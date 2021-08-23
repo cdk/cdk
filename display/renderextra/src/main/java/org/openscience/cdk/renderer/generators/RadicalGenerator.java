@@ -23,9 +23,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.vecmath.Point2d;
-
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -58,8 +56,9 @@ public class RadicalGenerator implements IGenerator<IAtomContainer> {
         final Color RADICAL_COLOR = Color.BLACK;
 
         // XXX : is this the best option?
-        final double ATOM_RADIUS = ((AtomRadius) model.getParameter(AtomRadius.class)).getValue()
-                / model.getParameter(Scale.class).getValue();
+        final double ATOM_RADIUS =
+                ((AtomRadius) model.getParameter(AtomRadius.class)).getValue()
+                        / model.getParameter(Scale.class).getValue();
 
         double modelRadius = SCREEN_RADIUS / model.getParameter(Scale.class).getValue();
         double modelSpacing = modelRadius * 2.5;

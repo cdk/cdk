@@ -22,6 +22,16 @@
  */
 package org.openscience.cdk;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -44,17 +54,6 @@ import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.tools.manipulator.SgroupManipulator;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Objects;
-
 /**
  * This class should not be used directly.
  *
@@ -64,9 +63,9 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
 
     private static final int DEFAULT_CAPACITY = 20;
 
-    private BaseAtomRef[]     atoms;
-    private BaseBondRef[]     bonds;
-    private ILonePair[]       lonepairs;
+    private BaseAtomRef[] atoms;
+    private BaseBondRef[] bonds;
+    private ILonePair[] lonepairs;
     private ISingleElectron[] electrons;
     private List<IStereoElement> stereo = new ArrayList<>();
 
@@ -78,101 +77,80 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
     /**
      * Create a new container with the specified capacities.
      *
-     * @param numAtoms           expected number of atoms
-     * @param numBonds           expected number of bonds
-     * @param numLonePairs       expected number of lone pairs
+     * @param numAtoms expected number of atoms
+     * @param numBonds expected number of bonds
+     * @param numLonePairs expected number of lone pairs
      * @param numSingleElectrons expected number of single electrons
      */
-    AtomContainer2(int numAtoms,
-                   int numBonds,
-                   int numLonePairs,
-                   int numSingleElectrons) {
+    AtomContainer2(int numAtoms, int numBonds, int numLonePairs, int numSingleElectrons) {
         this.atoms = new BaseAtomRef[numAtoms];
         this.bonds = new BaseBondRef[numBonds];
         this.lonepairs = new ILonePair[numLonePairs];
         this.electrons = new ISingleElectron[numSingleElectrons];
     }
 
-    /**
-     * Constructs an empty AtomContainer.
-     */
+    /** Constructs an empty AtomContainer. */
     AtomContainer2() {
         this(0, 0, 0, 0);
     }
 
     /**
-     * Constructs a shallow copy of the provided IAtomContainer with the same
-     * atoms, bonds, electron containers and stereochemistry of another
-     * AtomContainer. Removing atoms/bonds in this copy will not affect
-     * the original, however changing the properties will.
+     * Constructs a shallow copy of the provided IAtomContainer with the same atoms, bonds, electron
+     * containers and stereochemistry of another AtomContainer. Removing atoms/bonds in this copy
+     * will not affect the original, however changing the properties will.
      *
      * @param src the source atom container
      */
     AtomContainer2(IAtomContainer src) {
-        this(src.getAtomCount(),
-             src.getBondCount(),
-             src.getLonePairCount(),
-             src.getSingleElectronCount());
-        for (IAtom atom : src.atoms())
-            addAtom(atom);
-        for (IBond bond : src.bonds())
-            addBond(bond);
-        for (ISingleElectron se : src.singleElectrons())
-            addSingleElectron(se);
-        for (ILonePair lp : src.lonePairs())
-            addLonePair(lp);
-        for (IStereoElement se : src.stereoElements())
-            addStereoElement(se);
+        this(
+                src.getAtomCount(),
+                src.getBondCount(),
+                src.getLonePairCount(),
+                src.getSingleElectronCount());
+        for (IAtom atom : src.atoms()) addAtom(atom);
+        for (IBond bond : src.bonds()) addBond(bond);
+        for (ISingleElectron se : src.singleElectrons()) addSingleElectron(se);
+        for (ILonePair lp : src.lonePairs()) addLonePair(lp);
+        for (IStereoElement se : src.stereoElements()) addStereoElement(se);
     }
 
     private <T> T[] grow(T[] arr, int required) {
-        int grow = arr.length == 0 ? DEFAULT_CAPACITY :
-                   arr.length + (arr.length >> 1);
-        if (grow < required)
-            grow = required;
+        int grow = arr.length == 0 ? DEFAULT_CAPACITY : arr.length + (arr.length >> 1);
+        if (grow < required) grow = required;
         return Arrays.copyOf(arr, grow);
     }
 
     private void ensureAtomCapacity(int required) {
-        if (required >= atoms.length)
-            atoms = grow(atoms, required);
+        if (required >= atoms.length) atoms = grow(atoms, required);
     }
 
     private void ensureBondCapacity(int required) {
-        if (required >= bonds.length)
-            bonds = grow(bonds, required);
+        if (required >= bonds.length) bonds = grow(bonds, required);
     }
 
     private void ensureLonePairCapacity(int required) {
-        if (required >= lonepairs.length)
-            lonepairs = grow(lonepairs, required);
+        if (required >= lonepairs.length) lonepairs = grow(lonepairs, required);
     }
 
     private void ensureElectronCapacity(int required) {
-        if (required >= electrons.length)
-            electrons = grow(electrons, required);
+        if (required >= electrons.length) electrons = grow(electrons, required);
     }
 
     private static IAtom unbox(IAtom atom) {
-        while (atom instanceof AtomRef)
-            atom = ((AtomRef) atom).deref();
+        while (atom instanceof AtomRef) atom = ((AtomRef) atom).deref();
         return atom;
     }
 
     private static IBond unbox(IBond bond) {
-        while (bond instanceof BondRef)
-            bond = ((BondRef) bond).deref();
+        while (bond instanceof BondRef) bond = ((BondRef) bond).deref();
         return bond;
     }
 
     private BaseAtomRef getAtomRefUnsafe(IAtom atom) {
-        if (atom.getContainer() == this &&
-            atoms[atom.getIndex()] == atom)
+        if (atom.getContainer() == this && atoms[atom.getIndex()] == atom)
             return (BaseAtomRef) atom;
         atom = unbox(atom);
-        for (int i = 0; i < numAtoms; i++)
-            if (Objects.equals(atoms[i], atom))
-                return atoms[i];
+        for (int i = 0; i < numAtoms; i++) if (Objects.equals(atoms[i], atom)) return atoms[i];
         return null;
     }
 
@@ -185,8 +163,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
 
     private BaseAtomRef newAtomRef(IAtom atom) {
         // most common implementation we'll encounter..
-        if (atom.getClass() == Atom.class)
-            return new BaseAtomRef(this, atom);
+        if (atom.getClass() == Atom.class) return new BaseAtomRef(this, atom);
         atom = unbox(atom);
         // re-check the common case now we've un-boxed
         if (atom.getClass() == Atom.class) {
@@ -203,24 +180,18 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
     }
 
     private BondRef getBondRefUnsafe(IBond bond) {
-        if (bond.getContainer() == this &&
-            bonds[bond.getIndex()] == bond)
-            return (BondRef) bond;
+        if (bond.getContainer() == this && bonds[bond.getIndex()] == bond) return (BondRef) bond;
         bond = unbox(bond);
-        for (int i = 0; i < numBonds; i++)
-            if (bonds[i].deref() == bond)
-                return bonds[i];
+        for (int i = 0; i < numBonds; i++) if (bonds[i].deref() == bond) return bonds[i];
         return null;
     }
 
     private BaseBondRef newBondRef(IBond bond) {
         BaseAtomRef beg = bond.getBegin() == null ? null : getAtomRef(bond.getBegin());
         BaseAtomRef end = bond.getEnd() == null ? null : getAtomRef(bond.getEnd());
-        if (bond.getClass() == Bond.class)
-            return new BaseBondRef(this, bond, beg, end);
+        if (bond.getClass() == Bond.class) return new BaseBondRef(this, bond, beg, end);
         bond = unbox(bond);
-        if (bond instanceof IQueryBond)
-            return new QueryBondRef(this, (IQueryBond) bond, beg, end);
+        if (bond instanceof IQueryBond) return new QueryBondRef(this, (IQueryBond) bond, beg, end);
         return new BaseBondRef(this, bond, beg, end);
     }
 
@@ -241,23 +212,18 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         for (int i = 0; i < bondref.getAtomCount(); i++) {
             BaseAtomRef aref = getAtomRefUnsafe(bondref.getAtom(i));
             // atom may have already been deleted, naughty!
-            if (aref != null)
-                aref.bonds.remove(bondref);
+            if (aref != null) aref.bonds.remove(bondref);
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void addStereoElement(IStereoElement element) {
         stereo.add(element);
         notifyChanged();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setStereoElements(List<IStereoElement> elements) {
         this.stereo.clear();
@@ -265,9 +231,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         notifyChanged();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Iterable<IStereoElement> stereoElements() {
         return Collections.unmodifiableList(stereo);
@@ -279,9 +243,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setAtoms(IAtom[] newatoms) {
         ensureAtomCapacity(newatoms.length);
@@ -293,10 +255,8 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
             if (newatoms[i].getContainer() == this) {
                 atoms[i] = (BaseAtomRef) newatoms[i];
                 atoms[i].setIndex(i);
-            } else
-            {
-                if (atoms[i] != null)
-                    atoms[i].removeListener(this);
+            } else {
+                if (atoms[i] != null) atoms[i].removeListener(this);
                 atoms[i] = newAtomRef(newatoms[i]);
                 atoms[i].setIndex(i);
                 atoms[i].addListener(this);
@@ -306,8 +266,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
 
         // null-fill rest of the array
         if (newatoms.length < numAtoms) {
-            for (int i = newatoms.length; i < numAtoms; i++)
-                atoms[i].removeListener(this);
+            for (int i = newatoms.length; i < numAtoms; i++) atoms[i].removeListener(this);
             Arrays.fill(this.atoms, newatoms.length, numAtoms, null);
         }
         numAtoms = newatoms.length;
@@ -317,16 +276,13 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         // added
         if (numBonds > 0 && reindexBonds) {
             clearAdjacency();
-            for (int i = 0; i < numBonds; i++)
-                addToEndpoints(bonds[i]);
+            for (int i = 0; i < numBonds; i++) addToEndpoints(bonds[i]);
         }
 
         notifyChanged();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setBonds(IBond[] newbonds) {
         // replace existing bonds to clear their adjacency
@@ -338,30 +294,26 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
             BaseBondRef bondRef = newBondRef(newbonds[i]);
             bondRef.setIndex(i);
             addToEndpoints(bondRef);
-            if (bonds[i] != null)
-                bonds[i].removeListener(this);
+            if (bonds[i] != null) bonds[i].removeListener(this);
             bonds[i] = bondRef;
             bondRef.addListener(this);
         }
         // null-fill
         if (newbonds.length < numBonds) {
-            for (int i = newbonds.length; i < numBonds; i++)
-                bonds[i].removeListener(this);
+            for (int i = newbonds.length; i < numBonds; i++) bonds[i].removeListener(this);
             Arrays.fill(this.bonds, newbonds.length, numBonds, null);
         }
         numBonds = newbonds.length;
         notifyChanged();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setAtom(int idx, IAtom atom) {
-        if (atom == null)
-            throw new NullPointerException("Null atom provided");
+        if (atom == null) throw new NullPointerException("Null atom provided");
         if (contains(atom))
-            throw new IllegalArgumentException("Atom already in container at index: " + indexOf(atom));
+            throw new IllegalArgumentException(
+                    "Atom already in container at index: " + indexOf(atom));
         if (idx < 0 || idx >= numAtoms)
             throw new IndexOutOfBoundsException("No current atom at index: " + idx);
         BaseAtomRef rep = newAtomRef(atom);
@@ -369,27 +321,23 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         atoms[idx] = rep;
         atoms[idx].setIndex(idx);
         for (IBond bond : new ArrayList<>(org.bonds)) {
-            if (bond.getBegin().equals(org))
-                bond.setAtom(rep, 0);
-            else if (bond.getEnd().equals(org))
-                bond.setAtom(rep, 1);
+            if (bond.getBegin().equals(org)) bond.setAtom(rep, 0);
+            else if (bond.getEnd().equals(org)) bond.setAtom(rep, 1);
         }
 
         // update single electrons and lone pairs
         for (ISingleElectron ec : singleElectrons()) {
-            if (org.equals(ec.getAtom()))
-                ec.setAtom(rep);
+            if (org.equals(ec.getAtom())) ec.setAtom(rep);
         }
         for (ILonePair lp : lonePairs()) {
-            if (org.equals(lp.getAtom()))
-                lp.setAtom(rep);
+            if (org.equals(lp.getAtom())) lp.setAtom(rep);
         }
 
         // update stereo
         for (int i = 0; i < this.stereo.size(); i++) {
             IStereoElement se = stereo.get(i);
             if (se.contains(org)) {
-                Map<IAtom, IAtom> amap = Collections.<IAtom,IAtom>singletonMap(org, rep);
+                Map<IAtom, IAtom> amap = Collections.<IAtom, IAtom>singletonMap(org, rep);
                 Map<IBond, IBond> bmap = Collections.emptyMap();
                 this.stereo.set(i, se.map(amap, bmap));
             }
@@ -399,39 +347,28 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         notifyChanged();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtom getAtom(int idx) {
-        if (idx >= numAtoms)
-            throw new IndexOutOfBoundsException("No atom at index: " + idx);
+        if (idx >= numAtoms) throw new IndexOutOfBoundsException("No atom at index: " + idx);
         return atoms[idx];
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IBond getBond(int idx) {
-        if (idx >= numBonds)
-            throw new IndexOutOfBoundsException("No bond at index: " + idx);
+        if (idx >= numBonds) throw new IndexOutOfBoundsException("No bond at index: " + idx);
         return bonds[idx];
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public ILonePair getLonePair(int idx) {
-        if (idx >= numLonePairs)
-            throw new NoSuchElementException("No lone pair at index: " + idx);
+        if (idx >= numLonePairs) throw new NoSuchElementException("No lone pair at index: " + idx);
         return lonepairs[idx];
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public ISingleElectron getSingleElectron(int idx) {
         if (idx >= numSingleElectrons)
@@ -439,9 +376,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         return electrons[idx];
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Iterable<IAtom> atoms() {
         return new Iterable<IAtom>() {
@@ -453,9 +388,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         };
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Iterable<IBond> bonds() {
         return new Iterable<IBond>() {
@@ -467,9 +400,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         };
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Iterable<ILonePair> lonePairs() {
         return new Iterable<ILonePair>() {
@@ -481,9 +412,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         };
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Iterable<ISingleElectron> singleElectrons() {
         return new Iterable<ISingleElectron>() {
@@ -494,9 +423,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         };
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Iterable<IElectronContainer> electronContainers() {
         return new Iterable<IElectronContainer>() {
@@ -507,83 +434,63 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         };
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtom getFirstAtom() {
         return numAtoms > 0 ? atoms[0] : null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtom getLastAtom() {
         return numAtoms > 0 ? atoms[numAtoms - 1] : null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getAtomNumber(IAtom atom) {
         return indexOf(atom);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getBondNumber(IAtom beg, IAtom end) {
         return indexOf(getBond(beg, end));
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getBondNumber(IBond bond) {
         return indexOf(bond);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getLonePairNumber(ILonePair lonePair) {
         return indexOf(lonePair);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getSingleElectronNumber(ISingleElectron singleElectron) {
         return indexOf(singleElectron);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int indexOf(IAtom atom) {
         final AtomRef aref = getAtomRefUnsafe(atom);
         return aref == null ? -1 : aref.getIndex();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int indexOf(IBond bond) {
         final BondRef bref = getBondRefUnsafe(bond);
         return bref == null ? -1 : bref.getIndex();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int indexOf(ISingleElectron electron) {
         for (int i = 0; i < numSingleElectrons; i++) {
@@ -592,9 +499,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         return -1;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int indexOf(ILonePair pair) {
         for (int i = 0; i < numLonePairs; i++) {
@@ -603,9 +508,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         return -1;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IElectronContainer getElectronContainer(int number) {
         if (number < numBonds) return bonds[number];
@@ -616,58 +519,44 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         return null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IBond getBond(IAtom beg, IAtom end) {
         final AtomRef begref = getAtomRefUnsafe(beg);
         return begref != null ? begref.getBond(end) : null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getAtomCount() {
         return numAtoms;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getBondCount() {
         return numBonds;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getLonePairCount() {
         return numLonePairs;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getSingleElectronCount() {
         return numSingleElectrons;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getElectronContainerCount() {
         return numBonds + numSingleElectrons + numLonePairs;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public List<IAtom> getConnectedAtomsList(IAtom atom) {
         AtomRef aref = getAtomRef(atom);
@@ -678,18 +567,14 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         return nbrs;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public List<IBond> getConnectedBondsList(IAtom atom) {
         BaseAtomRef atomref = getAtomRef(atom);
         return new ArrayList<>(atomref.bonds);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public List<ILonePair> getConnectedLonePairsList(IAtom atom) {
         getAtomRef(atom);
@@ -700,9 +585,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         return lps;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public List<ISingleElectron> getConnectedSingleElectronsList(IAtom atom) {
         getAtomRef(atom);
@@ -713,55 +596,42 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         return ses;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
-    public List<IElectronContainer> getConnectedElectronContainersList(
-        IAtom atom) {
-        List<IElectronContainer> ecs  = new ArrayList<>();
-        AtomRef                  aref = getAtomRef(atom);
+    public List<IElectronContainer> getConnectedElectronContainersList(IAtom atom) {
+        List<IElectronContainer> ecs = new ArrayList<>();
+        AtomRef aref = getAtomRef(atom);
         for (IBond bond : aref.bonds()) {
             ecs.add(bond);
         }
         for (int i = 0; i < numLonePairs; i++) {
-            if (lonepairs[i].contains(atom))
-                ecs.add(lonepairs[i]);
+            if (lonepairs[i].contains(atom)) ecs.add(lonepairs[i]);
         }
         for (int i = 0; i < numSingleElectrons; i++) {
-            if (electrons[i].contains(atom))
-                ecs.add(electrons[i]);
+            if (electrons[i].contains(atom)) ecs.add(electrons[i]);
         }
         return ecs;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getConnectedAtomsCount(IAtom atom) {
         return getConnectedBondsCount(atom);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getConnectedBondsCount(IAtom atom) {
         return getAtomRef(atom).getBondCount();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getConnectedBondsCount(int idx) {
         return getAtom(idx).getBondCount();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getConnectedLonePairsCount(IAtom atom) {
         // check atom is present
@@ -773,9 +643,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         return count;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getConnectedSingleElectronsCount(IAtom atom) {
         getAtomRef(atom);
@@ -786,9 +654,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         return count;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public double getBondOrderSum(IAtom atom) {
         double count = 0;
@@ -801,9 +667,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         return count;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Order getMaximumBondOrder(IAtom atom) {
         Order max = null;
@@ -813,18 +677,14 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
             }
         }
         if (max == null) {
-            if (atom.getImplicitHydrogenCount() != null &&
-                atom.getImplicitHydrogenCount() > 0)
+            if (atom.getImplicitHydrogenCount() != null && atom.getImplicitHydrogenCount() > 0)
                 max = Order.SINGLE;
-            else
-                max = Order.UNSET;
+            else max = Order.UNSET;
         }
         return max;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Order getMinimumBondOrder(IAtom atom) {
         Order min = null;
@@ -834,41 +694,35 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
             }
         }
         if (min == null) {
-            if (atom.getImplicitHydrogenCount() != null &&
-                atom.getImplicitHydrogenCount() > 0)
+            if (atom.getImplicitHydrogenCount() != null && atom.getImplicitHydrogenCount() > 0)
                 min = Order.SINGLE;
-            else
-                min = Order.UNSET;
+            else min = Order.UNSET;
         }
         return min;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void add(IAtomContainer that) {
 
         // mark visited
-        for (IAtom atom : that.atoms())
-            atom.setFlag(CDKConstants.VISITED, false);
-        for (IBond bond : that.bonds())
-            bond.setFlag(CDKConstants.VISITED, false);
-        for (IAtom atom : this.atoms())
-            atom.setFlag(CDKConstants.VISITED, true);
-        for (IBond bond : this.bonds())
-            bond.setFlag(CDKConstants.VISITED, true);
+        for (IAtom atom : that.atoms()) atom.setFlag(CDKConstants.VISITED, false);
+        for (IBond bond : that.bonds()) bond.setFlag(CDKConstants.VISITED, false);
+        for (IAtom atom : this.atoms()) atom.setFlag(CDKConstants.VISITED, true);
+        for (IBond bond : this.bonds()) bond.setFlag(CDKConstants.VISITED, true);
 
         // do stereo elements first
         for (IStereoElement se : that.stereoElements()) {
-            if (se instanceof TetrahedralChirality &&
-                !((TetrahedralChirality) se).getChiralAtom().getFlag(CDKConstants.VISITED)) {
+            if (se instanceof TetrahedralChirality
+                    && !((TetrahedralChirality) se).getChiralAtom().getFlag(CDKConstants.VISITED)) {
                 this.addStereoElement(se);
-            } else if (se instanceof DoubleBondStereochemistry &&
-                       !((DoubleBondStereochemistry) se).getStereoBond().getFlag(CDKConstants.VISITED)) {
+            } else if (se instanceof DoubleBondStereochemistry
+                    && !((DoubleBondStereochemistry) se)
+                            .getStereoBond()
+                            .getFlag(CDKConstants.VISITED)) {
                 this.addStereoElement(se);
-            } else if (se instanceof ExtendedTetrahedral &&
-                       !((ExtendedTetrahedral) se).focus().getFlag(CDKConstants.VISITED)) {
+            } else if (se instanceof ExtendedTetrahedral
+                    && !((ExtendedTetrahedral) se).focus().getFlag(CDKConstants.VISITED)) {
                 this.addStereoElement(se);
             }
         }
@@ -889,24 +743,19 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         // linear indexOf.. but we expected there to be few electron/lone pairs
         // instances
         for (ISingleElectron se : that.singleElectrons()) {
-            if (this.indexOf(se) < 0)
-                addSingleElectron(se);
+            if (this.indexOf(se) < 0) addSingleElectron(se);
         }
         for (ILonePair lp : that.lonePairs()) {
-            if (this.indexOf(lp) < 0)
-                addLonePair(lp);
+            if (this.indexOf(lp) < 0) addLonePair(lp);
         }
 
         notifyChanged();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void addAtom(IAtom atom) {
-        if (contains(atom))
-            return;
+        if (contains(atom)) return;
         ensureAtomCapacity(numAtoms + 1);
         final BaseAtomRef aref = newAtomRef(atom);
         aref.setIndex(numAtoms);
@@ -915,9 +764,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         notifyChanged();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void addBond(IBond bond) {
         ensureBondCapacity(numBonds + 1);
@@ -929,9 +776,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         notifyChanged();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void addLonePair(ILonePair lp) {
         ensureLonePairCapacity(numLonePairs + 1);
@@ -940,9 +785,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         notifyChanged();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void addSingleElectron(ISingleElectron e) {
         ensureElectronCapacity(numSingleElectrons + 1);
@@ -951,23 +794,16 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         notifyChanged();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void addElectronContainer(IElectronContainer ec) {
-        if (ec instanceof IBond)
-            this.addBond((IBond) ec);
-        if (ec instanceof ILonePair)
-            this.addLonePair((ILonePair) ec);
-        if (ec instanceof ISingleElectron)
-            this.addSingleElectron((ISingleElectron) ec);
+        if (ec instanceof IBond) this.addBond((IBond) ec);
+        if (ec instanceof ILonePair) this.addLonePair((ILonePair) ec);
+        if (ec instanceof ISingleElectron) this.addSingleElectron((ISingleElectron) ec);
         notifyChanged();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void remove(IAtomContainer atomContainer) {
         // FIXME: can be better
@@ -986,9 +822,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         notifyChanged();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void removeAtomOnly(int idx) {
         if (idx >= 0 && idx < numAtoms) {
@@ -1003,17 +837,13 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void removeAtomOnly(IAtom atom) {
         removeAtomOnly(indexOf(atom));
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IBond removeBond(int idx) {
         BondRef bond = null;
@@ -1032,25 +862,19 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         return bond;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IBond removeBond(IAtom beg, IAtom end) {
         return removeBond(indexOf(getBond(beg, end)));
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void removeBond(IBond bond) {
         removeBond(indexOf(bond));
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public ILonePair removeLonePair(int idx) {
         ILonePair lonepair = null;
@@ -1065,17 +889,13 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         return lonepair;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void removeLonePair(ILonePair lonePair) {
         removeLonePair(indexOf(lonePair));
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public ISingleElectron removeSingleElectron(int idx) {
         ISingleElectron electron = null;
@@ -1090,54 +910,38 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         return electron;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void removeSingleElectron(ISingleElectron electron) {
         removeSingleElectron(indexOf(electron));
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IElectronContainer removeElectronContainer(int number) {
-        if (number < numBonds)
-            return removeBond(number);
+        if (number < numBonds) return removeBond(number);
         number -= numBonds;
-        if (number < numLonePairs)
-            return removeLonePair(number);
+        if (number < numLonePairs) return removeLonePair(number);
         number -= numLonePairs;
-        if (number < numSingleElectrons)
-            return removeSingleElectron(number);
+        if (number < numSingleElectrons) return removeSingleElectron(number);
         return null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void removeElectronContainer(IElectronContainer ec) {
-        if (ec instanceof IBond)
-            removeBond((IBond) ec);
-        else if (ec instanceof ILonePair)
-            removeLonePair((ILonePair) ec);
-        else if (ec instanceof ISingleElectron)
-            removeSingleElectron((ISingleElectron) ec);
+        if (ec instanceof IBond) removeBond((IBond) ec);
+        else if (ec instanceof ILonePair) removeLonePair((ILonePair) ec);
+        else if (ec instanceof ISingleElectron) removeSingleElectron((ISingleElectron) ec);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void removeAtomAndConnectedElectronContainers(IAtom atom) {
         removeAtom(atom);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void removeAtom(IAtom atom) {
         AtomRef atomref = getAtomRefUnsafe(atom);
@@ -1187,22 +991,18 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
                 if (element.contains(atom)) atomElements.add(element);
             }
             stereo.removeAll(atomElements);
-            
+
             removeAtomOnly(atomref.getIndex());
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void removeAtom(int pos) {
         removeAtom(getAtom(pos));
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void removeAllElements() {
         removeAllElectronContainers();
@@ -1211,9 +1011,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         stereo.clear();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void removeAllElectronContainers() {
         removeAllBonds();
@@ -1223,9 +1021,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         numSingleElectrons = 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void removeAllBonds() {
         bonds = new BaseBondRef[0];
@@ -1234,29 +1030,23 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         notifyChanged();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void addBond(int beg, int end, Order order, Stereo stereo) {
         IBond bond = getBuilder().newBond();
-        bond.setAtoms(new IAtom[]{getAtom(beg), getAtom(end)});
+        bond.setAtoms(new IAtom[] {getAtom(beg), getAtom(end)});
         bond.setOrder(order);
         bond.setStereo(stereo);
         addBond(bond);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void addBond(int beg, int end, Order order) {
         addBond(beg, end, order, Stereo.NONE);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void addLonePair(int idx) {
         ILonePair lp = getBuilder().newInstance(ILonePair.class);
@@ -1264,9 +1054,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         addLonePair(lp);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void addSingleElectron(int idx) {
         ISingleElectron electron = getBuilder().newInstance(ISingleElectron.class);
@@ -1274,45 +1062,34 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         addSingleElectron(electron);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean contains(IAtom atom) {
         return indexOf(atom) >= 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean contains(IBond bond) {
         return indexOf(bond) >= 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean contains(ILonePair lonepair) {
         return indexOf(lonepair) >= 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean contains(ISingleElectron electron) {
         return indexOf(electron) >= 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean contains(IElectronContainer electronContainer) {
-        if (electronContainer instanceof IBond)
-            return contains((IBond) electronContainer);
+        if (electronContainer instanceof IBond) return contains((IBond) electronContainer);
         else if (electronContainer instanceof ILonePair)
             return contains((ILonePair) electronContainer);
         else if (electronContainer instanceof ISingleElectron)
@@ -1320,25 +1097,19 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public String getTitle() {
         return getProperty(CDKConstants.TITLE);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setTitle(String title) {
         setProperty(CDKConstants.TITLE, title);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(64);
@@ -1384,9 +1155,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         return new AtomContainer2(this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtomContainer clone() throws CloneNotSupportedException {
         // this is pretty wasteful as we need to delete most the data
@@ -1394,7 +1163,8 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         // would have a ClassCastException when they invoke clone
         AtomContainer2 clone = (AtomContainer2) super.clone();
 
-        // remove existing elements - we need to set the stereo elements list as list.clone() doesn't
+        // remove existing elements - we need to set the stereo elements list as list.clone()
+        // doesn't
         // work as expected and will also remove all elements from the original
         clone.numAtoms = 0;
         clone.numBonds = 0;
@@ -1420,17 +1190,16 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
             atoms[i] = this.atoms[i].deref().clone();
         }
         clone.setAtoms(atoms);
-        for (int i = 0; i < atoms.length; i++)
-            atomMap.put(this.atoms[i], clone.getAtom(i));
+        for (int i = 0; i < atoms.length; i++) atomMap.put(this.atoms[i], clone.getAtom(i));
 
         // clone bonds using a the mappings from the original to the clone
         IBond[] bonds = new IBond[this.numBonds];
         for (int i = 0; i < bonds.length; i++) {
 
             BondRef original = this.bonds[i];
-            IBond   bond     = original.deref().clone();
-            int     n        = bond.getAtomCount();
-            IAtom[] members  = new IAtom[n];
+            IBond bond = original.deref().clone();
+            int n = bond.getAtomCount();
+            IAtom[] members = new IAtom[n];
 
             for (int j = 0; j < n; j++) {
                 members[j] = atomMap.get(original.getAtom(j));
@@ -1441,29 +1210,27 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
             bonds[i] = bond;
         }
         clone.setBonds(bonds);
-        for (int i = 0; i < bonds.length; i++)
-            bondMap.put(this.bonds[i], clone.getBond(i));
+        for (int i = 0; i < bonds.length; i++) bondMap.put(this.bonds[i], clone.getBond(i));
 
         // clone lone pairs (we can't use an array to buffer as there is no setLonePairs())
         for (int i = 0; i < numLonePairs; i++) {
 
             ILonePair original = this.lonepairs[i];
-            ILonePair pair     = (ILonePair) original.clone();
+            ILonePair pair = (ILonePair) original.clone();
 
-            if (pair.getAtom() != null)
-                pair.setAtom(atomMap.get(original.getAtom()));
+            if (pair.getAtom() != null) pair.setAtom(atomMap.get(original.getAtom()));
 
             clone.addLonePair(pair);
         }
 
-        // clone single electrons (we can't use an array to buffer as there is no setSingleElectrons())
+        // clone single electrons (we can't use an array to buffer as there is no
+        // setSingleElectrons())
         for (int i = 0; i < numSingleElectrons; i++) {
 
             ISingleElectron original = this.electrons[i];
             ISingleElectron electron = (ISingleElectron) original.clone();
 
-            if (electron.getAtom() != null)
-                electron.setAtom(atomMap.get(original.getAtom()));
+            if (electron.getAtom() != null) electron.setAtom(atomMap.get(original.getAtom()));
 
             clone.addSingleElectron(electron);
         }
@@ -1476,27 +1243,22 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         // update sgroups
         Collection<Sgroup> sgroups = getProperty(CDKConstants.CTAB_SGROUPS);
         if (sgroups != null) {
-            Map<IChemObject,IChemObject> replace = new HashMap<>();
+            Map<IChemObject, IChemObject> replace = new HashMap<>();
             replace.putAll(atomMap);
             replace.putAll(bondMap);
-            clone.setProperty(CDKConstants.CTAB_SGROUPS,
-                              SgroupManipulator.copy(sgroups, replace));
+            clone.setProperty(CDKConstants.CTAB_SGROUPS, SgroupManipulator.copy(sgroups, replace));
         }
 
         return clone;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void stateChanged(IChemObjectChangeEvent event) {
         notifyChanged(event);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean isEmpty() {
         return numAtoms == 0;
@@ -1540,7 +1302,6 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         public void remove() {
             removeBond(--idx);
         }
-
     }
 
     private class LonePairIterator implements Iterator<ILonePair> {
@@ -1561,7 +1322,6 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         public void remove() {
             removeLonePair(--idx);
         }
-
     }
 
     private class SingleElectronIterator implements Iterator<ISingleElectron> {
@@ -1582,7 +1342,6 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         public void remove() {
             removeSingleElectron(--idx);
         }
-
     }
 
     private class ElectronContainerIterator implements Iterator<IElectronContainer> {
@@ -1596,10 +1355,8 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
 
         @Override
         public IElectronContainer next() {
-            if (idx < numBonds)
-                return bonds[idx++];
-            else if (idx < numBonds + numLonePairs)
-                return lonepairs[(idx++) - numBonds];
+            if (idx < numBonds) return bonds[idx++];
+            else if (idx < numBonds + numLonePairs) return lonepairs[(idx++) - numBonds];
             else if (idx < numBonds + numLonePairs + numSingleElectrons)
                 return electrons[(idx++) - (numBonds + numLonePairs)];
             return null;
@@ -1615,7 +1372,6 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
                 removeSingleElectron((--idx) - (numBonds - numLonePairs));
             }
         }
-
     }
 
     private static class BaseAtomRef extends AtomRef {
@@ -1656,8 +1412,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         @Override
         public IBond getBond(IAtom atom) {
             for (IBond bond : bonds) {
-                if (bond.getOther(this).equals(atom))
-                    return bond;
+                if (bond.getOther(this).equals(atom)) return bond;
             }
             return null;
         }
@@ -1669,8 +1424,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
 
         @Override
         public boolean equals(Object obj) {
-            if (obj instanceof AtomRef)
-                return deref().equals(((AtomRef) obj).deref());
+            if (obj instanceof AtomRef) return deref().equals(((AtomRef) obj).deref());
             return deref().equals(obj);
         }
     }
@@ -1711,8 +1465,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
 
         @Override
         public boolean equals(Object obj) {
-            if (obj instanceof BondRef)
-                return deref().equals(((BondRef) obj).deref());
+            if (obj instanceof BondRef) return deref().equals(((BondRef) obj).deref());
             return deref().equals(obj);
         }
 
@@ -1877,12 +1630,11 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
 
     private static class BaseBondRef extends BondRef {
 
-        private       int            idx;
+        private int idx;
         private final AtomContainer2 mol;
-        private       BaseAtomRef    beg, end;
+        private BaseAtomRef beg, end;
 
-        private BaseBondRef(AtomContainer2 mol, IBond bond, BaseAtomRef beg,
-                            BaseAtomRef end) {
+        private BaseBondRef(AtomContainer2 mol, IBond bond, BaseAtomRef beg, BaseAtomRef end) {
             super(bond);
             this.mol = mol;
             this.beg = beg;
@@ -1927,15 +1679,11 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
 
         @Override
         public AtomRef getOther(IAtom atom) {
-            if (atom == beg)
-                return end;
-            else if (atom == end)
-                return beg;
+            if (atom == beg) return end;
+            else if (atom == end) return beg;
             atom = AtomContainer2.unbox(atom);
-            if (atom == beg.deref())
-                return end;
-            else if (atom == end.deref())
-                return beg;
+            if (atom == beg.deref()) return end;
+            else if (atom == end.deref()) return beg;
             return null;
         }
 
@@ -1950,10 +1698,8 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
                 end = tmp;
                 return;
             }
-            if (beg != null)
-                beg.bonds.remove(this);
-            if (end != null)
-                end.bonds.remove(this);
+            if (beg != null) beg.bonds.remove(this);
+            if (end != null) end.bonds.remove(this);
             beg = mol.getAtomRef(atoms[0]);
             end = mol.getAtomRef(atoms[1]);
             beg.bonds.add(this);
@@ -1964,13 +1710,11 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         public void setAtom(IAtom atom, int idx) {
             super.setAtom(atom, idx);
             if (idx == 0) {
-                if (beg != null)
-                    beg.bonds.remove(this);
+                if (beg != null) beg.bonds.remove(this);
                 beg = mol.getAtomRef(atom);
                 beg.bonds.add(this);
             } else if (idx == 1) {
-                if (end != null)
-                    end.bonds.remove(this);
+                if (end != null) end.bonds.remove(this);
                 end = mol.getAtomRef(atom);
                 end.bonds.add(this);
             }
@@ -1983,20 +1727,14 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
 
         @Override
         public boolean equals(Object obj) {
-            if (obj instanceof BondRef)
-                return deref().equals(((BondRef) obj).deref());
+            if (obj instanceof BondRef) return deref().equals(((BondRef) obj).deref());
             return deref().equals(obj);
         }
     }
 
-    private static final class QueryBondRef
-        extends BaseBondRef
-        implements IQueryBond {
+    private static final class QueryBondRef extends BaseBondRef implements IQueryBond {
 
-        public QueryBondRef(AtomContainer2 mol,
-                             IQueryBond bond,
-                             BaseAtomRef beg,
-                             BaseAtomRef end) {
+        public QueryBondRef(AtomContainer2 mol, IQueryBond bond, BaseAtomRef beg, BaseAtomRef end) {
             super(mol, bond, beg, end);
         }
 
@@ -2005,5 +1743,4 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
             return ((IQueryBond) deref()).matches(bond);
         }
     }
-
 }

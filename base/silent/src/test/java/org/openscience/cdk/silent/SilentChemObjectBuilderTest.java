@@ -25,8 +25,8 @@ import org.openscience.cdk.AbstractChemObjectBuilderTest;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * Checks the functionality of the {@link IChemObjectBuilder}
- * {@link SilentChemObjectBuilder} implementation.
+ * Checks the functionality of the {@link IChemObjectBuilder} {@link SilentChemObjectBuilder}
+ * implementation.
  *
  * @cdk.module test-silent
  */
@@ -44,5 +44,4 @@ public class SilentChemObjectBuilderTest extends AbstractChemObjectBuilderTest {
         Assert.assertTrue(builder instanceof IChemObjectBuilder);
         Assert.assertTrue(builder instanceof SilentChemObjectBuilder);
     }
-
 }

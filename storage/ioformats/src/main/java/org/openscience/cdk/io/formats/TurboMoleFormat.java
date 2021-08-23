@@ -24,7 +24,6 @@ import org.openscience.cdk.tools.DataFeatures;
  * See <a href="http://www.cosmologic.de/turbomole.html">here</a>.
  *
  * @author Miguel Rojas
- *
  * @cdk.module ioformats
  * @cdk.githash
  */
@@ -60,7 +59,7 @@ public class TurboMoleFormat extends AbstractResourceFormat implements IChemForm
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"tmol"};
+        return new String[] {"tmol"};
     }
 
     /** {@inheritDoc} */

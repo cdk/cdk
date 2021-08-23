@@ -23,21 +23,11 @@
  */
 package org.openscience.cdk;
 
-import org.junit.Test;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.ICDKObject;
-import org.openscience.cdk.interfaces.IElement;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.mock;
@@ -45,6 +35,15 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.openscience.cdk.DynamicFactory.key;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.ICDKObject;
+import org.openscience.cdk.interfaces.IElement;
 
 /**
  * Unit test for the DynamicFactory.
@@ -54,23 +53,18 @@ import static org.openscience.cdk.DynamicFactory.key;
  */
 public class DynamicFactoryTest {
 
-    /**
-     * Ensure a negative size throws an exception.
-     */
+    /** Ensure a negative size throws an exception. */
     @Test(expected = IllegalArgumentException.class)
     public void testConstructor() {
         new DynamicFactory(-1);
     }
 
-    /**
-     * Check we can't register an interface.
-     */
+    /** Check we can't register an interface. */
     @Test(expected = IllegalArgumentException.class)
     public void testRegister_Interface() throws Exception {
 
         DynamicFactory factory = new DynamicFactory(0);
         factory.register(IAtom.class);
-
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -86,7 +80,7 @@ public class DynamicFactoryTest {
         DynamicFactory.InterfaceProvider accessor = mock(DynamicFactory.InterfaceProvider.class);
         IAtom mock = mock(MockedAtom.class);
 
-        when(accessor.getInterfaces(mock.getClass())).thenReturn(new Class<?>[]{IAtom.class});
+        when(accessor.getInterfaces(mock.getClass())).thenReturn(new Class<?>[] {IAtom.class});
 
         DynamicFactory factory = new DynamicFactory(accessor, 5);
 
@@ -95,7 +89,6 @@ public class DynamicFactoryTest {
         factory.register(mock.getClass());
 
         assertFalse(factory.implementorsOf(IAtom.class).isEmpty());
-
     }
 
     @Test
@@ -106,12 +99,11 @@ public class DynamicFactoryTest {
 
         // we should not register this implementation with comparable, we can
         // simulate this here
-        when(accessor.getInterfaces(mock.getClass())).thenReturn(new Class<?>[]{Comparable.class});
+        when(accessor.getInterfaces(mock.getClass())).thenReturn(new Class<?>[] {Comparable.class});
 
         DynamicFactory factory = new DynamicFactory(accessor, 5);
 
         assertFalse(factory.register(mock.getClass()));
-
     }
 
     @Test
@@ -136,7 +128,6 @@ public class DynamicFactoryTest {
         factory.register(IElement.class, mock.getClass());
 
         assertFalse(factory.implementorsOf(IElement.class).isEmpty());
-
     }
 
     @Test
@@ -156,7 +147,6 @@ public class DynamicFactoryTest {
         }
 
         assertThat("mocked atom should have two public constructors", list.size(), is(2));
-
     }
 
     @Test
@@ -164,8 +154,10 @@ public class DynamicFactoryTest {
 
         DynamicFactory factory = new DynamicFactory(5);
 
-        assertTrue(factory.register(ICDKObject.class, DynamicFactoryTestMock.class.getConstructor(String.class)));
-
+        assertTrue(
+                factory.register(
+                        ICDKObject.class,
+                        DynamicFactoryTestMock.class.getConstructor(String.class)));
     }
 
     @SuppressWarnings("unchecked")
@@ -177,19 +169,21 @@ public class DynamicFactoryTest {
 
         DynamicFactory.CreationModifier modifier = mock(DynamicFactory.CreationModifier.class);
 
-        assertTrue(factory.register(ICDKObject.class, DynamicFactoryTestMock.class.getConstructor(String.class),
-                modifier));
+        assertTrue(
+                factory.register(
+                        ICDKObject.class,
+                        DynamicFactoryTestMock.class.getConstructor(String.class),
+                        modifier));
 
         assertNotNull(factory.ofClass(ICDKObject.class, "empty"));
 
         // verify the modifier was invoked once
         verify(modifier).modify(anyObject());
-
     }
 
     /**
-     * Tests that we get an exception if we try to register two different
-     * constructors to the same interface.
+     * Tests that we get an exception if we try to register two different constructors to the same
+     * interface.
      *
      * @throws Exception
      */
@@ -206,7 +200,6 @@ public class DynamicFactoryTest {
         // should throw an exception the mocked atom also has a constructor with
         // a single String parameter
         assertFalse(factory.register(ICDKObject.class, atom.getClass()));
-
     }
 
     @Test
@@ -214,16 +207,17 @@ public class DynamicFactoryTest {
 
         DynamicFactory factory = new DynamicFactory(5);
 
-        factory.register(key(IAtom.class), new DynamicFactory.BasicCreator<IAtom>(null) {
+        factory.register(
+                key(IAtom.class),
+                new DynamicFactory.BasicCreator<IAtom>(null) {
 
-            @Override
-            public IAtom create(Object[] objects) {
-                return mock(IAtom.class);
-            }
-        });
+                    @Override
+                    public IAtom create(Object[] objects) {
+                        return mock(IAtom.class);
+                    }
+                });
 
         assertNotNull(factory.ofClass(IAtom.class));
-
     }
 
     @Test
@@ -242,11 +236,11 @@ public class DynamicFactoryTest {
         IAtom instance = factory.ofClass(IAtom.class, this);
 
         assertNotNull(instance);
-
     }
 
     /**
      * Check we get an exception when we try to build from a non-interface.
+     *
      * @throws Exception
      */
     @Test(expected = IllegalArgumentException.class)
@@ -263,7 +257,6 @@ public class DynamicFactoryTest {
 
         // ofClass -> illegal argument, non-interface
         IAtom instance = factory.ofClass(mock.getClass(), this);
-
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -278,7 +271,6 @@ public class DynamicFactoryTest {
 
         // ofClass -> illegal argument, non-interface
         ICDKObject instance = factory.ofClass(DynamicFactoryTestMock.class);
-
     }
 
     @Test
@@ -299,12 +291,9 @@ public class DynamicFactoryTest {
         assertNotNull(instance);
 
         assertEquals("C", instance.getSymbol());
-
     }
 
-    /**
-     * Kind of already tested in other methods.
-     */
+    /** Kind of already tested in other methods. */
     @Test
     public void testSuggest() throws Exception {
 
@@ -346,19 +335,18 @@ public class DynamicFactoryTest {
 
         assertEquals(IAtom.class, key.intf());
         assertEquals(0, key.n());
-
     }
 
     @Test
     public void testKey_Parameters() {
 
-        DynamicFactory.ConstructorKey key = DynamicFactory.key(IBond.class, IAtom.class, IAtom.class);
+        DynamicFactory.ConstructorKey key =
+                DynamicFactory.key(IBond.class, IAtom.class, IAtom.class);
 
         assertEquals(IBond.class, key.intf());
         assertEquals(2, key.n());
         assertEquals(IAtom.class, key.type(0));
         assertEquals(IAtom.class, key.type(1));
-
     }
 
     @Test
@@ -369,17 +357,23 @@ public class DynamicFactoryTest {
         assertEquals(1, key.n());
         assertTrue(key.type(0).isArray());
         assertEquals(IAtom[].class, key.type(0));
-
     }
 
-    /**
-     * Ensures primitive types are converted.
-     */
+    /** Ensures primitive types are converted. */
     @Test
     public void testKey_Primitives() {
 
-        DynamicFactory.ConstructorKey key = DynamicFactory.key(IAtom.class, boolean.class, byte.class, char.class,
-                short.class, int.class, float.class, long.class, double.class);
+        DynamicFactory.ConstructorKey key =
+                DynamicFactory.key(
+                        IAtom.class,
+                        boolean.class,
+                        byte.class,
+                        char.class,
+                        short.class,
+                        int.class,
+                        float.class,
+                        long.class,
+                        double.class);
 
         assertEquals(IAtom.class, key.intf());
         assertEquals(8, key.n());
@@ -391,13 +385,12 @@ public class DynamicFactoryTest {
         assertEquals(Float.class, key.type(5));
         assertEquals(Long.class, key.type(6));
         assertEquals(Double.class, key.type(7));
-
     }
 
     /**
-     * Unit test ensures the factory wraps up varargs into the correct
-     * representation. This is needed as passing a uniform array will be
-     * converted to actual varargs - this test checks both cases.
+     * Unit test ensures the factory wraps up varargs into the correct representation. This is
+     * needed as passing a uniform array will be converted to actual varargs - this test checks both
+     * cases.
      */
     @Test
     public void testOfClass_Wrapping() {
@@ -405,31 +398,39 @@ public class DynamicFactoryTest {
         DynamicFactory factory = new DynamicFactory(5);
 
         // register ICDKObject with an mock instantiator
-        factory.register(key(ICDKObject.class, IAtom[].class), new DynamicFactory.BasicCreator<IAtom>(null) {
+        factory.register(
+                key(ICDKObject.class, IAtom[].class),
+                new DynamicFactory.BasicCreator<IAtom>(null) {
 
-            @Override
-            public IAtom create(Object[] objects) {
-                return mock(IAtom.class);
-            }
-        });
+                    @Override
+                    public IAtom create(Object[] objects) {
+                        return mock(IAtom.class);
+                    }
+                });
 
         // uniform parameter array
-        assertNotNull(factory.ofClass(ICDKObject.class, new IAtom[]{mock(IAtom.class), mock(IAtom.class),
-                mock(IAtom.class)}));
+        assertNotNull(
+                factory.ofClass(
+                        ICDKObject.class,
+                        new IAtom[] {mock(IAtom.class), mock(IAtom.class), mock(IAtom.class)}));
 
         // is equivalent to just using varargs...
-        assertNotNull(factory.ofClass(ICDKObject.class, mock(IAtom.class), mock(IAtom.class), mock(IAtom.class)));
+        assertNotNull(
+                factory.ofClass(
+                        ICDKObject.class, mock(IAtom.class), mock(IAtom.class), mock(IAtom.class)));
 
         // unless we double wrap it (which resolves to the same instantiator)
-        assertNotNull(factory.ofClass(ICDKObject.class, new Object[]{new IAtom[]{mock(IAtom.class), mock(IAtom.class),
-                mock(IAtom.class)}}));
-
+        assertNotNull(
+                factory.ofClass(
+                        ICDKObject.class,
+                        new Object[] {
+                            new IAtom[] {mock(IAtom.class), mock(IAtom.class), mock(IAtom.class)}
+                        }));
     }
 
     /**
-     * Test mocks {@link org.openscience.cdk.DynamicFactory.CreationModifier}
-     * and ensures the modify is called once when a registered implementation is
-     * created.
+     * Test mocks {@link org.openscience.cdk.DynamicFactory.CreationModifier} and ensures the modify
+     * is called once when a registered implementation is created.
      */
     @Test
     @SuppressWarnings("unchecked")
@@ -447,7 +448,6 @@ public class DynamicFactoryTest {
 
         // verify the modify method was called once
         verify(modifier, times(1)).modify(anyObject());
-
     }
 
     /* some abstract classes to mock */
@@ -488,5 +488,4 @@ public class DynamicFactoryTest {
         @Override
         public abstract IAtom clone() throws CloneNotSupportedException;
     }
-
 }

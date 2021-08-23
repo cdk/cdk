@@ -26,7 +26,8 @@ import org.junit.Test;
 import org.openscience.cdk.io.formats.PDBFormat;
 
 /**
- * TestCase for the instantiation and functionality of the {@link org.openscience.cdk.io.ReaderFactory}.
+ * TestCase for the instantiation and functionality of the {@link
+ * org.openscience.cdk.io.ReaderFactory}.
  *
  * @cdk.module test-pdb
  */

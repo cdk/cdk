@@ -23,15 +23,13 @@
 
 package org.openscience.cdk.sgroup;
 
-/**
- * Keys for indexing common Sgroup attributes.
- */
+/** Keys for indexing common Sgroup attributes. */
 public enum SgroupKey {
     CtabType,
     CtabSubType,
     /**
-     * Not to be confused with the subscript key
-     * this is Sgroup label not the bracket label (e.g. 'n').
+     * Not to be confused with the subscript key this is Sgroup label not the bracket label (e.g.
+     * 'n').
      */
     CtabLabel,
     CtabExpansion,

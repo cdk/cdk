@@ -19,9 +19,8 @@
 package org.openscience.cdk.interfaces;
 
 /**
- * An object containing multiple MoleculeSet and
- * the other lower level concepts like rings, sequences,
- * fragments, etc.
+ * An object containing multiple MoleculeSet and the other lower level concepts like rings,
+ * sequences, fragments, etc.
  *
  * @cdk.module interfaces
  * @cdk.githash
@@ -31,16 +30,16 @@ public interface IChemModel extends IChemObject {
     /**
      * Returns the IAtomContainerSet of this ChemModel.
      *
-     * @return   The {@link IAtomContainerSet} of this ChemModel
-     * @see      #setMoleculeSet
+     * @return The {@link IAtomContainerSet} of this ChemModel
+     * @see #setMoleculeSet
      */
     public IAtomContainerSet getMoleculeSet();
 
     /**
      * Sets the IAtomContainerSet of this ChemModel.
      *
-     * @param   setOfMolecules  the content of this model
-     * @see      #getMoleculeSet
+     * @param setOfMolecules the content of this model
+     * @see #getMoleculeSet
      */
     public void setMoleculeSet(IAtomContainerSet setOfMolecules);
 
@@ -48,15 +47,15 @@ public interface IChemModel extends IChemObject {
      * Returns the RingSet of this ChemModel.
      *
      * @return the ringset of this model
-     * @see      #setRingSet
+     * @see #setRingSet
      */
     public IRingSet getRingSet();
 
     /**
      * Sets the RingSet of this ChemModel.
      *
-     * @param   ringSet         the content of this model
-     * @see      #getRingSet
+     * @param ringSet the content of this model
+     * @see #getRingSet
      */
     public void setRingSet(IRingSet ringSet);
 
@@ -64,15 +63,15 @@ public interface IChemModel extends IChemObject {
      * Gets the Crystal contained in this ChemModel.
      *
      * @return The crystal in this model
-     * @see      #setCrystal
+     * @see #setCrystal
      */
     public ICrystal getCrystal();
 
     /**
      * Sets the Crystal contained in this ChemModel.
      *
-     * @param   crystal  the Crystal to store in this model
-     * @see      #getCrystal
+     * @param crystal the Crystal to store in this model
+     * @see #getCrystal
      */
     public void setCrystal(ICrystal crystal);
 
@@ -80,7 +79,7 @@ public interface IChemModel extends IChemObject {
      * Gets the ReactionSet contained in this ChemModel.
      *
      * @return The ReactionSet in this model
-     * @see      #setReactionSet
+     * @see #setReactionSet
      */
     public IReactionSet getReactionSet();
 
@@ -88,7 +87,7 @@ public interface IChemModel extends IChemObject {
      * Sets the ReactionSet contained in this ChemModel.
      *
      * @param sor the ReactionSet to store in this model
-     * @see       #getReactionSet
+     * @see #getReactionSet
      */
     public void setReactionSet(IReactionSet sor);
 
@@ -98,5 +97,4 @@ public interface IChemModel extends IChemObject {
      * @return a boolean indicating if this model has no content
      */
     public boolean isEmpty();
-
 }

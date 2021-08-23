@@ -47,20 +47,21 @@
  */
 package org.openscience.cdk.smsd.algorithm.vflib.interfaces;
 
-
 /**
  * Interface for the query graph generator.
+ *
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is
+ *     available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public interface IQueryCompiler {
 
     /**
      * Parse and build a query graph from the query moleucle.
+     *
      * @return compile the query molecule and build the graph.
      */
     public IQuery compile();

@@ -26,24 +26,20 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  * Base class for discrete partition refiners of IAtomContainers.
- * 
+ *
  * @author maclean
  * @cdk.module group
- *
  */
-abstract class AtomContainerDiscretePartitionRefinerImpl 
-       extends AbstractDiscretePartitionRefiner 
-       implements AtomContainerDiscretePartitionRefiner {
-    
+abstract class AtomContainerDiscretePartitionRefinerImpl extends AbstractDiscretePartitionRefiner
+        implements AtomContainerDiscretePartitionRefiner {
+
     private Refinable refinable;
-    
+
     /**
-     * Refine an atom container, which has the side effect of calculating
-     * the automorphism group.
+     * Refine an atom container, which has the side effect of calculating the automorphism group.
      *
-     * If the group is needed afterwards, call {@link #getAutomorphismGroup()}
-     * instead of {@link #getAutomorphismGroup(IAtomContainer)} otherwise the
-     * refine method will be called twice.
+     * <p>If the group is needed afterwards, call {@link #getAutomorphismGroup()} instead of {@link
+     * #getAutomorphismGroup(IAtomContainer)} otherwise the refine method will be called twice.
      *
      * @param atomContainer the atomContainer to refine
      */
@@ -61,10 +57,9 @@ abstract class AtomContainerDiscretePartitionRefinerImpl
         setup(atomContainer);
         super.refine(partition);
     }
-    
+
     /**
-     * Checks if the atom container is canonical. Note that this calls
-     * {@link #refine} first.
+     * Checks if the atom container is canonical. Note that this calls {@link #refine} first.
      *
      * @param atomContainer the atom container to check
      * @return true if the atom container is canonical
@@ -74,12 +69,12 @@ abstract class AtomContainerDiscretePartitionRefinerImpl
         super.refine(refinable.getInitialPartition());
         return isCanonical();
     }
-    
+
     /**
-     * Gets the automorphism group of the atom container. By default it uses an
-     * initial partition based on the element symbols (so all the carbons are in
-     * one cell, all the nitrogens in another, etc). If this behaviour is not
-     * desired, then use the {@link #ignoreElements} flag in the constructor.
+     * Gets the automorphism group of the atom container. By default it uses an initial partition
+     * based on the element symbols (so all the carbons are in one cell, all the nitrogens in
+     * another, etc). If this behaviour is not desired, then use the {@link #ignoreElements} flag in
+     * the constructor.
      *
      * @param atomContainer the atom container to use
      * @return the automorphism group of the atom container
@@ -89,22 +84,23 @@ abstract class AtomContainerDiscretePartitionRefinerImpl
         super.refine(refinable.getInitialPartition());
         return super.getAutomorphismGroup();
     }
-    
+
     /**
-     * Speed up the search for the automorphism group using the automorphisms in
-     * the supplied group. Note that the behaviour of this method is unknown if
-     * the group does not contain automorphisms...
+     * Speed up the search for the automorphism group using the automorphisms in the supplied group.
+     * Note that the behaviour of this method is unknown if the group does not contain
+     * automorphisms...
      *
      * @param atomContainer the atom container to use
      * @param group the group of known automorphisms
      * @return the full automorphism group
      */
-    public PermutationGroup getAutomorphismGroup(IAtomContainer atomContainer, PermutationGroup group) {
+    public PermutationGroup getAutomorphismGroup(
+            IAtomContainer atomContainer, PermutationGroup group) {
         setup(atomContainer, group);
         super.refine(refinable.getInitialPartition());
         return super.getAutomorphismGroup();
     }
-    
+
     /**
      * Get the automorphism group of the molecule given an initial partition.
      *
@@ -112,12 +108,13 @@ abstract class AtomContainerDiscretePartitionRefinerImpl
      * @param initialPartition an initial partition of the atoms
      * @return the automorphism group starting with this partition
      */
-    public PermutationGroup getAutomorphismGroup(IAtomContainer atomContainer, Partition initialPartition) {
+    public PermutationGroup getAutomorphismGroup(
+            IAtomContainer atomContainer, Partition initialPartition) {
         setup(atomContainer);
         super.refine(initialPartition);
         return super.getAutomorphismGroup();
     }
-    
+
     /**
      * Get the automorphism partition (equivalence classes) of the atoms.
      *
@@ -129,35 +126,31 @@ abstract class AtomContainerDiscretePartitionRefinerImpl
         super.refine(refinable.getInitialPartition());
         return super.getAutomorphismPartition();
     }
-    
+
     protected abstract Refinable createRefinable(IAtomContainer atomContainer);
-    
+
     private Refinable getRefinable(IAtomContainer atomContainer) {
         refinable = createRefinable(atomContainer);
         return refinable;
     }
-    
-    /**
-     * @inheritDoc
-     */
+
+    /** @inheritDoc */
     @Override
     protected int getVertexCount() {
         return refinable.getVertexCount();
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     @Override
     protected int getConnectivity(int vertexI, int vertexJ) {
-       return refinable.getConnectivity(vertexI, vertexJ);
+        return refinable.getConnectivity(vertexI, vertexJ);
     }
-    
+
     private void setup(IAtomContainer atomContainer) {
         // have to setup the connection table before making the group
         // otherwise the size may be wrong, but only setup if it doesn't exist
         Refinable refinable = getRefinable(atomContainer);
-        
+
         int size = getVertexCount();
         PermutationGroup group = new PermutationGroup(new Permutation(size));
         super.setup(group, new EquitablePartitionRefiner(refinable));
@@ -166,5 +159,4 @@ abstract class AtomContainerDiscretePartitionRefinerImpl
     private void setup(IAtomContainer atomContainer, PermutationGroup group) {
         super.setup(group, new EquitablePartitionRefiner(getRefinable(atomContainer)));
     }
-
 }

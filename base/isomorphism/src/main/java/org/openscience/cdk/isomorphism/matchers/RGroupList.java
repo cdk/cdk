@@ -30,14 +30,12 @@ import java.util.List;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.openscience.cdk.exception.CDKException;
 
 /**
- * Represents a list of Rgroup substitutes to be associated with some
- * {@link RGroupQuery}.
+ * Represents a list of Rgroup substitutes to be associated with some {@link RGroupQuery}.
  *
- * @cdk.module  isomorphism
+ * @cdk.module isomorphism
  * @cdk.githash
  * @cdk.keyword Rgroup
  * @cdk.keyword R group
@@ -46,50 +44,45 @@ import org.openscience.cdk.exception.CDKException;
  */
 public class RGroupList {
 
-    /**
-     * Default value for occurrence field.
-     */
-    public final static String DEFAULT_OCCURRENCE = ">0";
+    /** Default value for occurrence field. */
+    public static final String DEFAULT_OCCURRENCE = ">0";
+
+    /** Unique number to identify the Rgroup. */
+    private int rGroupNumber;
 
     /**
-     * Unique number to identify the Rgroup.
+     * Indicates that sites labeled with this Rgroup may only be substituted with a member of the
+     * Rgroup or with hydrogen.
      */
-    private int                rGroupNumber;
-
-    /**
-     * Indicates that sites labeled with this Rgroup may only be
-     * substituted with a member of the Rgroup or with hydrogen.
-     */
-    private boolean            restH;
+    private boolean restH;
 
     /**
      * Occurrence required:
+     *
      * <UL>
-     * <LI>n : exactly n ;</LI>
-     * <LI>n - m : n through m ;</LI>
-     * <LI>&#62; n : greater than n ;</LI>
-     * <LI>&#60; n : fewer than n ;</LI>
-     * <LI>default (blank) is > 0 ;</LI>
+     *   <LI>n : exactly n ;
+     *   <LI>n - m : n through m ;
+     *   <LI>&#62; n : greater than n ;
+     *   <LI>&#60; n : fewer than n ;
+     *   <LI>default (blank) is > 0 ;
      * </UL>
-     * Any non-contradictory combination of the preceding values is also
-     * allowed; for example "1, 3-7, 9, >11".
+     *
+     * Any non-contradictory combination of the preceding values is also allowed; for example "1,
+     * 3-7, 9, >11".
      */
-    private String             occurrence;
+    private String occurrence;
+
+    /** List of substitute structures. */
+    private List<RGroup> rGroups;
 
     /**
-     * List of substitute structures.
+     * The rGroup (say B) that is required when this one (say A) exists.
+     *
+     * <p>This captures the "LOG" information 'IF A (this) THEN B'.
      */
-    private List<RGroup>       rGroups;
+    private int requiredRGroupNumber;
 
-    /**
-     * The rGroup (say B) that is required when this one (say A) exists.<p>
-     * This captures the "LOG" information 'IF A (this) THEN B'.
-     */
-    private int                requiredRGroupNumber;
-
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public RGroupList(int rGroupNumber) {
         setRGroupNumber(rGroupNumber);
         this.restH = false;
@@ -106,7 +99,8 @@ public class RGroupList {
      * @param requiredRGroupNumber number of other R-Group required
      * @throws CDKException
      */
-    public RGroupList(int rGroupNumber, boolean restH, String occurrence, int requiredRGroupNumber) throws CDKException {
+    public RGroupList(int rGroupNumber, boolean restH, String occurrence, int requiredRGroupNumber)
+            throws CDKException {
         setRGroupNumber(rGroupNumber);
         setRestH(restH);
         setOccurrence(occurrence);
@@ -114,8 +108,9 @@ public class RGroupList {
     }
 
     /**
-     * Setter for rGroupNumber, checks for valid range.
-     * Spec: "value from 1 to 32 *, labels position of Rgroup on root."
+     * Setter for rGroupNumber, checks for valid range. Spec: "value from 1 to 32 *, labels position
+     * of Rgroup on root."
+     *
      * @param rGroupNumber R-Group number
      */
     public void setRGroupNumber(int rGroupNumber) {
@@ -156,6 +151,7 @@ public class RGroupList {
 
     /**
      * Returns the occurrence value.
+     *
      * @return occurrence
      */
     public String getOccurrence() {
@@ -163,33 +159,35 @@ public class RGroupList {
     }
 
     /**
-     * Picky setter for occurrence fields. Validates user input to be conform
-     * the (Symyx) specification.
+     * Picky setter for occurrence fields. Validates user input to be conform the (Symyx)
+     * specification.
+     *
      * @param occurrence occurence value
      */
     public void setOccurrence(String occurrence) throws CDKException {
         if (occurrence == null || occurrence.equals("")) {
-            occurrence = ">0"; //revert to default
+            occurrence = ">0"; // revert to default
         } else {
             occurrence = occurrence.trim().replaceAll(" ", "");
             if (isValidOccurrenceSyntax(occurrence)) {
                 this.occurrence = occurrence;
-            } else
-                throw new CDKException("Invalid occurence line: " + occurrence);
+            } else throw new CDKException("Invalid occurence line: " + occurrence);
         }
     }
 
     /**
      * Validates the occurrence value.
+     *
      * <UL>
-     * <LI>n : exactly n ;</LI>
-     * <LI>n - m : n through m ;</LI>
-     * <LI>&#62; n : greater than n ;</LI>
-     * <LI>&#60; n : fewer than n ;</LI>
-     * <LI>default (blank) is &gt; 0 ;</LI>
+     *   <LI>n : exactly n ;
+     *   <LI>n - m : n through m ;
+     *   <LI>&#62; n : greater than n ;
+     *   <LI>&#60; n : fewer than n ;
+     *   <LI>default (blank) is &gt; 0 ;
      * </UL>
-     * Any combination of the preceding values is also
-     * allowed; for example "1, 3-7, 9, &gt;11".
+     *
+     * Any combination of the preceding values is also allowed; for example "1, 3-7, 9, &gt;11".
+     *
      * @param occ String to validate.
      * @return true if valid String provided.
      */
@@ -198,28 +196,28 @@ public class RGroupList {
         while (st.hasMoreTokens()) {
             String cond = st.nextToken().trim().replaceAll(" ", "");
             do {
-                //Number: "n"
+                // Number: "n"
                 if (match("^\\d+$", cond)) {
                     if (Integer.valueOf(cond) < 0) // not allowed
-                        return false;
+                    return false;
                     break;
                 }
-                //Range: "n-m"
+                // Range: "n-m"
                 if (match("^\\d+-\\d+$", cond)) {
                     int from = Integer.valueOf(cond.substring(0, cond.indexOf('-')));
                     int to = Integer.valueOf(cond.substring(cond.indexOf('-') + 1, cond.length()));
                     if (from < 0 || to < 0 || to < from) // not allowed
-                        return false;
+                    return false;
                     break;
                 }
-                //Smaller than: "<n"
+                // Smaller than: "<n"
                 if (match("^<\\d+$", cond)) {
                     int n = Integer.valueOf(cond.substring(cond.indexOf('<') + 1, cond.length()));
                     if (n == 0) // not allowed
-                        return false;
+                    return false;
                     break;
                 }
-                //Greater than: ">n"
+                // Greater than: ">n"
                 if (match("^>\\d+$", cond)) {
                     break;
                 }
@@ -233,6 +231,7 @@ public class RGroupList {
 
     /**
      * Helper method for regular expression matching.
+     *
      * @param regExp regular expression String
      * @param userInput user's input
      * @return the regular expression matched the user input
@@ -240,20 +239,17 @@ public class RGroupList {
     private static boolean match(String regExp, String userInput) {
         Pattern pattern = Pattern.compile(regExp);
         Matcher matcher = pattern.matcher(userInput);
-        if (matcher.find())
-            return true;
-        else
-            return false;
+        if (matcher.find()) return true;
+        else return false;
     }
 
     /**
-     * Matches the 'occurrence' condition with a provided maximum number of
-     * RGroup attachments. Returns the valid occurrences (numeric) for these
-     * two combined. If none found, returns empty list.
-     * <br>
-     * Example: if R1 occurs 3 times attached to some root structure, then
-     * stating "&gt;5" as an occurrence for that RGoupList does not make
-     * sense: the example R1 can occur 0..3 times. Empty would be returned.<br>
+     * Matches the 'occurrence' condition with a provided maximum number of RGroup attachments.
+     * Returns the valid occurrences (numeric) for these two combined. If none found, returns empty
+     * list. <br>
+     * Example: if R1 occurs 3 times attached to some root structure, then stating "&gt;5" as an
+     * occurrence for that RGoupList does not make sense: the example R1 can occur 0..3 times. Empty
+     * would be returned.<br>
      * If the occurence would be &gt;2, then 3 would be returned. Etcetera.
      *
      * @param maxAttachments number of attachments
@@ -294,7 +290,6 @@ public class RGroupList {
                 if (addVal) {
                     validValues.add(val);
                 }
-
             }
         }
         return validValues;
@@ -304,13 +299,11 @@ public class RGroupList {
     public boolean equals(Object obj) {
         if (obj instanceof RGroupList && this.rGroupNumber == ((RGroupList) obj).rGroupNumber)
             return true;
-        else
-            return false;
+        else return false;
     }
 
     @Override
     public int hashCode() {
         return this.rGroupNumber;
     }
-
 }

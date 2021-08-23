@@ -19,10 +19,13 @@
  */
 package org.openscience.cdk.graph;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertTrue;
+
 import java.io.InputStream;
 import java.util.List;
 import java.util.Set;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.*;
@@ -40,17 +43,12 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertTrue;
-
 /**
- *  Checks the functionality of the ConnectivityChecker
+ * Checks the functionality of the ConnectivityChecker
  *
  * @cdk.module test-standard
- *
- * @author     steinbeck
- * @cdk.created    2001-07-24
+ * @author steinbeck
+ * @cdk.created 2001-07-24
  */
 public class ConnectivityCheckerTest extends CDKTestCase {
 
@@ -58,12 +56,10 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         super();
     }
 
-    /**
-     * This test tests the function of the partitionIntoMolecule() method.
-     */
+    /** This test tests the function of the partitionIntoMolecule() method. */
     @Test
     public void testPartitionIntoMolecules_IAtomContainer() {
-        //logger.debug(atomCon);
+        // logger.debug(atomCon);
         AtomContainer atomCon = new org.openscience.cdk.AtomContainer();
         atomCon.add(TestMoleculeFactory.make4x3CondensedRings());
         atomCon.add(TestMoleculeFactory.makeAlphaPinene());
@@ -73,9 +69,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         Assert.assertEquals(3, moleculeSet.getAtomContainerCount());
     }
 
-    /**
-     * Test for SF bug #903551
-     */
+    /** Test for SF bug #903551 */
     @Test
     public void testPartitionIntoMoleculesKeepsAtomIDs() {
         AtomContainer atomCon = new org.openscience.cdk.AtomContainer();
@@ -95,13 +89,10 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         Assert.assertEquals(atom2.getID(), copy2.getID());
     }
 
-    /**
-     * This test tests the consistency between isConnected() and
-     * partitionIntoMolecules().
-     */
+    /** This test tests the consistency between isConnected() and partitionIntoMolecules(). */
     @Test
     public void testPartitionIntoMolecules_IsConnected_Consistency() {
-        //logger.debug(atomCon);
+        // logger.debug(atomCon);
         AtomContainer atomCon = new org.openscience.cdk.AtomContainer();
         atomCon.add(TestMoleculeFactory.make4x3CondensedRings());
         atomCon.add(TestMoleculeFactory.makeAlphaPinene());
@@ -116,8 +107,8 @@ public class ConnectivityCheckerTest extends CDKTestCase {
     }
 
     /**
-     * This test makes sure that it is checked that the partitionIntoMolecules()
-     * method keeps LonePairs and SingleElectrons with its associated atoms.
+     * This test makes sure that it is checked that the partitionIntoMolecules() method keeps
+     * LonePairs and SingleElectrons with its associated atoms.
      */
     @Test
     public void testDontDeleteSingleElectrons() {
@@ -152,19 +143,31 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         Assert.assertEquals(1, moleculeSet.getAtomContainer(1).getAtomCount());
         Assert.assertEquals(1, moleculeSet.getAtomContainer(1).getElectronContainerCount());
         // we don't know which partition contains the LP and which the electron
-        Assert.assertTrue(moleculeSet.getAtomContainer(0).getConnectedSingleElectronsCount(
-                moleculeSet.getAtomContainer(0).getAtom(0)) == 0
-                || moleculeSet.getAtomContainer(1).getConnectedSingleElectronsCount(
-                        moleculeSet.getAtomContainer(1).getAtom(0)) == 0);
-        Assert.assertTrue(moleculeSet.getAtomContainer(0).getConnectedLonePairsCount(
-                moleculeSet.getAtomContainer(0).getAtom(0)) == 0
-                || moleculeSet.getAtomContainer(1).getConnectedLonePairsCount(
-                        moleculeSet.getAtomContainer(1).getAtom(0)) == 0);
+        Assert.assertTrue(
+                moleculeSet
+                                        .getAtomContainer(0)
+                                        .getConnectedSingleElectronsCount(
+                                                moleculeSet.getAtomContainer(0).getAtom(0))
+                                == 0
+                        || moleculeSet
+                                        .getAtomContainer(1)
+                                        .getConnectedSingleElectronsCount(
+                                                moleculeSet.getAtomContainer(1).getAtom(0))
+                                == 0);
+        Assert.assertTrue(
+                moleculeSet
+                                        .getAtomContainer(0)
+                                        .getConnectedLonePairsCount(
+                                                moleculeSet.getAtomContainer(0).getAtom(0))
+                                == 0
+                        || moleculeSet
+                                        .getAtomContainer(1)
+                                        .getConnectedLonePairsCount(
+                                                moleculeSet.getAtomContainer(1).getAtom(0))
+                                == 0);
     }
 
-    /**
-     * This test tests the algorithm behind isConnected().
-     */
+    /** This test tests the algorithm behind isConnected(). */
     @Test
     public void testIsConnected_IAtomContainer() {
         IAtomContainer spiro = TestMoleculeFactory.makeSpiroRings();
@@ -178,9 +181,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         Assert.assertTrue(ConnectivityChecker.isConnected(container));
     }
 
-    /**
-     * @cdk.bug 2126904
-     */
+    /** @cdk.bug 2126904 */
     @Test
     public void testIsConnectedFromHINFile() throws Exception {
         String filename = "data/hin/connectivity1.hin";
@@ -190,12 +191,11 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = cList.get(0);
 
-        Assert.assertTrue("Molecule appears not to be connected", ConnectivityChecker.isConnected(ac));
+        Assert.assertTrue(
+                "Molecule appears not to be connected", ConnectivityChecker.isConnected(ac));
     }
 
-    /**
-    * @cdk.bug 2126904
-    */
+    /** @cdk.bug 2126904 */
     @Test
     public void testIsConnectedFromSDFile() throws Exception {
         String filename = "data/mdl/mdeotest.sdf";
@@ -205,7 +205,8 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = cList.get(0);
 
-        Assert.assertTrue("Molecule appears not to be connected", ConnectivityChecker.isConnected(ac));
+        Assert.assertTrue(
+                "Molecule appears not to be connected", ConnectivityChecker.isConnected(ac));
     }
 
     @Test
@@ -217,21 +218,19 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         assertTrue(containerSet.getAtomContainer(0).stereoElements().iterator().hasNext());
     }
 
-    /**
-     * @cdk.bug 2784209
-     */
+    /** @cdk.bug 2784209 */
     @Test
     public void testNoAtomsIsConnected() {
         IAtomContainer container = new AtomContainer();
-        Assert.assertTrue("Molecule appears not to be connected", ConnectivityChecker.isConnected(container));
+        Assert.assertTrue(
+                "Molecule appears not to be connected", ConnectivityChecker.isConnected(container));
     }
 
     @Test
     public void copySgroups() throws Exception {
         String filename = "data/mdl/sgroup-split.mol";
-        try(InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-            ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
-        ){
+        try (InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+                ISimpleChemObjectReader reader = new MDLV2000Reader(ins); ) {
             ChemFile content = (ChemFile) reader.read((ChemObject) new ChemFile());
             List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
             IAtomContainer ac = cList.get(0);
@@ -239,17 +238,15 @@ public class ConnectivityCheckerTest extends CDKTestCase {
             Assert.assertEquals(2, containerSet.getAtomContainerCount());
             IAtomContainer container1 = containerSet.getAtomContainer(0);
             IAtomContainer container2 = containerSet.getAtomContainer(1);
-            IAtomContainer h2o = container1.getAtomCount()<=3? container1 : container2;
-            Assert.assertNull( h2o.getProperty(CDKConstants.CTAB_SGROUPS));
-            IAtomContainer otherContainer = h2o == container1? container2: container1;
+            IAtomContainer h2o = container1.getAtomCount() <= 3 ? container1 : container2;
+            Assert.assertNull(h2o.getProperty(CDKConstants.CTAB_SGROUPS));
+            IAtomContainer otherContainer = h2o == container1 ? container2 : container1;
             List<Sgroup> sgroups = otherContainer.getProperty(CDKConstants.CTAB_SGROUPS);
             Assert.assertEquals(1, sgroups.size());
             Sgroup sgroup = sgroups.get(0);
             Assert.assertEquals(SgroupType.CtabStructureRepeatUnit, sgroup.getType());
             Set<IAtom> atoms = sgroup.getAtoms();
             Assert.assertEquals(2, atoms.size());
-
         }
     }
-
 }

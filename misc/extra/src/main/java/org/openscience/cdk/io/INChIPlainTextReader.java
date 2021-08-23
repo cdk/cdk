@@ -30,7 +30,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.StringTokenizer;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -42,8 +41,9 @@ import org.openscience.cdk.io.formats.INChIPlainTextFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 
 /**
- * Reads the content of a IUPAC/NIST Chemical Identifier (INChI) plain text
- * document. This reader parses output generated with INChI 1.12beta like:
+ * Reads the content of a IUPAC/NIST Chemical Identifier (INChI) plain text document. This reader
+ * parses output generated with INChI 1.12beta like:
+ *
  * <pre>
  *
  * Input_File: "E:\Program Files\INChI\inchi-samples\Figure04.mol"
@@ -56,19 +56,16 @@ import org.openscience.cdk.io.formats.IResourceFormat;
  * @cdk.module extra
  * @cdk.githash
  * @cdk.iooptions
- *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  * @cdk.created 2004-08-01
- *
  * @cdk.keyword file format, INChI
  * @cdk.keyword chemical identifier
  * @cdk.require java1.4+
- *
- * @see     org.openscience.cdk.io.INChIReader
+ * @see org.openscience.cdk.io.INChIReader
  */
 public class INChIPlainTextReader extends DefaultChemObjectReader {
 
-    private BufferedReader            input;
+    private BufferedReader input;
     private INChIContentProcessorTool inchiTool;
 
     /**
@@ -109,9 +106,7 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
-    /**
-     * Initializes this reader.
-     */
+    /** Initializes this reader. */
     private void init() {}
 
     @Override
@@ -127,10 +122,9 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
     }
 
     /**
-     * Reads a IChemObject of type object from input.
-     * Supported types are: ChemFile.
+     * Reads a IChemObject of type object from input. Supported types are: ChemFile.
      *
-     * @param  object type of requested IChemObject
+     * @param object type of requested IChemObject
      * @return the content in a ChemFile object
      */
     @Override
@@ -168,15 +162,18 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
                     if (tokenizer.hasMoreTokens()) {
                         connections = tokenizer.nextToken().substring(1); // 1-2-4-6-5-3-1
                     }
-                    //final String hydrogens = tokenizer.nextToken().substring(1); // 1-6H
+                    // final String hydrogens = tokenizer.nextToken().substring(1); // 1-6H
 
-                    IAtomContainer parsedContent = inchiTool.processFormula(
-                            cf.getBuilder().newInstance(IAtomContainer.class), formula);
+                    IAtomContainer parsedContent =
+                            inchiTool.processFormula(
+                                    cf.getBuilder().newInstance(IAtomContainer.class), formula);
                     if (connections != null)
                         inchiTool.processConnections(connections, parsedContent, -1);
 
-                    IAtomContainerSet moleculeSet = cf.getBuilder().newInstance(IAtomContainerSet.class);
-                    moleculeSet.addAtomContainer(cf.getBuilder().newInstance(IAtomContainer.class, parsedContent));
+                    IAtomContainerSet moleculeSet =
+                            cf.getBuilder().newInstance(IAtomContainerSet.class);
+                    moleculeSet.addAtomContainer(
+                            cf.getBuilder().newInstance(IAtomContainer.class, parsedContent));
                     IChemModel model = cf.getBuilder().newInstance(IChemModel.class);
                     model.setMoleculeSet(moleculeSet);
                     IChemSequence sequence = cf.getBuilder().newInstance(IChemSequence.class);
@@ -186,7 +183,8 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
             }
         } catch (IOException | IllegalArgumentException exception) {
             exception.printStackTrace();
-            throw new CDKException("Error while reading INChI file: " + exception.getMessage(), exception);
+            throw new CDKException(
+                    "Error while reading INChI file: " + exception.getMessage(), exception);
         }
         return cf;
     }

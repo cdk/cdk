@@ -24,7 +24,6 @@ package org.openscience.cdk.interfaces;
 
 import java.util.Hashtable;
 import java.util.Map;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
@@ -34,7 +33,7 @@ import org.openscience.cdk.tools.diff.ChemObjectDiff;
  * Tests the functionality of {@link IChemObject} implementations.
  *
  * @author Edgar Luttmann &lt;edgar@uni-paderborn.de&gt;
- * @cdk.module  test-interfaces
+ * @cdk.module test-interfaces
  * @cdk.created 2001-08-09
  */
 public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
@@ -94,7 +93,6 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         Assert.assertNull(chemObject.getProperty("dummy", String.class));
         chemObject.setProperty("dummy", 5);
         Assert.assertNotNull(chemObject.getProperty("dummy", Integer.class));
-
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -172,9 +170,7 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         Assert.assertNotSame((short) 0, chemObject.getFlagValue());
     }
 
-    /**
-     * Different flags are reflected by different numbers.
-     */
+    /** Different flags are reflected by different numbers. */
     @Test
     public void testGetFlagValueDifferentFlags() {
         IChemObject chemObject = newChemObject();
@@ -184,9 +180,7 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         Assert.assertNotSame(chemObject.getFlagValue(), chemObject2.getFlagValue());
     }
 
-    /**
-     * The number is always the same for the same flag.
-     */
+    /** The number is always the same for the same flag. */
     @Test
     public void testGetFlagValueSameFlag() {
         IChemObject chemObject = newChemObject();
@@ -291,9 +285,7 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         Assert.assertEquals(atom, chemObject2.getProperties().get("atom"));
     }
 
-    /**
-     * @cdk.bug 2975800
-     */
+    /** @cdk.bug 2975800 */
     @Test
     public void testClone_PropertyNull() throws Exception {
         IChemObject chemObject = newChemObject();
@@ -451,9 +443,7 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         Assert.assertNotNull(listener.event);
     }
 
-    /**
-     * @cdk.bug 2992921
-     */
+    /** @cdk.bug 2992921 */
     @Test
     public void testNotifyChanged_SetFlag() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
@@ -465,9 +455,7 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         Assert.assertNotNull(listener.event);
     }
 
-    /**
-     * @cdk.bug 2992921
-     */
+    /** @cdk.bug 2992921 */
     @Test
     public void testNotifyChanged_SetFlags() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
@@ -510,7 +498,7 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
 
     private class ChemObjectListenerImpl implements IChemObjectListener {
 
-        private boolean                changed;
+        private boolean changed;
         private IChemObjectChangeEvent event;
 
         private ChemObjectListenerImpl() {
@@ -531,5 +519,4 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
             event = null;
         }
     }
-
 }

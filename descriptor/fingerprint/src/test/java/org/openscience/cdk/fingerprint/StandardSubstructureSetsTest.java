@@ -26,9 +26,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 
-/**
- * @cdk.module test-fingerprint
- */
+/** @cdk.module test-fingerprint */
 public class StandardSubstructureSetsTest extends CDKTestCase {
 
     @Test
@@ -46,5 +44,4 @@ public class StandardSubstructureSetsTest extends CDKTestCase {
         Assert.assertNotNull(smarts);
         Assert.assertEquals(142, smarts.length); // currently fragment pattern is ignored
     }
-
 }

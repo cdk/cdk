@@ -19,14 +19,11 @@
 package org.openscience.cdk.dict;
 
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 
-/**
- * @cdk.module test-dict
- */
+/** @cdk.module test-dict */
 public abstract class AbstractEntryTest extends CDKTestCase {
 
     private Entry testClass;
@@ -112,5 +109,4 @@ public abstract class AbstractEntryTest extends CDKTestCase {
         entry.setRawContent(someObject);
         Assert.assertEquals(someObject, entry.getRawContent());
     }
-
 }

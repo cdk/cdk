@@ -21,8 +21,8 @@ package org.openscience.cdk.config.atomtypes;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.ChemObject;
 
 /**
  * Checks the functionality of the {@link OWLAtomTypeHandler}.
@@ -55,5 +55,4 @@ public class OWLAtomTypeHandlerTest extends CDKTestCase {
         Assert.assertNotNull(handler);
         Assert.assertNull(handler.getAtomTypes());
     }
-
 }

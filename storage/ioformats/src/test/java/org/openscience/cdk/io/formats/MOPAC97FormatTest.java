@@ -25,9 +25,7 @@ package org.openscience.cdk.io.formats;
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * @cdk.module test-ioformats
- */
+/** @cdk.module test-ioformats */
 public class MOPAC97FormatTest extends ChemFormatMatcherTest {
 
     public MOPAC97FormatTest() {

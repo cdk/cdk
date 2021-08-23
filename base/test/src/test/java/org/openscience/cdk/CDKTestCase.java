@@ -18,6 +18,10 @@
  */
 package org.openscience.cdk;
 
+import java.util.Iterator;
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
@@ -28,25 +32,19 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-import javax.vecmath.Vector3d;
-
-import java.util.Iterator;
-
 /**
- * Super class for <b>all</b> CDK TestCase implementations that ensures that
- * the LoggingTool is configured. This is the JUnit4 version of CDKTestCase.
+ * Super class for <b>all</b> CDK TestCase implementations that ensures that the LoggingTool is
+ * configured. This is the JUnit4 version of CDKTestCase.
  *
  * @cdk.module test
- *
- * @see        CDKTestCase
+ * @see CDKTestCase
  */
 public class CDKTestCase {
 
     /**
-     * Determines if slow JUnit tests are to be run. You can set this
-     * from the command line when running Ant:
+     * Determines if slow JUnit tests are to be run. You can set this from the command line when
+     * running Ant:
+     *
      * <pre>
      *   ant -f build.xml -DrunSlowTests=false test-all
      * </pre>
@@ -61,19 +59,19 @@ public class CDKTestCase {
     }
 
     /**
-     * Determines if JUnit tests for known and unfixed bugs are to be run.
-     * This is to aid the 'Open Source JVM Test Suite', so that all bugs that
-     * show up in the report are caused by the JVM or the Java library is
-     * uses (mostly a Classpath version).
+     * Determines if JUnit tests for known and unfixed bugs are to be run. This is to aid the 'Open
+     * Source JVM Test Suite', so that all bugs that show up in the report are caused by the JVM or
+     * the Java library is uses (mostly a Classpath version).
      *
      * <p>You can set this from the command line when running Ant:
+     *
      * <pre>
      *   ant -f build.xml -DrunKnownBugs=false test-all
      * </pre>
      *
-     * <p><b>This method may only be used in JUnit classes, if the bug is reported
-     * on SourceForge, and both the test <i>and</i> the affected Class are marked
-     * with a JavaDoc @cdk.bug taglet!</b>
+     * <p><b>This method may only be used in JUnit classes, if the bug is reported on SourceForge,
+     * and both the test <i>and</i> the affected Class are marked with a JavaDoc @cdk.bug
+     * taglet!</b>
      *
      * @return a boolean indicating whether known bugs should be tested
      */
@@ -85,11 +83,11 @@ public class CDKTestCase {
     }
 
     /**
-     * Compares two Point2d objects, and asserts that the XY coordinates
-     * are identical within the given error.
+     * Compares two Point2d objects, and asserts that the XY coordinates are identical within the
+     * given error.
      *
-     * @param p1    first Point2d
-     * @param p2    second Point2d
+     * @param p1 first Point2d
+     * @param p2 second Point2d
      * @param error maximal allowed error
      */
     public void assertEquals(Point2d p1, Point2d p2, double error) {
@@ -100,11 +98,11 @@ public class CDKTestCase {
     }
 
     /**
-     * Compares two Point3d objects, and asserts that the XY coordinates
-     * are identical within the given error.
+     * Compares two Point3d objects, and asserts that the XY coordinates are identical within the
+     * given error.
      *
-     * @param p1    first Point3d
-     * @param p2    second Point3d
+     * @param p1 first Point3d
+     * @param p2 second Point3d
      * @param error maximal allowed error
      */
     public void assertEquals(Point3d p1, Point3d p2, double error) {
@@ -116,11 +114,11 @@ public class CDKTestCase {
     }
 
     /**
-     * Compares two Vector3d objects, and asserts that the XYZ coordinates
-     * are identical within the given error.
+     * Compares two Vector3d objects, and asserts that the XYZ coordinates are identical within the
+     * given error.
      *
-     * @param v1    first Point3d
-     * @param v2    second Point3d
+     * @param v1 first Point3d
+     * @param v2 second Point3d
      * @param error maximal allowed error
      */
     public void assertEquals(Vector3d v1, Vector3d v2, double error) {
@@ -132,8 +130,7 @@ public class CDKTestCase {
     }
 
     /**
-     * Tests method that asserts that for all atoms an reasonable CDK atom
-     * type can be perceived.
+     * Tests method that asserts that for all atoms an reasonable CDK atom type can be perceived.
      *
      * @param container IAtomContainer to test atom types of
      */
@@ -148,9 +145,8 @@ public class CDKTestCase {
     }
 
     /**
-     * Convenience method that perceives atom types (CDK scheme) and
-     * adds explicit hydrogens accordingly. It does not create 2D or 3D
-     * coordinates for the new hydrogens.
+     * Convenience method that perceives atom types (CDK scheme) and adds explicit hydrogens
+     * accordingly. It does not create 2D or 3D coordinates for the new hydrogens.
      *
      * @param container to which explicit hydrogens are added.
      */
@@ -160,9 +156,8 @@ public class CDKTestCase {
     }
 
     /**
-     * Convenience method that perceives atom types (CDK scheme) and
-     * adds implicit hydrogens accordingly. It does not create 2D or 3D
-     * coordinates for the new hydrogens.
+     * Convenience method that perceives atom types (CDK scheme) and adds implicit hydrogens
+     * accordingly. It does not create 2D or 3D coordinates for the new hydrogens.
      *
      * @param container to which implicit hydrogens are added.
      */
@@ -186,31 +181,30 @@ public class CDKTestCase {
     }
 
     /**
-     * Convenience method to check that all bond orders are single
-     * and all heavy atoms are aromatic (and that all explicit
-     * hydrogens are not aromatic).
+     * Convenience method to check that all bond orders are single and all heavy atoms are aromatic
+     * (and that all explicit hydrogens are not aromatic).
      *
      * @param container the atom container to check
      */
     protected void assertAllSingleOrAromatic(IAtomContainer container) throws Exception {
         for (IBond bond : container.bonds()) {
-            if (!bond.isAromatic())
-                Assert.assertEquals(IBond.Order.SINGLE, bond.getOrder());
+            if (!bond.isAromatic()) Assert.assertEquals(IBond.Order.SINGLE, bond.getOrder());
         }
 
         for (IAtom atom : container.atoms()) {
             if (atom.getSymbol().equals("H"))
-                Assert.assertFalse(atom.getSymbol() + container.indexOf(atom) + " was aromatic",
+                Assert.assertFalse(
+                        atom.getSymbol() + container.indexOf(atom) + " was aromatic",
                         atom.getFlag(CDKConstants.ISAROMATIC));
             else
-                Assert.assertTrue(atom.getSymbol() + container.indexOf(atom) + " was not aromatic",
+                Assert.assertTrue(
+                        atom.getSymbol() + container.indexOf(atom) + " was not aromatic",
                         atom.getFlag(CDKConstants.ISAROMATIC));
         }
     }
 
     /**
-     * Convenience method to check the atom symbols
-     * of a molecule.
+     * Convenience method to check the atom symbols of a molecule.
      *
      * @param symbols an array of the expected atom symbols
      * @param container the atom container to check
@@ -222,30 +216,30 @@ public class CDKTestCase {
     }
 
     /**
-     * Convenience method to check the hybridization states
-     * of a molecule.
+     * Convenience method to check the hybridization states of a molecule.
      *
      * @param hybridizations an array of the expected hybridization states
      * @param container the atom container to check
      */
-    protected void assertHybridizations(IAtomType.Hybridization[] hybridizations, IAtomContainer container)
-            throws Exception {
+    protected void assertHybridizations(
+            IAtomType.Hybridization[] hybridizations, IAtomContainer container) throws Exception {
         int i = 0;
         for (Iterator<IAtom> atoms = container.atoms().iterator(); atoms.hasNext(); i++)
             Assert.assertEquals(hybridizations[i], atoms.next().getHybridization());
     }
 
     /**
-     * Convenience method to check the hydrogen counts
-     * of a molecule.
+     * Convenience method to check the hydrogen counts of a molecule.
      *
      * @param hydrogenCounts an array of the expected hydrogenCounts
      * @param container the atom container to check
      */
-    protected void assertHydrogenCounts(int[] hydrogenCounts, IAtomContainer container) throws Exception {
+    protected void assertHydrogenCounts(int[] hydrogenCounts, IAtomContainer container)
+            throws Exception {
         int i = 0;
         for (Iterator<IAtom> atoms = container.atoms().iterator(); atoms.hasNext(); i++)
-            Assert.assertEquals(hydrogenCounts[i], atoms.next().getImplicitHydrogenCount().intValue());
+            Assert.assertEquals(
+                    hydrogenCounts[i], atoms.next().getImplicitHydrogenCount().intValue());
     }
 
     /**
@@ -255,12 +249,15 @@ public class CDKTestCase {
      */
     public void assertZeroLength(String testString) {
         Assert.assertNotNull("Expected a non-null String.", testString);
-        Assert.assertEquals("Expected a zero-length String, but found '" + testString + "'", 0, testString.length());
+        Assert.assertEquals(
+                "Expected a zero-length String, but found '" + testString + "'",
+                0,
+                testString.length());
     }
 
     /**
-     * Asserts that the given String consists of a single line, and thus
-     * does not contain any '\r' and/or '\n' characters.
+     * Asserts that the given String consists of a single line, and thus does not contain any '\r'
+     * and/or '\n' characters.
      *
      * @param String String to test.
      */
@@ -274,10 +271,10 @@ public class CDKTestCase {
     }
 
     /**
-     * This test allows people to use the {@link TestMethod} annotation for
-     * methods that are testing in other classes than identified with {@link TestClass}.
-     * Bit of a workaround for the current set up, but useful in situations where
-     * a methods is rather untestable, such as SAXHandler's endElement() methods.
+     * This test allows people to use the {@link TestMethod} annotation for methods that are testing
+     * in other classes than identified with {@link TestClass}. Bit of a workaround for the current
+     * set up, but useful in situations where a methods is rather untestable, such as SAXHandler's
+     * endElement() methods.
      *
      * <p>Should be used only in these rare cases.
      */
@@ -296,8 +293,8 @@ public class CDKTestCase {
     public void assertContains(String fullString, String subString) {
         Assert.assertNotNull("Expected a non-null String to test contains against.", fullString);
         Assert.assertNotNull("Expected a non-null substring in contains test.", subString);
-        Assert.assertTrue("Expected the full string '" + fullString + "' to contain '" + subString + "'.",
+        Assert.assertTrue(
+                "Expected the full string '" + fullString + "' to contain '" + subString + "'.",
                 fullString.contains(subString));
     }
-
 }

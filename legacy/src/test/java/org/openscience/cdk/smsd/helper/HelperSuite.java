@@ -31,14 +31,17 @@ import org.junit.runners.Suite;
 
 /**
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- *
  * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({org.openscience.cdk.smsd.helper.LabelContainerTest.class,
-        org.openscience.cdk.smsd.helper.MolHandlerTest.class, org.openscience.cdk.smsd.helper.FinalMappingsTest.class,
-        org.openscience.cdk.smsd.helper.BondEnergyTest.class, org.openscience.cdk.smsd.helper.BinaryTreeTest.class})
+@Suite.SuiteClasses({
+    org.openscience.cdk.smsd.helper.LabelContainerTest.class,
+    org.openscience.cdk.smsd.helper.MolHandlerTest.class,
+    org.openscience.cdk.smsd.helper.FinalMappingsTest.class,
+    org.openscience.cdk.smsd.helper.BondEnergyTest.class,
+    org.openscience.cdk.smsd.helper.BinaryTreeTest.class
+})
 public class HelperSuite {
 
     @BeforeClass
@@ -52,5 +55,4 @@ public class HelperSuite {
 
     @After
     public void tearDown() throws Exception {}
-
 }

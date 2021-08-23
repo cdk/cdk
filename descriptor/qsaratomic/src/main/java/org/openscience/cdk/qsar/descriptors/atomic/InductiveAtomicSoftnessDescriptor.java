@@ -20,9 +20,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 
 import java.io.IOException;
 import java.util.Iterator;
-
 import javax.vecmath.Point3d;
-
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -37,10 +35,12 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- *  Inductive atomic softness of an atom in a polyatomic system can be defined
- *  as charge delocalizing ability. Only works with 3D coordinates, which must be calculated beforehand. <p>
+ * Inductive atomic softness of an atom in a polyatomic system can be defined as charge delocalizing
+ * ability. Only works with 3D coordinates, which must be calculated beforehand.
  *
- *  <table border="1">
+ * <p>
+ *
+ * <table border="1">
  *    <caption>Table 1 - Parameters for this descriptor</caption>
  *    <tr>
  *      <td>
@@ -64,53 +64,50 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *    </tr>
  *  </table>
  *
- *
- * @author         mfe4
- * @cdk.created    2004-11-03
- * @cdk.module     qsaratomic
+ * @author mfe4
+ * @cdk.created 2004-11-03
+ * @cdk.module qsaratomic
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:atomicSoftness
  */
-public class InductiveAtomicSoftnessDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
+public class InductiveAtomicSoftnessDescriptor extends AbstractAtomicDescriptor
+        implements IAtomicDescriptor {
 
-    private static final String[] NAMES   = {"indAtomSoftness"};
+    private static final String[] NAMES = {"indAtomSoftness"};
 
-    private static ILoggingTool   logger  = LoggingToolFactory
-                                                  .createLoggingTool(InductiveAtomicSoftnessDescriptor.class);
-    private AtomTypeFactory       factory = null;
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(InductiveAtomicSoftnessDescriptor.class);
+    private AtomTypeFactory factory = null;
 
     /**
-     *  Constructor for the InductiveAtomicSoftnessDescriptor object
+     * Constructor for the InductiveAtomicSoftnessDescriptor object
      *
-     *@exception  IOException             Description of the Exception
-     *@exception  ClassNotFoundException  Description of the Exception
+     * @exception IOException Description of the Exception
+     * @exception ClassNotFoundException Description of the Exception
      */
     public InductiveAtomicSoftnessDescriptor() throws IOException, ClassNotFoundException {}
 
     /**
-     *  Gets the specification attribute of the InductiveAtomicSoftnessDescriptor
-     *  object
+     * Gets the specification attribute of the InductiveAtomicSoftnessDescriptor object
      *
-     *@return    The specification value
+     * @return The specification value
      */
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomicSoftness", this.getClass()
-                        .getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomicSoftness",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
-    /**
-     * This descriptor does have any parameter.
-     */
+    /** This descriptor does have any parameter. */
     @Override
     public void setParameters(Object[] params) throws CDKException {}
 
     /**
-     *  Gets the parameters attribute of the InductiveAtomicSoftnessDescriptor
-     *  object
+     * Gets the parameters attribute of the InductiveAtomicSoftnessDescriptor object
      *
-     * @return    The parameters value
+     * @return The parameters value
      * @see #setParameters
      */
     @Override
@@ -124,24 +121,31 @@ public class InductiveAtomicSoftnessDescriptor extends AbstractAtomicDescriptor 
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                Double.NaN), NAMES, e);
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new DoubleResult(Double.NaN),
+                NAMES,
+                e);
     }
 
     /**
-     *  It is needed to call the addExplicitHydrogensToSatisfyValency method from
-     *  the class tools.HydrogenAdder, and 3D coordinates.
+     * It is needed to call the addExplicitHydrogensToSatisfyValency method from the class
+     * tools.HydrogenAdder, and 3D coordinates.
      *
-     *@param  atom              The IAtom for which the DescriptorValue is requested
-     *@param  ac                AtomContainer
-     *@return                   a double with polarizability of the heavy atom
+     * @param atom The IAtom for which the DescriptorValue is requested
+     * @param ac AtomContainer
+     * @return a double with polarizability of the heavy atom
      */
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
         if (factory == null)
             try {
-                factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt",
-                        ac.getBuilder());
+                factory =
+                        AtomTypeFactory.getInstance(
+                                "org/openscience/cdk/config/data/jmol_atomtypes.txt",
+                                ac.getBuilder());
             } catch (Exception exception) {
                 return getDummyDescriptorValue(exception);
             }
@@ -167,8 +171,9 @@ public class InductiveAtomicSoftnessDescriptor extends AbstractAtomicDescriptor 
         while (allAtoms.hasNext()) {
             IAtom curAtom = (IAtom) allAtoms.next();
             if (atom.getPoint3d() == null || curAtom.getPoint3d() == null) {
-                return getDummyDescriptorValue(new CDKException(
-                        "The target atom or current atom had no 3D coordinates. These are required"));
+                return getDummyDescriptorValue(
+                        new CDKException(
+                                "The target atom or current atom had no 3D coordinates. These are required"));
             }
             if (!atom.equals(curAtom)) {
                 partial = 0;
@@ -184,15 +189,20 @@ public class InductiveAtomicSoftnessDescriptor extends AbstractAtomicDescriptor 
                 partial += radius * radius;
                 partial += (radiusTarget * radiusTarget);
                 partial = partial / (calculateSquareDistanceBetweenTwoAtoms(curAtom, atom));
-                //logger.debug("SOFT: atom "+symbol+", radius "+radius+", distance "+calculateSquareDistanceBetweenTwoAtoms(allAtoms[i], target));
+                // logger.debug("SOFT: atom "+symbol+", radius "+radius+", distance
+                // "+calculateSquareDistanceBetweenTwoAtoms(allAtoms[i], target));
                 atomicSoftness += partial;
             }
         }
 
         atomicSoftness = 2 * atomicSoftness;
         atomicSoftness = atomicSoftness * 0.172;
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                atomicSoftness), NAMES);
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new DoubleResult(atomicSoftness),
+                NAMES);
     }
 
     private double calculateSquareDistanceBetweenTwoAtoms(IAtom atom1, IAtom atom2) {
@@ -206,9 +216,9 @@ public class InductiveAtomicSoftnessDescriptor extends AbstractAtomicDescriptor 
     }
 
     /**
-     *  Gets the parameterNames attribute of the InductiveAtomicSoftnessDescriptor  object.
+     * Gets the parameterNames attribute of the InductiveAtomicSoftnessDescriptor object.
      *
-     * @return    The parameterNames value
+     * @return The parameterNames value
      */
     @Override
     public String[] getParameterNames() {
@@ -216,10 +226,10 @@ public class InductiveAtomicSoftnessDescriptor extends AbstractAtomicDescriptor 
     }
 
     /**
-     *  Gets the parameterType attribute of the InductiveAtomicSoftnessDescriptor object.
+     * Gets the parameterType attribute of the InductiveAtomicSoftnessDescriptor object.
      *
-     * @param  name  Description of the Parameter
-     * @return       An Object of class equal to that of the parameter being requested
+     * @param name Description of the Parameter
+     * @return An Object of class equal to that of the parameter being requested
      */
     @Override
     public Object getParameterType(String name) {

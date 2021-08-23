@@ -23,27 +23,26 @@
 
 package org.openscience.cdk.isomorphism;
 
+import static org.openscience.cdk.isomorphism.matchers.Expr.Type.*;
+
+import java.util.Collections;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.*;
 
-import java.util.Collections;
-
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.*;
-
 /**
- * The depth-first (DF) backtracking sub-structure matching algorithm so named
- * because it matches the molecule in a depth-first manner (bond by bond). The
- * algorithm is a simple but elegant backtracking search iterating over the
- * bonds of a query. Like the popular VF2 the algorithm, it uses linear memory
- * but unlike VF2 bonded atoms are selected from the neighbor lists of already
- * mapped atoms.
- * <br><br>
- * In practice VF2 take O(N<sup>2</sup>) to match a linear chain against it's
- * self whilst this algorithm is O(N).
- * <br><br>
+ * The depth-first (DF) backtracking sub-structure matching algorithm so named because it matches
+ * the molecule in a depth-first manner (bond by bond). The algorithm is a simple but elegant
+ * backtracking search iterating over the bonds of a query. Like the popular VF2 the algorithm, it
+ * uses linear memory but unlike VF2 bonded atoms are selected from the neighbor lists of already
+ * mapped atoms. <br>
+ * <br>
+ * In practice VF2 take O(N<sup>2</sup>) to match a linear chain against it's self whilst this
+ * algorithm is O(N). <br>
+ * <br>
  * Usage:
+ *
  * <pre>{@code
  * DfPattern ptrn = DfPattern.findSubstructure(query);
  *
@@ -65,12 +64,14 @@ import static org.openscience.cdk.isomorphism.matchers.Expr.Type.*;
  *   }
  * }
  * }</pre>
+ *
  * <b>References</b>
+ *
  * <ul>
- *     <li>{@cdk.cite Ray57}</li>
- *     <li>{@cdk.cite Ullmann76}</li>
- *     <li>{@cdk.cite Cordella04}</li>
- *     <li>{@cdk.cite Jeliazkova18}</li>
+ *   <li>{@cdk.cite Ray57}
+ *   <li>{@cdk.cite Ullmann76}
+ *   <li>{@cdk.cite Cordella04}
+ *   <li>{@cdk.cite Jeliazkova18}
  * </ul>
  *
  * @author John Mayfield
@@ -93,39 +94,31 @@ public class DfPattern extends Pattern {
     private static void checkCompatibleAPI(IAtom atom) {
         if (atom.getContainer() == null) {
             throw new IllegalArgumentException(
-                    "This API can only be used with the option " +
-                            "CdkUseLegacyAtomContainer=false (default). The atoms in " +
-                            "the molecule provided do not know about their parent " +
-                            "molecule"
-            );
+                    "This API can only be used with the option "
+                            + "CdkUseLegacyAtomContainer=false (default). The atoms in "
+                            + "the molecule provided do not know about their parent "
+                            + "molecule");
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int[] match(IAtomContainer target) {
         return matchAll(target).first();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean matches(IAtomContainer target) {
         return matchAll(target).atLeast(1);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Mappings matchAll(IAtomContainer mol) {
         if (mol.getAtomCount() < query.getAtomCount())
             return new Mappings(src, mol, Collections.<int[]>emptySet());
-        if (mol.getAtomCount() > 0)
-            checkCompatibleAPI(mol.getAtom(0));
+        if (mol.getAtomCount() > 0) checkCompatibleAPI(mol.getAtom(0));
         DfState local = new DfState(state);
         local.setMol(mol);
         return filter(new Mappings(src, mol, local), query, mol);
@@ -161,10 +154,10 @@ public class DfPattern extends Pattern {
     }
 
     /**
-     * Create a pattern which can be used to find molecules which contain the
-     * {@code query} structure. If a 'real' molecule is provided is is converted
-     * with {@link QueryAtomContainer#create(IAtomContainer, Expr.Type...)}
-     * matching elements, aromaticity status, and bond orders.
+     * Create a pattern which can be used to find molecules which contain the {@code query}
+     * structure. If a 'real' molecule is provided is is converted with {@link
+     * QueryAtomContainer#create(IAtomContainer, Expr.Type...)} matching elements, aromaticity
+     * status, and bond orders.
      *
      * @param query the substructure to find
      * @return a pattern for finding the {@code query}
@@ -175,25 +168,23 @@ public class DfPattern extends Pattern {
         // out input to a query molecule using some sensible defaults. Note any existing
         // query atom/bonds will be copied
         if (!isCompleteQuery(query)) {
-            return new DfPattern(query,
-                                 QueryAtomContainer.create(query,
-                                                           ALIPHATIC_ELEMENT,
-                                                           AROMATIC_ELEMENT,
-                                                           SINGLE_OR_AROMATIC,
-                                                           ALIPHATIC_ORDER,
-                                                           STEREOCHEMISTRY));
+            return new DfPattern(
+                    query,
+                    QueryAtomContainer.create(
+                            query,
+                            ALIPHATIC_ELEMENT,
+                            AROMATIC_ELEMENT,
+                            SINGLE_OR_AROMATIC,
+                            ALIPHATIC_ORDER,
+                            STEREOCHEMISTRY));
         } else {
             return new DfPattern(query, query);
         }
     }
 
     private static boolean isCompleteQuery(IAtomContainer query) {
-        for (IAtom atom : query.atoms())
-            if (!(atom instanceof IQueryAtom))
-                return false;
-        for (IBond bond : query.bonds())
-            if (!(bond instanceof IQueryBond))
-                return false;
+        for (IAtom atom : query.atoms()) if (!(atom instanceof IQueryAtom)) return false;
+        for (IBond bond : query.bonds()) if (!(bond instanceof IQueryBond)) return false;
         return true;
     }
 }

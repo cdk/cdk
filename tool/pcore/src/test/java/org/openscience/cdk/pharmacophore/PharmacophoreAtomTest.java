@@ -18,14 +18,11 @@
  */
 package org.openscience.cdk.pharmacophore;
 
+import javax.vecmath.Point3d;
 import org.junit.Assert;
 import org.junit.Test;
 
-import javax.vecmath.Point3d;
-
-/**
- * @cdk.module test-pcore
- */
+/** @cdk.module test-pcore */
 public class PharmacophoreAtomTest {
 
     @Test
@@ -40,7 +37,7 @@ public class PharmacophoreAtomTest {
     @Test
     public void testMatchingAtoms() {
         PharmacophoreAtom patom = new PharmacophoreAtom("[CX2]N", "Amine", new Point3d(0, 0, 0));
-        patom.setMatchingAtoms(new int[]{1, 4, 5});
+        patom.setMatchingAtoms(new int[] {1, 4, 5});
         int[] indices = patom.getMatchingAtoms();
         Assert.assertEquals(1, indices[0]);
         Assert.assertEquals(4, indices[1]);
@@ -50,16 +47,16 @@ public class PharmacophoreAtomTest {
     @Test
     public void testEquals() {
         PharmacophoreAtom patom1 = new PharmacophoreAtom("[CX2]N", "Amine", new Point3d(0, 0, 0));
-        patom1.setMatchingAtoms(new int[]{1, 4, 5});
+        patom1.setMatchingAtoms(new int[] {1, 4, 5});
 
         PharmacophoreAtom patom2 = new PharmacophoreAtom("[CX2]N", "Amine", new Point3d(0, 0, 0));
-        patom2.setMatchingAtoms(new int[]{1, 4, 5});
+        patom2.setMatchingAtoms(new int[] {1, 4, 5});
 
         PharmacophoreAtom patom3 = new PharmacophoreAtom("[CX2]N", "Amine", new Point3d(0, 1, 0));
-        patom3.setMatchingAtoms(new int[]{1, 4, 5});
+        patom3.setMatchingAtoms(new int[] {1, 4, 5});
 
         PharmacophoreAtom patom4 = new PharmacophoreAtom("[CX2]N", "Amine", new Point3d(0, 0, 0));
-        patom4.setMatchingAtoms(new int[]{1, 4, 6});
+        patom4.setMatchingAtoms(new int[] {1, 4, 6});
 
         Assert.assertEquals(patom2, patom1);
         Assert.assertNotSame(patom3, patom1);

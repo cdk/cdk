@@ -1,34 +1,29 @@
 /**
+ * Copyright (C) 2006-2010 Syed Asad Rahman <asad@ebi.ac.uk>
  *
- * Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
+ * <p>Contact: cdk-devel@lists.sourceforge.net
  *
- * Contact: cdk-devel@lists.sourceforge.net
+ * <p>This program is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation; either version
+ * 2.1 of the License, or (at your option) any later version. All we ask is that proper credit is
+ * given for our work, which includes - but is not limited to - adding the above copyright notice to
+ * the beginning of your source code files, and to any copyright notice that you may distribute with
+ * programs based on this work.
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1
- * of the License, or (at your option) any later version.
- * All we ask is that proper credit is given for our work, which includes
- * - but is not limited to - adding the above copyright notice to the beginning
- * of your source code files, and to any copyright notice that you may distribute
- * with programs based on this work.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * <p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+ * Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.smsd.tools;
 
-//~--- JDK imports ------------------------------------------------------------
+// ~--- JDK imports ------------------------------------------------------------
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
@@ -45,26 +40,27 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Class that handles molecules for MCS search.
+ *
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated A more recent version of SMSD is available at <a href="http://github.com/asad/smsd">
- *             http://github.com/asad/smsd</a>
+ *     http://github.com/asad/smsd</a>
  */
 @Deprecated
 public class MolHandler {
 
-    private IAtomContainer             atomContainer  = null;
-    private boolean                    removeHydrogen = false;
-    private final ILoggingTool         logger         = LoggingToolFactory.createLoggingTool(MolHandler.class);
-    private ICanonicalMoleculeLabeller canonLabeler   = new CanonicalLabellingAdaptor();
+    private IAtomContainer atomContainer = null;
+    private boolean removeHydrogen = false;
+    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MolHandler.class);
+    private ICanonicalMoleculeLabeller canonLabeler = new CanonicalLabellingAdaptor();
 
     /**
      * Creates a new instance of MolHandler
+     *
      * @param molFile atomContainer file name
      * @param cleanMolecule
      * @param removeHydrogen
-     *
      */
     public MolHandler(String molFile, boolean removeHydrogen, boolean cleanMolecule) {
 
@@ -80,7 +76,9 @@ public class MolHandler {
             readMolecule.close();
             /* Remove Hydrogen by Asad */
             if (removeHydrogen) {
-                atomContainer = ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(atomContainer);
+                atomContainer =
+                        ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(
+                                atomContainer);
             }
             if (cleanMolecule) {
 
@@ -89,7 +87,7 @@ public class MolHandler {
                 }
                 // percieve atoms, set valency etc
                 ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
-                //Add implicit Hydrogens
+                // Add implicit Hydrogens
                 CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(atomContainer.getBuilder());
                 adder.addImplicitHydrogens(atomContainer);
                 // figure out which atoms are in aromatic rings:
@@ -114,6 +112,7 @@ public class MolHandler {
 
     /**
      * Creates a new instance of MolHandler
+     *
      * @param container Molecule AtomContainer
      * @param cleanMolecule
      * @param removeHydrogen
@@ -124,13 +123,15 @@ public class MolHandler {
         this.atomContainer = container;
         if (removeHydrogen) {
             try {
-                this.atomContainer = ExtAtomContainerManipulator
-                        .removeHydrogensExceptSingleAndPreserveAtomID(atomContainer);
+                this.atomContainer =
+                        ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(
+                                atomContainer);
             } catch (Exception ex) {
                 logger.error(ex);
             }
         } else {
-            this.atomContainer = container.getBuilder().newInstance(IAtomContainer.class, atomContainer);
+            this.atomContainer =
+                    container.getBuilder().newInstance(IAtomContainer.class, atomContainer);
         }
 
         if (cleanMolecule) {
@@ -140,7 +141,7 @@ public class MolHandler {
                 }
                 // percieve atoms, set valency etc
                 ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
-                //Add implicit Hydrogens
+                // Add implicit Hydrogens
                 CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(atomContainer.getBuilder());
                 adder.addImplicitHydrogens(atomContainer);
                 // figure out which atoms are in aromatic rings:
@@ -154,6 +155,7 @@ public class MolHandler {
 
     /**
      * Returns the modified container
+     *
      * @return get processed / modified container
      */
     public IAtomContainer getMolecule() {
@@ -162,6 +164,7 @@ public class MolHandler {
 
     /**
      * Returns true if hydrogens were made implicit else return false
+     *
      * @return true if remove H else false
      */
     public boolean getRemoveHydrogenFlag() {

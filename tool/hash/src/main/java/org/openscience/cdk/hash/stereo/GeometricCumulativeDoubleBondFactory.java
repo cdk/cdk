@@ -23,12 +23,6 @@
 
 package org.openscience.cdk.hash.stereo;
 
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -36,6 +30,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 
 /**
  * Stereo encoder factory for 2D and 3D cumulative double bonds.
@@ -49,7 +48,7 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
      * Create a stereo encoder for cumulative double bonds.
      *
      * @param container the container
-     * @param graph     adjacency list representation of the container
+     * @param graph adjacency list representation of the container
      * @return a stereo encoder
      */
     @Override
@@ -114,8 +113,9 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
                     //   s = = = = e
                     //  /           \
                     if (isOdd(size)) {
-                        StereoEncoder encoder = GeometricDoubleBondEncoderFactory.newEncoder(container, s, sParent, e,
-                                eParent, graph);
+                        StereoEncoder encoder =
+                                GeometricDoubleBondEncoderFactory.newEncoder(
+                                        container, s, sParent, e, eParent, graph);
                         if (encoder != null) {
                             encoders.add(encoder);
                         }
@@ -133,12 +133,11 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
     }
 
     /**
-     * Create an encoder for axial 2D stereochemistry for the given start and
-     * end atoms.
+     * Create an encoder for axial 2D stereochemistry for the given start and end atoms.
      *
      * @param container the molecule
-     * @param start     start of the cumulated system
-     * @param end       end of the cumulated system
+     * @param start start of the cumulated system
+     * @param end end of the cumulated system
      * @return an encoder or null if there are no coordinated
      */
     static StereoEncoder axialEncoder(IAtomContainer container, IAtom start, IAtom end) {
@@ -158,76 +157,90 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
     }
 
     /**
-     * Create an encoder for axial 2D stereochemistry for the given start and
-     * end atoms.
+     * Create an encoder for axial 2D stereochemistry for the given start and end atoms.
      *
-     * @param container  the molecule
-     * @param start      start of the cumulated system
+     * @param container the molecule
+     * @param start start of the cumulated system
      * @param startBonds bonds connected to the start
-     * @param end        end of the cumulated system
-     * @param endBonds   bonds connected to the end
+     * @param end end of the cumulated system
+     * @param endBonds bonds connected to the end
      * @return an encoder
      */
-    private static StereoEncoder axial2DEncoder(IAtomContainer container, IAtom start, List<IBond> startBonds,
-            IAtom end, List<IBond> endBonds) {
+    private static StereoEncoder axial2DEncoder(
+            IAtomContainer container,
+            IAtom start,
+            List<IBond> startBonds,
+            IAtom end,
+            List<IBond> endBonds) {
 
         Point2d[] ps = new Point2d[4];
         int[] es = new int[4];
 
-        PermutationParity perm = new CombinedPermutationParity(fill2DCoordinates(container, start, startBonds, ps, es,
-                0), fill2DCoordinates(container, end, endBonds, ps, es, 2));
+        PermutationParity perm =
+                new CombinedPermutationParity(
+                        fill2DCoordinates(container, start, startBonds, ps, es, 0),
+                        fill2DCoordinates(container, end, endBonds, ps, es, 2));
 
         GeometricParity geom = new Tetrahedral2DParity(ps, es);
 
         int u = container.indexOf(start);
         int v = container.indexOf(end);
 
-        return new GeometryEncoder(new int[]{u, v}, perm, geom);
+        return new GeometryEncoder(new int[] {u, v}, perm, geom);
     }
 
     /**
-     * Create an encoder for axial 3D stereochemistry for the given start and
-     * end atoms.
+     * Create an encoder for axial 3D stereochemistry for the given start and end atoms.
      *
-     * @param container  the molecule
-     * @param start      start of the cumulated system
+     * @param container the molecule
+     * @param start start of the cumulated system
      * @param startBonds bonds connected to the start
-     * @param end        end of the cumulated system
-     * @param endBonds   bonds connected to the end
+     * @param end end of the cumulated system
+     * @param endBonds bonds connected to the end
      * @return an encoder
      */
-    private static StereoEncoder axial3DEncoder(IAtomContainer container, IAtom start, List<IBond> startBonds,
-            IAtom end, List<IBond> endBonds) {
+    private static StereoEncoder axial3DEncoder(
+            IAtomContainer container,
+            IAtom start,
+            List<IBond> startBonds,
+            IAtom end,
+            List<IBond> endBonds) {
 
         Point3d[] coordinates = new Point3d[4];
 
-        PermutationParity perm = new CombinedPermutationParity(fill3DCoordinates(container, start, startBonds,
-                coordinates, 0), fill3DCoordinates(container, end, endBonds, coordinates, 2));
+        PermutationParity perm =
+                new CombinedPermutationParity(
+                        fill3DCoordinates(container, start, startBonds, coordinates, 0),
+                        fill3DCoordinates(container, end, endBonds, coordinates, 2));
 
         GeometricParity geom = new Tetrahedral3DParity(coordinates);
 
         int u = container.indexOf(start);
         int v = container.indexOf(end);
 
-        return new GeometryEncoder(new int[]{u, v}, perm, geom);
+        return new GeometryEncoder(new int[] {u, v}, perm, geom);
     }
 
     /**
-     * Fill the {@literal coordinates} and {@literal elevation} from the given
-     * offset index. If there is only one connection then the second entry (from
-     * the offset) will use the coordinates of <i>a</i>. The permutation parity
-     * is also built and returned.
+     * Fill the {@literal coordinates} and {@literal elevation} from the given offset index. If
+     * there is only one connection then the second entry (from the offset) will use the coordinates
+     * of <i>a</i>. The permutation parity is also built and returned.
      *
-     * @param container   atom container
-     * @param a           the central atom
-     * @param connected   bonds connected to the central atom
+     * @param container atom container
+     * @param a the central atom
+     * @param connected bonds connected to the central atom
      * @param coordinates the coordinates array to fill
-     * @param elevations  the elevations of the connected atoms
-     * @param offset      current location in the offset array
+     * @param elevations the elevations of the connected atoms
+     * @param offset current location in the offset array
      * @return the permutation parity
      */
-    private static PermutationParity fill2DCoordinates(IAtomContainer container, IAtom a, List<IBond> connected,
-            Point2d[] coordinates, int[] elevations, int offset) {
+    private static PermutationParity fill2DCoordinates(
+            IAtomContainer container,
+            IAtom a,
+            List<IBond> connected,
+            Point2d[] coordinates,
+            int[] elevations,
+            int offset) {
 
         int i = 0;
         coordinates[offset + 1] = a.getPoint2d();
@@ -249,24 +262,26 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
         } else {
             return new BasicPermutationParity(indices);
         }
-
     }
 
     /**
-     * Fill the {@literal coordinates} from the given offset index. If there is
-     * only one connection then the second entry (from the offset) will use the
-     * coordinates of <i>a</i>. The permutation parity is also built and
-     * returned.
+     * Fill the {@literal coordinates} from the given offset index. If there is only one connection
+     * then the second entry (from the offset) will use the coordinates of <i>a</i>. The permutation
+     * parity is also built and returned.
      *
-     * @param container   atom container
-     * @param a           the central atom
-     * @param connected   bonds connected to the central atom
+     * @param container atom container
+     * @param a the central atom
+     * @param connected bonds connected to the central atom
      * @param coordinates the coordinates array to fill
-     * @param offset      current location in the offset array
+     * @param offset current location in the offset array
      * @return the permutation parity
      */
-    private static PermutationParity fill3DCoordinates(IAtomContainer container, IAtom a, List<IBond> connected,
-            Point3d[] coordinates, int offset) {
+    private static PermutationParity fill3DCoordinates(
+            IAtomContainer container,
+            IAtom a,
+            List<IBond> connected,
+            Point3d[] coordinates,
+            int offset) {
 
         int i = 0;
         int[] indices = new int[2];
@@ -290,41 +305,43 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
     }
 
     /**
-     * Check if all atoms in the bond list have 2D coordinates. There is some
-     * redundant checking but the list will typically be short.
+     * Check if all atoms in the bond list have 2D coordinates. There is some redundant checking but
+     * the list will typically be short.
      *
      * @param bonds the bonds to check
      * @return whether all atoms have 2D coordinates
      */
     private static boolean has2DCoordinates(List<IBond> bonds) {
         for (IBond bond : bonds) {
-            if (bond.getBegin().getPoint2d() == null || bond.getEnd().getPoint2d() == null) return false;
+            if (bond.getBegin().getPoint2d() == null || bond.getEnd().getPoint2d() == null)
+                return false;
         }
         return true;
     }
 
     /**
-     * Check if all atoms in the bond list have 3D coordinates. There is some
-     * redundant checking but the list will typically be short.
+     * Check if all atoms in the bond list have 3D coordinates. There is some redundant checking but
+     * the list will typically be short.
      *
      * @param bonds the bonds to check
      * @return whether all atoms have 2D coordinates
      */
     private static boolean has3DCoordinates(List<IBond> bonds) {
         for (IBond bond : bonds) {
-            if (bond.getBegin().getPoint3d() == null || bond.getEnd().getPoint3d() == null) return false;
+            if (bond.getBegin().getPoint3d() == null || bond.getEnd().getPoint3d() == null)
+                return false;
         }
         return true;
     }
 
     /**
-     * Access the elevation of a bond relative to the given source atom. With a
-     * wedge bond if the atom <i>a</i> is the <i>point</i> end then the bond
-     * comes off the paper <i>above</i> the plane. If <i>a</i> is the <i>fat</i>
-     * end then the bond from <i>a</i> goes <i>below</i> the plane.
+     * Access the elevation of a bond relative to the given source atom. With a wedge bond if the
+     * atom <i>a</i> is the <i>point</i> end then the bond comes off the paper <i>above</i> the
+     * plane. If <i>a</i> is the <i>fat</i> end then the bond from <i>a</i> goes <i>below</i> the
+     * plane.
      *
      * @param bond a bond
-     * @param a    an atom
+     * @param a an atom
      * @return elevation of bond
      */
     static int elevation(IBond bond, IAtom a) {
@@ -335,8 +352,7 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
      * Access the elevation of a bond.
      *
      * @param bond the bond
-     * @return +1 above the plane, 0 in the plane (default) or -1 below the
-     *         plane
+     * @return +1 above the plane, 0 in the plane (default) or -1 below the plane
      */
     static int elevation(IBond bond) {
         IBond.Stereo stereo = bond.getStereo();
@@ -373,10 +389,7 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
         return IBond.Order.DOUBLE.equals(bond.getOrder());
     }
 
-    /**
-     * Helper class for storing a lookup of atoms and their connected double
-     * bonds.
-     */
+    /** Helper class for storing a lookup of atoms and their connected double bonds. */
     private static class BondMap {
 
         private Map<IAtom, List<IBond>> bonds;
@@ -398,12 +411,11 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
          */
         public List<IBond> bonds(IAtom a) {
             List<IBond> bs = bonds.get(a);
-            return bs != null ? bs : Collections.<IBond> emptyList();
+            return bs != null ? bs : Collections.<IBond>emptyList();
         }
 
         /**
-         * Check whether the the atom is cumulated - two consecutive double
-         * bonds.
+         * Check whether the the atom is cumulated - two consecutive double bonds.
          *
          * @param a an atom
          * @return whether the atom is cumulated
@@ -444,5 +456,4 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
             return bonds.keySet();
         }
     }
-
 }

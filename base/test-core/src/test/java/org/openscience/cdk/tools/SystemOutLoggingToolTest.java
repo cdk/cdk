@@ -21,13 +21,10 @@ package org.openscience.cdk.tools;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * @cdk.module test-core
- */
+/** @cdk.module test-core */
 public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
     @Test

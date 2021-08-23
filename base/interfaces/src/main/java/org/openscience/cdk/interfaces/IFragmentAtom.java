@@ -23,19 +23,18 @@
 package org.openscience.cdk.interfaces;
 
 /**
- * Class to represent an IPseudoAtom which embeds an IAtomContainer. Very much
- * like the MDL molfile <code>Group</code> concept.
+ * Class to represent an IPseudoAtom which embeds an IAtomContainer. Very much like the MDL molfile
+ * <code>Group</code> concept.
  *
  * @cdk.module interfaces
  * @cdk.githash
- *
  * @author egonw
  */
 public interface IFragmentAtom extends IPseudoAtom {
 
     /**
-     * Helper method to indicate that the method should be drawn fully, and not
-     * just the abbreviated form.
+     * Helper method to indicate that the method should be drawn fully, and not just the abbreviated
+     * form.
      *
      * @return true, if it should be considered in expended form
      */
@@ -61,5 +60,4 @@ public interface IFragmentAtom extends IPseudoAtom {
      * @param fragment The fragment
      */
     public void setFragment(IAtomContainer fragment);
-
 }

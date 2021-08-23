@@ -23,8 +23,7 @@ package org.openscience.cdk.interfaces;
  *
  * @cdk.module interfaces
  * @cdk.githash
- *
- * @author      egonw
+ * @author egonw
  * @cdk.created 2005-08-24
  * @cdk.keyword isotope
  * @cdk.keyword mass number
@@ -35,58 +34,48 @@ public interface IIsotope extends IElement {
     /**
      * Sets the NaturalAbundance attribute of the Isotope object.
      *
-     * @param  naturalAbundance  The new NaturalAbundance value
-     *
-     * @see    #getNaturalAbundance
+     * @param naturalAbundance The new NaturalAbundance value
+     * @see #getNaturalAbundance
      */
     public void setNaturalAbundance(Double naturalAbundance);
 
     /**
      * Sets the ExactMass attribute of the Isotope object.
      *
-     * @param  exactMass  The new ExactMass value
-     *
-     * @see    #getExactMass
+     * @param exactMass The new ExactMass value
+     * @see #getExactMass
      */
     public void setExactMass(Double exactMass);
 
     /**
-     * Gets the NaturalAbundance attribute of the Isotope object.
-     * Returns null when unconfigured.
+     * Gets the NaturalAbundance attribute of the Isotope object. Returns null when unconfigured.
      *
-     * @return    The NaturalAbundance value
-     *
-     * @see       #setNaturalAbundance
+     * @return The NaturalAbundance value
+     * @see #setNaturalAbundance
      */
     public Double getNaturalAbundance();
 
     /**
-     * Gets the ExactMass attribute of the Isotope object.
-     * Returns null when unconfigured.
+     * Gets the ExactMass attribute of the Isotope object. Returns null when unconfigured.
      *
-     * @return    The ExactMass value
-     *
-     * @see       #setExactMass
+     * @return The ExactMass value
+     * @see #setExactMass
      */
     public Double getExactMass();
 
     /**
-     * Returns the atomic mass of this element.
-     * Returns null when unconfigured.
+     * Returns the atomic mass of this element. Returns null when unconfigured.
      *
      * @return The atomic mass of this element
-     *
-     * @see    #setMassNumber(Integer)
+     * @see #setMassNumber(Integer)
      */
     public Integer getMassNumber();
 
     /**
      * Sets the atomic mass of this element.
      *
-     * @param   massNumber The atomic mass to be assigned to this element
-     *
-     * @see    #getMassNumber
+     * @param massNumber The atomic mass to be assigned to this element
+     * @see #getMassNumber
      */
     public void setMassNumber(Integer massNumber);
-
 }

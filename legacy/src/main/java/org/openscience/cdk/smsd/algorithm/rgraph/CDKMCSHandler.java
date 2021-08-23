@@ -28,7 +28,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
@@ -46,23 +45,24 @@ import org.openscience.cdk.smsd.tools.MolHandler;
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public
- *             access to internal implementation details. SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK
+ *     or provides public access to internal implementation details. SMSD has been deprecated from
+ *     the CDK with a newer, more recent version of SMSD is available at <a
+ *     href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public class CDKMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
 
     //    //~--- fields -------------------------------------------------------------
-    private IAtomContainer              source;
-    private IAtomContainer              target;
-    private boolean                     rOnPFlag     = false;
-    private List<Map<IAtom, IAtom>>     allAtomMCS   = null;
-    private Map<IAtom, IAtom>           firstAtomMCS = null;
-    private Map<Integer, Integer>       firstMCS     = null;
-    private List<Map<Integer, Integer>> allMCS       = null;
+    private IAtomContainer source;
+    private IAtomContainer target;
+    private boolean rOnPFlag = false;
+    private List<Map<IAtom, IAtom>> allAtomMCS = null;
+    private Map<IAtom, IAtom> firstAtomMCS = null;
+    private Map<Integer, Integer> firstMCS = null;
+    private List<Map<Integer, Integer>> allMCS = null;
 
-    //~--- constructors -------------------------------------------------------
+    // ~--- constructors -------------------------------------------------------
     /*
      * Creates a new instance of MappingHandler
      */
@@ -74,7 +74,8 @@ public class CDKMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
         this.allMCS = new ArrayList<Map<Integer, Integer>>();
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      *
      * @param source
      * @param target
@@ -85,7 +86,8 @@ public class CDKMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
         this.target = target.getMolecule();
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      *
      * @param source
      * @param target
@@ -96,7 +98,8 @@ public class CDKMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
         this.target = target;
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      *
      * @param shouldMatchBonds
      */
@@ -107,11 +110,13 @@ public class CDKMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
 
         try {
 
-            if ((source.getAtomCount() == target.getAtomCount()) && source.getBondCount() == target.getBondCount()) {
+            if ((source.getAtomCount() == target.getAtomCount())
+                    && source.getBondCount() == target.getBondCount()) {
                 rOnPFlag = true;
                 rmap.calculateOverlapsAndReduceExactMatch(source, target, shouldMatchBonds);
 
-            } else if (source.getAtomCount() > target.getAtomCount() && source.getBondCount() != target.getBondCount()) {
+            } else if (source.getAtomCount() > target.getAtomCount()
+                    && source.getBondCount() != target.getBondCount()) {
                 rOnPFlag = true;
                 rmap.calculateOverlapsAndReduce(source, target, shouldMatchBonds);
 
@@ -127,20 +132,20 @@ public class CDKMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
 
         } catch (CDKException e) {
             rmap = null;
-            //            System.err.println("WARNING: graphContainer: most probably time out error ");
+            //            System.err.println("WARNING: graphContainer: most probably time out error
+            // ");
         }
     }
 
     /**
-     *
      * @param mol
      * @param mcss
      * @param shouldMatchBonds
      * @return IMolecule Set
      * @throws CDKException
      */
-    protected IAtomContainerSet getUncommon(IAtomContainer mol, IAtomContainer mcss, boolean shouldMatchBonds)
-            throws CDKException {
+    protected IAtomContainerSet getUncommon(
+            IAtomContainer mol, IAtomContainer mcss, boolean shouldMatchBonds) throws CDKException {
         ArrayList<Integer> atomSerialsToDelete = new ArrayList<Integer>();
 
         List<List<CDKRMap>> matches = CDKMCS.getSubgraphAtomsMaps(mol, mcss, shouldMatchBonds);
@@ -168,11 +173,11 @@ public class CDKMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
         return ConnectivityChecker.partitionIntoMolecules(mol);
     }
 
-    //~--- get methods --------------------------------------------------------
+    // ~--- get methods --------------------------------------------------------
     private synchronized void setAllMapping() {
 
-        //int count_final_sol = 1;
-        //System.out.println("Output of the final FinalMappings: ");
+        // int count_final_sol = 1;
+        // System.out.println("Output of the final FinalMappings: ");
         try {
             List<Map<Integer, Integer>> sol = FinalMappings.getInstance().getFinalMapping();
             int counter = 0;
@@ -197,7 +202,6 @@ public class CDKMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
         } catch (Exception ex) {
             ex.getCause();
         }
-
     }
 
     private synchronized void setAllAtomMapping() {
@@ -217,7 +221,6 @@ public class CDKMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
                 sourceAtom = source.getAtom(iIndex);
                 targetAtom = target.getAtom(jIndex);
                 atomMappings.put(sourceAtom, targetAtom);
-
             }
             allAtomMCS.add(counter++, atomMappings);
         }
@@ -228,39 +231,33 @@ public class CDKMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
         if (!allMCS.isEmpty()) {
             firstMCS = new TreeMap<Integer, Integer>(allMCS.get(0));
         }
-
     }
 
     private synchronized void setFirstAtomMapping() {
         if (!allAtomMCS.isEmpty()) {
             firstAtomMCS = new HashMap<IAtom, IAtom>(allAtomMCS.get(0));
         }
-
     }
 
-    /** {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public List<Map<Integer, Integer>> getAllMapping() {
         return Collections.unmodifiableList(allMCS);
     }
 
-    /** {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Map<Integer, Integer> getFirstMapping() {
         return Collections.unmodifiableMap(firstMCS);
     }
 
-    /** {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public List<Map<IAtom, IAtom>> getAllAtomMapping() {
         return Collections.unmodifiableList(allAtomMCS);
     }
 
-    /** {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Map<IAtom, IAtom> getFirstAtomMapping() {
         return Collections.unmodifiableMap(firstAtomMCS);

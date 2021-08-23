@@ -19,16 +19,17 @@
 
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.util.Iterator;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.charges.Polarizability;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
-import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -40,24 +41,21 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
-import java.util.Iterator;
-
 /**
- * This class calculates ATS autocorrelation descriptor, where the weight equal
- * to the charges.
+ * This class calculates ATS autocorrelation descriptor, where the weight equal to the charges.
  *
  * @author Federico
  * @cdk.created 2007-03-01
  * @cdk.module qsarmolecular
  * @cdk.githash
  */
-
-public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDescriptor implements
-        IMolecularDescriptor {
+public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDescriptor
+        implements IMolecularDescriptor {
 
     private static final String[] NAMES = {"ATSp1", "ATSp2", "ATSp3", "ATSp4", "ATSp5"};
 
-    private static double[] listpolarizability(IAtomContainer container, int[][] dmat) throws CDKException {
+    private static double[] listpolarizability(IAtomContainer container, int[][] dmat)
+            throws CDKException {
         int natom = container.getAtomCount();
         double[] polars = new double[natom];
 
@@ -65,18 +63,18 @@ public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDe
         for (int i = 0; i < natom; i++) {
             IAtom atom = container.getAtom(i);
             try {
-                polars[i] = polar.calculateGHEffectiveAtomPolarizability(container, atom, false, dmat);
+                polars[i] =
+                        polar.calculateGHEffectiveAtomPolarizability(container, atom, false, dmat);
             } catch (Exception ex1) {
-                throw new CDKException("Problems with assign Polarizability due to " + ex1.toString(), ex1);
+                throw new CDKException(
+                        "Problems with assign Polarizability due to " + ex1.toString(), ex1);
             }
         }
 
         return polars;
     }
 
-    /**
-     * This method calculate the ATS Autocorrelation descriptor.
-     */
+    /** This method calculate the ATS Autocorrelation descriptor. */
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
         IAtomContainer molecule;
@@ -99,19 +97,22 @@ public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDe
             hAdder.addImplicitHydrogens(molecule);
             AtomContainerManipulator.convertImplicitToExplicitHydrogens(molecule);
         } catch (Exception e) {
-            return getDummyDescriptorValue(new CDKException("Could not add hydrogens: " + e.getMessage(), e));
+            return getDummyDescriptorValue(
+                    new CDKException("Could not add hydrogens: " + e.getMessage(), e));
         }
 
         // do aromaticity detecttion for calculating polarizability later on
         try {
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         } catch (CDKException e) {
-            return getDummyDescriptorValue(new CDKException("Could not percieve atom types: " + e.getMessage(), e));
+            return getDummyDescriptorValue(
+                    new CDKException("Could not percieve atom types: " + e.getMessage(), e));
         }
         try {
             Aromaticity.cdkLegacy().apply(molecule);
         } catch (CDKException e) {
-            return getDummyDescriptorValue(new CDKException("Could not percieve aromaticity: " + e.getMessage(), e));
+            return getDummyDescriptorValue(
+                    new CDKException("Could not percieve aromaticity: " + e.getMessage(), e));
         }
 
         // get the distance matrix for pol calcs as well as for later on
@@ -129,34 +130,42 @@ public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDe
                         if (molecule.getAtom(j).getAtomicNumber() == IElement.H) continue;
                         if (distancematrix[i][j] == k) {
                             polarizabilitySum[k] += w[i] * w[j];
-                        } else
-                            polarizabilitySum[k] += 0.0;
+                        } else polarizabilitySum[k] += 0.0;
                     }
                 }
                 if (k > 0) polarizabilitySum[k] = polarizabilitySum[k] / 2;
-
             }
             DoubleArrayResult result = new DoubleArrayResult(5);
             for (double aPolarizabilitySum : polarizabilitySum) {
                 result.add(aPolarizabilitySum);
-
             }
 
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result,
+            return new DescriptorValue(
+                    getSpecification(),
+                    getParameterNames(),
+                    getParameters(),
+                    result,
                     getDescriptorNames());
 
         } catch (Exception ex) {
-            return getDummyDescriptorValue(new CDKException("Error while calculating the ATSpolarizabilty descriptor: "
-                    + ex.getMessage(), ex));
+            return getDummyDescriptorValue(
+                    new CDKException(
+                            "Error while calculating the ATSpolarizabilty descriptor: "
+                                    + ex.getMessage(),
+                            ex));
         }
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
         DoubleArrayResult results = new DoubleArrayResult(5);
-        for (int i = 0; i < 5; i++)
-            results.add(Double.NaN);
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), results,
-                getDescriptorNames(), e);
+        for (int i = 0; i < 5; i++) results.add(Double.NaN);
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                results,
+                getDescriptorNames(),
+                e);
     }
 
     @Override
@@ -183,7 +192,8 @@ public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDe
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationPolarizability",
-                this.getClass().getName(), "The Chemistry Development Kit");
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     @Override
@@ -192,8 +202,5 @@ public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDe
     }
 
     @Override
-    public void setParameters(Object[] params) throws CDKException {
-
-    }
-
+    public void setParameters(Object[] params) throws CDKException {}
 }

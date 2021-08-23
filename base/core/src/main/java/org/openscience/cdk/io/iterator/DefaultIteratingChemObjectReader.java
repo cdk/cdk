@@ -25,16 +25,16 @@ import org.openscience.cdk.io.ChemObjectIO;
 import org.openscience.cdk.io.IChemObjectReaderErrorHandler;
 
 /**
- * Abstract class that IteratingChemObjectReader's can implement to have it
- * take care of basic stuff, like managing the ReaderListeners.
+ * Abstract class that IteratingChemObjectReader's can implement to have it take care of basic
+ * stuff, like managing the ReaderListeners.
  *
  * @cdk.module io
  * @cdk.githash
  */
-public abstract class DefaultIteratingChemObjectReader<T extends IChemObject> extends ChemObjectIO implements
-        IIteratingChemObjectReader<T> {
+public abstract class DefaultIteratingChemObjectReader<T extends IChemObject> extends ChemObjectIO
+        implements IIteratingChemObjectReader<T> {
 
-    protected Mode        mode         = Mode.RELAXED;
+    protected Mode mode = Mode.RELAXED;
     protected IChemObjectReaderErrorHandler errorHandler = null;
 
     @Override
@@ -44,9 +44,7 @@ public abstract class DefaultIteratingChemObjectReader<T extends IChemObject> ex
 
     /* Extra convenience methods */
 
-    /**
-     * File IO generally does not support removing of entries.
-     */
+    /** File IO generally does not support removing of entries. */
     @Override
     public void remove() {
         throw new UnsupportedOperationException();
@@ -82,14 +80,17 @@ public abstract class DefaultIteratingChemObjectReader<T extends IChemObject> ex
     /** {@inheritDoc} */
     @Override
     public void handleError(String message, int row, int colStart, int colEnd) throws CDKException {
-        if (this.errorHandler != null) this.errorHandler.handleError(message, row, colStart, colEnd);
+        if (this.errorHandler != null)
+            this.errorHandler.handleError(message, row, colStart, colEnd);
         if (this.mode == Mode.STRICT) throw new CDKException(message);
     }
 
     /** {@inheritDoc} */
     @Override
-    public void handleError(String message, int row, int colStart, int colEnd, Exception exception) throws CDKException {
-        if (this.errorHandler != null) this.errorHandler.handleError(message, row, colStart, colEnd, exception);
+    public void handleError(String message, int row, int colStart, int colEnd, Exception exception)
+            throws CDKException {
+        if (this.errorHandler != null)
+            this.errorHandler.handleError(message, row, colStart, colEnd, exception);
         if (this.mode == Mode.STRICT) {
             throw new CDKException(message, exception);
         }

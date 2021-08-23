@@ -24,23 +24,22 @@
 
 package org.openscience.cdk.layout;
 
+import static java.util.AbstractMap.SimpleEntry;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.number.IsCloseTo.closeTo;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Map;
+import javax.vecmath.Point2d;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.AtomContainer;
-
-import javax.vecmath.Point2d;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.Map;
-
-import static java.util.AbstractMap.SimpleEntry;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.number.IsCloseTo.closeTo;
-import static org.junit.Assert.assertFalse;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 public class IdentityTemplateLibraryTest {
 
@@ -56,17 +55,18 @@ public class IdentityTemplateLibraryTest {
 
     @Test
     public void encodeCoordinates() throws Exception {
-        Point2d[] points = new Point2d[]{new Point2d(12.5f, 5.5f), new Point2d(4f, 2f)};
+        Point2d[] points = new Point2d[] {new Point2d(12.5f, 5.5f), new Point2d(4f, 2f)};
         String str = IdentityTemplateLibrary.encodeCoordinates(points);
         assertThat(str, is("|(12.5,5.5,;4.0,2.0,)|"));
-
     }
 
     @Test
     public void encodeEntry() {
         String smiles = "CO";
-        Point2d[] points = new Point2d[]{new Point2d(12.5f, 5.5f), new Point2d(4f, 2f)};
-        String encoded = IdentityTemplateLibrary.encodeEntry(new SimpleEntry<String, Point2d[]>(smiles, points));
+        Point2d[] points = new Point2d[] {new Point2d(12.5f, 5.5f), new Point2d(4f, 2f)};
+        String encoded =
+                IdentityTemplateLibrary.encodeEntry(
+                        new SimpleEntry<String, Point2d[]>(smiles, points));
         Map.Entry<String, Point2d[]> entry = IdentityTemplateLibrary.decodeEntry(encoded);
         assertThat(encoded, is("CO |(12.5,5.5,;4.0,2.0,)|"));
     }
@@ -76,7 +76,9 @@ public class IdentityTemplateLibraryTest {
         String encode = "CO 12.500, 5.500, 4.000, 2.000";
         Map.Entry<String, Point2d[]> entry = IdentityTemplateLibrary.decodeEntry(encode);
         assertThat(entry.getKey(), is("CO"));
-        assertThat(entry.getValue(), is(new Point2d[]{new Point2d(12.5f, 5.5f), new Point2d(4f, 2f)}));
+        assertThat(
+                entry.getValue(),
+                is(new Point2d[] {new Point2d(12.5f, 5.5f), new Point2d(4f, 2f)}));
     }
 
     @Test
@@ -125,7 +127,8 @@ public class IdentityTemplateLibraryTest {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         lib.store(baos);
         baos.close();
-        assertThat(new String(baos.toByteArray()),
+        assertThat(
+                new String(baos.toByteArray()),
                 is("[C][C][O] |(.0,1.0,;2.0,3.0,;4.0,5.0,)|\n[C][C] |(.0,1.0,;2.0,3.0,)|\n"));
     }
 }

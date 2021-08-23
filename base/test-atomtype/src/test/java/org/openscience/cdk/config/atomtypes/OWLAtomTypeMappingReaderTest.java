@@ -22,7 +22,6 @@ package org.openscience.cdk.config.atomtypes;
 import java.io.StringReader;
 import java.util.Map;
 import java.util.Set;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -34,27 +33,35 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class OWLAtomTypeMappingReaderTest extends CDKTestCase {
 
-    private final String OWL_CONTENT = "<?xml version=\"1.0\"?>" + "<!DOCTYPE rdf:RDF ["
-                                             + "  <!ENTITY rdf  \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" >"
-                                             + "  <!ENTITY elem \"http://cdk.sf.net/ontologies/elements#\" >"
-                                             + "  <!ENTITY at   \"http://cdk.sf.net/ontologies/atomtypes#\" >"
-                                             + "  <!ENTITY cdkat \"http://cdk.sf.net/ontologies/atomtypes/cdk#\" >"
-                                             + "  <!ENTITY sybylat \"http://cdk.sf.net/ontologies/atomtypes/sybyl#\" >"
-                                             + "  <!ENTITY atm  \"http://cdk.sf.net/ontologies/atomtypemappings#\" >"
-                                             + "  <!ENTITY owl  \"http://www.w3.org/2002/07/owl#\" >" + "]>"
-                                             + "<rdf:RDF xmlns=\"&cdkat;\" xml:base=\"&cdkat;\""
-                                             + "         xmlns:at=\"&at;\"" + "         xmlns:elem=\"&elem;\""
-                                             + "         xmlns:rdf=\"&rdf;\"" + "         xmlns:atm=\"&atm;\""
-                                             + "         xmlns:owl=\"&owl;\"" + ">"
-                                             + "  <owl:ObjectProperty rdf:about=\"&atm;mapsToType\"/>"
-                                             + "  <owl:ObjectProperty rdf:about=\"&atm;equivalentAsType\"/>"
-                                             + "  <owl:Thing rdf:about=\"&sybylat;X\"/>"
-                                             + "  <owl:Thing rdf:about=\"&sybylat;C.3\"/>"
-                                             + "  <owl:Thing rdf:about=\"&cdkat;X\">"
-                                             + "    <atm:mapsToType rdf:resource=\"&sybylat;X\"/>" + "  </owl:Thing>"
-                                             + "  <owl:Thing rdf:about=\"&cdkat;C.sp3\">"
-                                             + "    <atm:equivalentAsType rdf:resource=\"&sybylat;C.3\"/>"
-                                             + "  </owl:Thing>" + "</rdf:RDF>";
+    private final String OWL_CONTENT =
+            "<?xml version=\"1.0\"?>"
+                    + "<!DOCTYPE rdf:RDF ["
+                    + "  <!ENTITY rdf  \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" >"
+                    + "  <!ENTITY elem \"http://cdk.sf.net/ontologies/elements#\" >"
+                    + "  <!ENTITY at   \"http://cdk.sf.net/ontologies/atomtypes#\" >"
+                    + "  <!ENTITY cdkat \"http://cdk.sf.net/ontologies/atomtypes/cdk#\" >"
+                    + "  <!ENTITY sybylat \"http://cdk.sf.net/ontologies/atomtypes/sybyl#\" >"
+                    + "  <!ENTITY atm  \"http://cdk.sf.net/ontologies/atomtypemappings#\" >"
+                    + "  <!ENTITY owl  \"http://www.w3.org/2002/07/owl#\" >"
+                    + "]>"
+                    + "<rdf:RDF xmlns=\"&cdkat;\" xml:base=\"&cdkat;\""
+                    + "         xmlns:at=\"&at;\""
+                    + "         xmlns:elem=\"&elem;\""
+                    + "         xmlns:rdf=\"&rdf;\""
+                    + "         xmlns:atm=\"&atm;\""
+                    + "         xmlns:owl=\"&owl;\""
+                    + ">"
+                    + "  <owl:ObjectProperty rdf:about=\"&atm;mapsToType\"/>"
+                    + "  <owl:ObjectProperty rdf:about=\"&atm;equivalentAsType\"/>"
+                    + "  <owl:Thing rdf:about=\"&sybylat;X\"/>"
+                    + "  <owl:Thing rdf:about=\"&sybylat;C.3\"/>"
+                    + "  <owl:Thing rdf:about=\"&cdkat;X\">"
+                    + "    <atm:mapsToType rdf:resource=\"&sybylat;X\"/>"
+                    + "  </owl:Thing>"
+                    + "  <owl:Thing rdf:about=\"&cdkat;C.sp3\">"
+                    + "    <atm:equivalentAsType rdf:resource=\"&sybylat;C.3\"/>"
+                    + "  </owl:Thing>"
+                    + "</rdf:RDF>";
 
     @Test
     public void testOWLAtomTypeMappingReader_Reader() {
@@ -64,7 +71,8 @@ public class OWLAtomTypeMappingReaderTest extends CDKTestCase {
 
     @Test
     public void testReadAtomTypeMappings() {
-        OWLAtomTypeMappingReader reader = new OWLAtomTypeMappingReader(new StringReader(OWL_CONTENT));
+        OWLAtomTypeMappingReader reader =
+                new OWLAtomTypeMappingReader(new StringReader(OWL_CONTENT));
         Assert.assertNotNull(reader);
         Map<String, String> mappings = reader.readAtomTypeMappings();
         Assert.assertNotNull(mappings);
@@ -73,7 +81,8 @@ public class OWLAtomTypeMappingReaderTest extends CDKTestCase {
 
     @Test
     public void testReadAtomTypes_CDK2Sybyl() {
-        OWLAtomTypeMappingReader reader = new OWLAtomTypeMappingReader(new StringReader(OWL_CONTENT));
+        OWLAtomTypeMappingReader reader =
+                new OWLAtomTypeMappingReader(new StringReader(OWL_CONTENT));
         Assert.assertNotNull(reader);
         Map<String, String> mappings = reader.readAtomTypeMappings();
         Assert.assertNotNull(mappings);
@@ -87,5 +96,4 @@ public class OWLAtomTypeMappingReaderTest extends CDKTestCase {
         Assert.assertEquals("X", mappings.get("X"));
         Assert.assertEquals("C.3", mappings.get("C.sp3"));
     }
-
 }

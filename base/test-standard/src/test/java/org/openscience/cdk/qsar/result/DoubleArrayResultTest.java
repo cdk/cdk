@@ -20,12 +20,9 @@ package org.openscience.cdk.qsar.result;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.CDKTestCase;
 
-/**
- * @cdk.module test-standard
- */
+/** @cdk.module test-standard */
 public class DoubleArrayResultTest extends CDKTestCase {
 
     public DoubleArrayResultTest() {
@@ -94,5 +91,4 @@ public class DoubleArrayResultTest extends CDKTestCase {
         Assert.assertEquals(2, result.get(1), 0.000001);
         Assert.assertEquals(-1, result.get(2), 0.000001);
     }
-
 }

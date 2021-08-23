@@ -21,7 +21,6 @@ package org.openscience.cdk.validate;
 
 import java.util.Iterator;
 import java.util.Map;
-
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -30,15 +29,16 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * Validates the existence of references to dictionaries.
  *
- * @author   Egon Willighagen
+ * @author Egon Willighagen
  * @cdk.githash
- * @cdk.created  2003-03-28
+ * @cdk.created 2003-03-28
  */
 public class DictionaryValidator extends AbstractValidator {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(DictionaryValidator.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(DictionaryValidator.class);
 
-    private DictionaryDatabase  db;
+    private DictionaryDatabase db;
 
     public DictionaryValidator(DictionaryDatabase db) {
         this.db = db;
@@ -49,10 +49,15 @@ public class DictionaryValidator extends AbstractValidator {
         ValidationReport report = new ValidationReport();
         Map<Object, Object> properties = subject.getProperties();
         Iterator<Object> iter = properties.keySet().iterator();
-        ValidationTest noNamespace = new ValidationTest(subject,
-                "Dictionary Reference lacks a namespace indicating the dictionary.");
-        ValidationTest noDict = new ValidationTest(subject, "The referenced dictionary does not exist.");
-        ValidationTest noEntry = new ValidationTest(subject, "The referenced entry does not exist in the dictionary.");
+        ValidationTest noNamespace =
+                new ValidationTest(
+                        subject,
+                        "Dictionary Reference lacks a namespace indicating the dictionary.");
+        ValidationTest noDict =
+                new ValidationTest(subject, "The referenced dictionary does not exist.");
+        ValidationTest noEntry =
+                new ValidationTest(
+                        subject, "The referenced entry does not exist in the dictionary.");
         while (iter.hasNext()) {
             Object key = iter.next();
             if (key instanceof String) {
@@ -104,5 +109,4 @@ public class DictionaryValidator extends AbstractValidator {
         }
         return report;
     }
-
 }

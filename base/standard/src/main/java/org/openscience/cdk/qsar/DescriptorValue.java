@@ -19,7 +19,6 @@
 package org.openscience.cdk.qsar;
 
 import java.io.Serializable;
-
 import org.openscience.cdk.qsar.result.BooleanResult;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
@@ -35,47 +34,59 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  */
 public class DescriptorValue implements Serializable {
 
-    private static final long       serialVersionUID = -5672896059814842972L;
+    private static final long serialVersionUID = -5672896059814842972L;
 
     private DescriptorSpecification specification;
-    private String[]                parameterNames;
-    private Object[]                parameterSettings;
-    private IDescriptorResult       value;
-    private String[]                descriptorNames;
-    private Exception               exception;
+    private String[] parameterNames;
+    private Object[] parameterSettings;
+    private IDescriptorResult value;
+    private String[] descriptorNames;
+    private Exception exception;
 
     /**
-     * Construct a descriptor value object, representing the numeric values as well as parameters and provenance.
+     * Construct a descriptor value object, representing the numeric values as well as parameters
+     * and provenance.
      *
-     * This constructor should be used when there has been no error during the descriptor calculation
+     * <p>This constructor should be used when there has been no error during the descriptor
+     * calculation
      *
      * @param specification The specification
      * @param parameterNames The parameter names for the descriptors
-     * @param parameterSettings  The parameter settings
-     * @param value  The actual values
+     * @param parameterSettings The parameter settings
+     * @param value The actual values
      * @param descriptorNames The names of the values
      */
-    public DescriptorValue(DescriptorSpecification specification, String[] parameterNames, Object[] parameterSettings,
-            IDescriptorResult value, String[] descriptorNames) {
+    public DescriptorValue(
+            DescriptorSpecification specification,
+            String[] parameterNames,
+            Object[] parameterSettings,
+            IDescriptorResult value,
+            String[] descriptorNames) {
         this(specification, parameterNames, parameterSettings, value, descriptorNames, null);
-
     }
 
     /**
-     * Construct a descriptor value object, representing the numeric values as well as parameters and provenance.
+     * Construct a descriptor value object, representing the numeric values as well as parameters
+     * and provenance.
      *
-     * This constructor should be used when there has been an error during the descriptor calculation
+     * <p>This constructor should be used when there has been an error during the descriptor
+     * calculation
      *
      * @param specification The specification
      * @param parameterNames The parameter names for the descriptors
-     * @param parameterSettings  The parameter settings
-     * @param value  The actual values
+     * @param parameterSettings The parameter settings
+     * @param value The actual values
      * @param descriptorNames The names of the values
-     * @param exception The exception object that should have been caught if an error occurred during descriptor
-     * calculation
+     * @param exception The exception object that should have been caught if an error occurred
+     *     during descriptor calculation
      */
-    public DescriptorValue(DescriptorSpecification specification, String[] parameterNames, Object[] parameterSettings,
-            IDescriptorResult value, String[] descriptorNames, Exception exception) {
+    public DescriptorValue(
+            DescriptorSpecification specification,
+            String[] parameterNames,
+            Object[] parameterSettings,
+            IDescriptorResult value,
+            String[] descriptorNames,
+            Exception exception) {
         this.specification = specification;
         this.parameterNames = parameterNames;
         this.parameterSettings = parameterSettings;
@@ -106,21 +117,22 @@ public class DescriptorValue implements Serializable {
 
     /**
      * Returns an array of names for each descriptor value calculated.
-     * 
-     * Many descriptors return multiple values. In general it is useful for the
-     * descriptor to indicate the names for each value. When a descriptor creates
-     * a <code>DescriptorValue</code> object, it should supply an array of names equal
-     * in length to the number of descriptor calculated.
-     * 
-     * In many cases, these names can be as simple as X0, X1, ..., XN where X is a prefix
-     * and 0, 1, ..., N are the indices. On the other hand it is also possible to return
-     * other arbitrary names, which should be documented in the JavaDocs for the descriptor
-     * (e.g., the CPSA descriptor).
-     * 
-     * Note that by default if a descriptor returns a single value (such as {@link org.openscience.cdk.qsar.descriptors.molecular.ALOGPDescriptor}
-     * the return array will have a single element
-     * 
-     * In case a descriptor creates a <code>DescriptorValue</code> object with no names, this
+     *
+     * <p>Many descriptors return multiple values. In general it is useful for the descriptor to
+     * indicate the names for each value. When a descriptor creates a <code>DescriptorValue</code>
+     * object, it should supply an array of names equal in length to the number of descriptor
+     * calculated.
+     *
+     * <p>In many cases, these names can be as simple as X0, X1, ..., XN where X is a prefix and 0,
+     * 1, ..., N are the indices. On the other hand it is also possible to return other arbitrary
+     * names, which should be documented in the JavaDocs for the descriptor (e.g., the CPSA
+     * descriptor).
+     *
+     * <p>Note that by default if a descriptor returns a single value (such as {@link
+     * org.openscience.cdk.qsar.descriptors.molecular.ALOGPDescriptor} the return array will have a
+     * single element
+     *
+     * <p>In case a descriptor creates a <code>DescriptorValue</code> object with no names, this
      * method will generate a set of names based on the {@link DescriptorSpecification} object
      * supplied at instantiation.
      *
@@ -129,7 +141,9 @@ public class DescriptorValue implements Serializable {
     public String[] getNames() {
         if (descriptorNames == null || descriptorNames.length == 0) {
             String title = specification.getImplementationTitle();
-            if (value instanceof BooleanResult || value instanceof DoubleResult || value instanceof IntegerResult) {
+            if (value instanceof BooleanResult
+                    || value instanceof DoubleResult
+                    || value instanceof IntegerResult) {
                 descriptorNames = new String[1];
                 descriptorNames[0] = title;
             } else {
@@ -140,11 +154,9 @@ public class DescriptorValue implements Serializable {
                     ndesc = value.length();
                 }
                 descriptorNames = new String[ndesc];
-                for (int i = 0; i < ndesc; i++)
-                    descriptorNames[i] = title + i;
+                for (int i = 0; i < ndesc; i++) descriptorNames[i] = title + i;
             }
         }
         return descriptorNames;
     }
-
 }

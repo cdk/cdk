@@ -22,7 +22,6 @@
 package org.openscience.cdk.io;
 
 import java.io.InputStream;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -30,9 +29,7 @@ import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 
-/**
- * @cdk.module test-smiles
- */
+/** @cdk.module test-smiles */
 public class MoSSOutputReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass
@@ -55,8 +52,12 @@ public class MoSSOutputReaderTest extends SimpleChemObjectReaderTest {
         moleculeSet = reader.read(moleculeSet);
         Assert.assertEquals(19, moleculeSet.getAtomContainerCount());
         for (IAtomContainer mol : moleculeSet.atomContainers()) {
-            Assert.assertEquals(Integer.valueOf(mol.getProperty("atomCount").toString()).intValue(), mol.getAtomCount());
-            Assert.assertEquals(Integer.valueOf(mol.getProperty("bondCount").toString()).intValue(), mol.getBondCount());
+            Assert.assertEquals(
+                    Integer.valueOf(mol.getProperty("atomCount").toString()).intValue(),
+                    mol.getAtomCount());
+            Assert.assertEquals(
+                    Integer.valueOf(mol.getProperty("bondCount").toString()).intValue(),
+                    mol.getBondCount());
         }
     }
 
@@ -67,11 +68,23 @@ public class MoSSOutputReaderTest extends SimpleChemObjectReaderTest {
         MoSSOutputReader reader = new MoSSOutputReader(ins);
         IAtomContainerSet moleculeSet = new AtomContainerSet();
         moleculeSet = reader.read(moleculeSet);
-        Assert.assertEquals(5.06, Double
-                .valueOf(moleculeSet.getAtomContainer(0).getProperty("focusSupport").toString()).doubleValue(), 0.01);
-        Assert.assertEquals(1.74,
-                Double.valueOf(moleculeSet.getAtomContainer(0).getProperty("complementSupport").toString())
-                        .doubleValue(), 0.01);
+        Assert.assertEquals(
+                5.06,
+                Double.valueOf(
+                                moleculeSet
+                                        .getAtomContainer(0)
+                                        .getProperty("focusSupport")
+                                        .toString())
+                        .doubleValue(),
+                0.01);
+        Assert.assertEquals(
+                1.74,
+                Double.valueOf(
+                                moleculeSet
+                                        .getAtomContainer(0)
+                                        .getProperty("complementSupport")
+                                        .toString())
+                        .doubleValue(),
+                0.01);
     }
-
 }

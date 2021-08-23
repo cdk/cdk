@@ -18,6 +18,9 @@
  */
 package org.openscience.cdk.reaction.type;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
@@ -36,30 +39,21 @@ import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 /**
  * TestSuite that runs a test for the ElectronImpactSDBReactionTest.
  *
  * @cdk.module test-reaction
  */
-
 public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
 
     private IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
-    /**
-     *  The JUnit setup method
-     */
+    /** The JUnit setup method */
     public ElectronImpactSDBReactionTest() throws Exception {
         setReaction(ElectronImpactSDBReaction.class);
     }
 
-    /**
-     *  The JUnit setup method
-     */
+    /** The JUnit setup method */
     @Test
     public void testElectronImpactSDBReaction() throws Exception {
         IReactionProcess type = new ElectronImpactSDBReaction();
@@ -67,11 +61,11 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
     }
 
     /**
-     *  A unit test for JUnit.
+     * A unit test for JUnit.
      *
-     *  FIXME REAC: not recognized IAtomType =C*
+     * <p>FIXME REAC: not recognized IAtomType =C*
      *
-     * @return    Description of the Return Value
+     * @return Description of the Return Value
      */
     @Test
     @Override
@@ -86,7 +80,9 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
             IBond bond = (IBond) bonds.next();
             IAtom atom1 = bond.getBegin();
             IAtom atom2 = bond.getEnd();
-            if (bond.getOrder() == IBond.Order.SINGLE && atom1.getSymbol().equals("C") && atom2.getSymbol().equals("C")) {
+            if (bond.getOrder() == IBond.Order.SINGLE
+                    && atom1.getSymbol().equals("C")
+                    && atom2.getSymbol().equals("C")) {
                 bond.setFlag(CDKConstants.REACTIVE_CENTER, true);
                 atom1.setFlag(CDKConstants.REACTIVE_CENTER, true);
                 atom2.setFlag(CDKConstants.REACTIVE_CENTER, true);
@@ -107,12 +103,17 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
         Assert.assertEquals(2, setOfReactions.getReactionCount());
         Assert.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
 
-        IAtomContainer molecule1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);//[H][C+]=C([H])[H]
+        IAtomContainer molecule1 =
+                setOfReactions
+                        .getReaction(0)
+                        .getProducts()
+                        .getAtomContainer(0); // [H][C+]=C([H])[H]
 
         Assert.assertEquals(1, molecule1.getAtom(1).getFormalCharge().intValue());
         Assert.assertEquals(0, molecule1.getSingleElectronCount());
 
-        IAtomContainer molecule2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);//[H][C*]([H])[H]
+        IAtomContainer molecule2 =
+                setOfReactions.getReaction(0).getProducts().getAtomContainer(1); // [H][C*]([H])[H]
 
         Assert.assertEquals(1, molecule2.getSingleElectronCount());
         Assert.assertEquals(1, molecule2.getConnectedSingleElectronsCount(molecule2.getAtom(0)));
@@ -121,20 +122,24 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
 
         Assert.assertEquals(2, setOfReactions.getReaction(1).getProductCount());
 
-        molecule1 = setOfReactions.getReaction(1).getProducts().getAtomContainer(0);//[H]C=[C*]([H])[H]
+        molecule1 =
+                setOfReactions
+                        .getReaction(1)
+                        .getProducts()
+                        .getAtomContainer(0); // [H]C=[C*]([H])[H]
         Assert.assertEquals(1, molecule1.getConnectedSingleElectronsCount(molecule1.getAtom(1)));
 
-        molecule2 = setOfReactions.getReaction(1).getProducts().getAtomContainer(1);//[H][C+]([H])[H]
+        molecule2 =
+                setOfReactions.getReaction(1).getProducts().getAtomContainer(1); // [H][C+]([H])[H]
 
         Assert.assertEquals(0, molecule2.getSingleElectronCount());
         Assert.assertEquals(1, molecule2.getAtom(0).getFormalCharge().intValue());
-
     }
 
     /**
      * Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
      *
-     * @param molecule          The IAtomContainer to analyze
+     * @param molecule The IAtomContainer to analyze
      * @throws CDKException
      */
     private void makeSureAtomTypesAreRecognized(IAtomContainer molecule) throws Exception {
@@ -143,7 +148,9 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
         while (atoms.hasNext()) {
             IAtom nextAtom = atoms.next();
-            Assert.assertNotNull("Missing atom type for: " + nextAtom, matcher.findMatchingAtomType(molecule, nextAtom));
+            Assert.assertNotNull(
+                    "Missing atom type for: " + nextAtom,
+                    matcher.findMatchingAtomType(molecule, nextAtom));
         }
     }
 
@@ -153,9 +160,10 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
      * @return The IAtomContainerSet
      */
     private IAtomContainerSet getExampleReactants() {
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
 
-        IAtomContainer reactant = builder.newInstance(IAtomContainer.class);//Smiles("C=CC")
+        IAtomContainer reactant = builder.newInstance(IAtomContainer.class); // Smiles("C=CC")
         reactant.addAtom(builder.newInstance(IAtom.class, "C"));
         reactant.addAtom(builder.newInstance(IAtom.class, "C"));
         reactant.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -173,8 +181,7 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
     }
 
     /**
-     * Get the expected set of molecules.
-     * TODO:reaction. Set the products
+     * Get the expected set of molecules. TODO:reaction. Set the products
      *
      * @return The IAtomContainerSet
      */

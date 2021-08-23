@@ -24,18 +24,19 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * This query bond indicates a particular geometric stereo configuration.
  *
- * @cdk.module  smarts
+ * @cdk.module smarts
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
 @Deprecated
 public class StereoBond extends SMARTSBond {
 
-    private final boolean   unspecified;
+    private final boolean unspecified;
     private final Direction direction;
 
     public enum Direction {
-        UP, DOWN
+        UP,
+        DOWN
     }
 
     public StereoBond(IChemObjectBuilder builder, Direction direction, boolean unspecified) {
@@ -54,10 +55,8 @@ public class StereoBond extends SMARTSBond {
     }
 
     public Direction direction(IAtom atom) {
-        if (getBegin().equals(atom))
-            return direction;
-        else if (getEnd().equals(atom))
-            return inv(direction);
+        if (getBegin().equals(atom)) return direction;
+        else if (getEnd().equals(atom)) return inv(direction);
         throw new IllegalArgumentException("atom is not a memeber of this bond");
     }
 

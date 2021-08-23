@@ -25,11 +25,10 @@ package org.openscience.cdk;
 import javax.vecmath.Point3d;
 
 /**
- * A molecule which looks like a cube. The center
- * of the cube is located at (0,0,0) and the corners have a length of 2.
+ * A molecule which looks like a cube. The center of the cube is located at (0,0,0) and the corners
+ * have a length of 2.
  *
  * @cdk.module test-extra
- *
  * @author Edgar Luttmann &lt;edgar@uni-paderborn.de&gt;
  * @cdk.created 2001-08-09
  */

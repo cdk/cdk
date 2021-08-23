@@ -27,9 +27,7 @@ import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Iterator;
-
 import javax.vecmath.Point3d;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -45,22 +43,21 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.module io
  * @cdk.githash
  * @cdk.iooptions
- *
  * @author Bradley A. Smith &lt;bradley@baysmith.com&gt;
- * @author  J. Daniel Gezelter
- * @author  Egon Willighagen
+ * @author J. Daniel Gezelter
+ * @author Egon Willighagen
  */
 public class XYZWriter extends DefaultChemObjectWriter {
 
-    private BufferedWriter      writer;
+    private BufferedWriter writer;
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(XYZWriter.class);
-    private FormatStringBuffer  fsb;
+    private FormatStringBuffer fsb;
 
     /**
-    * Constructor.
-    *
-    * @param out the stream to write the XYZ file to.
-    */
+     * Constructor.
+     *
+     * @param out the stream to write the XYZ file to.
+     */
     public XYZWriter(Writer out) {
         fsb = new FormatStringBuffer("%-8.6f");
         try {
@@ -100,9 +97,7 @@ public class XYZWriter extends DefaultChemObjectWriter {
         setWriter(new OutputStreamWriter(output));
     }
 
-    /**
-     * Flushes the output and closes this object.
-     */
+    /** Flushes the output and closes this object. */
     @Override
     public void close() throws IOException {
         writer.close();
@@ -134,9 +129,10 @@ public class XYZWriter extends DefaultChemObjectWriter {
     }
 
     /**
-    * writes a single frame in XYZ format to the Writer.
-    * @param mol the Molecule to write
-    */
+     * writes a single frame in XYZ format to the Writer.
+     *
+     * @param mol the Molecule to write
+     */
     public void writeMolecule(IAtomContainer mol) throws IOException {
 
         String st = "";
@@ -162,10 +158,26 @@ public class XYZWriter extends DefaultChemObjectWriter {
 
                 Point3d p3 = a.getPoint3d();
                 if (p3 != null) {
-                    st = st + "\t" + (p3.x < 0 ? "" : " ") + fsb.format(p3.x) + "\t" + (p3.y < 0 ? "" : " ")
-                            + fsb.format(p3.y) + "\t" + (p3.z < 0 ? "" : " ") + fsb.format(p3.z);
+                    st =
+                            st
+                                    + "\t"
+                                    + (p3.x < 0 ? "" : " ")
+                                    + fsb.format(p3.x)
+                                    + "\t"
+                                    + (p3.y < 0 ? "" : " ")
+                                    + fsb.format(p3.y)
+                                    + "\t"
+                                    + (p3.z < 0 ? "" : " ")
+                                    + fsb.format(p3.z);
                 } else {
-                    st = st + "\t " + fsb.format(0.0) + "\t " + fsb.format(0.0) + "\t " + fsb.format(0.0);
+                    st =
+                            st
+                                    + "\t "
+                                    + fsb.format(0.0)
+                                    + "\t "
+                                    + fsb.format(0.0)
+                                    + "\t "
+                                    + fsb.format(0.0);
                 }
 
                 if (writecharge) {
@@ -175,7 +187,6 @@ public class XYZWriter extends DefaultChemObjectWriter {
 
                 writer.write(st, 0, st.length());
                 writer.write('\n');
-
             }
         } catch (IOException e) {
             //            throw e;

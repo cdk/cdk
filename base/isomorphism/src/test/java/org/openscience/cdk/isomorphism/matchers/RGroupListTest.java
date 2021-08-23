@@ -27,13 +27,12 @@ package org.openscience.cdk.isomorphism.matchers;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 
 /**
- * Checks the functionality of the {@link org.openscience.cdk.isomorphism.matchers.RGroupList},
- * in particular setting valid 'occurrence' strings.
+ * Checks the functionality of the {@link org.openscience.cdk.isomorphism.matchers.RGroupList}, in
+ * particular setting valid 'occurrence' strings.
  *
  * @cdk.module test-isomorphism
  */
@@ -73,5 +72,4 @@ public class RGroupListTest extends CDKTestCase {
         RGroupList rgrLst = new RGroupList(1);
         rgrLst.setOccurrence("<0");
     }
-
 }

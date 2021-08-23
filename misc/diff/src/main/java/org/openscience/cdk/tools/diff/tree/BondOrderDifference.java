@@ -21,15 +21,16 @@ package org.openscience.cdk.tools.diff.tree;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
- * {@link org.openscience.cdk.tools.diff.tree.IDifference} between two {@link org.openscience.cdk.interfaces.IBond.Order}s.
+ * {@link org.openscience.cdk.tools.diff.tree.IDifference} between two {@link
+ * org.openscience.cdk.interfaces.IBond.Order}s.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module diff
  * @cdk.githash
  */
 public class BondOrderDifference implements IDifference {
 
-    private String      name;
+    private String name;
     private IBond.Order first;
     private IBond.Order second;
 
@@ -42,10 +43,10 @@ public class BondOrderDifference implements IDifference {
     /**
      * Constructs a new {@link IDifference} object.
      *
-     * @param name   a name reflecting the nature of the created {@link IDifference}
-     * @param first  the first object to compare
+     * @param name a name reflecting the nature of the created {@link IDifference}
+     * @param first the first object to compare
      * @param second the second object to compare
-     * @return       an {@link IDifference} reflecting the differences between the first and second object
+     * @return an {@link IDifference} reflecting the differences between the first and second object
      */
     public static IDifference construct(String name, IBond.Order first, IBond.Order second) {
         if (first == second) {

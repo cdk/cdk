@@ -23,9 +23,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
- * @cdk.module test-dict
- */
+/** @cdk.module test-dict */
 public class EntryReactTest extends AbstractEntryTest {
 
     @Before
@@ -47,5 +45,4 @@ public class EntryReactTest extends AbstractEntryTest {
         entry.setID("identifier");
         Assert.assertEquals("identifier", entry.getID());
     }
-
 }

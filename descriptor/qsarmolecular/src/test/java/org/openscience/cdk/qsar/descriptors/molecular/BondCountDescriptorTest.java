@@ -23,9 +23,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
@@ -33,7 +33,6 @@ import org.openscience.cdk.smiles.SmilesParser;
  *
  * @cdk.module test-qsarmolecular
  */
-
 public class BondCountDescriptorTest extends MolecularDescriptorTest {
 
     private static final SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
@@ -51,8 +50,9 @@ public class BondCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testSingleBondCount() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        descriptor.setParameters(new String[]{"s"});
+    public void testSingleBondCount()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
+        descriptor.setParameters(new String[] {"s"});
         IAtomContainer mol = sp.parseSmiles("CCO"); // ethanol
         Assert.assertEquals(2, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
         mol = sp.parseSmiles("C=C=C");
@@ -60,8 +60,9 @@ public class BondCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testDoubleBondCount() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        descriptor.setParameters(new String[]{"d"});
+    public void testDoubleBondCount()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
+        descriptor.setParameters(new String[] {"d"});
         IAtomContainer mol = sp.parseSmiles("CCO"); // ethanol
         Assert.assertEquals(0, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
         mol = sp.parseSmiles("C=C=C");
@@ -70,7 +71,6 @@ public class BondCountDescriptorTest extends MolecularDescriptorTest {
 
     /**
      * The default setting should be to count *all* bonds.
-     *
      *
      * @cdk.bug 1651263
      */

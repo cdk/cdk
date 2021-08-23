@@ -22,25 +22,28 @@
  */
 package org.openscience.cdk.layout;
 
+import java.util.List;
+import javax.vecmath.Point2d;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import javax.vecmath.Point2d;
-import java.util.List;
-
 /**
- * This is a wrapper class for some existing methods in AtomPlacer. It helps you
- * to layout 2D and 3D coordinates for hydrogen atoms added to a molecule which
- * already has coordinates for the rest of the atoms.
+ * This is a wrapper class for some existing methods in AtomPlacer. It helps you to layout 2D and 3D
+ * coordinates for hydrogen atoms added to a molecule which already has coordinates for the rest of
+ * the atoms.
  *
- * <blockquote><pre>
+ * <blockquote>
+ *
+ * <pre>
  * IAtomContainer container      = ...;
  * HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
  * hydrogenPlacer.placeHydrogens2D(container, 1.5);
- * </pre></blockquote>
+ * </pre>
+ *
+ * </blockquote>
  *
  * @author Christoph Steinbeck
  * @cdk.created 2003-08-06
@@ -51,12 +54,13 @@ import java.util.List;
 public final class HydrogenPlacer {
 
     /** Class logger. */
-    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(HydrogenPlacer.class);
+    private static final ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(HydrogenPlacer.class);
 
     /**
      * Place all hydrogens connected to atoms which have already been laid out.
      *
-     * @param container  atom container
+     * @param container atom container
      * @param bondLength bond length to user
      */
     public void placeHydrogens2D(final IAtomContainer container, final double bondLength) {
@@ -71,15 +75,12 @@ public final class HydrogenPlacer {
     }
 
     /**
-     * Place hydrogens connected to the given atom using the average bond length
-     * in the container.
+     * Place hydrogens connected to the given atom using the average bond length in the container.
      *
      * @param container atom container of which <i>atom</i> is a member
-     * @param atom      the atom of which to place connected hydrogens
-     * @throws IllegalArgumentException if the <i>atom</i> does not have 2d
-     *                                  coordinates
-     * @see #placeHydrogens2D(org.openscience.cdk.interfaces.IAtomContainer,
-     *      double)
+     * @param atom the atom of which to place connected hydrogens
+     * @throws IllegalArgumentException if the <i>atom</i> does not have 2d coordinates
+     * @see #placeHydrogens2D(org.openscience.cdk.interfaces.IAtomContainer, double)
      */
     public void placeHydrogens2D(IAtomContainer container, IAtom atom) {
         double bondLength = GeometryUtil.getBondLengthAverage(container);
@@ -87,23 +88,24 @@ public final class HydrogenPlacer {
     }
 
     /**
-     * Place hydrogens connected to the provided atom <i>atom</i> using the
-     * specified <i>bondLength</i>.
+     * Place hydrogens connected to the provided atom <i>atom</i> using the specified
+     * <i>bondLength</i>.
      *
-     * @param container  atom container
+     * @param container atom container
      * @param bondLength bond length to user
-     * @throws IllegalArgumentException thrown if the <i>atom</i> or
-     *                                  <i>container</i> was null or the atom
-     *                                  has connected atoms which have not been
-     *                                  placed.
+     * @throws IllegalArgumentException thrown if the <i>atom</i> or <i>container</i> was null or
+     *     the atom has connected atoms which have not been placed.
      */
     public void placeHydrogens2D(IAtomContainer container, IAtom atom, double bondLength) {
 
-        if (container == null) throw new IllegalArgumentException("cannot place hydrogens, no container provided");
+        if (container == null)
+            throw new IllegalArgumentException("cannot place hydrogens, no container provided");
         if (atom.getPoint2d() == null)
-            throw new IllegalArgumentException("cannot place hydrogens on atom without coordinates");
+            throw new IllegalArgumentException(
+                    "cannot place hydrogens on atom without coordinates");
 
-        logger.debug("placing hydrogens connected to atom ", atom.getSymbol(), ": ", atom.getPoint2d());
+        logger.debug(
+                "placing hydrogens connected to atom ", atom.getSymbol(), ": ", atom.getPoint2d());
         logger.debug("bond length", bondLength);
 
         AtomPlacer atomPlacer = new AtomPlacer();
@@ -119,8 +121,9 @@ public final class HydrogenPlacer {
                 if (conAtom.getSymbol().equals("H")) {
                     unplaced.addAtom(conAtom);
                 } else {
-                    throw new IllegalArgumentException("cannot place hydrogens, atom has connected"
-                            + " non-hydrogens without coordinates");
+                    throw new IllegalArgumentException(
+                            "cannot place hydrogens, atom has connected"
+                                    + " non-hydrogens without coordinates");
                 }
             } else {
                 placed.addAtom(conAtom);

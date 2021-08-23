@@ -19,18 +19,15 @@
 package org.openscience.cdk.renderer.color;
 
 import java.awt.Color;
-
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * Class defining the color which with atoms are colored.
  *
- * <p>This scheme used the atomic partial charge to determine
- * the Atom's color:
- * uncharged atoms are colored white, positively charged
- * atoms are blue, and negatively charge atoms are red.
+ * <p>This scheme used the atomic partial charge to determine the Atom's color: uncharged atoms are
+ * colored white, positively charged atoms are blue, and negatively charge atoms are red.
  *
- * @cdk.module  render
+ * @cdk.module render
  * @cdk.githash
  * @cdk.keyword atom coloring, partial charges
  */
@@ -39,8 +36,8 @@ public class PartialAtomicChargeColors implements IAtomColorer {
     /**
      * Returns the a color reflecting the given atom's partial charge.
      *
-     * @param atom         IAtom to get a color for
-     * @return             the color for the given atom.
+     * @param atom IAtom to get a color for
+     * @return the color for the given atom.
      */
     @Override
     public Color getAtomColor(IAtom atom) {
@@ -48,13 +45,13 @@ public class PartialAtomicChargeColors implements IAtomColorer {
     }
 
     /**
-     * Returns the a color reflecting the given atom's partial charge, or
-     * defaults to the given color if no color is defined.
+     * Returns the a color reflecting the given atom's partial charge, or defaults to the given
+     * color if no color is defined.
      *
-     * @param atom         IAtom to get a color for
-     * @param defaultColor Color returned if this scheme does not define
-     *                     a color for the passed IAtom
-     * @return             the color for the given atom.
+     * @param atom IAtom to get a color for
+     * @param defaultColor Color returned if this scheme does not define a color for the passed
+     *     IAtom
+     * @return the color for the given atom.
      */
     @Override
     public Color getAtomColor(IAtom atom, Color defaultColor) {

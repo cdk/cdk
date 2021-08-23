@@ -34,22 +34,21 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * A fragment count descriptor that uses e-state fragments.
- * 
- * Traditionally the e-state descriptors identify the relevant fragments and
- * then evaluate the actual e-state value. However it has been
- * <a href="http://www.mdpi.org/molecules/papers/91201004.pdf">shown</a> in {@cdk.cite BUTINA2004}
- * that simply using the <i>counts</i> of the e-state fragments can lead to QSAR models
- * that exhibit similar performance to those built using the actual e-state indices.
- * 
- * Atom typing and aromaticity perception should be performed prior to calling this
- * descriptor. The atom type definitions are taken from {@cdk.cite HALL1995}.
- * The SMARTS definitions were obtained from <a href="http://www.rdkit.org">RDKit</a>.
- * 
- * The descriptor returns an integer array result of 79 values with the
- * following names (see <a href="http://www.edusoft-lc.com/molconn/manuals/350/appV.html">
- * here</a> for the corresponding chemical groups).
- * 
- * 
+ *
+ * <p>Traditionally the e-state descriptors identify the relevant fragments and then evaluate the
+ * actual e-state value. However it has been <a
+ * href="http://www.mdpi.org/molecules/papers/91201004.pdf">shown</a> in {@cdk.cite BUTINA2004} that
+ * simply using the <i>counts</i> of the e-state fragments can lead to QSAR models that exhibit
+ * similar performance to those built using the actual e-state indices.
+ *
+ * <p>Atom typing and aromaticity perception should be performed prior to calling this descriptor.
+ * The atom type definitions are taken from {@cdk.cite HALL1995}. The SMARTS definitions were
+ * obtained from <a href="http://www.rdkit.org">RDKit</a>.
+ *
+ * <p>The descriptor returns an integer array result of 79 values with the following names (see <a
+ * href="http://www.edusoft-lc.com/molconn/manuals/350/appV.html">here</a> for the corresponding
+ * chemical groups).
+ *
  * <table border=1 cellpadding=5>
  * <caption>SMARTS patterns used by the descriptor</caption>
  * <thead>
@@ -304,7 +303,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:kierHallSmarts
  */
-public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
+public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor
+        implements IMolecularDescriptor {
 
     private static String[] names;
     private static final SmartsPattern[] SMARTS = EStateFragments.getPatterns();
@@ -312,21 +312,19 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
     public KierHallSmartsDescriptor() {
         String[] tmp = EStateFragments.getNames();
         names = new String[tmp.length];
-        for (int i = 0; i < tmp.length; i++)
-            names[i] = "khs." + tmp[i];
+        for (int i = 0; i < tmp.length; i++) names[i] = "khs." + tmp[i];
     }
 
     /**
-     * Returns a <code>Map</code> which specifies which descriptor
-     * is implemented by this class.
-     * 
-     * These fields are used in the map:
+     * Returns a <code>Map</code> which specifies which descriptor is implemented by this class.
+     *
+     * <p>These fields are used in the map:
+     *
      * <ul>
-     * <li>Specification-Reference: refers to an entry in a unique dictionary
-     * <li>Implementation-Title: anything
-     * <li>Implementation-Identifier: a unique identifier for this version of
-     * this class
-     * <li>Implementation-Vendor: CDK, JOELib, or anything else
+     *   <li>Specification-Reference: refers to an entry in a unique dictionary
+     *   <li>Implementation-Title: anything
+     *   <li>Implementation-Identifier: a unique identifier for this version of this class
+     *   <li>Implementation-Vendor: CDK, JOELib, or anything else
      * </ul>
      *
      * @return An object containing the descriptor specification
@@ -334,16 +332,16 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#kierHallSmarts", this.getClass()
-                                                                                                         .getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#kierHallSmarts",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     /**
      * Sets the parameters attribute of the descriptor.
      *
      * @param params The new parameters value
-     * @throws org.openscience.cdk.exception.CDKException
-     *          if any parameters are specified
+     * @throws org.openscience.cdk.exception.CDKException if any parameters are specified
      * @see #getParameters
      */
     @Override
@@ -369,10 +367,14 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
         IntegerArrayResult result = new IntegerArrayResult();
-        for (int i = 0; i < SMARTS.length; i++)
-            result.add((int) Double.NaN);
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result,
-                                   getDescriptorNames(), e);
+        for (int i = 0; i < SMARTS.length; i++) result.add((int) Double.NaN);
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                result,
+                getDescriptorNames(),
+                e);
     }
 
     /**
@@ -384,15 +386,15 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
         if (container == null || container.getAtomCount() == 0) {
-            return getDummyDescriptorValue(new CDKException("Container was null or else had no atoms"));
+            return getDummyDescriptorValue(
+                    new CDKException("Container was null or else had no atoms"));
         }
 
         IAtomContainer atomContainer;
         try {
             atomContainer = (IAtomContainer) container.clone();
             for (IAtom atom : atomContainer.atoms()) {
-                if (atom.getImplicitHydrogenCount() == null)
-                    atom.setImplicitHydrogenCount(0);
+                if (atom.getImplicitHydrogenCount() == null) atom.setImplicitHydrogenCount(0);
             }
             atomContainer = AtomContainerManipulator.removeHydrogens(atomContainer);
         } catch (CloneNotSupportedException e) {
@@ -406,23 +408,28 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
         }
 
         IntegerArrayResult result = new IntegerArrayResult();
-        for (Integer i : counts)
-            result.add(i);
+        for (Integer i : counts) result.add(i);
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result,
-                                   getDescriptorNames());
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                result,
+                getDescriptorNames());
     }
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * 
-     * The return value from this method really indicates what type of result will
-     * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
-     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
-     * allows you to do the same thing, without actually calculating the descriptor.
      *
-     * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
-     *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
+     * <p>The return value from this method really indicates what type of result will be obtained
+     * from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
+     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object;
+     * this method allows you to do the same thing, without actually calculating the descriptor.
+     *
+     * @return an object that implements the {@link
+     *     org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating the actual type
+     *     of values returned by the descriptor in the {@link
+     *     org.openscience.cdk.qsar.DescriptorValue} object
      */
     @Override
     public IDescriptorResult getDescriptorResultType() {

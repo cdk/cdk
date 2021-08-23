@@ -22,6 +22,7 @@
  *  */
 package org.openscience.cdk.io;
 
+import java.io.InputStream;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -34,13 +35,10 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.silent.AtomContainer;
 
-import java.io.InputStream;
-
 /**
  * TestCase for the reading MDL mol files using one test file.
  *
  * @cdk.module test-io
- *
  * @see org.openscience.cdk.io.MDLReader
  */
 public class SDFReaderTest extends SimpleChemObjectReaderTest {
@@ -223,5 +221,4 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertNotNull(m);
         Assert.assertEquals(">1", m.getProperty("IC50_uM"));
     }
-
 }

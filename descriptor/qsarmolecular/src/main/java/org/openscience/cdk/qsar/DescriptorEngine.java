@@ -18,21 +18,6 @@
  */
 package org.openscience.cdk.qsar;
 
-import nu.xom.Attribute;
-import nu.xom.Element;
-import nu.xom.Elements;
-import org.openscience.cdk.IImplementationSpecification;
-import org.openscience.cdk.dict.Dictionary;
-import org.openscience.cdk.dict.DictionaryDatabase;
-import org.openscience.cdk.dict.Entry;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.tools.ILoggingTool;
-import org.openscience.cdk.tools.LoggingToolFactory;
-
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -48,28 +33,44 @@ import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import nu.xom.Attribute;
+import nu.xom.Element;
+import nu.xom.Elements;
+import org.openscience.cdk.IImplementationSpecification;
+import org.openscience.cdk.dict.Dictionary;
+import org.openscience.cdk.dict.DictionaryDatabase;
+import org.openscience.cdk.dict.Entry;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * A class that provides access to automatic descriptor calculation and more.
- * 
- * <p>The aim of this class is to provide an easy to use interface to automatically evaluate
- * all the CDK descriptors for a given molecule. Note that at a given time this class
- * will evaluate all <i>atomic</i> or <i>molecular</i> descriptors but not both.
- * 
+ *
+ * <p>The aim of this class is to provide an easy to use interface to automatically evaluate all the
+ * CDK descriptors for a given molecule. Note that at a given time this class will evaluate all
+ * <i>atomic</i> or <i>molecular</i> descriptors but not both.
+ *
  * <p>The available descriptors are determined by scanning all the jar files in the users CLASSPATH
  * and selecting classes that belong to the CDK QSAR atomic or molecular descriptors package.
- * 
+ *
  * <p>An example of its usage would be
+ *
  * <pre>
  * Molecule someMolecule;
  * ...
  * DescriptorEngine descriptoEngine = new DescriptorEngine(DescriptorEngine.MOLECULAR, null);
  * descriptorEngine.process(someMolecule);
  * </pre>
- * 
+ *
  * <p>The class allows the user to obtain a List of all the available descriptors in terms of their
- * Java class names as well as instances of each descriptor class.   For each descriptor, it is possible to
- * obtain its classification as described in the CDK descriptor-algorithms OWL dictionary.
+ * Java class names as well as instances of each descriptor class. For each descriptor, it is
+ * possible to obtain its classification as described in the CDK descriptor-algorithms OWL
+ * dictionary.
  *
  * @cdk.created 2004-12-02
  * @cdk.module qsarmolecular
@@ -80,38 +81,39 @@ import java.util.jar.JarFile;
  */
 public class DescriptorEngine {
 
-    private static String                      rdfNS       = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+    private static String rdfNS = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 
-    private Dictionary                         dict        = null;
-    private List<String>                       classNames  = new ArrayList<String>(200);
-    private List<IDescriptor>                  descriptors = new ArrayList<IDescriptor>(200);
-    private List<IImplementationSpecification> speclist    = null;
-    private static ILoggingTool                logger      = LoggingToolFactory
-                                                                   .createLoggingTool(DescriptorEngine.class);
-    private final IChemObjectBuilder           builder;
+    private Dictionary dict = null;
+    private List<String> classNames = new ArrayList<String>(200);
+    private List<IDescriptor> descriptors = new ArrayList<IDescriptor>(200);
+    private List<IImplementationSpecification> speclist = null;
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(DescriptorEngine.class);
+    private final IChemObjectBuilder builder;
 
     /**
      * Instantiates the DescriptorEngine.
-     * 
-     * This constructor instantiates the engine but does not perform any initialization. As a result calling
-     * the <code>process()</code> method will fail. To use the engine via this constructor you should use
-     * the following code
-     * 
+     *
+     * <p>This constructor instantiates the engine but does not perform any initialization. As a
+     * result calling the <code>process()</code> method will fail. To use the engine via this
+     * constructor you should use the following code
+     *
      * <pre>
      * List classNames = DescriptorEngine.getDescriptorClassNameByPackage("org.openscience.cdk.qsar.descriptors.molecular",
      *                                                          null);
      * DescriptorEngine engine = DescriptorEngine(classNames);
-     * 
+     *
      * List instances =  engine.instantiateDescriptors(classNames);
      * List specs = engine.initializeSpecifications(instances)
      * engine.setDescriptorInstances(instances);
      * engine.setDescriptorSpecifications(specs);
-     * 
+     *
      * engine.process(someAtomContainer);
      * </pre>
-     * 
-     * This approach allows one to use find classes using the interface based approach ({@link #getDescriptorClassNameByInterface(String, String[])}.
-     * If you use this method it is preferable to specify the jar files to examine
+     *
+     * This approach allows one to use find classes using the interface based approach ({@link
+     * #getDescriptorClassNameByInterface(String, String[])}. If you use this method it is
+     * preferable to specify the jar files to examine
      */
     public DescriptorEngine(List<String> classNames, IChemObjectBuilder builder) {
         this.classNames = classNames;
@@ -125,15 +127,15 @@ public class DescriptorEngine {
     }
 
     /**
-     * Create a descriptor engine for all descriptor types. Descriptors are
-     * loaded using the service provider mechanism. To include custom
-     * descriptors one should declare in {@code META-INF/services} a file named
-     * as the interface you are providing (e.g. {@code org.openscience.cdk.qsar.IMolecularDescriptor}).
-     * This file declares the implementations provided by the jar as class names.
+     * Create a descriptor engine for all descriptor types. Descriptors are loaded using the service
+     * provider mechanism. To include custom descriptors one should declare in {@code
+     * META-INF/services} a file named as the interface you are providing (e.g. {@code
+     * org.openscience.cdk.qsar.IMolecularDescriptor}). This file declares the implementations
+     * provided by the jar as class names.
      *
      * @param c class of the descriptor to use (e.g. IMolecularDescriptor.class)
-     * @see <a href="http://docs.oracle.com/javase/tutorial/sound/SPI-intro.html">Service
-     *      Provider Interface (SPI) Introduction</a>
+     * @see <a href="http://docs.oracle.com/javase/tutorial/sound/SPI-intro.html">Service Provider
+     *     Interface (SPI) Introduction</a>
      */
     public DescriptorEngine(Class<? extends IDescriptor> c, IChemObjectBuilder builder) {
 
@@ -154,19 +156,19 @@ public class DescriptorEngine {
 
     /**
      * Calculates all available (or only those specified) descriptors for a molecule.
-     * 
-     * The results for a given descriptor as well as associated parameters and
-     * specifications are used to create a <code>DescriptorValue</code>
-     * object which is then added to the molecule as a property keyed
-     * on the <code>DescriptorSpecification</code> object for that descriptor
+     *
+     * <p>The results for a given descriptor as well as associated parameters and specifications are
+     * used to create a <code>DescriptorValue</code> object which is then added to the molecule as a
+     * property keyed on the <code>DescriptorSpecification</code> object for that descriptor
      *
      * @param molecule The molecule for which we want to calculate descriptors
-     * @throws CDKException if an error occurred during descriptor calculation or the descriptors and/or
-     *                      specifications have not been initialized
+     * @throws CDKException if an error occurred during descriptor calculation or the descriptors
+     *     and/or specifications have not been initialized
      */
     public void process(IAtomContainer molecule) throws CDKException {
 
-        if (descriptors == null || speclist == null) throw new CDKException("Descriptors have not been instantiated");
+        if (descriptors == null || speclist == null)
+            throw new CDKException("Descriptors have not been instantiated");
         if (speclist.size() != descriptors.size())
             throw new CDKException("Number of specs and descriptors do not match");
 
@@ -174,10 +176,11 @@ public class DescriptorEngine {
             IDescriptor descriptor = descriptors.get(i);
             if (descriptor instanceof IMolecularDescriptor) {
                 DescriptorValue value = ((IMolecularDescriptor) descriptor).calculate(molecule);
-                if (value.getException() == null)
-                    molecule.setProperty(speclist.get(i), value);
+                if (value.getException() == null) molecule.setProperty(speclist.get(i), value);
                 else {
-                    logger.error("Could not calculate descriptor value for: ", descriptor.getClass().getName());
+                    logger.error(
+                            "Could not calculate descriptor value for: ",
+                            descriptor.getClass().getName());
                     logger.debug(value.getException());
                 }
                 logger.debug("Calculated molecular descriptors...");
@@ -185,11 +188,13 @@ public class DescriptorEngine {
                 Iterator atoms = molecule.atoms().iterator();
                 while (atoms.hasNext()) {
                     IAtom atom = (IAtom) atoms.next();
-                    DescriptorValue value = ((IAtomicDescriptor) descriptor).calculate(atom, molecule);
-                    if (value.getException() == null)
-                        atom.setProperty(speclist.get(i), value);
+                    DescriptorValue value =
+                            ((IAtomicDescriptor) descriptor).calculate(atom, molecule);
+                    if (value.getException() == null) atom.setProperty(speclist.get(i), value);
                     else {
-                        logger.error("Could not calculate descriptor value for: ", descriptor.getClass().getName());
+                        logger.error(
+                                "Could not calculate descriptor value for: ",
+                                descriptor.getClass().getName());
                         logger.debug(value.getException());
                     }
                 }
@@ -198,11 +203,13 @@ public class DescriptorEngine {
                 Iterator bonds = molecule.bonds().iterator();
                 while (bonds.hasNext()) {
                     IBond bond = (IBond) bonds.next();
-                    DescriptorValue value = ((IBondDescriptor) descriptor).calculate(bond, molecule);
-                    if (value.getException() == null)
-                        bond.setProperty(speclist.get(i), value);
+                    DescriptorValue value =
+                            ((IBondDescriptor) descriptor).calculate(bond, molecule);
+                    if (value.getException() == null) bond.setProperty(speclist.get(i), value);
                     else {
-                        logger.error("Could not calculate descriptor value for: ", descriptor.getClass().getName());
+                        logger.error(
+                                "Could not calculate descriptor value for: ",
+                                descriptor.getClass().getName());
                         logger.debug(value.getException());
                     }
                 }
@@ -215,25 +222,25 @@ public class DescriptorEngine {
 
     /**
      * Returns the type of the descriptor as defined in the descriptor dictionary.
-     * 
-     * The method will look for the identifier specified by the user in the QSAR descriptor
+     *
+     * <p>The method will look for the identifier specified by the user in the QSAR descriptor
      * dictionary. If a corresponding entry is found, first child element that is called
      * "isClassifiedAs" is returned. Note that the OWL descriptor spec allows both the class of
-     * descriptor (electronic, topological etc) as well as the type of descriptor (molecular, atomic)
-     * to be specified in an "isClassifiedAs" element. Thus we ignore any such element that
+     * descriptor (electronic, topological etc) as well as the type of descriptor (molecular,
+     * atomic) to be specified in an "isClassifiedAs" element. Thus we ignore any such element that
      * indicates the descriptors class.
-     * 
-     * The method assumes that any descriptor entry will have only one "isClassifiedAs" entry describing
-     * the descriptors type.
-     * 
-     * The descriptor can be identified either by the name of the class implementing the descriptor
-     * or else the specification reference value of the descriptor which can be obtained from an instance
-     * of the descriptor class.
      *
-     * @param identifier A String containing either the descriptors fully qualified class name or else the descriptors
-     *                   specification reference
-     * @return The type of the descriptor as stored in the dictionary, null if no entry is found matching
-     *         the supplied identifier
+     * <p>The method assumes that any descriptor entry will have only one "isClassifiedAs" entry
+     * describing the descriptors type.
+     *
+     * <p>The descriptor can be identified either by the name of the class implementing the
+     * descriptor or else the specification reference value of the descriptor which can be obtained
+     * from an instance of the descriptor class.
+     *
+     * @param identifier A String containing either the descriptors fully qualified class name or
+     *     else the descriptors specification reference
+     * @return The type of the descriptor as stored in the dictionary, null if no entry is found
+     *     matching the supplied identifier
      */
     public String getDictionaryType(String identifier) {
 
@@ -251,7 +258,8 @@ public class DescriptorEngine {
                 // We're not fully Java 1.5 yet, so commented it out now. If it is
                 // really important to have it, then add @cdk.require java1.5 in the
                 // Class javadoc (and all classes that use this class)
-                Elements classifications = rawElement.getChildElements("isClassifiedAs", dict.getNS());
+                Elements classifications =
+                        rawElement.getChildElements("isClassifiedAs", dict.getNS());
 
                 for (int i = 0; i < classifications.size(); i++) {
                     Element element = classifications.get(i);
@@ -269,22 +277,22 @@ public class DescriptorEngine {
 
     /**
      * Returns the type of the descriptor as defined in the descriptor dictionary.
-     * 
-     * The method will look for the identifier specified by the user in the QSAR descriptor
+     *
+     * <p>The method will look for the identifier specified by the user in the QSAR descriptor
      * dictionary. If a corresponding entry is found, first child element that is called
      * "isClassifiedAs" is returned. Note that the OWL descriptor spec allows both the class of
-     * descriptor (electronic, topological etc) as well as the type of descriptor (molecular, atomic)
-     * to be specified in an "isClassifiedAs" element. Thus we ignore any such element that
+     * descriptor (electronic, topological etc) as well as the type of descriptor (molecular,
+     * atomic) to be specified in an "isClassifiedAs" element. Thus we ignore any such element that
      * indicates the descriptors class.
-     * 
-     * The method assumes that any descriptor entry will have only one "isClassifiedAs" entry describing
-     * the descriptors type.
-     * 
-     * The descriptor can be identified it DescriptorSpecification object
+     *
+     * <p>The method assumes that any descriptor entry will have only one "isClassifiedAs" entry
+     * describing the descriptors type.
+     *
+     * <p>The descriptor can be identified it DescriptorSpecification object
      *
      * @param descriptorSpecification A DescriptorSpecification object
-     * @return he type of the descriptor as stored in the dictionary, null if no entry is found matching
-     *         the supplied identifier
+     * @return he type of the descriptor as stored in the dictionary, null if no entry is found
+     *     matching the supplied identifier
      */
     public String getDictionaryType(IImplementationSpecification descriptorSpecification) {
         return getDictionaryType(descriptorSpecification.getSpecificationReference());
@@ -292,22 +300,23 @@ public class DescriptorEngine {
 
     /**
      * Returns the class(es) of the decsriptor as defined in the descriptor dictionary.
-     * 
-     * The method will look for the identifier specified by the user in the QSAR descriptor
-     * dictionary. If a corresponding entry is found, the meta-data list is examined to
-     * look for a dictRef attribute that contains a descriptorClass value. if such an attribute is
-     * found, the value of the contents attribute  add to a list. Since a descriptor may be classed in
-     * multiple ways (geometric and electronic for example), in general, a given descriptor will
-     * have multiple classes associated with it.
-     * 
-     * The descriptor can be identified either by the name of the class implementing the descriptor
-     * or else the specification reference value of the descriptor which can be obtained from an instance
-     * of the descriptor class.
      *
-     * @param identifier A String containing either the descriptors fully qualified class name or else the descriptors
-     *                   specification reference
-     * @return A List containing the names of the QSAR descriptor classes that this  descriptor was declared
-     *         to belong to. If an entry for the specified identifier was not found, null is returned.
+     * <p>The method will look for the identifier specified by the user in the QSAR descriptor
+     * dictionary. If a corresponding entry is found, the meta-data list is examined to look for a
+     * dictRef attribute that contains a descriptorClass value. if such an attribute is found, the
+     * value of the contents attribute add to a list. Since a descriptor may be classed in multiple
+     * ways (geometric and electronic for example), in general, a given descriptor will have
+     * multiple classes associated with it.
+     *
+     * <p>The descriptor can be identified either by the name of the class implementing the
+     * descriptor or else the specification reference value of the descriptor which can be obtained
+     * from an instance of the descriptor class.
+     *
+     * @param identifier A String containing either the descriptors fully qualified class name or
+     *     else the descriptors specification reference
+     * @return A List containing the names of the QSAR descriptor classes that this descriptor was
+     *     declared to belong to. If an entry for the specified identifier was not found, null is
+     *     returned.
      */
     public String[] getDictionaryClass(String identifier) {
 
@@ -324,7 +333,8 @@ public class DescriptorEngine {
             if (!dictEntry.getClassName().equals("Descriptor")) continue;
             if (dictEntry.getID().equals(specRef.toLowerCase())) {
                 Element rawElement = (Element) dictEntry.getRawContent();
-                Elements classifications = rawElement.getChildElements("isClassifiedAs", dict.getNS());
+                Elements classifications =
+                        rawElement.getChildElements("isClassifiedAs", dict.getNS());
                 for (int i = 0; i < classifications.size(); i++) {
                     Element element = classifications.get(i);
                     Attribute attr = element.getAttribute("resource", rdfNS);
@@ -338,43 +348,41 @@ public class DescriptorEngine {
             }
         }
 
-        if (dictClasses.size() == 0)
-            return null;
-        else
-            return (String[]) dictClasses.toArray(new String[]{});
+        if (dictClasses.size() == 0) return null;
+        else return (String[]) dictClasses.toArray(new String[] {});
     }
 
     /**
      * Returns the class(es) of the descriptor as defined in the descriptor dictionary.
-     * 
-     * The method will look for the identifier specified by the user in the QSAR descriptor
-     * dictionary. If a corresponding entry is found, the meta-data list is examined to
-     * look for a dictRef attribute that contains a descriptorClass value. if such an attribute is
-     * found, the value of the contents attribute  add to a list. Since a descriptor may be classed in
-     * multiple ways (geometric and electronic for example), in general, a given descriptor will
-     * have multiple classes associated with it.
-     * 
-     * The descriptor can be identified by its DescriptorSpecification object.
+     *
+     * <p>The method will look for the identifier specified by the user in the QSAR descriptor
+     * dictionary. If a corresponding entry is found, the meta-data list is examined to look for a
+     * dictRef attribute that contains a descriptorClass value. if such an attribute is found, the
+     * value of the contents attribute add to a list. Since a descriptor may be classed in multiple
+     * ways (geometric and electronic for example), in general, a given descriptor will have
+     * multiple classes associated with it.
+     *
+     * <p>The descriptor can be identified by its DescriptorSpecification object.
      *
      * @param descriptorSpecification A DescriptorSpecification object
-     * @return A List containing the names of the QSAR descriptor classes that this  descriptor was declared
-     *         to belong to. If an entry for the specified identifier was not found, null is returned.
+     * @return A List containing the names of the QSAR descriptor classes that this descriptor was
+     *     declared to belong to. If an entry for the specified identifier was not found, null is
+     *     returned.
      */
-
     public String[] getDictionaryClass(IImplementationSpecification descriptorSpecification) {
         return getDictionaryClass(descriptorSpecification.getSpecificationReference());
     }
 
     /**
      * Gets the definition of the descriptor.
-     * 
-     * All descriptors in the descriptor dictioanry will have a definition element. This function
-     * returns the value of that element. Many descriptors also have a description element which is
-     * more detailed. However the value of these elements can contain arbitrary mark up (such as MathML)
-     * and I'm not sure what I should return it as
      *
-     * @param identifier A String containing either the descriptors fully qualified class name or else the descriptors
-     *                   specification reference
+     * <p>All descriptors in the descriptor dictioanry will have a definition element. This function
+     * returns the value of that element. Many descriptors also have a description element which is
+     * more detailed. However the value of these elements can contain arbitrary mark up (such as
+     * MathML) and I'm not sure what I should return it as
+     *
+     * @param identifier A String containing either the descriptors fully qualified class name or
+     *     else the descriptors specification reference
      * @return The definition
      */
     public String getDictionaryDefinition(String identifier) {
@@ -399,11 +407,11 @@ public class DescriptorEngine {
 
     /**
      * Gets the definition of the descriptor.
-     * 
-     * All descriptors in the descriptor dictioanry will have a definition element. This function
+     *
+     * <p>All descriptors in the descriptor dictioanry will have a definition element. This function
      * returns the value of that element. Many descriptors also have a description element which is
-     * more detailed. However the value of these elements can contain arbitrary mark up (such as MathML)
-     * and I'm not sure what I should return it as
+     * more detailed. However the value of these elements can contain arbitrary mark up (such as
+     * MathML) and I'm not sure what I should return it as
      *
      * @param descriptorSpecification A DescriptorSpecification object
      * @return The definition
@@ -415,8 +423,8 @@ public class DescriptorEngine {
     /**
      * Gets the label (title) of the descriptor.
      *
-     * @param identifier A String containing either the descriptors fully qualified class name or else the descriptors
-     *                   specification reference
+     * @param identifier A String containing either the descriptors fully qualified class name or
+     *     else the descriptors specification reference
      * @return The title
      */
     public String getDictionaryTitle(String identifier) {
@@ -439,10 +447,10 @@ public class DescriptorEngine {
     }
 
     /**
-     *  Gets the label (title) of the descriptor.
+     * Gets the label (title) of the descriptor.
      *
      * @param descriptorSpecification The specification object
-     * @return  The title
+     * @return The title
      */
     public String getDictionaryTitle(DescriptorSpecification descriptorSpecification) {
         return getDictionaryTitle(descriptorSpecification.getSpecificationReference());
@@ -451,16 +459,16 @@ public class DescriptorEngine {
     /**
      * Returns the DescriptorSpecification objects for all available descriptors.
      *
-     * @return An array of <code>DescriptorSpecification</code> objects. These are the keys
-     *         with which the <code>DescriptorValue</code> objects can be obtained from a
-     *         molecules property list
+     * @return An array of <code>DescriptorSpecification</code> objects. These are the keys with
+     *     which the <code>DescriptorValue</code> objects can be obtained from a molecules property
+     *     list
      */
     public List<IImplementationSpecification> getDescriptorSpecifications() {
         return (speclist);
     }
 
     /**
-     * Set the list of    <code>DescriptorSpecification</code> objects.
+     * Set the list of <code>DescriptorSpecification</code> objects.
      *
      * @param specs A list of specification objects
      * @see #getDescriptorSpecifications
@@ -509,36 +517,40 @@ public class DescriptorEngine {
             if (tmp != null) classList.addAll(Arrays.asList(tmp));
         }
         Set<String> uniqueClasses = new HashSet<String>(classList);
-        return (String[]) uniqueClasses.toArray(new String[]{});
+        return (String[]) uniqueClasses.toArray(new String[] {});
     }
 
     /**
      * Returns a list containing the classes that implement a specific interface.
-     * 
-     * The interface name specified can be null or an empty string. In this case the interface name
-     * is automatcally set to <i>IDescriptor</i>.  Specifying <i>IDescriptor</i> will
-     * return all available descriptor classes. Valid interface names are
+     *
+     * <p>The interface name specified can be null or an empty string. In this case the interface
+     * name is automatcally set to <i>IDescriptor</i>. Specifying <i>IDescriptor</i> will return all
+     * available descriptor classes. Valid interface names are
+     *
      * <ul>
-     * <li>IMolecularDescriptor
-     * <li>IAtomicDescripto
-     * <li>IBondDescriptor
-     * <li>IDescriptor
+     *   <li>IMolecularDescriptor
+     *   <li>IAtomicDescripto
+     *   <li>IBondDescriptor
+     *   <li>IDescriptor
      * </ul>
      *
      * @param interfaceName The name of the interface that classes should implement
-     * @param jarFileNames  A String[] containing the fully qualified names of the jar files
-     *                      to examine for descriptor classes. In general this can be set to NULL, in which case
-     *                      the system classpath is examined for available jar files. This parameter can be set for
-     *                      situations where the system classpath is not available or is modified such as in an application
-     *                      container.
-     * @return A list containing the classes implementing the specified interface, null if an invalid interface
-     *         is specified
+     * @param jarFileNames A String[] containing the fully qualified names of the jar files to
+     *     examine for descriptor classes. In general this can be set to NULL, in which case the
+     *     system classpath is examined for available jar files. This parameter can be set for
+     *     situations where the system classpath is not available or is modified such as in an
+     *     application container.
+     * @return A list containing the classes implementing the specified interface, null if an
+     *     invalid interface is specified
      */
-    public static List<String> getDescriptorClassNameByInterface(String interfaceName, String[] jarFileNames) {
+    public static List<String> getDescriptorClassNameByInterface(
+            String interfaceName, String[] jarFileNames) {
         if (interfaceName == null || interfaceName.equals("")) interfaceName = "IDescriptor";
 
-        if (!interfaceName.equals("IDescriptor") && !interfaceName.equals("IMolecularDescriptor")
-                && !interfaceName.equals("IAtomicDescriptor") && !interfaceName.equals("IBondDescriptor")) return null;
+        if (!interfaceName.equals("IDescriptor")
+                && !interfaceName.equals("IMolecularDescriptor")
+                && !interfaceName.equals("IAtomicDescriptor")
+                && !interfaceName.equals("IBondDescriptor")) return null;
 
         String[] jars;
         if (jarFileNames == null) {
@@ -558,7 +570,8 @@ public class DescriptorEngine {
                 while (enumeration.hasMoreElements()) {
                     JarEntry jarEntry = (JarEntry) enumeration.nextElement();
                     if (jarEntry.toString().indexOf(".class,") != -1) {
-                        String className = jarEntry.toString().replace('/', '.').replaceAll(".class,", "");
+                        String className =
+                                jarEntry.toString().replace('/', '.').replaceAll(".class,", "");
                         if (className.indexOf('$') != -1) continue;
 
                         Class klass = null;
@@ -577,7 +590,8 @@ public class DescriptorEngine {
                         int modifer = klass.getModifiers();
                         if (Modifier.isAbstract(modifer) || Modifier.isInterface(modifer)) continue;
 
-                        // get the interfaces implemented and see if one matches the one we're looking for
+                        // get the interfaces implemented and see if one matches the one we're
+                        // looking for
                         Class[] interfaces = klass.getInterfaces();
                         for (Class anInterface : interfaces) {
                             if (anInterface.getName().equals(interfaceName)) {
@@ -597,20 +611,21 @@ public class DescriptorEngine {
 
     /**
      * Returns a list containing the classes found in the specified descriptor package.
-     * 
-     * The package name specified can be null or an empty string. In this case the package name
+     *
+     * <p>The package name specified can be null or an empty string. In this case the package name
      * is automatcally set to "org.openscience.cdk.qsar.descriptors" and as a result will return
      * classes corresponding to both atomic and molecular descriptors.
      *
-     * @param packageName  The name of the package containing the required descriptor
-     * @param jarFileNames A String[] containing the fully qualified names of the jar files
-     *                     to examine for descriptor classes. In general this can be set to NULL, in which case
-     *                     the system classpath is examined for available jar files. This parameter can be set for
-     *                     situations where the system classpath is not available or is modified such as in an application
-     *                     container.
+     * @param packageName The name of the package containing the required descriptor
+     * @param jarFileNames A String[] containing the fully qualified names of the jar files to
+     *     examine for descriptor classes. In general this can be set to NULL, in which case the
+     *     system classpath is examined for available jar files. This parameter can be set for
+     *     situations where the system classpath is not available or is modified such as in an
+     *     application container.
      * @return A list containing the classes in the specified package
      */
-    public static List<String> getDescriptorClassNameByPackage(String packageName, String[] jarFileNames) {
+    public static List<String> getDescriptorClassNameByPackage(
+            String packageName, String[] jarFileNames) {
 
         if (packageName == null || packageName.equals("")) {
             packageName = "org.openscience.cdk.qsar.descriptors";
@@ -636,7 +651,8 @@ public class DescriptorEngine {
                 while (enumeration.hasMoreElements()) {
                     JarEntry jarEntry = (JarEntry) enumeration.nextElement();
                     if (jarEntry.toString().endsWith(".class")) {
-                        String tmp = jarEntry.toString().replace('/', '.').replaceAll("\\.class", "");
+                        String tmp =
+                                jarEntry.toString().replace('/', '.').replaceAll("\\.class", "");
                         if (!(tmp.indexOf(packageName) != -1)) continue;
                         if (tmp.indexOf('$') != -1) continue;
                         if (tmp.indexOf("Test") != -1) continue;
@@ -658,7 +674,8 @@ public class DescriptorEngine {
         for (String descriptorName : descriptorClassNames) {
             try {
                 @SuppressWarnings("unchecked")
-                Class<? extends IDescriptor> c = (Class<? extends IDescriptor>) classLoader.loadClass(descriptorName);
+                Class<? extends IDescriptor> c =
+                        (Class<? extends IDescriptor>) classLoader.loadClass(descriptorName);
                 IDescriptor descriptor = instantiate(c);
                 descriptor.initialise(builder);
                 descriptors.add(descriptor);
@@ -669,7 +686,9 @@ public class DescriptorEngine {
             } catch (ClassNotFoundException exception) {
                 logger.error("Could not find this Descriptor: ", descriptorName);
                 logger.debug(exception);
-            } catch (IllegalAccessException | InvocationTargetException | InstantiationException exception) {
+            } catch (IllegalAccessException
+                    | InvocationTargetException
+                    | InstantiationException exception) {
                 logger.error("Could not load this Descriptor: ", descriptorName);
                 logger.debug(exception);
             }
@@ -677,8 +696,8 @@ public class DescriptorEngine {
         return descriptors;
     }
 
-    private IDescriptor instantiate(Class<? extends IDescriptor> c) throws IllegalAccessException,
-            InvocationTargetException, InstantiationException {
+    private IDescriptor instantiate(Class<? extends IDescriptor> c)
+            throws IllegalAccessException, InvocationTargetException, InstantiationException {
         for (Constructor constructor : c.getConstructors()) {
             Class<?>[] params = constructor.getParameterTypes();
             if (params.length == 0) {
@@ -687,10 +706,12 @@ public class DescriptorEngine {
                 return (IDescriptor) constructor.newInstance(builder);
             }
         }
-        throw new IllegalStateException("descriptor " + c.getSimpleName() + " has no usable constructors");
+        throw new IllegalStateException(
+                "descriptor " + c.getSimpleName() + " has no usable constructors");
     }
 
-    public List<IImplementationSpecification> initializeSpecifications(List<IDescriptor> descriptors) {
+    public List<IImplementationSpecification> initializeSpecifications(
+            List<IDescriptor> descriptors) {
         List<IImplementationSpecification> speclist = new ArrayList<IImplementationSpecification>();
         for (IDescriptor descriptor : descriptors) {
             speclist.add(descriptor.getSpecification());
@@ -708,7 +729,9 @@ public class DescriptorEngine {
                 IImplementationSpecification descSpecification = descriptor.getSpecification();
                 String[] tmp = descSpecification.getSpecificationReference().split("#");
                 if (tmp.length != 2) {
-                    logger.debug("Something fishy with the spec ref: ", descSpecification.getSpecificationReference());
+                    logger.debug(
+                            "Something fishy with the spec ref: ",
+                            descSpecification.getSpecificationReference());
                 } else {
                     specRef = tmp[1];
                 }

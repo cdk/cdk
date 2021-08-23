@@ -19,15 +19,12 @@
 package org.openscience.cdk.interfaces;
 
 /**
- * Class representing a ring structure in a molecule.
- * A ring is a linear sequence of
- * N atoms interconnected to each other by covalent bonds,
- * such that atom i (1 &lt; i &lt; N) is bonded to
+ * Class representing a ring structure in a molecule. A ring is a linear sequence of N atoms
+ * interconnected to each other by covalent bonds, such that atom i (1 &lt; i &lt; N) is bonded to
  * atom i-1 and atom i + 1 and atom 1 is bonded to atom N and atom 2.
  *
- * @cdk.module  interfaces
+ * @cdk.module interfaces
  * @cdk.githash
- *
  * @cdk.keyword ring
  */
 public interface IRing extends IAtomContainer {
@@ -35,18 +32,17 @@ public interface IRing extends IAtomContainer {
     /**
      * Returns the number of atoms/bonds in this ring.
      *
-     * @return   The number of atoms/bonds in this ring
+     * @return The number of atoms/bonds in this ring
      */
     public int getRingSize();
 
     /**
-     * Returns the next bond in order, relative to a given bond and atom.
-     * Example: Let the ring be composed of 0-1, 1-2, 2-3 and 3-0.
-     * A request getNextBond(1-2, 2) will return Bond 2-3.
+     * Returns the next bond in order, relative to a given bond and atom. Example: Let the ring be
+     * composed of 0-1, 1-2, 2-3 and 3-0. A request getNextBond(1-2, 2) will return Bond 2-3.
      *
-     * @param   bond  A bond for which an atom from a consecutive bond is sought
-     * @param   atom  A atom from the bond above to assign a search direction
-     * @return  The next bond in the order given by the above assignment
+     * @param bond A bond for which an atom from a consecutive bond is sought
+     * @param atom A atom from the bond above to assign a search direction
+     * @return The next bond in the order given by the above assignment
      */
     public IBond getNextBond(IBond bond, IAtom atom);
 
@@ -57,9 +53,7 @@ public interface IRing extends IAtomContainer {
      */
     public int getBondOrderSum();
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IRing clone() throws CloneNotSupportedException;
 }

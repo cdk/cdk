@@ -22,7 +22,6 @@ package org.openscience.cdk.io.formats;
  * See <a href="http://www.povray.org/">here</a>.
  *
  * @author Miguel Rojas
- *
  * @cdk.module ioformats
  * @cdk.githash
  */
@@ -58,7 +57,7 @@ public class POVRayFormat extends AbstractResourceFormat implements IResourceFor
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"pov"};
+        return new String[] {"pov"};
     }
 
     /** {@inheritDoc} */

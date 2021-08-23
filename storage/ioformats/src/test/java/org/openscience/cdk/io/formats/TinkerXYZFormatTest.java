@@ -22,13 +22,10 @@
  */
 package org.openscience.cdk.io.formats;
 
-/**
- * @cdk.module test-ioformats
- */
+/** @cdk.module test-ioformats */
 public class TinkerXYZFormatTest extends ChemFormatTest {
 
     public TinkerXYZFormatTest() {
         super.setChemFormat((IChemFormat) TinkerXYZFormat.getInstance());
     }
-
 }

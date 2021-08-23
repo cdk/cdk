@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2008  Miguel Rojas <miguelrojasch@users.sf.net>
  *               2014  Mark B Vine (orcid:0000-0002-7794-0426)
  *
@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-
 import org.openscience.cdk.dict.Dictionary;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.dict.EntryReact;
@@ -34,34 +33,32 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * <p>The base class for all chemical reactions objects in this cdk.
- * It provides methods for adding parameters</p>
+ * The base class for all chemical reactions objects in this cdk. It provides methods for adding
+ * parameters
  *
- * @author         Miguel Rojas
- *
- * @cdk.created    2008-02-01
- * @cdk.module     reaction
+ * @author Miguel Rojas
+ * @cdk.created 2008-02-01
+ * @cdk.module reaction
  * @cdk.githash
  */
 public class ReactionEngine {
 
-    private static ILoggingTool    logger = LoggingToolFactory.createLoggingTool(ReactionEngine.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(ReactionEngine.class);
 
-    private Dictionary             dictionary;
+    private Dictionary dictionary;
     public HashMap<String, Object> paramsMap;
 
-    public IReactionMechanism      mechanism;
+    public IReactionMechanism mechanism;
 
-    public List<IParameterReact>   paramsMap2;
+    public List<IParameterReact> paramsMap2;
 
-    /**
-     * Constructor of the ReactionEngine object.
-     */
+    /** Constructor of the ReactionEngine object. */
     public ReactionEngine() {
 
         try {
             IReactionProcess reaction = (IReactionProcess) this;
-            EntryReact entry = initiateDictionary("reaction-processes", (IReactionProcess) reaction);
+            EntryReact entry =
+                    initiateDictionary("reaction-processes", (IReactionProcess) reaction);
             initiateParameterMap2(entry);
             reaction.setParameterList(getParameterList());
             // extract mechanism dependence, if there is one
@@ -70,18 +67,19 @@ public class ReactionEngine {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     /**
      * Extract the mechanism necessary for this reaction.
      *
-     * @param entry  The EntryReact object
+     * @param entry The EntryReact object
      */
     private void extractMechanism(EntryReact entry) {
         String mechanismName = "org.openscience.cdk.reaction.mechanism." + entry.getMechanism();
         try {
-            mechanism = (IReactionMechanism) this.getClass().getClassLoader().loadClass(mechanismName).newInstance();
+            mechanism =
+                    (IReactionMechanism)
+                            this.getClass().getClassLoader().loadClass(mechanismName).newInstance();
             logger.info("Loaded mechanism: ", mechanismName);
         } catch (ClassNotFoundException exception) {
             logger.error("Could not find this IReactionMechanism: ", mechanismName);
@@ -95,9 +93,9 @@ public class ReactionEngine {
     /**
      * Open the Dictionary OWLReact.
      *
-     * @param nameDict  Name of the Dictionary
-     * @param reaction  The IReactionProcess
-     * @return          The entry for this reaction
+     * @param nameDict Name of the Dictionary
+     * @param reaction The IReactionProcess
+     * @return The entry for this reaction
      */
     private EntryReact initiateDictionary(String nameDict, IReactionProcess reaction) {
         DictionaryDatabase db = new DictionaryDatabase();
@@ -108,19 +106,18 @@ public class ReactionEngine {
         return (EntryReact) dictionary.getEntry(entryString.toLowerCase());
     }
 
-    /**
-     * Creates a map with the name and type of the parameters.
-     */
+    /** Creates a map with the name and type of the parameters. */
     private void initiateParameterMap2(EntryReact entry) {
         List<List<String>> paramDic = entry.getParameterClass();
 
         paramsMap2 = new ArrayList<IParameterReact>();
-        for (Iterator<List<String>> it = paramDic.iterator(); it.hasNext();) {
+        for (Iterator<List<String>> it = paramDic.iterator(); it.hasNext(); ) {
             List<String> param = it.next();
             String paramName = "org.openscience.cdk.reaction.type.parameters." + param.get(0);
             try {
-                IParameterReact ipc = (IParameterReact) this.getClass().getClassLoader().loadClass(paramName)
-                        .newInstance();
+                IParameterReact ipc =
+                        (IParameterReact)
+                                this.getClass().getClassLoader().loadClass(paramName).newInstance();
                 ipc.setParameter(Boolean.parseBoolean(param.get(1)));
                 ipc.setValue(param.get(2));
 
@@ -139,13 +136,11 @@ public class ReactionEngine {
     /**
      * Returns the current parameter Map for this reaction.
      *
-     * Must be done before calling
-     * calculate as the parameters influence the calculation outcome.
+     * <p>Must be done before calling calculate as the parameters influence the calculation outcome.
      *
-     * @param params A List of Objects containing the parameters for this reaction.
-     * 				 The key must be included into the Dictionary reacton-processes
+     * @param params A List of Objects containing the parameters for this reaction. The key must be
+     *     included into the Dictionary reacton-processes
      * @throws CDKException if invalid number of type of parameters are passed to it
-     *
      * @see #getParameterList
      */
     public void setParameterList(List<IParameterReact> params) throws CDKException {
@@ -157,7 +152,7 @@ public class ReactionEngine {
      *
      * @return A List of Object containing the name and the type of the parameter
      * @see #setParameterList
-     * */
+     */
     public List<IParameterReact> getParameterList() {
         return paramsMap2;
     }
@@ -166,15 +161,14 @@ public class ReactionEngine {
      * Return the IParameterReact if it exists given the class.
      *
      * @param paramClass The class
-     * @return           The IParameterReact
+     * @return The IParameterReact
      */
     public IParameterReact getParameterClass(Class<?> paramClass) {
-        for (Iterator<IParameterReact> it = paramsMap2.iterator(); it.hasNext();) {
+        for (Iterator<IParameterReact> it = paramsMap2.iterator(); it.hasNext(); ) {
             IParameterReact ipr = it.next();
             if (ipr.getClass().equals(paramClass)) return ipr;
         }
 
         return null;
     }
-
 }

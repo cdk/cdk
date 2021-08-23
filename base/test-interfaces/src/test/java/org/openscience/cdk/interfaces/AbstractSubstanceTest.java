@@ -23,6 +23,4 @@ package org.openscience.cdk.interfaces;
  *
  * @cdk.module test-interfaces
  */
-public abstract class AbstractSubstanceTest extends AbstractAtomContainerSetTest {
-
-}
+public abstract class AbstractSubstanceTest extends AbstractAtomContainerSetTest {}

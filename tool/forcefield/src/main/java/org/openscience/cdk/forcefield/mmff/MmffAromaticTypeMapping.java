@@ -24,46 +24,46 @@
 
 package org.openscience.cdk.forcefield.mmff;
 
-import com.google.common.collect.ImmutableMap;
-import org.openscience.cdk.exception.Intractable;
-import org.openscience.cdk.graph.Cycles;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
+import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 
+import com.google.common.collect.ImmutableMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
+import org.openscience.cdk.exception.Intractable;
+import org.openscience.cdk.graph.Cycles;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 
 /**
  * Assign MMFF aromatic atom types from the preliminary symbolic type. The assignment is described
  * in the appendix of {@cdk.cite Halgren96a}:
  *
- * For non-hydrogen atoms, the assignment of symbolic MMFF atom types takes place in two stages. In
- * the first, a provisional atom type is assigned based on local connectivity. In the second,
+ * <p>For non-hydrogen atoms, the assignment of symbolic MMFF atom types takes place in two stages.
+ * In the first, a provisional atom type is assigned based on local connectivity. In the second,
  * aromatic systems are perceived, and properly qualified aromatic atom types are assigned based on
  * ring size and, for five-membered rings, on the position within the ring. Information in this file
  * (MMFFAROM.PAR) is used to make the proper correspondence between provisional and final (aromatic)
- * atom types. 
+ * atom types.
  *
- * The column labeled "L5" refers, in the case of 5-ring systems, to the position of the atom in
+ * <p>The column labeled "L5" refers, in the case of 5-ring systems, to the position of the atom in
  * question relative to the unique pi-lone-pair containing heteroatom (which itself occupies
  * position "1"); a "4" is an artificial entry that is assigned when no such unique heteroatom
  * exists, as for example occurs in imidazolium cations and in tetrazole anions. An entry of "1" in
  * the "IM CAT" or "N5 ANION" column must also be matched for such ionic species to convert the
  * "OLD" (preliminary) to "AROM" (aromatic) symbolic atom type. Note: in matching the "OLD" symbolic
  * atom types, an "exact" match is first attempted. If this match fails, a wild-carded match, using
- * for example "C*" is then employed. 
+ * for example "C*" is then employed.
  *
- * This class implements this in three stages. Firstly, the aromatic rings are found with {@link
+ * <p>This class implements this in three stages. Firstly, the aromatic rings are found with {@link
  * #findAromaticRings(int[][], int[], int[])}. These rings are then parsed to {@link
- * #updateAromaticTypesInSixMemberRing(int[], String[])} and {@link #updateAromaticTypesInFiveMemberRing(int[],
- * String[])}. The more complex of the two is the five member rings that normalises the ring to put
- * the 'pi-lone-pair' hetroatom in position 1. The alpha and beta positions are then fixed and the
- * {@link #alphaTypes} and {@link #betaTypes} mappings are used to obtain the correct assignment.
+ * #updateAromaticTypesInSixMemberRing(int[], String[])} and {@link
+ * #updateAromaticTypesInFiveMemberRing(int[], String[])}. The more complex of the two is the five
+ * member rings that normalises the ring to put the 'pi-lone-pair' hetroatom in position 1. The
+ * alpha and beta positions are then fixed and the {@link #alphaTypes} and {@link #betaTypes}
+ * mappings are used to obtain the correct assignment.
  *
  * @author John May
  */
@@ -81,19 +81,26 @@ final class MmffAromaticTypeMapping {
      * String[])} and {@link #updateAromaticTypesInSixMemberRing(int[], String[])}.
      *
      * @param container structure representation
-     * @param symbs     vector of symbolic types for the whole structure
-     * @param bonds     edge to bond map lookup
-     * @param graph     adjacency list graph representation of structure
-     * @param mmffArom  set of bonds that are aromatic
+     * @param symbs vector of symbolic types for the whole structure
+     * @param bonds edge to bond map lookup
+     * @param graph adjacency list graph representation of structure
+     * @param mmffArom set of bonds that are aromatic
      */
-    void assign(IAtomContainer container, String[] symbs, EdgeToBondMap bonds, int[][] graph, Set<IBond> mmffArom) {
+    void assign(
+            IAtomContainer container,
+            String[] symbs,
+            EdgeToBondMap bonds,
+            int[][] graph,
+            Set<IBond> mmffArom) {
 
         int[] contribution = new int[graph.length];
         int[] doubleBonds = new int[graph.length];
         Arrays.fill(doubleBonds, -1);
         setupContributionAndDoubleBonds(container, bonds, graph, contribution, doubleBonds);
 
-        int[][] cycles = findAromaticRings(cyclesOfSizeFiveOrSix(container, graph), contribution, doubleBonds);
+        int[][] cycles =
+                findAromaticRings(
+                        cyclesOfSizeFiveOrSix(container, graph), contribution, doubleBonds);
 
         for (int[] cycle : cycles) {
             int len = cycle.length - 1;
@@ -104,8 +111,7 @@ final class MmffAromaticTypeMapping {
                 updateAromaticTypesInFiveMemberRing(cycle, symbs);
             }
             // mark aromatic bonds
-            for (int i = 1; i < cycle.length; i++)
-                mmffArom.add(bonds.get(cycle[i], cycle[i - 1]));
+            for (int i = 1; i < cycle.length; i++) mmffArom.add(bonds.get(cycle[i], cycle[i - 1]));
         }
     }
 
@@ -114,9 +120,9 @@ final class MmffAromaticTypeMapping {
      * definition - {@link #isAromaticRing(int[], int[], int[], boolean[])}. The cycles of size 6
      * are listed first.
      *
-     * @param cycles       initial set of cycles from
+     * @param cycles initial set of cycles from
      * @param contribution vector of p electron contributions from each vertex
-     * @param dbs          vector of double-bond pairs, index stored double-bonded index
+     * @param dbs vector of double-bond pairs, index stored double-bonded index
      * @return the cycles that are aromatic
      */
     private static int[][] findAromaticRings(int[][] cycles, int[] contribution, int[] dbs) {
@@ -151,10 +157,8 @@ final class MmffAromaticTypeMapping {
                     for (int j = 0; j < len; j++) {
                         aromaticAtoms[cycle[j]] = true;
                     }
-                    if (len == 6)
-                        ringsOfSize6.add(cycle);
+                    if (len == 6) ringsOfSize6.add(cycle);
                     else if (len == 5) ringsOfSize5.add(cycle);
-
                 }
             }
         } while (found);
@@ -171,10 +175,10 @@ final class MmffAromaticTypeMapping {
      * to 4n+2. Double bonds can only contribute if they are in the cycle being tested or are
      * already delocalised.
      *
-     * @param cycle        closed walk of vertices in the cycle
+     * @param cycle closed walk of vertices in the cycle
      * @param contribution vector of p electron contributions from each vertex
-     * @param dbs          vector of double-bond pairs, index stored double-bonded index
-     * @param aromatic     binary set of aromatic atoms
+     * @param dbs vector of double-bond pairs, index stored double-bonded index
+     * @param aromatic binary set of aromatic atoms
      * @return whether the ring is aromatic
      */
     static boolean isAromaticRing(int[] cycle, int[] contribution, int[] dbs, boolean[] aromatic) {
@@ -226,10 +230,8 @@ final class MmffAromaticTypeMapping {
         for (final int v : cycle) {
             if (NCN_PLUS.equals(symbs[v]) || "N+=C".equals(symbs[v]) || "N=+C".equals(symbs[v]))
                 symbs[v] = "NPD+";
-            else if ("N2OX".equals(symbs[v]))
-                symbs[v] = "NPOX";
-            else if ("N=C".equals(symbs[v]) || "N=N".equals(symbs[v]))
-                symbs[v] = "NPYD";
+            else if ("N2OX".equals(symbs[v])) symbs[v] = "NPOX";
+            else if ("N=C".equals(symbs[v]) || "N=N".equals(symbs[v])) symbs[v] = "NPYD";
             else if (symbs[v].startsWith("C")) symbs[v] = "CB";
         }
     }
@@ -256,7 +258,6 @@ final class MmffAromaticTypeMapping {
         symbs[cycle[4]] = getAlphaAromaticType(symbs[cycle[4]], imidazolium, anion);
         symbs[cycle[2]] = getBetaAromaticType(symbs[cycle[2]], imidazolium, anion);
         symbs[cycle[3]] = getBetaAromaticType(symbs[cycle[3]], imidazolium, anion);
-
     }
 
     /**
@@ -264,9 +265,9 @@ final class MmffAromaticTypeMapping {
      * position of a 5-member ring. This method delegates to {@link #getAromaticType(java.util.Map,
      * char, String, boolean, boolean)} setup for alpha atoms.
      *
-     * @param symb        symbolic atom type
+     * @param symb symbolic atom type
      * @param imidazolium imidazolium flag (IM naming from MMFFAROM.PAR)
-     * @param anion       anion flag (AN naming from MMFFAROM.PAR)
+     * @param anion anion flag (AN naming from MMFFAROM.PAR)
      * @return the aromatic type
      */
     private String getAlphaAromaticType(String symb, boolean imidazolium, boolean anion) {
@@ -278,9 +279,9 @@ final class MmffAromaticTypeMapping {
      * of a 5-member ring. This method delegates to {@link #getAromaticType(java.util.Map, char,
      * String, boolean, boolean)} setup for beta atoms.
      *
-     * @param symb        symbolic atom type
+     * @param symb symbolic atom type
      * @param imidazolium imidazolium flag (IM naming from MMFFAROM.PAR)
-     * @param anion       anion flag (AN naming from MMFFAROM.PAR)
+     * @param anion anion flag (AN naming from MMFFAROM.PAR)
      * @return the aromatic type
      */
     private String getBetaAromaticType(String symb, boolean imidazolium, boolean anion) {
@@ -297,14 +298,15 @@ final class MmffAromaticTypeMapping {
      * 'N5B'. This is because the hetroatom in these rings can resonate and so the atom is both
      * alpha and beta.
      *
-     * @param map         mapping of alpha or beta types
-     * @param suffix      'A' or 'B'
-     * @param symb        input symbolic type
+     * @param map mapping of alpha or beta types
+     * @param suffix 'A' or 'B'
+     * @param symb input symbolic type
      * @param imidazolium imidazolium flag (IM naming from MMFFAROM.PAR)
-     * @param anion       anion flag (AN naming from MMFFAROM.PAR)
+     * @param anion anion flag (AN naming from MMFFAROM.PAR)
      * @return the aromatic type
      */
-    static String getAromaticType(Map<String, String> map, char suffix, String symb, boolean imidazolium, boolean anion) {
+    static String getAromaticType(
+            Map<String, String> map, char suffix, String symb, boolean imidazolium, boolean anion) {
         if (anion && symb.startsWith("N")) symb = "N5M";
         if (map.containsKey(symb)) symb = map.get(symb);
         if ((imidazolium || anion) && symb.charAt(symb.length() - 1) == suffix)
@@ -316,7 +318,7 @@ final class MmffAromaticTypeMapping {
      * Find the index of a hetroatom in a cycle. A hetroatom in MMFF is the unique atom that
      * contributes a pi-lone-pair to the aromatic system.
      *
-     * @param cycle        aromatic cycle, |C| = 5
+     * @param cycle aromatic cycle, |C| = 5
      * @param contribution vector of p electron contributions from each vertex
      * @return index of hetroatom, if none found index is < 0.
      */
@@ -334,7 +336,7 @@ final class MmffAromaticTypeMapping {
      * index 2 and 3. If the ring contains more than one hetroatom the cycle is not normalised
      * (return=false).
      *
-     * @param cycle        aromatic cycle to normalise, |C| = 5
+     * @param cycle aromatic cycle to normalise, |C| = 5
      * @param contribution vector of p electron contributions from each vertex (size |V|)
      * @return whether the cycle was normalised
      */
@@ -355,8 +357,8 @@ final class MmffAromaticTypeMapping {
      * Electron contribution of an element with the specified connectivity and valence.
      *
      * @param elem atomic number
-     * @param x    connectivity
-     * @param v    bonded valence
+     * @param x connectivity
+     * @param v bonded valence
      * @return p electrons
      */
     @SuppressWarnings("PMD.CyclomaticComplexity")
@@ -384,7 +386,7 @@ final class MmffAromaticTypeMapping {
      * Locate all 5 and 6 member cycles (rings) in a structure representation.
      *
      * @param container structure representation
-     * @param graph     adjacency list graph representation of structure
+     * @param graph adjacency list graph representation of structure
      * @return closed walks (first = last vertex) of the cycles
      */
     static int[][] cyclesOfSizeFiveOrSix(IAtomContainer container, int[][] graph) {
@@ -399,14 +401,18 @@ final class MmffAromaticTypeMapping {
      * Internal - sets up the 'contribution' and 'dbs' vectors. These define how many pi electrons
      * an atom can contribute and provide a lookup of the double bonded neighbour.
      *
-     * @param molecule     structure representation
-     * @param bonds        edge to bond map lookup
-     * @param graph        adjacency list graph representation of structure
+     * @param molecule structure representation
+     * @param bonds edge to bond map lookup
+     * @param graph adjacency list graph representation of structure
      * @param contribution vector of p electron contributions from each vertex
-     * @param dbs          vector of double-bond pairs, index stored double-bonded index
+     * @param dbs vector of double-bond pairs, index stored double-bonded index
      */
-    private static void setupContributionAndDoubleBonds(IAtomContainer molecule, EdgeToBondMap bonds, int[][] graph,
-            int[] contribution, int[] dbs) {
+    private static void setupContributionAndDoubleBonds(
+            IAtomContainer molecule,
+            EdgeToBondMap bonds,
+            int[][] graph,
+            int[] contribution,
+            int[] dbs) {
         // fill the contribution and dbs vectors
         for (int v = 0; v < graph.length; v++) {
 
@@ -431,51 +437,86 @@ final class MmffAromaticTypeMapping {
      * Mapping of preliminary atom MMFF symbolic types to aromatic types for atoms that contribute a
      * lone pair.
      */
-    private final Map<String, String> hetroTypes = ImmutableMap.<String, String>builder().put("S", STHI)
-                                                               .put("-O-", OFUR).put("OC=C", OFUR).put("OC=N", OFUR)
-                                                               .put(NCN_PLUS, NIM_PLUS).put(NGD_PLUS, NIM_PLUS)
-                                                               .put("NM", N5M).put("NC=C", NPYL).put("NC=N", NPYL).put("NN=N", NPYL)
-                                                               .put("NC=O", NPYL).put("NC=S", NPYL).put("NSO2", NPYL)
-                                                               .put("NR", NPYL).build();
+    private final Map<String, String> hetroTypes =
+            ImmutableMap.<String, String>builder()
+                    .put("S", STHI)
+                    .put("-O-", OFUR)
+                    .put("OC=C", OFUR)
+                    .put("OC=N", OFUR)
+                    .put(NCN_PLUS, NIM_PLUS)
+                    .put(NGD_PLUS, NIM_PLUS)
+                    .put("NM", N5M)
+                    .put("NC=C", NPYL)
+                    .put("NC=N", NPYL)
+                    .put("NN=N", NPYL)
+                    .put("NC=O", NPYL)
+                    .put("NC=S", NPYL)
+                    .put("NSO2", NPYL)
+                    .put("NR", NPYL)
+                    .build();
     /**
      * Mapping of preliminary atom MMFF symbolic types to aromatic types for atoms that contribute
      * one electron and are alpha to an atom that contributes a lone pair.
      */
-    private final Map<String, String> alphaTypes = ImmutableMap.<String, String> builder().put("CNN+", CIM_PLUS)
-                                                         .put("CGD+", CIM_PLUS).put("C=C", C5A).put("C=N", C5A)
-                                                         .put("CGD", C5A).put("CB", C5A).put(C5B, C5).put("N2OX", N5AX)
-                                                         .put(NCN_PLUS, NIM_PLUS).put(NGD_PLUS, NIM_PLUS)
-                                                         .put("N+=C", N5A_PLUS).put("N+=N", N5A_PLUS)
-                                                         .put("NPD+", N5A_PLUS).put("N=C", N5A).put("N=N", N5A).build();
+    private final Map<String, String> alphaTypes =
+            ImmutableMap.<String, String>builder()
+                    .put("CNN+", CIM_PLUS)
+                    .put("CGD+", CIM_PLUS)
+                    .put("C=C", C5A)
+                    .put("C=N", C5A)
+                    .put("CGD", C5A)
+                    .put("CB", C5A)
+                    .put(C5B, C5)
+                    .put("N2OX", N5AX)
+                    .put(NCN_PLUS, NIM_PLUS)
+                    .put(NGD_PLUS, NIM_PLUS)
+                    .put("N+=C", N5A_PLUS)
+                    .put("N+=N", N5A_PLUS)
+                    .put("NPD+", N5A_PLUS)
+                    .put("N=C", N5A)
+                    .put("N=N", N5A)
+                    .build();
     /**
      * Mapping of preliminary atom MMFF symbolic types to aromatic types for atoms that contribute
      * one electron and are beta to an atom that contributes a lone pair.
      */
-    private final Map<String, String> betaTypes  = ImmutableMap.<String, String> builder().put("CNN+", CIM_PLUS)
-                                                         .put("CGD+", CIM_PLUS).put("C=C", C5B).put("C=N", C5B)
-                                                         .put("CGD", C5B).put("CB", C5B).put(C5A, C5).put("N2OX", N5BX)
-                                                         .put(NCN_PLUS, NIM_PLUS).put(NGD_PLUS, NIM_PLUS)
-                                                         .put("N+=C", N5B_PLUS).put("N+=N", N5B_PLUS)
-                                                         .put("NPD+", N5B_PLUS).put("N=C", N5B).put("N=N", N5B).build();
+    private final Map<String, String> betaTypes =
+            ImmutableMap.<String, String>builder()
+                    .put("CNN+", CIM_PLUS)
+                    .put("CGD+", CIM_PLUS)
+                    .put("C=C", C5B)
+                    .put("C=N", C5B)
+                    .put("CGD", C5B)
+                    .put("CB", C5B)
+                    .put(C5A, C5)
+                    .put("N2OX", N5BX)
+                    .put(NCN_PLUS, NIM_PLUS)
+                    .put(NGD_PLUS, NIM_PLUS)
+                    .put("N+=C", N5B_PLUS)
+                    .put("N+=N", N5B_PLUS)
+                    .put("NPD+", N5B_PLUS)
+                    .put("N=C", N5B)
+                    .put("N=N", N5B)
+                    .build();
 
     @SuppressWarnings("PMD.ShortVariable")
     // C5 is intended
-    private static final String       C5         = "C5";
-    private static final String       C5A        = "C5A";
-    private static final String       C5B        = "C5B";
-    private static final String       N5A        = "N5A";
-    private static final String       N5B        = "N5B";
-    private static final String       NPYL       = "NPYL";
-    private static final String       NCN_PLUS   = "NCN+";
-    private static final String       NGD_PLUS   = "NGD+";
-    private static final String       NIM_PLUS   = "NIM+";
-    private static final String       N5A_PLUS   = "N5A+";
-    private static final String       N5B_PLUS   = "N5B+";
-    private static final String       N5M        = "N5M";
-    private static final String       N5AX       = "N5AX";
-    private static final String       N5BX       = "N5BX";
-    private static final String       CIM_PLUS   = "CIM+";
-    private static final String       OFUR       = "OFUR";
-    private static final String       STHI       = "STHI";
+    private static final String C5 = "C5";
 
+    private static final String C5A = "C5A";
+    private static final String C5B = "C5B";
+    private static final String N5A = "N5A";
+    private static final String N5B = "N5B";
+    private static final String NPYL = "NPYL";
+    private static final String NCN_PLUS = "NCN+";
+    private static final String NGD_PLUS = "NGD+";
+    private static final String NIM_PLUS = "NIM+";
+    private static final String N5A_PLUS = "N5A+";
+    private static final String N5B_PLUS = "N5B+";
+    private static final String N5M = "N5M";
+    private static final String N5AX = "N5AX";
+    private static final String N5BX = "N5BX";
+    private static final String CIM_PLUS = "CIM+";
+    private static final String OFUR = "OFUR";
+    private static final String STHI = "STHI";
 }

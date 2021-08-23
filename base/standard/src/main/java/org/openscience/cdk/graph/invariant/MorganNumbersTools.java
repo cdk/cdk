@@ -24,13 +24,11 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
- * Compute the extended connectivity values (Morgan Numbers) {@cdk.cite MOR65}.
- * The tool does not produce the lexicographic smallest labelling on the graph
- * and should not be used as a robust canonical labelling tool. To canonical
- * label a graph please use {@link InChINumbersTools} or {@link
- * CanonicalLabeler}. To determine equivalent classes of atoms please use {@link
- * HuLuIndexTool} or one of the discrete refines available in the 'cdk-group'
- * module.
+ * Compute the extended connectivity values (Morgan Numbers) {@cdk.cite MOR65}. The tool does not
+ * produce the lexicographic smallest labelling on the graph and should not be used as a robust
+ * canonical labelling tool. To canonical label a graph please use {@link InChINumbersTools} or
+ * {@link CanonicalLabeler}. To determine equivalent classes of atoms please use {@link
+ * HuLuIndexTool} or one of the discrete refines available in the 'cdk-group' module.
  *
  * @author shk3
  * @cdk.module standard
@@ -47,9 +45,8 @@ public class MorganNumbersTools {
     private static final int INITIAL_DEGREE = 4;
 
     /**
-     * Makes an array containing the morgan numbers of the atoms of
-     * atomContainer. These number are the extended connectivity values and not
-     * the lexicographic smallest labelling on the graph.
+     * Makes an array containing the morgan numbers of the atoms of atomContainer. These number are
+     * the extended connectivity values and not the lexicographic smallest labelling on the graph.
      *
      * @param molecule the molecule to analyse.
      * @return The morgan numbers value.
@@ -102,10 +99,9 @@ public class MorganNumbersTools {
     }
 
     /**
-     * Makes an array containing the morgan numbers+element symbol of the atoms
-     * of {@code atomContainer}. This method puts the element symbol before the
-     * morgan number, useful for finding out how many different rests are
-     * connected to an atom.
+     * Makes an array containing the morgan numbers+element symbol of the atoms of {@code
+     * atomContainer}. This method puts the element symbol before the morgan number, useful for
+     * finding out how many different rests are connected to an atom.
      *
      * @param atomContainer The atomContainer to analyse.
      * @return The morgan numbers value.
@@ -114,7 +110,8 @@ public class MorganNumbersTools {
         long[] morgannumbers = getMorganNumbers(atomContainer);
         String[] morgannumberswithelement = new String[morgannumbers.length];
         for (int i = 0; i < morgannumbers.length; i++) {
-            morgannumberswithelement[i] = atomContainer.getAtom(i).getSymbol() + "-" + morgannumbers[i];
+            morgannumberswithelement[i] =
+                    atomContainer.getAtom(i).getSymbol() + "-" + morgannumbers[i];
         }
         return (morgannumberswithelement);
     }

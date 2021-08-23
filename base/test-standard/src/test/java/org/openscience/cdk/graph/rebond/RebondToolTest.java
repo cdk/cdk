@@ -20,7 +20,6 @@
 package org.openscience.cdk.graph.rebond;
 
 import javax.vecmath.Point3d;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -57,9 +56,10 @@ public class RebondToolTest extends CDKTestCase {
         methane.addAtom(new Atom("H", new Point3d(-0.6, 0.6, -0.6)));
 
         // configure atoms
-        AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt",
-                methane.getBuilder());
-        //org.openscience.cdk.interfaces.IAtom[] atoms = methane.getAtoms();
+        AtomTypeFactory factory =
+                AtomTypeFactory.getInstance(
+                        "org/openscience/cdk/config/data/jmol_atomtypes.txt", methane.getBuilder());
+        // org.openscience.cdk.interfaces.IAtom[] atoms = methane.getAtoms();
         for (int i = 0; i < methane.getAtomCount(); i++) {
             factory.configure(methane.getAtom(i));
         }

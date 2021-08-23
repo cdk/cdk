@@ -20,7 +20,6 @@ package org.openscience.cdk.renderer.selection;
 
 import java.util.Collection;
 import java.util.Collections;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -36,37 +35,34 @@ import org.openscience.cdk.interfaces.IChemObject;
  */
 public abstract class AbstractSelection implements IChemObjectSelection {
 
-    /**
-     * Static implementation of an empty selection.
-     */
-    public static IChemObjectSelection EMPTY_SELECTION = new AbstractSelection() {
+    /** Static implementation of an empty selection. */
+    public static IChemObjectSelection EMPTY_SELECTION =
+            new AbstractSelection() {
 
-                                                           /** {@inheritDoc} */
-                                                           @Override
-                                                           public IAtomContainer getConnectedAtomContainer() {
-                                                               return null;
-                                                           }
+                /** {@inheritDoc} */
+                @Override
+                public IAtomContainer getConnectedAtomContainer() {
+                    return null;
+                }
 
-                                                           /** {@inheritDoc} */
-                                                           @Override
-                                                           public boolean isFilled() {
-                                                               return false;
-                                                           }
+                /** {@inheritDoc} */
+                @Override
+                public boolean isFilled() {
+                    return false;
+                }
 
-                                                           /** {@inheritDoc} */
-                                                           @Override
-                                                           public boolean contains(IChemObject obj) {
-                                                               return false;
-                                                           }
+                /** {@inheritDoc} */
+                @Override
+                public boolean contains(IChemObject obj) {
+                    return false;
+                }
 
-                                                           /** {@inheritDoc} */
-                                                           @Override
-                                                           public <E extends IChemObject> Collection<E> elements(
-                                                                   Class<E> clazz) {
-                                                               return Collections.emptySet();
-                                                           }
-
-                                                       };
+                /** {@inheritDoc} */
+                @Override
+                public <E extends IChemObject> Collection<E> elements(Class<E> clazz) {
+                    return Collections.emptySet();
+                }
+            };
 
     /** {@inheritDoc} */
     @Override
@@ -90,5 +86,4 @@ public abstract class AbstractSelection implements IChemObjectSelection {
             ac.addBond((IBond) item);
         }
     }
-
 }

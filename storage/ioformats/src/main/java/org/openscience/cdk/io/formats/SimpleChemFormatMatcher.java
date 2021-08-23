@@ -27,27 +27,26 @@ package org.openscience.cdk.io.formats;
 import java.util.List;
 
 /**
- * A simple line matcher which delegates format matching to the previous
- * per-line implementation.
+ * A simple line matcher which delegates format matching to the previous per-line implementation.
  *
  * @author John May
  * @cdk.module ioformats
  */
-abstract class SimpleChemFormatMatcher extends AbstractResourceFormat implements IChemFormatMatcher {
+abstract class SimpleChemFormatMatcher extends AbstractResourceFormat
+        implements IChemFormatMatcher {
 
     /**
-     * Check whether a given line at a specified position (line number) could
-     * belong to this format.
+     * Check whether a given line at a specified position (line number) could belong to this format.
      *
      * @param lineNumber the line number of {@literal line}
-     * @param line       the contents at the given {@literal lineNumber}
+     * @param line the contents at the given {@literal lineNumber}
      * @return this line in this position could indicate a format match
      */
     abstract boolean matches(int lineNumber, String line);
 
     /**
-     * Simple implementation, runs the lines one-by-one through {@link
-     * #matches(int, String)} and returns true if any line matches.
+     * Simple implementation, runs the lines one-by-one through {@link #matches(int, String)} and
+     * returns true if any line matches.
      *
      * @param lines lines of the input to be checked
      * @return runs the lines

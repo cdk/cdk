@@ -51,18 +51,20 @@ import org.openscience.cdk.interfaces.IBond;
 
 /**
  * Checks if atom is matching between query and target molecules.
+ *
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public
- *             access to internal implementation details. SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK
+ *     or provides public access to internal implementation details. SMSD has been deprecated from
+ *     the CDK with a newer, more recent version of SMSD is available at <a
+ *     href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public class DefaultMatcher {
 
-    public static boolean isBondMatch(BondMatcher bondMatcher, IAtomContainer ac2, IBond bondA2,
-            boolean shouldMatchBonds) {
+    public static boolean isBondMatch(
+            BondMatcher bondMatcher, IAtomContainer ac2, IBond bondA2, boolean shouldMatchBonds) {
 
         // ok, bonds match
         if (bondMatcher.matches(ac2, bondA2)) {
@@ -70,23 +72,27 @@ public class DefaultMatcher {
             return true;
         }
         return false;
-
     }
 
-    public static boolean isAtomMatch(AtomMatcher atomMatcher1, AtomMatcher atomMatcher2, IAtomContainer ac2,
-            IBond bondA2, boolean shouldMatchBonds) {
+    public static boolean isAtomMatch(
+            AtomMatcher atomMatcher1,
+            AtomMatcher atomMatcher2,
+            IAtomContainer ac2,
+            IBond bondA2,
+            boolean shouldMatchBonds) {
 
         // ok, atoms match
-        if (atomMatcher1.matches(ac2, bondA2.getBegin()) && atomMatcher2.matches(ac2, bondA2.getEnd())) {
+        if (atomMatcher1.matches(ac2, bondA2.getBegin())
+                && atomMatcher2.matches(ac2, bondA2.getEnd())) {
             //            System.out.println("Atom Matched");
             return true;
         }
         // ok, atoms match
-        if (atomMatcher1.matches(ac2, bondA2.getEnd()) && atomMatcher2.matches(ac2, bondA2.getBegin())) {
+        if (atomMatcher1.matches(ac2, bondA2.getEnd())
+                && atomMatcher2.matches(ac2, bondA2.getBegin())) {
             //            System.out.println("Atom Matched");
             return true;
         }
         return false;
     }
-
 }

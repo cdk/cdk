@@ -30,24 +30,25 @@ import org.openscience.cdk.tools.diff.tree.IntegerDifference;
 /**
  * Compares two {@link IAtomContainer} classes.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module diff
  * @cdk.githash
  */
 public class AtomContainerDiff {
 
     /**
-     * Overwrite the default public constructor because this class is not
-     * supposed to be instantiated.
+     * Overwrite the default public constructor because this class is not supposed to be
+     * instantiated.
      */
     private AtomContainerDiff() {}
 
     /**
      * Compare two {@link IChemObject} classes and return the difference as a {@link String}.
      *
-     * @param first  the first of the two classes to compare
+     * @param first the first of the two classes to compare
      * @param second the second of the two classes to compare
-     * @return a {@link String} representation of the difference between the first and second {@link IChemObject}.
+     * @return a {@link String} representation of the difference between the first and second {@link
+     *     IChemObject}.
      */
     public static String diff(IChemObject first, IChemObject second) {
         IDifference diff = difference(first, second);
@@ -61,9 +62,10 @@ public class AtomContainerDiff {
     /**
      * Compare two {@link IChemObject} classes and return the difference as an {@link IDifference}.
      *
-     * @param first  the first of the two classes to compare
+     * @param first the first of the two classes to compare
      * @param second the second of the two classes to compare
-     * @return an {@link IDifference} representation of the difference between the first and second {@link IChemObject}.
+     * @return an {@link IDifference} representation of the difference between the first and second
+     *     {@link IChemObject}.
      */
     public static IDifference difference(IChemObject first, IChemObject second) {
         if (!(first instanceof IAtomContainer && second instanceof IAtomContainer)) {
@@ -72,31 +74,44 @@ public class AtomContainerDiff {
         IAtomContainer firstAC = (IAtomContainer) first;
         IAtomContainer secondAC = (IAtomContainer) second;
         ChemObjectDifference totalDiff = new ChemObjectDifference("AtomContainerDiff");
-        totalDiff.addChild(IntegerDifference.construct("atomCount", firstAC.getAtomCount(), secondAC.getAtomCount()));
+        totalDiff.addChild(
+                IntegerDifference.construct(
+                        "atomCount", firstAC.getAtomCount(), secondAC.getAtomCount()));
         if (firstAC.getAtomCount() == secondAC.getAtomCount()) {
             for (int i = 0; i < firstAC.getAtomCount(); i++) {
                 totalDiff.addChild(AtomDiff.difference(firstAC.getAtom(i), secondAC.getAtom(i)));
             }
         }
-        totalDiff.addChild(IntegerDifference.construct("electronContainerCount", firstAC.getElectronContainerCount(),
-                secondAC.getElectronContainerCount()));
+        totalDiff.addChild(
+                IntegerDifference.construct(
+                        "electronContainerCount",
+                        firstAC.getElectronContainerCount(),
+                        secondAC.getElectronContainerCount()));
         if (firstAC.getElectronContainerCount() == secondAC.getElectronContainerCount()) {
             for (int i = 0; i < firstAC.getElectronContainerCount(); i++) {
                 if (firstAC.getElectronContainer(i) instanceof IBond
                         && secondAC.getElectronContainer(i) instanceof IBond) {
-                    totalDiff.addChild(BondDiff.difference(firstAC.getElectronContainer(i),
-                            secondAC.getElectronContainer(i)));
+                    totalDiff.addChild(
+                            BondDiff.difference(
+                                    firstAC.getElectronContainer(i),
+                                    secondAC.getElectronContainer(i)));
                 } else if (firstAC.getElectronContainer(i) instanceof ILonePair
                         && secondAC.getElectronContainer(i) instanceof ILonePair) {
-                    totalDiff.addChild(LonePairDiff.difference(firstAC.getElectronContainer(i),
-                            secondAC.getElectronContainer(i)));
+                    totalDiff.addChild(
+                            LonePairDiff.difference(
+                                    firstAC.getElectronContainer(i),
+                                    secondAC.getElectronContainer(i)));
                 } else if (firstAC.getElectronContainer(i) instanceof ISingleElectron
                         && secondAC.getElectronContainer(i) instanceof ISingleElectron) {
-                    totalDiff.addChild(SingleElectronDiff.difference(firstAC.getElectronContainer(i),
-                            secondAC.getElectronContainer(i)));
+                    totalDiff.addChild(
+                            SingleElectronDiff.difference(
+                                    firstAC.getElectronContainer(i),
+                                    secondAC.getElectronContainer(i)));
                 } else {
-                    totalDiff.addChild(ElectronContainerDiff.difference(firstAC.getElectronContainer(i),
-                            secondAC.getElectronContainer(i)));
+                    totalDiff.addChild(
+                            ElectronContainerDiff.difference(
+                                    firstAC.getElectronContainer(i),
+                                    secondAC.getElectronContainer(i)));
                 }
             }
         }
@@ -107,5 +122,4 @@ public class AtomContainerDiff {
             return null;
         }
     }
-
 }

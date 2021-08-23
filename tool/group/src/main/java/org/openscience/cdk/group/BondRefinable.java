@@ -30,37 +30,30 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
  * Wraps an atom container to provide information on the bond connectivity.
- * 
+ *
  * @author maclean
  * @cdk.module group
- *
  */
 class BondRefinable implements Refinable {
-    
+
     private final IAtomContainer atomContainer;
 
-    /**
-     * The connectivity between bonds; two bonds are connected
-     * if they share an atom.
-     */
+    /** The connectivity between bonds; two bonds are connected if they share an atom. */
     private int[][] connectionTable;
 
-    /**
-     * Specialised option to allow generating automorphisms that ignore the bond order.
-     */
+    /** Specialised option to allow generating automorphisms that ignore the bond order. */
     private boolean ignoreBondOrders;
-    
+
     public BondRefinable(IAtomContainer atomContainer) {
         this(atomContainer, false);
     }
-    
+
     public BondRefinable(IAtomContainer atomContainer, boolean ignoreBondOrders) {
         this.atomContainer = atomContainer;
         this.ignoreBondOrders = ignoreBondOrders;
@@ -83,7 +76,7 @@ class BondRefinable implements Refinable {
         }
         return 0;
     }
-    
+
     @Override
     public Invariant neighboursInBlock(Set<Integer> block, int vertexIndex) {
         int neighbours = 0;
@@ -98,10 +91,10 @@ class BondRefinable implements Refinable {
     private int[] getConnectedIndices(int vertexIndex) {
         return connectionTable[vertexIndex];
     }
-    
+
     /**
-     * Get the bond partition, based on the element types of the atoms at either end
-     * of the bond, and the bond order.
+     * Get the bond partition, based on the element types of the atoms at either end of the bond,
+     * and the bond order.
      *
      * @return a partition of the bonds based on the element types and bond order
      */
@@ -152,7 +145,7 @@ class BondRefinable implements Refinable {
         bondPartition.order();
         return bondPartition;
     }
-    
+
     private void setupConnectionTable(IAtomContainer atomContainer) {
         int bondCount = atomContainer.getBondCount();
         // unfortunately, we have to sort the bonds
@@ -205,5 +198,4 @@ class BondRefinable implements Refinable {
             }
         }
     }
-
 }

@@ -24,16 +24,12 @@
 
 package org.openscience.cdk.renderer;
 
-import org.openscience.cdk.config.Elements;
-import org.openscience.cdk.config.Isotopes;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IIsotope;
-
+import java.util.List;
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
-import java.io.IOException;
-import java.util.List;
+import org.openscience.cdk.config.Elements;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
 
 /**
  * Predicate that defines whether an atom symbol is displayed in a structure diagram.
@@ -49,7 +45,7 @@ public abstract class SymbolVisibility {
     /**
      * Determine if an atom with the specified bonds is visible.
      *
-     * @param atom      an atom
+     * @param atom an atom
      * @param neighbors neighboring bonds
      * @return whether the atom symbol is visible
      */
@@ -92,9 +88,7 @@ public abstract class SymbolVisibility {
         return new IupacVisibility(false);
     }
 
-    /**
-     * Visibility following IUPAC guidelines.
-     */
+    /** Visibility following IUPAC guidelines. */
     private static final class IupacVisibility extends SymbolVisibility {
 
         private boolean terminal = false;
@@ -103,9 +97,7 @@ public abstract class SymbolVisibility {
             this.terminal = terminal;
         }
 
-        /**
-         *{@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
         public boolean visible(IAtom atom, List<IBond> bonds, RendererModel model) {
 
@@ -124,8 +116,7 @@ public abstract class SymbolVisibility {
             if (!isFourValent(atom, bonds)) return true;
 
             // charge, normally caught by previous rule but can have bad input: C=[CH-]C
-            if (atom.getFormalCharge() != null &&
-                atom.getFormalCharge() != 0) return true;
+            if (atom.getFormalCharge() != null && atom.getFormalCharge() != 0) return true;
 
             // carbon isotopes are displayed
             Integer mass = atom.getMassNumber();
@@ -133,11 +124,9 @@ public abstract class SymbolVisibility {
 
             // no kink between bonds to imply the presence of a carbon and it must
             // be displayed if the bonds have the same bond order
-            if (bonds.size() == 2 &&
-                    bonds.get(0).getOrder() == bonds.get(1).getOrder()) {
+            if (bonds.size() == 2 && bonds.get(0).getOrder() == bonds.get(1).getOrder()) {
                 IBond.Order bndord = bonds.get(0).getOrder();
-                if (bndord == IBond.Order.DOUBLE || hasParallelBonds(atom, bonds))
-                    return true;
+                if (bndord == IBond.Order.DOUBLE || hasParallelBonds(atom, bonds)) return true;
             }
 
             // special case ethane
@@ -145,8 +134,7 @@ public abstract class SymbolVisibility {
                 Integer begHcnt = atom.getImplicitHydrogenCount();
                 IAtom end = bonds.get(0).getOther(atom);
                 Integer endHcnt = end.getImplicitHydrogenCount();
-                if (begHcnt != null && endHcnt != null && begHcnt == 3 && endHcnt == 3)
-                    return true;
+                if (begHcnt != null && endHcnt != null && begHcnt == 3 && endHcnt == 3) return true;
             }
 
             // ProblemMarker ?
@@ -157,7 +145,7 @@ public abstract class SymbolVisibility {
         /**
          * Check the valency of the atom.
          *
-         * @param atom  an atom
+         * @param atom an atom
          * @param bonds bonds connected to the atom
          * @return whether the atom is four valent
          */
@@ -176,11 +164,9 @@ public abstract class SymbolVisibility {
                 }
                 // valence nudge, we're only dealing with neutral carbons here
                 // and if
-                if (hasUnsetArom)
-                    valence++;
+                if (hasUnsetArom) valence++;
             } else {
-                for (final IBond bond : bonds)
-                    valence += bond.getOrder().numeric();
+                for (final IBond bond : bonds) valence += bond.getOrder().numeric();
             }
             return valence == 4;
         }
@@ -188,7 +174,7 @@ public abstract class SymbolVisibility {
         /**
          * Check whether the atom has only two bonds connected and they are (or close to) parallel.
          *
-         * @param atom  an atom
+         * @param atom an atom
          * @param bonds bonds connected to the atom
          * @return whether the atom has parallel bonds
          */
@@ -203,7 +189,7 @@ public abstract class SymbolVisibility {
         /**
          * Determine the angle between two bonds of one atom.
          *
-         * @param atom  an atom
+         * @param atom an atom
          * @param bond1 a bond connected to the atom
          * @param bond2 another bond connected to the atom
          * @return the angle (in radians)

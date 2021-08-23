@@ -24,7 +24,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.atomtype.SybylAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
@@ -39,20 +38,19 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * An output Writer that writes molecular data into the
- * <a href="http://www.tripos.com/data/support/mol2.pdf">Tripos Mol2 format</a>.
- * Writes the atoms and the bonds only at this moment.
+ * An output Writer that writes molecular data into the <a
+ * href="http://www.tripos.com/data/support/mol2.pdf">Tripos Mol2 format</a>. Writes the atoms and
+ * the bonds only at this moment.
  *
  * @cdk.module io
  * @cdk.githash
  * @cdk.iooptions
- *
- * @author     Egon Willighagen
+ * @author Egon Willighagen
  */
 public class Mol2Writer extends DefaultChemObjectWriter {
 
-    private BufferedWriter       writer;
-    private static ILoggingTool  logger = LoggingToolFactory.createLoggingTool(Mol2Writer.class);
+    private BufferedWriter writer;
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(Mol2Writer.class);
     private SybylAtomTypeMatcher matcher;
 
     public Mol2Writer() {
@@ -61,6 +59,7 @@ public class Mol2Writer extends DefaultChemObjectWriter {
 
     /**
      * Constructs a new Mol2 writer.
+     *
      * @param out the stream to write the Mol2 file to.
      */
     public Mol2Writer(Writer out) {
@@ -97,9 +96,7 @@ public class Mol2Writer extends DefaultChemObjectWriter {
         setWriter(new OutputStreamWriter(output));
     }
 
-    /**
-     * Flushes the output and closes this object.
-     */
+    /** Flushes the output and closes this object. */
     @Override
     public void close() throws IOException {
         writer.close();
@@ -160,7 +157,12 @@ public class Mol2Writer extends DefaultChemObjectWriter {
                 writer.write(mol.getID());
             }
             writer.write('\n');
-            writer.write(mol.getAtomCount() + " " + mol.getBondCount()); // that's the minimum amount of info required the format
+            writer.write(
+                    mol.getAtomCount()
+                            + " "
+                            + mol
+                                    .getBondCount()); // that's the minimum amount of info required
+                                                      // the format
             writer.write('\n');
             writer.write("SMALL"); // no biopolymer
             writer.write('\n');
@@ -224,10 +226,8 @@ public class Mol2Writer extends DefaultChemObjectWriter {
             int counter = 0;
             for (IBond bond : mol.bonds()) {
                 String sybylBondOrder = "-1";
-                if (bond.getOrder().equals(IBond.Order.SINGLE))
-                    sybylBondOrder = "1";
-                else if (bond.getOrder().equals(IBond.Order.DOUBLE))
-                    sybylBondOrder = "2";
+                if (bond.getOrder().equals(IBond.Order.SINGLE)) sybylBondOrder = "1";
+                else if (bond.getOrder().equals(IBond.Order.DOUBLE)) sybylBondOrder = "2";
                 else if (bond.getOrder().equals(IBond.Order.TRIPLE)) sybylBondOrder = "3";
                 if (bond.getFlag(CDKConstants.ISAROMATIC)) sybylBondOrder = "ar";
 
@@ -238,17 +238,26 @@ public class Mol2Writer extends DefaultChemObjectWriter {
                 try {
                     final IAtomType bondAtom1Type = matcher.findMatchingAtomType(mol, bondAtom1);
                     final IAtomType bondAtom2Type = matcher.findMatchingAtomType(mol, bondAtom2);
-                    if (bondAtom1Type != null && bondAtom2Type != null && 
-                            ((bondAtom1Type.getAtomTypeName().equals("N.am") && bondAtom2Type.getAtomTypeName().equals("C.2"))
-                            || (bondAtom2Type.getAtomTypeName().equals("N.am") && bondAtom1Type.getAtomTypeName().equals("C.2")))) {
+                    if (bondAtom1Type != null
+                            && bondAtom2Type != null
+                            && ((bondAtom1Type.getAtomTypeName().equals("N.am")
+                                            && bondAtom2Type.getAtomTypeName().equals("C.2"))
+                                    || (bondAtom2Type.getAtomTypeName().equals("N.am")
+                                            && bondAtom1Type.getAtomTypeName().equals("C.2")))) {
                         sybylBondOrder = "am";
                     }
                 } catch (CDKException e) {
                     e.printStackTrace();
                 }
 
-                writer.write((counter + 1) + " " + (mol.indexOf(bond.getBegin()) + 1) + " "
-                             + (mol.indexOf(bond.getEnd()) + 1) + " " + sybylBondOrder);
+                writer.write(
+                        (counter + 1)
+                                + " "
+                                + (mol.indexOf(bond.getBegin()) + 1)
+                                + " "
+                                + (mol.indexOf(bond.getEnd()) + 1)
+                                + " "
+                                + sybylBondOrder);
                 writer.write('\n');
                 counter++;
             }

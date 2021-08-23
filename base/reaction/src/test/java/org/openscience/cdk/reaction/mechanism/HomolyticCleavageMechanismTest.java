@@ -31,17 +31,13 @@ import org.openscience.cdk.reaction.ReactionMechanismTest;
  */
 public class HomolyticCleavageMechanismTest extends ReactionMechanismTest {
 
-    /**
-     *  The JUnit setup method
-     */
+    /** The JUnit setup method */
     @BeforeClass
     public static void setUp() throws Exception {
         setMechanism(HomolyticCleavageMechanism.class);
     }
 
-    /**
-     *  Constructor for the HomolyticCleavageMechanismTest object.
-     */
+    /** Constructor for the HomolyticCleavageMechanismTest object. */
     public HomolyticCleavageMechanismTest() {
         super();
     }
@@ -58,8 +54,7 @@ public class HomolyticCleavageMechanismTest extends ReactionMechanismTest {
     }
 
     /**
-     * Junit test.
-     * TODDO: REACT: add an example
+     * Junit test. TODDO: REACT: add an example
      *
      * @throws Exception
      */

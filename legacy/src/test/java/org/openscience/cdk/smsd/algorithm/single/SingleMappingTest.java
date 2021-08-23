@@ -24,21 +24,19 @@ package org.openscience.cdk.smsd.algorithm.single;
 
 import static org.junit.Assert.assertNotNull;
 
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 /**
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- *
  * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
@@ -58,9 +56,7 @@ public class SingleMappingTest {
     @After
     public void tearDown() {}
 
-    /**
-     * Test of getOverLaps method, of class SingleMapping.
-     */
+    /** Test of getOverLaps method, of class SingleMapping. */
     @Test
     public void testGetOverLaps() throws CDKException {
         IAtom atomSource = new Atom("R");

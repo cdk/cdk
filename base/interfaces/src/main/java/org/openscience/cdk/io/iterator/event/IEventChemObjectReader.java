@@ -26,20 +26,17 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.IChemObjectIO;
 
 /**
- * Interface for an iterating molecule reader. It allows to iterate over all molecules
- * in specific file format (e.g. CML), without reading them all into memory first. Suitable
- * for very large files, with thousands of molecules.
+ * Interface for an iterating molecule reader. It allows to iterate over all molecules in specific
+ * file format (e.g. CML), without reading them all into memory first. Suitable for very large
+ * files, with thousands of molecules.
  *
  * @cdk.module io
  * @cdk.githash
- *
  * @see IChemObjectIO
- *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  * @cdk.created 2005-01-25
  */
 public interface IEventChemObjectReader extends IChemObjectIO {
 
     public IAtomContainer getAtomContainer();
-
 }

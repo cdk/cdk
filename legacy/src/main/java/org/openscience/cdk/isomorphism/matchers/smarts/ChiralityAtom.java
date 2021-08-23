@@ -22,29 +22,23 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * This matches an atom with chirality property. It is not implemented yet.
- * It'll match any atom right now.
+ * This matches an atom with chirality property. It is not implemented yet. It'll match any atom
+ * right now.
  *
- * @cdk.module  smarts
+ * @cdk.module smarts
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
 @Deprecated
 public class ChiralityAtom extends SMARTSAtom {
 
-    /**
-     * The degree of the chirality
-     */
-    private int     degree;
+    /** The degree of the chirality */
+    private int degree;
 
-    /**
-     * Whether unspecified chirality should be taken into consideration
-     */
+    /** Whether unspecified chirality should be taken into consideration */
     private boolean unspecified;
 
-    /**
-     * Whether the chirality is clockwise
-     */
+    /** Whether the chirality is clockwise */
     private boolean clockwise;
 
     public int getDegree() {
@@ -71,10 +65,7 @@ public class ChiralityAtom extends SMARTSAtom {
         this.clockwise = clockwise;
     }
 
-    /**
-     * Creates a new instance
-     *
-     */
+    /** Creates a new instance */
     public ChiralityAtom(IChemObjectBuilder builder) {
         super(builder);
     }
@@ -85,7 +76,7 @@ public class ChiralityAtom extends SMARTSAtom {
         return true;
     }
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     public boolean chiralityMatches(IAtom target, int tParity, int permParity) {
         int qParity = permParity * (clockwise ? 1 : -1);

@@ -22,20 +22,17 @@
  */
 package org.openscience.cdk.io.formats;
 
+import com.google.common.io.CharStreams;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.Arrays;
 import java.util.Collections;
-
-import com.google.common.io.CharStreams;
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * @cdk.module test-ioformats
- */
-abstract public class ChemFormatMatcherTest extends ChemFormatTest {
+/** @cdk.module test-ioformats */
+public abstract class ChemFormatMatcherTest extends ChemFormatTest {
 
     private IChemFormatMatcher matcher;
 
@@ -46,7 +43,9 @@ abstract public class ChemFormatMatcherTest extends ChemFormatTest {
 
     @Test
     public void testChemFormatMatcherSet() {
-        Assert.assertNotNull("You must use setChemFormatMatcher() to set the IChemFormatMatcher object.", matcher);
+        Assert.assertNotNull(
+                "You must use setChemFormatMatcher() to set the IChemFormatMatcher object.",
+                matcher);
     }
 
     protected boolean matches(String header) throws IOException {
@@ -63,7 +62,7 @@ abstract public class ChemFormatMatcherTest extends ChemFormatTest {
 
     @Test
     public void testNoLines() {
-        Assert.assertFalse(matcher.matches(Collections.<String> emptyList()).matched());
+        Assert.assertFalse(matcher.matches(Collections.<String>emptyList()).matched());
     }
 
     @Test
@@ -73,9 +72,10 @@ abstract public class ChemFormatMatcherTest extends ChemFormatTest {
 
     @Test
     public void testMatchesLoremIpsum() {
-        Assert.assertFalse(matcher
-                .matches(
-                        Arrays.asList("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam accumsan metus ut nulla."))
-                .matched());
+        Assert.assertFalse(
+                matcher.matches(
+                                Arrays.asList(
+                                        "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam accumsan metus ut nulla."))
+                        .matched());
     }
 }

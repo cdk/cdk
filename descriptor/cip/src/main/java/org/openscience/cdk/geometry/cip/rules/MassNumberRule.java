@@ -24,9 +24,8 @@
 package org.openscience.cdk.geometry.cip.rules;
 
 import java.io.IOException;
-
-import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.geometry.cip.ILigand;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -40,7 +39,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 class MassNumberRule implements ISequenceSubRule<ILigand> {
 
-    ILoggingTool   logger = LoggingToolFactory.createLoggingTool(MassNumberRule.class);
+    ILoggingTool logger = LoggingToolFactory.createLoggingTool(MassNumberRule.class);
     IsotopeFactory factory;
 
     /** {@inheritDoc} */
@@ -68,5 +67,4 @@ class MassNumberRule implements ISequenceSubRule<ILigand> {
         if (isotope == null) return 0;
         return isotope.getMassNumber();
     }
-
 }

@@ -36,13 +36,14 @@ public class DebugPolymerTest extends AbstractPolymerTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new DebugPolymer();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new DebugPolymer();
+                    }
+                });
     }
 
     @Test

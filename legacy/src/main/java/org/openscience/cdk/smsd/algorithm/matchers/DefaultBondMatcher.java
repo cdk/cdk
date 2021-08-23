@@ -54,25 +54,25 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 
 /**
  * Checks if a bond is matching between query and target molecules.
+ *
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public
- *             access to internal implementation details. SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK
+ *     or provides public access to internal implementation details. SMSD has been deprecated from
+ *     the CDK with a newer, more recent version of SMSD is available at <a
+ *     href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public class DefaultBondMatcher implements BondMatcher {
 
-    static final long  serialVersionUID = -7861469841127328812L;
-    private IBond      queryBond        = null;
-    private IQueryBond smartQueryBond   = null;
-    private int        unsaturation     = 0;
-    private boolean    shouldMatchBonds = false;
+    static final long serialVersionUID = -7861469841127328812L;
+    private IBond queryBond = null;
+    private IQueryBond smartQueryBond = null;
+    private int unsaturation = 0;
+    private boolean shouldMatchBonds = false;
 
-    /**
-     * Constructor
-     */
+    /** Constructor */
     public DefaultBondMatcher() {
         this.queryBond = null;
         this.smartQueryBond = null;
@@ -82,6 +82,7 @@ public class DefaultBondMatcher implements BondMatcher {
 
     /**
      * Constructor
+     *
      * @param queryMol query Molecule
      * @param queryBond query Molecule
      * @param shouldMatchBonds bond match flag
@@ -95,6 +96,7 @@ public class DefaultBondMatcher implements BondMatcher {
 
     /**
      * Constructor
+     *
      * @param queryBond query Molecule
      */
     public DefaultBondMatcher(IQueryBond queryBond) {
@@ -102,7 +104,8 @@ public class DefaultBondMatcher implements BondMatcher {
         this.smartQueryBond = queryBond;
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      *
      * @param targetContainer target container
      * @param targetBond target bond
@@ -119,7 +122,8 @@ public class DefaultBondMatcher implements BondMatcher {
             if (isBondMatchFlag() && isBondTypeMatch(targetBond)) {
                 return true;
             }
-            if (isBondMatchFlag() && this.unsaturation == getUnsaturation(targetContainer, targetBond)) {
+            if (isBondMatchFlag()
+                    && this.unsaturation == getUnsaturation(targetContainer, targetBond)) {
                 return true;
             }
         }
@@ -128,16 +132,19 @@ public class DefaultBondMatcher implements BondMatcher {
 
     /**
      * Return true if a bond is matched between query and target
+     *
      * @param targetBond
      * @return
      */
     private boolean isBondTypeMatch(IBond targetBond) {
         int reactantBondType = queryBond.getOrder().numeric();
         int productBondType = targetBond.getOrder().numeric();
-        if ((queryBond.getFlag(CDKConstants.ISAROMATIC) == targetBond.getFlag(CDKConstants.ISAROMATIC))
+        if ((queryBond.getFlag(CDKConstants.ISAROMATIC)
+                        == targetBond.getFlag(CDKConstants.ISAROMATIC))
                 && (reactantBondType == productBondType)) {
             return true;
-        } else if (queryBond.getFlag(CDKConstants.ISAROMATIC) && targetBond.getFlag(CDKConstants.ISAROMATIC)) {
+        } else if (queryBond.getFlag(CDKConstants.ISAROMATIC)
+                && targetBond.getFlag(CDKConstants.ISAROMATIC)) {
             return true;
         }
         return false;
@@ -148,7 +155,8 @@ public class DefaultBondMatcher implements BondMatcher {
     }
 
     private int getUnsaturation(IAtomContainer container, IBond bond) {
-        return getUnsaturation(container, bond.getBegin()) + getUnsaturation(container, bond.getEnd());
+        return getUnsaturation(container, bond.getBegin())
+                + getUnsaturation(container, bond.getEnd());
     }
 
     private int getUnsaturation(IAtomContainer container, IAtom atom) {
@@ -163,16 +171,12 @@ public class DefaultBondMatcher implements BondMatcher {
         return (atom.getImplicitHydrogenCount() == null) ? 0 : atom.getImplicitHydrogenCount();
     }
 
-    /**
-     * @return the shouldMatchBonds
-     */
+    /** @return the shouldMatchBonds */
     public boolean isBondMatchFlag() {
         return shouldMatchBonds;
     }
 
-    /**
-     * @param shouldMatchBonds the shouldMatchBonds to set
-     */
+    /** @param shouldMatchBonds the shouldMatchBonds to set */
     public final void setBondMatchFlag(boolean shouldMatchBonds) {
         this.shouldMatchBonds = shouldMatchBonds;
     }

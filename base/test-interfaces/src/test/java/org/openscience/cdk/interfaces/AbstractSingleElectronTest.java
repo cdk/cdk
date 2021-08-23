@@ -26,7 +26,6 @@ import org.junit.Test;
  * Checks the functionality of {@link ISingleElectron} implementations.
  *
  * @see org.openscience.cdk.SingleElectron
- *
  * @cdk.module test-interfaces
  */
 public abstract class AbstractSingleElectronTest extends AbstractElectronContainerTest {
@@ -95,9 +94,7 @@ public abstract class AbstractSingleElectronTest extends AbstractElectronContain
         }
     }
 
-    /**
-     * The electron count of a single electron is always exactly 1.
-     */
+    /** The electron count of a single electron is always exactly 1. */
     @Test
     @Override
     public void testSetElectronCount_Integer() {

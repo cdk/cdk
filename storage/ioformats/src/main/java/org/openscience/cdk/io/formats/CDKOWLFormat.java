@@ -21,8 +21,7 @@ package org.openscience.cdk.io.formats;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
- * Serializes a CDK model into the Web Ontology Language using the
- * N3 format.
+ * Serializes a CDK model into the Web Ontology Language using the N3 format.
  *
  * @cdk.module ioformats
  * @cdk.githash
@@ -59,7 +58,7 @@ public class CDKOWLFormat extends SimpleChemFormatMatcher implements IChemFormat
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"n3"};
+        return new String[] {"n3"};
     }
 
     /** {@inheritDoc} */
@@ -92,10 +91,14 @@ public class CDKOWLFormat extends SimpleChemFormatMatcher implements IChemFormat
     /** {@inheritDoc} */
     @Override
     public int getSupportedDataFeatures() {
-        return DataFeatures.HAS_2D_COORDINATES | DataFeatures.HAS_3D_COORDINATES
-                | DataFeatures.HAS_ATOM_PARTIAL_CHARGES | DataFeatures.HAS_ATOM_FORMAL_CHARGES
-                | DataFeatures.HAS_ATOM_MASS_NUMBERS | DataFeatures.HAS_ATOM_ISOTOPE_NUMBERS
-                | DataFeatures.HAS_GRAPH_REPRESENTATION | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
+        return DataFeatures.HAS_2D_COORDINATES
+                | DataFeatures.HAS_3D_COORDINATES
+                | DataFeatures.HAS_ATOM_PARTIAL_CHARGES
+                | DataFeatures.HAS_ATOM_FORMAL_CHARGES
+                | DataFeatures.HAS_ATOM_MASS_NUMBERS
+                | DataFeatures.HAS_ATOM_ISOTOPE_NUMBERS
+                | DataFeatures.HAS_GRAPH_REPRESENTATION
+                | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
     }
 
     /** {@inheritDoc} */

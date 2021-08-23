@@ -3,7 +3,6 @@ package org.openscience.cdk.group;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -20,7 +19,8 @@ public class AtomContainerPrinter {
     }
 
     public static String toString(IAtomContainer atomContainer) {
-        return AtomContainerPrinter.toString(atomContainer, new Permutation(atomContainer.getAtomCount()));
+        return AtomContainerPrinter.toString(
+                atomContainer, new Permutation(atomContainer.getAtomCount()));
     }
 
     public static String toString(IAtomContainer atomContainer, boolean sortEdges) {
@@ -32,7 +32,8 @@ public class AtomContainerPrinter {
         return toString(atomContainer, permutation, false); // don't sort by default?
     }
 
-    public static String toString(IAtomContainer atomContainer, Permutation permutation, boolean sortEdges) {
+    public static String toString(
+            IAtomContainer atomContainer, Permutation permutation, boolean sortEdges) {
         StringBuffer sb = new StringBuffer();
         int atomCount = atomContainer.getAtomCount();
         IAtom[] pAtoms = new IAtom[atomCount];

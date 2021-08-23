@@ -32,19 +32,14 @@ import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- * A topological descriptor combining distance and adjacency information.
- * This descriptor is described by Sharma et al. {@cdk.cite SHA97} and has been shown
- * to correlate well with a number of physical properties. The descriptor is also reported to
- * have good discriminatory ability.
- * <p>
- * The eccentric connectivity index for a hydrogen supressed molecular graph is given by the
- * expression
- * <center>
- * \xi^{c} = \sum_{i = 1}{n} E(i) V(i)
- * </center>
- * where E(i) is the eccentricity of the i<sup>th</sup> atom (path length from the
- * i<sup>th</sup> atom to the atom farthest from it) and V(i) is the vertex degree of the
- * i<sup>th</sup> atom.
+ * A topological descriptor combining distance and adjacency information. This descriptor is
+ * described by Sharma et al. {@cdk.cite SHA97} and has been shown to correlate well with a number
+ * of physical properties. The descriptor is also reported to have good discriminatory ability.
+ *
+ * <p>The eccentric connectivity index for a hydrogen supressed molecular graph is given by the
+ * expression <center> \xi^{c} = \sum_{i = 1}{n} E(i) V(i) </center> where E(i) is the eccentricity
+ * of the i<sup>th</sup> atom (path length from the i<sup>th</sup> atom to the atom farthest from
+ * it) and V(i) is the vertex degree of the i<sup>th</sup> atom.
  *
  * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
@@ -60,13 +55,15 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * </table>
  *
  * Returns a single value with name <i>ECCEN</i>
- * @author      Rajarshi Guha
- * @cdk.created     2005-03-19
- * @cdk.module  qsarmolecular
+ *
+ * @author Rajarshi Guha
+ * @cdk.created 2005-03-19
+ * @cdk.module qsarmolecular
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:eccentricConnectivityIndex
  */
-public class EccentricConnectivityIndexDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
+public class EccentricConnectivityIndexDescriptor extends AbstractMolecularDescriptor
+        implements IMolecularDescriptor {
 
     private static final String[] NAMES = {"ECCEN"};
 
@@ -75,15 +72,16 @@ public class EccentricConnectivityIndexDescriptor extends AbstractMolecularDescr
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#eccentricConnectivityIndex", this
-                        .getClass().getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#eccentricConnectivityIndex",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     /**
-     *  Sets the parameters attribute of the EccentricConnectivityIndexDescriptor object
+     * Sets the parameters attribute of the EccentricConnectivityIndexDescriptor object
      *
-     *@param  params            The new parameters value
-     *@exception  CDKException  Description of the Exception
+     * @param params The new parameters value
+     * @exception CDKException Description of the Exception
      */
     @Override
     public void setParameters(Object[] params) throws CDKException {
@@ -91,9 +89,9 @@ public class EccentricConnectivityIndexDescriptor extends AbstractMolecularDescr
     }
 
     /**
-     *  Gets the parameters attribute of the EccentricConnectivityIndexDescriptor object
+     * Gets the parameters attribute of the EccentricConnectivityIndexDescriptor object
      *
-     *@return    The parameters value
+     * @return The parameters value
      */
     @Override
     public Object[] getParameters() {
@@ -107,9 +105,9 @@ public class EccentricConnectivityIndexDescriptor extends AbstractMolecularDescr
     }
 
     /**
-     *  Gets the parameterNames attribute of the EccentricConnectivityIndexDescriptor object
+     * Gets the parameterNames attribute of the EccentricConnectivityIndexDescriptor object
      *
-     *@return    The parameterNames value
+     * @return The parameterNames value
      */
     @Override
     public String[] getParameterNames() {
@@ -118,10 +116,10 @@ public class EccentricConnectivityIndexDescriptor extends AbstractMolecularDescr
     }
 
     /**
-     *  Gets the parameterType attribute of the EccentricConnectivityIndexDescriptor object
+     * Gets the parameterType attribute of the EccentricConnectivityIndexDescriptor object
      *
-     *@param  name  Description of the Parameter
-     *@return       The parameterType value
+     * @param name Description of the Parameter
+     * @return The parameterType value
      */
     @Override
     public Object getParameterType(String name) {
@@ -129,12 +127,11 @@ public class EccentricConnectivityIndexDescriptor extends AbstractMolecularDescr
     }
 
     /**
-     *  Calculates the eccentric connectivity
+     * Calculates the eccentric connectivity
      *
-     *@param  container  Parameter is the atom container.
-     *@return            An IntegerResult value representing the eccentric connectivity index
+     * @param container Parameter is the atom container.
+     * @return An IntegerResult value representing the eccentric connectivity index
      */
-
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
         IAtomContainer local = AtomContainerManipulator.removeHydrogens(container);
@@ -153,20 +150,27 @@ public class EccentricConnectivityIndexDescriptor extends AbstractMolecularDescr
             eccenindex += max * degree;
         }
         IntegerResult retval = new IntegerResult(eccenindex);
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval,
-                getDescriptorNames(), null);
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                retval,
+                getDescriptorNames(),
+                null);
     }
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * 
-     * The return value from this method really indicates what type of result will
-     * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
-     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
-     * allows you to do the same thing, without actually calculating the descriptor.
      *
-     * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
-     *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
+     * <p>The return value from this method really indicates what type of result will be obtained
+     * from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
+     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object;
+     * this method allows you to do the same thing, without actually calculating the descriptor.
+     *
+     * @return an object that implements the {@link
+     *     org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating the actual type
+     *     of values returned by the descriptor in the {@link
+     *     org.openscience.cdk.qsar.DescriptorValue} object
      */
     @Override
     public IDescriptorResult getDescriptorResultType() {

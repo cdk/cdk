@@ -64,32 +64,29 @@ import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 
 /**
- * A helper class to instantiate a {@link IChemObject} for the original CDK
- * implementation. The factory create debug objects which will log their
- * behaviour when used.
+ * A helper class to instantiate a {@link IChemObject} for the original CDK implementation. The
+ * factory create debug objects which will log their behaviour when used.
  *
- * 
  * <pre>{@code
- *     IChemObjectBuilder builder = DebugChemObjectBuilder.getInstance();
+ * IChemObjectBuilder builder = DebugChemObjectBuilder.getInstance();
  *
- *     IAtom a = builder.newInstance(IAtom.class);
- *     IAtom c12 = builder.newInstance(IAtom.class, "C");
- *     IAtom c13 = builder.newInstance(IAtom.class,
- *                                     builder.newInstance(IIsotope.class,
- *                                                         "C", 13));
+ * IAtom a = builder.newInstance(IAtom.class);
+ * IAtom c12 = builder.newInstance(IAtom.class, "C");
+ * IAtom c13 = builder.newInstance(IAtom.class,
+ *                                 builder.newInstance(IIsotope.class,
+ *                                                     "C", 13));
  * }</pre>
  *
- *
- * @author        egonw
- * @author        john may
- * @cdk.module    datadebug
+ * @author egonw
+ * @author john may
+ * @cdk.module datadebug
  * @cdk.githash
  */
 public class DebugChemObjectBuilder implements IChemObjectBuilder {
 
     private static volatile IChemObjectBuilder instance = null;
-    private static final Object                LOCK     = new Object();
-    private final DynamicFactory               factory  = new DynamicFactory(200);
+    private static final Object LOCK = new Object();
+    private final DynamicFactory factory = new DynamicFactory(200);
 
     private DebugChemObjectBuilder() {
 
@@ -143,7 +140,9 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
         factory.register(ISubstance.class, DebugSubstance.class);
 
         // stereo components (requires some modification after instantiation)
-        factory.register(ITetrahedralChirality.class, TetrahedralChirality.class,
+        factory.register(
+                ITetrahedralChirality.class,
+                TetrahedralChirality.class,
                 new DynamicFactory.CreationModifier<TetrahedralChirality>() {
 
                     @Override
@@ -151,7 +150,9 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
                         instance.setBuilder(self);
                     }
                 });
-        factory.register(IDoubleBondStereochemistry.class, DoubleBondStereochemistry.class,
+        factory.register(
+                IDoubleBondStereochemistry.class,
+                DoubleBondStereochemistry.class,
                 new DynamicFactory.CreationModifier<DoubleBondStereochemistry>() {
 
                     @Override
@@ -163,13 +164,12 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
         // miscellaneous
         factory.register(IMapping.class, DebugMapping.class);
         factory.register(IChemObject.class, DebugChemObject.class);
-
     }
 
     /**
-     * Access the singleton instance of this DebugChemObjectBuilder. 
-     * <pre>{@code
+     * Access the singleton instance of this DebugChemObjectBuilder.
      *
+     * <pre>{@code
      * // get the builder instance
      * IChemObjectBuilder builder = DebugChemObjectBuilder.getInstance();
      *
@@ -196,33 +196,25 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
         return result;
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public <T extends ICDKObject> T newInstance(Class<T> clazz, Object... params) {
         return factory.ofClass(clazz, params);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtom newAtom() {
         return new DebugAtom();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IBond newBond() {
         return new DebugBond();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtomContainer newAtomContainer() {
         return new DebugAtomContainer();

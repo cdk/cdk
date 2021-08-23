@@ -93,9 +93,7 @@ public abstract class AbstractFragmentAtomTest extends AbstractPseudoAtomTest {
         }
     }
 
-    /**
-     * Overwrites the {@link AbstractPseudoAtomTest} version.
-     */
+    /** Overwrites the {@link AbstractPseudoAtomTest} version. */
     @Test(expected = IllegalAccessError.class)
     @Override
     public void testSetExactMass_Double() {
@@ -109,5 +107,4 @@ public abstract class AbstractFragmentAtomTest extends AbstractPseudoAtomTest {
         // do not test this, as the exact mass is a implicit
         // property calculated from the fragment
     }
-
 }

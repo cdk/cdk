@@ -18,6 +18,8 @@
  */
 package org.openscience.cdk.reaction.type;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,36 +44,29 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * TestSuite that runs a test for the AdductionProtonLPReactionTest.
- * Generalized Reaction: [X-] + [H+] => X -H.
+ * TestSuite that runs a test for the AdductionProtonLPReactionTest. Generalized Reaction: [X-] +
+ * [H+] => X -H.
  *
  * @cdk.module test-reaction
  */
 public class AdductionProtonLPReactionTest extends ReactionProcessTest {
 
     private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-    private IChemObjectBuilder            builder = SilentChemObjectBuilder.getInstance();
-    private UniversalIsomorphismTester    uiTester;
+    private IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    private UniversalIsomorphismTester uiTester;
 
     @Before
     public void setUpUITester() {
         uiTester = new UniversalIsomorphismTester();
     }
 
-    /**
-     *  The JUnit setup method
-     */
+    /** The JUnit setup method */
     public AdductionProtonLPReactionTest() throws Exception {
         setReaction(AdductionProtonLPReaction.class);
     }
 
-    /**
-     *  The JUnit setup method
-     */
+    /** The JUnit setup method */
     @Test
     public void testAdductionProtonLPReaction() throws Exception {
         IReactionProcess type = new AdductionProtonLPReaction();
@@ -79,13 +74,11 @@ public class AdductionProtonLPReactionTest extends ReactionProcessTest {
     }
 
     /**
-     * A unit test suite for JUnit for acetaldehyde.
-     * Reaction: O=C-C-H => O(H)-C=C.
-     * Automatically looks for the active centre.
+     * A unit test suite for JUnit for acetaldehyde. Reaction: O=C-C-H => O(H)-C=C. Automatically
+     * looks for the active centre.
      *
      * @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
-     *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     @Override
@@ -108,19 +101,17 @@ public class AdductionProtonLPReactionTest extends ReactionProcessTest {
 
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
 
-        IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
+        IQueryAtomContainer queryAtom =
+                QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
         Assert.assertTrue(uiTester.isIsomorph(molecule2, queryAtom));
-
     }
 
     /**
-     * A unit test suite for JUnit for acetaldehyde.
-     * Reaction: O=C-C-H => O(H)-C=C.
-     * Manually tests for active centre.
+     * A unit test suite for JUnit for acetaldehyde. Reaction: O=C-C-H => O(H)-C=C. Manually tests
+     * for active centre.
      *
      * @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
-     *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testManuallyCentreActive() throws Exception {
@@ -145,17 +136,16 @@ public class AdductionProtonLPReactionTest extends ReactionProcessTest {
 
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
 
-        IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
+        IQueryAtomContainer queryAtom =
+                QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
         Assert.assertTrue(uiTester.isIsomorph(molecule2, queryAtom));
-
     }
 
     /**
      * A unit test suite for JUnit.
      *
      * @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
-     *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testCDKConstants_REACTIVE_CENTER() throws Exception {
@@ -201,8 +191,7 @@ public class AdductionProtonLPReactionTest extends ReactionProcessTest {
      * A unit test suite for JUnit.
      *
      * @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
-     *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testMapping() throws Exception {
@@ -224,21 +213,22 @@ public class AdductionProtonLPReactionTest extends ReactionProcessTest {
 
         Assert.assertEquals(8, setOfReactions.getReaction(0).getMappingCount());
 
-        IAtom mappedProductA0 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
-                molecule.getAtom(0));
+        IAtom mappedProductA0 =
+                (IAtom)
+                        ReactionManipulator.getMappedChemObject(
+                                setOfReactions.getReaction(0), molecule.getAtom(0));
         Assert.assertEquals(mappedProductA0, product.getAtom(0));
-
     }
 
     /**
      * Get the Acetaldehyde structure.
      *
      * @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
-     *
      * @return The IAtomContainerSet
      */
     private IAtomContainerSet getExampleReactants() {
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "O"));
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));

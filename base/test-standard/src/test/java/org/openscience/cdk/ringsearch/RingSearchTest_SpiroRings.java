@@ -22,16 +22,15 @@
  */
 package org.openscience.cdk.ringsearch;
 
-import org.junit.Test;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.templates.TestMoleculeFactory;
-
-import java.util.List;
-
 import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
+
+import java.util.List;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 
 /**
  * ring search unit tests for spiro rings
@@ -83,8 +82,10 @@ public final class RingSearchTest_SpiroRings {
         RingSearch search = new RingSearch(spiro);
         List<IAtomContainer> isolated = search.isolatedRingFragments();
         assertThat(isolated.size(), is(2));
-        assertThat(4, anyOf(is(isolated.get(0).getAtomCount()), is(isolated.get(1).getAtomCount())));
-        assertThat(7, anyOf(is(isolated.get(0).getAtomCount()), is(isolated.get(1).getAtomCount())));
+        assertThat(
+                4, anyOf(is(isolated.get(0).getAtomCount()), is(isolated.get(1).getAtomCount())));
+        assertThat(
+                7, anyOf(is(isolated.get(0).getAtomCount()), is(isolated.get(1).getAtomCount())));
     }
 
     @Test
@@ -93,5 +94,4 @@ public final class RingSearchTest_SpiroRings {
         List<IAtomContainer> fused = search.fusedRingFragments();
         assertThat(fused.size(), is(0));
     }
-
 }

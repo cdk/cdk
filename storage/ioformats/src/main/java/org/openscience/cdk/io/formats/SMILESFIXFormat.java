@@ -21,9 +21,7 @@ package org.openscience.cdk.io.formats;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
- *
  * @author Miguel Rojas
- *
  * @cdk.module ioformats
  * @cdk.githash
  */
@@ -59,7 +57,7 @@ public class SMILESFIXFormat extends AbstractResourceFormat implements IChemForm
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"fix"};
+        return new String[] {"fix"};
     }
 
     /** {@inheritDoc} */

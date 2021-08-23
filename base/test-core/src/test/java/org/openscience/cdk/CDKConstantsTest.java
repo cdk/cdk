@@ -21,17 +21,15 @@ package org.openscience.cdk;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
- * Included so that CoreCoverageTest won't complain. The class does not have
- * methods, only constants, so there is nothing to test.
+ * Included so that CoreCoverageTest won't complain. The class does not have methods, only
+ * constants, so there is nothing to test.
  *
  * @cdk.module test-core
- *
  * @see org.openscience.cdk.CDKConstants
  */
 public class CDKConstantsTest extends CDKTestCase {
@@ -82,7 +80,6 @@ public class CDKConstantsTest extends CDKTestCase {
         Assert.assertTrue(mol.getAtom(0).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
         Assert.assertTrue(mol.getBond(0).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
         Assert.assertTrue(mol.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
-
     }
 
     // FIXME: should add a test here that used introspection and test whether there

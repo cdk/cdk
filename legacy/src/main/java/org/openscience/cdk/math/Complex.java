@@ -48,61 +48,45 @@ public class Complex {
         this.imag = imag;
     }
 
-    /**
-     * Creates a copy of a complex object
-     */
+    /** Creates a copy of a complex object */
     public Complex(Complex c) {
         real = c.real;
         imag = c.imag;
     }
 
-    /**
-     * Sets the real part of this complex value
-     */
+    /** Sets the real part of this complex value */
     public void setRealPart(double real) {
         this.real = real;
     }
 
-    /**
-     * Gets the real part of this complex value
-     */
+    /** Gets the real part of this complex value */
     public double getRealPart() {
         return real;
     }
 
-    /**
-     * Sets the imaginary part of this value
-     */
+    /** Sets the imaginary part of this value */
     public void setImaginaryPart(double imag) {
         this.imag = imag;
     }
 
-    /**
-     * Gets the imaginary part of this value
-     */
+    /** Gets the imaginary part of this value */
     public double getImaginaryPart() {
         return imag;
     }
 
-    /**
-     * Add a complex value
-     */
+    /** Add a complex value */
     public void add(Complex c) {
         real += c.real;
         imag += c.imag;
     }
 
-    /**
-     * Subtracs a complex value
-     */
+    /** Subtracs a complex value */
     public void sub(Complex c) {
         real -= c.real;
         imag -= c.imag;
     }
 
-    /**
-     * Multiply this value with a complex value
-     */
+    /** Multiply this value with a complex value */
     public void mul(Complex c) {
         double newreal = real * c.real - imag * c.imag;
         double newimag = real * c.imag + imag * c.real;
@@ -110,9 +94,7 @@ public class Complex {
         imag = newimag;
     }
 
-    /**
-     * Div this value by a complex value
-     */
+    /** Div this value by a complex value */
     public void div(Complex c) {
         double modulus = c.real * c.real + c.imag * c.imag;
         double newreal = imag * c.imag + real * c.real;
@@ -121,9 +103,7 @@ public class Complex {
         imag = newimag / modulus;
     }
 
-    /**
-     * Create a string of the content of this class
-     */
+    /** Create a string of the content of this class */
     @Override
     public String toString() {
         return "(" + real + "+i*" + imag + ")";

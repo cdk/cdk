@@ -32,7 +32,6 @@ import org.openscience.cdk.smiles.SmilesParser;
  *
  * @cdk.module test-qsarmolecular
  */
-
 public class BPolDescriptorTest extends MolecularDescriptorTest {
 
     public BPolDescriptorTest() {}
@@ -43,10 +42,14 @@ public class BPolDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testBPolDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testBPolDescriptor()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O=C(O)CC");
         addExplicitHydrogens(mol);
-        Assert.assertEquals(7.517242, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.01);
+        Assert.assertEquals(
+                7.517242,
+                ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(),
+                0.01);
     }
 }

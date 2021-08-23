@@ -18,6 +18,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.Cycles;
@@ -33,58 +35,43 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.qsar.result.IntegerResultType;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
 /**
  * Returns the number of spiro atoms.
  *
  * @author rguha
  * @cdk.dictref qsar-descriptors:nSpiroAtom
  */
-public class SpiroAtomCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
+public class SpiroAtomCountDescriptor extends AbstractMolecularDescriptor
+        implements IMolecularDescriptor {
 
-    private final static String[] NAMES = {"nSpiroAtoms"};
+    private static final String[] NAMES = {"nSpiroAtoms"};
 
-    /**
-     * Creates a new {@link SpiroAtomCountDescriptor}.
-     */
-    public SpiroAtomCountDescriptor() {
-    }
+    /** Creates a new {@link SpiroAtomCountDescriptor}. */
+    public SpiroAtomCountDescriptor() {}
 
     @Override
-    public void initialise(IChemObjectBuilder builder) {
-    }
+    public void initialise(IChemObjectBuilder builder) {}
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#nSpiroAtom",
-                this.getClass().getName(), "The Chemistry Development Kit");
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
-    public void setParameters(Object[] params) throws CDKException {
-    }
+    public void setParameters(Object[] params) throws CDKException {}
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Object[] getParameters() {
         return null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public String[] getDescriptorNames() {
         return NAMES;
@@ -95,29 +82,22 @@ public class SpiroAtomCountDescriptor extends AbstractMolecularDescriptor implem
         prev.setFlag(CDKConstants.VISITED, true);
         for (IBond bond : mol.getConnectedBondsList(atom)) {
             IAtom nbr = bond.getOther(atom);
-            if (!nbr.getFlag(CDKConstants.VISITED))
-                traverseRings(mol, nbr, bond);
-            else
-                bond.setFlag(CDKConstants.VISITED, true);
+            if (!nbr.getFlag(CDKConstants.VISITED)) traverseRings(mol, nbr, bond);
+            else bond.setFlag(CDKConstants.VISITED, true);
         }
     }
 
     private static int getSpiroDegree(IAtomContainer mol, IAtom atom) {
-        if (!atom.isInRing())
-            return 0;
+        if (!atom.isInRing()) return 0;
         List<IBond> rbonds = new ArrayList<>(4);
         for (IBond bond : mol.getConnectedBondsList(atom)) {
-            if (bond.isInRing())
-                rbonds.add(bond);
+            if (bond.isInRing()) rbonds.add(bond);
         }
-        if (rbonds.size() < 4)
-            return 0;
+        if (rbonds.size() < 4) return 0;
         int degree = 0;
         // clear flags
-        for (IBond b : mol.bonds())
-            b.setFlag(CDKConstants.VISITED, false);
-        for (IAtom a : mol.atoms())
-            a.setFlag(CDKConstants.VISITED, false);
+        for (IBond b : mol.bonds()) b.setFlag(CDKConstants.VISITED, false);
+        for (IAtom a : mol.atoms()) a.setFlag(CDKConstants.VISITED, false);
         // visit rings
         atom.setFlag(CDKConstants.VISITED, true);
         for (IBond rbond : rbonds) {
@@ -129,9 +109,7 @@ public class SpiroAtomCountDescriptor extends AbstractMolecularDescriptor implem
         return degree < 2 ? 0 : degree;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         int nSpiro = 0;
@@ -140,43 +118,44 @@ public class SpiroAtomCountDescriptor extends AbstractMolecularDescriptor implem
             IAtomContainer local = atomContainer.clone();
             Cycles.markRingAtomsAndBonds(local);
             for (IAtom atom : local.atoms()) {
-                if (getSpiroDegree(local, atom) != 0)
-                    nSpiro++;
+                if (getSpiroDegree(local, atom) != 0) nSpiro++;
             }
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                    new IntegerResult(nSpiro), getDescriptorNames());
+            return new DescriptorValue(
+                    getSpecification(),
+                    getParameterNames(),
+                    getParameters(),
+                    new IntegerResult(nSpiro),
+                    getDescriptorNames());
         } catch (CloneNotSupportedException e) {
             return getDummyDescriptorValue(e);
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new IntegerResultType();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public String[] getParameterNames() {
         return new String[0];
-
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Object getParameterType(String name) {
         return null;
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception exception) {
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(-1),
-                getDescriptorNames(), exception);
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new IntegerResult(-1),
+                getDescriptorNames(),
+                exception);
     }
 }

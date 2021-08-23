@@ -58,7 +58,7 @@ public class SDFFormat extends SimpleChemFormatMatcher implements IChemFormatMat
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"sdf", "sd"};
+        return new String[] {"sdf", "sd"};
     }
 
     /** {@inheritDoc} */
@@ -91,7 +91,9 @@ public class SDFFormat extends SimpleChemFormatMatcher implements IChemFormatMat
     /** {@inheritDoc} */
     @Override
     public int getSupportedDataFeatures() {
-        return getRequiredDataFeatures() | DataFeatures.HAS_2D_COORDINATES | DataFeatures.HAS_3D_COORDINATES
+        return getRequiredDataFeatures()
+                | DataFeatures.HAS_2D_COORDINATES
+                | DataFeatures.HAS_3D_COORDINATES
                 | DataFeatures.HAS_GRAPH_REPRESENTATION;
     }
 

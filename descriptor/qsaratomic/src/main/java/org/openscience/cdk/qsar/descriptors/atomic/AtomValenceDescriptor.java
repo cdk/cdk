@@ -30,22 +30,18 @@ import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 
 /**
- * This class returns the valence of an atom.
- * This descriptor does not have any parameters.
+ * This class returns the valence of an atom. This descriptor does not have any parameters.
  *
- * @author      mfe4
+ * @author mfe4
  * @cdk.created 2004-11-13
- * @cdk.module  qsaratomic
+ * @cdk.module qsaratomic
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:atomValence
- *
- * @see         org.openscience.cdk.qsar.AtomValenceTool
+ * @see org.openscience.cdk.qsar.AtomValenceTool
  */
 public class AtomValenceDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
-    /**
-     * Constructor for the AtomValenceDescriptor object
-     */
+    /** Constructor for the AtomValenceDescriptor object */
     public AtomValenceDescriptor() {}
 
     /**
@@ -56,20 +52,19 @@ public class AtomValenceDescriptor extends AbstractAtomicDescriptor implements I
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomValence", this.getClass()
-                        .getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomValence",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
-    /**
-     * This descriptor does have any parameter.
-     */
+    /** This descriptor does have any parameter. */
     @Override
     public void setParameters(Object[] params) throws CDKException {}
 
     /**
-     *  Gets the parameters attribute of the VdWRadiusDescriptor object.
+     * Gets the parameters attribute of the VdWRadiusDescriptor object.
      *
-     *@return    The parameters value
+     * @return The parameters value
      * @see #setParameters
      */
     @Override
@@ -79,28 +74,31 @@ public class AtomValenceDescriptor extends AbstractAtomicDescriptor implements I
 
     @Override
     public String[] getDescriptorNames() {
-        return new String[]{"val"};
+        return new String[] {"val"};
     }
 
     /**
      * This method calculates the valence of an atom.
      *
-     * @param atom          The IAtom for which the DescriptorValue is requested
-     * @param container      Parameter is the atom container.
+     * @param atom The IAtom for which the DescriptorValue is requested
+     * @param container Parameter is the atom container.
      * @return The valence of an atom
      */
-
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
         int atomValence = AtomValenceTool.getValence(atom);
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
-                atomValence), getDescriptorNames());
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new IntegerResult(atomValence),
+                getDescriptorNames());
     }
 
     /**
-     *  Gets the parameterNames attribute of the VdWRadiusDescriptor object.
+     * Gets the parameterNames attribute of the VdWRadiusDescriptor object.
      *
-     *@return    The parameterNames value
+     * @return The parameterNames value
      */
     @Override
     public String[] getParameterNames() {
@@ -110,8 +108,8 @@ public class AtomValenceDescriptor extends AbstractAtomicDescriptor implements I
     /**
      * Gets the parameterType attribute of the VdWRadiusDescriptor object.
      *
-     * @param  name  Description of the Parameter
-     * @return       An Object of class equal to that of the parameter being requested
+     * @param name Description of the Parameter
+     * @return An Object of class equal to that of the parameter being requested
      */
     @Override
     public Object getParameterType(String name) {

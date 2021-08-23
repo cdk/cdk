@@ -20,7 +20,6 @@
 package org.openscience.cdk.protein.data;
 
 import javax.vecmath.Point3d;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -40,13 +39,14 @@ public class PDBAtomTest extends AbstractPDBAtomTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new PDBAtom("C");
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new PDBAtom("C");
+                    }
+                });
     }
 
     @Test
@@ -56,9 +56,7 @@ public class PDBAtomTest extends AbstractPDBAtomTest {
         Assert.assertNotNull(a);
     }
 
-    /**
-     * Method to test the Atom(String symbol) method.
-     */
+    /** Method to test the Atom(String symbol) method. */
     @Test
     public void testPDBAtom_String() {
         IPDBAtom a = new PDBAtom("C");
@@ -68,9 +66,7 @@ public class PDBAtomTest extends AbstractPDBAtomTest {
         Assert.assertNull(a.getFractionalPoint3d());
     }
 
-    /**
-     * Method to test the Atom(String symbol, javax.vecmath.Point3d point3D) method.
-     */
+    /** Method to test the Atom(String symbol, javax.vecmath.Point3d point3D) method. */
     @Test
     public void testPDBAtom_String_Point3d() {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
@@ -82,9 +78,7 @@ public class PDBAtomTest extends AbstractPDBAtomTest {
         Assert.assertNull(a.getFractionalPoint3d());
     }
 
-    /**
-     * Method to test the compare() method.
-     */
+    /** Method to test the compare() method. */
     @Test
     @Override
     public void testCompare_Object() {
@@ -97,5 +91,4 @@ public class PDBAtomTest extends AbstractPDBAtomTest {
             Assert.assertFalse(atom.compare("C"));
         }
     }
-
 }

@@ -33,12 +33,11 @@ import org.openscience.cdk.CDKTestCase;
  * This class tests the SimpleCycleBasis class.
  *
  * @cdk.module test-standard
- *
  * @author Ulrich Bauer &lt;baueru@cs.tum.edu&gt;
  */
 public class SimpleCycleBasisTest extends CDKTestCase {
 
-    private static SimpleGraph      g;
+    private static SimpleGraph g;
     private static SimpleCycleBasis basis;
 
     @Before
@@ -70,7 +69,6 @@ public class SimpleCycleBasisTest extends CDKTestCase {
         g.addEdge("f", "h");
 
         basis = new SimpleCycleBasis(g);
-
     }
 
     @Test
@@ -100,7 +98,7 @@ public class SimpleCycleBasisTest extends CDKTestCase {
 
         basis = new SimpleCycleBasis(g);
         Assert.assertEquals(g.edgeSet().size() - g.vertexSet().size() + 1, basis.cycles().size());
-        Assert.assertArrayEquals(basis.weightVector(), new int[]{3, 3, 3, 3, 3, 3});
+        Assert.assertArrayEquals(basis.weightVector(), new int[] {3, 3, 3, 3, 3, 3});
         Assert.assertEquals(10, basis.relevantCycles().size());
         Assert.assertEquals(0, basis.essentialCycles().size());
         Assert.assertEquals(1, basis.equivalenceClasses().size());
@@ -108,7 +106,7 @@ public class SimpleCycleBasisTest extends CDKTestCase {
 
     @Test
     public void testWeightVector() {
-        Assert.assertArrayEquals(basis.weightVector(), new int[]{3, 3, 3, 3, 3, 3, 3, 3});
+        Assert.assertArrayEquals(basis.weightVector(), new int[] {3, 3, 3, 3, 3, 3, 3, 3});
     }
 
     @Test
@@ -201,7 +199,6 @@ public class SimpleCycleBasisTest extends CDKTestCase {
 
         Assert.assertEquals(19, b.equivalenceClasses().size());
         Assert.assertEquals(18, b.essentialCycles().size());
-
     }
 
     /*

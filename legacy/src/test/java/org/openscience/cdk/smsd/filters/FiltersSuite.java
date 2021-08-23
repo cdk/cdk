@@ -32,13 +32,14 @@ import org.junit.runners.Suite;
 
 /**
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- *
  * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({org.openscience.cdk.smsd.filters.PostFilterTest.class,
-        org.openscience.cdk.smsd.filters.ChemicalFiltersTest.class})
+@Suite.SuiteClasses({
+    org.openscience.cdk.smsd.filters.PostFilterTest.class,
+    org.openscience.cdk.smsd.filters.ChemicalFiltersTest.class
+})
 public class FiltersSuite {
 
     @BeforeClass
@@ -52,5 +53,4 @@ public class FiltersSuite {
 
     @After
     public void tearDown() throws Exception {}
-
 }

@@ -24,7 +24,6 @@ import java.util.EventObject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -33,37 +32,30 @@ import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 
 /**
- * @cdk.module  isomorphism
+ * @cdk.module isomorphism
  * @cdk.githash
  */
 public class QueryChemObject implements IChemObject {
 
-    /**
-     * List for listener administration.
-     */
+    /** List for listener administration. */
     private List<IChemObjectListener> chemObjectListeners;
 
-    /**
-     *  A hashtable for the storage of any kind of properties of this IChemObject.
-     */
-    private Map<Object, Object>       properties;
+    /** A hashtable for the storage of any kind of properties of this IChemObject. */
+    private Map<Object, Object> properties;
+
+    /** String representing the identifier for this atom type with null as default. */
+    private String identifier = (String) CDKConstants.UNSET;
 
     /**
-     * String representing the identifier for this atom type with null as default.
+     * You will frequently have to use some flags on a IChemObject. For example, if you want to draw
+     * a molecule and see if you've already drawn an atom, or in a ring search to check whether a
+     * vertex has been visited in a graph traversal. Use these flags while addressing particular
+     * positions in the flag array with self-defined constants (flags[VISITED] = true). 100 flags
+     * per object should be more than enough.
      */
-    private String                    identifier = (String) CDKConstants.UNSET;
+    private short flags; // flags are currently stored as a single short value MAX_FLAG_INDEX < 16
 
-    /**
-     *  You will frequently have to use some flags on a IChemObject. For example, if
-     *  you want to draw a molecule and see if you've already drawn an atom, or in
-     *  a ring search to check whether a vertex has been visited in a graph
-     *  traversal. Use these flags while addressing particular positions in the
-     *  flag array with self-defined constants (flags[VISITED] = true). 100 flags
-     *  per object should be more than enough.
-     */
-    private short                     flags;                                   // flags are currently stored as a single short value MAX_FLAG_INDEX < 16
-
-    private final IChemObjectBuilder  builder;
+    private final IChemObjectBuilder builder;
 
     public QueryChemObject(IChemObjectBuilder builder) {
         chemObjectListeners = null;
@@ -73,9 +65,9 @@ public class QueryChemObject implements IChemObject {
     }
 
     /**
-     *  Lazy creation of chemObjectListeners List.
+     * Lazy creation of chemObjectListeners List.
      *
-     *@return    List with the ChemObjects associated.
+     * @return List with the ChemObjects associated.
      */
     private List<IChemObjectListener> lazyChemObjectListeners() {
         if (chemObjectListeners == null) {
@@ -85,11 +77,11 @@ public class QueryChemObject implements IChemObject {
     }
 
     /**
-     *  Use this to add yourself to this IChemObject as a listener. In order to do
-     *  so, you must implement the ChemObjectListener Interface.
+     * Use this to add yourself to this IChemObject as a listener. In order to do so, you must
+     * implement the ChemObjectListener Interface.
      *
-     *@param  col  the ChemObjectListener
-     *@see         #removeListener
+     * @param col the ChemObjectListener
+     * @see #removeListener
      */
     @Override
     public void addListener(IChemObjectListener col) {
@@ -103,9 +95,9 @@ public class QueryChemObject implements IChemObject {
     }
 
     /**
-     *  Returns the number of ChemObjectListeners registered with this object.
+     * Returns the number of ChemObjectListeners registered with this object.
      *
-     *@return    the number of registered listeners.
+     * @return the number of registered listeners.
      */
     @Override
     public int getListenerCount() {
@@ -116,11 +108,11 @@ public class QueryChemObject implements IChemObject {
     }
 
     /**
-     *  Use this to remove a ChemObjectListener from the ListenerList of this
-     *  IChemObject. It will then not be notified of change in this object anymore.
+     * Use this to remove a ChemObjectListener from the ListenerList of this IChemObject. It will
+     * then not be notified of change in this object anymore.
      *
-     *@param  col  The ChemObjectListener to be removed
-     *@see         #addListener
+     * @param col The ChemObjectListener to be removed
+     * @see #addListener
      */
     @Override
     public void removeListener(IChemObjectListener col) {
@@ -135,8 +127,8 @@ public class QueryChemObject implements IChemObject {
     }
 
     /**
-     *  This should be triggered by an method that changes the content of an object
-     *  to that the registered listeners can react to it.
+     * This should be triggered by an method that changes the content of an object to that the
+     * registered listeners can react to it.
      */
     @Override
     public void notifyChanged() {
@@ -149,13 +141,11 @@ public class QueryChemObject implements IChemObject {
     }
 
     /**
-     *  This should be triggered by an method that changes the content of an object
-     *  to that the registered listeners can react to it. This is a version of
-     *  notifyChanged() which allows to propagate a change event while preserving
-     *  the original origin.
+     * This should be triggered by an method that changes the content of an object to that the
+     * registered listeners can react to it. This is a version of notifyChanged() which allows to
+     * propagate a change event while preserving the original origin.
      *
-     *@param  evt  A ChemObjectChangeEvent pointing to the source of where
-     *      the change happend
+     * @param evt A ChemObjectChangeEvent pointing to the source of where the change happend
      */
     @Override
     public void notifyChanged(IChemObjectChangeEvent evt) {
@@ -170,7 +160,7 @@ public class QueryChemObject implements IChemObject {
     /**
      * Lazy creation of properties hash.
      *
-     * @return    Returns in instance of the properties
+     * @return Returns in instance of the properties
      */
     private Map<Object, Object> lazyProperties() {
         if (properties == null) {
@@ -180,13 +170,12 @@ public class QueryChemObject implements IChemObject {
     }
 
     /**
-     *  Sets a property for a IChemObject.
+     * Sets a property for a IChemObject.
      *
-     *@param  description  An object description of the property (most likely a
-     *      unique string)
-     *@param  property     An object with the property itself
-     *@see                 #getProperty
-     *@see                 #removeProperty
+     * @param description An object description of the property (most likely a unique string)
+     * @param property An object with the property itself
+     * @see #getProperty
+     * @see #removeProperty
      */
     @Override
     public void setProperty(Object description, Object property) {
@@ -195,12 +184,11 @@ public class QueryChemObject implements IChemObject {
     }
 
     /**
-     *  Removes a property for a IChemObject.
+     * Removes a property for a IChemObject.
      *
-     *@param  description  The object description of the property (most likely a
-     *      unique string)
-     *@see                 #setProperty
-     *@see                 #getProperty
+     * @param description The object description of the property (most likely a unique string)
+     * @see #setProperty
+     * @see #getProperty
      */
     @Override
     public void removeProperty(Object description) {
@@ -211,14 +199,12 @@ public class QueryChemObject implements IChemObject {
     }
 
     /**
-     *  Returns a property for the IChemObject.
+     * Returns a property for the IChemObject.
      *
-     *@param  description  An object description of the property (most likely a
-     *      unique string)
-     *@return              The object containing the property. Returns null if
-     *      propert is not set.
-     *@see                 #setProperty
-     *@see                 #removeProperty
+     * @param description An object description of the property (most likely a unique string)
+     * @return The object containing the property. Returns null if propert is not set.
+     * @see #setProperty
+     * @see #removeProperty
      */
     @Override
     public <T> T getProperty(Object description) {
@@ -228,9 +214,7 @@ public class QueryChemObject implements IChemObject {
         return value;
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public <T> T getProperty(Object description, Class<T> c) {
         Object value = lazyProperties().get(description);
@@ -242,19 +226,21 @@ public class QueryChemObject implements IChemObject {
             return typed;
 
         } else if (value != null) {
-            throw new IllegalArgumentException("attempted to access a property of incorrect type, expected "
-                    + c.getSimpleName() + " got " + value.getClass().getSimpleName());
+            throw new IllegalArgumentException(
+                    "attempted to access a property of incorrect type, expected "
+                            + c.getSimpleName()
+                            + " got "
+                            + value.getClass().getSimpleName());
         }
 
         return null;
-
     }
 
     /**
-     *  Returns a Map with the IChemObject's properties.
+     * Returns a Map with the IChemObject's properties.
      *
-     *@return    The object's properties as an Hashtable
-     *@see       #addProperties
+     * @return The object's properties as an Hashtable
+     * @see #addProperties
      */
     @Override
     public Map<Object, Object> getProperties() {
@@ -262,10 +248,10 @@ public class QueryChemObject implements IChemObject {
     }
 
     /**
-     *  Returns the identifier (ID) of this object.
+     * Returns the identifier (ID) of this object.
      *
-     *@return    a String representing the ID value
-     *@see       #setID
+     * @return a String representing the ID value
+     * @see #setID
      */
     @Override
     public String getID() {
@@ -273,10 +259,10 @@ public class QueryChemObject implements IChemObject {
     }
 
     /**
-     *  Sets the identifier (ID) of this object.
+     * Sets the identifier (ID) of this object.
      *
-     *@param  identifier  a String representing the ID value
-     *@see                #getID
+     * @param identifier a String representing the ID value
+     * @see #getID
      */
     @Override
     public void setID(String identifier) {
@@ -284,28 +270,22 @@ public class QueryChemObject implements IChemObject {
         notifyChanged();
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setFlag(int mask, boolean value) {
         // set/unset a bit in the flags value
-        if (value)
-            flags |= mask;
-        else
-            flags &= ~(mask);
+        if (value) flags |= mask;
+        else flags &= ~(mask);
         notifyChanged();
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean getFlag(int mask) {
         return (flags & mask) != 0;
     }
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     public void setProperties(Map<Object, Object> properties) {
         this.properties = null;
@@ -313,10 +293,10 @@ public class QueryChemObject implements IChemObject {
     }
 
     /**
-     *  Sets the properties of this object.
+     * Sets the properties of this object.
      *
-     *@param  properties  a Hashtable specifying the property values
-     *@see                #getProperties
+     * @param properties a Hashtable specifying the property values
+     * @see #getProperties
      */
     @Override
     public void addProperties(Map<Object, Object> properties) {
@@ -327,18 +307,13 @@ public class QueryChemObject implements IChemObject {
 
     private boolean doNotification = true;
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setFlags(boolean[] flagsNew) {
-        for (int i = 0; i < flagsNew.length; i++)
-            setFlag(CDKConstants.FLAG_MASKS[i], flagsNew[i]);
+        for (int i = 0; i < flagsNew.length; i++) setFlag(CDKConstants.FLAG_MASKS[i], flagsNew[i]);
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean[] getFlags() {
         // could use a list a invoke .toArray() on the return
@@ -350,9 +325,7 @@ public class QueryChemObject implements IChemObject {
         return flagArray;
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Short getFlagValue() {
         return flags;

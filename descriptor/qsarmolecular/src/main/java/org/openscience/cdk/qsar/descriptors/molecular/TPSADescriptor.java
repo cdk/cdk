@@ -18,14 +18,17 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
@@ -38,14 +41,10 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 /**
- * Calculation of topological polar surface area based on fragment
- * contributions (TPSA) {@cdk.cite ERTL2000}.
- * 
+ * Calculation of topological polar surface area based on fragment contributions (TPSA) {@cdk.cite
+ * ERTL2000}.
+ *
  * <table border="1"><caption>Parameters for this descriptor:</caption>
  * <tr>
  * <td>Name</td>
@@ -58,11 +57,11 @@ import java.util.List;
  * <td>If true, it will check aromaticity</td>
  * </tr>
  * </table>
- * 
- * This descriptor works properly with AtomContainers whose atoms contain either <b>explicit hydrogens</b> or
- * <b>implicit hydrogens</b>.
- * 
- * Returns a single value named <i>TopoPSA</i>
+ *
+ * This descriptor works properly with AtomContainers whose atoms contain either <b>explicit
+ * hydrogens</b> or <b>implicit hydrogens</b>.
+ *
+ * <p>Returns a single value named <i>TopoPSA</i>
  *
  * @author mfe4
  * @author ulif
@@ -76,16 +75,14 @@ import java.util.List;
  */
 public class TPSADescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private boolean               checkAromaticity = false;
-    private static HashMap<String,Double>        map;
-    private static final String[] NAMES            = {"TopoPSA"};
+    private boolean checkAromaticity = false;
+    private static HashMap<String, Double> map;
+    private static final String[] NAMES = {"TopoPSA"};
 
-    /**
-     * Constructor for the TPSADescriptor object.
-     */
+    /** Constructor for the TPSADescriptor object. */
     public TPSADescriptor() {
         if (map == null) {
-            map = new HashMap<String,Double>();
+            map = new HashMap<String, Double>();
             // contributions:
             // every contribution is given by an atom profile;
             // positions in atom profile strings are: symbol, max-bond-order, bond-order-sum,
@@ -100,44 +97,44 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
             map.put("N+1.0+3.0+3+0+0+0+1+3+0+0", new Double(3.01)); // 6
             map.put("N+1.0+3.0+3+1+0+0+0+3+0+0", new Double(12.03)); // 7
             map.put("N+1.0+3.0+3+1+0+0+1+3+0+0", new Double(21.94)); // 8
-            map.put("N+2.0+3.0+2+1+0+0+0+1+1+0", new Double(23.85)); //9
+            map.put("N+2.0+3.0+2+1+0+0+0+1+1+0", new Double(23.85)); // 9
             map.put("N+1.0+3.0+3+2+0+0+0+3+0+0", new Double(26.02)); // 10
-            map.put("N+1.0+4.0+4+0+1+0+0+4+0+0", new Double(0.0)); //11
-            map.put("N+2.0+4.0+3+0+1+0+0+2+1+0", new Double(3.01)); //12
-            map.put("N+3.0+4.0+2+0+1+0+0+1+0+1", new Double(4.36)); //13
-            map.put("N+1.0+4.0+4+1+1+0+0+4+0+0", new Double(4.44)); //14
-            map.put("N+2.0+4.0+3+1+1+0+0+2+1+0", new Double(13.97)); //15
-            map.put("N+1.0+4.0+4+2+1+0+0+4+0+0", new Double(16.61)); //16
-            map.put("N+2.0+4.0+3+2+1+0+0+2+1+0", new Double(25.59)); //17
-            map.put("N+1.0+4.0+4+3+1+0+0+4+0+0", new Double(27.64)); //18
-            map.put("N+1.5+3.0+2+0+0+2+0+0+0+0", new Double(12.89)); //19
-            map.put("N+1.5+4.5+3+0+0+3+0+0+0+0", new Double(4.41)); //20
-            map.put("N+1.5+4.0+3+0+0+2+0+1+0+0", new Double(4.93)); //21
-            map.put("N+2.0+5.0+3+0+0+2+0+0+1+0", new Double(8.39)); //22
-            map.put("N+1.5+4.0+3+1+0+2+0+1+0+0", new Double(15.79)); //23
-            map.put("N+1.5+4.5+3+0+1+3+0+0+0+0", new Double(4.1)); //24
-            map.put("N+1.5+4.0+3+0+1+2+0+1+0+0", new Double(3.88)); //25
-            map.put("N+1.5+4.0+3+1+1+2+0+1+0+0", new Double(14.14)); //26
+            map.put("N+1.0+4.0+4+0+1+0+0+4+0+0", new Double(0.0)); // 11
+            map.put("N+2.0+4.0+3+0+1+0+0+2+1+0", new Double(3.01)); // 12
+            map.put("N+3.0+4.0+2+0+1+0+0+1+0+1", new Double(4.36)); // 13
+            map.put("N+1.0+4.0+4+1+1+0+0+4+0+0", new Double(4.44)); // 14
+            map.put("N+2.0+4.0+3+1+1+0+0+2+1+0", new Double(13.97)); // 15
+            map.put("N+1.0+4.0+4+2+1+0+0+4+0+0", new Double(16.61)); // 16
+            map.put("N+2.0+4.0+3+2+1+0+0+2+1+0", new Double(25.59)); // 17
+            map.put("N+1.0+4.0+4+3+1+0+0+4+0+0", new Double(27.64)); // 18
+            map.put("N+1.5+3.0+2+0+0+2+0+0+0+0", new Double(12.89)); // 19
+            map.put("N+1.5+4.5+3+0+0+3+0+0+0+0", new Double(4.41)); // 20
+            map.put("N+1.5+4.0+3+0+0+2+0+1+0+0", new Double(4.93)); // 21
+            map.put("N+2.0+5.0+3+0+0+2+0+0+1+0", new Double(8.39)); // 22
+            map.put("N+1.5+4.0+3+1+0+2+0+1+0+0", new Double(15.79)); // 23
+            map.put("N+1.5+4.5+3+0+1+3+0+0+0+0", new Double(4.1)); // 24
+            map.put("N+1.5+4.0+3+0+1+2+0+1+0+0", new Double(3.88)); // 25
+            map.put("N+1.5+4.0+3+1+1+2+0+1+0+0", new Double(14.14)); // 26
 
-            map.put("O+1.0+2.0+2+0+0+0+0+2+0+0", new Double(9.23)); //27
-            map.put("O+1.0+2.0+2+0+0+0+1+2+0+0", new Double(12.53)); //28
-            map.put("O+2.0+2.0+1+0+0+0+0+0+1+0", new Double(17.07)); //29
-            map.put("O+1.0+1.0+1+0+-1+0+0+1+0+0", new Double(23.06)); //30
-            map.put("O+1.0+2.0+2+1+0+0+0+2+0+0", new Double(20.23)); //31
-            map.put("O+1.5+3.0+2+0+0+2+0+0+0+0", new Double(13.14)); //32
+            map.put("O+1.0+2.0+2+0+0+0+0+2+0+0", new Double(9.23)); // 27
+            map.put("O+1.0+2.0+2+0+0+0+1+2+0+0", new Double(12.53)); // 28
+            map.put("O+2.0+2.0+1+0+0+0+0+0+1+0", new Double(17.07)); // 29
+            map.put("O+1.0+1.0+1+0+-1+0+0+1+0+0", new Double(23.06)); // 30
+            map.put("O+1.0+2.0+2+1+0+0+0+2+0+0", new Double(20.23)); // 31
+            map.put("O+1.5+3.0+2+0+0+2+0+0+0+0", new Double(13.14)); // 32
 
-            map.put("S+1.0+2.0+2+0+0+0+0+2+0+0", new Double(25.3)); //33
-            map.put("S+2.0+2.0+1+0+0+0+0+0+1+0", new Double(32.09)); //34
-            map.put("S+2.0+4.0+3+0+0+0+0+2+1+0", new Double(19.21)); //35
-            map.put("S+2.0+6.0+4+0+0+0+0+2+2+0", new Double(8.38)); //36
-            map.put("S+1.0+2.0+2+1+0+0+0+2+0+0", new Double(38.8)); //37
-            map.put("S+1.5+3.0+2+0+0+2+0+0+0+0", new Double(28.24)); //38
-            map.put("S+2.0+5.0+3+0+0+2+0+0+1+0", new Double(21.7)); //39
+            map.put("S+1.0+2.0+2+0+0+0+0+2+0+0", new Double(25.3)); // 33
+            map.put("S+2.0+2.0+1+0+0+0+0+0+1+0", new Double(32.09)); // 34
+            map.put("S+2.0+4.0+3+0+0+0+0+2+1+0", new Double(19.21)); // 35
+            map.put("S+2.0+6.0+4+0+0+0+0+2+2+0", new Double(8.38)); // 36
+            map.put("S+1.0+2.0+2+1+0+0+0+2+0+0", new Double(38.8)); // 37
+            map.put("S+1.5+3.0+2+0+0+2+0+0+0+0", new Double(28.24)); // 38
+            map.put("S+2.0+5.0+3+0+0+2+0+0+1+0", new Double(21.7)); // 39
 
-            map.put("P+1.0+3.0+3+0+0+0+0+3+0+0", new Double(13.59)); //40
-            map.put("P+2.0+3.0+3+0+0+0+0+1+1+0", new Double(34.14)); //41
-            map.put("P+2.0+5.0+4+0+0+0+0+3+1+0", new Double(9.81)); //42
-            map.put("P+2.0+5.0+4+1+0+0+0+3+1+0", new Double(23.47)); //43
+            map.put("P+1.0+3.0+3+0+0+0+0+3+0+0", new Double(13.59)); // 40
+            map.put("P+2.0+3.0+3+0+0+0+0+1+1+0", new Double(34.14)); // 41
+            map.put("P+2.0+5.0+4+0+0+0+0+3+1+0", new Double(9.81)); // 42
+            map.put("P+2.0+5.0+4+1+0+0+0+3+1+0", new Double(23.47)); // 43
         }
     }
 
@@ -148,16 +145,17 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
      */
     @Override
     public DescriptorSpecification getSpecification() {
-        return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#tpsa",
-                this.getClass().getName(), "The Chemistry Development Kit");
+        return new DescriptorSpecification(
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#tpsa",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     /**
-     * Sets the parameters attribute of the  TPSADescriptor object.
-     * 
-     * The descriptor takes a Boolean parameter to indicate whether
-     * the descriptor routine should check for aromaticity (TRUE) or
-     * not (FALSE).
+     * Sets the parameters attribute of the TPSADescriptor object.
+     *
+     * <p>The descriptor takes a Boolean parameter to indicate whether the descriptor routine should
+     * check for aromaticity (TRUE) or not (FALSE).
      *
      * @param params The parameter value (TRUE or FALSE)
      * @throws CDKException if the supplied parameter is not of type Boolean
@@ -178,8 +176,8 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
     /**
      * Gets the parameters attribute of the TPSADescriptor object.
      *
-     * @return The parameter value. For this descriptor it returns a Boolean
-     *         indicating whether aromaticity was to be checked or not
+     * @return The parameter value. For this descriptor it returns a Boolean indicating whether
+     *     aromaticity was to be checked or not
      * @see #setParameters
      */
     @Override
@@ -188,7 +186,6 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
         Object[] params = new Object[1];
         params[0] = checkAromaticity;
         return params;
-
     }
 
     @Override
@@ -197,21 +194,25 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                Double.NaN), getDescriptorNames(), e);
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new DoubleResult(Double.NaN),
+                getDescriptorNames(),
+                e);
     }
 
     /**
      * Calculates the TPSA for an atom container.
-     * 
-     * Before calling this method, you may want to set the parameter
-     * indicating that aromaticity should be checked. If no parameter is specified
-     * (or if it is set to FALSE) then it is assumed that aromaticaity has already been
-     * checked.
-     * 
-     * Prior to calling this method it is necessary to either add implicit or explicit hydrogens
-     * using {@link CDKHydrogenAdder#addImplicitHydrogens(IAtomContainer)} or
-     * {@link AtomContainerManipulator#convertImplicitToExplicitHydrogens(IAtomContainer)}.
+     *
+     * <p>Before calling this method, you may want to set the parameter indicating that aromaticity
+     * should be checked. If no parameter is specified (or if it is set to FALSE) then it is assumed
+     * that aromaticaity has already been checked.
+     *
+     * <p>Prior to calling this method it is necessary to either add implicit or explicit hydrogens
+     * using {@link CDKHydrogenAdder#addImplicitHydrogens(IAtomContainer)} or {@link
+     * AtomContainerManipulator#convertImplicitToExplicitHydrogens(IAtomContainer)}.
      *
      * @param atomContainer The AtomContainer whose TPSA is to be calculated
      * @return A double containing the topological surface area
@@ -245,7 +246,9 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
 
         // iterate over all atoms of ac
         for (IAtom atom : ac.atoms()) {
-            if (atom.getAtomicNumber() == IElement.N || atom.getAtomicNumber() == IElement.O || atom.getAtomicNumber() == IElement.S
+            if (atom.getAtomicNumber() == IElement.N
+                    || atom.getAtomicNumber() == IElement.O
+                    || atom.getAtomicNumber() == IElement.S
                     || atom.getAtomicNumber() == IElement.P) {
                 int singleBondCount = 0;
                 int doubleBondCount = 0;
@@ -259,12 +262,9 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
                 // counting the number of single/double/triple/aromatic bonds
                 List<IBond> connectedBonds = ac.getConnectedBondsList(atom);
                 for (IBond connectedBond : connectedBonds) {
-                    if (connectedBond.getFlag(CDKConstants.ISAROMATIC))
-                        aromaticBondCount++;
-                    else if (connectedBond.getOrder() == Order.SINGLE)
-                        singleBondCount++;
-                    else if (connectedBond.getOrder() == Order.DOUBLE)
-                        doubleBondCount++;
+                    if (connectedBond.getFlag(CDKConstants.ISAROMATIC)) aromaticBondCount++;
+                    else if (connectedBond.getOrder() == Order.SINGLE) singleBondCount++;
+                    else if (connectedBond.getOrder() == Order.DOUBLE) doubleBondCount++;
                     else if (connectedBond.getOrder() == Order.TRIPLE) tripleBondCount++;
                 }
                 int formalCharge = atom.getFormalCharge();
@@ -273,8 +273,10 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
 
                 // EXPLICIT hydrogens: count the number of hydrogen atoms
                 for (int neighbourIndex = 0; neighbourIndex < numberOfNeighbours; neighbourIndex++)
-                    if (((IAtom) connectedAtoms.get(neighbourIndex)).getAtomicNumber() == IElement.H) hCount++;
-                // IMPLICIT hydrogens: count the number of hydrogen atoms and adjust other atom profile properties
+                    if (((IAtom) connectedAtoms.get(neighbourIndex)).getAtomicNumber()
+                            == IElement.H) hCount++;
+                // IMPLICIT hydrogens: count the number of hydrogen atoms and adjust other atom
+                // profile properties
                 Integer implicitHAtoms = atom.getImplicitHydrogenCount();
                 if (implicitHAtoms == CDKConstants.UNSET) {
                     implicitHAtoms = 0;
@@ -285,7 +287,8 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
                     numberOfNeighbours++;
                     singleBondCount++;
                 }
-                // Calculate bond order sum using the counters of single/double/triple/aromatic bonds
+                // Calculate bond order sum using the counters of single/double/triple/aromatic
+                // bonds
                 bondOrderSum += singleBondCount * 1.0;
                 bondOrderSum += doubleBondCount * 2.0;
                 bondOrderSum += tripleBondCount * 3.0;
@@ -299,16 +302,38 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
                 // isIn3MemberRing checker
                 if (rs.contains(atom)) {
                     IRingSet rsAtom = rs.getRings(atom);
-                    for (int ringSetIndex = 0; ringSetIndex < rsAtom.getAtomContainerCount(); ringSetIndex++) {
+                    for (int ringSetIndex = 0;
+                            ringSetIndex < rsAtom.getAtomContainerCount();
+                            ringSetIndex++) {
                         IRing ring = (IRing) rsAtom.getAtomContainer(ringSetIndex);
                         if (ring.getRingSize() == 3) isIn3MemberRing = 1;
                     }
                 }
-                // create a profile of the current atom (atoms[atomIndex]) according to the profile definition in the constructor
-                String profile = atom.getSymbol() + "+" + maxBondOrder + "+" + bondOrderSum + "+" + numberOfNeighbours
-                        + "+" + hCount + "+" + formalCharge + "+" + aromaticBondCount + "+" + isIn3MemberRing + "+"
-                        + singleBondCount + "+" + doubleBondCount + "+" + tripleBondCount;
-                //logger.debug("tpsa profile: "+ profile);
+                // create a profile of the current atom (atoms[atomIndex]) according to the profile
+                // definition in the constructor
+                String profile =
+                        atom.getSymbol()
+                                + "+"
+                                + maxBondOrder
+                                + "+"
+                                + bondOrderSum
+                                + "+"
+                                + numberOfNeighbours
+                                + "+"
+                                + hCount
+                                + "+"
+                                + formalCharge
+                                + "+"
+                                + aromaticBondCount
+                                + "+"
+                                + isIn3MemberRing
+                                + "+"
+                                + singleBondCount
+                                + "+"
+                                + doubleBondCount
+                                + "+"
+                                + tripleBondCount;
+                // logger.debug("tpsa profile: "+ profile);
                 profiles.add(profile);
             }
         }
@@ -318,27 +343,33 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
         for (int profileIndex = 0; profileIndex < profiles.size(); profileIndex++) {
             if (map.containsKey(profiles.get(profileIndex))) {
                 tpsa += (Double) map.get(profiles.get(profileIndex));
-                //logger.debug("tpsa contribs: " + profiles.elementAt(profileIndex) + "\t" + ((Double)map.get(profiles.elementAt(profileIndex))).doubleValue());
+                // logger.debug("tpsa contribs: " + profiles.elementAt(profileIndex) + "\t" +
+                // ((Double)map.get(profiles.elementAt(profileIndex))).doubleValue());
             }
         }
         profiles.clear(); // remove all profiles from the profiles-Vector
-        //logger.debug("tpsa: " + tpsa);
+        // logger.debug("tpsa: " + tpsa);
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(tpsa),
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new DoubleResult(tpsa),
                 getDescriptorNames());
-
     }
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * 
-     * The return value from this method really indicates what type of result will
-     * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
-     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
-     * allows you to do the same thing, without actually calculating the descriptor.
      *
-     * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
-     *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
+     * <p>The return value from this method really indicates what type of result will be obtained
+     * from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
+     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object;
+     * this method allows you to do the same thing, without actually calculating the descriptor.
+     *
+     * @return an object that implements the {@link
+     *     org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating the actual type
+     *     of values returned by the descriptor in the {@link
+     *     org.openscience.cdk.qsar.DescriptorValue} object
      */
     @Override
     public IDescriptorResult getDescriptorResultType() {
@@ -346,7 +377,7 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
     }
 
     /**
-     * Gets the parameterNames attribute of the  TPSADescriptor object.
+     * Gets the parameterNames attribute of the TPSADescriptor object.
      *
      * @return The parameterNames value
      */

@@ -48,11 +48,13 @@ public class ALOGPDescriptorTest extends MolecularDescriptorTest {
 
     /**
      * This test is actually testing 1-cholorpropane.
+     *
      * @cdk.inchi InChI=1S/C3H7Cl/c1-2-3-4/h2-3H2,1H3
      */
     @Test
     public void testChloroButane() throws Exception {
-        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer mol =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         IAtom c2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         IAtom c3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
@@ -66,11 +68,10 @@ public class ALOGPDescriptorTest extends MolecularDescriptorTest {
         mol.addBond(new Bond(c3, cl));
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         CDKHydrogenAdder.getInstance(SilentChemObjectBuilder.getInstance())
-                        .addImplicitHydrogens(mol);
+                .addImplicitHydrogens(mol);
 
         DescriptorValue v = descriptor.calculate(mol);
         Assert.assertEquals(1.719, ((DoubleArrayResult) v.getValue()).get(0), 0.01);
         Assert.assertEquals(20.585, ((DoubleArrayResult) v.getValue()).get(2), 0.01);
     }
-
 }

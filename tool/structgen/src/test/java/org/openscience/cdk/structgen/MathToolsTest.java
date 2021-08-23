@@ -23,9 +23,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 
-/**
- * @cdk.module test-standard
- */
+/** @cdk.module test-standard */
 public class MathToolsTest extends CDKTestCase {
 
     public MathToolsTest() {
@@ -67,5 +65,4 @@ public class MathToolsTest extends CDKTestCase {
         Assert.assertTrue(MathTools.isOdd(3));
         Assert.assertTrue(MathTools.isOdd(209));
     }
-
 }

@@ -1,7 +1,6 @@
 package org.openscience.cdk.graph;
 
 import java.util.BitSet;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -57,7 +56,7 @@ public class PermutorTest {
     @Test
     public void setRankTest() {
         int size = 4;
-        int[] reverse = new int[]{3, 2, 1, 0};
+        int[] reverse = new int[] {3, 2, 1, 0};
         Permutor permutor = new Permutor(size);
         // out of 4! = 24 permutations, numbered 0-23, this is the last
         permutor.setRank(23);
@@ -76,7 +75,7 @@ public class PermutorTest {
     @Test
     public void setPermutationTest() {
         int size = 4;
-        int[] target = new int[]{3, 1, 0, 2};
+        int[] target = new int[] {3, 1, 0, 2};
         Permutor permutor = new Permutor(size);
         permutor.setPermutation(target);
         Assert.assertArrayEquals(target, permutor.getCurrentPermutation());
@@ -126,5 +125,4 @@ public class PermutorTest {
         int[] random = permutor.getRandomNextPermutation();
         Assert.assertTrue(arrayElementsDistinct(random));
     }
-
 }

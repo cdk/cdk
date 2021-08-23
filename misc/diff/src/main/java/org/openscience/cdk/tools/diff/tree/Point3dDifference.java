@@ -18,13 +18,13 @@
  */
 package org.openscience.cdk.tools.diff.tree;
 
-import javax.vecmath.Point3d;
 import java.util.Iterator;
+import javax.vecmath.Point3d;
 
 /**
  * Difference between two boolean[]'s.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module diff
  * @cdk.githash
  */
@@ -39,21 +39,24 @@ public class Point3dDifference extends AbstractDifferenceList implements IDiffer
     /**
      * Constructs a new {@link IDifference} object.
      *
-     * @param name   a name reflecting the nature of the created {@link IDifference}
-     * @param first  the first object to compare
+     * @param name a name reflecting the nature of the created {@link IDifference}
+     * @param first the first object to compare
      * @param second the second object to compare
-     * @return       an {@link IDifference} reflecting the differences between the first and second object
+     * @return an {@link IDifference} reflecting the differences between the first and second object
      */
     public static IDifference construct(String name, Point3d first, Point3d second) {
         if (first == null && second == null) return null;
 
         Point3dDifference totalDiff = new Point3dDifference(name);
-        totalDiff.addChild(DoubleDifference.construct("x", first == null ? null : first.x, second == null ? null
-                : second.x));
-        totalDiff.addChild(DoubleDifference.construct("y", first == null ? null : first.y, second == null ? null
-                : second.y));
-        totalDiff.addChild(DoubleDifference.construct("z", first == null ? null : first.z, second == null ? null
-                : second.z));
+        totalDiff.addChild(
+                DoubleDifference.construct(
+                        "x", first == null ? null : first.x, second == null ? null : second.x));
+        totalDiff.addChild(
+                DoubleDifference.construct(
+                        "y", first == null ? null : first.y, second == null ? null : second.y));
+        totalDiff.addChild(
+                DoubleDifference.construct(
+                        "z", first == null ? null : first.z, second == null ? null : second.z));
         if (totalDiff.childCount() == 0) {
             return null;
         }

@@ -21,13 +21,10 @@ package org.openscience.cdk.graph.matrix;
 /**
  * Interface describing a molecular graph matrix calculator.
  *
- * @cdk.module  interfaces
+ * @cdk.module interfaces
  * @cdk.githash
  * @cdk.keyword graph matrix, molecular
- *
- * @author      egonw
+ * @author egonw
  * @cdk.created 2004-07-04
  */
-public interface IGraphMatrix {
-
-}
+public interface IGraphMatrix {}

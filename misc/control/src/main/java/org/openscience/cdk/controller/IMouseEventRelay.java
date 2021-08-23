@@ -79,29 +79,27 @@ public interface IMouseEventRelay {
     public abstract void mouseMove(int screenCoordX, int screenCoordY);
 
     /**
-     *
      * @param screenCoordX
      * @param screenCoordY
      */
     public abstract void mouseEnter(int screenCoordX, int screenCoordY);
 
     /**
-     *
      * @param screenCoordX
      * @param screenCoordY
      */
     public abstract void mouseExit(int screenCoordX, int screenCoordY);
 
     /**
-     * Event to signal that a mouse has been dragged from one point to
-     * a next.
+     * Event to signal that a mouse has been dragged from one point to a next.
      *
      * @param screenCoordXFrom the x part of the screen coordinate dragged from.
      * @param screenCoordYFrom the y part of the screen coordinate dragged from.
-     * @param screenCoordXTo   the x part of the screen coordinate dragged to.
-     * @param screenCoordYTo   the y part of the screen coordinate dragged to.
+     * @param screenCoordXTo the x part of the screen coordinate dragged to.
+     * @param screenCoordYTo the y part of the screen coordinate dragged to.
      */
-    public abstract void mouseDrag(int screenCoordXFrom, int screenCoordYFrom, int screenCoordXTo, int screenCoordYTo);
+    public abstract void mouseDrag(
+            int screenCoordXFrom, int screenCoordYFrom, int screenCoordXTo, int screenCoordYTo);
 
     /**
      * Event to signal that the mouse wheel has been rotated a certain amount forward.
@@ -118,5 +116,4 @@ public interface IMouseEventRelay {
      * @see #mouseWheelMovedForward(int)
      */
     public abstract void mouseWheelMovedBackward(int rotation);
-
 }

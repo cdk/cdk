@@ -31,15 +31,16 @@ import org.junit.runners.Suite;
 
 /**
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- *
  * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({org.openscience.cdk.smsd.algorithm.vflib.VFlibMCSHandlerTest.class,
-        org.openscience.cdk.smsd.algorithm.vflib.VFlibTurboHandlerTest.class,
-        org.openscience.cdk.smsd.algorithm.vflib.VFLibTest.class,
-        org.openscience.cdk.smsd.algorithm.vflib.VFMapperTest.class})
+@Suite.SuiteClasses({
+    org.openscience.cdk.smsd.algorithm.vflib.VFlibMCSHandlerTest.class,
+    org.openscience.cdk.smsd.algorithm.vflib.VFlibTurboHandlerTest.class,
+    org.openscience.cdk.smsd.algorithm.vflib.VFLibTest.class,
+    org.openscience.cdk.smsd.algorithm.vflib.VFMapperTest.class
+})
 public class VflibSuite {
 
     @BeforeClass

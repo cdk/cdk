@@ -19,12 +19,12 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import Jama.EigenvalueDecomposition;
+import Jama.Matrix;
 import java.io.IOException;
-
 import javax.vecmath.Point3d;
-
-import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
@@ -41,30 +41,28 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
-import Jama.EigenvalueDecomposition;
-import Jama.Matrix;
-
 /**
- * A descriptor that calculates the moment of inertia and radius of gyration.
- * Moment of inertia (MI) values characterize the mass distribution of a molecule.
- * Related to the MI values, ratios of the MI values along the three principal axes
- * are also well know modeling variables. This descriptor calculates the MI values
- * along the X, Y and Z axes as well as the ratio's X/Y, X/Z and Y/Z. Finally it also
- * calculates the radius of gyration of the molecule.
- * 
- * The descriptor generates 7 values in the following order
+ * A descriptor that calculates the moment of inertia and radius of gyration. Moment of inertia (MI)
+ * values characterize the mass distribution of a molecule. Related to the MI values, ratios of the
+ * MI values along the three principal axes are also well know modeling variables. This descriptor
+ * calculates the MI values along the X, Y and Z axes as well as the ratio's X/Y, X/Z and Y/Z.
+ * Finally it also calculates the radius of gyration of the molecule.
+ *
+ * <p>The descriptor generates 7 values in the following order
+ *
  * <ul>
- * <li>MOMI-X - MI along X axis
- * <li>MOMI-Y - MI along Y axis
- * <li>MOMI-Z - MI along Z axis
- * <li>MOMI-XY - X/Y
- * <li>MOMI-XZ - X/Z
- * <li>MOMI-YZ Y/Z
- * <li>MOMI-R - Radius of gyration
+ *   <li>MOMI-X - MI along X axis
+ *   <li>MOMI-Y - MI along Y axis
+ *   <li>MOMI-Z - MI along Z axis
+ *   <li>MOMI-XY - X/Y
+ *   <li>MOMI-XZ - X/Z
+ *   <li>MOMI-YZ Y/Z
+ *   <li>MOMI-R - Radius of gyration
  * </ul>
- * One important aspect of the algorithm is that if the eigenvalues of the MI tensor
- * are below 1e-3, then the ratio's are set to a default of 1000.
- * 
+ *
+ * One important aspect of the algorithm is that if the eigenvalues of the MI tensor are below 1e-3,
+ * then the ratio's are set to a default of 1000.
+ *
  * <table border="1"><caption>Parameters for this descriptor:</caption>
  * <tr>
  * <td>Name</td>
@@ -78,24 +76,29 @@ import Jama.Matrix;
  * </tr>
  * </table>
  *
- * @author           Rajarshi Guha
- * @cdk.created      2005-02-07
- * @cdk.module       qsarmolecular
+ * @author Rajarshi Guha
+ * @cdk.created 2005-02-07
+ * @cdk.module qsarmolecular
  * @cdk.githash
- * @cdk.dictref      qsar-descriptors:momentOfInertia
- * @cdk.keyword      moment of inertia
+ * @cdk.dictref qsar-descriptors:momentOfInertia
+ * @cdk.keyword moment of inertia
  */
-public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
+public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor
+        implements IMolecularDescriptor {
 
-    private static ILoggingTool   logger = LoggingToolFactory.createLoggingTool(MomentOfInertiaDescriptor.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(MomentOfInertiaDescriptor.class);
 
-    private static final String[] NAMES  = {"MOMI-X", "MOMI-Y", "MOMI-Z", "MOMI-XY", "MOMI-XZ", "MOMI-YZ", "MOMI-R"};
+    private static final String[] NAMES = {
+        "MOMI-X", "MOMI-Y", "MOMI-Z", "MOMI-XY", "MOMI-XZ", "MOMI-YZ", "MOMI-R"
+    };
 
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#momentOfInertia", this.getClass()
-                        .getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#momentOfInertia",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     /**
@@ -152,21 +155,24 @@ public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor imple
     private DescriptorValue getDummyDescriptorValue(Exception e) {
         int ndesc = getDescriptorNames().length;
         DoubleArrayResult results = new DoubleArrayResult(ndesc);
-        for (int i = 0; i < ndesc; i++)
-            results.add(Double.NaN);
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), results,
-                getDescriptorNames(), e);
+        for (int i = 0; i < ndesc; i++) results.add(Double.NaN);
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                results,
+                getDescriptorNames(),
+                e);
     }
 
     /**
      * Calculates the 3 MI's, 3 ration and the R_gyr value.
      *
-     * The molecule should have hydrogens
+     * <p>The molecule should have hydrogens
      *
      * @param container Parameter is the atom container.
      * @return An ArrayList containing 7 elements in the order described above
      */
-
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
         if (!GeometryUtil.has3DCoordinates(container))
@@ -201,8 +207,7 @@ public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor imple
             IAtom currentAtom = clone.getAtom(i);
 
             Double mass = factory.getMajorIsotope(currentAtom.getSymbol()).getExactMass();
-            if (mass == null)
-                mass = factory.getNaturalMass(currentAtom);
+            if (mass == null) mass = factory.getNaturalMass(currentAtom);
 
             xdif = currentAtom.getPoint3d().x - centerOfMass.x;
             ydif = currentAtom.getPoint3d().y - centerOfMass.y;
@@ -238,10 +243,8 @@ public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor imple
         eval[0] = eval[2];
         eval[2] = etmp;
 
-        if (Math.abs(eval[1]) > 1e-3)
-            retval.add(eval[0] / eval[1]);
-        else
-            retval.add(1000);
+        if (Math.abs(eval[1]) > 1e-3) retval.add(eval[0] / eval[1]);
+        else retval.add(1000);
 
         if (Math.abs(eval[2]) > 1e-3) {
             retval.add(eval[0] / eval[2]);
@@ -254,26 +257,37 @@ public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor imple
         // finally get the radius of gyration
         double pri;
         IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula(clone);
-        if (Math.abs(eval[2]) > eps)
-            pri = Math.pow(eval[0] * eval[1] * eval[2], 1.0 / 3.0);
+        if (Math.abs(eval[2]) > eps) pri = Math.pow(eval[0] * eval[1] * eval[2], 1.0 / 3.0);
         else
             pri = Math.sqrt(eval[0] * ccf / MolecularFormulaManipulator.getTotalExactMass(formula));
-        retval.add(Math.sqrt(Math.PI * 2 * pri * ccf / MolecularFormulaManipulator.getTotalExactMass(formula)));
+        retval.add(
+                Math.sqrt(
+                        Math.PI
+                                * 2
+                                * pri
+                                * ccf
+                                / MolecularFormulaManipulator.getTotalExactMass(formula)));
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval,
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                retval,
                 getDescriptorNames());
     }
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * 
-     * The return value from this method really indicates what type of result will
-     * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
-     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
-     * allows you to do the same thing, without actually calculating the descriptor.
      *
-     * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
-     *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
+     * <p>The return value from this method really indicates what type of result will be obtained
+     * from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
+     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object;
+     * this method allows you to do the same thing, without actually calculating the descriptor.
+     *
+     * @return an object that implements the {@link
+     *     org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating the actual type
+     *     of values returned by the descriptor in the {@link
+     *     org.openscience.cdk.qsar.DescriptorValue} object
      */
     @Override
     public IDescriptorResult getDescriptorResultType() {

@@ -38,30 +38,25 @@ public class OxygenAtomCountDescriptorTest extends SubstanceDescriptorTest {
     public void testCalculate_ZnO() throws Exception {
         ISubstance material = new Substance();
         material.addAtomContainer(
-            MolecularFormulaManipulator.getAtomContainer(
-                "ZnO", DefaultChemObjectBuilder.getInstance()
-            )
-        );
+                MolecularFormulaManipulator.getAtomContainer(
+                        "ZnO", DefaultChemObjectBuilder.getInstance()));
         DescriptorValue value = descriptor.calculate(material);
         Assert.assertNotNull(value);
         IDescriptorResult result = value.getValue();
         Assert.assertNotNull(result);
-        Assert.assertEquals(1, ((IntegerResult)result).intValue());
+        Assert.assertEquals(1, ((IntegerResult) result).intValue());
     }
 
     @Test
     public void testCalculate_IronOxide() throws Exception {
         ISubstance material = new Substance();
         material.addAtomContainer(
-            MolecularFormulaManipulator.getAtomContainer(
-                "Fe3O4", DefaultChemObjectBuilder.getInstance()
-            )
-        );
+                MolecularFormulaManipulator.getAtomContainer(
+                        "Fe3O4", DefaultChemObjectBuilder.getInstance()));
         DescriptorValue value = descriptor.calculate(material);
         Assert.assertNotNull(value);
         IDescriptorResult result = value.getValue();
         Assert.assertNotNull(result);
-        Assert.assertEquals(4, ((IntegerResult)result).intValue());
+        Assert.assertEquals(4, ((IntegerResult) result).intValue());
     }
-
 }

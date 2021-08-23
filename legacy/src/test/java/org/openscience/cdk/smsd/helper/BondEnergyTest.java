@@ -24,17 +24,15 @@ package org.openscience.cdk.smsd.helper;
 
 import static org.junit.Assert.assertEquals;
 
-import org.openscience.cdk.interfaces.IBond.Order;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IBond.Order;
 
 /**
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- *
  * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
@@ -54,9 +52,7 @@ public class BondEnergyTest {
     @After
     public void tearDown() {}
 
-    /**
-     * Test of getSymbolFirstAtom method, of class BondEnergy.
-     */
+    /** Test of getSymbolFirstAtom method, of class BondEnergy. */
     @Test
     public void testGetSymbolFirstAtom() {
         BondEnergy instance = new BondEnergy("H", "I", Order.SINGLE, 295);
@@ -65,9 +61,7 @@ public class BondEnergyTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of getSymbolSecondAtom method, of class BondEnergy.
-     */
+    /** Test of getSymbolSecondAtom method, of class BondEnergy. */
     @Test
     public void testGetSymbolSecondAtom() {
         BondEnergy instance = new BondEnergy("H", "I", Order.SINGLE, 295);
@@ -76,9 +70,7 @@ public class BondEnergyTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of getBondOrder method, of class BondEnergy.
-     */
+    /** Test of getBondOrder method, of class BondEnergy. */
     @Test
     public void testGetBondOrder() {
         BondEnergy instance = new BondEnergy("H", "I", Order.SINGLE, 295);
@@ -87,9 +79,7 @@ public class BondEnergyTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of getEnergy method, of class BondEnergy.
-     */
+    /** Test of getEnergy method, of class BondEnergy. */
     @Test
     public void testGetEnergy() {
         BondEnergy instance = new BondEnergy("H", "I", Order.SINGLE, 295);

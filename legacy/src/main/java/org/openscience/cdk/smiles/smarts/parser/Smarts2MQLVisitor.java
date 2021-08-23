@@ -18,8 +18,8 @@
 package org.openscience.cdk.smiles.smarts.parser;
 
 /**
- * An AST tree visitor. It is a prototype that translate Smarts to MQL.
- * It is far from fully functioning.
+ * An AST tree visitor. It is a prototype that translate Smarts to MQL. It is far from fully
+ * functioning.
  *
  * @author Dazhi Jiao
  * @cdk.created 2007-04-24
@@ -35,8 +35,8 @@ public class Smarts2MQLVisitor implements SMARTSParserVisitor {
         return null;
     }
 
-    String  symbolIdentified = "";
-    boolean not              = false;
+    String symbolIdentified = "";
+    boolean not = false;
 
     public Object visit(ASTAtom node, Object data) {
         // TODO Auto-generated method stub
@@ -316,5 +316,4 @@ public class Smarts2MQLVisitor implements SMARTSParserVisitor {
         symbolIdentified = node.getSymbol();
         return "";
     }
-
 }

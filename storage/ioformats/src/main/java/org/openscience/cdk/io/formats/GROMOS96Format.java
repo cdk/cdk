@@ -24,7 +24,6 @@ import org.openscience.cdk.tools.DataFeatures;
  * See <a href="http://www.igc.ethz.ch/gromos/">here</a>.
  *
  * @author Miguel Rojas
- *
  * @cdk.module ioformats
  * @cdk.githash
  */
@@ -60,7 +59,7 @@ public class GROMOS96Format extends AbstractResourceFormat implements IChemForma
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"gr96 "};
+        return new String[] {"gr96 "};
     }
 
     /** {@inheritDoc} */

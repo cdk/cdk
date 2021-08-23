@@ -24,7 +24,6 @@ package org.openscience.cdk.io.iterator;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -35,20 +34,20 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
-/**
- * @cdk.module test-io
- */
+/** @cdk.module test-io */
 public class IteratingPCSubstancesXMLReaderTest extends CDKTestCase {
 
-    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingPCSubstancesXMLReaderTest.class);
+    private ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(IteratingPCSubstancesXMLReaderTest.class);
 
     @Test
     public void testTaxols() throws Exception {
         String filename = "data/asn/pubchem/taxols.xml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IteratingPCSubstancesXMLReader reader = new IteratingPCSubstancesXMLReader(new InputStreamReader(ins),
-                DefaultChemObjectBuilder.getInstance());
+        IteratingPCSubstancesXMLReader reader =
+                new IteratingPCSubstancesXMLReader(
+                        new InputStreamReader(ins), DefaultChemObjectBuilder.getInstance());
 
         int modelCount = 0;
         IChemSequence set = DefaultChemObjectBuilder.getInstance().newInstance(IChemSequence.class);
@@ -65,5 +64,4 @@ public class IteratingPCSubstancesXMLReaderTest extends CDKTestCase {
         Assert.assertEquals(63, ChemModelManipulator.getAtomCount(first));
         Assert.assertEquals(69, ChemModelManipulator.getBondCount(first));
     }
-
 }

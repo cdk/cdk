@@ -23,11 +23,11 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.AbstractChemModelTest;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IRing;
@@ -43,13 +43,14 @@ public class ChemModelTest extends AbstractChemModelTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new ChemModel();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new ChemModel();
+                    }
+                });
     }
 
     @Test

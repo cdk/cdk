@@ -30,7 +30,6 @@ import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -82,7 +81,9 @@ public class FormatFactoryTest extends CDKTestCase {
 
     @Test
     public void testGaussian94() throws Exception {
-        expectFormat("data/gaussian/4-cyanophenylnitrene-Benzazirine-TS.g94.out", Gaussian94Format.getInstance());
+        expectFormat(
+                "data/gaussian/4-cyanophenylnitrene-Benzazirine-TS.g94.out",
+                Gaussian94Format.getInstance());
     }
 
     @Test
@@ -232,9 +233,7 @@ public class FormatFactoryTest extends CDKTestCase {
         Assert.assertEquals(expectedFormat.getFormatName(), format.getFormatName());
     }
 
-    /**
-     * @cdk.bug 2153298
-     */
+    /** @cdk.bug 2153298 */
     @Test
     public void testGuessFormat() throws Exception {
         String filename = "data/xyz/bf3.xyz";
@@ -255,8 +254,10 @@ public class FormatFactoryTest extends CDKTestCase {
     @Test
     public void testGuessFormat_Gz() throws Exception {
         String filename = "data/xyz/bf3.xyz.gz";
-        InputStream input = new BufferedInputStream(new GZIPInputStream(this.getClass().getClassLoader()
-                .getResourceAsStream(filename)));
+        InputStream input =
+                new BufferedInputStream(
+                        new GZIPInputStream(
+                                this.getClass().getClassLoader().getResourceAsStream(filename)));
         IChemFormat format = factory.guessFormat(input);
         Assert.assertNotNull(format);
         // make sure the InputStream is properly reset
@@ -339,7 +340,7 @@ public class FormatFactoryTest extends CDKTestCase {
 
         @Override
         public String[] getNameExtensions() {
-            return new String[]{"dummy", "dum"};
+            return new String[] {"dummy", "dum"};
         }
 
         @Override

@@ -36,13 +36,13 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Calculates 29 Charged Partial Surface Area (CPSA) descriptors.
- * 
- * The CPSA's were developed by Stanton et al. ({@cdk.cite STA90}) and
- * are related to the Polar Surface Area descriptors. The original
- * implementation was in the ADAPT software package and the definitions
- * of the individual descriptors are presented in the following table. This class
- * returns a <code>DoubleArrayResult</code> containing the 29 descriptors in the order
- * described in the table.
+ *
+ * <p>The CPSA's were developed by Stanton et al. ({@cdk.cite STA90}) and are related to the Polar
+ * Surface Area descriptors. The original implementation was in the ADAPT software package and the
+ * definitions of the individual descriptors are presented in the following table. This class
+ * returns a <code>DoubleArrayResult</code> containing the 29 descriptors in the order described in
+ * the table.
+ *
  * <table border=1 cellpadding=2>
  * <caption><a name="cpsa">A Summary of the 29 CPSA Descriptors</a></caption>
  * <thead>
@@ -103,18 +103,17 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * </tr>
  * </tbody>
  * </table>
- * 
- * <b>NOTE</b>: The values calculated by this implementation will differ from those
- * calculated by the original ADAPT implementation of the CPSA descriptors. This
- * is because the original implementation used an analytical surface area algorithm
- * and used partial charges obtained from MOPAC using the AM1 Hamiltonian.
- * This implementation uses a numerical
- * algorithm to obtain surface areas (see {@link NumericalSurface}) and obtains partial
- * charges using the Gasteiger-Marsilli algorithm (see {@link GasteigerMarsiliPartialCharges}).
- * 
- * However, a comparison of the values calculated by the two implementations indicates
- * that they are qualitatively the same.
- * 
+ *
+ * <b>NOTE</b>: The values calculated by this implementation will differ from those calculated by
+ * the original ADAPT implementation of the CPSA descriptors. This is because the original
+ * implementation used an analytical surface area algorithm and used partial charges obtained from
+ * MOPAC using the AM1 Hamiltonian. This implementation uses a numerical algorithm to obtain surface
+ * areas (see {@link NumericalSurface}) and obtains partial charges using the Gasteiger-Marsilli
+ * algorithm (see {@link GasteigerMarsiliPartialCharges}).
+ *
+ * <p>However, a comparison of the values calculated by the two implementations indicates that they
+ * are qualitatively the same.
+ *
  * <table border="1"><caption>Parameters for this descriptor:</caption>
  * <tr>
  * <td>Name</td>
@@ -136,18 +135,22 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class CPSADescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static final String[] NAMES  = {"PPSA-1", "PPSA-2", "PPSA-3", "PNSA-1", "PNSA-2", "PNSA-3", "DPSA-1",
-            "DPSA-2", "DPSA-3", "FPSA-1", "FPSA-2", "FPSA-3", "FNSA-1", "FNSA-2", "FNSA-3", "WPSA-1", "WPSA-2",
-            "WPSA-3", "WNSA-1", "WNSA-2", "WNSA-3", "RPCG", "RNCG", "RPCS", "RNCS", "THSA", "TPSA", "RHSA", "RPSA"};
+    private static final String[] NAMES = {
+        "PPSA-1", "PPSA-2", "PPSA-3", "PNSA-1", "PNSA-2", "PNSA-3", "DPSA-1", "DPSA-2", "DPSA-3",
+        "FPSA-1", "FPSA-2", "FPSA-3", "FNSA-1", "FNSA-2", "FNSA-3", "WPSA-1", "WPSA-2", "WPSA-3",
+        "WNSA-1", "WNSA-2", "WNSA-3", "RPCG", "RNCG", "RPCS", "RNCS", "THSA", "TPSA", "RHSA", "RPSA"
+    };
 
-    private static ILoggingTool   logger = LoggingToolFactory.createLoggingTool(CPSADescriptor.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CPSADescriptor.class);
 
     public CPSADescriptor() {}
 
     @Override
     public DescriptorSpecification getSpecification() {
-        return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#CPSA",
-                this.getClass().getName(), "The Chemistry Development Kit");
+        return new DescriptorSpecification(
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#CPSA",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     /**
@@ -207,16 +210,19 @@ public class CPSADescriptor extends AbstractMolecularDescriptor implements IMole
      * @param atomContainer Parameter is the atom container.
      * @return An ArrayList containing 29 elements in the order described above
      */
-
     @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         DoubleArrayResult retval = new DoubleArrayResult();
 
         if (!GeometryUtil.has3DCoordinates(atomContainer)) {
-            for (int i = 0; i < 29; i++)
-                retval.add(Double.NaN);
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval,
-                    getDescriptorNames(), new CDKException("Molecule must have 3D coordinates"));
+            for (int i = 0; i < 29; i++) retval.add(Double.NaN);
+            return new DescriptorValue(
+                    getSpecification(),
+                    getParameterNames(),
+                    getParameters(),
+                    retval,
+                    getDescriptorNames(),
+                    new CDKException("Molecule must have 3D coordinates"));
         }
 
         IAtomContainer container;
@@ -224,10 +230,14 @@ public class CPSADescriptor extends AbstractMolecularDescriptor implements IMole
             container = (IAtomContainer) atomContainer.clone();
         } catch (CloneNotSupportedException e) {
             logger.debug("Error during clone");
-            for (int i = 0; i < 29; i++)
-                retval.add(Double.NaN);
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval,
-                    getDescriptorNames(), new CDKException("Error during clone" + e.getMessage()));
+            for (int i = 0; i < 29; i++) retval.add(Double.NaN);
+            return new DescriptorValue(
+                    getSpecification(),
+                    getParameterNames(),
+                    getParameters(),
+                    retval,
+                    getDescriptorNames(),
+                    new CDKException("Error during clone" + e.getMessage()));
         }
 
         //        IsotopeFactory factory = null;
@@ -243,10 +253,14 @@ public class CPSADescriptor extends AbstractMolecularDescriptor implements IMole
             peoe.assignGasteigerMarsiliSigmaPartialCharges(container, true);
         } catch (Exception e) {
             logger.debug("Error in assigning Gasteiger-Marsilli charges");
-            for (int i = 0; i < 29; i++)
-                retval.add(Double.NaN);
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval,
-                    getDescriptorNames(), new CDKException("Error in getting G-M charges"));
+            for (int i = 0; i < 29; i++) retval.add(Double.NaN);
+            return new DescriptorValue(
+                    getSpecification(),
+                    getParameterNames(),
+                    getParameters(),
+                    retval,
+                    getDescriptorNames(),
+                    new CDKException("Error in getting G-M charges"));
         }
 
         NumericalSurface surface;
@@ -255,13 +269,17 @@ public class CPSADescriptor extends AbstractMolecularDescriptor implements IMole
             surface.calculateSurface();
         } catch (NullPointerException npe) {
             logger.debug("Error in surface area calculation");
-            for (int i = 0; i < 29; i++)
-                retval.add(Double.NaN);
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval,
-                    getDescriptorNames(), new CDKException("Error in surface area calculation"));
+            for (int i = 0; i < 29; i++) retval.add(Double.NaN);
+            return new DescriptorValue(
+                    getSpecification(),
+                    getParameterNames(),
+                    getParameters(),
+                    retval,
+                    getDescriptorNames(),
+                    new CDKException("Error in surface area calculation"));
         }
 
-        //double molecularWeight = mfa.getMass();
+        // double molecularWeight = mfa.getMass();
         double[] atomSurfaces = surface.getAllSurfaceAreas();
         double totalSA = surface.getTotalSurfaceArea();
 
@@ -380,20 +398,26 @@ public class CPSADescriptor extends AbstractMolecularDescriptor implements IMole
         retval.add(rhsa);
         retval.add(rpsa);
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval,
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                retval,
                 getDescriptorNames());
     }
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * 
-     * The return value from this method really indicates what type of result will
-     * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
-     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
-     * allows you to do the same thing, without actually calculating the descriptor.
      *
-     * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
-     *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
+     * <p>The return value from this method really indicates what type of result will be obtained
+     * from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
+     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object;
+     * this method allows you to do the same thing, without actually calculating the descriptor.
+     *
+     * @return an object that implements the {@link
+     *     org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating the actual type
+     *     of values returned by the descriptor in the {@link
+     *     org.openscience.cdk.qsar.DescriptorValue} object
      */
     @Override
     public IDescriptorResult getDescriptorResultType() {

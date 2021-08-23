@@ -24,6 +24,11 @@
 
 package org.openscience.cdk.aromaticity;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.graph.Cycles;
@@ -35,19 +40,15 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.diff.AtomContainerDiff;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertFalse;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertTrue;
-
 /**
  * @author John May
  * @cdk.module test-standard
  */
 public class AromaticityTest {
 
-    private final Aromaticity cdk      = new Aromaticity(ElectronDonation.cdk(), Cycles.all());
-    private final Aromaticity cdkExo   = new Aromaticity(ElectronDonation.cdkAllowingExocyclic(), Cycles.all());
+    private final Aromaticity cdk = new Aromaticity(ElectronDonation.cdk(), Cycles.all());
+    private final Aromaticity cdkExo =
+            new Aromaticity(ElectronDonation.cdkAllowingExocyclic(), Cycles.all());
     private final Aromaticity daylight = new Aromaticity(ElectronDonation.daylight(), Cycles.all());
 
     @Test
@@ -93,8 +94,12 @@ public class AromaticityTest {
 
     @Test
     public void subset() throws Exception {
-        assertThat(daylight.findBonds(smiles("[O-][Cu++]123([O-])CN4C=NC5=C4C(N=CN5)=[O+]1.O=S(=O)([OH+]2)[OH+]3"))
-                .size(), is(5));
+        assertThat(
+                daylight.findBonds(
+                                smiles(
+                                        "[O-][Cu++]123([O-])CN4C=NC5=C4C(N=CN5)=[O+]1.O=S(=O)([OH+]2)[OH+]3"))
+                        .size(),
+                is(5));
     }
 
     @Test
@@ -111,10 +116,8 @@ public class AromaticityTest {
     public void clearFlags_quinone() throws Exception {
         IAtomContainer quinone = smiles("O=c1ccc(=O)cc1");
         daylight.apply(quinone);
-        for (IBond bond : quinone.bonds())
-            assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
-        for (IAtom atom : quinone.atoms())
-            assertFalse(atom.getFlag(CDKConstants.ISAROMATIC));
+        for (IBond bond : quinone.bonds()) assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
+        for (IAtom atom : quinone.atoms()) assertFalse(atom.getFlag(CDKConstants.ISAROMATIC));
     }
 
     @Test
@@ -147,19 +150,18 @@ public class AromaticityTest {
 
     @Test
     public void electronSum() throws Exception {
-        assertThat(Aromaticity.electronSum(new int[]{0, 1, 2, 3, 0}, new int[]{1, 1, 1, 1}, new int[]{0, 1, 2, 3}),
-                   is(4));
+        assertThat(
+                Aromaticity.electronSum(
+                        new int[] {0, 1, 2, 3, 0}, new int[] {1, 1, 1, 1}, new int[] {0, 1, 2, 3}),
+                is(4));
     }
 
-    /**
-     * @cdk.bug 736
-     */
+    /** @cdk.bug 736 */
     @Test
     public void ensureConsistentRepresentation() throws Exception {
         IAtomContainer a = smiles("C1=CC2=CC3=CC4=C(C=CC=C4)C=C3C=C2C=C1");
         IAtomContainer b = smiles("c1cc2cc3cc4c(cccc4)cc3cc2cc1");
-        Aromaticity arom = new Aromaticity(ElectronDonation.daylight(),
-                                           Cycles.all());
+        Aromaticity arom = new Aromaticity(ElectronDonation.daylight(), Cycles.all());
         arom.apply(a);
         arom.apply(b);
         assertTrue(AtomContainerDiff.diff(a, b).isEmpty());

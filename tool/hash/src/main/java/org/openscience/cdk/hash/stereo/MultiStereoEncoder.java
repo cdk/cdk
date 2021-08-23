@@ -24,17 +24,15 @@
 
 package org.openscience.cdk.hash.stereo;
 
-
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collections;
 import java.util.List;
 
 /**
- * A multiple stereo encoder. Given a list of other encoders this class wraps
- * them up into a single method call. Once each encoder has been configured it
- * is marked and will not be visited again unless the encoder is {@link
- * #reset()}.
+ * A multiple stereo encoder. Given a list of other encoders this class wraps them up into a single
+ * method call. Once each encoder has been configured it is marked and will not be visited again
+ * unless the encoder is {@link #reset()}.
  *
  * @author John May
  * @cdk.module hash
@@ -42,14 +40,12 @@ import java.util.List;
 final class MultiStereoEncoder implements StereoEncoder {
 
     /* indices of unconfigured encoders */
-    private final BitSet              unconfigured;
+    private final BitSet unconfigured;
 
     /* list of encoders */
     private final List<StereoEncoder> encoders;
 
-    /**
-     * Create a new multiple stereo encoder from a single list of encoders
-     */
+    /** Create a new multiple stereo encoder from a single list of encoders */
     public MultiStereoEncoder(List<StereoEncoder> encoders) {
         if (encoders.isEmpty()) throw new IllegalArgumentException("no stereo encoders provided");
         this.encoders = Collections.unmodifiableList(new ArrayList<StereoEncoder>(encoders));
@@ -57,9 +53,7 @@ final class MultiStereoEncoder implements StereoEncoder {
         unconfigured.flip(0, encoders.size());
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean encode(long[] current, long[] next) {
         boolean configured = false;
@@ -74,9 +68,7 @@ final class MultiStereoEncoder implements StereoEncoder {
         return configured;
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void reset() {
         // mark all as unperceived and reset

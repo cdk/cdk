@@ -19,7 +19,6 @@
 package org.openscience.cdk.debug;
 
 import javax.vecmath.Point3d;
-
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.protein.data.PDBAtom;
@@ -29,7 +28,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * Debugging data class.
  *
- * @author     Miguel Rojas
+ * @author Miguel Rojas
  * @cdk.module datadebug
  * @cdk.githash
  */
@@ -37,7 +36,8 @@ public class DebugPDBAtom extends PDBAtom implements IPDBAtom {
 
     private static final long serialVersionUID = -2432127382224382452L;
 
-    private static final ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugPDBAtom.class);
+    private static final ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(DebugPDBAtom.class);
 
     public DebugPDBAtom(IElement element) {
         super(element);

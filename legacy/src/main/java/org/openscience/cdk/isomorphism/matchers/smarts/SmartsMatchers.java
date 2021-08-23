@@ -24,14 +24,12 @@
 
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
- * Bridging class between the SMARTS matcher and the parser/query tool. The
- * class are currently split across different packages. This classes temporary
- * functionality is to expose package private functionality through a single
- * location.
+ * Bridging class between the SMARTS matcher and the parser/query tool. The class are currently
+ * split across different packages. This classes temporary functionality is to expose package
+ * private functionality through a single location.
  *
  * @author John May
  * @cdk.module smarts
@@ -43,7 +41,7 @@ public final class SmartsMatchers {
     /**
      * Do not use - temporary method until the SMARTS packages are cleaned up.
      *
-     * Prepares a target molecule for matching with SMARTS.
+     * <p>Prepares a target molecule for matching with SMARTS.
      *
      * @param container the container to initialise
      * @param ringQuery whether the smarts will check ring size queries
@@ -55,5 +53,4 @@ public final class SmartsMatchers {
             SMARTSAtomInvariants.configureDaylightWithoutRingInfo(container);
         }
     }
-
 }

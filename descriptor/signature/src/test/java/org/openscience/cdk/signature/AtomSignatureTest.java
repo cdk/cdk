@@ -24,7 +24,6 @@ package org.openscience.cdk.signature;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,13 +36,12 @@ import org.openscience.cdk.interfaces.IElement;
 /**
  * @cdk.module test-signature
  * @author maclean
- *
  */
 public class AtomSignatureTest extends AbstractSignatureTest {
 
     private IAtomContainer atomContainer;
 
-    private AtomSignature  atomSignature;
+    private AtomSignature atomSignature;
 
     @Before
     public void setUp() {
@@ -197,5 +195,4 @@ public class AtomSignatureTest extends AbstractSignatureTest {
         Assert.assertTrue(singleColor < doubleColor);
         Assert.assertTrue(doubleColor < tripleColor);
     }
-
 }

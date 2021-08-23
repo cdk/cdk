@@ -20,7 +20,6 @@ package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
 
-
 /**
  * Text element as used in the chemical drawing. This can be a element symbol.
  *
@@ -39,15 +38,15 @@ public class TextElement implements IRenderingElement {
     public final String text;
 
     /** The color of the text. */
-    public final Color  color;
+    public final Color color;
 
     /**
-     * Constructs a new TextElement with the content <code>text</code> to be
-     * drawn at position (x,y) in the color <code>color</code>.
+     * Constructs a new TextElement with the content <code>text</code> to be drawn at position (x,y)
+     * in the color <code>color</code>.
      *
-     * @param xCoord     x coordinate where the text should be displayed
-     * @param yCoord     y coordinate where the text should be displayed
-     * @param text  the text to be drawn
+     * @param xCoord x coordinate where the text should be displayed
+     * @param yCoord y coordinate where the text should be displayed
+     * @param text the text to be drawn
      * @param color the color of the text
      */
     public TextElement(double xCoord, double yCoord, String text, Color color) {
@@ -62,5 +61,4 @@ public class TextElement implements IRenderingElement {
     public void accept(IRenderingVisitor visotor) {
         visotor.visit(this);
     }
-
 }

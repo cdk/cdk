@@ -24,7 +24,6 @@ package org.openscience.cdk.io.cml;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -38,14 +37,12 @@ import org.openscience.cdk.libio.cml.Convertor;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.diff.AtomDiff;
 
-/**
- * @cdk.module test-libiocml
- */
+/** @cdk.module test-libiocml */
 public class CDKRoundTripTest extends CDKTestCase {
 
-    private static IChemObjectBuilder builder   = SilentChemObjectBuilder.getInstance();
+    private static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
-    private static Convertor          convertor = new Convertor(false, "");
+    private static Convertor convertor = new Convertor(false, "");
 
     @Test
     public void testIElement_Symbol() throws Exception {
@@ -297,5 +294,4 @@ public class CDKRoundTripTest extends CDKTestCase {
         String difference = AtomDiff.diff(atom, copy.getAtom(0));
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
-
 }

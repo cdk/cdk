@@ -20,7 +20,6 @@
 package org.openscience.cdk.interfaces;
 
 import java.util.Iterator;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -60,7 +59,8 @@ public abstract class AbstractChemSequenceTest extends AbstractChemObjectTest {
         Assert.assertEquals(3, cs.getChemModelCount());
         cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
         cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class));
-        cs.addChemModel(cs.getBuilder().newInstance(IChemModel.class)); // this one should enfore array grow
+        cs.addChemModel(
+                cs.getBuilder().newInstance(IChemModel.class)); // this one should enfore array grow
         Assert.assertEquals(6, cs.getChemModelCount());
     }
 

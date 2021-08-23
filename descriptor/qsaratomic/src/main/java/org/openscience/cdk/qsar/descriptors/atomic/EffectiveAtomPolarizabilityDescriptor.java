@@ -47,48 +47,44 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  *   </tr>
  * </table>
  *
- * @author      Miguel Rojas
+ * @author Miguel Rojas
  * @cdk.created 2006-05-03
- * @cdk.module  qsaratomic
+ * @cdk.module qsaratomic
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:effectivePolarizability
  * @see Polarizability
  */
-public class EffectiveAtomPolarizabilityDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
+public class EffectiveAtomPolarizabilityDescriptor extends AbstractAtomicDescriptor
+        implements IAtomicDescriptor {
 
     private Polarizability pol;
 
-    /**
-     *  Constructor for the EffectiveAtomPolarizabilityDescriptor object
-     */
+    /** Constructor for the EffectiveAtomPolarizabilityDescriptor object */
     public EffectiveAtomPolarizabilityDescriptor() {
         pol = new Polarizability();
     }
 
     /**
-     *  Gets the specification attribute of the EffectiveAtomPolarizabilityDescriptor
-     *  object
+     * Gets the specification attribute of the EffectiveAtomPolarizabilityDescriptor object
      *
-     *@return    The specification value
+     * @return The specification value
      */
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#effectivePolarizability", this
-                        .getClass().getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#effectivePolarizability",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
-    /**
-     * This descriptor does have any parameter.
-     */
+    /** This descriptor does have any parameter. */
     @Override
     public void setParameters(Object[] params) throws CDKException {}
 
     /**
-     *  Gets the parameters attribute of the EffectiveAtomPolarizabilityDescriptor
-     *  object
+     * Gets the parameters attribute of the EffectiveAtomPolarizabilityDescriptor object
      *
-     * @return    The parameters value
+     * @return The parameters value
      * @see #setParameters
      */
     @Override
@@ -98,22 +94,23 @@ public class EffectiveAtomPolarizabilityDescriptor extends AbstractAtomicDescrip
 
     @Override
     public String[] getDescriptorNames() {
-        return new String[]{"effAtomPol"};
+        return new String[] {"effAtomPol"};
     }
 
     /**
-     *  The method calculates the Effective Atom Polarizability of a given atom
-     *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
+     * The method calculates the Effective Atom Polarizability of a given atom It is needed to call
+     * the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
      *
-     *@param  atom              The IAtom for which the DescriptorValue is requested
-     *@param  ac                AtomContainer
-     *@return                   return the effective polarizability
+     * @param atom The IAtom for which the DescriptorValue is requested
+     * @param ac AtomContainer
+     * @return return the effective polarizability
      */
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
         double polarizability;
         try {
-            // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
+            // FIXME: for now I'll cache a few modified atomic properties, and restore them at the
+            // end of this method
             String originalAtomtypeName = atom.getAtomTypeName();
             Integer originalNeighborCount = atom.getFormalNeighbourCount();
             Integer originalHCount = atom.getImplicitHydrogenCount();
@@ -132,19 +129,27 @@ public class EffectiveAtomPolarizabilityDescriptor extends AbstractAtomicDescrip
             atom.setHybridization(originalHybridization);
             atom.setMaxBondOrder(originalMaxBondOrder);
             atom.setBondOrderSum(originalBondOrderSum);
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                    polarizability), getDescriptorNames());
+            return new DescriptorValue(
+                    getSpecification(),
+                    getParameterNames(),
+                    getParameters(),
+                    new DoubleResult(polarizability),
+                    getDescriptorNames());
         } catch (Exception ex1) {
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                    Double.NaN), getDescriptorNames(), ex1);
+            return new DescriptorValue(
+                    getSpecification(),
+                    getParameterNames(),
+                    getParameters(),
+                    new DoubleResult(Double.NaN),
+                    getDescriptorNames(),
+                    ex1);
         }
     }
 
     /**
-     *  Gets the parameterNames attribute of the EffectiveAtomPolarizabilityDescriptor
-     *  object
+     * Gets the parameterNames attribute of the EffectiveAtomPolarizabilityDescriptor object
      *
-     *@return    The parameterNames value
+     * @return The parameterNames value
      */
     @Override
     public String[] getParameterNames() {
@@ -152,11 +157,10 @@ public class EffectiveAtomPolarizabilityDescriptor extends AbstractAtomicDescrip
     }
 
     /**
-     *  Gets the parameterType attribute of the EffectiveAtomPolarizabilityDescriptor
-     *  object
+     * Gets the parameterType attribute of the EffectiveAtomPolarizabilityDescriptor object
      *
-     *@param  name  Description of the Parameter
-     *@return       The parameterType value
+     * @param name Description of the Parameter
+     * @return The parameterType value
      */
     @Override
     public Object getParameterType(String name) {

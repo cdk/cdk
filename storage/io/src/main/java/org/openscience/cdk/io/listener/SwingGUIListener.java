@@ -21,9 +21,7 @@ package org.openscience.cdk.io.listener;
 import java.awt.Component;
 import java.util.Iterator;
 import java.util.List;
-
 import javax.swing.JOptionPane;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.ReaderEvent;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
@@ -33,25 +31,20 @@ import org.openscience.cdk.io.setting.OptionIOSetting;
 import org.openscience.cdk.io.setting.StringIOSetting;
 
 /**
- * Allows processing of IOSetting quesions which are passed to the user
- * by using Swing dialogs.
+ * Allows processing of IOSetting quesions which are passed to the user by using Swing dialogs.
  *
  * @cdk.module io
  * @cdk.githash
- *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  * @cdk.created 2003-07-18
  * @cdk.require swing
  */
 public class SwingGUIListener implements IReaderListener, IWriterListener {
 
-    private Component  frame = null;
+    private Component frame = null;
     private Importance level = Importance.HIGH;
 
-    /**
-     * 0 = ask no questions
-     * 3 = ask all questions
-     */
+    /** 0 = ask no questions 3 = ask all questions */
     public SwingGUIListener(Component frame, Importance level) {
         this.level = level;
         this.frame = frame;
@@ -65,11 +58,11 @@ public class SwingGUIListener implements IReaderListener, IWriterListener {
     public void frameRead(ReaderEvent event) {}
 
     /**
-     * Processes the IOSettings by listing the question, giving the options
-     * and asking the user to provide their choice.
+     * Processes the IOSettings by listing the question, giving the options and asking the user to
+     * provide their choice.
      *
-     * <p>Note: if the input reader is <code>null</code>, then the method
-     * does not wait for an answer, and takes the default.
+     * <p>Note: if the input reader is <code>null</code>, then the method does not wait for an
+     * answer, and takes the default.
      */
     @Override
     public void processIOSettingQuestion(IOSetting setting) {
@@ -78,8 +71,12 @@ public class SwingGUIListener implements IReaderListener, IWriterListener {
             String answer = setting.getSetting();
 
             if (setting instanceof BooleanIOSetting) {
-                int n = JOptionPane.showConfirmDialog(frame, setting.getQuestion(), setting.getName(),
-                        JOptionPane.YES_NO_OPTION);
+                int n =
+                        JOptionPane.showConfirmDialog(
+                                frame,
+                                setting.getQuestion(),
+                                setting.getName(),
+                                JOptionPane.YES_NO_OPTION);
                 if (n == JOptionPane.YES_OPTION) {
                     answer = "true";
                 } else if (n == JOptionPane.NO_OPTION) {
@@ -95,15 +92,39 @@ public class SwingGUIListener implements IReaderListener, IWriterListener {
                 for (int i = 0; i < options.length; i++) {
                     options[i] = elements.next();
                 }
-                int n = JOptionPane.showOptionDialog(frame, setting.getQuestion(), setting.getName(),
-                        JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, setting.getSetting());
+                int n =
+                        JOptionPane.showOptionDialog(
+                                frame,
+                                setting.getQuestion(),
+                                setting.getName(),
+                                JOptionPane.DEFAULT_OPTION,
+                                JOptionPane.QUESTION_MESSAGE,
+                                null,
+                                options,
+                                setting.getSetting());
                 answer = (String) options[n];
             } else if (setting instanceof StringIOSetting) {
-                answer = JOptionPane.showInputDialog(frame, setting.getQuestion(), setting.getName(),
-                        JOptionPane.QUESTION_MESSAGE, null, null, setting.getSetting()).toString();
+                answer =
+                        JOptionPane.showInputDialog(
+                                        frame,
+                                        setting.getQuestion(),
+                                        setting.getName(),
+                                        JOptionPane.QUESTION_MESSAGE,
+                                        null,
+                                        null,
+                                        setting.getSetting())
+                                .toString();
             } else {
-                answer = JOptionPane.showInputDialog(frame, setting.getQuestion(), setting.getName(),
-                        JOptionPane.QUESTION_MESSAGE, null, null, setting.getSetting()).toString();
+                answer =
+                        JOptionPane.showInputDialog(
+                                        frame,
+                                        setting.getQuestion(),
+                                        setting.getName(),
+                                        JOptionPane.QUESTION_MESSAGE,
+                                        null,
+                                        null,
+                                        setting.getSetting())
+                                .toString();
             }
 
             try {
@@ -111,7 +132,5 @@ public class SwingGUIListener implements IReaderListener, IWriterListener {
             } catch (CDKException exception) {
             }
         } // else skip question
-
     }
-
 }

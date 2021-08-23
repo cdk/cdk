@@ -23,7 +23,6 @@
 package org.openscience.cdk.io;
 
 import java.io.InputStream;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -38,7 +37,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * TestCase for the reading XYZ files using a test file.
  *
  * @cdk.module test-io
- *
  * @see org.openscience.cdk.io.XYZReader
  */
 public class XYZReaderTest extends SimpleChemObjectReaderTest {
@@ -120,5 +118,4 @@ public class XYZReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(3.1270, m.getAtom(62).getPoint3d().y, 0.0001);
         Assert.assertEquals(-0.9362, m.getAtom(62).getPoint3d().z, 0.0001);
     }
-
 }

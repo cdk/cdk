@@ -18,20 +18,19 @@
  */
 package org.openscience.cdk.reaction.type.parameters;
 
-
 /**
  * Class which defines the allowed parameters of a reaction.
  *
- * @author      miguelrojasch
- * @cdk.module  reaction
+ * @author miguelrojasch
+ * @cdk.module reaction
  * @cdk.githash
  */
 public class ParameterReact implements IParameterReact {
 
-    /** True, if the parameter is fixed to take account*/
+    /** True, if the parameter is fixed to take account */
     private boolean IS_SET_PARAMETER = false;
-    /** The value of the parameter to set*/
-    private Object  VALUE            = null;
+    /** The value of the parameter to set */
+    private Object VALUE = null;
 
     /**
      * Set the parameter to take account.

@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.hash.stereo;
 
-
 /**
  * Combine two permutation parities into one.
  *
@@ -38,10 +37,10 @@ final class CombinedPermutationParity extends PermutationParity {
     private final PermutationParity right;
 
     /**
-     * Combines the left and right parity into a single parity. This parity is
-     * the product of the two separate parities.
+     * Combines the left and right parity into a single parity. This parity is the product of the
+     * two separate parities.
      *
-     * @param left  either parity
+     * @param left either parity
      * @param right other parity
      */
     public CombinedPermutationParity(PermutationParity left, PermutationParity right) {
@@ -49,9 +48,7 @@ final class CombinedPermutationParity extends PermutationParity {
         this.right = right;
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int parity(long[] current) {
         return left.parity(current) * right.parity(current);

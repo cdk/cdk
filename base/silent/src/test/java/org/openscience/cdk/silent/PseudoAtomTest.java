@@ -21,7 +21,6 @@ package org.openscience.cdk.silent;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -41,13 +40,14 @@ public class PseudoAtomTest extends AbstractPseudoAtomTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new PseudoAtom();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new PseudoAtom();
+                    }
+                });
     }
 
     @Test

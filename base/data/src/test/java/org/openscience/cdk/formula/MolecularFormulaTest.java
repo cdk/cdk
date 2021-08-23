@@ -20,7 +20,6 @@
 package org.openscience.cdk.formula;
 
 import java.io.IOException;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -33,7 +32,6 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
  * Checks the functionality of the MolecularFormula.
  *
  * @cdk.module test-data
- *
  * @see MolecularFormula
  */
 public class MolecularFormulaTest extends AbstractMolecularFormulaTest {
@@ -46,7 +44,7 @@ public class MolecularFormulaTest extends AbstractMolecularFormulaTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testMolecularFormula() {

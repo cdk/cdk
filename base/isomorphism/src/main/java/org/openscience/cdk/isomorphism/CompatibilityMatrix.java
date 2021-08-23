@@ -24,14 +24,13 @@
 
 package org.openscience.cdk.isomorphism;
 
-
 /**
- * A compatibility matrix defines which query vertices (rows) could possible be
- * mapped to a target vertex (columns). The matrix is used in the Ullmann and
- * Ullmann-like algorithms to provide top-down pruning.
+ * A compatibility matrix defines which query vertices (rows) could possible be mapped to a target
+ * vertex (columns). The matrix is used in the Ullmann and Ullmann-like algorithms to provide
+ * top-down pruning.
  *
- * Instead of using a binary matrix this implementation uses int values. This
- * allows us to remove a mapping but put it back in later (backtrack).
+ * <p>Instead of using a binary matrix this implementation uses int values. This allows us to remove
+ * a mapping but put it back in later (backtrack).
  *
  * @author John May
  * @cdk.module isomorphism
@@ -43,7 +42,7 @@ final class CompatibilityMatrix {
     final int[] data;
 
     /** Size of the matrix. */
-    final int   nRows, mCols;
+    final int nRows, mCols;
 
     /**
      * Create a matrix of the given size.
@@ -78,8 +77,7 @@ final class CompatibilityMatrix {
     }
 
     /**
-     * Access the value at row i and column j. The values wrap around to the
-     * next row.
+     * Access the value at row i and column j. The values wrap around to the next row.
      *
      * @param i index
      * @return the value is set
@@ -91,8 +89,8 @@ final class CompatibilityMatrix {
     /**
      * Mark the value in row i and column j allowing it to be reset later.
      *
-     * @param i       row index
-     * @param j       column index
+     * @param i row index
+     * @param j column index
      * @param marking the marking to store (should be negative)
      */
     void mark(int i, int j, int marking) {
@@ -102,23 +100,21 @@ final class CompatibilityMatrix {
     /**
      * Mark all values in row i allowing it to be reset later.
      *
-     * @param i       row index
+     * @param i row index
      * @param marking the marking to store (should be negative)
      */
     void markRow(int i, int marking) {
-        for (int j = (i * mCols), end = j + mCols; j < end; j++)
-            if (data[j] > 0) data[j] = marking;
+        for (int j = (i * mCols), end = j + mCols; j < end; j++) if (data[j] > 0) data[j] = marking;
     }
 
     /**
      * Reset all values marked with (marking) from row i onwards.
      *
-     * @param i       row index
+     * @param i row index
      * @param marking the marking to reset (should be negative)
      */
     void resetRows(int i, int marking) {
-        for (int j = (i * mCols); j < data.length; j++)
-            if (data[j] == marking) data[j] = 1;
+        for (int j = (i * mCols); j < data.length; j++) if (data[j] == marking) data[j] = 1;
     }
 
     /**
@@ -128,8 +124,7 @@ final class CompatibilityMatrix {
      */
     int[][] fix() {
         int[][] m = new int[nRows][mCols];
-        for (int i = 0; i < nRows; i++)
-            System.arraycopy(data, (i * mCols), m[i], 0, mCols);
+        for (int i = 0; i < nRows; i++) System.arraycopy(data, (i * mCols), m[i], 0, mCols);
         return m;
     }
 }

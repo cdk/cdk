@@ -24,15 +24,14 @@
 
 package org.openscience.cdk.stereo;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import org.junit.Test;
-import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * Verifies the types of atoms accepted as exhibiting stereo chemistry.
@@ -179,8 +178,8 @@ public class StereocentersTest {
     }
 
     /**
-     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-     * if it has - (a) A terminal H atom neighbor
+     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic if it has - (a) A
+     * terminal H atom neighbor
      *
      * @throws Exception
      */
@@ -199,8 +198,8 @@ public class StereocentersTest {
     }
 
     /**
-     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-     * if it has - (a) A terminal H atom neighbor
+     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic if it has - (a) A
+     * terminal H atom neighbor
      *
      * @throws Exception
      */
@@ -212,11 +211,10 @@ public class StereocentersTest {
         none("[NH4+]");
     }
 
-
     /**
-     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-     * if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
-     * connected by any kind of bond, where X is O, S, Se, Te, or N.
+     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic if it has - (b) At
+     * least two terminal neighbors, XHm and XHn, (n+m>0) connected by any kind of bond, where X is
+     * O, S, Se, Te, or N.
      *
      * @throws Exception
      */
@@ -237,8 +235,8 @@ public class StereocentersTest {
     }
 
     /**
-     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-     * if it has - (a) A terminal H atom neighbor
+     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic if it has - (a) A
+     * terminal H atom neighbor
      *
      * @throws Exception
      */
@@ -250,9 +248,9 @@ public class StereocentersTest {
     }
 
     /**
-     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-     * if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
-     * connected by any kind of bond, where X is O, S, Se, Te, or N.
+     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic if it has - (b) At
+     * least two terminal neighbors, XHm and XHn, (n+m>0) connected by any kind of bond, where X is
+     * O, S, Se, Te, or N.
      *
      * @throws Exception
      */
@@ -274,8 +272,8 @@ public class StereocentersTest {
     }
 
     /**
-     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-     * if it has - (a) A terminal H atom neighbor
+     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic if it has - (a) A
+     * terminal H atom neighbor
      *
      * @throws Exception
      */
@@ -287,9 +285,9 @@ public class StereocentersTest {
     }
 
     /**
-     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-     * if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
-     * connected by any kind of bond, where X is O, S, Se, Te, or N.
+     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic if it has - (b) At
+     * least two terminal neighbors, XHm and XHn, (n+m>0) connected by any kind of bond, where X is
+     * O, S, Se, Te, or N.
      *
      * @throws Exception
      */
@@ -297,7 +295,6 @@ public class StereocentersTest {
     public void phosphorus_v3_neutral_reject_h_on_terminal() throws Exception {
         none("P(N)([NH4])C");
         none("P(S)([SH4])C");
-
     }
 
     @Test
@@ -309,10 +306,9 @@ public class StereocentersTest {
     }
 
     /**
-     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-     * if it has - (a) A terminal H atom neighbor. Since InChI software v.
-     * 1.02-standard (2009), phosphines and arsines are always treated as
-     * stereogenic even with H atom neighbors
+     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic if it has - (a) A
+     * terminal H atom neighbor. Since InChI software v. 1.02-standard (2009), phosphines and
+     * arsines are always treated as stereogenic even with H atom neighbors
      *
      * @throws Exception
      */
@@ -325,9 +321,9 @@ public class StereocentersTest {
     }
 
     /**
-     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-     * if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
-     * connected by any kind of bond, where X is O, S, Se, Te, or N.
+     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic if it has - (b) At
+     * least two terminal neighbors, XHm and XHn, (n+m>0) connected by any kind of bond, where X is
+     * O, S, Se, Te, or N.
      *
      * @throws Exception
      */
@@ -348,8 +344,8 @@ public class StereocentersTest {
     }
 
     /**
-     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-     * if it has - (a) A terminal H atom neighbor
+     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic if it has - (a) A
+     * terminal H atom neighbor
      *
      * @throws Exception
      */
@@ -361,9 +357,9 @@ public class StereocentersTest {
     }
 
     /**
-     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-     * if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
-     * connected by any kind of bond, where X is O, S, Se, Te, or N.
+     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic if it has - (b) At
+     * least two terminal neighbors, XHm and XHn, (n+m>0) connected by any kind of bond, where X is
+     * O, S, Se, Te, or N.
      *
      * @throws Exception
      */
@@ -386,10 +382,9 @@ public class StereocentersTest {
     }
 
     /**
-     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-     * if it has - (a) A terminal H atom neighbor. Since InChI software v.
-     * 1.02-standard (2009), phosphines and arsines are always treated as
-     * stereogenic even with H atom neighbors
+     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic if it has - (a) A
+     * terminal H atom neighbor. Since InChI software v. 1.02-standard (2009), phosphines and
+     * arsines are always treated as stereogenic even with H atom neighbors
      *
      * @throws Exception
      */
@@ -402,9 +397,9 @@ public class StereocentersTest {
     }
 
     /**
-     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-     * if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
-     * connected by any kind of bond, where X is O, S, Se, Te, or N.
+     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic if it has - (b) At
+     * least two terminal neighbors, XHm and XHn, (n+m>0) connected by any kind of bond, where X is
+     * O, S, Se, Te, or N.
      *
      * @throws Exception
      */
@@ -424,8 +419,8 @@ public class StereocentersTest {
     }
 
     /**
-     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-     * if it has - (a) A terminal H atom neighbor
+     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic if it has - (a) A
+     * terminal H atom neighbor
      *
      * @throws Exception
      */
@@ -436,9 +431,9 @@ public class StereocentersTest {
     }
 
     /**
-     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-     * if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
-     * connected by any kind of bond, where X is O, S, Se, Te, or N.
+     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic if it has - (b) At
+     * least two terminal neighbors, XHm and XHn, (n+m>0) connected by any kind of bond, where X is
+     * O, S, Se, Te, or N.
      *
      * @throws Exception
      */
@@ -465,8 +460,8 @@ public class StereocentersTest {
     }
 
     /**
-     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-     * if it has - (a) A terminal H atom neighbor
+     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic if it has - (a) A
+     * terminal H atom neighbor
      *
      * @throws Exception
      */
@@ -477,9 +472,9 @@ public class StereocentersTest {
     }
 
     /**
-     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-     * if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
-     * connected by any kind of bond, where X is O, S, Se, Te, or N.
+     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic if it has - (b) At
+     * least two terminal neighbors, XHm and XHn, (n+m>0) connected by any kind of bond, where X is
+     * O, S, Se, Te, or N.
      *
      * @throws Exception
      */
@@ -502,8 +497,8 @@ public class StereocentersTest {
     }
 
     /**
-     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-     * if it has - (a) A terminal H atom neighbor
+     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic if it has - (a) A
+     * terminal H atom neighbor
      *
      * @throws Exception
      */
@@ -514,9 +509,9 @@ public class StereocentersTest {
     }
 
     /**
-     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-     * if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
-     * connected by any kind of bond, where X is O, S, Se, Te, or N.
+     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic if it has - (b) At
+     * least two terminal neighbors, XHm and XHn, (n+m>0) connected by any kind of bond, where X is
+     * O, S, Se, Te, or N.
      *
      * @throws Exception
      */
@@ -544,8 +539,8 @@ public class StereocentersTest {
     }
 
     /**
-     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-     * if it has - (a) A terminal H atom neighbor
+     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic if it has - (a) A
+     * terminal H atom neighbor
      *
      * @throws Exception
      */
@@ -557,9 +552,9 @@ public class StereocentersTest {
     }
 
     /**
-     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-     * if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
-     * connected by any kind of bond, where X is O, S, Se, Te, or N.
+     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic if it has - (b) At
+     * least two terminal neighbors, XHm and XHn, (n+m>0) connected by any kind of bond, where X is
+     * O, S, Se, Te, or N.
      *
      * @throws Exception
      */
@@ -581,8 +576,8 @@ public class StereocentersTest {
     }
 
     /**
-     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-     * if it has - (a) A terminal H atom neighbor
+     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic if it has - (a) A
+     * terminal H atom neighbor
      *
      * @throws Exception
      */
@@ -593,9 +588,9 @@ public class StereocentersTest {
     }
 
     /**
-     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-     * if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
-     * connected by any kind of bond, where X is O, S, Se, Te, or N.
+     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic if it has - (b) At
+     * least two terminal neighbors, XHm and XHn, (n+m>0) connected by any kind of bond, where X is
+     * O, S, Se, Te, or N.
      *
      * @throws Exception
      */
@@ -622,8 +617,8 @@ public class StereocentersTest {
     }
 
     /**
-     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-     * if it has - (a) A terminal H atom neighbor
+     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic if it has - (a) A
+     * terminal H atom neighbor
      *
      * @throws Exception
      */
@@ -634,9 +629,9 @@ public class StereocentersTest {
     }
 
     /**
-     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-     * if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
-     * connected by any kind of bond, where X is O, S, Se, Te, or N.
+     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic if it has - (b) At
+     * least two terminal neighbors, XHm and XHn, (n+m>0) connected by any kind of bond, where X is
+     * O, S, Se, Te, or N.
      *
      * @throws Exception
      */
@@ -660,8 +655,8 @@ public class StereocentersTest {
     }
 
     /**
-     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-     * if it has - (a) A terminal H atom neighbor
+     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic if it has - (a) A
+     * terminal H atom neighbor
      *
      * @throws Exception
      */
@@ -672,9 +667,9 @@ public class StereocentersTest {
     }
 
     /**
-     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-     * if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
-     * connected by any kind of bond, where X is O, S, Se, Te, or N.
+     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic if it has - (b) At
+     * least two terminal neighbors, XHm and XHn, (n+m>0) connected by any kind of bond, where X is
+     * O, S, Se, Te, or N.
      *
      * @throws Exception
      */
@@ -702,8 +697,8 @@ public class StereocentersTest {
     }
 
     /**
-     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-     * if it has - (a) A terminal H atom neighbor
+     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic if it has - (a) A
+     * terminal H atom neighbor
      *
      * @throws Exception
      */
@@ -715,9 +710,9 @@ public class StereocentersTest {
     }
 
     /**
-     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-     * if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
-     * connected by any kind of bond, where X is O, S, Se, Te, or N.
+     * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic if it has - (b) At
+     * least two terminal neighbors, XHm and XHn, (n+m>0) connected by any kind of bond, where X is
+     * O, S, Se, Te, or N.
      *
      * @throws Exception
      */
@@ -733,7 +728,6 @@ public class StereocentersTest {
     }
 
     /** Geometric. */
-
     @Test
     public void carbon_neutral_geometric() throws Exception {
         geometric("C(=CC)C");
@@ -761,18 +755,17 @@ public class StereocentersTest {
     }
 
     /**
-     * This one is a bit of an odd bull and changes depending on hydrogen
-     * representation. In most cast it's probably tautomeric. Note that
-     * InChI does allow it: InChI=1S/H2N2/c1-2/h1-2H/b2-1+
+     * This one is a bit of an odd bull and changes depending on hydrogen representation. In most
+     * cast it's probably tautomeric. Note that InChI does allow it: InChI=1S/H2N2/c1-2/h1-2H/b2-1+
      */
     @Test
     public void nitrogen_neutral_geometric() throws Exception {
-        test("N(=NC)C", Stereocenters.Type.Tricoordinate,true);
+        test("N(=NC)C", Stereocenters.Type.Tricoordinate, true);
         test("N(=NC)", Stereocenters.Type.None, false);
-        test("N(=N)C", Stereocenters.Type.None,false);
+        test("N(=N)C", Stereocenters.Type.None, false);
         test("N(=N)", Stereocenters.Type.None, false);
         test("N(=NC)[H]", Stereocenters.Type.Tricoordinate, false);
-        test("N(=N[H])[H]", Stereocenters.Type.Tricoordinate,false);
+        test("N(=N[H])[H]", Stereocenters.Type.Tricoordinate, false);
         test("N(=N[H])[H]", Stereocenters.Type.Tricoordinate, false);
     }
 
@@ -797,13 +790,21 @@ public class StereocentersTest {
     // assert the first atom of the SMILES is accepted as a tetrahedral center
     void tetrahedral(String smi) throws Exception {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        test(sp.parseSmiles(smi), Stereocenters.Type.Tetracoordinate, smi + " was not accepted", true);
+        test(
+                sp.parseSmiles(smi),
+                Stereocenters.Type.Tetracoordinate,
+                smi + " was not accepted",
+                true);
     }
 
     // assert the first atom of the SMILES is accepted as a geometric center
     void geometric(String smi) throws Exception {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        test(sp.parseSmiles(smi), Stereocenters.Type.Tricoordinate, smi + " was not accepted", true);
+        test(
+                sp.parseSmiles(smi),
+                Stereocenters.Type.Tricoordinate,
+                smi + " was not accepted",
+                true);
     }
 
     // assert the first atom of the SMILES is accepted as a bicoordinate center
@@ -823,7 +824,10 @@ public class StereocentersTest {
         assertThat(mesg, Stereocenters.of(container).elementType(0), is(type));
         if (hnorm) {
             AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
-            assertThat(mesg + " (unsupressed hydrogens)", Stereocenters.of(container).elementType(0), is(type));
+            assertThat(
+                    mesg + " (unsupressed hydrogens)",
+                    Stereocenters.of(container).elementType(0),
+                    is(type));
         }
     }
 

@@ -26,7 +26,6 @@ import org.junit.Test;
  * Checks the functionality of {@link ILonePair} implementations.
  *
  * @see org.openscience.cdk.LonePair
- *
  * @cdk.module test-interfaces
  */
 public abstract class AbstractLonePairTest extends AbstractElectronContainerTest {
@@ -54,7 +53,10 @@ public abstract class AbstractLonePairTest extends AbstractElectronContainerTest
         ILonePair lp = (ILonePair) newChemObject();
         Assert.assertEquals(2, lp.getElectronCount().intValue());
 
-        lp = lp.getBuilder().newInstance(ILonePair.class, lp.getBuilder().newInstance(IAtom.class, "N"));
+        lp =
+                lp.getBuilder()
+                        .newInstance(
+                                ILonePair.class, lp.getBuilder().newInstance(IAtom.class, "N"));
         Assert.assertEquals(2, lp.getElectronCount().intValue());
     }
 
@@ -97,9 +99,7 @@ public abstract class AbstractLonePairTest extends AbstractElectronContainerTest
         }
     }
 
-    /**
-     * The electron count of an LP is always exactly 2.
-     */
+    /** The electron count of an LP is always exactly 2. */
     @Test
     @Override
     public void testSetElectronCount_Integer() {
@@ -109,5 +109,4 @@ public abstract class AbstractLonePairTest extends AbstractElectronContainerTest
         ec.setElectronCount(null);
         Assert.assertEquals(2, ec.getElectronCount().intValue());
     }
-
 }

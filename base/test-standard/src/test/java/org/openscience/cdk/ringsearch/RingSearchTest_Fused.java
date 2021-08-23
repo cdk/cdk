@@ -22,17 +22,16 @@
  */
 package org.openscience.cdk.ringsearch;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.templates.TestMoleculeFactory;
-
-import java.util.List;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 /**
  * ring search unit tests for a fused system
@@ -47,8 +46,7 @@ public class RingSearchTest_Fused {
     @Test
     public void testCyclic_Int() {
         RingSearch ringSearch = new RingSearch(fusedRings);
-        for (int i = 0; i < fusedRings.getAtomCount(); i++)
-            assertTrue(ringSearch.cyclic(i));
+        for (int i = 0; i < fusedRings.getAtomCount(); i++) assertTrue(ringSearch.cyclic(i));
     }
 
     @Test
@@ -101,5 +99,4 @@ public class RingSearchTest_Fused {
         List<IAtomContainer> fragments = ringSearch.isolatedRingFragments();
         assertThat(fragments.size(), is(0));
     }
-
 }

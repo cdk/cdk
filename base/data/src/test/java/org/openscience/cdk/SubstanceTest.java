@@ -32,13 +32,13 @@ public class SubstanceTest extends AbstractSubstanceTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new Substance();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new Substance();
+                    }
+                });
     }
-
 }

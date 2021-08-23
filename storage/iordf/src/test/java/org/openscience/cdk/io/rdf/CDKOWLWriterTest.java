@@ -22,6 +22,7 @@
  */
 package org.openscience.cdk.io.rdf;
 
+import java.io.StringWriter;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -33,8 +34,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.io.ChemObjectWriterTest;
 import org.openscience.cdk.silent.Atom;
-
-import java.io.StringWriter;
 
 /**
  * TestCase for the {@link CDKOWLWriter}.
@@ -55,7 +54,8 @@ public class CDKOWLWriterTest extends ChemObjectWriterTest {
         StringWriter output = new StringWriter();
         CDKOWLWriter writer = new CDKOWLWriter(output);
 
-        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer mol =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
         mol.addBond(0, 1, IBond.Order.DOUBLE);

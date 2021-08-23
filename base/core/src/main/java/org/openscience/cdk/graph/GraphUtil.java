@@ -23,19 +23,17 @@
  */
 package org.openscience.cdk.graph;
 
+import static java.util.Arrays.copyOf;
+
 import com.google.common.collect.Maps;
+import java.util.Map;
+import java.util.Set;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
-import java.util.Map;
-import java.util.Set;
-
-import static java.util.Arrays.copyOf;
-
 /**
- * Collection of static utilities for manipulating adjacency list
- * representations stored as a {@literal int[][]}. May well be replaced in
- * future with a <i>Graph</i> data type.
+ * Collection of static utilities for manipulating adjacency list representations stored as a
+ * {@literal int[][]}. May well be replaced in future with a <i>Graph</i> data type.
  *
  * @author John May
  * @cdk.module core
@@ -54,9 +52,8 @@ public class GraphUtil {
      *
      * @param container the molecule
      * @return adjacency list representation stored as an {@literal int[][]}.
-     * @throws NullPointerException     the container was null
-     * @throws IllegalArgumentException a bond was found which contained atoms
-     *                                  not in the molecule
+     * @throws NullPointerException the container was null
+     * @throws IllegalArgumentException a bond was found which contained atoms not in the molecule
      */
     public static int[][] toAdjList(IAtomContainer container) {
 
@@ -73,8 +70,10 @@ public class GraphUtil {
             int w = container.indexOf(bond.getEnd());
 
             if (v < 0 || w < 0)
-                throw new IllegalArgumentException("bond at index " + container.indexOf(bond)
-                        + " contained an atom not pressent in molecule");
+                throw new IllegalArgumentException(
+                        "bond at index "
+                                + container.indexOf(bond)
+                                + " contained an atom not pressent in molecule");
 
             graph[v][degree[v]++] = w;
             graph[w][degree[w]++] = v;
@@ -92,14 +91,13 @@ public class GraphUtil {
     }
 
     /**
-     * Create an adjacent list representation of the {@literal container} that only
-     * includes bonds that are in the set provided as an argument.
+     * Create an adjacent list representation of the {@literal container} that only includes bonds
+     * that are in the set provided as an argument.
      *
      * @param container the molecule
      * @return adjacency list representation stored as an {@literal int[][]}.
-     * @throws NullPointerException     the container was null
-     * @throws IllegalArgumentException a bond was found which contained atoms
-     *                                  not in the molecule
+     * @throws NullPointerException the container was null
+     * @throws IllegalArgumentException a bond was found which contained atoms not in the molecule
      */
     public static int[][] toAdjListSubgraph(IAtomContainer container, Set<IBond> include) {
 
@@ -112,15 +110,16 @@ public class GraphUtil {
 
         for (IBond bond : container.bonds()) {
 
-            if (!include.contains(bond))
-                continue;
+            if (!include.contains(bond)) continue;
 
             int v = container.indexOf(bond.getBegin());
             int w = container.indexOf(bond.getEnd());
 
             if (v < 0 || w < 0)
-                throw new IllegalArgumentException("bond at index " + container.indexOf(bond)
-                                                   + " contained an atom not pressent in molecule");
+                throw new IllegalArgumentException(
+                        "bond at index "
+                                + container.indexOf(bond)
+                                + " contained an atom not pressent in molecule");
 
             graph[v][degree[v]++] = w;
             graph[w][degree[w]++] = v;
@@ -138,15 +137,14 @@ public class GraphUtil {
     }
 
     /**
-     * Create an adjacent list representation of the {@code container} and
-     * fill in the {@code bondMap} for quick lookup.
+     * Create an adjacent list representation of the {@code container} and fill in the {@code
+     * bondMap} for quick lookup.
      *
      * @param container the molecule
      * @param bondMap a map to index the bonds into
      * @return adjacency list representation stored as an {@literal int[][]}.
-     * @throws NullPointerException     the container was null
-     * @throws IllegalArgumentException a bond was found which contained atoms
-     *                                  not in the molecule
+     * @throws NullPointerException the container was null
+     * @throws IllegalArgumentException a bond was found which contained atoms not in the molecule
      */
     public static int[][] toAdjList(IAtomContainer container, EdgeToBondMap bondMap) {
 
@@ -163,8 +161,10 @@ public class GraphUtil {
             int w = container.indexOf(bond.getEnd());
 
             if (v < 0 || w < 0)
-                throw new IllegalArgumentException("bond at index " + container.indexOf(bond)
-                        + " contained an atom not pressent in molecule");
+                throw new IllegalArgumentException(
+                        "bond at index "
+                                + container.indexOf(bond)
+                                + " contained an atom not pressent in molecule");
 
             graph[v][degree[v]++] = w;
             graph[w][degree[w]++] = v;
@@ -184,11 +184,13 @@ public class GraphUtil {
     }
 
     /**
-     * Create a subgraph by specifying the vertices from the original {@literal
-     * graph} to {@literal include} in the subgraph. The provided vertices also
-     * provide the mapping between vertices in the subgraph and the original.
+     * Create a subgraph by specifying the vertices from the original {@literal graph} to {@literal
+     * include} in the subgraph. The provided vertices also provide the mapping between vertices in
+     * the subgraph and the original.
      *
-     * <blockquote><pre>{@code
+     * <blockquote>
+     *
+     * <pre>{@code
      * int[][] g  = toAdjList(naphthalene);
      * int[]   vs = new int[]{0, 1, 2, 3, 4, 5};
      *
@@ -197,9 +199,11 @@ public class GraphUtil {
      * for(int v = 0; v < h.length; v++) {
      *     // vs[v] is 'v' in 'g'
      * }
-     * }</pre></blockquote>
+     * }</pre>
      *
-     * @param graph   adjacency list graph
+     * </blockquote>
+     *
+     * @param graph adjacency list graph
      * @param include the vertices of he graph to include in the subgraph
      * @return the subgraph
      */
@@ -229,7 +233,8 @@ public class GraphUtil {
             for (int w : graph[v]) {
                 int q = mapping[w] - 1;
                 if (q < 0) continue;
-                if (degree[p] == subgraph[p].length) subgraph[p] = copyOf(subgraph[p], 2 * subgraph[p].length);
+                if (degree[p] == subgraph[p].length)
+                    subgraph[p] = copyOf(subgraph[p], 2 * subgraph[p].length);
                 subgraph[p][degree[p]++] = q;
             }
         }
@@ -243,15 +248,13 @@ public class GraphUtil {
     }
 
     /**
-     * Arrange the {@literal vertices} in a simple cyclic path. If the vertices
-     * do not form such a path an {@link IllegalArgumentException} is thrown.
+     * Arrange the {@literal vertices} in a simple cyclic path. If the vertices do not form such a
+     * path an {@link IllegalArgumentException} is thrown.
      *
-     * @param graph    a graph
+     * @param graph a graph
      * @param vertices set of vertices
-     * @return vertices in a walk which makes a cycle (first and last are the
-     *         same)
-     * @throws IllegalArgumentException thrown if the vertices do not form a
-     *                                  cycle
+     * @return vertices in a walk which makes a cycle (first and last are the same)
+     * @throws IllegalArgumentException thrown if the vertices do not form a cycle
      * @see org.openscience.cdk.ringsearch.RingSearch#isolated()
      */
     public static int[] cycle(int[][] graph, int[] vertices) {
@@ -289,26 +292,24 @@ public class GraphUtil {
     /**
      * Find the first value in {@literal ws} which is {@literal marked}.
      *
-     * @param xs     array of values
+     * @param xs array of values
      * @param marked marked values
      * @return first marked value, -1 if none found
      */
     static int firstMarked(int[] xs, boolean[] marked) {
-        for (int x : xs)
-            if (marked[x]) return x;
+        for (int x : xs) if (marked[x]) return x;
         return -1;
     }
 
     /** Utility for storing {@link IBond}s indexed by vertex end points. */
     public static final class EdgeToBondMap {
 
-        /**
-         * Internal map.
-         */
+        /** Internal map. */
         private final Map<Tuple, IBond> lookup;
 
         /**
          * Internal constructor - create with enough space for, n bonds.
+         *
          * @param n number of bonds expected
          */
         private EdgeToBondMap(int n) {
@@ -318,8 +319,8 @@ public class GraphUtil {
         /**
          * Index a bond by the endpoints.
          *
-         * @param v    an endpoint
-         * @param w    another endpoint
+         * @param v an endpoint
+         * @param w another endpoint
          * @param bond the bond value
          * @return the previous bond value
          */
@@ -328,8 +329,7 @@ public class GraphUtil {
         }
 
         /**
-         * Access the bond store at the end points v and w. If no bond is
-         * store, null is returned.
+         * Access the bond store at the end points v and w. If no bond is store, null is returned.
          *
          * @param v an endpoint
          * @param w another endpoint
@@ -340,8 +340,8 @@ public class GraphUtil {
         }
 
         /**
-         * Create a map with enough space for all the bonds in the molecule,
-         * {@code container}. Note - the map is not filled by this method.
+         * Create a map with enough space for all the bonds in the molecule, {@code container}. Note
+         * - the map is not filled by this method.
          *
          * @param container the container
          * @return a map with enough space for the container
@@ -352,8 +352,7 @@ public class GraphUtil {
     }
 
     /**
-     * Unordered storage of two int values. Mainly useful to index bonds by
-     * it's vertex end points.
+     * Unordered storage of two int values. Mainly useful to index bonds by it's vertex end points.
      */
     private static final class Tuple {
 
@@ -361,6 +360,7 @@ public class GraphUtil {
 
         /**
          * Create a new tuple with the specified values.
+         *
          * @param u a value
          * @param v another value
          */
@@ -369,9 +369,7 @@ public class GraphUtil {
             this.v = v;
         }
 
-        /**
-         *{@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
@@ -382,9 +380,7 @@ public class GraphUtil {
             return this.u == that.u && this.v == that.v || this.u == that.v && this.v == that.u;
         }
 
-        /**
-         *{@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
         public int hashCode() {
             return u ^ v;

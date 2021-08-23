@@ -20,9 +20,8 @@
 package org.openscience.cdk.qsar.descriptors.bond;
 
 import java.io.IOException;
-
-import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -37,20 +36,20 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
 /**
  * Describes the imbalance in atomic number of the IBond.
  *
- * @author      Egon Willighagen
+ * @author Egon Willighagen
  * @cdk.created 2007-12-29
- * @cdk.module  qsarbond
+ * @cdk.module qsarbond
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:bondAtomicNumberImbalance
  */
-public class AtomicNumberDifferenceDescriptor extends AbstractBondDescriptor implements IBondDescriptor {
+public class AtomicNumberDifferenceDescriptor extends AbstractBondDescriptor
+        implements IBondDescriptor {
 
     private static IsotopeFactory factory = null;
 
-    private final static String[] NAMES = {"MNDiff"};
+    private static final String[] NAMES = {"MNDiff"};
 
-    public AtomicNumberDifferenceDescriptor() {
-    }
+    public AtomicNumberDifferenceDescriptor() {}
 
     private void ensureIsotopeFactory() {
         if (factory == null) {
@@ -66,13 +65,13 @@ public class AtomicNumberDifferenceDescriptor extends AbstractBondDescriptor imp
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondAtomicNumberImbalance", this
-                .getClass().getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondAtomicNumberImbalance",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     @Override
-    public void setParameters(Object[] params) throws CDKException {
-    }
+    public void setParameters(Object[] params) throws CDKException {}
 
     @Override
     public Object[] getParameters() {
@@ -88,15 +87,27 @@ public class AtomicNumberDifferenceDescriptor extends AbstractBondDescriptor imp
     public DescriptorValue calculate(IBond bond, IAtomContainer ac) {
         ensureIsotopeFactory();
         if (bond.getAtomCount() != 2) {
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                    Double.NaN), NAMES, new CDKException("Only 2-center bonds are considered"));
+            return new DescriptorValue(
+                    getSpecification(),
+                    getParameterNames(),
+                    getParameters(),
+                    new DoubleResult(Double.NaN),
+                    NAMES,
+                    new CDKException("Only 2-center bonds are considered"));
         }
 
         IAtom[] atoms = BondManipulator.getAtomArray(bond);
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                Math.abs(factory.getElement(atoms[0].getSymbol()).getAtomicNumber()
-                                 - factory.getElement(atoms[1].getSymbol()).getAtomicNumber())), NAMES);
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new DoubleResult(
+                        Math.abs(
+                                factory.getElement(atoms[0].getSymbol()).getAtomicNumber()
+                                        - factory.getElement(atoms[1].getSymbol())
+                                                .getAtomicNumber())),
+                NAMES);
     }
 
     @Override

@@ -1,4 +1,4 @@
-/*  
+/*
  *  Copyright (C) 2004-2010  The Chemistry Development Kit (CDK) project
  *                     2014  Mark B Vine (orcid:0000-0002-7794-0426)
  *
@@ -25,6 +25,8 @@
  */
 package org.openscience.cdk.normalize;
 
+import java.util.Iterator;
+import java.util.List;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -37,15 +39,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import java.util.Iterator;
-import java.util.List;
-
 /**
  * Adjusts parts of an AtomContainer to the configuration of a fragment.
  *
- * @author        shk3
- * @cdk.created   2004-03-04
- * @cdk.module    smiles
+ * @author shk3
+ * @cdk.created 2004-03-04
+ * @cdk.module smiles
  * @cdk.githash
  * @deprecated The functionality provided by with class is better suited to SMIRKS
  */
@@ -53,22 +52,24 @@ import java.util.List;
 public class Normalizer {
 
     /**
-     *  The method takes an XML files like the following:<br>
-     *  &lt;replace-set&gt;<br>
-     *  &lt;replace&gt;O=N=O&lt;/replace&gt;<br>
-     *  &lt;replacement&gt;[O-][N+]=O&lt;/replacement&gt;<br>
-     *  &lt;/replace-set&gt;<br>
-     *  All parts in ac which are the same as replace will be changed according to replacement.
-     *  Currently the following changes are done: BondOrder, FormalCharge.
-     *  For detection of fragments like replace, we rely on UniversalIsomorphismTester.
-     *  doc may contain several replace-sets and a replace-set may contain several replace fragments, which will all be normalized according to replacement.
+     * The method takes an XML files like the following:<br>
+     * &lt;replace-set&gt;<br>
+     * &lt;replace&gt;O=N=O&lt;/replace&gt;<br>
+     * &lt;replacement&gt;[O-][N+]=O&lt;/replacement&gt;<br>
+     * &lt;/replace-set&gt;<br>
+     * All parts in ac which are the same as replace will be changed according to replacement.
+     * Currently the following changes are done: BondOrder, FormalCharge. For detection of fragments
+     * like replace, we rely on UniversalIsomorphismTester. doc may contain several replace-sets and
+     * a replace-set may contain several replace fragments, which will all be normalized according
+     * to replacement.
      *
-     * @param  ac                          The atomcontainer to normalize.
-     * @param  doc                         The configuration file.
-     * @return                             Did a replacement take place?
-     * @exception  InvalidSmilesException  doc contains an invalid smiles.
+     * @param ac The atomcontainer to normalize.
+     * @param doc The configuration file.
+     * @return Did a replacement take place?
+     * @exception InvalidSmilesException doc contains an invalid smiles.
      */
-    public static boolean normalize(IAtomContainer ac, Document doc) throws InvalidSmilesException, CDKException {
+    public static boolean normalize(IAtomContainer ac, Document doc)
+            throws InvalidSmilesException, CDKException {
         NodeList nl = doc.getElementsByTagName("replace-set");
         SmilesParser sp = new SmilesParser(ac.getBuilder());
         boolean change = false;
@@ -78,7 +79,8 @@ public class Normalizer {
             NodeList replacement = child.getElementsByTagName("replacement");
             String replacementstring = replacement.item(0).getFirstChild().getNodeValue();
             if (replacementstring.indexOf('\n') > -1 || replacementstring.length() < 1) {
-                replacementstring = replacement.item(0).getFirstChild().getNextSibling().getNodeValue();
+                replacementstring =
+                        replacement.item(0).getFirstChild().getNextSibling().getNodeValue();
             }
             IAtomContainer replacementStructure = sp.parseSmiles(replacementstring);
             for (int k = 0; k < replaces.getLength(); k++) {
@@ -89,9 +91,13 @@ public class Normalizer {
                 }
                 IAtomContainer replaceStructure = sp.parseSmiles(replacestring);
                 List<RMap> l = null;
-                UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
-                while ((l = universalIsomorphismTester.getSubgraphMap(ac, replaceStructure)) != null) {
-                    List<RMap> l2 = universalIsomorphismTester.makeAtomsMapOfBondsMap(l, ac, replaceStructure);
+                UniversalIsomorphismTester universalIsomorphismTester =
+                        new UniversalIsomorphismTester();
+                while ((l = universalIsomorphismTester.getSubgraphMap(ac, replaceStructure))
+                        != null) {
+                    List<RMap> l2 =
+                            universalIsomorphismTester.makeAtomsMapOfBondsMap(
+                                    l, ac, replaceStructure);
                     Iterator<RMap> bondit = l.iterator();
                     while (bondit.hasNext()) {
                         RMap rmap = bondit.next();

@@ -23,6 +23,13 @@
 
 package org.openscience.cdk.stereo;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Arrays;
+import java.util.Iterator;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.openscience.cdk.exception.InvalidSmilesException;
@@ -32,32 +39,22 @@ import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
-import java.util.Arrays;
-import java.util.Iterator;
-
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertTrue;
-
 public class SquarePlanarTest {
 
-    @Test public void normalize() throws InvalidSmilesException {
-        SmilesParser             smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        IAtomContainer           mol    = smipar.parseSmiles("Cl[Pt@SP3](Cl)([NH3])[NH3]");
-        Iterator<IStereoElement> ses    = mol.stereoElements().iterator();
+    @Test
+    public void normalize() throws InvalidSmilesException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("Cl[Pt@SP3](Cl)([NH3])[NH3]");
+        Iterator<IStereoElement> ses = mol.stereoElements().iterator();
         assertTrue(ses.hasNext());
         IStereoElement se = ses.next();
         assertThat(se, instanceOf(SquarePlanar.class));
         assertThat(se.getConfigOrder(), is(3));
         SquarePlanar sp = (SquarePlanar) se;
         SquarePlanar spNorm = sp.normalize();
-        assertThat(spNorm.getCarriers(), is(Arrays.asList(
-            mol.getAtom(0),
-            mol.getAtom(2),
-            mol.getAtom(4),
-            mol.getAtom(3)
-        )));
+        assertThat(
+                spNorm.getCarriers(),
+                is(Arrays.asList(mol.getAtom(0), mol.getAtom(2), mol.getAtom(4), mol.getAtom(3))));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -68,7 +65,7 @@ public class SquarePlanarTest {
         IAtom a3 = Mockito.mock(IAtom.class);
         IAtom a4 = Mockito.mock(IAtom.class);
         IAtom a5 = Mockito.mock(IAtom.class);
-        new SquarePlanar(a0, new IAtom[]{a1,a2,a3,a4,a5}, 1);
+        new SquarePlanar(a0, new IAtom[] {a1, a2, a3, a4, a5}, 1);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -78,6 +75,6 @@ public class SquarePlanarTest {
         IAtom a2 = Mockito.mock(IAtom.class);
         IAtom a3 = Mockito.mock(IAtom.class);
         IAtom a4 = Mockito.mock(IAtom.class);
-        new SquarePlanar(a0, new IAtom[]{a1,a2,a3,a4}, 32);
+        new SquarePlanar(a0, new IAtom[] {a1, a2, a3, a4}, 32);
     }
 }

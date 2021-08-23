@@ -21,21 +21,19 @@ package org.openscience.cdk.isomorphism.matchers;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- *  A QueryAtom that matches all symbols but those in this container. You may
- *  add symbols to this container. This QueryAtom will only give a match if it
- *  does NOT contain the symbol of the Atom to match (example: add "C" to get a
- *  match for all non-"C"-Atoms).
+ * A QueryAtom that matches all symbols but those in this container. You may add symbols to this
+ * container. This QueryAtom will only give a match if it does NOT contain the symbol of the Atom to
+ * match (example: add "C" to get a match for all non-"C"-Atoms).
  *
- * @author        kha
+ * @author kha
  * @cdk.githash
- * @cdk.created   2004-09-16
- * @see           SymbolSetQueryAtom
- * @cdk.module    isomorphism
+ * @cdk.created 2004-09-16
+ * @see SymbolSetQueryAtom
+ * @cdk.module isomorphism
  * @deprecated @deprecated Use {@code new Expr(Element, 6).and(new Expr(Element, 8)).negate() } etc
  */
 @Deprecated
@@ -43,11 +41,9 @@ public class InverseSymbolSetQueryAtom extends QueryAtom implements IQueryAtom {
 
     private static final long serialVersionUID = -6570190504347822438L;
 
-    private Set<String>       symbols          = new HashSet<String>();
+    private Set<String> symbols = new HashSet<String>();
 
-    /**
-     *  Constructor for the InverseSymbolSetQueryAtom object
-     */
+    /** Constructor for the InverseSymbolSetQueryAtom object */
     public InverseSymbolSetQueryAtom(IChemObjectBuilder builder) {
         super(builder);
     }
@@ -55,10 +51,10 @@ public class InverseSymbolSetQueryAtom extends QueryAtom implements IQueryAtom {
     public void setOperator(String str) {}
 
     /**
-     *  The matches implementation of the QueryAtom interface.
+     * The matches implementation of the QueryAtom interface.
      *
-     *@param  atom  The atom to be matched by this QueryAtom
-     *@return       true if Atom matched
+     * @param atom The atom to be matched by this QueryAtom
+     * @return true if Atom matched
      */
     @Override
     public boolean matches(IAtom atom) {
@@ -66,46 +62,46 @@ public class InverseSymbolSetQueryAtom extends QueryAtom implements IQueryAtom {
     }
 
     /**
-     *  Add a symbol to this QueryAtom
+     * Add a symbol to this QueryAtom
      *
-     *@param  symbol  The symbol to add
+     * @param symbol The symbol to add
      */
     public void addSymbol(String symbol) {
         symbols.add(symbol);
     }
 
     /**
-     *  Remove a symbol from this QueryAtom
+     * Remove a symbol from this QueryAtom
      *
-     *@param  symbol  The symbol to remove
+     * @param symbol The symbol to remove
      */
     public void removeSymbol(String symbol) {
         symbols.remove(symbol);
     }
 
     /**
-     *  Check whether a symbol is already registered
+     * Check whether a symbol is already registered
      *
-     *@param  symbol  The symbol to check for
-     *@return         true if symbol already registered
+     * @param symbol The symbol to check for
+     * @return true if symbol already registered
      */
     public boolean hasSymbol(String symbol) {
         return symbols.contains(symbol);
     }
 
     /**
-     *  Retrieve the Set of symbols
+     * Retrieve the Set of symbols
      *
-     *@return    The symbol Set
+     * @return The symbol Set
      */
     public Set<String> getSymbolSet() {
         return symbols;
     }
 
     /**
-     *  The toString method
+     * The toString method
      *
-     *@return    The String representation of this object.
+     * @return The String representation of this object.
      */
     @Override
     public String toString() {

@@ -25,16 +25,16 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractStrandTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IStrand;
-import org.openscience.cdk.interfaces.AbstractStrandTest;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * TODO To change the template for this generated type comment go to Window - Preferences - Java -
+ * Code Style - Code Templates
  *
  * @author Martin Eklund &lt;martin.eklund@farmbio.uu.se&gt;
  * @cdk.module test-data
@@ -43,13 +43,14 @@ public class StrandTest extends AbstractStrandTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new Strand();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new Strand();
+                    }
+                });
     }
 
     @Test
@@ -98,5 +99,4 @@ public class StrandTest extends AbstractStrandTest {
         Assert.assertEquals(oStrand.getAtomCount(), 5);
         Assert.assertEquals(oStrand.getMonomerCount(), 3);
     }
-
 }

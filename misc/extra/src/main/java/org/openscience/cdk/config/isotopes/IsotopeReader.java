@@ -26,42 +26,37 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.xml.parsers.ParserConfigurationException;
-
-import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
-
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
 /**
- * Reader that instantiates an XML parser and customized handler to process
- * the isotope information in the CML2 isotope data file. The Reader first
- * tries to instantiate a JAXP XML parser available from Sun JVM 1.4.0 and
- * later. If not found it tries the Aelfred2 parser, and as last try the
+ * Reader that instantiates an XML parser and customized handler to process the isotope information
+ * in the CML2 isotope data file. The Reader first tries to instantiate a JAXP XML parser available
+ * from Sun JVM 1.4.0 and later. If not found it tries the Aelfred2 parser, and as last try the
  * Xerces parser.
  *
- * @cdk.module  extra
+ * @cdk.module extra
  * @cdk.githash
- *
- * @author     Egon Willighagen
+ * @author Egon Willighagen
  */
 public class IsotopeReader {
 
-    private XMLReader           parser;
-    private InputStream         input;
+    private XMLReader parser;
+    private InputStream input;
 
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(IsotopeReader.class);
-    private IChemObjectBuilder  builder;
+    private IChemObjectBuilder builder;
 
     /**
      * Instantiates a new reader that parses the XML from the given <code>input</code>.
      *
-     * @param input   InputStream with the XML source
+     * @param input InputStream with the XML source
      * @param builder The {@link IChemObjectBuilder} used to create new IIsotope's.
      */
     public IsotopeReader(InputStream input, IChemObjectBuilder builder) {
@@ -75,7 +70,8 @@ public class IsotopeReader {
         // If JAXP is prefered (comes with Sun JVM 1.4.0 and higher)
         if (!success) {
             try {
-                javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
+                javax.xml.parsers.SAXParserFactory spf =
+                        javax.xml.parsers.SAXParserFactory.newInstance();
                 spf.setNamespaceAware(true);
                 javax.xml.parsers.SAXParser saxParser = spf.newSAXParser();
                 parser = saxParser.getXMLReader();
@@ -89,8 +85,12 @@ public class IsotopeReader {
         // Aelfred is first alternative.
         if (!success) {
             try {
-                parser = (XMLReader) this.getClass().getClassLoader().loadClass("gnu.xml.aelfred2.XmlReader")
-                        .newInstance();
+                parser =
+                        (XMLReader)
+                                this.getClass()
+                                        .getClassLoader()
+                                        .loadClass("gnu.xml.aelfred2.XmlReader")
+                                        .newInstance();
                 logger.info("Using Aelfred2 XML parser.");
                 success = true;
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
@@ -101,8 +101,12 @@ public class IsotopeReader {
         // Xerces is second alternative
         if (!success) {
             try {
-                parser = (XMLReader) this.getClass().getClassLoader().loadClass("org.apache.xerces.parsers.SAXParser")
-                        .newInstance();
+                parser =
+                        (XMLReader)
+                                this.getClass()
+                                        .getClassLoader()
+                                        .loadClass("org.apache.xerces.parsers.SAXParser")
+                                        .newInstance();
                 logger.info("Using Xerces XML parser.");
                 success = true;
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
@@ -116,11 +120,10 @@ public class IsotopeReader {
     }
 
     /**
-     * Triggers the XML parsing of the data file and returns the read Isotopes.
-     * It turns of XML validation before parsing.
+     * Triggers the XML parsing of the data file and returns the read Isotopes. It turns of XML
+     * validation before parsing.
      *
-     * @return a List of Isotope's. Returns an empty list is some reading error
-     *         occurred.
+     * @return a List of Isotope's. Returns an empty list is some reading error occurred.
      */
     public List<IIsotope> readIsotopes() {
         List<IIsotope> isotopes = new ArrayList<IIsotope>();
@@ -146,5 +149,4 @@ public class IsotopeReader {
         }
         return isotopes;
     }
-
 }

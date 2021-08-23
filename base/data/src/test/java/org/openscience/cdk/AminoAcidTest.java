@@ -25,8 +25,8 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.AbstractAminoAcidTest;
+import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
@@ -34,7 +34,6 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  * TestCase for the AminoAcid class.
  *
  * @cdk.module test-data
- *
  * @author Edgar Luttman &lt;edgar@uni-paderborn.de&gt;
  * @cdk.created 2001-08-09
  */
@@ -42,13 +41,14 @@ public class AminoAcidTest extends AbstractAminoAcidTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new AminoAcid();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new AminoAcid();
+                    }
+                });
     }
 
     @Test
@@ -56,5 +56,4 @@ public class AminoAcidTest extends AbstractAminoAcidTest {
         IAminoAcid oAminoAcid = new AminoAcid();
         Assert.assertNotNull(oAminoAcid);
     }
-
 }

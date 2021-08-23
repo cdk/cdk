@@ -24,7 +24,6 @@ import org.openscience.cdk.tools.DataFeatures;
  * See <a href="http://www.chembio.uoguelph.ca/oakley/310/cacao/cacao.htm">here</a>.
  *
  * @author Miguel Rojas
- *
  * @cdk.module ioformats
  * @cdk.githash
  */
@@ -56,7 +55,7 @@ public class CacaoCartesianFormat extends AbstractResourceFormat implements IChe
 
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"caccrt"};
+        return new String[] {"caccrt"};
     }
 
     @Override

@@ -23,9 +23,7 @@
 package org.openscience.cdk.group;
 
 import java.util.Arrays;
-
 import org.junit.Assert;
-
 import org.junit.Test;
 
 /**
@@ -74,9 +72,12 @@ public class DisjointSetForestTest {
         forest.makeUnion(2, 3);
         forest.makeUnion(4, 5);
         int[][] sets = forest.getSets();
-        int[][] expected = new int[][]{{0, 1}, {2, 3}, {4, 5}};
-        String failMessage = "Expected " + Arrays.deepToString(expected) + " but was " + Arrays.deepToString(sets);
+        int[][] expected = new int[][] {{0, 1}, {2, 3}, {4, 5}};
+        String failMessage =
+                "Expected "
+                        + Arrays.deepToString(expected)
+                        + " but was "
+                        + Arrays.deepToString(sets);
         Assert.assertTrue(failMessage, Arrays.deepEquals(expected, sets));
     }
-
 }

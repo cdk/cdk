@@ -18,8 +18,7 @@
 package org.openscience.cdk.smiles.smarts.parser;
 
 /**
- * An AST node. It represents the OR logical operator (,) used between bonds in
- * smarts.
+ * An AST node. It represents the OR logical operator (,) used between bonds in smarts.
  *
  * @author Dazhi Jiao
  * @cdk.created 2007-04-24
@@ -30,16 +29,12 @@ package org.openscience.cdk.smiles.smarts.parser;
 @Deprecated
 class ASTOrBond extends SimpleNode {
 
-    /**
-     * Creates a new instance.
-     */
+    /** Creates a new instance. */
     public ASTOrBond(int id) {
         super(id);
     }
 
-    /**
-     * Creates a new instance.
-     */
+    /** Creates a new instance. */
     public ASTOrBond(SMARTSParser p, int id) {
         super(p, id);
     }

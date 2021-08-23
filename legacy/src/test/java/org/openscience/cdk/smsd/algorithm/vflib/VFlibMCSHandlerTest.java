@@ -27,7 +27,6 @@ import static org.junit.Assert.assertNotNull;
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -46,8 +45,8 @@ import org.openscience.cdk.smsd.tools.MolHandler;
 
 /**
  * Unit testing for the {@link VFlibMCSHandler} class.
- * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  *
+ * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
@@ -72,9 +71,7 @@ public class VFlibMCSHandlerTest extends AbstractMCSAlgorithmTest {
         AbstractMCSAlgorithmTest.setMCSAlgorithm(new VFlibMCSHandler());
     }
 
-    /**
-     * Test of searchMCS method, of class VFlibMCSHandler.
-     */
+    /** Test of searchMCS method, of class VFlibMCSHandler. */
     @Test
     @Override
     public void testSearchMCS() {
@@ -102,6 +99,7 @@ public class VFlibMCSHandlerTest extends AbstractMCSAlgorithmTest {
 
     /**
      * Test of set method, of class VFlibMCSHandler.
+     *
      * @throws Exception
      */
     @Test
@@ -120,6 +118,7 @@ public class VFlibMCSHandlerTest extends AbstractMCSAlgorithmTest {
 
     /**
      * Test of set method, of class VFlibMCSHandler.
+     *
      * @throws CDKException
      */
     @Test
@@ -147,6 +146,7 @@ public class VFlibMCSHandlerTest extends AbstractMCSAlgorithmTest {
 
     /**
      * Test of set method, of class VFlibMCSHandler.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -165,6 +165,7 @@ public class VFlibMCSHandlerTest extends AbstractMCSAlgorithmTest {
 
     /**
      * Test of getAllAtomMapping method, of class VFlibMCSHandler.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -185,6 +186,7 @@ public class VFlibMCSHandlerTest extends AbstractMCSAlgorithmTest {
 
     /**
      * Test of getAllMapping method, of class VFlibMCSHandler.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -205,6 +207,7 @@ public class VFlibMCSHandlerTest extends AbstractMCSAlgorithmTest {
 
     /**
      * Test of getFirstAtomMapping method, of class VFlibMCSHandler.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -225,6 +228,7 @@ public class VFlibMCSHandlerTest extends AbstractMCSAlgorithmTest {
 
     /**
      * Test of getFirstMapping method, of class VFlibMCSHandler.
+     *
      * @throws InvalidSmilesException
      */
     @Test

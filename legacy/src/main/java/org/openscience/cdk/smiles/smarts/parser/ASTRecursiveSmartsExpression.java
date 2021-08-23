@@ -29,16 +29,12 @@ package org.openscience.cdk.smiles.smarts.parser;
 @Deprecated
 class ASTRecursiveSmartsExpression extends SimpleNode {
 
-    /**
-     * Creates a new instance.
-     */
+    /** Creates a new instance. */
     public ASTRecursiveSmartsExpression(int id) {
         super(id);
     }
 
-    /**
-     * Creates a new instance.
-     */
+    /** Creates a new instance. */
     public ASTRecursiveSmartsExpression(SMARTSParser p, int id) {
         super(p, id);
     }

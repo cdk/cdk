@@ -18,8 +18,8 @@
 package org.openscience.cdk.smiles.smarts.parser;
 
 /**
- * An AST node. It can represent any element that can be represented
- * explicitly ( without the brackets) in smarts.
+ * An AST node. It can represent any element that can be represented explicitly ( without the
+ * brackets) in smarts.
  *
  * @author Dazhi Jiao
  * @cdk.created 2007-04-24
@@ -30,28 +30,20 @@ package org.openscience.cdk.smiles.smarts.parser;
 @Deprecated
 class ASTExplicitAtom extends SimpleNode {
 
-    /**
-     * The element symbol.
-     */
+    /** The element symbol. */
     private String symbol;
 
-    /**
-     * Creates a new instance.
-     */
+    /** Creates a new instance. */
     public ASTExplicitAtom(int id) {
         super(id);
     }
 
-    /**
-     * Creates a new instance.
-     */
+    /** Creates a new instance. */
     public ASTExplicitAtom(SMARTSParser p, int id) {
         super(p, id);
     }
 
-    /**
-     * Returns the element symbol.
-     */
+    /** Returns the element symbol. */
     public String getSymbol() {
         return symbol;
     }
@@ -67,11 +59,8 @@ class ASTExplicitAtom extends SimpleNode {
         return visitor.visit(this, data);
     }
 
-    /**
-     * Sets the element symbol.
-     */
+    /** Sets the element symbol. */
     public void setSymbol(String symbol) {
         this.symbol = symbol;
     }
-
 }

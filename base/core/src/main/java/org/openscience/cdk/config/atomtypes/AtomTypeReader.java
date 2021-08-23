@@ -22,19 +22,15 @@
  */
 package org.openscience.cdk.config.atomtypes;
 
-
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
-
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -43,14 +39,13 @@ import org.xml.sax.XMLReader;
  * XML Reader for the CDKBasedAtomTypeConfigurator.
  *
  * @see org.openscience.cdk.config.CDKBasedAtomTypeConfigurator
- *
  * @cdk.module core
  * @cdk.githash
  */
 public class AtomTypeReader {
 
-    private XMLReader           parser;
-    private Reader              input;
+    private XMLReader parser;
+    private Reader input;
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(AtomTypeReader.class);
 
     /**
@@ -68,7 +63,8 @@ public class AtomTypeReader {
         // If JAXP is prefered (comes with Sun JVM 1.4.0 and higher)
         if (!success) {
             try {
-                javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
+                javax.xml.parsers.SAXParserFactory spf =
+                        javax.xml.parsers.SAXParserFactory.newInstance();
                 spf.setNamespaceAware(true);
                 javax.xml.parsers.SAXParser saxParser = spf.newSAXParser();
                 parser = saxParser.getXMLReader();
@@ -82,11 +78,17 @@ public class AtomTypeReader {
         // Aelfred is first alternative.
         if (!success) {
             try {
-                parser = (XMLReader) this.getClass().getClassLoader().loadClass("gnu.xml.aelfred2.XmlReader")
-                        .newInstance();
+                parser =
+                        (XMLReader)
+                                this.getClass()
+                                        .getClassLoader()
+                                        .loadClass("gnu.xml.aelfred2.XmlReader")
+                                        .newInstance();
                 logger.info("Using Aelfred2 XML parser.");
                 success = true;
-            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException exception) {
+            } catch (ClassNotFoundException
+                    | InstantiationException
+                    | IllegalAccessException exception) {
                 logger.warn("Could not instantiate Aelfred2 XML reader!");
                 logger.debug(exception);
             }
@@ -94,11 +96,17 @@ public class AtomTypeReader {
         // Xerces is second alternative
         if (!success) {
             try {
-                parser = (XMLReader) this.getClass().getClassLoader().loadClass("org.apache.xerces.parsers.SAXParser")
-                        .newInstance();
+                parser =
+                        (XMLReader)
+                                this.getClass()
+                                        .getClassLoader()
+                                        .loadClass("org.apache.xerces.parsers.SAXParser")
+                                        .newInstance();
                 logger.info("Using Xerces XML parser.");
                 success = true;
-            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException exception) {
+            } catch (ClassNotFoundException
+                    | InstantiationException
+                    | IllegalAccessException exception) {
                 logger.warn("Could not instantiate Xerces XML reader!");
                 logger.debug(exception);
             }
@@ -111,8 +119,8 @@ public class AtomTypeReader {
     /**
      * Reads the atom types from the data file.
      *
-     * @param  builder The IChemObjectBuilder used to create new IAtomType's.
-     * @return         a List with atom types. Is empty if some reading error occurred.
+     * @param builder The IChemObjectBuilder used to create new IAtomType's.
+     * @return a List with atom types. Is empty if some reading error occurred.
      */
     public List<IAtomType> readAtomTypes(IChemObjectBuilder builder) {
         List<IAtomType> isotopes = new ArrayList<IAtomType>();
@@ -137,5 +145,4 @@ public class AtomTypeReader {
         }
         return isotopes;
     }
-
 }

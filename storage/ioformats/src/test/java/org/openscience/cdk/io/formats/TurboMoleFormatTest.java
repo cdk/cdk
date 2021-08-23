@@ -22,13 +22,10 @@
  */
 package org.openscience.cdk.io.formats;
 
-/**
- * @cdk.module test-ioformats
- */
+/** @cdk.module test-ioformats */
 public class TurboMoleFormatTest extends ChemFormatTest {
 
     public TurboMoleFormatTest() {
         super.setChemFormat((IChemFormat) TurboMoleFormat.getInstance());
     }
-
 }

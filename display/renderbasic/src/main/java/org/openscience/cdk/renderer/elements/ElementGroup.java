@@ -22,23 +22,18 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-
 /**
  * A group of rendering elements, of any type.
  *
- * @cdk.module  renderbasic
+ * @cdk.module renderbasic
  * @cdk.githash
  */
 public class ElementGroup implements IRenderingElement, Iterable<IRenderingElement> {
 
-    /**
-     * The elements in the group.
-     */
+    /** The elements in the group. */
     private final List<IRenderingElement> elements;
 
-    /**
-     * Create an empty element group.
-     */
+    /** Create an empty element group. */
     public ElementGroup() {
         elements = new ArrayList<>();
     }
@@ -58,8 +53,7 @@ public class ElementGroup implements IRenderingElement, Iterable<IRenderingEleme
         if (element != null) {
             if (element.getClass().equals(ElementGroup.class))
                 elements.addAll(((ElementGroup) element).elements);
-            else
-                elements.add(element);
+            else elements.add(element);
         }
     }
 
@@ -79,5 +73,4 @@ public class ElementGroup implements IRenderingElement, Iterable<IRenderingEleme
     public void accept(IRenderingVisitor v) {
         v.visit(this);
     }
-
 }

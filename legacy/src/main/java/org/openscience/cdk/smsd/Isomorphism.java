@@ -1,26 +1,22 @@
 /**
+ * Copyright (C) 2006-2010 Syed Asad Rahman <asad@ebi.ac.uk>
  *
- * Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
+ * <p>Contact: cdk-devel@lists.sourceforge.net
  *
- * Contact: cdk-devel@lists.sourceforge.net
+ * <p>This program is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation; either version
+ * 2.1 of the License, or (at your option) any later version. All we ask is that proper credit is
+ * given for our work, which includes - but is not limited to - adding the above copyright notice to
+ * the beginning of your sourceAtomCount code files, and to any copyright notice that you may
+ * distribute with programs based on this work.
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1
- * of the License, or (at your option) any later version.
- * All we ask is that proper credit is given for our work, which includes
- * - but is not limited to - adding the above copyright notice to the beginning
- * of your sourceAtomCount code files, and to any copyright notice that you may distribute
- * with programs based on this work.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * <p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
- * You should have received rBondCount copy of the GNU Lesser General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ * <p>You should have received rBondCount copy of the GNU Lesser General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+ * Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.smsd;
 
@@ -33,7 +29,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -55,137 +50,138 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- *  <p>This class implements the Isomorphism- a multipurpose structure comparison tool.
- *  It allows users to, i) find the maximal common substructure(s) (MCS);
- *  ii) perform the mapping of a substructure in another structure, and;
- *  iii) map two isomorphic structures.</p>
+ * This class implements the Isomorphism- a multipurpose structure comparison tool. It allows users
+ * to, i) find the maximal common substructure(s) (MCS); ii) perform the mapping of a substructure
+ * in another structure, and; iii) map two isomorphic structures.
  *
- *  <p>It also comes with various published algorithms. The user is free to
- *  choose his favorite algorithm to perform MCS or substructure search.
- *  For example 0: Isomorphism algorithm, 1: MCSPlus, 2: VFLibMCS, 3: CDKMCS, 4:
- *  Substructure</p>
+ * <p>It also comes with various published algorithms. The user is free to choose his favorite
+ * algorithm to perform MCS or substructure search. For example 0: Isomorphism algorithm, 1:
+ * MCSPlus, 2: VFLibMCS, 3: CDKMCS, 4: Substructure
  *
- *  <p>It also has a set of robust chemical filters (i.e. bond energy, fragment
- *  count, stereo &amp; bond match) to sort the reported MCS solutions in a chemically
- *  relevant manner. Each comparison can be made with or without using the bond
- *  sensitive mode and with implicit or explicit hydrogens.</p>
+ * <p>It also has a set of robust chemical filters (i.e. bond energy, fragment count, stereo &amp;
+ * bond match) to sort the reported MCS solutions in a chemically relevant manner. Each comparison
+ * can be made with or without using the bond sensitive mode and with implicit or explicit
+ * hydrogens.
  *
- *  <p>If you are using <font color="#FF0000">Isomorphism, please cite Rahman <i>et.al. 2009</i></font>
- *  {@cdk.cite SMSD2009}. The Isomorphism algorithm is described in this paper.
- *  </p>
+ * <p>If you are using <font color="#FF0000">Isomorphism, please cite Rahman <i>et.al.
+ * 2009</i></font> {@cdk.cite SMSD2009}. The Isomorphism algorithm is described in this paper.
  *
+ * <p>An example for <b>Substructure search</b>:
  *
- * <p>An example for <b>Substructure search</b>:</p>
- *  <pre>{@code
- *  SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
- *  // Benzene
- *  IAtomContainer A1 = sp.parseSmiles("C1=CC=CC=C1");
- *  // Napthalene
- *  IAtomContainer A2 = sp.parseSmiles("C1=CC2=C(C=C1)C=CC=C2");
- *  //Turbo mode search
- *  //Bond Sensitive is set true
- *  Isomorphism comparison = new Isomorphism(Algorithm.SubStructure, true);
- *  // set molecules, remove hydrogens, clean and configure molecule
- *  comparison.init(A1, A2, true, true);
- *  // set chemical filter true
- *  comparison.setChemFilters(false, false, false);
- *  if (comparison.isSubgraph()) {
- *  //Get similarity score
- *   System.out.println("Tanimoto coefficient:  " + comparison.getTanimotoSimilarity());
- *   System.out.println("A1 is a subgraph of A2:  " + comparison.isSubgraph());
- *  //Get Modified AtomContainer
- *   IAtomContainer Mol1 = comparison.getReactantMolecule();
- *   IAtomContainer Mol2 = comparison.getProductMolecule();
- *  // Print the mapping between molecules
- *   System.out.println(" Mappings: ");
- *   for (Map.Entry <Integer, Integer> mapping : comparison.getFirstMapping().entrySet()) {
- *      System.out.println((mapping.getKey() + 1) + " " + (mapping.getValue() + 1));
- *
- *      IAtom eAtom = Mol1.getAtom(mapping.getKey());
- *      IAtom pAtom = Mol2.getAtom(mapping.getValue());
- *      System.out.println(eAtom.getSymbol() + " " + pAtom.getSymbol());
- *   }
- *   System.out.println("");
- *  }
- *  }</pre>
- *
- * <p>An example for <b>MCS search</b>:</p>
- *  <pre>{@code
- *  SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
- *  // Benzene
- *  IAtomContainer A1 = sp.parseSmiles("C1=CC=CC=C1");
- *  // Napthalene
- *  IAtomContainer A2 = sp.parseSmiles("C1=CC2=C(C=C1)C=CC=C2");
- *  //{ 0: Default Isomorphism Algorithm, 1: MCSPlus Algorithm, 2: VFLibMCS Algorithm, 3: CDKMCS Algorithm}
- *  //Bond Sensitive is set true
- *  Isomorphism comparison = new Isomorphism(Algorithm.DEFAULT, true);
- *  // set molecules, remove hydrogens, clean and configure molecule
- *  comparison.init(A1, A2, true, true);
- *  // set chemical filter true
- *  comparison.setChemFilters(true, true, true);
- *
- *  //Get similarity score
+ * <pre>{@code
+ * SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+ * // Benzene
+ * IAtomContainer A1 = sp.parseSmiles("C1=CC=CC=C1");
+ * // Napthalene
+ * IAtomContainer A2 = sp.parseSmiles("C1=CC2=C(C=C1)C=CC=C2");
+ * //Turbo mode search
+ * //Bond Sensitive is set true
+ * Isomorphism comparison = new Isomorphism(Algorithm.SubStructure, true);
+ * // set molecules, remove hydrogens, clean and configure molecule
+ * comparison.init(A1, A2, true, true);
+ * // set chemical filter true
+ * comparison.setChemFilters(false, false, false);
+ * if (comparison.isSubgraph()) {
+ * //Get similarity score
  *  System.out.println("Tanimoto coefficient:  " + comparison.getTanimotoSimilarity());
  *  System.out.println("A1 is a subgraph of A2:  " + comparison.isSubgraph());
- *  //Get Modified AtomContainer
+ * //Get Modified AtomContainer
  *  IAtomContainer Mol1 = comparison.getReactantMolecule();
  *  IAtomContainer Mol2 = comparison.getProductMolecule();
- *  // Print the mapping between molecules
+ * // Print the mapping between molecules
  *  System.out.println(" Mappings: ");
  *  for (Map.Entry <Integer, Integer> mapping : comparison.getFirstMapping().entrySet()) {
- *      System.out.println((mapping.getKey() + 1) + " " + (mapping.getValue() + 1));
+ *     System.out.println((mapping.getKey() + 1) + " " + (mapping.getValue() + 1));
  *
- *      IAtom eAtom = Mol1.getAtom(mapping.getKey());
- *      IAtom pAtom = Mol2.getAtom(mapping.getValue());
- *      System.out.println(eAtom.getSymbol() + " " + pAtom.getSymbol());
+ *     IAtom eAtom = Mol1.getAtom(mapping.getKey());
+ *     IAtom pAtom = Mol2.getAtom(mapping.getValue());
+ *     System.out.println(eAtom.getSymbol() + " " + pAtom.getSymbol());
  *  }
  *  System.out.println("");
- *  }</pre>
+ * }
+ *
+ * }</pre>
+ *
+ * <p>An example for <b>MCS search</b>:
+ *
+ * <pre>{@code
+ * SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+ * // Benzene
+ * IAtomContainer A1 = sp.parseSmiles("C1=CC=CC=C1");
+ * // Napthalene
+ * IAtomContainer A2 = sp.parseSmiles("C1=CC2=C(C=C1)C=CC=C2");
+ * //{ 0: Default Isomorphism Algorithm, 1: MCSPlus Algorithm, 2: VFLibMCS Algorithm, 3: CDKMCS Algorithm}
+ * //Bond Sensitive is set true
+ * Isomorphism comparison = new Isomorphism(Algorithm.DEFAULT, true);
+ * // set molecules, remove hydrogens, clean and configure molecule
+ * comparison.init(A1, A2, true, true);
+ * // set chemical filter true
+ * comparison.setChemFilters(true, true, true);
+ *
+ * //Get similarity score
+ * System.out.println("Tanimoto coefficient:  " + comparison.getTanimotoSimilarity());
+ * System.out.println("A1 is a subgraph of A2:  " + comparison.isSubgraph());
+ * //Get Modified AtomContainer
+ * IAtomContainer Mol1 = comparison.getReactantMolecule();
+ * IAtomContainer Mol2 = comparison.getProductMolecule();
+ * // Print the mapping between molecules
+ * System.out.println(" Mappings: ");
+ * for (Map.Entry <Integer, Integer> mapping : comparison.getFirstMapping().entrySet()) {
+ *     System.out.println((mapping.getKey() + 1) + " " + (mapping.getValue() + 1));
+ *
+ *     IAtom eAtom = Mol1.getAtom(mapping.getKey());
+ *     IAtom pAtom = Mol2.getAtom(mapping.getValue());
+ *     System.out.println(eAtom.getSymbol() + " " + pAtom.getSymbol());
+ * }
+ * System.out.println("");
+ *
+ * }</pre>
  *
  * @cdk.require java1.5+
- *
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @deprecated A more recent version of SMSD is available at <a href="http://github.com/asad/smsd">
- *             http://github.com/asad/smsd</a>
+ *     http://github.com/asad/smsd</a>
  */
 @Deprecated
 public final class Isomorphism extends AbstractMCS implements Serializable {
 
-    static final long                   serialVersionUID       = 10278639972837495L;
-    private List<Map<Integer, Integer>> allMCS                 = null;
-    private Map<Integer, Integer>       firstSolution          = null;
-    private List<Map<IAtom, IAtom>>     allAtomMCS             = null;
-    private Map<IAtom, IAtom>           firstAtomMCS           = null;
-    private List<Map<IBond, IBond>>     allBondMCS             = null;
-    private Map<IBond, IBond>           firstBondMCS           = null;
-    private MolHandler                  rMol                   = null;
-    private IQueryAtomContainer         queryMol               = null;
-    private MolHandler                  pMol                   = null;
-    private IAtomContainer              pAC                    = null;
-    private List<Double>                stereoScore            = null;
-    private List<Integer>               fragmentSize           = null;
-    private List<Double>                bEnergies              = null;
-    private Algorithm                   algorithmType;
-    private boolean                     removeHydrogen         = false;
-    private final static ILoggingTool   LOGGER                 = LoggingToolFactory
-                                                                       .createLoggingTool(Isomorphism.class);
-    private double                      bondSensitiveTimeOut   = 0.15;                                        //mins
-    private double                      bondInSensitiveTimeOut = 1.00;                                        //mins
-    private boolean                     subGraph               = false;
-    private boolean                     matchBonds             = false;
+    static final long serialVersionUID = 10278639972837495L;
+    private List<Map<Integer, Integer>> allMCS = null;
+    private Map<Integer, Integer> firstSolution = null;
+    private List<Map<IAtom, IAtom>> allAtomMCS = null;
+    private Map<IAtom, IAtom> firstAtomMCS = null;
+    private List<Map<IBond, IBond>> allBondMCS = null;
+    private Map<IBond, IBond> firstBondMCS = null;
+    private MolHandler rMol = null;
+    private IQueryAtomContainer queryMol = null;
+    private MolHandler pMol = null;
+    private IAtomContainer pAC = null;
+    private List<Double> stereoScore = null;
+    private List<Integer> fragmentSize = null;
+    private List<Double> bEnergies = null;
+    private Algorithm algorithmType;
+    private boolean removeHydrogen = false;
+    private static final ILoggingTool LOGGER =
+            LoggingToolFactory.createLoggingTool(Isomorphism.class);
+    private double bondSensitiveTimeOut = 0.15; // mins
+    private double bondInSensitiveTimeOut = 1.00; // mins
+    private boolean subGraph = false;
+    private boolean matchBonds = false;
 
     /**
      * This is the algorithm factory and entry port for all the MCS algorithm in the Isomorphism
      * supported algorithm {@link org.openscience.cdk.smsd.interfaces.Algorithm} types:
+     *
      * <OL>
-     * <lI>0: Default,
-     * <lI>1: MCSPlus,
-     * <lI>2: VFLibMCS,
-     * <lI>3: CDKMCS,
-     * <lI>4: SubStructure
+     *   <lI>0: Default,
+     *   <lI>1: MCSPlus,
+     *   <lI>2: VFLibMCS,
+     *   <lI>3: CDKMCS,
+     *   <lI>4: SubStructure
      * </OL>
+     *
      * @param algorithmType {@link org.openscience.cdk.smsd.interfaces.Algorithm}
      * @param bondTypeFlag
      */
@@ -217,7 +213,8 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
         }
 
         if (!allAtomMCS.isEmpty() && !firstAtomMCS.isEmpty() && firstAtomMCS.size() > 1) {
-            setAllBondMaps(makeBondMapsOfAtomMaps(mol1.getMolecule(), mol2.getMolecule(), allAtomMCS));
+            setAllBondMaps(
+                    makeBondMapsOfAtomMaps(mol1.getMolecule(), mol2.getMolecule(), allAtomMCS));
             if (getAllBondMaps().iterator().hasNext()) {
                 setFirstBondMap(getAllBondMaps().iterator().next());
             }
@@ -248,13 +245,14 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
 
     /**
      * Returns bond maps between source and target molecules based on the atoms
+     *
      * @param ac1 source molecule
      * @param ac2 target molecule
      * @param mappings mappings between source and target molecule atoms
      * @return bond maps between source and target molecules based on the atoms
      */
-    public static List<Map<IBond, IBond>> makeBondMapsOfAtomMaps(IAtomContainer ac1, IAtomContainer ac2,
-            List<Map<IAtom, IAtom>> mappings) {
+    public static List<Map<IBond, IBond>> makeBondMapsOfAtomMaps(
+            IAtomContainer ac1, IAtomContainer ac2, List<Map<IAtom, IAtom>> mappings) {
         List<Map<IBond, IBond>> bondMaps = new ArrayList<Map<IBond, IBond>>();
         for (Map<IAtom, IAtom> mapping : mappings) {
             bondMaps.add(makeBondMapOfAtomMap(ac1, ac2, mapping));
@@ -263,15 +261,15 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
     }
 
     /**
-     *
      * Returns bond map between source and target molecules based on the atoms
+     *
      * @param ac1 source molecule
      * @param ac2 target molecule
      * @param mapping mappings between source and target molecule atoms
      * @return bond map between source and target molecules based on the atoms
      */
-    public static Map<IBond, IBond> makeBondMapOfAtomMap(IAtomContainer ac1, IAtomContainer ac2,
-            Map<IAtom, IAtom> mapping) {
+    public static Map<IBond, IBond> makeBondMapOfAtomMap(
+            IAtomContainer ac1, IAtomContainer ac2, Map<IAtom, IAtom> mapping) {
         Map<IBond, IBond> maps = new HashMap<IBond, IBond>();
 
         for (Map.Entry<IAtom, IAtom> mapS : mapping.entrySet()) {
@@ -297,7 +295,6 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
         //        System.out.println("bond Map size:" + maps.size());
 
         return maps;
-
     }
 
     private void chooseAlgorithm(int rBondCount, int pBondCount) {
@@ -341,7 +338,6 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
 
         firstAtomMCS.putAll(mcs.getFirstAtomMapping());
         allAtomMCS.addAll(mcs.getAllAtomMapping());
-
     }
 
     private synchronized void cdkSubgraphAlgorithm() {
@@ -363,7 +359,6 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
             firstAtomMCS.putAll(mcs.getFirstAtomMapping());
             allAtomMCS.addAll(mcs.getAllAtomMapping());
         }
-
     }
 
     private synchronized void mcsPlusAlgorithm() {
@@ -572,10 +567,8 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
     }
 
     /**
-     *
      * @param reactant
      * @param product
-     *
      */
     private void init(MolHandler reactant, MolHandler product) throws CDKException {
         this.rMol = reactant;
@@ -584,10 +577,8 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
     }
 
     /**
-     *
      * @param reactant
      * @param product
-     *
      */
     @Override
     public void init(IQueryAtomContainer reactant, IAtomContainer product) throws CDKException {
@@ -598,40 +589,58 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
 
     /**
      * {@inheritDoc}
+     *
      * @param reactant
      * @param product
      */
     @Override
-    public void init(IAtomContainer reactant, IAtomContainer product, boolean removeHydrogen,
-            boolean cleanAndConfigureMolecule) throws CDKException {
+    public void init(
+            IAtomContainer reactant,
+            IAtomContainer product,
+            boolean removeHydrogen,
+            boolean cleanAndConfigureMolecule)
+            throws CDKException {
         this.removeHydrogen = removeHydrogen;
-        init(new MolHandler(reactant, removeHydrogen, cleanAndConfigureMolecule), new MolHandler(product,
-                removeHydrogen, cleanAndConfigureMolecule));
+        init(
+                new MolHandler(reactant, removeHydrogen, cleanAndConfigureMolecule),
+                new MolHandler(product, removeHydrogen, cleanAndConfigureMolecule));
     }
 
     /**
      * Initialize the query and targetAtomCount mol via mol files
+     *
      * @param sourceMolFileName source mol file name
      * @param targetMolFileName target mol file name
-     * @param removeHydrogen    set true to make hydrogens implicit before search
-     * @param cleanAndConfigureMolecule eg: percieveAtomTypesAndConfigureAtoms, detect aromaticity etc
+     * @param removeHydrogen set true to make hydrogens implicit before search
+     * @param cleanAndConfigureMolecule eg: percieveAtomTypesAndConfigureAtoms, detect aromaticity
+     *     etc
      * @throws CDKException
      */
-    public void init(String sourceMolFileName, String targetMolFileName, boolean removeHydrogen,
-            boolean cleanAndConfigureMolecule) throws CDKException {
+    public void init(
+            String sourceMolFileName,
+            String targetMolFileName,
+            boolean removeHydrogen,
+            boolean cleanAndConfigureMolecule)
+            throws CDKException {
         this.removeHydrogen = removeHydrogen;
-        init(new MolHandler(sourceMolFileName, cleanAndConfigureMolecule, removeHydrogen), new MolHandler(
-                targetMolFileName, cleanAndConfigureMolecule, removeHydrogen));
+        init(
+                new MolHandler(sourceMolFileName, cleanAndConfigureMolecule, removeHydrogen),
+                new MolHandler(targetMolFileName, cleanAndConfigureMolecule, removeHydrogen));
     }
 
-    /** {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setChemFilters(boolean stereoFilter, boolean fragmentFilter, boolean energyFilter) {
 
         if (firstAtomMCS != null) {
-            ChemicalFilters chemFilter = new ChemicalFilters(allMCS, allAtomMCS, firstSolution, firstAtomMCS,
-                    getReactantMolecule(), getProductMolecule());
+            ChemicalFilters chemFilter =
+                    new ChemicalFilters(
+                            allMCS,
+                            allAtomMCS,
+                            firstSolution,
+                            firstAtomMCS,
+                            getReactantMolecule(),
+                            getProductMolecule());
 
             if (stereoFilter && firstAtomMCS.size() > 1) {
                 try {
@@ -656,75 +665,69 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
         }
     }
 
-    /** {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public synchronized Integer getFragmentSize(int key) {
         return (fragmentSize != null && !fragmentSize.isEmpty()) ? fragmentSize.get(key) : null;
     }
 
-    /** {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public synchronized Integer getStereoScore(int key) {
-        return (stereoScore != null && !stereoScore.isEmpty()) ? stereoScore.get(key).intValue() : null;
+        return (stereoScore != null && !stereoScore.isEmpty())
+                ? stereoScore.get(key).intValue()
+                : null;
     }
 
-    /** {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public synchronized Double getEnergyScore(int key) {
         return (bEnergies != null && !bEnergies.isEmpty()) ? bEnergies.get(key) : null;
     }
 
-    /** {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public synchronized Map<Integer, Integer> getFirstMapping() {
         return firstSolution.isEmpty() ? null : firstSolution;
     }
 
-    /** {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public synchronized List<Map<Integer, Integer>> getAllMapping() {
         return allMCS.isEmpty() ? null : allMCS;
     }
 
-    /** {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public synchronized Map<IAtom, IAtom> getFirstAtomMapping() {
         return firstAtomMCS.isEmpty() ? null : firstAtomMCS;
     }
 
-    /** {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public synchronized List<Map<IAtom, IAtom>> getAllAtomMapping() {
         return allAtomMCS.isEmpty() ? null : allAtomMCS;
     }
 
-    /** {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtomContainer getReactantMolecule() {
         return queryMol == null ? rMol.getMolecule() : queryMol;
     }
 
-    /** {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtomContainer getProductMolecule() {
         return pAC == null ? pMol.getMolecule() : pAC;
     }
 
-    /** {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public double getTanimotoSimilarity() throws IOException {
         double tanimoto = getTanimotoAtomSimilarity() + getTanimotoBondSimilarity();
-        if (tanimoto > 0 && getReactantMolecule().getBondCount() > 0 && getProductMolecule().getBondCount() > 0) {
+        if (tanimoto > 0
+                && getReactantMolecule().getBondCount() > 0
+                && getProductMolecule().getBondCount() > 0) {
             tanimoto /= 2;
         }
         return tanimoto;
@@ -741,7 +744,8 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
                 rAtomCount = getReactantMolecule().getAtomCount();
                 pAtomCount = getProductMolecule().getAtomCount();
             } else {
-                rAtomCount = getReactantMolecule().getAtomCount() - getHCount(getReactantMolecule());
+                rAtomCount =
+                        getReactantMolecule().getAtomCount() - getHCount(getReactantMolecule());
                 pAtomCount = getProductMolecule().getAtomCount() - getHCount(getProductMolecule());
             }
             double matchCount = getFirstMapping().size();
@@ -772,9 +776,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
         return tanimotoAtom;
     }
 
-    /** {@inheritDoc}
-     *
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean isStereoMisMatch() {
         boolean flag = false;
@@ -800,7 +802,8 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
                     IAtom targetAtom2 = indexJPlus;
                     IBond pBond = product.getBond(targetAtom1, targetAtom2);
 
-                    if ((rBond != null && pBond != null) && (rBond.getStereo() != pBond.getStereo())) {
+                    if ((rBond != null && pBond != null)
+                            && (rBond.getStereo() != pBond.getStereo())) {
                         score++;
                     }
                 }
@@ -812,9 +815,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
         return flag;
     }
 
-    /** {@inheritDoc}
-     *
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean isSubgraph() {
 
@@ -834,7 +835,8 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
             targetAtomCount -= getHCount(product);
         }
         if (mappingSize == sourceAtomCount && mappingSize <= targetAtomCount) {
-            if (!getFirstBondMap().isEmpty() && getFirstBondMap().size() == reactant.getBondCount()) {
+            if (!getFirstBondMap().isEmpty()
+                    && getFirstBondMap().size() == reactant.getBondCount()) {
                 return true;
             } else if (mappingSize == 1) {
                 return true;
@@ -843,8 +845,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
         return false;
     }
 
-    /** {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public double getEuclideanDistance() throws IOException {
         int decimalPlaces = 4;
@@ -871,6 +872,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
 
     /**
      * {@inheritDoc}
+     *
      * @return the bondSensitiveTimeOut
      */
     @Override
@@ -880,6 +882,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
 
     /**
      * {@inheritDoc}
+     *
      * @param bondSensitiveTimeOut the bond Sensitive Timeout in mins (default 0.10 min)
      */
     @Override
@@ -889,6 +892,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
 
     /**
      * {@inheritDoc}
+     *
      * @return the bondInSensitiveTimeOut
      */
     @Override
@@ -898,6 +902,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
 
     /**
      * {@inheritDoc}
+     *
      * @param bondInSensitiveTimeOut the bond insensitive Timeout in mins (default 0.15 min)
      */
     @Override
@@ -905,44 +910,32 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
         this.bondInSensitiveTimeOut = bondInSensitiveTimeOut;
     }
 
-    /**
-     * @return the matchBonds
-     */
+    /** @return the matchBonds */
     public boolean isMatchBonds() {
         return matchBonds;
     }
 
-    /**
-     * @param matchBonds the matchBonds to set
-     */
+    /** @param matchBonds the matchBonds to set */
     public void setMatchBonds(boolean matchBonds) {
         this.matchBonds = matchBonds;
     }
 
-    /**
-     * @return the allBondMCS
-     */
+    /** @return the allBondMCS */
     public List<Map<IBond, IBond>> getAllBondMaps() {
         return allBondMCS;
     }
 
-    /**
-     * @param allBondMCS the allBondMCS to set
-     */
+    /** @param allBondMCS the allBondMCS to set */
     private void setAllBondMaps(List<Map<IBond, IBond>> allBondMCS) {
         this.allBondMCS = allBondMCS;
     }
 
-    /**
-     * @return the firstBondMCS
-     */
+    /** @return the firstBondMCS */
     public Map<IBond, IBond> getFirstBondMap() {
         return firstBondMCS;
     }
 
-    /**
-     * @param firstBondMCS the firstBondMCS to set
-     */
+    /** @param firstBondMCS the firstBondMCS to set */
     private void setFirstBondMap(Map<IBond, IBond> firstBondMCS) {
         this.firstBondMCS = firstBondMCS;
     }

@@ -68,7 +68,9 @@ public abstract class AbstractChemFileTest extends AbstractChemObjectTest {
         Assert.assertEquals(3, cs.getChemSequenceCount());
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
-        cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class)); // this one should enfore array grow
+        cs.addChemSequence(
+                cs.getBuilder()
+                        .newInstance(IChemSequence.class)); // this one should enfore array grow
         Assert.assertEquals(6, cs.getChemSequenceCount());
     }
 

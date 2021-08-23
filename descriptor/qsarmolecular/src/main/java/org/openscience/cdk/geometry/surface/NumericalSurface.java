@@ -20,6 +20,12 @@
 
 package org.openscience.cdk.geometry.surface;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.vecmath.Point3d;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -28,51 +34,45 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
-import javax.vecmath.Point3d;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
  * A class representing the solvent accessible surface area surface of a molecule.
  *
- * <p>This class is based on the Python implementation of the DCLM method
- * ({@cdk.cite EIS95}) by Peter McCluskey, which is a non-analytical method to generate a set of points
- * representing the solvent accessible surface area of a molecule.
+ * <p>This class is based on the Python implementation of the DCLM method ({@cdk.cite EIS95}) by
+ * Peter McCluskey, which is a non-analytical method to generate a set of points representing the
+ * solvent accessible surface area of a molecule.
  *
- * <p>The neighbor list is a simplified version of that
- * described in {@cdk.cite EIS95} and as a result, the surface areas of the atoms may not be exact
- * (compared to analytical calculations). The tessellation is slightly different from
- * that described by McCluskey and uses recursive subdivision starting from an icosahedral
- * representation.
+ * <p>The neighbor list is a simplified version of that described in {@cdk.cite EIS95} and as a
+ * result, the surface areas of the atoms may not be exact (compared to analytical calculations).
+ * The tessellation is slightly different from that described by McCluskey and uses recursive
+ * subdivision starting from an icosahedral representation.
  *
- * <p>The default solvent radius used is 1.4A and setting this to 0 will give the
- * Van der Waals surface. The accuracy can be increased by increasing the tessellation
- * level, though the default of 4 is a good balance between accuracy and speed.
+ * <p>The default solvent radius used is 1.4A and setting this to 0 will give the Van der Waals
+ * surface. The accuracy can be increased by increasing the tessellation level, though the default
+ * of 4 is a good balance between accuracy and speed.
  *
- * @author      Rajarshi Guha
+ * @author Rajarshi Guha
  * @cdk.created 2005-05-08
- * @cdk.module  qsarmolecular
+ * @cdk.module qsarmolecular
  * @cdk.githash
- * @cdk.bug     1846421
+ * @cdk.bug 1846421
  */
 public class NumericalSurface {
 
-    private static ILoggingTool logger         = LoggingToolFactory.createLoggingTool(NumericalSurface.class);
-    double          solventRadius  = 1.4;
-    int             tesslevel      = 4;
-    IAtom[]         atoms;
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(NumericalSurface.class);
+    double solventRadius = 1.4;
+    int tesslevel = 4;
+    IAtom[] atoms;
     List<Point3d>[] surfPoints;
-    double[]        areas;
-    double[]        volumes;
+    double[] areas;
+    double[] volumes;
 
     /**
      * Constructor to initialize the surface calculation with default values.
      *
-     * This constructor use the Van der Waals radii as defined in <i>org/openscience/cdk/config/data/jmol_atomtypes.txt</i>
-     * of the source distribution. Also uses a tesselation level of 4 and solvent radius of 1.4A.
+     * <p>This constructor use the Van der Waals radii as defined in
+     * <i>org/openscience/cdk/config/data/jmol_atomtypes.txt</i> of the source distribution. Also
+     * uses a tesselation level of 4 and solvent radius of 1.4A.
      *
      * @param atomContainer The {@link IAtomContainer} for which the surface is to be calculated
      */
@@ -84,14 +84,14 @@ public class NumericalSurface {
     /**
      * Constructor to initialize the surface calculation with user specified values.
      *
-     * This constructor use the Van der Waals radii as defined in <i>org/openscience/cdk/config/data/jmol_atomtypes.txt</i>
-     * of the source distribution
+     * <p>This constructor use the Van der Waals radii as defined in
+     * <i>org/openscience/cdk/config/data/jmol_atomtypes.txt</i> of the source distribution
      *
      * @param atomContainer The {@link IAtomContainer} for which the surface is to be calculated
-     * @param solventRadius The radius of a solvent molecule that is used to extend
-     * the radius of each atom. Setting to 0 gives the Van der Waals surface
-     * @param tesslevel The number of levels that the subdivision algorithm for tessellation
-     * should use
+     * @param solventRadius The radius of a solvent molecule that is used to extend the radius of
+     *     each atom. Setting to 0 gives the Van der Waals surface
+     * @param tesslevel The number of levels that the subdivision algorithm for tessellation should
+     *     use
      */
     public NumericalSurface(IAtomContainer atomContainer, double solventRadius, int tesslevel) {
         this.solventRadius = solventRadius;
@@ -103,8 +103,9 @@ public class NumericalSurface {
     /**
      * Evaluate the surface.
      *
-     * This method generates the points on the accessible surface area of each atom
-     * as well as calculating the surface area of each atom.
+     * <p>This method generates the points on the accessible surface area of each atom as well as
+     * calculating the surface area of each atom.
+     *
      * @deprecated
      */
     @Deprecated
@@ -113,8 +114,8 @@ public class NumericalSurface {
     }
 
     /**
-     * Initialize the surface, generating the points on the accessible surface
-     * area of each atom as well as calculating the surface area of each atom.
+     * Initialize the surface, generating the points on the accessible surface area of each atom as
+     * well as calculating the surface area of each atom.
      */
     private void init() {
 
@@ -166,21 +167,19 @@ public class NumericalSurface {
             translatePoints(i, points, pointDensity, atoms[i], cp);
         }
         logger.info("Obtained points, areas and volumes");
-
     }
 
     /**
      * Get an array of all the points on the molecular surface.
      *
-     * This returns an array of Point3d objects representing all the points
-     * on the molecular surface
+     * <p>This returns an array of Point3d objects representing all the points on the molecular
+     * surface
      *
-     * @return  An array of Point3d objects
+     * @return An array of Point3d objects
      */
     public Point3d[] getAllSurfacePoints() {
         int npt = 0;
-        for (List<Point3d> surfPoint : this.surfPoints)
-            npt += surfPoint.size();
+        for (List<Point3d> surfPoint : this.surfPoints) npt += surfPoint.size();
         Point3d[] ret = new Point3d[npt];
         int j = 0;
         for (List<Point3d> points : this.surfPoints) {
@@ -192,13 +191,13 @@ public class NumericalSurface {
     }
 
     /**
-     * Get the map from atom to surface points. If an atom does not appear in
-     * the map it is buried. Atoms may share surface points with other atoms.
+     * Get the map from atom to surface points. If an atom does not appear in the map it is buried.
+     * Atoms may share surface points with other atoms.
      *
      * @return surface atoms and associated points on the surface
      */
     public Map<IAtom, List<Point3d>> getAtomSurfaceMap() {
-        Map<IAtom,List<Point3d>> map = new HashMap<>();
+        Map<IAtom, List<Point3d>> map = new HashMap<>();
         for (int i = 0; i < this.surfPoints.length; i++) {
             if (!this.surfPoints[i].isEmpty())
                 map.put(this.atoms[i], Collections.unmodifiableList(this.surfPoints[i]));
@@ -209,9 +208,9 @@ public class NumericalSurface {
     /**
      * Get an array of the points on the accessible surface of a specific atom.
      *
-     * @param atomIdx The index of the atom. Ranges from 0 to n-1, where n is the
-     * number of atoms in the AtomContainer that the surface was calculated for
-     * @return  An array of Point3d objects
+     * @param atomIdx The index of the atom. Ranges from 0 to n-1, where n is the number of atoms in
+     *     the AtomContainer that the surface was calculated for
+     * @return An array of Point3d objects
      * @throws CDKException if the atom index is outside the range of allowable indices
      */
     public Point3d[] getSurfacePoints(int atomIdx) throws CDKException {
@@ -223,8 +222,8 @@ public class NumericalSurface {
     /**
      * Get the surface area for the specified atom.
      *
-     * @param atomIdx The index of the atom. Ranges from 0 to n-1, where n is the
-     * number of atoms in the AtomContainer that the surface was calculated for
+     * @param atomIdx The index of the atom. Ranges from 0 to n-1, where n is the number of atoms in
+     *     the AtomContainer that the surface was calculated for
      * @return A double representing the accessible surface area of the atom
      * @throws CDKException if the atom index is outside the range of allowable indices
      */
@@ -246,17 +245,17 @@ public class NumericalSurface {
     /**
      * Get the total surface area for the AtomContainer.
      *
-     * @return A double containing the total surface area of the AtomContainer for
-     * which the surface was calculated for
+     * @return A double containing the total surface area of the AtomContainer for which the surface
+     *     was calculated for
      */
     public double getTotalSurfaceArea() {
         double ta = 0.0;
-        for (double area : this.areas)
-            ta += area;
+        for (double area : this.areas) ta += area;
         return ta;
     }
 
-    private void translatePoints(int atmIdx, Point3d[][] points, int pointDensity, IAtom atom, Point3d cp) {
+    private void translatePoints(
+            int atmIdx, Point3d[][] points, int pointDensity, IAtom atom, Point3d cp) {
         double totalRadius = PeriodicTable.getVdwRadius(atom.getSymbol()) + solventRadius;
 
         double area = 4 * Math.PI * (totalRadius * totalRadius) * points.length / pointDensity;
@@ -271,21 +270,24 @@ public class NumericalSurface {
             sumz += p.z;
         }
         double vconst = 4.0 / 3.0 * Math.PI / (double) pointDensity;
-        double dotp1 = (atom.getPoint3d().x - cp.x) * sumx + (atom.getPoint3d().y - cp.y) * sumy
-                + (atom.getPoint3d().z - cp.z) * sumz;
-        double volume = vconst * (totalRadius * totalRadius) * dotp1 + (totalRadius * totalRadius * totalRadius)
-                * points.length;
+        double dotp1 =
+                (atom.getPoint3d().x - cp.x) * sumx
+                        + (atom.getPoint3d().y - cp.y) * sumy
+                        + (atom.getPoint3d().z - cp.z) * sumz;
+        double volume =
+                vconst * (totalRadius * totalRadius) * dotp1
+                        + (totalRadius * totalRadius * totalRadius) * points.length;
 
         this.areas[atmIdx] = area;
         this.volumes[atmIdx] = volume;
 
         List<Point3d> tmp = new ArrayList<>();
-        for (Point3d[] point : points)
-            tmp.add(point[0]);
+        for (Point3d[] point : points) tmp.add(point[0]);
         this.surfPoints[atmIdx] = tmp;
     }
 
-    private Point3d[][] atomicSurfacePoints(NeighborList nbrlist, int currAtomIdx, IAtom atom, Tessellate tess) {
+    private Point3d[][] atomicSurfacePoints(
+            NeighborList nbrlist, int currAtomIdx, IAtom atom, Tessellate tess) {
 
         double totalRadius = PeriodicTable.getVdwRadius(atom.getSymbol()) + solventRadius;
         double totalRadius2 = totalRadius * totalRadius;
@@ -321,8 +323,11 @@ public class NumericalSurface {
             }
             if (!buried) {
                 Point3d[] tmp = new Point3d[2];
-                tmp[0] = new Point3d(totalRadius * pt.x + atom.getPoint3d().x, totalRadius * pt.y
-                                                                               + atom.getPoint3d().y, totalRadius * pt.z + atom.getPoint3d().z);
+                tmp[0] =
+                        new Point3d(
+                                totalRadius * pt.x + atom.getPoint3d().x,
+                                totalRadius * pt.y + atom.getPoint3d().y,
+                                totalRadius * pt.z + atom.getPoint3d().z);
                 tmp[1] = pt;
                 points.add(tmp);
             }

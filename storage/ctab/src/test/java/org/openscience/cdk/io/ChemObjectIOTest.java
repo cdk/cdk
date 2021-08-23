@@ -60,7 +60,8 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
 
     @Test
     public void testChemObjectIOSet() {
-        Assert.assertNotNull("You must use setChemObjectIO() to set the IChemObjectIO object.", chemObjectIO);
+        Assert.assertNotNull(
+                "You must use setChemObjectIO() to set the IChemObjectIO object.", chemObjectIO);
     }
 
     @Test
@@ -69,8 +70,9 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
         Assert.assertNotNull("The IChemObjectIO.getFormat method returned null.", format);
     }
 
-    private static IChemObject[] acceptableNNChemObjects = {new ChemFile(), new ChemModel(), new AtomContainer(),
-            new Reaction()                               };
+    private static IChemObject[] acceptableNNChemObjects = {
+        new ChemFile(), new ChemModel(), new AtomContainer(), new Reaction()
+    };
 
     @Test
     public void testAcceptsAtLeastOneNonotifyObject() {
@@ -85,8 +87,9 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
                 oneAccepted);
     }
 
-    private static IChemObject[] acceptableDebugChemObjects = {new DebugChemFile(), new DebugChemModel(),
-            new DebugAtomContainer(), new DebugReaction()   };
+    private static IChemObject[] acceptableDebugChemObjects = {
+        new DebugChemFile(), new DebugChemModel(), new DebugAtomContainer(), new DebugReaction()
+    };
 
     @Test
     public void testAcceptsAtLeastOneDebugObject() {
@@ -103,12 +106,22 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
 
     /** static objects, shared between tests - difficult to locate bugs. */
     @Deprecated
-    protected static IChemObject[] acceptableChemObjects = {new ChemFile(), new ChemModel(), new AtomContainer(),
-            new Reaction(), new RGroupQuery(DefaultChemObjectBuilder.getInstance())};
+    protected static IChemObject[] acceptableChemObjects = {
+        new ChemFile(),
+        new ChemModel(),
+        new AtomContainer(),
+        new Reaction(),
+        new RGroupQuery(DefaultChemObjectBuilder.getInstance())
+    };
 
     protected static IChemObject[] acceptableChemObjects() {
-        return new IChemObject[]{new ChemFile(), new ChemModel(), new AtomContainer(), new Reaction(),
-                new RGroupQuery(DefaultChemObjectBuilder.getInstance())};
+        return new IChemObject[] {
+            new ChemFile(),
+            new ChemModel(),
+            new AtomContainer(),
+            new Reaction(),
+            new RGroupQuery(DefaultChemObjectBuilder.getInstance())
+        };
     }
 
     @Test
@@ -125,12 +138,11 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
     }
 
     @SuppressWarnings("rawtypes")
-    protected static Class[] acceptableChemObjectClasses = {IChemFile.class, IChemModel.class, IAtomContainer.class,
-            IReaction.class, IRGroupQuery.class          };
+    protected static Class[] acceptableChemObjectClasses = {
+        IChemFile.class, IChemModel.class, IAtomContainer.class, IReaction.class, IRGroupQuery.class
+    };
 
-    /**
-     * @cdk.bug 3553780
-     */
+    /** @cdk.bug 3553780 */
     @SuppressWarnings("unchecked")
     @Test
     public void testAcceptsAtLeastOneChemObjectClass() {
@@ -184,5 +196,4 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
         chemObjectIO.addChemObjectIOListener(listener);
         chemObjectIO.removeChemObjectIOListener(listener);
     }
-
 }

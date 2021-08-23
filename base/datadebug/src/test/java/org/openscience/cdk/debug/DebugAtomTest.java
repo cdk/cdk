@@ -21,7 +21,6 @@ package org.openscience.cdk.debug;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -40,13 +39,14 @@ public class DebugAtomTest extends AbstractAtomTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new DebugAtom();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new DebugAtom();
+                    }
+                });
     }
 
     @Test

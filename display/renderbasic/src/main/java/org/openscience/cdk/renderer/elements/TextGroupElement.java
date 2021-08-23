@@ -22,46 +22,42 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
- * A group of text elements, particularly the element symbol (eg: "C")
- * surrounded by other annotations such as mass number, charge, etc. These
- * annotation elements are the 'children' of the parent text element.
+ * A group of text elements, particularly the element symbol (eg: "C") surrounded by other
+ * annotations such as mass number, charge, etc. These annotation elements are the 'children' of the
+ * parent text element.
  *
  * @cdk.module renderbasic
  * @cdk.githash
  */
 public class TextGroupElement extends TextElement {
 
-    /**
-     * Compass-point positions for text element annotation children.
-     *
-     */
+    /** Compass-point positions for text element annotation children. */
     public enum Position {
-        NW, SW, SE, NE, S, N, W, E
+        NW,
+        SW,
+        SE,
+        NE,
+        S,
+        N,
+        W,
+        E
     };
 
     /**
      * A string of text that should be shown around the parent.
      *
      * @author maclean
-     *
      */
     public class Child {
 
-        /**
-         * The text of this child.
-         */
-        public final String   text;
+        /** The text of this child. */
+        public final String text;
 
-        /**
-         * A subscript (if any) for the child.
-         */
-        public final String   subscript;
+        /** A subscript (if any) for the child. */
+        public final String subscript;
 
-        /**
-         * The position of the child relative to the parent.
-         */
+        /** The position of the child relative to the parent. */
         public final Position position;
 
         /**
@@ -78,6 +74,7 @@ public class TextGroupElement extends TextElement {
 
         /**
          * Make a child element with the specified text, subscript, and position.
+         *
          * @param text the child's text
          * @param subscript a subscript for the child
          * @param position the position of the child relative to the parent
@@ -87,12 +84,9 @@ public class TextGroupElement extends TextElement {
             this.position = position;
             this.subscript = subscript;
         }
-
     }
 
-    /**
-     * The child text elements.
-     */
+    /** The child text elements. */
     public final List<Child> children;
 
     /**
@@ -129,12 +123,9 @@ public class TextGroupElement extends TextElement {
         this.children.add(new Child(text, subscript, position));
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void accept(IRenderingVisitor v) {
         v.visit(this);
     }
-
 }

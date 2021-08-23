@@ -23,12 +23,11 @@
 package org.openscience.cdk.interfaces;
 
 /**
- * A AminoAcid is Monomer which stores additional amino acid specific
- * informations, like the N-terminus atom.
+ * A AminoAcid is Monomer which stores additional amino acid specific informations, like the
+ * N-terminus atom.
  *
- * @cdk.module  interfaces
+ * @cdk.module interfaces
  * @cdk.githash
- *
  * @author Egon Willighagen &lt;e.willighagen@science.ru.nl&gt;
  * @cdk.created 2005-12-05
  * @cdk.keyword amino acid
@@ -39,17 +38,15 @@ public interface IAminoAcid extends IMonomer {
      * Retrieves the N-terminus atom.
      *
      * @return The Atom that is the N-terminus
-     *
-     * @see    #addNTerminus(IAtom)
+     * @see #addNTerminus(IAtom)
      */
     public IAtom getNTerminus();
 
     /**
      * Add an Atom and makes it the N-terminus atom.
      *
-     * @param atom  The Atom that is the N-terminus
-     *
-     * @see    #getNTerminus
+     * @param atom The Atom that is the N-terminus
+     * @see #getNTerminus
      */
     public void addNTerminus(IAtom atom);
 
@@ -57,23 +54,19 @@ public interface IAminoAcid extends IMonomer {
      * Retrieves the C-terminus atom.
      *
      * @return The Atom that is the C-terminus
-     *
-     * @see    #addCTerminus(IAtom)
+     * @see #addCTerminus(IAtom)
      */
     public IAtom getCTerminus();
 
     /**
      * Add an Atom and makes it the C-terminus atom.
      *
-     * @param atom  The Atom that is the C-terminus
-     *
-     * @see    #getCTerminus
+     * @param atom The Atom that is the C-terminus
+     * @see #getCTerminus
      */
     public void addCTerminus(IAtom atom);
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAminoAcid clone() throws CloneNotSupportedException;
 }

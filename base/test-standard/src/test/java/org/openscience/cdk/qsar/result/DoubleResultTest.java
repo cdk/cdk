@@ -20,12 +20,9 @@ package org.openscience.cdk.qsar.result;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.CDKTestCase;
 
-/**
- * @cdk.module test-standard
- */
+/** @cdk.module test-standard */
 public class DoubleResultTest extends CDKTestCase {
 
     public DoubleResultTest() {

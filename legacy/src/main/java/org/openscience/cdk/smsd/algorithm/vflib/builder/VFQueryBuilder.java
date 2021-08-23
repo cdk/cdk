@@ -53,7 +53,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.smsd.algorithm.matchers.VFAtomMatcher;
 import org.openscience.cdk.smsd.algorithm.matchers.VFBondMatcher;
@@ -63,22 +62,21 @@ import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IQuery;
 
 /**
  * Class for parsing and generating query graph.
+ *
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is
+ *     available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public class VFQueryBuilder implements IQuery {
 
-    private List<INode>       nodesList;
-    private List<IEdge>       edgesList;
+    private List<INode> nodesList;
+    private List<IEdge> edgesList;
     private Map<INode, IAtom> nodeBondMap;
 
-    /**
-     * Constructor for VF Query Builder
-     */
+    /** Constructor for VF Query Builder */
     public VFQueryBuilder() {
         nodesList = new ArrayList<INode>();
         edgesList = new ArrayList<IEdge>();
@@ -105,6 +103,7 @@ public class VFQueryBuilder implements IQuery {
 
     /**
      * Return a node for a given atom else return null
+     *
      * @param atom
      * @return Node in the graph for a given atom
      */
@@ -145,6 +144,7 @@ public class VFQueryBuilder implements IQuery {
 
     /**
      * Add and return a node for a query atom
+     *
      * @param matcher
      * @param atom
      * @return added Node
@@ -176,6 +176,7 @@ public class VFQueryBuilder implements IQuery {
 
     /**
      * Construct and return an edge for a given query and target node
+     *
      * @param source
      * @param target
      * @param matcher

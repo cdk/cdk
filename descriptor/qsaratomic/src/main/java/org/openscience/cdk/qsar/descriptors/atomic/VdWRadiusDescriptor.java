@@ -18,6 +18,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import java.io.IOException;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -28,10 +29,8 @@ import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
-import java.io.IOException;
-
 /**
- *  This class return the VdW radius of a given atom.
+ * This class return the VdW radius of a given atom.
  *
  * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
@@ -46,9 +45,9 @@ import java.io.IOException;
  *   </tr>
  * </table>
  *
- * @author         mfe4
- * @cdk.created    2004-11-13
- * @cdk.module     qsaratomic
+ * @author mfe4
+ * @cdk.created 2004-11-13
+ * @cdk.module qsaratomic
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:vdwradius
  */
@@ -57,24 +56,23 @@ public class VdWRadiusDescriptor extends AbstractAtomicDescriptor implements IAt
     private static final String[] NAMES = {"vdwRadius"};
 
     /**
-     *  Constructor for the VdWRadiusDescriptor object.
+     * Constructor for the VdWRadiusDescriptor object.
      *
-     *  @throws IOException if an error ocurrs when reading atom type information
-     *  @throws ClassNotFoundException if an error occurs during tom typing
+     * @throws IOException if an error ocurrs when reading atom type information
+     * @throws ClassNotFoundException if an error occurs during tom typing
      */
     public VdWRadiusDescriptor() throws IOException, ClassNotFoundException {}
 
     /**
-     * Returns a <code>Map</code> which specifies which descriptor
-     * is implemented by this class.
+     * Returns a <code>Map</code> which specifies which descriptor is implemented by this class.
      *
-     * These fields are used in the map:
+     * <p>These fields are used in the map:
+     *
      * <ul>
-     * <li>Specification-Reference: refers to an entry in a unique dictionary
-     * <li>Implementation-Title: anything
-     * <li>Implementation-Identifier: a unique identifier for this version of
-     *  this class
-     * <li>Implementation-Vendor: CDK, JOELib, or anything else
+     *   <li>Specification-Reference: refers to an entry in a unique dictionary
+     *   <li>Implementation-Title: anything
+     *   <li>Implementation-Identifier: a unique identifier for this version of this class
+     *   <li>Implementation-Vendor: CDK, JOELib, or anything else
      * </ul>
      *
      * @return An object containing the descriptor specification
@@ -82,20 +80,19 @@ public class VdWRadiusDescriptor extends AbstractAtomicDescriptor implements IAt
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#vdwradius", this.getClass()
-                        .getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#vdwradius",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
-    /**
-     * This descriptor does have any parameter.
-     */
+    /** This descriptor does have any parameter. */
     @Override
     public void setParameters(Object[] params) throws CDKException {}
 
     /**
-     *  Gets the parameters attribute of the VdWRadiusDescriptor object.
+     * Gets the parameters attribute of the VdWRadiusDescriptor object.
      *
-     *@return    The parameters value
+     * @return The parameters value
      * @see #setParameters
      */
     @Override
@@ -109,25 +106,27 @@ public class VdWRadiusDescriptor extends AbstractAtomicDescriptor implements IAt
     }
 
     /**
-     *  This method calculate the Van der Waals radius of an atom.
+     * This method calculate the Van der Waals radius of an atom.
      *
-     *@param  container         The {@link IAtomContainer} for which the descriptor is to be calculated
-     *@return                   The Van der Waals radius of the atom
+     * @param container The {@link IAtomContainer} for which the descriptor is to be calculated
+     * @return The Van der Waals radius of the atom
      */
-
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
         String symbol = atom.getSymbol();
         double vdwradius = PeriodicTable.getVdwRadius(symbol);
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                new DoubleResult(vdwradius), NAMES);
-
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new DoubleResult(vdwradius),
+                NAMES);
     }
 
     /**
-     *  Gets the parameterNames attribute of the VdWRadiusDescriptor object.
+     * Gets the parameterNames attribute of the VdWRadiusDescriptor object.
      *
-     *@return    The parameterNames value
+     * @return The parameterNames value
      */
     @Override
     public String[] getParameterNames() {
@@ -137,8 +136,8 @@ public class VdWRadiusDescriptor extends AbstractAtomicDescriptor implements IAt
     /**
      * Gets the parameterType attribute of the VdWRadiusDescriptor object.
      *
-     * @param  name  Description of the Parameter
-     * @return       An Object of class equal to that of the parameter being requested
+     * @param name Description of the Parameter
+     * @return An Object of class equal to that of the parameter being requested
      */
     @Override
     public Object getParameterType(String name) {

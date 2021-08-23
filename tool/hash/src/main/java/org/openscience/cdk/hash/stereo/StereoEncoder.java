@@ -25,44 +25,38 @@
 package org.openscience.cdk.hash.stereo;
 
 /**
- * An encoder for stereo chemistry. The stereo configuration is encoded by
- * checking the {@code current[]} invariant values. If there is a configuration
- * then the appropriate value is the {@code next[]} is modified.
+ * An encoder for stereo chemistry. The stereo configuration is encoded by checking the {@code
+ * current[]} invariant values. If there is a configuration then the appropriate value is the {@code
+ * next[]} is modified.
  *
  * @author John May
  * @cdk.module hash
  */
 public interface StereoEncoder {
 
+    /** empty stereo encoder when no stereo can be perceived */
+    public static StereoEncoder EMPTY =
+            new StereoEncoder() {
+
+                @Override
+                public boolean encode(long[] current, long[] next) {
+                    return false;
+                }
+
+                @Override
+                public void reset() {}
+            };
+
     /**
-     * empty stereo encoder when no stereo can be perceived
-     */
-    public static StereoEncoder EMPTY = new StereoEncoder() {
-
-                                          @Override
-                                          public boolean encode(long[] current, long[] next) {
-                                              return false;
-                                          }
-
-                                          @Override
-                                          public void reset() {}
-                                      };
-
-    /**
-     * Encode one or more stereo elements based on the current invariants. If
-     * any stereo element are uncovered then the corresponding value in the
-     * next[] array is modified.
+     * Encode one or more stereo elements based on the current invariants. If any stereo element are
+     * uncovered then the corresponding value in the next[] array is modified.
      *
      * @param current current invariants
-     * @param next    next invariants
+     * @param next next invariants
      * @return whether any stereo configurations were encoded
      */
     public boolean encode(long[] current, long[] next);
 
-    /**
-     * Reset the stereo-encoders, any currently perceived configurations will be
-     * re-activated.
-     */
+    /** Reset the stereo-encoders, any currently perceived configurations will be re-activated. */
     public void reset();
-
 }

@@ -21,18 +21,14 @@
 package org.openscience.cdk.renderer.color;
 
 import java.awt.Color;
-
 import org.junit.Assert;
 import org.junit.Test;
-
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.interfaces.IAtom;
 
-/**
- * @cdk.module test-render
- */
+/** @cdk.module test-render */
 public class RasmolColorsTest extends CDKTestCase {
 
     @Test
@@ -55,5 +51,4 @@ public class RasmolColorsTest extends CDKTestCase {
         IAtom imaginary = new PseudoAtom("Ix");
         Assert.assertEquals(Color.ORANGE, colors.getAtomColor(imaginary, Color.ORANGE));
     }
-
 }

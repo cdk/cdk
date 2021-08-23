@@ -19,9 +19,8 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import java.io.IOException;
-
-import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.matrix.TopologicalMatrix;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -36,28 +35,30 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- * This class calculates ATS autocorrelation descriptor, where the weight equal
- * to the scaled atomic mass {@cdk.cite Moreau1980}.
+ * This class calculates ATS autocorrelation descriptor, where the weight equal to the scaled atomic
+ * mass {@cdk.cite Moreau1980}.
  *
- * @author      Federico
+ * @author Federico
  * @cdk.created 2007-02-08
- * @cdk.module  qsarmolecular
+ * @cdk.module qsarmolecular
  * @cdk.githash
  */
-public class AutocorrelationDescriptorMass extends AbstractMolecularDescriptor implements IMolecularDescriptor {
+public class AutocorrelationDescriptorMass extends AbstractMolecularDescriptor
+        implements IMolecularDescriptor {
 
-    private final static String[] NAMES       = {"ATSm1", "ATSm2", "ATSm3", "ATSm4", "ATSm5"};
-    private final static double   CARBON_MASS = 12.010735896788;
+    private static final String[] NAMES = {"ATSm1", "ATSm2", "ATSm3", "ATSm4", "ATSm5"};
+    private static final double CARBON_MASS = 12.010735896788;
 
-    private static double scaledAtomicMasses(IElement element) throws java.io.IOException, ClassNotFoundException {
+    private static double scaledAtomicMasses(IElement element)
+            throws java.io.IOException, ClassNotFoundException {
 
         IsotopeFactory isofac = Isotopes.getInstance();
         double realmasses = isofac.getNaturalMass(element);
         return (realmasses / CARBON_MASS);
-
     }
 
-    private static double[] listConvertion(IAtomContainer container) throws java.io.IOException, ClassNotFoundException {
+    private static double[] listConvertion(IAtomContainer container)
+            throws java.io.IOException, ClassNotFoundException {
         int natom = container.getAtomCount();
 
         double[] scalated = new double[natom];
@@ -68,9 +69,7 @@ public class AutocorrelationDescriptorMass extends AbstractMolecularDescriptor i
         return scalated;
     }
 
-    /**
-     * This method calculate the ATS Autocorrelation descriptor.
-     */
+    /** This method calculate the ATS Autocorrelation descriptor. */
     @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer container;
@@ -79,10 +78,14 @@ public class AutocorrelationDescriptorMass extends AbstractMolecularDescriptor i
             container = AtomContainerManipulator.removeHydrogens(container);
         } catch (CloneNotSupportedException e) {
             DoubleArrayResult result = new DoubleArrayResult(5);
-            for (int i = 0; i < 5; i++)
-                result.add(Double.NaN);
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result,
-                    getDescriptorNames(), new CDKException("Error during cloner: " + e.getMessage(), e));
+            for (int i = 0; i < 5; i++) result.add(Double.NaN);
+            return new DescriptorValue(
+                    getSpecification(),
+                    getParameterNames(),
+                    getParameters(),
+                    result,
+                    getDescriptorNames(),
+                    new CDKException("Error during cloner: " + e.getMessage(), e));
         }
 
         try {
@@ -97,28 +100,35 @@ public class AutocorrelationDescriptorMass extends AbstractMolecularDescriptor i
 
                         if (distancematrix[i][j] == k) {
                             masSum[k] += w[i] * w[j];
-                        } else
-                            masSum[k] += 0.0;
+                        } else masSum[k] += 0.0;
                     }
                 }
                 if (k > 0) masSum[k] = masSum[k] / 2;
-
             }
             DoubleArrayResult result = new DoubleArrayResult(5);
             for (double aMasSum : masSum) {
                 result.add(aMasSum);
             }
 
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result,
+            return new DescriptorValue(
+                    getSpecification(),
+                    getParameterNames(),
+                    getParameters(),
+                    result,
                     getDescriptorNames());
 
         } catch (IOException | ClassNotFoundException ex) {
             DoubleArrayResult result = new DoubleArrayResult(5);
-            for (int i = 0; i < 5; i++)
-                result.add(Double.NaN);
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result,
-                    getDescriptorNames(), new CDKException("Error while calculating the ATS_mass descriptor: "
-                            + ex.getMessage(), ex));
+            for (int i = 0; i < 5; i++) result.add(Double.NaN);
+            return new DescriptorValue(
+                    getSpecification(),
+                    getParameterNames(),
+                    getParameters(),
+                    result,
+                    getDescriptorNames(),
+                    new CDKException(
+                            "Error while calculating the ATS_mass descriptor: " + ex.getMessage(),
+                            ex));
         }
     }
 
@@ -145,8 +155,9 @@ public class AutocorrelationDescriptorMass extends AbstractMolecularDescriptor i
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationMass", this
-                        .getClass().getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationMass",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     @Override
@@ -155,8 +166,5 @@ public class AutocorrelationDescriptorMass extends AbstractMolecularDescriptor i
     }
 
     @Override
-    public void setParameters(Object[] params) throws CDKException {
-
-    }
-
+    public void setParameters(Object[] params) throws CDKException {}
 }

@@ -23,46 +23,45 @@
 
 package org.openscience.cdk.renderer.generators.standard;
 
-import org.openscience.cdk.config.Elements;
-
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
+import org.openscience.cdk.config.Elements;
 
 /**
  * Utility class for handling/formatting abbreviation (superatom) labels.
- * 
- * Depending on orientation a label may need to be reversed. For example
- * consider '-OAc', if the bond exits from the right it is preferable to
- * write it 'AcO-'. Other labels don't need reversing at all (e.g. tBu).
- * We reverse labels by spiting them up into 'tokens', reversing token order, * and then joining them back together.
- * 
- * Abbreviation labels that are formulas benefit from sub and subscripting
- * certain parts. For example OPO3H2 looks better with the digits 3 and 2
- * rendered in subscript.
+ *
+ * <p>Depending on orientation a label may need to be reversed. For example consider '-OAc', if the
+ * bond exits from the right it is preferable to write it 'AcO-'. Other labels don't need reversing
+ * at all (e.g. tBu). We reverse labels by spiting them up into 'tokens', reversing token order, *
+ * and then joining them back together.
+ *
+ * <p>Abbreviation labels that are formulas benefit from sub and subscripting certain parts. For
+ * example OPO3H2 looks better with the digits 3 and 2 rendered in subscript.
  */
 final class AbbreviationLabel {
 
-    /**
-     * Better rendering of negative charge by using minus and not
-     * an ascii hyphen.
-     */
+    /** Better rendering of negative charge by using minus and not an ascii hyphen. */
     private static final String MINUS_STRING = "\u2212";
 
     // chemical symbol prefixes
-    private final static String[] PREFIX_LIST = new String[]{
-            "n", "norm", "n-", "c", "cy", "cyc", "cyclo", "c-", "cy-", "cyc-", "i", "iso", "i-", "t", "tert", "t-", "s",
-            "sec", "s-", "o", "ortho", "o-", "m", "meta", "m-", "p", "para", "p-", "1-", "2-", "3-", "4-", "5-", "6-",
-            "7-", "8-", "9-"
-    };
+    private static final String[] PREFIX_LIST =
+            new String[] {
+                "n", "norm", "n-", "c", "cy", "cyc", "cyclo", "c-", "cy-", "cyc-", "i", "iso", "i-",
+                        "t", "tert", "t-", "s",
+                "sec", "s-", "o", "ortho", "o-", "m", "meta", "m-", "p", "para", "p-", "1-", "2-",
+                        "3-", "4-", "5-", "6-",
+                "7-", "8-", "9-"
+            };
 
     // see https://en.wikipedia.org/wiki/Wikipedia:Naming_conventions_(chemistry)#Prefixes_in_titles
-    private final static String[] ITAL_PREFIX = new String[]{
-            "n", "norm", "sec", "s", "tert", "t",
-            "ortho", "o", "meta", "m", "para", "p"
-    };
+    private static final String[] ITAL_PREFIX =
+            new String[] {
+                "n", "norm", "sec", "s", "tert", "t",
+                "ortho", "o", "meta", "m", "para", "p"
+            };
 
     // chemical symbols excluding periodic symbols which are loaded separately
     // Some of these are derived from https://github.com/openbabel/superatoms that
@@ -91,21 +90,105 @@ final class AbbreviationLabel {
     //    OTHER DEALINGS IN THE SOFTWARE.
     //
     //    For more information, please refer to <http://unlicense.org/>
-    private final static String[] SYMBOL_LIST = new String[]{"acac", "Ace", "Acetyl", "Acyl", "Ad", "All", "Alloc", "Allyl", "Amyl", "AOC",
-                                                             "BDMS", "Benzoyl", "Benzyl", "Bn", "BOC", "Boc", "BOM", "bpy", "Bromo", "Bs", "Bu", "But", "Butyl", "Bz", "Bzl",
-                                                             "Car", "Cbz", "Chloro", "CoA", "Cy",
-                                                             "dppf", "dppp", "dba", "D", "Dan", "Dansyl", "DEIPS", "DEM", "Dip", "Dmb", "DPA", "DTBMS",
-                                                             "EE", "EOM", "Et", "Ethyl",
-                                                             "Fluoro", "FMOC", "Fmoc", "Formyl",
-                                                             "Heptyl", "Hexyl",
-                                                             "Iodo", "IPDMS",
-                                                             "Me", "MEM", "Mesityl", "Mesyl", "Methoxy", "Methyl", "MOM", "Ms",
-                                                             "Nitro",
-                                                             "Oct", "Octyl",
-                                                             "PAB", "Pentyl", "Ph", "Phenyl", "Pivaloyl", "PMB", "Pro", "Propargyl", "Propyl", "Pv",
-                                                             "R", "SEM",
-                                                             "T", "TBS", "TBDMS", "Trt", "TBDPS", "TES", "Tf", "THP", "THPO", "TIPS", "TMS", "Tos", "Tol", "Tosyl", "Tr", "Troc",
-                                                             "Vinyl", "Voc", "Z"};
+    private static final String[] SYMBOL_LIST =
+            new String[] {
+                "acac",
+                "Ace",
+                "Acetyl",
+                "Acyl",
+                "Ad",
+                "All",
+                "Alloc",
+                "Allyl",
+                "Amyl",
+                "AOC",
+                "BDMS",
+                "Benzoyl",
+                "Benzyl",
+                "Bn",
+                "BOC",
+                "Boc",
+                "BOM",
+                "bpy",
+                "Bromo",
+                "Bs",
+                "Bu",
+                "But",
+                "Butyl",
+                "Bz",
+                "Bzl",
+                "Car",
+                "Cbz",
+                "Chloro",
+                "CoA",
+                "Cy",
+                "dppf",
+                "dppp",
+                "dba",
+                "D",
+                "Dan",
+                "Dansyl",
+                "DEIPS",
+                "DEM",
+                "Dip",
+                "Dmb",
+                "DPA",
+                "DTBMS",
+                "EE",
+                "EOM",
+                "Et",
+                "Ethyl",
+                "Fluoro",
+                "FMOC",
+                "Fmoc",
+                "Formyl",
+                "Heptyl",
+                "Hexyl",
+                "Iodo",
+                "IPDMS",
+                "Me",
+                "MEM",
+                "Mesityl",
+                "Mesyl",
+                "Methoxy",
+                "Methyl",
+                "MOM",
+                "Ms",
+                "Nitro",
+                "Oct",
+                "Octyl",
+                "PAB",
+                "Pentyl",
+                "Ph",
+                "Phenyl",
+                "Pivaloyl",
+                "PMB",
+                "Pro",
+                "Propargyl",
+                "Propyl",
+                "Pv",
+                "R",
+                "SEM",
+                "T",
+                "TBS",
+                "TBDMS",
+                "Trt",
+                "TBDPS",
+                "TES",
+                "Tf",
+                "THP",
+                "THPO",
+                "TIPS",
+                "TMS",
+                "Tos",
+                "Tol",
+                "Tosyl",
+                "Tr",
+                "Troc",
+                "Vinyl",
+                "Voc",
+                "Z"
+            };
 
     private static Trie PREFIX_TRIE = new Trie();
     private static Trie ITAL_PREFIX_TRIE = new Trie();
@@ -113,25 +196,20 @@ final class AbbreviationLabel {
 
     // build the tries on class init
     static {
-        for (String str : PREFIX_LIST)
-            insert(PREFIX_TRIE, str, 0);
-        for (String str : ITAL_PREFIX)
-            insert(ITAL_PREFIX_TRIE, str, 0);
+        for (String str : PREFIX_LIST) insert(PREFIX_TRIE, str, 0);
+        for (String str : ITAL_PREFIX) insert(ITAL_PREFIX_TRIE, str, 0);
         for (Elements elem : Elements.values())
-            if (!elem.symbol().isEmpty())
-                insert(SYMBOL_TRIE, elem.symbol(), 0);
-        for (String str : SYMBOL_LIST)
-            insert(SYMBOL_TRIE, str, 0);
+            if (!elem.symbol().isEmpty()) insert(SYMBOL_TRIE, elem.symbol(), 0);
+        for (String str : SYMBOL_LIST) insert(SYMBOL_TRIE, str, 0);
     }
 
-    static int STYLE_NORMAL    = 0;
+    static int STYLE_NORMAL = 0;
     static int STYLE_SUBSCRIPT = -1;
     static int STYLE_SUPSCRIPT = +1;
-    static int STYLE_ITALIC    = 2;
+    static int STYLE_ITALIC = 2;
 
     /**
-     * A small class to help describe which parts of a string
-     * are super and subscript (style field).
+     * A small class to help describe which parts of a string are super and subscript (style field).
      */
     static final class FormattedText {
         String text;
@@ -144,20 +222,16 @@ final class AbbreviationLabel {
     }
 
     /**
-     * Split a label it to recognised tokens for reversing, the
-     * validity of the label is not checked! The method is intended
-     * for zero/single attachments only and linkers are not supported.
-     * 
-     * 
-     * Example: 
-     * {@code NHCH2Ph -> N,H,C,H2,Ph -> reverse/join -> PhH2CHN}
-     * 
-     * 
-     * 
-     * The method return value signals whether formula
-     * formatting (sub- and super- script) can be applied.
+     * Split a label it to recognised tokens for reversing, the validity of the label is not
+     * checked! The method is intended for zero/single attachments only and linkers are not
+     * supported.
      *
-     * @param label  abbreviation label
+     * <p>Example: {@code NHCH2Ph -> N,H,C,H2,Ph -> reverse/join -> PhH2CHN}
+     *
+     * <p>The method return value signals whether formula formatting (sub- and super- script) can be
+     * applied.
+     *
+     * @param label abbreviation label
      * @param tokens the list of tokens from the input (n>0)
      * @return whether the label parsed okay (i.e. apply formatting)
      */
@@ -184,8 +258,7 @@ final class AbbreviationLabel {
                     while (i < len && isDigit(c = label.charAt(i))) {
                         i++;
                     }
-                    if (i > st)
-                        tokens.add(label.substring(st, i));
+                    if (i > st) tokens.add(label.substring(st, i));
                 }
 
                 continue;
@@ -200,8 +273,7 @@ final class AbbreviationLabel {
                 while (i < label.length() && isDigit(label.charAt(i))) {
                     i++;
                 }
-                if (i > beg)
-                    tokens.add(label.substring(beg, i));
+                if (i > beg) tokens.add(label.substring(beg, i));
                 continue;
             }
 
@@ -247,10 +319,10 @@ final class AbbreviationLabel {
     }
 
     /**
-     * Abort call when a label could not be parsed. The tokens are cleared
-     * and replaced with the original label.
+     * Abort call when a label could not be parsed. The tokens are cleared and replaced with the
+     * original label.
      *
-     * @param label  the original label
+     * @param label the original label
      * @param tokens the current tokens
      * @return always returns false
      */
@@ -261,15 +333,12 @@ final class AbbreviationLabel {
     }
 
     private static boolean isNumber(String str) {
-        for (int i = 0; i < str.length(); i++)
-            if (!isDigit(str.charAt(i)))
-                return false;
+        for (int i = 0; i < str.length(); i++) if (!isDigit(str.charAt(i))) return false;
         return true;
     }
 
     /**
-     * Reverse a list of tokens for display, flipping
-     * brackets as needed.
+     * Reverse a list of tokens for display, flipping brackets as needed.
      *
      * @param tokens list of tokens
      */
@@ -286,10 +355,9 @@ final class AbbreviationLabel {
                     tokens.add(i + 1, num);
                     i++;
                 }
-            }
-            else if (token.equals(")")) {
+            } else if (token.equals(")")) {
                 tokens.set(i, "(");
-                if (i>0 && isNumber(tokens.get(i - 1))) {
+                if (i > 0 && isNumber(tokens.get(i - 1))) {
                     numbers.push(tokens.remove(i - 1));
                     i--;
                 } else {
@@ -300,9 +368,8 @@ final class AbbreviationLabel {
     }
 
     /**
-     * Format and optimise the tokens for rendering (e.g. "OAc" or "AcO"
-     * can be done in one go) and mark tokens that are subscript (-1)
-     * or superscript (+1).
+     * Format and optimise the tokens for rendering (e.g. "OAc" or "AcO" can be done in one go) and
+     * mark tokens that are subscript (-1) or superscript (+1).
      *
      * @param tokens tokenized label
      */
@@ -318,26 +385,25 @@ final class AbbreviationLabel {
                 texts.add(new FormattedText(coef + sign, STYLE_SUPSCRIPT));
             }
             // subscript number after brackets
-            else if (token.length() == 1 && isDigit(token.charAt(0)) && !texts.isEmpty() && texts.get(texts.size()-1).text.equals(")")) {
+            else if (token.length() == 1
+                    && isDigit(token.charAt(0))
+                    && !texts.isEmpty()
+                    && texts.get(texts.size() - 1).text.equals(")")) {
                 texts.add(new FormattedText(token, STYLE_SUBSCRIPT));
-            }
-            else {
+            } else {
                 // optional prefix
                 int i = findPrefix(ITAL_PREFIX_TRIE, token, 0, 0);
                 // find a numeric suffix to subscript
                 int j = token.length();
-                while (j > 0 && isDigit(token.charAt(j - 1)))
-                    j--;
+                while (j > 0 && isDigit(token.charAt(j - 1))) j--;
                 // check if we have numeric suffix
                 if (j > 0 && j < token.length()) {
                     if (i > j) i = 0; // prefix overlaps with suffix so don't use it
-                    if (i > 0)
-                        texts.add(new FormattedText(token.substring(0, i), STYLE_ITALIC));
+                    if (i > 0) texts.add(new FormattedText(token.substring(0, i), STYLE_ITALIC));
                     texts.add(new FormattedText(token.substring(i, j), STYLE_NORMAL));
                     texts.add(new FormattedText(token.substring(j), STYLE_SUBSCRIPT));
                 } else {
-                    if (i > 0)
-                        texts.add(new FormattedText(token.substring(0, i), STYLE_ITALIC));
+                    if (i > 0) texts.add(new FormattedText(token.substring(0, i), STYLE_ITALIC));
                     texts.add(new FormattedText(token.substring(i), STYLE_NORMAL));
                 }
             }
@@ -402,25 +468,21 @@ final class AbbreviationLabel {
     }
 
     /**
-     * Find the longest prefix from position (i) in this string that
-     * is present in the trie symbol table.
+     * Find the longest prefix from position (i) in this string that is present in the trie symbol
+     * table.
      *
-     * @param trie   trie node (start with root)
+     * @param trie trie node (start with root)
      * @param string string to find a prefix of
-     * @param i      the position in the string
-     * @param best   best score so far (-1 to start)
+     * @param i the position in the string
+     * @param best best score so far (-1 to start)
      * @return the length of the prefix
      */
     private static int findPrefix(Trie trie, String string, int i, int best) {
-        if (trie == null)
-            return best;
-        if (trie.token != null)
-            best = i;
-        if (i == string.length())
-            return best;
+        if (trie == null) return best;
+        if (trie.token != null) best = i;
+        if (i == string.length()) return best;
         final char c = norm(string.charAt(i));
-        if (c > 128)
-            return best;
+        if (c > 128) return best;
         return findPrefix(trie.children[c], string, i + 1, best);
     }
 
@@ -428,13 +490,12 @@ final class AbbreviationLabel {
      * Insert a string (str) into the trie.
      *
      * @param trie trie node
-     * @param str  the string to insert
-     * @param i    index in the string
+     * @param str the string to insert
+     * @param i index in the string
      * @return a created child node or null
      */
     private static Trie insert(Trie trie, String str, int i) {
-        if (trie == null)
-            trie = new Trie();
+        if (trie == null) trie = new Trie();
         if (i == str.length()) {
             trie.token = str;
         } else {
@@ -444,9 +505,7 @@ final class AbbreviationLabel {
         return trie;
     }
 
-    /**
-     * A trie symbol table node.
-     */
+    /** A trie symbol table node. */
     private static final class Trie {
         String token;
         Trie[] children = new Trie[128];

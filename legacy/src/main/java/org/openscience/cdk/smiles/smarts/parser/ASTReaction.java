@@ -29,16 +29,12 @@ package org.openscience.cdk.smiles.smarts.parser;
 @Deprecated
 class ASTReaction extends SimpleNode {
 
-    /**
-     * Creates a new instance.
-     */
+    /** Creates a new instance. */
     public ASTReaction(int id) {
         super(id);
     }
 
-    /**
-     * Creates a new instance.
-     */
+    /** Creates a new instance. */
     public ASTReaction(SMARTSParser p, int id) {
         super(p, id);
     }

@@ -19,27 +19,25 @@
  */
 package org.openscience.cdk;
 
+import java.io.Serializable;
+import java.util.Iterator;
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-import java.io.Serializable;
-import java.util.Iterator;
-
 /**
- * Implements the concept of a covalent bond between two or more atoms. A bond is
- * considered to be a number of electrons connecting two or more  of atoms.
- * 
- * It should be noted that the majority of applications will consider 2-center bonds,
- * especially since the bond orders currently supported are really only valid for
- * 2-center bonds. However the code does support multi-center bonds, though the
- * orders may not make sense at this point.
- * 
- * In general code that assumes bonds are 2-centered can use this class seamlessly, as
- * the semantics are identical to the older versions. Care shoud be exercised when
- * using multi-center bonds using this class as the orders may not make sense.
+ * Implements the concept of a covalent bond between two or more atoms. A bond is considered to be a
+ * number of electrons connecting two or more of atoms.
+ *
+ * <p>It should be noted that the majority of applications will consider 2-center bonds, especially
+ * since the bond orders currently supported are really only valid for 2-center bonds. However the
+ * code does support multi-center bonds, though the orders may not make sense at this point.
+ *
+ * <p>In general code that assumes bonds are 2-centered can use this class seamlessly, as the
+ * semantics are identical to the older versions. Care shoud be exercised when using multi-center
+ * bonds using this class as the orders may not make sense.
  *
  * @author steinbeck
  * @cdk.module data
@@ -53,39 +51,29 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 
     /**
      * Determines if a de-serialized object is compatible with this class.
-     * 
-     * This value must only be changed if and only if the new version
-     * of this class is incompatible with the old version. See Sun docs
-     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
+     *
+     * <p>This value must only be changed if and only if the new version of this class is
+     * incompatible with the old version. See Sun docs for <a
+     * href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
      */
     private static final long serialVersionUID = 7057060562283387384L;
 
-    /**
-     * The bond order of this bond.
-     */
-    protected IBond.Order     order            = (Order) CDKConstants.UNSET;
+    /** The bond order of this bond. */
+    protected IBond.Order order = (Order) CDKConstants.UNSET;
 
-    /**
-     * Number of atoms contained by this object.
-     */
-    protected int             atomCount        = 0;
+    /** Number of atoms contained by this object. */
+    protected int atomCount = 0;
 
-    /**
-     * A list of atoms participating in this bond.
-     */
-    protected IAtom[]         atoms            = null;
+    /** A list of atoms participating in this bond. */
+    protected IAtom[] atoms = null;
 
-    /**
-     * A descriptor the stereochemical orientation of this bond.
-     */
-    protected IBond.Stereo    stereo;
+    /** A descriptor the stereochemical orientation of this bond. */
+    protected IBond.Stereo stereo;
 
     protected IBond.Display display = Display.Solid;
 
-    /**
-     * Constructs an empty bond.
-     */
+    /** Constructs an empty bond. */
     public Bond() {
         this(null, null, null, IBond.Stereo.NONE);
         atomCount = 0;
@@ -137,12 +125,11 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
     }
 
     /**
-     * Constructs a bond with a given order and stereo orientation from an array
-     * of atoms.
+     * Constructs a bond with a given order and stereo orientation from an array of atoms.
      *
-     * @param atom1  the first Atom in the bond
-     * @param atom2  the second Atom in the bond
-     * @param order  the bond order
+     * @param atom1 the first Atom in the bond
+     * @param atom2 the second Atom in the bond
+     * @param order the bond order
      * @param stereo a descriptor the stereochemical orientation of this bond
      */
     public Bond(IAtom atom1, IAtom atom2, Order order, IBond.Stereo stereo) {
@@ -156,8 +143,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
     }
 
     /**
-     * Returns the Iterator to atoms making up this bond.
-     * Iterator.remove() is not implemented.
+     * Returns the Iterator to atoms making up this bond. Iterator.remove() is not implemented.
      *
      * @return An Iterator to atoms participating in this bond
      * @see #setAtoms
@@ -173,25 +159,19 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
         };
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getIndex() {
         return -1;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtomContainer getContainer() {
         return null;
     }
 
-    /**
-     * The inner Iterator class.
-     */
+    /** The inner Iterator class. */
     private class AtomsIterator implements Iterator<IAtom> {
 
         private int pointer = 0;
@@ -209,7 +189,6 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 
         @Override
         public void remove() {}
-
     }
 
     /**
@@ -244,58 +223,43 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      */
     @Override
     public IAtom getAtom(int position) {
-        if (atoms == null)
-            return null;
-        else
-            return atoms[position];
+        if (atoms == null) return null;
+        else return atoms[position];
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public IAtom getBegin() {
         return atomCount < 1 ? null : atoms[0];
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public IAtom getEnd() {
         return atomCount < 2 ? null : atoms[1];
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtom getOther(IAtom atom) {
-        if (atoms[0].equals(atom))
-            return atoms[1];
-        else if (atoms[1].equals(atom))
-            return atoms[0];
+        if (atoms[0].equals(atom)) return atoms[1];
+        else if (atoms[1].equals(atom)) return atoms[0];
         return null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtom getConnectedAtom(IAtom atom) {
         return getOther(atom);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtom[] getConnectedAtoms(IAtom atom) {
         if (atomCount < 1) return null;
-        IAtom[] connected = new IAtom[atomCount-1];
+        IAtom[] connected = new IAtom[atomCount - 1];
         int j = 0;
         for (int i = 0; i < atomCount; i++) {
             if (!this.atoms[i].equals(atom)) {
-                if (j >= connected.length)
-                    return null;
+                if (j >= connected.length) return null;
                 connected[j++] = this.atoms[i];
             }
         }
@@ -320,7 +284,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
     /**
      * Sets an Atom in this bond.
      *
-     * @param atom     The atom to be set
+     * @param atom The atom to be set
      * @param position The position in this bond where the atom is to be inserted
      * @see #getAtom
      */
@@ -336,8 +300,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      * Returns the bond order of this bond.
      *
      * @return The bond order of this bond
-     * @see org.openscience.cdk.CDKConstants org.openscience.cdk.CDKConstants
-     *      for predefined values.
+     * @see org.openscience.cdk.CDKConstants org.openscience.cdk.CDKConstants for predefined values.
      * @see #setOrder
      */
     @Override
@@ -349,8 +312,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      * Sets the bond order of this bond.
      *
      * @param order The bond order to be assigned to this bond
-     * @see org.openscience.cdk.CDKConstants
-     *      org.openscience.cdk.CDKConstants for predefined values.
+     * @see org.openscience.cdk.CDKConstants org.openscience.cdk.CDKConstants for predefined values.
      * @see #getOrder
      */
     @Override
@@ -435,16 +397,12 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
         notifyChanged();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public IBond.Display getDisplay() {
         return display;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void setDisplay(IBond.Display display) {
         this.display = display;
         notifyChanged();
@@ -464,7 +422,8 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
             yOfCenter += atom.getPoint2d().y;
         }
 
-        return new Point2d(xOfCenter / ((double) getAtomCount()), yOfCenter / ((double) getAtomCount()));
+        return new Point2d(
+                xOfCenter / ((double) getAtomCount()), yOfCenter / ((double) getAtomCount()));
     }
 
     /**
@@ -483,7 +442,8 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
             zOfCenter += atom.getPoint3d().z;
         }
 
-        return new Point3d(xOfCenter / getAtomCount(), yOfCenter / getAtomCount(), zOfCenter / getAtomCount());
+        return new Point3d(
+                xOfCenter / getAtomCount(), yOfCenter / getAtomCount(), zOfCenter / getAtomCount());
     }
 
     /**
@@ -503,7 +463,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
             }
 
             // not important ??!!
-            //if (order==bond.order)
+            // if (order==bond.order)
             //  return false;
 
             return true;
@@ -512,8 +472,8 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
     }
 
     /**
-     * Checks whether a bond is connected to another one.
-     * This can only be true if the bonds have an Atom in common.
+     * Checks whether a bond is connected to another one. This can only be true if the bonds have an
+     * Atom in common.
      *
      * @param bond The bond which is checked to be connect with this one
      * @return true if the bonds share an atom, otherwise false
@@ -551,8 +511,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
     }
 
     /**
-     * Clones this bond object, including clones of the atoms between which the
-     * bond is defined.
+     * Clones this bond object, including clones of the atoms between which the bond is defined.
      *
      * @return The cloned object
      */
@@ -571,27 +530,21 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
         return clone;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int hashCode() {
         return super.hashCode();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof BondRef)
-            return super.equals(((BondRef) obj).deref());
+        if (obj instanceof BondRef) return super.equals(((BondRef) obj).deref());
         return super.equals(obj);
     }
 
     /**
-     * Returns a one line string representation of this Container. This method is
-     * conform RFC #9.
+     * Returns a one line string representation of this Container. This method is conform RFC #9.
      *
      * @return The string representation of this Container
      */
@@ -613,5 +566,4 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
         resultString.append(')');
         return resultString.toString();
     }
-
 }

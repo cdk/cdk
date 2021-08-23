@@ -31,22 +31,21 @@ import java.util.List;
  * Entry in a Dictionary for reactions.
  *
  * @author Miguel Rojas &lt;miguelrojasch@users.sf.net&gt;
- * @cdk.created  2008-01-01
- * @cdk.keyword  dictionary
- * @cdk.module   dict
+ * @cdk.created 2008-01-01
+ * @cdk.keyword dictionary
+ * @cdk.module dict
  * @cdk.githash
- *
- * @see          Dictionary
+ * @see Dictionary
  */
 public class EntryReact extends Entry {
 
-    private List<String>            reactionInfo;
-    private List<String>            representations;
+    private List<String> reactionInfo;
+    private List<String> representations;
     private HashMap<String, String> parameters;
-    private List<String>            parametersValue;
-    private List<String>            reactionExample;
-    private List<List<String>>      parameterClass;
-    private String                  mechanism;
+    private List<String> parametersValue;
+    private List<String> reactionExample;
+    private List<List<String>> parameterClass;
+    private String mechanism;
 
     /**
      * Constructor of the EntryReact.
@@ -103,7 +102,7 @@ public class EntryReact extends Entry {
      *
      * @param nameParam The parameter names of the reaction as String
      * @param typeParam The parameter types of the reaction as String
-     * @param value     The value default of the parameter
+     * @param value The value default of the parameter
      */
     public void setParameters(String nameParam, String typeParam, String value) {
         this.parameters.put(nameParam, typeParam);
@@ -172,14 +171,10 @@ public class EntryReact extends Entry {
      */
     public void addExampleReaction(String xml) {
         this.reactionExample.add(xml);
-
     }
 
-    /**
-     * @return A List of reactions in XML schema.
-     */
+    /** @return A List of reactions in XML schema. */
     public List<String> getExampleReactions() {
         return this.reactionExample;
-
     }
 }

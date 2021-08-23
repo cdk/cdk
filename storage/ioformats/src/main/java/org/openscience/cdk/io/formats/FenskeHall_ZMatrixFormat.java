@@ -21,9 +21,7 @@ package org.openscience.cdk.io.formats;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
- *
  * @author Miguel Rojas
- *
  * @cdk.module ioformats
  * @cdk.githash
  */
@@ -59,7 +57,7 @@ public class FenskeHall_ZMatrixFormat extends AbstractResourceFormat implements 
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"fh"};
+        return new String[] {"fh"};
     }
 
     /** {@inheritDoc} */

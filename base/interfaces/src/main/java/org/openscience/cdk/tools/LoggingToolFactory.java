@@ -23,6 +23,7 @@ import java.lang.reflect.Method;
 
 /**
  * Factory used to instantiate a {@link ILoggingTool}. To get an instance, run:
+ *
  * <pre>
  * public class SomeClass {
  *   private static ILoggingTool logger;
@@ -39,9 +40,10 @@ import java.lang.reflect.Method;
 public class LoggingToolFactory {
 
     /** Default logging tool. Currently, the log4j based one. */
-    public final static String                   DEFAULT_LOGGING_TOOL_CLASS = "org.openscience.cdk.tools.LoggingTool";
+    public static final String DEFAULT_LOGGING_TOOL_CLASS = "org.openscience.cdk.tools.LoggingTool";
     /** Back-up logging tool. Currently, a tool that outputs to System.out. */
-    public final static String                   STDOUT_LOGGING_TOOL_CLASS  = "org.openscience.cdk.tools.SystemOutLoggingTool";
+    public static final String STDOUT_LOGGING_TOOL_CLASS =
+            "org.openscience.cdk.tools.SystemOutLoggingTool";
 
     private static Class<? extends ILoggingTool> userSetILoggerTool;
 
@@ -49,7 +51,7 @@ public class LoggingToolFactory {
      * Sets the {@link ILoggingTool} implementation to be used.
      *
      * @param loggingTool The new {@link ILoggingTool}.
-     * @see   #getLoggingToolClass()
+     * @see #getLoggingToolClass()
      */
     public static void setLoggingToolClass(Class<? extends ILoggingTool> loggingTool) {
         LoggingToolFactory.userSetILoggerTool = loggingTool;
@@ -59,19 +61,17 @@ public class LoggingToolFactory {
      * Gets the currently used {@link ILoggingTool} implementation.
      *
      * @return The currently used {@link ILoggingTool}.
-     * @see    #setLoggingToolClass(Class)
+     * @see #setLoggingToolClass(Class)
      */
     public static Class<? extends ILoggingTool> getLoggingToolClass() {
         return LoggingToolFactory.userSetILoggerTool;
     }
 
     /**
-     * Dynamically create a {@link ILoggingTool} for the given
-     * <code>sourceClass</code>.
+     * Dynamically create a {@link ILoggingTool} for the given <code>sourceClass</code>.
      *
-     * @param  sourceClass Class for which the {@link ILoggingTool} should be
-     *                     constructed.
-     * @return             An {@link ILoggingTool} implementation.
+     * @param sourceClass Class for which the {@link ILoggingTool} should be constructed.
+     * @return An {@link ILoggingTool} implementation.
      */
     public static ILoggingTool createLoggingTool(Class<?> sourceClass) {
         ILoggingTool tool = null;
@@ -101,7 +101,8 @@ public class LoggingToolFactory {
         return null;
     }
 
-    private static ILoggingTool instantiateWithCreateMethod(Class<?> sourceClass, Class<?> loggingToolClass) {
+    private static ILoggingTool instantiateWithCreateMethod(
+            Class<?> sourceClass, Class<?> loggingToolClass) {
         Method createMethod;
         try {
             createMethod = loggingToolClass.getMethod("create", Class.class);
@@ -109,7 +110,9 @@ public class LoggingToolFactory {
             if (createdLoggingTool instanceof ILoggingTool) {
                 return (ILoggingTool) createdLoggingTool;
             } else {
-                System.out.println("Expected ILoggingTool, but found a:" + createdLoggingTool.getClass().getName());
+                System.out.println(
+                        "Expected ILoggingTool, but found a:"
+                                + createdLoggingTool.getClass().getName());
             }
         } catch (SecurityException e) {
         } catch (NoSuchMethodException e) {
@@ -119,5 +122,4 @@ public class LoggingToolFactory {
         }
         return null;
     }
-
 }

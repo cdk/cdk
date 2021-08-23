@@ -24,10 +24,9 @@
 
 package org.openscience.cdk.renderer.generators.standard;
 
-import org.openscience.cdk.config.Elements;
-import org.openscience.cdk.interfaces.IAtom;
+import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.average;
+import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.newUnitVectors;
 
-import javax.vecmath.Vector2d;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -35,53 +34,58 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.average;
-import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.newUnitVectors;
+import javax.vecmath.Vector2d;
+import org.openscience.cdk.config.Elements;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
- * Enumeration of hydrogen label position for 2D depictions. The best placement of the
- * label can depend on a variety of factors. Currently, the {@link #position(IAtom, List)}
- * method decides the position based on the atom and neighbouring atom coordinates.
+ * Enumeration of hydrogen label position for 2D depictions. The best placement of the label can
+ * depend on a variety of factors. Currently, the {@link #position(IAtom, List)} method decides the
+ * position based on the atom and neighbouring atom coordinates.
  *
  * @author John May
  */
 enum HydrogenPosition {
-    Right(0, new Vector2d(1, 0)), Left(Math.PI, new Vector2d(-1, 0)), Above(Math.PI / 2, new Vector2d(0, 1)), Below(
-            Math.PI + (Math.PI / 2), new Vector2d(0, -1));
+    Right(0, new Vector2d(1, 0)),
+    Left(Math.PI, new Vector2d(-1, 0)),
+    Above(Math.PI / 2, new Vector2d(0, 1)),
+    Below(Math.PI + (Math.PI / 2), new Vector2d(0, -1));
 
     /**
-     * When a single atom is displayed in isolation the position defaults to the
-     * right unless the element is listed here. This allows us to correctly
-     * displayed H2O not OH2 and CH4 not H4C.
+     * When a single atom is displayed in isolation the position defaults to the right unless the
+     * element is listed here. This allows us to correctly displayed H2O not OH2 and CH4 not H4C.
      */
-    private static final Set<Elements> PREFIXED_H         = new HashSet<Elements>(Arrays.asList(Elements.Oxygen,
-                                                                  Elements.Sulfur, Elements.Selenium,
-                                                                  Elements.Tellurium, Elements.Fluorine,
-                                                                  Elements.Chlorine, Elements.Bromine, Elements.Iodine));
+    private static final Set<Elements> PREFIXED_H =
+            new HashSet<Elements>(
+                    Arrays.asList(
+                            Elements.Oxygen,
+                            Elements.Sulfur,
+                            Elements.Selenium,
+                            Elements.Tellurium,
+                            Elements.Fluorine,
+                            Elements.Chlorine,
+                            Elements.Bromine,
+                            Elements.Iodine));
 
     /**
-     * When an atom has a single bond, the position is left or right depending
-     * only on this bond. This threshold defines the position at which we flip
-     * from positioning hydrogens on the right to positioning them on the left.
-     * A positive value favours placing them on the right, a negative on the
-     * left.
+     * When an atom has a single bond, the position is left or right depending only on this bond.
+     * This threshold defines the position at which we flip from positioning hydrogens on the right
+     * to positioning them on the left. A positive value favours placing them on the right, a
+     * negative on the left.
      */
-    private static final double        VERTICAL_THRESHOLD = 0.1;
+    private static final double VERTICAL_THRESHOLD = 0.1;
 
-    /**
-     * Tau = 2π.
-     */
-    private static final double        TAU                = Math.PI + Math.PI;
+    /** Tau = 2π. */
+    private static final double TAU = Math.PI + Math.PI;
 
-    /**
-     * Direction this position is pointing in radians.
-     */
-    private final double               direction;
-    private final Vector2d             vector;
+    /** Direction this position is pointing in radians. */
+    private final double direction;
+
+    private final Vector2d vector;
 
     /**
      * Internal - create a hydrogen position pointing int he specified direction.
+     *
      * @param direction angle of the position in radians
      */
     HydrogenPosition(double direction, Vector2d vector) {
@@ -99,8 +103,8 @@ enum HydrogenPosition {
     }
 
     /**
-     * Determine an appropriate position for the hydrogen label of an atom with
-     * the specified neighbors.
+     * Determine an appropriate position for the hydrogen label of an atom with the specified
+     * neighbors.
      *
      * @param atom the atom to which the hydrogen position is being determined
      * @param neighbors atoms adjacent to the 'atom'
@@ -135,7 +139,8 @@ enum HydrogenPosition {
         double[] extents = VecmathUtil.extents(vectors);
         Arrays.sort(extents);
 
-        Map<HydrogenPosition, OffsetExtent> extentMap = new HashMap<HydrogenPosition, OffsetExtent>();
+        Map<HydrogenPosition, OffsetExtent> extentMap =
+                new HashMap<HydrogenPosition, OffsetExtent>();
 
         for (int i = 0; i < extents.length; i++) {
             final double before = extents[i];
@@ -183,9 +188,7 @@ enum HydrogenPosition {
         return best.getKey();
     }
 
-    /**
-     * A simple value class that stores a tuple of an angular extent and an offset.
-     */
+    /** A simple value class that stores a tuple of an angular extent and an offset. */
     private static final class OffsetExtent {
 
         private final double extent;
@@ -193,6 +196,7 @@ enum HydrogenPosition {
 
         /**
          * Internal - create pairing of angular extent and offset.
+         *
          * @param extent the angular extent
          * @param offset offset from the centre of the extent
          */
@@ -201,21 +205,22 @@ enum HydrogenPosition {
             this.offset = offset;
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         public String toString() {
             return String.format("%.2f, %.2f", extent, offset);
         }
     }
 
-    /**
-     * Comparator to prioritise {@link OffsetExtent}s.
-     */
-    private static enum ExtentPriority implements Comparator<Map.Entry<HydrogenPosition, OffsetExtent>> {
+    /** Comparator to prioritise {@link OffsetExtent}s. */
+    private static enum ExtentPriority
+            implements Comparator<Map.Entry<HydrogenPosition, OffsetExtent>> {
         INSTANCE;
 
         @Override
-        public int compare(Map.Entry<HydrogenPosition, OffsetExtent> a, Map.Entry<HydrogenPosition, OffsetExtent> b) {
+        public int compare(
+                Map.Entry<HydrogenPosition, OffsetExtent> a,
+                Map.Entry<HydrogenPosition, OffsetExtent> b) {
 
             OffsetExtent aExtent = a.getValue();
             OffsetExtent bExtent = b.getValue();
@@ -236,8 +241,8 @@ enum HydrogenPosition {
     }
 
     /**
-     * By snapping to the cardinal direction (compass point) of the provided
-     * vector, return the position opposite the 'snapped' coordinate.
+     * By snapping to the cardinal direction (compass point) of the provided vector, return the
+     * position opposite the 'snapped' coordinate.
      *
      * @param opposite position the hydrogen label opposite to this vector
      * @return the position
@@ -267,8 +272,7 @@ enum HydrogenPosition {
     }
 
     /**
-     * Access the default position of the hydrogen label when the atom has no
-     * bonds.
+     * Access the default position of the hydrogen label when the atom has no bonds.
      *
      * @param atom hydrogens will be labelled
      * @return the position

@@ -24,7 +24,6 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Test;
@@ -44,9 +43,8 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
- * This class tests the perception of Sybyl atom types, which uses
- * CDK atom type perception and mapping of CDK atom types to Sybyl
- * atom types.
+ * This class tests the perception of Sybyl atom types, which uses CDK atom type perception and
+ * mapping of CDK atom types to Sybyl atom types.
  *
  * @cdk.module test-atomtype
  */
@@ -74,13 +72,15 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 
     @Test
     public void testGetInstance_IChemObjectBuilder() {
-        IAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(SilentChemObjectBuilder.getInstance());
+        IAtomTypeMatcher matcher =
+                SybylAtomTypeMatcher.getInstance(SilentChemObjectBuilder.getInstance());
         Assert.assertNotNull(matcher);
     }
 
     @Test
     public void testFindMatchingAtomType_IAtomContainer_IAtom() throws Exception {
-        IAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(SilentChemObjectBuilder.getInstance());
+        IAtomTypeMatcher matcher =
+                SybylAtomTypeMatcher.getInstance(SilentChemObjectBuilder.getInstance());
         Assert.assertNotNull(matcher);
         IAtomContainer ethane = TestMoleculeFactory.makeAlkane(2);
         String[] expectedTypes = {"C.3", "C.3"};
@@ -95,7 +95,8 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         IAtomContainer mol = (IAtomContainer) reader.read(new AtomContainer());
 
         // just check consistency; other methods do perception testing
-        SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
+        SybylAtomTypeMatcher matcher =
+                SybylAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
         IAtomType[] types = matcher.findMatchingAtomTypes(mol);
         for (int i = 0; i < types.length; i++) {
             IAtomType type = matcher.findMatchingAtomType(mol, mol.getAtom(i));
@@ -118,14 +119,14 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         Iterator<IAtom> atoms = molecule.atoms().iterator();
         while (atoms.hasNext() && refAtoms.hasNext()) {
             // work around aromaticity, which we skipped for now
-            Assert.assertEquals("Perceived atom type does not match atom type in file", refAtoms.next()
-                    .getAtomTypeName(), atoms.next().getAtomTypeName());
+            Assert.assertEquals(
+                    "Perceived atom type does not match atom type in file",
+                    refAtoms.next().getAtomTypeName(),
+                    atoms.next().getAtomTypeName());
         }
     }
 
-    /**
-     * Uses findMatchingAtomType(IAtomContainer, IAtom) type.
-     */
+    /** Uses findMatchingAtomType(IAtomContainer, IAtom) type. */
     @Test
     public void testBenzene() throws Exception {
         IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
@@ -141,17 +142,21 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     @Test
     public void testAdenine() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makeAdenine();
-        String[] expectedTypes = {"C.ar", "C.ar", "C.ar", "N.ar", "N.ar", "N.ar", "N.ar", "N.3", "C.ar", "C.ar"};
+        String[] expectedTypes = {
+            "C.ar", "C.ar", "C.ar", "N.ar", "N.ar", "N.ar", "N.ar", "N.3", "C.ar", "C.ar"
+        };
         SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(mol.getBuilder());
         IAtomType[] types = matcher.findMatchingAtomTypes(mol);
         for (int i = 0; i < expectedTypes.length; i++) {
-            assertAtomType(testedAtomTypes, "Incorrect perception for atom " + i, expectedTypes[i], types[i]);
+            assertAtomType(
+                    testedAtomTypes,
+                    "Incorrect perception for atom " + i,
+                    expectedTypes[i],
+                    types[i]);
         }
     }
 
-    /**
-     * Uses findMatchingAtomType(IAtomContainer) type.
-     */
+    /** Uses findMatchingAtomType(IAtomContainer) type. */
     @Test
     public void testBenzene_AtomContainer() throws Exception {
         IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
@@ -180,14 +185,14 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         while (atoms.hasNext() && refAtoms.hasNext()) {
             // work around aromaticity, which we skipped for now
             IAtom refAtom = refAtoms.next();
-            Assert.assertEquals("Perceived atom type does not match atom type in file", refAtom.getAtomTypeName(),
+            Assert.assertEquals(
+                    "Perceived atom type does not match atom type in file",
+                    refAtom.getAtomTypeName(),
                     atoms.next().getAtomTypeName());
         }
     }
 
-    /**
-     * @cdk.bug 2445178
-     */
+    /** @cdk.bug 2445178 */
     @Test
     public void testNonExistingType() throws Exception {
         IAtomContainer mol = new AtomContainer();
@@ -215,7 +220,9 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         while (atoms.hasNext() && refAtoms.hasNext()) {
             // work around aromaticity, which we skipped for now
             IAtom refAtom = refAtoms.next();
-            Assert.assertEquals("Perceived atom type does not match atom type in file", refAtom.getAtomTypeName(),
+            Assert.assertEquals(
+                    "Perceived atom type does not match atom type in file",
+                    refAtom.getAtomTypeName(),
                     atoms.next().getAtomTypeName());
         }
     }
@@ -236,7 +243,9 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         while (atoms.hasNext() && refAtoms.hasNext()) {
             // work around aromaticity, which we skipped for now
             IAtom refAtom = refAtoms.next();
-            Assert.assertEquals("Perceived atom type does not match atom type in file", refAtom.getAtomTypeName(),
+            Assert.assertEquals(
+                    "Perceived atom type does not match atom type in file",
+                    refAtom.getAtomTypeName(),
                     atoms.next().getAtomTypeName());
         }
     }
@@ -308,8 +317,8 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 
         String[] expectedTypes = {"C.1", "C.1", "C.3"};
         assertAtomTypeNames(testedAtomTypes, expectedTypes, mol);
-    } 
-    
+    }
+
     @Test
     public void testAllene() throws Exception {
         IAtomContainer mol = new AtomContainer();
@@ -616,8 +625,10 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         IBond b16 = mol.getBuilder().newInstance(IBond.class, a1, a17, IBond.Order.SINGLE);
         mol.addBond(b16);
 
-        String[] expectedTypes = {"Si", "O.3", "O.3", "O.3", "C.3", "C.3", "C.3", "H", "H", "H", "H", "H", "H", "H",
-                "H", "H", "H"};
+        String[] expectedTypes = {
+            "Si", "O.3", "O.3", "O.3", "C.3", "C.3", "C.3", "H", "H", "H", "H", "H", "H", "H", "H",
+            "H", "H"
+        };
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -644,54 +655,59 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         IAtom atom = new Atom("Na");
         atom.setFormalCharge(+1);
         mol.addAtom(atom);
-        String[] expectedTypes = new String[]{"Na"};
+        String[] expectedTypes = new String[] {"Na"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
         mol = new AtomContainer();
         atom = new Atom("K");
         atom.setFormalCharge(+1);
         mol.addAtom(atom);
-        expectedTypes = new String[]{"K"};
+        expectedTypes = new String[] {"K"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
         mol = new AtomContainer();
         atom = new Atom("Ca");
         atom.setFormalCharge(+2);
         mol.addAtom(atom);
-        expectedTypes = new String[]{"Ca"};
+        expectedTypes = new String[] {"Ca"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
         mol = new AtomContainer();
         atom = new Atom("Mg");
         atom.setFormalCharge(+2);
         mol.addAtom(atom);
-        expectedTypes = new String[]{"Mg"};
+        expectedTypes = new String[] {"Mg"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
         mol = new AtomContainer();
         atom = new Atom("Cu");
         atom.setFormalCharge(+2);
         mol.addAtom(atom);
-        expectedTypes = new String[]{"Cu"};
+        expectedTypes = new String[] {"Cu"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
         mol = new AtomContainer();
         atom = new Atom("Al");
         atom.setFormalCharge(+3);
         mol.addAtom(atom);
-        expectedTypes = new String[]{"Al"};
+        expectedTypes = new String[] {"Al"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
     @Test
     public void testH2S() throws Exception {
-        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer mol =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         IAtom s = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "S");
         IAtom h1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "H");
         IAtom h2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "H");
 
-        IBond b1 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class, s, h1, IBond.Order.SINGLE);
-        IBond b2 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class, s, h2, IBond.Order.SINGLE);
+        IBond b1 =
+                DefaultChemObjectBuilder.getInstance()
+                        .newInstance(IBond.class, s, h1, IBond.Order.SINGLE);
+        IBond b2 =
+                DefaultChemObjectBuilder.getInstance()
+                        .newInstance(IBond.class, s, h2, IBond.Order.SINGLE);
 
         mol.addAtom(s);
         mol.addAtom(h1);
@@ -732,8 +748,10 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         ferrocene.addBond(8, 9, Order.SINGLE);
         ferrocene.addBond(9, 5, Order.SINGLE);
 
-        String[] expectedTypes = new String[]{"C.2", "C.2", "C.2", "C.2", "Any", "C.2", "C.2", "C.2", "C.2", "Any",
-                "Fe"};
+        String[] expectedTypes =
+                new String[] {
+                    "C.2", "C.2", "C.2", "C.2", "Any", "C.2", "C.2", "C.2", "C.2", "Any", "Fe"
+                };
         assertAtomTypes(testedAtomTypes, expectedTypes, ferrocene);
     }
 
@@ -755,7 +773,10 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         IAtom nitrogen = benzene.getBuilder().newInstance(IAtom.class, "N");
         benzene.addAtom(nitrogen);
-        benzene.addBond(benzene.getBuilder().newInstance(IBond.class, benzene.getAtom(0), nitrogen, IBond.Order.SINGLE));
+        benzene.addBond(
+                benzene.getBuilder()
+                        .newInstance(
+                                IBond.class, benzene.getAtom(0), nitrogen, IBond.Order.SINGLE));
 
         // test if the perceived atom types match that
         SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(benzene.getBuilder());
@@ -817,18 +838,21 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * @cdk.inchi InChI=1/H2Se/h1H2
-     */
+    /** @cdk.inchi InChI=1/H2Se/h1H2 */
     @Test
     public void testH2Se() throws Exception {
-        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer mol =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         IAtom se = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "Se");
         IAtom h1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "H");
         IAtom h2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "H");
 
-        IBond b1 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class, se, h1, IBond.Order.SINGLE);
-        IBond b2 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class, se, h2, IBond.Order.SINGLE);
+        IBond b1 =
+                DefaultChemObjectBuilder.getInstance()
+                        .newInstance(IBond.class, se, h1, IBond.Order.SINGLE);
+        IBond b2 =
+                DefaultChemObjectBuilder.getInstance()
+                        .newInstance(IBond.class, se, h2, IBond.Order.SINGLE);
 
         mol.addAtom(se);
         mol.addAtom(h1);

@@ -21,12 +21,11 @@ package org.openscience.cdk.silent;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.AbstractAtomTest;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
@@ -40,13 +39,14 @@ public class AtomTest extends AbstractAtomTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new Atom();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new Atom();
+                    }
+                });
     }
 
     @Test
@@ -251,7 +251,7 @@ public class AtomTest extends AbstractAtomTest {
     public void testNotifyChanged_RemoveProperty() {
         ChemObjectTestHelper.testNotifyChanged_RemoveProperty(newChemObject());
     }
-    
+
     @Test
     public void testNewAtomImplicitHydrogenCount() {
         Assert.assertNull(new Atom("C").getImplicitHydrogenCount());
@@ -259,5 +259,5 @@ public class AtomTest extends AbstractAtomTest {
         Assert.assertNull(new Atom("H").getImplicitHydrogenCount());
         Assert.assertNull(new Atom("D").getImplicitHydrogenCount());
         Assert.assertNull(new Atom("T").getImplicitHydrogenCount());
-    }   
+    }
 }

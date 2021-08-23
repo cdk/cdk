@@ -23,6 +23,10 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.*;
+import java.util.StringTokenizer;
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.*;
@@ -31,44 +35,36 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import javax.vecmath.Point3d;
-import javax.vecmath.Vector3d;
-import java.io.*;
-import java.util.StringTokenizer;
-
 /**
- * This is not a reader for the CIF and mmCIF crystallographic formats.
- * It is able, however, to extract some content from such files.
- * It's very ad hoc, not written
- * using any dictionary. So please complain if something is not working.
- * In addition, the things it does read are considered experimental.
+ * This is not a reader for the CIF and mmCIF crystallographic formats. It is able, however, to
+ * extract some content from such files. It's very ad hoc, not written using any dictionary. So
+ * please complain if something is not working. In addition, the things it does read are considered
+ * experimental.
  *
- * <p>The CIF example on the IUCR website has been tested, as well as Crambin (1CRN)
- * in the PDB database.
+ * <p>The CIF example on the IUCR website has been tested, as well as Crambin (1CRN) in the PDB
+ * database.
  *
  * @cdk.module io
  * @cdk.githash
- *
  * @cdk.keyword file format, CIF
  * @cdk.keyword file format, mmCIF
- *
- * @author  E.L. Willighagen
+ * @author E.L. Willighagen
  * @cdk.created 2003-10-12
  * @cdk.iooptions
  */
 public class CIFReader extends DefaultChemObjectReader {
 
-    private BufferedReader      input;
-    private static ILoggingTool logger  = LoggingToolFactory.createLoggingTool(CIFReader.class);
+    private BufferedReader input;
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CIFReader.class);
 
-    private ICrystal            crystal = null;
+    private ICrystal crystal = null;
     // cell parameters
-    private double              a       = 0.0;
-    private double              b       = 0.0;
-    private double              c       = 0.0;
-    private double              alpha   = 0.0;
-    private double              beta    = 0.0;
-    private double              gamma   = 0.0;
+    private double a = 0.0;
+    private double b = 0.0;
+    private double c = 0.0;
+    private double alpha = 0.0;
+    private double beta = 0.0;
+    private double gamma = 0.0;
 
     /**
      * Create an CIF like file reader.
@@ -135,8 +131,7 @@ public class CIFReader extends DefaultChemObjectReader {
     }
 
     /**
-     * Read the ShelX from input. Each ShelX document is expected to contain
-     * one crystal structure.
+     * Read the ShelX from input. Each ShelX document is expected to contain one crystal structure.
      *
      * @return a ChemFile with the coordinates, charges, vectors, etc.
      */
@@ -190,8 +185,7 @@ public class CIFReader extends DefaultChemObjectReader {
                     line = input.readLine();
                     if (line != null && line.startsWith(";")) {
                         logger.debug("Skipping block content");
-                        while ((line = input.readLine()) != null &&
-                               !line.startsWith(";")) {
+                        while ((line = input.readLine()) != null && !line.startsWith(";")) {
                             logger.debug("Skipping block line: ", line);
                         }
                     }
@@ -235,7 +229,8 @@ public class CIFReader extends DefaultChemObjectReader {
         }
     }
 
-    private void possiblySetCellParams(double a, double b, double c, double alpha, double beta, double gamma) {
+    private void possiblySetCellParams(
+            double a, double b, double c, double alpha, double beta, double gamma) {
         if (a != 0.0 && b != 0.0 && c != 0.0 && alpha != 0.0 && beta != 0.0 && gamma != 0.0) {
             logger.info("Found and set crystal cell parameters");
             Vector3d[] axes = CrystalGeometryTools.notionalToCartesian(a, b, c, alpha, beta, gamma);
@@ -270,11 +265,12 @@ public class CIFReader extends DefaultChemObjectReader {
 
     private String skipLoopBody(String line) throws IOException {
         // Then, skip every line that looks like starting with a CIF value:
-        while (line != null && line.length() > 0 &&
-        		line.charAt(0) != '#' &&
-        		line.charAt(0) != '_' &&
-        		!line.startsWith("loop_") &&
-        		!line.startsWith("data_")) {
+        while (line != null
+                && line.length() > 0
+                && line.charAt(0) != '#'
+                && line.charAt(0) != '_'
+                && !line.startsWith("loop_")
+                && !line.startsWith("data_")) {
             line = input.readLine();
             if (line != null) line = line.trim();
         }
@@ -337,16 +333,21 @@ public class CIFReader extends DefaultChemObjectReader {
             return skipLoopBody(line);
         } else {
             // now that headers are parsed, read the data
-            while (line != null && line.length() > 0 &&
-                    line.charAt(0) != '#' &&
-                    line.charAt(0) != '_' &&
-                    !line.startsWith("loop_") &&
-                    !line.startsWith("data_")) {
+            while (line != null
+                    && line.length() > 0
+                    && line.charAt(0) != '#'
+                    && line.charAt(0) != '_'
+                    && !line.startsWith("loop_")
+                    && !line.startsWith("data_")) {
                 logger.debug("new row");
                 StringTokenizer tokenizer = new StringTokenizer(line);
                 if (tokenizer.countTokens() < headerCount) {
                     logger.warn("Column count mismatch; assuming continued on next line");
-                    logger.debug("Found #expected, #found: ", headerCount, ", ", tokenizer.countTokens());
+                    logger.debug(
+                            "Found #expected, #found: ",
+                            headerCount,
+                            ", ",
+                            tokenizer.countTokens());
                     tokenizer = new StringTokenizer(line + input.readLine());
                 }
                 int colIndex = 0;
@@ -413,9 +414,7 @@ public class CIFReader extends DefaultChemObjectReader {
         return line;
     }
 
-    /**
-     * Process double in the format: '.071(1)'.
-     */
+    /** Process double in the format: '.071(1)'. */
     private double parseIntoDouble(String value) {
         double returnVal = 0.0;
         if (value.charAt(0) == '.') value = "0" + value;

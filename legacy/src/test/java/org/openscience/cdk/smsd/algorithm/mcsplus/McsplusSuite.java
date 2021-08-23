@@ -31,16 +31,17 @@ import org.junit.runners.Suite;
 
 /**
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- *
  * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({org.openscience.cdk.smsd.algorithm.mcsplus.MCSPlusHandlerTest.class,
-        org.openscience.cdk.smsd.algorithm.mcsplus.MCSPlusTest.class,
-        org.openscience.cdk.smsd.algorithm.mcsplus.ExactMappingTest.class,
-        org.openscience.cdk.smsd.algorithm.mcsplus.GenerateCompatibilityGraphTest.class,
-        org.openscience.cdk.smsd.algorithm.mcsplus.BKKCKCFTest.class})
+@Suite.SuiteClasses({
+    org.openscience.cdk.smsd.algorithm.mcsplus.MCSPlusHandlerTest.class,
+    org.openscience.cdk.smsd.algorithm.mcsplus.MCSPlusTest.class,
+    org.openscience.cdk.smsd.algorithm.mcsplus.ExactMappingTest.class,
+    org.openscience.cdk.smsd.algorithm.mcsplus.GenerateCompatibilityGraphTest.class,
+    org.openscience.cdk.smsd.algorithm.mcsplus.BKKCKCFTest.class
+})
 public class McsplusSuite {
 
     @BeforeClass

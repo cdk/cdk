@@ -37,13 +37,14 @@ public class DebugLonePairTest extends AbstractLonePairTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new DebugLonePair();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new DebugLonePair();
+                    }
+                });
     }
 
     @Test

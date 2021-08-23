@@ -22,6 +22,14 @@
  *  */
 package org.openscience.cdk.io.iterator;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.io.InputStream;
+import java.io.Reader;
+import java.io.StringReader;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
@@ -35,15 +43,6 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import java.io.InputStream;
-import java.io.Reader;
-import java.io.StringReader;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 /**
  * TestCase for the reading SMILES mol files using one test file.
  *
@@ -52,14 +51,16 @@ import static org.junit.Assert.assertTrue;
  */
 public class IteratingSMILESReaderTest extends CDKTestCase {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingSMILESReaderTest.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(IteratingSMILESReaderTest.class);
 
     @Test
     public void testSMILESFileWithNames() throws Exception {
         String filename = "data/smiles/test.smi";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IteratingSMILESReader reader = new IteratingSMILESReader(ins, DefaultChemObjectBuilder.getInstance());
+        IteratingSMILESReader reader =
+                new IteratingSMILESReader(ins, DefaultChemObjectBuilder.getInstance());
 
         int molCount = 0;
         while (reader.hasNext()) {
@@ -79,7 +80,8 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
         String filename = "data/smiles/tabs.smi";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IteratingSMILESReader reader = new IteratingSMILESReader(ins, DefaultChemObjectBuilder.getInstance());
+        IteratingSMILESReader reader =
+                new IteratingSMILESReader(ins, DefaultChemObjectBuilder.getInstance());
 
         int molCount = 0;
         while (reader.hasNext()) {
@@ -99,7 +101,8 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
         String filename = "data/smiles/tabs.smi";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IteratingSMILESReader reader = new IteratingSMILESReader(ins, DefaultChemObjectBuilder.getInstance());
+        IteratingSMILESReader reader =
+                new IteratingSMILESReader(ins, DefaultChemObjectBuilder.getInstance());
 
         while (reader.hasNext()) {
 
@@ -107,7 +110,6 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
             String title = (String) mol.getProperty(CDKConstants.TITLE);
             Assert.assertNotNull(title);
         }
-
     }
 
     @Test
@@ -115,7 +117,8 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
         String filename = "data/smiles/test2.smi";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IteratingSMILESReader reader = new IteratingSMILESReader(ins, DefaultChemObjectBuilder.getInstance());
+        IteratingSMILESReader reader =
+                new IteratingSMILESReader(ins, DefaultChemObjectBuilder.getInstance());
 
         int molCount = 0;
         while (reader.hasNext()) {
@@ -133,7 +136,8 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
         String filename = "data/smiles/test2.smi";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IteratingSMILESReader reader = new IteratingSMILESReader(ins, DefaultChemObjectBuilder.getInstance());
+        IteratingSMILESReader reader =
+                new IteratingSMILESReader(ins, DefaultChemObjectBuilder.getInstance());
         IResourceFormat format = reader.getFormat();
         assertTrue(format instanceof SMILESFormat);
     }
@@ -142,7 +146,8 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
     public void testSetReader1() {
         String filename = "data/smiles/test2.smi";
         InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IteratingSMILESReader reader = new IteratingSMILESReader(ins1, DefaultChemObjectBuilder.getInstance());
+        IteratingSMILESReader reader =
+                new IteratingSMILESReader(ins1, DefaultChemObjectBuilder.getInstance());
         int molCount = 0;
         while (reader.hasNext()) {
             reader.next();
@@ -163,7 +168,8 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
     public void testRemove() {
         String filename = "data/smiles/test2.smi";
         InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IteratingSMILESReader reader = new IteratingSMILESReader(ins1, DefaultChemObjectBuilder.getInstance());
+        IteratingSMILESReader reader =
+                new IteratingSMILESReader(ins1, DefaultChemObjectBuilder.getInstance());
         int molCount = 0;
         while (reader.hasNext()) {
             reader.next();
@@ -176,7 +182,8 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
     @Test
     public void empty() {
         Reader reader = new StringReader(" empty1\n empty2");
-        IteratingSMILESReader smis = new IteratingSMILESReader(reader, SilentChemObjectBuilder.getInstance());
+        IteratingSMILESReader smis =
+                new IteratingSMILESReader(reader, SilentChemObjectBuilder.getInstance());
         assertTrue(smis.hasNext());
         IAtomContainer m1 = smis.next();
         assertThat(m1.getAtomCount(), is(0));
@@ -192,7 +199,8 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
     public void problemSmiles() {
 
         Reader reader = new StringReader(" okay\nn1cccc1 bad\n okay");
-        IteratingSMILESReader smis = new IteratingSMILESReader(reader, SilentChemObjectBuilder.getInstance());
+        IteratingSMILESReader smis =
+                new IteratingSMILESReader(reader, SilentChemObjectBuilder.getInstance());
         assertTrue(smis.hasNext());
         IAtomContainer m1 = smis.next();
         assertThat(m1.getAtomCount(), is(0));
@@ -201,7 +209,9 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
         IAtomContainer m2 = smis.next();
         assertThat(m2.getAtomCount(), is(0));
         assertThat(m2.getProperty(CDKConstants.TITLE, String.class), CoreMatchers.is("bad"));
-        assertThat(m2.getProperty(IteratingSMILESReader.BAD_SMILES_INPUT, String.class), CoreMatchers.is("n1cccc1 bad"));
+        assertThat(
+                m2.getProperty(IteratingSMILESReader.BAD_SMILES_INPUT, String.class),
+                CoreMatchers.is("n1cccc1 bad"));
         IAtomContainer m3 = smis.next();
         assertThat(m3.getAtomCount(), is(0));
         assertThat(m3.getProperty(CDKConstants.TITLE, String.class), CoreMatchers.is("okay"));

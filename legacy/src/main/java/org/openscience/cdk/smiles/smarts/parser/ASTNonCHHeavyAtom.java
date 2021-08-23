@@ -5,8 +5,7 @@ package org.openscience.cdk.smiles.smarts.parser;
 /**
  * An AST node. It represents any non-C heavy atom.
  *
- * This is not specified in the original Daylight specification, but
- * is support by MOE
+ * <p>This is not specified in the original Daylight specification, but is support by MOE
  *
  * @author Rajarshi Guha
  * @cdk.created 2008-10-14
@@ -14,7 +13,6 @@ package org.openscience.cdk.smiles.smarts.parser;
  * @cdk.githash
  * @cdk.keyword SMARTS AST
  */
-
 @Deprecated
 class ASTNonCHHeavyAtom extends SimpleNode {
 
@@ -26,7 +24,7 @@ class ASTNonCHHeavyAtom extends SimpleNode {
         super(p, id);
     }
 
-    /** Accept the visitor. **/
+    /** Accept the visitor. * */
     @Override
     public Object jjtAccept(SMARTSParserVisitor visitor, Object data) {
         return visitor.visit(this, data);

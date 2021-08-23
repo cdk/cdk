@@ -34,7 +34,6 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
@@ -52,14 +51,13 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * Iterating MDL SDF reader. It allows to iterate over all molecules
- * in the SD file, without reading them into memory first. Suitable
- * for (very) large SDF files. For parsing the molecules in the
- * SD file, it uses the <code>MDLV2000Reader</code> or
- * <code>MDLV3000Reader</code> reader; it does <b>not</b> work
- * for SDF files with MDL formats prior to the V2000 format.
+ * Iterating MDL SDF reader. It allows to iterate over all molecules in the SD file, without reading
+ * them into memory first. Suitable for (very) large SDF files. For parsing the molecules in the SD
+ * file, it uses the <code>MDLV2000Reader</code> or <code>MDLV3000Reader</code> reader; it does
+ * <b>not</b> work for SDF files with MDL formats prior to the V2000 format.
  *
  * <p>Example use:
+ *
  * <pre>
  * File sdfFile = new File("../zinc-structures/ZINC_subset3_3D_charged_wH_maxmin1000.sdf");
  * IteratingSDFReader reader = new IteratingSDFReader(
@@ -72,54 +70,51 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @cdk.module io
  * @cdk.githash
- *
  * @see org.openscience.cdk.io.MDLV2000Reader
  * @see org.openscience.cdk.io.MDLV3000Reader
- *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
- * @cdk.created    2003-10-19
- *
- * @cdk.keyword    file format, MDL molfile
- * @cdk.keyword    file format, SDF
+ * @cdk.created 2003-10-19
+ * @cdk.keyword file format, MDL molfile
+ * @cdk.keyword file format, SDF
  * @cdk.iooptions
  */
 public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomContainer> {
 
-    private BufferedReader                                  input;
-    private static ILoggingTool                             logger               = LoggingToolFactory
-                                                                                         .createLoggingTool(IteratingSDFReader.class);
-    private String                                          currentLine;
-    private IChemFormat                                     currentFormat;
+    private BufferedReader input;
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(IteratingSDFReader.class);
+    private String currentLine;
+    private IChemFormat currentFormat;
 
-    private boolean                                         nextAvailableIsKnown;
-    private boolean                                         hasNext;
-    private IChemObjectBuilder                              builder;
-    private IAtomContainer                                  nextMolecule;
+    private boolean nextAvailableIsKnown;
+    private boolean hasNext;
+    private IChemObjectBuilder builder;
+    private IAtomContainer nextMolecule;
 
-    private BooleanIOSetting                                forceReadAs3DCoords;
+    private BooleanIOSetting forceReadAs3DCoords;
 
     // if an error is encountered the reader will skip over the error
-    private boolean                                         skip                 = false;
+    private boolean skip = false;
 
     // buffer to store pre-read Mol records in
-    private StringBuilder                                   buffer               = new StringBuilder(10000);
+    private StringBuilder buffer = new StringBuilder(10000);
 
-    private static final String                             LINE_SEPARATOR       = "\n";
+    private static final String LINE_SEPARATOR = "\n";
 
     // patterns to match
-    private static Pattern MDL_VERSION          = Pattern.compile("[vV](2000|3000)");
-    private static String  M_END                = "M  END";
-    private static String  SDF_RECORD_SEPARATOR = "$$$$";
-    private static String  SDF_DATA_HEADER      = "> ";
+    private static Pattern MDL_VERSION = Pattern.compile("[vV](2000|3000)");
+    private static String M_END = "M  END";
+    private static String SDF_RECORD_SEPARATOR = "$$$$";
+    private static String SDF_DATA_HEADER = "> ";
 
     // map of MDL formats to their readers
-    private final Map<IChemFormat, ISimpleChemObjectReader> readerMap            = new HashMap<IChemFormat, ISimpleChemObjectReader>(
-                                                                                         5);
+    private final Map<IChemFormat, ISimpleChemObjectReader> readerMap =
+            new HashMap<IChemFormat, ISimpleChemObjectReader>(5);
 
     /**
      * Constructs a new IteratingMDLReader that can read Molecule from a given Reader.
      *
-     * @param  in  The Reader to read from
+     * @param in The Reader to read from
      * @param builder The builder
      */
     public IteratingSDFReader(Reader in, IChemObjectBuilder builder) {
@@ -129,7 +124,7 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
     /**
      * Constructs a new IteratingMDLReader that can read Molecule from a given InputStream.
      *
-     * @param  in  The InputStream to read from
+     * @param in The InputStream to read from
      * @param builder The builder
      */
     public IteratingSDFReader(InputStream in, IChemObjectBuilder builder) {
@@ -137,32 +132,30 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
     }
 
     /**
-     * Constructs a new IteratingMDLReader that can read Molecule from a given a
-     * InputStream. This constructor allows specification of whether the reader will
-     * skip 'null' molecules. If skip is set to false and a broken/corrupted molecule
-     * is read the iterating reader will stop at the broken molecule. However if
-     * skip is set to true then the reader will keep trying to read more molecules
-     * until the end of the file is reached.
+     * Constructs a new IteratingMDLReader that can read Molecule from a given a InputStream. This
+     * constructor allows specification of whether the reader will skip 'null' molecules. If skip is
+     * set to false and a broken/corrupted molecule is read the iterating reader will stop at the
+     * broken molecule. However if skip is set to true then the reader will keep trying to read more
+     * molecules until the end of the file is reached.
      *
-     * @param in       the {@link InputStream} to read from
-     * @param builder  builder to use
-     * @param skip     whether to skip null molecules
+     * @param in the {@link InputStream} to read from
+     * @param builder builder to use
+     * @param skip whether to skip null molecules
      */
     public IteratingSDFReader(InputStream in, IChemObjectBuilder builder, boolean skip) {
         this(new InputStreamReader(in), builder, skip);
     }
 
     /**
-     * Constructs a new IteratingMDLReader that can read Molecule from a given a
-     * Reader. This constructor allows specification of whether the reader will
-     * skip 'null' molecules. If skip is set to false and a broken/corrupted molecule
-     * is read the iterating reader will stop at the broken molecule. However if
-     * skip is set to true then the reader will keep trying to read more molecules
-     * until the end of the file is reached.
+     * Constructs a new IteratingMDLReader that can read Molecule from a given a Reader. This
+     * constructor allows specification of whether the reader will skip 'null' molecules. If skip is
+     * set to false and a broken/corrupted molecule is read the iterating reader will stop at the
+     * broken molecule. However if skip is set to true then the reader will keep trying to read more
+     * molecules until the end of the file is reached.
      *
-     * @param in       the {@link Reader} to read from
-     * @param builder  builder to use
-     * @param skip     whether to skip null molecules
+     * @param in the {@link Reader} to read from
+     * @param builder builder to use
+     * @param skip whether to skip null molecules
      */
     public IteratingSDFReader(Reader in, IChemObjectBuilder builder, boolean skip) {
         this.builder = builder;
@@ -177,14 +170,13 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
     }
 
     /**
-     *                Method will return an appropriate reader for the provided format. Each reader is stored
-     *                in a map, if no reader is available for the specified format a new reader is created. The
-     *                {@see ISimpleChemObjectReadr#setErrorHandler(IChemObjectReaderErrorHandler)} and
-     *                {@see ISimpleChemObjectReadr#setReaderMode(DefaultIteratingChemObjectReader)}
-     *                methods are set.
+     * Method will return an appropriate reader for the provided format. Each reader is stored in a
+     * map, if no reader is available for the specified format a new reader is created. The {@see
+     * ISimpleChemObjectReadr#setErrorHandler(IChemObjectReaderErrorHandler)} and {@see
+     * ISimpleChemObjectReadr#setReaderMode(DefaultIteratingChemObjectReader)} methods are set.
      *
-     * @param  format The format to obtain a reader for
-     * @return        instance of a reader appropriate for the provided format
+     * @param format The format to obtain a reader for
+     * @return instance of a reader appropriate for the provided format
      */
     private ISimpleChemObjectReader getReader(IChemFormat format) {
 
@@ -192,14 +184,10 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
         if (!readerMap.containsKey(format)) {
 
             ISimpleChemObjectReader reader;
-            if (format instanceof MDLV2000Format)
-                reader = new MDLV2000Reader();
-            else if (format instanceof MDLV3000Format)
-                reader = new MDLV3000Reader();
-            else if (format instanceof MDLFormat)
-                reader = new MDLReader();
-            else
-                throw new IllegalArgumentException("Unexpected format: " + format);
+            if (format instanceof MDLV2000Format) reader = new MDLV2000Reader();
+            else if (format instanceof MDLV3000Format) reader = new MDLV3000Reader();
+            else if (format instanceof MDLFormat) reader = new MDLReader();
+            else throw new IllegalArgumentException("Unexpected format: " + format);
             reader.setErrorHandler(this.errorHandler);
             reader.setReaderMode(this.mode);
             if (currentFormat instanceof MDLV2000Format) {
@@ -207,16 +195,12 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
             }
 
             readerMap.put(format, reader);
-
         }
 
         return readerMap.get(format);
-
     }
 
-    /**
-     * Returns true if another {@link IAtomContainer} can be read.
-     */
+    /** Returns true if another {@link IAtomContainer} can be read. */
     @Override
     public boolean hasNext() {
 
@@ -243,8 +227,10 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
                 if (lineNum == 4) {
                     Matcher versionMatcher = MDL_VERSION.matcher(currentLine);
                     if (versionMatcher.find()) {
-                        currentFormat = "2000".equals(versionMatcher.group(1)) ? (IChemFormat) MDLV2000Format.getInstance()
-                                                                               : (IChemFormat) MDLV3000Format.getInstance();
+                        currentFormat =
+                                "2000".equals(versionMatcher.group(1))
+                                        ? (IChemFormat) MDLV2000Format.getInstance()
+                                        : (IChemFormat) MDLV3000Format.getInstance();
                     }
                 }
 
@@ -259,7 +245,8 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
                         reader.setReader(new StringReader(buffer.toString()));
                         molecule = reader.read(builder.newAtomContainer());
                     } catch (Exception exception) {
-                        logger.error("Error while reading next molecule: " + exception.getMessage());
+                        logger.error(
+                                "Error while reading next molecule: " + exception.getMessage());
                         logger.debug(exception);
                     }
 
@@ -286,7 +273,8 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
                     lineNum = 0;
                 }
 
-                // found SDF record separator ($$$$) without parsing a molecule (separator is detected
+                // found SDF record separator ($$$$) without parsing a molecule (separator is
+                // detected
                 // in readDataBlockInto()) the buffer is cleared and the iterator continues reading
                 if (currentLine.startsWith(SDF_RECORD_SEPARATOR)) {
                     buffer.setLength(0);
@@ -300,7 +288,6 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
 
         // reached end of file
         return false;
-
     }
 
     private void readDataBlockInto(IAtomContainer m) throws IOException {
@@ -308,8 +295,7 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
         StringBuilder sb = new StringBuilder();
         currentLine = input.readLine();
         while (currentLine != null) {
-            if (currentLine.startsWith(SDF_RECORD_SEPARATOR))
-                break;
+            if (currentLine.startsWith(SDF_RECORD_SEPARATOR)) break;
             logger.debug("looking for data header: ", currentLine);
             String str = currentLine;
             if (str.startsWith(SDF_DATA_HEADER)) {
@@ -327,9 +313,9 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
     }
 
     /**
-     *        Indicate whether the reader should skip over SDF records
-     *        that cause problems. If true the reader will fetch the next
-     *        molecule
+     * Indicate whether the reader should skip over SDF records that cause problems. If true the
+     * reader will fetch the next molecule
+     *
      * @param skip ignore error molecules continue reading
      */
     public void setSkip(boolean skip) {
@@ -339,18 +325,15 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
     private String extractFieldData(StringBuilder data) throws IOException {
         data.setLength(0);
         while (currentLine != null && !currentLine.startsWith(SDF_RECORD_SEPARATOR)) {
-            if (currentLine.startsWith(SDF_DATA_HEADER))
-                break;
+            if (currentLine.startsWith(SDF_DATA_HEADER)) break;
             logger.debug("data line: ", currentLine);
-            if (data.length() > 0)
-                data.append('\n');
+            if (data.length() > 0) data.append('\n');
             data.append(currentLine);
             currentLine = input.readLine();
         }
         // trim trailing newline
         int len = data.length();
-        if (len > 1 && data.charAt(len-1) == '\n')
-            data.setLength(len-1);
+        if (len > 1 && data.charAt(len - 1) == '\n') data.setLength(len - 1);
         return data.toString();
     }
 
@@ -374,9 +357,7 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
         return null;
     }
 
-    /**
-     * Returns the next {@link IAtomContainer}.
-     */
+    /** Returns the next {@link IAtomContainer}. */
     @Override
     public IAtomContainer next() {
         if (!nextAvailableIsKnown) {
@@ -417,8 +398,12 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
     }
 
     private void initIOSettings() {
-        forceReadAs3DCoords = new BooleanIOSetting("ForceReadAs3DCoordinates", IOSetting.Importance.LOW,
-                "Should coordinates always be read as 3D?", "false");
+        forceReadAs3DCoords =
+                new BooleanIOSetting(
+                        "ForceReadAs3DCoordinates",
+                        IOSetting.Importance.LOW,
+                        "Should coordinates always be read as 3D?",
+                        "false");
         addSetting(forceReadAs3DCoords);
     }
 

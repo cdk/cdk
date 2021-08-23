@@ -22,24 +22,20 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertTrue;
+
 import java.util.BitSet;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertTrue;
-
-/**
- * @cdk.module test-standard
- */
+/** @cdk.module test-standard */
 public class FingerprinterToolTest extends CDKTestCase {
 
     public FingerprinterToolTest() {
@@ -91,10 +87,10 @@ public class FingerprinterToolTest extends CDKTestCase {
 
         Assert.assertEquals(3, FingerprinterTool.differences(bs1, bs2).size());
     }
-    
-    @Test 
+
+    @Test
     public void makeBitFingerprint() {
-        Map<String,Integer> features = new HashMap<String,Integer>();
+        Map<String, Integer> features = new HashMap<String, Integer>();
         features.put("CCO", 1);
         features.put("CC", 1);
         features.put("C", 1);
@@ -104,10 +100,10 @@ public class FingerprinterToolTest extends CDKTestCase {
         assertTrue(fp.get("CC".hashCode() % 1024));
         assertTrue(fp.get("C".hashCode() % 1024));
     }
-    
-    @Test 
+
+    @Test
     public void makeCountFingerprint() {
-        Map<String,Integer> features = new HashMap<String,Integer>();
+        Map<String, Integer> features = new HashMap<String, Integer>();
         features.put("CCO", 1);
         features.put("CC", 2);
         features.put("C", 2);

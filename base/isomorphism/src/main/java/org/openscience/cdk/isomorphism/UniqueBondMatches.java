@@ -26,20 +26,23 @@ package org.openscience.cdk.isomorphism;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;
-
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- * A predicate for filtering atom-mapping results for those which cover unique
- * edges. This class is intended for use with {@link Pattern}.
+ * A predicate for filtering atom-mapping results for those which cover unique edges. This class is
+ * intended for use with {@link Pattern}.
  *
- * <blockquote><pre>{@code
- *     Pattern     pattern = Ullmann.findSubstructure(query);
- *     List<int[]> unique  = FluentIterable.of(patter.matchAll(target))
- *                                         .filter(new UniqueBondMatches())
- *                                         .toList();
- * }</pre></blockquote>
+ * <blockquote>
+ *
+ * <pre>{@code
+ * Pattern     pattern = Ullmann.findSubstructure(query);
+ * List<int[]> unique  = FluentIterable.of(patter.matchAll(target))
+ *                                     .filter(new UniqueBondMatches())
+ *                                     .toList();
+ * }</pre>
+ *
+ * </blockquote>
  *
  * @author John May
  * @cdk.module isomorphism
@@ -50,11 +53,11 @@ final class UniqueBondMatches implements Predicate<int[]> {
     private final Set<Set<Tuple>> unique;
 
     /** The query graph. */
-    private final int[][]         g;
+    private final int[][] g;
 
     /**
-     * Create filter for the expected number of unique matches. The number of
-     * matches can grow if required.
+     * Create filter for the expected number of unique matches. The number of matches can grow if
+     * required.
      *
      * @param expectedHits expected number of unique matches
      */
@@ -68,7 +71,7 @@ final class UniqueBondMatches implements Predicate<int[]> {
         this(g, 10);
     }
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     public boolean apply(int[] input) {
         return unique.add(toEdgeSet(input));
@@ -107,13 +110,13 @@ final class UniqueBondMatches implements Predicate<int[]> {
             this.v = v;
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         public int hashCode() {
             return u ^ v;
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;

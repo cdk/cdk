@@ -34,7 +34,6 @@
  */
 package org.openscience.cdk.tools;
 
-
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
@@ -43,20 +42,20 @@ import java.util.Locale;
 /**
  * A class for formatting output similar to the C <tt>printf</tt> command.
  *
- * <P>Some features provided by ANSI C-standard conformant <tt>printfs</tt>
- * are not supported because of language constraints.
+ * <p>Some features provided by ANSI C-standard conformant <tt>printfs</tt> are not supported
+ * because of language constraints.
  *
- * <P>Supported conversion specifiers are: 'c', 'd', 'e', 'E', 'f', 'g'
- * (works like 'f'), 'i', 'o', 's', 'x' and 'X'.
+ * <p>Supported conversion specifiers are: 'c', 'd', 'e', 'E', 'f', 'g' (works like 'f'), 'i', 'o',
+ * 's', 'x' and 'X'.
  *
- * <P>Supported conversion flags are: '#', '0', '-', ' ' (a space) and '+'.
+ * <p>Supported conversion flags are: '#', '0', '-', ' ' (a space) and '+'.
  *
- * <P>Support for conversion flag '*' is under development.
+ * <p>Support for conversion flag '*' is under development.
  *
- * @author      Antti S. Brax (asb@iki.fi, base implementation)
- * @author      Fred Long (flong(AT)skcc.org, implemented 'e', 'E' and 'g')
- * @version     1.7
- * @cdk.module  standard
+ * @author Antti S. Brax (asb@iki.fi, base implementation)
+ * @author Fred Long (flong(AT)skcc.org, implemented 'e', 'E' and 'g')
+ * @version 1.7
+ * @cdk.module standard
  * @cdk.githash
  * @cdk.license BSD
  */
@@ -65,31 +64,31 @@ public class FormatStringBuffer {
     // ==================================================================== //
 
     /** Pad with zero instead of space. */
-    private static final int ZEROPAD  = 1;
+    private static final int ZEROPAD = 1;
 
     /** Unsigned/signed long. */
-    //private static final int SIGN = 2;
+    // private static final int SIGN = 2;
 
     /** Show plus sign. */
-    private static final int PLUS     = 4;
+    private static final int PLUS = 4;
 
     /** Space if plus. */
-    private static final int SPACE    = 8;
+    private static final int SPACE = 8;
 
     /** Left justified. */
-    private static final int LEFT     = 16;
+    private static final int LEFT = 16;
 
     /** Prepend hex digits with '0x' and octal with '0' */
-    private static final int SPECIAL  = 32;
+    private static final int SPECIAL = 32;
 
     /** Use upper case hex digits. */
-    private static final int LARGE    = 64;
+    private static final int LARGE = 64;
 
     /** Use scientific notation */
-    private static final int SCI      = 128;
+    private static final int SCI = 128;
 
     /** Use upper case E */
-    private static final int UPPER    = 256;
+    private static final int UPPER = 256;
 
     /** Use grouping character */
     private static final int GROUPING = 512;
@@ -97,27 +96,27 @@ public class FormatStringBuffer {
     // ==================================================================== //
 
     /** Format a char. */
-    private static final int CHAR     = 0;
+    private static final int CHAR = 0;
 
     /** Format a String. */
-    private static final int STRING   = 1;
+    private static final int STRING = 1;
 
     /** Format a decimal number. */
-    private static final int DECIMAL  = 2;
+    private static final int DECIMAL = 2;
 
     /** Format a floating point number. */
-    private static final int FLOAT    = 3;
+    private static final int FLOAT = 3;
 
     // ==================================================================== //
 
     /** The format string. */
-    private String           format   = null;
+    private String format = null;
 
     /** The buffer. */
-    private StringBuffer     buffer   = null;
+    private StringBuffer buffer = null;
 
     /** The current index. */
-    private int              index    = 0;
+    private int index = 0;
 
     // ==================================================================== //
 
@@ -142,9 +141,8 @@ public class FormatStringBuffer {
     }
 
     /**
-     * Reset this <tt>FormatStringBuffer</tt> with the format string
-     * given in the constructor or last call to <tt>reset(String)</tt>.
-     * This is automatically called after <tt>toString()</tt>.
+     * Reset this <tt>FormatStringBuffer</tt> with the format string given in the constructor or
+     * last call to <tt>reset(String)</tt>. This is automatically called after <tt>toString()</tt>.
      */
     public FormatStringBuffer reset() {
         this.buffer = new StringBuffer();
@@ -155,9 +153,8 @@ public class FormatStringBuffer {
     // ==================================================================== //
 
     /**
-     * Get the next format token from the format string. Copy every
-     * character from <tt>format</tt> to <tt>buffer</tt> between
-     * <tt>index</tt> and the next format token.
+     * Get the next format token from the format string. Copy every character from <tt>format</tt>
+     * to <tt>buffer</tt> between <tt>index</tt> and the next format token.
      */
     private Format getFormat() {
 
@@ -176,7 +173,8 @@ public class FormatStringBuffer {
             boolean repeat = true;
             while (repeat) {
 
-                if (index + 1 >= format.length()) throw new IllegalArgumentException("Malformed format");
+                if (index + 1 >= format.length())
+                    throw new IllegalArgumentException("Malformed format");
 
                 switch (ch = format.charAt(++index)) { // Skip the first '%'
                     case '-':
@@ -214,7 +212,8 @@ public class FormatStringBuffer {
             // Get precision.
             if ((ch = format.charAt(index)) == '.') {
 
-                if (++index >= format.length()) throw new IllegalArgumentException("Malformed format");
+                if (++index >= format.length())
+                    throw new IllegalArgumentException("Malformed format");
 
                 fmt.precision = skipDigits();
                 if (fmt.precision < 0) {
@@ -277,9 +276,7 @@ public class FormatStringBuffer {
         return null;
     }
 
-    /**
-     * Skip digits and return the number they form.
-     */
+    /** Skip digits and return the number they form. */
     private int skipDigits() {
         char ch;
         int i = 0;
@@ -297,36 +294,27 @@ public class FormatStringBuffer {
 
     // ==================================================================== //
 
-    /**
-     * Format a <tt>char</tt>.
-     */
+    /** Format a <tt>char</tt>. */
     public FormatStringBuffer format(char ch) {
 
         Format fmt = getFormat();
 
         if (fmt.type != CHAR) throw new IllegalArgumentException("Expected a char format");
 
-        if ((fmt.flags & LEFT) != LEFT) while (--fmt.fieldWidth > 0)
-            buffer.append(' ');
+        if ((fmt.flags & LEFT) != LEFT) while (--fmt.fieldWidth > 0) buffer.append(' ');
         buffer.append(ch);
-        while (--fmt.fieldWidth > 0)
-            buffer.append(' ');
+        while (--fmt.fieldWidth > 0) buffer.append(' ');
 
         return this;
     }
 
-    /**
-     * Format a <tt>float</tt>.
-     */
+    /** Format a <tt>float</tt>. */
     public FormatStringBuffer format(float flt) {
 
         return format((double) flt);
-
     }
 
-    /**
-     * Format a <tt>double</tt>.
-     */
+    /** Format a <tt>double</tt>. */
     public FormatStringBuffer format(double dbl) {
 
         Format fmt = getFormat();
@@ -354,30 +342,22 @@ public class FormatStringBuffer {
         if ((fmt.flags & PLUS) == PLUS && dbl >= 0.0) str = "+" + str;
 
         int len = str.length();
-        if ((fmt.flags & LEFT) != LEFT) while (len < fmt.fieldWidth--)
-            buffer.append(' ');
+        if ((fmt.flags & LEFT) != LEFT) while (len < fmt.fieldWidth--) buffer.append(' ');
 
-        for (int i = 0; i < len; ++i)
-            buffer.append(str.charAt(i));
+        for (int i = 0; i < len; ++i) buffer.append(str.charAt(i));
 
-        while (len < fmt.fieldWidth--)
-            buffer.append(' ');
+        while (len < fmt.fieldWidth--) buffer.append(' ');
 
         return this;
     }
 
-    /**
-     * Format a <tt>float</tt>.
-     */
+    /** Format a <tt>float</tt>. */
     public FormatStringBuffer format(int i) {
 
         return format((long) i);
-
     }
 
-    /**
-     * Format a <tt>float</tt>.
-     */
+    /** Format a <tt>float</tt>. */
     public FormatStringBuffer format(long l) {
 
         Format fmt = getFormat();
@@ -435,8 +415,7 @@ public class FormatStringBuffer {
         }
 
         // Pad.
-        if ((fmt.flags & LEFT) != LEFT) while (len < fmt.fieldWidth--)
-            buffer.append(pad);
+        if ((fmt.flags & LEFT) != LEFT) while (len < fmt.fieldWidth--) buffer.append(pad);
 
         // Place the sign character now if not zero padding.
         if ((fmt.flags & ZEROPAD) != ZEROPAD) {
@@ -448,18 +427,14 @@ public class FormatStringBuffer {
             buffer.append(prefix);
         }
 
-        for (int i = 0; i < len; ++i)
-            buffer.append(str.charAt(i));
+        for (int i = 0; i < len; ++i) buffer.append(str.charAt(i));
 
-        while (len < fmt.fieldWidth--)
-            buffer.append(' ');
+        while (len < fmt.fieldWidth--) buffer.append(' ');
 
         return this;
     }
 
-    /**
-     * Format a <tt>String</tt>.
-     */
+    /** Format a <tt>String</tt>. */
     public FormatStringBuffer format(String str) {
 
         if (str == null) str = "<NULL>";
@@ -471,14 +446,11 @@ public class FormatStringBuffer {
         int len = str.length();
         if (fmt.precision != -1 && len > fmt.precision) len = fmt.precision;
 
-        if ((fmt.flags & LEFT) != LEFT) while (len < fmt.fieldWidth--)
-            buffer.append(' ');
+        if ((fmt.flags & LEFT) != LEFT) while (len < fmt.fieldWidth--) buffer.append(' ');
 
-        for (int i = 0; i < len; ++i)
-            buffer.append(str.charAt(i));
+        for (int i = 0; i < len; ++i) buffer.append(str.charAt(i));
 
-        while (len < fmt.fieldWidth--)
-            buffer.append(' ');
+        while (len < fmt.fieldWidth--) buffer.append(' ');
 
         return this;
     }
@@ -486,8 +458,7 @@ public class FormatStringBuffer {
     // ==================================================================== //
 
     /**
-     * Get the result of the formatting. <tt>reset()</tt> is automatically
-     * called from this method.
+     * Get the result of the formatting. <tt>reset()</tt> is automatically called from this method.
      */
     @Override
     public String toString() {
@@ -502,15 +473,13 @@ public class FormatStringBuffer {
 
     // ==================================================================== //
 
-    /**
-     * A container class for several format parameters.
-     */
+    /** A container class for several format parameters. */
     private class Format {
 
-        public int flags      = 0;
+        public int flags = 0;
         public int fieldWidth = -1;
-        public int precision  = -1;
-        public int type       = -1;
-        public int base       = 10;
+        public int precision = -1;
+        public int type = -1;
+        public int base = 10;
     }
 }

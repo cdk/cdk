@@ -23,14 +23,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-
-import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.mcss.RMap;
@@ -38,30 +37,33 @@ import org.openscience.cdk.qsar.AtomValenceTool;
 
 /**
  * Utility methods for chi index calculations.
- * 
- * These methods are common to all the types of chi index calculations and can
- * be used to evaluate path, path-cluster, cluster and chain chi indices.
  *
- * @author     Rajarshi Guha
+ * <p>These methods are common to all the types of chi index calculations and can be used to
+ * evaluate path, path-cluster, cluster and chain chi indices.
+ *
+ * @author Rajarshi Guha
  * @cdk.module qsarmolecular
  * @cdk.githash
  */
 class ChiIndexUtils {
 
     /**
-     * Gets the fragments from a target <code>AtomContainer</code> matching a set of query fragments.
-     * 
-     * This method returns a list of lists. Each list contains the atoms of the target <code>AtomContainer</code>
-     * that arise in the mapping of bonds in the target molecule to the bonds in the query fragment.
-     * The query fragments should be constructed
-     * using the <code>createAnyAtomAnyBondContainer</code> method of the <code>QueryAtomContainerCreator</code>
-     * CDK class, since we are only interested in connectivity and not actual atom or bond type information.
+     * Gets the fragments from a target <code>AtomContainer</code> matching a set of query
+     * fragments.
+     *
+     * <p>This method returns a list of lists. Each list contains the atoms of the target <code>
+     * AtomContainer</code> that arise in the mapping of bonds in the target molecule to the bonds
+     * in the query fragment. The query fragments should be constructed using the <code>
+     * createAnyAtomAnyBondContainer</code> method of the <code>QueryAtomContainerCreator</code> CDK
+     * class, since we are only interested in connectivity and not actual atom or bond type
+     * information.
      *
      * @param atomContainer The target <code>AtomContainer</code>
-     * @param queries       An array of query fragments
+     * @param queries An array of query fragments
      * @return A list of lists, each list being the atoms that match the query fragments
      */
-    public static List<List<Integer>> getFragments(IAtomContainer atomContainer, QueryAtomContainer[] queries) {
+    public static List<List<Integer>> getFragments(
+            IAtomContainer atomContainer, QueryAtomContainer[] queries) {
         UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
         List<List<Integer>> uniqueSubgraphs = new ArrayList<List<Integer>>();
         for (QueryAtomContainer query : queries) {
@@ -102,10 +104,11 @@ class ChiIndexUtils {
      * Evaluates the simple chi index for a set of fragments.
      *
      * @param atomContainer The target <code>AtomContainer</code>
-     * @param fragLists      A list of fragments
+     * @param fragLists A list of fragments
      * @return The simple chi index
      */
-    public static double evalSimpleIndex(IAtomContainer atomContainer, List<List<Integer>> fragLists) {
+    public static double evalSimpleIndex(
+            IAtomContainer atomContainer, List<List<Integer>> fragLists) {
         double sum = 0;
         for (List<Integer> fragList : fragLists) {
             double prod = 1.0;
@@ -121,21 +124,23 @@ class ChiIndexUtils {
 
     /**
      * Evaluates the valence corrected chi index for a set of fragments.
-     * 
-     * This method takes into account the S and P atom types described in
-     * Kier & Hall (1986), page 20 for which empirical delta V values are used.
+     *
+     * <p>This method takes into account the S and P atom types described in Kier & Hall (1986),
+     * page 20 for which empirical delta V values are used.
      *
      * @param atomContainer The target <code>AtomContainer</code>
-     * @param fragList      A list of fragments
+     * @param fragList A list of fragments
      * @return The valence corrected chi index
      * @throws CDKException if the <code>IsotopeFactory</code> cannot be created
      */
-    public static double evalValenceIndex(IAtomContainer atomContainer, List<List<Integer>> fragList) throws CDKException {
+    public static double evalValenceIndex(
+            IAtomContainer atomContainer, List<List<Integer>> fragList) throws CDKException {
         try {
             IsotopeFactory ifac = Isotopes.getInstance();
             ifac.configureAtoms(atomContainer);
         } catch (IOException e) {
-            throw new CDKException("IO problem occurred when using the CDK atom config\n" + e.getMessage(), e);
+            throw new CDKException(
+                    "IO problem occurred when using the CDK atom config\n" + e.getMessage(), e);
         }
         double sum = 0;
         for (List<Integer> aFragList : fragList) {
@@ -184,15 +189,13 @@ class ChiIndexUtils {
 
     /**
      * Evaluates the empirical delt V for some S environments.
-     * 
-     * The method checks to see whether a S atom is in a -S-S-,
-     * -SO-, -SO2- group and returns the empirical values noted
-     * in Kier & Hall (1986), page 20.
      *
-     * @param atom          The S atom in question
+     * <p>The method checks to see whether a S atom is in a -S-S-, -SO-, -SO2- group and returns the
+     * empirical values noted in Kier & Hall (1986), page 20.
+     *
+     * @param atom The S atom in question
      * @param atomContainer The molecule containing the S
-     * @return The empirical delta V if it is present in one of the above
-     *         environments, -1 otherwise
+     * @return The empirical delta V if it is present in one of the above environments, -1 otherwise
      */
     protected static double deltavSulphur(IAtom atom, IAtomContainer atomContainer) {
         if (atom.getAtomicNumber() != IElement.S) return -1;
@@ -201,16 +204,17 @@ class ChiIndexUtils {
         List<IAtom> connected = atomContainer.getConnectedAtomsList(atom);
         for (IAtom connectedAtom : connected) {
             if (connectedAtom.getAtomicNumber() == IElement.S
-                    && atomContainer.getBond(atom, connectedAtom).getOrder() == IBond.Order.SINGLE) return .89;
+                    && atomContainer.getBond(atom, connectedAtom).getOrder() == IBond.Order.SINGLE)
+                return .89;
         }
 
         int count = 0;
         for (IAtom connectedAtom : connected) {
             if (connectedAtom.getAtomicNumber() == IElement.O
-                    && atomContainer.getBond(atom, connectedAtom).getOrder() == IBond.Order.DOUBLE) count++;
+                    && atomContainer.getBond(atom, connectedAtom).getOrder() == IBond.Order.DOUBLE)
+                count++;
         }
-        if (count == 1)
-            return 1.33; // check whether it's a S in -SO-
+        if (count == 1) return 1.33; // check whether it's a S in -SO-
         else if (count == 2) return 2.67; // check whether it's a S in -SO2-
 
         return -1;
@@ -218,13 +222,12 @@ class ChiIndexUtils {
 
     /**
      * Checks whether the P atom is in a PO environment.
-     * 
-     * This environment is noted in Kier & Hall (1986), page 20
      *
-     * @param atom          The P atom in question
+     * <p>This environment is noted in Kier & Hall (1986), page 20
+     *
+     * @param atom The P atom in question
      * @param atomContainer The molecule containing the P atom
-     * @return The empirical delta V if present in the above environment,
-     *         -1 otherwise
+     * @return The empirical delta V if present in the above environment, -1 otherwise
      */
     private static double deltavPhosphorous(IAtom atom, IAtomContainer atomContainer) {
         if (atom.getAtomicNumber() != IElement.P) return -1;
@@ -236,8 +239,10 @@ class ChiIndexUtils {
 
         for (IAtom connectedAtom : connected) {
             if (connectedAtom.getAtomicNumber() == IElement.O
-                    && atomContainer.getBond(atom, connectedAtom).getOrder() == IBond.Order.DOUBLE) conditions++;
-            if (atomContainer.getBond(atom, connectedAtom).getOrder() == IBond.Order.SINGLE) conditions++;
+                    && atomContainer.getBond(atom, connectedAtom).getOrder() == IBond.Order.DOUBLE)
+                conditions++;
+            if (atomContainer.getBond(atom, connectedAtom).getOrder() == IBond.Order.SINGLE)
+                conditions++;
         }
         if (conditions == 5) return 2.22;
         return -1;
@@ -245,16 +250,17 @@ class ChiIndexUtils {
 
     /**
      * Converts a set of bond mappings to a unique set of atom paths.
-     * 
-     * This method accepts a <code>List</code> of bond mappings. It first
-     * reduces the set to a unique set of bond maps and then for each bond map
-     * converts it to a series of atoms making up the bonds.
+     *
+     * <p>This method accepts a <code>List</code> of bond mappings. It first reduces the set to a
+     * unique set of bond maps and then for each bond map converts it to a series of atoms making up
+     * the bonds.
      *
      * @param subgraphs A <code>List</code> of bon mappings
-     * @param ac        The molecule we are examining
+     * @param ac The molecule we are examining
      * @return A unique <code>List</code> of atom paths
      */
-    private static List<List<Integer>> getUniqueBondSubgraphs(List<List<RMap>> subgraphs, IAtomContainer ac) {
+    private static List<List<Integer>> getUniqueBondSubgraphs(
+            List<List<RMap>> subgraphs, IAtomContainer ac) {
         List<List<Integer>> bondList = new ArrayList<List<Integer>>();
         for (List<RMap> subgraph : subgraphs) {
             List<RMap> current = subgraph;
@@ -286,5 +292,4 @@ class ChiIndexUtils {
         }
         return paths;
     }
-
 }

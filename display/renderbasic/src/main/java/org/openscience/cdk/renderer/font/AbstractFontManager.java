@@ -30,32 +30,28 @@ import java.util.TreeMap;
 public abstract class AbstractFontManager implements IFontManager {
 
     /** The default font family */
-    private String                 fontName = "Arial";
+    private String fontName = "Arial";
 
     /** The font style - normal or bold */
     private IFontManager.FontStyle fontStyle;
 
     /** The mapping between zoom levels and font sizes */
-    private Map<Double, Integer>   zoomToFontSizeMap;
+    private Map<Double, Integer> zoomToFontSizeMap;
 
     // these two values track the font position if it falls
     // off the end of the array so that font and scale are always in synch
-    private int                    lowerVirtualCount;
+    private int lowerVirtualCount;
 
-    private int                    upperVirtualCount;
+    private int upperVirtualCount;
 
-    protected int                  currentFontIndex;
+    protected int currentFontIndex;
 
-    /**
-     * Call this in subclasses with the super() constructor.
-     */
+    /** Call this in subclasses with the super() constructor. */
     public AbstractFontManager() {
         this.zoomToFontSizeMap = new TreeMap<Double, Integer>();
     }
 
-    /**
-     * Make widget-specific fonts.
-     */
+    /** Make widget-specific fonts. */
     protected abstract void makeFonts();
 
     /**
@@ -99,8 +95,8 @@ public abstract class AbstractFontManager implements IFontManager {
     }
 
     /**
-     * For a particular zoom level, register a font point-size so that this
-     * size of font will be used when the zoom is at this level.
+     * For a particular zoom level, register a font point-size so that this size of font will be
+     * used when the zoom is at this level.
      *
      * @param zoom the zoom level
      * @param size the font size
@@ -141,24 +137,20 @@ public abstract class AbstractFontManager implements IFontManager {
         return this.zoomToFontSizeMap.size();
     }
 
-    /**
-     * Reset the virtual counts.
-     */
+    /** Reset the virtual counts. */
     public void resetVirtualCounts() {
         this.lowerVirtualCount = 0;
         this.upperVirtualCount = this.getNumberOfFontSizes() - 1;
     }
 
-    /**
-     * Set the font size pointer to the middle of the range.
-     */
+    /** Set the font size pointer to the middle of the range. */
     public void toMiddle() {
         this.currentFontIndex = this.getNumberOfFontSizes() / 2;
     }
 
     /**
-     * Move the font size pointer up. If this would move the pointer past
-     * the maximum font size, track this increase with a virtual size.
+     * Move the font size pointer up. If this would move the pointer past the maximum font size,
+     * track this increase with a virtual size.
      */
     public void increaseFontSize() {
         // move INTO range if we have just moved OUT of lower virtual
@@ -172,8 +164,8 @@ public abstract class AbstractFontManager implements IFontManager {
     }
 
     /**
-     * Move the font size pointer down. If this would move the pointer past
-     * the minimum font size, track this increase with a virtual size.
+     * Move the font size pointer down. If this would move the pointer past the minimum font size,
+     * track this increase with a virtual size.
      */
     public void decreaseFontSize() {
         // move INTO range if we have just moved OUT of upper virtual
@@ -196,8 +188,8 @@ public abstract class AbstractFontManager implements IFontManager {
     }
 
     /**
-     * Test the virtual font pointer to see if it is at the lower boundary of
-     * the font size range (0).
+     * Test the virtual font pointer to see if it is at the lower boundary of the font size range
+     * (0).
      *
      * @return true if the lower virtual count is zero
      */
@@ -206,8 +198,8 @@ public abstract class AbstractFontManager implements IFontManager {
     }
 
     /**
-     * Test the virtual font pointer to see if it is at the upper boundary of
-     * the font size range (|fonts| - 1).
+     * Test the virtual font pointer to see if it is at the upper boundary of the font size range
+     * (|fonts| - 1).
      *
      * @return true if the upper virtual count is |fonts| - 1
      */

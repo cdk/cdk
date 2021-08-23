@@ -20,11 +20,11 @@ package org.openscience.cdk.debug;
 
 import java.util.List;
 import java.util.Map;
-
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
@@ -32,7 +32,6 @@ import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStereoElement;
-import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -53,8 +52,8 @@ public class DebugAtomContainer extends AtomContainer implements IAtomContainer 
         super();
     }
 
-    public DebugAtomContainer(int atomCount, int bondCount, int lonePairCount,
-                              int singleElectronCount) {
+    public DebugAtomContainer(
+            int atomCount, int bondCount, int lonePairCount, int singleElectronCount) {
         super(atomCount, bondCount, lonePairCount, singleElectronCount);
     }
 
@@ -62,814 +61,638 @@ public class DebugAtomContainer extends AtomContainer implements IAtomContainer 
         super(container);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void addStereoElement(IStereoElement parity) {
         logger.debug("Adding stereo element: ", parity);
         super.addStereoElement(parity);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setStereoElements(List<IStereoElement> elements) {
         logger.debug("Setting stereo elements: ", elements);
         super.setStereoElements(elements);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Iterable<IStereoElement> stereoElements() {
         logger.debug("Getting stereo elements.");
         return super.stereoElements();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setAtoms(IAtom[] atoms) {
         logger.debug("Setting atoms: ", atoms.length);
         super.setAtoms(atoms);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setAtom(int number, IAtom atom) {
         logger.debug("Setting atom at: pos=" + number, " atom=" + atom);
         super.setAtom(number, atom);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtom getAtom(int idx) {
         logger.debug("Getting atom at: ", idx);
         return super.getAtom(idx);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IBond getBond(int idx) {
         logger.debug("Getting bond at: ", idx);
         return super.getBond(idx);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public ILonePair getLonePair(int idx) {
         logger.debug("Getting lone pair at: ", idx);
         return super.getLonePair(idx);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public ISingleElectron getSingleElectron(int idx) {
         logger.debug("Getting single electron at: ", idx);
         return super.getSingleElectron(idx);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Iterable<IAtom> atoms() {
         logger.debug("Getting atoms iterator");
         return super.atoms();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Iterable<IBond> bonds() {
         logger.debug("Getting bonds iterator");
         return super.bonds();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Iterable<ILonePair> lonePairs() {
         logger.debug("Getting lone pairs iterator");
         return super.lonePairs();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Iterable<ISingleElectron> singleElectrons() {
         logger.debug("Getting single electrons iterator");
         return super.singleElectrons();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Iterable<IElectronContainer> electronContainers() {
         logger.debug("Getting electron containers iterator");
         return super.electronContainers();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtom getFirstAtom() {
         logger.debug("Getting first atom: ", super.getFirstAtom());
         return super.getFirstAtom();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtom getLastAtom() {
         logger.debug("Getting last atom: ", super.getLastAtom());
         return super.getLastAtom();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int indexOf(IAtom atom) {
         logger.debug("Getting index of atom: ", atom);
         return super.indexOf(atom);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int indexOf(IBond bond) {
         logger.debug("Getting index of bond: ", bond);
         return super.indexOf(bond);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int indexOf(ISingleElectron electron) {
         logger.debug("Getting index of single electron: ", electron);
         return super.indexOf(electron);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int indexOf(ILonePair pair) {
         logger.debug("Getting index of single electron: ", pair);
         return super.indexOf(pair);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IElectronContainer getElectronContainer(int number) {
         logger.debug("Getting electron container at: ", number);
         return super.getElectronContainer(number);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IBond getBond(IAtom atom1, IAtom atom2) {
         logger.debug("Getting bond for atoms: atom1=" + atom1, " atom2=" + atom2);
         return super.getBond(atom1, atom2);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getAtomCount() {
         logger.debug("Getting atom count");
         return super.getAtomCount();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getBondCount() {
         logger.debug("Getting bond count");
         return super.getBondCount();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getLonePairCount() {
         logger.debug("Getting lone pair count");
         return super.getLonePairCount();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getSingleElectronCount() {
         logger.debug("Getting single electron count");
         return super.getSingleElectronCount();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getElectronContainerCount() {
         logger.debug("Getting electron container count");
         return super.getElectronContainerCount();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public List<IAtom> getConnectedAtomsList(IAtom atom) {
         logger.debug("Getting connecting atoms list for atom: ", atom);
         return super.getConnectedAtomsList(atom);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public List<IBond> getConnectedBondsList(IAtom atom) {
         logger.debug("Getting connected bonds list for atom: ", atom);
         return super.getConnectedBondsList(atom);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public List<ILonePair> getConnectedLonePairsList(IAtom atom) {
-        logger.debug("Getting lone pairs at atom: atom=" + atom,
-                     " lone pairs=" + super.getConnectedLonePairsCount(atom));
+        logger.debug(
+                "Getting lone pairs at atom: atom=" + atom,
+                " lone pairs=" + super.getConnectedLonePairsCount(atom));
         return super.getConnectedLonePairsList(atom);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public List<ISingleElectron> getConnectedSingleElectronsList(IAtom atom) {
-        logger.debug("Getting single electrons at atom: atom=" + atom,
-                     " single electrons=" + super.getConnectedSingleElectronsCount(atom));
+        logger.debug(
+                "Getting single electrons at atom: atom=" + atom,
+                " single electrons=" + super.getConnectedSingleElectronsCount(atom));
         return super.getConnectedSingleElectronsList(atom);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
-    public List<IElectronContainer> getConnectedElectronContainersList(
-        IAtom atom) {
+    public List<IElectronContainer> getConnectedElectronContainersList(IAtom atom) {
         logger.debug("Getting connected electron containers for atom: ", atom);
         return super.getConnectedElectronContainersList(atom);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getConnectedAtomsCount(IAtom atom) {
         logger.debug("Getting connected atoms count for atom: ", atom);
         return super.getConnectedAtomsCount(atom);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getConnectedBondsCount(IAtom atom) {
         logger.debug("Getting connected bonds count for atom: ", atom);
         return super.getConnectedBondsCount(atom);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getConnectedLonePairsCount(IAtom atom) {
         logger.debug("Getting connected lone pairs count for atom: ", atom);
         return super.getConnectedLonePairsCount(atom);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getConnectedSingleElectronsCount(IAtom atom) {
         logger.debug("Getting connected single electrons count for atom: ", atom);
         return super.getConnectedSingleElectronsCount(atom);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public double getBondOrderSum(IAtom atom) {
         logger.debug("Getting bond order sum for atom: ", atom);
         return super.getBondOrderSum(atom);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Order getMaximumBondOrder(IAtom atom) {
         logger.debug("Getting maximum bond order for atom: ", atom);
         return super.getMaximumBondOrder(atom);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Order getMinimumBondOrder(IAtom atom) {
         logger.debug("Getting minimum bond order for atom: ", atom);
         return super.getMinimumBondOrder(atom);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void add(IAtomContainer atomContainer) {
         logger.debug("Adding atom container: ", atomContainer);
         super.add(atomContainer);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void addAtom(IAtom atom) {
         logger.debug("Adding atom: ", atom);
         super.addAtom(atom);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void addBond(IBond bond) {
         logger.debug("Adding bond: ", bond);
         super.addBond(bond);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void addLonePair(ILonePair ec) {
         logger.debug("Adding lone pair: ", ec);
         super.addLonePair(ec);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void addSingleElectron(ISingleElectron ec) {
         logger.debug("Adding single electron: ", ec);
         super.addSingleElectron(ec);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void addElectronContainer(IElectronContainer electronContainer) {
         logger.debug("Adding electron container: ", electronContainer);
         super.addElectronContainer(electronContainer);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void remove(IAtomContainer atomContainer) {
         logger.debug("Removing atom container: ", atomContainer);
         super.remove(atomContainer);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IElectronContainer removeElectronContainer(int position) {
         logger.debug("Removing electronContainer: ", position);
         return super.removeElectronContainer(position);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void removeElectronContainer(IElectronContainer electronContainer) {
         logger.debug("Removing electron container: ", electronContainer);
         super.removeElectronContainer(electronContainer);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void removeAtomOnly(int position) {
         logger.debug("Removing atom: ", position);
         super.removeAtomOnly(position);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void removeAtomOnly(IAtom atom) {
         logger.debug("Removing atom: ", atom);
         super.removeAtomOnly(atom);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IBond removeBond(int pos) {
         logger.debug("Removing bond at " + pos);
         return super.removeBond(pos);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IBond removeBond(IAtom atom1, IAtom atom2) {
         logger.debug("Removing bond: atom1=" + atom1 + " atom2=" + atom2);
         return super.removeBond(atom1, atom2);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void removeBond(IBond bond) {
         logger.debug("Removing bond=" + bond);
         super.removeBond(bond);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public ILonePair removeLonePair(int pos) {
         logger.debug("Removing bond at " + pos);
         return super.removeLonePair(pos);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void removeLonePair(ILonePair ec) {
         logger.debug("Removing bond=" + ec);
         super.removeLonePair(ec);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public ISingleElectron removeSingleElectron(int pos) {
         logger.debug("Removing bond at " + pos);
         return super.removeSingleElectron(pos);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void removeSingleElectron(ISingleElectron ec) {
         logger.debug("Removing bond=" + ec);
         super.removeSingleElectron(ec);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void removeAtom(IAtom atom) {
         logger.debug("Removing atom and connected electron containers: ", atom);
         super.removeAtom(atom);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void removeAllElements() {
         logger.debug("Removing all elements");
         super.removeAllElements();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void removeAllElectronContainers() {
         logger.debug("Removing all electron containers");
         super.removeAllElectronContainers();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void removeAllBonds() {
         logger.debug("Removing all bonds");
         super.removeAllBonds();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
-    public void addBond(int atom1, int atom2, IBond.Order order,
-                        IBond.Stereo stereo) {
-        logger.debug("Adding bond: atom1=" + atom1 + " atom2=" + atom2, " order=" + order + " stereo=" + stereo);
+    public void addBond(int atom1, int atom2, IBond.Order order, IBond.Stereo stereo) {
+        logger.debug(
+                "Adding bond: atom1=" + atom1 + " atom2=" + atom2,
+                " order=" + order + " stereo=" + stereo);
         super.addBond(atom1, atom2, order, stereo);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void addBond(int atom1, int atom2, IBond.Order order) {
         logger.debug("Adding bond: atom1=" + atom1 + " atom2=" + atom2, " order=" + order);
         super.addBond(atom1, atom2, order);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void addLonePair(int atomID) {
         logger.debug("Adding lone pair: ", atomID);
         super.addLonePair(atomID);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void addSingleElectron(int atomID) {
         logger.debug("Adding single electron: ", atomID);
         super.addSingleElectron(atomID);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean contains(IAtom atom) {
         logger.debug("Contains atom: ", atom);
         return super.contains(atom);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean contains(IBond bond) {
         logger.debug("Contains bond: ", bond);
         return super.contains(bond);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean contains(ILonePair ec) {
         logger.debug("Contains lone pair: ", ec);
         return super.contains(ec);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean contains(ISingleElectron ec) {
         logger.debug("Contains single electron: ", ec);
         return super.contains(ec);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean contains(IElectronContainer electronContainer) {
         logger.debug("Contains electron container: ", electronContainer);
         return super.contains(electronContainer);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void addListener(IChemObjectListener col) {
         logger.debug("Adding listener: ", col);
         super.addListener(col);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getListenerCount() {
         logger.debug("Getting listener count: ", super.getListenerCount());
         return super.getListenerCount();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void removeListener(IChemObjectListener col) {
         logger.debug("Removing listener: ", col);
         super.removeListener(col);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void notifyChanged() {
         logger.debug("Notifying changed");
         super.notifyChanged();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void notifyChanged(IChemObjectChangeEvent evt) {
         logger.debug("Notifying changed event: ", evt);
         super.notifyChanged(evt);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setProperty(Object description, Object property) {
         logger.debug("Setting property: ", description + "=" + property);
         super.setProperty(description, property);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void removeProperty(Object description) {
         logger.debug("Removing property: ", description);
         super.removeProperty(description);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public <T> T getProperty(Object description) {
         logger.debug("Getting property: ", description + "=" + super.getProperty(description));
         return super.getProperty(description);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Map<Object, Object> getProperties() {
         logger.debug("Getting properties");
         return super.getProperties();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public String getID() {
         logger.debug("Getting ID: ", super.getID());
         return super.getID();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setID(String identifier) {
         logger.debug("Setting ID: ", identifier);
         super.setID(identifier);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setFlag(int flagType, boolean flagValue) {
         logger.debug("Setting flag: ", flagType + "=" + flagValue);
         super.setFlag(flagType, flagValue);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean getFlag(int flagType) {
         logger.debug("Setting flag: ", flagType + "=" + super.getFlag(flagType));
         return super.getFlag(flagType);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void addProperties(Map<Object, Object> properties) {
         logger.debug("Setting properties: ", properties);
         super.addProperties(properties);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean[] getFlags() {
         logger.debug("Getting flags:", super.getFlags().length);
         return super.getFlags();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setFlags(boolean[] flagsNew) {
         logger.debug("Setting flags:", flagsNew.length);
         super.setFlags(flagsNew);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtomContainer clone() throws CloneNotSupportedException {
         IAtomContainer clone = null;
         try {
             clone = super.clone();
         } catch (Exception exception) {
-            logger.error("Could not clone DebugAtomContainer: " + exception.getMessage(), exception);
+            logger.error(
+                    "Could not clone DebugAtomContainer: " + exception.getMessage(), exception);
             logger.debug(exception);
         }
         return clone;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IChemObjectBuilder getBuilder() {
         return DebugChemObjectBuilder.getInstance();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean isEmpty() {
         logger.debug("AtomContainer.isEmpty(): ", atomCount == 0);
         return atomCount == 0;
     }
-
 }

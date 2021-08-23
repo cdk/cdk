@@ -20,7 +20,6 @@ package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
 
-
 /**
  * A text element with added information.
  *
@@ -38,8 +37,14 @@ public class AtomSymbolElement extends TextElement {
     /** The hydrogen alignment. */
     public final int alignment;
 
-    public AtomSymbolElement(double x, double y, String symbol, Integer formalCharge, Integer hydrogenCount,
-            int alignment, Color color) {
+    public AtomSymbolElement(
+            double x,
+            double y,
+            String symbol,
+            Integer formalCharge,
+            Integer hydrogenCount,
+            int alignment,
+            Color color) {
         super(x, y, symbol, color);
         this.formalCharge = formalCharge != null ? formalCharge : -1;
         this.hydrogenCount = hydrogenCount != null ? hydrogenCount : -1;
@@ -51,5 +56,4 @@ public class AtomSymbolElement extends TextElement {
     public void accept(IRenderingVisitor v) {
         v.visit(this);
     }
-
 }

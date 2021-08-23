@@ -31,17 +31,13 @@ import org.openscience.cdk.reaction.ReactionMechanismTest;
  */
 public class RearrangementChargeMechanismTest extends ReactionMechanismTest {
 
-    /**
-     *  The JUnit setup method
-     */
+    /** The JUnit setup method */
     @BeforeClass
     public static void setUp() throws Exception {
         setMechanism(RearrangementChargeMechanism.class);
     }
 
-    /**
-     *  Constructor for the RearrangementChargeMechanism object.
-     */
+    /** Constructor for the RearrangementChargeMechanism object. */
     public RearrangementChargeMechanismTest() {
         super();
     }
@@ -58,8 +54,7 @@ public class RearrangementChargeMechanismTest extends ReactionMechanismTest {
     }
 
     /**
-     * Junit test.
-     * TODDO: REACT: add an example
+     * Junit test. TODDO: REACT: add an example
      *
      * @throws Exception
      */

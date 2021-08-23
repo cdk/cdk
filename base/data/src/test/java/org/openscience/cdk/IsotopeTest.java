@@ -22,30 +22,30 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractIsotopeTest;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.AbstractIsotopeTest;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the Isotope class.
  *
  * @cdk.module test-data
- *
  * @see org.openscience.cdk.Isotope
  */
 public class IsotopeTest extends AbstractIsotopeTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new Isotope("C");
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new Isotope("C");
+                    }
+                });
     }
 
     @Test

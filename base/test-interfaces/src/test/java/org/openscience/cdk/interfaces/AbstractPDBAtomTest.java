@@ -20,7 +20,6 @@
 package org.openscience.cdk.interfaces;
 
 import javax.vecmath.Point3d;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -31,9 +30,7 @@ import org.junit.Test;
  */
 public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
 
-    /**
-     * Method to test the setFractional3D() methods.
-     */
+    /** Method to test the setFractional3D() methods. */
     @Test
     @Override
     public void testSetFractionalPoint3d_Point3d() {
@@ -75,9 +72,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
         Assert.assertEquals(point3d, a.getPoint3d());
     }
 
-    /**
-     * Method to test the clone() method
-     */
+    /** Method to test the clone() method */
     @Test
     @Override
     public void testClone() throws Exception {
@@ -87,9 +82,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
         Assert.assertTrue(clone instanceof IAtom);
     }
 
-    /**
-     * Method to test the clone() method
-     */
+    /** Method to test the clone() method */
     @Test
     @Override
     public void testClone_Point3d() throws Exception {
@@ -100,9 +93,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
         Assert.assertEquals(clone.getPoint3d().x, 2.0, 0.001);
     }
 
-    /**
-     * Method to test the clone() method
-     */
+    /** Method to test the clone() method */
     @Test
     @Override
     public void testClone_FractionalPoint3d() throws Exception {
@@ -113,9 +104,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
         Assert.assertEquals(clone.getFractionalPoint3d().x, 2.0, 0.001);
     }
 
-    /**
-     * Method to test whether the class complies with RFC #9.
-     */
+    /** Method to test whether the class complies with RFC #9. */
     @Test
     @Override
     public void testToString() {
@@ -128,9 +117,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
         }
     }
 
-    /**
-     * Checks that the default charge is set to NaN
-     */
+    /** Checks that the default charge is set to NaN */
     @Test
     @Override
     public void testDefaultChargeValue() {
@@ -144,7 +131,8 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
         IPDBAtom atom = (IPDBAtom) newChemObject();
         atom.setSymbol("C");
         atom.setRecord("ATOM 1635 N PHE 105 -3.504 9.019 -14.276 1.00 0.00 N");
-        Assert.assertEquals("ATOM 1635 N PHE 105 -3.504 9.019 -14.276 1.00 0.00 N", atom.getRecord());
+        Assert.assertEquals(
+                "ATOM 1635 N PHE 105 -3.504 9.019 -14.276 1.00 0.00 N", atom.getRecord());
     }
 
     @Test

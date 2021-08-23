@@ -1,26 +1,22 @@
 /**
+ * Copyright (C) 2006-2010 Syed Asad Rahman <asad@ebi.ac.uk>
  *
- * Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
+ * <p>Contact: cdk-devel@lists.sourceforge.net
  *
- * Contact: cdk-devel@lists.sourceforge.net
+ * <p>This program is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation; either version
+ * 2.1 of the License, or (at your option) any later version. All we ask is that proper credit is
+ * given for our work, which includes - but is not limited to - adding the above copyright notice to
+ * the beginning of your source code files, and to any copyright notice that you may distribute with
+ * programs based on this work.
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1
- * of the License, or (at your option) any later version.
- * All we ask is that proper credit is given for our work, which includes
- * - but is not limited to - adding the above copyright notice to the beginning
- * of your source code files, and to any copyright notice that you may distribute
- * with programs based on this work.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * <p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
- * You should have received index copy of the GNU Lesser General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ * <p>You should have received index copy of the GNU Lesser General Public License along with this
+ * program; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+ * Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.smsd.algorithm.mcsplus;
 
@@ -30,63 +26,62 @@ import java.util.Stack;
 import org.openscience.cdk.smsd.tools.TimeManager;
 
 /**
- * This class implements Bron-Kerbosch clique detection algorithm as it is
- * described in [F. Cazals, vertexOfCurrentClique. Karande: An Algorithm for reporting maximal c-cliques;
- * processedVertex.Comp. Sc. (2005); vol 349; pp.
- * 484-490]
+ * This class implements Bron-Kerbosch clique detection algorithm as it is described in [F. Cazals,
+ * vertexOfCurrentClique. Karande: An Algorithm for reporting maximal c-cliques;
+ * processedVertex.Comp. Sc. (2005); vol 349; pp. 484-490]
  *
- *
- * BronKerboschCazalsKarandeKochCliqueFinder.java
+ * <p>BronKerboschCazalsKarandeKochCliqueFinder.java
  *
  * @cdk.githash
  * @cdk.module smsd
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is
+ *     available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public class BKKCKCF {
 
-    private List<List<Integer>> maxCliquesSet      = null;
-    /***********************************************************************/
-    private List<Integer>       cEdges             = null;
-    private List<Integer>       dEdges             = null;
-    private int                 bestCliqueSize     = 0;
-    private List<Integer>       compGraphNodes     = null;
-    private double              dEdgeIterationSize = 0;
-    private double              cEdgeIterationSize = 0;
+    private List<List<Integer>> maxCliquesSet = null;
+    /** ******************************************************************** */
+    private List<Integer> cEdges = null;
+
+    private List<Integer> dEdges = null;
+    private int bestCliqueSize = 0;
+    private List<Integer> compGraphNodes = null;
+    private double dEdgeIterationSize = 0;
+    private double cEdgeIterationSize = 0;
 
     /**
-     * Creates index new instance of Bron Kerbosch Cazals Karande Koch Clique Finder
-     * This class implements Bron-Kerbosch clique detection algorithm as it is
-     * described in [F. Cazals, vertexOfCurrentClique. Karande: An Algorithm for reporting maximal c-cliques;
-     * processedVertex.Comp. Sc. (2005); vol 349; pp.
-     * 484-490]
+     * Creates index new instance of Bron Kerbosch Cazals Karande Koch Clique Finder This class
+     * implements Bron-Kerbosch clique detection algorithm as it is described in [F. Cazals,
+     * vertexOfCurrentClique. Karande: An Algorithm for reporting maximal c-cliques;
+     * processedVertex.Comp. Sc. (2005); vol 349; pp. 484-490]
+     *
      * @param compGraphNodesOrg
      * @param cEdgesOrg C-Edges set of allowed edges
      * @param dEdgesOrg D-Edges set of prohibited edges
      */
-    protected BKKCKCF(List<Integer> compGraphNodesOrg, List<Integer> cEdgesOrg, List<Integer> dEdgesOrg) {
+    protected BKKCKCF(
+            List<Integer> compGraphNodesOrg, List<Integer> cEdgesOrg, List<Integer> dEdgesOrg) {
         MCSPlus.setTimeManager(new TimeManager());
         this.compGraphNodes = compGraphNodesOrg;
         this.cEdges = cEdgesOrg;
         this.dEdges = dEdgesOrg;
         bestCliqueSize = 0;
-        //Orignal assignment as per paper
+        // Orignal assignment as per paper
         dEdgeIterationSize = dEdges.size() / 2;
 
-        //Orignal assignment as per paper
+        // Orignal assignment as per paper
         cEdgeIterationSize = cEdges.size() / 2;
 
-        //reset Degdes and Cedges if required
+        // reset Degdes and Cedges if required
         //        setEdges();
 
-        //Initialization maxCliquesSet
+        // Initialization maxCliquesSet
 
         maxCliquesSet = new ArrayList<List<Integer>>();
 
         init();
-
     }
 
     /*
@@ -94,21 +89,22 @@ public class BKKCKCF {
      */
     private void init() {
 
-        /********************************************************************/
+        /** ***************************************************************** */
         /*
          * vertex: stored all the vertices for the Graph G vertex[G] nodes of
          * vector compGraphNodes are stored in vertex
          */
-        List<Integer> vertex = new ArrayList<Integer>(); //Initialization of ArrayList vertex
+        List<Integer> vertex = new ArrayList<Integer>(); // Initialization of ArrayList vertex
 
         int vertexCount = compGraphNodes.size() / 3;
 
-        //System.out.println("ArrayList vertex is initialized");
+        // System.out.println("ArrayList vertex is initialized");
         for (int a = 0; a < vertexCount; a++) {
             vertex.add(compGraphNodes.get(a * 3 + 2));
-            //System.out.print("vertex[" + index + "]: " + compGraphNodes.get(index * 3 + 2) + " ");
+            // System.out.print("vertex[" + index + "]: " + compGraphNodes.get(index * 3 + 2) + "
+            // ");
         }
-        //System.out.println();
+        // System.out.println();
 
         vertex.add(0);
         // System.out.println("ArrayList vertex :" + vertex);
@@ -124,20 +120,25 @@ public class BKKCKCF {
          */
         initIterator(vertex, processedVertex);
         processedVertex.clear();
-        //System.out.println("maxCliquesSet: " + maxCliquesSet);
+        // System.out.println("maxCliquesSet: " + maxCliquesSet);
 
     }
 
-    private int enumerateCliques(List<Integer> vertexOfCurrentClique, Stack<Integer> potentialCVertex,
-            List<Integer> potentialDVertex, List<Integer> excludedVertex, List<Integer> excludedCVertex) {
-        List<Integer> potentialVertex = new ArrayList<Integer>();//Defined as potentialCVertex' in the paper
+    private int enumerateCliques(
+            List<Integer> vertexOfCurrentClique,
+            Stack<Integer> potentialCVertex,
+            List<Integer> potentialDVertex,
+            List<Integer> excludedVertex,
+            List<Integer> excludedCVertex) {
+        List<Integer> potentialVertex =
+                new ArrayList<Integer>(); // Defined as potentialCVertex' in the paper
         for (Integer i : potentialCVertex) {
             potentialVertex.add(i);
         }
 
         if ((potentialCVertex.size() == 1) && (excludedVertex.isEmpty())) {
 
-            //store best solutions in stack maxCliquesSet
+            // store best solutions in stack maxCliquesSet
             int cliqueSize = vertexOfCurrentClique.size();
 
             if (cliqueSize >= bestCliqueSize) {
@@ -145,16 +146,20 @@ public class BKKCKCF {
 
                     maxCliquesSet.clear();
                     bestCliqueSize = cliqueSize;
-
                 }
                 if (cliqueSize == bestCliqueSize) {
-                    //System.out.println("vertexOfCurrentClique-Clique " + vertexOfCurrentClique);
+                    // System.out.println("vertexOfCurrentClique-Clique " + vertexOfCurrentClique);
                     maxCliquesSet.add(vertexOfCurrentClique);
                 }
             }
             return 0;
         }
-        findCliques(potentialVertex, vertexOfCurrentClique, potentialCVertex, potentialDVertex, excludedVertex,
+        findCliques(
+                potentialVertex,
+                vertexOfCurrentClique,
+                potentialCVertex,
+                potentialDVertex,
+                excludedVertex,
                 excludedCVertex);
         return 0;
     }
@@ -165,15 +170,16 @@ public class BKKCKCF {
 
         for (int a = 0; a < cEdgeIterationSize; a++) {
             if (cEdges.get(a * 2 + 0) == centralNode) {
-                //          System.out.println( cEdges.get(index*2+0) + " " + cEdges.get(index*2+1));
+                //          System.out.println( cEdges.get(index*2+0) + " " +
+                // cEdges.get(index*2+1));
                 neighborVertex.add(cEdges.get(a * 2 + 1));
                 neighborVertex.add(1); // 1 means: is connected via C-edge
             } else if (cEdges.get(a * 2 + 1) == centralNode) {
-                //           System.out.println(cEdges.get(index*2+0) + " " + cEdges.get(index*2+1));
+                //           System.out.println(cEdges.get(index*2+0) + " " +
+                // cEdges.get(index*2+1));
                 neighborVertex.add(cEdges.get(a * 2 + 0));
                 neighborVertex.add(1); // 1 means: is connected via C-edge
             }
-
         }
         for (int a = 0; a < dEdgeIterationSize; a++) {
             if (dEdges.get(a * 2 + 0) == centralNode) {
@@ -199,11 +205,16 @@ public class BKKCKCF {
         return solution;
     }
 
-    private void findCliques(List<Integer> potentialVertex, List<Integer> vertexOfCurrentClique,
-            Stack<Integer> potentialCVertex, List<Integer> potentialDVertex, List<Integer> excludedVertex,
+    private void findCliques(
+            List<Integer> potentialVertex,
+            List<Integer> vertexOfCurrentClique,
+            Stack<Integer> potentialCVertex,
+            List<Integer> potentialDVertex,
+            List<Integer> excludedVertex,
             List<Integer> excludedCVertex) {
         int index = 0;
-        List<Integer> neighbourVertex = new ArrayList<Integer>(); ////Initialization ArrayList neighbourVertex
+        List<Integer> neighbourVertex =
+                new ArrayList<Integer>(); // //Initialization ArrayList neighbourVertex
 
         while (potentialVertex.get(index) != 0) {
             int potentialVertexIndex = potentialVertex.get(index);
@@ -223,19 +234,37 @@ public class BKKCKCF {
             }
 
             pCopy.pop();
-            //find the neighbors of the central node from potentialCVertex
-            //System.out.println("potentialVertex.elementAt(index): " + potentialVertex.elementAt(index));
+            // find the neighbors of the central node from potentialCVertex
+            // System.out.println("potentialVertex.elementAt(index): " +
+            // potentialVertex.elementAt(index));
 
             neighbourVertex = findNeighbors(potentialVertexIndex);
-            groupNeighbors(index, pCopy, qCopy, xCopy, yCopy, neighbourVertex, potentialDVertex, potentialVertex,
-                    excludedVertex, excludedCVertex);
+            groupNeighbors(
+                    index,
+                    pCopy,
+                    qCopy,
+                    xCopy,
+                    yCopy,
+                    neighbourVertex,
+                    potentialDVertex,
+                    potentialVertex,
+                    excludedVertex,
+                    excludedCVertex);
             Stack<Integer> pCopyNIntersec = new Stack<Integer>();
             List<Integer> qCopyNIntersec = new ArrayList<Integer>();
             List<Integer> xCopyNIntersec = new ArrayList<Integer>();
             List<Integer> yCopyNIntersec = new ArrayList<Integer>();
 
-            copyVertex(neighbourVertex, pCopyNIntersec, pCopy, qCopyNIntersec, qCopy, xCopyNIntersec,
-                    xCopy, yCopyNIntersec, yCopy);
+            copyVertex(
+                    neighbourVertex,
+                    pCopyNIntersec,
+                    pCopy,
+                    qCopyNIntersec,
+                    qCopy,
+                    xCopyNIntersec,
+                    xCopy,
+                    yCopyNIntersec,
+                    yCopy);
 
             pCopyNIntersec.push(0);
             rCopy.add(potentialVertexIndex);
@@ -245,9 +274,16 @@ public class BKKCKCF {
         }
     }
 
-    private void copyVertex(List<Integer> neighbourVertex, Stack<Integer> pCopyNIntersec, Stack<Integer> pCopy,
-            List<Integer> qCopyNIntersec, List<Integer> qCopy, List<Integer> xCopyNIntersec,
-            List<Integer> xCopy, List<Integer> yCopyNIntersec, List<Integer> yCopy) {
+    private void copyVertex(
+            List<Integer> neighbourVertex,
+            Stack<Integer> pCopyNIntersec,
+            Stack<Integer> pCopy,
+            List<Integer> qCopyNIntersec,
+            List<Integer> qCopy,
+            List<Integer> xCopyNIntersec,
+            List<Integer> xCopy,
+            List<Integer> yCopyNIntersec,
+            List<Integer> yCopy) {
         int nElement = -1;
         int nSize = neighbourVertex.size();
 
@@ -270,29 +306,37 @@ public class BKKCKCF {
         }
     }
 
-    private void groupNeighbors(int index, Stack<Integer> pCopy, List<Integer> qCopy, List<Integer> xCopy,
-            List<Integer> yCopy, List<Integer> neighbourVertex, List<Integer> potentialDVertex,
-            List<Integer> potentialVertex, List<Integer> excludedVertex, List<Integer> excludedCVertex) {
+    private void groupNeighbors(
+            int index,
+            Stack<Integer> pCopy,
+            List<Integer> qCopy,
+            List<Integer> xCopy,
+            List<Integer> yCopy,
+            List<Integer> neighbourVertex,
+            List<Integer> potentialDVertex,
+            List<Integer> potentialVertex,
+            List<Integer> excludedVertex,
+            List<Integer> excludedCVertex) {
 
         int nSize = neighbourVertex.size();
 
-        //System.out.println("Neighbors: ");
+        // System.out.println("Neighbors: ");
 
         for (int b = 0; b < nSize; b += 2) {
             // neighbourVertex[index] is node v
-            //Grouping of the neighbors:
+            // Grouping of the neighbors:
 
             Integer nElementAtB = neighbourVertex.get(b);
 
             if (neighbourVertex.get(b + 1) == 1) {
-                //u and v are adjacent via index C-edge
+                // u and v are adjacent via index C-edge
 
                 if (potentialDVertex.contains(nElementAtB)) {
 
                     pCopy.push(nElementAtB);
-                    //delete neighbourVertex[index] bzw. potentialDVertex[c] from set qCopy, remove C-edges
+                    // delete neighbourVertex[index] bzw. potentialDVertex[c] from set qCopy, remove
+                    // C-edges
                     qCopy.remove(nElementAtB);
-
                 }
                 if (excludedCVertex.contains(nElementAtB)) {
                     if (excludedVertex.contains(nElementAtB)) {
@@ -302,9 +346,11 @@ public class BKKCKCF {
                 }
             }
 
-            //find respective neighbor position in potentialVertex, which is needed for the deletion from potentialVertex
+            // find respective neighbor position in potentialVertex, which is needed for the
+            // deletion from potentialVertex
 
-            if (potentialVertex.indexOf(nElementAtB) <= index && potentialVertex.indexOf(nElementAtB) > -1) {
+            if (potentialVertex.indexOf(nElementAtB) <= index
+                    && potentialVertex.indexOf(nElementAtB) > -1) {
                 --index;
             }
             potentialVertex.remove(nElementAtB);
@@ -395,7 +441,7 @@ public class BKKCKCF {
             excludedVertex.clear();
             vertexOfCurrentClique.clear();
 
-            //find the neighbors of the central node from vertex
+            // find the neighbors of the central node from vertex
             neighbourVertex = findNeighbors(centralNode);
 
             for (int c = 0; c < neighbourVertex.size(); c = c + 2) {
@@ -404,8 +450,9 @@ public class BKKCKCF {
                  */
                 Integer neighbourVertexOfC = neighbourVertex.get(c);
 
-                //find respective neighbor position in potentialCVertex, which is needed for the deletion from vertex
-                //delete neighbor from set vertex
+                // find respective neighbor position in potentialCVertex, which is needed for the
+                // deletion from vertex
+                // delete neighbor from set vertex
 
                 if (neighbourVertex.get(c + 1) == 1) {
                     if (processedVertex.contains(neighbourVertexOfC)) {
@@ -415,7 +462,8 @@ public class BKKCKCF {
                     }
                 } else if (neighbourVertex.get(c + 1) == 2) {
                     // u and v are adjacent via index potentialDVertex-edge
-                    //System.out.println("u and v are adjacent via index potentialDVertex-edge: " + neighbourVertex.elementAt(c));
+                    // System.out.println("u and v are adjacent via index potentialDVertex-edge: " +
+                    // neighbourVertex.elementAt(c));
 
                     if (processedVertex.contains(neighbourVertexOfC)) {
                         excludedCVertex.add(neighbourVertexOfC);
@@ -424,18 +472,25 @@ public class BKKCKCF {
                     }
                 }
 
-                if (vertex.indexOf(neighbourVertexOfC) <= index && vertex.indexOf(neighbourVertexOfC) > -1) {
+                if (vertex.indexOf(neighbourVertexOfC) <= index
+                        && vertex.indexOf(neighbourVertexOfC) > -1) {
                     --index;
                 }
                 vertex.remove(neighbourVertexOfC);
-                //System.out.println("Elements Removed from vertex:" + neighbourVertexOfC);
+                // System.out.println("Elements Removed from vertex:" + neighbourVertexOfC);
             }
 
             potentialCVertex.add(0);
             vertexOfCurrentClique.add(centralNode);
 
-            enumerateCliques(vertexOfCurrentClique, potentialCVertex, potentialDVertex, excludedVertex, excludedCVertex);
-            //enumerateCliques(vertexOfCurrentClique, potentialCVertex, potentialDVertex, excludedVertex);
+            enumerateCliques(
+                    vertexOfCurrentClique,
+                    potentialCVertex,
+                    potentialDVertex,
+                    excludedVertex,
+                    excludedCVertex);
+            // enumerateCliques(vertexOfCurrentClique, potentialCVertex, potentialDVertex,
+            // excludedVertex);
             processedVertex.add(centralNode);
             index++;
         }

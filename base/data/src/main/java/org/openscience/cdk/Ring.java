@@ -24,13 +24,11 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
 
 /**
- * Class representing a ring structure in a molecule.
- * A ring is a linear sequence of
- * N atoms interconnected to each other by covalent bonds,
- * such that atom i (1 &lt; i &lt; N) is bonded to
+ * Class representing a ring structure in a molecule. A ring is a linear sequence of N atoms
+ * interconnected to each other by covalent bonds, such that atom i (1 &lt; i &lt; N) is bonded to
  * atom i-1 and atom i + 1 and atom 1 is bonded to atom N and atom 2.
  *
- * @cdk.module  data
+ * @cdk.module data
  * @cdk.githash
  * @cdk.keyword ring
  */
@@ -39,17 +37,14 @@ public class Ring extends AtomContainer implements java.io.Serializable, IRing {
     /**
      * Determines if a de-serialized object is compatible with this class.
      *
-     * This value must only be changed if and only if the new version
-     * of this class is incompatible with the old version. See Sun docs
-     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
+     * <p>This value must only be changed if and only if the new version of this class is
+     * incompatible with the old version. See Sun docs for <a
+     * href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
      */
     private static final long serialVersionUID = 6604894792331865990L;
 
-    /**
-     * Constructs an empty ring.
-     *
-     */
+    /** Constructs an empty ring. */
     public Ring() {
         super();
     }
@@ -66,8 +61,8 @@ public class Ring extends AtomContainer implements java.io.Serializable, IRing {
     /**
      * Constructs a ring that will have a certain number of atoms of the given elements.
      *
-     * @param   ringSize   The number of atoms and bonds the ring will have
-     * @param   elementSymbol   The element of the atoms the ring will have
+     * @param ringSize The number of atoms and bonds the ring will have
+     * @param elementSymbol The element of the atoms the ring will have
      */
     public Ring(int ringSize, String elementSymbol) {
         this(ringSize);
@@ -84,9 +79,8 @@ public class Ring extends AtomContainer implements java.io.Serializable, IRing {
     /**
      * Constructs an empty ring that will have a certain size.
      *
-     * @param   ringSize  The size (number of atoms) the ring will have
+     * @param ringSize The size (number of atoms) the ring will have
      */
-
     public Ring(int ringSize) {
         super(ringSize, ringSize, 0, 0);
     }
@@ -94,22 +88,20 @@ public class Ring extends AtomContainer implements java.io.Serializable, IRing {
     /**
      * Returns the number of atoms\edges in this ring.
      *
-     * @return   The number of atoms\edges in this ring
+     * @return The number of atoms\edges in this ring
      */
-
     @Override
     public int getRingSize() {
         return this.atomCount;
     }
 
     /**
-     * Returns the next bond in order, relative to a given bond and atom.
-     * Example: Let the ring be composed of 0-1, 1-2, 2-3 and 3-0. A request getNextBond(1-2, 2)
-     * will return Bond 2-3.
+     * Returns the next bond in order, relative to a given bond and atom. Example: Let the ring be
+     * composed of 0-1, 1-2, 2-3 and 3-0. A request getNextBond(1-2, 2) will return Bond 2-3.
      *
-     * @param   bond  A bond for which an atom from a consecutive bond is sought
-     * @param   atom  A atom from the bond above to assign a search direction
-     * @return  The next bond in the order given by the above assignment
+     * @param bond A bond for which an atom from a consecutive bond is sought
+     * @param atom A atom from the bond above to assign a search direction
+     * @return The next bond in the order given by the above assignment
      */
     @Override
     public IBond getNextBond(IBond bond, IAtom atom) {
@@ -138,9 +130,7 @@ public class Ring extends AtomContainer implements java.io.Serializable, IRing {
         return sum;
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IRing clone() throws CloneNotSupportedException {
         return (IRing) super.clone();
@@ -154,5 +144,4 @@ public class Ring extends AtomContainer implements java.io.Serializable, IRing {
         buffer.append(')');
         return buffer.toString();
     }
-
 }

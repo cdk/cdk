@@ -29,9 +29,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-/**
- * @cdk.module test-qsarmolecular
- */
+/** @cdk.module test-qsarmolecular */
 public class FMFDescriptorTest extends MolecularDescriptorTest {
 
     public FMFDescriptorTest() {}
@@ -74,11 +72,11 @@ public class FMFDescriptorTest extends MolecularDescriptorTest {
     @Test
     public void testPirenperone() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer mol = sp.parseSmiles("Fc1ccc(cc1)C(=O)C4CCN(CCC\\3=C(\\N=C2\\C=C/C=C\\N2C/3=O)C)CC4");
+        IAtomContainer mol =
+                sp.parseSmiles("Fc1ccc(cc1)C(=O)C4CCN(CCC\\3=C(\\N=C2\\C=C/C=C\\N2C/3=O)C)CC4");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
         DoubleResult result = (DoubleResult) descriptor.calculate(mol).getValue();
         Assert.assertEquals(0.862, result.doubleValue(), 0.001);
     }
-
 }

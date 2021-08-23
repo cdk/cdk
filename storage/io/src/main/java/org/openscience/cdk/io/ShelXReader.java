@@ -30,10 +30,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.StringTokenizer;
-
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -49,26 +47,24 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * A reader for ShelX output (RES) files. It does not read all information.
- * The list of fields that is read: REM, END, CELL, SPGR.
- * In additions atoms are read.
+ * A reader for ShelX output (RES) files. It does not read all information. The list of fields that
+ * is read: REM, END, CELL, SPGR. In additions atoms are read.
  *
  * <p>A reader for ShelX files. It currently supports ShelXL.
  *
- * <p>The ShelXL format is described on the net:
- * <a href="http://www.msg.ucsf.edu/local/programs/shelxl/ch_07.html">
+ * <p>The ShelXL format is described on the net: <a
+ * href="http://www.msg.ucsf.edu/local/programs/shelxl/ch_07.html">
  * http://www.msg.ucsf.edu/local/programs/shelxl/ch_07.html</a>.
  *
  * @cdk.module io
  * @cdk.githash
  * @cdk.iooptions
- *
  * @cdk.keyword file format, ShelXL
  * @author E.L. Willighagen
  */
 public class ShelXReader extends DefaultChemObjectReader {
 
-    private BufferedReader      input;
+    private BufferedReader input;
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(ShelXReader.class);
 
     /**
@@ -148,8 +144,7 @@ public class ShelXReader extends DefaultChemObjectReader {
     }
 
     /**
-     * Read the ShelX from input. Each ShelX document is expected to contain
-     * one crystal structure.
+     * Read the ShelX from input. Each ShelX document is expected to contain one crystal structure.
      *
      * @return a ChemFile with the coordinates, charges, vectors, etc.
      */
@@ -219,7 +214,8 @@ public class ShelXReader extends DefaultChemObjectReader {
                 double beta = FortranFormat.atof(sbeta);
                 double gamma = FortranFormat.atof(sgamma);
 
-                Vector3d[] axes = CrystalGeometryTools.notionalToCartesian(a, b, c, alpha, beta, gamma);
+                Vector3d[] axes =
+                        CrystalGeometryTools.notionalToCartesian(a, b, c, alpha, beta, gamma);
 
                 crystal.setA(axes[0]);
                 crystal.setB(axes[1]);
@@ -320,7 +316,7 @@ public class ShelXReader extends DefaultChemObjectReader {
 
                 /* All other is atom */
             } else {
-                //logger.debug("Assumed to contain an atom: " + line);
+                // logger.debug("Assumed to contain an atom: " + line);
                 /*
                  * this line gives an atom, because all lines not starting with
                  * a ShelX command is an atom (that sucks!)
@@ -351,7 +347,15 @@ public class ShelXReader extends DefaultChemObjectReader {
                 if (atype.equalsIgnoreCase("Q")) {
                     // ingore atoms named Q
                 } else {
-                    logger.info("Adding atom: " + atype + ", " + frac[0] + ", " + frac[1] + ", " + frac[2]);
+                    logger.info(
+                            "Adding atom: "
+                                    + atype
+                                    + ", "
+                                    + frac[0]
+                                    + ", "
+                                    + frac[1]
+                                    + ", "
+                                    + frac[2]);
                     IAtom atom = crystal.getBuilder().newInstance(IAtom.class, atype);
                     atom.setFractionalPoint3d(new Point3d(frac[0], frac[1], frac[2]));
                     crystal.addAtom(atom);

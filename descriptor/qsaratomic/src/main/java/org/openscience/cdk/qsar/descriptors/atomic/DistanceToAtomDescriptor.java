@@ -18,6 +18,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import javax.vecmath.Point3d;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -27,10 +28,9 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 
-import javax.vecmath.Point3d;
-
 /**
- *  This class returns the 3D distance between two atoms. Only works with 3D coordinates, which must be calculated beforehand.
+ * This class returns the 3D distance between two atoms. Only works with 3D coordinates, which must
+ * be calculated beforehand.
  *
  * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
@@ -45,38 +45,38 @@ import javax.vecmath.Point3d;
  *   </tr>
  * </table>
  *
- *@author         mfe4
- *@cdk.created    2004-11-13
- *@cdk.module     qsaratomic
+ * @author mfe4
+ * @cdk.created 2004-11-13
+ * @cdk.module qsaratomic
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:distanceToAtom
  */
-public class DistanceToAtomDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
+public class DistanceToAtomDescriptor extends AbstractAtomicDescriptor
+        implements IAtomicDescriptor {
 
     private int focusPosition = 0;
 
-    /**
-     *  Constructor for the DistanceToAtomDescriptor object
-     */
+    /** Constructor for the DistanceToAtomDescriptor object */
     public DistanceToAtomDescriptor() {}
 
     /**
-     *  Gets the specification attribute of the DistanceToAtomDescriptor object
+     * Gets the specification attribute of the DistanceToAtomDescriptor object
      *
-     *@return    The specification value
+     * @return The specification value
      */
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#distanceToAtom", this.getClass()
-                        .getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#distanceToAtom",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     /**
-     *  Sets the parameters attribute of the DistanceToAtomDescriptor object
+     * Sets the parameters attribute of the DistanceToAtomDescriptor object
      *
-     *@param  params            The parameter is the position to focus
-     *@exception  CDKException  Description of the Exception
+     * @param params The parameter is the position to focus
+     * @exception CDKException Description of the Exception
      */
     @Override
     public void setParameters(Object[] params) throws CDKException {
@@ -90,9 +90,9 @@ public class DistanceToAtomDescriptor extends AbstractAtomicDescriptor implement
     }
 
     /**
-     *  Gets the parameters attribute of the DistanceToAtomDescriptor object
+     * Gets the parameters attribute of the DistanceToAtomDescriptor object
      *
-     *@return    The parameters value
+     * @return The parameters value
      */
     @Override
     public Object[] getParameters() {
@@ -103,17 +103,16 @@ public class DistanceToAtomDescriptor extends AbstractAtomicDescriptor implement
 
     @Override
     public String[] getDescriptorNames() {
-        return new String[]{"distanceToAtom"};
+        return new String[] {"distanceToAtom"};
     }
 
     /**
-     *  This method calculate the 3D distance between two atoms.
+     * This method calculate the 3D distance between two atoms.
      *
-     *@param  atom              The IAtom for which the DescriptorValue is requested
-     *@param  container         Parameter is the atom container.
-     *@return                   The number of bonds on the shortest path between two atoms
+     * @param atom The IAtom for which the DescriptorValue is requested
+     * @param container Parameter is the atom container.
+     * @return The number of bonds on the shortest path between two atoms
      */
-
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
         double distanceToAtom;
@@ -121,17 +120,23 @@ public class DistanceToAtomDescriptor extends AbstractAtomicDescriptor implement
         IAtom focus = container.getAtom(focusPosition);
 
         if (atom.getPoint3d() == null || focus.getPoint3d() == null) {
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                    Double.NaN), getDescriptorNames(), new CDKException(
-                    "Target or focus atom must have 3D coordinates."));
-
+            return new DescriptorValue(
+                    getSpecification(),
+                    getParameterNames(),
+                    getParameters(),
+                    new DoubleResult(Double.NaN),
+                    getDescriptorNames(),
+                    new CDKException("Target or focus atom must have 3D coordinates."));
         }
 
         distanceToAtom = calculateDistanceBetweenTwoAtoms(atom, focus);
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                distanceToAtom), getDescriptorNames());
-
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new DoubleResult(distanceToAtom),
+                getDescriptorNames());
     }
 
     /**
@@ -139,7 +144,6 @@ public class DistanceToAtomDescriptor extends AbstractAtomicDescriptor implement
      *
      * @param atom1 The IAtom 1
      * @param atom2 The IAtom 2
-     *
      * @return distance between atom1 and atom2
      */
     private double calculateDistanceBetweenTwoAtoms(IAtom atom1, IAtom atom2) {
@@ -151,9 +155,9 @@ public class DistanceToAtomDescriptor extends AbstractAtomicDescriptor implement
     }
 
     /**
-     *  Gets the parameterNames attribute of the DistanceToAtomDescriptor object
+     * Gets the parameterNames attribute of the DistanceToAtomDescriptor object
      *
-     *@return    The parameterNames value
+     * @return The parameterNames value
      */
     @Override
     public String[] getParameterNames() {
@@ -163,10 +167,10 @@ public class DistanceToAtomDescriptor extends AbstractAtomicDescriptor implement
     }
 
     /**
-     *  Gets the parameterType attribute of the DistanceToAtomDescriptor object
+     * Gets the parameterType attribute of the DistanceToAtomDescriptor object
      *
-     *@param  name  Description of the Parameter
-     *@return       The parameterType value
+     * @param name Description of the Parameter
+     * @return The parameterType value
      */
     @Override
     public Object getParameterType(String name) {

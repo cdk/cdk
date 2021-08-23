@@ -26,7 +26,6 @@ package org.openscience.cdk.ringsearch;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -38,33 +37,33 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
- * Finds the Smallest Set of Smallest Rings.
- * This is an implementation of the algorithm published in
+ * Finds the Smallest Set of Smallest Rings. This is an implementation of the algorithm published in
  * {@cdk.cite FIG96}.
  *
- * <p>The {@link SSSRFinder} is encouraged to be used, providing an exact
- * algorithm for finding the SSSR.
+ * <p>The {@link SSSRFinder} is encouraged to be used, providing an exact algorithm for finding the
+ * SSSR.
  *
  * @cdk.module extra
  * @cdk.githash
  * @cdk.keyword smallest-set-of-rings
  * @cdk.keyword ring search
  * @cdk.dictref blue-obelisk:findSmallestSetOfSmallestRings_Figueras
- *
  * @deprecated Use SSSRFinder instead (exact algorithm).
  */
 public class FiguerasSSSRFinder {
 
-    private static ILoggingTool logger      = LoggingToolFactory.createLoggingTool(FiguerasSSSRFinder.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(FiguerasSSSRFinder.class);
 
-    int                         trimCounter = 0;
-    private static final String PATH        = "org.openscience.cdk.ringsearch.FiguerasSSSRFinderRFinder.PATH";
+    int trimCounter = 0;
+    private static final String PATH =
+            "org.openscience.cdk.ringsearch.FiguerasSSSRFinderRFinder.PATH";
 
     /**
      * Finds the Smallest Set of Smallest Rings.
      *
-     * @param   mol the molecule to be searched for rings
-     * @return      a RingSet containing the rings in molecule
+     * @param mol the molecule to be searched for rings
+     * @return a RingSet containing the rings in molecule
      */
     public IRingSet findSSSR(IAtomContainer mol) {
         IBond brokenBond = null;
@@ -77,10 +76,10 @@ public class FiguerasSSSRFinder {
         IAtom[] rememberNodes;
         IRing ring;
 
-        //Two Vectors - as defined in the article. One to hold the
-        //full set of atoms in the structure and on to store the numbers
-        //of the nodes that have been trimmed away.
-        //Furhter there is a Vector nodesN2 to store the number of N2 nodes
+        // Two Vectors - as defined in the article. One to hold the
+        // full set of atoms in the structure and on to store the numbers
+        // of the nodes that have been trimmed away.
+        // Furhter there is a Vector nodesN2 to store the number of N2 nodes
         List<IAtom> fullSet = new ArrayList<IAtom>();
         List<IAtom> trimSet = new ArrayList<IAtom>();
         List<IAtom> nodesN2 = new ArrayList<IAtom>();
@@ -94,10 +93,10 @@ public class FiguerasSSSRFinder {
         logger.debug("fullSet.size(): " + fullSet.size());
 
         do {
-            //Add nodes of degree zero to trimset.
-            //Also add nodes of degree 2 to nodesN2.
-            //In the same run, check, which node has the lowest degree
-            //greater than zero.
+            // Add nodes of degree zero to trimset.
+            // Also add nodes of degree 2 to nodesN2.
+            // In the same run, check, which node has the lowest degree
+            // greater than zero.
             smallestDegree = 7;
             smallest = null;
             nodesN2.clear();
@@ -177,23 +176,22 @@ public class FiguerasSSSRFinder {
     }
 
     /**
-     * This routine is called 'getRing() in Figueras original article
-     * finds the smallest ring of which rootNode is part of.
+     * This routine is called 'getRing() in Figueras original article finds the smallest ring of
+     * which rootNode is part of.
      *
-     * @param   rootNode  The Atom to be searched for the smallest ring it is part of
-     * @param   molecule  The molecule that contains the rootNode
-     * @return     The smallest Ring rootnode is part of
+     * @param rootNode The Atom to be searched for the smallest ring it is part of
+     * @param molecule The molecule that contains the rootNode
+     * @return The smallest Ring rootnode is part of
      */
     private IRing getRing(IAtom rootNode, IAtomContainer molecule) {
         IAtom node, neighbor, mAtom;
         List neighbors, mAtoms;
-        /** OKatoms is Figueras nomenclature, giving the number of
-            atoms in the structure */
+        /** OKatoms is Figueras nomenclature, giving the number of atoms in the structure */
         int OKatoms = molecule.getAtomCount();
         /** queue for Breadth First Search of this graph */
         Queue queue = new Queue();
         /* Initialize a path Vector for each node */
-        //Vector pfad1,pfad2;
+        // Vector pfad1,pfad2;
         List<List<IAtom>> path = new ArrayList<List<IAtom>>(OKatoms);
         List<IAtom> intersection = new ArrayList<IAtom>();
         List<IAtom> ring = new ArrayList<IAtom>();
@@ -204,8 +202,8 @@ public class FiguerasSSSRFinder {
         // Initialize the queue with nodes attached to rootNode
         neighbors = molecule.getConnectedAtomsList(rootNode);
         for (int f = 0; f < neighbors.size(); f++) {
-            //if the degree of the f-st neighbor of rootNode is greater
-            //than zero (i.e., it has not yet been deleted from the list)
+            // if the degree of the f-st neighbor of rootNode is greater
+            // than zero (i.e., it has not yet been deleted from the list)
             neighbor = (IAtom) neighbors.get(f);
             // push the f-st node onto our FIFO queue
             // after assigning rootNode as its source
@@ -218,9 +216,14 @@ public class FiguerasSSSRFinder {
             mAtoms = molecule.getConnectedAtomsList(node);
             for (int f = 0; f < mAtoms.size(); f++) {
                 mAtom = (IAtom) mAtoms.get(f);
-                if (!mAtom.equals(((List) node.getProperty(PATH)).get(((List<IAtom>) node.getProperty(PATH)).size() - 2))) {
+                if (!mAtom.equals(
+                        ((List) node.getProperty(PATH))
+                                .get(((List<IAtom>) node.getProperty(PATH)).size() - 2))) {
                     if (((List) mAtom.getProperty(PATH)).size() > 0) {
-                        intersection = getIntersection((List) node.getProperty(PATH), (List) mAtom.getProperty(PATH));
+                        intersection =
+                                getIntersection(
+                                        (List) node.getProperty(PATH),
+                                        (List) mAtom.getProperty(PATH));
                         if (intersection.size() == 1) {
                             // we have found a valid ring closure
                             // now let's prepare the path to
@@ -229,16 +232,20 @@ public class FiguerasSSSRFinder {
                             logger.debug("path2  ", ((List) mAtom.getProperty(PATH)));
                             logger.debug("rootNode  ", rootNode);
                             logger.debug("ring   ", ring);
-                            ring = getUnion((List) node.getProperty(PATH), (List) mAtom.getProperty(PATH));
+                            ring =
+                                    getUnion(
+                                            (List) node.getProperty(PATH),
+                                            (List) mAtom.getProperty(PATH));
                             return prepareRing(ring, molecule);
                         }
                     } else {
                         // if path[mNumber] is null
                         // update the path[mNumber]
-                        //pfad2 = (Vector)node.getProperty(PATH);
-                        mAtom.setProperty(PATH, new ArrayList<IAtom>((List<IAtom>) node.getProperty(PATH)));
+                        // pfad2 = (Vector)node.getProperty(PATH);
+                        mAtom.setProperty(
+                                PATH, new ArrayList<IAtom>((List<IAtom>) node.getProperty(PATH)));
                         ((List<IAtom>) mAtom.getProperty(PATH)).add(mAtom);
-                        //pfad1 = (Vector)mAtom.getProperty(PATH);
+                        // pfad1 = (Vector)mAtom.getProperty(PATH);
                         // now push the node m onto the queue
                         queue.push(mAtom);
                     }
@@ -251,9 +258,9 @@ public class FiguerasSSSRFinder {
     /**
      * Returns the ring that is formed by the atoms in the given vector.
      *
-     * @param   vec  The vector that contains the atoms of the ring
-     * @param   mol  The molecule this ring is a substructure of
-     * @return     The ring formed by the given atoms
+     * @param vec The vector that contains the atoms of the ring
+     * @param mol The molecule this ring is a substructure of
+     * @return The ring formed by the given atoms
      */
     private IRing prepareRing(List vec, IAtomContainer mol) {
         // add the atoms in vec to the new ring
@@ -289,8 +296,8 @@ public class FiguerasSSSRFinder {
     /**
      * removes all bonds connected to the given atom leaving it with degree zero.
      *
-     * @param   atom  The atom to be disconnecred
-     * @param   molecule  The molecule containing the atom
+     * @param atom The atom to be disconnecred
+     * @param molecule The molecule containing the atom
      */
     private void trim(IAtom atom, IAtomContainer molecule) {
         List<IBond> bonds = molecule.getConnectedBondsList(atom);
@@ -303,7 +310,7 @@ public class FiguerasSSSRFinder {
     /**
      * initializes a path vector in every Atom of the given molecule
      *
-     * @param   molecule  The given molecule
+     * @param molecule The given molecule
      */
     private void initPath(IAtomContainer molecule) {
         for (int i = 0; i < molecule.getAtomCount(); i++) {
@@ -315,8 +322,8 @@ public class FiguerasSSSRFinder {
     /**
      * Returns a Vector that contains the intersection of Vectors vec1 and vec2
      *
-     * @param   list1   The first vector
-     * @param   list2   The second vector
+     * @param list1 The first vector
+     * @param list2 The second vector
      * @return the intersection of the two list
      */
     private List getIntersection(List<IAtom> list1, List<IAtom> list2) {
@@ -330,8 +337,8 @@ public class FiguerasSSSRFinder {
     /**
      * Returns a Vector that contains the union of Vectors vec1 and vec2
      *
-     * @param   list1  The first vector
-     * @param   list2  The second vector
+     * @param list1 The first vector
+     * @param list2 The second vector
      * @return the union of the two list
      */
     private List<IAtom> getUnion(List<IAtom> list1, List<IAtom> list2) {
@@ -348,8 +355,8 @@ public class FiguerasSSSRFinder {
     /**
      * Eliminates one bond of this atom from the molecule
      *
-     * @param   atom  The atom one bond is eliminated of
-     * @param   molecule  The molecule that contains the atom
+     * @param atom The atom one bond is eliminated of
+     * @param molecule The molecule that contains the atom
      */
     private void breakBond(IAtom atom, IAtomContainer molecule) {
         Iterator<IBond> bonds = molecule.bonds().iterator();
@@ -365,11 +372,11 @@ public class FiguerasSSSRFinder {
     /**
      * Selects an optimum edge for elimination in structures without N2 nodes.
      *
-     * <p>This might be severely broken! Would have helped if there was an
-     * explanation of how this algorithm worked.
+     * <p>This might be severely broken! Would have helped if there was an explanation of how this
+     * algorithm worked.
      *
-     * @param   ring
-     * @param   molecule
+     * @param ring
+     * @param molecule
      */
     private IBond checkEdges(IRing ring, IAtomContainer molecule) {
         IRing r1, r2;
@@ -400,5 +407,4 @@ public class FiguerasSSSRFinder {
         }
         return (IBond) ring.getElectronContainer(minMax);
     }
-
 }

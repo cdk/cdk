@@ -24,7 +24,9 @@
 
 package org.openscience.cdk.smiles.smarts.parser;
 
-import org.junit.Ignore;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -32,13 +34,9 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 /**
- * Verifies stereo matching. We check the counts to ensure that
- * tetrahedral/geometric stereo isn't matching absolute values (i.e. R/S or
- * odd/even // parity from MDL molfile)
+ * Verifies stereo matching. We check the counts to ensure that tetrahedral/geometric stereo isn't
+ * matching absolute values (i.e. R/S or odd/even // parity from MDL molfile)
  *
  * @author John May
  * @cdk.module test-smarts
@@ -137,7 +135,8 @@ public class SmartsStereoTest {
         assertMatch("[C@?H](C)(N)O", "C(N)(C)O", 1, 1);
     }
 
-    static void assertMatch(SMARTSQueryTool sqt, IAtomContainer m, int hits, int usaHits) throws Exception {
+    static void assertMatch(SMARTSQueryTool sqt, IAtomContainer m, int hits, int usaHits)
+            throws Exception {
         sqt.matches(m);
         assertThat(sqt.getMatchingAtoms().size(), is(hits));
         assertThat(sqt.getUniqueMatchingAtoms().size(), is(usaHits));
@@ -156,5 +155,4 @@ public class SmartsStereoTest {
     }
 
     private static final SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
-
 }

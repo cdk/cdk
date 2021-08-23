@@ -25,7 +25,6 @@ import org.openscience.cdk.io.ReaderEvent;
  *
  * @cdk.module io
  * @cdk.githash
- *
  * @author Bradley A. Smith &lt;bradley@baysmith.com&gt;
  */
 public interface IReaderListener extends IChemObjectIOListener {
@@ -36,5 +35,4 @@ public interface IReaderListener extends IChemObjectIOListener {
      * @param event information about the event.
      */
     public void frameRead(ReaderEvent event);
-
 }

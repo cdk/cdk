@@ -19,29 +19,28 @@
 package org.openscience.cdk.interfaces;
 
 /**
- * A PDBAtom is a subclass of a Atom which is supposed to store additional informations about the Atom.
+ * A PDBAtom is a subclass of a Atom which is supposed to store additional informations about the
+ * Atom.
  *
- * @cdk.module  interfaces
+ * @cdk.module interfaces
  * @cdk.githash
- *
  * @author Miguel Rojas &lt;miguel.rojas@uni-koeln.de&gt;
  * @cdk.created 2006-11-20
- *
  * @cdk.keyword pdbpolymer
  */
 public interface IPDBAtom extends IAtom {
 
     /**
-     * Get one entire line from the PDB entry file which describe the IPDBAtom.
-     * It consists of 80 columns.
+     * Get one entire line from the PDB entry file which describe the IPDBAtom. It consists of 80
+     * columns.
      *
      * @return a String with all information
      */
     public String getRecord();
 
     /**
-     * Set one entire line from the PDB entry file which describe the IPDBAtom.
-     * It consists of 80 columns.
+     * Set one entire line from the PDB entry file which describe the IPDBAtom. It consists of 80
+     * columns.
      *
      * @param newRecord A String with all information
      */
@@ -57,7 +56,7 @@ public interface IPDBAtom extends IAtom {
     /**
      * set the Temperature factor of this atom.
      *
-     * @param newTempFactor  the Temperature factor of this atom
+     * @param newTempFactor the Temperature factor of this atom
      */
     public void setTempFactor(Double newTempFactor);
 
@@ -71,7 +70,7 @@ public interface IPDBAtom extends IAtom {
     /**
      * set the Residue name of this atom.
      *
-     * @param newResName  the Residue name of this atom
+     * @param newResName the Residue name of this atom
      */
     public void setResName(String newResName);
 
@@ -85,7 +84,7 @@ public interface IPDBAtom extends IAtom {
     /**
      * set the Code for insertion of residues of this atom.
      *
-     * @param newICode  the Code for insertion of residues of this atom
+     * @param newICode the Code for insertion of residues of this atom
      */
     public void setICode(String newICode);
 
@@ -99,7 +98,7 @@ public interface IPDBAtom extends IAtom {
     /**
      * set the Atom name of this atom.
      *
-     * @param newName  the Atom name of this atom
+     * @param newName the Atom name of this atom
      */
     public void setName(String newName);
 
@@ -113,7 +112,7 @@ public interface IPDBAtom extends IAtom {
     /**
      * set the Chain identifier of this atom.
      *
-     * @param newChainID  the Chain identifier of this atom
+     * @param newChainID the Chain identifier of this atom
      */
     public void setChainID(String newChainID);
 
@@ -127,7 +126,7 @@ public interface IPDBAtom extends IAtom {
     /**
      * set the Alternate location indicator of this atom.
      *
-     * @param newAltLoc  the Alternate location indicator of this atom
+     * @param newAltLoc the Alternate location indicator of this atom
      */
     public void setAltLoc(String newAltLoc);
 
@@ -141,7 +140,7 @@ public interface IPDBAtom extends IAtom {
     /**
      * set the Segment identifier, left-justified of this atom.
      *
-     * @param newSegID  the Segment identifier, left-justified of this atom
+     * @param newSegID the Segment identifier, left-justified of this atom
      */
     public void setSegID(String newSegID);
 
@@ -155,7 +154,7 @@ public interface IPDBAtom extends IAtom {
     /**
      * set the Atom serial number of this atom.
      *
-     * @param newSerial  the Atom serial number of this atom
+     * @param newSerial the Atom serial number of this atom
      */
     public void setSerial(Integer newSerial);
 
@@ -169,7 +168,7 @@ public interface IPDBAtom extends IAtom {
     /**
      * set the Residue sequence number of this atom.
      *
-     * @param newResSeq  the Residue sequence number of this atom
+     * @param newResSeq the Residue sequence number of this atom
      */
     public void setResSeq(String newResSeq);
 
@@ -189,6 +188,7 @@ public interface IPDBAtom extends IAtom {
 
     /**
      * Determine whether this is a heteroatom or not.
+     *
      * @return true if the atom is a heteroatom, otherwise false
      */
     public Boolean getHetAtom();
@@ -210,8 +210,7 @@ public interface IPDBAtom extends IAtom {
     /**
      * set the Occupancy of this atom.
      *
-     * @param newOccupancy  the Occupancy of this atom
+     * @param newOccupancy the Occupancy of this atom
      */
     public void setOccupancy(Double newOccupancy);
-
 }

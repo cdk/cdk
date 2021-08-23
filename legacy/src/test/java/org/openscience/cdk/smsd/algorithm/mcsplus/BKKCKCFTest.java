@@ -26,7 +26,6 @@ package org.openscience.cdk.smsd.algorithm.mcsplus;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -56,7 +55,10 @@ public class BKKCKCFTest {
     @Test
     public void testSomeMethod() {
         // TODO review the generated test code and remove the default call to fail.
-        assertNotNull(new BKKCKCF(new ArrayList<Integer>(), new ArrayList<Integer>(), new ArrayList<Integer>()));
+        assertNotNull(
+                new BKKCKCF(
+                        new ArrayList<Integer>(),
+                        new ArrayList<Integer>(),
+                        new ArrayList<Integer>()));
     }
-
 }

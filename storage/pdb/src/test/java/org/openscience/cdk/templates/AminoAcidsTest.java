@@ -18,18 +18,14 @@
  */
 package org.openscience.cdk.templates;
 
+import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.AminoAcid;
-import org.openscience.cdk.interfaces.IAminoAcid;
-import org.openscience.cdk.templates.AminoAcids;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.interfaces.IAminoAcid;
 
-import java.util.Map;
-
-/**
- * @cdk.module test-pdb
- */
+/** @cdk.module test-pdb */
 public class AminoAcidsTest extends CDKTestCase {
 
     @Test
@@ -78,5 +74,4 @@ public class AminoAcidsTest extends CDKTestCase {
             Assert.assertNotNull("Did not find AA for: " + aa1, aa);
         }
     }
-
 }

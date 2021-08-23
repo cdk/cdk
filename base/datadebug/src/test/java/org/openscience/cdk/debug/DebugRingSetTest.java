@@ -36,13 +36,14 @@ public class DebugRingSetTest extends AbstractRingSetTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new DebugRingSet();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new DebugRingSet();
+                    }
+                });
     }
 
     @Test

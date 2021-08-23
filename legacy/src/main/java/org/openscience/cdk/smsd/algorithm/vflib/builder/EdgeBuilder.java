@@ -27,23 +27,22 @@ import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IEdge;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.INode;
 
 /**
- * Class for building/storing edges (bonds) in the graph with bond
- * query capabilities.
+ * Class for building/storing edges (bonds) in the graph with bond query capabilities.
+ *
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is
+ *     available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public class EdgeBuilder implements IEdge {
 
-    private NodeBuilder   source;
-    private NodeBuilder   target;
+    private NodeBuilder source;
+    private NodeBuilder target;
     private VFBondMatcher matcher;
 
     /**
-     *
      * @param source
      * @param target
      * @param matcher

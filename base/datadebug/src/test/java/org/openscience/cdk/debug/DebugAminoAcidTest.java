@@ -36,13 +36,14 @@ public class DebugAminoAcidTest extends AbstractAminoAcidTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new DebugAminoAcid();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new DebugAminoAcid();
+                    }
+                });
     }
 
     @Test

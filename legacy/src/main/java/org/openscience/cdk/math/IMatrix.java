@@ -41,13 +41,11 @@ public class IMatrix {
     public double[][] imagmatrix;
 
     /** the count of rows of the matrix */
-    public int        rows;
+    public int rows;
     /** the count of columns of the matrix */
-    public int        columns;
+    public int columns;
 
-    /**
-     * Creates a complex matrix
-     */
+    /** Creates a complex matrix */
     public IMatrix(int rows, int columns) {
         this.rows = rows;
         this.columns = columns;
@@ -55,9 +53,7 @@ public class IMatrix {
         imagmatrix = new double[rows][columns];
     }
 
-    /**
-     * Creates a complex copy of a matrix
-     */
+    /** Creates a complex copy of a matrix */
     public IMatrix(Matrix m) {
         rows = m.rows;
         columns = m.columns;
@@ -65,23 +61,17 @@ public class IMatrix {
         imagmatrix = new double[rows][columns];
     }
 
-    /**
-     * Returns the count of rows
-     */
+    /** Returns the count of rows */
     public int getRows() {
         return rows;
     }
 
-    /**
-     * Returns the count of columns
-     */
+    /** Returns the count of columns */
     public int getColumns() {
         return columns;
     }
 
-    /**
-     * Creates a vector with the content of a row from this matrix
-     */
+    /** Creates a vector with the content of a row from this matrix */
     public IVector getVectorFromRow(int index) {
         IVector result = new IVector(columns);
         for (int i = 0; i < columns; i++) {
@@ -91,9 +81,7 @@ public class IMatrix {
         return result;
     }
 
-    /**
-     * Creates a vector with the content of a column from this matrix
-     */
+    /** Creates a vector with the content of a column from this matrix */
     public IVector getVectorFromColumn(int index) {
         IVector result = new IVector(rows);
         for (int i = 0; i < rows; i++) {
@@ -103,9 +91,7 @@ public class IMatrix {
         return result;
     }
 
-    /**
-     * Creates a vector with the content of the diagonal elements from this matrix
-     */
+    /** Creates a vector with the content of the diagonal elements from this matrix */
     public IVector getVectorFromDiagonal() {
         int size = Math.min(rows, columns);
         IVector result = new IVector(size);
@@ -116,18 +102,14 @@ public class IMatrix {
         return result;
     }
 
-    /**
-     *  Addition from two matrices
-     */
+    /** Addition from two matrices */
     public IMatrix add(IMatrix b) {
         IMatrix result = new IMatrix(rows, columns);
         add(b, result);
         return result;
     }
 
-    /**
-     *  Addition from two matrices
-     */
+    /** Addition from two matrices */
     public void add(IMatrix b, IMatrix result) {
         if ((b == null) || (rows != b.rows) || (columns != b.columns)) return;
 
@@ -141,18 +123,14 @@ public class IMatrix {
             }
     }
 
-    /**
-     *  Subtraktion from two matrices
-     */
+    /** Subtraktion from two matrices */
     public IMatrix sub(IMatrix b) {
         IMatrix result = new IMatrix(rows, columns);
         sub(b, result);
         return result;
     }
 
-    /**
-     *  Subtraktion from two matrices
-     */
+    /** Subtraktion from two matrices */
     public void sub(IMatrix b, IMatrix result) {
         if ((b == null) || (rows != b.rows) || (columns != b.columns)) return;
 
@@ -166,18 +144,14 @@ public class IMatrix {
             }
     }
 
-    /**
-     *  Multiplikation from two matrices
-     */
+    /** Multiplikation from two matrices */
     public IMatrix mul(IMatrix b) {
         IMatrix result = new IMatrix(rows, columns);
         mul(b, result);
         return result;
     }
 
-    /**
-     *  Multiplikation from two matrices
-     */
+    /** Multiplikation from two matrices */
     public void mul(IMatrix b, IMatrix result) {
         if ((b == null) || (columns != b.rows)) return;
 
@@ -189,26 +163,26 @@ public class IMatrix {
                 realsum = 0;
                 imagsum = 0;
                 for (j = 0; j < columns; j++) {
-                    realsum += realmatrix[i][j] * b.realmatrix[j][k] - imagmatrix[i][j] * b.imagmatrix[j][k];
-                    imagsum += realmatrix[i][j] * b.imagmatrix[j][k] + imagmatrix[i][j] * b.realmatrix[j][k];
+                    realsum +=
+                            realmatrix[i][j] * b.realmatrix[j][k]
+                                    - imagmatrix[i][j] * b.imagmatrix[j][k];
+                    imagsum +=
+                            realmatrix[i][j] * b.imagmatrix[j][k]
+                                    + imagmatrix[i][j] * b.realmatrix[j][k];
                 }
                 result.realmatrix[i][k] = realsum;
                 result.imagmatrix[i][k] = imagsum;
             }
     }
 
-    /**
-     *  Multiplikation from a vector and a matrix
-     */
+    /** Multiplikation from a vector and a matrix */
     public IVector mul(IVector a) {
         IVector result = new IVector(rows);
         mul(a, result);
         return result;
     }
 
-    /**
-     *  Multiplikation from a vector and a matrix
-     */
+    /** Multiplikation from a vector and a matrix */
     public void mul(IVector a, IVector result) {
         if ((a == null) || (columns != a.size)) return;
 
@@ -228,18 +202,14 @@ public class IMatrix {
         }
     }
 
-    /**
-     *  Multiplikation from a scalar and a matrix
-     */
+    /** Multiplikation from a scalar and a matrix */
     public IMatrix mul(Complex a) {
         IMatrix result = new IMatrix(rows, columns);
         mul(a, result);
         return result;
     }
 
-    /**
-     *  Multiplikation from a scalar and a matrix
-     */
+    /** Multiplikation from a scalar and a matrix */
     public void mul(Complex a, IMatrix result) {
         if ((result.rows != rows) || (result.columns != columns)) result.reshape(rows, columns);
 
@@ -251,18 +221,14 @@ public class IMatrix {
             }
     }
 
-    /**
-     *  Copy a matrix
-     */
+    /** Copy a matrix */
     public IMatrix duplicate() {
         IMatrix result = new IMatrix(rows, columns);
         duplicate(result);
         return result;
     }
 
-    /**
-     *  Copy a matrix
-     */
+    /** Copy a matrix */
     public void duplicate(IMatrix result) {
         if ((result.rows != rows) || (result.columns != columns)) result.reshape(rows, columns);
 
@@ -274,18 +240,14 @@ public class IMatrix {
             }
     }
 
-    /**
-     *  Transpose a matrix
-     */
+    /** Transpose a matrix */
     public IMatrix transpose() {
         IMatrix result = new IMatrix(rows, columns);
         transpose(result);
         return result;
     }
 
-    /**
-     *  Transpose a matrix
-     */
+    /** Transpose a matrix */
     public void transpose(IMatrix result) {
         if ((result.rows != rows) || (result.columns != columns)) result.reshape(rows, columns);
 
@@ -297,22 +259,17 @@ public class IMatrix {
             }
     }
 
-    /**
-     * Similar transformation
-     * Ut * M * U
-     */
+    /** Similar transformation Ut * M * U */
     public IMatrix similar(IMatrix U) {
         IMatrix result = new IMatrix(rows, columns);
         similar(U, result);
         return result;
     }
 
-    /**
-     * Similar transformation
-     * Ut * M * U
-     */
+    /** Similar transformation Ut * M * U */
     public void similar(IMatrix U, IMatrix result) {
-        if ((result.rows != U.columns) || (result.columns != U.columns)) result.reshape(U.columns, U.columns);
+        if ((result.rows != U.columns) || (result.columns != U.columns))
+            result.reshape(U.columns, U.columns);
 
         double realsum, imagsum, realinnersum, imaginnersum;
         for (int i = 0; i < U.columns; i++)
@@ -323,20 +280,24 @@ public class IMatrix {
                     realinnersum = 0d;
                     imaginnersum = 0d;
                     for (int l = 0; l < U.columns; l++) {
-                        realinnersum += realmatrix[k][l] * U.realmatrix[l][j] - imagmatrix[k][l] * U.imagmatrix[l][j];
-                        imaginnersum += realmatrix[k][l] * U.imagmatrix[l][j] + imagmatrix[k][l] * U.realmatrix[l][j];
+                        realinnersum +=
+                                realmatrix[k][l] * U.realmatrix[l][j]
+                                        - imagmatrix[k][l] * U.imagmatrix[l][j];
+                        imaginnersum +=
+                                realmatrix[k][l] * U.imagmatrix[l][j]
+                                        + imagmatrix[k][l] * U.realmatrix[l][j];
                     }
-                    realsum += U.realmatrix[k][i] * realinnersum - U.imagmatrix[k][i] * imaginnersum;
-                    imagsum += U.realmatrix[k][i] * imaginnersum + U.imagmatrix[k][i] * realinnersum;
+                    realsum +=
+                            U.realmatrix[k][i] * realinnersum - U.imagmatrix[k][i] * imaginnersum;
+                    imagsum +=
+                            U.realmatrix[k][i] * imaginnersum + U.imagmatrix[k][i] * realinnersum;
                 }
                 result.realmatrix[i][j] = realsum;
                 result.imagmatrix[i][j] = imagsum;
             }
     }
 
-    /**
-     * Calculates the contraction from a matrix
-     */
+    /** Calculates the contraction from a matrix */
     public Complex contraction() {
         int i, j;
         Complex result = new Complex(0d, 0d);
@@ -348,9 +309,7 @@ public class IMatrix {
         return result;
     }
 
-    /**
-     *  Return a matrix as a string
-     */
+    /** Return a matrix as a string */
     @Override
     public String toString() {
         if ((rows <= 0) || (columns <= 0)) return "[]";
@@ -361,38 +320,46 @@ public class IMatrix {
         StringBuffer str = new StringBuffer();
         for (i = 0; i < (rows - 1); i++) {
             for (j = 0; j < (columns - 1); j++)
-                if ((Math.round(realmatrix[i][j] * 10000) != 0) && (Math.round(imagmatrix[i][j] * 10000) != 0))
-                    str.append(format.format(realmatrix[i][j]) + "+i*" + format.format(imagmatrix[i][j]) + " ");
-                else
-                    str.append("--------+i*-------- ");
+                if ((Math.round(realmatrix[i][j] * 10000) != 0)
+                        && (Math.round(imagmatrix[i][j] * 10000) != 0))
+                    str.append(
+                            format.format(realmatrix[i][j])
+                                    + "+i*"
+                                    + format.format(imagmatrix[i][j])
+                                    + " ");
+                else str.append("--------+i*-------- ");
             if ((Math.round(realmatrix[i][columns - 1] * 10000) != 0)
                     && (Math.round(imagmatrix[i][columns - 1] * 10000) != 0))
-                str.append(format.format(realmatrix[i][columns - 1]) + "+i*"
-                        + format.format(imagmatrix[i][columns - 1]) + "\n");
-            else
-                str.append("--------+i*--------\n");
+                str.append(
+                        format.format(realmatrix[i][columns - 1])
+                                + "+i*"
+                                + format.format(imagmatrix[i][columns - 1])
+                                + "\n");
+            else str.append("--------+i*--------\n");
         }
         for (j = 0; j < (columns - 1); j++)
             if ((Math.round(realmatrix[rows - 1][j] * 10000) != 0)
                     && (Math.round(imagmatrix[rows - 1][j] * 10000) != 0))
-                str.append(format.format(realmatrix[rows - 1][j]) + "+i*" + format.format(imagmatrix[rows - 1][j])
-                        + " ");
-            else
-                str.append("--------+i*-------- ");
+                str.append(
+                        format.format(realmatrix[rows - 1][j])
+                                + "+i*"
+                                + format.format(imagmatrix[rows - 1][j])
+                                + " ");
+            else str.append("--------+i*-------- ");
         if ((Math.round(realmatrix[rows - 1][columns - 1] * 10000) != 0)
                 && (Math.round(imagmatrix[rows - 1][columns - 1] * 10000) != 0))
-            str.append(format.format(realmatrix[rows - 1][columns - 1]) + "+i*"
-                    + format.format(imagmatrix[rows - 1][columns - 1]));
-        else
-            str.append("--------+i*-------- ");
+            str.append(
+                    format.format(realmatrix[rows - 1][columns - 1])
+                            + "+i*"
+                            + format.format(imagmatrix[rows - 1][columns - 1]));
+        else str.append("--------+i*-------- ");
         return str.toString();
     }
 
-    /**
-     * Resize the matrix
-     */
+    /** Resize the matrix */
     public void reshape(int newrows, int newcolumns) {
-        if (((newrows == rows) && (newcolumns == columns)) || (newrows <= 0) || (newcolumns <= 0)) return;
+        if (((newrows == rows) && (newcolumns == columns)) || (newrows <= 0) || (newcolumns <= 0))
+            return;
 
         double[][] newrealmatrix = new double[newrows][newcolumns];
         double[][] newimagmatrix = new double[newrows][newcolumns];

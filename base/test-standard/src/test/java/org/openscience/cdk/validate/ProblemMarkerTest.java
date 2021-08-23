@@ -20,14 +20,11 @@ package org.openscience.cdk.validate;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.validate.ProblemMarker;
 
-/**
- * @cdk.module test-standard
- */
+/** @cdk.module test-standard */
 public class ProblemMarkerTest extends CDKTestCase {
 
     public ProblemMarkerTest() {
@@ -82,5 +79,4 @@ public class ProblemMarkerTest extends CDKTestCase {
         ProblemMarker.markWithWarning(object);
         Assert.assertNotNull(object.getProperty(ProblemMarker.WARNING_MARKER));
     }
-
 }

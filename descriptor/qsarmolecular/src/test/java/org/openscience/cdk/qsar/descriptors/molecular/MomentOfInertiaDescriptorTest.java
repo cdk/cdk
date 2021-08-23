@@ -21,7 +21,6 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import java.io.InputStream;
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,7 +42,6 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *
  * @cdk.module test-qsarmolecular
  */
-
 public class MomentOfInertiaDescriptorTest extends MolecularDescriptorTest {
 
     public MomentOfInertiaDescriptorTest() {}
@@ -62,12 +60,14 @@ public class MomentOfInertiaDescriptorTest extends MolecularDescriptorTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCCC");
         DescriptorValue value = descriptor.calculate(mol);
-        Assert.assertNotNull("The Exception should be non-null since we don't have 3D coords", value.getException());
-
+        Assert.assertNotNull(
+                "The Exception should be non-null since we don't have 3D coords",
+                value.getException());
     }
 
     @Test
-    public void testMomentOfInertia1() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testMomentOfInertia1()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
         String filename = "data/hin/gravindex.hin";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);
@@ -87,7 +87,8 @@ public class MomentOfInertiaDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testMomentOfInertia2() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testMomentOfInertia2()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
         String filename = "data/hin/momi2.hin";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);
@@ -105,5 +106,4 @@ public class MomentOfInertiaDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(12.578745, retval.get(5), 0.00001);
         Assert.assertEquals(8.2966226, retval.get(6), 0.00001);
     }
-
 }

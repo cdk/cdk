@@ -21,7 +21,6 @@ package org.openscience.cdk.atomtype;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -34,8 +33,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
- * This class tests the matching of atom types defined in the
- * CDK atom type list.
+ * This class tests the matching of atom types defined in the CDK atom type list.
  *
  * @cdk.module test-core
  */
@@ -54,14 +52,13 @@ public class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
         Assert.assertNotNull(chemFile);
         IAtomContainer mol = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
 
-        String[] expectedTypes = {"C.sp2", "N.sp2", "C.sp2", "N.sp3", "C.sp2", "N.sp2", "O.sp3", "C.sp2", "C.sp2",
-                "C.sp2"};
+        String[] expectedTypes = {
+            "C.sp2", "N.sp2", "C.sp2", "N.sp3", "C.sp2", "N.sp2", "O.sp3", "C.sp2", "C.sp2", "C.sp2"
+        };
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * @cdk.bug 3141611
-     */
+    /** @cdk.bug 3141611 */
     @Test
     public void testBug3141611() throws Exception {
         String filename = "data/mdl/error.sdf";
@@ -73,8 +70,10 @@ public class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
         Assert.assertNotNull(chemFile);
         IAtomContainer mol = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
 
-        String[] expectedTypes = {"C.sp3", "C.sp2", "O.sp2", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "P.ate", "O.sp2",
-                "O.minus"};
+        String[] expectedTypes = {
+            "C.sp3", "C.sp2", "O.sp2", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "P.ate", "O.sp2",
+            "O.minus"
+        };
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -89,15 +88,18 @@ public class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
         Assert.assertNotNull(chemFile);
         IAtomContainer mol = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
 
-        String[] expectedTypes = {"C.sp2", "C.sp2", "C.sp2", "C.sp2", "F", "C.sp2", "C.sp2", "C.sp2", "O.sp2", "C.sp3",
-                "C.sp3", "C.sp3", "N.plus", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp2", "O.sp3", "C.sp2",
-                "C.sp2", "C.sp2", "C.sp2", "C.sp2", "Cl"};
+        String[] expectedTypes = {
+            "C.sp2", "C.sp2", "C.sp2", "C.sp2", "F", "C.sp2", "C.sp2", "C.sp2", "O.sp2", "C.sp3",
+            "C.sp3", "C.sp3", "N.plus", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp2",
+            "O.sp3", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "Cl"
+        };
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
     @Test
     public void testSmilesFiles() throws Exception {
-        CDKAtomTypeMatcher atomTypeMatcher = CDKAtomTypeMatcher.getInstance(SilentChemObjectBuilder.getInstance());
+        CDKAtomTypeMatcher atomTypeMatcher =
+                CDKAtomTypeMatcher.getInstance(SilentChemObjectBuilder.getInstance());
 
         // Read the first file
         String filename = "data/cml/smiles1.cml";
@@ -120,7 +122,9 @@ public class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
         for (int i = 0; i < mol1.getAtomCount(); i++) {
             Assert.assertNotNull("Atom typing in mol1 failed for atom " + (i + 1), types1[i]);
             Assert.assertNotNull("Atom typing in mol2 failed for atom " + (i + 1), types2[i]);
-            Assert.assertEquals("Atom type mismatch for the " + (i + 1) + " atom", types1[i].getAtomTypeName(),
+            Assert.assertEquals(
+                    "Atom type mismatch for the " + (i + 1) + " atom",
+                    types1[i].getAtomTypeName(),
                     types2[i].getAtomTypeName());
         }
     }

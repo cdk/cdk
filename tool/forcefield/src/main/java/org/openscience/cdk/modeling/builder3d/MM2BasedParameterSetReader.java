@@ -35,7 +35,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.Vector;
-
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -43,28 +42,25 @@ import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
- * AtomType list configurator that uses the ParameterSet originally
- * defined in mm2.prm from tinker. This class was added to be able to port
- * mm2 to CDK.
+ * AtomType list configurator that uses the ParameterSet originally defined in mm2.prm from tinker.
+ * This class was added to be able to port mm2 to CDK.
  *
- * @author         chhoppe
- * @cdk.created    2004-09-07
- * @cdk.module     forcefield
+ * @author chhoppe
+ * @cdk.created 2004-09-07
+ * @cdk.module forcefield
  * @cdk.githash
- * @cdk.keyword    atom type, MM2
+ * @cdk.keyword atom type, MM2
  */
 public class MM2BasedParameterSetReader {
 
-    private String              configFile = "org/openscience/cdk/modeling/forcefield/data/mm2.prm";
-    private InputStream         ins        = null;
+    private String configFile = "org/openscience/cdk/modeling/forcefield/data/mm2.prm";
+    private InputStream ins = null;
     private Map<String, Object> parameterSet;
-    private List<IAtomType>     atomTypes;
-    private StringTokenizer     st;
-    private String              key        = "";
+    private List<IAtomType> atomTypes;
+    private StringTokenizer st;
+    private String key = "";
 
-    /**
-     * Constructor for the MM2BasedParameterSetReader object.
-     */
+    /** Constructor for the MM2BasedParameterSetReader object. */
     public MM2BasedParameterSetReader() {
         parameterSet = new Hashtable<String, Object>();
         atomTypes = new ArrayList<IAtomType>();
@@ -81,7 +77,7 @@ public class MM2BasedParameterSetReader {
     /**
      * Sets the file containing the config data.
      *
-     * @param  ins  The new inputStream type InputStream
+     * @param ins The new inputStream type InputStream
      */
     public void setInputStream(InputStream ins) {
         this.ins = ins;
@@ -90,7 +86,7 @@ public class MM2BasedParameterSetReader {
     /**
      * Read a text based configuration file out of the force field mm2 file
      *
-     * @exception  Exception  Description of the Exception
+     * @exception Exception Description of the Exception
      */
     private void setForceFieldDefinitions() throws Exception {
         String sid = st.nextToken();
@@ -107,7 +103,7 @@ public class MM2BasedParameterSetReader {
             try {
                 double value1 = new Double(svalue).doubleValue();
                 key = sid.substring(1);
-                //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
+                // if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
                 parameterSet.put(key, new Double(value1));
             } catch (NumberFormatException nfe) {
                 throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
@@ -116,7 +112,7 @@ public class MM2BasedParameterSetReader {
             try {
                 double value1 = new Double(svalue).doubleValue();
                 key = sid.substring(1);
-                //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
+                // if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
                 parameterSet.put(key, new Double(value1));
             } catch (NumberFormatException nfe) {
                 throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
@@ -125,7 +121,7 @@ public class MM2BasedParameterSetReader {
             try {
                 double value1 = new Double(svalue).doubleValue();
                 key = sid.substring(1);
-                //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
+                // if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
                 parameterSet.put(key, new Double(value1));
             } catch (NumberFormatException nfe) {
                 throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
@@ -134,7 +130,7 @@ public class MM2BasedParameterSetReader {
             try {
                 double value1 = new Double(svalue).doubleValue();
                 key = sid.substring(1);
-                //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
+                // if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
                 parameterSet.put(key, new Double(value1));
             } catch (NumberFormatException nfe) {
                 throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
@@ -143,7 +139,7 @@ public class MM2BasedParameterSetReader {
             try {
                 double value1 = new Double(svalue).doubleValue();
                 key = sid.substring(1);
-                //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
+                // if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
                 parameterSet.put(key, new Double(value1));
             } catch (NumberFormatException nfe) {
                 throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
@@ -152,7 +148,7 @@ public class MM2BasedParameterSetReader {
             try {
                 double value1 = new Double(svalue).doubleValue();
                 key = sid.substring(1);
-                //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
+                // if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
                 parameterSet.put(key, new Double(value1));
             } catch (NumberFormatException nfe) {
                 throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
@@ -161,35 +157,35 @@ public class MM2BasedParameterSetReader {
             try {
                 double value1 = new Double(svalue).doubleValue();
                 key = sid.substring(1);
-                //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
+                // if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
                 parameterSet.put(key, new Double(value1));
             } catch (NumberFormatException nfe) {
                 throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
             }
         } else if (sid.equals(">vdwtype")) {
             key = sid.substring(1);
-            //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
+            // if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
             parameterSet.put(key, svalue);
         } else if (sid.equals(">radiusrule")) {
             key = sid.substring(1);
-            //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
+            // if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
             parameterSet.put(key, svalue);
         } else if (sid.equals(">radiustype")) {
             key = sid.substring(1);
-            //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
+            // if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
             parameterSet.put(key, svalue);
         } else if (sid.equals(">radiussize")) {
             key = sid.substring(1);
-            //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
+            // if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
             parameterSet.put(key, svalue);
         } else if (sid.equals(">epsilonrule")) {
             key = sid.substring(1);
-            //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
+            // if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
             parameterSet.put(key, svalue);
         } else if (sid.equals(">a-expterm")) {
             try {
                 key = sid.substring(1);
-                //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
+                // if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
                 parameterSet.put(key, svalue);
             } catch (NumberFormatException nfe) {
                 throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
@@ -197,7 +193,7 @@ public class MM2BasedParameterSetReader {
         } else if (sid.equals("b-expterm")) {
             try {
                 key = sid.substring(1);
-                //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
+                // if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
                 parameterSet.put(key, svalue);
             } catch (NumberFormatException nfe) {
                 throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
@@ -206,7 +202,7 @@ public class MM2BasedParameterSetReader {
             try {
                 double value1 = new Double(svalue).doubleValue();
                 key = sid.substring(1);
-                //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
+                // if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
                 parameterSet.put(key, new Double(value1));
             } catch (NumberFormatException nfe) {
                 throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
@@ -215,7 +211,7 @@ public class MM2BasedParameterSetReader {
             try {
                 double value1 = new Double(svalue).doubleValue();
                 key = sid.substring(1);
-                //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
+                // if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
                 parameterSet.put(key, new Double(value1));
             } catch (NumberFormatException nfe) {
                 throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
@@ -224,7 +220,7 @@ public class MM2BasedParameterSetReader {
             try {
                 double value1 = new Double(svalue).doubleValue();
                 key = sid.substring(1);
-                //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
+                // if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
                 parameterSet.put(key, new Double(value1));
             } catch (NumberFormatException nfe) {
                 throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
@@ -233,7 +229,7 @@ public class MM2BasedParameterSetReader {
             try {
                 double value1 = new Double(svalue).doubleValue();
                 key = sid.substring(1);
-                //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
+                // if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
                 parameterSet.put(key, new Double(value1));
             } catch (NumberFormatException nfe) {
                 throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
@@ -243,9 +239,9 @@ public class MM2BasedParameterSetReader {
     }
 
     /**
-     *  Read and stores the atom types in a vector
+     * Read and stores the atom types in a vector
      *
-     * @exception  Exception  Description of the Exception
+     * @exception Exception Description of the Exception
      */
     private void setAtomTypes(IChemObjectBuilder builder) throws Exception {
         String name = "";
@@ -287,9 +283,9 @@ public class MM2BasedParameterSetReader {
     }
 
     /**
-     *  Read vdw radius, stored into the parameter set
+     * Read vdw radius, stored into the parameter set
      *
-     * @exception  Exception  Description of the Exception
+     * @exception Exception Description of the Exception
      */
     private void setvdWaals() throws Exception {
         List data = new Vector();
@@ -307,14 +303,14 @@ public class MM2BasedParameterSetReader {
             throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
         }
         key = "vdw" + sid;
-        //if (parameterSet.containsKey(key)){System.out.println("KeyError: hasKey "+key);}
+        // if (parameterSet.containsKey(key)){System.out.println("KeyError: hasKey "+key);}
         parameterSet.put(key, data);
     }
 
     /**
-     *  Read vdW pair radius,stored into the parameter set
+     * Read vdW pair radius,stored into the parameter set
      *
-     * @exception  Exception  Description of the Exception
+     * @exception Exception Description of the Exception
      */
     private void setvdWaalpr() throws Exception {
         List data = new Vector();
@@ -330,16 +326,17 @@ public class MM2BasedParameterSetReader {
             data.add(new Double(va2));
 
         } catch (NumberFormatException nfe) {
-            throw new IOException("VdWaalsTable.ReadvdWaalsPR:Malformed Number due to" + nfe.toString());
+            throw new IOException(
+                    "VdWaalsTable.ReadvdWaalsPR:Malformed Number due to" + nfe.toString());
         }
         key = "vdwpr" + sid1 + ";" + sid2;
         parameterSet.put(key, data);
     }
 
     /**
-     *  Sets the bond attribute stored into the parameter set
+     * Sets the bond attribute stored into the parameter set
      *
-     * @exception  Exception  Description of the Exception
+     * @exception Exception Description of the Exception
      */
     private void setBond() throws Exception {
         List data = new Vector();
@@ -363,9 +360,9 @@ public class MM2BasedParameterSetReader {
     }
 
     /**
-     *  Sets the bond3 attribute stored into the parameter set
+     * Sets the bond3 attribute stored into the parameter set
      *
-     * @exception  Exception  Description of the Exception
+     * @exception Exception Description of the Exception
      */
     private void setBond3() throws Exception {
         List data = new Vector();
@@ -389,9 +386,9 @@ public class MM2BasedParameterSetReader {
     }
 
     /**
-     *  Sets the bond4 attribute stored into the parameter set
+     * Sets the bond4 attribute stored into the parameter set
      *
-     * @exception  Exception  Description of the Exception
+     * @exception Exception Description of the Exception
      */
     private void setBond4() throws Exception {
         List data = new Vector();
@@ -415,9 +412,9 @@ public class MM2BasedParameterSetReader {
     }
 
     /**
-     *  Sets the angle attribute stored into the parameter set
+     * Sets the angle attribute stored into the parameter set
      *
-     * @exception  Exception  Description of the Exception
+     * @exception Exception Description of the Exception
      */
     private void setAngle() throws Exception {
         List data = new Vector();
@@ -453,13 +450,12 @@ public class MM2BasedParameterSetReader {
         } catch (NumberFormatException nfe) {
             throw new IOException("setAngle: Malformed Number");
         }
-
     }
 
     /**
-     *  Sets the angle3 attribute stored into the parameter set
+     * Sets the angle3 attribute stored into the parameter set
      *
-     * @exception  Exception  Description of the Exception
+     * @exception Exception Description of the Exception
      */
     private void setAngle3() throws Exception {
         List data = new Vector();
@@ -490,9 +486,9 @@ public class MM2BasedParameterSetReader {
     }
 
     /**
-     *  Sets the angle4 attribute stored into the parameter set
+     * Sets the angle4 attribute stored into the parameter set
      *
-     * @exception  Exception  Description of the Exception
+     * @exception Exception Description of the Exception
      */
     private void setAngle4() throws Exception {
         List data = new Vector();
@@ -523,9 +519,9 @@ public class MM2BasedParameterSetReader {
     }
 
     /**
-     *  Sets the strBnd attribute stored into the parameter set
+     * Sets the strBnd attribute stored into the parameter set
      *
-     * @exception  Exception  Description of the Exception
+     * @exception Exception Description of the Exception
      */
     private void setStrBnd() throws Exception {
         List data = new Vector();
@@ -544,9 +540,9 @@ public class MM2BasedParameterSetReader {
     }
 
     /**
-     *  Sets the opBend attribute stored into the parameter set
+     * Sets the opBend attribute stored into the parameter set
      *
-     * @exception  Exception  Description of the Exception
+     * @exception Exception Description of the Exception
      */
     private void setOpBend() throws Exception {
         List data = new Vector();
@@ -560,7 +556,7 @@ public class MM2BasedParameterSetReader {
             data.add(new Double(va1));
             key = "opbend" + sid1 + ";" + sid2;
             if (parameterSet.containsKey(key)) {
-                //logger.debug("KeyError: hasKey "+key);
+                // logger.debug("KeyError: hasKey "+key);
                 data = (Vector) parameterSet.get(key);
                 data.add(new Double(va1));
             }
@@ -569,13 +565,12 @@ public class MM2BasedParameterSetReader {
         } catch (NumberFormatException nfe) {
             throw new IOException("setOpBend: Malformed Number");
         }
-
     }
 
     /**
-     *  Sets the torsion attribute stored into the parameter set
+     * Sets the torsion attribute stored into the parameter set
      *
-     * @exception  Exception  Description of the Exception
+     * @exception Exception Description of the Exception
      */
     private void setTorsion() throws Exception {
         List data = new Vector();
@@ -613,13 +608,12 @@ public class MM2BasedParameterSetReader {
         } catch (NumberFormatException nfe) {
             throw new IOException("setTorsion: Malformed Number");
         }
-
     }
 
     /**
-     *  Sets the torsion4 attribute stored into the parameter set
+     * Sets the torsion4 attribute stored into the parameter set
      *
-     * @exception  Exception  Description of the Exception
+     * @exception Exception Description of the Exception
      */
     private void setTorsion4() throws Exception {
         List data = new Vector();
@@ -654,9 +648,9 @@ public class MM2BasedParameterSetReader {
     }
 
     /**
-     *  Sets the charge attribute stored into the parameter set
+     * Sets the charge attribute stored into the parameter set
      *
-     * @exception  Exception  Description of the Exception
+     * @exception Exception Description of the Exception
      */
     private void setCharge() throws Exception {
         List data = new Vector();
@@ -675,9 +669,9 @@ public class MM2BasedParameterSetReader {
     }
 
     /**
-     *  Sets the dipole attribute stored into the parameter set
+     * Sets the dipole attribute stored into the parameter set
      *
-     * @exception  Exception  Description of the Exception
+     * @exception Exception Description of the Exception
      */
     private void setDipole() throws Exception {
         List data = new Vector();
@@ -701,9 +695,9 @@ public class MM2BasedParameterSetReader {
     }
 
     /**
-     *  Sets the dipole3 attribute stored into the parameter set
+     * Sets the dipole3 attribute stored into the parameter set
      *
-     * @exception  Exception  Description of the Exception
+     * @exception Exception Description of the Exception
      */
     private void setDipole3() throws Exception {
         List data = new Vector();
@@ -727,9 +721,9 @@ public class MM2BasedParameterSetReader {
     }
 
     /**
-     *  Sets the piAtom attribute stored into the parameter set
+     * Sets the piAtom attribute stored into the parameter set
      *
-     * @exception  Exception  Description of the Exception
+     * @exception Exception Description of the Exception
      */
     private void setPiAtom() throws Exception {
         List data = new Vector();
@@ -755,9 +749,9 @@ public class MM2BasedParameterSetReader {
     }
 
     /**
-     *  Sets the piBond attribute stored into the parameter set
+     * Sets the piBond attribute stored into the parameter set
      *
-     * @exception  Exception  Description of the Exception
+     * @exception Exception Description of the Exception
      */
     private void setPiBond() throws Exception {
         List data = new Vector();
@@ -783,13 +777,13 @@ public class MM2BasedParameterSetReader {
     /**
      * The main method which parses through the force field configuration file
      *
-     * @exception  Exception  Description of the Exception
+     * @exception Exception Description of the Exception
      */
     public void readParameterSets(IChemObjectBuilder builder) throws Exception {
-        //vdW,vdWp,bond,bond4,bond3,angle,angle4,angle3,
-        //strbond,opbend,torsion,torsion4,charge,dipole,
-        //dipole3,piatom,pibond,dipole3
-        //logger.debug("------ ReadParameterSets ------");
+        // vdW,vdWp,bond,bond4,bond3,angle,angle4,angle3,
+        // strbond,opbend,torsion,torsion4,charge,dipole,
+        // dipole3,piatom,pibond,dipole3
+        // logger.debug("------ ReadParameterSets ------");
 
         if (ins == null) {
             ins = getClass().getClassLoader().getResourceAsStream(configFile);
@@ -868,15 +862,17 @@ public class MM2BasedParameterSetReader {
                     setPiBond();
                     a[16]++;
                 }
-            }// end while
+            } // end while
             ins.close();
         } catch (IOException e) {
-            throw new IOException("There was a problem parsing the mm2 forcefield due to:" + e.toString());
+            throw new IOException(
+                    "There was a problem parsing the mm2 forcefield due to:" + e.toString());
         }
     }
 
     /**
      * Mass number for a atom with a given atomic number and exact mass.
+     *
      * @param atomicNumber atomic number
      * @param exactMass exact mass
      * @return the mass number (or null) if no mass number was found

@@ -18,6 +18,9 @@
  */
 package org.openscience.cdk.reaction.type;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
@@ -40,61 +43,52 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 /**
- * <p>IReactionProcess which participate in movement resonance.
- * This reaction could be represented as |A-B=C => [A+]=B-[C-]. Due to
- * the negative charge of the atom A, the double bond in position 2 is
- * displaced.</p>
+ * IReactionProcess which participate in movement resonance. This reaction could be represented as
+ * |A-B=C => [A+]=B-[C-]. Due to the negative charge of the atom A, the double bond in position 2 is
+ * displaced.
+ *
  * <pre>
  *  IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
  *  setOfReactants.addAtomContainer(new AtomContainer());
  *  IReactionProcess type = new RearrangementLonePairReaction();
  *  HashMap<String,Object> params = new HashMap<String,Object>();
-        params.put("hasActiveCenter",Boolean.FALSE);;
-    type.setParameters(params);
+ * params.put("hasActiveCenter",Boolean.FALSE);;
+ * type.setParameters(params);
  *  IReactionSet setOfReactions = type.initiate(setOfReactants, null);
  *  </pre>
  *
- * <p>We have the possibility to localize the reactive center. Good method if you
- * want to localize the reaction in a fixed point</p>
+ * <p>We have the possibility to localize the reactive center. Good method if you want to localize
+ * the reaction in a fixed point
+ *
  * <pre>atoms[0].setFlag(CDKConstants.REACTIVE_CENTER,true);</pre>
- * <p>Moreover you must put the parameter Boolean.TRUE</p>
- * <p>If the reactive center is not localized then the reaction process will
- * try to find automatically the possible reactive center.</p>
  *
+ * <p>Moreover you must put the parameter Boolean.TRUE
  *
- * @author         Miguel Rojas
+ * <p>If the reactive center is not localized then the reaction process will try to find
+ * automatically the possible reactive center.
  *
- * @cdk.created    2006-05-05
- * @cdk.module     test-reaction
- *
- **/
+ * @author Miguel Rojas
+ * @cdk.created 2006-05-05
+ * @cdk.module test-reaction
+ */
 /**
- * TestSuite that runs a test for the RearrangementLonePairReactionTest.
- * Generalized Reaction: [A-]-B=C => A=B-[C-].
+ * TestSuite that runs a test for the RearrangementLonePairReactionTest. Generalized Reaction:
+ * [A-]-B=C => A=B-[C-].
  *
  * @cdk.module test-reaction
  */
-
 public class RearrangementLonePairReactionTest extends ReactionProcessTest {
 
     private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-    private IChemObjectBuilder            builder = SilentChemObjectBuilder.getInstance();
+    private IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
-    /**
-     *  The JUnit setup method
-     */
+    /** The JUnit setup method */
     public RearrangementLonePairReactionTest() throws Exception {
         setReaction(RearrangementLonePairReaction.class);
     }
 
-    /**
-     *  The JUnit setup method
-     */
+    /** The JUnit setup method */
     @Test
     public void testRearrangementLonePairReaction() throws Exception {
         IReactionProcess type = new RearrangementLonePairReaction();
@@ -102,12 +96,11 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
     }
 
     /**
-     * A unit test suite for JUnit. Reaction: O-C=C-C => [O+]=C-[C-]-C
-     * Automatic search of the center active.
+     * A unit test suite for JUnit. Reaction: O-C=C-C => [O+]=C-[C-]-C Automatic search of the
+     * center active.
      *
-     * @cdk.inchi  InChI=1/C3H6O/c1-2-3-4/h2-4H,1H3
-     *
-     * @return    The test suite
+     * @cdk.inchi InChI=1/C3H6O/c1-2-3-4/h2-4H,1H3
+     * @return The test suite
      */
     @Test
     @Override
@@ -139,12 +132,11 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
     }
 
     /**
-     * A unit test suite for JUnit. Reaction: O-C=C-C => [O+]=C-[C-]-C
-     * Manually put of the center active.
+     * A unit test suite for JUnit. Reaction: O-C=C-C => [O+]=C-[C-]-C Manually put of the center
+     * active.
      *
-     * @cdk.inchi  InChI=1/C3H6O/c1-2-3-4/h2-4H,1H3
-     *
-     * @return    The test suite
+     * @cdk.inchi InChI=1/C3H6O/c1-2-3-4/h2-4H,1H3
+     * @return The test suite
      */
     @Test
     public void testManuallyCentreActive() throws Exception {
@@ -186,7 +178,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testCDKConstants_REACTIVE_CENTER() throws Exception {
@@ -227,7 +219,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testMapping() throws Exception {
@@ -250,47 +242,46 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
         IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 
         Assert.assertEquals(10, setOfReactions.getReaction(0).getMappingCount());
-        IAtom mappedProductA1 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
-                molecule.getAtom(0));
+        IAtom mappedProductA1 =
+                (IAtom)
+                        ReactionManipulator.getMappedChemObject(
+                                setOfReactions.getReaction(0), molecule.getAtom(0));
         Assert.assertEquals(mappedProductA1, product.getAtom(0));
-        mappedProductA1 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
-                molecule.getAtom(1));
+        mappedProductA1 =
+                (IAtom)
+                        ReactionManipulator.getMappedChemObject(
+                                setOfReactions.getReaction(0), molecule.getAtom(1));
         Assert.assertEquals(mappedProductA1, product.getAtom(1));
-        mappedProductA1 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
-                molecule.getAtom(2));
+        mappedProductA1 =
+                (IAtom)
+                        ReactionManipulator.getMappedChemObject(
+                                setOfReactions.getReaction(0), molecule.getAtom(2));
         Assert.assertEquals(mappedProductA1, product.getAtom(2));
-
     }
 
-    /**
-     * Test to recognize if this IAtomContainer_1 matches correctly into the CDKAtomTypes.
-     */
+    /** Test to recognize if this IAtomContainer_1 matches correctly into the CDKAtomTypes. */
     @Test
     public void testAtomTypesAtomContainer1() throws Exception {
         IAtomContainer moleculeTest = getExampleReactants().getAtomContainer(0);
         makeSureAtomTypesAreRecognized(moleculeTest);
-
     }
 
-    /**
-     * Test to recognize if this IAtomContainer_2 matches correctly into the CDKAtomTypes.
-     */
+    /** Test to recognize if this IAtomContainer_2 matches correctly into the CDKAtomTypes. */
     @Test
     public void testAtomTypesAtomContainer2() throws Exception {
         IAtomContainer moleculeTest = getExpectedProducts().getAtomContainer(0);
         makeSureAtomTypesAreRecognized(moleculeTest);
-
     }
 
     /**
      * get the molecule 1: O-C=C-C
      *
-     * @cdk.inchi  InChI=1/C3H6O/c1-2-3-4/h2-4H,1H3
-     *
+     * @cdk.inchi InChI=1/C3H6O/c1-2-3-4/h2-4H,1H3
      * @return The IAtomContainerSet
      */
     private IAtomContainerSet getExampleReactants() {
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
 
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "O"));
@@ -322,7 +313,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
      */
     private IAtomContainerSet getExpectedProducts() {
         IAtomContainerSet setOfProducts = builder.newInstance(IAtomContainerSet.class);
-        //[O+]=C-[C-]-C
+        // [O+]=C-[C-]-C
 
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "O"));
@@ -352,7 +343,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
     /**
      * Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
      *
-     * @param molecule          The IAtomContainer to analyze
+     * @param molecule The IAtomContainer to analyze
      * @throws CDKException
      */
     private void makeSureAtomTypesAreRecognized(IAtomContainer molecule) throws Exception {
@@ -361,16 +352,18 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
         while (atoms.hasNext()) {
             IAtom nextAtom = atoms.next();
-            Assert.assertNotNull("Missing atom type for: " + nextAtom, matcher.findMatchingAtomType(molecule, nextAtom));
+            Assert.assertNotNull(
+                    "Missing atom type for: " + nextAtom,
+                    matcher.findMatchingAtomType(molecule, nextAtom));
         }
     }
 
     /**
-     * A unit test suite for JUnit: Resonance Fluorobenzene  Fc1ccccc1 <=> ...
+     * A unit test suite for JUnit: Resonance Fluorobenzene Fc1ccccc1 <=> ...
      *
-     * InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
+     * <p>InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testFluorobenzene() throws Exception {
@@ -398,7 +391,8 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
 
         IReactionProcess type = new RearrangementLonePairReaction();
 
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         setOfReactants.addAtomContainer(molecule);
         /* automatic search of the center active */
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();

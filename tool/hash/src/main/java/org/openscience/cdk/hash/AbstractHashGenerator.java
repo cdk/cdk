@@ -24,14 +24,13 @@
 
 package org.openscience.cdk.hash;
 
+import java.util.Arrays;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
-import java.util.Arrays;
-
 /**
- * An abstract hash function providing several utility methods to be used by
- * other hashing functions.
+ * An abstract hash function providing several utility methods to be used by other hashing
+ * functions.
  *
  * @author John May
  * @cdk.module hash
@@ -43,14 +42,14 @@ class AbstractHashGenerator {
     private final Pseudorandom pseudorandom;
 
     /**
-     * Construct an abstract hash function providing the pseudorandom number
-     * generator.
+     * Construct an abstract hash function providing the pseudorandom number generator.
      *
      * @param pseudorandom a pseudorandom number generator
      * @throws NullPointerException the pseudorandom number generator was null
      */
     public AbstractHashGenerator(Pseudorandom pseudorandom) {
-        if (pseudorandom == null) throw new NullPointerException("null pseduorandom number generator provided");
+        if (pseudorandom == null)
+            throw new NullPointerException("null pseduorandom number generator provided");
         this.pseudorandom = pseudorandom;
     }
 
@@ -68,7 +67,7 @@ class AbstractHashGenerator {
     /**
      * Copy the values from the source (src) array to the destination (dest).
      *
-     * @param src  source values
+     * @param src source values
      * @param dest destination of the source copy
      * @see System#arraycopy(Object, int, Object, int, int);
      */
@@ -79,8 +78,7 @@ class AbstractHashGenerator {
     /**
      * Generate the next random number.
      *
-     * @param seed a {@literal long} value to seed a pseudorandom number
-     *             generator
+     * @param seed a {@literal long} value to seed a pseudorandom number generator
      * @return next pseudorandom number
      */
     long rotate(long seed) {
@@ -88,23 +86,20 @@ class AbstractHashGenerator {
     }
 
     /**
-     * Rotate a <i>value</i>, <i>n</i> times. The rotation uses a pseudorandom
-     * number generator to sequentially generate values seed on the previous
-     * value.
+     * Rotate a <i>value</i>, <i>n</i> times. The rotation uses a pseudorandom number generator to
+     * sequentially generate values seed on the previous value.
      *
      * @param value the {@literal long} value to rotate
-     * @param n     the number of times to rotate the value
+     * @param n the number of times to rotate the value
      * @return the {@literal long} value rotated the specified number of times
      */
     long rotate(long value, int n) {
-        while (n-- > 0)
-            value = pseudorandom.next(value);
+        while (n-- > 0) value = pseudorandom.next(value);
         return value;
     }
 
     /**
-     * Returns the value of the lowest three bits. This value is between 0 and 7
-     * inclusive.
+     * Returns the value of the lowest three bits. This value is between 0 and 7 inclusive.
      *
      * @param value a {@literal long} value
      * @return the {@literal int} value of the lowest three bits.
@@ -145,8 +140,10 @@ class AbstractHashGenerator {
             int w = container.indexOf(bond.getEnd());
 
             if (v < 0 || w < 0)
-                throw new IllegalArgumentException("bond at index " + container.indexOf(bond)
-                        + " contained an atom not pressent in molecule");
+                throw new IllegalArgumentException(
+                        "bond at index "
+                                + container.indexOf(bond)
+                                + " contained an atom not pressent in molecule");
 
             graph[v][degree[v]++] = w;
             graph[w][degree[w]++] = v;
@@ -161,6 +158,5 @@ class AbstractHashGenerator {
         }
 
         return graph;
-
     }
 }

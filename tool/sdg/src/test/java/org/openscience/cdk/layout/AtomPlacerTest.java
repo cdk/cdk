@@ -22,12 +22,13 @@
  */
 package org.openscience.cdk.layout;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.closeTo;
+
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -37,9 +38,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.silent.AtomContainer;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.closeTo;
 
 /**
  * @author maclean
@@ -146,7 +144,6 @@ public class AtomPlacerTest extends CDKTestCase {
 
         assertThat(Math.acos(p2p1.x * p2p3.x + p2p1.y * p2p3.y), closeTo(Math.PI, 0.05));
         assertThat(Math.acos(p3p2.x * p3p4.x + p3p2.y * p3p4.y), closeTo(Math.PI, 0.05));
-
     }
 
     static IAtom atom(String symbol, int hCount) {

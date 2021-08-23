@@ -27,8 +27,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
- * Concept of a ligand in CIP terms, reflecting a side chain of a central atom that can
- * have precedence over another.
+ * Concept of a ligand in CIP terms, reflecting a side chain of a central atom that can have
+ * precedence over another.
  *
  * @cdk.module cip
  * @cdk.githash
@@ -36,11 +36,15 @@ import org.openscience.cdk.interfaces.IBond;
 public class Ligand implements ILigand {
 
     private IAtomContainer container;
-    private IAtom          centralAtom;
-    private IAtom          ligandAtom;
-    private VisitedAtoms   visitedAtoms;
+    private IAtom centralAtom;
+    private IAtom ligandAtom;
+    private VisitedAtoms visitedAtoms;
 
-    public Ligand(IAtomContainer container, VisitedAtoms visitedAtoms, IAtom centralAtom, IAtom ligandAtom) {
+    public Ligand(
+            IAtomContainer container,
+            VisitedAtoms visitedAtoms,
+            IAtom centralAtom,
+            IAtom ligandAtom) {
         this.container = container;
         this.centralAtom = centralAtom;
         this.ligandAtom = ligandAtom;
@@ -70,8 +74,8 @@ public class Ligand implements ILigand {
     }
 
     /**
-     * {@link IAtom} of the ligand that is connected to the chiral {@link IAtom} via
-     * one {@link IBond}.
+     * {@link IAtom} of the ligand that is connected to the chiral {@link IAtom} via one {@link
+     * IBond}.
      *
      * @return the ligand atom
      */
@@ -91,5 +95,4 @@ public class Ligand implements ILigand {
     public boolean isVisited(IAtom atom) {
         return visitedAtoms.isVisited(atom);
     }
-
 }

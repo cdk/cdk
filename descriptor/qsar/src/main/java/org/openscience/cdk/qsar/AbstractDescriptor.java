@@ -26,8 +26,7 @@ package org.openscience.cdk.qsar;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * A super class for molecular descriptors allowing default implementations for
- * interface methods.
+ * A super class for molecular descriptors allowing default implementations for interface methods.
  *
  * @author John May
  * @cdk.module qsar
@@ -43,5 +42,4 @@ abstract class AbstractDescriptor implements IDescriptor {
     public void initialise(IChemObjectBuilder builder) {
         // do nothing
     }
-
 }

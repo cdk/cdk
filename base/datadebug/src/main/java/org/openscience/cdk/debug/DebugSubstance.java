@@ -19,13 +19,12 @@
 package org.openscience.cdk.debug;
 
 import java.util.Map;
-
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.ISubstance;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -33,7 +32,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * Debugging data class.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module datadebug
  * @cdk.githash
  */
@@ -41,7 +40,7 @@ public class DebugSubstance extends AtomContainerSet implements ISubstance {
 
     private static final long serialVersionUID = 7729610512495602788L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugSubstance.class);
+    ILoggingTool logger = LoggingToolFactory.createLoggingTool(DebugSubstance.class);
 
     /** {@inheritDoc} */
     @Override
@@ -219,7 +218,8 @@ public class DebugSubstance extends AtomContainerSet implements ISubstance {
     /** {@inheritDoc} */
     @Override
     public void setMultiplier(int position, Double multiplier) {
-        logger.debug("Setting multiplier for atomcontainer at pos: ", "" + position, "" + multiplier);
+        logger.debug(
+                "Setting multiplier for atomcontainer at pos: ", "" + position, "" + multiplier);
         super.setMultiplier(position, multiplier);
     }
 
@@ -286,9 +286,7 @@ public class DebugSubstance extends AtomContainerSet implements ISubstance {
         return super.getAtomContainerCount();
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean isEmpty() {
         logger.debug("Checking if the atom container set empty: ", atomContainerCount == 0);

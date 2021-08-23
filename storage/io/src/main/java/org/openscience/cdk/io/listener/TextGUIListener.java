@@ -26,7 +26,6 @@ import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.List;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.ReaderEvent;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
@@ -35,23 +34,22 @@ import org.openscience.cdk.io.setting.IOSetting.Importance;
 import org.openscience.cdk.io.setting.OptionIOSetting;
 
 /**
- * Allows processing of IOSetting quesions which are passed to the user
- * by using the System.out and System.in by default.
+ * Allows processing of IOSetting quesions which are passed to the user by using the System.out and
+ * System.in by default.
  *
- * <p>This listener can also be used to list all the questions a ChemObjectWriter
- * has, by using a dummy StringWriter, and a <code>null</code> Reader.
+ * <p>This listener can also be used to list all the questions a ChemObjectWriter has, by using a
+ * dummy StringWriter, and a <code>null</code> Reader.
  *
  * @cdk.module io
  * @cdk.githash
- *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */
 public class TextGUIListener implements IReaderListener, IWriterListener {
 
     private BufferedReader in;
-    private PrintWriter    out;
+    private PrintWriter out;
 
-    private Importance     level = Importance.HIGH;
+    private Importance level = Importance.HIGH;
 
     public TextGUIListener(Importance level) {
         this.level = level;
@@ -63,9 +61,7 @@ public class TextGUIListener implements IReaderListener, IWriterListener {
         this.level = level;
     }
 
-    /**
-     * Overwrites the default writer to which the output is directed.
-     */
+    /** Overwrites the default writer to which the output is directed. */
     public void setOutputWriter(Writer writer) {
         if (writer instanceof PrintWriter) {
             this.out = (PrintWriter) writer;
@@ -76,9 +72,7 @@ public class TextGUIListener implements IReaderListener, IWriterListener {
         }
     }
 
-    /**
-     * Overwrites the default reader from which the input is taken.
-     */
+    /** Overwrites the default reader from which the input is taken. */
     public void setInputReader(Reader reader) {
         if (reader instanceof BufferedReader) {
             this.in = (BufferedReader) reader;
@@ -93,11 +87,11 @@ public class TextGUIListener implements IReaderListener, IWriterListener {
     public void frameRead(ReaderEvent event) {}
 
     /**
-     * Processes the IOSettings by listing the question, giving the options
-     * and asking the user to provide their choice.
+     * Processes the IOSettings by listing the question, giving the options and asking the user to
+     * provide their choice.
      *
-     * <p>Note: if the input reader is <code>null</code>, then the method
-     * does not wait for an answer, and takes the default.
+     * <p>Note: if the input reader is <code>null</code>, then the method does not wait for an
+     * answer, and takes the default.
      */
     @Override
     public void processIOSettingQuestion(IOSetting setting) {
@@ -172,5 +166,4 @@ public class TextGUIListener implements IReaderListener, IWriterListener {
             }
         }
     }
-
 }

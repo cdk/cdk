@@ -18,6 +18,9 @@
  */
 package org.openscience.cdk.reaction.type;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
@@ -33,20 +36,16 @@ import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionProcessTest;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 /**
- * TestSuite that runs a test for the HyperconjugationReactionTest.
- * Generalized Reaction: [C1+]-C2 => C1=C2 + [H+].
+ * TestSuite that runs a test for the HyperconjugationReactionTest. Generalized Reaction: [C1+]-C2
+ * => C1=C2 + [H+].
  *
  * @cdk.module test-reaction
  */
@@ -54,16 +53,12 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
 
     private IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
-    /**
-     *  The JUnit setup method
-     */
+    /** The JUnit setup method */
     public HyperconjugationReactionTest() throws Exception {
         setReaction(HyperconjugationReaction.class);
     }
 
-    /**
-     *  The JUnit setup method
-     */
+    /** The JUnit setup method */
     @Test
     public void testHyperconjugationReaction() throws Exception {
         IReactionProcess type = new HyperconjugationReaction();
@@ -71,16 +66,17 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
     }
 
     /**
-     * A unit test suite for JUnit. Reaction: [C+]-CC => C=CC + [H+]
-     * Automatic search for the active center.
+     * A unit test suite for JUnit. Reaction: [C+]-CC => C=CC + [H+] Automatic search for the active
+     * center.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     @Override
     public void testInitiate_IAtomContainerSet_IAtomContainerSet() throws Exception {
         IReactionProcess type = new HyperconjugationReaction();
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
 
         /* [C+]CC */
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
@@ -133,7 +129,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
     /**
      * Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
      *
-     * @param molecule          The IAtomContainer to analyze
+     * @param molecule The IAtomContainer to analyze
      * @throws CDKException
      */
     private void makeSureAtomTypesAreRecognized(IAtomContainer molecule) throws Exception {
@@ -142,15 +138,17 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
         while (atoms.hasNext()) {
             IAtom nextAtom = atoms.next();
-            Assert.assertNotNull("Missing atom type for: " + nextAtom, matcher.findMatchingAtomType(molecule, nextAtom));
+            Assert.assertNotNull(
+                    "Missing atom type for: " + nextAtom,
+                    matcher.findMatchingAtomType(molecule, nextAtom));
         }
     }
 
     /**
-     * A unit test suite for JUnit. Reaction: [C-][C+]-C => [C-]C=C + [H+]
-     * Manually put of the center active.
+     * A unit test suite for JUnit. Reaction: [C-][C+]-C => [C-]C=C + [H+] Manually put of the
+     * center active.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testManuallyCentreActive() throws Exception {
@@ -183,16 +181,16 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
 
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
 
-        IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
+        IQueryAtomContainer queryAtom =
+                QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
         Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, queryAtom));
-
     }
 
     /**
-     * A unit test suite for JUnit. Reaction: [C-][C+]-C => [C-]C=C + [H+]
-     * Automatic search for the active center.
+     * A unit test suite for JUnit. Reaction: [C-][C+]-C => [C-]C=C + [H+] Automatic search for the
+     * active center.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testWithNegativeCharge() throws Exception {
@@ -217,7 +215,8 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
 
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
 
-        IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
+        IQueryAtomContainer queryAtom =
+                QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
         Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(product, queryAtom));
 
         product = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
@@ -233,7 +232,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testCDKConstants_REACTIVE_CENTER() throws Exception {
@@ -275,7 +274,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testMapping() throws Exception {
@@ -301,14 +300,20 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
         Assert.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
 
         // if these assertions fail the atom order may have changed
-        IAtom mappedProductA1 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
-                molecule.getAtom(1));
+        IAtom mappedProductA1 =
+                (IAtom)
+                        ReactionManipulator.getMappedChemObject(
+                                setOfReactions.getReaction(0), molecule.getAtom(1));
         Assert.assertEquals(mappedProductA1, product1.getAtom(1));
-        mappedProductA1 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
-                molecule.getAtom(2));
+        mappedProductA1 =
+                (IAtom)
+                        ReactionManipulator.getMappedChemObject(
+                                setOfReactions.getReaction(0), molecule.getAtom(2));
         Assert.assertEquals(mappedProductA1, product1.getAtom(2));
-        mappedProductA1 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
-                molecule.getAtom(6));
+        mappedProductA1 =
+                (IAtom)
+                        ReactionManipulator.getMappedChemObject(
+                                setOfReactions.getReaction(0), molecule.getAtom(6));
         Assert.assertEquals(mappedProductA1, product2.getAtom(0));
     }
 
@@ -318,7 +323,8 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
      * @return The IAtomContainerSet
      */
     private IAtomContainerSet getExampleReactants() {
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
 
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -365,5 +371,4 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
         setOfProducts.addAtomContainer(molecule);
         return setOfProducts;
     }
-
 }

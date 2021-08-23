@@ -29,24 +29,25 @@ import org.openscience.cdk.tools.diff.tree.IntegerDifference;
 /**
  * Compares two {@link IBond} classes.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module diff
  * @cdk.githash
  */
 public class BondDiff {
 
     /**
-     * Overwrite the default public constructor because this class is not
-     * supposed to be instantiated.
+     * Overwrite the default public constructor because this class is not supposed to be
+     * instantiated.
      */
     private BondDiff() {}
 
     /**
      * Compare two {@link IChemObject} classes and return the difference as a {@link String}.
      *
-     * @param first  the first of the two classes to compare
+     * @param first the first of the two classes to compare
      * @param second the second of the two classes to compare
-     * @return a {@link String} representation of the difference between the first and second {@link IChemObject}.
+     * @return a {@link String} representation of the difference between the first and second {@link
+     *     IChemObject}.
      */
     public static String diff(IChemObject first, IChemObject second) {
         IDifference diff = difference(first, second);
@@ -60,9 +61,10 @@ public class BondDiff {
     /**
      * Compare two {@link IChemObject} classes and return the difference as an {@link IDifference}.
      *
-     * @param first  the first of the two classes to compare
+     * @param first the first of the two classes to compare
      * @param second the second of the two classes to compare
-     * @return an {@link IDifference} representation of the difference between the first and second {@link IChemObject}.
+     * @return an {@link IDifference} representation of the difference between the first and second
+     *     {@link IChemObject}.
      */
     public static IDifference difference(IChemObject first, IChemObject second) {
         if (!(first instanceof IBond && second instanceof IBond)) {
@@ -71,8 +73,11 @@ public class BondDiff {
         IBond firstB = (IBond) first;
         IBond secondB = (IBond) second;
         IDifferenceList totalDiff = new ChemObjectDifference("BondDiff");
-        totalDiff.addChild(BondOrderDifference.construct("order", firstB.getOrder(), secondB.getOrder()));
-        totalDiff.addChild(IntegerDifference.construct("atomCount", firstB.getAtomCount(), secondB.getAtomCount()));
+        totalDiff.addChild(
+                BondOrderDifference.construct("order", firstB.getOrder(), secondB.getOrder()));
+        totalDiff.addChild(
+                IntegerDifference.construct(
+                        "atomCount", firstB.getAtomCount(), secondB.getAtomCount()));
         if (firstB.getAtomCount() == secondB.getAtomCount()) {
             totalDiff.addChild(AtomDiff.difference(firstB.getBegin(), secondB.getBegin()));
             totalDiff.addChild(AtomDiff.difference(firstB.getEnd(), secondB.getEnd()));
@@ -87,5 +92,4 @@ public class BondDiff {
             return null;
         }
     }
-
 }

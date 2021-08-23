@@ -18,15 +18,12 @@
  */
 package org.openscience.cdk.reaction.type.parameters;
 
-
 /**
- * Class extension of ParameterReact class which defines if a reaction is set already the reaction center
- * in the reactants.
+ * Class extension of ParameterReact class which defines if a reaction is set already the reaction
+ * center in the reactants.
  *
- * @author      miguelrojasch
- * @cdk.module  reaction
+ * @author miguelrojasch
+ * @cdk.module reaction
  * @cdk.githash
  */
-public class SetReactionCenter extends ParameterReact {
-
-}
+public class SetReactionCenter extends ParameterReact {}

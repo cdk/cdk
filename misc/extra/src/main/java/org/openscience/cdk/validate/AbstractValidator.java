@@ -36,14 +36,13 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 
 /**
- * Abstract validator that does nothing but provide all the methods that the
- * ValidatorInterface requires.
+ * Abstract validator that does nothing but provide all the methods that the ValidatorInterface
+ * requires.
  *
  * @cdk.module extra
  * @cdk.githash
- *
- * @author   Egon Willighagen
- * @cdk.created  2004-03-27
+ * @author Egon Willighagen
+ * @cdk.created 2004-03-27
  * @cdk.require java1.4+
  */
 public class AbstractValidator implements IValidator {
@@ -143,5 +142,4 @@ public class AbstractValidator implements IValidator {
         ValidationReport report = new ValidationReport();
         return report;
     }
-
 }

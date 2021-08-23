@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.qsar.result;
 
-
 /**
  * IDescriptorResult type for doubles.
  *
@@ -29,7 +28,7 @@ public class DoubleArrayResultType implements IDescriptorResult {
 
     private static final long serialVersionUID = -8255004284721233969L;
 
-    private int               size;
+    private int size;
 
     public DoubleArrayResultType(int size) {
         this.size = size;

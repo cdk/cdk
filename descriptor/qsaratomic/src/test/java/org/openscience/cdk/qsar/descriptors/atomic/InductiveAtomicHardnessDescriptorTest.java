@@ -19,7 +19,6 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import javax.vecmath.Point3d;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,9 +30,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 
-/**
- * @cdk.module test-qsaratomic
- */
+/** @cdk.module test-qsaratomic */
 public class InductiveAtomicHardnessDescriptorTest extends AtomicDescriptorTest {
 
     public InductiveAtomicHardnessDescriptorTest() {}
@@ -44,15 +41,16 @@ public class InductiveAtomicHardnessDescriptorTest extends AtomicDescriptorTest 
     }
 
     @Test
-    public void testInductiveAtomicHardnessDescriptor() throws ClassNotFoundException, CDKException,
-            java.lang.Exception {
+    public void testInductiveAtomicHardnessDescriptor()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
         double[] testResult = {1.28};
 
         Point3d c_coord = new Point3d(1.392, 0.0, 0.0);
         Point3d f_coord = new Point3d(0.0, 0.0, 0.0);
         Point3d h1_coord = new Point3d(1.7439615035767404, 1.0558845107302222, 0.0);
         Point3d h2_coord = new Point3d(1.7439615035767404, -0.5279422553651107, 0.914422809754875);
-        Point3d h3_coord = new Point3d(1.7439615035767402, -0.5279422553651113, -0.9144228097548747);
+        Point3d h3_coord =
+                new Point3d(1.7439615035767402, -0.5279422553651113, -0.9144228097548747);
 
         IAtomContainer mol = new AtomContainer(); // molecule is CF
 
@@ -83,7 +81,8 @@ public class InductiveAtomicHardnessDescriptorTest extends AtomicDescriptorTest 
 
         IAtomicDescriptor descriptor = new InductiveAtomicHardnessDescriptor();
 
-        double retval = ((DoubleResult) descriptor.calculate(mol.getAtom(0), mol).getValue()).doubleValue();
+        double retval =
+                ((DoubleResult) descriptor.calculate(mol.getAtom(0), mol).getValue()).doubleValue();
         Assert.assertEquals(testResult[0], retval, 0.1);
     }
 }

@@ -19,7 +19,6 @@
 package org.openscience.cdk.debug;
 
 import java.util.Map;
-
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -33,7 +32,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * Debugging data class.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module datadebug
  * @cdk.githash
  */
@@ -41,7 +40,7 @@ public class DebugReaction extends Reaction implements IReaction {
 
     private static final long serialVersionUID = -8958358842308217875L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugReaction.class);
+    ILoggingTool logger = LoggingToolFactory.createLoggingTool(DebugReaction.class);
 
     public DebugReaction() {
         super();
@@ -265,14 +264,20 @@ public class DebugReaction extends Reaction implements IReaction {
     /** {@inheritDoc} */
     @Override
     public Double getReactantCoefficient(IAtomContainer reactant) {
-        logger.debug("Setting reactant coefficient: ", reactant, "" + super.getReactantCoefficient(reactant));
+        logger.debug(
+                "Setting reactant coefficient: ",
+                reactant,
+                "" + super.getReactantCoefficient(reactant));
         return super.getReactantCoefficient(reactant);
     }
 
     /** {@inheritDoc} */
     @Override
     public Double getProductCoefficient(IAtomContainer product) {
-        logger.debug("Setting product coefficient: ", product, "" + super.getProductCoefficient(product));
+        logger.debug(
+                "Setting product coefficient: ",
+                product,
+                "" + super.getProductCoefficient(product));
         return super.getProductCoefficient(product);
     }
 
@@ -331,5 +336,4 @@ public class DebugReaction extends Reaction implements IReaction {
         logger.debug("Getting direction: ", super.getDirection());
         return super.getDirection();
     }
-
 }

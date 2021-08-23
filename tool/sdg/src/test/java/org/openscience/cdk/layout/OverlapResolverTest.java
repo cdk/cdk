@@ -20,7 +20,6 @@ package org.openscience.cdk.layout;
 
 import java.io.InputStream;
 import java.util.Vector;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.AtomContainer;
@@ -36,27 +35,26 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
- *  Description of the Class
+ * Description of the Class
  *
  * @cdk.module test-sdg
- *
- *@author     steinbeck
- *@cdk.created    September 4, 2003
+ * @author steinbeck
+ * @cdk.created September 4, 2003
  * @cdk.require java1.4+
  */
 public class OverlapResolverTest extends CDKTestCase {
 
-    /**
-     *  Description of the Field
-     */
-    public boolean              standAlone = false;
-    private static ILoggingTool logger     = LoggingToolFactory.createLoggingTool(OverlapResolverTest.class);
-    StructureDiagramGenerator   sdg        = null;
+    /** Description of the Field */
+    public boolean standAlone = false;
+
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(OverlapResolverTest.class);
+    StructureDiagramGenerator sdg = null;
 
     /**
-     *  A unit test for JUnit
+     * A unit test for JUnit
      *
-     *@exception  Exception  Description of the Exception
+     * @exception Exception Description of the Exception
      */
     @Test
     public void testResolveOverlap1() throws Exception {
@@ -65,25 +63,25 @@ public class OverlapResolverTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
-        IAtomContainer atomContainer = (IAtomContainer) ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
+        IAtomContainer atomContainer =
+                (IAtomContainer) ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
 
         OverlapResolver or = new OverlapResolver();
         double score = new OverlapResolver().getAtomOverlapScore(atomContainer, new Vector());
         logger.debug("Overlap Score before treatment: " + score);
         Assert.assertTrue(score > 0);
         or.resolveOverlap(atomContainer, null);
-        //MoleculeViewer2D.display(new AtomContainer(atomContainer), false);
+        // MoleculeViewer2D.display(new AtomContainer(atomContainer), false);
         score = new OverlapResolver().getAtomOverlapScore(atomContainer, new Vector());
         logger.debug("Overlap Score after treatment: " + score);
         Assert.assertEquals(0.0, score, 0.00001);
         logger.debug("End of test case with atom clash");
-
     }
 
     /**
-     *  A unit test for JUnit
+     * A unit test for JUnit
      *
-     *@exception  Exception  Description of the Exception
+     * @exception Exception Description of the Exception
      */
     @Test
     public void testResolveOverlap2() throws Exception {
@@ -92,18 +90,19 @@ public class OverlapResolverTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
-        IAtomContainer atomContainer = (IAtomContainer) ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
-        //MoleculeViewer2D.display(new AtomContainer(atomContainer), false);
-        double score = new OverlapResolver().getOverlapScore(atomContainer, new Vector(), new Vector());
+        IAtomContainer atomContainer =
+                (IAtomContainer) ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
+        // MoleculeViewer2D.display(new AtomContainer(atomContainer), false);
+        double score =
+                new OverlapResolver().getOverlapScore(atomContainer, new Vector(), new Vector());
         Assert.assertEquals(0.0, score, 0.0001);
         logger.debug("End of test case with neither bond nor atom overlap");
-
     }
 
     /**
-     *  A unit test for JUnit
+     * A unit test for JUnit
      *
-     *@exception  Exception  Description of the Exception
+     * @exception Exception Description of the Exception
      */
     @Test
     public void testResolveOverlap3() throws Exception {
@@ -112,18 +111,18 @@ public class OverlapResolverTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
-        IAtomContainer atomContainer = (IAtomContainer) ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
-        //MoleculeViewer2D.display(new AtomContainer(atomContainer), false);
+        IAtomContainer atomContainer =
+                (IAtomContainer) ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
+        // MoleculeViewer2D.display(new AtomContainer(atomContainer), false);
         double score = new OverlapResolver().getBondOverlapScore(atomContainer, new Vector());
         Assert.assertTrue(score > 0);
         logger.debug("End of test case with bond overlap");
-
     }
 
     /**
-     *  A unit test for JUnit
+     * A unit test for JUnit
      *
-     *@exception  Exception  Description of the Exception
+     * @exception Exception Description of the Exception
      */
     @Test
     public void testResolveOverlap4() throws Exception {
@@ -133,37 +132,36 @@ public class OverlapResolverTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
-        IAtomContainer atomContainer = (IAtomContainer) ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
-        //MoleculeViewer2D.display(new AtomContainer(atomContainer), false);
+        IAtomContainer atomContainer =
+                (IAtomContainer) ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
+        // MoleculeViewer2D.display(new AtomContainer(atomContainer), false);
         OverlapResolver or = new OverlapResolver();
         overlapScore = or.resolveOverlap(atomContainer, null);
-        //MoleculeViewer2D.display(new AtomContainer(atomContainer), false);
+        // MoleculeViewer2D.display(new AtomContainer(atomContainer), false);
         Assert.assertEquals(0.0, overlapScore, 0.0001);
         logger.debug("End of test case with atom clash");
-
     }
 
     /**
-     *  A unit test for JUnit
+     * A unit test for JUnit
      *
-     *@exception  Exception  Description of the Exception
+     * @exception Exception Description of the Exception
      */
     @Test
     public void testResolveOverlap5() throws Exception {
         double overlapScore = 0;
         logger.debug("Test case with atom clash");
-        IAtomContainer atomContainer = new SmilesParser(DefaultChemObjectBuilder.getInstance())
-                .parseSmiles("OC4C(N2C1=C(C(=NC(=N1)SC)SC)C3=C2N=CN=C3N)OC(C4O)CO");
+        IAtomContainer atomContainer =
+                new SmilesParser(DefaultChemObjectBuilder.getInstance())
+                        .parseSmiles("OC4C(N2C1=C(C(=NC(=N1)SC)SC)C3=C2N=CN=C3N)OC(C4O)CO");
         StructureDiagramGenerator sdg = new StructureDiagramGenerator();
         sdg.setMolecule(new AtomContainer(atomContainer));
         sdg.generateCoordinates();
         atomContainer = sdg.getMolecule();
         OverlapResolver or = new OverlapResolver();
         overlapScore = or.resolveOverlap(atomContainer, null);
-        //MoleculeViewer2D.display(new AtomContainer(atomContainer), true);
+        // MoleculeViewer2D.display(new AtomContainer(atomContainer), true);
         Assert.assertEquals(0.0, overlapScore, 0.0001);
         logger.debug("End of test case with atom clash");
-
     }
-
 }

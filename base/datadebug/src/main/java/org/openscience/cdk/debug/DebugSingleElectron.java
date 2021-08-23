@@ -19,12 +19,11 @@
 package org.openscience.cdk.debug;
 
 import java.util.Map;
-
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -32,7 +31,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * Debugging data class.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module datadebug
  * @cdk.githash
  */
@@ -40,7 +39,7 @@ public class DebugSingleElectron extends SingleElectron implements ISingleElectr
 
     private static final long serialVersionUID = -2895377834940311825L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugSingleElectron.class);
+    ILoggingTool logger = LoggingToolFactory.createLoggingTool(DebugSingleElectron.class);
 
     public DebugSingleElectron() {
         super();
@@ -215,5 +214,4 @@ public class DebugSingleElectron extends SingleElectron implements ISingleElectr
         logger.debug("Contains atom?: ", atom);
         return super.contains(atom);
     }
-
 }

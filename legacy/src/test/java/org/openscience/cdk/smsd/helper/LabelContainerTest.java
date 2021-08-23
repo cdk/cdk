@@ -29,7 +29,7 @@ import org.junit.Test;
 /**
  * Unit testing for the {@link LabelContainer} class.
  *
- * @author     Syed Asad Rahman
+ * @author Syed Asad Rahman
  * @cdk.module test-smsd
  */
 public class LabelContainerTest {
@@ -39,9 +39,7 @@ public class LabelContainerTest {
         Assert.assertNotNull(LabelContainer.getInstance());
     }
 
-    /**
-     * Test of addLabel method, of class LabelContainer.
-     */
+    /** Test of addLabel method, of class LabelContainer. */
     @Test
     public void testAddLabel() {
         String label = "R3";
@@ -52,9 +50,7 @@ public class LabelContainerTest {
         assertEquals(expectedValue, instance.getLabelID("R3"));
     }
 
-    /**
-     * Test of getLabelID method, of class LabelContainer.
-     */
+    /** Test of getLabelID method, of class LabelContainer. */
     @Test
     public void testGetLabelID() {
         String label = "R3";
@@ -64,9 +60,7 @@ public class LabelContainerTest {
         assertEquals(expectedValue, instance.getLabelID("R3"));
     }
 
-    /**
-     * Test of getLabel method, of class LabelContainer.
-     */
+    /** Test of getLabel method, of class LabelContainer. */
     @Test
     public void testGetLabel() {
         String label = "R3";
@@ -77,9 +71,7 @@ public class LabelContainerTest {
         assertEquals(label, result);
     }
 
-    /**
-     * Test of getSize method, of class LabelContainer.
-     */
+    /** Test of getSize method, of class LabelContainer. */
     @Test
     public void testGetSize() {
         String label = "R3";

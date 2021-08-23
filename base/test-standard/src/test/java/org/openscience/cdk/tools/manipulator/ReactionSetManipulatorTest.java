@@ -21,7 +21,6 @@ package org.openscience.cdk.tools.manipulator;
 import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,13 +39,11 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.MDLRXNReader;
 
-/**
- * @cdk.module test-standard
- */
+/** @cdk.module test-standard */
 public class ReactionSetManipulatorTest extends CDKTestCase {
 
     private IChemObjectBuilder builder;
-    private ReactionSet        set;
+    private ReactionSet set;
 
     public ReactionSetManipulatorTest() {
         super();
@@ -68,8 +65,8 @@ public class ReactionSetManipulatorTest extends CDKTestCase {
         reactionSet.addReaction(builder.newInstance(IReaction.class)); // 1
         reactionSet.addReaction(builder.newInstance(IReaction.class)); // 2
 
-        Assert.assertEquals(0, ReactionSetManipulator.getAllMolecules(reactionSet).getAtomContainerCount());
-
+        Assert.assertEquals(
+                0, ReactionSetManipulator.getAllMolecules(reactionSet).getAtomContainerCount());
     }
 
     @Test
@@ -85,8 +82,8 @@ public class ReactionSetManipulatorTest extends CDKTestCase {
         reaction2.addReactant(molecule);
         reactionSet.addReaction(reaction2);
 
-        Assert.assertEquals(3, ReactionSetManipulator.getAllMolecules(reactionSet).getAtomContainerCount());
-
+        Assert.assertEquals(
+                3, ReactionSetManipulator.getAllMolecules(reactionSet).getAtomContainerCount());
     }
 
     @Test
@@ -106,48 +103,57 @@ public class ReactionSetManipulatorTest extends CDKTestCase {
 
     @Test
     public void testGetRelevantReaction_IReactionSet_IAtom() {
-        Iterator<IAtomContainer> atomContainers = ReactionSetManipulator.getAllAtomContainers(set).iterator();
+        Iterator<IAtomContainer> atomContainers =
+                ReactionSetManipulator.getAllAtomContainers(set).iterator();
         while (atomContainers.hasNext()) {
             IAtomContainer container = atomContainers.next();
             IAtom anAtom = container.getAtom(0);
-            Assert.assertEquals(set.getReaction(0), ReactionSetManipulator.getRelevantReaction(set, anAtom));
+            Assert.assertEquals(
+                    set.getReaction(0), ReactionSetManipulator.getRelevantReaction(set, anAtom));
         }
     }
 
     @Test
     public void testGetRelevantReaction_IReactionSet_IBond() {
-        Iterator<IAtomContainer> atomContainers = ReactionSetManipulator.getAllAtomContainers(set).iterator();
+        Iterator<IAtomContainer> atomContainers =
+                ReactionSetManipulator.getAllAtomContainers(set).iterator();
         while (atomContainers.hasNext()) {
             IAtomContainer container = atomContainers.next();
             IBond aBond = container.getBond(0);
-            Assert.assertEquals(set.getReaction(0), ReactionSetManipulator.getRelevantReaction(set, aBond));
+            Assert.assertEquals(
+                    set.getReaction(0), ReactionSetManipulator.getRelevantReaction(set, aBond));
         }
     }
 
     @Test
     public void testGetRelevantAtomContainer_IReactionSet_IAtom() {
-        Iterator<IAtomContainer> atomContainers = ReactionSetManipulator.getAllAtomContainers(set).iterator();
+        Iterator<IAtomContainer> atomContainers =
+                ReactionSetManipulator.getAllAtomContainers(set).iterator();
         while (atomContainers.hasNext()) {
             IAtomContainer container = atomContainers.next();
             IAtom anAtom = container.getAtom(0);
-            Assert.assertEquals(container, ReactionSetManipulator.getRelevantAtomContainer(set, anAtom));
+            Assert.assertEquals(
+                    container, ReactionSetManipulator.getRelevantAtomContainer(set, anAtom));
         }
     }
 
     @Test
     public void testGetRelevantAtomContainer_IReactionSet_IBond() {
-        Iterator<IAtomContainer> atomContainers = ReactionSetManipulator.getAllAtomContainers(set).iterator();
+        Iterator<IAtomContainer> atomContainers =
+                ReactionSetManipulator.getAllAtomContainers(set).iterator();
         while (atomContainers.hasNext()) {
             IAtomContainer container = atomContainers.next();
             IBond aBond = container.getBond(0);
-            Assert.assertEquals(container, ReactionSetManipulator.getRelevantAtomContainer(set, aBond));
+            Assert.assertEquals(
+                    container, ReactionSetManipulator.getRelevantAtomContainer(set, aBond));
         }
     }
 
     @Test
     public void testSetAtomProperties_IReactionSet_Object_Object() throws Exception {
         ReactionSetManipulator.setAtomProperties(set, "test", "ok");
-        Iterator<IAtomContainer> atomContainers = ReactionSetManipulator.getAllAtomContainers(set).iterator();
+        Iterator<IAtomContainer> atomContainers =
+                ReactionSetManipulator.getAllAtomContainers(set).iterator();
         while (atomContainers.hasNext()) {
             IAtomContainer container = atomContainers.next();
             Iterator<IAtom> atoms = container.atoms().iterator();
@@ -189,7 +195,6 @@ public class ReactionSetManipulatorTest extends CDKTestCase {
 
         Assert.assertEquals(2, mol.getAtomCount());
         Assert.assertEquals(0, mol.getBondCount());
-
     }
 
     @Test
@@ -266,7 +271,6 @@ public class ReactionSetManipulatorTest extends CDKTestCase {
         IReactionSet reactionSet1 = ReactionSetManipulator.getRelevantReactions(set, mol1a);
         Assert.assertEquals(1, reactionSet1.getReactionCount());
         Assert.assertEquals(reaction1, reactionSet1.getReaction(0));
-
     }
 
     @Test
@@ -292,14 +296,15 @@ public class ReactionSetManipulatorTest extends CDKTestCase {
         set.addReaction(reaction3);
 
         Assert.assertEquals(3, set.getReactionCount());
-        IReactionSet reactionSet2 = ReactionSetManipulator.getRelevantReactionsAsReactant(set, mol1b);
+        IReactionSet reactionSet2 =
+                ReactionSetManipulator.getRelevantReactionsAsReactant(set, mol1b);
         Assert.assertEquals(2, reactionSet2.getReactionCount());
         Assert.assertEquals(reaction1, reactionSet2.getReaction(0));
         Assert.assertEquals(reaction2, reactionSet2.getReaction(1));
-        IReactionSet reactionSet1 = ReactionSetManipulator.getRelevantReactionsAsReactant(set, mol1a);
+        IReactionSet reactionSet1 =
+                ReactionSetManipulator.getRelevantReactionsAsReactant(set, mol1a);
         Assert.assertEquals(1, reactionSet1.getReactionCount());
         Assert.assertEquals(reaction1, reactionSet1.getReaction(0));
-
     }
 
     @Test
@@ -325,12 +330,13 @@ public class ReactionSetManipulatorTest extends CDKTestCase {
         set.addReaction(reaction3);
 
         Assert.assertEquals(3, set.getReactionCount());
-        IReactionSet reactionSet2 = ReactionSetManipulator.getRelevantReactionsAsProduct(set, mol1b);
+        IReactionSet reactionSet2 =
+                ReactionSetManipulator.getRelevantReactionsAsProduct(set, mol1b);
         Assert.assertEquals(0, reactionSet2.getReactionCount());
-        IReactionSet reactionSet1 = ReactionSetManipulator.getRelevantReactionsAsProduct(set, mol1a);
+        IReactionSet reactionSet1 =
+                ReactionSetManipulator.getRelevantReactionsAsProduct(set, mol1a);
         Assert.assertEquals(1, reactionSet1.getReactionCount());
         Assert.assertEquals(reaction3, reactionSet1.getReaction(0));
-
     }
 
     @Test
@@ -384,8 +390,10 @@ public class ReactionSetManipulatorTest extends CDKTestCase {
         reaction3.addReactant(builder.newInstance(IAtomContainer.class));
         reaction3.addProduct(builder.newInstance(IAtomContainer.class));
         set.addReaction(reaction3);
-        Assert.assertEquals(reaction1, ReactionSetManipulator.getReactionByAtomContainerID(set, "1"));
-        Assert.assertEquals(reaction2, ReactionSetManipulator.getReactionByAtomContainerID(set, "2"));
+        Assert.assertEquals(
+                reaction1, ReactionSetManipulator.getReactionByAtomContainerID(set, "1"));
+        Assert.assertEquals(
+                reaction2, ReactionSetManipulator.getReactionByAtomContainerID(set, "2"));
         Assert.assertNull(ReactionSetManipulator.getReactionByAtomContainerID(set, "3"));
     }
 }

@@ -23,10 +23,10 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 
 /**
- * This encapsulates an atom with a ring identifier, with an optional ring
- * bond specified. For example, <code>C=1CCCCC1</code>.
+ * This encapsulates an atom with a ring identifier, with an optional ring bond specified. For
+ * example, <code>C=1CCCCC1</code>.
  *
- * @cdk.module  smarts
+ * @cdk.module smarts
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
@@ -34,8 +34,8 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 public class RingIdentifierAtom extends SMARTSAtom {
 
     private static final long serialVersionUID = -6812146026923460637L;
-    private IQueryAtom        atom;
-    private IQueryBond        ringBond;
+    private IQueryAtom atom;
+    private IQueryBond ringBond;
 
     public RingIdentifierAtom(IChemObjectBuilder builder) {
         super(builder);

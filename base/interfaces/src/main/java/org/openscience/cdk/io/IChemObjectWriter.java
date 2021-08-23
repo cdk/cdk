@@ -24,16 +24,14 @@ package org.openscience.cdk.io;
 
 import java.io.OutputStream;
 import java.io.Writer;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemObject;
 
 /**
- * This class is the interface that all IO writers should implement.
- * Programs need only care about this interface for any kind of IO.
+ * This class is the interface that all IO writers should implement. Programs need only care about
+ * this interface for any kind of IO.
  *
- * <p>Currently, database IO and file IO is supported. Internet IO is
- * expected.
+ * <p>Currently, database IO and file IO is supported. Internet IO is expected.
  *
  * @cdk.module io
  * @cdk.githash
@@ -43,23 +41,14 @@ public interface IChemObjectWriter extends IChemObjectIO {
     /**
      * Writes the content of "object" to output.
      *
-     * @param  object    the object of which the content is outputted
-     *
-     * @exception CDKException is thrown if the output
-     *            does not support the data in the object
+     * @param object the object of which the content is outputted
+     * @exception CDKException is thrown if the output does not support the data in the object
      */
     public void write(IChemObject object) throws CDKException;
 
-    /**
-     * Sets the Writer from which this ChemObjectWriter should write
-     * the contents.
-     */
+    /** Sets the Writer from which this ChemObjectWriter should write the contents. */
     public void setWriter(Writer writer) throws CDKException;
 
-    /**
-     * Sets the OutputStream from which this ChemObjectWriter should write
-     * the contents.
-     */
+    /** Sets the OutputStream from which this ChemObjectWriter should write the contents. */
     public void setWriter(OutputStream writer) throws CDKException;
-
 }

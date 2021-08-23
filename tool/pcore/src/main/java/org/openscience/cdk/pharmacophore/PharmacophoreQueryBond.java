@@ -19,9 +19,9 @@
 package org.openscience.cdk.pharmacophore;
 
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.BondRef;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
-import org.openscience.cdk.BondRef;
 
 /**
  * Represents a pharmacophore query distance constraint.
@@ -45,7 +45,7 @@ public class PharmacophoreQueryBond extends Bond implements IQueryBond {
     /**
      * Create a query distance constraint between two query groups.
      *
-     * Note that the distance is only considered upto 2 decimal places.
+     * <p>Note that the distance is only considered upto 2 decimal places.
      *
      * @param atom1 The first pharmacophore group
      * @param atom2 The second pharmacophore group
@@ -53,7 +53,11 @@ public class PharmacophoreQueryBond extends Bond implements IQueryBond {
      * @param upper The upper bound of the distance between the two groups
      * @see #PharmacophoreQueryBond(PharmacophoreQueryAtom,PharmacophoreQueryAtom,double)
      */
-    public PharmacophoreQueryBond(PharmacophoreQueryAtom atom1, PharmacophoreQueryAtom atom2, double lower, double upper) {
+    public PharmacophoreQueryBond(
+            PharmacophoreQueryAtom atom1,
+            PharmacophoreQueryAtom atom2,
+            double lower,
+            double upper) {
         super(atom1, atom2);
         this.upper = round(upper, 2);
         this.lower = round(lower, 2);
@@ -61,19 +65,19 @@ public class PharmacophoreQueryBond extends Bond implements IQueryBond {
 
     /**
      * Create a query distance constraint between two query groups.
-     * 
-     * This constructor allows you to define a query distance constraint
-     * such that the distance between the two query groups is exact
-     * (i.e., not a range).
      *
-     * Note that the distance is only considered upto 2 decimal places.
+     * <p>This constructor allows you to define a query distance constraint such that the distance
+     * between the two query groups is exact (i.e., not a range).
      *
-     * @param atom1    The first pharmacophore group
-     * @param atom2    The second pharmacophore group
+     * <p>Note that the distance is only considered upto 2 decimal places.
+     *
+     * @param atom1 The first pharmacophore group
+     * @param atom2 The second pharmacophore group
      * @param distance The exact distance between the two groups
      * @see #PharmacophoreQueryBond(PharmacophoreQueryAtom, PharmacophoreQueryAtom, double, double)
      */
-    public PharmacophoreQueryBond(PharmacophoreQueryAtom atom1, PharmacophoreQueryAtom atom2, double distance) {
+    public PharmacophoreQueryBond(
+            PharmacophoreQueryAtom atom1, PharmacophoreQueryAtom atom2, double distance) {
         super(atom1, atom2);
         this.upper = round(distance, 2);
         this.lower = round(distance, 2);
@@ -81,10 +85,10 @@ public class PharmacophoreQueryBond extends Bond implements IQueryBond {
 
     /**
      * Checks whether the query distance constraint matches a target distance.
-     * 
-     * This method checks whether a query constraint is satisfied by an observed
-     * distance (represented by a {@link PharmacophoreBond} in the target molecule.
-     * Note that distance are compared upto 2 decimal places.
+     *
+     * <p>This method checks whether a query constraint is satisfied by an observed distance
+     * (represented by a {@link PharmacophoreBond} in the target molecule. Note that distance are
+     * compared upto 2 decimal places.
      *
      * @param bond The distance relationship in a target molecule
      * @return true if the target distance lies within the range of the query constraint
@@ -96,8 +100,7 @@ public class PharmacophoreQueryBond extends Bond implements IQueryBond {
             PharmacophoreBond pbond = (PharmacophoreBond) bond;
             double bondLength = round(pbond.getBondLength(), 2);
             return bondLength >= lower && bondLength <= upper;
-        } else
-            return false;
+        } else return false;
     }
 
     public double getUpper() {
@@ -118,13 +121,21 @@ public class PharmacophoreQueryBond extends Bond implements IQueryBond {
     /**
      * String representation of a distance constraint.
      *
-     * @return  String representation of a distance constraint
+     * @return String representation of a distance constraint
      */
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        sb.append("DC::" + getAtom(0) + "::" + getAtom(1) + "::[" + getLower() + " - " + getUpper() + "] ");
+        sb.append(
+                "DC::"
+                        + getAtom(0)
+                        + "::"
+                        + getAtom(1)
+                        + "::["
+                        + getLower()
+                        + " - "
+                        + getUpper()
+                        + "] ");
         return sb.toString();
     }
-
 }

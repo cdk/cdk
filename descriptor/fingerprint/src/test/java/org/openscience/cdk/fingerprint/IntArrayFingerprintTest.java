@@ -22,10 +22,9 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import org.junit.Assert;
-import org.junit.Test;
-
 import static org.hamcrest.CoreMatchers.is;
+
+import org.junit.Test;
 
 public class IntArrayFingerprintTest extends AbstractBitFingerprintTest {
 
@@ -41,14 +40,10 @@ public class IntArrayFingerprintTest extends AbstractBitFingerprintTest {
         fp.set(219, true);
         fp.set(3, true);
         fp.set(24, true);
-        org.hamcrest.MatcherAssert.assertThat(new int[]{1, 3, 24, 55, 219},
-                          is(fp.getSetbits()));
+        org.hamcrest.MatcherAssert.assertThat(new int[] {1, 3, 24, 55, 219}, is(fp.getSetbits()));
         fp.set(24, false);
-        org.hamcrest.MatcherAssert.assertThat(new int[]{1, 3, 55, 219},
-                          is(fp.getSetbits()));
+        org.hamcrest.MatcherAssert.assertThat(new int[] {1, 3, 55, 219}, is(fp.getSetbits()));
         fp.set(26, true);
-        org.hamcrest.MatcherAssert.assertThat(new int[]{1, 3, 26, 55, 219},
-                          is(fp.getSetbits()));
+        org.hamcrest.MatcherAssert.assertThat(new int[] {1, 3, 26, 55, 219}, is(fp.getSetbits()));
     }
-
 }

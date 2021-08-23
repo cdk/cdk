@@ -22,22 +22,23 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
-
 import org.openscience.cdk.interfaces.IIsotope;
 
 /**
- *  Class defining a expanded molecular formula object. The Isotopes don't have
- *  a fix occurrence in the MolecularFormula but they have a range.<p>
- *  With this class man can define a MolecularFormula which contains certain IIsotope
- *  with a maximum and minimum occurrence.
+ * Class defining a expanded molecular formula object. The Isotopes don't have a fix occurrence in
+ * the MolecularFormula but they have a range.
  *
- *  Examples:
+ * <p>With this class man can define a MolecularFormula which contains certain IIsotope with a
+ * maximum and minimum occurrence.
+ *
+ * <p>Examples:
+ *
  * <ul>
- *   <li><code>[C(1-5)H(4-10)]-</code></li>
+ *   <li><code>[C(1-5)H(4-10)]-</code>
  * </ul>
  *
- * @cdk.module  formula
- * @author      miguelrojasch
+ * @cdk.module formula
+ * @author miguelrojasch
  * @cdk.created 2007-11-20
  * @cdk.keyword molecular formula
  * @cdk.githash
@@ -47,30 +48,26 @@ public class MolecularFormulaRange implements Cloneable {
     private Map<IIsotope, Integer> isotopesMax;
     private Map<IIsotope, Integer> isotopesMin;
 
-    /**
-     *  Constructs an empty MolecularFormulaExpand.
-     */
+    /** Constructs an empty MolecularFormulaExpand. */
     public MolecularFormulaRange() {
         isotopesMax = new HashMap<IIsotope, Integer>();
         isotopesMin = new HashMap<IIsotope, Integer>();
     }
 
     /**
-     *  Adds an Isotope to this MolecularFormulaExpand in a number of
-     *  maximum and minimum occurrences allowed.
+     * Adds an Isotope to this MolecularFormulaExpand in a number of maximum and minimum occurrences
+     * allowed.
      *
-     * @param  isotope  The isotope to be added to this MolecularFormulaExpand
-     * @param  countMax The maximal number of occurrences to add
-     * @param  countMin The minimal number of occurrences to add
-     *
+     * @param isotope The isotope to be added to this MolecularFormulaExpand
+     * @param countMax The maximal number of occurrences to add
+     * @param countMin The minimal number of occurrences to add
      */
     public void addIsotope(IIsotope isotope, int countMin, int countMax) {
-        
-        if (isotope == null) 
-            throw new IllegalArgumentException("Isotope must not be null");
-        
+
+        if (isotope == null) throw new IllegalArgumentException("Isotope must not be null");
+
         boolean flag = false;
-        for (Iterator<IIsotope> it = isotopes().iterator(); it.hasNext();) {
+        for (Iterator<IIsotope> it = isotopes().iterator(); it.hasNext(); ) {
             IIsotope thisIsotope = it.next();
             if (isTheSame(thisIsotope, isotope)) {
                 isotopesMax.put(thisIsotope, countMax);
@@ -86,15 +83,14 @@ public class MolecularFormulaRange implements Cloneable {
     }
 
     /**
-     *  True, if the MolecularFormulaExpand contains the given IIsotope.
-     *  The method looks for other isotopes which has the same
-     *  symbol, natural abundance and exact mass.
+     * True, if the MolecularFormulaExpand contains the given IIsotope. The method looks for other
+     * isotopes which has the same symbol, natural abundance and exact mass.
      *
-     * @param  isotope  The IIsotope this MolecularFormula is searched for
-     * @return          True, if the MolecularFormula contains the given isotope object
+     * @param isotope The IIsotope this MolecularFormula is searched for
+     * @return True, if the MolecularFormula contains the given isotope object
      */
     public boolean contains(IIsotope isotope) {
-        for (Iterator<IIsotope> it = isotopes().iterator(); it.hasNext();) {
+        for (Iterator<IIsotope> it = isotopes().iterator(); it.hasNext(); ) {
             IIsotope thisIsotope = it.next();
             if (isTheSame(thisIsotope, isotope)) {
                 return true;
@@ -104,50 +100,46 @@ public class MolecularFormulaRange implements Cloneable {
     }
 
     /**
-     *  Checks a set of Nodes for the maximal occurrence of the isotope in the
-     *  MolecularFormulaExpand from a particular isotope. It returns -1 if the Isotope
-     *  does not exist.
+     * Checks a set of Nodes for the maximal occurrence of the isotope in the MolecularFormulaExpand
+     * from a particular isotope. It returns -1 if the Isotope does not exist.
      *
-     * @param   isotope          The IIsotope to look for
-     * @return                   The occurrence of this isotope in this IMolecularFormula
+     * @param isotope The IIsotope to look for
+     * @return The occurrence of this isotope in this IMolecularFormula
      */
     public int getIsotopeCountMax(IIsotope isotope) {
         return !contains(isotope) ? -1 : isotopesMax.get(getIsotope(isotope));
     }
 
     /**
-     *  Checks a set of Nodes for the minimal occurrence of the isotope in the
-     *  MolecularFormulaExpand from a particular isotope. It returns -1 if the Isotope
-     *  does not exist.
+     * Checks a set of Nodes for the minimal occurrence of the isotope in the MolecularFormulaExpand
+     * from a particular isotope. It returns -1 if the Isotope does not exist.
      *
-     * @param   isotope          The IIsotope to look for
-     * @return                   The occurrence of this isotope in this IMolecularFormula
+     * @param isotope The IIsotope to look for
+     * @return The occurrence of this isotope in this IMolecularFormula
      */
     public int getIsotopeCountMin(IIsotope isotope) {
         return !contains(isotope) ? -1 : isotopesMin.get(getIsotope(isotope));
     }
 
     /**
-     *  Checks a set of Nodes for the number of different isotopes in the
-     *  MolecularFormulaExpand.
+     * Checks a set of Nodes for the number of different isotopes in the MolecularFormulaExpand.
      *
-     * @return        The the number of different isotopes in this MolecularFormulaExpand
+     * @return The the number of different isotopes in this MolecularFormulaExpand
      */
     public int getIsotopeCount() {
         return isotopesMax.size();
     }
 
     /**
-     *  Get the isotope instance given an IIsotope. The instance is those
-     *  that has the isotope with the same symbol, natural abundance and
-     *  exact mass.
+     * Get the isotope instance given an IIsotope. The instance is those that has the isotope with
+     * the same symbol, natural abundance and exact mass.
      *
-     * @param  isotope The IIsotope for looking for
-     * @return         The IIsotope instance
-    * @see            #isotopes
+     * @param isotope The IIsotope for looking for
+     * @return The IIsotope instance
+     * @see #isotopes
      */
     private IIsotope getIsotope(IIsotope isotope) {
-        for (Iterator<IIsotope> it = isotopes().iterator(); it.hasNext();) {
+        for (Iterator<IIsotope> it = isotopes().iterator(); it.hasNext(); ) {
             IIsotope thisIsotope = it.next();
             if (isTheSame(isotope, thisIsotope)) return thisIsotope;
         }
@@ -155,9 +147,9 @@ public class MolecularFormulaRange implements Cloneable {
     }
 
     /**
-     *  Returns an Iterator for looping over all isotopes in this MolecularFormulaExpand.
+     * Returns an Iterator for looping over all isotopes in this MolecularFormulaExpand.
      *
-     * @return    An Iterator with the isotopes in this MolecularFormulaExpand
+     * @return An Iterator with the isotopes in this MolecularFormulaExpand
      */
     public Iterable<IIsotope> isotopes() {
         return new Iterable<IIsotope>() {
@@ -169,18 +161,16 @@ public class MolecularFormulaRange implements Cloneable {
         };
     }
 
-    /**
-     * Removes all isotopes of this molecular formula.
-     */
+    /** Removes all isotopes of this molecular formula. */
     public void removeAllIsotopes() {
         isotopesMax.clear();
         isotopesMin.clear();
     }
 
     /**
-     *  Removes the given isotope from the MolecularFormulaExpand.
+     * Removes the given isotope from the MolecularFormulaExpand.
      *
-     * @param isotope  The IIsotope to be removed
+     * @param isotope The IIsotope to be removed
      */
     public void removeIsotope(IIsotope isotope) {
         isotopesMax.remove(getIsotope(isotope));
@@ -188,10 +178,10 @@ public class MolecularFormulaRange implements Cloneable {
     }
 
     /**
-     * Clones this MolecularFormulaExpand object and its content. I should
-     * integrate into ChemObject.
+     * Clones this MolecularFormulaExpand object and its content. I should integrate into
+     * ChemObject.
      *
-     * @return    The cloned object
+     * @return The cloned object
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
@@ -200,27 +190,30 @@ public class MolecularFormulaRange implements Cloneable {
         Iterator<IIsotope> iterIso = this.isotopes().iterator();
         while (iterIso.hasNext()) {
             IIsotope isotope = iterIso.next();
-            clone.addIsotope((IIsotope) isotope.clone(), getIsotopeCountMin(isotope), getIsotopeCountMax(isotope));
+            clone.addIsotope(
+                    (IIsotope) isotope.clone(),
+                    getIsotopeCountMin(isotope),
+                    getIsotopeCountMax(isotope));
         }
         return clone;
     }
 
     /**
-     * Compare to IIsotope. The method doesn't compare instance but if they
-     * have the same symbol, natural abundance and exact mass.
+     * Compare to IIsotope. The method doesn't compare instance but if they have the same symbol,
+     * natural abundance and exact mass.
      *
-     * @param isotopeOne   The first Isotope to compare
-     * @param isotopeTwo   The second Isotope to compare
-     * @return             True, if both isotope are the same
+     * @param isotopeOne The first Isotope to compare
+     * @param isotopeTwo The second Isotope to compare
+     * @return True, if both isotope are the same
      */
     private boolean isTheSame(IIsotope isotopeOne, IIsotope isotopeTwo) {
 
         if (!isotopeOne.getSymbol().equals(isotopeTwo.getSymbol())) return false;
         // XXX: floating point comparision!
-        if (!Objects.equals(isotopeOne.getNaturalAbundance(), isotopeTwo.getNaturalAbundance())) return false;
+        if (!Objects.equals(isotopeOne.getNaturalAbundance(), isotopeTwo.getNaturalAbundance()))
+            return false;
         if (!Objects.equals(isotopeOne.getExactMass(), isotopeTwo.getExactMass())) return false;
 
         return true;
     }
-
 }

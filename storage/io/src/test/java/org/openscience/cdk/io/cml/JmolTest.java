@@ -23,9 +23,7 @@
 package org.openscience.cdk.io.cml;
 
 import java.io.InputStream;
-
 import javax.vecmath.Vector3d;
-
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -42,9 +40,8 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * TestCase for reading CML files using a few test files
- * in data/cmltest as found in the Jmol distribution
- * (<a href="http://www.jmol.org/">http://www.jmol.org/</a>).
+ * TestCase for reading CML files using a few test files in data/cmltest as found in the Jmol
+ * distribution (<a href="http://www.jmol.org/">http://www.jmol.org/</a>).
  *
  * @cdk.module test-io
  */
@@ -52,13 +49,14 @@ public class JmolTest extends CDKTestCase {
 
     private ILoggingTool logger = LoggingToolFactory.createLoggingTool(JmolTest.class);
 
-    /**
-     * Now come the actual tests...
-     */
+    /** Now come the actual tests... */
 
     /**
      * Special CML characteristics:
-     * <ul><li> &lt;crystal></li></ul>
+     *
+     * <ul>
+     *   <li>&lt;crystal>
+     * </ul>
      */
     @Test
     public void testEstron() throws Exception {
@@ -92,10 +90,7 @@ public class JmolTest extends CDKTestCase {
         Assert.assertTrue(c.z != 0.0);
     }
 
-    /**
-     * Special CML characteristics:
-     * - Jmol Animation
-     */
+    /** Special CML characteristics: - Jmol Animation */
     @Ignore("It is broken, but not used, AFAIK")
     public void testAnimation() throws Exception {
         String filename = "data/cml/SN1_reaction.cml";
@@ -124,9 +119,7 @@ public class JmolTest extends CDKTestCase {
         Assert.assertTrue(GeometryUtil.has3DCoordinates(mol));
     }
 
-    /**
-     * No special CML code, just regression test for Jmol releases
-     */
+    /** No special CML code, just regression test for Jmol releases */
     @Test
     public void testMethanolTwo() throws Exception {
         String filename = "data/cml/methanol2.cml";
@@ -139,11 +132,11 @@ public class JmolTest extends CDKTestCase {
         // test the resulting ChemFile content
         Assert.assertNotNull(chemFile);
         Assert.assertEquals(1, chemFile.getChemSequenceCount());
-        //logger.debug("NO sequences: " + chemFile.getChemSequenceCount());
+        // logger.debug("NO sequences: " + chemFile.getChemSequenceCount());
         IChemSequence seq = chemFile.getChemSequence(0);
         Assert.assertNotNull(seq);
         Assert.assertEquals(1, seq.getChemModelCount());
-        //logger.debug("NO models: " + seq.getChemModelCount());
+        // logger.debug("NO models: " + seq.getChemModelCount());
         IChemModel model = seq.getChemModel(0);
         Assert.assertNotNull(model);
         Assert.assertEquals(1, model.getMoleculeSet().getAtomContainerCount());
@@ -155,9 +148,7 @@ public class JmolTest extends CDKTestCase {
         Assert.assertTrue(GeometryUtil.has3DCoordinates(mol));
     }
 
-    /**
-     * No special CML code, just regression test for Jmol releases
-     */
+    /** No special CML code, just regression test for Jmol releases */
     @Test
     public void testMethanolOne() throws Exception {
         String filename = "data/cml/methanol1.cml";
@@ -170,11 +161,11 @@ public class JmolTest extends CDKTestCase {
         // test the resulting ChemFile content
         Assert.assertNotNull(chemFile);
         Assert.assertEquals(1, chemFile.getChemSequenceCount());
-        //logger.debug("NO sequences: " + chemFile.getChemSequenceCount());
+        // logger.debug("NO sequences: " + chemFile.getChemSequenceCount());
         IChemSequence seq = chemFile.getChemSequence(0);
         Assert.assertNotNull(seq);
         Assert.assertEquals(1, seq.getChemModelCount());
-        //logger.debug("NO models: " + seq.getChemModelCount());
+        // logger.debug("NO models: " + seq.getChemModelCount());
         IChemModel model = seq.getChemModel(0);
         Assert.assertNotNull(model);
         IAtomContainerSet som = model.getMoleculeSet();
@@ -186,5 +177,4 @@ public class JmolTest extends CDKTestCase {
         Assert.assertEquals(mol.getAtomCount(), 6);
         Assert.assertTrue(GeometryUtil.has3DCoordinates(mol));
     }
-
 }

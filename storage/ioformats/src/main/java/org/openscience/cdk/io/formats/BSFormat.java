@@ -24,7 +24,6 @@ import org.openscience.cdk.tools.DataFeatures;
  * See <a href="http://www.orc.uni-linz.ac.at/mueller/ball_and_stick.shtml">here</a>.
  *
  * @author Miguel Rojas
- *
  * @cdk.module ioformats
  * @cdk.githash
  */
@@ -60,7 +59,7 @@ public class BSFormat extends AbstractResourceFormat implements IChemFormat {
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"bs"};
+        return new String[] {"bs"};
     }
 
     /** {@inheritDoc} */

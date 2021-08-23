@@ -18,6 +18,9 @@
  */
 package org.openscience.cdk.reaction.type;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,22 +47,18 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 /**
- * TestSuite that runs a test for the HeterolyticCleavagePBReactionTest.
- * Generalized Reaction: A=B => |[A-]-[B+] + [A+]-|[B-]. Depending of the bond order
- * the bond will be removed or simply the order decreased.
+ * TestSuite that runs a test for the HeterolyticCleavagePBReactionTest. Generalized Reaction: A=B
+ * => |[A-]-[B+] + [A+]-|[B-]. Depending of the bond order the bond will be removed or simply the
+ * order decreased.
  *
  * @cdk.module test-reaction
  */
 public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
 
     private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-    private IChemObjectBuilder            builder = SilentChemObjectBuilder.getInstance();
-    private UniversalIsomorphismTester    uiTester;
+    private IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    private UniversalIsomorphismTester uiTester;
 
     @Before
     public void setUpUITester() {
@@ -70,9 +69,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         setReaction(HeterolyticCleavagePBReaction.class);
     }
 
-    /**
-     *  The JUnit setup method
-     */
+    /** The JUnit setup method */
     @Test
     public void testHeterolyticCleavagePBReaction() throws Exception {
         IReactionProcess type = new HeterolyticCleavagePBReaction();
@@ -80,18 +77,15 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
     }
 
     /**
-     * A unit test suite for JUnit. Reaction: Propene.
-     * CC!=!C => C[C+][C-]
-     *           C[C-][C+]
+     * A unit test suite for JUnit. Reaction: Propene. CC!=!C => C[C+][C-] C[C-][C+]
      *
      * @cdk.inchi InChI=1/C3H6/c1-3-2/h3H,1H2,2H3
-     *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     @Override
     public void testInitiate_IAtomContainerSet_IAtomContainerSet() throws Exception {
-        //Smiles("CC=C")
+        // Smiles("CC=C")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -116,7 +110,8 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         molecule.getAtom(2).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         setOfReactants.addAtomContainer(molecule);
 
         IReactionProcess type = new HeterolyticCleavagePBReaction();
@@ -133,7 +128,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
 
         // expected products
 
-        //Smiles("C[C+][C-]")
+        // Smiles("C[C+][C-]")
         IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
         expected1.addAtom(builder.newInstance(IAtom.class, "C"));
         expected1.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -157,10 +152,11 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
         lpcheck.saturate(expected1);
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
-        QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
+        QueryAtomContainer queryAtom =
+                QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
         Assert.assertTrue(uiTester.isIsomorph(product1, queryAtom));
 
-        //Smiles("C[C-][C+]")
+        // Smiles("C[C-][C+]")
         expected1.getAtom(1).setFormalCharge(-1);
         expected1.getAtom(2).setFormalCharge(+1);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
@@ -168,33 +164,25 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         product1 = setOfReactions.getReaction(1).getProducts().getAtomContainer(0);
         queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
         Assert.assertTrue(uiTester.isIsomorph(product1, queryAtom));
-
     }
 
     /**
-     * A unit test suite for JUnit. Reaction:.
-     * C[C+]!=!C => C[C+][C-]
-     *           C[C-][C+]
+     * A unit test suite for JUnit. Reaction:. C[C+]!=!C => C[C+][C-] C[C-][C+]
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
-    public void testCspChargeDoubleB() throws Exception {
-
-    }
+    public void testCspChargeDoubleB() throws Exception {}
 
     /**
-     * A unit test suite for JUnit. Reaction: Allene.
-     * C=C!=!C => C=[C+][C-]
-     *            C=[C-][C+]
+     * A unit test suite for JUnit. Reaction: Allene. C=C!=!C => C=[C+][C-] C=[C-][C+]
      *
      * @cdk.inchi InChI=1/C3H4/c1-3-2/h1-2H2
-     *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testCspDoubleB() throws Exception {
-        //Smiles("C=C=C")
+        // Smiles("C=C=C")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -215,7 +203,8 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         molecule.getAtom(2).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         setOfReactants.addAtomContainer(molecule);
 
         IReactionProcess type = new HeterolyticCleavagePBReaction();
@@ -232,7 +221,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
 
         // expected products
 
-        //Smiles("C=[C+][C-]")
+        // Smiles("C=[C+][C-]")
         IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
         expected1.addAtom(builder.newInstance(IAtom.class, "C"));
         expected1.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -252,10 +241,11 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
         lpcheck.saturate(expected1);
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
-        QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
+        QueryAtomContainer queryAtom =
+                QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
         Assert.assertTrue(uiTester.isIsomorph(product1, queryAtom));
 
-        //Smiles("C=[C-][C+]")
+        // Smiles("C=[C-][C+]")
         expected1.getAtom(1).setFormalCharge(-1);
         expected1.getAtom(2).setFormalCharge(+1);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
@@ -266,17 +256,14 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
     }
 
     /**
-     * A unit test suite for JUnit. Reaction: Propyne.
-     * CC#C => C[C+]=[C-]
-     *         C[C-]=[C+]
+     * A unit test suite for JUnit. Reaction: Propyne. CC#C => C[C+]=[C-] C[C-]=[C+]
      *
      * @cdk.inchi InChI=1/C3H4/c1-3-2/h1H,2H3
-     *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testCspTripleB() throws Exception {
-        //Smiles("CC#C")
+        // Smiles("CC#C")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -297,7 +284,8 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         molecule.getAtom(2).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         setOfReactants.addAtomContainer(molecule);
 
         IReactionProcess type = new HeterolyticCleavagePBReaction();
@@ -314,7 +302,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
 
         // expected products
 
-        //Smiles("C[C+]=[C-]")
+        // Smiles("C[C+]=[C-]")
         IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
         expected1.addAtom(builder.newInstance(IAtom.class, "C"));
         expected1.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -333,10 +321,11 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         expected1.addBond(2, 6, IBond.Order.SINGLE);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
-        QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
+        QueryAtomContainer queryAtom =
+                QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
         Assert.assertTrue(uiTester.isIsomorph(product1, queryAtom));
 
-        //Smiles("C[C-]=[C+]")
+        // Smiles("C[C-]=[C+]")
         expected1.getAtom(1).setFormalCharge(-1);
         expected1.getAtom(2).setFormalCharge(+1);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
@@ -347,16 +336,14 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
     }
 
     /**
-     * A unit test suite for JUnit. Reaction: N-methylmethanimine.
-     * CN!=!C => C[N-]-[C+]
+     * A unit test suite for JUnit. Reaction: N-methylmethanimine. CN!=!C => C[N-]-[C+]
      *
      * @cdk.inchi InChI=1/C2H5N/c1-3-2/h1H2,2H3
-     *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testNsp2DoubleB() throws Exception {
-        //Smiles("CN=C")
+        // Smiles("CN=C")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
         molecule.addAtom(builder.newInstance(IAtom.class, "N"));
@@ -380,7 +367,8 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         molecule.getAtom(2).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         setOfReactants.addAtomContainer(molecule);
 
         IReactionProcess type = new HeterolyticCleavagePBReaction();
@@ -397,7 +385,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
 
         // expected products
 
-        //Smiles("C[N-]-[C+]")
+        // Smiles("C[N-]-[C+]")
         IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
         expected1.addAtom(builder.newInstance(IAtom.class, "C"));
         expected1.addAtom(builder.newInstance(IAtom.class, "N"));
@@ -419,21 +407,20 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
         lpcheck.saturate(expected1);
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
-        QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
+        QueryAtomContainer queryAtom =
+                QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
         Assert.assertTrue(uiTester.isIsomorph(product1, queryAtom));
     }
 
     /**
-     * A unit test suite for JUnit. Reaction: formonitrile.
-     * N!#!C => [N-]=[C+]
+     * A unit test suite for JUnit. Reaction: formonitrile. N!#!C => [N-]=[C+]
      *
      * @cdk.inchi InChI=1/CHN/c1-2/h1H
-     *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testNspTripleB() throws Exception {
-        //Smiles("N#C")
+        // Smiles("N#C")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "N"));
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -447,7 +434,8 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         setOfReactants.addAtomContainer(molecule);
 
         IReactionProcess type = new HeterolyticCleavagePBReaction();
@@ -464,7 +452,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
 
         // expected products
 
-        //Smiles("[N-]=[C+]")
+        // Smiles("[N-]=[C+]")
         IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
         expected1.addAtom(builder.newInstance(IAtom.class, "N"));
         expected1.getAtom(0).setFormalCharge(-1);
@@ -476,21 +464,20 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
         lpcheck.saturate(expected1);
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
-        QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
+        QueryAtomContainer queryAtom =
+                QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
         Assert.assertTrue(uiTester.isIsomorph(product1, queryAtom));
     }
 
     /**
-     * A unit test suite for JUnit. Reaction: formaldehyde.
-     * O!=!C => [O-][C+]
+     * A unit test suite for JUnit. Reaction: formaldehyde. O!=!C => [O-][C+]
      *
-     * @cdk.inchi  InChI=1/CH2O/c1-2/h1H2
-     *
-     * @return    The test suite
+     * @cdk.inchi InChI=1/CH2O/c1-2/h1H2
+     * @return The test suite
      */
     @Test
     public void testOspDoubleB() throws Exception {
-        //Smiles("O=C")
+        // Smiles("O=C")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "O"));
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -506,7 +493,8 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         setOfReactants.addAtomContainer(molecule);
 
         IReactionProcess type = new HeterolyticCleavagePBReaction();
@@ -523,7 +511,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
 
         // expected products
 
-        //Smiles("[O-][C+]")
+        // Smiles("[O-][C+]")
         IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
         expected1.addAtom(builder.newInstance(IAtom.class, "O"));
         expected1.getAtom(0).setFormalCharge(-1);
@@ -537,25 +525,25 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
         lpcheck.saturate(expected1);
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
-        QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
+        QueryAtomContainer queryAtom =
+                QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
         Assert.assertTrue(uiTester.isIsomorph(product1, queryAtom));
     }
 
     /**
-     * A unit test suite for JUnit. Reaction: C=O => [C+]-[O-]
-     * Manually put of the reactive center.
+     * A unit test suite for JUnit. Reaction: C=O => [C+]-[O-] Manually put of the reactive center.
      *
      * @cdk.inchi InChI=1/CH2O/c1-2/h1H2
-     *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testCDKConstants_REACTIVE_CENTER() throws Exception {
         IReactionProcess type = new HeterolyticCleavagePBReaction();
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
 
         /* C=O */
-        IAtomContainer molecule = builder.newInstance(IAtomContainer.class);//Smiles("C=O")
+        IAtomContainer molecule = builder.newInstance(IAtomContainer.class); // Smiles("C=O")
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
         molecule.addAtom(builder.newInstance(IAtom.class, "O"));
         molecule.addBond(0, 1, IBond.Order.DOUBLE);
@@ -594,12 +582,11 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
     }
 
     /**
-     * A unit test suite for JUnit. Reaction: C=O => [C+]-[O-] + [C-]-[O+]
-     * Test of mapped between the reactant and product. Only is mapped the reactive center.
+     * A unit test suite for JUnit. Reaction: C=O => [C+]-[O-] + [C-]-[O+] Test of mapped between
+     * the reactant and product. Only is mapped the reactive center.
      *
      * @cdk.inchi InChI=1/CH2O/c1-2/h1H2
-     *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testMapping() throws Exception {
@@ -620,18 +607,22 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 
         Assert.assertEquals(4, setOfReactions.getReaction(0).getMappingCount());
-        IAtom mappedProductA1 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
-                molecule.getAtom(0));
+        IAtom mappedProductA1 =
+                (IAtom)
+                        ReactionManipulator.getMappedChemObject(
+                                setOfReactions.getReaction(0), molecule.getAtom(0));
         Assert.assertEquals(mappedProductA1, product.getAtom(0));
-        IAtom mappedProductA2 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
-                molecule.getAtom(1));
+        IAtom mappedProductA2 =
+                (IAtom)
+                        ReactionManipulator.getMappedChemObject(
+                                setOfReactions.getReaction(0), molecule.getAtom(1));
         Assert.assertEquals(mappedProductA2, product.getAtom(1));
     }
 
     /**
      * Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
      *
-     * @param molecule          The IAtomContainer to analyze
+     * @param molecule The IAtomContainer to analyze
      * @throws CDKException
      */
     private void makeSureAtomTypesAreRecognized(IAtomContainer molecule) throws Exception {
@@ -640,19 +631,19 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
         while (atoms.hasNext()) {
             IAtom nextAtom = atoms.next();
-            Assert.assertNotNull("Missing atom type for: " + nextAtom, matcher.findMatchingAtomType(molecule, nextAtom));
+            Assert.assertNotNull(
+                    "Missing atom type for: " + nextAtom,
+                    matcher.findMatchingAtomType(molecule, nextAtom));
         }
     }
 
     /**
-    * A unit test suite for JUnit. Reaction:
-    * C(H)(H)=O => [C+](H)(H)-[O-] + [C+](H)=O +
-    * Automatic search of the reactive atoms and bonds.
-    *
-    * @cdk.inchi InChI=1/CH2O/c1-2/h1H2
-    *
-    * @return    The test suite
-    */
+     * A unit test suite for JUnit. Reaction: C(H)(H)=O => [C+](H)(H)-[O-] + [C+](H)=O + Automatic
+     * search of the reactive atoms and bonds.
+     *
+     * @cdk.inchi InChI=1/CH2O/c1-2/h1H2
+     * @return The test suite
+     */
     @Test
     public void testBB_AutomaticSearchCentreActiveFormaldehyde() throws Exception {
         IReactionProcess type = new HeterolyticCleavagePBReaction();
@@ -678,7 +669,6 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 
         Assert.assertTrue(uiTester.isIsomorph(getExpectedProducts().getAtomContainer(0), product));
-
     }
 
     /**
@@ -687,7 +677,8 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
      * @return The IAtomContainerSet
      */
     private IAtomContainerSet getExampleReactants() {
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
 
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -712,7 +703,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
      */
     private IAtomContainerSet getExpectedProducts() {
         IAtomContainerSet setOfProducts = builder.newInstance(IAtomContainerSet.class);
-        //Smiles("[C+](H)(H)-[O-]");
+        // Smiles("[C+](H)(H)-[O-]");
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         IAtom carbon = builder.newInstance(IAtom.class, "C");
         carbon.setFormalCharge(1);

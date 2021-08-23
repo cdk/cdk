@@ -21,7 +21,6 @@ package org.openscience.cdk.atomtype;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -37,39 +36,41 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * Class implements methods to assign mmff94 atom types for a specific atom in an molecule.
  *
- * @author         cho
- * @cdk.created    2005-18-07
- * @cdk.module     extra
+ * @author cho
+ * @cdk.created 2005-18-07
+ * @cdk.module extra
  * @cdk.githash
  * @deprecated Incomplete and error prone - use at your own risk.
  */
 @Deprecated
 public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 
-    private static ILoggingTool logger        = LoggingToolFactory.createLoggingTool(MM2AtomTypeMatcher.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(MM2AtomTypeMatcher.class);
 
-    IBond.Order                 maxBondOrder  = IBond.Order.SINGLE;
-    private AtomTypeFactory     factory       = null;
-    AtomTypeTools               atomTypeTools = null;
+    IBond.Order maxBondOrder = IBond.Order.SINGLE;
+    private AtomTypeFactory factory = null;
+    AtomTypeTools atomTypeTools = null;
 
-    String[]                    atomTypeIds   = {"C", "Csp2", "C=", "Csp", "HC", "O", "O=", "N", "Nsp2", "Nsp", "F",
-            "CL", "BR", "I", "S", "S+", ">SN", "SO2", "Sthi", "SI", "LP", "HO", "CR3R", "HN", "HOCO", "P", "B", "BTET",
-            "HN2", "C.", "C+", "GE", "SN", "PB", "SE", "TE", "D", "-N=", "CE3R", "N+", "NPYL", "Oar", "Sthi", "N2OX",
-            "HS", "=N=", "NO2", "OM", "HN+", "OR", "Car", "HE", "NE", "AR", "KR", "XE", "MG+2", "PTET", "FE+2", "FE+3",
-            "NI+2", "NI+3", "CO+2", "CO+3", "OX", "OK", "C++", "N=C", "NPD+", "N+=", "N2OX"};
+    String[] atomTypeIds = {
+        "C", "Csp2", "C=", "Csp", "HC", "O", "O=", "N", "Nsp2", "Nsp", "F", "CL", "BR", "I", "S",
+        "S+", ">SN", "SO2", "Sthi", "SI", "LP", "HO", "CR3R", "HN", "HOCO", "P", "B", "BTET", "HN2",
+        "C.", "C+", "GE", "SN", "PB", "SE", "TE", "D", "-N=", "CE3R", "N+", "NPYL", "Oar", "Sthi",
+        "N2OX", "HS", "=N=", "NO2", "OM", "HN+", "OR", "Car", "HE", "NE", "AR", "KR", "XE", "MG+2",
+        "PTET", "FE+2", "FE+3", "NI+2", "NI+3", "CO+2", "CO+3", "OX", "OK", "C++", "N=C", "NPD+",
+        "N+=", "N2OX"
+    };
 
-    /**
-     * Constructor for the MMFF94AtomTypeMatcher object.
-     */
+    /** Constructor for the MMFF94AtomTypeMatcher object. */
     public MM2AtomTypeMatcher() {
         atomTypeTools = new AtomTypeTools();
     }
 
-    private String getSphericalMatcher(IAtomType type) throws CDKException {//NOPMD
+    private String getSphericalMatcher(IAtomType type) throws CDKException { // NOPMD
         return (String) type.getProperty(CDKConstants.SPHERICAL_MATCHER);
     }
 
-    private String getSphericalMatcher(String type) throws CDKException {//NOPMD
+    private String getSphericalMatcher(String type) throws CDKException { // NOPMD
         return getSphericalMatcher(factory.getAtomType(type));
     }
 
@@ -85,25 +86,29 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     /**
-     * Assign the mm2 atom type to a given atom.
-     * Before this method can be called the following has to be done:
+     * Assign the mm2 atom type to a given atom. Before this method can be called the following has
+     * to be done:
+     *
      * <pre>
      * atomContainer = (AtomContainer)atomTypeTools.assignAtomTypePropertiesToAtom(
      *   new Molecule(atomContainer)
      * );
      * </pre>
      *
-     * @param  atomContainer   AtomContainer
-     * @param  atomInterface   the target atom
+     * @param atomContainer AtomContainer
+     * @param atomInterface the target atom
      * @exception CDKException Description of the Exception
-     * @return                 the matching AtomType (AtomType class)
+     * @return the matching AtomType (AtomType class)
      */
     @Override
-    public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atomInterface) throws CDKException {
+    public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atomInterface)
+            throws CDKException {
         if (factory == null) {
             try {
-                factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/mm2_atomtypes.xml",
-                        atomContainer.getBuilder());
+                factory =
+                        AtomTypeFactory.getInstance(
+                                "org/openscience/cdk/config/data/mm2_atomtypes.xml",
+                                atomContainer.getBuilder());
             } catch (Exception ex1) {
                 logger.error("Could not instantiate the AtomType list!", ex1.getMessage());
                 logger.debug(ex1);
@@ -114,7 +119,8 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
         IAtom atom = atomInterface;
         logger.debug("****** Configure MM2 AtomType via findMatching ******");
         String atomSphericalMatcher = (String) atom.getProperty(CDKConstants.SPHERICAL_MATCHER);
-        int atomChemicalGroupConstant = (Integer) atom.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT);
+        int atomChemicalGroupConstant =
+                (Integer) atom.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT);
         int atomRingSize = 0; // not all atom types have ring sizes define; 0 is default
         Object oRingSize = atom.getProperty(CDKConstants.PART_OF_RING_OF_SIZE);
         if (oRingSize != null) {
@@ -132,10 +138,15 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
         Matcher mat1 = null;
         IBond.Order tmpMaxBondOrder = IBond.Order.SINGLE;
         maxBondOrder = atomContainer.getMaximumBondOrder(atom);
-        logger.debug("Atom maxBond" + maxBondOrder + " ChemicalGroupConstant " + atomChemicalGroupConstant);
+        logger.debug(
+                "Atom maxBond"
+                        + maxBondOrder
+                        + " ChemicalGroupConstant "
+                        + atomChemicalGroupConstant);
         for (int j = 0; j < atomTypeIds.length; j++) {
             tmpMaxBondOrder = factory.getAtomType(atomTypeIds[j]).getMaxBondOrder();
-            logger.debug(j + "ATOM TYPE " + tmpMaxBondOrder + " " + getSphericalMatcher(atomTypeIds[j]));
+            logger.debug(
+                    j + "ATOM TYPE " + tmpMaxBondOrder + " " + getSphericalMatcher(atomTypeIds[j]));
             p1 = Pattern.compile(getSphericalMatcher(atomTypeIds[j]));
             mat1 = p1.matcher(atomSphericalMatcher);
             if (mat1.matches()) {
@@ -177,12 +188,12 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
                         ID = "C=";
                     }
                 } else if (atomTypeIds[j].equals("O")) {
-                    //OH/Ether
+                    // OH/Ether
                     if (atomChemicalGroupConstant != -1) {
                         if (atomChemicalGroupConstant == AtomTypeTools.FURAN_RING) {
-                            ID = "Oar";//furan
+                            ID = "Oar"; // furan
                         } else if (atomRingSize == 3) {
-                            ID = "OR";//epoxy
+                            ID = "OR"; // epoxy
                         }
                     }
                     p1 = Pattern.compile(getSphericalMatcher("OX"));
@@ -191,13 +202,13 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
                         ID = "OX";
                     }
 
-                } else if (atomTypeIds[j].equals("N")) {//n sp3
+                } else if (atomTypeIds[j].equals("N")) { // n sp3
                     if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.DOUBLE) {
                         ID = "Nsp2";
                     }
 
                     if (atomChemicalGroupConstant == 4) {
-                        ID = "NPYL";//Pyrole
+                        ID = "NPYL"; // Pyrole
                     } else if (atomChemicalGroupConstant == 10) {
                         ID = "-N=";
                         p1 = Pattern.compile(getSphericalMatcher("NPD+"));
@@ -206,7 +217,7 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
                             ID = "NPD+";
                         }
                     } else {
-                        //Amid
+                        // Amid
                         p1 = Pattern.compile(getSphericalMatcher("Namid"));
                         mat1 = p1.matcher(atomSphericalMatcher);
                         if (mat1.matches() && atomChemicalGroupConstant == -1) {
@@ -222,9 +233,9 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 
                 } else if (atomTypeIds[j].equals("Nsp2")) {
                     if (atomChemicalGroupConstant == 12) {
-                        ID = "=N-";//Pyridin
+                        ID = "=N-"; // Pyridin
                     }
-                    //Azo
+                    // Azo
                     p1 = Pattern.compile(getSphericalMatcher("-N="));
                     mat1 = p1.matcher(atomSphericalMatcher);
                     if (mat1.matches() && atomChemicalGroupConstant == -1) {
@@ -253,21 +264,21 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
                         if (mat1.matches()) {
                             ID = "=N=";
                         }
-
                     }
 
                 } else if (atomTypeIds[j].equals("HS")) {
-                    if (atom.getMaxBondOrder() != null && atom.getMaxBondOrder() != IBond.Order.SINGLE) {
+                    if (atom.getMaxBondOrder() != null
+                            && atom.getMaxBondOrder() != IBond.Order.SINGLE) {
                         ID = "HC";
                     }
                 } else if (atomTypeIds[j].equals("HO")) {
-                    //Enol,amid
+                    // Enol,amid
                     p1 = Pattern.compile(getSphericalMatcher("HOC"));
                     mat1 = p1.matcher(atomSphericalMatcher);
                     if (mat1.matches() && atomChemicalGroupConstant == -1) {
                         ID = "HN2";
                     }
-                    //COOH
+                    // COOH
                     p1 = Pattern.compile(getSphericalMatcher("HOCO"));
                     mat1 = p1.matcher(atomSphericalMatcher);
                     if (mat1.matches() && atomChemicalGroupConstant == -1) {
@@ -284,18 +295,20 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
                 atomTypeFlag = true;
                 logger.debug(" MATCH AtomTypeID:" + j + " " + ID);
                 break;
-            }//IF
-        }//for end
+            } // IF
+        } // for end
         if (atomTypeFlag) {
             atomTypeFlag = false;
             logger.debug("ID in factory true:" + ID);
             return factory.getAtomType(ID);
         } else {
-            logger.debug("NoSuchAtomTypeException: Atom is unkown with Symbol:" + atom.getSymbol()
-                    + " does not MATCH AtomType. HoseCode:" + atomSphericalMatcher);
+            logger.debug(
+                    "NoSuchAtomTypeException: Atom is unkown with Symbol:"
+                            + atom.getSymbol()
+                            + " does not MATCH AtomType. HoseCode:"
+                            + atomSphericalMatcher);
             logger.debug("ID in factory false:" + ID);
             return factory.getAtomType("DU");
         }
     }
-
 }

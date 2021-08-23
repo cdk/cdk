@@ -58,7 +58,7 @@ public class ShelXFormat extends SimpleChemFormatMatcher implements IChemFormatM
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"ins", "res"};
+        return new String[] {"ins", "res"};
     }
 
     /** {@inheritDoc} */
@@ -97,7 +97,8 @@ public class ShelXFormat extends SimpleChemFormatMatcher implements IChemFormatM
     /** {@inheritDoc} */
     @Override
     public int getRequiredDataFeatures() {
-        return DataFeatures.HAS_3D_COORDINATES | DataFeatures.HAS_UNITCELL_PARAMETERS
+        return DataFeatures.HAS_3D_COORDINATES
+                | DataFeatures.HAS_UNITCELL_PARAMETERS
                 | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
     }
 }

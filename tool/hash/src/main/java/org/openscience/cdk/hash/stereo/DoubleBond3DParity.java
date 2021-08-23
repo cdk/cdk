@@ -24,14 +24,12 @@
 
 package org.openscience.cdk.hash.stereo;
 
-
 import javax.vecmath.Point3d;
 
 /**
- * Calculate the geometric configuration of a double bond. The configuration is
- * provided as a parity (+1,-1) where +1 indicates the substituents are on
- * <i>opposite</i> sides (E or trans) and -1 indicates they are <i>together</i>
- * on the same side (Z or cis).
+ * Calculate the geometric configuration of a double bond. The configuration is provided as a parity
+ * (+1,-1) where +1 indicates the substituents are on <i>opposite</i> sides (E or trans) and -1
+ * indicates they are <i>together</i> on the same side (Z or cis).
  *
  * @author John May
  * @cdk.module hash
@@ -48,12 +46,13 @@ final class DoubleBond3DParity extends GeometricParity {
     /**
      * Create a new double bond parity for the 2D coordinates of the atoms.
      *
-     * @param left             one atom of the double bond
-     * @param right            the other atom of a double bond
-     * @param leftSubstituent  the substituent atom connected to the left atom
+     * @param left one atom of the double bond
+     * @param right the other atom of a double bond
+     * @param leftSubstituent the substituent atom connected to the left atom
      * @param rightSubstituent the substituent atom connected to the right atom
      */
-    public DoubleBond3DParity(Point3d left, Point3d right, Point3d leftSubstituent, Point3d rightSubstituent) {
+    public DoubleBond3DParity(
+            Point3d left, Point3d right, Point3d leftSubstituent, Point3d rightSubstituent) {
         this.u = left;
         this.v = right;
         this.x = leftSubstituent;
@@ -93,12 +92,12 @@ final class DoubleBond3DParity extends GeometricParity {
     /**
      * Create a vector by specifying the source and destination coordinates.
      *
-     * @param src  start point of the vector
+     * @param src start point of the vector
      * @param dest end point of the vector
      * @return a new vector
      */
     private static double[] toVector(Point3d src, Point3d dest) {
-        return new double[]{dest.x - src.x, dest.y - src.y, dest.z - src.z};
+        return new double[] {dest.x - src.x, dest.y - src.y, dest.z - src.z};
     }
 
     /**
@@ -120,7 +119,10 @@ final class DoubleBond3DParity extends GeometricParity {
      * @return the cross-product
      */
     private static double[] crossProduct(double[] u, double[] v) {
-        return new double[]{(u[1] * v[2]) - (v[1] * u[2]), (u[2] * v[0]) - (v[2] * u[0]), (u[0] * v[1]) - (v[0] * u[1])};
+        return new double[] {
+            (u[1] * v[2]) - (v[1] * u[2]),
+            (u[2] * v[0]) - (v[2] * u[0]),
+            (u[0] * v[1]) - (v[0] * u[1])
+        };
     }
-
 }

@@ -32,8 +32,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
-
-
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.UndirectedGraph;
@@ -45,28 +43,26 @@ import org._3pq.jgrapht.graph.Subgraph;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
- * Finds the biconnected components of a graph.
- * Two edges belong to the same biconnected component if and only if they are
- * identical or both belong to a simple cycle.
+ * Finds the biconnected components of a graph. Two edges belong to the same biconnected component
+ * if and only if they are identical or both belong to a simple cycle.
  *
  * @author Ulrich Bauer &lt;ulrich.bauer@alumni.tum.de&gt;
- *
  * @cdk.module standard
  * @cdk.githash
- * @deprecated Use {@link org.openscience.cdk.ringsearch.RingSearch} or
- *             {@link Cycles#markRingAtomsAndBonds(IAtomContainer)}
+ * @deprecated Use {@link org.openscience.cdk.ringsearch.RingSearch} or {@link
+ *     Cycles#markRingAtomsAndBonds(IAtomContainer)}
  */
 @Deprecated
 public class BiconnectivityInspector {
 
-    private List            biconnectedSets;
+    private List biconnectedSets;
     private UndirectedGraph graph;
 
     /**
      * Creates a biconnectivity inspector for the specified undirected graph.
+     *
      * @param g the specified graph
      */
-
     public BiconnectivityInspector(UndirectedGraph g) {
         graph = g;
     }
@@ -137,9 +133,7 @@ public class BiconnectivityInspector {
                             } else {
                                 // non-tree edge
                             }
-
                         }
-
                     }
                 }
 
@@ -153,13 +147,14 @@ public class BiconnectivityInspector {
 
                 Set connected = new HashSet();
 
-                for (Iterator it = dfsVertices.iterator(); it.hasNext();) {
+                for (Iterator it = dfsVertices.iterator(); it.hasNext(); ) {
                     Object v = it.next();
 
                     visitedVertices.add(v);
 
                     // find all adjacent non-tree edges
-                    for (Iterator adjacentEdges = subgraph.edgesOf(v).iterator(); adjacentEdges.hasNext();) {
+                    for (Iterator adjacentEdges = subgraph.edgesOf(v).iterator();
+                            adjacentEdges.hasNext(); ) {
                         Edge l = (Edge) adjacentEdges.next();
                         if (!treeEdges.contains(l)) {
                             h.addVertex(l);
@@ -184,13 +179,11 @@ public class BiconnectivityInspector {
                             }
                         }
                     }
-
                 }
 
                 ConnectivityInspector connectivityInspector = new ConnectivityInspector(h);
 
                 biconnectedSets.addAll(connectivityInspector.connectedSets());
-
             }
         }
 
@@ -198,11 +191,11 @@ public class BiconnectivityInspector {
     }
 
     /**
-     * Returns a list of <code>Set</code>s, where each set contains all edge that are
-     * in the same biconnected component. All graph edges occur in exactly one set.
+     * Returns a list of <code>Set</code>s, where each set contains all edge that are in the same
+     * biconnected component. All graph edges occur in exactly one set.
      *
-     * @return a list of <code>Set</code>s, where each set contains all edge that are
-     * in the same biconnected component
+     * @return a list of <code>Set</code>s, where each set contains all edge that are in the same
+     *     biconnected component
      */
     public List biconnectedSets() {
         return lazyFindBiconnectedSets();
@@ -218,32 +211,23 @@ public class BiconnectivityInspector {
         biconnectedSets = null;
     }
 
-    /**
-     * @see org._3pq.jgrapht.event.GraphListener#edgeAdded(GraphEdgeChangeEvent)
-     */
+    /** @see org._3pq.jgrapht.event.GraphListener#edgeAdded(GraphEdgeChangeEvent) */
     public void edgeAdded(GraphEdgeChangeEvent e) {
         init();
     }
 
-    /**
-     * @see org._3pq.jgrapht.event.GraphListener#edgeRemoved(GraphEdgeChangeEvent)
-     */
+    /** @see org._3pq.jgrapht.event.GraphListener#edgeRemoved(GraphEdgeChangeEvent) */
     public void edgeRemoved(GraphEdgeChangeEvent e) {
         init();
     }
 
-    /**
-     * @see org._3pq.jgrapht.event.VertexSetListener#vertexAdded(GraphVertexChangeEvent)
-     */
+    /** @see org._3pq.jgrapht.event.VertexSetListener#vertexAdded(GraphVertexChangeEvent) */
     public void vertexAdded(GraphVertexChangeEvent e) {
         init();
     }
 
-    /**
-     * @see org._3pq.jgrapht.event.VertexSetListener#vertexRemoved(GraphVertexChangeEvent)
-     */
+    /** @see org._3pq.jgrapht.event.VertexSetListener#vertexRemoved(GraphVertexChangeEvent) */
     public void vertexRemoved(GraphVertexChangeEvent e) {
         init();
     }
-
 }

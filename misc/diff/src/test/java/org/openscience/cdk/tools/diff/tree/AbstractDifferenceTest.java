@@ -22,9 +22,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 
-/**
- * @cdk.module test-diff
- */
+/** @cdk.module test-diff */
 public class AbstractDifferenceTest extends CDKTestCase {
 
     @Test
@@ -33,8 +31,5 @@ public class AbstractDifferenceTest extends CDKTestCase {
         Assert.assertNotNull(diffClass);
     }
 
-    protected class DifferenceClass extends AbstractDifference {
-
-    }
-
+    protected class DifferenceClass extends AbstractDifference {}
 }

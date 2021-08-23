@@ -26,7 +26,6 @@
 package org.openscience.cdk.similarity;
 
 import java.util.Map;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -35,9 +34,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-/**
- * @cdk.module test-fingerprint
- */
+/** @cdk.module test-fingerprint */
 public class LingoSimilarityTest extends CDKTestCase {
 
     @Test
@@ -54,5 +51,4 @@ public class LingoSimilarityTest extends CDKTestCase {
         float lingosim = LingoSimilarity.calculate(bs1, bs2);
         Assert.assertEquals(1.0, lingosim, 0.01);
     }
-
 }

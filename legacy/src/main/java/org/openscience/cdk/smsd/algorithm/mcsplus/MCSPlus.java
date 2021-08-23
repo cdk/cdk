@@ -35,62 +35,53 @@ import org.openscience.cdk.smsd.global.TimeOut;
 import org.openscience.cdk.smsd.tools.TimeManager;
 
 /**
- * This class handles MCS plus algorithm which is a combination of
- * c-clique algorithm and McGregor algorithm.
+ * This class handles MCS plus algorithm which is a combination of c-clique algorithm and McGregor
+ * algorithm.
+ *
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is
+ *     available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public class MCSPlus {
 
-    /**
-    * Default constructor added
-    */
-    public MCSPlus() {
-
-    }
+    /** Default constructor added */
+    public MCSPlus() {}
 
     private static TimeManager timeManager = null;
 
-    /**
-     * @return the timeout
-     */
-    protected synchronized static double getTimeout() {
+    /** @return the timeout */
+    protected static synchronized double getTimeout() {
         return TimeOut.getInstance().getTimeOut();
     }
 
-    /**
-     * @return the timeManager
-     */
-    protected synchronized static TimeManager getTimeManager() {
+    /** @return the timeManager */
+    protected static synchronized TimeManager getTimeManager() {
         return timeManager;
     }
 
-    /**
-     * @param aTimeManager the timeManager to set
-     */
-    protected synchronized static void setTimeManager(TimeManager aTimeManager) {
+    /** @param aTimeManager the timeManager to set */
+    protected static synchronized void setTimeManager(TimeManager aTimeManager) {
         TimeOut.getInstance().setTimeOutFlag(false);
         timeManager = aTimeManager;
     }
 
     /**
-     *
      * @param ac1
      * @param ac2
      * @param shouldMatchBonds
      * @return
      * @throws CDKException
      */
-    protected List<List<Integer>> getOverlaps(IAtomContainer ac1, IAtomContainer ac2, boolean shouldMatchBonds)
-            throws CDKException {
+    protected List<List<Integer>> getOverlaps(
+            IAtomContainer ac1, IAtomContainer ac2, boolean shouldMatchBonds) throws CDKException {
         Stack<List<Integer>> maxCliqueSet = null;
         List<List<Integer>> mappings = new ArrayList<List<Integer>>();
         try {
-            GenerateCompatibilityGraph gcg = new GenerateCompatibilityGraph(ac1, ac2, shouldMatchBonds);
+            GenerateCompatibilityGraph gcg =
+                    new GenerateCompatibilityGraph(ac1, ac2, shouldMatchBonds);
             List<Integer> compGraphNodes = gcg.getCompGraphNodes();
 
             List<Integer> cEdges = gcg.getCEgdes();
@@ -107,7 +98,7 @@ public class MCSPlus {
             //            System.err.println("Max_Cliques_Set: " + maxCliqueSet.size());
             //            System.out.println("Best Clique Size: " + init.getBestCliqueSize());
 
-            //clear all the compatibility graph content
+            // clear all the compatibility graph content
             gcg.clear();
             while (!maxCliqueSet.empty()) {
                 List<Integer> cliqueList = maxCliqueSet.peek();
@@ -131,7 +122,7 @@ public class MCSPlus {
         return mappings;
     }
 
-    public synchronized static boolean isTimeOut() {
+    public static synchronized boolean isTimeOut() {
         if (getTimeout() > -1 && getTimeManager().getElapsedTimeInMinutes() > getTimeout()) {
             TimeOut.getInstance().setTimeOutFlag(true);
             return true;

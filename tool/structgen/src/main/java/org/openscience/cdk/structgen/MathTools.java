@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.structgen;
 
-
 /**
  * Class providing convenience methods for simple mathematical operations.
  *
@@ -30,32 +29,28 @@ class MathTools {
     /**
      * Analog of Math.max that returns the largest double value in an array of doubles.
      *
-     * @param   values  the values to be searched for the largest value among them
-     * @return   the largest value among a set of given values
+     * @param values the values to be searched for the largest value among them
+     * @return the largest value among a set of given values
      */
     static double max(double[] values) {
         double max = values[0];
-        for (double value : values)
-            if (value > max) max = value;
+        for (double value : values) if (value > max) max = value;
         return max;
     }
 
     /**
      * Analog of Math.min that returns the largest double value in an array of double.
      *
-     * @param   values  the values to be searched for the smallest value among them
-     * @return   the smallest value among a set of given values
+     * @param values the values to be searched for the smallest value among them
+     * @return the smallest value among a set of given values
      */
     static double min(double[] values) {
         double min = values[0];
-        for (double value : values)
-            if (value < min) min = value;
+        for (double value : values) if (value < min) min = value;
         return min;
     }
 
-    /**
-     * Analog of Math.max that returns the largest int value in an array of ints.
-     **/
+    /** Analog of Math.max that returns the largest int value in an array of ints. */
     static int max(int[] values) {
         int max = values[0];
         for (int value : values) {
@@ -66,9 +61,7 @@ class MathTools {
         return max;
     }
 
-    /**
-     * Analog of Math.max that returns the largest int value in an array of ints.
-     **/
+    /** Analog of Math.max that returns the largest int value in an array of ints. */
     static int min(int[] values) {
         int min = values[0];
         for (int value : values) {
@@ -86,5 +79,4 @@ class MathTools {
     static boolean isEven(int intValue) {
         return (intValue & 0x1) == 0;
     }
-
 }

@@ -1,7 +1,6 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import java.io.InputStream;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,9 +20,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 
-/**
- * @cdk.module test-qsaratomic
- */
+/** @cdk.module test-qsaratomic */
 public class RDFProtonDescriptor_GHRTest extends AtomicDescriptorTest {
 
     public RDFProtonDescriptor_GHRTest() {}
@@ -33,12 +30,10 @@ public class RDFProtonDescriptor_GHRTest extends AtomicDescriptorTest {
         setDescriptor(RDFProtonDescriptor_GHR.class);
     }
 
-    /**
-     *  @cdk.bug 1632419
-     */
+    /** @cdk.bug 1632419 */
     @Test
     public void testExample1() throws Exception {
-        //firstly read file to molecule
+        // firstly read file to molecule
         String filename = "data/mdl/hydroxyamino.mol" + "";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
@@ -55,7 +50,7 @@ public class RDFProtonDescriptor_GHRTest extends AtomicDescriptorTest {
             //			System.out.println("  charge: " + mol.getAtom(i).getCharge());
             if (mol.getAtom(i).getAtomicNumber() == IElement.H) {
                 hNumber++;
-                //secondly perform calculation on it.
+                // secondly perform calculation on it.
                 DescriptorValue dv = descriptor.calculate(mol.getAtom(i), mol);
                 IDescriptorResult result = dv.getValue();
                 //				System.out.println("array: " + result.toString());
@@ -79,5 +74,4 @@ public class RDFProtonDescriptor_GHRTest extends AtomicDescriptorTest {
             Assert.assertEquals(Double.NaN, dResult.get(i), 0.000001);
         }
     }
-
 }

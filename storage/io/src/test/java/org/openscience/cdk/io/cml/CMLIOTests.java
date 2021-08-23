@@ -23,15 +23,21 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 /**
- * TestSuite for testing the CML reading capabilities. The writing functionality
- * is tested by <code>MlibiocmlTests</code>.
+ * TestSuite for testing the CML reading capabilities. The writing functionality is tested by <code>
+ * MlibiocmlTests</code>.
  *
  * @cdk.module test-io
- *
  * @see org.openscience.cdk.modulesuites.MlibiocmlTests
  */
 @RunWith(value = Suite.class)
-@SuiteClasses(value = {CMLStackTest.class, JumboTest.class, JChemPaintTest.class, CMLFragmentsTest.class,
-        CML23FragmentsTest.class, CML25FragmentsTest.class, Jumbo46CMLFragmentsTest.class})
-public class CMLIOTests {
-}
+@SuiteClasses(
+        value = {
+            CMLStackTest.class,
+            JumboTest.class,
+            JChemPaintTest.class,
+            CMLFragmentsTest.class,
+            CML23FragmentsTest.class,
+            CML25FragmentsTest.class,
+            Jumbo46CMLFragmentsTest.class
+        })
+public class CMLIOTests {}

@@ -33,33 +33,25 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 /**
- * Immutable outline of text. The outline is maintained as a Java 2D shape
- * instance and can be transformed. As an immutable instance, transforming the
- * outline creates a new instance.
+ * Immutable outline of text. The outline is maintained as a Java 2D shape instance and can be
+ * transformed. As an immutable instance, transforming the outline creates a new instance.
  *
  * @author John May
  */
 final class TextOutline {
 
-    public static final FontRenderContext FONT_RENDER_CONTEXT = new FontRenderContext(new AffineTransform(), true, true);
-    /**
-     * The original text.
-     */
-    private final String          text;
+    public static final FontRenderContext FONT_RENDER_CONTEXT =
+            new FontRenderContext(new AffineTransform(), true, true);
+    /** The original text. */
+    private final String text;
 
-    /**
-     * The original glyphs.
-     */
-    private final GlyphVector     glyphs;
+    /** The original glyphs. */
+    private final GlyphVector glyphs;
 
-    /**
-     * The outline of the text (untransformed).
-     */
-    private final Shape           outline;
+    /** The outline of the text (untransformed). */
+    private final Shape outline;
 
-    /**
-     * Transform applied to outline.
-     */
+    /** Transform applied to outline. */
     private final AffineTransform transform;
 
     /**
@@ -69,7 +61,10 @@ final class TextOutline {
      * @param font the font style, size, and shape that defines the outline
      */
     TextOutline(final String text, final Font font) {
-        this(text, font.createGlyphVector(new FontRenderContext(new AffineTransform(), true, true), text));
+        this(
+                text,
+                font.createGlyphVector(
+                        new FontRenderContext(new AffineTransform(), true, true), text));
     }
 
     /**
@@ -99,6 +94,7 @@ final class TextOutline {
 
     /**
      * The text which the outline displays.
+     *
      * @return the text
      */
     String text() {
@@ -213,8 +209,7 @@ final class TextOutline {
     }
 
     /**
-     * Convenience function to resize the outline and maintain the existing
-     * center point.
+     * Convenience function to resize the outline and maintain the existing center point.
      *
      * @param scaleX scale x-axis
      * @param scaleY scale y-axis
@@ -240,9 +235,7 @@ final class TextOutline {
         return transform(AffineTransform.getTranslateInstance(translateX, translateY));
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         final Rectangle2D bounds = getBounds();

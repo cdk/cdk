@@ -27,18 +27,15 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
- *  Description of the Class
+ * Description of the Class
  *
  * @cdk.module test-charges
- *
- *@author     chhoppe
- *@cdk.created    2004-11-04
+ * @author chhoppe
+ * @cdk.created 2004-11-04
  */
 public class PolarizabilityTest extends CDKTestCase {
 
-    /**
-     *  A unit test for JUnit
-     */
+    /** A unit test for JUnit */
     @Test
     public void testGetPolarizabilitiyFactorForAtom_IAtomContainer_IAtom() throws Exception {
         Polarizability pol = new Polarizability();
@@ -50,11 +47,10 @@ public class PolarizabilityTest extends CDKTestCase {
         Assert.assertFalse(Double.isNaN(result));
     }
 
-    /**
-     *  A unit test for JUnit with n,n-dimethyl ethylendiamine
-     */
+    /** A unit test for JUnit with n,n-dimethyl ethylendiamine */
     @Test
-    public void testCalculateGHEffectiveAtomPolarizability_IAtomContainer_IAtom_Int_Boolean() throws Exception {
+    public void testCalculateGHEffectiveAtomPolarizability_IAtomContainer_IAtom_Int_Boolean()
+            throws Exception {
         double[] testResult = {4.73, 6.92};
         Polarizability pol = new Polarizability();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -65,18 +61,14 @@ public class PolarizabilityTest extends CDKTestCase {
         Assert.assertEquals(testResult[1], result, 0.01);
     }
 
-    /**
-     *  A unit test for JUnit
-     */
+    /** A unit test for JUnit */
     @Ignore
     @Test
     public void testCalculateGHEffectiveAtomPolarizability_IAtomContainer_IAtom_Boolean_IntInt() {
         Assert.fail("Not tested yet");
     }
 
-    /**
-     *  A unit test for JUnit with n,n-dimethyl ethylendiamine
-     */
+    /** A unit test for JUnit with n,n-dimethyl ethylendiamine */
     @Test
     public void testCalculateBondPolarizability_IAtomContainer_IBond() throws Exception {
         Polarizability pol = new Polarizability();
@@ -86,9 +78,7 @@ public class PolarizabilityTest extends CDKTestCase {
         Assert.assertFalse(Double.isNaN(result));
     }
 
-    /**
-     *  A unit test for JUnit with methane
-     */
+    /** A unit test for JUnit with methane */
     @Test
     public void testCalculateKJMeanMolecularPolarizability() throws Exception {
         double testResult = 2.61;
@@ -99,9 +89,7 @@ public class PolarizabilityTest extends CDKTestCase {
         Assert.assertEquals(testResult, result, 0.01);
     }
 
-    /**
-     *  A unit test for JUnit with Ethyl chloride
-     */
+    /** A unit test for JUnit with Ethyl chloride */
     @Test
     public void testcalculateGHEffectiveAtomPolarizability_Ethyl_chloride() throws Exception {
         double testResult = 4.62; /* from thesis Wolfgang Hanebeck, TUM */
@@ -112,9 +100,7 @@ public class PolarizabilityTest extends CDKTestCase {
         Assert.assertEquals(testResult, result, 0.01);
     }
 
-    /**
-     *  A unit test for JUnit with Allyl bromide
-     */
+    /** A unit test for JUnit with Allyl bromide */
     @Test
     public void testcalculateGHEffectiveAtomPolarizability_Allyl_bromide() throws Exception {
         double testResult = 6.17; /* from thesis Wolfgang Hanebeck, TUM */
@@ -125,9 +111,7 @@ public class PolarizabilityTest extends CDKTestCase {
         Assert.assertEquals(testResult, result, 0.01);
     }
 
-    /**
-     *  A unit test for JUnit with Isopentyl iodide
-     */
+    /** A unit test for JUnit with Isopentyl iodide */
     @Test
     public void testcalculateGHEffectiveAtomPolarizability_Isopentyl_iodide() throws Exception {
         double testResult = 8.69; /* from thesis Wolfgang Hanebeck, TUM */
@@ -138,9 +122,7 @@ public class PolarizabilityTest extends CDKTestCase {
         Assert.assertEquals(testResult, result, 0.01);
     }
 
-    /**
-     *  A unit test for JUnit with Ethoxy ethane
-     */
+    /** A unit test for JUnit with Ethoxy ethane */
     @Test
     public void testcalculateGHEffectiveAtomPolarizability_Ethoxy_ethane() throws Exception {
         double testResult = 5.21; /* from thesis Wolfgang Hanebeck, TUM */
@@ -151,9 +133,7 @@ public class PolarizabilityTest extends CDKTestCase {
         Assert.assertEquals(testResult, result, 0.01);
     }
 
-    /**
-     *  A unit test for JUnit with Ethanolamine
-     */
+    /** A unit test for JUnit with Ethanolamine */
     @Test
     public void testcalculateGHEffectiveAtomPolarizability_Ethanolamine() throws Exception {
         double[] testResult = {4.26, 3.60}; /*
@@ -169,9 +149,7 @@ public class PolarizabilityTest extends CDKTestCase {
         Assert.assertEquals(testResult[0], result, 0.01);
     }
 
-    /**
-     *  A unit test for JUnit with Allyl mercaptan
-     */
+    /** A unit test for JUnit with Allyl mercaptan */
     @Test
     public void testcalculateGHEffectiveAtomPolarizability_Allyl_mercaptan() throws Exception {
         double testResult = 6.25; /* from thesis Wolfgang Hanebeck, TUM */

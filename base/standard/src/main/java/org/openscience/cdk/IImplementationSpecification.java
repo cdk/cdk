@@ -19,8 +19,7 @@
 package org.openscience.cdk;
 
 /**
- * Interface that is used to describe the specification of a certain
- * implementation of an algorithm.
+ * Interface that is used to describe the specification of a certain implementation of an algorithm.
  *
  * @cdk.module standard
  * @cdk.githash
@@ -28,35 +27,31 @@ package org.openscience.cdk;
 public interface IImplementationSpecification {
 
     /**
-     * Pointer to a dictionary or ontology describing a unique
-     * algorithm.
+     * Pointer to a dictionary or ontology describing a unique algorithm.
      *
      * @return the URN pointing to a (virtual) dictionary or ontology.
      */
     public String getSpecificationReference();
 
     /**
-     * Human-readable name for the implementation for the algorithm
-     * specified by the reference.
+     * Human-readable name for the implementation for the algorithm specified by the reference.
      *
      * @return the name of this implementation
      */
     public String getImplementationTitle();
 
     /**
-     * Identifier for this implementation which must include
-     * version information. The format is free.
+     * Identifier for this implementation which must include version information. The format is
+     * free.
      *
      * @return a free format identifier for this implementation
      */
     public String getImplementationIdentifier();
 
     /**
-     * Human-readable name for the vendor that holds copyright for this
-     * implementation.
+     * Human-readable name for the vendor that holds copyright for this implementation.
      *
      * @return the copyright holder of the implementation
      */
     public String getImplementationVendor();
-
 }

@@ -24,14 +24,13 @@
 package org.openscience.cdk.interfaces;
 
 /**
- * A simple setting that can be managed by the SettingManager. Currently the only
- * required method is {@link #getName()} and provides the key with which setting are
- * added and retrieved with.
+ * A simple setting that can be managed by the SettingManager. Currently the only required method is
+ * {@link #getName()} and provides the key with which setting are added and retrieved with.
  *
- * @author      johnmay
- * @cdk.module  interfaces
+ * @author johnmay
+ * @cdk.module interfaces
  * @cdk.created 20.03.2012
- * @see         org.openscience.cdk.io.setting.SettingManager
+ * @see org.openscience.cdk.io.setting.SettingManager
  * @cdk.githash
  */
 public interface ISetting {
@@ -42,5 +41,4 @@ public interface ISetting {
      * @return the name of the setting
      */
     public String getName();
-
 }

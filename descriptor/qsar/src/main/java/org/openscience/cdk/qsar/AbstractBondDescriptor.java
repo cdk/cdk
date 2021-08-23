@@ -20,16 +20,14 @@ package org.openscience.cdk.qsar;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 
 /**
- * Abstract bond descriptor class with helper functions for descriptors
- * that require the whole molecule to calculate the descriptor values,
- * which in turn need to be cached for all bonds, so that they can be
- * retrieved one by one.
+ * Abstract bond descriptor class with helper functions for descriptors that require the whole
+ * molecule to calculate the descriptor values, which in turn need to be cached for all bonds, so
+ * that they can be retrieved one by one.
  *
  * @cdk.module qsar
  * @cdk.githash
@@ -38,7 +36,7 @@ public abstract class AbstractBondDescriptor extends AbstractDescriptor implemen
 
     private static final String PREVIOUS_ATOMCONTAINER = "previousAtomContainer";
 
-    private Map                 cachedDescriptorValues = null;
+    private Map cachedDescriptorValues = null;
 
     /**
      * Returns true if the cached IDescriptorResult's are for the given IAtomContainer.
@@ -55,7 +53,7 @@ public abstract class AbstractBondDescriptor extends AbstractDescriptor implemen
      * Returns the cached DescriptorValue for the given IBond.
      *
      * @param bond the IAtom for which the DescriptorValue is requested
-     * @return     null, if no DescriptorValue was cached for the given IBond
+     * @return null, if no DescriptorValue was cached for the given IBond
      */
     public IDescriptorResult getCachedDescriptorValue(IBond bond) {
         if (cachedDescriptorValues == null) return null;
@@ -63,13 +61,14 @@ public abstract class AbstractBondDescriptor extends AbstractDescriptor implemen
     }
 
     /**
-     * Caches a DescriptorValue for a given IBond. This method may only
-     * be called after setNewContainer() is called.
+     * Caches a DescriptorValue for a given IBond. This method may only be called after
+     * setNewContainer() is called.
      *
-     * @param bond  IBond to cache the value for
+     * @param bond IBond to cache the value for
      * @param doubleResult DescriptorValue for the given IBond
      */
-    public void cacheDescriptorValue(IBond bond, IAtomContainer container, IDescriptorResult doubleResult) {
+    public void cacheDescriptorValue(
+            IBond bond, IAtomContainer container, IDescriptorResult doubleResult) {
         if (cachedDescriptorValues == null) {
             cachedDescriptorValues = new HashMap();
             cachedDescriptorValues.put(PREVIOUS_ATOMCONTAINER, container);

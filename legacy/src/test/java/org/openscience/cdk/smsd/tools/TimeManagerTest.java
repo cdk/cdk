@@ -42,9 +42,7 @@ public class TimeManagerTest extends CDKTestCase {
         Assert.assertNotNull(tMan);
     }
 
-    /**
-     * Test of getElapsedTimeInHours method, of class TimeManager.
-     */
+    /** Test of getElapsedTimeInHours method, of class TimeManager. */
     @Test
     public void testGetElapsedTimeInHours() {
         TimeManager instance = new TimeManager();
@@ -54,9 +52,7 @@ public class TimeManagerTest extends CDKTestCase {
         Assert.assertEquals(expResult, result, 0.0001);
     }
 
-    /**
-     * Test of getElapsedTimeInMinutes method, of class TimeManager.
-     */
+    /** Test of getElapsedTimeInMinutes method, of class TimeManager. */
     @Test
     public void testGetElapsedTimeInMinutes() {
         TimeManager instance = new TimeManager();
@@ -66,9 +62,7 @@ public class TimeManagerTest extends CDKTestCase {
         Assert.assertEquals(expResult, result, 0.006);
     }
 
-    /**
-     * Test of getElapsedTimeInSeconds method, of class TimeManager.
-     */
+    /** Test of getElapsedTimeInSeconds method, of class TimeManager. */
     @Test
     public void testGetElapsedTimeInSeconds() {
         TimeManager instance = new TimeManager();
@@ -78,9 +72,7 @@ public class TimeManagerTest extends CDKTestCase {
         Assert.assertEquals(expResult, result, 0.36);
     }
 
-    /**
-     * Test of getElapsedTimeInMilliSeconds method, of class TimeManager.
-     */
+    /** Test of getElapsedTimeInMilliSeconds method, of class TimeManager. */
     @Test
     public void testGetElapsedTimeInMilliSeconds() {
         TimeManager instance = new TimeManager();

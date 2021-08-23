@@ -19,7 +19,6 @@
 package org.openscience.cdk.renderer.color;
 
 import java.awt.Color;
-
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
@@ -32,21 +31,21 @@ import org.openscience.cdk.interfaces.IAtom;
 @Deprecated
 public class CDKAtomColors implements IAtomColorer {
 
-    private final static Color HYDROGEN   = Color.white;
-    private final static Color CARBON     = Color.black;
-    private final static Color NITROGEN   = Color.blue;
-    private final static Color OXYGEN     = Color.red;
-    private final static Color PHOSPHORUS = Color.green;
-    private final static Color SULPHUR    = Color.yellow;
-    private final static Color CHLORINE   = Color.magenta;
+    private static final Color HYDROGEN = Color.white;
+    private static final Color CARBON = Color.black;
+    private static final Color NITROGEN = Color.blue;
+    private static final Color OXYGEN = Color.red;
+    private static final Color PHOSPHORUS = Color.green;
+    private static final Color SULPHUR = Color.yellow;
+    private static final Color CHLORINE = Color.magenta;
 
-    private final static Color DEFAULT    = Color.darkGray;
+    private static final Color DEFAULT = Color.darkGray;
 
     /**
      * Returns the CDK scheme color for the given atom's element.
      *
-     * @param atom         IAtom to get a color for
-     * @return             the atom's color according to this coloring scheme.
+     * @param atom IAtom to get a color for
+     * @return the atom's color according to this coloring scheme.
      */
     @Override
     public Color getAtomColor(IAtom atom) {
@@ -54,13 +53,13 @@ public class CDKAtomColors implements IAtomColorer {
     }
 
     /**
-     * Returns the CDK scheme color for the given atom's element, or
-     * defaults to the given color if no color is defined.
+     * Returns the CDK scheme color for the given atom's element, or defaults to the given color if
+     * no color is defined.
      *
-     * @param atom         IAtom to get a color for
-     * @param defaultColor Color returned if this scheme does not define
-     *                     a color for the passed IAtom
-     * @return             the atom's color according to this coloring scheme.
+     * @param atom IAtom to get a color for
+     * @param defaultColor Color returned if this scheme does not define a color for the passed
+     *     IAtom
+     * @return the atom's color according to this coloring scheme.
      */
     @Override
     public Color getAtomColor(IAtom atom, Color defaultColor) {

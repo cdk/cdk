@@ -25,17 +25,16 @@ import org.openscience.cdk.io.listener.IChemObjectIOListener;
 import org.openscience.cdk.io.listener.IReaderListener;
 
 /**
- * Abstract class that IteratingChemObjectReader's can implement to have it
- * take care of basic stuff, like managing the ReaderListeners.
+ * Abstract class that IteratingChemObjectReader's can implement to have it take care of basic
+ * stuff, like managing the ReaderListeners.
  *
  * @cdk.module io
  * @cdk.githash
  */
-public abstract class DefaultEventChemObjectReader extends ChemObjectIO implements IEventChemObjectReader {
+public abstract class DefaultEventChemObjectReader extends ChemObjectIO
+        implements IEventChemObjectReader {
 
-    /**
-     * An event to be sent to listeners when a frame is read.
-     */
+    /** An event to be sent to listeners when a frame is read. */
     private ReaderEvent frameReadEvent = null;
 
     public boolean accepts(IChemObject object) {
@@ -50,16 +49,12 @@ public abstract class DefaultEventChemObjectReader extends ChemObjectIO implemen
 
     /* Extra convenience methods */
 
-    /**
-     * File IO generally does not support removing of entries.
-     */
+    /** File IO generally does not support removing of entries. */
     public void remove() {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * Sends a frame read event to the registered ReaderListeners.
-     */
+    /** Sends a frame read event to the registered ReaderListeners. */
     protected void fireFrameRead() {
         for (IChemObjectIOListener chemListener : getListeners()) {
             IReaderListener listener = (IReaderListener) chemListener;
@@ -71,5 +66,4 @@ public abstract class DefaultEventChemObjectReader extends ChemObjectIO implemen
             listener.frameRead(frameReadEvent);
         }
     }
-
 }

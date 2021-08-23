@@ -20,7 +20,6 @@
 package org.openscience.cdk.silent;
 
 import java.io.Serializable;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -30,24 +29,20 @@ import org.openscience.cdk.interfaces.IRingSet;
 /**
  * Maintains a set of Ring objects.
  *
- * @cdk.module  silent
+ * @cdk.module silent
  * @cdk.githash
- *
- * @cdk.keyword     ring, set of
+ * @cdk.keyword ring, set of
  */
 public class RingSet extends AtomContainerSet implements Serializable, IRingSet, Cloneable {
 
     private static final long serialVersionUID = 7168431521057961434L;
 
     /** Flag to denote that the set is order with the largest ring first? */
-    public final static int   LARGE_FIRST      = 1;
+    public static final int LARGE_FIRST = 1;
     /** Flag to denote that the set is order with the smallest ring first? */
-    public final static int   SMALL_FIRST      = 2;
+    public static final int SMALL_FIRST = 2;
 
-    /**
-     * The constructor.
-     *
-     */
+    /** The constructor. */
     public RingSet() {
         super();
     }
@@ -55,10 +50,9 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
     /**
      * Returns a vector of all rings that this bond is part of.
      *
-     * @param   bond  The bond to be checked
-     * @return   A vector of all rings that this bond is part of
+     * @param bond The bond to be checked
+     * @return A vector of all rings that this bond is part of
      */
-
     @Override
     public IRingSet getRings(IBond bond) {
         IRingSet rings = bond.getBuilder().newInstance(IRingSet.class);
@@ -75,10 +69,9 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
     /**
      * Returns a vector of all rings that this atom is part of.
      *
-     * @param   atom  The atom to be checked
-     * @return   A vector of all rings that this bond is part of
+     * @param atom The atom to be checked
+     * @return A vector of all rings that this bond is part of
      */
-
     @Override
     public IRingSet getRings(IAtom atom) {
         IRingSet rings = new RingSet();
@@ -93,13 +86,11 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
     }
 
     /**
-     * Returns all the rings in the RingSet that share
-     * one or more atoms with a given ring.
+     * Returns all the rings in the RingSet that share one or more atoms with a given ring.
      *
-     * @param   ring  A ring with which all return rings must share one or more atoms
-     * @return  All the rings that share one or more atoms with a given ring.
+     * @param ring A ring with which all return rings must share one or more atoms
+     * @return All the rings that share one or more atoms with a given ring.
      */
-
     @Override
     public IRingSet getConnectedRings(IRing ring) {
         IRingSet connectedRings = ring.getBuilder().newInstance(IRingSet.class);
@@ -109,7 +100,9 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
             atom = ring.getAtom(i);
             for (int j = 0; j < getAtomContainerCount(); j++) {
                 tempRing = (IRing) getAtomContainer(j);
-                if (tempRing != ring && !connectedRings.contains(tempRing) && tempRing.contains(atom)) {
+                if (tempRing != ring
+                        && !connectedRings.contains(tempRing)
+                        && tempRing.contains(atom)) {
                     connectedRings.addAtomContainer(tempRing);
                 }
             }
@@ -120,9 +113,10 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
     /**
      * Adds all rings of another RingSet if they are not already part of this ring set.
      *
-     * If you want to add a single ring to the set use {@link #addAtomContainer(org.openscience.cdk.interfaces.IAtomContainer)}
+     * <p>If you want to add a single ring to the set use {@link
+     * #addAtomContainer(org.openscience.cdk.interfaces.IAtomContainer)}
      *
-     * @param   ringSet  the ring set to be united with this one.
+     * @param ringSet the ring set to be united with this one.
      */
     @Override
     public void add(IRingSet ringSet) {
@@ -134,11 +128,10 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
     }
 
     /**
-     * True, if at least one of the rings in the ringset contains
-     * the given atom.
+     * True, if at least one of the rings in the ringset contains the given atom.
      *
-     * @param  atom Atom to check
-     * @return      true, if the ringset contains the atom
+     * @param atom Atom to check
+     * @return true, if the ringset contains the atom
      */
     @Override
     public boolean contains(IAtom atom) {
@@ -153,9 +146,8 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
     /**
      * Checks for presence of a ring in this RingSet.
      *
-     * @param  ring  The ring to check
-     * @return  true if ring is part of RingSet
-     *
+     * @param ring The ring to check
+     * @return true if ring is part of RingSet
      */
     @Override
     public boolean contains(IAtomContainer ring) {
@@ -170,7 +162,7 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
     /**
      * Clones this <code>RingSet</code> including the Rings.
      *
-     * @return  The cloned object
+     * @return The cloned object
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
@@ -200,5 +192,4 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
         buffer.append(')');
         return buffer.toString();
     }
-
 }

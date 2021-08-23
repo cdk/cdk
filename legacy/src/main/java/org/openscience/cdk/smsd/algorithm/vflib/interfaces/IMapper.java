@@ -54,17 +54,19 @@ import org.openscience.cdk.smsd.algorithm.vflib.builder.TargetProperties;
 
 /**
  * Interface for the mappings (mapped objects).
+ *
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is
+ *     available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public interface IMapper {
 
     /**
      * checks if a map exits for a molecule.
+     *
      * @param molecule molecule
      * @return true/false.
      */
@@ -72,6 +74,7 @@ public interface IMapper {
 
     /**
      * Returns solution map count.
+     *
      * @param target target molecule.
      * @return map count.
      */
@@ -79,6 +82,7 @@ public interface IMapper {
 
     /**
      * Returns all solution map.
+     *
      * @param target molecule.
      * @return get maps.
      */
@@ -86,6 +90,7 @@ public interface IMapper {
 
     /**
      * Returns first solution map.
+     *
      * @param target molecule.
      * @return get first map.
      */
@@ -93,6 +98,7 @@ public interface IMapper {
 
     /**
      * checks if a map exits for a molecule.
+     *
      * @param molecule molecule
      * @return true/false.
      */
@@ -100,6 +106,7 @@ public interface IMapper {
 
     /**
      * Returns solution map count.
+     *
      * @param target target molecule.
      * @return map count.
      */
@@ -107,6 +114,7 @@ public interface IMapper {
 
     /**
      * Returns all solution map.
+     *
      * @param target molecule.
      * @return get maps.
      */
@@ -114,6 +122,7 @@ public interface IMapper {
 
     /**
      * Returns first solution map.
+     *
      * @param target molecule.
      * @return get first map.
      */

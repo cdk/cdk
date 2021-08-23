@@ -24,6 +24,12 @@
 
 package org.openscience.cdk.io;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.openscience.cdk.CDKConstants;
@@ -35,22 +41,22 @@ import org.openscience.cdk.isomorphism.matchers.Expr;
 import org.openscience.cdk.isomorphism.matchers.QueryBond;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 /**
  * @author John May
  * @cdk.module test-io
  */
 public class MDLV2000BondBlockTest {
 
-    private final MDLV2000Reader     reader  = new MDLV2000Reader();
+    private final MDLV2000Reader reader = new MDLV2000Reader();
     private final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-    private final IAtom[]            atoms   = new IAtom[]{Mockito.mock(IAtom.class), Mockito.mock(IAtom.class),
-            Mockito.mock(IAtom.class), Mockito.mock(IAtom.class), Mockito.mock(IAtom.class)};
+    private final IAtom[] atoms =
+            new IAtom[] {
+                Mockito.mock(IAtom.class),
+                Mockito.mock(IAtom.class),
+                Mockito.mock(IAtom.class),
+                Mockito.mock(IAtom.class),
+                Mockito.mock(IAtom.class)
+            };
 
     @Test
     public void atomNumbers() throws Exception {

@@ -22,11 +22,11 @@ package org.openscience.cdk.silent;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractStrandTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IStrand;
-import org.openscience.cdk.interfaces.AbstractStrandTest;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
@@ -38,13 +38,14 @@ public class StrandTest extends AbstractStrandTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new Strand();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new Strand();
+                    }
+                });
     }
 
     @Test

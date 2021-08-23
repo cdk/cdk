@@ -22,23 +22,19 @@
  */
 package org.openscience.cdk.io.cml;
 
-
 /**
  * Low weight alternative to Sun's Stack class.
  *
  * @cdk.module io
  * @cdk.githash
- *
  * @cdk.keyword stack
  */
 public class CMLModuleStack {
 
     ICMLModule[] stack = new ICMLModule[64];
-    int          sp    = 0;
+    int sp = 0;
 
-    /**
-     * Adds an entry to the stack.
-     */
+    /** Adds an entry to the stack. */
     public void push(ICMLModule item) {
         if (sp == stack.length) {
             ICMLModule[] temp = new ICMLModule[2 * sp];
@@ -74,9 +70,7 @@ public class CMLModuleStack {
         }
     }
 
-    /**
-     * Returns a String representation of the stack.
-     */
+    /** Returns a String representation of the stack. */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -88,23 +82,17 @@ public class CMLModuleStack {
         return sb.toString();
     }
 
-    /**
-     * Convenience method to check the last added elements.
-     */
+    /** Convenience method to check the last added elements. */
     public boolean endsWith(ICMLModule lastElement) {
         return stack[sp - 1].equals(lastElement);
     }
 
-    /**
-     * Convenience method to check the last two added elements.
-     */
+    /** Convenience method to check the last two added elements. */
     public boolean endsWith(ICMLModule oneButLast, ICMLModule lastElement) {
         return endsWith(lastElement) && stack[sp - 2].equals(oneButLast);
     }
 
-    /**
-     * Convenience method to check the last three added elements.
-     */
+    /** Convenience method to check the last three added elements. */
     public boolean endsWith(ICMLModule twoButLast, ICMLModule oneButLast, ICMLModule lastElement) {
         return endsWith(oneButLast, lastElement) && stack[sp - 3].equals(twoButLast);
     }

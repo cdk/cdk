@@ -22,9 +22,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 
-/**
- * @cdk.module test-standard
- */
+/** @cdk.module test-standard */
 public class RGraphTest extends CDKTestCase {
 
     @Test
@@ -32,5 +30,4 @@ public class RGraphTest extends CDKTestCase {
         RGraph graph = new RGraph();
         Assert.assertNotNull(graph);
     }
-
 }

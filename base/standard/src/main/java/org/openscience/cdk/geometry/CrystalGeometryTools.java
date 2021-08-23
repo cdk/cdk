@@ -23,22 +23,18 @@
 package org.openscience.cdk.geometry;
 
 import java.util.Iterator;
-
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.ICrystal;
-
-import javax.vecmath.Point3d;
-import javax.vecmath.Vector3d;
 
 /**
  * A set of static methods for working with crystal coordinates.
  *
  * @cdk.module standard
  * @cdk.githash
- *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
- *
  * @cdk.keyword fractional coordinates, crystal
  */
 public class CrystalGeometryTools {
@@ -46,12 +42,17 @@ public class CrystalGeometryTools {
     /**
      * Inverts three cell axes.
      *
-     * @return         a 3x3 matrix with the three Cartesian vectors representing
-     *                 the unit cell axes. The a axis is the first row.
+     * @return a 3x3 matrix with the three Cartesian vectors representing the unit cell axes. The a
+     *     axis is the first row.
      */
     public static Vector3d[] calcInvertedAxes(Vector3d aAxis, Vector3d bAxis, Vector3d cAxis) {
-        double det = aAxis.x * bAxis.y * cAxis.z - aAxis.x * bAxis.z * cAxis.y - aAxis.y * bAxis.x * cAxis.z + aAxis.y
-                * bAxis.z * cAxis.x + aAxis.z * bAxis.x * cAxis.y - aAxis.z * bAxis.y * cAxis.x;
+        double det =
+                aAxis.x * bAxis.y * cAxis.z
+                        - aAxis.x * bAxis.z * cAxis.y
+                        - aAxis.y * bAxis.x * cAxis.z
+                        + aAxis.y * bAxis.z * cAxis.x
+                        + aAxis.z * bAxis.x * cAxis.y
+                        - aAxis.z * bAxis.y * cAxis.x;
         Vector3d[] invaxes = new Vector3d[3];
         invaxes[0] = new Vector3d();
         invaxes[0].x = (bAxis.y * cAxis.z - bAxis.z * cAxis.y) / det;
@@ -70,22 +71,29 @@ public class CrystalGeometryTools {
         return invaxes;
     }
 
-    /**
-     * @cdk.dictref blue-obelisk:convertCartesianIntoFractionalCoordinates
-     */
-    public static Point3d cartesianToFractional(Vector3d aAxis, Vector3d bAxis, Vector3d cAxis, Point3d cartPoint) {
+    /** @cdk.dictref blue-obelisk:convertCartesianIntoFractionalCoordinates */
+    public static Point3d cartesianToFractional(
+            Vector3d aAxis, Vector3d bAxis, Vector3d cAxis, Point3d cartPoint) {
         Vector3d[] invaxis = calcInvertedAxes(aAxis, bAxis, cAxis);
         Point3d frac = new Point3d();
-        frac.x = invaxis[0].x * cartPoint.x + invaxis[0].y * cartPoint.y + invaxis[0].z * cartPoint.z;
-        frac.y = invaxis[1].x * cartPoint.x + invaxis[1].y * cartPoint.y + invaxis[1].z * cartPoint.z;
-        frac.z = invaxis[2].x * cartPoint.x + invaxis[2].y * cartPoint.y + invaxis[2].z * cartPoint.z;
+        frac.x =
+                invaxis[0].x * cartPoint.x
+                        + invaxis[0].y * cartPoint.y
+                        + invaxis[0].z * cartPoint.z;
+        frac.y =
+                invaxis[1].x * cartPoint.x
+                        + invaxis[1].y * cartPoint.y
+                        + invaxis[1].z * cartPoint.z;
+        frac.z =
+                invaxis[2].x * cartPoint.x
+                        + invaxis[2].y * cartPoint.y
+                        + invaxis[2].z * cartPoint.z;
         return frac;
     }
 
-    /**
-     * @cdk.dictref blue-obelisk:convertFractionIntoCartesianCoordinates
-     */
-    public static Point3d fractionalToCartesian(Vector3d aAxis, Vector3d bAxis, Vector3d cAxis, Point3d frac) {
+    /** @cdk.dictref blue-obelisk:convertFractionIntoCartesianCoordinates */
+    public static Point3d fractionalToCartesian(
+            Vector3d aAxis, Vector3d bAxis, Vector3d cAxis, Point3d frac) {
         Point3d cart = new Point3d();
         cart.x = frac.x * aAxis.x + frac.y * bAxis.x + frac.z * cAxis.x;
         cart.y = frac.x * aAxis.y + frac.y * bAxis.y + frac.z * cAxis.y;
@@ -94,29 +102,32 @@ public class CrystalGeometryTools {
     }
 
     /**
-     * Calculates Cartesian vectors for unit cell axes from axes lengths and angles
-     * between axes.
+     * Calculates Cartesian vectors for unit cell axes from axes lengths and angles between axes.
      *
-     * <p>To calculate Cartesian coordinates, it places the a axis on the x axes,
-     * the b axis in the xy plane, making an angle gamma with the a axis, and places
-     * the c axis to fulfill the remaining constraints. (See also
-     * <a href="http://server.ccl.net/cca/documents/molecular-modeling/node4.html">the
-     * CCL archive</a>.)
+     * <p>To calculate Cartesian coordinates, it places the a axis on the x axes, the b axis in the
+     * xy plane, making an angle gamma with the a axis, and places the c axis to fulfill the
+     * remaining constraints. (See also <a
+     * href="http://server.ccl.net/cca/documents/molecular-modeling/node4.html">the CCL
+     * archive</a>.)
      *
-     * @param alength   length of the a axis
-     * @param blength   length of the b axis
-     * @param clength   length of the c axis
-     * @param alpha     angle between b and c axes in degrees
-     * @param beta      angle between a and c axes in degrees
-     * @param gamma     angle between a and b axes in degrees
-     * @return          an array of Vector3d objects with the three Cartesian vectors representing
-     *                  the unit cell axes.
-     *
-     * @cdk.keyword  notional coordinates
-     * @cdk.dictref  blue-obelisk:convertNotionalIntoCartesianCoordinates
+     * @param alength length of the a axis
+     * @param blength length of the b axis
+     * @param clength length of the c axis
+     * @param alpha angle between b and c axes in degrees
+     * @param beta angle between a and c axes in degrees
+     * @param gamma angle between a and b axes in degrees
+     * @return an array of Vector3d objects with the three Cartesian vectors representing the unit
+     *     cell axes.
+     * @cdk.keyword notional coordinates
+     * @cdk.dictref blue-obelisk:convertNotionalIntoCartesianCoordinates
      */
-    public static Vector3d[] notionalToCartesian(double alength, double blength, double clength, double alpha,
-            double beta, double gamma) {
+    public static Vector3d[] notionalToCartesian(
+            double alength,
+            double blength,
+            double clength,
+            double alpha,
+            double beta,
+            double gamma) {
         Vector3d[] axes = new Vector3d[3];
 
         /* 1. align the a axis with x axis */
@@ -141,11 +152,16 @@ public class CrystalGeometryTools {
 
         /* 3. now the c axis, with more complex maths */
         axes[2] = new Vector3d();
-        double volume = alength
-                * blength
-                * clength
-                * Math.sqrt(1.0 - cosalpha * cosalpha - cosbeta * cosbeta - cosgamma * cosgamma + 2.0 * cosalpha
-                        * cosbeta * cosgamma);
+        double volume =
+                alength
+                        * blength
+                        * clength
+                        * Math.sqrt(
+                                1.0
+                                        - cosalpha * cosalpha
+                                        - cosbeta * cosbeta
+                                        - cosgamma * cosgamma
+                                        + 2.0 * cosalpha * cosbeta * cosgamma);
         axes[2].x = clength * cosbeta;
         axes[2].y = clength * (cosalpha - cosbeta * cosgamma) / singamma;
         axes[2].z = volume / (alength * blength * singamma);
@@ -153,9 +169,7 @@ public class CrystalGeometryTools {
         return axes;
     }
 
-    /**
-     * @cdk.dictref  blue-obelisk:convertCartesianIntoNotionalCoordinates
-     */
+    /** @cdk.dictref blue-obelisk:convertCartesianIntoNotionalCoordinates */
     public static double[] cartesianToNotional(Vector3d aAxis, Vector3d bAxis, Vector3d cAxis) {
         double[] notionalCoords = new double[6];
         notionalCoords[0] = aAxis.length();
@@ -170,7 +184,7 @@ public class CrystalGeometryTools {
     /**
      * Determines if this model contains fractional (crystal) coordinates.
      *
-     * @return  boolean indication that 3D coordinates are available
+     * @return boolean indication that 3D coordinates are available
      */
     public static boolean hasCrystalCoordinates(IAtomContainer container) {
         Iterator<IAtom> atoms = container.atoms().iterator();
@@ -182,9 +196,7 @@ public class CrystalGeometryTools {
         return true;
     }
 
-    /**
-     * Creates Cartesian coordinates for all Atoms in the Crystal.
-     */
+    /** Creates Cartesian coordinates for all Atoms in the Crystal. */
     public static void fractionalToCartesian(ICrystal crystal) {
         Iterator<IAtom> atoms = crystal.atoms().iterator();
         Vector3d aAxis = crystal.getA();

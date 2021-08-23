@@ -26,15 +26,13 @@ package org.openscience.cdk.io.pubchemxml;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.events.XMLEvent;
-
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -50,67 +48,64 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
  *
  * @cdk.module io
  * @cdk.githash
- *
  * @author Egon Willighagen &lt;egonw@users.sf.net&gt;
- * @cdk.created  2008-05-05
+ * @cdk.created 2008-05-05
  */
 public class PubChemXMLHelper {
 
     private IChemObjectBuilder builder;
-    private IsotopeFactory     factory;
+    private IsotopeFactory factory;
 
-    /**
-     * @throws java.io.IOException if there is error in getting the {@link IsotopeFactory}
-     */
+    /** @throws java.io.IOException if there is error in getting the {@link IsotopeFactory} */
     public PubChemXMLHelper(IChemObjectBuilder builder) throws IOException {
         this.builder = builder;
         factory = Isotopes.getInstance();
     }
 
     // general elements
-    public final static String EL_PCCOMPOUND        = "PC-Compound";
-    public final static String EL_PCCOMPOUNDS       = "PC-Compounds";
-    public final static String EL_PCSUBSTANCE       = "PC-Substance";
-    public final static String EL_PCSUBSTANCE_SID   = "PC-Substance_sid";
-    public final static String EL_PCCOMPOUND_ID     = "PC-Compound_id";
-    public final static String EL_PCCOMPOUND_CID    = "PC-CompoundType_id_cid";
-    public final static String EL_PCID_ID           = "PC-ID_id";
+    public static final String EL_PCCOMPOUND = "PC-Compound";
+    public static final String EL_PCCOMPOUNDS = "PC-Compounds";
+    public static final String EL_PCSUBSTANCE = "PC-Substance";
+    public static final String EL_PCSUBSTANCE_SID = "PC-Substance_sid";
+    public static final String EL_PCCOMPOUND_ID = "PC-Compound_id";
+    public static final String EL_PCCOMPOUND_CID = "PC-CompoundType_id_cid";
+    public static final String EL_PCID_ID = "PC-ID_id";
 
     // atom block elements
-    public final static String EL_ATOMBLOCK         = "PC-Atoms";
-    public final static String EL_ATOMSELEMENT      = "PC-Atoms_element";
-    public final static String EL_ATOMSCHARGE       = "PC-Atoms_charge";
-    public final static String EL_ATOMINT           = "PC-AtomInt";
-    public final static String EL_ATOMINT_AID       = "PC-AtomInt_aid";
-    public final static String EL_ATOMINT_VALUE     = "PC-AtomInt_value";
-    public final static String EL_ELEMENT           = "PC-Element";
+    public static final String EL_ATOMBLOCK = "PC-Atoms";
+    public static final String EL_ATOMSELEMENT = "PC-Atoms_element";
+    public static final String EL_ATOMSCHARGE = "PC-Atoms_charge";
+    public static final String EL_ATOMINT = "PC-AtomInt";
+    public static final String EL_ATOMINT_AID = "PC-AtomInt_aid";
+    public static final String EL_ATOMINT_VALUE = "PC-AtomInt_value";
+    public static final String EL_ELEMENT = "PC-Element";
 
     // coordinate block elements
-    public final static String EL_COORDINATESBLOCK  = "PC-Compound_coords";
-    public final static String EL_COORDINATES_AID   = "PC-Coordinates_aid";
-    public final static String EL_COORDINATES_AIDE  = "PC-Coordinates_aid_E";
-    public final static String EL_ATOM_CONFORMER    = "PC-Conformer";
-    public final static String EL_ATOM_CONFORMER_X  = "PC-Conformer_x";
-    public final static String EL_ATOM_CONFORMER_XE = "PC-Conformer_x_E";
-    public final static String EL_ATOM_CONFORMER_Y  = "PC-Conformer_y";
-    public final static String EL_ATOM_CONFORMER_YE = "PC-Conformer_y_E";
-    public final static String EL_ATOM_CONFORMER_Z  = "PC-Conformer_z";
-    public final static String EL_ATOM_CONFORMER_ZE = "PC-Conformer_z_E";
+    public static final String EL_COORDINATESBLOCK = "PC-Compound_coords";
+    public static final String EL_COORDINATES_AID = "PC-Coordinates_aid";
+    public static final String EL_COORDINATES_AIDE = "PC-Coordinates_aid_E";
+    public static final String EL_ATOM_CONFORMER = "PC-Conformer";
+    public static final String EL_ATOM_CONFORMER_X = "PC-Conformer_x";
+    public static final String EL_ATOM_CONFORMER_XE = "PC-Conformer_x_E";
+    public static final String EL_ATOM_CONFORMER_Y = "PC-Conformer_y";
+    public static final String EL_ATOM_CONFORMER_YE = "PC-Conformer_y_E";
+    public static final String EL_ATOM_CONFORMER_Z = "PC-Conformer_z";
+    public static final String EL_ATOM_CONFORMER_ZE = "PC-Conformer_z_E";
 
     // bond block elements
-    public final static String EL_BONDBLOCK         = "PC-Bonds";
-    public final static String EL_BONDID1           = "PC-Bonds_aid1";
-    public final static String EL_BONDID2           = "PC-Bonds_aid2";
-    public final static String EL_BONDORDER         = "PC-Bonds_order";
+    public static final String EL_BONDBLOCK = "PC-Bonds";
+    public static final String EL_BONDID1 = "PC-Bonds_aid1";
+    public static final String EL_BONDID2 = "PC-Bonds_aid2";
+    public static final String EL_BONDORDER = "PC-Bonds_order";
 
     // property block elements
-    public final static String EL_PROPSBLOCK        = "PC-Compound_props";
-    public final static String EL_PROPS_INFODATA    = "PC-InfoData";
-    public final static String EL_PROPS_URNLABEL    = "PC-Urn_label";
-    public final static String EL_PROPS_URNNAME     = "PC-Urn_name";
-    public final static String EL_PROPS_SVAL        = "PC-InfoData_value_sval";
-    public final static String EL_PROPS_FVAL        = "PC-InfoData_value_fval";
-    public final static String EL_PROPS_BVAL        = "PC-InfoData_value_binary";
+    public static final String EL_PROPSBLOCK = "PC-Compound_props";
+    public static final String EL_PROPS_INFODATA = "PC-InfoData";
+    public static final String EL_PROPS_URNLABEL = "PC-Urn_label";
+    public static final String EL_PROPS_URNNAME = "PC-Urn_name";
+    public static final String EL_PROPS_SVAL = "PC-InfoData_value_sval";
+    public static final String EL_PROPS_FVAL = "PC-InfoData_value_fval";
+    public static final String EL_PROPS_BVAL = "PC-InfoData_value_binary";
 
     public IAtomContainerSet parseCompoundsBlock(XMLStreamReader parser) throws Exception {
         IAtomContainerSet set = builder.newInstance(IAtomContainerSet.class);
@@ -195,7 +190,8 @@ public class PubChemXMLHelper {
         return cid;
     }
 
-    public void parseAtomElements(XMLStreamReader parser, IAtomContainer molecule) throws Exception {
+    public void parseAtomElements(XMLStreamReader parser, IAtomContainer molecule)
+            throws Exception {
         while (parser.next() != XMLEvent.END_DOCUMENT) {
             if (parser.getEventType() == XMLEvent.END_ELEMENT) {
                 if (EL_ATOMSELEMENT.equals(parser.getLocalName())) {
@@ -209,7 +205,8 @@ public class PubChemXMLHelper {
                         IAtom atom = molecule.getBuilder().newInstance(IPseudoAtom.class);
                         molecule.addAtom(atom);
                     } else {
-                        IAtom atom = molecule.getBuilder().newInstance(IAtom.class, element.getSymbol());
+                        IAtom atom =
+                                molecule.getBuilder().newInstance(IAtom.class, element.getSymbol());
                         atom.setAtomicNumber(element.getAtomicNumber());
                         molecule.addAtom(atom);
                     }
@@ -234,7 +231,8 @@ public class PubChemXMLHelper {
         }
     }
 
-    public void parserCompoundInfoData(XMLStreamReader parser, IAtomContainer molecule) throws Exception {
+    public void parserCompoundInfoData(XMLStreamReader parser, IAtomContainer molecule)
+            throws Exception {
         String urnLabel = null;
         String urnName = null;
         String sval = null;
@@ -292,7 +290,8 @@ public class PubChemXMLHelper {
         }
     }
 
-    public IAtomContainer parseMolecule(XMLStreamReader parser, IChemObjectBuilder builder) throws Exception {
+    public IAtomContainer parseMolecule(XMLStreamReader parser, IChemObjectBuilder builder)
+            throws Exception {
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         // assume the current element is PC-Compound
         if (!parser.getLocalName().equals("PC-Compound")) {
@@ -346,7 +345,8 @@ public class PubChemXMLHelper {
             throw new CDKException("Inequal number of atom identifier in bond block.");
         }
         if (id1s.size() != orders.size()) {
-            throw new CDKException("Number of bond orders does not match number of bonds in bond block.");
+            throw new CDKException(
+                    "Number of bond orders does not match number of bonds in bond block.");
         }
         for (int i = 0; i < id1s.size(); i++) {
             IAtom atom1 = molecule.getAtom(Integer.parseInt(id1s.get(i)) - 1);
@@ -401,17 +401,22 @@ public class PubChemXMLHelper {
         for (int i = 0; i < ids.size(); i++) {
             IAtom atom = molecule.getAtom(Integer.parseInt(ids.get(i)) - 1);
             if (has3dCoords) {
-                Point3d coord = new Point3d(Double.parseDouble(xs.get(i)), Double.parseDouble(ys.get(i)),
-                        Double.parseDouble(zs.get(i)));
+                Point3d coord =
+                        new Point3d(
+                                Double.parseDouble(xs.get(i)),
+                                Double.parseDouble(ys.get(i)),
+                                Double.parseDouble(zs.get(i)));
                 atom.setPoint3d(coord);
             } else if (has2dCoords) {
-                Point2d coord = new Point2d(Double.parseDouble(xs.get(i)), Double.parseDouble(ys.get(i)));
+                Point2d coord =
+                        new Point2d(Double.parseDouble(xs.get(i)), Double.parseDouble(ys.get(i)));
                 atom.setPoint2d(coord);
             }
         }
     }
 
-    private List<String> parseValues(XMLStreamReader parser, String endTag, String fieldTag) throws Exception {
+    private List<String> parseValues(XMLStreamReader parser, String endTag, String fieldTag)
+            throws Exception {
         List<String> values = new ArrayList<String>();
         while (parser.next() != XMLEvent.END_DOCUMENT) {
             if (parser.getEventType() == XMLEvent.END_ELEMENT) {
@@ -428,5 +433,4 @@ public class PubChemXMLHelper {
         }
         return values;
     }
-
 }

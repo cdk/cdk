@@ -33,20 +33,20 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  * Checks the functionality of the Ring class.
  *
  * @cdk.module test-data
- *
  * @see org.openscience.cdk.Ring
  */
 public class RingTest extends AbstractRingTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new Ring();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new Ring();
+                    }
+                });
     }
 
     @Test
@@ -82,5 +82,4 @@ public class RingTest extends AbstractRingTest {
         Assert.assertEquals(2, ring.getAtomCount());
         Assert.assertEquals(0, ring.getBondCount());
     }
-
 }

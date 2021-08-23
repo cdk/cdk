@@ -24,15 +24,13 @@
 
 package org.openscience.cdk.hash.stereo;
 
-
 import javax.vecmath.Point2d;
 
 /**
- * Calculate the geometric configuration of a double bond. The configuration is
- * provided as a parity (+1,0,-1) where +1 indicates the substituents are on
- * <i>opposite</i> sides (E or trans) and -1 indicates they are <i>together</i>
- * on the same side (Z or cis). If one of the substituents is parallel to the
- * double bond then the configuration is unspecified and 0 is returned.
+ * Calculate the geometric configuration of a double bond. The configuration is provided as a parity
+ * (+1,0,-1) where +1 indicates the substituents are on <i>opposite</i> sides (E or trans) and -1
+ * indicates they are <i>together</i> on the same side (Z or cis). If one of the substituents is
+ * parallel to the double bond then the configuration is unspecified and 0 is returned.
  *
  * @author John May
  * @cdk.module hash
@@ -46,7 +44,7 @@ final class DoubleBond2DParity extends GeometricParity {
     //   l = r
     //  /     \
     // l2      r2
-    private Point2d             l, r, l1, r1, l2, r2;
+    private Point2d l, r, l1, r1, l2, r2;
 
     /* the area below which we return unspecified parity */
     private static final double THRESHOLD = 0.1;
@@ -54,12 +52,13 @@ final class DoubleBond2DParity extends GeometricParity {
     /**
      * Create a new double bond parity for the 2D coordinates of the atoms.
      *
-     * @param left             one atom of the double bond
-     * @param right            the other atom of a double bond
-     * @param leftSubstituent  the substituent atom connected to the left atom
+     * @param left one atom of the double bond
+     * @param right the other atom of a double bond
+     * @param leftSubstituent the substituent atom connected to the left atom
      * @param rightSubstituent the substituent atom connected to the right atom
      */
-    public DoubleBond2DParity(Point2d left, Point2d right, Point2d leftSubstituent, Point2d rightSubstituent) {
+    public DoubleBond2DParity(
+            Point2d left, Point2d right, Point2d leftSubstituent, Point2d rightSubstituent) {
         this.l = left;
         this.r = right;
         this.l1 = leftSubstituent;
@@ -69,11 +68,10 @@ final class DoubleBond2DParity extends GeometricParity {
     }
 
     /**
-     * Create a new double bond parity for the 2D coordinates of the atoms. This
-     * method is required for cases where both substituents may lie on the same
-     * side of a bond. If one of the sides has two substituents and the other
-     * side has two then you can pass left/right atom of the double bond as
-     * the second substituent.
+     * Create a new double bond parity for the 2D coordinates of the atoms. This method is required
+     * for cases where both substituents may lie on the same side of a bond. If one of the sides has
+     * two substituents and the other side has two then you can pass left/right atom of the double
+     * bond as the second substituent.
      *
      * <pre>
      *  l1      r1
@@ -86,15 +84,20 @@ final class DoubleBond2DParity extends GeometricParity {
      *      new DoubleBond2DParity(l, r, l1, l2, r1, r);
      * </pre>
      *
-     * @param left             one atom of the double bond
-     * @param right            the other atom of a double bond
-     * @param leftSubstituent1  first substituent atom connected to the left atom
-     * @param leftSubstituent2  second substituent atom connected to the left atom
+     * @param left one atom of the double bond
+     * @param right the other atom of a double bond
+     * @param leftSubstituent1 first substituent atom connected to the left atom
+     * @param leftSubstituent2 second substituent atom connected to the left atom
      * @param rightSubstituent1 first substituent atom connected to the right atom
      * @param rightSubstituent2 second substituent atom connected to the right atom
      */
-    public DoubleBond2DParity(Point2d left, Point2d right, Point2d leftSubstituent1, Point2d leftSubstituent2,
-            Point2d rightSubstituent1, Point2d rightSubstituent2) {
+    public DoubleBond2DParity(
+            Point2d left,
+            Point2d right,
+            Point2d leftSubstituent1,
+            Point2d leftSubstituent2,
+            Point2d rightSubstituent1,
+            Point2d rightSubstituent2) {
         this.l = left;
         this.r = right;
         this.l1 = leftSubstituent1;
@@ -114,8 +117,8 @@ final class DoubleBond2DParity extends GeometricParity {
     }
 
     /**
-     * Determine the rotation parity of one side of the double bond. This parity
-     * is the sign of the area of a triangle.
+     * Determine the rotation parity of one side of the double bond. This parity is the sign of the
+     * area of a triangle.
      *
      * <pre>
      * a
@@ -134,5 +137,4 @@ final class DoubleBond2DParity extends GeometricParity {
 
         return Math.abs(det) < THRESHOLD ? 0 : (int) Math.signum(det);
     }
-
 }

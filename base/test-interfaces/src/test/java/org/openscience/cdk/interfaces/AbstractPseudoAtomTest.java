@@ -19,11 +19,10 @@
  */
 package org.openscience.cdk.interfaces;
 
-import org.junit.Assert;
-import org.junit.Test;
-
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * Checks the functionality of {@link IPseudoAtom} implementations.
@@ -113,9 +112,7 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
         assertEquals(twoD, a.getPoint2d(), 0.0001);
     }
 
-    /**
-     * Method to test the clone() method
-     */
+    /** Method to test the clone() method */
     @Test
     @Override
     public void testClone() throws Exception {
@@ -124,9 +121,7 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
         Assert.assertTrue(clone instanceof IPseudoAtom);
     }
 
-    /**
-     * Method to test whether the class complies with RFC #9.
-     */
+    /** Method to test whether the class complies with RFC #9. */
     @Test
     @Override
     public void testToString() {
@@ -139,10 +134,10 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
     }
 
     /**
-     * Test for bug #1778479 "MDLWriter writes empty PseudoAtom label string".
-     * We decided to let the pseudo atoms have a default label of '*'.
+     * Test for bug #1778479 "MDLWriter writes empty PseudoAtom label string". We decided to let the
+     * pseudo atoms have a default label of '*'.
      *
-     * Author: Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
+     * <p>Author: Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
      *
      * @cdk.bug 1778479
      */
@@ -153,10 +148,7 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
         Assert.assertEquals("Test for PseudoAtom's default label", "*", atom.getLabel());
     }
 
-    /**
-     * Overwrite the method in {@link AbstractAtomTest} to always
-     * expect zero hydrogen counts.
-     */
+    /** Overwrite the method in {@link AbstractAtomTest} to always expect zero hydrogen counts. */
     @Test
     @Override
     public void testClone_HydrogenCount() throws Exception {
@@ -169,10 +161,7 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
         Assert.assertEquals(3, clone.getImplicitHydrogenCount().intValue());
     }
 
-    /**
-     * Overwrite the method in {@link AbstractAtomTest} to always
-     * expect zero hydrogen counts.
-     */
+    /** Overwrite the method in {@link AbstractAtomTest} to always expect zero hydrogen counts. */
     @Test
     public void testGetHydrogenCount() {
         // expect zero by definition
@@ -184,10 +173,7 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
         Assert.assertNull(a.getImplicitHydrogenCount());
     }
 
-    /**
-     * Overwrite the method in {@link AbstractAtomTypeTest} to always
-     * expect zero stereo parity.
-     */
+    /** Overwrite the method in {@link AbstractAtomTypeTest} to always expect zero stereo parity. */
     @Test
     @Override
     public void testClone_StereoParity() throws Exception {

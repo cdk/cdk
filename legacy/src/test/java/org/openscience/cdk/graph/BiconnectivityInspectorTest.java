@@ -23,19 +23,16 @@
  */
 package org.openscience.cdk.graph;
 
+import java.util.List;
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.graph.BiconnectivityInspector;
 import org.openscience.cdk.CDKTestCase;
-
-import java.util.List;
 
 /**
  * This class tests the BiconnectivityInspector class.
  *
  * @cdk.module test-standard
- *
  * @author Ulrich Bauer &lt;baueru@cs.tum.edu&gt;
  */
 public class BiconnectivityInspectorTest extends CDKTestCase {
@@ -79,5 +76,4 @@ public class BiconnectivityInspectorTest extends CDKTestCase {
 
         Assert.assertTrue(connectedSets.size() == 5);
     }
-
 }

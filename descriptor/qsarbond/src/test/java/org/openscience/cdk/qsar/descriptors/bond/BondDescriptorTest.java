@@ -19,7 +19,6 @@
 package org.openscience.cdk.qsar.descriptors.bond;
 
 import javax.vecmath.Point3d;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -66,7 +65,8 @@ public abstract class BondDescriptorTest extends DescriptorTest<IBondDescriptor>
             Assert.fail("A descriptor must not throw an exception");
         }
         Assert.assertNotNull(v);
-        Assert.assertNotSame("The descriptor did not calculate any value.", 0, v.getValue().length());
+        Assert.assertNotSame(
+                "The descriptor did not calculate any value.", 0, v.getValue().length());
     }
 
     /**
@@ -81,7 +81,8 @@ public abstract class BondDescriptorTest extends DescriptorTest<IBondDescriptor>
         DescriptorValue v = descriptor.calculate(mol.getBond(0), mol);
         Assert.assertNotNull(v);
         String[] names = v.getNames();
-        Assert.assertNotNull("The descriptor must return labels using the getNames() method.", names);
+        Assert.assertNotNull(
+                "The descriptor must return labels using the getNames() method.", names);
         Assert.assertNotSame("At least one label must be given.", 0, names.length);
         for (int i = 0; i < names.length; i++) {
             Assert.assertNotNull("A descriptor label may not be null.", names[i]);
@@ -90,15 +91,15 @@ public abstract class BondDescriptorTest extends DescriptorTest<IBondDescriptor>
         }
         Assert.assertNotNull(v.getValue());
         int valueCount = v.getValue().length();
-        Assert.assertEquals("The number of labels must equals the number of values.", names.length, valueCount);
+        Assert.assertEquals(
+                "The number of labels must equals the number of values.", names.length, valueCount);
     }
 
     /**
-    * Check if the names obtained directly from the descriptor without
-    * calculation match those obtained from the descriptor value object.
-    * Also ensure that the number of actual values matches the length
-    * of the names
-    */
+     * Check if the names obtained directly from the descriptor without calculation match those
+     * obtained from the descriptor value object. Also ensure that the number of actual values
+     * matches the length of the names
+     */
     @Test
     public void testNamesConsistency() {
         IAtomContainer mol = someoneBringMeSomeWater();
@@ -121,13 +122,18 @@ public abstract class BondDescriptorTest extends DescriptorTest<IBondDescriptor>
         IBond clone = (IBond) mol.getBond(0).clone();
         descriptor.calculate(bond, mol);
         String diff = BondDiff.diff(clone, bond);
-        Assert.assertEquals("(" + descriptor.getClass().toString()
-                + ") The descriptor must not change the passed bond in any respect, but found this diff: " + diff, 0,
+        Assert.assertEquals(
+                "("
+                        + descriptor.getClass().toString()
+                        + ") The descriptor must not change the passed bond in any respect, but found this diff: "
+                        + diff,
+                0,
                 diff.length());
     }
 
     private IAtomContainer someoneBringMeSomeWater() {
-        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer mol =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "O");
         c1.setPoint3d(new Point3d(0.0, 0.0, 0.0));
         IAtom h1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "H");
@@ -141,5 +147,4 @@ public abstract class BondDescriptorTest extends DescriptorTest<IBondDescriptor>
         mol.addBond(0, 2, IBond.Order.SINGLE);
         return mol;
     }
-
 }

@@ -18,25 +18,20 @@
  */
 package org.openscience.cdk.geometry;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.openscience.cdk.geometry.CrystalGeometryTools;
-import org.openscience.cdk.CDKTestCase;
-
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
+import org.junit.Assert;
+import org.junit.Test;
+import org.openscience.cdk.CDKTestCase;
 
 /**
- * This class defines regression tests that should ensure that the source code
- * of the org.openscience.cdk.geometry.CrystalGeometryTools is not broken.
- * All methods that start with test are regression tests, e.g.
- * <code>testNotionalToCartesian()</code>.
+ * This class defines regression tests that should ensure that the source code of the
+ * org.openscience.cdk.geometry.CrystalGeometryTools is not broken. All methods that start with test
+ * are regression tests, e.g. <code>testNotionalToCartesian()</code>.
  *
  * @cdk.module test-standard
- *
- * @author     Egon Willighagen
- * @cdk.created    2003-08-19
- *
+ * @author Egon Willighagen
+ * @cdk.created 2003-08-19
  * @see org.openscience.cdk.geometry.CrystalGeometryTools
  */
 public class CrystalGeometryToolsTest extends CDKTestCase {
@@ -46,14 +41,14 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
     }
 
     /**
-     * This method tests the conversion of notional coordinates to
-     * cartesian coordinates. The test assumes that the
-     * <code>CrystalGeometryTools.notionalToCartesian()</code> methods
-     * places the a axis on the x axis and the b axis in the xy plane.
+     * This method tests the conversion of notional coordinates to cartesian coordinates. The test
+     * assumes that the <code>CrystalGeometryTools.notionalToCartesian()</code> methods places the a
+     * axis on the x axis and the b axis in the xy plane.
      */
     @Test
     public void testNotionalToCartesian_double_double_double_double_double_double() {
-        Vector3d[] cardAxes = CrystalGeometryTools.notionalToCartesian(1.0, 2.0, 3.0, 90.0, 90.0, 90.0);
+        Vector3d[] cardAxes =
+                CrystalGeometryTools.notionalToCartesian(1.0, 2.0, 3.0, 90.0, 90.0, 90.0);
         // the a axis
         Assert.assertEquals(1.0, cardAxes[0].x, 0.001);
         Assert.assertEquals(0.0, cardAxes[0].y, 0.001);
@@ -68,7 +63,9 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
         Assert.assertEquals(3.0, cardAxes[2].z, 0.001);
 
         // some sanity checking: roundtripping
-        cardAxes = CrystalGeometryTools.notionalToCartesian(9.3323, 10.1989, 11.2477, 69.043, 74.441, 77.821);
+        cardAxes =
+                CrystalGeometryTools.notionalToCartesian(
+                        9.3323, 10.1989, 11.2477, 69.043, 74.441, 77.821);
         Vector3d a = cardAxes[0];
         Vector3d b = cardAxes[1];
         Vector3d c = cardAxes[2];
@@ -80,10 +77,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
         Assert.assertEquals(11.2477, c.length(), 0.0001);
     }
 
-    /**
-     * This method tests the conversion of cartesian coordinates to
-     * notional coordinates.
-     */
+    /** This method tests the conversion of cartesian coordinates to notional coordinates. */
     @Test
     public void testCartesianToNotional_Vector3d_Vector3d_Vector3d() {
         Vector3d a = new Vector3d(1.0, 0.0, 0.0);
@@ -99,8 +93,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
     }
 
     /**
-     * This method tests the conversion of atomic fractional coordinates to
-     * cartesian coordinates.
+     * This method tests the conversion of atomic fractional coordinates to cartesian coordinates.
      */
     @Test
     public void testFractionalToCartesian_Vector3d_Vector3d_Vector3d_Point3d() {
@@ -115,27 +108,28 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
     }
 
     /**
-     * This method tests the conversion of atomic fractional coordinates to
-     * cartesian coordinates. The specific numbers are taken from 9603.res.
+     * This method tests the conversion of atomic fractional coordinates to cartesian coordinates.
+     * The specific numbers are taken from 9603.res.
      */
     @Test
     public void testFractionalToCartesian2() {
-        Vector3d[] cardAxes = CrystalGeometryTools
-                .notionalToCartesian(9.3323, 10.1989, 11.2477, 69.043, 74.441, 77.821);
+        Vector3d[] cardAxes =
+                CrystalGeometryTools.notionalToCartesian(
+                        9.3323, 10.1989, 11.2477, 69.043, 74.441, 77.821);
         Vector3d a = cardAxes[0];
         Vector3d b = cardAxes[1];
         Vector3d c = cardAxes[2];
 
-        Point3d cartCoords = CrystalGeometryTools.fractionalToCartesian(a, b, c, new Point3d(0.517879, 0.258121,
-                0.698477));
+        Point3d cartCoords =
+                CrystalGeometryTools.fractionalToCartesian(
+                        a, b, c, new Point3d(0.517879, 0.258121, 0.698477));
         Assert.assertEquals(7.495, cartCoords.x, 0.001);
         Assert.assertEquals(4.993, cartCoords.y, 0.001);
         Assert.assertEquals(7.171, cartCoords.z, 0.001);
     }
 
     /**
-     * This method tests the conversion of atomic cartesian coordinates to
-     * fractional coordinates.
+     * This method tests the conversion of atomic cartesian coordinates to fractional coordinates.
      */
     @Test
     public void testCartesianToFractional_Vector3d_Vector3d_Vector3d_Point3d() {
@@ -149,9 +143,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
         Assert.assertEquals(0.75, fractCoord.z, 0.001);
     }
 
-    /**
-     * This method tests the calculation of axis lengths.
-     */
+    /** This method tests the calculation of axis lengths. */
     @Test
     public void testCalcAxisLength() {
         Vector3d a = new Vector3d(1.0, 1.0, 1.0);
@@ -160,8 +152,8 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
     }
 
     /**
-     * This method tests the calculation of axis lengths too, like
-     * <code>testCalcAxisLength()</code>.
+     * This method tests the calculation of axis lengths too, like <code>testCalcAxisLength()</code>
+     * .
      */
     @Test
     public void testCalcAxisLength2() {
@@ -176,9 +168,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
         Assert.assertEquals(1.0, length, 0.001);
     }
 
-    /**
-     * This method tests the calculation of the angle between two axes.
-     */
+    /** This method tests the calculation of the angle between two axes. */
     @Test
     public void testCalcAngle() {
         Vector3d b = new Vector3d(0.0, 2.0, 0.0);
@@ -187,9 +177,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
         Assert.assertEquals(90.0, angle, 0.001);
     }
 
-    /**
-     * This method tests the calculation of the angle between two axes too.
-     */
+    /** This method tests the calculation of the angle between two axes too. */
     @Test
     public void testCalcAngle2() {
         Vector3d b = new Vector3d(0.0, 1.0, 1.0);
@@ -199,8 +187,8 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
     }
 
     /**
-     * This method tests the calculation of the angle between one axis
-     * and itself, which should be zero by definition.
+     * This method tests the calculation of the angle between one axis and itself, which should be
+     * zero by definition.
      */
     @Test
     public void testCalcAngle3() {
@@ -210,12 +198,12 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
     }
 
     /**
-     * This method tests the conversion of notional coordinates to
-     * cartesian and back to notional.
+     * This method tests the conversion of notional coordinates to cartesian and back to notional.
      */
     @Test
     public void testRoundTripUnitCellNotionalCoordinates() {
-        Vector3d[] cardAxes = CrystalGeometryTools.notionalToCartesian(7.6, 3.9, 10.3, 67.0, 91.2, 110.5);
+        Vector3d[] cardAxes =
+                CrystalGeometryTools.notionalToCartesian(7.6, 3.9, 10.3, 67.0, 91.2, 110.5);
         Vector3d a = cardAxes[0];
         Vector3d b = cardAxes[1];
         Vector3d c = cardAxes[2];
@@ -228,10 +216,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
         Assert.assertEquals(110.5, notionalCoords[5], 0.001);
     }
 
-    /**
-     * This method tests whether two times inversion of the axes
-     * gives back the original axes.
-     */
+    /** This method tests whether two times inversion of the axes gives back the original axes. */
     @Test
     public void testCalcInvertedAxes_Vector3d_Vector3d_Vector3d() {
         Vector3d a = new Vector3d(3.4, 7.6, 5.5);

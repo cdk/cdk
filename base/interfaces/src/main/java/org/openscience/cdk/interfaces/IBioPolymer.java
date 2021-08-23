@@ -26,35 +26,32 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * A BioPolymer is a subclass of a Polymer which is supposed to store
- * additional informations about the Polymer which are connected to BioPolymers.
+ * A BioPolymer is a subclass of a Polymer which is supposed to store additional informations about
+ * the Polymer which are connected to BioPolymers.
  *
- * @cdk.module  interfaces
+ * @cdk.module interfaces
  * @cdk.githash
- *
  * @author Edgar Luttmann &lt;edgar@uni-paderborn.de&gt;
  * @cdk.created 2001-08-06
- *
  * @cdk.keyword polymer
  * @cdk.keyword biopolymer
  */
 public interface IBioPolymer extends IPolymer {
 
     /**
-     * Adds the atom oAtom without specifying a Monomer or a Strand. Therefore the
-     * atom to this AtomContainer, but not to a certain Strand or Monomer (intended
-     * e.g. for HETATMs).
+     * Adds the atom oAtom without specifying a Monomer or a Strand. Therefore the atom to this
+     * AtomContainer, but not to a certain Strand or Monomer (intended e.g. for HETATMs).
      *
-     * @param oAtom  The atom to add
+     * @param oAtom The atom to add
      */
     @Override
     public void addAtom(IAtom oAtom);
 
     /**
-     * Adds the atom oAtom to a specified Strand, whereas the Monomer is unspecified. Hence
-     * the atom will be added to a Monomer of type UNKNOWN in the specified Strand.
+     * Adds the atom oAtom to a specified Strand, whereas the Monomer is unspecified. Hence the atom
+     * will be added to a Monomer of type UNKNOWN in the specified Strand.
      *
-     * @param oAtom   The atom to add
+     * @param oAtom The atom to add
      * @param oStrand The strand the atom belongs to
      */
     public void addAtom(IAtom oAtom, IStrand oStrand);
@@ -62,9 +59,9 @@ public interface IBioPolymer extends IPolymer {
     /**
      * Adds the atom to a specified Strand and a specified Monomer.
      *
-     * @param oAtom    The atom to add
+     * @param oAtom The atom to add
      * @param oMonomer The monomer the atom belongs to
-     * @param oStrand  The strand the atom belongs to
+     * @param oStrand The strand the atom belongs to
      */
     public void addAtom(IAtom oAtom, IMonomer oMonomer, IStrand oStrand);
 
@@ -79,19 +76,17 @@ public interface IBioPolymer extends IPolymer {
     /**
      * Retrieve a <code>Monomer</code> object by specifying its name.
      *
-     * <p>You have to specify the strand to enable
-     * monomers with the same name in different strands. There is at least one such case: every
-     * strand contains a monomer called "".
+     * <p>You have to specify the strand to enable monomers with the same name in different strands.
+     * There is at least one such case: every strand contains a monomer called "".
      *
-     * @param  monName    The name of the monomer to look for
-     * @param  strandName The name of the strand to look for
-     * @return            The Monomer object which was asked for
+     * @param monName The name of the monomer to look for
+     * @param strandName The name of the strand to look for
+     * @return The Monomer object which was asked for
      */
     public IMonomer getMonomer(String monName, String strandName);
 
     /**
-     * Returns a collection of the names of all <code>Monomer</code>s in this
-     * BioPolymer.
+     * Returns a collection of the names of all <code>Monomer</code>s in this BioPolymer.
      *
      * @return a <code>Collection</code> of all the monomer names.
      */
@@ -108,14 +103,13 @@ public interface IBioPolymer extends IPolymer {
     /**
      * Retrieve a Monomer object by specifying its name.
      *
-     * @param cName  The name of the monomer to look for
+     * @param cName The name of the monomer to look for
      * @return The Monomer object which was asked for
      */
     public IStrand getStrand(String cName);
 
     /**
-     * Returns a collection of the names of all <code>Strand</code>s in this
-     * BioPolymer.
+     * Returns a collection of the names of all <code>Strand</code>s in this BioPolymer.
      *
      * @return a <code>Collection</code> of all the strand names.
      */
@@ -124,7 +118,7 @@ public interface IBioPolymer extends IPolymer {
     /**
      * Removes a particular strand, specified by its name.
      *
-     * @param name  The name of the strand to remove
+     * @param name The name of the strand to remove
      */
     public void removeStrand(String name);
 
@@ -135,9 +129,7 @@ public interface IBioPolymer extends IPolymer {
      */
     public Map<String, IStrand> getStrands();
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IBioPolymer clone() throws CloneNotSupportedException;
 }

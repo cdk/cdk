@@ -27,7 +27,6 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -36,7 +35,6 @@ import org.junit.Test;
 
 /**
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- *
  * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
@@ -56,9 +54,7 @@ public class PostFilterTest {
     @After
     public void tearDown() {}
 
-    /**
-     * Test of filter method, of class PostFilter.
-     */
+    /** Test of filter method, of class PostFilter. */
     @Test
     public void testFilter() {
 

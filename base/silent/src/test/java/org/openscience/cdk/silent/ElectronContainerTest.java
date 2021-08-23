@@ -22,9 +22,9 @@ package org.openscience.cdk.silent;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractElectronContainerTest;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.AbstractElectronContainerTest;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
@@ -36,13 +36,14 @@ public class ElectronContainerTest extends AbstractElectronContainerTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new ElectronContainer();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new ElectronContainer();
+                    }
+                });
     }
 
     @Test

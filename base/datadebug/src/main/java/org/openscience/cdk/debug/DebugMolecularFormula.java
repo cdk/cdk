@@ -19,7 +19,6 @@
 package org.openscience.cdk.debug;
 
 import java.util.Map;
-
 import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
@@ -155,5 +154,4 @@ public class DebugMolecularFormula extends MolecularFormula implements IMolecula
     public IChemObjectBuilder getBuilder() {
         return DebugChemObjectBuilder.getInstance();
     }
-
 }

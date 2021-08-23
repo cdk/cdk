@@ -56,7 +56,7 @@ public class CDKSourceCodeFormat extends AbstractResourceFormat implements IChem
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"java"};
+        return new String[] {"java"};
     }
 
     /** {@inheritDoc} */

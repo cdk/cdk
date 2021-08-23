@@ -22,6 +22,10 @@
  */
 package org.openscience.cdk.ringsearch;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 import org._3pq.jgrapht.UndirectedGraph;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.graph.MoleculeGraphs;
@@ -32,50 +36,40 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.cyclebasis.CycleBasis;
 import org.openscience.cdk.ringsearch.cyclebasis.SimpleCycle;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-
 /**
- * Finds the Smallest Set of Smallest Rings.
- * This is an implementation of an algorithm
- * by Franziska Berger, Peter Gritzmann, and Sven deVries, TU M&uuml;nchen,
- * {@cdk.cite BGdV04a}.
+ * Finds the Smallest Set of Smallest Rings. This is an implementation of an algorithm by Franziska
+ * Berger, Peter Gritzmann, and Sven deVries, TU M&uuml;nchen, {@cdk.cite BGdV04a}.
  *
  * <p>Additional related algorithms from {@cdk.cite BGdV04b}.
  *
  * @author Ulrich Bauer &lt;ulrich.bauer@alumni.tum.de&gt;
- *
  * @cdk.module standard
  * @cdk.githash
- *
  * @cdk.keyword smallest-set-of-rings
  * @cdk.keyword ring search
  * @cdk.dictref blue-obelisk:findSmallestSetOfSmallestRings_Berger
- * @deprecated Use the {@link org.openscience.cdk.graph.Cycles} API
- *             {@link org.openscience.cdk.graph.Cycles#sssr(IAtomContainer)}
+ * @deprecated Use the {@link org.openscience.cdk.graph.Cycles} API {@link
+ *     org.openscience.cdk.graph.Cycles#sssr(IAtomContainer)}
  */
 @Deprecated
 public class SSSRFinder {
 
     private IAtomContainer atomContainer;
-    private CycleBasis     cycleBasis;
+    private CycleBasis cycleBasis;
 
     /**
      * Constructs a SSSRFinder for a specified molecule.
      *
-     * @param   container the molecule to be searched for rings
+     * @param container the molecule to be searched for rings
      */
     public SSSRFinder(IAtomContainer container) {
         this.atomContainer = container;
     }
 
     /**
-     * Finds a Smallest Set of Smallest Rings.
-     * The returned set is not uniquely defined.
+     * Finds a Smallest Set of Smallest Rings. The returned set is not uniquely defined.
      *
-     * @return      a RingSet containing the SSSR
+     * @return a RingSet containing the SSSR
      */
     public IRingSet findSSSR() {
         if (atomContainer == null) {
@@ -84,15 +78,13 @@ public class SSSRFinder {
         IRingSet ringSet = toRingSet(atomContainer, cycleBasis().cycles());
         //		atomContainer.setProperty(CDKConstants.SMALLEST_RINGS, ringSet);
         return ringSet;
-
     }
 
     /**
-     * Finds the Set of Essential Rings.
-     * These rings are contained in every possible SSSR.
-     * The returned set is uniquely defined.
+     * Finds the Set of Essential Rings. These rings are contained in every possible SSSR. The
+     * returned set is uniquely defined.
      *
-     * @return      a RingSet containing the Essential Rings
+     * @return a RingSet containing the Essential Rings
      */
     public IRingSet findEssentialRings() {
         if (atomContainer == null) {
@@ -104,11 +96,10 @@ public class SSSRFinder {
     }
 
     /**
-     * Finds the Set of Relevant Rings.
-     * These rings are contained in every possible SSSR.
-     * The returned set is uniquely defined.
+     * Finds the Set of Relevant Rings. These rings are contained in every possible SSSR. The
+     * returned set is uniquely defined.
      *
-     * @return      a RingSet containing the Relevant Rings
+     * @return a RingSet containing the Relevant Rings
      */
     public IRingSet findRelevantRings() {
         if (atomContainer == null) {
@@ -121,10 +112,10 @@ public class SSSRFinder {
     }
 
     /**
-     * Finds the "interchangeability" equivalence classes.
-     * The interchangeability relation is described in [GLS00].
+     * Finds the "interchangeability" equivalence classes. The interchangeability relation is
+     * described in [GLS00].
      *
-     * @return      a List of RingSets containing the rings in an equivalence class
+     * @return a List of RingSets containing the rings in an equivalence class
      */
     public List findEquivalenceClasses() {
         if (atomContainer == null) {
@@ -139,8 +130,8 @@ public class SSSRFinder {
     }
 
     /**
-     * Returns a vector containing the lengths of the rings in a SSSR.
-     * The vector is uniquely defined for any SSSR of a molecule.
+     * Returns a vector containing the lengths of the rings in a SSSR. The vector is uniquely
+     * defined for any SSSR of a molecule.
      *
      * @return An <code>int[]</code> containing the length of the rings in a SSSR
      */
@@ -149,8 +140,8 @@ public class SSSRFinder {
     }
 
     /**
-     * Returns a vector containing the size of the "interchangeability" equivalence classes.
-     * The vector is uniquely defined for any SSSR of a molecule.
+     * Returns a vector containing the size of the "interchangeability" equivalence classes. The
+     * vector is uniquely defined for any SSSR of a molecule.
      *
      * @return An <code>int[]</code> containing the size of the equivalence classes in a SSSR
      */
@@ -192,8 +183,7 @@ public class SSSRFinder {
                 ring.addElectronContainer(container.getBond(atoms[i - 1], atoms[i]));
             }
 
-            for (IAtom atom : atoms)
-                atom.setFlag(CDKConstants.ISINRING, true);
+            for (IAtom atom : atoms) atom.setFlag(CDKConstants.ISINRING, true);
 
             ring.addElectronContainer(container.getBond(atoms[vertices.size() - 1], atoms[0]));
             ring.setAtoms(atoms);
@@ -202,7 +192,5 @@ public class SSSRFinder {
         }
 
         return ringSet;
-
     }
-
 }

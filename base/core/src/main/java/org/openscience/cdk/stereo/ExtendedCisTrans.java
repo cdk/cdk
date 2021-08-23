@@ -23,18 +23,16 @@
 
 package org.openscience.cdk.stereo;
 
+import java.util.List;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IStereoElement;
 
-import java.util.List;
-
-import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
-
 /**
- * Extended Cis/Trans double bond configuration. This stereo element is
- * used to represent configurations of odd numbers of double bonds:
+ * Extended Cis/Trans double bond configuration. This stereo element is used to represent
+ * configurations of odd numbers of double bonds:
+ *
  * <pre>
  *                  C
  *                 /
@@ -42,11 +40,11 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
  *  /
  * C
  * </pre>
+ *
  * @see ExtendedTetrahedral
  * @author John Mayfield
  */
-public final class ExtendedCisTrans
-    extends AbstractStereo<IBond,IBond>  {
+public final class ExtendedCisTrans extends AbstractStereo<IBond, IBond> {
 
     public ExtendedCisTrans(IBond focus, IBond[] peripherals, int config) {
         super(focus, peripherals, CU | (CFG_MASK & config));
@@ -55,19 +53,17 @@ public final class ExtendedCisTrans
     // internal, find a neighbor connected to 'atom' that is not 'other'
     private static IAtom getOtherAtom(IAtomContainer mol, IAtom atom, IAtom other) {
         List<IBond> bonds = mol.getConnectedBondsList(atom);
-        if (bonds.size() != 2)
-            return null;
+        if (bonds.size() != 2) return null;
         if (bonds.get(0).contains(other))
             return bonds.get(1).getOrder() == IBond.Order.DOUBLE
-                   ? bonds.get(1).getOther(atom) : null;
-        return bonds.get(0).getOrder() == IBond.Order.DOUBLE
-                    ? bonds.get(0).getOther(atom) : null;
+                    ? bonds.get(1).getOther(atom)
+                    : null;
+        return bonds.get(0).getOrder() == IBond.Order.DOUBLE ? bonds.get(0).getOther(atom) : null;
     }
 
     /**
-     * Helper method to locate two terminal atoms in a container for this
-     * extended Cis/Trans element. The atoms are ordered such that the first
-     * atom is closer to first carrier.
+     * Helper method to locate two terminal atoms in a container for this extended Cis/Trans
+     * element. The atoms are ordered such that the first atom is closer to first carrier.
      *
      * @param container structure representation
      * @return the terminal atoms (ordered)
@@ -87,17 +83,13 @@ public final class ExtendedCisTrans
             bPrev = bNext;
             bNext = tmp;
         }
-        if (aPrev != null && bPrev != null)
-            return new IAtom[]{aPrev, bPrev};
+        if (aPrev != null && bPrev != null) return new IAtom[] {aPrev, bPrev};
         return null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
-    protected IStereoElement<IBond, IBond> create(IBond focus, List<IBond> carriers,
-                                                  int cfg) {
+    protected IStereoElement<IBond, IBond> create(IBond focus, List<IBond> carriers, int cfg) {
         return new ExtendedCisTrans(focus, carriers.toArray(new IBond[2]), cfg);
     }
 }

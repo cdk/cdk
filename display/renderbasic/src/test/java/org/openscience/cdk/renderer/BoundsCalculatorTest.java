@@ -30,14 +30,12 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.silent.AtomContainer;
 
-/**
- * @cdk.module test-renderbasic
- */
+/** @cdk.module test-renderbasic */
 public class BoundsCalculatorTest {
 
     /**
-     * Test if we get the expected {@link IllegalArgumentException} when we pass
-     * an {@link IAtomContainer} without 2D coordinates.
+     * Test if we get the expected {@link IllegalArgumentException} when we pass an {@link
+     * IAtomContainer} without 2D coordinates.
      */
     @Test(expected = IllegalArgumentException.class)
     public void testCalculateBounds_IAtomContainer_SingleAtom() {
@@ -47,8 +45,8 @@ public class BoundsCalculatorTest {
     }
 
     /**
-     * Test if we get the expected {@link IllegalArgumentException} when we pass
-     * an {@link IAtomContainer} without 2D coordinates.
+     * Test if we get the expected {@link IllegalArgumentException} when we pass an {@link
+     * IAtomContainer} without 2D coordinates.
      */
     @Test(expected = IllegalArgumentException.class)
     public void testCalculateBounds_IAtomContainer() {
@@ -59,8 +57,8 @@ public class BoundsCalculatorTest {
     }
 
     /**
-     * Test if we get the expected {@link IllegalArgumentException} when we pass
-     * an {@link IAtomContainer} without 2D coordinates.
+     * Test if we get the expected {@link IllegalArgumentException} when we pass an {@link
+     * IAtomContainer} without 2D coordinates.
      */
     @Test(expected = IllegalArgumentException.class)
     public void testCalculateBounds_IAtomContainerSet_SingleAtom() {
@@ -72,8 +70,8 @@ public class BoundsCalculatorTest {
     }
 
     /**
-     * Test if we get the expected {@link IllegalArgumentException} when we pass
-     * an {@link IAtomContainer} without 2D coordinates.
+     * Test if we get the expected {@link IllegalArgumentException} when we pass an {@link
+     * IAtomContainer} without 2D coordinates.
      */
     @Test(expected = IllegalArgumentException.class)
     public void testCalculateBounds_IAtomContainerSet() {
@@ -86,8 +84,8 @@ public class BoundsCalculatorTest {
     }
 
     /**
-     * Test if we get the expected {@link IllegalArgumentException} when we pass
-     * an {@link IAtomContainer} without 2D coordinates.
+     * Test if we get the expected {@link IllegalArgumentException} when we pass an {@link
+     * IAtomContainer} without 2D coordinates.
      */
     @Test(expected = IllegalArgumentException.class)
     public void testCalculateBounds_IReactionSet_SingleAtom() {
@@ -101,8 +99,8 @@ public class BoundsCalculatorTest {
     }
 
     /**
-     * Test if we get the expected {@link IllegalArgumentException} when we pass
-     * an {@link IAtomContainer} without 2D coordinates.
+     * Test if we get the expected {@link IllegalArgumentException} when we pass an {@link
+     * IAtomContainer} without 2D coordinates.
      */
     @Test(expected = IllegalArgumentException.class)
     public void testCalculateBounds_IReactionSet() {
@@ -117,8 +115,8 @@ public class BoundsCalculatorTest {
     }
 
     /**
-     * Test if we get the expected {@link IllegalArgumentException} when we pass
-     * an {@link IAtomContainer} without 2D coordinates.
+     * Test if we get the expected {@link IllegalArgumentException} when we pass an {@link
+     * IAtomContainer} without 2D coordinates.
      */
     @Test(expected = IllegalArgumentException.class)
     public void testCalculateBounds_IChemModel_SingleAtom() {
@@ -132,8 +130,8 @@ public class BoundsCalculatorTest {
     }
 
     /**
-     * Test if we get the expected {@link IllegalArgumentException} when we pass
-     * an {@link IAtomContainer} without 2D coordinates.
+     * Test if we get the expected {@link IllegalArgumentException} when we pass an {@link
+     * IAtomContainer} without 2D coordinates.
      */
     @Test(expected = IllegalArgumentException.class)
     public void testCalculateBounds_IChemModel() {
@@ -148,8 +146,8 @@ public class BoundsCalculatorTest {
     }
 
     /**
-     * Test if we get the expected {@link IllegalArgumentException} when we pass
-     * an {@link IAtomContainer} without 2D coordinates.
+     * Test if we get the expected {@link IllegalArgumentException} when we pass an {@link
+     * IAtomContainer} without 2D coordinates.
      */
     @Test(expected = IllegalArgumentException.class)
     public void testCalculateBounds_IReaction_SingleAtom() {
@@ -161,8 +159,8 @@ public class BoundsCalculatorTest {
     }
 
     /**
-     * Test if we get the expected {@link IllegalArgumentException} when we pass
-     * an {@link IAtomContainer} without 2D coordinates.
+     * Test if we get the expected {@link IllegalArgumentException} when we pass an {@link
+     * IAtomContainer} without 2D coordinates.
      */
     @Test(expected = IllegalArgumentException.class)
     public void testCalculateBounds_IReaction() {

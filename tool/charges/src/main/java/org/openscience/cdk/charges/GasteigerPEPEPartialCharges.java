@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.config.AtomTypeFactory;
@@ -46,16 +45,16 @@ import org.openscience.cdk.tools.StructureResonanceGenerator;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- * <p>The calculation of the Gasteiger (PEPE) partial charges is based on
- * {@cdk.cite Saller85}. This class doesn't implement the original method of the Marsili but the
- * method based on H. Saller which is described from Petra manual version 2.6</p>
- * <p>They are calculated by generating all valence bond (resonance) structures
- * for this system and then weighting them on the basis of pi-orbital electronegativities
- * and formal considerations based on PEPE (Partial Equalization of pi-electronegativity).</p>
+ * The calculation of the Gasteiger (PEPE) partial charges is based on {@cdk.cite Saller85}. This
+ * class doesn't implement the original method of the Marsili but the method based on H. Saller
+ * which is described from Petra manual version 2.6
  *
- * @author      Miguel Rojas
+ * <p>They are calculated by generating all valence bond (resonance) structures for this system and
+ * then weighting them on the basis of pi-orbital electronegativities and formal considerations
+ * based on PEPE (Partial Equalization of pi-electronegativity).
  *
- * @cdk.module  charges
+ * @author Miguel Rojas
+ * @cdk.module charges
  * @cdk.githash
  * @cdk.created 2006-05-14
  * @cdk.keyword partial atomic charges
@@ -67,58 +66,57 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 
     /** max iterations */
-    private int                 MX_ITERATIONS = 8;
-    /** max number of resonance structures to be searched*/
-    private int                 MX_RESON      = 50;
-    private int                 STEP_SIZE     = 5;
-    private AtomTypeFactory     factory;
-    /** Flag is set if the formal charge of a chemobject is changed due to resonance.*/
-    private static int          ISCHANGEDFC   = 0x1;
+    private int MX_ITERATIONS = 8;
+    /** max number of resonance structures to be searched */
+    private int MX_RESON = 50;
 
-    /** Corresponds an empirical influence between the electrostatic potential and
-     * the neighbours.*/
-    private double              fE            = 1.1;                                                                     /* 1.1 */
-    /** Scale factor which makes same heavy for all structures*/
-    private double              fS            = 0.37;
-
-    private static ILoggingTool logger        = LoggingToolFactory.createLoggingTool(GasteigerPEPEPartialCharges.class);
+    private int STEP_SIZE = 5;
+    private AtomTypeFactory factory;
+    /** Flag is set if the formal charge of a chemobject is changed due to resonance. */
+    private static int ISCHANGEDFC = 0x1;
 
     /**
-     *  Constructor for the GasteigerPEPEPartialCharges object.
+     * Corresponds an empirical influence between the electrostatic potential and the neighbours.
      */
+    private double fE = 1.1; /* 1.1 */
+    /** Scale factor which makes same heavy for all structures */
+    private double fS = 0.37;
+
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(GasteigerPEPEPartialCharges.class);
+
+    /** Constructor for the GasteigerPEPEPartialCharges object. */
     public GasteigerPEPEPartialCharges() {}
 
     /**
-     *  Sets the maxGasteigerIters attribute of the GasteigerPEPEPartialCharges
-     *  object.
+     * Sets the maxGasteigerIters attribute of the GasteigerPEPEPartialCharges object.
      *
-     *@param  iters  The new maxGasteigerIters value
+     * @param iters The new maxGasteigerIters value
      */
     public void setMaxGasteigerIters(int iters) {
         MX_ITERATIONS = iters;
     }
 
     /**
-     *  Sets the maximum resonance structures to be searched.
+     * Sets the maximum resonance structures to be searched.
      *
-     *@param  numbReson  The number of resonance Structures to be searched
+     * @param numbReson The number of resonance Structures to be searched
      */
     public void setMaxResoStruc(int numbReson) {
         MX_RESON = numbReson;
     }
 
     /**
-     *  Gets the maxGasteigerIters attribute of the GasteigerPEPEPartialCharges
-     *  object.
+     * Gets the maxGasteigerIters attribute of the GasteigerPEPEPartialCharges object.
      *
-     *@return  The new maxGasteigerIters value
+     * @return The new maxGasteigerIters value
      */
     public int getMaxGasteigerIters() {
         return MX_ITERATIONS;
     }
 
     /**
-     *  Gets the maximum resonance structures to be searched.
+     * Gets the maximum resonance structures to be searched.
      *
      * @return the maximum number of resonance structures that will be returned
      */
@@ -127,15 +125,15 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
     }
 
     /**
-     *  Main method which assigns Gasteiger partial pi charges.
+     * Main method which assigns Gasteiger partial pi charges.
      *
-     *
-     *@param  ac             AtomContainer
-     *@param  setCharge      currently unused
-     *@return                AtomContainer with partial charges
-     *@exception  Exception  Possible Exceptions
+     * @param ac AtomContainer
+     * @param setCharge currently unused
+     * @return AtomContainer with partial charges
+     * @exception Exception Possible Exceptions
      */
-    public IAtomContainer assignGasteigerPiPartialCharges(IAtomContainer ac, boolean setCharge) throws Exception {
+    public IAtomContainer assignGasteigerPiPartialCharges(IAtomContainer ac, boolean setCharge)
+            throws Exception {
 
         // we save the aromaticity flags for the input molecule so that
         // we can add them back before we return
@@ -158,7 +156,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
         }
 
         /* 1: detect resonance structure */
-        StructureResonanceGenerator gR1 = new StructureResonanceGenerator();/*
+        StructureResonanceGenerator gR1 = new StructureResonanceGenerator(); /*
                                                                              * according
                                                                              * G
                                                                              * .
@@ -184,7 +182,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
         }
         gR1.setReactions(reactionList1);
 
-        StructureResonanceGenerator gR2 = new StructureResonanceGenerator();/*
+        StructureResonanceGenerator gR2 = new StructureResonanceGenerator(); /*
                                                                              * according
                                                                              * G
                                                                              * .
@@ -211,7 +209,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
         gR2.setReactions(reactionList2);
 
         /* find resonance containers, which eliminates the repetitions */
-        StructureResonanceGenerator gRN = new StructureResonanceGenerator();/*
+        StructureResonanceGenerator gRN = new StructureResonanceGenerator(); /*
                                                                              * according
                                                                              * G
                                                                              * .
@@ -223,41 +221,46 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
                                                                              * bonding
                                                                              */
         IAtomContainerSet acSet = gRN.getContainers(removingFlagsAromaticity(ac));
-        //		IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(removingFlagsAromaticity(ac));
+        //		IAtomContainerSet acSet =
+        // ConjugatedPiSystemsDetector.detect(removingFlagsAromaticity(ac));
 
         IAtomContainerSet iSet = ac.getBuilder().newInstance(IAtomContainerSet.class);
         iSet.addAtomContainer(ac);
 
-        if (acSet != null) for (Iterator<IAtomContainer> it = acSet.atomContainers().iterator(); it.hasNext();) {
-            IAtomContainer container = it.next();
-            ac = setFlags(container, ac, true);
+        if (acSet != null)
+            for (Iterator<IAtomContainer> it = acSet.atomContainers().iterator(); it.hasNext(); ) {
+                IAtomContainer container = it.next();
+                ac = setFlags(container, ac, true);
 
-            // Aromatic don't break its double bond homolytically
-            if (Aromaticity.cdkLegacy().apply(ac))
-                reactionList1.remove(reactionHCPB);
-            else
-                reactionList1.add(reactionHCPB);
+                // Aromatic don't break its double bond homolytically
+                if (Aromaticity.cdkLegacy().apply(ac)) reactionList1.remove(reactionHCPB);
+                else reactionList1.add(reactionHCPB);
 
-            IAtomContainerSet a = gR1.getStructures(removingFlagsAromaticity(ac));
-            if (a.getAtomContainerCount() > 1) {
-                for (int j = 1; j < a.getAtomContainerCount(); j++) { // the first is already added
-                    iSet.addAtomContainer(a.getAtomContainer(j));
+                IAtomContainerSet a = gR1.getStructures(removingFlagsAromaticity(ac));
+                if (a.getAtomContainerCount() > 1) {
+                    for (int j = 1;
+                            j < a.getAtomContainerCount();
+                            j++) { // the first is already added
+                        iSet.addAtomContainer(a.getAtomContainer(j));
+                    }
+                }
+                ac = setFlags(container, ac, false);
+
+                /* processing for bonds which are not in resonance */
+                for (int number = 0; number < ac.getBondCount(); number++) {
+                    IAtomContainer aa = setAntiFlags(container, ac, number, true);
+                    if (aa != null) {
+                        IAtomContainerSet ab = gR2.getStructures(aa);
+                        if (ab.getAtomContainerCount() > 1)
+                            for (int j = 1;
+                                    j < ab.getAtomContainerCount();
+                                    j++) { // the first is already added
+                                iSet.addAtomContainer(ab.getAtomContainer(j));
+                            }
+                        ac = setAntiFlags(container, aa, number, false);
+                    }
                 }
             }
-            ac = setFlags(container, ac, false);
-
-            /* processing for bonds which are not in resonance */
-            for (int number = 0; number < ac.getBondCount(); number++) {
-                IAtomContainer aa = setAntiFlags(container, ac, number, true);
-                if (aa != null) {
-                    IAtomContainerSet ab = gR2.getStructures(aa);
-                    if (ab.getAtomContainerCount() > 1) for (int j = 1; j < ab.getAtomContainerCount(); j++) { // the first is already added
-                            iSet.addAtomContainer(ab.getAtomContainer(j));
-                        }
-                    ac = setAntiFlags(container, aa, number, false);
-                }
-            }
-        }
 
         /* detect hyperconjugation interactions */
         setHI = getHyperconjugationInteractions(ac, iSet);
@@ -282,26 +285,27 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
             IAtomContainer iac = iSet.getAtomContainer(i);
             for (int j = 0; j < iac.getAtomCount(); j++)
                 sumCharges[i][j] = iac.getAtom(j).getFormalCharge();
-
         }
 
         for (int i = 1; i < iSet.getAtomContainerCount(); i++) {
             IAtomContainer iac = iSet.getAtomContainer(i);
             int count = 0;
             for (int j = 0; j < ac.getAtomCount(); j++)
-                if (count < 2) if (sumCharges[i][j] != ac.getAtom(j).getFormalCharge()) {
-                    ac.getAtom(j).setFlag(ISCHANGEDFC, true);
-                    iac.getAtom(j).setFlag(ISCHANGEDFC, true);
-                    count++; /* TODO- error */
-                }
+                if (count < 2)
+                    if (sumCharges[i][j] != ac.getAtom(j).getFormalCharge()) {
+                        ac.getAtom(j).setFlag(ISCHANGEDFC, true);
+                        iac.getAtom(j).setFlag(ISCHANGEDFC, true);
+                        count++; /* TODO- error */
+                    }
         }
 
         /* 3: set sigma charge (PEOE). Initial start point */
-        GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();;
+        GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
+        ;
         peoe.setMaxGasteigerIters(6);
         IAtomContainer acCloned;
 
-        double[][] gasteigerFactors = assignPiFactors(iSet);//a,b,c,deoc,chi,q
+        double[][] gasteigerFactors = assignPiFactors(iSet); // a,b,c,deoc,chi,q
 
         /* 4: calculate topological weight factors Wt=fQ*fB*fA */
         double[] Wt = new double[iSet.getAtomContainerCount() - 1];
@@ -314,7 +318,8 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
                 acCloned = peoe.assignGasteigerMarsiliSigmaPartialCharges(acCloned, true);
                 for (int j = 0; j < acCloned.getAtomCount(); j++)
                     if (iSet.getAtomContainer(i).getAtom(j).getFlag(ISCHANGEDFC)) {
-                        gasteigerFactors[i][STEP_SIZE * j + j + 5] = acCloned.getAtom(j).getCharge();
+                        gasteigerFactors[i][STEP_SIZE * j + j + 5] =
+                                acCloned.getAtom(j).getCharge();
                     }
             } catch (CloneNotSupportedException e) {
                 throw new CDKException("Could not clone ac", e);
@@ -337,24 +342,34 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
                     if (count == 2) /*
                                      * The change of sign is product of only two
                                      * atoms, is not true
-                                     */
-                    break;
+                                     */ break;
                     if (iac.getAtom(j).getFlag(ISCHANGEDFC)) {
-                        logger.debug("Atom: " + j + ", S:" + iac.getAtom(j).getSymbol() + ", C:"
-                                + iac.getAtom(j).getFormalCharge());
-                        if (count == 0)
-                            atom1 = j;
-                        else
-                            atom2 = j;
+                        logger.debug(
+                                "Atom: "
+                                        + j
+                                        + ", S:"
+                                        + iac.getAtom(j).getSymbol()
+                                        + ", C:"
+                                        + iac.getAtom(j).getFormalCharge());
+                        if (count == 0) atom1 = j;
+                        else atom2 = j;
 
                         double q1 = gasteigerFactors[k][STEP_SIZE * j + j + 5];
-                        electronegativity[count] = gasteigerFactors[k][STEP_SIZE * j + j + 2] * q1 * q1
-                                + gasteigerFactors[k][STEP_SIZE * j + j + 1] * q1
-                                + gasteigerFactors[k][STEP_SIZE * j + j];
-                        logger.debug("e:" + electronegativity[count] + ",q1: " + q1 + ", c:"
-                                + gasteigerFactors[k][STEP_SIZE * j + j + 2] + ", b:"
-                                + gasteigerFactors[k][STEP_SIZE * j + j + 1] + ", a:"
-                                + gasteigerFactors[k][STEP_SIZE * j + j]);
+                        electronegativity[count] =
+                                gasteigerFactors[k][STEP_SIZE * j + j + 2] * q1 * q1
+                                        + gasteigerFactors[k][STEP_SIZE * j + j + 1] * q1
+                                        + gasteigerFactors[k][STEP_SIZE * j + j];
+                        logger.debug(
+                                "e:"
+                                        + electronegativity[count]
+                                        + ",q1: "
+                                        + q1
+                                        + ", c:"
+                                        + gasteigerFactors[k][STEP_SIZE * j + j + 2]
+                                        + ", b:"
+                                        + gasteigerFactors[k][STEP_SIZE * j + j + 1]
+                                        + ", a:"
+                                        + gasteigerFactors[k][STEP_SIZE * j + j]);
                         count++;
                     }
                 }
@@ -365,8 +380,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
                 double DX = 1.0;
                 if (electronegativity[0] < electronegativity[1])
                     DX = gasteigerFactors[k][STEP_SIZE * atom1 + atom1 + 3];
-                else
-                    DX = gasteigerFactors[k][STEP_SIZE * atom2 + atom2 + 3];
+                else DX = gasteigerFactors[k][STEP_SIZE * atom2 + atom2 + 3];
 
                 double Dq = (max1 - min1) / DX;
                 logger.debug("Dq : " + Dq + " = (" + max1 + "-" + min1 + ")/" + DX);
@@ -382,8 +396,21 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 
                 /* total topological */
                 double W = WE * Wt[k - 1] * fS / (iTE);
-                logger.debug("W : " + W + " = WE(" + WE + ")*Wt(" + Wt[k - 1] + ")*fS(" + fS + ")/iter(" + iTE
-                        + "), atoms: " + atom1 + ", " + atom2);
+                logger.debug(
+                        "W : "
+                                + W
+                                + " = WE("
+                                + WE
+                                + ")*Wt("
+                                + Wt[k - 1]
+                                + ")*fS("
+                                + fS
+                                + ")/iter("
+                                + iTE
+                                + "), atoms: "
+                                + atom1
+                                + ", "
+                                + atom2);
 
                 /* iac == new structure, ac == old structure */
                 /* atom1 */
@@ -410,7 +437,6 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
                 } else {
                     gasteigerFactors[k][STEP_SIZE * atom2 + atom2 + 5] = -1 * W;
                 }
-
             }
             for (int k = 1; k < iSet.getAtomContainerCount(); k++) {
 
@@ -419,13 +445,19 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
                         double charge = ac.getAtom(i).getCharge();
                         double chargeT = 0.0;
                         chargeT = charge + gasteigerFactors[k][STEP_SIZE * i + i + 5];
-                        logger.debug("i<|" + ac.getAtom(i).getSymbol() + ", " + chargeT + "=c:" + charge + "+g: "
-                                + gasteigerFactors[k][STEP_SIZE * i + i + 5]);
+                        logger.debug(
+                                "i<|"
+                                        + ac.getAtom(i).getSymbol()
+                                        + ", "
+                                        + chargeT
+                                        + "=c:"
+                                        + charge
+                                        + "+g: "
+                                        + gasteigerFactors[k][STEP_SIZE * i + i + 5]);
                         ac.getAtom(i).setCharge(chargeT);
                     }
             }
-
-        }// iterations
+        } // iterations
         logger.debug("final");
 
         // before getting back we should set back the aromatic flags
@@ -435,7 +467,6 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
             ac.getBond(i).setFlag(CDKConstants.ISAROMATIC, oldBondAromaticity[i]);
 
         return ac;
-
     }
 
     @Override
@@ -443,7 +474,8 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
         try {
             this.assignGasteigerPiPartialCharges(container, true);
         } catch (Exception exception) {
-            throw new CDKException("Could not calculate Gasteiger-Marsili PEPE charges: " + exception.getMessage(),
+            throw new CDKException(
+                    "Could not calculate Gasteiger-Marsili PEPE charges: " + exception.getMessage(),
                     exception);
         }
     }
@@ -452,15 +484,13 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
      * remove the aromaticity flags.
      *
      * @param ac The IAtomContainer to remove flags
-     * @return   The IAtomContainer with the flags removed
+     * @return The IAtomContainer with the flags removed
      */
     private IAtomContainer removingFlagsAromaticity(IAtomContainer ac) {
         Iterator<IAtom> atoms = ac.atoms().iterator();
-        while (atoms.hasNext())
-            atoms.next().setFlag(CDKConstants.ISAROMATIC, false);
+        while (atoms.hasNext()) atoms.next().setFlag(CDKConstants.ISAROMATIC, false);
         Iterator<IBond> bonds = ac.bonds().iterator();
-        while (bonds.hasNext())
-            bonds.next().setFlag(CDKConstants.ISAROMATIC, false);
+        while (bonds.hasNext()) bonds.next().setFlag(CDKConstants.ISAROMATIC, false);
         return ac;
     }
 
@@ -468,46 +498,44 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
      * Set the Flags to atoms and bonds from an atomContainer.
      *
      * @param container Container with the flags
-     * @param ac        Container to put the flags
-     * @param b         True, if the the flag is true
-     * @return          Container with added flags
+     * @param ac Container to put the flags
+     * @param b True, if the the flag is true
+     * @return Container with added flags
      */
     private IAtomContainer setFlags(IAtomContainer container, IAtomContainer ac, boolean b) {
-        for (Iterator<IAtom> it = container.atoms().iterator(); it.hasNext();) {
+        for (Iterator<IAtom> it = container.atoms().iterator(); it.hasNext(); ) {
             int positionA = ac.indexOf(it.next());
             ac.getAtom(positionA).setFlag(CDKConstants.REACTIVE_CENTER, b);
         }
-        for (Iterator<IBond> it = container.bonds().iterator(); it.hasNext();) {
+        for (Iterator<IBond> it = container.bonds().iterator(); it.hasNext(); ) {
             int positionB = ac.indexOf(it.next());
             ac.getBond(positionB).setFlag(CDKConstants.REACTIVE_CENTER, b);
-
         }
         return ac;
     }
 
     /**
-     * Set the Flags to atoms and bonds which are not contained
-     * in an atomContainer.
+     * Set the Flags to atoms and bonds which are not contained in an atomContainer.
      *
      * @param container Container with the flags
-     * @param ac        Container to put the flags
-     * @param b         True, if the the flag is true
-     * @return          Container with added flags
+     * @param ac Container to put the flags
+     * @param b True, if the the flag is true
+     * @return Container with added flags
      */
-    private IAtomContainer setAntiFlags(IAtomContainer container, IAtomContainer ac, int number, boolean b) {
+    private IAtomContainer setAntiFlags(
+            IAtomContainer container, IAtomContainer ac, int number, boolean b) {
         IBond bond = ac.getBond(number);
         if (!container.contains(bond)) {
             bond.setFlag(CDKConstants.REACTIVE_CENTER, b);
             bond.getBegin().setFlag(CDKConstants.REACTIVE_CENTER, b);
             bond.getEnd().setFlag(CDKConstants.REACTIVE_CENTER, b);
-        } else
-            return null;
+        } else return null;
         return ac;
     }
 
     /**
-     * get the possible structures after hyperconjugation interactions for bonds which
-     * do not belong to any resonance structure.
+     * get the possible structures after hyperconjugation interactions for bonds which do not belong
+     * to any resonance structure.
      *
      * @param ac IAtomContainer
      * @return IAtomContainerSet
@@ -515,7 +543,8 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
      * @throws ClassNotFoundException
      * @throws IOException
      */
-    private IAtomContainerSet getHyperconjugationInteractions(IAtomContainer ac, IAtomContainerSet iSet)
+    private IAtomContainerSet getHyperconjugationInteractions(
+            IAtomContainer ac, IAtomContainerSet iSet)
             throws IOException, ClassNotFoundException, CDKException {
         IAtomContainerSet set = ac.getBuilder().newInstance(IAtomContainerSet.class);
         IReactionProcess type = new HeterolyticCleavageSBReaction();
@@ -523,7 +552,8 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
         boolean found = false; /* control obtained containers */
         IAtomContainerSet setOfReactants = ac.getBuilder().newInstance(IAtomContainerSet.class);
         /* search of reactive center. */
-        out: for (int i = 0; i < ac.getBondCount(); i++) {
+        out:
+        for (int i = 0; i < ac.getBondCount(); i++) {
             if (ac.getBond(i).getOrder() != IBond.Order.SINGLE) {
                 for (int j = 0; j < iSet.getAtomContainerCount(); j++) {
                     IAtomContainer ati = iSet.getAtomContainer(j);
@@ -532,11 +562,14 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
                             IAtom a0 = ati.getBond(k).getBegin();
                             IAtom a1 = ati.getBond(k).getEnd();
                             if (!"H".equals(a0.getSymbol()) || !"H".equals(a1.getSymbol()))
-                                if ((a0.getID().equals(ac.getBond(i).getBegin().getID()) && a1.getID().equals(
-                                        ac.getBond(i).getEnd().getID()))
-                                        || (a1.getID().equals(ac.getBond(i).getBegin().getID()) && a0.getID().equals(
-                                                ac.getBond(i).getEnd().getID()))) {
-                                    if (a0.getFormalCharge() != 0 || a1.getFormalCharge() != 0) continue out;
+                                if ((a0.getID().equals(ac.getBond(i).getBegin().getID())
+                                                && a1.getID()
+                                                        .equals(ac.getBond(i).getEnd().getID()))
+                                        || (a1.getID().equals(ac.getBond(i).getBegin().getID())
+                                                && a0.getID()
+                                                        .equals(ac.getBond(i).getEnd().getID()))) {
+                                    if (a0.getFormalCharge() != 0 || a1.getFormalCharge() != 0)
+                                        continue out;
                                 }
                         }
                 }
@@ -574,7 +607,8 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
             IReactionSet setOfReactions2 = type.initiate(setOfM2, null);
             if (setOfReactions2.getReactionCount() > 0) {
 
-                IAtomContainer react = setOfReactions2.getReaction(0).getReactants().getAtomContainer(0);
+                IAtomContainer react =
+                        setOfReactions2.getReaction(0).getReactants().getAtomContainer(0);
 
                 set.addAtomContainer(react);
             }
@@ -586,10 +620,10 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
     /**
      * get the electrostatic potential of the neighbours of a atom.
      *
-     * @param ac   The IAtomContainer to study
+     * @param ac The IAtomContainer to study
      * @param ds
      * @param atom1 The position of the IAtom to study
-     * @return     The sum of electrostatic potential of the neighbours
+     * @return The sum of electrostatic potential of the neighbours
      */
     private double getElectrostaticPotentialN(IAtomContainer ac, int atom1, double[] ds) {
 
@@ -598,8 +632,10 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
         double sum = 0.0;
         try {
             if (factory == null)
-                factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt",
-                        ac.getBuilder());
+                factory =
+                        AtomTypeFactory.getInstance(
+                                "org/openscience/cdk/config/data/jmol_atomtypes.txt",
+                                ac.getBuilder());
 
             List<IAtom> atoms = ac.getConnectedAtomsList(ac.getAtom(atom1));
             for (IAtom atom : atoms) {
@@ -609,8 +645,15 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
                 covalentradius = type.getCovalentRadius();
 
                 double charge = ds[STEP_SIZE * atom1 + atom1 + 5];
-                logger.debug("sum_(" + sum + ") = CFC(" + CoulombForceConstant + ")*charge(" + charge + "/ret("
-                        + covalentradius);
+                logger.debug(
+                        "sum_("
+                                + sum
+                                + ") = CFC("
+                                + CoulombForceConstant
+                                + ")*charge("
+                                + charge
+                                + "/ret("
+                                + covalentradius);
                 sum += CoulombForceConstant * charge / (covalentradius * covalentradius);
             }
         } catch (CDKException e) {
@@ -623,8 +666,8 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
     /**
      * get the topological weight factor for each atomContainer.
      *
-     * @param atomContainer  The IAtomContainer to study.
-     * @param ac             The IAtomContainer to study.
+     * @param atomContainer The IAtomContainer to study.
+     * @param ac The IAtomContainer to study.
      * @return The value
      */
     private double getTopologicalFactors(IAtomContainer atomContainer, IAtomContainer ac) {
@@ -637,7 +680,8 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
             fQ = 0.5;
             for (int i = 0; i < atomContainer.getBondCount(); i++) {
                 IBond bond = atomContainer.getBond(i);
-                if (bond.getBegin().getFormalCharge() != 0.0 && bond.getEnd().getFormalCharge() != 0.0) {
+                if (bond.getBegin().getFormalCharge() != 0.0
+                        && bond.getEnd().getFormalCharge() != 0.0) {
                     fQ = 0.25;
                     break;
                 }
@@ -653,7 +697,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
             if (ac.getBond(i).getOrder() == IBond.Order.DOUBLE) numBond2 += 1;
         }
 
-        if (numBond1 < /* > */numBond2) fB = 0.8;
+        if (numBond1 < /* > */ numBond2) fB = 0.8;
 
         double fPlus = 1.0;
         if (totalNCharge1 == 0.0 && totalPCharge1 == 0.0) fPlus = 0.1;
@@ -661,30 +705,39 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
         /* aromatic */
         double fA = 1.0;
         try {
-            if (Aromaticity.cdkLegacy().apply(ac)) if (!Aromaticity.cdkLegacy().apply(atomContainer)) fA = 0.3;
+            if (Aromaticity.cdkLegacy().apply(ac))
+                if (!Aromaticity.cdkLegacy().apply(atomContainer)) fA = 0.3;
         } catch (CDKException e) {
             e.printStackTrace();
         }
-        logger.debug("return " + fQ * fB * fPlus * fA + "= sp:" + fQ + ", dc:" + fB + ", fPlus:" + fPlus + ", fA:" + fA);
+        logger.debug(
+                "return "
+                        + fQ * fB * fPlus * fA
+                        + "= sp:"
+                        + fQ
+                        + ", dc:"
+                        + fB
+                        + ", fPlus:"
+                        + fPlus
+                        + ", fA:"
+                        + fA);
 
         return fQ * fB * fPlus * fA;
     }
 
     /**
-     *  Get the StepSize attribute of the GasteigerMarsiliPartialCharges
-     *  object.
+     * Get the StepSize attribute of the GasteigerMarsiliPartialCharges object.
      *
-     *@return STEP_SIZE
+     * @return STEP_SIZE
      */
     public int getStepSize() {
         return STEP_SIZE;
     }
 
     /**
-     *  Set the StepSize attribute of the GasteigerMarsiliPartialCharges
-     *  object.
+     * Set the StepSize attribute of the GasteigerMarsiliPartialCharges object.
      *
-     *@param step
+     * @param step
      */
     public void setStepSize(int step) {
         STEP_SIZE = step;
@@ -693,14 +746,15 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
     /**
      * Method which stores and assigns the factors a,b,c and CHI+.
      *
-     * @return     Array of doubles [a1,b1,c1,denom1,chi1,q1...an,bn,cn...] 1:Atom 1-n in AtomContainer
+     * @return Array of doubles [a1,b1,c1,denom1,chi1,q1...an,bn,cn...] 1:Atom 1-n in AtomContainer
      */
     private double[][] assignPiFactors(IAtomContainerSet setAc) {
-        //a,b,c,denom,chi,q
-        double[][] gasteigerFactors = new double[setAc.getAtomContainerCount()][(setAc.getAtomContainer(0)
-                .getAtomCount() * (STEP_SIZE + 1))];
+        // a,b,c,denom,chi,q
+        double[][] gasteigerFactors =
+                new double[setAc.getAtomContainerCount()]
+                        [(setAc.getAtomContainer(0).getAtomCount() * (STEP_SIZE + 1))];
         String AtomSymbol = "";
-        double[] factors = new double[]{0.0, 0.0, 0.0};
+        double[] factors = new double[] {0.0, 0.0, 0.0};
         for (int k = 1; k < setAc.getAtomContainerCount(); k++) {
             IAtomContainer ac = setAc.getAtomContainer(k);
             for (int i = 0; i < ac.getAtomCount(); i++) {
@@ -712,10 +766,11 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
                     factors[0] = 0.0;
                     factors[1] = 0.0;
                     factors[2] = 0.0;
-                } else if (AtomSymbol.equals("C")) {/*
-                                                     * if(ac.getAtom(i).getFlag(
-                                                     * ISCHANGEDFC))
-                                                     */
+                } else if (AtomSymbol.equals("C")) {
+                        /*
+                         * if(ac.getAtom(i).getFlag(
+                         * ISCHANGEDFC))
+                         */
                     {
                         factors[0] = 5.60;
                         factors[1] = 8.93;
@@ -733,13 +788,13 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
                     }
                 } else if (AtomSymbol.equals("N")) {
                     if (ac.getMaximumBondOrder(ac.getAtom(i)) != IBond.Order.SINGLE) {
-                        factors[0] = 7.95;/* 7.95 */
-                        factors[1] = 9.73;/* 9.73 */
-                        factors[2] = 2.67;/* 2.67 */
+                        factors[0] = 7.95; /* 7.95 */
+                        factors[1] = 9.73; /* 9.73 */
+                        factors[2] = 2.67; /* 2.67 */
                     } else {
-                        factors[0] = 4.54;/* 4.54 *//* 5.5 */
-                        factors[1] = 11.86;/* 11.86 *//* 10.86 */
-                        factors[2] = 7.32;/* 7.32 *//* 7.99 */
+                        factors[0] = 4.54; /* 4.54 */ /* 5.5 */
+                        factors[1] = 11.86; /* 11.86 */ /* 10.86 */
+                        factors[2] = 7.32; /* 7.32 */ /* 7.99 */
                     }
                 } else if (AtomSymbol.equals("S")) {
                     if (ac.getMaximumBondOrder(ac.getAtom(i)) == IBond.Order.SINGLE) {
@@ -777,7 +832,8 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
                 if (factors[0] == 0 && factors[1] == 0 && factors[2] == 0) {
                     gasteigerFactors[k][STEP_SIZE * i + i + 3] = 1;
                 } else {
-                    gasteigerFactors[k][STEP_SIZE * i + i + 3] = factors[0] + factors[1] + factors[2];
+                    gasteigerFactors[k][STEP_SIZE * i + i + 3] =
+                            factors[0] + factors[1] + factors[2];
                 }
             }
         }
@@ -786,16 +842,17 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
     }
 
     /**
-     *  Method which stores and assigns the factors a,b,c and CHI+.
+     * Method which stores and assigns the factors a,b,c and CHI+.
      *
-     *@return     Array of doubles [a1,b1,c1,denom1,chi1,q1...an,bn,cn...] 1:Atom 1-n in AtomContainer
+     * @return Array of doubles [a1,b1,c1,denom1,chi1,q1...an,bn,cn...] 1:Atom 1-n in AtomContainer
      */
     public double[][] assignrPiMarsilliFactors(IAtomContainerSet setAc) {
-        //a,b,c,denom,chi,q
-        double[][] gasteigerFactors = new double[setAc.getAtomContainerCount()][(setAc.getAtomContainer(0)
-                .getAtomCount() * (STEP_SIZE + 1))];
+        // a,b,c,denom,chi,q
+        double[][] gasteigerFactors =
+                new double[setAc.getAtomContainerCount()]
+                        [(setAc.getAtomContainer(0).getAtomCount() * (STEP_SIZE + 1))];
         String AtomSymbol = "";
-        double[] factors = new double[]{0.0, 0.0, 0.0};
+        double[] factors = new double[] {0.0, 0.0, 0.0};
         for (int k = 1; k < setAc.getAtomContainerCount(); k++) {
             IAtomContainer ac = setAc.getAtomContainer(k);
 
@@ -809,13 +866,13 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
                     factors[1] = 0.0;
                     factors[2] = 0.0;
                 } else if (AtomSymbol.equals("C")) {
-                    factors[0] = 5.98;/* 5.98-5.60 */
-                    factors[1] = 7.93;/* 7.93-8.93 */
+                    factors[0] = 5.98; /* 5.98-5.60 */
+                    factors[1] = 7.93; /* 7.93-8.93 */
                     factors[2] = 1.94;
                 } else if (AtomSymbol.equals("O")) {
                     if (ac.getMaximumBondOrder(ac.getAtom(i)) != IBond.Order.SINGLE) {
-                        factors[0] = 11.2;/* 11.2-10.0 */
-                        factors[1] = 13.24;/* 13.24-13.86 */
+                        factors[0] = 11.2; /* 11.2-10.0 */
+                        factors[1] = 13.24; /* 13.24-13.86 */
                         factors[2] = 9.68;
                     } else {
                         factors[0] = 7.91;
@@ -825,23 +882,23 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
                 } else if (AtomSymbol.equals("N")) {
                     if (ac.getMaximumBondOrder(ac.getAtom(i)) != IBond.Order.SINGLE) {
 
-                        factors[0] = 8.95;/* 7.95 */
-                        factors[1] = 9.73;/* 9.73 */
-                        factors[2] = 2.67;/* 2.67 */
+                        factors[0] = 8.95; /* 7.95 */
+                        factors[1] = 9.73; /* 9.73 */
+                        factors[2] = 2.67; /* 2.67 */
                     } else {
                         factors[0] = 4.54;
                         factors[1] = 11.86;
                         factors[2] = 7.32;
                     }
-                } else if (AtomSymbol.equals("P")) {// <--No correct
+                } else if (AtomSymbol.equals("P")) { // <--No correct
                     if (ac.getMaximumBondOrder(ac.getAtom(i)) != IBond.Order.SINGLE) {
-                        factors[0] = 10.73;// <--No correct
-                        factors[1] = 11.16;// <--No correct
-                        factors[2] = 6.81;// <--No correct
+                        factors[0] = 10.73; // <--No correct
+                        factors[1] = 11.16; // <--No correct
+                        factors[2] = 6.81; // <--No correct
                     } else {
-                        factors[0] = 9.60;// <--No correct
-                        factors[1] = 13.32;// <--No correct
-                        factors[2] = 2.72;// <--No correct
+                        factors[0] = 9.60; // <--No correct
+                        factors[1] = 13.32; // <--No correct
+                        factors[2] = 2.72; // <--No correct
                     }
                 } else if (AtomSymbol.equals("S")) {
                     if (ac.getMaximumBondOrder(ac.getAtom(i)) != IBond.Order.SINGLE) {
@@ -855,11 +912,11 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
                         factors[2] = 3.72;
                     }
                 } else if (AtomSymbol.equals("F")) {
-                    factors[0] = 7.14/* 7.34 */;
+                    factors[0] = 7.14 /* 7.34 */;
                     factors[1] = 13.86;
                     factors[2] = 5.68;
                 } else if (AtomSymbol.equals("Cl")) {
-                    factors[0] = 6.51;/* 6.50 */
+                    factors[0] = 6.51; /* 6.50 */
                     factors[1] = 11.02;
                     factors[2] = 4.52;
                 } else if (AtomSymbol.equals("Br")) {
@@ -880,7 +937,8 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
                 if (factors[0] == 0 && factors[1] == 0 && factors[2] == 0) {
                     gasteigerFactors[k][STEP_SIZE * i + i + 3] = 1;
                 } else {
-                    gasteigerFactors[k][STEP_SIZE * i + i + 3] = factors[0] + factors[1] + factors[2];
+                    gasteigerFactors[k][STEP_SIZE * i + i + 3] =
+                            factors[0] + factors[1] + factors[2];
                 }
             }
         }

@@ -22,17 +22,15 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
- * Calculator for a adjacency matrix representation of this AtomContainer. An
- * adjacency matrix is a matrix of quare NxN matrix, where N is the number of
- * atoms in the AtomContainer. The element i,j of the matrix is 1, if the i-th
- * and the j-th atom in the atomcontainer share a bond. Otherwise it is zero.
- * See {@cdk.cite TRI92}.
+ * Calculator for a adjacency matrix representation of this AtomContainer. An adjacency matrix is a
+ * matrix of quare NxN matrix, where N is the number of atoms in the AtomContainer. The element i,j
+ * of the matrix is 1, if the i-th and the j-th atom in the atomcontainer share a bond. Otherwise it
+ * is zero. See {@cdk.cite TRI92}.
  *
- * @cdk.module  core
+ * @cdk.module core
  * @cdk.githash
  * @cdk.keyword adjacency matrix
- *
- * @author      steinbeck
+ * @author steinbeck
  * @cdk.created 2004-07-04
  * @cdk.dictref blue-obelisk:calculateAdjecencyMatrix
  */
@@ -41,8 +39,8 @@ public class AdjacencyMatrix implements IGraphMatrix {
     /**
      * Returns the adjacency matrix for the given AtomContainer.
      *
-     * @param  container The AtomContainer for which the matrix is calculated
-     * @return           An adjacency matrix representing this AtomContainer
+     * @param container The AtomContainer for which the matrix is calculated
+     * @return An adjacency matrix representing this AtomContainer
      */
     public static int[][] getMatrix(IAtomContainer container) {
         IBond bond;
@@ -58,5 +56,4 @@ public class AdjacencyMatrix implements IGraphMatrix {
         }
         return conMat;
     }
-
 }

@@ -58,7 +58,7 @@ public class MDLRXNFormat extends SimpleChemFormatMatcher implements IChemFormat
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"rxn"};
+        return new String[] {"rxn"};
     }
 
     /** {@inheritDoc} */

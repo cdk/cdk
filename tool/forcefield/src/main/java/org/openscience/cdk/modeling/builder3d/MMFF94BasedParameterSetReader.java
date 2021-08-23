@@ -23,14 +23,6 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
-import org.openscience.cdk.config.Isotopes;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.tools.ILoggingTool;
-import org.openscience.cdk.tools.LoggingToolFactory;
-import org.openscience.cdk.tools.periodictable.PeriodicTable;
-
 import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -41,10 +33,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.Vector;
+import org.openscience.cdk.config.Isotopes;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
- * AtomType list configurator that uses the ParameterSet originally defined in
- * mmff94.prm from moe. This class was added to be able to port mmff94 to CDK.
+ * AtomType list configurator that uses the ParameterSet originally defined in mmff94.prm from moe.
+ * This class was added to be able to port mmff94 to CDK.
  *
  * @author chhoppe
  * @cdk.created 2004-09-07
@@ -54,29 +53,27 @@ import java.util.Vector;
  */
 public class MMFF94BasedParameterSetReader {
 
-    private final ILoggingTool  LOG            = LoggingToolFactory
-                                                       .createLoggingTool(MMFF94BasedParameterSetReader.class);
+    private final ILoggingTool LOG =
+            LoggingToolFactory.createLoggingTool(MMFF94BasedParameterSetReader.class);
 
-    private String              configFile     = "org/openscience/cdk/modeling/forcefield/data/mmff94.prm";
-    private InputStream         ins            = null;
+    private String configFile = "org/openscience/cdk/modeling/forcefield/data/mmff94.prm";
+    private InputStream ins = null;
     private Map<String, Object> parameterSet;
-    private List<IAtomType>     atomTypes;
-    private StringTokenizer     st;
-    private String              key            = "";
-    private String              sid;
+    private List<IAtomType> atomTypes;
+    private StringTokenizer st;
+    private String key = "";
+    private String sid;
 
-    private String              configFilevdW  = "org/openscience/cdk/modeling/forcefield/data/mmffvdw.prm";
-    private InputStream         insvdW         = null;
-    private StringTokenizer     stvdW;
-    private String              sidvdW;
+    private String configFilevdW = "org/openscience/cdk/modeling/forcefield/data/mmffvdw.prm";
+    private InputStream insvdW = null;
+    private StringTokenizer stvdW;
+    private String sidvdW;
 
-    private String              configFileDFSB = "org/openscience/cdk/modeling/forcefield/data/mmffdfsb.par";
-    private InputStream         insDFSB;
-    private StringTokenizer     stDFSB;
+    private String configFileDFSB = "org/openscience/cdk/modeling/forcefield/data/mmffdfsb.par";
+    private InputStream insDFSB;
+    private StringTokenizer stDFSB;
 
-    /**
-     * Constructor for the MM2BasedParameterSetReader object
-     */
+    /** Constructor for the MM2BasedParameterSetReader object */
     public MMFF94BasedParameterSetReader() {
         parameterSet = new Hashtable<String, Object>();
         atomTypes = new Vector<IAtomType>();
@@ -113,7 +110,7 @@ public class MMFF94BasedParameterSetReader {
         String swell = st.nextToken();
         String sapol = st.nextToken();
         String sNeff = st.nextToken();
-        //st.nextToken();
+        // st.nextToken();
         String sDA = st.nextToken();
         String sq0 = st.nextToken();
         String spbci = st.nextToken();
@@ -129,7 +126,7 @@ public class MMFF94BasedParameterSetReader {
             double apol = new Double(sapol).doubleValue();
             double Neff = new Double(sNeff).doubleValue();
             double fcadj = new Double(sfcadj).doubleValue();
-            //double pbci = new Double(spbci).doubleValue();
+            // double pbci = new Double(spbci).doubleValue();
             double a = new Double(sA).doubleValue();
             double g = new Double(sG).doubleValue();
 
@@ -179,7 +176,7 @@ public class MMFF94BasedParameterSetReader {
     private void setAtomTypes(IChemObjectBuilder builder) throws Exception {
         String name = "";
         String rootType = "";
-        //int an = 0;
+        // int an = 0;
         int rl = 255;
         int gl = 20;
         int bl = 147;
@@ -271,7 +268,7 @@ public class MMFF94BasedParameterSetReader {
         String value4 = st.nextToken();
 
         try {
-            //int code=new Integer(scode).intValue();
+            // int code=new Integer(scode).intValue();
             double va1 = new Double(value1).doubleValue();
             double va2 = new Double(value2).doubleValue();
             double va3 = new Double(value3).doubleValue();
@@ -313,7 +310,7 @@ public class MMFF94BasedParameterSetReader {
         String value2 = st.nextToken();
 
         try {
-            //int code=new Integer(scode).intValue();
+            // int code=new Integer(scode).intValue();
             double va1 = new Double(value1).doubleValue();
             double va2 = new Double(value2).doubleValue();
             data.add(new Double(va1));
@@ -443,7 +440,7 @@ public class MMFF94BasedParameterSetReader {
      * @throws Exception Description of the Exception
      */
     public void readParameterSets(IChemObjectBuilder builder) throws Exception {
-        //vdW,bond,angle,strbond,opbend,torsion,data
+        // vdW,bond,angle,strbond,opbend,torsion,data
         LOG.debug("------ Read MMFF94 ParameterSets ------");
 
         if (ins == null) {
@@ -462,7 +459,8 @@ public class MMFF94BasedParameterSetReader {
             insvdW = this.getClass().getClassLoader().getResourceAsStream(configFilevdW);
         }
         if (insvdW == null) {
-            throw new IOException("There was a problem getting the default stream: " + configFilevdW);
+            throw new IOException(
+                    "There was a problem getting the default stream: " + configFilevdW);
         }
 
         BufferedReader rvdW = new BufferedReader(new InputStreamReader(insvdW), 1024);
@@ -473,7 +471,8 @@ public class MMFF94BasedParameterSetReader {
             insDFSB = this.getClass().getClassLoader().getResourceAsStream(configFileDFSB);
         }
         if (insDFSB == null) {
-            throw new IOException("There was a problem getting the default stream: " + configFileDFSB);
+            throw new IOException(
+                    "There was a problem getting the default stream: " + configFileDFSB);
         }
 
         BufferedReader rDFSB = new BufferedReader(new InputStreamReader(insDFSB), 1024);
@@ -507,7 +506,8 @@ public class MMFF94BasedParameterSetReader {
                     setOpBend();
                     a[5]++;
                 } else if (s.startsWith("data") & nt == 10) {
-                    readatmmffvdw: while (true) {
+                    readatmmffvdw:
+                    while (true) {
                         svdW = rvdW.readLine();
                         if (svdW == null) {
                             break;
@@ -526,9 +526,9 @@ public class MMFF94BasedParameterSetReader {
                             }
                             break readatmmffvdw;
                         }
-                    }// end while
+                    } // end while
                 }
-            }// end while
+            } // end while
 
             ins.close();
             insvdW.close();
@@ -555,7 +555,8 @@ public class MMFF94BasedParameterSetReader {
             insDFSB.close();
             LOG.debug("insDFSB closed");
         } catch (IOException e) {
-            throw new IOException("There was a problem parsing the Default Stretch-Bend Parameters (mmffdfsb.par)");
+            throw new IOException(
+                    "There was a problem parsing the Default Stretch-Bend Parameters (mmffdfsb.par)");
         }
     }
 
@@ -563,7 +564,7 @@ public class MMFF94BasedParameterSetReader {
      * Mass number for a atom with a given atomic number and exact mass.
      *
      * @param atomicNumber atomic number
-     * @param exactMass    exact mass
+     * @param exactMass exact mass
      * @return the mass number (or null) if no mass number was found
      * @throws IOException isotope configuration could not be loaded
      */
@@ -572,5 +573,4 @@ public class MMFF94BasedParameterSetReader {
         IIsotope isotope = Isotopes.getInstance().getIsotope(symbol, exactMass, 0.001);
         return isotope != null ? isotope.getMassNumber() : null;
     }
-
 }

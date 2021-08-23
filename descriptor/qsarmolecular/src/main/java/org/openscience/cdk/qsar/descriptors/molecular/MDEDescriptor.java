@@ -19,6 +19,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
@@ -33,47 +35,43 @@ import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * Calculates the Molecular Distance Edge descriptor described in {@cdk.cite LIU98}.
- * This class evaluates the 10 MDE descriptors described by Liu et al. and
- * in addition it calculates variants where O and N are considered (as found in the DEDGE routine
- * from ADAPT).
- * 
+ * Calculates the Molecular Distance Edge descriptor described in {@cdk.cite LIU98}. This class
+ * evaluates the 10 MDE descriptors described by Liu et al. and in addition it calculates variants
+ * where O and N are considered (as found in the DEDGE routine from ADAPT).
  *
- * <center>
+ * <p><center>
+ *
  * <table border=1>
  * <caption>Table 1 - Description of the different MDE descriptors generated</caption>
  * <tr>
  * <td>MDEC-11</td><td> molecular distance edge between all primary carbons</td></tr><tr>
  * <td>MDEC-12</td><td> molecular distance edge between all primary and secondary carbons</td></tr><tr>
- * 
+ *
  * <td>MDEC-13</td><td> molecular distance edge between all primary and tertiary carbons</td></tr><tr>
  * <td>MDEC-14</td><td> molecular distance edge between all primary and quaternary carbons </td></tr><tr>
  * <td>MDEC-22</td><td> molecular distance edge between all secondary carbons </td></tr><tr>
  * <td>MDEC-23</td><td> molecular distance edge between all secondary and tertiary carbons</td></tr><tr>
- * 
+ *
  * <td>MDEC-24</td><td> molecular distance edge between all secondary and quaternary carbons </td></tr><tr>
  * <td>MDEC-33</td><td> molecular distance edge between all tertiary carbons</td></tr><tr>
  * <td>MDEC-34</td><td> molecular distance edge between all tertiary and quaternary carbons </td></tr><tr>
  * <td>MDEC-44</td><td> molecular distance edge between all quaternary carbons </td></tr><tr>
- * 
+ *
  * <td>MDEO-11</td><td> molecular distance edge between all primary oxygens </td></tr><tr>
  * <td>MDEO-12</td><td> molecular distance edge between all primary and secondary oxygens </td></tr><tr>
  * <td>MDEO-22</td><td> molecular distance edge between all secondary oxygens </td></tr><tr>
  * <td>MDEN-11</td><td> molecular distance edge between all primary nitrogens</td></tr><tr>
- * 
+ *
  * <td>MDEN-12</td><td> molecular distance edge between all primary and secondary nitrogens </td></tr><tr>
  * <td>MDEN-13</td><td> molecular distance edge between all primary and tertiary niroqens </td></tr><tr>
  * <td>MDEN-22</td><td> molecular distance edge between all secondary nitroqens </td></tr><tr>
  * <td>MDEN-23</td><td> molecular distance edge between all secondary and tertiary nitrogens </td></tr><tr>
- * 
+ *
  * <td>MDEN-33</td><td> molecular distance edge between all tertiary nitrogens</td></tr>
  * </table>
+ *
  * </center>
- * 
  *
  * @author Rajarshi Guha
  * @cdk.created 2006-09-18
@@ -83,75 +81,76 @@ import java.util.List;
  */
 public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static final String[] NAMES  = {"MDEC-11", "MDEC-12", "MDEC-13", "MDEC-14", "MDEC-22", "MDEC-23",
-            "MDEC-24", "MDEC-33", "MDEC-34", "MDEC-44", "MDEO-11", "MDEO-12", "MDEO-22", "MDEN-11", "MDEN-12",
-            "MDEN-13", "MDEN-22", "MDEN-23", "MDEN-33"};
+    private static final String[] NAMES = {
+        "MDEC-11", "MDEC-12", "MDEC-13", "MDEC-14", "MDEC-22", "MDEC-23", "MDEC-24", "MDEC-33",
+        "MDEC-34", "MDEC-44", "MDEO-11", "MDEO-12", "MDEO-22", "MDEN-11", "MDEN-12", "MDEN-13",
+        "MDEN-22", "MDEN-23", "MDEN-33"
+    };
 
-    public static final int       MDEC11 = 0;
-    public static final int       MDEC12 = 1;
-    public static final int       MDEC13 = 2;
-    public static final int       MDEC14 = 3;
-    public static final int       MDEC22 = 4;
-    public static final int       MDEC23 = 5;
-    public static final int       MDEC24 = 6;
-    public static final int       MDEC33 = 7;
-    public static final int       MDEC34 = 8;
-    public static final int       MDEC44 = 9;
+    public static final int MDEC11 = 0;
+    public static final int MDEC12 = 1;
+    public static final int MDEC13 = 2;
+    public static final int MDEC14 = 3;
+    public static final int MDEC22 = 4;
+    public static final int MDEC23 = 5;
+    public static final int MDEC24 = 6;
+    public static final int MDEC33 = 7;
+    public static final int MDEC34 = 8;
+    public static final int MDEC44 = 9;
 
-    public static final int       MDEO11 = 10;
-    public static final int       MDEO12 = 11;
-    public static final int       MDEO22 = 12;
+    public static final int MDEO11 = 10;
+    public static final int MDEO12 = 11;
+    public static final int MDEO22 = 12;
 
-    public static final int       MDEN11 = 13;
-    public static final int       MDEN12 = 14;
-    public static final int       MDEN13 = 15;
-    public static final int       MDEN22 = 16;
-    public static final int       MDEN23 = 17;
-    public static final int       MDEN33 = 18;
+    public static final int MDEN11 = 13;
+    public static final int MDEN12 = 14;
+    public static final int MDEN13 = 15;
+    public static final int MDEN22 = 16;
+    public static final int MDEN23 = 17;
+    public static final int MDEN33 = 18;
 
-    private static final int      C_1    = 1;
-    private static final int      C_2    = 2;
-    private static final int      C_3    = 3;
-    private static final int      C_4    = 4;
+    private static final int C_1 = 1;
+    private static final int C_2 = 2;
+    private static final int C_3 = 3;
+    private static final int C_4 = 4;
 
-    private static final int      O_1    = 1;
-    private static final int      O_2    = 2;
+    private static final int O_1 = 1;
+    private static final int O_2 = 2;
 
-    private static final int      N_1    = 1;
-    private static final int      N_2    = 2;
-    private static final int      N_3    = 3;
+    private static final int N_1 = 1;
+    private static final int N_2 = 2;
+    private static final int N_3 = 3;
 
-    public MDEDescriptor() {
-
-    }
+    public MDEDescriptor() {}
 
     /**
      * Returns a <code>Map</code> which specifies which descriptor is implemented by this class.
-     * 
-     * These fields are used in the map:
+     *
+     * <p>These fields are used in the map:
+     *
      * <ul>
-     * <li>Specification-Reference: refers to an entry in a unique dictionary
-     * <li>Implementation-Title: anything
-     * <li>Implementation-Identifier: a unique identifier for this version of
-     * this class
-     * <li>Implementation-Vendor: CDK, JOELib, or anything else
+     *   <li>Specification-Reference: refers to an entry in a unique dictionary
+     *   <li>Implementation-Title: anything
+     *   <li>Implementation-Identifier: a unique identifier for this version of this class
+     *   <li>Implementation-Vendor: CDK, JOELib, or anything else
      * </ul>
      *
      * @return An object containing the descriptor specification
      */
     @Override
     public DescriptorSpecification getSpecification() {
-        return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#mde",
-                this.getClass().getName(), "The Chemistry Development Kit");
+        return new DescriptorSpecification(
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#mde",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     /**
      * Sets the parameters attribute of the WeightDescriptor object.
      *
      * @param params The new parameters value
-     * @throws org.openscience.cdk.exception.CDKException
-     *          if more than 1 parameter is specified or if the parameter
-     *          is not of type String
+     * @throws org.openscience.cdk.exception.CDKException if more than 1 parameter is specified or
+     *     if the parameter is not of type String
      * @see #getParameters
      */
     @Override
@@ -176,13 +175,13 @@ public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolec
     }
 
     /**
-     * Calculate the weight of specified element type in the supplied {@link org.openscience.cdk.interfaces.IAtomContainer}.
+     * Calculate the weight of specified element type in the supplied {@link
+     * org.openscience.cdk.interfaces.IAtomContainer}.
      *
-     * @param container The AtomContainer for which this descriptor is to be calculated. If 'H'
-     *                  is specified as the element symbol make sure that the AtomContainer has hydrogens.
+     * @param container The AtomContainer for which this descriptor is to be calculated. If 'H' is
+     *     specified as the element symbol make sure that the AtomContainer has hydrogens.
      * @return The total weight of atoms of the specified element type
      */
-
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
 
@@ -193,20 +192,26 @@ public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolec
             retval.add(dedge(local, i));
         }
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval,
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                retval,
                 getDescriptorNames());
     }
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * 
-     * The return value from this method really indicates what type of result will
-     * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
-     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
-     * allows you to do the same thing, without actually calculating the descriptor.
      *
-     * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
-     *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
+     * <p>The return value from this method really indicates what type of result will be obtained
+     * from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
+     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object;
+     * this method allows you to do the same thing, without actually calculating the descriptor.
+     *
+     * @return an object that implements the {@link
+     *     org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating the actual type
+     *     of values returned by the descriptor in the {@link
+     *     org.openscience.cdk.qsar.DescriptorValue} object
      */
     @Override
     public IDescriptorResult getDescriptorResultType() {
@@ -313,7 +318,7 @@ public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolec
     }
 
     private int[][] evalATable(IAtomContainer atomContainer, int atomicNum) {
-        //IAtom[] atoms = atomContainer.getAtoms();
+        // IAtom[] atoms = atomContainer.getAtoms();
         int natom = atomContainer.getAtomCount();
         int[][] atypes = new int[natom][2];
         for (int i = 0; i < natom; i++) {
@@ -322,8 +327,7 @@ public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolec
             atypes[i][1] = i;
             if (atomicNum == (atom.getAtomicNumber() == null ? 0 : atom.getAtomicNumber()))
                 atypes[i][0] = numConnectedBonds;
-            else
-                atypes[i][0] = -1;
+            else atypes[i][0] = -1;
         }
         return atypes;
     }
@@ -354,10 +358,8 @@ public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolec
             lambda = Math.sqrt(lambda);
             n = n / 2;
         }
-        if (n == 0)
-            return 0.0;
-        else
-            return n / Math.pow(Math.pow(lambda, 1.0 / (2.0 * n)), 2);
+        if (n == 0) return 0.0;
+        else return n / Math.pow(Math.pow(lambda, 1.0 / (2.0 * n)), 2);
     }
 
     /**

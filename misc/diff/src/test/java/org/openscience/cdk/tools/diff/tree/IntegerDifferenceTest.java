@@ -22,9 +22,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 
-/**
- * @cdk.module test-diff
- */
+/** @cdk.module test-diff */
 public class IntegerDifferenceTest extends CDKTestCase {
 
     @Test

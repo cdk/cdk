@@ -27,21 +27,18 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
- * <P> This code returns a sorted set of atoms for a container according to its
- * symbol and hybridization states. This will aid in finding a deterministic
- * path rather than Stochastic one. </P>
+ * This code returns a sorted set of atoms for a container according to its symbol and hybridization
+ * states. This will aid in finding a deterministic path rather than Stochastic one.
  *
  * @author Syed Asad Rahman (2012)
  * @cdk.keyword fingerprint
  * @cdk.keyword similarity
  * @cdk.module fingerprint
  * @cdk.githash
- *
  */
 public class SimpleAtomCanonicalizer {
 

@@ -22,13 +22,10 @@
  */
 package org.openscience.cdk.io.formats;
 
-/**
- * @cdk.module test-ioformats
- */
+/** @cdk.module test-ioformats */
 public class MacroModelFormatTest extends ChemFormatTest {
 
     public MacroModelFormatTest() {
         super.setChemFormat((IChemFormat) MacroModelFormat.getInstance());
     }
-
 }

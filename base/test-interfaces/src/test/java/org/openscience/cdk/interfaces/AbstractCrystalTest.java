@@ -20,7 +20,6 @@
 package org.openscience.cdk.interfaces;
 
 import javax.vecmath.Vector3d;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -156,9 +155,7 @@ public abstract class AbstractCrystalTest extends AbstractAtomContainerTest {
         testSetZ_Integer();
     }
 
-    /**
-     * Method to test whether the class complies with RFC #9.
-     */
+    /** Method to test whether the class complies with RFC #9. */
     @Test
     @Override
     public void testToString() {
@@ -198,5 +195,4 @@ public abstract class AbstractCrystalTest extends AbstractAtomContainerTest {
         Vector3d a = crystal.getA();
         Assert.assertNotNull(a);
     }
-
 }

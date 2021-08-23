@@ -58,7 +58,7 @@ public class PDBFormat extends SimpleChemFormatMatcher implements IChemFormatMat
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"pdb", "ent"};
+        return new String[] {"pdb", "ent"};
     }
 
     /** {@inheritDoc} */

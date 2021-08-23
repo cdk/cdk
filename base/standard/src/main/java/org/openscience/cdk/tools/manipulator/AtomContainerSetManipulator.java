@@ -25,7 +25,6 @@ package org.openscience.cdk.tools.manipulator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -37,7 +36,6 @@ import org.openscience.cdk.interfaces.IElectronContainer;
 /**
  * @cdk.module standard
  * @cdk.githash
- *
  * @see ChemModelManipulator
  */
 public class AtomContainerSetManipulator {
@@ -62,7 +60,8 @@ public class AtomContainerSetManipulator {
         for (IAtomContainer atomContainer : set.atomContainers()) {
             if (atomContainer.contains(atom)) {
                 atomContainer.removeAtom(atom);
-                IAtomContainerSet molecules = ConnectivityChecker.partitionIntoMolecules(atomContainer);
+                IAtomContainerSet molecules =
+                        ConnectivityChecker.partitionIntoMolecules(atomContainer);
                 if (molecules.getAtomContainerCount() > 1) {
                     set.removeAtomContainer(atomContainer);
                     for (int k = 0; k < molecules.getAtomContainerCount(); k++) {
@@ -74,11 +73,13 @@ public class AtomContainerSetManipulator {
         }
     }
 
-    public static void removeElectronContainer(IAtomContainerSet set, IElectronContainer electrons) {
+    public static void removeElectronContainer(
+            IAtomContainerSet set, IElectronContainer electrons) {
         for (IAtomContainer atomContainer : set.atomContainers()) {
             if (atomContainer.contains(electrons)) {
                 atomContainer.removeElectronContainer(electrons);
-                IAtomContainerSet molecules = ConnectivityChecker.partitionIntoMolecules(atomContainer);
+                IAtomContainerSet molecules =
+                        ConnectivityChecker.partitionIntoMolecules(atomContainer);
                 if (molecules.getAtomContainerCount() > 1) {
                     set.removeAtomContainer(atomContainer);
                     for (int k = 0; k < molecules.getAtomContainerCount(); k++) {
@@ -133,7 +134,7 @@ public class AtomContainerSetManipulator {
     }
 
     /**
-     * @param set  The collection of IAtomContainer objects
+     * @param set The collection of IAtomContainer objects
      * @return The summed implicit hydrogens of all atoms in this set.
      */
     public static int getTotalHydrogenCount(IAtomContainerSet set) {
@@ -158,12 +159,14 @@ public class AtomContainerSetManipulator {
     public static void setAtomProperties(IAtomContainerSet set, Object propKey, Object propVal) {
         if (set != null) {
             for (int i = 0; i < set.getAtomContainerCount(); i++) {
-                AtomContainerManipulator.setAtomProperties(set.getAtomContainer(i), propKey, propVal);
+                AtomContainerManipulator.setAtomProperties(
+                        set.getAtomContainer(i), propKey, propVal);
             }
         }
     }
 
-    public static IAtomContainer getRelevantAtomContainer(IAtomContainerSet containerSet, IAtom atom) {
+    public static IAtomContainer getRelevantAtomContainer(
+            IAtomContainerSet containerSet, IAtom atom) {
         for (IAtomContainer atomContainer : containerSet.atomContainers()) {
             if (atomContainer.contains(atom)) {
                 return atomContainer;
@@ -172,7 +175,8 @@ public class AtomContainerSetManipulator {
         return null;
     }
 
-    public static IAtomContainer getRelevantAtomContainer(IAtomContainerSet containerSet, IBond bond) {
+    public static IAtomContainer getRelevantAtomContainer(
+            IAtomContainerSet containerSet, IBond bond) {
         for (IAtomContainer atomContainer : containerSet.atomContainers()) {
             if (atomContainer.contains(bond)) {
                 return atomContainer;
@@ -197,20 +201,24 @@ public class AtomContainerSetManipulator {
     }
 
     /**
-     * <p>Sorts the IAtomContainers in the given IAtomContainerSet by the following
-     * criteria with decreasing priority:</p>
+     * Sorts the IAtomContainers in the given IAtomContainerSet by the following criteria with
+     * decreasing priority:
+     *
      * <ul>
      *   <li>Compare atom count
      *   <li>Compare molecular weight (heavy atoms only)
      *   <li>Compare bond count
      *   <li>Compare sum of bond orders (heavy atoms only)
      * </ul>
-     * <p>If no difference can be found with the above criteria, the IAtomContainers are
-     * considered equal.</p>
+     *
+     * <p>If no difference can be found with the above criteria, the IAtomContainers are considered
+     * equal.
+     *
      * @param atomContainerSet The collection of IAtomContainer objects
      */
     public static void sort(IAtomContainerSet atomContainerSet) {
-        List<IAtomContainer> atomContainerList = AtomContainerSetManipulator.getAllAtomContainers(atomContainerSet);
+        List<IAtomContainer> atomContainerList =
+                AtomContainerSetManipulator.getAllAtomContainers(atomContainerSet);
         Collections.sort(atomContainerList, new AtomContainerComparator());
         atomContainerSet.removeAllAtomContainers();
         for (Object anAtomContainerList : atomContainerList)
@@ -218,8 +226,8 @@ public class AtomContainerSetManipulator {
     }
 
     /**
-     * Tells if an AtomContainerSet contains at least one AtomContainer with the
-     * same ID as atomContainer. Note this checks getID() for equality, not pointers.
+     * Tells if an AtomContainerSet contains at least one AtomContainer with the same ID as
+     * atomContainer. Note this checks getID() for equality, not pointers.
      *
      * @param id The IAtomContainer to look for
      * @param atomContainerSet The collection of IAtomContainer objects
@@ -230,5 +238,4 @@ public class AtomContainerSetManipulator {
         }
         return false;
     }
-
 }

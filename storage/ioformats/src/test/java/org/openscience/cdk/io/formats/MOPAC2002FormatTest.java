@@ -22,13 +22,10 @@
  */
 package org.openscience.cdk.io.formats;
 
-/**
- * @cdk.module test-ioformats
- */
+/** @cdk.module test-ioformats */
 public class MOPAC2002FormatTest extends ChemFormatMatcherTest {
 
     public MOPAC2002FormatTest() {
         super.setChemFormatMatcher((IChemFormatMatcher) MOPAC2002Format.getInstance());
     }
-
 }

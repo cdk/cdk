@@ -24,7 +24,11 @@
 
 package org.openscience.cdk.renderer.generators.standard;
 
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.number.IsCloseTo.closeTo;
+import static org.openscience.cdk.renderer.generators.standard.AtomSymbol.SymbolAlignment.Center;
+import static org.openscience.cdk.renderer.generators.standard.AtomSymbol.SymbolAlignment.Left;
+import static org.openscience.cdk.renderer.generators.standard.AtomSymbol.SymbolAlignment.Right;
 
 import java.awt.Font;
 import java.awt.Rectangle;
@@ -32,12 +36,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Arrays;
 import java.util.Collections;
-
-import static org.hamcrest.number.IsCloseTo.closeTo;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.openscience.cdk.renderer.generators.standard.AtomSymbol.SymbolAlignment.Center;
-import static org.openscience.cdk.renderer.generators.standard.AtomSymbol.SymbolAlignment.Left;
-import static org.openscience.cdk.renderer.generators.standard.AtomSymbol.SymbolAlignment.Right;
+import org.junit.Test;
 
 public class AtomSymbolTest {
 
@@ -46,28 +45,30 @@ public class AtomSymbolTest {
     @Test
     public void alignToCenter() throws Exception {
         TextOutline outline = new TextOutline("Cl", font);
-        AtomSymbol symbol = new AtomSymbol(outline, Collections.<TextOutline> emptyList());
+        AtomSymbol symbol = new AtomSymbol(outline, Collections.<TextOutline>emptyList());
         assertCloseTo(outline.getCenter(), symbol.alignTo(Center).getAlignmentCenter(), 0.01);
     }
 
     @Test
     public void alignToLeft() throws Exception {
         TextOutline outline = new TextOutline("Cl", font);
-        AtomSymbol symbol = new AtomSymbol(outline, Collections.<TextOutline> emptyList());
-        assertCloseTo(outline.getFirstGlyphCenter(), symbol.alignTo(Left).getAlignmentCenter(), 0.01);
+        AtomSymbol symbol = new AtomSymbol(outline, Collections.<TextOutline>emptyList());
+        assertCloseTo(
+                outline.getFirstGlyphCenter(), symbol.alignTo(Left).getAlignmentCenter(), 0.01);
     }
 
     @Test
     public void alignToRight() throws Exception {
         TextOutline outline = new TextOutline("Cl", font);
-        AtomSymbol symbol = new AtomSymbol(outline, Collections.<TextOutline> emptyList());
-        assertCloseTo(outline.getLastGlyphCenter(), symbol.alignTo(Right).getAlignmentCenter(), 0.01);
+        AtomSymbol symbol = new AtomSymbol(outline, Collections.<TextOutline>emptyList());
+        assertCloseTo(
+                outline.getLastGlyphCenter(), symbol.alignTo(Right).getAlignmentCenter(), 0.01);
     }
 
     @Test
     public void testGetOutlines() throws Exception {
         TextOutline outline = new TextOutline("Cl", font);
-        AtomSymbol symbol = new AtomSymbol(outline, Collections.<TextOutline> emptyList());
+        AtomSymbol symbol = new AtomSymbol(outline, Collections.<TextOutline>emptyList());
         Rectangle outlineBounds = outline.getOutline().getBounds();
         Rectangle symbolBounds = symbol.getOutlines().get(0).getBounds();
         assertThat(outlineBounds.getX(), closeTo(symbolBounds.getX(), 0.01));
@@ -92,7 +93,7 @@ public class AtomSymbolTest {
     @Test
     public void testGetConvexHull() throws Exception {
         TextOutline outline = new TextOutline("Cl", font);
-        AtomSymbol symbol = new AtomSymbol(outline, Collections.<TextOutline> emptyList());
+        AtomSymbol symbol = new AtomSymbol(outline, Collections.<TextOutline>emptyList());
         ConvexHull outlineHull = ConvexHull.ofShape(outline.getOutline());
         ConvexHull symbolHull = symbol.getConvexHull();
 
@@ -108,20 +109,23 @@ public class AtomSymbolTest {
     @Test
     public void testResize() throws Exception {
         TextOutline outline = new TextOutline("Cl", font);
-        AtomSymbol symbol = new AtomSymbol(outline, Collections.<TextOutline> emptyList());
+        AtomSymbol symbol = new AtomSymbol(outline, Collections.<TextOutline>emptyList());
         AtomSymbol transformed = symbol.resize(2, 2);
         Rectangle2D orgBounds = outline.getBounds();
         Rectangle2D newBounds = transformed.getOutlines().get(0).getBounds2D();
         assertThat(newBounds.getX(), closeTo(orgBounds.getX() - orgBounds.getWidth() / 2, 0.01));
         assertThat(newBounds.getY(), closeTo(orgBounds.getY() - orgBounds.getHeight() / 2, 0.01));
-        assertThat(newBounds.getMaxX(), closeTo(orgBounds.getMaxX() + orgBounds.getWidth() / 2, 0.01));
-        assertThat(newBounds.getMaxY(), closeTo(orgBounds.getMaxY() + orgBounds.getHeight() / 2, 0.01));
+        assertThat(
+                newBounds.getMaxX(), closeTo(orgBounds.getMaxX() + orgBounds.getWidth() / 2, 0.01));
+        assertThat(
+                newBounds.getMaxY(),
+                closeTo(orgBounds.getMaxY() + orgBounds.getHeight() / 2, 0.01));
     }
 
     @Test
     public void testCenter() throws Exception {
         TextOutline outline = new TextOutline("Cl", font);
-        AtomSymbol symbol = new AtomSymbol(outline, Collections.<TextOutline> emptyList());
+        AtomSymbol symbol = new AtomSymbol(outline, Collections.<TextOutline>emptyList());
         AtomSymbol transformed = symbol.center(2, 2);
         Rectangle2D oBounds = outline.getBounds();
         Rectangle2D newBounds = transformed.getOutlines().get(0).getBounds2D();
@@ -138,7 +142,7 @@ public class AtomSymbolTest {
     @Test
     public void testTranslate() throws Exception {
         TextOutline outline = new TextOutline("Cl", font);
-        AtomSymbol symbol = new AtomSymbol(outline, Collections.<TextOutline> emptyList());
+        AtomSymbol symbol = new AtomSymbol(outline, Collections.<TextOutline>emptyList());
         AtomSymbol transformed = symbol.translate(4, 2);
         Rectangle2D orgBounds = symbol.getOutlines().get(0).getBounds2D();
         Rectangle2D newBounds = transformed.getOutlines().get(0).getBounds2D();

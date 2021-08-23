@@ -23,6 +23,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import Jama.Matrix;
+import javax.vecmath.Point3d;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
@@ -37,38 +38,38 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import javax.vecmath.Point3d;
-
 /**
  * Evaluates length over breadth descriptors.
- * 
- * The current implementation reproduces the results obtained from the LOVERB descriptor
- * routine in ADAPT. As a result ti does not perform any orientation and only considers the
- * X &amp; Y extents for a series of rotations about the Z axis (in 10 degree increments).
- * 
- * The class gives two descriptors
+ *
+ * <p>The current implementation reproduces the results obtained from the LOVERB descriptor routine
+ * in ADAPT. As a result ti does not perform any orientation and only considers the X &amp; Y
+ * extents for a series of rotations about the Z axis (in 10 degree increments).
+ *
+ * <p>The class gives two descriptors
+ *
  * <ul>
- * <li>LOBMAX - The maximum L/B ratio
- * <li>LOBMIN - The L/B ratio for the rotation that results in the minimum area
- * (defined by the product of the X &amp; Y extents for that orientation)
+ *   <li>LOBMAX - The maximum L/B ratio
+ *   <li>LOBMIN - The L/B ratio for the rotation that results in the minimum area (defined by the
+ *       product of the X &amp; Y extents for that orientation)
  * </ul>
+ *
  * <b>Note:</b> The descriptor assumes that the atoms have been configured.
  *
- * @author      Rajarshi Guha
+ * @author Rajarshi Guha
  * @cdk.created 2006-09-26
- * @cdk.module  qsarmolecular
+ * @cdk.module qsarmolecular
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:lengthOverBreadth
  */
-public class LengthOverBreadthDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
+public class LengthOverBreadthDescriptor extends AbstractMolecularDescriptor
+        implements IMolecularDescriptor {
 
-    private static ILoggingTool   logger = LoggingToolFactory.createLoggingTool(LengthOverBreadthDescriptor.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(LengthOverBreadthDescriptor.class);
 
-    private static final String[] NAMES  = {"LOBMAX", "LOBMIN"};
+    private static final String[] NAMES = {"LOBMAX", "LOBMIN"};
 
-    /**
-     * Constructor for the LengthOverBreadthDescriptor object.
-     */
+    /** Constructor for the LengthOverBreadthDescriptor object. */
     public LengthOverBreadthDescriptor() {}
 
     /**
@@ -79,16 +80,16 @@ public class LengthOverBreadthDescriptor extends AbstractMolecularDescriptor imp
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#lengthOverBreadth", this.getClass()
-                        .getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#lengthOverBreadth",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     /**
      * Sets the parameters attribute of the PetitjeanNumberDescriptor object
      *
      * @param params The new parameters value
-     * @throws org.openscience.cdk.exception.CDKException
-     *          Description of the Exception
+     * @throws org.openscience.cdk.exception.CDKException Description of the Exception
      */
     @Override
     public void setParameters(Object[] params) throws CDKException {
@@ -115,16 +116,21 @@ public class LengthOverBreadthDescriptor extends AbstractMolecularDescriptor imp
         DoubleArrayResult result = new DoubleArrayResult(2);
         result.add(Double.NaN);
         result.add(Double.NaN);
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result,
-                getDescriptorNames(), e);
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                result,
+                getDescriptorNames(),
+                e);
     }
 
     /**
      * Evaluate the descriptor for the molecule.
      *
      * @param atomContainer AtomContainer
-     * @return A {@link org.openscience.cdk.qsar.result.DoubleArrayResult} containing LOBMAX and LOBMIN in that
-     *         order
+     * @return A {@link org.openscience.cdk.qsar.result.DoubleArrayResult} containing LOBMAX and
+     *     LOBMIN in that order
      */
     @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
@@ -148,8 +154,10 @@ public class LengthOverBreadthDescriptor extends AbstractMolecularDescriptor imp
 
         // get the com
         Point3d com = GeometryUtil.get3DCentreOfMass(atomContainer);
-        if (com == null) 
-            return getDummyDescriptorValue(new CDKException("Error in center of mass calculation, has exact mass been set on all atoms?"));
+        if (com == null)
+            return getDummyDescriptorValue(
+                    new CDKException(
+                            "Error in center of mass calculation, has exact mass been set on all atoms?"));
 
         // translate everything to COM
         for (int i = 0; i < coords.length; i++) {
@@ -185,20 +193,26 @@ public class LengthOverBreadthDescriptor extends AbstractMolecularDescriptor imp
         result.add(maxLOB);
         result.add(mmLOB);
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result,
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                result,
                 getDescriptorNames());
     }
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * 
-     * The return value from this method really indicates what type of result will
-     * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
-     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
-     * allows you to do the same thing, without actually calculating the descriptor.
      *
-     * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
-     *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
+     * <p>The return value from this method really indicates what type of result will be obtained
+     * from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
+     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object;
+     * this method allows you to do the same thing, without actually calculating the descriptor.
+     *
+     * @return an object that implements the {@link
+     *     org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating the actual type
+     *     of values returned by the descriptor in the {@link
+     *     org.openscience.cdk.qsar.DescriptorValue} object
      */
     @Override
     public IDescriptorResult getDescriptorResultType() {
@@ -224,12 +238,12 @@ public class LengthOverBreadthDescriptor extends AbstractMolecularDescriptor imp
         newCoord = rZ.times(newCoord);
         newCoord = newCoord.transpose();
         for (int i = 0; i < natom; i++) {
-            for (int j = 0; j < 3; j++)
-                coords[i][j] = newCoord.get(i, j);
+            for (int j = 0; j < 3; j++) coords[i][j] = newCoord.get(i, j);
         }
     }
 
-    private double[] extents(IAtomContainer atomContainer, double[][] coords, boolean withRadii) throws CDKException {
+    private double[] extents(IAtomContainer atomContainer, double[][] coords, boolean withRadii)
+            throws CDKException {
         double xmax = -1e30;
         double ymax = -1e30;
         double zmax = -1e30;
@@ -244,8 +258,9 @@ public class LengthOverBreadthDescriptor extends AbstractMolecularDescriptor imp
             System.arraycopy(coords[i], 0, coord, 0, coords[0].length);
             if (withRadii) {
                 IAtom atom = atomContainer.getAtom(i);
-                double radius = org.openscience.cdk.tools.periodictable.PeriodicTable.getCovalentRadius(atom
-                        .getSymbol());
+                double radius =
+                        org.openscience.cdk.tools.periodictable.PeriodicTable.getCovalentRadius(
+                                atom.getSymbol());
 
                 xmax = Math.max(xmax, coord[0] + radius);
                 ymax = Math.max(ymax, coord[1] + radius);

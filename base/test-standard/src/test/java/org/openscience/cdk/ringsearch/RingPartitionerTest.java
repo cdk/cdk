@@ -19,7 +19,6 @@
 package org.openscience.cdk.ringsearch;
 
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -32,15 +31,14 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
  * This class tests the RingPartitioner class.
  *
  * @cdk.module test-standard
- *
- * @author         kaihartmann
- * @cdk.created    2005-05-24
+ * @author kaihartmann
+ * @cdk.created 2005-05-24
  */
 public class RingPartitionerTest extends CDKTestCase {
 
     static boolean standAlone = false;
 
-    //private static ILoggingTool logger = null;
+    // private static ILoggingTool logger = null;
 
     public RingPartitionerTest() {
         super();
@@ -72,7 +70,5 @@ public class RingPartitionerTest extends CDKTestCase {
         ringSet = Cycles.sssr(spiro).toRingSet();
         list = RingPartitioner.partitionRings(ringSet);
         Assert.assertEquals(1, list.size());
-
     }
-
 }

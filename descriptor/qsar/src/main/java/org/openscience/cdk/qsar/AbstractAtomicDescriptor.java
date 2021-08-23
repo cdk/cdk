@@ -20,25 +20,24 @@ package org.openscience.cdk.qsar;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 
 /**
- * Abstract atomic descriptor class with helper functions for descriptors
- * that require the whole molecule to calculate the descriptor values,
- * which in turn need to be cached for all atoms, so that they can be
- * retrieved one by one.
+ * Abstract atomic descriptor class with helper functions for descriptors that require the whole
+ * molecule to calculate the descriptor values, which in turn need to be cached for all atoms, so
+ * that they can be retrieved one by one.
  *
  * @cdk.module qsar
  * @cdk.githash
  */
-public abstract class AbstractAtomicDescriptor extends AbstractDescriptor implements IAtomicDescriptor {
+public abstract class AbstractAtomicDescriptor extends AbstractDescriptor
+        implements IAtomicDescriptor {
 
     private static final String PREVIOUS_ATOMCONTAINER = "previousAtomContainer";
 
-    private Map                 cachedDescriptorValues = null;                   // FIXME: needs a better solution!
+    private Map cachedDescriptorValues = null; // FIXME: needs a better solution!
 
     /**
      * Returns true if the cached IDescriptorResult's are for the given IAtomContainer.
@@ -55,7 +54,7 @@ public abstract class AbstractAtomicDescriptor extends AbstractDescriptor implem
      * Returns the cached DescriptorValue for the given IAtom.
      *
      * @param atom the IAtom for which the DescriptorValue is requested
-     * @return     null, if no DescriptorValue was cached for the given IAtom
+     * @return null, if no DescriptorValue was cached for the given IAtom
      */
     public IDescriptorResult getCachedDescriptorValue(IAtom atom) {
         if (cachedDescriptorValues == null) return null;
@@ -63,13 +62,14 @@ public abstract class AbstractAtomicDescriptor extends AbstractDescriptor implem
     }
 
     /**
-     * Caches a DescriptorValue for a given IAtom. This method may only
-     * be called after setNewContainer() is called.
+     * Caches a DescriptorValue for a given IAtom. This method may only be called after
+     * setNewContainer() is called.
      *
-     * @param atom  IAtom to cache the value for
+     * @param atom IAtom to cache the value for
      * @param value DescriptorValue for the given IAtom
      */
-    public void cacheDescriptorValue(IAtom atom, IAtomContainer container, IDescriptorResult value) {
+    public void cacheDescriptorValue(
+            IAtom atom, IAtomContainer container, IDescriptorResult value) {
         if (cachedDescriptorValues == null) {
             cachedDescriptorValues = new HashMap();
             cachedDescriptorValues.put(PREVIOUS_ATOMCONTAINER, container);

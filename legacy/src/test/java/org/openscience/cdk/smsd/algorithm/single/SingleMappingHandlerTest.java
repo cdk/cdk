@@ -26,7 +26,6 @@ import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
 import java.io.InputStream;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -44,9 +43,8 @@ import org.openscience.cdk.smsd.tools.MolHandler;
 /**
  * Unit testing for the {@link SingleMappingHandler} class.
  *
- * @author     egonw
+ * @author egonw
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- *
  * @cdk.module test-smsd
  */
 public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
@@ -58,6 +56,7 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
 
     /**
      * Test of set method, of class SingleMappingHandler.
+     *
      * @throws Exception
      */
     @Test
@@ -78,6 +77,7 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
 
     /**
      * Test of set method, of class SingleMappingHandler.
+     *
      * @throws CDKException
      * @throws IOException
      */
@@ -102,9 +102,7 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
         assertEquals(score, smsd1.getTanimotoSimilarity(), 0.0001);
     }
 
-    /**
-     * Test of set method, of class SingleMappingHandler.
-     */
+    /** Test of set method, of class SingleMappingHandler. */
     @Test
     public void testSet_MolHandler_MolHandler() {
         IAtom atomSource = new Atom("R");
@@ -123,9 +121,7 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
         assertNotNull(instance.getFirstAtomMapping());
     }
 
-    /**
-     * Test of searchMCS method, of class SingleMappingHandler.
-     */
+    /** Test of searchMCS method, of class SingleMappingHandler. */
     @Test
     @Override
     public void testSearchMCS() {
@@ -145,9 +141,7 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
         assertEquals(1, instance.getAllMapping().size());
     }
 
-    /**
-     * Test of getAllMapping method, of class SingleMappingHandler.
-     */
+    /** Test of getAllMapping method, of class SingleMappingHandler. */
     @Test
     public void testGetAllMapping() {
         IAtom atomSource = new Atom("R");
@@ -165,9 +159,7 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
         assertNotNull(instance.getAllMapping());
     }
 
-    /**
-     * Test of getFirstMapping method, of class SingleMappingHandler.
-     */
+    /** Test of getFirstMapping method, of class SingleMappingHandler. */
     @Test
     public void testGetFirstMapping() {
         IAtom atomSource = new Atom("R");
@@ -185,9 +177,7 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
         assertNotNull(instance.getFirstMapping());
     }
 
-    /**
-     * Test of getAllAtomMapping method, of class SingleMappingHandler.
-     */
+    /** Test of getAllAtomMapping method, of class SingleMappingHandler. */
     @Test
     public void testGetAllAtomMapping() {
         IAtom atomSource = new Atom("R");
@@ -205,9 +195,7 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
         assertNotNull(instance.getAllAtomMapping());
     }
 
-    /**
-     * Test of getFirstAtomMapping method, of class SingleMappingHandler.
-     */
+    /** Test of getFirstAtomMapping method, of class SingleMappingHandler. */
     @Test
     public void testGetFirstAtomMapping() {
         IAtom atomSource = new Atom("R");

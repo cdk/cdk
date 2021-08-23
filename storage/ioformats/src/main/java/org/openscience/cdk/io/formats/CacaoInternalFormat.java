@@ -24,7 +24,6 @@ import org.openscience.cdk.tools.DataFeatures;
  * See <a href="http://www.chembio.uoguelph.ca/oakley/310/cacao/cacao.htm">here</a>.
  *
  * @author Miguel Rojas
- *
  * @cdk.module ioformats
  * @cdk.githash
  */
@@ -60,7 +59,7 @@ public class CacaoInternalFormat extends AbstractResourceFormat implements IChem
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"cacint"};
+        return new String[] {"cacint"};
     }
 
     /** {@inheritDoc} */

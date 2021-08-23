@@ -22,40 +22,39 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractReactionSchemeTest;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IReactionScheme;
-import org.openscience.cdk.interfaces.AbstractReactionSchemeTest;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the MolecularFormulaSet class.
  *
  * @cdk.module test-data
- *
  * @see ReactionScheme
  */
 public class ReactionSchemeTest extends AbstractReactionSchemeTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new ReactionScheme();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new ReactionScheme();
+                    }
+                });
     }
 
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testReactionScheme() {
         IReactionScheme scheme = new ReactionScheme();
         Assert.assertNotNull(scheme);
     }
-
 }

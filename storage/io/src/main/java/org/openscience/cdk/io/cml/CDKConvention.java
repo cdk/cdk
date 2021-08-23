@@ -24,7 +24,6 @@
 package org.openscience.cdk.io.cml;
 
 import java.util.StringTokenizer;
-
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 import org.xml.sax.Attributes;
@@ -34,7 +33,6 @@ import org.xml.sax.Attributes;
  *
  * @cdk.module io
  * @cdk.githash
- *
  * @author egonw
  */
 public class CDKConvention extends CMLCoreModule {
@@ -56,7 +54,8 @@ public class CDKConvention extends CMLCoreModule {
     }
 
     @Override
-    public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
+    public void startElement(
+            CMLStack xpath, String uri, String local, String raw, Attributes atts) {
         isBond = false;
         if (xpath.toString().endsWith("string/")) {
             for (int i = 0; i < atts.getLength(); i++) {

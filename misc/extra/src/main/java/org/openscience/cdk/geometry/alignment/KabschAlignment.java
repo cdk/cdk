@@ -20,31 +20,30 @@
 
 package org.openscience.cdk.geometry.alignment;
 
+import Jama.EigenvalueDecomposition;
+import Jama.Matrix;
 import javax.vecmath.Point3d;
-
-import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import Jama.EigenvalueDecomposition;
-import Jama.Matrix;
-
 /**
  * Aligns two structures to minimize the RMSD using the Kabsch algorithm.
  *
  * <p>This class is an implementation of the Kabsch algorithm ({@cdk.cite KAB76}, {@cdk.cite KAB78})
  * and evaluates the optimal rotation matrix (U) to minimize the RMSD between the two structures.
- * Since the algorithm assumes that the number of points are the same in the two structures
- * it is the job of the caller to pass the proper number of atoms from the two structures. Constructors
+ * Since the algorithm assumes that the number of points are the same in the two structures it is
+ * the job of the caller to pass the proper number of atoms from the two structures. Constructors
  * which take whole <code>AtomContainer</code>'s are provided but they should have the same number
- * of atoms.
- * The algorithm allows for the use of atom weightings and by default all points are given a weight of 1.0
+ * of atoms. The algorithm allows for the use of atom weightings and by default all points are given
+ * a weight of 1.0
  *
  * <p>Example usage can be:
+ *
  * <pre>
  * AtomContainer ac1, ac2;
  *
@@ -54,15 +53,15 @@ import Jama.Matrix;
  *    System.out.println(sa.getRMSD());
  * } catch (CDKException e){}
  * </pre>
- * In many cases, molecules will be aligned based on some common substructure.
- * In this case the center of masses calculated during alignment refer to these
- * substructures rather than the whole molecules. To superimpose the molecules
- * for display, the second molecule must be rotated and translated by calling
- * <code>rotateAtomContainer</code>. However, since this will also translate the
- * second molecule, the first molecule should also be translated to the center of mass
- * of the substructure specified for this molecule. This center of mass can be obtained
- * by a call to <code>getCenterOfMass</code> and then manually translating the coordinates.
- * Thus an example would be
+ *
+ * In many cases, molecules will be aligned based on some common substructure. In this case the
+ * center of masses calculated during alignment refer to these substructures rather than the whole
+ * molecules. To superimpose the molecules for display, the second molecule must be rotated and
+ * translated by calling <code>rotateAtomContainer</code>. However, since this will also translate
+ * the second molecule, the first molecule should also be translated to the center of mass of the
+ * substructure specified for this molecule. This center of mass can be obtained by a call to <code>
+ * getCenterOfMass</code> and then manually translating the coordinates. Thus an example would be
+ *
  * <pre>
  * AtomContainer ac1, ac2;  // whole molecules
  * Atom[] a1, a2;           // some subset of atoms from the two molecules
@@ -83,24 +82,24 @@ import Jama.Matrix;
  * sa.rotateAtomContainer(ac2);
  *
  * // display the two AtomContainer's
- *</pre>
+ * </pre>
  *
- * @author           Rajarshi Guha
- * @cdk.created      2004-12-11
- * @cdk.dictref      blue-obelisk:alignmentKabsch
+ * @author Rajarshi Guha
+ * @cdk.created 2004-12-11
+ * @cdk.dictref blue-obelisk:alignmentKabsch
  * @cdk.githash
  */
 public class KabschAlignment {
 
     private ILoggingTool logger = LoggingToolFactory.createLoggingTool(KabschAlignment.class);
 
-    private double[][]   U;
-    private double       rmsd   = -1.0;
-    private Point3d[]    p1, p2, rp;                                                          // rp are the rotated coordinates
-    private double[]     wts;
-    private int          npoint;
-    private Point3d      cm1, cm2;
-    private double[]     atwt1, atwt2;
+    private double[][] U;
+    private double rmsd = -1.0;
+    private Point3d[] p1, p2, rp; // rp are the rotated coordinates
+    private double[] wts;
+    private int npoint;
+    private Point3d cm1, cm2;
+    private double[] atwt1, atwt2;
 
     private Point3d[] getPoint3dArray(IAtom[] a) {
         Point3d[] p = new Point3d[a.length];
@@ -169,12 +168,11 @@ public class KabschAlignment {
     /**
      * Sets up variables for the alignment algorithm.
      *
-     * The algorithm allows for atom weighting and the default is 1.0 for all
-     * atoms.
+     * <p>The algorithm allows for atom weighting and the default is 1.0 for all atoms.
      *
      * @param al1 An array of {@link IAtom} objects
-     * @param al2 An array of {@link IAtom} objects. This array will have its coordinates rotated
-     *            so that the RMDS is minimized to the coordinates of the first array
+     * @param al2 An array of {@link IAtom} objects. This array will have its coordinates rotated so
+     *     that the RMDS is minimized to the coordinates of the first array
      * @throws CDKException if the number of Atom's are not the same in the two arrays
      */
     public KabschAlignment(IAtom[] al1, IAtom[] al2) throws CDKException {
@@ -189,19 +187,18 @@ public class KabschAlignment {
         this.atwt1 = getAtomicMasses(al1);
         this.atwt2 = getAtomicMasses(al2);
 
-        for (int i = 0; i < this.npoint; i++)
-            this.wts[i] = 1.0;
+        for (int i = 0; i < this.npoint; i++) this.wts[i] = 1.0;
     }
 
     /**
      * Sets up variables for the alignment algorithm.
      *
      * @param al1 An array of {@link IAtom} objects
-     * @param al2 An array of {@link IAtom} objects. This array will have its coordinates rotated
-     *            so that the RMSD is minimized to the coordinates of the first array
+     * @param al2 An array of {@link IAtom} objects. This array will have its coordinates rotated so
+     *     that the RMSD is minimized to the coordinates of the first array
      * @param wts A vector atom weights.
-     * @throws CDKException if the number of Atom's are not the same in the two arrays or
-     *                         length of the weight vector is not the same as the Atom arrays
+     * @throws CDKException if the number of Atom's are not the same in the two arrays or length of
+     *     the weight vector is not the same as the Atom arrays
      */
     public KabschAlignment(IAtom[] al1, IAtom[] al2, double[] wts) throws CDKException {
         if (al1.length != al2.length) {
@@ -223,24 +220,23 @@ public class KabschAlignment {
     /**
      * Sets up variables for the alignment algorithm.
      *
-     * The algorithm allows for atom weighting and the default is 1.0 for all
-     * atoms.
+     * <p>The algorithm allows for atom weighting and the default is 1.0 for all atoms.
      *
      * @param ac1 An {@link IAtomContainer}
-     * @param ac2 An {@link IAtomContainer}. This AtomContainer will have its coordinates rotated
-     *            so that the RMDS is minimized to the coordinates of the first one
+     * @param ac2 An {@link IAtomContainer}. This AtomContainer will have its coordinates rotated so
+     *     that the RMDS is minimized to the coordinates of the first one
      * @throws CDKException if the number of atom's are not the same in the two AtomContainer's
      */
     public KabschAlignment(IAtomContainer ac1, IAtomContainer ac2) throws CDKException {
         if (ac1.getAtomCount() != ac2.getAtomCount()) {
-            throw new CDKException("The AtomContainer's being aligned must have the same number of atoms");
+            throw new CDKException(
+                    "The AtomContainer's being aligned must have the same number of atoms");
         }
         this.npoint = ac1.getAtomCount();
         this.p1 = getPoint3dArray(ac1);
         this.p2 = getPoint3dArray(ac2);
         this.wts = new double[npoint];
-        for (int i = 0; i < npoint; i++)
-            this.wts[i] = 1.0;
+        for (int i = 0; i < npoint; i++) this.wts[i] = 1.0;
 
         this.atwt1 = getAtomicMasses(ac1);
         this.atwt2 = getAtomicMasses(ac2);
@@ -250,15 +246,17 @@ public class KabschAlignment {
      * Sets up variables for the alignment algorithm.
      *
      * @param ac1 An {@link IAtomContainer}
-     * @param ac2 An {@link IAtomContainer}. This AtomContainer will have its coordinates rotated
-     *            so that the RMDS is minimized to the coordinates of the first one
+     * @param ac2 An {@link IAtomContainer}. This AtomContainer will have its coordinates rotated so
+     *     that the RMDS is minimized to the coordinates of the first one
      * @param wts A vector atom weights.
      * @throws CDKException if the number of atom's are not the same in the two AtomContainer's or
-     *                         length of the weight vector is not the same as number of atoms.
+     *     length of the weight vector is not the same as number of atoms.
      */
-    public KabschAlignment(IAtomContainer ac1, IAtomContainer ac2, double[] wts) throws CDKException {
+    public KabschAlignment(IAtomContainer ac1, IAtomContainer ac2, double[] wts)
+            throws CDKException {
         if (ac1.getAtomCount() != ac2.getAtomCount()) {
-            throw new CDKException("The AtomContainer's being aligned must have the same number of atoms");
+            throw new CDKException(
+                    "The AtomContainer's being aligned must have the same number of atoms");
         }
         if (ac1.getAtomCount() != wts.length) {
             throw new CDKException("Number of weights must equal number of atoms");
@@ -276,8 +274,7 @@ public class KabschAlignment {
     /**
      * Perform an alignment.
      *
-     * This method aligns to set of atoms which should have been specified
-     * prior to this call
+     * <p>This method aligns to set of atoms which should have been specified prior to this call
      */
     public void align() {
 
@@ -401,15 +398,20 @@ public class KabschAlignment {
         // first, rotate the second set of points and ...
         this.rp = new Point3d[this.npoint];
         for (int i = 0; i < this.npoint; i++) {
-            this.rp[i] = new Point3d(U[0][0] * p2[i].x + U[0][1] * p2[i].y + U[0][2] * p2[i].z, U[1][0] * p2[i].x
-                    + U[1][1] * p2[i].y + U[1][2] * p2[i].z, U[2][0] * p2[i].x + U[2][1] * p2[i].y + U[2][2] * p2[i].z);
+            this.rp[i] =
+                    new Point3d(
+                            U[0][0] * p2[i].x + U[0][1] * p2[i].y + U[0][2] * p2[i].z,
+                            U[1][0] * p2[i].x + U[1][1] * p2[i].y + U[1][2] * p2[i].z,
+                            U[2][0] * p2[i].x + U[2][1] * p2[i].y + U[2][2] * p2[i].z);
         }
 
         // ... then eval rms
         double rms = 0.;
         for (int i = 0; i < this.npoint; i++) {
-            rms += (p1[i].x - this.rp[i].x) * (p1[i].x - this.rp[i].x) + (p1[i].y - this.rp[i].y)
-                    * (p1[i].y - this.rp[i].y) + (p1[i].z - this.rp[i].z) * (p1[i].z - this.rp[i].z);
+            rms +=
+                    (p1[i].x - this.rp[i].x) * (p1[i].x - this.rp[i].x)
+                            + (p1[i].y - this.rp[i].y) * (p1[i].y - this.rp[i].y)
+                            + (p1[i].z - this.rp[i].z) * (p1[i].z - this.rp[i].z);
         }
         this.rmsd = Math.sqrt(rms / this.npoint);
     }
@@ -417,7 +419,7 @@ public class KabschAlignment {
     /**
      * Returns the RMSD from the alignment.
      *
-     * If align() has not been called the return value is -1.0
+     * <p>If align() has not been called the return value is -1.0
      *
      * @return The RMSD for this alignment
      * @see #align
@@ -439,13 +441,12 @@ public class KabschAlignment {
     /**
      * Returns the center of mass for the first molecule or fragment used in the calculation.
      *
-     * This method is useful when using this class to align the coordinates
-     * of two molecules and them displaying them superimposed. Since the center of
-     * mass used during the alignment may not be based on the whole molecule (in
-     * general common substructures are aligned), when preparing molecules for display
-     * the first molecule should be translated to the center of mass. Then displaying the
-     * first molecule and the rotated version of the second one will result in superimposed
-     * structures.
+     * <p>This method is useful when using this class to align the coordinates of two molecules and
+     * them displaying them superimposed. Since the center of mass used during the alignment may not
+     * be based on the whole molecule (in general common substructures are aligned), when preparing
+     * molecules for display the first molecule should be translated to the center of mass. Then
+     * displaying the first molecule and the rotated version of the second one will result in
+     * superimposed structures.
      *
      * @return A Point3d containing the coordinates of the center of mass
      */
@@ -456,13 +457,12 @@ public class KabschAlignment {
     /**
      * Rotates the {@link IAtomContainer} coordinates by the rotation matrix.
      *
-     * In general if you align a subset of atoms in a AtomContainer
-     * this function can be applied to the whole AtomContainer to rotate all
-     * atoms. This should be called with the second AtomContainer (or Atom[])
-     * that was passed to the constructor.
+     * <p>In general if you align a subset of atoms in a AtomContainer this function can be applied
+     * to the whole AtomContainer to rotate all atoms. This should be called with the second
+     * AtomContainer (or Atom[]) that was passed to the constructor.
      *
-     * Note that the AtomContainer coordinates also get translated such that the
-     * center of mass of the original fragment used to calculate the alignment is at the origin.
+     * <p>Note that the AtomContainer coordinates also get translated such that the center of mass
+     * of the original fragment used to calculate the alignment is at the origin.
      *
      * @param ac The {@link IAtomContainer} whose coordinates are to be rotated
      */
@@ -475,10 +475,12 @@ public class KabschAlignment {
             p[i].z = p[i].z - this.cm2.z;
 
             // do the actual rotation
-            ac.getAtom(i).setPoint3d(
-                    new Point3d(U[0][0] * p[i].x + U[0][1] * p[i].y + U[0][2] * p[i].z, U[1][0] * p[i].x + U[1][1]
-                            * p[i].y + U[1][2] * p[i].z, U[2][0] * p[i].x + U[2][1] * p[i].y + U[2][2] * p[i].z));
+            ac.getAtom(i)
+                    .setPoint3d(
+                            new Point3d(
+                                    U[0][0] * p[i].x + U[0][1] * p[i].y + U[0][2] * p[i].z,
+                                    U[1][0] * p[i].x + U[1][1] * p[i].y + U[1][2] * p[i].z,
+                                    U[2][0] * p[i].x + U[2][1] * p[i].y + U[2][2] * p[i].z));
         }
     }
-
 }

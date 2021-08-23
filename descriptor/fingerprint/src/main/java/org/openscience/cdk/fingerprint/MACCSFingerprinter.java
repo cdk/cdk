@@ -22,6 +22,13 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.List;
+import java.util.Map;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.AllCycles;
 import org.openscience.cdk.graph.GraphUtil;
@@ -33,48 +40,38 @@ import org.openscience.cdk.smarts.SmartsPattern;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.List;
-import java.util.Map;
-
 /**
  * This fingerprinter generates 166 bit MACCS keys.
- * 
- * The SMARTS patterns for each of the features was taken from
- * <a href="http://www.rdkit.org"> RDKit</a>. However given that there is no
- * official and explicit listing of the original key definitions, the results
- * of this implementation may differ from others.
  *
- * This class assumes that aromaticity perception, atom typing and adding of
- * implicit hydrogens have been performed prior to generating the fingerprint.
+ * <p>The SMARTS patterns for each of the features was taken from <a href="http://www.rdkit.org">
+ * RDKit</a>. However given that there is no official and explicit listing of the original key
+ * definitions, the results of this implementation may differ from others.
  *
- * <b>Note</b> Currently bits 1 and 44 are completely ignored since the RDKit
- * defs do not provide a definition and I can't find an official description
- * of them.
+ * <p>This class assumes that aromaticity perception, atom typing and adding of implicit hydrogens
+ * have been performed prior to generating the fingerprint.
  *
- * <b>Warning - MACCS substructure keys cannot be used for substructure
- * filtering. It is possible for some keys to match substructures and not match
- * the superstructures. Some keys check for hydrogen counts which may not be
- * preserved in a superstructure.</b>
+ * <p><b>Note</b> Currently bits 1 and 44 are completely ignored since the RDKit defs do not provide
+ * a definition and I can't find an official description of them.
+ *
+ * <p><b>Warning - MACCS substructure keys cannot be used for substructure filtering. It is possible
+ * for some keys to match substructures and not match the superstructures. Some keys check for
+ * hydrogen counts which may not be preserved in a superstructure.</b>
  *
  * @author Rajarshi Guha
  * @cdk.created 2008-07-23
  * @cdk.keyword fingerprint
  * @cdk.keyword similarity
- * @cdk.module  fingerprint
+ * @cdk.module fingerprint
  * @cdk.githash
  */
 public class MACCSFingerprinter extends AbstractFingerprinter implements IFingerprinter {
 
-    private static ILoggingTool logger          = LoggingToolFactory.createLoggingTool(MACCSFingerprinter.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(MACCSFingerprinter.class);
 
     private static final String KEY_DEFINITIONS = "data/maccs.txt";
 
-    private volatile MaccsKey[] keys            = null;
+    private volatile MaccsKey[] keys = null;
 
     public MACCSFingerprinter() {}
 
@@ -100,13 +97,12 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
 
         final int numAtoms = container.getAtomCount();
 
-
-        final GraphUtil.EdgeToBondMap bmap    = GraphUtil.EdgeToBondMap.withSpaceFor(container);
-        final int[][]                 adjlist = GraphUtil.toAdjList(container, bmap);
+        final GraphUtil.EdgeToBondMap bmap = GraphUtil.EdgeToBondMap.withSpaceFor(container);
+        final int[][] adjlist = GraphUtil.toAdjList(container, bmap);
 
         for (int i = 0; i < keys.length; i++) {
-            final MaccsKey key     = keys[i];
-            final Pattern  pattern = key.pattern;
+            final MaccsKey key = keys[i];
+            final Pattern pattern = key.pattern;
 
             switch (key.smarts) {
                 case "[!*]":
@@ -120,7 +116,7 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
                     }
                     break;
 
-                // ring bits
+                    // ring bits
                 case "[R]1@*@*@1": // 3M RING bit22
                 case "[R]1@*@*@*@1": // 4M RING bit11
                 case "[R]1@*@*@*@*@1": // 5M RING bit96
@@ -136,14 +132,12 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
                     // component, iff there are some atoms not visited we have more than
                     // one component
                     boolean[] visit = new boolean[numAtoms];
-                    if (numAtoms > 1 && visitPart(visit, adjlist, 0, -1) < numAtoms)
-                        fp.set(165);
+                    if (numAtoms > 1 && visitPart(visit, adjlist, 0, -1) < numAtoms) fp.set(165);
                     break;
 
                 default:
                     if (key.count == 0) {
-                        if (pattern.matches(container))
-                            fp.set(i);
+                        if (pattern.matches(container)) fp.set(i);
                     } else {
                         // check if there are at least 'count' unique hits, key.count = 0
                         // means find at least one match hence we add 1 to out limit
@@ -158,9 +152,7 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
 
         // threshold=126, see AllRingsFinder.Threshold.PubChem_97
         if (numAtoms > 2) {
-            AllCycles allcycles = new AllCycles(adjlist,
-                                                Math.min(8, numAtoms),
-                                                126);
+            AllCycles allcycles = new AllCycles(adjlist, Math.min(8, numAtoms), 126);
             int numArom = 0;
             for (int[] path : allcycles.paths()) {
                 // length is +1 as we repeat the closure vertex
@@ -175,12 +167,10 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
                         fp.set(95);
                         break;
                     case 7: // 6M bit163->bit145, bit124 numArom > 1
-
                         if (numArom < 2) {
                             if (isAromPath(path, bmap)) {
                                 numArom++;
-                                if (numArom == 2)
-                                    fp.set(124);
+                                if (numArom == 2) fp.set(124);
                             }
                         }
 
@@ -207,8 +197,7 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
         visit[beg] = true;
         int visited = 1;
         for (int end : g[beg]) {
-            if (end != prev && !visit[end])
-                visited += visitPart(visit, g, end, beg);
+            if (end != prev && !visit[end]) visited += visitPart(visit, g, end, beg);
         }
         return visited;
     }
@@ -216,15 +205,15 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
     private static boolean isAromPath(int[] path, GraphUtil.EdgeToBondMap bmap) {
         int end = path.length - 1;
         for (int i = 0; i < end; i++) {
-            if (!bmap.get(path[i], path[i+1]).isAromatic())
-                return false;
+            if (!bmap.get(path[i], path[i + 1]).isAromatic()) return false;
         }
         return true;
     }
 
     /** {@inheritDoc} */
     @Override
-    public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
+    public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer)
+            throws CDKException {
         throw new UnsupportedOperationException();
     }
 
@@ -234,10 +223,12 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
         return 166;
     }
 
-    private MaccsKey[] readKeyDef(final IChemObjectBuilder builder) throws IOException, CDKException {
+    private MaccsKey[] readKeyDef(final IChemObjectBuilder builder)
+            throws IOException, CDKException {
         List<MaccsKey> keys = new ArrayList<MaccsKey>(166);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(getClass()
-                .getResourceAsStream(KEY_DEFINITIONS)));
+        BufferedReader reader =
+                new BufferedReader(
+                        new InputStreamReader(getClass().getResourceAsStream(KEY_DEFINITIONS)));
 
         // now process the keys
         String line;
@@ -246,16 +237,19 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
             String data = line.substring(0, line.indexOf('|')).trim();
             String[] toks = data.split("\\s");
 
-            keys.add(new MaccsKey(toks[1], createPattern(toks[1], builder), Integer.parseInt(toks[2])));
+            keys.add(
+                    new MaccsKey(
+                            toks[1], createPattern(toks[1], builder), Integer.parseInt(toks[2])));
         }
-        if (keys.size() != 166) throw new CDKException("Found " + keys.size() + " keys during setup. Should be 166");
+        if (keys.size() != 166)
+            throw new CDKException("Found " + keys.size() + " keys during setup. Should be 166");
         return keys.toArray(new MaccsKey[166]);
     }
 
     private class MaccsKey {
 
-        private String  smarts;
-        private int     count;
+        private String smarts;
+        private int count;
         private Pattern pattern;
 
         private MaccsKey(String smarts, Pattern pattern, int count) {
@@ -305,10 +299,9 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
     }
 
     /**
-     * Create a pattern for the provided SMARTS - if the SMARTS is '?' a pattern
-     * is not created.
+     * Create a pattern for the provided SMARTS - if the SMARTS is '?' a pattern is not created.
      *
-     * @param smarts  a smarts pattern
+     * @param smarts a smarts pattern
      * @param builder chem object builder
      * @return the pattern to match
      */

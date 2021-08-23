@@ -29,9 +29,7 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class ParameterReactTest extends CDKTestCase {
 
-    /**
-     *  Constructor for the ParameterReactTest object.
-     */
+    /** Constructor for the ParameterReactTest object. */
     public ParameterReactTest() {
         super();
     }
@@ -58,7 +56,6 @@ public class ParameterReactTest extends CDKTestCase {
 
         paramSet.setParameter(Boolean.TRUE);
         Assert.assertTrue(paramSet.isSetParameter());
-
     }
 
     /**
@@ -82,7 +79,6 @@ public class ParameterReactTest extends CDKTestCase {
         IParameterReact paramSet = new ParameterReact();
         paramSet.setValue(null);
         Assert.assertNull(paramSet.getValue());
-
     }
 
     /**

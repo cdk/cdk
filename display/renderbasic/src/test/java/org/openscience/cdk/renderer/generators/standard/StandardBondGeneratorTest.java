@@ -24,6 +24,12 @@
 
 package org.openscience.cdk.renderer.generators.standard;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.openscience.cdk.renderer.generators.standard.StandardBondGenerator.RingBondOffsetComparator;
+
+import java.util.Map;
+import javax.vecmath.Point2d;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -31,13 +37,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
-
-import javax.vecmath.Point2d;
-import java.util.Map;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.openscience.cdk.renderer.generators.standard.StandardBondGenerator.RingBondOffsetComparator;
 
 public class StandardBondGeneratorTest {
 
@@ -68,8 +67,7 @@ public class StandardBondGeneratorTest {
 
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = smipar.parseSmiles("C1[Fe]C=CC2=C1C=CN2");
-        for (IAtom atom : mol.atoms())
-            atom.setPoint2d(new Point2d(0,0));
+        for (IAtom atom : mol.atoms()) atom.setPoint2d(new Point2d(0, 0));
         Map<IBond, IAtomContainer> ringMap = StandardBondGenerator.ringPreferenceMap(mol);
 
         int nSize5 = 0, nSize6 = 0;
@@ -119,7 +117,6 @@ public class StandardBondGeneratorTest {
         int[] freq = RingBondOffsetComparator.countLightElements(TestMoleculeFactory.makeBenzene());
         assertThat(freq[6], is(6));
     }
-
 
     @Test
     public void highAtomicNoElementCount() {
@@ -210,5 +207,4 @@ public class StandardBondGeneratorTest {
         assertThat(new RingBondOffsetComparator().compare(furane, thiophene), is(-1));
         assertThat(new RingBondOffsetComparator().compare(thiophene, furane), is(+1));
     }
-
 }

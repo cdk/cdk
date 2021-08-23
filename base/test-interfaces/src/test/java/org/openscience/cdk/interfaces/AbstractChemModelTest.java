@@ -360,9 +360,11 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
         mol.addAtom(atom);
         mset.addAtomContainer(mol);
         chemModel.setMoleculeSet(mset);
-        Assert.assertFalse("chem model with a molecule set should not be empty", chemModel.isEmpty());
+        Assert.assertFalse(
+                "chem model with a molecule set should not be empty", chemModel.isEmpty());
         mol.removeAtomOnly(atom);
-        Assert.assertFalse("chem model with a (empty) molecule set should not be empty", chemModel.isEmpty());
+        Assert.assertFalse(
+                "chem model with a (empty) molecule set should not be empty", chemModel.isEmpty());
         chemModel.setMoleculeSet(null);
         Assert.assertTrue("chemo model with no molecule set should be empty", chemModel.isEmpty());
     }
@@ -385,7 +387,6 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
         Assert.assertFalse("model has a reaction set and should not be empty", model.isEmpty());
         model.setReactionSet(null);
         Assert.assertTrue("model has no reaction set", model.isEmpty());
-
     }
 
     @Test
@@ -404,7 +405,6 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
         Assert.assertFalse(model.isEmpty());
         model.setRingSet(null);
         Assert.assertTrue(model.isEmpty());
-
     }
 
     @Test
@@ -420,7 +420,5 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
         Assert.assertFalse(model.isEmpty());
         model.setCrystal(null);
         Assert.assertTrue(model.isEmpty());
-
     }
-
 }

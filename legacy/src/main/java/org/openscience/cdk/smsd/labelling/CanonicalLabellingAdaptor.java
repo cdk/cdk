@@ -8,24 +8,21 @@ import org.openscience.cdk.smiles.InvPair;
 /**
  * @cdk.module smsd
  * @cdk.githash
- * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public
- *             access to internal implementation details. SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK
+ *     or provides public access to internal implementation details. SMSD has been deprecated from
+ *     the CDK with a newer, more recent version of SMSD is available at <a
+ *     href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public class CanonicalLabellingAdaptor implements ICanonicalMoleculeLabeller {
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtomContainer getCanonicalMolecule(IAtomContainer container) {
         return AtomContainerAtomPermutor.permute(getCanonicalPermutation(container), container);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int[] getCanonicalPermutation(IAtomContainer container) {
         CanonicalLabeler labeler = new CanonicalLabeler();

@@ -24,7 +24,6 @@ public class SimpleAtomComparatorTest {
         IAtom a2 = builder.newInstance(IAtom.class, "C");
 
         Assert.assertEquals("Null hybridzation should be equals", 0, comparator.compare(a1, a2));
-
     }
 
     @Test
@@ -39,7 +38,6 @@ public class SimpleAtomComparatorTest {
         a2.setHybridization(IAtomType.Hybridization.SP3);
 
         Assert.assertEquals("Same hybridzation should be equals", 0, comparator.compare(a1, a2));
-
     }
 
     @Test
@@ -54,7 +52,6 @@ public class SimpleAtomComparatorTest {
         a2.setHybridization(IAtomType.Hybridization.SP3);
 
         Assert.assertEquals("Atom 2 should have priority", -1, comparator.compare(a1, a2));
-
     }
 
     @Test
@@ -67,8 +64,7 @@ public class SimpleAtomComparatorTest {
 
         // can't do less than correctly without hamcrest?
         Assert.assertTrue("oxygen should rank above carbon", comparator.compare(a1, a2) < 0);
-        Assert.assertTrue("oxygen should rank above carbon (inverse)", comparator.compare(a2, a1) > 0);
-
+        Assert.assertTrue(
+                "oxygen should rank above carbon (inverse)", comparator.compare(a2, a1) > 0);
     }
-
 }

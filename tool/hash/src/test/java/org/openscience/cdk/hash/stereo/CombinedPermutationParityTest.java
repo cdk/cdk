@@ -1,15 +1,13 @@
 package org.openscience.cdk.hash.stereo;
 
-import org.junit.Test;
-import org.openscience.cdk.hash.stereo.CombinedPermutationParity;
-import org.openscience.cdk.hash.stereo.PermutationParity;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import org.junit.Test;
 
 /**
  * @author John May

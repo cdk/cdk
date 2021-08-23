@@ -28,24 +28,25 @@ import org.openscience.cdk.tools.diff.tree.StringDifference;
 /**
  * Compares two {@link IElement} classes.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module diff
  * @cdk.githash
  */
 public class ElementDiff {
 
     /**
-     * Overwrite the default public constructor because this class is not
-     * supposed to be instantiated.
+     * Overwrite the default public constructor because this class is not supposed to be
+     * instantiated.
      */
     private ElementDiff() {}
 
     /**
      * Compare two {@link IChemObject} classes and return the difference as a {@link String}.
      *
-     * @param first  the first of the two classes to compare
+     * @param first the first of the two classes to compare
      * @param second the second of the two classes to compare
-     * @return a {@link String} representation of the difference between the first and second {@link IChemObject}.
+     * @return a {@link String} representation of the difference between the first and second {@link
+     *     IChemObject}.
      */
     public static String diff(IChemObject first, IChemObject second) {
         IDifference difference = difference(first, second);
@@ -59,9 +60,10 @@ public class ElementDiff {
     /**
      * Compare two {@link IChemObject} classes and return the difference as an {@link IDifference}.
      *
-     * @param first  the first of the two classes to compare
+     * @param first the first of the two classes to compare
      * @param second the second of the two classes to compare
-     * @return an {@link IDifference} representation of the difference between the first and second {@link IChemObject}.
+     * @return an {@link IDifference} representation of the difference between the first and second
+     *     {@link IChemObject}.
      */
     public static IDifference difference(IChemObject first, IChemObject second) {
         if (!(first instanceof IElement && second instanceof IElement)) {
@@ -70,9 +72,12 @@ public class ElementDiff {
         IElement firstElem = (IElement) first;
         IElement secondElem = (IElement) second;
         ChemObjectDifference coDiff = new ChemObjectDifference("ElementDiff");
-        coDiff.addChild(StringDifference.construct("S", firstElem.getSymbol(), secondElem.getSymbol()));
+        coDiff.addChild(
+                StringDifference.construct("S", firstElem.getSymbol(), secondElem.getSymbol()));
         coDiff.addChild(StringDifference.construct("ID", firstElem.getID(), secondElem.getID()));
-        coDiff.addChild(IntegerDifference.construct("AN", firstElem.getAtomicNumber(), secondElem.getAtomicNumber()));
+        coDiff.addChild(
+                IntegerDifference.construct(
+                        "AN", firstElem.getAtomicNumber(), secondElem.getAtomicNumber()));
         coDiff.addChild(ChemObjectDiff.difference(first, second));
         if (coDiff.childCount() > 0) {
             return coDiff;
@@ -80,5 +85,4 @@ public class ElementDiff {
             return null;
         }
     }
-
 }

@@ -36,13 +36,14 @@ public class DebugMappingTest extends AbstractMappingTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new DebugMapping(new DebugAtom(), new DebugAtom());
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new DebugMapping(new DebugAtom(), new DebugAtom());
+                    }
+                });
     }
 
     @Test
@@ -50,5 +51,4 @@ public class DebugMappingTest extends AbstractMappingTest {
         IMapping mapping = new DebugMapping(new DebugAtom(), new DebugAtom());
         Assert.assertNotNull(mapping);
     }
-
 }

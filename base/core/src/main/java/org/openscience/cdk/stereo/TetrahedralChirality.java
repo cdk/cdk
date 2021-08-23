@@ -22,15 +22,14 @@
  */
 package org.openscience.cdk.stereo;
 
+import java.util.List;
+import java.util.Map;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * Stereochemistry specification for tetravalent atoms. See {@link ITetrahedralChirality} for
@@ -40,19 +39,14 @@ import java.util.Map;
  * @cdk.githash
  * @see org.openscience.cdk.interfaces.ITetrahedralChirality
  */
-public class TetrahedralChirality
-    extends AbstractStereo<IAtom, IAtom>
-    implements ITetrahedralChirality {
+public class TetrahedralChirality extends AbstractStereo<IAtom, IAtom>
+        implements ITetrahedralChirality {
 
-    public TetrahedralChirality(IAtom chiralAtom,
-                                IAtom[] ligands,
-                                Stereo stereo) {
+    public TetrahedralChirality(IAtom chiralAtom, IAtom[] ligands, Stereo stereo) {
         this(chiralAtom, ligands, Stereo.toConfig(stereo));
     }
 
-    public TetrahedralChirality(IAtom chiralAtom,
-                                IAtom[] ligands,
-                                int config) {
+    public TetrahedralChirality(IAtom chiralAtom, IAtom[] ligands, int config) {
         super(chiralAtom, ligands, TH | (CFG_MASK & config));
     }
 
@@ -82,8 +76,7 @@ public class TetrahedralChirality
     }
 
     @Override
-    public ITetrahedralChirality map(Map<IAtom, IAtom> atoms,
-                                     Map<IBond, IBond> bonds) {
+    public ITetrahedralChirality map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds) {
         return (ITetrahedralChirality) super.map(atoms, bonds);
     }
 

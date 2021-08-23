@@ -24,6 +24,15 @@
 
 package org.openscience.cdk.renderer.generators;
 
+import java.awt.Color;
+import java.awt.Shape;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
+import java.awt.geom.RoundRectangle2D;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -34,26 +43,17 @@ import org.openscience.cdk.renderer.elements.GeneralPath;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
 
-import java.awt.Color;
-import java.awt.Shape;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Area;
-import java.awt.geom.RoundRectangle2D;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
- * Generate an under/overlaid highlight in structure depictions. The highlight
- * emphasises atoms and bonds. Each atom and bond is optionally assigned an
- * integer identifier. Entities with identifiers are then highlighted using the
- * {@link Palette} to determine the color. The size of the highlight is
- * specified with the {@link HighlightRadius} parameter.
+ * Generate an under/overlaid highlight in structure depictions. The highlight emphasises atoms and
+ * bonds. Each atom and bond is optionally assigned an integer identifier. Entities with identifiers
+ * are then highlighted using the {@link Palette} to determine the color. The size of the highlight
+ * is specified with the {@link HighlightRadius} parameter.
  *
- * 
- * Basic usage:
- * <blockquote><pre>{@code
+ * <p>Basic usage:
+ *
+ * <blockquote>
+ *
+ * <pre>{@code
  * // create with the highlight generator
  * AtomContainerRenderer renderer = ...;
  *
@@ -78,13 +78,16 @@ import java.util.Map;
  *
  * // draw
  * renderer.paint(m, new AWTDrawVisitor(g2), bounds, true);
- * }</pre></blockquote>
+ * }</pre>
  *
- * By default colours are automatically generated, to assign specific colors
- * a custom {@link Palette} must be used. Here are some examples of setting
- * the palette parameter in the renderer.
+ * </blockquote>
  *
- * <blockquote><pre>
+ * By default colours are automatically generated, to assign specific colors a custom {@link
+ * Palette} must be used. Here are some examples of setting the palette parameter in the renderer.
+ *
+ * <blockquote>
+ *
+ * <pre>
  * AtomContainerRenderer renderer = ...;
  *
  * // opaque colors
@@ -101,7 +104,9 @@ import java.util.Map;
  * renderer.getRenderer2DModel()
  *         .set(HighlightGenerator.HighlightPalette.class,
  *              HighlightGenerator.createPalette(new Color(0x88ff0000, true), Color.BLUE, Color.GREEN));
- * </pre></blockquote>
+ * </pre>
+ *
+ * </blockquote>
  *
  * @author John May
  * @cdk.module renderextra
@@ -110,15 +115,15 @@ import java.util.Map;
 public final class HighlightGenerator implements IGenerator<IAtomContainer> {
 
     /** The atom radius on screen. */
-    private final HighlightRadius  highlightRadius  = new HighlightRadius();
+    private final HighlightRadius highlightRadius = new HighlightRadius();
 
     /** Color palette to use. */
     private final HighlightPalette highlightPalette = new HighlightPalette();
 
     /** Property key. */
-    public static final String     ID_MAP           = "cdk.highlight.id";
+    public static final String ID_MAP = "cdk.highlight.id";
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     public IRenderingElement generate(IAtomContainer container, RendererModel model) {
 
@@ -127,8 +132,9 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
         if (highlight == null) return null;
 
         final Palette palette = model.getParameter(HighlightPalette.class).getValue();
-        final double radius = model.getParameter(HighlightRadius.class).getValue()
-                / model.getParameter(BasicSceneGenerator.Scale.class).getValue();
+        final double radius =
+                model.getParameter(HighlightRadius.class).getValue()
+                        / model.getParameter(BasicSceneGenerator.Scale.class).getValue();
 
         final Map<Integer, Area> shapes = new HashMap<Integer, Area>();
 
@@ -141,10 +147,8 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
             Area area = shapes.get(id);
             Shape shape = createAtomHighlight(atom, radius);
 
-            if (area == null)
-                shapes.put(id, new Area(shape));
-            else
-                area.add(new Area(shape));
+            if (area == null) shapes.put(id, new Area(shape));
+            else area.add(new Area(shape));
         }
 
         for (IBond bond : container.bonds()) {
@@ -156,15 +160,13 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
             Area area = shapes.get(id);
             Shape shape = createBondHighlight(bond, radius);
 
-            if (area == null)
-                shapes.put(id, (area = new Area(shape)));
-            else
-                area.add(new Area(shape));
+            if (area == null) shapes.put(id, (area = new Area(shape)));
+            else area.add(new Area(shape));
 
             // punch out the area occupied by atoms highlighted with a
             // different color
 
-            IAtom   a1   = bond.getBegin(), a2 = bond.getEnd();
+            IAtom a1 = bond.getBegin(), a2 = bond.getEnd();
             Integer a1Id = highlight.get(a1), a2Id = highlight.get(a2);
 
             if (a1Id != null && !a1Id.equals(id)) area.subtract(shapes.get(a1Id));
@@ -183,7 +185,7 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
     /**
      * Create the shape which will highlight the provided atom.
      *
-     * @param atom   the atom to highlight
+     * @param atom the atom to highlight
      * @param radius the specified radius
      * @return the shape which will highlight the atom
      */
@@ -191,13 +193,14 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
         double x = atom.getPoint2d().x;
         double y = atom.getPoint2d().y;
 
-        return new RoundRectangle2D.Double(x - radius, y - radius, 2 * radius, 2 * radius, 2 * radius, 2 * radius);
+        return new RoundRectangle2D.Double(
+                x - radius, y - radius, 2 * radius, 2 * radius, 2 * radius, 2 * radius);
     }
 
     /**
      * Create the shape which will highlight the provided bond.
      *
-     * @param bond   the bond to highlight
+     * @param bond the bond to highlight
      * @param radius the specified radius
      * @return the shape which will highlight the atom
      */
@@ -218,17 +221,18 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
 
         double r2 = radius / 2;
 
-        Shape s = new RoundRectangle2D.Double(x1 - r2, y1 - r2, mag + radius, radius, radius, radius);
+        Shape s =
+                new RoundRectangle2D.Double(x1 - r2, y1 - r2, mag + radius, radius, radius, radius);
 
         double theta = Math.atan2(dy, dx);
 
         return AffineTransform.getRotateInstance(theta, x1, y1).createTransformedShape(s);
     }
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     public List<IGeneratorParameter<?>> getParameters() {
-        return Arrays.asList(new IGeneratorParameter<?>[]{highlightRadius, highlightPalette});
+        return Arrays.asList(new IGeneratorParameter<?>[] {highlightRadius, highlightPalette});
     }
 
     /**
@@ -255,8 +259,7 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
     }
 
     /**
-     * Create an auto generating palette which will generate colors using the
-     * provided parameters.
+     * Create an auto generating palette which will generate colors using the provided parameters.
      *
      * @param saturation color saturation, 0.0 &lt; x &lt; 1.0
      * @param brightness color brightness, 0.0 &lt; x &lt; 1.0
@@ -268,21 +271,20 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
     }
 
     /**
-     * Create an auto generating palette which will generate colors using the
-     * provided parameters.
+     * Create an auto generating palette which will generate colors using the provided parameters.
      *
      * @param saturation color saturation, 0.0 &lt; x &lt; 1.0
      * @param brightness color brightness, 0.0 &lt; x &lt; 1.0
      * @param transparent generate transparent colors, 0 &lt; x &lt; 255
      * @return a palette to use in highlighting
      */
-    public static Palette createAutoGenPalette(float saturation, float brightness, boolean transparent) {
+    public static Palette createAutoGenPalette(
+            float saturation, float brightness, boolean transparent) {
         return new AutoGenerated(5, saturation, brightness, transparent ? 200 : 255);
     }
 
     /**
-     * Create an auto generating palette which will generate colors using the
-     * provided parameters.
+     * Create an auto generating palette which will generate colors using the provided parameters.
      *
      * @param transparent generate transparent colors
      * @return a palette to use in highlighting
@@ -292,8 +294,7 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
     }
 
     /**
-     * Defines a color palette, the palette should provide a color the specified
-     * identifier (id).
+     * Defines a color palette, the palette should provide a color the specified identifier (id).
      */
     public static interface Palette {
 
@@ -307,8 +308,8 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
     }
 
     /**
-     * A palette that allows one to define the precise colors of each class. The
-     * colors are passed in the constructor.
+     * A palette that allows one to define the precise colors of each class. The colors are passed
+     * in the constructor.
      */
     private static final class FixedPalette implements Palette {
 
@@ -324,44 +325,45 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
             this.colors = Arrays.copyOf(colors, colors.length);
         }
 
-        /**
-         *{@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
         public Color color(int id) {
             if (id < 0) throw new IllegalArgumentException("id should be positive");
-            if (id >= colors.length) throw new IllegalArgumentException("no color has been provided for id=" + id);
+            if (id >= colors.length)
+                throw new IllegalArgumentException("no color has been provided for id=" + id);
             return colors[id];
         }
     }
 
     /**
-     * An automatically generating color palette. The palette use the golden
-     * ratio to generate colors with varied hue.
+     * An automatically generating color palette. The palette use the golden ratio to generate
+     * colors with varied hue.
      *
-     * @see <a href="http://martin.ankerl.com/2009/12/09/how-to-create-random-colors-programmatically/">Create Random Colors Programmatically</a>
+     * @see <a
+     *     href="http://martin.ankerl.com/2009/12/09/how-to-create-random-colors-programmatically/">Create
+     *     Random Colors Programmatically</a>
      */
     private static final class AutoGenerated implements Palette {
 
         /** Golden ratio. */
-        private static final float PHI    = 0.618033988749895f;
+        private static final float PHI = 0.618033988749895f;
 
         /** Starting color - adjust for a different start color. */
-        private static final int   offset = 14;
+        private static final int offset = 14;
 
         /** The colors. */
-        private Color[]            colors;
+        private Color[] colors;
 
         /** Color alpha. */
-        private final int          alpha;
+        private final int alpha;
 
         /** The saturation and brightness values. */
-        private final float        saturation, brightness;
+        private final float saturation, brightness;
 
         /**
          * Create an automatically generating color palette.
          *
-         * @param n     pre-generate this many colors
+         * @param n pre-generate this many colors
          * @param alpha transparency (0-255)
          */
         public AutoGenerated(int n, int alpha) {
@@ -371,10 +373,10 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
         /**
          * Create an automatically generating color palette.
          *
-         * @param n          pre-generate this many colors
+         * @param n pre-generate this many colors
          * @param saturation color saturation (0-1f)
          * @param brightness color brightness (0-1f)
-         * @param alpha      transparency (0-255)
+         * @param alpha transparency (0-255)
          */
         public AutoGenerated(int n, float saturation, float brightness, int alpha) {
             this.colors = new Color[n];
@@ -385,12 +387,11 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
         }
 
         /**
-         * Fill the indices, from - to inclusive, in the colors array with
-         * generated colors.
+         * Fill the indices, from - to inclusive, in the colors array with generated colors.
          *
          * @param colors indexed colors
-         * @param from   first index
-         * @param to     last index
+         * @param from first index
+         * @param to last index
          */
         private void fill(Color[] colors, int from, int to) {
             if (alpha < 255) {
@@ -404,7 +405,7 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
             }
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         public Color color(int id) {
             if (id < 0) throw new IllegalArgumentException("id should be positive");
@@ -418,8 +419,8 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
     }
 
     /**
-     * Magic number with unknown units that defines the radius around an atom,
-     * e.g. used for highlighting atoms.
+     * Magic number with unknown units that defines the radius around an atom, e.g. used for
+     * highlighting atoms.
      */
     public static class HighlightRadius extends AbstractGeneratorParameter<Double> {
 

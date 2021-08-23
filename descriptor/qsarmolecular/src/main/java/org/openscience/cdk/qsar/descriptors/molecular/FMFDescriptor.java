@@ -33,17 +33,16 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 
 /**
  * An implementation of the FMF descriptor characterizing complexity of a molecule.
- * 
- * The descriptor is described in {@cdk.cite YANG2010} and is an approach to
- * characterizing molecular complexity based on the Murcko framework present
- * in the molecule. The descriptor is the ratio of heavy atoms in the framework to the
- * total number of heavy atoms in the molecule. By definition, acyclic molecules
- * which have no frameworks, will have a value of 0.
  *
- * Note that the authors consider an isolated ring system to be a framework (even
- * though there is no linker).
+ * <p>The descriptor is described in {@cdk.cite YANG2010} and is an approach to characterizing
+ * molecular complexity based on the Murcko framework present in the molecule. The descriptor is the
+ * ratio of heavy atoms in the framework to the total number of heavy atoms in the molecule. By
+ * definition, acyclic molecules which have no frameworks, will have a value of 0.
  *
- * This descriptor returns a single double value, labeled as "FMF"
+ * <p>Note that the authors consider an isolated ring system to be a framework (even though there is
+ * no linker).
+ *
+ * <p>This descriptor returns a single double value, labeled as "FMF"
  *
  * @author Rajarshi Guha
  * @cdk.module qsarmolecular
@@ -58,10 +57,10 @@ public class FMFDescriptor extends AbstractMolecularDescriptor implements IMolec
     /**
      * Calculates the FMF descriptor value for the given {@link IAtomContainer}.
      *
-     * @param container An {@link org.openscience.cdk.interfaces.IAtomContainer} for which this descriptor
-     *                  should be calculated
+     * @param container An {@link org.openscience.cdk.interfaces.IAtomContainer} for which this
+     *     descriptor should be calculated
      * @return An object of {@link org.openscience.cdk.qsar.DescriptorValue} that contains the
-     *         calculated FMF descriptor value as well as specification details
+     *     calculated FMF descriptor value as well as specification details
      */
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
@@ -75,33 +74,39 @@ public class FMFDescriptor extends AbstractMolecularDescriptor implements IMolec
             IAtomContainer[] framework = fragmenter.getFrameworksAsContainers();
             IAtomContainer[] ringSystems = fragmenter.getRingSystemsAsContainers();
             if (framework.length == 1) {
-                result = new DoubleResult(framework[0].getAtomCount() / (double) container.getAtomCount());
+                result =
+                        new DoubleResult(
+                                framework[0].getAtomCount() / (double) container.getAtomCount());
             } else if (framework.length == 0 && ringSystems.length == 1) {
-                result = new DoubleResult(ringSystems[0].getAtomCount() / (double) container.getAtomCount());
-            } else
-                result = new DoubleResult(0.0);
+                result =
+                        new DoubleResult(
+                                ringSystems[0].getAtomCount() / (double) container.getAtomCount());
+            } else result = new DoubleResult(0.0);
         } catch (CDKException e) {
             result = new DoubleResult(Double.NaN);
         }
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result,
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                result,
                 getDescriptorNames());
-
     }
 
     /**
      * Returns the specific type of the FMF descriptor value.
      *
-     * The FMF descriptor is a single, double value.
+     * <p>The FMF descriptor is a single, double value.
      *
-     * The return value from this method really indicates what type of result will
-     * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
-     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
-     * allows you to do the same thing, without actually calculating the descriptor.
-     * 
-     * <p>Additionally, the length indicated by the result type must match the actual
-     * length of a descriptor calculated with the current parameters. Typically, the
-     * length of array result types vary with the values of the parameters. See
-     * {@link org.openscience.cdk.qsar.IDescriptor} for more details.
+     * <p>The return value from this method really indicates what type of result will be obtained
+     * from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
+     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object;
+     * this method allows you to do the same thing, without actually calculating the descriptor.
+     *
+     * <p>Additionally, the length indicated by the result type must match the actual length of a
+     * descriptor calculated with the current parameters. Typically, the length of array result
+     * types vary with the values of the parameters. See {@link
+     * org.openscience.cdk.qsar.IDescriptor} for more details.
      *
      * @return an instance of the {@link org.openscience.cdk.qsar.result.DoubleResultType}
      */
@@ -111,30 +116,31 @@ public class FMFDescriptor extends AbstractMolecularDescriptor implements IMolec
     }
 
     /**
-     * Returns a <code>Map</code> which specifies which descriptor
-     * is implemented by this class.
-     * 
-     * These fields are used in the map:
+     * Returns a <code>Map</code> which specifies which descriptor is implemented by this class.
+     *
+     * <p>These fields are used in the map:
+     *
      * <ul>
-     * <li>Specification-Reference: refers to an entry in a unique dictionary
-     * <li>Implementation-Title: anything
-     * <li>Implementation-Identifier: a unique identifier for this version of
-     * this class
-     * <li>Implementation-Vendor: CDK, JOELib, or anything else
+     *   <li>Specification-Reference: refers to an entry in a unique dictionary
+     *   <li>Implementation-Title: anything
+     *   <li>Implementation-Identifier: a unique identifier for this version of this class
+     *   <li>Implementation-Vendor: CDK, JOELib, or anything else
      * </ul>
      *
      * @return An object containing the descriptor specification
      */
     @Override
     public DescriptorSpecification getSpecification() {
-        return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#fmf",
-                this.getClass().getName(), "The Chemistry Development Kit");
+        return new DescriptorSpecification(
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#fmf",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     /**
      * Returns the names of the parameters for this descriptor.
      *
-     * Since this descriptor takes no parameters, null is returned
+     * <p>Since this descriptor takes no parameters, null is returned
      *
      * @return null, since there are no parameters
      */
@@ -146,7 +152,7 @@ public class FMFDescriptor extends AbstractMolecularDescriptor implements IMolec
     /**
      * Returns a class matching that of the parameter with the given name.
      *
-     * Since this descriptor has no parameters, null is always returned
+     * <p>Since this descriptor has no parameters, null is always returned
      *
      * @param name The name of the parameter whose type is requested
      * @return null, since this descriptor has no parameters
@@ -158,12 +164,12 @@ public class FMFDescriptor extends AbstractMolecularDescriptor implements IMolec
 
     /**
      * Sets the parameters for this descriptor.
-     * 
-     * This method does nothing, since the descriptor has no parameters
+     *
+     * <p>This method does nothing, since the descriptor has no parameters
      *
      * @param params An array of Object containing the parameters for this descriptor
-     * @throws org.openscience.cdk.exception.CDKException
-     *          if invalid number of type of parameters are passed to it
+     * @throws org.openscience.cdk.exception.CDKException if invalid number of type of parameters
+     *     are passed to it
      * @see #getParameters
      */
     @Override
@@ -172,7 +178,8 @@ public class FMFDescriptor extends AbstractMolecularDescriptor implements IMolec
     /**
      * Returns the current parameter values.
      *
-     * null is returned since the descriptor has no parameters
+     * <p>null is returned since the descriptor has no parameters
+     *
      * @return null, since there are no parameters
      * @see #setParameters
      */
@@ -183,13 +190,13 @@ public class FMFDescriptor extends AbstractMolecularDescriptor implements IMolec
 
     /**
      * Returns an array of names for each descriptor value calculated.
-     * 
-     * Since this descriptor returns a single value, the array has a single element,
-     * viz., "FMF"
+     *
+     * <p>Since this descriptor returns a single value, the array has a single element, viz., "FMF"
+     *
      * @return A 1-element string array, with the value "FMF"
      */
     @Override
     public String[] getDescriptorNames() {
-        return new String[]{"FMF"};
+        return new String[] {"FMF"};
     }
 }

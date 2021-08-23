@@ -19,7 +19,6 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import javax.vecmath.Point3d;
-
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Before;
@@ -39,7 +38,6 @@ import org.openscience.cdk.smiles.SmilesParser;
  *
  * @cdk.module test-qsarmolecular
  */
-
 public class HBondAcceptorCountDescriptorTest extends MolecularDescriptorTest {
 
     public HBondAcceptorCountDescriptorTest() {}
@@ -50,7 +48,8 @@ public class HBondAcceptorCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testHBondAcceptorCountDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testHBondAcceptorCountDescriptor()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
         Object[] params = {new Boolean(true)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -61,7 +60,7 @@ public class HBondAcceptorCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     /**
-     * @cdk.bug   3133610
+     * @cdk.bug 3133610
      * @cdk.inchi InChI=1S/C2H3N3/c1-3-2-5-4-1/h1-2H,(H,3,4,5)
      */
     @Test
@@ -122,16 +121,14 @@ public class HBondAcceptorCountDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(2, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
 
-    /**
-     * @see <a href="https://github.com/cdk/cdk/issues/495">Issue 495</a>
-     */
+    /** @see <a href="https://github.com/cdk/cdk/issues/495">Issue 495</a> */
     @Test
     public void exocyclicOxygenInAromaticRing() throws InvalidSmilesException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer m = sp.parseSmiles("Cn1c2nc([nH]c2c(=O)n(c1=O)C)C1CCCC1");
 
         HBondAcceptorCountDescriptor hbond_acceptor_desc = new HBondAcceptorCountDescriptor();
-        int actual = ((IntegerResult)hbond_acceptor_desc.calculate(m).getValue()).intValue();
+        int actual = ((IntegerResult) hbond_acceptor_desc.calculate(m).getValue()).intValue();
         org.hamcrest.MatcherAssert.assertThat(actual, CoreMatchers.is(3));
     }
 }

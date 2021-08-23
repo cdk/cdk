@@ -65,8 +65,7 @@ public interface IAtom extends IAtomType {
     Integer getImplicitHydrogenCount();
 
     /**
-     * Sets a point specifying the location of this
-     * atom in a 2D space.
+     * Sets a point specifying the location of this atom in a 2D space.
      *
      * @param point2d A point in a 2D plane
      * @see #getPoint2d
@@ -74,8 +73,7 @@ public interface IAtom extends IAtomType {
     void setPoint2d(Point2d point2d);
 
     /**
-     * Sets a point specifying the location of this
-     * atom in 3D space.
+     * Sets a point specifying the location of this atom in 3D space.
      *
      * @param point3d A point in a 3-dimensional space
      * @see #getPoint3d
@@ -83,8 +81,7 @@ public interface IAtom extends IAtomType {
     void setPoint3d(Point3d point3d);
 
     /**
-     * Sets a point specifying the location of this
-     * atom in a Crystal unit cell.
+     * Sets a point specifying the location of this atom in a Crystal unit cell.
      *
      * @param point3d A point in a 3d fractional unit cell space
      * @see #getFractionalPoint3d
@@ -104,8 +101,7 @@ public interface IAtom extends IAtomType {
     void setStereoParity(Integer stereoParity);
 
     /**
-     * Returns a point specifying the location of this
-     * atom in a 2D space.
+     * Returns a point specifying the location of this atom in a 2D space.
      *
      * @return A point in a 2D plane. Null if unset.
      * @see #setPoint2d
@@ -113,8 +109,7 @@ public interface IAtom extends IAtomType {
     Point2d getPoint2d();
 
     /**
-     * Returns a point specifying the location of this
-     * atom in a 3D space.
+     * Returns a point specifying the location of this atom in a 3D space.
      *
      * @return A point in 3-dimensional space. Null if unset.
      * @see #setPoint3d
@@ -122,8 +117,7 @@ public interface IAtom extends IAtomType {
     Point3d getPoint3d();
 
     /**
-     * Returns a point specifying the location of this
-     * atom in a Crystal unit cell.
+     * Returns a point specifying the location of this atom in a Crystal unit cell.
      *
      * @return A point in 3d fractional unit cell space. Null if unset.
      * @see #setFractionalPoint3d
@@ -132,8 +126,7 @@ public interface IAtom extends IAtomType {
     Point3d getFractionalPoint3d();
 
     /**
-     * Returns the stereo parity of this atom. It uses the predefined values
-     * found in CDKConstants.
+     * Returns the stereo parity of this atom. It uses the predefined values found in CDKConstants.
      *
      * @return The stereo parity for this atom
      * @see org.openscience.cdk.CDKConstants
@@ -144,9 +137,9 @@ public interface IAtom extends IAtomType {
     Integer getStereoParity();
 
     /**
-     * Access the {@link IAtomContainer} of which this atom is a member of. Because atoms
-     * can be in multiple molecules this method will only work if the atom has been accessed
-     * in the context of an {@link IAtomContainer}, for example:
+     * Access the {@link IAtomContainer} of which this atom is a member of. Because atoms can be in
+     * multiple molecules this method will only work if the atom has been accessed in the context of
+     * an {@link IAtomContainer}, for example:
      *
      * <pre>{@code
      * IAtomContainer mol  = new AtomContainer();
@@ -158,26 +151,24 @@ public interface IAtom extends IAtomType {
      * mol.getAtom(0).getContainer(); // not-null, returns 'mol'
      * }</pre>
      *
-     * @return the atom container or null if not accessed in the context of a
-     *         container
+     * @return the atom container or null if not accessed in the context of a container
      */
     IAtomContainer getContainer();
 
     /**
-     * Acces the index of an atom in the context of an {@link IAtomContainer}. If the
-     * index is not known, &lt; 0 is returned.
+     * Acces the index of an atom in the context of an {@link IAtomContainer}. If the index is not
+     * known, &lt; 0 is returned.
      *
      * @return atom index or &lt; 0 if the index is not known
      */
     int getIndex();
 
     /**
-     * Returns the bonds connected to this atom. If the bonds are not
-     * known an exception is thrown. This method will only throw an exception
-     * if {@link #getIndex()} returns &lt; 0 or {@link #getContainer()} returns null.
+     * Returns the bonds connected to this atom. If the bonds are not known an exception is thrown.
+     * This method will only throw an exception if {@link #getIndex()} returns &lt; 0 or {@link
+     * #getContainer()} returns null.
      *
      * <pre>{@code
-     *
      * IAtom atom = ...;
      *
      * if (atom.getIndex() >= 0) {
@@ -206,13 +197,15 @@ public interface IAtom extends IAtomType {
 
     /**
      * Get the number of explicit bonds connected to this atom.
+     *
      * @return the total bond count
      */
     int getBondCount();
 
     /**
-     * Returns the bond connecting 'this' atom to the provided atom. If the
-     * atoms are not bonded, null is returned.
+     * Returns the bond connecting 'this' atom to the provided atom. If the atoms are not bonded,
+     * null is returned.
+     *
      * @param atom the other atom
      * @return the bond connecting the atoms
      * @throws UnsupportedOperationException thrown if the bonds are not known
@@ -220,9 +213,8 @@ public interface IAtom extends IAtomType {
     IBond getBond(IAtom atom);
 
     /**
-     * Access whether this atom has been marked as aromatic. The default
-     * value is false and you must explicitly perceive aromaticity with
-     * one of the available models.
+     * Access whether this atom has been marked as aromatic. The default value is false and you must
+     * explicitly perceive aromaticity with one of the available models.
      *
      * @return aromatic status
      * @see #getFlag(int)
@@ -239,8 +231,8 @@ public interface IAtom extends IAtomType {
     void setIsAromatic(boolean arom);
 
     /**
-     * Access whether this atom has been flagged as in a ring. The default
-     * value is false and you must explicitly find rings first.
+     * Access whether this atom has been flagged as in a ring. The default value is false and you
+     * must explicitly find rings first.
      *
      * @return ring status
      * @see #getFlag(int)
@@ -270,10 +262,7 @@ public interface IAtom extends IAtomType {
      */
     void setMapIdx(int mapidx);
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     IAtom clone() throws CloneNotSupportedException;
-
 }

@@ -25,19 +25,18 @@ package org.openscience.cdk.group;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
- * A tool for determining the automorphism group of the atoms in a molecule, or
- * for checking for a canonical form of a molecule.
+ * A tool for determining the automorphism group of the atoms in a molecule, or for checking for a
+ * canonical form of a molecule.
  *
- * If two atoms are equivalent under an automorphism in the group, then
- * roughly speaking they are in symmetric positions in the molecule. For
- * example, the C atoms in two methyl groups attached to a benzene ring
- * are 'equivalent' in this sense.
+ * <p>If two atoms are equivalent under an automorphism in the group, then roughly speaking they are
+ * in symmetric positions in the molecule. For example, the C atoms in two methyl groups attached to
+ * a benzene ring are 'equivalent' in this sense.
  *
- * <p>There are a couple of ways to use it - firstly, get the automorphisms.</p>
+ * <p>There are a couple of ways to use it - firstly, get the automorphisms.
  *
  * <pre>
  *     IAtomContainer ac = ... // get an atom container somehow
- *     AtomContainerDiscretePartitionRefiner refiner = 
+ *     AtomContainerDiscretePartitionRefiner refiner =
  *          PartitionRefinement.forAtoms().create()
  *     PermutationGroup autG = refiner.getAutomorphismGroup(ac);
  *     for (Permutation automorphism : autG.all()) {
@@ -45,23 +44,22 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  *     }
  * </pre>
  *
- * <p>Another is to check an atom container to see if it is canonical:</p>
+ * <p>Another is to check an atom container to see if it is canonical:
  *
  * <pre>
  *     IAtomContainer ac = ... // get an atom container somehow
- *     AtomContainerDiscretePartitionRefiner refiner = 
+ *     AtomContainerDiscretePartitionRefiner refiner =
  *          PartitionRefinement.forAtoms().create()
  *     if (refiner.isCanonical(ac)) {
  *         ... // do something with the atom container
  *     }
  * </pre>
  *
- * Note that it is not necessary to call {@link #refine(IAtomContainer)} before
- * either of these methods. However if both the group and the canonical check
- * are required, then the code should be:
+ * Note that it is not necessary to call {@link #refine(IAtomContainer)} before either of these
+ * methods. However if both the group and the canonical check are required, then the code should be:
  *
  * <pre>
- *     AtomContainerDiscretePartitionRefiner refiner = 
+ *     AtomContainerDiscretePartitionRefiner refiner =
  *          PartitionRefinement.forAtoms().create()
  *     refiner.refine(ac);
  *     boolean isCanon = refiner.isCanonical();
@@ -71,14 +69,12 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * This way, the refinement is not carried out multiple times.
  */
 public interface AtomContainerDiscretePartitionRefiner extends DiscretePartitionRefiner {
-    
+
     /**
-     * Refine an atom container, which has the side effect of calculating
-     * the automorphism group.
+     * Refine an atom container, which has the side effect of calculating the automorphism group.
      *
-     * If the group is needed afterwards, call {@link #getAutomorphismGroup()}
-     * instead of {@link #getAutomorphismGroup(IAtomContainer)} otherwise the
-     * refine method will be called twice.
+     * <p>If the group is needed afterwards, call {@link #getAutomorphismGroup()} instead of {@link
+     * #getAutomorphismGroup(IAtomContainer)} otherwise the refine method will be called twice.
      *
      * @param atomContainer the atomContainer to refine
      */
@@ -91,39 +87,38 @@ public interface AtomContainerDiscretePartitionRefiner extends DiscretePartition
      * @param partition the initial partition of the atoms
      */
     public void refine(IAtomContainer atomContainer, Partition partition);
-    
+
     /**
-     * Checks if the atom container is canonical. Note that this calls
-     * {@link #refine} first.
+     * Checks if the atom container is canonical. Note that this calls {@link #refine} first.
      *
      * @param atomContainer the atom container to check
      * @return true if the atom container is canonical
      */
     public boolean isCanonical(IAtomContainer atomContainer);
-    
+
     /**
-     * Gets the automorphism group of the atom container. By default it uses an
-     * initial partition based on the element symbols (so all the carbons are in
-     * one cell, all the nitrogens in another, etc). If this behaviour is not
-     * desired, then use the {@link AtomDiscretePartitionRefiner#ignoreElements}
-     * flag in the constructor.
+     * Gets the automorphism group of the atom container. By default it uses an initial partition
+     * based on the element symbols (so all the carbons are in one cell, all the nitrogens in
+     * another, etc). If this behaviour is not desired, then use the {@link
+     * AtomDiscretePartitionRefiner#ignoreElements} flag in the constructor.
      *
      * @param atomContainer the atom container to use
      * @return the automorphism group of the atom container
      */
     public PermutationGroup getAutomorphismGroup(IAtomContainer atomContainer);
-    
+
     /**
-     * Speed up the search for the automorphism group using the automorphisms in
-     * the supplied group. Note that the behaviour of this method is unknown if
-     * the group does not contain automorphisms...
+     * Speed up the search for the automorphism group using the automorphisms in the supplied group.
+     * Note that the behaviour of this method is unknown if the group does not contain
+     * automorphisms...
      *
      * @param atomContainer the atom container to use
      * @param group the group of known automorphisms
      * @return the full automorphism group
      */
-    public PermutationGroup getAutomorphismGroup(IAtomContainer atomContainer, PermutationGroup group);
-    
+    public PermutationGroup getAutomorphismGroup(
+            IAtomContainer atomContainer, PermutationGroup group);
+
     /**
      * Get the automorphism group of the molecule given an initial partition.
      *
@@ -131,8 +126,9 @@ public interface AtomContainerDiscretePartitionRefiner extends DiscretePartition
      * @param initialPartition an initial partition of the atoms
      * @return the automorphism group starting with this partition
      */
-    public PermutationGroup getAutomorphismGroup(IAtomContainer atomContainer, Partition initialPartition);
-    
+    public PermutationGroup getAutomorphismGroup(
+            IAtomContainer atomContainer, Partition initialPartition);
+
     /**
      * Get the automorphism partition (equivalence classes) of the atoms.
      *

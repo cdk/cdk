@@ -22,6 +22,8 @@
  *  */
 package org.openscience.cdk.io.cml;
 
+import java.io.ByteArrayInputStream;
+import java.util.Iterator;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
@@ -44,15 +46,11 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 
-import java.io.ByteArrayInputStream;
-import java.util.Iterator;
-
 /**
- * Atomic tests for reading CML documents. All tested CML strings are valid CML 2.3,
- * as can be determined in cdk/src/org.openscience.cdk/io/cml/cml23TestFramework.xml.
+ * Atomic tests for reading CML documents. All tested CML strings are valid CML 2.3, as can be
+ * determined in cdk/src/org.openscience.cdk/io/cml/cml23TestFramework.xml.
  *
  * @cdk.module test-io
- *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */
 public class CML23FragmentsTest extends CDKTestCase {
@@ -95,7 +93,8 @@ public class CML23FragmentsTest extends CDKTestCase {
 
     @Test
     public void testMassNumber() throws Exception {
-        String cmlString = "<molecule id='m1'><atomArray><atom id='a1' elementType='C' isotopeNumber='12'/></atomArray></molecule>";
+        String cmlString =
+                "<molecule id='m1'><atomArray><atom id='a1' elementType='C' isotopeNumber='12'/></atomArray></molecule>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
@@ -108,7 +107,8 @@ public class CML23FragmentsTest extends CDKTestCase {
 
     @Test
     public void testAtomicNumber() throws Exception {
-        String cmlString = "<molecule><atomArray><atom id='a1' elementType=\"C\"><scalar dataType=\"xsd:integer\" dictRef=\"cdk:atomicNumber\">6</scalar></atom></atomArray></molecule>";
+        String cmlString =
+                "<molecule><atomArray><atom id='a1' elementType=\"C\"><scalar dataType=\"xsd:integer\" dictRef=\"cdk:atomicNumber\">6</scalar></atom></atomArray></molecule>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
@@ -121,7 +121,8 @@ public class CML23FragmentsTest extends CDKTestCase {
 
     @Test
     public void testIsotopicMass() throws Exception {
-        String cmlString = "<molecule><atomArray><atom id='a1' elementType=\"C\"><scalar dataType=\"xsd:float\" dictRef=\"cdk:isotopicMass\">12.0</scalar></atom></atomArray></molecule>";
+        String cmlString =
+                "<molecule><atomArray><atom id='a1' elementType=\"C\"><scalar dataType=\"xsd:float\" dictRef=\"cdk:isotopicMass\">12.0</scalar></atom></atomArray></molecule>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
@@ -134,9 +135,10 @@ public class CML23FragmentsTest extends CDKTestCase {
 
     @Test
     public void testAtomParity() throws Exception {
-        String cmlString = "<molecule><atomArray><atom id='a1' elementType='C'><atomParity atomRefs4='a2 a3 a5 a4'>1</atomParity></atom>"
-                + "<atom id='a2' elementType='Br'/><atom id='a3' elementType='Cl'/><atom id='a4' elementType='F'/><atom id='a5' elementType='I'/></atomArray>"
-                + "<bondArray><bond atomRefs2='a1 a2' order='1'/><bond atomRefs2='a1 a3' order='1'/><bond atomRefs2='a1 a4' order='1'/><bond atomRefs2='a1 a5' order='1'/></bondArray></molecule>";
+        String cmlString =
+                "<molecule><atomArray><atom id='a1' elementType='C'><atomParity atomRefs4='a2 a3 a5 a4'>1</atomParity></atom>"
+                        + "<atom id='a2' elementType='Br'/><atom id='a3' elementType='Cl'/><atom id='a4' elementType='F'/><atom id='a5' elementType='I'/></atomArray>"
+                        + "<bondArray><bond atomRefs2='a1 a2' order='1'/><bond atomRefs2='a1 a3' order='1'/><bond atomRefs2='a1 a4' order='1'/><bond atomRefs2='a1 a5' order='1'/></bondArray></molecule>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
@@ -158,7 +160,8 @@ public class CML23FragmentsTest extends CDKTestCase {
 
     @Test
     public void testBond() throws Exception {
-        String cmlString = "<molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>";
+        String cmlString =
+                "<molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
@@ -175,7 +178,8 @@ public class CML23FragmentsTest extends CDKTestCase {
 
     @Test
     public void testBond4() throws Exception {
-        String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2 a3'/><bondArray atomRef1='a1 a1' atomRef2='a2 a3' bondID='b1 b2'/></molecule>";
+        String cmlString =
+                "<molecule id='m1'><atomArray atomID='a1 a2 a3'/><bondArray atomRef1='a1 a1' atomRef2='a2 a3' bondID='b1 b2'/></molecule>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
@@ -193,7 +197,8 @@ public class CML23FragmentsTest extends CDKTestCase {
 
     @Test
     public void testBond5() throws Exception {
-        String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2 a3'/><bondArray atomRef1='a1 a1' atomRef2='a2 a3' order='1 1'/></molecule>";
+        String cmlString =
+                "<molecule id='m1'><atomArray atomID='a1 a2 a3'/><bondArray atomRef1='a1 a1' atomRef2='a2 a3' order='1 1'/></molecule>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
@@ -210,7 +215,8 @@ public class CML23FragmentsTest extends CDKTestCase {
 
     @Test
     public void testBondId() throws Exception {
-        String cmlString = "<molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>";
+        String cmlString =
+                "<molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
@@ -223,7 +229,8 @@ public class CML23FragmentsTest extends CDKTestCase {
 
     @Test
     public void testBondStereo() throws Exception {
-        String cmlString = "<molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'><bondStereo dictRef='cml:H'/></bond></bondArray></molecule>";
+        String cmlString =
+                "<molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'><bondStereo dictRef='cml:H'/></bond></bondArray></molecule>";
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
@@ -235,7 +242,8 @@ public class CML23FragmentsTest extends CDKTestCase {
 
     @Test
     public void testBondAromatic() throws Exception {
-        String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2'/><bondArray atomRef1='a1' atomRef2='a2' order='A'/></molecule>";
+        String cmlString =
+                "<molecule id='m1'><atomArray atomID='a1 a2'/><bondArray atomRef1='a1' atomRef2='a2' order='A'/></molecule>";
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
@@ -248,7 +256,8 @@ public class CML23FragmentsTest extends CDKTestCase {
 
     @Test
     public void testBondAromatic2() throws Exception {
-        String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2'/><bondArray><bond atomRefs='a1 a2' order='2'><bondType dictRef='cdk:aromaticBond'/></bond></bondArray></molecule>";
+        String cmlString =
+                "<molecule id='m1'><atomArray atomID='a1 a2'/><bondArray><bond atomRefs='a1 a2' order='2'><bondType dictRef='cdk:aromaticBond'/></bond></bondArray></molecule>";
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
@@ -261,10 +270,11 @@ public class CML23FragmentsTest extends CDKTestCase {
 
     @Test
     public void testList() throws Exception {
-        String cmlString = "<list>"
-                + "<molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>"
-                + "<molecule id='m2'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>"
-                + "</list>";
+        String cmlString =
+                "<list>"
+                        + "<molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>"
+                        + "<molecule id='m2'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>"
+                        + "</list>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         checkForXMoleculeFile(chemFile, 2);
@@ -272,7 +282,8 @@ public class CML23FragmentsTest extends CDKTestCase {
 
     @Test
     public void testCoordinates2D() throws Exception {
-        String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2' x2='0.0 0.1' y2='1.2 1.3'/></molecule>";
+        String cmlString =
+                "<molecule id='m1'><atomArray atomID='a1 a2' x2='0.0 0.1' y2='1.2 1.3'/></molecule>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
@@ -286,7 +297,8 @@ public class CML23FragmentsTest extends CDKTestCase {
 
     @Test
     public void testCoordinates3D() throws Exception {
-        String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2' x3='0.0 0.1' y3='1.2 1.3' z3='2.1 2.5'/></molecule>";
+        String cmlString =
+                "<molecule id='m1'><atomArray atomID='a1 a2' x3='0.0 0.1' y3='1.2 1.3' z3='2.1 2.5'/></molecule>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
@@ -300,7 +312,8 @@ public class CML23FragmentsTest extends CDKTestCase {
 
     @Test
     public void testFractional3D() throws Exception {
-        String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2' xFract='0.0 0.1' yFract='1.2 1.3' zFract='2.1 2.5'/></molecule>";
+        String cmlString =
+                "<molecule id='m1'><atomArray atomID='a1 a2' xFract='0.0 0.1' yFract='1.2 1.3' zFract='2.1 2.5'/></molecule>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
@@ -314,7 +327,8 @@ public class CML23FragmentsTest extends CDKTestCase {
 
     @Test
     public void testMissing2DCoordinates() throws Exception {
-        String cmlString = "<molecule id='m1'><atomArray><atom id='a1' xy2='0.0 0.1'/><atom id='a2'/><atom id='a3' xy2='0.1 0.0'/></atomArray></molecule>";
+        String cmlString =
+                "<molecule id='m1'><atomArray><atom id='a1' xy2='0.0 0.1'/><atom id='a2'/><atom id='a3' xy2='0.1 0.0'/></atomArray></molecule>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
@@ -331,7 +345,8 @@ public class CML23FragmentsTest extends CDKTestCase {
 
     @Test
     public void testMissing3DCoordinates() throws Exception {
-        String cmlString = "<molecule id='m1'><atomArray><atom id='a1' xyz3='0.0 0.1 0.2'/><atom id='a2'/><atom id='a3' xyz3='0.1 0.0 0.2'/></atomArray></molecule>";
+        String cmlString =
+                "<molecule id='m1'><atomArray><atom id='a1' xyz3='0.0 0.1 0.2'/><atom id='a2'/><atom id='a3' xyz3='0.1 0.0 0.2'/></atomArray></molecule>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
@@ -358,7 +373,8 @@ public class CML23FragmentsTest extends CDKTestCase {
 
     @Test
     public void testName() throws Exception {
-        String cmlString = "<molecule id='m1'><name>acetic acid</name><atomArray atomID='a1 a2 a3'/></molecule>";
+        String cmlString =
+                "<molecule id='m1'><name>acetic acid</name><atomArray atomID='a1 a2 a3'/></molecule>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
@@ -366,12 +382,11 @@ public class CML23FragmentsTest extends CDKTestCase {
         Assert.assertEquals("acetic acid", mol.getTitle());
     }
 
-    /**
-     * @cdk.bug 2142400
-     */
+    /** @cdk.bug 2142400 */
     @Test
     public void testHydrogenCount1() throws Exception {
-        String cmlString = "<molecule><atomArray><atom id='a1' elementType='C' hydrogenCount='4'/></atomArray></molecule>";
+        String cmlString =
+                "<molecule><atomArray><atom id='a1' elementType='C' hydrogenCount='4'/></atomArray></molecule>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
@@ -383,17 +398,23 @@ public class CML23FragmentsTest extends CDKTestCase {
         Assert.assertEquals(4, atom.getImplicitHydrogenCount().intValue());
     }
 
-    /**
-     * @cdk.bug 2142400
-     */
+    /** @cdk.bug 2142400 */
     @Test
     public void testHydrogenCount2() throws Exception {
-        String cmlString = "<molecule><atomArray>" + "<atom id='a1' elementType='C' hydrogenCount='4'/>"
-                + "<atom id='a2' elementType='H'/>" + "<atom id='a3' elementType='H'/>"
-                + "<atom id='a4' elementType='H'/>" + "<atom id='a5' elementType='H'/>" + "</atomArray>"
-                + "<bondArray>" + "<bond id='b1' atomRefs2='a1 a2' order='S'/>"
-                + "<bond id='b2' atomRefs2='a1 a3' order='S'/>" + "<bond id='b3' atomRefs2='a1 a4' order='S'/>"
-                + "<bond id='b4' atomRefs2='a1 a5' order='S'/>" + "</bondArray></molecule>";
+        String cmlString =
+                "<molecule><atomArray>"
+                        + "<atom id='a1' elementType='C' hydrogenCount='4'/>"
+                        + "<atom id='a2' elementType='H'/>"
+                        + "<atom id='a3' elementType='H'/>"
+                        + "<atom id='a4' elementType='H'/>"
+                        + "<atom id='a5' elementType='H'/>"
+                        + "</atomArray>"
+                        + "<bondArray>"
+                        + "<bond id='b1' atomRefs2='a1 a2' order='S'/>"
+                        + "<bond id='b2' atomRefs2='a1 a3' order='S'/>"
+                        + "<bond id='b3' atomRefs2='a1 a4' order='S'/>"
+                        + "<bond id='b4' atomRefs2='a1 a5' order='S'/>"
+                        + "</bondArray></molecule>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
@@ -406,14 +427,19 @@ public class CML23FragmentsTest extends CDKTestCase {
         Assert.assertEquals(0, atom.getImplicitHydrogenCount().intValue());
     }
 
-    /**
-     * @cdk.bug 2142400
-     */
+    /** @cdk.bug 2142400 */
     @Test
     public void testHydrogenCount3() throws Exception {
-        String cmlString = "<molecule>" + "<atomArray>" + "<atom id='a1' elementType='C' hydrogenCount='4'/>"
-                + "<atom id='a2' elementType='H'/>" + "</atomArray>" + "<bondArray>"
-                + "<bond id='b1' atomRefs2='a1 a2' order='S'/>" + "</bondArray>" + "</molecule>";
+        String cmlString =
+                "<molecule>"
+                        + "<atomArray>"
+                        + "<atom id='a1' elementType='C' hydrogenCount='4'/>"
+                        + "<atom id='a2' elementType='H'/>"
+                        + "</atomArray>"
+                        + "<bondArray>"
+                        + "<bond id='b1' atomRefs2='a1 a2' order='S'/>"
+                        + "</bondArray>"
+                        + "</molecule>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
@@ -427,17 +453,20 @@ public class CML23FragmentsTest extends CDKTestCase {
 
     @Test
     public void testInChI() throws Exception {
-        String cmlString = "<molecule id='m1'><identifier convention='iupac:inchi' value='InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)'/><atomArray atomID='a1 a2 a3'/></molecule>";
+        String cmlString =
+                "<molecule id='m1'><identifier convention='iupac:inchi' value='InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)'/><atomArray atomID='a1 a2 a3'/></molecule>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
-        Assert.assertEquals("InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)", mol.getProperty(CDKConstants.INCHI));
+        Assert.assertEquals(
+                "InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)", mol.getProperty(CDKConstants.INCHI));
     }
 
     @Test
     public void testDictRef() throws Exception {
-        String cmlString = "<molecule id=\"alanine\" dictRef=\"pdb:aminoAcid\"><name>alanine</name><name dictRef=\"pdb:residueName\">Ala</name><name dictRef=\"pdb:oneLetterCode\">A</name><scalar dictRef=\"pdb:id\">3</scalar><atomArray><atom id=\"a1\" elementType=\"C\" x2=\"265.0\" y2=\"989.0\"/><atom id=\"a2\" elementType=\"N\" x2=\"234.0\" y2=\"972.0\" dictRef=\"pdb:nTerminus\"/><atom id=\"a3\" elementType=\"C\" x2=\"265.0\" y2=\"1025.0\"/><atom id=\"a4\" elementType=\"C\" x2=\"296.0\" y2=\"971.0\" dictRef=\"pdb:cTerminus\"/><atom id=\"a5\" elementType=\"O\" x2=\"296.0\" y2=\"935.0\"/><atom id=\"a6\" elementType=\"O\" x2=\"327.0\" y2=\"988.0\"/></atomArray><bondArray><bond id=\"b1\" atomRefs2=\"a2 a1\" order=\"S\"/><bond id=\"b2\" atomRefs2=\"a1 a3\" order=\"S\"/><bond id=\"b3\" atomRefs2=\"a1 a4\" order=\"S\"/><bond id=\"b4\" atomRefs2=\"a4 a5\" order=\"D\"/><bond id=\"b5\" atomRefs2=\"a4 a6\" order=\"S\"/></bondArray></molecule>";
+        String cmlString =
+                "<molecule id=\"alanine\" dictRef=\"pdb:aminoAcid\"><name>alanine</name><name dictRef=\"pdb:residueName\">Ala</name><name dictRef=\"pdb:oneLetterCode\">A</name><scalar dictRef=\"pdb:id\">3</scalar><atomArray><atom id=\"a1\" elementType=\"C\" x2=\"265.0\" y2=\"989.0\"/><atom id=\"a2\" elementType=\"N\" x2=\"234.0\" y2=\"972.0\" dictRef=\"pdb:nTerminus\"/><atom id=\"a3\" elementType=\"C\" x2=\"265.0\" y2=\"1025.0\"/><atom id=\"a4\" elementType=\"C\" x2=\"296.0\" y2=\"971.0\" dictRef=\"pdb:cTerminus\"/><atom id=\"a5\" elementType=\"O\" x2=\"296.0\" y2=\"935.0\"/><atom id=\"a6\" elementType=\"O\" x2=\"327.0\" y2=\"988.0\"/></atomArray><bondArray><bond id=\"b1\" atomRefs2=\"a2 a1\" order=\"S\"/><bond id=\"b2\" atomRefs2=\"a1 a3\" order=\"S\"/><bond id=\"b3\" atomRefs2=\"a1 a4\" order=\"S\"/><bond id=\"b4\" atomRefs2=\"a4 a5\" order=\"D\"/><bond id=\"b5\" atomRefs2=\"a4 a6\" order=\"S\"/></bondArray></molecule>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
@@ -454,35 +483,37 @@ public class CML23FragmentsTest extends CDKTestCase {
     @Test
     public void testQSAROutput() throws Exception {
         String specificationReference = "qsar:weight";
-        String implementationTitle = "org.openscience.cdk.qsar.descriptors.molecular.WeightDescriptor";
+        String implementationTitle =
+                "org.openscience.cdk.qsar.descriptors.molecular.WeightDescriptor";
         String implementationIdentifier = "$Id$";
         String implementationVendor = "The Chemistry Development Kit";
 
-        String cmlString = "<molecule xmlns=\"http://www.xml-cml.org/schema\"><atomArray><atom id=\"a5256233\" "
-                + "elementType=\"C\" formalCharge=\"0\" hydrogenCount=\"0\" /><atom id=\"a26250401\" elementType=\"C\" "
-                + "formalCharge=\"0\" hydrogenCount=\"0\" /><atom id=\"a16821027\" elementType=\"C\" formalCharge=\"0\" "
-                + "hydrogenCount=\"0\" /><atom id=\"a14923925\" elementType=\"C\" formalCharge=\"0\" hydrogenCount=\"0\" />"
-                + "<atom id=\"a7043360\" elementType=\"C\" formalCharge=\"0\" hydrogenCount=\"0\" /><atom id=\"a31278839\" "
-                + "elementType=\"C\" formalCharge=\"0\" hydrogenCount=\"0\" /></atomArray><bondArray><bond id=\"b6175092\" "
-                + "atomRefs2=\"a5256233 a26250401\" order=\"S\" /><bond id=\"b914691\" atomRefs2=\"a26250401 a16821027\" "
-                + "order=\"D\" /><bond id=\"b5298332\" atomRefs2=\"a16821027 a14923925\" order=\"S\" /><bond id=\"b29167060\" "
-                + "atomRefs2=\"a14923925 a7043360\" order=\"D\" /><bond id=\"b14093690\" atomRefs2=\"a7043360 a31278839\" "
-                + "order=\"S\" /><bond id=\"b11924794\" atomRefs2=\"a31278839 a5256233\" order=\"D\" /></bondArray>"
-                + "<propertyList><property xmlns:qsar=\"http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/\" "
-                + "convention=\"qsar:DescriptorValue\"><metadataList><metadata dictRef=\"qsar:specificationReference\" "
-                + "content=\""
-                + specificationReference
-                + "\" /><metadata dictRef=\"qsar:implementationTitle\" content=\""
-                + implementationTitle
-                + "\" /><metadata dictRef=\"qsar:implementationIdentifier\" "
-                + "content=\""
-                + implementationIdentifier
-                + "\" /><metadata dictRef=\""
-                + "qsar:implementationVendor\" content=\""
-                + implementationVendor
-                + "\" /><metadataList title=\"qsar:"
-                + "descriptorParameters\"><metadata title=\"elementSymbol\" content=\"*\" /></metadataList></metadataList>"
-                + "<scalar dataType=\"xsd:double\" dictRef=\"qsar:weight\">72.0</scalar></property></propertyList></molecule>";
+        String cmlString =
+                "<molecule xmlns=\"http://www.xml-cml.org/schema\"><atomArray><atom id=\"a5256233\" "
+                        + "elementType=\"C\" formalCharge=\"0\" hydrogenCount=\"0\" /><atom id=\"a26250401\" elementType=\"C\" "
+                        + "formalCharge=\"0\" hydrogenCount=\"0\" /><atom id=\"a16821027\" elementType=\"C\" formalCharge=\"0\" "
+                        + "hydrogenCount=\"0\" /><atom id=\"a14923925\" elementType=\"C\" formalCharge=\"0\" hydrogenCount=\"0\" />"
+                        + "<atom id=\"a7043360\" elementType=\"C\" formalCharge=\"0\" hydrogenCount=\"0\" /><atom id=\"a31278839\" "
+                        + "elementType=\"C\" formalCharge=\"0\" hydrogenCount=\"0\" /></atomArray><bondArray><bond id=\"b6175092\" "
+                        + "atomRefs2=\"a5256233 a26250401\" order=\"S\" /><bond id=\"b914691\" atomRefs2=\"a26250401 a16821027\" "
+                        + "order=\"D\" /><bond id=\"b5298332\" atomRefs2=\"a16821027 a14923925\" order=\"S\" /><bond id=\"b29167060\" "
+                        + "atomRefs2=\"a14923925 a7043360\" order=\"D\" /><bond id=\"b14093690\" atomRefs2=\"a7043360 a31278839\" "
+                        + "order=\"S\" /><bond id=\"b11924794\" atomRefs2=\"a31278839 a5256233\" order=\"D\" /></bondArray>"
+                        + "<propertyList><property xmlns:qsar=\"http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/\" "
+                        + "convention=\"qsar:DescriptorValue\"><metadataList><metadata dictRef=\"qsar:specificationReference\" "
+                        + "content=\""
+                        + specificationReference
+                        + "\" /><metadata dictRef=\"qsar:implementationTitle\" content=\""
+                        + implementationTitle
+                        + "\" /><metadata dictRef=\"qsar:implementationIdentifier\" "
+                        + "content=\""
+                        + implementationIdentifier
+                        + "\" /><metadata dictRef=\""
+                        + "qsar:implementationVendor\" content=\""
+                        + implementationVendor
+                        + "\" /><metadataList title=\"qsar:"
+                        + "descriptorParameters\"><metadata title=\"elementSymbol\" content=\"*\" /></metadataList></metadataList>"
+                        + "<scalar dataType=\"xsd:double\" dictRef=\"qsar:weight\">72.0</scalar></property></propertyList></molecule>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
@@ -515,9 +546,7 @@ public class CML23FragmentsTest extends CDKTestCase {
         return chemFile;
     }
 
-    /**
-     * Tests whether the file is indeed a single molecule file
-     */
+    /** Tests whether the file is indeed a single molecule file */
     private IAtomContainer checkForSingleMoleculeFile(IChemFile chemFile) {
         return checkForXMoleculeFile(chemFile, 1);
     }
@@ -564,9 +593,12 @@ public class CML23FragmentsTest extends CDKTestCase {
 
     @Test
     public void testReaction() throws Exception {
-        String cmlString = "<reaction>" + "<reactantList><reactant><molecule id='react'/></reactant></reactantList>"
-                + "<productList><product><molecule id='product'/></product></productList>"
-                + "<substanceList><substance><molecule id='water'/></substance></substanceList>" + "</reaction>";
+        String cmlString =
+                "<reaction>"
+                        + "<reactantList><reactant><molecule id='react'/></reactant></reactantList>"
+                        + "<productList><product><molecule id='product'/></product></productList>"
+                        + "<substanceList><substance><molecule id='water'/></substance></substanceList>"
+                        + "</reaction>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         IReaction reaction = checkForSingleReactionFile(chemFile);
@@ -579,9 +611,7 @@ public class CML23FragmentsTest extends CDKTestCase {
         Assert.assertEquals("water", reaction.getAgents().getAtomContainer(0).getID());
     }
 
-    /**
-     * Tests whether the file is indeed a single reaction file
-     */
+    /** Tests whether the file is indeed a single reaction file */
     private IReaction checkForSingleReactionFile(IChemFile chemFile) {
         return checkForXReactionFile(chemFile, 1);
     }
@@ -608,5 +638,4 @@ public class CML23FragmentsTest extends CDKTestCase {
         }
         return reaction;
     }
-
 }

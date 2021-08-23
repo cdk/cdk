@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.dict;
 
-import java.util.Iterator;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,7 +27,6 @@ import org.openscience.cdk.CDKTestCase;
  * Checks the functionality of the DefaultHanlder class.
  *
  * @cdk.module test-extra
- *
  * @see org.openscience.cdk.dict.DefaultHanlder
  */
 public class DictionaryTest extends CDKTestCase {
@@ -40,5 +38,4 @@ public class DictionaryTest extends CDKTestCase {
         Entry entry = dict.getEntry("ionPair".toLowerCase());
         Assert.assertNotNull(entry);
     }
-
 }

@@ -18,14 +18,13 @@
  */
 package org.openscience.cdk.io.inchi;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Tool to help process INChI 1.12beta content.
@@ -36,13 +35,14 @@ import java.util.regex.Pattern;
 @Deprecated
 public class INChIContentProcessorTool {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(INChIContentProcessorTool.class); ;
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(INChIContentProcessorTool.class);;
 
     public INChIContentProcessorTool() {}
 
     /**
-     * Processes the content from the formula field of the INChI.
-     * Typical values look like C6H6, from INChI=1.12Beta/C6H6/c1-2-4-6-5-3-1/h1-6H.
+     * Processes the content from the formula field of the INChI. Typical values look like C6H6,
+     * from INChI=1.12Beta/C6H6/c1-2-4-6-5-3-1/h1-6H.
      */
     public IAtomContainer processFormula(IAtomContainer parsedContent, String atomsEncoding) {
         logger.debug("Parsing atom data: ", atomsEncoding);
@@ -65,7 +65,8 @@ public class INChIContentProcessorTool {
                     }
                     logger.debug("  occurence: ", occurence);
                     for (int i = 1; i <= occurence; i++) {
-                        parsedContent.addAtom(parsedContent.getBuilder().newInstance(IAtom.class, symbol));
+                        parsedContent.addAtom(
+                                parsedContent.getBuilder().newInstance(IAtom.class, symbol));
                     }
                 }
                 remainder = matcher.group(3);
@@ -81,14 +82,13 @@ public class INChIContentProcessorTool {
     }
 
     /**
-     * Processes the content from the connections field of the INChI.
-     * Typical values look like 1-2-4-6-5-3-1, from INChI=1.12Beta/C6H6/c1-2-4-6-5-3-1/h1-6H.
+     * Processes the content from the connections field of the INChI. Typical values look like
+     * 1-2-4-6-5-3-1, from INChI=1.12Beta/C6H6/c1-2-4-6-5-3-1/h1-6H.
      *
      * @param bondsEncoding the content of the INChI connections field
-     * @param container     the atomContainer parsed from the formula field
-     * @param source        the atom to build the path upon. If -1, then start new path
-     *
-     * @see   #processFormula
+     * @param container the atomContainer parsed from the formula field
+     * @param source the atom to build the path upon. If -1, then start new path
+     * @see #processFormula
      */
     public void processConnections(String bondsEncoding, IAtomContainer container, int source) {
         logger.debug("Parsing bond data: ", bondsEncoding);
@@ -117,8 +117,14 @@ public class INChIContentProcessorTool {
                     IAtom targetAtom = container.getAtom(target - 1);
                     if (source != -1) {
                         IAtom sourceAtom = container.getAtom(source - 1);
-                        bondToAdd = container.getBuilder().newInstance(IBond.class, sourceAtom, targetAtom,
-                                IBond.Order.SINGLE);
+                        bondToAdd =
+                                container
+                                        .getBuilder()
+                                        .newInstance(
+                                                IBond.class,
+                                                sourceAtom,
+                                                targetAtom,
+                                                IBond.Order.SINGLE);
                         container.addBond(bondToAdd);
                     }
                     remainder = matcher.group(2);
@@ -133,8 +139,8 @@ public class INChIContentProcessorTool {
     }
 
     /**
-     * Extracts the first full branch. It extracts everything between the first
-     * '(' and the corresponding ')' char.
+     * Extracts the first full branch. It extracts everything between the first '(' and the
+     * corresponding ')' char.
      */
     private String chopBranch(String remainder) {
         boolean doChop = false;
@@ -159,5 +165,4 @@ public class INChIContentProcessorTool {
         }
         return choppedString.toString();
     }
-
 }

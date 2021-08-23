@@ -22,36 +22,34 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.ISetting;
 
 /**
- * An interface for reader settings. It is subclassed by implementations,
- * one for each type of field, e.g. IntReaderSetting.
+ * An interface for reader settings. It is subclassed by implementations, one for each type of
+ * field, e.g. IntReaderSetting.
  *
  * @cdk.module io
  * @cdk.githash
- *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */
 public abstract class IOSetting implements ISetting {
 
     public enum Importance {
-        HIGH, MEDIUM, LOW
+        HIGH,
+        MEDIUM,
+        LOW
     }
 
     protected Importance level;
-    protected String     name;
-    protected String     question;
-    protected String     setting;
+    protected String name;
+    protected String question;
+    protected String setting;
 
     /**
-     * The default constructor that sets this field. All textual
-     * information is supposed to be English. Localization is taken care
-     * off by the ReaderConfigurator.
+     * The default constructor that sets this field. All textual information is supposed to be
+     * English. Localization is taken care off by the ReaderConfigurator.
      *
-     * @param name           Name of the setting
-     * @param level          Level at which question is asked
-     * @param question       Question that is popped to the user when the
-     *                       ReaderSetting needs setting
-     * @param defaultSetting The default setting, used if not overwritten
-     *                       by a user
+     * @param name Name of the setting
+     * @param level Level at which question is asked
+     * @param question Question that is popped to the user when the ReaderSetting needs setting
+     * @param defaultSetting The default setting, used if not overwritten by a user
      */
     public IOSetting(String name, Importance level, String question, String defaultSetting) {
         this.level = level;
@@ -78,9 +76,8 @@ public abstract class IOSetting implements ISetting {
     }
 
     /**
-     * Sets the setting for a certain question. It will throw
-     * a CDKException when the setting is not valid.
-     *
+     * Sets the setting for a certain question. It will throw a CDKException when the setting is not
+     * valid.
      */
     public void setSetting(String setting) throws CDKException {
         // by default, except all input, so no setting checking
@@ -88,9 +85,8 @@ public abstract class IOSetting implements ISetting {
     }
 
     /**
-     * Sets the setting for a certain question. It will throw
-     * a CDKException when the setting is not valid.
-     *
+     * Sets the setting for a certain question. It will throw a CDKException when the setting is not
+     * valid.
      */
     public String getSetting() {
         // by default, except all input, so no setting checking

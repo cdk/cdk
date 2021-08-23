@@ -22,18 +22,14 @@
  */
 package org.openscience.cdk.math;
 
-
 /**
  * Converts a String representation of a Fortran double to a double.
  *
- * <p>A modified version of the <code>atof</code> method provided in the Core Java
- * books by Cay S. Horstmann &amp; Gary Cornell.  The main difference
- * here is that we scan for Fortran double precision characters
- * ('D' and 'd') which often cause the C versions of atof to
- * barf.
+ * <p>A modified version of the <code>atof</code> method provided in the Core Java books by Cay S.
+ * Horstmann &amp; Gary Cornell. The main difference here is that we scan for Fortran double
+ * precision characters ('D' and 'd') which often cause the C versions of atof to barf.
  *
  * @author Dan Gezelter
- *
  * @cdk.module standard
  * @cdk.githash
  */
@@ -51,8 +47,7 @@ public class FortranFormat {
         double p = 1; // exponent of fractional part
         int state = 0; // 0 = int part, 1 = frac part
 
-        while (i < s.length() && Character.isWhitespace(s.charAt(i)))
-            i++;
+        while (i < s.length() && Character.isWhitespace(s.charAt(i))) i++;
         if (i < s.length() && s.charAt(i) == '-') {
             sign = -1;
             i++;
@@ -62,22 +57,18 @@ public class FortranFormat {
         while (i < s.length()) {
             char ch = s.charAt(i);
             if ('0' <= ch && ch <= '9') {
-                if (state == 0)
-                    r = r * 10 + ch - '0';
+                if (state == 0) r = r * 10 + ch - '0';
                 else if (state == 1) {
                     p = p / 10;
                     r = r + p * (ch - '0');
                 }
             } else if (ch == '.') {
-                if (state == 0)
-                    state = 1;
-                else
-                    return sign * r;
+                if (state == 0) state = 1;
+                else return sign * r;
             } else if (ch == 'e' || ch == 'E' || ch == 'd' || ch == 'D') {
                 long e = (int) parseLong(s.substring(i + 1), 10);
                 return sign * r * Math.pow(10, e);
-            } else
-                return sign * r;
+            } else return sign * r;
             i++;
         }
         return sign * r;
@@ -88,8 +79,7 @@ public class FortranFormat {
         int sign = 1;
         long r = 0;
 
-        while (i < s.length() && Character.isWhitespace(s.charAt(i)))
-            i++;
+        while (i < s.length() && Character.isWhitespace(s.charAt(i))) i++;
         if (i < s.length() && s.charAt(i) == '-') {
             sign = -1;
             i++;
@@ -98,17 +88,12 @@ public class FortranFormat {
         }
         while (i < s.length()) {
             char ch = s.charAt(i);
-            if ('0' <= ch && ch < '0' + base)
-                r = r * base + ch - '0';
-            else if ('A' <= ch && ch < 'A' + base - 10)
-                r = r * base + ch - 'A' + 10;
-            else if ('a' <= ch && ch < 'a' + base - 10)
-                r = r * base + ch - 'a' + 10;
-            else
-                return r * sign;
+            if ('0' <= ch && ch < '0' + base) r = r * base + ch - '0';
+            else if ('A' <= ch && ch < 'A' + base - 10) r = r * base + ch - 'A' + 10;
+            else if ('a' <= ch && ch < 'a' + base - 10) r = r * base + ch - 'a' + 10;
+            else return r * sign;
             i++;
         }
         return r * sign;
     }
-
 }

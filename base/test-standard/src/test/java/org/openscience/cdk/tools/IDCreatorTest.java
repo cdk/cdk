@@ -19,7 +19,6 @@
 package org.openscience.cdk.tools;
 
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -32,9 +31,7 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 
-/**
- * @cdk.module test-standard
- */
+/** @cdk.module test-standard */
 public class IDCreatorTest extends CDKTestCase {
 
     public IDCreatorTest() {
@@ -88,9 +85,7 @@ public class IDCreatorTest extends CDKTestCase {
         Assert.assertEquals(3, ids.size());
     }
 
-    /**
-     * @cdk.bug 1455341
-     */
+    /** @cdk.bug 1455341 */
     @Test
     public void testCallingTwice() {
         IAtomContainerSet molSet = new AtomContainerSet();
@@ -134,5 +129,4 @@ public class IDCreatorTest extends CDKTestCase {
         Assert.assertTrue(idsAfter.contains("a1"));
         Assert.assertEquals(10, idsAfter.size());
     }
-
 }

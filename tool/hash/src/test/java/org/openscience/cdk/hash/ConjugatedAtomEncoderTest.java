@@ -24,23 +24,20 @@
 
 package org.openscience.cdk.hash;
 
-import org.junit.Test;
-import org.mockito.InOrder;
-import org.openscience.cdk.hash.AtomEncoder;
-import org.openscience.cdk.hash.ConjugatedAtomEncoder;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import org.junit.Test;
+import org.mockito.InOrder;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  * @author John May
@@ -55,12 +52,10 @@ public class ConjugatedAtomEncoderTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstruction_Empty() {
-        new ConjugatedAtomEncoder(Collections.<AtomEncoder> emptyList());
+        new ConjugatedAtomEncoder(Collections.<AtomEncoder>emptyList());
     }
 
-    /**
-     * ensure we can modify the order after we have constructed the conjunction
-     */
+    /** ensure we can modify the order after we have constructed the conjunction */
     @Test
     public void testConstruction_Modification() {
         AtomEncoder a = mock(AtomEncoder.class);

@@ -29,14 +29,15 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
- * Generates a fingerprint for a given {@link IAtomContainer}. Fingerprints are
- * one-dimensional bit arrays, where bits are set according to a the occurrence
- * of a particular structural feature (See for example the Daylight inc. theory
- * manual for more information). Fingerprints allow for a fast screening step to
- * exclude candidates for a substructure search in a database. They are also a
+ * Generates a fingerprint for a given {@link IAtomContainer}. Fingerprints are one-dimensional bit
+ * arrays, where bits are set according to a the occurrence of a particular structural feature (See
+ * for example the Daylight inc. theory manual for more information). Fingerprints allow for a fast
+ * screening step to exclude candidates for a substructure search in a database. They are also a
  * means for determining the similarity of chemical structures.
  *
- * <p>A fingerprint is generated for an AtomContainer with this code:</p><pre>
+ * <p>A fingerprint is generated for an AtomContainer with this code:
+ *
+ * <pre>
  *   Molecule molecule = new Molecule();
  *   IFingerprinter fingerprinter =
  *     new HybridizationFingerprinter();
@@ -45,25 +46,23 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  *   fingerprint.length(); // returns the highest set bit
  * </pre>
  *
- * <p>The FingerPrinter assumes that hydrogens are explicitly given!
- * Furthermore, if pseudo atoms or atoms with malformed symbols are present,
- * their atomic number is taken as one more than the last element currently
- * supported in {@link PeriodicTable}.
+ * <p>The FingerPrinter assumes that hydrogens are explicitly given! Furthermore, if pseudo atoms or
+ * atoms with malformed symbols are present, their atomic number is taken as one more than the last
+ * element currently supported in {@link PeriodicTable}.
  *
- * <p>Unlike the {@link Fingerprinter}, this fingerprinter does not take into
- * account aromaticity. Instead, it takes into account SP2
- * {@link Hybridization}.
+ * <p>Unlike the {@link Fingerprinter}, this fingerprinter does not take into account aromaticity.
+ * Instead, it takes into account SP2 {@link Hybridization}.
  *
- * @cdk.keyword    fingerprint
- * @cdk.keyword    similarity
- * @cdk.module     standard
+ * @cdk.keyword fingerprint
+ * @cdk.keyword similarity
+ * @cdk.module standard
  * @cdk.githash
  */
 public class HybridizationFingerprinter extends Fingerprinter implements IFingerprinter {
 
     /**
-     * Creates a fingerprint generator of length <code>DEFAULT_SIZE</code>
-     * and with a search depth of <code>DEFAULT_SEARCH_DEPTH</code>.
+     * Creates a fingerprint generator of length <code>DEFAULT_SIZE</code> and with a search depth
+     * of <code>DEFAULT_SEARCH_DEPTH</code>.
      */
     public HybridizationFingerprinter() {
         this(DEFAULT_SIZE, DEFAULT_SEARCH_DEPTH);
@@ -74,12 +73,11 @@ public class HybridizationFingerprinter extends Fingerprinter implements IFinger
     }
 
     /**
-     * Constructs a fingerprint generator that creates fingerprints of
-     * the given size, using a generation algorithm with the given search
-     * depth.
+     * Constructs a fingerprint generator that creates fingerprints of the given size, using a
+     * generation algorithm with the given search depth.
      *
-     * @param  size        The desired size of the fingerprint
-     * @param  searchDepth The desired depth of search
+     * @param size The desired size of the fingerprint
+     * @param searchDepth The desired depth of search
      */
     public HybridizationFingerprinter(int size, int searchDepth) {
         super(size, searchDepth);
@@ -88,7 +86,7 @@ public class HybridizationFingerprinter extends Fingerprinter implements IFinger
     /**
      * Gets the bond Symbol attribute of the Fingerprinter class.
      *
-     * @return       The bondSymbol value
+     * @return The bondSymbol value
      */
     protected String getBondSymbol(IBond bond) {
         String bondSymbol = "";
@@ -112,11 +110,10 @@ public class HybridizationFingerprinter extends Fingerprinter implements IFinger
         return bondSymbol;
     }
 
-    /**
-     * Returns true if the bond binds two atoms, and both atoms are SP2.
-     */
+    /** Returns true if the bond binds two atoms, and both atoms are SP2. */
     private boolean isSP2Bond(IBond bond) {
-        return bond.getAtomCount() == 2 && bond.getBegin().getHybridization() == Hybridization.SP2
-               && bond.getEnd().getHybridization() == Hybridization.SP2;
+        return bond.getAtomCount() == 2
+                && bond.getBegin().getHybridization() == Hybridization.SP2
+                && bond.getEnd().getHybridization() == Hybridization.SP2;
     }
 }

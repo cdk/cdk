@@ -29,8 +29,8 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 
 /**
- * Utility class for calculating the average bond length for various
- * IChemObject subtypes : IReaction, IAtomContainerSet, IChemModel, and IReactionSet.
+ * Utility class for calculating the average bond length for various IChemObject subtypes :
+ * IReaction, IAtomContainerSet, IChemModel, and IReactionSet.
  *
  * @author maclean
  * @cdk.module renderbasic
@@ -49,13 +49,15 @@ public class AverageBondLengthCalculator {
         IAtomContainerSet reactants = reaction.getReactants();
         double reactantAverage = 0.0;
         if (reactants != null) {
-            reactantAverage = calculateAverageBondLength(reactants) / reactants.getAtomContainerCount();
+            reactantAverage =
+                    calculateAverageBondLength(reactants) / reactants.getAtomContainerCount();
         }
 
         IAtomContainerSet products = reaction.getProducts();
         double productAverage = 0.0;
         if (products != null) {
-            productAverage = calculateAverageBondLength(products) / products.getAtomContainerCount();
+            productAverage =
+                    calculateAverageBondLength(products) / products.getAtomContainerCount();
         }
 
         if (productAverage == 0.0 && reactantAverage == 0.0) {
@@ -102,6 +104,7 @@ public class AverageBondLengthCalculator {
 
     /**
      * Calculate the average bond length for the bonds in a reaction set.
+     *
      * @param reactionSet the reaction set to use
      * @return the average bond length
      */
@@ -112,5 +115,4 @@ public class AverageBondLengthCalculator {
         }
         return averageBondModelLength / reactionSet.getReactionCount();
     }
-
 }

@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -46,44 +45,40 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * This is an ultra fast method to report if query
- * is a substructure for target molecule. If this case is true
- * then it returns only all mapping.
+ * This is an ultra fast method to report if query is a substructure for target molecule. If this
+ * case is true then it returns only all mapping.
  *
- * This is much faster than {@link
- * org.openscience.cdk.smsd.algorithm.vflib.VFlibMCSHandler} class
- * as it only reports first match and backtracks.
+ * <p>This is much faster than {@link org.openscience.cdk.smsd.algorithm.vflib.VFlibMCSHandler}
+ * class as it only reports first match and backtracks.
  *
- * This class should only be used to report if a query
- * graph is a substructure of the target graph.
+ * <p>This class should only be used to report if a query graph is a substructure of the target
+ * graph.
  *
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is
+ *     available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public class VFlibSubStructureHandler extends AbstractSubGraph implements IMCSBase {
 
-    private static       List<Map<IAtom, IAtom>>     allAtomMCS     = null;
-    private static       Map<IAtom, IAtom>           atomsMCS       = null;
-    private static       List<Map<IAtom, IAtom>>     allAtomMCSCopy = null;
-    private static       Map<Integer, Integer>       firstMCS       = null;
-    private static       List<Map<Integer, Integer>> allMCS         = null;
-    private static       List<Map<Integer, Integer>> allMCSCopy     = null;
-    private              IQueryAtomContainer         queryMol       = null;
-    private              IAtomContainer              mol1           = null;
-    private              IAtomContainer              mol2           = null;
-    private              List<Map<INode, IAtom>>     vfLibSolutions = null;
-    private              int                         vfMCSSize      = -1;
-    private              boolean                     bondMatchFlag  = false;
-    private final static ILoggingTool                LOGGER         = LoggingToolFactory
-            .createLoggingTool(VFlibSubStructureHandler.class);
+    private static List<Map<IAtom, IAtom>> allAtomMCS = null;
+    private static Map<IAtom, IAtom> atomsMCS = null;
+    private static List<Map<IAtom, IAtom>> allAtomMCSCopy = null;
+    private static Map<Integer, Integer> firstMCS = null;
+    private static List<Map<Integer, Integer>> allMCS = null;
+    private static List<Map<Integer, Integer>> allMCSCopy = null;
+    private IQueryAtomContainer queryMol = null;
+    private IAtomContainer mol1 = null;
+    private IAtomContainer mol2 = null;
+    private List<Map<INode, IAtom>> vfLibSolutions = null;
+    private int vfMCSSize = -1;
+    private boolean bondMatchFlag = false;
+    private static final ILoggingTool LOGGER =
+            LoggingToolFactory.createLoggingTool(VFlibSubStructureHandler.class);
 
-    /**
-     * Constructor for an extended VF Algorithm for the MCS search
-     */
+    /** Constructor for an extended VF Algorithm for the MCS search */
     public VFlibSubStructureHandler() {
         allAtomMCS = new ArrayList<Map<IAtom, IAtom>>();
         allAtomMCSCopy = new ArrayList<Map<IAtom, IAtom>>();
@@ -108,9 +103,10 @@ public class VFlibSubStructureHandler extends AbstractSubGraph implements IMCSBa
         return false;
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      *
-     * Set the VFLib MCS software
+     * <p>Set the VFLib MCS software
      *
      * @param reactant
      * @param product
@@ -121,7 +117,8 @@ public class VFlibSubStructureHandler extends AbstractSubGraph implements IMCSBa
         mol2 = product.getMolecule();
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      *
      * @param source
      * @param target
@@ -165,7 +162,8 @@ public class VFlibSubStructureHandler extends AbstractSubGraph implements IMCSBa
         return Collections.unmodifiableMap(firstMCS);
     }
 
-    private int checkCommonAtomCount(IAtomContainer reactantMolecule, IAtomContainer productMolecule) {
+    private int checkCommonAtomCount(
+            IAtomContainer reactantMolecule, IAtomContainer productMolecule) {
         ArrayList<String> atoms = new ArrayList<String>();
         for (int i = 0; i < reactantMolecule.getAtomCount(); i++) {
             atoms.add(reactantMolecule.getAtom(i).getSymbol());
@@ -255,7 +253,8 @@ public class VFlibSubStructureHandler extends AbstractSubGraph implements IMCSBa
             }
             //            System.out.println("indexindexMapping " + indexindexMapping.size());
             //            System.out.println("MCS Size " + vfMCSSize);
-            if (!atomatomMapping.isEmpty() && !hasMap(indexindexMapping, allMCSCopy)
+            if (!atomatomMapping.isEmpty()
+                    && !hasMap(indexindexMapping, allMCSCopy)
                     && indexindexMapping.size() == vfMCSSize) {
                 allAtomMCSCopy.add(counter, atomatomMapping);
                 allMCSCopy.add(counter, indexindexMapping);
@@ -286,19 +285,18 @@ public class VFlibSubStructureHandler extends AbstractSubGraph implements IMCSBa
             allMCS.addAll(allMCSCopy);
         }
         setFirstMappings();
-        return (!allMCS.isEmpty() && allMCS.iterator().next().size() == getReactantMol().getAtomCount()) ? true : false;
+        return (!allMCS.isEmpty()
+                        && allMCS.iterator().next().size() == getReactantMol().getAtomCount())
+                ? true
+                : false;
     }
 
-    /**
-     * @return the shouldMatchBonds
-     */
+    /** @return the shouldMatchBonds */
     public boolean isBondMatchFlag() {
         return bondMatchFlag;
     }
 
-    /**
-     * @param shouldMatchBonds the shouldMatchBonds to set
-     */
+    /** @param shouldMatchBonds the shouldMatchBonds to set */
     public void setBondMatchFlag(boolean shouldMatchBonds) {
         this.bondMatchFlag = shouldMatchBonds;
     }

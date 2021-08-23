@@ -32,48 +32,38 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Intermediate between an
- * {@link org.openscience.cdk.renderer.elements.IRenderingElement} and the atom
- * data. The atom symbol represents a visible atom element with zero of more
- * adjuncts. The adjuncts are hydrogen count, charge, and mass. The atom symbol
- * is immutable and modifying a property or transforming the symbol makes a new
- * instance.
+ * Intermediate between an {@link org.openscience.cdk.renderer.elements.IRenderingElement} and the
+ * atom data. The atom symbol represents a visible atom element with zero of more adjuncts. The
+ * adjuncts are hydrogen count, charge, and mass. The atom symbol is immutable and modifying a
+ * property or transforming the symbol makes a new instance.
  *
  * @author John May
  */
 final class AtomSymbol {
 
-    /**
-     * The element symbol.
-     */
-    private final TextOutline       element;
+    /** The element symbol. */
+    private final TextOutline element;
 
-    /**
-     * Adjuncts to the symbol, hydrogen count, charge, and mass.
-     */
+    /** Adjuncts to the symbol, hydrogen count, charge, and mass. */
     private final List<TextOutline> adjuncts;
 
-    /**
-     * Annotation adjuncts.
-     */
+    /** Annotation adjuncts. */
     private final List<TextOutline> annotationAdjuncts;
 
-    /**
-     * Desired alignment of the symbol.
-     */
-    private final SymbolAlignment   alignment;
+    /** Desired alignment of the symbol. */
+    private final SymbolAlignment alignment;
+
+    /** The convex hull of the entire atom symbol. */
+    private final ConvexHull hull;
 
     /**
-     * The convex hull of the entire atom symbol.
-     */
-    private final ConvexHull        hull;
-
-    /**
-     * Alignment of symbol, left aligned symbols are centered on the first
-     * character, right aligned on the last character.
+     * Alignment of symbol, left aligned symbols are centered on the first character, right aligned
+     * on the last character.
      */
     enum SymbolAlignment {
-        Left, Center, Right
+        Left,
+        Center,
+        Right
     }
 
     /**
@@ -98,8 +88,12 @@ final class AtomSymbol {
      * @param alignment left, center, or right alignment
      * @param hull convex hull
      */
-    private AtomSymbol(TextOutline element, List<TextOutline> adjuncts, List<TextOutline> annotationAdjuncts,
-            SymbolAlignment alignment, ConvexHull hull) {
+    private AtomSymbol(
+            TextOutline element,
+            List<TextOutline> adjuncts,
+            List<TextOutline> annotationAdjuncts,
+            SymbolAlignment alignment,
+            ConvexHull hull) {
         this.element = element;
         this.adjuncts = adjuncts;
         this.annotationAdjuncts = annotationAdjuncts;
@@ -108,8 +102,7 @@ final class AtomSymbol {
     }
 
     /**
-     * Create a new atom symbol (from this symbol) but with the specified
-     * alignment.
+     * Create a new atom symbol (from this symbol) but with the specified alignment.
      *
      * @param alignment element alignment
      * @return new atom symbol
@@ -131,8 +124,7 @@ final class AtomSymbol {
     }
 
     /**
-     * Access the center point of the symbol. The center point is determined by
-     * the alignment.
+     * Access the center point of the symbol. The center point is determined by the alignment.
      *
      * @return center point
      */
@@ -148,6 +140,7 @@ final class AtomSymbol {
 
     /**
      * Access the element outline.
+     *
      * @return immutable element outline
      */
     TextOutline elementOutline() {
@@ -171,8 +164,7 @@ final class AtomSymbol {
     List<Shape> getOutlines() {
         List<Shape> shapes = new ArrayList<Shape>();
         shapes.add(element.getOutline());
-        for (TextOutline adjunct : adjuncts)
-            shapes.add(adjunct.getOutline());
+        for (TextOutline adjunct : adjuncts) shapes.add(adjunct.getOutline());
         return shapes;
     }
 
@@ -183,8 +175,7 @@ final class AtomSymbol {
      */
     List<Shape> getAnnotationOutlines() {
         List<Shape> shapes = new ArrayList<Shape>();
-        for (TextOutline adjunct : annotationAdjuncts)
-            shapes.add(adjunct.getOutline());
+        for (TextOutline adjunct : annotationAdjuncts) shapes.add(adjunct.getOutline());
         return shapes;
     }
 
@@ -205,12 +196,15 @@ final class AtomSymbol {
      */
     AtomSymbol transform(AffineTransform transform) {
         List<TextOutline> transformedAdjuncts = new ArrayList<TextOutline>(adjuncts.size());
-        for (TextOutline adjunct : adjuncts)
-            transformedAdjuncts.add(adjunct.transform(transform));
+        for (TextOutline adjunct : adjuncts) transformedAdjuncts.add(adjunct.transform(transform));
         List<TextOutline> transformedAnnAdjuncts = new ArrayList<TextOutline>(adjuncts.size());
         for (TextOutline adjunct : annotationAdjuncts)
             transformedAnnAdjuncts.add(adjunct.transform(transform));
-        return new AtomSymbol(element.transform(transform), transformedAdjuncts, transformedAnnAdjuncts, alignment,
+        return new AtomSymbol(
+                element.transform(transform),
+                transformedAdjuncts,
+                transformedAnnAdjuncts,
+                alignment,
                 hull.transform(transform));
     }
 
@@ -231,8 +225,8 @@ final class AtomSymbol {
     }
 
     /**
-     * Convenience function to center an atom symbol on a specified point. The
-     * centering depends on the symbol alignment.
+     * Convenience function to center an atom symbol on a specified point. The centering depends on
+     * the symbol alignment.
      *
      * @param x x-axis location
      * @param y y-axis location

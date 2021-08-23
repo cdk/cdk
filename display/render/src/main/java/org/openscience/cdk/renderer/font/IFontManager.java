@@ -27,9 +27,7 @@ package org.openscience.cdk.renderer.font;
  */
 public interface IFontManager {
 
-    /**
-     * Style of the font to use to draw text.
-     */
+    /** Style of the font to use to draw text. */
     public enum FontStyle {
         /** Regular font style. */
         NORMAL,
@@ -57,5 +55,4 @@ public interface IFontManager {
      * @param fontName name of the font to use
      */
     public void setFontName(String fontName);
-
 }

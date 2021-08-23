@@ -19,29 +19,27 @@ package org.openscience.cdk.silent;
 import org.openscience.cdk.interfaces.IPDBStructure;
 
 /**
- * Holder for secundary protein structure elements. Lously modeled after
- * the Jmol Structure.java.
+ * Holder for secundary protein structure elements. Lously modeled after the Jmol Structure.java.
  *
- * @author     egonw
- *
- * @cdk.module  silent
+ * @author egonw
+ * @cdk.module silent
  * @cdk.githash
  */
 public class PDBStructure extends ChemObject implements IPDBStructure {
 
-    private static final long  serialVersionUID = -1877529009319324448L;
+    private static final long serialVersionUID = -1877529009319324448L;
 
-    public final static String HELIX            = "helix";
-    public final static String SHEET            = "sheet";
-    public final static String TURN             = "turn";
+    public static final String HELIX = "helix";
+    public static final String SHEET = "sheet";
+    public static final String TURN = "turn";
 
-    private String             structureType;
-    private Character          startChainID;
-    private Integer            startSequenceNumber;
-    private Character          startInsertionCode;
-    private Character          endChainID;
-    private Integer            endSequenceNumber;
-    private Character          endInsertionCode;
+    private String structureType;
+    private Character startChainID;
+    private Integer startSequenceNumber;
+    private Character startInsertionCode;
+    private Character endChainID;
+    private Integer endSequenceNumber;
+    private Character endInsertionCode;
 
     /**
      * get the ending Chain identifier of this structure.
@@ -56,7 +54,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
     /**
      * set the ending Chain identifier of this structure.
      *
-     * @param endChainID  the ending Chain identifier of this structure
+     * @param endChainID the ending Chain identifier of this structure
      */
     @Override
     public void setEndChainID(Character endChainID) {
@@ -76,7 +74,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
     /**
      * set the ending Code for insertion of residues of this structure.
      *
-     * @param endInsertionCode  the ending Code for insertion of residues of this structure
+     * @param endInsertionCode the ending Code for insertion of residues of this structure
      */
     @Override
     public void setEndInsertionCode(Character endInsertionCode) {
@@ -96,7 +94,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
     /**
      * set the ending sequence number of this structure.
      *
-     * @param endSequenceNumber  the ending sequence number of this structure
+     * @param endSequenceNumber the ending sequence number of this structure
      */
     @Override
     public void setEndSequenceNumber(Integer endSequenceNumber) {
@@ -116,7 +114,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
     /**
      * set the start Chain identifier of this structure.
      *
-     * @param startChainID  the start Chain identifier of this structure
+     * @param startChainID the start Chain identifier of this structure
      */
     @Override
     public void setStartChainID(Character startChainID) {
@@ -136,7 +134,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
     /**
      * set the start Chain identifier of this structure.
      *
-     * @param startInsertionCode  the start Chain identifier of this structure
+     * @param startInsertionCode the start Chain identifier of this structure
      */
     @Override
     public void setStartInsertionCode(Character startInsertionCode) {
@@ -156,7 +154,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
     /**
      * set the start sequence number of this structure.
      *
-     * @param startSequenceNumber  the start sequence number of this structure
+     * @param startSequenceNumber the start sequence number of this structure
      */
     @Override
     public void setStartSequenceNumber(Integer startSequenceNumber) {
@@ -176,7 +174,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
     /**
      * set the Structure Type of this structure.
      *
-     * @param structureType  the Structure Type of this structure
+     * @param structureType the Structure Type of this structure
      */
     @Override
     public void setStructureType(String structureType) {

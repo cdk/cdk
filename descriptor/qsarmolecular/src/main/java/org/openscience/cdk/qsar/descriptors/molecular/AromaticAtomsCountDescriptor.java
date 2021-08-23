@@ -31,7 +31,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- *  Class that returns the number of aromatic atoms in an atom container.
+ * Class that returns the number of aromatic atoms in an atom container.
  *
  * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
@@ -48,33 +48,31 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * Returns a single value with name <i>nAromAtom</i>
  *
- * @author      mfe4
+ * @author mfe4
  * @cdk.created 2004-11-03
- * @cdk.module  qsarmolecular
+ * @cdk.module qsarmolecular
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:aromaticAtomsCount
  */
-public class AromaticAtomsCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
+public class AromaticAtomsCountDescriptor extends AbstractMolecularDescriptor
+        implements IMolecularDescriptor {
 
-    private boolean               checkAromaticity = false;
-    private static final String[] NAMES            = {"naAromAtom"};
+    private boolean checkAromaticity = false;
+    private static final String[] NAMES = {"naAromAtom"};
 
-    /**
-     *  Constructor for the AromaticAtomsCountDescriptor object.
-     */
+    /** Constructor for the AromaticAtomsCountDescriptor object. */
     public AromaticAtomsCountDescriptor() {}
 
     /**
-     * Returns a <code>Map</code> which specifies which descriptor
-     * is implemented by this class.
+     * Returns a <code>Map</code> which specifies which descriptor is implemented by this class.
      *
-     * These fields are used in the map:
+     * <p>These fields are used in the map:
+     *
      * <ul>
-     * <li>Specification-Reference: refers to an entry in a unique dictionary
-     * <li>Implementation-Title: anything
-     * <li>Implementation-Identifier: a unique identifier for this version of
-     *  this class
-     * <li>Implementation-Vendor: CDK, JOELib, or anything else
+     *   <li>Specification-Reference: refers to an entry in a unique dictionary
+     *   <li>Implementation-Title: anything
+     *   <li>Implementation-Identifier: a unique identifier for this version of this class
+     *   <li>Implementation-Vendor: CDK, JOELib, or anything else
      * </ul>
      *
      * @return An object containing the descriptor specification
@@ -82,18 +80,19 @@ public class AromaticAtomsCountDescriptor extends AbstractMolecularDescriptor im
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aromaticAtomsCount", this
-                        .getClass().getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aromaticAtomsCount",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     /**
-     *  Sets the parameters attribute of the AromaticAtomsCountDescriptor object.
+     * Sets the parameters attribute of the AromaticAtomsCountDescriptor object.
      *
-     * This descriptor takes one parameter, which should be Boolean to indicate whether
+     * <p>This descriptor takes one parameter, which should be Boolean to indicate whether
      * aromaticity has been checked (TRUE) or not (FALSE).
      *
-     * @param  params            The new parameters value
-     * @exception  CDKException if more than one parameter or a non-Boolean parameter is specified
+     * @param params The new parameters value
+     * @exception CDKException if more than one parameter or a non-Boolean parameter is specified
      * @see #getParameters
      */
     @Override
@@ -109,9 +108,9 @@ public class AromaticAtomsCountDescriptor extends AbstractMolecularDescriptor im
     }
 
     /**
-     *  Gets the parameters attribute of the AromaticAtomsCountDescriptor object.
+     * Gets the parameters attribute of the AromaticAtomsCountDescriptor object.
      *
-     * @return    The parameters value
+     * @return The parameters value
      * @see #setParameters
      */
     @Override
@@ -130,14 +129,12 @@ public class AromaticAtomsCountDescriptor extends AbstractMolecularDescriptor im
     /**
      * Calculate the count of aromatic atoms in the supplied {@link IAtomContainer}.
      *
-     *  The method require one parameter:
-     *  if checkAromaticity is true, the method check the aromaticity,
-     *  if false, means that the aromaticity has already been checked
+     * <p>The method require one parameter: if checkAromaticity is true, the method check the
+     * aromaticity, if false, means that the aromaticity has already been checked
      *
-     *
-     *@param  atomContainer  The {@link IAtomContainer} for which this descriptor is to be calculated
-     *@return                   the number of aromatic atoms of this AtomContainer
-     *@see #setParameters
+     * @param atomContainer The {@link IAtomContainer} for which this descriptor is to be calculated
+     * @return the number of aromatic atoms of this AtomContainer
+     * @see #setParameters
      */
     @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
@@ -145,8 +142,13 @@ public class AromaticAtomsCountDescriptor extends AbstractMolecularDescriptor im
         try {
             ac = (IAtomContainer) atomContainer.clone();
         } catch (CloneNotSupportedException e) {
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
-                    (int) Double.NaN), getDescriptorNames(), new CDKException("Error during clone"));
+            return new DescriptorValue(
+                    getSpecification(),
+                    getParameterNames(),
+                    getParameters(),
+                    new IntegerResult((int) Double.NaN),
+                    getDescriptorNames(),
+                    new CDKException("Error during clone"));
         }
 
         int aromaticAtomsCount = 0;
@@ -154,15 +156,24 @@ public class AromaticAtomsCountDescriptor extends AbstractMolecularDescriptor im
             try {
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
             } catch (CDKException e) {
-                return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
-                        (int) Double.NaN), getDescriptorNames(), new CDKException("Error during atom type perception"));
+                return new DescriptorValue(
+                        getSpecification(),
+                        getParameterNames(),
+                        getParameters(),
+                        new IntegerResult((int) Double.NaN),
+                        getDescriptorNames(),
+                        new CDKException("Error during atom type perception"));
             }
             try {
                 Aromaticity.cdkLegacy().apply(ac);
             } catch (CDKException e) {
-                return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
-                        (int) Double.NaN), getDescriptorNames(), new CDKException(
-                        "Error during aromaticity detection: " + e.getMessage()));
+                return new DescriptorValue(
+                        getSpecification(),
+                        getParameterNames(),
+                        getParameters(),
+                        new IntegerResult((int) Double.NaN),
+                        getDescriptorNames(),
+                        new CDKException("Error during aromaticity detection: " + e.getMessage()));
             }
         }
         for (int i = 0; i < ac.getAtomCount(); i++) {
@@ -170,20 +181,26 @@ public class AromaticAtomsCountDescriptor extends AbstractMolecularDescriptor im
                 aromaticAtomsCount += 1;
             }
         }
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
-                aromaticAtomsCount), getDescriptorNames());
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new IntegerResult(aromaticAtomsCount),
+                getDescriptorNames());
     }
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * 
-     * The return value from this method really indicates what type of result will
-     * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
-     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
-     * allows you to do the same thing, without actually calculating the descriptor.
      *
-     * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
-     *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
+     * <p>The return value from this method really indicates what type of result will be obtained
+     * from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
+     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object;
+     * this method allows you to do the same thing, without actually calculating the descriptor.
+     *
+     * @return an object that implements the {@link
+     *     org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating the actual type
+     *     of values returned by the descriptor in the {@link
+     *     org.openscience.cdk.qsar.DescriptorValue} object
      */
     @Override
     public IDescriptorResult getDescriptorResultType() {
@@ -191,9 +208,9 @@ public class AromaticAtomsCountDescriptor extends AbstractMolecularDescriptor im
     }
 
     /**
-     *  Gets the parameterNames attribute of the AromaticAtomsCountDescriptor object.
+     * Gets the parameterNames attribute of the AromaticAtomsCountDescriptor object.
      *
-     *@return    The parameterNames value
+     * @return The parameterNames value
      */
     @Override
     public String[] getParameterNames() {
@@ -203,10 +220,10 @@ public class AromaticAtomsCountDescriptor extends AbstractMolecularDescriptor im
     }
 
     /**
-     *  Gets the parameterType attribute of the AromaticAtomsCountDescriptor object.
+     * Gets the parameterType attribute of the AromaticAtomsCountDescriptor object.
      *
-     *@param  name  Description of the Parameter
-     *@return       An Object of class equal to that of the parameter being requested
+     * @param name Description of the Parameter
+     * @return An Object of class equal to that of the parameter being requested
      */
     @Override
     public Object getParameterType(String name) {

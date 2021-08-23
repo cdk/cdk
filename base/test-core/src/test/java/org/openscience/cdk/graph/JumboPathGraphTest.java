@@ -23,18 +23,17 @@
  */
 package org.openscience.cdk.graph;
 
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertFalse;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.openscience.cdk.graph.JumboPathGraph.PathEdge;
 import static org.openscience.cdk.graph.JumboPathGraph.ReducedEdge;
 import static org.openscience.cdk.graph.JumboPathGraph.SimpleEdge;
+
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.Test;
 
 /** @cdk.module test-core */
 public class JumboPathGraphTest {
@@ -101,8 +100,7 @@ public class JumboPathGraphTest {
         int[][] k3 = completeGraphOfSize(ord);
         JumboPathGraph pg = new JumboPathGraph(k3, identity(3), ord);
         List<int[]> cycles = new ArrayList<int[]>();
-        for (int v = 0; v < ord; v++)
-            pg.remove(v, cycles);
+        for (int v = 0; v < ord; v++) pg.remove(v, cycles);
         assertThat(cycles.size(), is(1));
     }
 
@@ -113,15 +111,13 @@ public class JumboPathGraphTest {
         int[][] k8 = completeGraphOfSize(ord);
         JumboPathGraph pg = new JumboPathGraph(k8, identity(8), ord);
         List<int[]> cycles = new ArrayList<int[]>();
-        for (int v = 0; v < ord; v++)
-            pg.remove(v, cycles);
+        for (int v = 0; v < ord; v++) pg.remove(v, cycles);
         assertThat(cycles.size(), is(8018));
     }
 
     public static int[] identity(int n) {
         int[] identity = new int[n];
-        for (int i = 0; i < n; i++)
-            identity[i] = i;
+        for (int i = 0; i < n; i++) identity[i] = i;
         return identity;
     }
 
@@ -151,10 +147,17 @@ public class JumboPathGraphTest {
 
     @Test
     public void path() {
-        assertThat(new SimpleEdge(0, 1).path(), is(new int[]{0, 1}));
-        assertThat(new ReducedEdge(new SimpleEdge(0, 1), new SimpleEdge(2, 1), 1).path(), is(new int[]{0, 1, 2}));
-        assertThat(new ReducedEdge(new ReducedEdge(new SimpleEdge(0, 1), new SimpleEdge(2, 1), 1), new ReducedEdge(
-                new SimpleEdge(2, 3), new SimpleEdge(3, 4), 3), 2).path(), is(new int[]{0, 1, 2, 3, 4}));
+        assertThat(new SimpleEdge(0, 1).path(), is(new int[] {0, 1}));
+        assertThat(
+                new ReducedEdge(new SimpleEdge(0, 1), new SimpleEdge(2, 1), 1).path(),
+                is(new int[] {0, 1, 2}));
+        assertThat(
+                new ReducedEdge(
+                                new ReducedEdge(new SimpleEdge(0, 1), new SimpleEdge(2, 1), 1),
+                                new ReducedEdge(new SimpleEdge(2, 3), new SimpleEdge(3, 4), 3),
+                                2)
+                        .path(),
+                is(new int[] {0, 1, 2, 3, 4}));
     }
 
     @Test

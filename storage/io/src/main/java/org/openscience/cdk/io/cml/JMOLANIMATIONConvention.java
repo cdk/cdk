@@ -32,18 +32,18 @@ import org.xml.sax.Attributes;
 
 /**
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
- *
  * @cdk.module io
  * @cdk.githash
  */
 public class JMOLANIMATIONConvention extends CMLCoreModule {
 
-    private final int           UNKNOWN = -1;
-    private final int           ENERGY  = 1;
+    private final int UNKNOWN = -1;
+    private final int ENERGY = 1;
 
-    private int                 current;
-    private String              frame_energy;
-    private static ILoggingTool logger  = LoggingToolFactory.createLoggingTool(JMOLANIMATIONConvention.class);
+    private int current;
+    private String frame_energy;
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(JMOLANIMATIONConvention.class);
 
     public JMOLANIMATIONConvention(IChemFile chemFile) {
         super(chemFile);
@@ -55,7 +55,8 @@ public class JMOLANIMATIONConvention extends CMLCoreModule {
     }
 
     @Override
-    public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
+    public void startElement(
+            CMLStack xpath, String uri, String local, String raw, Attributes atts) {
         String name = local;
         if (name.equals("list")) {
             logger.debug("Oke, JMOLANIMATION seems to be kicked in :)");

@@ -23,25 +23,30 @@
  */
 package org.openscience.cdk.graph;
 
-import java.util.BitSet;
-
 import static org.openscience.cdk.graph.InitialCycles.Cycle;
 
+import java.util.BitSet;
+
 /**
- * Mutable bit matrix which can eliminate linearly dependent rows and check
- * which rows were eliminated. These operations are useful when constructing a
- * cycle basis. From a graph we can represent the cycles as a binary vector of
- * incidence (edges). When processing cycles as these vectors we determine
- * whether a cycle can be made of other cycles in our basis. In the example
+ * Mutable bit matrix which can eliminate linearly dependent rows and check which rows were
+ * eliminated. These operations are useful when constructing a cycle basis. From a graph we can
+ * represent the cycles as a binary vector of incidence (edges). When processing cycles as these
+ * vectors we determine whether a cycle can be made of other cycles in our basis. In the example
  * below each row can be made by XORing the other two rows.
  *
- * <blockquote><pre>
+ * <blockquote>
+ *
+ * <pre>
  * 1:   111000111   (can be made by 2 XOR 3)
  * 2:   111000000   (can be made by 1 XOR 3)
  * 3:   000000111   (can be made by 1 XOR 2)
- * </pre></blockquote>
+ * </pre>
  *
- * <blockquote><pre>
+ * </blockquote>
+ *
+ * <blockquote>
+ *
+ * <pre>
  * BitMatrix m = new BitMatrix(9, 3);
  * m.add(toBitSet("111000111"));
  * m.add(toBitSet("111000000"));
@@ -49,7 +54,9 @@ import static org.openscience.cdk.graph.InitialCycles.Cycle;
  * if (m.eliminate() < 3){
  *   // rows are not independent
  * }
- * </pre></blockquote>
+ * </pre>
+ *
+ * </blockquote>
  *
  * @author John May
  * @cdk.module core
@@ -61,24 +68,24 @@ final class BitMatrix {
     private final BitSet[] rows;
 
     /** keep track of row swaps. */
-    private final int[]    indices;
+    private final int[] indices;
 
     /** maximum number of rows. */
-    private final int      max;
+    private final int max;
 
     /** number of columns. */
-    private final int      n;
+    private final int n;
 
     /** current number of rows. */
-    private int            m;
+    private int m;
 
     /**
-     * Create a new bit matrix with the given number of columns and rows. Note
-     * the rows is the <i>maximum</i> number of rows we which to store. The
-     * actual row count only increases with {@link #add(java.util.BitSet)}.
+     * Create a new bit matrix with the given number of columns and rows. Note the rows is the
+     * <i>maximum</i> number of rows we which to store. The actual row count only increases with
+     * {@link #add(java.util.BitSet)}.
      *
      * @param columns number of columns
-     * @param rows    number of rows
+     * @param rows number of rows
      */
     BitMatrix(final int columns, final int rows) {
         this.n = columns;
@@ -88,9 +95,8 @@ final class BitMatrix {
     }
 
     /**
-     * Swap the rows {@literal i} and {@literal j}, the swap is kept track of
-     * internally allowing {@link #row(int)} and {@link #eliminated(int)} to
-     * access the index of the original row.
+     * Swap the rows {@literal i} and {@literal j}, the swap is kept track of internally allowing
+     * {@link #row(int)} and {@link #eliminated(int)} to access the index of the original row.
      *
      * @param i row index
      * @param j row index
@@ -128,8 +134,8 @@ final class BitMatrix {
     }
 
     /**
-     * Check whether the row which was added at index {@literal j} has been
-     * eliminated. {@link #eliminate()} should be invoked first.
+     * Check whether the row which was added at index {@literal j} has been eliminated. {@link
+     * #eliminate()} should be invoked first.
      *
      * @param j row index
      * @return whether the row was eliminated
@@ -157,8 +163,7 @@ final class BitMatrix {
     }
 
     /**
-     * Eliminate rows from the matrix which can be made by linearly combinations
-     * of other rows.
+     * Eliminate rows from the matrix which can be made by linearly combinations of other rows.
      *
      * @return rank of the matrix
      * @see #eliminated(int)
@@ -190,8 +195,7 @@ final class BitMatrix {
             //       it's current use (cycle basis) as we only care about
             //       new additions being independent. However starting from
             //       j = 0 allows you to change this but of course is slower.
-            for (int j = y + 1; j < m; j++)
-                if (rows[j].get(x)) rows[j] = xor(rows[j], rows[y]);
+            for (int j = y + 1; j < m; j++) if (rows[j].get(x)) rows[j] = xor(rows[j], rows[y]);
 
             y++;
         }
@@ -212,7 +216,7 @@ final class BitMatrix {
         return -1;
     }
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder((4 + n) * m);
@@ -227,8 +231,7 @@ final class BitMatrix {
     }
 
     /**
-     * Utility method xors the vectors {@literal u} and {@literal v}. Neither
-     * input is modified.
+     * Utility method xors the vectors {@literal u} and {@literal v}. Neither input is modified.
      *
      * @param u a bit set
      * @param v a bit set
@@ -255,18 +258,16 @@ final class BitMatrix {
         }
 
         final BitMatrix matrix = new BitMatrix(cols, rows);
-        for (final Cycle c : cycles)
-            matrix.add(c.edgeVector());
+        for (final Cycle c : cycles) matrix.add(c.edgeVector());
         return matrix;
     }
 
     /**
-     * Simple creation of a BitMatrix from a collection of cycles. The final
-     * cycle will be added as the last row of the matrix. The <i>cycle</i>
-     * should no be found in <i>cycles</i>.
+     * Simple creation of a BitMatrix from a collection of cycles. The final cycle will be added as
+     * the last row of the matrix. The <i>cycle</i> should no be found in <i>cycles</i>.
      *
      * @param cycles cycles to create
-     * @param cycle  final cycle to add
+     * @param cycle final cycle to add
      * @return instance of a BitMatrix for the cycles
      */
     static BitMatrix from(final Iterable<Cycle> cycles, Cycle cycle) {
@@ -278,8 +279,7 @@ final class BitMatrix {
         }
 
         final BitMatrix matrix = new BitMatrix(cols, rows);
-        for (final Cycle c : cycles)
-            matrix.add(c.edgeVector());
+        for (final Cycle c : cycles) matrix.add(c.edgeVector());
         matrix.add(cycle.edgeVector());
         return matrix;
     }

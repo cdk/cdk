@@ -27,7 +27,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -43,27 +42,28 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * Reader for MoSS output files {@cdk.cite BOR2002} which present the results
- * of a substructure mining study. These files look like:
+ * Reader for MoSS output files {@cdk.cite BOR2002} which present the results of a substructure
+ * mining study. These files look like:
+ *
  * <pre>
  * id,description,nodes,edges,s_abs,s_rel,c_abs,c_rel
  * 1,S-c:c:c:c:c:c,7,6,491,5.055081,5,1.7421603
  * 2,S-c:c:c:c:c,6,5,493,5.0756717,5,1.7421603
  * </pre>
  *
- * <p><b>Caution</b>: the output contains substructures, not full molecules,
- * even though they are read as such right now.
+ * <p><b>Caution</b>: the output contains substructures, not full molecules, even though they are
+ * read as such right now.
  *
- * @cdk.module  smiles
+ * @cdk.module smiles
  * @cdk.githash
  * @cdk.iooptions
- *
  * @cdk.keyword MoSS
  */
 public class MoSSOutputReader extends DefaultChemObjectReader {
 
-    private BufferedReader      input;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MoSSOutputReader.class);
+    private BufferedReader input;
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(MoSSOutputReader.class);
 
     /**
      * Create a reader for MoSS output files from a {@link Reader}.
@@ -87,9 +87,7 @@ public class MoSSOutputReader extends DefaultChemObjectReader {
         this(new InputStreamReader(input));
     }
 
-    /**
-     * Create a reader for MoSS output files from an empty string.
-     */
+    /** Create a reader for MoSS output files from an empty string. */
     public MoSSOutputReader() {
         this(new StringReader(""));
     }
@@ -130,8 +128,8 @@ public class MoSSOutputReader extends DefaultChemObjectReader {
     /**
      * Read a {@link IAtomContainerSet} from the input source.
      *
-     * @param  object an {@link IAtomContainerSet} into which the data is stored.
-     * @return        the content in a {@link IAtomContainerSet} object
+     * @param object an {@link IAtomContainerSet} into which the data is stored.
+     * @return the content in a {@link IAtomContainerSet} object
      */
     @Override
     public <T extends IChemObject> T read(T object) throws CDKException {
@@ -164,6 +162,7 @@ public class MoSSOutputReader extends DefaultChemObjectReader {
 
     /**
      * Read the file content into a {@link IAtomContainerSet}.
+     *
      * @param molSet an {@link IAtomContainerSet} to store the structures
      * @return the {@link IAtomContainerSet} containing the molecules read in
      * @throws java.io.IOException if there is an error during reading

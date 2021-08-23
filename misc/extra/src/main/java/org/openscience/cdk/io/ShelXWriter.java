@@ -28,11 +28,8 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Iterator;
 import java.util.List;
-
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
-
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -46,15 +43,12 @@ import org.openscience.cdk.tools.FormatStringBuffer;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 /**
- * <p>Serializes a MoleculeSet or a Molecule object to ShelX code.
- * The output can be read with Platon.
+ * Serializes a MoleculeSet or a Molecule object to ShelX code. The output can be read with Platon.
  *
- * @cdk.module  extra
+ * @cdk.module extra
  * @cdk.githash
  * @cdk.iooptions
- *
  * @author Egon Willighagen
- *
  * @cdk.keyword file format, ShelX
  */
 public class ShelXWriter extends DefaultChemObjectWriter {
@@ -62,8 +56,8 @@ public class ShelXWriter extends DefaultChemObjectWriter {
     private BufferedWriter writer;
 
     /**
-     * Constructs a new ShelXWriter class. Output will be stored in the Writer
-     * class given as parameter.
+     * Constructs a new ShelXWriter class. Output will be stored in the Writer class given as
+     * parameter.
      *
      * @param out Writer to redirect the output to.
      */
@@ -105,9 +99,7 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         setWriter(new OutputStreamWriter(output));
     }
 
-    /**
-     * Flushes the output and closes this object.
-     */
+    /** Flushes the output and closes this object. */
     @Override
     public void close() throws IOException {
         writer.close();
@@ -163,8 +155,10 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         write(format.reset("%8.4f").format(alpha) + " ");
         write(format.reset("%8.4f").format(beta) + " ");
         writeln(format.reset("%8.4f").format(gamma) + "");
-        writeln("ZERR " + format.reset("%1.5f").format((double) crystal.getZ())
-                + "    0.01000  0.01000   0.01000   0.0100   0.0100   0.0100");
+        writeln(
+                "ZERR "
+                        + format.reset("%1.5f").format((double) crystal.getZ())
+                        + "    0.01000  0.01000   0.01000   0.0100   0.0100   0.0100");
         String spaceGroup = crystal.getSpaceGroup();
         if ("P1".equals(spaceGroup)) {
             writeln("LATT  -1");
@@ -184,7 +178,9 @@ public class ShelXWriter extends DefaultChemObjectWriter {
             IElement element = elements.next();
             String symbol = element.getSymbol();
             elemNames += symbol + "    ".substring(symbol.length());
-            String countS = Integer.valueOf(MolecularFormulaManipulator.getElementCount(formula, element)).toString();
+            String countS =
+                    Integer.valueOf(MolecularFormulaManipulator.getElementCount(formula, element))
+                            .toString();
             elemCounts += countS + "    ".substring(countS.length());
         }
         writeln("SFAC  " + elemNames);
@@ -222,7 +218,8 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         try {
             writer.write(s);
         } catch (IOException e) {
-            System.err.println("CMLWriter IOException while printing \"" + s + "\":" + e.toString());
+            System.err.println(
+                    "CMLWriter IOException while printing \"" + s + "\":" + e.toString());
         }
     }
 
@@ -231,8 +228,8 @@ public class ShelXWriter extends DefaultChemObjectWriter {
             writer.write(s);
             writer.write('\n');
         } catch (IOException e) {
-            System.err.println("CMLWriter IOException while printing \"" + s + "\":" + e.toString());
+            System.err.println(
+                    "CMLWriter IOException while printing \"" + s + "\":" + e.toString());
         }
     }
-
 }

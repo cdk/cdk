@@ -24,6 +24,10 @@
 
 package org.openscience.cdk.forcefield.mmff;
 
+import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -32,11 +36,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.silent.AtomContainer;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-
-import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
 
 /**
  * Unit tests for MMFF symbolic atom types. This class primarily tests preconditions and some
@@ -190,10 +189,12 @@ public class MmffAtomTypeMatcherTest {
         container.addBond(46, 48, IBond.Order.DOUBLE);
         container.addBond(39, 48, IBond.Order.SINGLE);
         container.addBond(48, 49, IBond.Order.SINGLE);
-        String[] expected = {"HOCO", "OC=O", "COO", "O=CO", "CR", "HC", "NC=O", "HNCO", "C=ON", "O=CN", "CR", "HC",
-                "CR", "HC", "HC", "CR", "HC", "HC", "CR", "HC", "CR", "HC", "HC", "CR", "HC", "HC", "CR", "HC", "CR",
-                "HC", "HC", "HC", "CR", "HC", "HC", "HC", "CR", "HC", "HC", "CB", "CB", "HC", "CB", "HC", "CB", "HC",
-                "CB", "HC", "CB", "HC"};
+        String[] expected = {
+            "HOCO", "OC=O", "COO", "O=CO", "CR", "HC", "NC=O", "HNCO", "C=ON", "O=CN", "CR", "HC",
+            "CR", "HC", "HC", "CR", "HC", "HC", "CR", "HC", "CR", "HC", "HC", "CR", "HC", "HC",
+            "CR", "HC", "CR", "HC", "HC", "HC", "CR", "HC", "HC", "HC", "CR", "HC", "HC", "CB",
+            "CB", "HC", "CB", "HC", "CB", "HC", "CB", "HC", "CB", "HC"
+        };
         String[] actual = INSTANCE.symbolicTypes(container);
         Assert.assertArrayEquals(expected, actual);
     }

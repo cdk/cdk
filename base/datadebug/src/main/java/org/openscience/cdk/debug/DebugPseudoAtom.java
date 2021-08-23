@@ -19,17 +19,15 @@
 package org.openscience.cdk.debug;
 
 import java.util.Map;
-
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -37,7 +35,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * Debugging data class.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module datadebug
  * @cdk.githash
  */
@@ -45,7 +43,8 @@ public class DebugPseudoAtom extends PseudoAtom implements IPseudoAtom {
 
     private static final long serialVersionUID = -5935090219383862070L;
 
-    private static final ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugPseudoAtom.class);
+    private static final ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(DebugPseudoAtom.class);
 
     public DebugPseudoAtom() {
         super();
@@ -117,7 +116,9 @@ public class DebugPseudoAtom extends PseudoAtom implements IPseudoAtom {
     /** {@inheritDoc} */
     @Override
     public void setFractionalPoint3d(Point3d point3d) {
-        logger.debug("Setting fractional point3d: x=" + point3d.x + ", y=" + point3d.y, ", z=" + point3d.z);
+        logger.debug(
+                "Setting fractional point3d: x=" + point3d.x + ", y=" + point3d.y,
+                ", z=" + point3d.z);
         super.setFractionalPoint3d(point3d);
     }
 
@@ -147,7 +148,8 @@ public class DebugPseudoAtom extends PseudoAtom implements IPseudoAtom {
         if (point3d == null) {
             logger.debug("Getting point3d: null");
         } else {
-            logger.debug("Getting point3d: x=" + point3d.x + ", y=" + point3d.y, ", z=" + point3d.z);
+            logger.debug(
+                    "Getting point3d: x=" + point3d.x + ", y=" + point3d.y, ", z=" + point3d.z);
         }
         return point3d;
     }
@@ -159,7 +161,9 @@ public class DebugPseudoAtom extends PseudoAtom implements IPseudoAtom {
         if (point3d == null) {
             logger.debug("Getting fractional point3d: null");
         } else {
-            logger.debug("Getting fractional point3d: x=" + point3d.x + ", y=" + point3d.y, ", z=" + point3d.z);
+            logger.debug(
+                    "Getting fractional point3d: x=" + point3d.x + ", y=" + point3d.y,
+                    ", z=" + point3d.z);
         }
         return point3d;
     }
@@ -295,7 +299,6 @@ public class DebugPseudoAtom extends PseudoAtom implements IPseudoAtom {
     public void setExactMass(Double exactMass) {
         logger.debug("Setting exact mass: ", exactMass);
         super.setExactMass(exactMass);
-
     }
 
     /** {@inheritDoc} */
@@ -498,5 +501,4 @@ public class DebugPseudoAtom extends PseudoAtom implements IPseudoAtom {
         logger.debug("Setting label: ", label);
         super.setLabel(label);
     }
-
 }

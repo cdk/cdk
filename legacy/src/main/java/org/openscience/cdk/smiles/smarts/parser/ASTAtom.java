@@ -18,8 +18,8 @@
 package org.openscience.cdk.smiles.smarts.parser;
 
 /**
- * An AST node. It represents either an explicit atom notation or an implicit
- * atom notation (with brackets) in smarts.
+ * An AST node. It represents either an explicit atom notation or an implicit atom notation (with
+ * brackets) in smarts.
  *
  * @author Dazhi Jiao
  * @cdk.created 2007-05-10

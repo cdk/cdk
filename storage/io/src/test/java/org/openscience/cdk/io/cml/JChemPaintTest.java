@@ -23,7 +23,6 @@
 package org.openscience.cdk.io.cml;
 
 import java.io.InputStream;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -38,9 +37,8 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * TestCase for reading CML files using a few test files
- * in data/cmltest as found in the JChemPaint distribution
- * (http://jchempaint.sf.org/).
+ * TestCase for reading CML files using a few test files in data/cmltest as found in the JChemPaint
+ * distribution (http://jchempaint.sf.org/).
  *
  * @cdk.module test-io
  */
@@ -48,9 +46,7 @@ public class JChemPaintTest extends CDKTestCase {
 
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(JChemPaintTest.class);
 
-    /**
-     * This one tests a CML2 file.
-     */
+    /** This one tests a CML2 file. */
     @Test
     public void testSalt() throws Exception {
         String filename = "data/cml/COONa.cml";
@@ -63,11 +59,11 @@ public class JChemPaintTest extends CDKTestCase {
         // test the resulting ChemFile content
         Assert.assertNotNull(chemFile);
         Assert.assertEquals(1, chemFile.getChemSequenceCount());
-        //logger.debug("NO sequences: " + chemFile.getChemSequenceCount());
+        // logger.debug("NO sequences: " + chemFile.getChemSequenceCount());
         IChemSequence seq = chemFile.getChemSequence(0);
         Assert.assertNotNull(seq);
         Assert.assertEquals(1, seq.getChemModelCount());
-        //logger.debug("NO models: " + seq.getChemModelCount());
+        // logger.debug("NO models: " + seq.getChemModelCount());
         IChemModel model = seq.getChemModel(0);
         Assert.assertNotNull(model);
         Assert.assertEquals(1, model.getMoleculeSet().getAtomContainerCount());
@@ -79,9 +75,7 @@ public class JChemPaintTest extends CDKTestCase {
         Assert.assertTrue(GeometryUtil.has3DCoordinates(mol));
     }
 
-    /**
-     * This one tests reading of output from the WWMM matrix (KEGG collection).
-     */
+    /** This one tests reading of output from the WWMM matrix (KEGG collection). */
     @Test
     public void testWWMMOutput() throws Exception {
         String filename = "data/cml/keggtest.cml";

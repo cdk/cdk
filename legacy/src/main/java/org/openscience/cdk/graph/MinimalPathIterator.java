@@ -30,8 +30,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
-
-
 import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
@@ -43,8 +41,6 @@ import org._3pq.jgrapht.traverse.BreadthFirstIterator;
  * Iterates over all shortest paths between two vertices in an undirected, unweighted graph.
  *
  * @author Ulrich Bauer &lt;ulrich.bauer@alumni.tum.de&gt;
- *
- *
  * @cdk.module standard
  * @cdk.githash
  * @deprecated use {@link ShortestPaths}
@@ -52,17 +48,18 @@ import org._3pq.jgrapht.traverse.BreadthFirstIterator;
 @Deprecated
 public class MinimalPathIterator implements Iterator {
 
-    private Object        sourceVertex, targetVertex;
-    private Graph         g;
+    private Object sourceVertex, targetVertex;
+    private Graph g;
     private DirectedGraph shortestPathGraph;
 
-    private Stack         edgeIteratorStack;
-    private Stack         vertexStack;
+    private Stack edgeIteratorStack;
+    private Stack vertexStack;
 
-    private Object        next;
+    private Object next;
 
     /**
      * Creates a minimal path iterator for the specified undirected graph.
+     *
      * @param g the specified graph
      * @param sourceVertex the start vertex for the paths
      * @param targetVertex the target vertex for the paths
@@ -107,14 +104,15 @@ public class MinimalPathIterator implements Iterator {
         // This map gives the distance of a vertex to the target vertex
         Map distanceMap = new HashMap();
 
-        for (MyBreadthFirstIterator iter = new MyBreadthFirstIterator(g, targetVertex); iter.hasNext();) {
+        for (MyBreadthFirstIterator iter = new MyBreadthFirstIterator(g, targetVertex);
+                iter.hasNext(); ) {
             Object vertex = iter.next();
             shortestPathGraph.addVertex(vertex);
 
             int distance = iter.level;
             distanceMap.put(vertex, Integer.valueOf(distance));
 
-            for (Iterator edges = g.edgesOf(vertex).iterator(); edges.hasNext();) {
+            for (Iterator edges = g.edgesOf(vertex).iterator(); edges.hasNext(); ) {
                 Edge edge = (Edge) edges.next();
                 Object opposite = edge.oppositeVertex(vertex);
                 if (distanceMap.get(opposite) != null) {
@@ -137,7 +135,6 @@ public class MinimalPathIterator implements Iterator {
 
         vertexStack = new Stack();
         vertexStack.push(sourceVertex);
-
     }
 
     //	private void createShortestPathWeightedGraph() {
@@ -149,7 +146,8 @@ public class MinimalPathIterator implements Iterator {
     //		Map distanceMap = new HashMap();
     //		distanceMap.put(targetVertex, new Integer(0));
     //
-    //		for (ClosestFirstIterator iter = new ClosestFirstIterator(g, targetVertex); iter.hasNext(); ) {
+    //		for (ClosestFirstIterator iter = new ClosestFirstIterator(g, targetVertex); iter.hasNext();
+    // ) {
     //			Object vertex = iter.next();
     //			shortestPathGraph.addVertex(vertex);
     //
@@ -196,7 +194,7 @@ public class MinimalPathIterator implements Iterator {
                 Iterator edgeIterator = (Iterator) edgeIteratorStack.peek();
                 Object currentVertex = vertexStack.peek();
 
-                //logger.debug(currentVertex);
+                // logger.debug(currentVertex);
 
                 if (edgeIterator.hasNext()) {
                     Edge edge = (Edge) edgeIterator.next();
@@ -213,13 +211,10 @@ public class MinimalPathIterator implements Iterator {
                     edgeIteratorStack.pop();
                     vertexStack.pop();
                 }
-
             }
-
         }
 
         return (next != null);
-
     }
 
     @Override
@@ -249,7 +244,6 @@ public class MinimalPathIterator implements Iterator {
         }
 
         return edgeList;
-
     }
 
     private static class MyBreadthFirstIterator extends BreadthFirstIterator {
@@ -258,7 +252,7 @@ public class MinimalPathIterator implements Iterator {
             super(g, startVertex);
         }
 
-        int            level = -1;
+        int level = -1;
         private Object firstVertexOfNextLevel;
 
         @Override
@@ -278,6 +272,5 @@ public class MinimalPathIterator implements Iterator {
             }
             return nextVertex;
         }
-
     }
 }

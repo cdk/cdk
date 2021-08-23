@@ -19,11 +19,10 @@
 package org.openscience.cdk.interfaces;
 
 /**
- * An {@link IChemObject} containing a number of ChemSequences. This is supposed to be the
- * top level container, which can contain all the concepts stored in a chemical
- * document
+ * An {@link IChemObject} containing a number of ChemSequences. This is supposed to be the top level
+ * container, which can contain all the concepts stored in a chemical document
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module interfaces
  * @cdk.githash
  */
@@ -32,41 +31,40 @@ public interface IChemFile extends IChemObject {
     /**
      * Adds an {@link IChemSequence} to this container.
      *
-     * @param  chemSequence  The chemSequence to be added to this container
-     * @see                  #chemSequences
+     * @param chemSequence The chemSequence to be added to this container
+     * @see #chemSequences
      */
     public void addChemSequence(IChemSequence chemSequence);
 
     /**
      * Removes the IChemSequence at the given position from this container.
      *
-     * @param  pos Position of the IChemSequence to remove
-     * @see        #chemSequences
+     * @param pos Position of the IChemSequence to remove
+     * @see #chemSequences
      */
     public void removeChemSequence(int pos);
 
     /**
-     *  Returns the {@link Iterable} to ChemSequences of this container.
+     * Returns the {@link Iterable} to ChemSequences of this container.
      *
-     *@return    The {@link Iterable} to ChemSequences of this container
-     *@see       #addChemSequence
+     * @return The {@link Iterable} to ChemSequences of this container
+     * @see #addChemSequence
      */
     public Iterable<IChemSequence> chemSequences();
 
     /**
      * Returns the ChemSequence at position <code>number</code> in the container.
      *
-     * @param  number  The position of the ChemSequence to be returned.
-     * @return         The ChemSequence at position <code>number</code>.
-     * @see            #addChemSequence
+     * @param number The position of the ChemSequence to be returned.
+     * @return The ChemSequence at position <code>number</code>.
+     * @see #addChemSequence
      */
     public IChemSequence getChemSequence(int number);
 
     /**
      * Returns the number of ChemSequences in this Container.
      *
-     * @return    The number of ChemSequences in this Container
+     * @return The number of ChemSequences in this Container
      */
     public int getChemSequenceCount();
-
 }

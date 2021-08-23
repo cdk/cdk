@@ -22,6 +22,8 @@
  *  */
 package org.openscience.cdk.io.iterator;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -31,26 +33,24 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
-/**
- * @cdk.module test-io
- */
+/** @cdk.module test-io */
 public class IteratingPCCompoundXMLReaderTest extends CDKTestCase {
 
-    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingPCCompoundXMLReaderTest.class);
+    private ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(IteratingPCCompoundXMLReaderTest.class);
 
     @Test
     public void testList() throws Exception {
         String filename = "data/asn/pubchem/aceticAcids38.xml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IteratingPCCompoundXMLReader reader = new IteratingPCCompoundXMLReader(new InputStreamReader(ins),
-                DefaultChemObjectBuilder.getInstance());
+        IteratingPCCompoundXMLReader reader =
+                new IteratingPCCompoundXMLReader(
+                        new InputStreamReader(ins), DefaultChemObjectBuilder.getInstance());
 
         int molCount = 0;
-        IAtomContainerSet set = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet set =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         while (reader.hasNext()) {
             //        	System.out.println("next molecule found");
             Object object = reader.next();
@@ -67,9 +67,9 @@ public class IteratingPCCompoundXMLReaderTest extends CDKTestCase {
         Assert.assertNotNull(first.getProperty("IUPAC Name (Traditional)"));
         Assert.assertEquals("acetic acid", first.getProperty("IUPAC Name (Traditional)"));
         Assert.assertNotNull(first.getProperty("InChI"));
-        Assert.assertEquals("InChI=1/C2H4O2/c1-2(3)4/h1H3,(H,3,4)/f/h3H", first.getProperty("InChI"));
+        Assert.assertEquals(
+                "InChI=1/C2H4O2/c1-2(3)4/h1H3,(H,3,4)/f/h3H", first.getProperty("InChI"));
         Assert.assertNotNull(first.getProperty("InChI"));
         Assert.assertEquals("176", first.getProperty("PubChem CID"));
     }
-
 }

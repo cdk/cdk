@@ -24,7 +24,6 @@
 package org.openscience.cdk.forcefield.mmff;
 
 import com.google.common.base.Charsets;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,31 +34,23 @@ import java.util.Map;
 
 /**
  * Internal class for accessing MMFF parameters.
- * 
+ *
  * @author John May
  */
 enum MmffParamSet {
-    
     INSTANCE;
 
     private static final int MAX_MMFF_ATOMTYPE = 99;
 
-   
-    /**
-     * Bond charge increments.
-     */
+    /** Bond charge increments. */
     private Map<BondKey, BigDecimal> bcis = new HashMap<>();
 
-    /**
-     * Atom type properties.
-     */
+    /** Atom type properties. */
     private MmffProp[] properties = new MmffProp[MAX_MMFF_ATOMTYPE + 1];
 
     private Map<String, Integer> typeMap = new HashMap<>();
 
-    /**
-     * Symbolic formal charges - some are varible and assigned in code.
-     */
+    /** Symbolic formal charges - some are varible and assigned in code. */
     private Map<String, BigDecimal> fCharges = new HashMap<>();
 
     MmffParamSet() {
@@ -105,10 +96,10 @@ enum MmffParamSet {
     }
 
     /**
-     * Access bond charge increment (bci) for a bond between two atoms (referred
-     * to by MMFF integer type).
+     * Access bond charge increment (bci) for a bond between two atoms (referred to by MMFF integer
+     * type).
      *
-     * @param cls   bond class
+     * @param cls bond class
      * @param type1 first atom type
      * @param type2 second atom type
      * @return bci
@@ -139,7 +130,7 @@ enum MmffParamSet {
 
     /**
      * Access the CRD for an MMFF int type.
-     * 
+     *
      * @param atype int atom type
      * @return CRD
      */
@@ -148,10 +139,9 @@ enum MmffParamSet {
     }
 
     /**
-     * Access the tabulated formal charge (may be fractional) for
-     * a symbolic atom type. Some formal charges are variable and
-     * need to be implemented in code.
-     * 
+     * Access the tabulated formal charge (may be fractional) for a symbolic atom type. Some formal
+     * charges are variable and need to be implemented in code.
+     *
      * @param symb symbolic type
      * @return formal charge
      */
@@ -160,22 +150,19 @@ enum MmffParamSet {
     }
 
     /**
-     * see. MMFF Part V - p 620, a nonstandard bond-type index of “1” is
-     * assigned whenever a single bond (formal bond order 1) is found: (a)
-     * between atoms i and j of types that are not both aromatic and for which
-     * ”sbmb” entries of ”1” appear in Table I; or (b) between pairs of atoms
-     * belonging to different aromatic rings (as in the case of the connecting
-     * C-C bond in biphenyl).
+     * see. MMFF Part V - p 620, a nonstandard bond-type index of “1” is assigned whenever a single
+     * bond (formal bond order 1) is found: (a) between atoms i and j of types that are not both
+     * aromatic and for which ”sbmb” entries of ”1” appear in Table I; or (b) between pairs of atoms
+     * belonging to different aromatic rings (as in the case of the connecting C-C bond in
+     * biphenyl).
      */
     int getBondCls(int type1, int type2, int bord, boolean barom) {
         MmffProp prop1 = properties[checkType(type1)];
         MmffProp prop2 = properties[checkType(type2)];
         // non-arom atoms with sbmb (single-bond-multi-bond)
-        if (bord == 1 && !prop1.arom && prop1.sbmb && !prop2.arom && prop2.sbmb)
-            return 1;
+        if (bord == 1 && !prop1.arom && prop1.sbmb && !prop2.arom && prop2.sbmb) return 1;
         // non-arom bond between arom atoms
-        if (bord == 1 && !barom && prop1.arom && prop2.arom)
-            return 1;
+        if (bord == 1 && !barom && prop1.arom && prop2.arom) return 1;
         return 0;
     }
 
@@ -185,18 +172,19 @@ enum MmffParamSet {
         return atype;
     }
 
-    private static void parseMMFFCHARGE(InputStream in, Map<BondKey, BigDecimal> map) throws IOException {
+    private static void parseMMFFCHARGE(InputStream in, Map<BondKey, BigDecimal> map)
+            throws IOException {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(in, Charsets.UTF_8))) {
             String line;
             while ((line = br.readLine()) != null) {
-                if (line.isEmpty() || line.charAt(0) == '*')
-                    continue;
+                if (line.isEmpty() || line.charAt(0) == '*') continue;
                 final String[] cols = line.split("\\s+");
-                if (cols.length != 5)
-                    throw new IOException("Malformed MMFFBOND.PAR file.");
-                final BondKey key = new BondKey(Integer.parseInt(cols[0]),
-                                                Integer.parseInt(cols[1]),
-                                                Integer.parseInt(cols[2]));
+                if (cols.length != 5) throw new IOException("Malformed MMFFBOND.PAR file.");
+                final BondKey key =
+                        new BondKey(
+                                Integer.parseInt(cols[0]),
+                                Integer.parseInt(cols[1]),
+                                Integer.parseInt(cols[2]));
                 final BigDecimal bci = new BigDecimal(cols[3]);
                 map.put(key, bci);
                 map.put(key.inv(), bci.negate());
@@ -208,13 +196,11 @@ enum MmffParamSet {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(in, Charsets.UTF_8))) {
             String line;
             while ((line = br.readLine()) != null) {
-                if (line.isEmpty() || line.charAt(0) == '*')
-                    continue;
+                if (line.isEmpty() || line.charAt(0) == '*') continue;
                 final String[] cols = line.split("\\s+");
-                if (cols.length < 5)
-                    throw new IOException("Malformed MMFFPCBI.PAR file.");
+                if (cols.length < 5) throw new IOException("Malformed MMFFPCBI.PAR file.");
                 final int type = Integer.parseInt(cols[1]);
-                props[type].pbci  = new BigDecimal(cols[2]);
+                props[type].pbci = new BigDecimal(cols[2]);
                 props[type].fcAdj = new BigDecimal(cols[3]);
             }
         }
@@ -224,30 +210,30 @@ enum MmffParamSet {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(in, Charsets.UTF_8))) {
             String line;
             while ((line = br.readLine()) != null) {
-                if (line.isEmpty() || line.charAt(0) == '*')
-                    continue;
+                if (line.isEmpty() || line.charAt(0) == '*') continue;
                 final String[] cols = line.split("\\s+");
-                if (cols.length != 10)
-                    throw new IOException("Malformed MMFFPROP.PAR file.");
+                if (cols.length != 10) throw new IOException("Malformed MMFFPROP.PAR file.");
                 final int type = Integer.parseInt(cols[1]);
-                props[type] = new MmffProp(Integer.parseInt(cols[2]),
-                                           Integer.parseInt(cols[3]),
-                                           Integer.parseInt(cols[4]),
-                                           Integer.parseInt(cols[5]),
-                                           Integer.parseInt(cols[6]),
-                                           Integer.parseInt(cols[7]),
-                                           Integer.parseInt(cols[8]),
-                                           Integer.parseInt(cols[9]));
+                props[type] =
+                        new MmffProp(
+                                Integer.parseInt(cols[2]),
+                                Integer.parseInt(cols[3]),
+                                Integer.parseInt(cols[4]),
+                                Integer.parseInt(cols[5]),
+                                Integer.parseInt(cols[6]),
+                                Integer.parseInt(cols[7]),
+                                Integer.parseInt(cols[8]),
+                                Integer.parseInt(cols[9]));
             }
         }
     }
 
-    private static void parseMMFFTypeMap(InputStream in, Map<String, Integer> types) throws IOException {
+    private static void parseMMFFTypeMap(InputStream in, Map<String, Integer> types)
+            throws IOException {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(in, Charsets.UTF_8))) {
             String line = br.readLine(); // header
             while ((line = br.readLine()) != null) {
-                if (line.isEmpty() || line.charAt(0) == '*')
-                    continue;
+                if (line.isEmpty() || line.charAt(0) == '*') continue;
                 final String[] cols = line.split("\t");
                 int intType = Integer.parseInt(cols[1]);
                 types.put(cols[0], intType);
@@ -256,31 +242,26 @@ enum MmffParamSet {
         }
     }
 
-    private static void parseMMFFFORMCHG(InputStream in, Map<String, BigDecimal> fcharges) throws IOException {
+    private static void parseMMFFFORMCHG(InputStream in, Map<String, BigDecimal> fcharges)
+            throws IOException {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(in, Charsets.UTF_8))) {
             String line = br.readLine(); // header
             while ((line = br.readLine()) != null) {
-                if (line.isEmpty() || line.charAt(0) == '*')
-                    continue;
+                if (line.isEmpty() || line.charAt(0) == '*') continue;
                 final String[] cols = line.split("\\s+");
                 fcharges.put(cols[0], new BigDecimal(cols[1]));
             }
         }
     }
 
-    /**
-     * Key for indexing bond parameters by
-     */
+    /** Key for indexing bond parameters by */
     static final class BondKey {
 
         /** Bond class. */
         private final int cls;
 
-        /**
-         * MMFF atom types for the bond.
-         */
+        /** MMFF atom types for the bond. */
         private final int type1, type2;
-
 
         public BondKey(int cls, int type1, int type2) {
             this.cls = cls;
@@ -292,7 +273,8 @@ enum MmffParamSet {
             return new BondKey(cls, type2, type1);
         }
 
-        @Override public boolean equals(Object o) {
+        @Override
+        public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
 
@@ -301,10 +283,10 @@ enum MmffParamSet {
             if (cls != bondKey.cls) return false;
             if (type1 != bondKey.type1) return false;
             return type2 == bondKey.type2;
-
         }
 
-        @Override public int hashCode() {
+        @Override
+        public int hashCode() {
             int result = cls;
             result = 31 * result + type1;
             result = 31 * result + type2;
@@ -312,22 +294,21 @@ enum MmffParamSet {
         }
     }
 
-    /**
-     * Properties of an MMFF atom type.
-     */
+    /** Properties of an MMFF atom type. */
     private static final class MmffProp {
-        private final int        aspec;
-        private final int        crd;
-        private final int        val;
-        private final int        pilp;
-        private final int        mltb;
-        private final boolean    arom;
-        private final boolean    lin;
-        private final boolean    sbmb;
-        private       BigDecimal pbci;
-        private       BigDecimal fcAdj;
+        private final int aspec;
+        private final int crd;
+        private final int val;
+        private final int pilp;
+        private final int mltb;
+        private final boolean arom;
+        private final boolean lin;
+        private final boolean sbmb;
+        private BigDecimal pbci;
+        private BigDecimal fcAdj;
 
-        public MmffProp(int aspec, int crd, int val, int pilp, int mltb, int arom, int lin, int sbmb) {
+        public MmffProp(
+                int aspec, int crd, int val, int pilp, int mltb, int arom, int lin, int sbmb) {
             this.aspec = aspec;
             this.crd = crd;
             this.val = val;
@@ -338,5 +319,4 @@ enum MmffParamSet {
             this.sbmb = sbmb != 0;
         }
     }
-
 }

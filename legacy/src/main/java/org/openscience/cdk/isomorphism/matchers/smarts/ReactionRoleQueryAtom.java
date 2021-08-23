@@ -27,22 +27,23 @@ import org.openscience.cdk.ReactionRole;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
-/**
- * Matches atoms with a particular role in a reaction.
- */
+/** Matches atoms with a particular role in a reaction. */
 @Deprecated
 public class ReactionRoleQueryAtom extends SMARTSAtom {
 
     public static final int ROLE_REACTANT = 0x1;
-    public static final int ROLE_AGENT    = 0x2;
-    public static final int ROLE_PRODUCT  = 0x4;
-    public static final int ROLE_ANY      = ROLE_REACTANT | ROLE_PRODUCT | ROLE_AGENT;
+    public static final int ROLE_AGENT = 0x2;
+    public static final int ROLE_PRODUCT = 0x4;
+    public static final int ROLE_ANY = ROLE_REACTANT | ROLE_PRODUCT | ROLE_AGENT;
 
     private final int role;
 
-    public final static ReactionRoleQueryAtom RoleReactant = new ReactionRoleQueryAtom(null, ROLE_REACTANT);
-    public final static ReactionRoleQueryAtom RoleAgent    = new ReactionRoleQueryAtom(null, ROLE_AGENT);
-    public final static ReactionRoleQueryAtom RoleProduct  = new ReactionRoleQueryAtom(null, ROLE_PRODUCT);
+    public static final ReactionRoleQueryAtom RoleReactant =
+            new ReactionRoleQueryAtom(null, ROLE_REACTANT);
+    public static final ReactionRoleQueryAtom RoleAgent =
+            new ReactionRoleQueryAtom(null, ROLE_AGENT);
+    public static final ReactionRoleQueryAtom RoleProduct =
+            new ReactionRoleQueryAtom(null, ROLE_PRODUCT);
 
     public ReactionRoleQueryAtom(IChemObjectBuilder builder, int role) {
         super(builder);
@@ -52,8 +53,7 @@ public class ReactionRoleQueryAtom extends SMARTSAtom {
     @Override
     public boolean matches(IAtom atom) {
         ReactionRole atomRole = atom.getProperty(CDKConstants.REACTION_ROLE);
-        if (atomRole == null)
-            return this.role == ROLE_ANY;
+        if (atomRole == null) return this.role == ROLE_ANY;
         switch (atomRole) {
             case Reactant:
                 return (this.role & ROLE_REACTANT) != 0;
@@ -69,12 +69,9 @@ public class ReactionRoleQueryAtom extends SMARTSAtom {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if ((role & ROLE_REACTANT) != 0)
-            sb.append("Reactant");
-        if ((role & ROLE_AGENT) != 0)
-            sb.append("Agent");
-        if ((role & ROLE_PRODUCT) != 0)
-            sb.append("Product");
+        if ((role & ROLE_REACTANT) != 0) sb.append("Reactant");
+        if ((role & ROLE_AGENT) != 0) sb.append("Agent");
+        if ((role & ROLE_PRODUCT) != 0) sb.append("Product");
         return "ReactionRole(" + sb.toString() + ")";
     }
 }

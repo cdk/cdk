@@ -26,7 +26,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.InputStream;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -45,7 +44,6 @@ import org.openscience.cdk.smsd.tools.MolHandler;
 
 /**
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- *
  * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
@@ -69,6 +67,7 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
 
     /**
      * Test of isSubgraph method, of class VFlibSubStructureHandler.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -87,6 +86,7 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
 
     /**
      * Test of set method, of class VFlibSubStructureHandler.
+     *
      * @throws Exception
      */
     @Test
@@ -104,6 +104,7 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
 
     /**
      * Test of set method, of class VFlibSubStructureHandler.
+     *
      * @throws CDKException
      */
     @Test
@@ -129,6 +130,7 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
 
     /**
      * Test of set method, of class VFlibSubStructureHandler.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -146,6 +148,7 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
 
     /**
      * Test of getAllAtomMapping method, of class VFlibSubStructureHandler.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -165,6 +168,7 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
 
     /**
      * Test of getAllMapping method, of class VFlibSubStructureHandler.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -184,6 +188,7 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
 
     /**
      * Test of getFirstAtomMapping method, of class VFlibSubStructureHandler.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -203,6 +208,7 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
 
     /**
      * Test of getFirstMapping method, of class VFlibSubStructureHandler.
+     *
      * @throws InvalidSmilesException
      */
     @Test

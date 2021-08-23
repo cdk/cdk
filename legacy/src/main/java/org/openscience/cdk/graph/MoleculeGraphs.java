@@ -33,11 +33,8 @@ import org.openscience.cdk.interfaces.IBond;
  * Utility class to create a molecule graph for use with JGraphT.
  *
  * @author Ulrich Bauer &lt;ulrich.bauer@alumni.tum.de&gt;
- *
- *
  * @cdk.module standard
  * @cdk.githash
- *
  */
 @Deprecated
 public class MoleculeGraphs {
@@ -46,13 +43,12 @@ public class MoleculeGraphs {
     private MoleculeGraphs() {}
 
     /**
-     * Creates a molecule graph for use with jgrapht.
-     * Bond orders are not respected.
+     * Creates a molecule graph for use with jgrapht. Bond orders are not respected.
      *
      * @param molecule the specified molecule
      * @return a graph representing the molecule
      */
-    static public SimpleGraph getMoleculeGraph(IAtomContainer molecule) {
+    public static SimpleGraph getMoleculeGraph(IAtomContainer molecule) {
         SimpleGraph graph = new SimpleGraph();
         for (int i = 0; i < molecule.getAtomCount(); i++) {
             IAtom atom = molecule.getAtom(i);

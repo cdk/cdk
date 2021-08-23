@@ -31,17 +31,13 @@ import org.openscience.cdk.reaction.ReactionMechanismTest;
  */
 public class AdductionPBMechanismTest extends ReactionMechanismTest {
 
-    /**
-     *  The JUnit setup method
-     */
+    /** The JUnit setup method */
     @BeforeClass
     public static void setUp() throws Exception {
         setMechanism(AdductionPBMechanism.class);
     }
 
-    /**
-     *  Constructor for the AdductionPBMechanismTest object.
-     */
+    /** Constructor for the AdductionPBMechanismTest object. */
     public AdductionPBMechanismTest() {
         super();
     }
@@ -58,8 +54,7 @@ public class AdductionPBMechanismTest extends ReactionMechanismTest {
     }
 
     /**
-     * Junit test.
-     * TODDO: REACT: add an example
+     * Junit test. TODDO: REACT: add an example
      *
      * @throws Exception
      */

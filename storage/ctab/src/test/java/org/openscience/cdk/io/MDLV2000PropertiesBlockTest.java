@@ -25,6 +25,14 @@
 
 package org.openscience.cdk.io;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.verify;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.openscience.cdk.CDKConstants;
@@ -36,22 +44,13 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.StringReader;
-
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.verify;
-
 /**
  * @author John May
  * @cdk.module test-io
  */
 public class MDLV2000PropertiesBlockTest {
 
-    private final MDLV2000Reader     reader  = new MDLV2000Reader();
+    private final MDLV2000Reader reader = new MDLV2000Reader();
     private final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
     @Test
@@ -76,17 +75,21 @@ public class MDLV2000PropertiesBlockTest {
 
     @Test
     public void atom_alias() throws Exception {
-        assertThat(MDLV2000Reader.PropertyKey.of("A    1"), is(MDLV2000Reader.PropertyKey.ATOM_ALIAS));
+        assertThat(
+                MDLV2000Reader.PropertyKey.of("A    1"), is(MDLV2000Reader.PropertyKey.ATOM_ALIAS));
     }
 
     @Test
     public void atom_value() throws Exception {
-        assertThat(MDLV2000Reader.PropertyKey.of("V    1"), is(MDLV2000Reader.PropertyKey.ATOM_VALUE));
+        assertThat(
+                MDLV2000Reader.PropertyKey.of("V    1"), is(MDLV2000Reader.PropertyKey.ATOM_VALUE));
     }
 
     @Test
     public void group_abrv() throws Exception {
-        assertThat(MDLV2000Reader.PropertyKey.of("G    1"), is(MDLV2000Reader.PropertyKey.GROUP_ABBREVIATION));
+        assertThat(
+                MDLV2000Reader.PropertyKey.of("G    1"),
+                is(MDLV2000Reader.PropertyKey.GROUP_ABBREVIATION));
     }
 
     @Test
@@ -99,7 +102,7 @@ public class MDLV2000PropertiesBlockTest {
     public void m_zzc_padding() throws Exception {
         assertThat(MDLV2000Reader.PropertyKey.of("M  ZZC  "), is(MDLV2000Reader.PropertyKey.M_ZZC));
     }
-    
+
     @Test
     public void anion() throws Exception {
         IAtomContainer mock = mock(3);
@@ -165,16 +168,15 @@ public class MDLV2000PropertiesBlockTest {
         read("M  ZZC   1 6", mock);
         verify(mock.getAtom(0)).setProperty(CDKConstants.ACDLABS_LABEL, "6");
     }
-    
+
     static IAtomContainer mock(int n) {
         IAtomContainer mock = new AtomContainer(n, 0, 0, 0);
-        for (int i = 0; i < n; i++)
-            mock.addAtom(Mockito.mock(IAtom.class));
+        for (int i = 0; i < n; i++) mock.addAtom(Mockito.mock(IAtom.class));
         return mock;
     }
 
     void read(String input, IAtomContainer container) throws IOException, CDKException {
-        reader.readPropertiesFast(new BufferedReader(new StringReader(input)), container, container.getAtomCount());
+        reader.readPropertiesFast(
+                new BufferedReader(new StringReader(input)), container, container.getAtomCount());
     }
-
 }

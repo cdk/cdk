@@ -18,8 +18,8 @@
 package org.openscience.cdk.smiles.smarts.parser;
 
 /**
- * An AST node. It represents the NOT logical operator (!)
- * used before atomic primitives or recursive smarts in smarts.
+ * An AST node. It represents the NOT logical operator (!) used before atomic primitives or
+ * recursive smarts in smarts.
  *
  * @author Dazhi Jiao
  * @cdk.created 2007-04-24
@@ -30,9 +30,7 @@ package org.openscience.cdk.smiles.smarts.parser;
 @Deprecated
 class ASTNotExpression extends SimpleNode {
 
-    /**
-     * Whether it's not.
-     */
+    /** Whether it's not. */
     private int type;
 
     public int getType() {
@@ -43,16 +41,12 @@ class ASTNotExpression extends SimpleNode {
         this.type = type;
     }
 
-    /**
-     * Creates a new instance.
-     */
+    /** Creates a new instance. */
     public ASTNotExpression(int id) {
         super(id);
     }
 
-    /**
-     * Creates a new instance.
-     */
+    /** Creates a new instance. */
     public ASTNotExpression(SMARTSParser p, int id) {
         super(p, id);
     }

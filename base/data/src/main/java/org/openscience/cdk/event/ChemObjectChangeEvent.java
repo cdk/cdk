@@ -25,8 +25,7 @@ package org.openscience.cdk.event;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 
 /**
- * Event fired by cdk classes to their registered listeners
- * in case something changes within them.
+ * Event fired by cdk classes to their registered listeners in case something changes within them.
  *
  * @cdk.module data
  * @cdk.githash
@@ -36,10 +35,9 @@ public class ChemObjectChangeEvent extends java.util.EventObject implements IChe
     private static final long serialVersionUID = 5418604788783986725L;
 
     /**
-     * Constructs a ChemObjectChangeEvent with a reference
-     * to the object where it originated.
+     * Constructs a ChemObjectChangeEvent with a reference to the object where it originated.
      *
-     * @param   source The reference to the object where this change event originated
+     * @param source The reference to the object where this change event originated
      */
     public ChemObjectChangeEvent(Object source) {
         super(source);

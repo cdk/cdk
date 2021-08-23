@@ -2,9 +2,7 @@ package org.openscience.cdk.renderer.generators;
 
 import java.awt.Rectangle;
 import java.util.List;
-
 import javax.vecmath.Point2d;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +14,7 @@ import org.openscience.cdk.renderer.elements.MarkedElement;
 /**
  * Test the {@link BasicBondGenerator}.
  *
- * @author     maclean
+ * @author maclean
  * @cdk.module test-renderbasic
  */
 public class BasicBondGeneratorTest extends AbstractGeneratorTest {
@@ -24,8 +22,7 @@ public class BasicBondGeneratorTest extends AbstractGeneratorTest {
     private BasicBondGenerator generator;
 
     static IRenderingElement unbox(IRenderingElement element) {
-        if (element instanceof MarkedElement)
-            return ((MarkedElement) element).element();
+        if (element instanceof MarkedElement) return ((MarkedElement) element).element();
         return element;
     }
 
@@ -79,5 +76,4 @@ public class BasicBondGeneratorTest extends AbstractGeneratorTest {
         // test that the center is at the origin
         Assert.assertEquals(new Point2d(0, 0), center(elements));
     }
-
 }

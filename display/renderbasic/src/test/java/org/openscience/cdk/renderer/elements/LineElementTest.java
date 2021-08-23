@@ -22,12 +22,9 @@
 package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
-
 import org.junit.BeforeClass;
 
-/**
- * @cdk.module test-renderbasic
- */
+/** @cdk.module test-renderbasic */
 public class LineElementTest extends AbstractElementTest {
 
     @BeforeClass
@@ -35,5 +32,4 @@ public class LineElementTest extends AbstractElementTest {
         IRenderingElement element = new LineElement(0, 0, 1, 1, 1.0, Color.orange);
         setRenderingElement(element);
     }
-
 }

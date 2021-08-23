@@ -27,9 +27,7 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.IAtom;
 
-/**
- * @cdk.module test-cip
- */
+/** @cdk.module test-cip */
 public class VisitedAtomsTest {
 
     @Test

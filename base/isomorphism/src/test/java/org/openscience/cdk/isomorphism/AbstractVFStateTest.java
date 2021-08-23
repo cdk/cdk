@@ -24,15 +24,15 @@
 
 package org.openscience.cdk.isomorphism;
 
-import org.junit.Test;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertFalse;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.openscience.cdk.isomorphism.AbstractVFState.UNMAPPED;
+
+import org.junit.Test;
 
 /**
  * @author John May
@@ -102,44 +102,47 @@ public class AbstractVFStateTest {
 
     @Test
     public void addNonFeasible() {
-        AbstractVFState state = new AbstractVFState(new int[4][], new int[6][]) {
+        AbstractVFState state =
+                new AbstractVFState(new int[4][], new int[6][]) {
 
-            @Override
-            boolean feasible(int n, int m) {
-                return false;
-            }
-        };
+                    @Override
+                    boolean feasible(int n, int m) {
+                        return false;
+                    }
+                };
         assertFalse(state.add(0, 1));
         assertThat(state.size, is(0));
-        assertThat(state.m1, is(new int[]{UNMAPPED, UNMAPPED, UNMAPPED, UNMAPPED}));
-        assertThat(state.m2, is(new int[]{UNMAPPED, UNMAPPED, UNMAPPED, UNMAPPED, UNMAPPED, UNMAPPED}));
-        assertThat(state.t1, is(new int[]{0, 0, 0, 0}));
-        assertThat(state.t2, is(new int[]{0, 0, 0, 0, 0, 0}));
+        assertThat(state.m1, is(new int[] {UNMAPPED, UNMAPPED, UNMAPPED, UNMAPPED}));
+        assertThat(
+                state.m2,
+                is(new int[] {UNMAPPED, UNMAPPED, UNMAPPED, UNMAPPED, UNMAPPED, UNMAPPED}));
+        assertThat(state.t1, is(new int[] {0, 0, 0, 0}));
+        assertThat(state.t2, is(new int[] {0, 0, 0, 0, 0, 0}));
     }
 
     @Test
     public void add() {
-        int[][] g1 = new int[][]{{1}, {0, 2}, {1, 3}, {2}};
-        int[][] g2 = new int[][]{{1}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {4}};
+        int[][] g1 = new int[][] {{1}, {0, 2}, {1, 3}, {2}};
+        int[][] g2 = new int[][] {{1}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {4}};
         AbstractVFState state = create(g1, g2);
         assertTrue(state.add(0, 1));
         assertThat(state.size, is(1));
-        assertThat(state.m1, is(new int[]{1, UNMAPPED, UNMAPPED, UNMAPPED}));
-        assertThat(state.m2, is(new int[]{UNMAPPED, 0, UNMAPPED, UNMAPPED, UNMAPPED, UNMAPPED}));
-        assertThat(state.t1, is(new int[]{0, 1, 0, 0}));
-        assertThat(state.t2, is(new int[]{1, 0, 1, 0, 0, 0}));
+        assertThat(state.m1, is(new int[] {1, UNMAPPED, UNMAPPED, UNMAPPED}));
+        assertThat(state.m2, is(new int[] {UNMAPPED, 0, UNMAPPED, UNMAPPED, UNMAPPED, UNMAPPED}));
+        assertThat(state.t1, is(new int[] {0, 1, 0, 0}));
+        assertThat(state.t2, is(new int[] {1, 0, 1, 0, 0, 0}));
         assertTrue(state.add(1, 2));
         assertThat(state.size, is(2));
-        assertThat(state.m1, is(new int[]{1, 2, UNMAPPED, UNMAPPED}));
-        assertThat(state.m2, is(new int[]{UNMAPPED, 0, 1, UNMAPPED, UNMAPPED, UNMAPPED}));
-        assertThat(state.t1, is(new int[]{2, 1, 2, 0}));
-        assertThat(state.t2, is(new int[]{1, 2, 1, 2, 0, 0}));
+        assertThat(state.m1, is(new int[] {1, 2, UNMAPPED, UNMAPPED}));
+        assertThat(state.m2, is(new int[] {UNMAPPED, 0, 1, UNMAPPED, UNMAPPED, UNMAPPED}));
+        assertThat(state.t1, is(new int[] {2, 1, 2, 0}));
+        assertThat(state.t2, is(new int[] {1, 2, 1, 2, 0, 0}));
     }
 
     @Test
     public void remove() {
-        int[][] g1 = new int[][]{{1}, {0, 2}, {1, 3}, {2}};
-        int[][] g2 = new int[][]{{1}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {4}};
+        int[][] g1 = new int[][] {{1}, {0, 2}, {1, 3}, {2}};
+        int[][] g2 = new int[][] {{1}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {4}};
         AbstractVFState state = create(g1, g2);
         state.size = 2;
         // see add()
@@ -155,28 +158,30 @@ public class AbstractVFStateTest {
         state.t2[2] = 1;
         state.t2[3] = 2;
         assertThat(state.size, is(2));
-        assertThat(state.m1, is(new int[]{1, 2, UNMAPPED, UNMAPPED}));
-        assertThat(state.m2, is(new int[]{UNMAPPED, 0, 1, UNMAPPED, UNMAPPED, UNMAPPED}));
-        assertThat(state.t1, is(new int[]{2, 1, 2, 0}));
-        assertThat(state.t2, is(new int[]{1, 2, 1, 2, 0, 0}));
+        assertThat(state.m1, is(new int[] {1, 2, UNMAPPED, UNMAPPED}));
+        assertThat(state.m2, is(new int[] {UNMAPPED, 0, 1, UNMAPPED, UNMAPPED, UNMAPPED}));
+        assertThat(state.t1, is(new int[] {2, 1, 2, 0}));
+        assertThat(state.t2, is(new int[] {1, 2, 1, 2, 0, 0}));
         state.remove(1, 2);
         assertThat(state.size, is(1));
-        assertThat(state.m1, is(new int[]{1, UNMAPPED, UNMAPPED, UNMAPPED}));
-        assertThat(state.m2, is(new int[]{UNMAPPED, 0, UNMAPPED, UNMAPPED, UNMAPPED, UNMAPPED}));
-        assertThat(state.t1, is(new int[]{0, 1, 0, 0}));
-        assertThat(state.t2, is(new int[]{1, 0, 1, 0, 0, 0}));
+        assertThat(state.m1, is(new int[] {1, UNMAPPED, UNMAPPED, UNMAPPED}));
+        assertThat(state.m2, is(new int[] {UNMAPPED, 0, UNMAPPED, UNMAPPED, UNMAPPED, UNMAPPED}));
+        assertThat(state.t1, is(new int[] {0, 1, 0, 0}));
+        assertThat(state.t2, is(new int[] {1, 0, 1, 0, 0, 0}));
         state.remove(0, 1);
         assertThat(state.size, is(0));
-        assertThat(state.m1, is(new int[]{UNMAPPED, UNMAPPED, UNMAPPED, UNMAPPED}));
-        assertThat(state.m2, is(new int[]{UNMAPPED, UNMAPPED, UNMAPPED, UNMAPPED, UNMAPPED, UNMAPPED}));
-        assertThat(state.t1, is(new int[]{0, 0, 0, 0}));
-        assertThat(state.t2, is(new int[]{0, 0, 0, 0, 0, 0}));
+        assertThat(state.m1, is(new int[] {UNMAPPED, UNMAPPED, UNMAPPED, UNMAPPED}));
+        assertThat(
+                state.m2,
+                is(new int[] {UNMAPPED, UNMAPPED, UNMAPPED, UNMAPPED, UNMAPPED, UNMAPPED}));
+        assertThat(state.t1, is(new int[] {0, 0, 0, 0}));
+        assertThat(state.t2, is(new int[] {0, 0, 0, 0, 0, 0}));
     }
 
     @Test
     public void copyMapping() {
-        int[][] g1 = new int[][]{{1}, {0, 2}, {1, 3}, {2}};
-        int[][] g2 = new int[][]{{1}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {4}};
+        int[][] g1 = new int[][] {{1}, {0, 2}, {1, 3}, {2}};
+        int[][] g2 = new int[][] {{1}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {4}};
         AbstractVFState state = create(g1, g2);
         state.m1[0] = 1;
         state.m1[1] = 2;
@@ -188,8 +193,8 @@ public class AbstractVFStateTest {
 
     @Test
     public void accessors() {
-        int[][] g1 = new int[][]{{1}, {0, 2}, {1, 3}, {2}};
-        int[][] g2 = new int[][]{{1}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {4}};
+        int[][] g1 = new int[][] {{1}, {0, 2}, {1, 3}, {2}};
+        int[][] g2 = new int[][] {{1}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {4}};
         AbstractVFState state = create(g1, g2);
         assertThat(state.nMax(), is(g1.length));
         assertThat(state.mMax(), is(g2.length));
@@ -211,5 +216,4 @@ public class AbstractVFStateTest {
             }
         };
     }
-
 }

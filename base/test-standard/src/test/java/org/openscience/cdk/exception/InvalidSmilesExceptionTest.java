@@ -20,12 +20,9 @@ package org.openscience.cdk.exception;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.CDKTestCase;
 
-/**
- * @cdk.module test-standard
- */
+/** @cdk.module test-standard */
 public class InvalidSmilesExceptionTest extends CDKTestCase {
 
     public InvalidSmilesExceptionTest() {
@@ -34,7 +31,8 @@ public class InvalidSmilesExceptionTest extends CDKTestCase {
 
     @Test
     public void testInvalidSmilesException_String() {
-        final String EXPLANATION = "No, CDK cannot compute the multidollar ligand you search for target X.";
+        final String EXPLANATION =
+                "No, CDK cannot compute the multidollar ligand you search for target X.";
         InvalidSmilesException exception = new InvalidSmilesException(EXPLANATION);
         Assert.assertNotNull(exception);
         Assert.assertEquals(EXPLANATION, exception.getMessage());

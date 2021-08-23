@@ -18,6 +18,8 @@
  */
 package org.openscience.cdk.normalize;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -28,9 +30,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 public class NormalizerTest extends CDKTestCase {
 
@@ -56,7 +55,8 @@ public class NormalizerTest extends CDKTestCase {
         set.appendChild(replacement);
         replacement.appendChild(doc.createTextNode("[O-][N+]=O"));
         Normalizer.normalize(ac, doc);
-        Assert.assertTrue(ac.getBond(1).getOrder() == IBond.Order.SINGLE
-                ^ ac.getBond(2).getOrder() == IBond.Order.SINGLE);
+        Assert.assertTrue(
+                ac.getBond(1).getOrder() == IBond.Order.SINGLE
+                        ^ ac.getBond(2).getOrder() == IBond.Order.SINGLE);
     }
 }

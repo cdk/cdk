@@ -24,15 +24,13 @@
 package org.openscience.cdk.interfaces;
 
 /**
- * Represents the idea of a non-chemical atom-like entity, like Me,
- * R, X, Phe, His, etc.
+ * Represents the idea of a non-chemical atom-like entity, like Me, R, X, Phe, His, etc.
  *
  * <p>This should be replaced by the mechanism explained in RFC #8.
  *
  * @cdk.module interfaces
  * @cdk.githash
- *
- * @see  IAtom
+ * @see IAtom
  */
 public interface IPseudoAtom extends IAtom {
 
@@ -40,7 +38,7 @@ public interface IPseudoAtom extends IAtom {
      * Returns the label of this PseudoAtom.
      *
      * @return The label for this PseudoAtom
-     * @see    #setLabel
+     * @see #setLabel
      */
     public String getLabel();
 
@@ -48,13 +46,13 @@ public interface IPseudoAtom extends IAtom {
      * Sets the label of this PseudoAtom.
      *
      * @param label The new label for this PseudoAtom
-     * @see   #getLabel
+     * @see #getLabel
      */
     public void setLabel(String label);
 
     /**
-     * Access the attachment point number. The default, 0, indicates this atom
-     * is not an attachment point.
+     * Access the attachment point number. The default, 0, indicates this atom is not an attachment
+     * point.
      *
      * @return attach point number
      */
@@ -67,10 +65,7 @@ public interface IPseudoAtom extends IAtom {
      */
     void setAttachPointNum(int ap);
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IPseudoAtom clone() throws CloneNotSupportedException;
-
 }

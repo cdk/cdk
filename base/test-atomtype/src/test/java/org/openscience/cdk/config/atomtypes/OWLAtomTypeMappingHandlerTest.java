@@ -66,5 +66,4 @@ public class OWLAtomTypeMappingHandlerTest extends CDKTestCase {
     public void testCharacters_arraychar_int_int() {
         Assert.assertTrue(true); // tested by testGetAtomTypeMappings
     }
-
 }

@@ -29,7 +29,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBioPolymer;
@@ -47,18 +46,18 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * An implementation of the TAE descriptors for amino acids.
- * 
- * The TAE descriptors ({@cdk.cite BREN1995} {@cdk.cite BREN1997} {@cdk.cite WHITE2003})
- * are derived from pre-calculated quantum mechanical parameters. This class
- * uses the parameters for amino acids and thus evaluates a set of 147 descriptors for peptide
- * sequences.
- * 
- * The class expects that it will be supplied an object which implements the {@link IBioPolymer}. Thus ordinary
- * AtomContainer objects  will result in an exception.
- * 
- * The descriptors are returned in the following order (see
- * <a href="http://www.chem.rpi.edu/chemweb/recondoc/TAE.doc">here</a>
- * for a detailed description of the individual descriptors):
+ *
+ * <p>The TAE descriptors ({@cdk.cite BREN1995} {@cdk.cite BREN1997} {@cdk.cite WHITE2003}) are
+ * derived from pre-calculated quantum mechanical parameters. This class uses the parameters for
+ * amino acids and thus evaluates a set of 147 descriptors for peptide sequences.
+ *
+ * <p>The class expects that it will be supplied an object which implements the {@link IBioPolymer}.
+ * Thus ordinary AtomContainer objects will result in an exception.
+ *
+ * <p>The descriptors are returned in the following order (see <a
+ * href="http://www.chem.rpi.edu/chemweb/recondoc/TAE.doc">here</a> for a detailed description of
+ * the individual descriptors):
+ *
  * <pre>
  * Energy Population VOLTAE SurfArea
  * SIDel.Rho.N Del.Rho.NMin Del.Rho.NMax Del.Rho.NIA Del.Rho.NA1
@@ -91,7 +90,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * Lapl3 Lapl4 Lapl5 Lapl6 Lapl7
  * Lapl8 Lapl9 Lapl10
  * </pre>
- * 
+ *
  * <table border="1"><caption>Parameters for this descriptor:</caption>
  * <tr>
  * <td>Name</td>
@@ -105,18 +104,20 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * </tr>
  * </table>
  *
- * @author      Rajarshi Guha
+ * @author Rajarshi Guha
  * @cdk.created 2006-08-23
- * @cdk.module  qsarprotein
+ * @cdk.module qsarprotein
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:taeAminoAcid
- * @see         IBioPolymer
+ * @see IBioPolymer
  */
-public class TaeAminoAcidDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
+public class TaeAminoAcidDescriptor extends AbstractMolecularDescriptor
+        implements IMolecularDescriptor {
 
-    private static ILoggingTool          logger    = LoggingToolFactory.createLoggingTool(TaeAminoAcidDescriptor.class);
-    private        Map<String, Double[]> taeParams = new HashMap<String, Double[]>();
-    private        int                   ndesc     = 147;
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(TaeAminoAcidDescriptor.class);
+    private Map<String, Double[]> taeParams = new HashMap<String, Double[]>();
+    private int ndesc = 147;
 
     private Map<String, String> nametrans = new HashMap<String, String>();
 
@@ -158,8 +159,7 @@ public class TaeAminoAcidDescriptor extends AbstractMolecularDescriptor implemen
                 String key = components[0].toLowerCase().trim();
 
                 Double[] data = new Double[ndesc];
-                for (int j = 1; j < components.length; j++)
-                    data[j - 1] = new Double(components[j]);
+                for (int j = 1; j < components.length; j++) data[j - 1] = new Double(components[j]);
 
                 taeParams.put(key, data);
             }
@@ -204,16 +204,16 @@ public class TaeAminoAcidDescriptor extends AbstractMolecularDescriptor implemen
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#taeAminoAcid", this.getClass()
-                                                                                                       .getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#taeAminoAcid",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     /**
      * Sets the parameters attribute of the TaeAminoAcidDescriptor object.
      *
      * @param params The new parameters value
-     * @throws org.openscience.cdk.exception.CDKException
-     *          Description of the Exception
+     * @throws org.openscience.cdk.exception.CDKException Description of the Exception
      */
     @Override
     public void setParameters(Object[] params) throws CDKException {
@@ -234,8 +234,7 @@ public class TaeAminoAcidDescriptor extends AbstractMolecularDescriptor implemen
     @Override
     public String[] getDescriptorNames() {
         String[] names = new String[ndesc];
-        for (int i = 0; i < names.length; i++)
-            names[i] = "TAE" + i;
+        for (int i = 0; i < names.length; i++) names[i] = "TAE" + i;
         return names;
     }
 
@@ -264,10 +263,14 @@ public class TaeAminoAcidDescriptor extends AbstractMolecularDescriptor implemen
     private DescriptorValue getDummyDescriptorValue(Exception e) {
         int ndesc = getDescriptorNames().length;
         DoubleArrayResult results = new DoubleArrayResult(ndesc);
-        for (int i = 0; i < ndesc; i++)
-            results.add(Double.NaN);
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), results,
-                getDescriptorNames(), e);
+        for (int i = 0; i < ndesc; i++) results.add(Double.NaN);
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                results,
+                getDescriptorNames(),
+                e);
     }
 
     /**
@@ -278,22 +281,23 @@ public class TaeAminoAcidDescriptor extends AbstractMolecularDescriptor implemen
      */
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
-        if (taeParams == null) return getDummyDescriptorValue(new CDKException("TAE parameters were not initialized"));
+        if (taeParams == null)
+            return getDummyDescriptorValue(new CDKException("TAE parameters were not initialized"));
         if (!(container instanceof IBioPolymer))
-            return getDummyDescriptorValue(new CDKException("The molecule should be of type IBioPolymer"));
+            return getDummyDescriptorValue(
+                    new CDKException("The molecule should be of type IBioPolymer"));
 
         IBioPolymer peptide = (IBioPolymer) container;
 
         // I assume that we get single letter names
-        //Collection aas = peptide.getMonomerNames();
+        // Collection aas = peptide.getMonomerNames();
 
         double[] desc = new double[ndesc];
-        for (int i = 0; i < ndesc; i++)
-            desc[i] = 0.0;
+        for (int i = 0; i < ndesc; i++) desc[i] = 0.0;
 
         List<IMonomer> monomers = getMonomers(peptide);
 
-        for (Iterator<IMonomer> iterator = monomers.iterator(); iterator.hasNext();) {
+        for (Iterator<IMonomer> iterator = monomers.iterator(); iterator.hasNext(); ) {
             IMonomer monomer = iterator.next();
 
             String o = monomer.getMonomerName();
@@ -308,32 +312,35 @@ public class TaeAminoAcidDescriptor extends AbstractMolecularDescriptor implemen
             // get the params for this AA
             Double[] params = (Double[]) taeParams.get(tlc);
 
-            for (int i = 0; i < ndesc; i++)
-                desc[i] += params[i];
+            for (int i = 0; i < ndesc; i++) desc[i] += params[i];
         }
 
         DoubleArrayResult retval = new DoubleArrayResult(ndesc);
-        for (int i = 0; i < ndesc; i++)
-            retval.add(desc[i]);
+        for (int i = 0; i < ndesc; i++) retval.add(desc[i]);
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval,
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                retval,
                 getDescriptorNames());
     }
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * 
-     * The return value from this method really indicates what type of result will
-     * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
-     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
-     * allows you to do the same thing, without actually calculating the descriptor.
      *
-     * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
-     *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
+     * <p>The return value from this method really indicates what type of result will be obtained
+     * from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
+     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object;
+     * this method allows you to do the same thing, without actually calculating the descriptor.
+     *
+     * @return an object that implements the {@link
+     *     org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating the actual type
+     *     of values returned by the descriptor in the {@link
+     *     org.openscience.cdk.qsar.DescriptorValue} object
      */
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(147);
     }
-
 }

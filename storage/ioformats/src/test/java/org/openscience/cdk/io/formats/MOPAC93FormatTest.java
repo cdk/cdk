@@ -25,9 +25,7 @@ package org.openscience.cdk.io.formats;
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * @cdk.module test-ioformats
- */
+/** @cdk.module test-ioformats */
 public class MOPAC93FormatTest extends ChemFormatMatcherTest {
 
     public MOPAC93FormatTest() {
@@ -36,7 +34,10 @@ public class MOPAC93FormatTest extends ChemFormatMatcherTest {
 
     @Test
     public void testMatchesMopac93() throws Exception {
-        Assert.assertTrue(((MOPAC93Format) MOPAC93Format.getInstance()).matches(0,
-                "*                   MOPAC  93.00               CALC'D. Mon May 31 20:29:07 2004"));
+        Assert.assertTrue(
+                ((MOPAC93Format) MOPAC93Format.getInstance())
+                        .matches(
+                                0,
+                                "*                   MOPAC  93.00               CALC'D. Mon May 31 20:29:07 2004"));
     }
 }

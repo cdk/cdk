@@ -33,20 +33,17 @@ import org.openscience.cdk.tools.DataFeatures;
  *
  * @author egonw
  * @cdk.githash
- *
- * @see    DataFeatures
+ * @see DataFeatures
  */
 public class MoleculeFeaturesTool {
 
     public static boolean hasPartialCharges(IAtomContainer molecule) {
-        for (IAtom atom : molecule.atoms())
-            if (atom.getCharge() != 0.0000) return true;
+        for (IAtom atom : molecule.atoms()) if (atom.getCharge() != 0.0000) return true;
         return false;
     }
 
     public static boolean hasFormalCharges(IAtomContainer molecule) {
-        for (IAtom atom : molecule.atoms())
-            if (atom.getFormalCharge() != 0) return true;
+        for (IAtom atom : molecule.atoms()) if (atom.getFormalCharge() != 0) return true;
         return false;
     }
 
@@ -57,13 +54,9 @@ public class MoleculeFeaturesTool {
         return false;
     }
 
-    /**
-     * Checks whether all bonds have exactly two atoms.
-     */
+    /** Checks whether all bonds have exactly two atoms. */
     public static boolean hasGraphRepresentation(IAtomContainer molecule) {
-        for (IBond bond : molecule.bonds())
-            if (bond.getAtomCount() != 2) return false;
+        for (IBond bond : molecule.bonds()) if (bond.getAtomCount() != 2) return false;
         return true;
     }
-
 }

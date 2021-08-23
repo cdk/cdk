@@ -27,9 +27,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import javax.vecmath.Point3d;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -44,33 +42,28 @@ import org.openscience.cdk.io.setting.OptionIOSetting;
 import org.openscience.cdk.io.setting.StringIOSetting;
 
 /**
- * File writer thats generates input files for Gaussian calculation
- * jobs. It was tested with Gaussian98.
+ * File writer thats generates input files for Gaussian calculation jobs. It was tested with
+ * Gaussian98.
  *
  * @cdk.module io
  * @cdk.githash
- *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
- *
  * @cdk.keyword Gaussian (tm), input file
  */
 public class GaussianInputWriter extends DefaultChemObjectWriter {
 
     static BufferedWriter writer;
 
-    IOSetting             method;
-    IOSetting             basis;
-    IOSetting             comment;
-    IOSetting             command;
-    IOSetting             memory;
-    BooleanIOSetting      shell;
-    IntegerIOSetting      proccount;
-    BooleanIOSetting      usecheckpoint;
+    IOSetting method;
+    IOSetting basis;
+    IOSetting comment;
+    IOSetting command;
+    IOSetting memory;
+    BooleanIOSetting shell;
+    IntegerIOSetting proccount;
+    BooleanIOSetting usecheckpoint;
 
-    /**
-    * Constructs a new writer that produces input files to run a
-    * Gaussian QM job.
-    */
+    /** Constructs a new writer that produces input files to run a Gaussian QM job. */
     public GaussianInputWriter(Writer out) {
         try {
             if (out instanceof BufferedWriter) {
@@ -126,16 +119,15 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
             try {
                 writeMolecule((IAtomContainer) object);
             } catch (Exception ex) {
-                throw new CDKException("Error while writing Gaussian input file: " + ex.getMessage(), ex);
+                throw new CDKException(
+                        "Error while writing Gaussian input file: " + ex.getMessage(), ex);
             }
         } else {
             throw new CDKException("GaussianInputWriter only supports output of Molecule classes.");
         }
     }
 
-    /**
-     * Writes a molecule for input for Gaussian.
-     */
+    /** Writes a molecule for input for Gaussian. */
     public void writeMolecule(IAtomContainer mol) throws IOException {
 
         customizeJob();
@@ -211,8 +203,13 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
             // export the 3D coordinates
             Point3d p3 = a.getPoint3d();
             if (p3 != null) {
-                st = st + new Double(p3.x).toString() + " " + new Double(p3.y).toString() + " "
-                        + new Double(p3.z).toString();
+                st =
+                        st
+                                + new Double(p3.x).toString()
+                                + " "
+                                + new Double(p3.y).toString()
+                                + " "
+                                + new Double(p3.z).toString();
             }
 
             writer.write(st, 0, st.length());
@@ -230,38 +227,78 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         basisOptions.add("6-31g(d)");
         basisOptions.add("6-311g");
         basisOptions.add("6-311+g**");
-        basis = new OptionIOSetting("Basis", IOSetting.Importance.MEDIUM, "Which basis set do you want to use?",
-                basisOptions, "6-31g");
+        basis =
+                new OptionIOSetting(
+                        "Basis",
+                        IOSetting.Importance.MEDIUM,
+                        "Which basis set do you want to use?",
+                        basisOptions,
+                        "6-31g");
 
         List<String> methodOptions = new ArrayList<String>();
         methodOptions.add("rb3lyp");
         methodOptions.add("b3lyp");
         methodOptions.add("rhf");
-        method = new OptionIOSetting("Method", IOSetting.Importance.MEDIUM, "Which method do you want to use?",
-                methodOptions, "b3lyp");
+        method =
+                new OptionIOSetting(
+                        "Method",
+                        IOSetting.Importance.MEDIUM,
+                        "Which method do you want to use?",
+                        methodOptions,
+                        "b3lyp");
 
         List<String> commandOptions = new ArrayList<String>();
         commandOptions.add("energy calculation");
         commandOptions.add("geometry optimization");
         commandOptions.add("IR frequency calculation");
         commandOptions.add("IR frequency calculation (with Raman)");
-        command = addSetting(new OptionIOSetting("Command", IOSetting.Importance.HIGH,
-                "What kind of job do you want to perform?", commandOptions, "energy calculation"));
+        command =
+                addSetting(
+                        new OptionIOSetting(
+                                "Command",
+                                IOSetting.Importance.HIGH,
+                                "What kind of job do you want to perform?",
+                                commandOptions,
+                                "energy calculation"));
 
-        comment = addSetting(new StringIOSetting("Comment", IOSetting.Importance.LOW,
-                "What comment should be put in the file?", "Created with CDK (http://cdk.sf.net/)"));
+        comment =
+                addSetting(
+                        new StringIOSetting(
+                                "Comment",
+                                IOSetting.Importance.LOW,
+                                "What comment should be put in the file?",
+                                "Created with CDK (http://cdk.sf.net/)"));
 
-        memory = addSetting(new StringIOSetting("Memory", IOSetting.Importance.LOW,
-                "How much memory do you want to use?", "unset"));
+        memory =
+                addSetting(
+                        new StringIOSetting(
+                                "Memory",
+                                IOSetting.Importance.LOW,
+                                "How much memory do you want to use?",
+                                "unset"));
 
-        shell = addSetting(new BooleanIOSetting("OpenShell", IOSetting.Importance.MEDIUM,
-                "Should the calculation be open shell?", "false"));
+        shell =
+                addSetting(
+                        new BooleanIOSetting(
+                                "OpenShell",
+                                IOSetting.Importance.MEDIUM,
+                                "Should the calculation be open shell?",
+                                "false"));
 
-        proccount = addSetting(new IntegerIOSetting("ProcessorCount", IOSetting.Importance.LOW,
-                "How many processors should be used by Gaussian?", "1"));
+        proccount =
+                addSetting(
+                        new IntegerIOSetting(
+                                "ProcessorCount",
+                                IOSetting.Importance.LOW,
+                                "How many processors should be used by Gaussian?",
+                                "1"));
 
-        usecheckpoint = new BooleanIOSetting("UseCheckPointFile", IOSetting.Importance.LOW,
-                "Should a check point file be saved?", "false");
+        usecheckpoint =
+                new BooleanIOSetting(
+                        "UseCheckPointFile",
+                        IOSetting.Importance.LOW,
+                        "Should a check point file be saved?",
+                        "false");
     }
 
     private void customizeJob() {

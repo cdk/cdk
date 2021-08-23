@@ -26,9 +26,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-/**
- * @cdk.module control
- */
+/** @cdk.module control */
 public class SwingMouseEventRelay implements MouseMotionListener, MouseListener {
 
     private IMouseEventRelay relay;
@@ -48,25 +46,31 @@ public class SwingMouseEventRelay implements MouseMotionListener, MouseListener 
 
     @Override
     public void mouseDragged(MouseEvent event) {
-        //check http://www.leepoint.net/notes-java/examples/mouse/020dragdemo.html for implementation
+        // check http://www.leepoint.net/notes-java/examples/mouse/020dragdemo.html for
+        // implementation
         relay.mouseDrag(dragFromX, dragFromY, event.getX(), event.getY());
         dragFromX = event.getX();
         dragFromY = event.getY();
     }
 
     /** Position of mouse press for dragging. */
-    private int     dragFromX = 0;
-    private int     dragFromY = 0;
+    private int dragFromX = 0;
+
+    private int dragFromY = 0;
 
     @Override
     public void mouseClicked(MouseEvent event) {
-        //normal mouseClicked is the same as mousePressed and mouseReleased after that
+        // normal mouseClicked is the same as mousePressed and mouseReleased after that
 
-        //Double click is a special case
+        // Double click is a special case
         if (event.getClickCount() > 1) relay.mouseClickedDouble(event.getX(), event.getY());
-        System.out.println("mouseClicked at: " + event.getX() + "/" + event.getY() + " event.getClickCount(): "
-                + event.getClickCount());
-
+        System.out.println(
+                "mouseClicked at: "
+                        + event.getX()
+                        + "/"
+                        + event.getY()
+                        + " event.getClickCount(): "
+                        + event.getClickCount());
     }
 
     @Override
@@ -93,5 +97,4 @@ public class SwingMouseEventRelay implements MouseMotionListener, MouseListener 
         // TODO Auto-generated method stub
         relay.mouseClickedUp(event.getX(), event.getY());
     }
-
 }

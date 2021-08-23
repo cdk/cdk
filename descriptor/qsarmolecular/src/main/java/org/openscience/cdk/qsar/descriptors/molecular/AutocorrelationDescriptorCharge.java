@@ -34,16 +34,15 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- * This class calculates ATS autocorrelation descriptor, where the weight equal
- * to the charges.
+ * This class calculates ATS autocorrelation descriptor, where the weight equal to the charges.
  *
- * @author      Federico
+ * @author Federico
  * @cdk.created 2007-02-27
- * @cdk.module  qsarmolecular
+ * @cdk.module qsarmolecular
  * @cdk.githash
  */
-
-public class AutocorrelationDescriptorCharge extends AbstractMolecularDescriptor implements IMolecularDescriptor {
+public class AutocorrelationDescriptorCharge extends AbstractMolecularDescriptor
+        implements IMolecularDescriptor {
 
     private static final String[] NAMES = {"ATSc1", "ATSc2", "ATSc3", "ATSc4", "ATSc5"};
 
@@ -51,8 +50,11 @@ public class AutocorrelationDescriptorCharge extends AbstractMolecularDescriptor
         int natom = container.getAtomCount();
         double[] charges = new double[natom];
         try {
-            IAtomContainer mol = container.getBuilder().newInstance(IAtomContainer.class,
-                    ((IAtomContainer) container.clone()));
+            IAtomContainer mol =
+                    container
+                            .getBuilder()
+                            .newInstance(
+                                    IAtomContainer.class, ((IAtomContainer) container.clone()));
             GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
             peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);
             for (int i = 0; i < natom; i++) {
@@ -60,7 +62,9 @@ public class AutocorrelationDescriptorCharge extends AbstractMolecularDescriptor
                 charges[i] = atom.getCharge();
             }
         } catch (Exception ex1) {
-            throw new CDKException("Problems with assignGasteigerMarsiliPartialCharges due to " + ex1.toString(), ex1);
+            throw new CDKException(
+                    "Problems with assignGasteigerMarsiliPartialCharges due to " + ex1.toString(),
+                    ex1);
         }
 
         return charges;
@@ -74,10 +78,14 @@ public class AutocorrelationDescriptorCharge extends AbstractMolecularDescriptor
             container = AtomContainerManipulator.removeHydrogens(container);
         } catch (CloneNotSupportedException e) {
             DoubleArrayResult result = new DoubleArrayResult(5);
-            for (int i = 0; i < 5; i++)
-                result.add(Double.NaN);
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result,
-                    getDescriptorNames(), new CDKException("Error during cloner: " + e.getMessage(), e));
+            for (int i = 0; i < 5; i++) result.add(Double.NaN);
+            return new DescriptorValue(
+                    getSpecification(),
+                    getParameterNames(),
+                    getParameters(),
+                    result,
+                    getDescriptorNames(),
+                    new CDKException("Error during cloner: " + e.getMessage(), e));
         }
 
         try {
@@ -92,25 +100,30 @@ public class AutocorrelationDescriptorCharge extends AbstractMolecularDescriptor
                     for (int j = 0; j < natom; j++) {
                         if (distancematrix[i][j] == k) {
                             chargeSum[k] += w[i] * w[j];
-                        } else
-                            chargeSum[k] += 0.0;
+                        } else chargeSum[k] += 0.0;
                     }
                 }
                 if (k > 0) chargeSum[k] = chargeSum[k] / 2;
-
             }
             DoubleArrayResult result = new DoubleArrayResult(5);
             for (double aChargeSum : chargeSum) {
                 result.add(aChargeSum);
             }
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result, NAMES);
+            return new DescriptorValue(
+                    getSpecification(), getParameterNames(), getParameters(), result, NAMES);
 
         } catch (Exception ex) {
             DoubleArrayResult result = new DoubleArrayResult(5);
-            for (int i = 0; i < 5; i++)
-                result.add(Double.NaN);
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result, NAMES,
-                    new CDKException("Error while calculating the ATS_charge descriptor: " + ex.getMessage(), ex));
+            for (int i = 0; i < 5; i++) result.add(Double.NaN);
+            return new DescriptorValue(
+                    getSpecification(),
+                    getParameterNames(),
+                    getParameters(),
+                    result,
+                    NAMES,
+                    new CDKException(
+                            "Error while calculating the ATS_charge descriptor: " + ex.getMessage(),
+                            ex));
         }
     }
 
@@ -137,8 +150,9 @@ public class AutocorrelationDescriptorCharge extends AbstractMolecularDescriptor
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationCharge", this
-                        .getClass().getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationCharge",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     @Override
@@ -147,8 +161,5 @@ public class AutocorrelationDescriptorCharge extends AbstractMolecularDescriptor
     }
 
     @Override
-    public void setParameters(Object[] params) throws CDKException {
-
-    }
-
+    public void setParameters(Object[] params) throws CDKException {}
 }

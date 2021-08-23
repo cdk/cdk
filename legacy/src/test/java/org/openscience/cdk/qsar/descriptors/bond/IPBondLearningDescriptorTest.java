@@ -39,12 +39,9 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class IPBondLearningDescriptorTest extends BondDescriptorTest {
 
     private IPBondLearningDescriptor descriptor;
-    private LonePairElectronChecker  lpcheck = new LonePairElectronChecker();
+    private LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
-    /**
-     *  Constructor for the IPBondLearningDescriptorTest object
-     *
-     */
+    /** Constructor for the IPBondLearningDescriptorTest object */
     public IPBondLearningDescriptorTest() {
         descriptor = new IPBondLearningDescriptor();
     }
@@ -54,17 +51,13 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
         setDescriptor(IPBondLearningDescriptor.class);
     }
 
-    /**
-    *  A unit test for JUnit
-    */
+    /** A unit test for JUnit */
     @Test
     public void testIPBondLearningDescriptor() {
         Assert.assertNotNull(descriptor);
     }
 
-    /**
-     *  A unit test for JUnit with CCCC=CCCCC
-     */
+    /** A unit test for JUnit with CCCC=CCCCC */
     @Test
     @Category(SlowTest.class)
     public void testIPDescriptor_1() throws Exception {
@@ -75,14 +68,13 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getBond(3), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getBond(3), mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.80;
         Assert.assertEquals(result, resultAccordingNIST, 0.051);
     }
 
-    /**
-     *  A unit test for JUnit with CC1CCC=C1
-     */
+    /** A unit test for JUnit with CC1CCC=C1 */
     @Test
     @Category(SlowTest.class)
     public void testIPDescriptor_2() throws java.lang.Exception {
@@ -93,14 +85,13 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getBond(4), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getBond(4), mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.95;
         Assert.assertEquals(result, resultAccordingNIST, 0.1);
     }
 
-    /**
-     *  A unit test for JUnit with C=CCCCC
-     */
+    /** A unit test for JUnit with C=CCCCC */
     @Test
     @Category(SlowTest.class)
     public void testIPDescriptor_3() throws java.lang.Exception {
@@ -111,15 +102,13 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getBond(0), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getBond(0), mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.44;
         Assert.assertEquals(result, resultAccordingNIST, 0.3);
     }
 
-    /**
-     * A unit test for JUnit with C=CCCCC
-     *
-     */
+    /** A unit test for JUnit with C=CCCCC */
     @Test
     @Category(SlowTest.class)
     public void testIPDescriptorReaction1() throws java.lang.Exception {
@@ -130,17 +119,14 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getBond(0), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getBond(0), mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.44;
 
         Assert.assertEquals(resultAccordingNIST, result, 0.3);
-
     }
 
-    /**
-     * A unit test for JUnit with CCCCCC
-     *
-     */
+    /** A unit test for JUnit with CCCCCC */
     @Test
     @Category(SlowTest.class)
     public void testIPDescriptorReaction2() throws java.lang.Exception {
@@ -151,16 +137,14 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getBond(0), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getBond(0), mol).getValue()).doubleValue();
         double resultAccordingNIST = 0.0;
 
         Assert.assertEquals(resultAccordingNIST, result, 0.0001);
     }
 
-    /**
-     * A unit test for JUnit with C#CCC
-     *
-     */
+    /** A unit test for JUnit with C#CCC */
     @Test
     @Category(SlowTest.class)
     public void testIPTripleDescriptor1() throws java.lang.Exception {
@@ -171,15 +155,13 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getBond(0), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getBond(0), mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.44;
         Assert.assertEquals(resultAccordingNIST, result, 0.75);
     }
 
-    /**
-     * A unit test for JUnit with C(#CC(C)(C)C)C(C)(C)C
-     *
-     */
+    /** A unit test for JUnit with C(#CC(C)(C)C)C(C)(C)C */
     @Test
     @Category(SlowTest.class)
     public void testIPTripleDescriptor2() throws java.lang.Exception {
@@ -190,15 +172,13 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getBond(0), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getBond(0), mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.98;
         Assert.assertEquals(resultAccordingNIST, result, 0.1);
     }
 
-    /**
-     * A unit test for JUnit with C=C(C=CC)C
-     *
-     */
+    /** A unit test for JUnit with C=C(C=CC)C */
     @Ignore("IonizationPotentialTool now deprecated due to bugs")
     public void testIPConjugatedDescriptor1() throws java.lang.Exception {
 
@@ -208,19 +188,18 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getBond(0), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getBond(0), mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.47;
         Assert.assertEquals(resultAccordingNIST, result, 0.6);
 
-        result = ((DoubleResult) descriptor.calculate(mol.getBond(2), mol).getValue()).doubleValue();
+        result =
+                ((DoubleResult) descriptor.calculate(mol.getBond(2), mol).getValue()).doubleValue();
         resultAccordingNIST = 8.47;
         Assert.assertEquals(resultAccordingNIST, result, 0.4);
     }
 
-    /**
-     * A unit test for JUnit with C=CC=C
-     *
-     */
+    /** A unit test for JUnit with C=CC=C */
     @Test
     @Category(SlowTest.class)
     public void testIPPySystemReaction1() throws java.lang.Exception {
@@ -231,10 +210,9 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getBond(0), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getBond(0), mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.072;
         Assert.assertEquals(resultAccordingNIST, result, 2.11);
-
     }
-
 }

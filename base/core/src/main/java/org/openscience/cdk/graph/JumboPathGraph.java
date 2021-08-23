@@ -23,23 +23,21 @@
  */
 package org.openscience.cdk.graph;
 
-import com.google.common.collect.Lists;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
+import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collections;
 import java.util.List;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
- * A path graph (<b>P-Graph</b>) for graphs with more than 64 vertices - the
- * P-Graph provides efficient generation of all simple cycles in a graph
- * {@cdk.cite HAN96}. Vertices are sequentially removed from the graph by
- * reducing incident edges and forming new 'path edges'. The order in which the
- * vertices are to be removed should be pre-defined in the constructor as the
- * {@code rank[]} parameter.
+ * A path graph (<b>P-Graph</b>) for graphs with more than 64 vertices - the P-Graph provides
+ * efficient generation of all simple cycles in a graph {@cdk.cite HAN96}. Vertices are sequentially
+ * removed from the graph by reducing incident edges and forming new 'path edges'. The order in
+ * which the vertices are to be removed should be pre-defined in the constructor as the {@code
+ * rank[]} parameter.
  *
  * @author John May
  * @author Till Schäfer (predefined vertex ordering)
@@ -47,8 +45,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @cdk.githash
  * @see org.openscience.cdk.ringsearch.RingSearch
  * @see org.openscience.cdk.graph.GraphUtil
- * @see <a href="http://en.wikipedia.org/wiki/Biconnected_component">Wikipedia:
- *      Biconnected Component</a>
+ * @see <a href="http://en.wikipedia.org/wiki/Biconnected_component">Wikipedia: Biconnected
+ *     Component</a>
  */
 final class JumboPathGraph extends PathGraph {
 
@@ -56,24 +54,20 @@ final class JumboPathGraph extends PathGraph {
     private final List<PathEdge>[] graph;
 
     /** Limit on the maximum length of cycle to be found. */
-    private final int              limit;
+    private final int limit;
 
     /** Indicates when each vertex will be removed, '0' = first, '|V|' = last. */
-    private final int[]            rank;
+    private final int[] rank;
 
     /**
-     * Create a regular path graph (<b>P-Graph</b>) for the given molecule graph
-     * (<b>M-Graph</b>).
+     * Create a regular path graph (<b>P-Graph</b>) for the given molecule graph (<b>M-Graph</b>).
      *
-     * @param mGraph The molecule graph (M-Graph) in adjacency list
-     *               representation.
-     * @param rank   Unique rank of each vertex - indicates when it will be
-     *               removed.
-     * @param limit  Limit for size of cycles found, to find all cycles specify
-     *               the limit as the number of vertices in the graph.
-     * @throws IllegalArgumentException limit was invalid or the graph was too
-     *                                  large
-     * @throws NullPointerException     the molecule graph was not provided
+     * @param mGraph The molecule graph (M-Graph) in adjacency list representation.
+     * @param rank Unique rank of each vertex - indicates when it will be removed.
+     * @param limit Limit for size of cycles found, to find all cycles specify the limit as the
+     *     number of vertices in the graph.
+     * @throws IllegalArgumentException limit was invalid or the graph was too large
+     * @throws NullPointerException the molecule graph was not provided
      */
     @SuppressWarnings("unchecked")
     JumboPathGraph(final int[][] mGraph, final int[] rank, final int limit) {
@@ -90,8 +84,7 @@ final class JumboPathGraph extends PathGraph {
         checkArgument(ord > 2, "graph was acyclic");
         checkArgument(limit >= 3 && limit <= ord, "limit should be from 3 to |V|");
 
-        for (int v = 0; v < ord; v++)
-            graph[v] = Lists.newArrayList();
+        for (int v = 0; v < ord; v++) graph[v] = Lists.newArrayList();
 
         // construct the path-graph
         for (int v = 0; v < ord; v++) {
@@ -102,29 +95,26 @@ final class JumboPathGraph extends PathGraph {
     }
 
     /**
-     * Add a path-edge to the path-graph. Edges are only added to the vertex of
-     * lowest rank (see. constructor).
+     * Add a path-edge to the path-graph. Edges are only added to the vertex of lowest rank (see.
+     * constructor).
      *
      * @param edge path edge
      */
     private void add(final PathEdge edge) {
         int u = edge.either();
         int v = edge.other(u);
-        if (rank[u] < rank[v])
-            graph[u].add(edge);
-        else
-            graph[v].add(edge);
+        if (rank[u] < rank[v]) graph[u].add(edge);
+        else graph[v].add(edge);
     }
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     public int degree(final int x) {
         return graph[x].size();
     }
 
     /**
-     * Access edges which are incident to <i>x</i> and remove them from the
-     * graph.
+     * Access edges which are incident to <i>x</i> and remove them from the graph.
      *
      * @param x a vertex
      * @return vertices incident to x
@@ -136,11 +126,10 @@ final class JumboPathGraph extends PathGraph {
     }
 
     /**
-     * Pairwise combination of all disjoint <i>edges</i> incident to a vertex
-     * <i>x</i>.
+     * Pairwise combination of all disjoint <i>edges</i> incident to a vertex <i>x</i>.
      *
      * @param edges edges which are currently incident to <i>x</i>
-     * @param x     a vertex in the graph
+     * @param x a vertex in the graph
      * @return reduced edges
      */
     private List<PathEdge> combine(final List<PathEdge> edges, final int x) {
@@ -159,7 +148,7 @@ final class JumboPathGraph extends PathGraph {
         return reduced;
     }
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     void remove(final int x, final List<int[]> cycles) {
 
@@ -168,10 +157,8 @@ final class JumboPathGraph extends PathGraph {
 
         for (final PathEdge e : reduced) {
             if (e.len() <= limit) {
-                if (e.loop())
-                    cycles.add(e.path());
-                else
-                    add(e);
+                if (e.loop()) cycles.add(e.path());
+                else add(e);
             }
         }
     }
@@ -180,23 +167,23 @@ final class JumboPathGraph extends PathGraph {
     private static final BitSet EMPTY_SET = new BitSet(0);
 
     /**
-     * An abstract path edge. A path edge has two end points and 0 or more
-     * reduced vertices which represent a path between those endpoints.
+     * An abstract path edge. A path edge has two end points and 0 or more reduced vertices which
+     * represent a path between those endpoints.
      */
-    static abstract class PathEdge {
+    abstract static class PathEdge {
 
         /** Endpoints of the edge. */
-        final int    u, v;
+        final int u, v;
 
         /** Bits indicate reduced vertices between endpoints (exclusive). */
         final BitSet xs;
 
         /**
-         * A new edge specified by two endpoints and a bit set indicating which
-         * vertices have been reduced.
+         * A new edge specified by two endpoints and a bit set indicating which vertices have been
+         * reduced.
          *
-         * @param u  an endpoint
-         * @param v  the other endpoint
+         * @param u an endpoint
+         * @param v the other endpoint
          * @param xs reduced vertices between endpoints
          */
         PathEdge(int u, int v, BitSet xs) {
@@ -206,9 +193,8 @@ final class JumboPathGraph extends PathGraph {
         }
 
         /**
-         * Check if the edges are disjoint with respect to their reduced
-         * vertices. That is, excluding the endpoints, no reduced vertices are
-         * shared.
+         * Check if the edges are disjoint with respect to their reduced vertices. That is,
+         * excluding the endpoints, no reduced vertices are shared.
          *
          * @param other another edge
          * @return the edges reduced vertices are disjoint.
@@ -246,16 +232,16 @@ final class JumboPathGraph extends PathGraph {
         }
 
         /**
-         * Total length of the path formed by this edge. The value includes
-         * endpoints and reduced vertices.
+         * Total length of the path formed by this edge. The value includes endpoints and reduced
+         * vertices.
          *
          * @return length of path
          */
         abstract int len();
 
         /**
-         * Reconstruct the path through the edge by appending vertices to a
-         * mutable {@link ArrayBuilder}.
+         * Reconstruct the path through the edge by appending vertices to a mutable {@link
+         * ArrayBuilder}.
          *
          * @param ab array builder to append vertices to
          * @return the array builder parameter for convenience
@@ -285,31 +271,27 @@ final class JumboPathGraph extends PathGraph {
             super(u, v, EMPTY_SET);
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         ArrayBuilder reconstruct(ArrayBuilder ab) {
             return ab.append(other(ab.prev()));
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         int len() {
             return 2;
         }
     }
 
-    /**
-     * A reduced edge, made from two existing path edges and an endpoint they
-     * have in common.
-     */
+    /** A reduced edge, made from two existing path edges and an endpoint they have in common. */
     static final class ReducedEdge extends PathEdge {
 
         /** Reduced edges. */
         private final PathEdge e, f;
 
         /**
-         * Create a new reduced edge from two existing edges and vertex they
-         * have in common.
+         * Create a new reduced edge from two existing edges and vertex they have in common.
          *
          * @param e an edge
          * @param f another edge
@@ -321,13 +303,15 @@ final class JumboPathGraph extends PathGraph {
             this.f = f;
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         ArrayBuilder reconstruct(ArrayBuilder ab) {
-            return u == ab.prev() ? f.reconstruct(e.reconstruct(ab)) : e.reconstruct(f.reconstruct(ab));
+            return u == ab.prev()
+                    ? f.reconstruct(e.reconstruct(ab))
+                    : e.reconstruct(f.reconstruct(ab));
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         int len() {
             return xs.cardinality() + 2;
@@ -342,8 +326,8 @@ final class JumboPathGraph extends PathGraph {
     }
 
     /**
-     * A simple helper class for constructing a fixed size int[] array and
-     * sequentially appending vertices.
+     * A simple helper class for constructing a fixed size int[] array and sequentially appending
+     * vertices.
      */
     static final class ArrayBuilder {
 

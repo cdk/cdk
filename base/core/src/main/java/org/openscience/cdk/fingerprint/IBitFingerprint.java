@@ -29,7 +29,7 @@ import java.util.BitSet;
  * Interface for bit fingerprint representations.
  *
  * @author jonalv
- * @cdk.module     core
+ * @cdk.module core
  * @cdk.githash
  */
 public interface IBitFingerprint extends Serializable {
@@ -49,38 +49,33 @@ public interface IBitFingerprint extends Serializable {
     public long size();
 
     /**
-     * Performs a logical <b>AND</b> of the bits in this target bit set with
-     * the bits in the argument fingerprint. This fingerprint is modified so
-     * that each bit in it has the value <code>true</code> if and only if
-     * it both initially had the value <code>true</code> and the
-     * corresponding bit in the fingerprint argument also had the value
-     * <code>true</code>.
+     * Performs a logical <b>AND</b> of the bits in this target bit set with the bits in the
+     * argument fingerprint. This fingerprint is modified so that each bit in it has the value
+     * <code>true</code> if and only if it both initially had the value <code>true</code> and the
+     * corresponding bit in the fingerprint argument also had the value <code>true</code>.
      *
-     * @param  fingerprint the fingerprint with which to perform the AND operation
-     * @throws IllegalArgumentException if the two fingerprints are
-     * not of same size
+     * @param fingerprint the fingerprint with which to perform the AND operation
+     * @throws IllegalArgumentException if the two fingerprints are not of same size
      */
     public void and(IBitFingerprint fingerprint);
 
     /**
-     * Performs a logical <b>OR</b> of the bits in this target bit set with
-     * the bits in the argument fingerprint. This operation can also be seen
-     * as merging two fingerprints. This fingerprint is modified so
-     * that each bit in it has the value <code>true</code> if and only if
-     * it either already had the value <code>true</code> or the corresponding
-     * bit in the bit set argument has the value <code>true</code>.
+     * Performs a logical <b>OR</b> of the bits in this target bit set with the bits in the argument
+     * fingerprint. This operation can also be seen as merging two fingerprints. This fingerprint is
+     * modified so that each bit in it has the value <code>true</code> if and only if it either
+     * already had the value <code>true</code> or the corresponding bit in the bit set argument has
+     * the value <code>true</code>.
      *
-     * @param  fingerprint the fingerprint with which to perform the OR operation
-     * @throws IllegalArgumentException if the two fingerprints are
-     * not of same size
+     * @param fingerprint the fingerprint with which to perform the OR operation
+     * @throws IllegalArgumentException if the two fingerprints are not of same size
      */
     public void or(IBitFingerprint fingerprint);
 
     /**
-     * Returns the value of the bit with the specified index. The value
-     * is <code>true</code> if the bit with the index <code>index</code>
-     * is currently set in this fingerprint; otherwise, the result
-     * is <code>false</code>.
+     * Returns the value of the bit with the specified index. The value is <code>true</code> if the
+     * bit with the index <code>index</code> is currently set in this fingerprint; otherwise, the
+     * result is <code>false</code>.
+     *
      * @param index the index of the bit to return the value for
      * @return the value of the bit at <code>index</code>
      */
@@ -95,8 +90,8 @@ public interface IBitFingerprint extends Serializable {
     public void set(int index, boolean value);
 
     /**
-     * Returns a <code>BitSet</code> representation of the fingerprint.
-     * This might take significantly more memory!
+     * Returns a <code>BitSet</code> representation of the fingerprint. This might take
+     * significantly more memory!
      *
      * @return the fingerprint as a <code>BitSet</code>
      */
@@ -104,6 +99,7 @@ public interface IBitFingerprint extends Serializable {
 
     /**
      * Sets the bit at the specified index to true.
+     *
      * @param i index
      */
     public void set(int i);

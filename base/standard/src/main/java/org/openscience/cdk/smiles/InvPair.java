@@ -32,27 +32,28 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.math.Primes;
 
 /**
- * This is used to hold the invariance numbers for the canonical labeling of
- * {@link IAtomContainer}s.
+ * This is used to hold the invariance numbers for the canonical labeling of {@link
+ * IAtomContainer}s.
  *
  * @cdk.module standard
  * @cdk.githash
  */
 public class InvPair implements java.io.Serializable {
 
-    private static final long  serialVersionUID = -1397634098919863122L;
+    private static final long serialVersionUID = -1397634098919863122L;
 
-    /** The description used to set the invariance numbers in the atom's property*/
-    public final static String INVARIANCE_PAIR  = "InvariancePair";
-    public final static String CANONICAL_LABEL  = "CanonicalLabel";
+    /** The description used to set the invariance numbers in the atom's property */
+    public static final String INVARIANCE_PAIR = "InvariancePair";
 
-    private long               last             = 0;
+    public static final String CANONICAL_LABEL = "CanonicalLabel";
 
-    private long               curr             = 0;
+    private long last = 0;
 
-    private IAtom              atom;
+    private long curr = 0;
 
-    private int                prime;
+    private IAtom atom;
+
+    private int prime;
 
     public InvPair() {}
 
@@ -68,12 +69,11 @@ public class InvPair implements java.io.Serializable {
 
     /**
      * Set the value of the seed.
-     * 
-     * Note that use of this method implies that a new prime number is desired.
-     * If so, make sure to call {@link #setPrime()} to ensure that a new prime
-     * number is obtained using the new seed.
-     * 
-     * Todo make the following robust!
+     *
+     * <p>Note that use of this method implies that a new prime number is desired. If so, make sure
+     * to call {@link #setPrime()} to ensure that a new prime number is obtained using the new seed.
+     *
+     * <p>Todo make the following robust!
      *
      * @see #getCurr()
      * @see #setPrime()
@@ -104,7 +104,8 @@ public class InvPair implements java.io.Serializable {
     public boolean equals(Object object) {
         if (object instanceof InvPair) {
             InvPair o = (InvPair) object;
-            //      logger.debug("Last " + last + "o.last " + o.getLast() + " curr " + curr + " o.curr " + o.getCurr() + " equals " +(last == o.getLast() && curr == o.getCurr()));
+            //      logger.debug("Last " + last + "o.last " + o.getLast() + " curr " + curr + "
+            // o.curr " + o.getCurr() + " equals " +(last == o.getLast() && curr == o.getCurr()));
             return (last == o.getLast() && curr == o.getCurr());
         } else {
             return false;
@@ -152,10 +153,9 @@ public class InvPair implements java.io.Serializable {
 
     /**
      * Sets the prime number based on the current seed.
-     * 
-     * Note that if you change the seed via {@link #setCurr(long)}, you should make
-     * sure to call this method so that a new prime number is available via
-     * {@link #getPrime()}
+     *
+     * <p>Note that if you change the seed via {@link #setCurr(long)}, you should make sure to call
+     * this method so that a new prime number is available via {@link #getPrime()}
      *
      * @see #setCurr(long)
      * @see #getPrime()

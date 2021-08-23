@@ -18,6 +18,9 @@
  */
 package org.openscience.cdk.reaction.type;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
@@ -39,13 +42,9 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 /**
- * TestSuite that runs a test for the RadicalSiteHrDeltaReactionTest.
- * Generalized Reaction: [A*]-(C)_4-C5[H] => A([H])-(C_4)-[C5*].
+ * TestSuite that runs a test for the RadicalSiteHrDeltaReactionTest. Generalized Reaction:
+ * [A*]-(C)_4-C5[H] => A([H])-(C_4)-[C5*].
  *
  * @cdk.module test-reaction
  */
@@ -53,16 +52,12 @@ public class RadicalSiteHrDeltaReactionTest extends ReactionProcessTest {
 
     private IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
-    /**
-     *  The JUnit setup method
-     */
+    /** The JUnit setup method */
     public RadicalSiteHrDeltaReactionTest() throws Exception {
         setReaction(RadicalSiteHrDeltaReaction.class);
     }
 
-    /**
-     *  The JUnit setup method
-     */
+    /** The JUnit setup method */
     @Test
     public void testRadicalSiteHrDeltaReaction() throws Exception {
         IReactionProcess type = new RadicalSiteHrDeltaReaction();
@@ -70,12 +65,12 @@ public class RadicalSiteHrDeltaReactionTest extends ReactionProcessTest {
     }
 
     /**
-     * A unit test suite for JUnit. Reaction: C([H])([H])([H])C([H])([H])C(=O)C([H])([H])C([H])C([H])[H]
-     * Automatic search of the center active. hexan-3-one
+     * A unit test suite for JUnit. Reaction:
+     * C([H])([H])([H])C([H])([H])C(=O)C([H])([H])C([H])C([H])[H] Automatic search of the center
+     * active. hexan-3-one
      *
      * @cdk.inchi InChI=1/C6H12O/c1-3-5-6(7)4-2/h3-5H2,1-2H3
-     *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     @Override
@@ -97,17 +92,16 @@ public class RadicalSiteHrDeltaReactionTest extends ReactionProcessTest {
         IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
 
-
         assertEquals(molecule2, product);
     }
 
     /**
-     * A unit test suite for JUnit. Reaction: C([H])([H])([H])C([H])([H])C(=O)C([H])([H])C([H])C([H])[H]
-     * Automatic search of the center active. hexan-3-one
+     * A unit test suite for JUnit. Reaction:
+     * C([H])([H])([H])C([H])([H])C(=O)C([H])([H])C([H])C([H])[H] Automatic search of the center
+     * active. hexan-3-one
      *
      * @cdk.inchi InChI=1/C6H12O/c1-3-5-6(7)4-2/h3-5H2,1-2H3
-     *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testManuallyCentreActive() throws Exception {
@@ -140,11 +134,11 @@ public class RadicalSiteHrDeltaReactionTest extends ReactionProcessTest {
      * create the compound Hexan-3-one.
      *
      * @cdk.inchi InChI=1/C6H12O/c1-3-5-6(7)4-2/h3-5H2,1-2H3
-     *
      * @return The IAtomContainerSet
      */
     private IAtomContainerSet getExampleReactants() {
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
 
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -221,7 +215,7 @@ public class RadicalSiteHrDeltaReactionTest extends ReactionProcessTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testCDKConstants_REACTIVE_CENTER() throws Exception {
@@ -259,7 +253,7 @@ public class RadicalSiteHrDeltaReactionTest extends ReactionProcessTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testMapping() throws Exception {
@@ -281,21 +275,27 @@ public class RadicalSiteHrDeltaReactionTest extends ReactionProcessTest {
         IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 
         Assert.assertEquals(18, setOfReactions.getReaction(0).getMappingCount());
-        IAtom mappedProductA1 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
-                molecule.getAtom(0));
+        IAtom mappedProductA1 =
+                (IAtom)
+                        ReactionManipulator.getMappedChemObject(
+                                setOfReactions.getReaction(0), molecule.getAtom(0));
         Assert.assertEquals(mappedProductA1, product.getAtom(0));
-        IAtom mappedProductA2 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
-                molecule.getAtom(6));
+        IAtom mappedProductA2 =
+                (IAtom)
+                        ReactionManipulator.getMappedChemObject(
+                                setOfReactions.getReaction(0), molecule.getAtom(6));
         Assert.assertEquals(mappedProductA2, product.getAtom(6));
-        IAtom mappedProductA3 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
-                molecule.getAtom(7));
+        IAtom mappedProductA3 =
+                (IAtom)
+                        ReactionManipulator.getMappedChemObject(
+                                setOfReactions.getReaction(0), molecule.getAtom(7));
         Assert.assertEquals(mappedProductA3, product.getAtom(7));
     }
 
     /**
      * Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
      *
-     * @param molecule          The IAtomContainer to analyze
+     * @param molecule The IAtomContainer to analyze
      * @throws CDKException
      */
     private void makeSureAtomTypesAreRecognized(IAtomContainer molecule) throws CDKException {
@@ -304,8 +304,9 @@ public class RadicalSiteHrDeltaReactionTest extends ReactionProcessTest {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
         while (atoms.hasNext()) {
             IAtom nextAtom = atoms.next();
-            Assert.assertNotNull("Missing atom type for: " + nextAtom, matcher.findMatchingAtomType(molecule, nextAtom));
+            Assert.assertNotNull(
+                    "Missing atom type for: " + nextAtom,
+                    matcher.findMatchingAtomType(molecule, nextAtom));
         }
     }
-
 }

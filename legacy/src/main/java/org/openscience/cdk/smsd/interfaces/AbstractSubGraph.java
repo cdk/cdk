@@ -22,23 +22,22 @@
  */
 package org.openscience.cdk.smsd.interfaces;
 
-
 /**
  * Interface class for reporting only substructure searches.
+ *
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is
+ *     available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public abstract class AbstractSubGraph {
 
     /**
-     * Initialise the Subgraph search algorithm. Each Subgraph algorithm
-     * should contain this method.
-     * @return true if Query/reactant is a subgraph of Target/product
-     * else false
+     * Initialise the Subgraph search algorithm. Each Subgraph algorithm should contain this method.
+     *
+     * @return true if Query/reactant is a subgraph of Target/product else false
      */
     public abstract boolean isSubgraph(boolean bondMatch);
 }

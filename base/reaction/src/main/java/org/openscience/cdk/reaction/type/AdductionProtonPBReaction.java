@@ -18,6 +18,8 @@
  */
 package org.openscience.cdk.reaction.type;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -36,78 +38,75 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 /**
- * <p>IReactionProcess which produces a protonation to double bond.
- * As most commonly encountered, this reaction results in the formal migration
- * of a hydrogen atom or proton, accompanied by a switch of a single bond and adjacent double bond</p>
+ * IReactionProcess which produces a protonation to double bond. As most commonly encountered, this
+ * reaction results in the formal migration of a hydrogen atom or proton, accompanied by a switch of
+ * a single bond and adjacent double bond
  *
  * <pre>A=B + [H+] =&gt; [A+]-B-H</pre>
  *
- * <p>Below you have an example how to initiate the mechanism.</p>
- * <p>It is processed by the AdductionPBMechanism class</p>
+ * <p>Below you have an example how to initiate the mechanism.
+ *
+ * <p>It is processed by the AdductionPBMechanism class
+ *
  * <pre>
  *  IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newAtomContainerSet();
  *  setOfReactants.addAtomContainer(new AtomContainer());
  *  IReactionProcess type = new AdductionProtonLPReaction();
  *  Object[] params = {Boolean.FALSE};
-    type.setParameters(params);
+ * type.setParameters(params);
  *  IReactionSet setOfReactions = type.initiate(setOfReactants, null);
  *  </pre>
  *
- * <p>We have the possibility to localize the reactive center. Good method if you
- * want to specify the reaction in a fixed point.</p>
+ * <p>We have the possibility to localize the reactive center. Good method if you want to specify
+ * the reaction in a fixed point.
+ *
  * <pre>atoms[0].setFlag(CDKConstants.REACTIVE_CENTER,true);</pre>
- * <p>Moreover you must put the parameter Boolean.TRUE</p>
- * <p>If the reactive center is not specified then the reaction process will
- * try to find automatically the possible reaction centers.</p>
  *
+ * <p>Moreover you must put the parameter Boolean.TRUE
  *
- * @author         Miguel Rojas
+ * <p>If the reactive center is not specified then the reaction process will try to find
+ * automatically the possible reaction centers.
  *
- * @cdk.created    2008-02-11
- * @cdk.module     reaction
+ * @author Miguel Rojas
+ * @cdk.created 2008-02-11
+ * @cdk.module reaction
  * @cdk.githash
- *
  * @see AdductionPBMechanism
- **/
+ */
 public class AdductionProtonPBReaction extends ReactionEngine implements IReactionProcess {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(AdductionProtonPBReaction.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(AdductionProtonPBReaction.class);
 
-    /**
-     * Constructor of the AdductionProtonPBReaction object.
-     *
-     */
+    /** Constructor of the AdductionProtonPBReaction object. */
     public AdductionProtonPBReaction() {}
 
     /**
-     *  Gets the specification attribute of the AdductionProtonPBReaction object.
+     * Gets the specification attribute of the AdductionProtonPBReaction object.
      *
-     *@return    The specification value
+     * @return The specification value
      */
     @Override
     public ReactionSpecification getSpecification() {
         return new ReactionSpecification(
-                "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#AdductionProtonPB", this
-                        .getClass().getName(), "$Id$", "The Chemistry Development Kit");
+                "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#AdductionProtonPB",
+                this.getClass().getName(),
+                "$Id$",
+                "The Chemistry Development Kit");
     }
 
     /**
-     *  Initiate process.
-     *  It is needed to call the addExplicitHydrogensToSatisfyValency
-     *  from the class tools.HydrogenAdder.
+     * Initiate process. It is needed to call the addExplicitHydrogensToSatisfyValency from the
+     * class tools.HydrogenAdder.
      *
-     *
-     *@exception  CDKException  Description of the Exception
-
-     * @param  reactants         reactants of the reaction
-    * @param  agents            agents of the reaction (Must be in this case null)
+     * @exception CDKException Description of the Exception
+     * @param reactants reactants of the reaction
+     * @param agents agents of the reaction (Must be in this case null)
      */
     @Override
-    public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents) throws CDKException {
+    public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents)
+            throws CDKException {
 
         logger.debug("initiate reaction: AdductionProtonPBReaction");
 
@@ -135,12 +134,20 @@ public class AdductionProtonPBReaction extends ReactionEngine implements IReacti
             IBond bondi = bondis.next();
 
             if (bondi.getFlag(CDKConstants.REACTIVE_CENTER)
-                    && ((bondi.getOrder() == IBond.Order.DOUBLE) || (bondi.getOrder() == IBond.Order.TRIPLE))
+                    && ((bondi.getOrder() == IBond.Order.DOUBLE)
+                            || (bondi.getOrder() == IBond.Order.TRIPLE))
                     && bondi.getBegin().getFlag(CDKConstants.REACTIVE_CENTER)
                     && bondi.getEnd().getFlag(CDKConstants.REACTIVE_CENTER)) {
-                int chargeAtom0 = bondi.getBegin().getFormalCharge() == null ? 0 : bondi.getBegin().getFormalCharge();
-                int chargeAtom1 = bondi.getEnd().getFormalCharge() == null ? 0 : bondi.getEnd().getFormalCharge();
-                if (chargeAtom0 >= 0 && chargeAtom1 >= 0
+                int chargeAtom0 =
+                        bondi.getBegin().getFormalCharge() == null
+                                ? 0
+                                : bondi.getBegin().getFormalCharge();
+                int chargeAtom1 =
+                        bondi.getEnd().getFormalCharge() == null
+                                ? 0
+                                : bondi.getEnd().getFormalCharge();
+                if (chargeAtom0 >= 0
+                        && chargeAtom1 >= 0
                         && reactant.getConnectedSingleElectronsCount(bondi.getBegin()) == 0
                         && reactant.getConnectedSingleElectronsCount(bondi.getEnd()) == 0
                         && reactant.getConnectedLonePairsCount(bondi.getBegin()) == 0
@@ -164,22 +171,19 @@ public class AdductionProtonPBReaction extends ReactionEngine implements IReacti
                         ArrayList<IBond> bondList = new ArrayList<IBond>();
                         bondList.add(bondi);
 
-                        IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(IAtomContainerSet.class);
+                        IAtomContainerSet moleculeSet =
+                                reactant.getBuilder().newInstance(IAtomContainerSet.class);
                         moleculeSet.addAtomContainer(reactant);
-                        IAtomContainer adduct = reactant.getBuilder().newInstance(IAtomContainer.class);
+                        IAtomContainer adduct =
+                                reactant.getBuilder().newInstance(IAtomContainer.class);
                         adduct.addAtom(atomH);
                         moleculeSet.addAtomContainer(adduct);
 
                         IReaction reaction = mechanism.initiate(moleculeSet, atomList, bondList);
-                        if (reaction == null)
-                            continue;
-                        else
-                            setOfReactions.addReaction(reaction);
-
+                        if (reaction == null) continue;
+                        else setOfReactions.addReaction(reaction);
                     }
-
                 }
-
             }
         }
 
@@ -187,8 +191,8 @@ public class AdductionProtonPBReaction extends ReactionEngine implements IReacti
     }
 
     /**
-     * set the active center for this molecule.
-     * The active center will be those which correspond with X=Y.
+     * set the active center for this molecule. The active center will be those which correspond
+     * with X=Y.
      *
      * @param reactant The molecule to set the activity
      * @throws CDKException
@@ -200,10 +204,18 @@ public class AdductionProtonPBReaction extends ReactionEngine implements IReacti
         while (bondis.hasNext()) {
             IBond bondi = bondis.next();
 
-            if (((bondi.getOrder() == IBond.Order.DOUBLE) || (bondi.getOrder() == IBond.Order.TRIPLE))) {
-                int chargeAtom0 = bondi.getBegin().getFormalCharge() == null ? 0 : bondi.getBegin().getFormalCharge();
-                int chargeAtom1 = bondi.getEnd().getFormalCharge() == null ? 0 : bondi.getEnd().getFormalCharge();
-                if (chargeAtom0 >= 0 && chargeAtom1 >= 0
+            if (((bondi.getOrder() == IBond.Order.DOUBLE)
+                    || (bondi.getOrder() == IBond.Order.TRIPLE))) {
+                int chargeAtom0 =
+                        bondi.getBegin().getFormalCharge() == null
+                                ? 0
+                                : bondi.getBegin().getFormalCharge();
+                int chargeAtom1 =
+                        bondi.getEnd().getFormalCharge() == null
+                                ? 0
+                                : bondi.getEnd().getFormalCharge();
+                if (chargeAtom0 >= 0
+                        && chargeAtom1 >= 0
                         && reactant.getConnectedSingleElectronsCount(bondi.getBegin()) == 0
                         && reactant.getConnectedSingleElectronsCount(bondi.getEnd()) == 0
                         && reactant.getConnectedLonePairsCount(bondi.getBegin()) == 0

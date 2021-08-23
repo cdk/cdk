@@ -29,7 +29,6 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import java.io.IOException;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.Isotopes;
@@ -48,14 +47,15 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
- * Polar surface area expressed as a ratio to molecular size. Calculates <b>tpsaEfficiency</b>, which is
- * to {@link TPSADescriptor} / <b>molecular weight</b>, in units of square Angstroms per Dalton.
+ * Polar surface area expressed as a ratio to molecular size. Calculates <b>tpsaEfficiency</b>,
+ * which is to {@link TPSADescriptor} / <b>molecular weight</b>, in units of square Angstroms per
+ * Dalton.
  *
- * Other related descriptors may also be useful to add, e.g. ratio of polar to hydrophobic surface area.
+ * <p>Other related descriptors may also be useful to add, e.g. ratio of polar to hydrophobic
+ * surface area.
  *
  * @cdk.module qsarmolecular
  * @cdk.githash
- *
  * @cdk.dictref qsar-descriptors:fractionalPSA
  * @cdk.keyword volume
  * @cdk.keyword descriptor
@@ -67,14 +67,13 @@ public class FractionalPSADescriptor implements IMolecularDescriptor {
     @Override
     public void initialise(IChemObjectBuilder builder) {}
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#fractionalPSA", this.getClass()
-                        .getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#fractionalPSA",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     /** {@inheritDoc} */
@@ -93,12 +92,17 @@ public class FractionalPSADescriptor implements IMolecularDescriptor {
 
     @Override
     public String[] getDescriptorNames() {
-        return new String[]{"tpsaEfficiency"};
+        return new String[] {"tpsaEfficiency"};
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                Double.NaN), getDescriptorNames(), e);
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new DoubleResult(Double.NaN),
+                getDescriptorNames(),
+                e);
     }
 
     /**
@@ -140,8 +144,12 @@ public class FractionalPSADescriptor implements IMolecularDescriptor {
             return getDummyDescriptorValue(exception);
         }
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                weight == 0 ? 0 : polar / weight), getDescriptorNames());
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new DoubleResult(weight == 0 ? 0 : polar / weight),
+                getDescriptorNames());
     }
 
     /** {@inheritDoc} */

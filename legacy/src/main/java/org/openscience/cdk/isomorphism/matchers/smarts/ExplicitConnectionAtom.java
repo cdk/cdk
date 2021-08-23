@@ -23,8 +23,8 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * Match an atom with the defined degree. The degree is also referred to as the
- * explicit connectivity and is encoded in smarts using {@code D<NUMBER>}.
+ * Match an atom with the defined degree. The degree is also referred to as the explicit
+ * connectivity and is encoded in smarts using {@code D<NUMBER>}.
  *
  * @cdk.module smarts
  * @cdk.keyword SMARTS
@@ -37,15 +37,15 @@ public final class ExplicitConnectionAtom extends SMARTSAtom {
     private int degree;
 
     /**
-     * Create a query atom for matching the degree of an atom. The degree is the
-     * number connected atoms.
+     * Create a query atom for matching the degree of an atom. The degree is the number connected
+     * atoms.
      */
     public ExplicitConnectionAtom(int degree, IChemObjectBuilder builder) {
         super(builder);
         this.degree = degree;
     }
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     public boolean matches(IAtom atom) {
         // XXX: this is incorrect but bug 824 expects this behaviour. The reason

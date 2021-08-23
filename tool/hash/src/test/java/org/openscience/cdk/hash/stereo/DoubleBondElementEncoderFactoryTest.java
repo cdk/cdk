@@ -24,6 +24,15 @@
 
 package org.openscience.cdk.hash.stereo;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -31,19 +40,8 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IStereoElement;
 
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 /**
- * See. {@link org.openscience.cdk.hash.HashCodeScenariosTest} for test which show
- * example usage.
+ * See. {@link org.openscience.cdk.hash.HashCodeScenariosTest} for test which show example usage.
  *
  * @author John May
  * @cdk.module test-hash
@@ -79,12 +77,13 @@ public class DoubleBondElementEncoderFactoryTest {
 
         IDoubleBondStereochemistry dbs = mock(IDoubleBondStereochemistry.class);
         when(dbs.getStereoBond()).thenReturn(stereoBond);
-        when(dbs.getBonds()).thenReturn(new IBond[]{left, right});
+        when(dbs.getBonds()).thenReturn(new IBond[] {left, right});
         when(dbs.getStereo()).thenReturn(IDoubleBondStereochemistry.Conformation.OPPOSITE);
-        when(container.stereoElements()).thenReturn(Collections.<IStereoElement> singleton(dbs));
+        when(container.stereoElements()).thenReturn(Collections.<IStereoElement>singleton(dbs));
 
-        StereoEncoder encoder = new DoubleBondElementEncoderFactory().create(container, new int[][]{{1, 2}, {0, 3},
-                {0}, {1}});
+        StereoEncoder encoder =
+                new DoubleBondElementEncoderFactory()
+                        .create(container, new int[][] {{1, 2}, {0, 3}, {0}, {1}});
 
         assertThat(getGeometricParity(encoder).parity(), is(1));
     }
@@ -118,12 +117,13 @@ public class DoubleBondElementEncoderFactoryTest {
 
         IDoubleBondStereochemistry dbs = mock(IDoubleBondStereochemistry.class);
         when(dbs.getStereoBond()).thenReturn(stereoBond);
-        when(dbs.getBonds()).thenReturn(new IBond[]{left, right});
+        when(dbs.getBonds()).thenReturn(new IBond[] {left, right});
         when(dbs.getStereo()).thenReturn(IDoubleBondStereochemistry.Conformation.TOGETHER);
-        when(container.stereoElements()).thenReturn(Collections.<IStereoElement> singleton(dbs));
+        when(container.stereoElements()).thenReturn(Collections.<IStereoElement>singleton(dbs));
 
-        StereoEncoder encoder = new DoubleBondElementEncoderFactory().create(container, new int[][]{{1, 2}, {0, 3},
-                {0}, {1}});
+        StereoEncoder encoder =
+                new DoubleBondElementEncoderFactory()
+                        .create(container, new int[][] {{1, 2}, {0, 3}, {0}, {1}});
 
         assertThat(getGeometricParity(encoder).parity(), is(-1));
     }

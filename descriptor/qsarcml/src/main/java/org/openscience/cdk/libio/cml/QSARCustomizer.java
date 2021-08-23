@@ -26,7 +26,8 @@ package org.openscience.cdk.libio.cml;
 
 import java.util.Iterator;
 import java.util.Map;
-
+import nu.xom.Attribute;
+import nu.xom.Element;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -47,23 +48,21 @@ import org.xmlcml.cml.element.CMLProperty;
 import org.xmlcml.cml.element.CMLPropertyList;
 import org.xmlcml.cml.element.CMLScalar;
 
-import nu.xom.Attribute;
-import nu.xom.Element;
-
 /**
- * Customizer for the libio-cml Convertor to be able to export details for
- * QSAR descriptors calculated for Molecules.
+ * Customizer for the libio-cml Convertor to be able to export details for QSAR descriptors
+ * calculated for Molecules.
  *
- * @author        egonw
- * @cdk.created   2005-05-04
- * @cdk.module    qsarcml
+ * @author egonw
+ * @cdk.created 2005-05-04
+ * @cdk.module qsarcml
  * @cdk.githash
- * @cdk.require   java1.5+
+ * @cdk.require java1.5+
  */
 public class QSARCustomizer implements ICMLCustomizer {
 
-    private final static String QSAR_NAMESPACE = "qsar";
-    private final static String QSAR_URI       = "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/";
+    private static final String QSAR_NAMESPACE = "qsar";
+    private static final String QSAR_URI =
+            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/";
 
     @Override
     public void customize(IBond bond, Object nodeToAdd) throws Exception {
@@ -123,7 +122,8 @@ public class QSARCustomizer implements ICMLCustomizer {
     }
 
     private void customizeIChemObject(IChemObject object, Object nodeToAdd) throws Exception {
-        if (!(nodeToAdd instanceof Element)) throw new CDKException("NodeToAdd must be of type nu.xom.Element!");
+        if (!(nodeToAdd instanceof Element))
+            throw new CDKException("NodeToAdd must be of type nu.xom.Element!");
 
         Element element = (Element) nodeToAdd;
         Map<Object, Object> props = object.getProperties();
@@ -142,34 +142,43 @@ public class QSARCustomizer implements ICMLCustomizer {
                 // setup up the metadata list
                 Element metadataList = new CMLMetadataList();
                 metadataList.addNamespaceDeclaration(QSAR_NAMESPACE, QSAR_URI);
-                property.addAttribute(new Attribute("convention", QSAR_NAMESPACE + ":" + "DescriptorValue"));
+                property.addAttribute(
+                        new Attribute("convention", QSAR_NAMESPACE + ":" + "DescriptorValue"));
                 String specsRef = specs.getSpecificationReference();
                 if (specsRef.startsWith(QSAR_URI)) {
                     property.addNamespaceDeclaration(QSAR_NAMESPACE, QSAR_URI);
                 }
                 CMLMetadata metaData = new CMLMetadata();
-                metaData.addAttribute(new Attribute("dictRef", QSAR_NAMESPACE + ":" + "specificationReference"));
+                metaData.addAttribute(
+                        new Attribute("dictRef", QSAR_NAMESPACE + ":" + "specificationReference"));
                 metaData.addAttribute(new Attribute("content", specsRef));
                 metadataList.appendChild(metaData);
                 metaData = new CMLMetadata();
-                metaData.addAttribute(new Attribute("dictRef", QSAR_NAMESPACE + ":" + "implementationTitle"));
+                metaData.addAttribute(
+                        new Attribute("dictRef", QSAR_NAMESPACE + ":" + "implementationTitle"));
                 metaData.addAttribute(new Attribute("content", specs.getImplementationTitle()));
                 metadataList.appendChild(metaData);
                 metaData = new CMLMetadata();
-                metaData.addAttribute(new Attribute("dictRef", QSAR_NAMESPACE + ":" + "implementationIdentifier"));
-                metaData.addAttribute(new Attribute("content", specs.getImplementationIdentifier()));
+                metaData.addAttribute(
+                        new Attribute(
+                                "dictRef", QSAR_NAMESPACE + ":" + "implementationIdentifier"));
+                metaData.addAttribute(
+                        new Attribute("content", specs.getImplementationIdentifier()));
                 metadataList.appendChild(metaData);
                 metaData = new CMLMetadata();
-                metaData.addAttribute(new Attribute("dictRef", QSAR_NAMESPACE + ":" + "implementationVendor"));
+                metaData.addAttribute(
+                        new Attribute("dictRef", QSAR_NAMESPACE + ":" + "implementationVendor"));
                 metaData.addAttribute(new Attribute("content", specs.getImplementationVendor()));
                 metadataList.appendChild(metaData);
                 // add parameter setting to the metadata list
                 Object[] params = value.getParameters();
-                //                logger.debug("Value: " + value.getSpecification().getImplementationIdentifier());
+                //                logger.debug("Value: " +
+                // value.getSpecification().getImplementationIdentifier());
                 if (params != null && params.length > 0) {
                     String[] paramNames = value.getParameterNames();
                     Element paramSettings = new CMLMetadataList();
-                    paramSettings.addAttribute(new Attribute("title", QSAR_NAMESPACE + ":" + "descriptorParameters"));
+                    paramSettings.addAttribute(
+                            new Attribute("title", QSAR_NAMESPACE + ":" + "descriptorParameters"));
                     for (int i = 0; i < params.length; i++) {
                         Element paramSetting = new CMLMetadata();
                         String paramName = paramNames[i];
@@ -177,10 +186,12 @@ public class QSARCustomizer implements ICMLCustomizer {
                         if (paramName == null) {
                             // logger.error("Parameter name was null! Cannot output to CML.");
                         } else if (paramVal == null) {
-                            // logger.error("Parameter setting was null! Cannot output to CML. Problem param: " + paramName);
+                            // logger.error("Parameter setting was null! Cannot output to CML.
+                            // Problem param: " + paramName);
                         } else {
                             paramSetting.addAttribute(new Attribute("title", paramNames[i]));
-                            paramSetting.addAttribute(new Attribute("content", params[i].toString()));
+                            paramSetting.addAttribute(
+                                    new Attribute("content", params[i].toString()));
                             paramSettings.appendChild(paramSetting);
                         }
                     }
@@ -198,5 +209,4 @@ public class QSARCustomizer implements ICMLCustomizer {
             element.appendChild(propList);
         }
     }
-
 }

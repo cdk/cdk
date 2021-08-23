@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -42,12 +41,10 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- *  This class returns the ionization potential of an atom containing lone
- *  pair electrons. It is
- *  based on a decision tree which is extracted from Weka(J48) from
- *  experimental values. Up to now is only possible predict for
- *  Cl,Br,I,N,P,O,S Atoms and they are not belong to
- *  conjugated system or not adjacent to an double bond.
+ * This class returns the ionization potential of an atom containing lone pair electrons. It is
+ * based on a decision tree which is extracted from Weka(J48) from experimental values. Up to now is
+ * only possible predict for Cl,Br,I,N,P,O,S Atoms and they are not belong to conjugated system or
+ * not adjacent to an double bond.
  *
  * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
@@ -62,48 +59,45 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *   </tr>
  * </table>
  *
- * @author       Miguel Rojas
- * @cdk.created  2006-05-26
- * @cdk.module   qsaratomic
+ * @author Miguel Rojas
+ * @cdk.created 2006-05-26
+ * @cdk.module qsaratomic
  * @cdk.githash
- * @cdk.dictref  qsar-descriptors:ionizationPotential
+ * @cdk.dictref qsar-descriptors:ionizationPotential
  */
 public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
 
     private static final String[] NAMES = {"ipAtomicHOSE"};
 
-    /** Maximum spheres to use by the HoseCode model.*/
-    int                           maxSpheresToUse = 10;
+    /** Maximum spheres to use by the HoseCode model. */
+    int maxSpheresToUse = 10;
 
-    private IPdb                  db              = new IPdb();
+    private IPdb db = new IPdb();
 
-    /**
-     *  Constructor for the IPAtomicHOSEDescriptor object.
-     */
+    /** Constructor for the IPAtomicHOSEDescriptor object. */
     public IPAtomicHOSEDescriptor() {}
 
     /**
-     *  Gets the specification attribute of the IPAtomicHOSEDescriptor object
+     * Gets the specification attribute of the IPAtomicHOSEDescriptor object
      *
-     *@return    The specification value
+     * @return The specification value
      */
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ionizationPotential", this
-                        .getClass().getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ionizationPotential",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
-    /**
-     * This descriptor does have any parameter.
-     */
+    /** This descriptor does have any parameter. */
     @Override
     public void setParameters(Object[] params) throws CDKException {}
 
     /**
-     *  Gets the parameters attribute of the IPAtomicHOSEDescriptor object.
+     * Gets the parameters attribute of the IPAtomicHOSEDescriptor object.
      *
-     *@return    The parameters value
+     * @return The parameters value
      * @see #setParameters
      */
     @Override
@@ -117,16 +111,17 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
     }
 
     /**
-     *  This method calculates the ionization potential of an atom.
+     * This method calculates the ionization potential of an atom.
      *
-     *@param  atom          The IAtom to ionize.
-     *@param  container         Parameter is the IAtomContainer.
-     *@return                   The ionization potential. Not possible the ionization.
+     * @param atom The IAtom to ionize.
+     * @param container Parameter is the IAtomContainer.
+     * @return The ionization potential. Not possible the ionization.
      */
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
         double value;
-        // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
+        // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end
+        // of this method
         String originalAtomtypeName = atom.getAtomTypeName();
         Integer originalNeighborCount = atom.getFormalNeighbourCount();
         Integer originalValency = atom.getValency();
@@ -140,10 +135,14 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
                 LonePairElectronChecker lpcheck = new LonePairElectronChecker();
                 lpcheck.saturate(container);
             } catch (CDKException e) {
-                return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                        Double.NaN), NAMES, e);
+                return new DescriptorValue(
+                        getSpecification(),
+                        getParameterNames(),
+                        getParameters(),
+                        new DoubleResult(Double.NaN),
+                        NAMES,
+                        e);
             }
-
         }
         value = db.extractIP(container, atom);
         // restore original props
@@ -154,27 +153,33 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
         atom.setMaxBondOrder(originalMaxBondOrder);
         atom.setBondOrderSum(originalBondOrderSum);
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(value),
-                                   NAMES);
-
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new DoubleResult(value),
+                NAMES);
     }
 
     /**
      * Looking if the Atom belongs to the halogen family.
      *
-     * @param  atom  The IAtom
-     * @return       True, if it belongs
+     * @param atom The IAtom
+     * @return True, if it belongs
      */
     private boolean familyHalogen(IAtom atom) {
         String symbol = atom.getSymbol();
-        return symbol.equals("F") || symbol.equals("Cl") || symbol.equals("Br") || symbol.equals("I");
+        return symbol.equals("F")
+                || symbol.equals("Cl")
+                || symbol.equals("Br")
+                || symbol.equals("I");
     }
 
     /**
-    * Gets the parameterNames attribute of the IPAtomicHOSEDescriptor object.
-    *
-    * @return    The parameterNames value
-    */
+     * Gets the parameterNames attribute of the IPAtomicHOSEDescriptor object.
+     *
+     * @return The parameterNames value
+     */
     @Override
     public String[] getParameterNames() {
         return new String[0];
@@ -183,8 +188,8 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
     /**
      * Gets the parameterType attribute of the IPAtomicHOSEDescriptor object.
      *
-     * @param  name  Description of the Parameter
-     * @return       An Object of class equal to that of the parameter being requested
+     * @param name Description of the Parameter
+     * @return An Object of class equal to that of the parameter being requested
      */
     @Override
     public Object getParameterType(String name) {
@@ -192,31 +197,27 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
     }
 
     /**
-     * Class defining the database containing the relation between the energy for ionizing and the HOSEcode
-     * fingerprints
+     * Class defining the database containing the relation between the energy for ionizing and the
+     * HOSEcode fingerprints
      *
      * @author Miguel Rojas
-     *
      */
     private class IPdb {
 
-        public static final String X_IP_HOSE_DB = "/org/openscience/cdk/qsar/descriptors/atomic/data/X_IP_HOSE.db";
-        public static final String X_IP_HOSE_DB_S = "/org/openscience/cdk/qsar/descriptors/atomic/data/X_IP_HOSE_S.db";
+        public static final String X_IP_HOSE_DB =
+                "/org/openscience/cdk/qsar/descriptors/atomic/data/X_IP_HOSE.db";
+        public static final String X_IP_HOSE_DB_S =
+                "/org/openscience/cdk/qsar/descriptors/atomic/data/X_IP_HOSE_S.db";
 
-        /**
-         * The constructor of the IPdb.
-         *
-         */
-        public IPdb() {
-
-        }
+        /** The constructor of the IPdb. */
+        public IPdb() {}
 
         /**
          * extract from the db the ionization energy.
          *
-         * @param container  The IAtomContainer
-         * @param atom       The IAtom
-         * @return           The energy value
+         * @param container The IAtomContainer
+         * @param atom The IAtom
+         * @return The energy value
          */
         public double extractIP(IAtomContainer container, IAtom atom) {
             // loading the files if they are not done
@@ -224,25 +225,24 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
             HashMap<String, Double> hoseVSenergyS;
             if (familyHalogen(atom)) {
                 try (InputStream ins = getClass().getResourceAsStream(X_IP_HOSE_DB);
-                     BufferedReader insr = new BufferedReader(new InputStreamReader(ins))) {
+                        BufferedReader insr = new BufferedReader(new InputStreamReader(ins))) {
                     hoseVSenergy = extractAttributes(insr);
                 } catch (IOException e) {
                     LoggingToolFactory.createLoggingTool(getClass()).error(e);
                     return 0;
                 }
                 try (InputStream ins = getClass().getResourceAsStream(X_IP_HOSE_DB_S);
-                     BufferedReader insr = new BufferedReader(new InputStreamReader(ins))) {
+                        BufferedReader insr = new BufferedReader(new InputStreamReader(ins))) {
                     hoseVSenergyS = extractAttributes(insr);
                 } catch (IOException e) {
                     LoggingToolFactory.createLoggingTool(getClass()).error(e);
                     return 0;
                 }
-            } else
-                return 0;
+            } else return 0;
 
             try {
                 HOSECodeGenerator hcg = new HOSECodeGenerator();
-                //Check starting from the exact sphere hose code and maximal a value of 10
+                // Check starting from the exact sphere hose code and maximal a value of 10
                 int exactSphere = 0;
                 String hoseCode = "";
                 for (int spheres = maxSpheresToUse; spheres > 0; spheres--) {
@@ -260,16 +260,18 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
                         break;
                     }
                 }
-                //Check starting from the rings bigger and smaller
-                //TODO:IP: Better application
+                // Check starting from the rings bigger and smaller
+                // TODO:IP: Better application
                 for (int i = 0; i < 3; i++) { // two rings
-                    for (int plusMinus = 0; plusMinus < 2; plusMinus++) { // plus==bigger, minus==smaller
+                    for (int plusMinus = 0;
+                            plusMinus < 2;
+                            plusMinus++) { // plus==bigger, minus==smaller
                         int sign = -1;
                         if (plusMinus == 1) sign = 1;
 
-                        StringTokenizer st             = new StringTokenizer(hoseCode, "()/");
-                        StringBuilder   hoseCodeBuffer = new StringBuilder();
-                        int             sum            = exactSphere + sign * (i + 1);
+                        StringTokenizer st = new StringTokenizer(hoseCode, "()/");
+                        StringBuilder hoseCodeBuffer = new StringBuilder();
+                        int sum = exactSphere + sign * (i + 1);
                         for (int k = 0; k < sum; k++) {
                             if (st.hasMoreTokens()) {
                                 String partcode = st.nextToken();
@@ -299,8 +301,8 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
         /**
          * Extract the Hose code and energy
          *
-         * @param input  The BufferedReader
-         * @return       HashMap with the Hose vs energy attributes
+         * @param input The BufferedReader
+         * @return HashMap with the Hose vs energy attributes
          */
         private HashMap<String, Double> extractAttributes(BufferedReader input) {
             HashMap<String, Double> hoseVSenergy = new HashMap<>();
@@ -323,23 +325,20 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
     /**
      * Extract the information from a line which contains HOSE_ID & energy.
      *
-     * @param str  String with the information
-     * @return     List with String = HOSECode and String = energy
+     * @param str String with the information
+     * @return List with String = HOSECode and String = energy
      */
     private static List<String> extractInfo(String str) {
         int beg = 0;
         int end = 0;
         int len = str.length();
         List<String> parts = new ArrayList<>();
-        while (end < len && !Character.isSpaceChar(str.charAt(end)))
-            end++;
-        parts.add(str.substring(beg,end));
-        while (end < len && Character.isSpaceChar(str.charAt(end)))
-            end++;
+        while (end < len && !Character.isSpaceChar(str.charAt(end))) end++;
+        parts.add(str.substring(beg, end));
+        while (end < len && Character.isSpaceChar(str.charAt(end))) end++;
         beg = end;
-        while (end < len && !Character.isSpaceChar(str.charAt(end)))
-            end++;
-        parts.add(str.substring(beg,end));
+        while (end < len && !Character.isSpaceChar(str.charAt(end))) end++;
+        parts.add(str.substring(beg, end));
         return parts;
     }
 }

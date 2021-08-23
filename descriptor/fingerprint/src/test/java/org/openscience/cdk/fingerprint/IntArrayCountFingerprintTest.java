@@ -6,29 +6,32 @@ import static org.junit.Assert.assertTrue;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.junit.Test;
 
 public class IntArrayCountFingerprintTest {
 
     @Test
     public void testMerge() {
-        IntArrayCountFingerprint fp1 = new IntArrayCountFingerprint(new HashMap<String, Integer>() {
+        IntArrayCountFingerprint fp1 =
+                new IntArrayCountFingerprint(
+                        new HashMap<String, Integer>() {
 
-            {
-                put("A", 1);
-                put("B", 2);
-                put("C", 3);
-            }
-        });
-        IntArrayCountFingerprint fp2 = new IntArrayCountFingerprint(new HashMap<String, Integer>() {
+                            {
+                                put("A", 1);
+                                put("B", 2);
+                                put("C", 3);
+                            }
+                        });
+        IntArrayCountFingerprint fp2 =
+                new IntArrayCountFingerprint(
+                        new HashMap<String, Integer>() {
 
-            {
-                put("A", 1);
-                put("E", 2);
-                put("F", 3);
-            }
-        });
+                            {
+                                put("A", 1);
+                                put("E", 2);
+                                put("F", 3);
+                            }
+                        });
 
         Map<Integer, Integer> hashCounts = new HashMap<Integer, Integer>();
         for (int i = 0; i < fp1.numOfPopulatedbins(); i++) {
@@ -61,5 +64,4 @@ public class IntArrayCountFingerprintTest {
         assertTrue("C should be in the fingerprint", Cindex >= 0);
         assertEquals(fp1.numOfHits[Cindex], 3);
     }
-
 }

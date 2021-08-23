@@ -24,32 +24,34 @@
 
 package org.openscience.cdk.hash;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.ringsearch.RingSearch;
-
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.ringsearch.RingSearch;
 
 /**
- * Finds the set of equivalent values are members of a ring. This class is
- * intended to drive the systematic perturbation of the {@link
- * org.openscience.cdk.hash.PerturbedAtomHashGenerator}. This {@link
- * EquivalentSetFinder} provides the highest probability of avoid collisions due
- * to uniform atom environments but is much more demanding then the simpler
- * {@link MinimumEquivalentCyclicSet}.
- *
- * <br/> The easiest way to use this class is with the {@link
+ * Finds the set of equivalent values are members of a ring. This class is intended to drive the
+ * systematic perturbation of the {@link org.openscience.cdk.hash.PerturbedAtomHashGenerator}. This
+ * {@link EquivalentSetFinder} provides the highest probability of avoid collisions due to uniform
+ * atom environments but is much more demanding then the simpler {@link MinimumEquivalentCyclicSet}.
+ * <br>
+ * The easiest way to use this class is with the {@link
  * org.openscience.cdk.hash.HashGeneratorMaker}.
- * <blockquote><pre>
+ *
+ * <blockquote>
+ *
+ * <pre>
  * MoleculeHashGenerator generator =
  *   new HashGeneratorMaker().depth(6)
  *                           .elemental()
  *                           .perturbWith(new AllEquivalentCyclicSet())
  *                           .molecular();
- * </pre></blockquote>
+ * </pre>
+ *
+ * </blockquote>
  *
  * @author John May
  * @cdk.module hash
@@ -60,9 +62,7 @@ import java.util.TreeSet;
  */
 final class AllEquivalentCyclicSet extends EquivalentSetFinder {
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     Set<Integer> find(long[] invariants, IAtomContainer container, int[][] graph) {
 

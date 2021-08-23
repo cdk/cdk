@@ -23,7 +23,6 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.renderer.RendererModel;
@@ -31,9 +30,8 @@ import org.openscience.cdk.renderer.elements.TextElement;
 import org.openscience.cdk.renderer.font.AWTFontManager;
 
 /**
- * @cdk.module  test-renderawt
+ * @cdk.module test-renderawt
  * @cdk.githash
- *
  */
 public class AWTDrawVisitorTest {
 

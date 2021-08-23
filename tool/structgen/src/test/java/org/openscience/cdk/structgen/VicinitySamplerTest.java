@@ -24,7 +24,6 @@
 package org.openscience.cdk.structgen;
 
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -36,9 +35,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
-/**
- * @cdk.module test-structgen
- */
+/** @cdk.module test-structgen */
 public class VicinitySamplerTest extends CDKTestCase {
 
     private static SmilesParser parser;
@@ -64,12 +61,9 @@ public class VicinitySamplerTest extends CDKTestCase {
             Assert.assertTrue(ConnectivityChecker.isConnected(temp));
             Assert.assertEquals(mol.getAtomCount(), temp.getAtomCount());
         }
-
     }
 
-    /**
-     * @cdk.bug 1632610
-     */
+    /** @cdk.bug 1632610 */
     public void testCycloButene() throws Exception {
         IAtomContainer mol = parser.parseSmiles("C=CC=C");
 
@@ -85,6 +79,5 @@ public class VicinitySamplerTest extends CDKTestCase {
             Assert.assertTrue(ConnectivityChecker.isConnected(temp));
             Assert.assertEquals(mol.getAtomCount(), temp.getAtomCount());
         }
-
     }
 }

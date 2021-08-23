@@ -18,6 +18,8 @@
  */
 package org.openscience.cdk.reaction.type;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -35,82 +37,80 @@ import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 /**
- * <p>IReactionProcess which a bond is broken displacing the electron to one of the
- * atoms. The mechanism will produce one atom with excess of charge and the other one deficiency.
- * Depending of the bond order, the bond will be removed or simply the order decreased.
- * As there are two directions for displacing a bond in a polar manner,
- * each case is investigated twice:</p>
+ * IReactionProcess which a bond is broken displacing the electron to one of the atoms. The
+ * mechanism will produce one atom with excess of charge and the other one deficiency. Depending of
+ * the bond order, the bond will be removed or simply the order decreased. As there are two
+ * directions for displacing a bond in a polar manner, each case is investigated twice:
  *
  * <pre>A-B =&gt; [A+] + |[B-]</pre>
+ *
  * <pre>A-B =&gt; |[A-] + [B+]</pre>
  *
- * <p>It will not be created structures no possible, e.g; C=O =&gt; [C-][O+].</p>
- * <p>Below you have an example how to initiate the mechanism.</p>
- * <p>It is processed by the HeterolyticCleavageMechanism class</p>
+ * <p>It will not be created structures no possible, e.g; C=O =&gt; [C-][O+].
+ *
+ * <p>Below you have an example how to initiate the mechanism.
+ *
+ * <p>It is processed by the HeterolyticCleavageMechanism class
+ *
  * <pre>
  *  IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newAtomContainerSet();
  *  setOfReactants.addAtomContainer(new AtomContainer());
  *  IReactionProcess type = new HeterolyticCleavageSBReaction();
  *  Object[] params = {Boolean.FALSE};
-    type.setParameters(params);
+ * type.setParameters(params);
  *  IReactionSet setOfReactions = type.initiate(setOfReactants, null);
  *  </pre>
  *
- * <p>We have the possibility to localize the reactive center. Good method if you
- * want to specify the reaction in a fixed point.</p>
+ * <p>We have the possibility to localize the reactive center. Good method if you want to specify
+ * the reaction in a fixed point.
+ *
  * <pre>atoms[0].setFlag(CDKConstants.REACTIVE_CENTER,true);</pre>
- * <p>Moreover you must put the parameter Boolean.TRUE</p>
- * <p>If the reactive center is not specified then the reaction process will
- * try to find automatically the possible reaction centers.</p>
  *
+ * <p>Moreover you must put the parameter Boolean.TRUE
  *
- * @author         Miguel Rojas
+ * <p>If the reactive center is not specified then the reaction process will try to find
+ * automatically the possible reaction centers.
  *
- * @cdk.created    2006-06-09
- * @cdk.module     reaction
+ * @author Miguel Rojas
+ * @cdk.created 2006-06-09
+ * @cdk.module reaction
  * @cdk.githash
- *
  * @see HeterolyticCleavageMechanism
- **/
+ */
 public class HeterolyticCleavageSBReaction extends ReactionEngine implements IReactionProcess {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(HeterolyticCleavageSBReaction.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(HeterolyticCleavageSBReaction.class);
 
-    /**
-     * Constructor of the HeterolyticCleavageSBReaction object.
-     *
-     */
+    /** Constructor of the HeterolyticCleavageSBReaction object. */
     public HeterolyticCleavageSBReaction() {}
 
     /**
-     *  Gets the specification attribute of the HeterolyticCleavageSBReaction object.
+     * Gets the specification attribute of the HeterolyticCleavageSBReaction object.
      *
-     *@return    The specification value
+     * @return The specification value
      */
     @Override
     public ReactionSpecification getSpecification() {
         return new ReactionSpecification(
                 "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#HeterolyticCleavageSB",
-                this.getClass().getName(), "$Id$", "The Chemistry Development Kit");
+                this.getClass().getName(),
+                "$Id$",
+                "The Chemistry Development Kit");
     }
 
     /**
-     *  Initiate process.
-     *  It is needed to call the addExplicitHydrogensToSatisfyValency
-     *  from the class tools.HydrogenAdder.
+     * Initiate process. It is needed to call the addExplicitHydrogensToSatisfyValency from the
+     * class tools.HydrogenAdder.
      *
-     *
-     *@exception  CDKException  Description of the Exception
-
-     * @param  reactants         reactants of the reaction
-    * @param  agents            agents of the reaction (Must be in this case null)
+     * @exception CDKException Description of the Exception
+     * @param reactants reactants of the reaction
+     * @param agents agents of the reaction (Must be in this case null)
      */
     @Override
-    public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents) throws CDKException {
+    public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents)
+            throws CDKException {
 
         logger.debug("initiate reaction: HeterolyticCleavageSBReaction");
 
@@ -136,10 +136,14 @@ public class HeterolyticCleavageSBReaction extends ReactionEngine implements IRe
             IBond bondi = bondis.next();
             IAtom atom1 = bondi.getBegin();
             IAtom atom2 = bondi.getEnd();
-            if (bondi.getFlag(CDKConstants.REACTIVE_CENTER) && bondi.getOrder() == IBond.Order.SINGLE
-                    && atom1.getFlag(CDKConstants.REACTIVE_CENTER) && atom2.getFlag(CDKConstants.REACTIVE_CENTER)
-                    && (atom1.getFormalCharge() == CDKConstants.UNSET ? 0 : atom1.getFormalCharge()) == 0
-                    && (atom2.getFormalCharge() == CDKConstants.UNSET ? 0 : atom2.getFormalCharge()) == 0
+            if (bondi.getFlag(CDKConstants.REACTIVE_CENTER)
+                    && bondi.getOrder() == IBond.Order.SINGLE
+                    && atom1.getFlag(CDKConstants.REACTIVE_CENTER)
+                    && atom2.getFlag(CDKConstants.REACTIVE_CENTER)
+                    && (atom1.getFormalCharge() == CDKConstants.UNSET ? 0 : atom1.getFormalCharge())
+                            == 0
+                    && (atom2.getFormalCharge() == CDKConstants.UNSET ? 0 : atom2.getFormalCharge())
+                            == 0
                     && reactant.getConnectedSingleElectronsCount(atom1) == 0
                     && reactant.getConnectedSingleElectronsCount(atom2) == 0) {
 
@@ -157,13 +161,12 @@ public class HeterolyticCleavageSBReaction extends ReactionEngine implements IRe
                     ArrayList<IBond> bondList = new ArrayList<IBond>();
                     bondList.add(bondi);
 
-                    IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(IAtomContainerSet.class);
+                    IAtomContainerSet moleculeSet =
+                            reactant.getBuilder().newInstance(IAtomContainerSet.class);
                     moleculeSet.addAtomContainer(reactant);
                     IReaction reaction = mechanism.initiate(moleculeSet, atomList, bondList);
-                    if (reaction == null)
-                        continue;
-                    else
-                        setOfReactions.addReaction(reaction);
+                    if (reaction == null) continue;
+                    else setOfReactions.addReaction(reaction);
                 }
             }
         }
@@ -171,9 +174,9 @@ public class HeterolyticCleavageSBReaction extends ReactionEngine implements IRe
     }
 
     /**
-     * set the active center for this molecule.
-     * The active center will be those which correspond with A-B. If
-     * the bond is simple, it will be broken forming two fragments
+     * set the active center for this molecule. The active center will be those which correspond
+     * with A-B. If the bond is simple, it will be broken forming two fragments
+     *
      * <pre>
      * A: Atom
      * #/=/-: bond
@@ -190,8 +193,10 @@ public class HeterolyticCleavageSBReaction extends ReactionEngine implements IRe
             IAtom atom1 = bond.getBegin();
             IAtom atom2 = bond.getEnd();
             if (bond.getOrder() == IBond.Order.SINGLE
-                    && (atom1.getFormalCharge() == CDKConstants.UNSET ? 0 : atom1.getFormalCharge()) == 0
-                    && (atom2.getFormalCharge() == CDKConstants.UNSET ? 0 : atom2.getFormalCharge()) == 0
+                    && (atom1.getFormalCharge() == CDKConstants.UNSET ? 0 : atom1.getFormalCharge())
+                            == 0
+                    && (atom2.getFormalCharge() == CDKConstants.UNSET ? 0 : atom2.getFormalCharge())
+                            == 0
                     && reactant.getConnectedSingleElectronsCount(atom1) == 0
                     && reactant.getConnectedSingleElectronsCount(atom2) == 0) {
                 atom1.setFlag(CDKConstants.REACTIVE_CENTER, true);

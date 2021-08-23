@@ -38,13 +38,14 @@ public class DebugStrandTest extends AbstractStrandTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new DebugStrand();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new DebugStrand();
+                    }
+                });
     }
 
     @Test

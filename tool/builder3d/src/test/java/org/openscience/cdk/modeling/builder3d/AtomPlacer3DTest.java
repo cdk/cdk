@@ -23,12 +23,15 @@ package org.openscience.cdk.modeling.builder3d;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.vecmath.Point3d;
-
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
@@ -41,13 +44,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 /**
  * Tests for AtomPlacer3D
@@ -72,17 +68,16 @@ public class AtomPlacer3DTest extends CDKTestCase {
     public void tearDown() throws Exception {}
 
     /**
-     *  Sets the standAlone attribute
+     * Sets the standAlone attribute
      *
-     *@param  standAlone  The new standAlone value
+     * @param standAlone The new standAlone value
      */
     public void setStandAlone(boolean standAlone) {
         this.standAlone = standAlone;
     }
 
     /**
-     * Create a test molecule (alpha-pinene).
-     * This code has been inlined from MoleculeFactory.java
+     * Create a test molecule (alpha-pinene). This code has been inlined from MoleculeFactory.java
      *
      * @return the created test molecule
      */
@@ -174,9 +169,8 @@ public class AtomPlacer3DTest extends CDKTestCase {
     }
 
     /**
-     * Demonstrate bug where AtomPlacer3D().numberOfUnplacedHeavyAtoms() counts
-     * explicit hydrogens as heavy atoms.
-     *
+     * Demonstrate bug where AtomPlacer3D().numberOfUnplacedHeavyAtoms() counts explicit hydrogens
+     * as heavy atoms.
      */
     @Test
     public void testNumberOfUnplacedHeavyAtoms_IAtomContainerWithExplicitHydrogens() {

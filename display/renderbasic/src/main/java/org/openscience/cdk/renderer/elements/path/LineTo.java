@@ -25,7 +25,6 @@ package org.openscience.cdk.renderer.elements.path;
 
 import javax.vecmath.Point2d;
 
-
 /**
  * A line element in the path.
  *
@@ -66,16 +65,16 @@ public class LineTo extends PathElement {
      * @param y y coord
      */
     public LineTo(double x, double y) {
-        this(new double[]{x, y});
+        this(new double[] {x, y});
     }
 
-    /** {@inheritDoc} **/
+    /** {@inheritDoc} * */
     @Override
     public float[] points() {
-        return new float[]{(float) coords[0], (float) coords[1]};
+        return new float[] {(float) coords[0], (float) coords[1]};
     }
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     public void points(double[] coords) {
         coords[0] = this.coords[0];

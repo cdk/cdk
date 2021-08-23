@@ -24,10 +24,10 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * SMARTS query atom for matching the total hydrogen count. This count is
- * specified in SMARTS using {@code H<NUMBER>}.
+ * SMARTS query atom for matching the total hydrogen count. This count is specified in SMARTS using
+ * {@code H<NUMBER>}.
  *
- * @cdk.module  smarts
+ * @cdk.module smarts
  * @cdk.keyword SMARTS
  * @cdk.githash
  */
@@ -43,8 +43,7 @@ public final class TotalHCountAtom extends SMARTSAtom {
     }
 
     /**
-     * Check if the total hydrogen count of the {@code atom} is equal to the
-     * query.
+     * Check if the total hydrogen count of the {@code atom} is equal to the query.
      *
      * @param atom the atom to match
      * @return the hydrogen count matches
@@ -54,7 +53,7 @@ public final class TotalHCountAtom extends SMARTSAtom {
         return invariants(atom).totalHydrogenCount() == totalHCount;
     }
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         return "H" + totalHCount;

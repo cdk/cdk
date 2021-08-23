@@ -18,6 +18,7 @@
  */
 package org.openscience.cdk.reaction.mechanism;
 
+import java.util.ArrayList;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
@@ -33,16 +34,14 @@ import org.openscience.cdk.reaction.IReactionMechanism;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
-import java.util.ArrayList;
-
 /**
- * This mechanism displaces the chemical bond to an Atom. Generating one with
- * excess charge and the other with deficiency.
- * It returns the reaction mechanism which has been cloned the IAtomContainer.
+ * This mechanism displaces the chemical bond to an Atom. Generating one with excess charge and the
+ * other with deficiency. It returns the reaction mechanism which has been cloned the
+ * IAtomContainer.
  *
- * @author         miguelrojasch
- * @cdk.created    2008-02-10
- * @cdk.module     reaction
+ * @author miguelrojasch
+ * @cdk.created 2008-02-10
+ * @cdk.module reaction
  * @cdk.githash
  */
 public class HeterolyticCleavageMechanism implements IReactionMechanism {
@@ -51,28 +50,32 @@ public class HeterolyticCleavageMechanism implements IReactionMechanism {
      * Initiates the process for the given mechanism. The atoms to apply are mapped between
      * reactants and products.
      *
-     *
      * @param atomContainerSet
-     * @param atomList    The list of atoms taking part in the mechanism. Only allowed two atoms.
-     *                    The first atom receives the positive charge charge and the second
-     *                    negative charge
-     * @param bondList    The list of bonds taking part in the mechanism. Only allowed one bond
-     * @return            The Reaction mechanism
-     *
+     * @param atomList The list of atoms taking part in the mechanism. Only allowed two atoms. The
+     *     first atom receives the positive charge charge and the second negative charge
+     * @param bondList The list of bonds taking part in the mechanism. Only allowed one bond
+     * @return The Reaction mechanism
      */
     @Override
-    public IReaction initiate(IAtomContainerSet atomContainerSet, ArrayList<IAtom> atomList, ArrayList<IBond> bondList)
+    public IReaction initiate(
+            IAtomContainerSet atomContainerSet,
+            ArrayList<IAtom> atomList,
+            ArrayList<IBond> bondList)
             throws CDKException {
-        CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(atomContainerSet.getBuilder(),
-                CDKAtomTypeMatcher.REQUIRE_EXPLICIT_HYDROGENS);
+        CDKAtomTypeMatcher atMatcher =
+                CDKAtomTypeMatcher.getInstance(
+                        atomContainerSet.getBuilder(),
+                        CDKAtomTypeMatcher.REQUIRE_EXPLICIT_HYDROGENS);
         if (atomContainerSet.getAtomContainerCount() != 1) {
             throw new CDKException("TautomerizationMechanism only expects one IAtomContainer");
         }
         if (atomList.size() != 2) {
-            throw new CDKException("HeterolyticCleavageMechanism expects two atoms in the ArrayList");
+            throw new CDKException(
+                    "HeterolyticCleavageMechanism expects two atoms in the ArrayList");
         }
         if (bondList.size() != 1) {
-            throw new CDKException("HeterolyticCleavageMechanism only expect one bond in the ArrayList");
+            throw new CDKException(
+                    "HeterolyticCleavageMechanism only expect one bond in the ArrayList");
         }
         IAtomContainer molecule = atomContainerSet.getAtomContainer(0);
         IAtomContainer reactantCloned;
@@ -90,8 +93,7 @@ public class HeterolyticCleavageMechanism implements IReactionMechanism {
 
         if (bond1.getOrder() == IBond.Order.SINGLE)
             reactantCloned.removeBond(reactantCloned.getBond(posBond1));
-        else
-            BondManipulator.decreaseBondOrder(reactantCloned.getBond(posBond1));
+        else BondManipulator.decreaseBondOrder(reactantCloned.getBond(posBond1));
 
         int charge = atom1C.getFormalCharge();
         atom1C.setFormalCharge(charge + 1);
@@ -115,14 +117,19 @@ public class HeterolyticCleavageMechanism implements IReactionMechanism {
 
         /* mapping */
         for (IAtom atom : molecule.atoms()) {
-            IMapping mapping = atom1C.getBuilder().newInstance(IMapping.class, atom,
-                    reactantCloned.getAtom(molecule.indexOf(atom)));
+            IMapping mapping =
+                    atom1C.getBuilder()
+                            .newInstance(
+                                    IMapping.class,
+                                    atom,
+                                    reactantCloned.getAtom(molecule.indexOf(atom)));
             reaction.addMapping(mapping);
         }
         if (bond1.getOrder() != IBond.Order.SINGLE) {
             reaction.addProduct(reactantCloned);
         } else {
-            IAtomContainerSet moleculeSetP = ConnectivityChecker.partitionIntoMolecules(reactantCloned);
+            IAtomContainerSet moleculeSetP =
+                    ConnectivityChecker.partitionIntoMolecules(reactantCloned);
             for (int z = 0; z < moleculeSetP.getAtomContainerCount(); z++) {
                 reaction.addProduct((IAtomContainer) moleculeSetP.getAtomContainer(z));
             }
@@ -130,5 +137,4 @@ public class HeterolyticCleavageMechanism implements IReactionMechanism {
 
         return reaction;
     }
-
 }

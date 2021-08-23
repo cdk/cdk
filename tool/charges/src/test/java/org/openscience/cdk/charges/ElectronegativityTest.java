@@ -22,26 +22,24 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
-* TestSuite that runs all tests.
-*
-* @cdk.module test-charges
-*/
+ * TestSuite that runs all tests.
+ *
+ * @cdk.module test-charges
+ */
 public class ElectronegativityTest extends CDKTestCase {
 
-    private IChemObjectBuilder      builder = SilentChemObjectBuilder.getInstance();
+    private IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
     private LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
-    /**
-     * Constructor of the ElectronegativityTest.
-     */
+    /** Constructor of the ElectronegativityTest. */
     public ElectronegativityTest() {
         super();
     }
@@ -49,7 +47,7 @@ public class ElectronegativityTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testElectronegativity() {
@@ -60,7 +58,7 @@ public class ElectronegativityTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testElectronegativity_Int_Int() {
@@ -71,9 +69,8 @@ public class ElectronegativityTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     *  @cdk.inchi InChI=1/CH3F/c1-2/h1H3
-     *
-     * @return    The test suite
+     * @cdk.inchi InChI=1/CH3F/c1-2/h1H3
+     * @return The test suite
      * @throws Exception
      */
     @Test
@@ -91,20 +88,22 @@ public class ElectronegativityTest extends CDKTestCase {
         lpcheck.saturate(molecule);
 
         for (int i = 0; i < molecule.getAtomCount(); i++)
-            Assert.assertEquals(testResult[i], pe.calculateSigmaElectronegativity(molecule, molecule.getAtom(i)), 0.001);
-
+            Assert.assertEquals(
+                    testResult[i],
+                    pe.calculateSigmaElectronegativity(molecule, molecule.getAtom(i)),
+                    0.001);
     }
 
     /**
      * A unit test suite for JUnit.
      *
-     *  @cdk.inchi InChI=1/CH3F/c1-2/h1H3
-     *
-     * @return    The test suite
+     * @cdk.inchi InChI=1/CH3F/c1-2/h1H3
+     * @return The test suite
      * @throws Exception
      */
     @Test
-    public void testCalculateSigmaElectronegativity_IAtomContainer_IAtom_Int_Int() throws Exception {
+    public void testCalculateSigmaElectronegativity_IAtomContainer_IAtom_Int_Int()
+            throws Exception {
         double[] testResult = {11.308338, 8.7184094, 7.5289848, 7.5289848, 7.5289848};
         Electronegativity pe = new Electronegativity();
 
@@ -118,16 +117,17 @@ public class ElectronegativityTest extends CDKTestCase {
         lpcheck.saturate(molecule);
 
         for (int i = 0; i < molecule.getAtomCount(); i++) {
-            Assert.assertEquals(testResult[i],
-                    pe.calculateSigmaElectronegativity(molecule, molecule.getAtom(i), 6, 50), 0.001);
-
+            Assert.assertEquals(
+                    testResult[i],
+                    pe.calculateSigmaElectronegativity(molecule, molecule.getAtom(i), 6, 50),
+                    0.001);
         }
     }
 
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      * @throws Exception
      */
     @Test
@@ -140,7 +140,7 @@ public class ElectronegativityTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      * @throws Exception
      */
     @Test
@@ -153,7 +153,7 @@ public class ElectronegativityTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      * @throws Exception
      */
     @Test
@@ -168,7 +168,7 @@ public class ElectronegativityTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      * @throws Exception
      */
     @Test

@@ -24,7 +24,6 @@ package org.openscience.cdk.tools.manipulator;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -33,11 +32,10 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IReaction;
 
 /**
- * Class with convenience methods that provide methods from
- * methods from ChemObjects within the ChemFile.
+ * Class with convenience methods that provide methods from methods from ChemObjects within the
+ * ChemFile.
  *
  * @see org.openscience.cdk.AtomContainer#removeAtomAndConnectedElectronContainers(IAtom)
- *
  * @cdk.module standard
  * @cdk.githash
  */
@@ -46,10 +44,9 @@ public class ChemFileManipulator {
     /**
      * Get the total number of atoms inside an IChemFile.
      *
-     * @param file       The IChemFile object.
-     * @return           The number of Atom object inside.
+     * @param file The IChemFile object.
+     * @return The number of Atom object inside.
      */
-
     public static int getAtomCount(IChemFile file) {
         int count = 0;
         for (int i = 0; i < file.getChemSequenceCount(); i++) {
@@ -61,8 +58,8 @@ public class ChemFileManipulator {
     /**
      * Get the total number of bonds inside an IChemFile.
      *
-     * @param file       The IChemFile object.
-     * @return           The number of Bond object inside.
+     * @param file The IChemFile object.
+     * @return The number of Bond object inside.
      */
     public static int getBondCount(IChemFile file) {
         int count = 0;
@@ -75,11 +72,11 @@ public class ChemFileManipulator {
     /**
      * Returns a List of all IChemObject inside a ChemFile.
      *
-     * @return  A list of all ChemObjects
+     * @return A list of all ChemObjects
      */
     public static List<IChemObject> getAllChemObjects(IChemFile file) {
         List<IChemObject> list = new ArrayList<IChemObject>();
-        //list.add(file); // should not add the original file
+        // list.add(file); // should not add the original file
         for (int i = 0; i < file.getChemSequenceCount(); i++) {
             list.add(file.getChemSequence(i));
             list.addAll(ChemSequenceManipulator.getAllChemObjects(file.getChemSequence(i)));
@@ -96,9 +93,7 @@ public class ChemFileManipulator {
         return list;
     }
 
-    /**
-     * Returns all the AtomContainer's of a ChemFile.
-     */
+    /** Returns all the AtomContainer's of a ChemFile. */
     public static List<IAtomContainer> getAllAtomContainers(IChemFile file) {
         List<IAtomContainer> acList = new ArrayList<IAtomContainer>();
         for (IChemSequence sequence : file.chemSequences()) {
@@ -110,8 +105,8 @@ public class ChemFileManipulator {
     /**
      * Get a list of all ChemModels inside an IChemFile.
      *
-     * @param file  The IChemFile object.
-     * @return      The List of IChemModel objects inside.
+     * @param file The IChemFile object.
+     * @return The List of IChemModel objects inside.
      */
     public static List<IChemModel> getAllChemModels(IChemFile file) {
         List<IChemModel> modelsList = new ArrayList<IChemModel>();
@@ -127,8 +122,8 @@ public class ChemFileManipulator {
     /**
      * Get a list of all IReaction inside an IChemFile.
      *
-     * @param file  The IChemFile object.
-     * @return      The List of IReaction objects inside.
+     * @param file The IChemFile object.
+     * @return The List of IReaction objects inside.
      */
     public static List<IReaction> getAllReactions(IChemFile file) {
         List<IReaction> reactonList = new ArrayList<IReaction>();

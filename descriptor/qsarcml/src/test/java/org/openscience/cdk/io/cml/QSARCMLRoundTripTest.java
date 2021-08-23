@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.io.cml;
 
+import java.io.StringWriter;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -39,17 +40,16 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import java.io.StringWriter;
-
 /**
  * @author John May
  * @cdk.module test-qsarcml
  */
 public class QSARCMLRoundTripTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(QSARCMLRoundTripTest.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(QSARCMLRoundTripTest.class);
 
-    private static Convertor    convertor;
+    private static Convertor convertor;
 
     @BeforeClass
     public static void setup() {
@@ -71,18 +71,27 @@ public class QSARCMLRoundTripTest {
         Object object = roundTrippedMol.getProperties().keySet().toArray()[0];
         Assert.assertTrue(object instanceof DescriptorSpecification);
         DescriptorSpecification spec = (DescriptorSpecification) object;
-        Assert.assertEquals(descriptor.getSpecification().getSpecificationReference(), spec.getSpecificationReference());
-        Assert.assertEquals(descriptor.getSpecification().getImplementationIdentifier(),
+        Assert.assertEquals(
+                descriptor.getSpecification().getSpecificationReference(),
+                spec.getSpecificationReference());
+        Assert.assertEquals(
+                descriptor.getSpecification().getImplementationIdentifier(),
                 spec.getImplementationIdentifier());
-        Assert.assertEquals(descriptor.getSpecification().getImplementationTitle(), spec.getImplementationTitle());
-        Assert.assertEquals(descriptor.getSpecification().getImplementationVendor(), spec.getImplementationVendor());
+        Assert.assertEquals(
+                descriptor.getSpecification().getImplementationTitle(),
+                spec.getImplementationTitle());
+        Assert.assertEquals(
+                descriptor.getSpecification().getImplementationVendor(),
+                spec.getImplementationVendor());
 
         Object value = roundTrippedMol.getProperty(spec);
         Assert.assertNotNull(value);
         Assert.assertTrue(value instanceof DescriptorValue);
         DescriptorValue descriptorResult = (DescriptorValue) value;
-        Assert.assertEquals(originalValue.getClass().getName(), descriptorResult.getClass().getName());
-        Assert.assertEquals(originalValue.getValue().toString(), descriptorResult.getValue().toString());
+        Assert.assertEquals(
+                originalValue.getClass().getName(), descriptorResult.getClass().getName());
+        Assert.assertEquals(
+                originalValue.getValue().toString(), descriptorResult.getValue().toString());
     }
 
     @Test
@@ -101,8 +110,8 @@ public class QSARCMLRoundTripTest {
         logger.debug("****************************** testQSARCustomization()");
         logger.debug(cmlContent);
         logger.debug("******************************");
-        Assert.assertTrue(cmlContent.indexOf("<property") != -1 && cmlContent.indexOf("xmlns:qsar") != -1);
+        Assert.assertTrue(
+                cmlContent.indexOf("<property") != -1 && cmlContent.indexOf("xmlns:qsar") != -1);
         Assert.assertTrue(cmlContent.indexOf("#weight\"") != -1);
     }
-
 }

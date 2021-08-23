@@ -24,7 +24,6 @@ package org.openscience.cdk.renderer;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
@@ -32,7 +31,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.font.AWTFontManager;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator;
@@ -44,16 +42,17 @@ import org.openscience.cdk.renderer.generators.BasicAtomGenerator.ShowEndCarbons
 import org.openscience.cdk.renderer.generators.BasicBondGenerator;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.renderer.generators.IGenerator;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
- * @author     maclean
+ * @author maclean
  * @cdk.module test-renderbasic
  */
 public class AtomContainerRendererTest {
 
-    private IChemObjectBuilder        builder = SilentChemObjectBuilder.getInstance();
+    private IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
-    private StructureDiagramGenerator sdg     = new StructureDiagramGenerator();
+    private StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 
     public IAtomContainer layout(IAtomContainer molecule) {
         sdg.setMolecule(molecule);
@@ -89,7 +88,8 @@ public class AtomContainerRendererTest {
         BasicAtomGenerator atomGenerator = new BasicAtomGenerator();
         generators.add(atomGenerator);
 
-        AtomContainerRenderer renderer = new AtomContainerRenderer(generators, new AWTFontManager());
+        AtomContainerRenderer renderer =
+                new AtomContainerRenderer(generators, new AWTFontManager());
         RendererModel model = renderer.getRenderer2DModel();
         model.getParameter(CompactShape.class).setValue(Shape.OVAL);
         model.getParameter(CompactAtom.class).setValue(true);
@@ -102,8 +102,9 @@ public class AtomContainerRendererTest {
         renderer.paint(square, visitor);
 
         for (IRenderingElement element : visitor.getElements()) {
-            Assert.assertTrue(visitor.toString(element).contains("Line") || visitor.toString(element).contains("Oval"));
+            Assert.assertTrue(
+                    visitor.toString(element).contains("Line")
+                            || visitor.toString(element).contains("Oval"));
         }
     }
-
 }

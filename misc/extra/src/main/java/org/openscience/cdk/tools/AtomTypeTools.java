@@ -19,6 +19,8 @@
  */
 package org.openscience.cdk.tools;
 
+import java.util.HashSet;
+import java.util.Set;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
@@ -32,33 +34,27 @@ import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
-* AtomTypeTools is a helper class for assigning atom types to an atom.
-*
-* @author         cho
-* @cdk.created    2005-18-07
-* @cdk.module     extra
+ * AtomTypeTools is a helper class for assigning atom types to an atom.
+ *
+ * @author cho
+ * @cdk.created 2005-18-07
+ * @cdk.module extra
  * @cdk.githash
-*/
-
+ */
 public class AtomTypeTools {
 
-    public static final int PYROLE_RING     = 4;
-    public static final int FURAN_RING      = 6;
-    public static final int THIOPHENE_RING  = 8;
-    public static final int PYRIDINE_RING   = 10;
+    public static final int PYROLE_RING = 4;
+    public static final int FURAN_RING = 6;
+    public static final int THIOPHENE_RING = 8;
+    public static final int PYRIDINE_RING = 10;
     public static final int PYRIMIDINE_RING = 12;
     public static final int BENZENE_RING = 5;
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(AtomTypeTools.class);
     HOSECodeGenerator hcg = null;
-    SmilesGenerator   sg  = null;
+    SmilesGenerator sg = null;
 
-    /**
-     * Constructor for the MMFF94AtomTypeMatcher object.
-     */
+    /** Constructor for the MMFF94AtomTypeMatcher object. */
     public AtomTypeTools() {
         hcg = new HOSECodeGenerator();
     }
@@ -68,24 +64,26 @@ public class AtomTypeTools {
     }
 
     /**
-     *  Method assigns certain properties to an atom. Necessary for the atom type matching
-     *  Properties:
-     *  <ul>
+     * Method assigns certain properties to an atom. Necessary for the atom type matching
+     * Properties:
+     *
+     * <ul>
      *   <li>aromaticity)
      *   <li>ChemicalGroup (CDKChemicalRingGroupConstant)
-     *	 <li>SSSR
-     *	 <li>Ring/Group, ringSize, aromaticity
-     *	 <li>SphericalMatcher (HoSe Code)
-     *  </ul>
+     *   <li>SSSR
+     *   <li>Ring/Group, ringSize, aromaticity
+     *   <li>SphericalMatcher (HoSe Code)
+     * </ul>
      *
-     *@param aromaticity boolean true/false true if aromaticity should be calculated
-     *@return sssrf ringSetofTheMolecule
-     *@exception Exception  Description of the Exception
+     * @param aromaticity boolean true/false true if aromaticity should be calculated
+     * @return sssrf ringSetofTheMolecule
+     * @exception Exception Description of the Exception
      */
-    public IRingSet assignAtomTypePropertiesToAtom(IAtomContainer molecule, boolean aromaticity) throws Exception {
+    public IRingSet assignAtomTypePropertiesToAtom(IAtomContainer molecule, boolean aromaticity)
+            throws Exception {
         SmilesGenerator sg = new SmilesGenerator();
 
-        //logger.debug("assignAtomTypePropertiesToAtom Start ...");
+        // logger.debug("assignAtomTypePropertiesToAtom Start ...");
         logger.debug("assignAtomTypePropertiesToAtom Start ...");
         String hoseCode = "";
         IRingSet ringSetA = null;
@@ -96,28 +94,36 @@ public class AtomTypeTools {
             try {
                 Aromaticity.cdkLegacy().apply(molecule);
             } catch (Exception cdk1) {
-                //logger.debug("AROMATICITYError: Cannot determine aromaticity due to: " + cdk1.toString());
-                logger.error("AROMATICITYError: Cannot determine aromaticity due to: " + cdk1.toString());
+                // logger.debug("AROMATICITYError: Cannot determine aromaticity due to: " +
+                // cdk1.toString());
+                logger.error(
+                        "AROMATICITYError: Cannot determine aromaticity due to: "
+                                + cdk1.toString());
             }
         }
 
         for (int i = 0; i < molecule.getAtomCount(); i++) {
             // FIXME: remove casting
             IAtom atom2 = molecule.getAtom(i);
-            //Atom aromatic is set by HueckelAromaticityDetector
-            //Atom in ring?
+            // Atom aromatic is set by HueckelAromaticityDetector
+            // Atom in ring?
             if (ringSetMolecule.contains(atom2)) {
                 ringSetA = ringSetMolecule.getRings(atom2);
                 RingSetManipulator.sort(ringSetA);
-                IRing sring = (IRing) ringSetA.getAtomContainer(ringSetA.getAtomContainerCount() - 1);
-                atom2.setProperty(CDKConstants.PART_OF_RING_OF_SIZE, Integer.valueOf(sring.getRingSize()));
+                IRing sring =
+                        (IRing) ringSetA.getAtomContainer(ringSetA.getAtomContainerCount() - 1);
+                atom2.setProperty(
+                        CDKConstants.PART_OF_RING_OF_SIZE, Integer.valueOf(sring.getRingSize()));
                 atom2.setProperty(
                         CDKConstants.CHEMICAL_GROUP_CONSTANT,
-                        Integer.valueOf(ringSystemClassifier(sring, getSubgraphSmiles(sring, molecule))));
+                        Integer.valueOf(
+                                ringSystemClassifier(sring, getSubgraphSmiles(sring, molecule))));
                 atom2.setFlag(CDKConstants.ISINRING, true);
                 atom2.setFlag(CDKConstants.ISALIPHATIC, false);
             } else {
-                atom2.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, Integer.valueOf(CDKConstants.ISNOTINRING));
+                atom2.setProperty(
+                        CDKConstants.CHEMICAL_GROUP_CONSTANT,
+                        Integer.valueOf(CDKConstants.ISNOTINRING));
                 atom2.setFlag(CDKConstants.ISINRING, false);
                 atom2.setFlag(CDKConstants.ISALIPHATIC, true);
             }
@@ -126,7 +132,9 @@ public class AtomTypeTools {
                 hoseCode = removeAromaticityFlagsFromHoseCode(hoseCode);
                 atom2.setProperty(CDKConstants.SPHERICAL_MATCHER, hoseCode);
             } catch (CDKException ex1) {
-                throw new CDKException("Could not build HOSECode from atom " + i + " due to " + ex1.toString(), ex1);
+                throw new CDKException(
+                        "Could not build HOSECode from atom " + i + " due to " + ex1.toString(),
+                        ex1);
             }
         }
         return ringSetMolecule;
@@ -143,18 +151,17 @@ public class AtomTypeTools {
      * @return the canonical smiles of the subgraph
      * @throws CDKException something went wrong with SMILES gen
      */
-    private static String getSubgraphSmiles(IAtomContainer subgraph, IAtomContainer molecule) throws CDKException {
+    private static String getSubgraphSmiles(IAtomContainer subgraph, IAtomContainer molecule)
+            throws CDKException {
         Set<IBond> bonds = new HashSet<>();
-        for (IBond bond : subgraph.bonds())
-            bonds.add(bond);
+        for (IBond bond : subgraph.bonds()) bonds.add(bond);
 
         Integer[] hCount = new Integer[subgraph.getAtomCount()];
         for (int i = 0; i < subgraph.getAtomCount(); i++) {
             final IAtom atom = subgraph.getAtom(i);
             int removed = 0;
             for (IBond bond : molecule.getConnectedBondsList(atom)) {
-                if (!bonds.contains(bond))
-                    removed += bond.getOrder().numeric();
+                if (!bonds.contains(bond)) removed += bond.getOrder().numeric();
             }
             hCount[i] = atom.getImplicitHydrogenCount();
             atom.setImplicitHydrogenCount(hCount[i] == null ? removed : hCount[i] + removed);
@@ -181,51 +188,44 @@ public class AtomTypeTools {
         return SmilesGenerator.unique().create(mol);
     }
 
-    private static String PYRROLE_SMI    = null;
-    private static String FURAN_SMI      = null;
-    private static String THIOPHENE_SMI  = null;
-    private static String PYRIDINE_SMI   = null;
+    private static String PYRROLE_SMI = null;
+    private static String FURAN_SMI = null;
+    private static String THIOPHENE_SMI = null;
+    private static String PYRIDINE_SMI = null;
     private static String PYRIMIDINE_SMI = null;
-    private static String BENZENE_SMI    = null;
-    
-    private static void initCache(SmilesParser smipar) throws CDKException{
-    	PYRROLE_SMI = cansmi(smipar.parseSmiles("c1cc[nH]c1"));
-    	FURAN_SMI = cansmi(smipar.parseSmiles("o1cccc1"));
-    	THIOPHENE_SMI = cansmi(smipar.parseSmiles("c1ccsc1"));
-    	PYRIDINE_SMI = cansmi(smipar.parseSmiles("c1ccncc1"));
-    	PYRIMIDINE_SMI = cansmi(smipar.parseSmiles("c1cncnc1"));
-    	BENZENE_SMI = cansmi(smipar.parseSmiles("c1ccccc1"));
+    private static String BENZENE_SMI = null;
+
+    private static void initCache(SmilesParser smipar) throws CDKException {
+        PYRROLE_SMI = cansmi(smipar.parseSmiles("c1cc[nH]c1"));
+        FURAN_SMI = cansmi(smipar.parseSmiles("o1cccc1"));
+        THIOPHENE_SMI = cansmi(smipar.parseSmiles("c1ccsc1"));
+        PYRIDINE_SMI = cansmi(smipar.parseSmiles("c1ccncc1"));
+        PYRIMIDINE_SMI = cansmi(smipar.parseSmiles("c1cncnc1"));
+        BENZENE_SMI = cansmi(smipar.parseSmiles("c1ccccc1"));
     }
 
     /**
-     *  Identifies ringSystem and returns a number which corresponds to
-     *  CDKChemicalRingConstant
+     * Identifies ringSystem and returns a number which corresponds to CDKChemicalRingConstant
      *
-     *@param  ring    Ring class with the ring system
-     *@param  smile  smile of the ring system
-     *@return chemicalRingConstant
+     * @param ring Ring class with the ring system
+     * @param smile smile of the ring system
+     * @return chemicalRingConstant
      */
     private int ringSystemClassifier(IRing ring, String smile) throws CDKException {
         /* System.out.println("IN AtomTypeTools Smile:"+smile); */
         logger.debug("Comparing ring systems: SMILES=", smile);
-        
+
         if (PYRROLE_SMI == null) {
             final SmilesParser smipar = new SmilesParser(ring.getBuilder());
             initCache(smipar);
         }
 
-        if (smile.equals(PYRROLE_SMI))
-            return PYROLE_RING;
-        else if (smile.equals(FURAN_SMI))
-            return FURAN_RING;
-        else if (smile.equals(THIOPHENE_SMI))
-            return THIOPHENE_RING;
-        else if (smile.equals(PYRIDINE_SMI))
-            return PYRIDINE_RING;
-        else if (smile.equals(PYRIMIDINE_SMI))
-            return PYRIMIDINE_RING;
-        else if (smile.equals(BENZENE_SMI))
-            return BENZENE_RING;
+        if (smile.equals(PYRROLE_SMI)) return PYROLE_RING;
+        else if (smile.equals(FURAN_SMI)) return FURAN_RING;
+        else if (smile.equals(THIOPHENE_SMI)) return THIOPHENE_RING;
+        else if (smile.equals(PYRIDINE_SMI)) return PYRIDINE_RING;
+        else if (smile.equals(PYRIMIDINE_SMI)) return PYRIMIDINE_RING;
+        else if (smile.equals(BENZENE_SMI)) return BENZENE_RING;
 
         int ncount = 0;
         for (int i = 0; i < ring.getAtomCount(); i++) {

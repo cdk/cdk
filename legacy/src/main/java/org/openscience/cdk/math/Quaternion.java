@@ -26,8 +26,7 @@
 package org.openscience.cdk.math;
 
 /**
- * This class handles quaternions.
- * Quaternion are 2*2 complex matrices.
+ * This class handles quaternions. Quaternion are 2*2 complex matrices.
  *
  * @cdk.module qm
  */
@@ -47,9 +46,7 @@ public class Quaternion {
         this.d = d;
     }
 
-    /**
-     * Generate a quaternion from a rotation axis and an angle
-     */
+    /** Generate a quaternion from a rotation axis and an angle */
     public Quaternion(Vector axis, double angle) {
         double sin_a = Math.sin(angle / 2);
         double cos_a = Math.cos(angle / 2);
@@ -65,9 +62,7 @@ public class Quaternion {
         }
     }
 
-    /**
-     * Generate a quaternion from spherical coordinates and a rotation angle
-     */
+    /** Generate a quaternion from spherical coordinates and a rotation angle */
     public Quaternion(double latitude, double longitude, double angle) {
         double sin_a = Math.sin(angle / 2);
         double cos_a = Math.cos(angle / 2);
@@ -97,8 +92,11 @@ public class Quaternion {
     }
 
     public Quaternion mul(Quaternion q) {
-        return new Quaternion(a * q.a - b * q.b - c * q.c - d * q.d, a * q.b + b * q.a + c * q.d - d * q.c, a * q.c + c
-                * q.a + d * q.b - b * q.d, a * q.d + d * q.a + a * q.c - c * q.b);
+        return new Quaternion(
+                a * q.a - b * q.b - c * q.c - d * q.d,
+                a * q.b + b * q.a + c * q.d - d * q.c,
+                a * q.c + c * q.a + d * q.b - b * q.d,
+                a * q.d + d * q.a + a * q.c - c * q.b);
     }
 
     public Quaternion mul(double v) {
@@ -110,7 +108,8 @@ public class Quaternion {
         temp1 = new Quaternion(q.a, -q.b, -q.c, -q.d);
         temp2 = mul(temp1);
         temp1 = q.mul(temp1);
-        return new Quaternion(temp2.a / temp1.a, temp2.b / temp1.a, temp2.c / temp1.a, temp2.d / temp1.a);
+        return new Quaternion(
+                temp2.a / temp1.a, temp2.b / temp1.a, temp2.c / temp1.a, temp2.d / temp1.a);
     }
 
     public Quaternion normalize() {
@@ -158,7 +157,11 @@ public class Quaternion {
         result.matrix[2][1] = 2 * (yz + xw);
         result.matrix[2][2] = 1 - 2 * (xx + yy);
 
-        result.matrix[3][0] = result.matrix[3][1] = result.matrix[3][2] = result.matrix[0][3] = result.matrix[1][3] = result.matrix[2][3] = 0d;
+        result.matrix[3][0] =
+                result.matrix[3][1] =
+                        result.matrix[3][2] =
+                                result.matrix[0][3] =
+                                        result.matrix[1][3] = result.matrix[2][3] = 0d;
         result.matrix[3][3] = 1d;
 
         return result;

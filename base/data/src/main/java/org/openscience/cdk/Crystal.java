@@ -19,23 +19,19 @@
 package org.openscience.cdk;
 
 import java.io.Serializable;
-
 import javax.vecmath.Vector3d;
-
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.ICrystal;
 
 /**
- * Class representing a molecular crystal.
- * The crystal is described with molecules in fractional
+ * Class representing a molecular crystal. The crystal is described with molecules in fractional
  * coordinates and three cell axes: a,b and c.
  *
- * <p>The crystal is designed to store only the asymmetric atoms.
- * Though this is not enforced, it is assumed by all methods.
+ * <p>The crystal is designed to store only the asymmetric atoms. Though this is not enforced, it is
+ * assumed by all methods.
  *
  * @cdk.module data
  * @cdk.githash
- *
  * @cdk.keyword crystal
  */
 public class Crystal extends AtomContainer implements Serializable, ICrystal, Cloneable {
@@ -43,42 +39,36 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
     /**
      * Determines if a de-serialized object is compatible with this class.
      *
-     * This value must only be changed if and only if the new version
-     * of this class is incompatible with the old version. See Sun docs
-     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide/serialization/spec/version.doc.html>details</a>.
+     * <p>This value must only be changed if and only if the new version of this class is
+     * incompatible with the old version. See Sun docs for <a
+     * href=http://java.sun.com/products/jdk/1.1/docs/guide/serialization/spec/version.doc.html>details</a>.
      */
     private static final long serialVersionUID = 5919649450390509278L;
 
     /** The a axis. */
-    private Vector3d          aAxis;
+    private Vector3d aAxis;
     /** The b axis. */
-    private Vector3d          bAxis;
+    private Vector3d bAxis;
     /** The c axis. */
-    private Vector3d          cAxis;
+    private Vector3d cAxis;
 
-    /**
-     * Number of symmetry related atoms.
-     */
-    private Integer           zValue           = 1;
+    /** Number of symmetry related atoms. */
+    private Integer zValue = 1;
 
-    /**
-     * Number of symmetry related atoms.
-     */
-    private String            spaceGroup       = "P1";
+    /** Number of symmetry related atoms. */
+    private String spaceGroup = "P1";
 
-    /**
-     * Constructs a new crystal with zero length cell axis.
-     */
+    /** Constructs a new crystal with zero length cell axis. */
     public Crystal() {
         super();
         setZeroAxes();
     }
 
     /**
-     * Constructs a new crystal with zero length cell axis
-     * and adds the atoms in the AtomContainer as cell content.
+     * Constructs a new crystal with zero length cell axis and adds the atoms in the AtomContainer
+     * as cell content.
      *
-     * @param container  the AtomContainer providing the atoms and bonds
+     * @param container the AtomContainer providing the atoms and bonds
      */
     public Crystal(IAtomContainer container) {
         super(container);
@@ -86,12 +76,10 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
     }
 
     /**
-     * Sets the A unit cell axes in Cartesian coordinates in a
-     * Euclidean space.
+     * Sets the A unit cell axes in Cartesian coordinates in a Euclidean space.
      *
-     * @param  newAxis the new A axis
-     *
-     * @see    #getA
+     * @param newAxis the new A axis
+     * @see #getA
      */
     @Override
     public void setA(Vector3d newAxis) {
@@ -100,12 +88,10 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
     }
 
     /**
-     * Gets the A unit cell axes in Cartesian coordinates
-     * as a three element double array.
+     * Gets the A unit cell axes in Cartesian coordinates as a three element double array.
      *
      * @return a Vector3D representing the A axis
-     *
-     * @see       #setA
+     * @see #setA
      */
     @Override
     public Vector3d getA() {
@@ -115,9 +101,8 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
     /**
      * Sets the B unit cell axes in Cartesian coordinates.
      *
-     * @param  newAxis the new B axis
-     *
-     * @see    #getB
+     * @param newAxis the new B axis
+     * @see #getB
      */
     @Override
     public void setB(Vector3d newAxis) {
@@ -126,12 +111,10 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
     }
 
     /**
-     * Gets the B unit cell axes in Cartesian coordinates
-     * as a three element double array.
+     * Gets the B unit cell axes in Cartesian coordinates as a three element double array.
      *
      * @return a Vector3D representing the B axis
-     *
-     * @see       #setB
+     * @see #setB
      */
     @Override
     public Vector3d getB() {
@@ -141,9 +124,8 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
     /**
      * Sets the C unit cell axes in Cartesian coordinates.
      *
-     * @param  newAxis the new C axis
-     *
-     * @see       #getC
+     * @param newAxis the new C axis
+     * @see #getC
      */
     @Override
     public void setC(Vector3d newAxis) {
@@ -152,12 +134,10 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
     }
 
     /**
-     * Gets the C unit cell axes in Cartesian coordinates
-     * as a three element double array.
+     * Gets the C unit cell axes in Cartesian coordinates as a three element double array.
      *
      * @return a Vector3D representing the C axis
-     *
-     * @see       #setC
+     * @see #setC
      */
     @Override
     public Vector3d getC() {
@@ -168,8 +148,7 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
      * Gets the space group of this crystal.
      *
      * @return the space group of this crystal structure
-     *
-     * @see       #setSpaceGroup
+     * @see #setSpaceGroup
      */
     @Override
     public String getSpaceGroup() {
@@ -179,9 +158,8 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
     /**
      * Sets the space group of this crystal.
      *
-     * @param   group  the space group of this crystal structure
-     *
-     * @see       #getSpaceGroup
+     * @param group the space group of this crystal structure
+     * @see #getSpaceGroup
      */
     @Override
     public void setSpaceGroup(String group) {
@@ -193,7 +171,7 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
      * Gets the number of asymmetric parts in the unit cell.
      *
      * @return the number of asymmetric parts in the unit cell
-     * @see    #setZ
+     * @see #setZ
      */
     @Override
     public Integer getZ() {
@@ -203,8 +181,8 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
     /**
      * Sets the number of asymmetric parts in the unit cell.
      *
-     * @param   value the number of asymmetric parts in the unit cell
-     * @see           #getZ
+     * @param value the number of asymmetric parts in the unit cell
+     * @see #getZ
      */
     @Override
     public void setZ(Integer value) {
@@ -213,7 +191,7 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
     }
 
     /**
-     *  Makes a clone of this crystal.
+     * Makes a clone of this crystal.
      *
      * @return The cloned crystal.
      */
@@ -227,9 +205,7 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
         return clone;
     }
 
-    /**
-     * Returns a String representation of this crystal.
-     */
+    /** Returns a String representation of this crystal. */
     @Override
     public String toString() {
         StringBuffer resultString = new StringBuffer(64);
@@ -241,21 +217,37 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
             resultString.append(", Z=").append(getZ());
         }
         if (getA() != null) {
-            resultString.append(", a=(").append(aAxis.x).append(", ").append(aAxis.y).append(", ").append(aAxis.z);
+            resultString
+                    .append(", a=(")
+                    .append(aAxis.x)
+                    .append(", ")
+                    .append(aAxis.y)
+                    .append(", ")
+                    .append(aAxis.z);
         }
         if (getB() != null) {
-            resultString.append("), b=(").append(bAxis.x).append(", ").append(bAxis.y).append(", ").append(bAxis.z);
+            resultString
+                    .append("), b=(")
+                    .append(bAxis.x)
+                    .append(", ")
+                    .append(bAxis.y)
+                    .append(", ")
+                    .append(bAxis.z);
         }
         if (getC() != null) {
-            resultString.append("), c=(").append(cAxis.x).append(", ").append(cAxis.y).append(", ").append(cAxis.z);
+            resultString
+                    .append("), c=(")
+                    .append(cAxis.x)
+                    .append(", ")
+                    .append(cAxis.y)
+                    .append(", ")
+                    .append(cAxis.z);
         }
         resultString.append(", ").append(super.toString());
         return resultString.toString();
     }
 
-    /**
-     *  Initializes the unit cell axes to zero length.
-     */
+    /** Initializes the unit cell axes to zero length. */
     private void setZeroAxes() {
         aAxis = new Vector3d(0.0, 0.0, 0.0);
         bAxis = new Vector3d(0.0, 0.0, 0.0);

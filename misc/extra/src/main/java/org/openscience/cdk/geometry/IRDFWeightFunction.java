@@ -27,22 +27,19 @@ import org.openscience.cdk.interfaces.IAtom;
 /**
  * Weight function used in the <code>RDFCalculator</code>.
  *
- * @cdk.module  extra
+ * @cdk.module extra
  * @cdk.githash
- *
- * @author      Egon Willighagen
+ * @author Egon Willighagen
  * @cdk.created 2005-01-14
- *
- * @see         org.openscience.cdk.geometry.RDFCalculator
+ * @see org.openscience.cdk.geometry.RDFCalculator
  */
 public interface IRDFWeightFunction {
 
     /**
      * Calculates the weight for the interaction between the two atoms.
      *
-     * @param atom  First atom.
+     * @param atom First atom.
      * @param atom2 Second atom.
      */
     public double calculate(IAtom atom, IAtom atom2);
-
 }

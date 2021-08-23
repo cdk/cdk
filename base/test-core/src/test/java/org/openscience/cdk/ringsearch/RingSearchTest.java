@@ -22,19 +22,9 @@
  */
 package org.openscience.cdk.ringsearch;
 
-import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.exception.NoSuchAtomException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-
-import java.util.Iterator;
-
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertFalse;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
@@ -43,9 +33,17 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Iterator;
+import org.junit.Test;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.exception.NoSuchAtomException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+
 /**
- * Mocking for {@link RingSearch}. Please refer to RingSearchTest_* for
- * situation unit tests.
+ * Mocking for {@link RingSearch}. Please refer to RingSearchTest_* for situation unit tests.
  *
  * @author John May
  * @cdk.module test-core
@@ -215,35 +213,36 @@ public class RingSearchTest {
 
         RingSearch ringSearch = new RingSearch(container, cyclicSearch);
 
-        when(cyclicSearch.cyclic()).thenReturn(new int[]{0, 1, 2});
-        when(cyclicSearch.isolated()).thenReturn(new int[][]{{0, 1, 2}});
+        when(cyclicSearch.cyclic()).thenReturn(new int[] {0, 1, 2});
+        when(cyclicSearch.isolated()).thenReturn(new int[][] {{0, 1, 2}});
         when(cyclicSearch.fused()).thenReturn(new int[0][0]);
         when(container.getAtomCount()).thenReturn(3);
         when(container.getBuilder()).thenReturn(builder);
-        when(builder.newInstance(IAtomContainer.class, 0, 0, 0, 0)).thenReturn(mock(IAtomContainer.class));
-        when(container.bonds()).thenReturn(new Iterable<IBond>() {
+        when(builder.newInstance(IAtomContainer.class, 0, 0, 0, 0))
+                .thenReturn(mock(IAtomContainer.class));
+        when(container.bonds())
+                .thenReturn(
+                        new Iterable<IBond>() {
 
-            @Override
-            public Iterator<IBond> iterator() {
-                return new Iterator<IBond>() {
+                            @Override
+                            public Iterator<IBond> iterator() {
+                                return new Iterator<IBond>() {
 
-                    @Override
-                    public boolean hasNext() {
-                        return false;
-                    }
+                                    @Override
+                                    public boolean hasNext() {
+                                        return false;
+                                    }
 
-                    @Override
-                    public IBond next() {
-                        return null;
-                    }
+                                    @Override
+                                    public IBond next() {
+                                        return null;
+                                    }
 
-                    @Override
-                    public void remove() {
-
-                    }
-                };
-            }
-        });
+                                    @Override
+                                    public void remove() {}
+                                };
+                            }
+                        });
 
         ringSearch.ringFragments();
 
@@ -267,33 +266,34 @@ public class RingSearchTest {
 
         RingSearch ringSearch = new RingSearch(container, cyclicSearch);
 
-        when(cyclicSearch.isolated()).thenReturn(new int[][]{{0, 1}, {2}});
+        when(cyclicSearch.isolated()).thenReturn(new int[][] {{0, 1}, {2}});
         when(container.getBuilder()).thenReturn(builder);
-        when(container.bonds()).thenReturn(new Iterable<IBond>() {
+        when(container.bonds())
+                .thenReturn(
+                        new Iterable<IBond>() {
 
-            @Override
-            public Iterator<IBond> iterator() {
-                return new Iterator<IBond>() {
+                            @Override
+                            public Iterator<IBond> iterator() {
+                                return new Iterator<IBond>() {
 
-                    @Override
-                    public boolean hasNext() {
-                        return false;
-                    }
+                                    @Override
+                                    public boolean hasNext() {
+                                        return false;
+                                    }
 
-                    @Override
-                    public IBond next() {
-                        return null;
-                    }
+                                    @Override
+                                    public IBond next() {
+                                        return null;
+                                    }
 
-                    @Override
-                    public void remove() {
-
-                    }
-                };
-            }
-        });
+                                    @Override
+                                    public void remove() {}
+                                };
+                            }
+                        });
         when(container.getAtom(anyInt())).thenReturn(mock(IAtom.class));
-        when(builder.newInstance(IAtomContainer.class, 0, 0, 0, 0)).thenReturn(mock(IAtomContainer.class));
+        when(builder.newInstance(IAtomContainer.class, 0, 0, 0, 0))
+                .thenReturn(mock(IAtomContainer.class));
 
         ringSearch.isolatedRingFragments();
 
@@ -306,7 +306,6 @@ public class RingSearchTest {
 
         // builder was invoked
         verify(builder, times(2)).newInstance(IAtomContainer.class, 0, 0, 0, 0);
-
     }
 
     @Test
@@ -318,32 +317,33 @@ public class RingSearchTest {
 
         RingSearch ringSearch = new RingSearch(container, cyclicSearch);
 
-        when(cyclicSearch.fused()).thenReturn(new int[][]{{0, 1}, {2}});
+        when(cyclicSearch.fused()).thenReturn(new int[][] {{0, 1}, {2}});
         when(container.getBuilder()).thenReturn(builder);
-        when(builder.newInstance(IAtomContainer.class, 0, 0, 0, 0)).thenReturn(mock(IAtomContainer.class));
-        when(container.bonds()).thenReturn(new Iterable<IBond>() {
+        when(builder.newInstance(IAtomContainer.class, 0, 0, 0, 0))
+                .thenReturn(mock(IAtomContainer.class));
+        when(container.bonds())
+                .thenReturn(
+                        new Iterable<IBond>() {
 
-            @Override
-            public Iterator<IBond> iterator() {
-                return new Iterator<IBond>() {
+                            @Override
+                            public Iterator<IBond> iterator() {
+                                return new Iterator<IBond>() {
 
-                    @Override
-                    public boolean hasNext() {
-                        return false;
-                    }
+                                    @Override
+                                    public boolean hasNext() {
+                                        return false;
+                                    }
 
-                    @Override
-                    public IBond next() {
-                        return null;
-                    }
+                                    @Override
+                                    public IBond next() {
+                                        return null;
+                                    }
 
-                    @Override
-                    public void remove() {
-
-                    }
-                };
-            }
-        });
+                                    @Override
+                                    public void remove() {}
+                                };
+                            }
+                        });
         when(container.getAtom(anyInt())).thenReturn(mock(IAtom.class));
 
         ringSearch.fusedRingFragments();
@@ -519,5 +519,4 @@ public class RingSearchTest {
         mol.addBond(b15);
         return mol;
     }
-
 }

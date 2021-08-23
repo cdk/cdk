@@ -31,7 +31,6 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
  * Checks the functionality of the AdductFormula.
  *
  * @cdk.module test-data
- *
  * @see AdductFormula
  */
 public class AdductFormulaTest extends AbstractAdductFormulaTest {
@@ -44,7 +43,7 @@ public class AdductFormulaTest extends AbstractAdductFormulaTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testAdductFormula() {
@@ -55,7 +54,7 @@ public class AdductFormulaTest extends AbstractAdductFormulaTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testAdductFormula_IMolecularFormula() {

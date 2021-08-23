@@ -19,13 +19,10 @@
 package org.openscience.cdk.charges;
 
 /**
- * Interface for classes that calculate (partial) charges centered
- * on atom nuclei.
+ * Interface for classes that calculate (partial) charges centered on atom nuclei.
  *
- * @author      egonw
- * @cdk.module  charges
+ * @author egonw
+ * @cdk.module charges
  * @cdk.githash
  */
-public interface IChargeCalculator extends IElectronicPropertyCalculator {
-
-}
+public interface IChargeCalculator extends IElectronicPropertyCalculator {}

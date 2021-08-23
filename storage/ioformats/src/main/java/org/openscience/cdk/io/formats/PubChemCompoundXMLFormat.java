@@ -18,9 +18,8 @@
  */
 package org.openscience.cdk.io.formats;
 
-import org.openscience.cdk.tools.DataFeatures;
-
 import java.util.List;
+import org.openscience.cdk.tools.DataFeatures;
 
 /**
  * @cdk.module ioformats
@@ -58,7 +57,7 @@ public class PubChemCompoundXMLFormat extends AbstractResourceFormat implements 
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"xml"};
+        return new String[] {"xml"};
     }
 
     /** {@inheritDoc} */
@@ -97,7 +96,8 @@ public class PubChemCompoundXMLFormat extends AbstractResourceFormat implements 
         MatchResult result = NO_MATCH;
         for (int i = 0; i < lines.size(); i++) {
             String line = lines.get(i);
-            if (line.contains("<PC-Compound") && result == NO_MATCH) result = new MatchResult(true, this, i);
+            if (line.contains("<PC-Compound") && result == NO_MATCH)
+                result = new MatchResult(true, this, i);
             if (line.contains("<PC-Compounds")) return NO_MATCH;
         }
         return result;

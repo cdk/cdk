@@ -21,15 +21,14 @@ package org.openscience.cdk.interfaces;
 /**
  * The base class for all data objects in this CDK.
  *
- * @author        egonw
- * @cdk.module    interfaces
+ * @author egonw
+ * @cdk.module interfaces
  * @cdk.githash
  */
 public interface ICDKObject extends Cloneable {
 
     /**
-     * Returns a {@link IChemObjectBuilder} for the data classes that extend
-     * this class.
+     * Returns a {@link IChemObjectBuilder} for the data classes that extend this class.
      *
      * @return The {@link IChemObjectBuilder} matching this {@link ICDKObject}
      */

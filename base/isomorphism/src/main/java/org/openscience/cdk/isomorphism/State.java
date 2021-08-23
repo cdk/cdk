@@ -25,13 +25,11 @@
 package org.openscience.cdk.isomorphism;
 
 /**
- * Defines a state for matching (subgraph-)isomorphism from a query graph
- * (<i>G1</i>) to a target graph (<i>G2</i>). The mutable state allows
- * generation and adding and removal of mappings. A mapping {n, m} indicates a
- * query vertex (from <i>G1</i>), n, is paired (mapped) with the target vertex,
- * m (from <i>G2</i>). Candidate pairs are generated using {@link #nextN(int)}
- * and {@link #nextM(int)}. Each candidate pair {n, m} is then {@link #add}ed if
- * the mapping was feasible.
+ * Defines a state for matching (subgraph-)isomorphism from a query graph (<i>G1</i>) to a target
+ * graph (<i>G2</i>). The mutable state allows generation and adding and removal of mappings. A
+ * mapping {n, m} indicates a query vertex (from <i>G1</i>), n, is paired (mapped) with the target
+ * vertex, m (from <i>G2</i>). Candidate pairs are generated using {@link #nextN(int)} and {@link
+ * #nextM(int)}. Each candidate pair {n, m} is then {@link #add}ed if the mapping was feasible.
  *
  * @author John May
  * @cdk.module isomorphism
@@ -39,8 +37,8 @@ package org.openscience.cdk.isomorphism;
 abstract class State {
 
     /**
-     * Given the previous candidate generate the next query candidate. The first
-     * candidate passed is always -1.
+     * Given the previous candidate generate the next query candidate. The first candidate passed is
+     * always -1.
      *
      * @param n the previous candidate
      * @return next candidate
@@ -48,8 +46,8 @@ abstract class State {
     abstract int nextN(int n);
 
     /**
-     * Given the previous candidate generate the next target candidate. The
-     * first candidate passed is always -1.
+     * Given the previous candidate generate the next target candidate. The first candidate passed
+     * is always -1.
      *
      * @param n the current n vertex
      * @param m the previous candidate
@@ -72,8 +70,8 @@ abstract class State {
     abstract int mMax();
 
     /**
-     * Add a mapping between n (a vertex G1) and m (a vertex in G2). If the
-     * mapping was not feasible the mapping is not added.
+     * Add a mapping between n (a vertex G1) and m (a vertex in G2). If the mapping was not feasible
+     * the mapping is not added.
      *
      * @param n a vertex in G1
      * @param m a vertex in G2
@@ -82,8 +80,7 @@ abstract class State {
     abstract boolean add(int n, int m);
 
     /**
-     * Remove a mapping (backtrack) between n (a vertex G1) and m (a vertex in
-     * G2).
+     * Remove a mapping (backtrack) between n (a vertex G1) and m (a vertex in G2).
      *
      * @param n a vertex in G1
      * @param m a vertex in G2
@@ -98,8 +95,7 @@ abstract class State {
     abstract int[] mapping();
 
     /**
-     * Current size of the state. If <i>size</i> is the current number of mapped
-     * candidates.
+     * Current size of the state. If <i>size</i> is the current number of mapped candidates.
      *
      * @return the size of the state
      */

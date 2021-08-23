@@ -58,7 +58,7 @@ public class GamessFormat extends SimpleChemFormatMatcher implements IChemFormat
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"gam", "gamin", "inp", "gamout"};
+        return new String[] {"gam", "gamin", "inp", "gamout"};
     }
 
     /** {@inheritDoc} */

@@ -31,17 +31,13 @@ import org.openscience.cdk.reaction.ReactionMechanismTest;
  */
 public class RadicalSiteRearrangementMechanismTest extends ReactionMechanismTest {
 
-    /**
-     *  The JUnit setup method
-     */
+    /** The JUnit setup method */
     @BeforeClass
     public static void setUp() throws Exception {
         setMechanism(RadicalSiteRearrangementMechanism.class);
     }
 
-    /**
-     *  Constructor for the RadicalSiteRearrangementMechanismTest object.
-     */
+    /** Constructor for the RadicalSiteRearrangementMechanismTest object. */
     public RadicalSiteRearrangementMechanismTest() {
         super();
     }
@@ -58,8 +54,7 @@ public class RadicalSiteRearrangementMechanismTest extends ReactionMechanismTest
     }
 
     /**
-     * Junit test.
-     * TODDO: REACT: add an example
+     * Junit test. TODDO: REACT: add an example
      *
      * @throws Exception
      */

@@ -18,6 +18,7 @@
  */
 package org.openscience.cdk.tools;
 
+import java.util.List;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtom;
@@ -29,19 +30,16 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
-import java.util.List;
-
 /**
- * Utility class written by Todd Martin, for help in his QSAR descriptors and SMILES
- * parser. Seems to have overlap with, at least, cdk.normalize.Normalizer.
+ * Utility class written by Todd Martin, for help in his QSAR descriptors and SMILES parser. Seems
+ * to have overlap with, at least, cdk.normalize.Normalizer.
  *
  * <p>TODO: merge with Normalizer.
  *
- * @author     Todd Martin
+ * @author Todd Martin
  * @cdk.module extra
  * @cdk.githash
- *
- * @see        org.openscience.cdk.normalize.Normalizer
+ * @see org.openscience.cdk.normalize.Normalizer
  * @deprecated better accomplished with SMARTS patterns or simple REGEX
  */
 @Deprecated
@@ -55,7 +53,6 @@ public class CDKUtilities {
         Smiles = Smiles.trim();
 
         return Smiles;
-
     }
 
     private static boolean fixNitroGroups(IAtomContainer m) {
@@ -85,7 +82,8 @@ public class CDKUtilities {
                             for (int j = 0; j <= 2; j++) {
                                 IAtom caj = (IAtom) ca.get(j);
                                 if (caj.getSymbol().equals("O")) {
-                                    if (m.getConnectedBondsCount(caj) == 1) {// account for possibility of ONO2
+                                    if (m.getConnectedBondsCount(caj)
+                                            == 1) { // account for possibility of ONO2
                                         cao[count] = caj;
                                         count++;
                                     }
@@ -95,19 +93,16 @@ public class CDKUtilities {
                             IBond.Order order1 = m.getBond(a, cao[0]).getOrder();
                             IBond.Order order2 = m.getBond(a, cao[1]).getOrder();
 
-                            //if (totalobonds==4) { // need to fix (FIXME)
+                            // if (totalobonds==4) { // need to fix (FIXME)
                             if (order1 == IBond.Order.SINGLE && order2 == IBond.Order.DOUBLE) {
                                 a.setFormalCharge(1);
                                 cao[0].setFormalCharge(-1); // pick first O arbitrarily
                                 m.getBond(a, cao[0]).setOrder(IBond.Order.SINGLE);
                                 changed = true;
                             }
-                        } //else if (count==1) {// end if count>1
-
-                    }// end ca==3 if
-
+                        } // else if (count==1) {// end if count>1
+                    } // end ca==3 if
                 } // end symbol == N
-
             }
 
             return changed;
@@ -115,7 +110,6 @@ public class CDKUtilities {
         } catch (Exception e) {
             return changed;
         }
-
     }
 
     public static boolean fixNitroGroups2(IAtomContainer m) {
@@ -146,7 +140,8 @@ public class CDKUtilities {
                             for (int j = 0; j <= 2; j++) {
                                 IAtom caj = (IAtom) ca.get(j);
                                 if (caj.getSymbol().equals("O")) {
-                                    if (m.getConnectedBondsCount(caj) == 1) {// account for possibility of ONO2
+                                    if (m.getConnectedBondsCount(caj)
+                                            == 1) { // account for possibility of ONO2
                                         cao[count] = caj;
                                         count++;
                                     }
@@ -156,13 +151,14 @@ public class CDKUtilities {
                             IBond.Order order1 = m.getBond(a, cao[0]).getOrder();
                             IBond.Order order2 = m.getBond(a, cao[1]).getOrder();
 
-                            //int totalobonds=0;
-                            //totalobonds+=m.getBond(a,cao[0]).getOrder();
+                            // int totalobonds=0;
+                            // totalobonds+=m.getBond(a,cao[0]).getOrder();
                             //						totalobonds+=m.getBond(a,cao[1]).getOrder();
 
-                            //if (totalobonds==4) { // need to fix
+                            // if (totalobonds==4) { // need to fix
                             if ((order1 == IBond.Order.SINGLE && order2 == IBond.Order.DOUBLE)
-                                    || (order1 == IBond.Order.DOUBLE && order2 == IBond.Order.SINGLE)) {
+                                    || (order1 == IBond.Order.DOUBLE
+                                            && order2 == IBond.Order.SINGLE)) {
                                 a.setFormalCharge(0);
                                 cao[0].setFormalCharge(0); // pick first O arbitrarily
                                 cao[1].setFormalCharge(0); // pick first O arbitrarily
@@ -171,11 +167,8 @@ public class CDKUtilities {
                                 changed = true;
                             }
                         } // end if count>1
-
-                    }// end ca==3 if
-
+                    } // end ca==3 if
                 } // end symbol == N
-
             }
 
             return changed;
@@ -218,8 +211,9 @@ public class CDKUtilities {
 
             m.getAtom(i).setFlag(CDKConstants.ISAROMATIC, false);
 
-            jloop: for (int j = 0; j <= rs.getAtomContainerCount() - 1; j++) {
-                //logger.debug(i+"\t"+j);
+            jloop:
+            for (int j = 0; j <= rs.getAtomContainerCount() - 1; j++) {
+                // logger.debug(i+"\t"+j);
                 IRing r = (IRing) rs.getAtomContainer(j);
                 if (!r.getFlag(CDKConstants.ISAROMATIC)) {
                     continue jloop;
@@ -227,21 +221,18 @@ public class CDKUtilities {
 
                 boolean haveatom = r.contains(m.getAtom(i));
 
-                //logger.debug("haveatom="+haveatom);
+                // logger.debug("haveatom="+haveatom);
 
                 if (haveatom && r.getAtomCount() == 6) {
                     m.getAtom(i).setFlag(CDKConstants.ISAROMATIC, true);
                 }
-
             }
-
         }
-
     }
 
     public static void fixSulphurH(IAtomContainer m) {
         // removes extra H's attached to sulphurs
-        //logger.debug("EnterFixSulphur");
+        // logger.debug("EnterFixSulphur");
 
         for (int i = 0; i <= m.getAtomCount() - 1; i++) {
             IAtom a = m.getAtom(i);
@@ -275,10 +266,7 @@ public class CDKUtilities {
                         }
                     }
                 }
-
             }
-
         }
     }
-
 }

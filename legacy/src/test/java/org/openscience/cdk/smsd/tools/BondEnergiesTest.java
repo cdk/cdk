@@ -41,9 +41,7 @@ public class BondEnergiesTest extends CDKTestCase {
         Assert.assertNotNull(energies);
     }
 
-    /**
-     * Test of getEnergies method, of class BondEnergies.
-     */
+    /** Test of getEnergies method, of class BondEnergies. */
     @Test
     public void testGetEnergies() {
         IAtom sourceAtom = new Atom("C");
@@ -54,5 +52,4 @@ public class BondEnergiesTest extends CDKTestCase {
         Integer result = instance.getEnergies(sourceAtom, targetAtom, bondOrder);
         Assert.assertEquals(expResult, result);
     }
-
 }

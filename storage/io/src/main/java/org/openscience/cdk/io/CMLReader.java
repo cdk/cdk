@@ -29,9 +29,7 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -43,34 +41,32 @@ import org.openscience.cdk.io.formats.CMLFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
-
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 
 /**
- * Reads a molecule in CML 1.x and 2.0 format.
- * CML is an XML based application {@cdk.cite PMR99}, and this Reader
- * applies the method described in {@cdk.cite WIL01}.
+ * Reads a molecule in CML 1.x and 2.0 format. CML is an XML based application {@cdk.cite PMR99},
+ * and this Reader applies the method described in {@cdk.cite WIL01}.
  *
- * @author      Egon L. Willighagen
+ * @author Egon L. Willighagen
  * @cdk.created 2001-02-01
- * @cdk.module  io
+ * @cdk.module io
  * @cdk.githash
  * @cdk.keyword file format, CML
- * @cdk.bug     1544406
+ * @cdk.bug 1544406
  * @cdk.iooptions
  */
 public class CMLReader extends DefaultChemObjectReader {
 
-    private XMLReader               parser;
-    private InputStream             input;
-    private String                  url;
+    private XMLReader parser;
+    private InputStream input;
+    private String url;
 
     private Map<String, ICMLModule> userConventions = new HashMap<String, ICMLModule>();
 
-    private static ILoggingTool     logger          = LoggingToolFactory.createLoggingTool(CMLReader.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CMLReader.class);
 
     /**
      * Reads CML from an java.io.InputStream, for example the FileInputStream.
@@ -91,8 +87,8 @@ public class CMLReader extends DefaultChemObjectReader {
     }
 
     /**
-     * Define this CMLReader to take the input from a java.io.Reader
-     * class. Possible readers are (among others) StringReader and FileReader.
+     * Define this CMLReader to take the input from a java.io.Reader class. Possible readers are
+     * (among others) StringReader and FileReader.
      *
      * @param url String url which points to the file to be read
      */
@@ -107,8 +103,8 @@ public class CMLReader extends DefaultChemObjectReader {
     }
 
     /**
-     * This method must not be used; XML reading requires the use of an InputStream.
-     * Use setReader(InputStream) instead.
+     * This method must not be used; XML reading requires the use of an InputStream. Use
+     * setReader(InputStream) instead.
      */
     @Override
     public void setReader(Reader reader) throws CDKException {
@@ -127,7 +123,8 @@ public class CMLReader extends DefaultChemObjectReader {
         // If JAXP is prefered (comes with Sun JVM 1.4.0 and higher)
         if (!success) {
             try {
-                javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
+                javax.xml.parsers.SAXParserFactory spf =
+                        javax.xml.parsers.SAXParserFactory.newInstance();
                 spf.setNamespaceAware(true);
                 javax.xml.parsers.SAXParser saxParser = spf.newSAXParser();
                 parser = saxParser.getXMLReader();
@@ -141,8 +138,12 @@ public class CMLReader extends DefaultChemObjectReader {
         // Aelfred is first alternative.
         if (!success) {
             try {
-                parser = (XMLReader) this.getClass().getClassLoader().loadClass("gnu.xml.aelfred2.XmlReader")
-                        .newInstance();
+                parser =
+                        (XMLReader)
+                                this.getClass()
+                                        .getClassLoader()
+                                        .loadClass("gnu.xml.aelfred2.XmlReader")
+                                        .newInstance();
                 logger.info("Using Aelfred2 XML parser.");
                 success = true;
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
@@ -153,8 +154,12 @@ public class CMLReader extends DefaultChemObjectReader {
         // Xerces is second alternative
         if (!success) {
             try {
-                parser = (XMLReader) this.getClass().getClassLoader().loadClass("org.apache.xerces.parsers.SAXParser")
-                        .newInstance();
+                parser =
+                        (XMLReader)
+                                this.getClass()
+                                        .getClassLoader()
+                                        .loadClass("org.apache.xerces.parsers.SAXParser")
+                                        .newInstance();
                 logger.info("Using Xerces XML parser.");
                 success = true;
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
@@ -245,5 +250,4 @@ public class CMLReader extends DefaultChemObjectReader {
     public void close() throws IOException {
         if (input != null) input.close();
     }
-
 }

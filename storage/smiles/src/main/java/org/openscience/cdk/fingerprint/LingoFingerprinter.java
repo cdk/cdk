@@ -23,11 +23,9 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import org.openscience.cdk.aromaticity.Aromaticity;
-import org.openscience.cdk.aromaticity.ElectronDonation;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.smiles.SmilesGenerator;
+import static org.openscience.cdk.graph.Cycles.all;
+import static org.openscience.cdk.graph.Cycles.or;
+import static org.openscience.cdk.graph.Cycles.relevant;
 
 import java.util.AbstractMap;
 import java.util.Collections;
@@ -35,15 +33,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
-
-import static org.openscience.cdk.graph.Cycles.all;
-import static org.openscience.cdk.graph.Cycles.or;
-import static org.openscience.cdk.graph.Cycles.relevant;
+import org.openscience.cdk.aromaticity.Aromaticity;
+import org.openscience.cdk.aromaticity.ElectronDonation;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.smiles.SmilesGenerator;
 
 /**
- * An implementation of the LINGO fingerprint {@cdk.cite Vidal2005}. <p> While the current
- * implementation converts ring closure symbols to 0's it does not convert 2-letter element symbols
- * to single letters (ala OpenEye).
+ * An implementation of the LINGO fingerprint {@cdk.cite Vidal2005}.
+ *
+ * <p>While the current implementation converts ring closure symbols to 0's it does not convert
+ * 2-letter element symbols to single letters (ala OpenEye).
  *
  * @author Rajarshi Guha
  * @cdk.module smiles
@@ -54,15 +54,13 @@ import static org.openscience.cdk.graph.Cycles.relevant;
 public class LingoFingerprinter extends AbstractFingerprinter implements IFingerprinter {
 
     private final int n;
-    private final SmilesGenerator gen    = SmilesGenerator.unique().aromatic();
-    private final Pattern         DIGITS = Pattern.compile("[0-9]+");
+    private final SmilesGenerator gen = SmilesGenerator.unique().aromatic();
+    private final Pattern DIGITS = Pattern.compile("[0-9]+");
 
-    private final Aromaticity aromaticity = new Aromaticity(ElectronDonation.daylight(),
-                                                            or(all(), relevant()));
+    private final Aromaticity aromaticity =
+            new Aromaticity(ElectronDonation.daylight(), or(all(), relevant()));
 
-    /**
-     * Initialize the fingerprinter with a default substring length of 4.
-     */
+    /** Initialize the fingerprinter with a default substring length of 4. */
     public LingoFingerprinter() {
         this(4);
     }
@@ -78,9 +76,8 @@ public class LingoFingerprinter extends AbstractFingerprinter implements IFinger
 
     @Override
     protected List<Map.Entry<String, String>> getParameters() {
-        return Collections.<Map.Entry<String,String>>singletonList(
-            new AbstractMap.SimpleImmutableEntry<>("ngramLength", Integer.toString(n))
-        );
+        return Collections.<Map.Entry<String, String>>singletonList(
+                new AbstractMap.SimpleImmutableEntry<>("ngramLength", Integer.toString(n)));
     }
 
     @Override
@@ -89,17 +86,16 @@ public class LingoFingerprinter extends AbstractFingerprinter implements IFinger
     }
 
     @Override
-    public Map<String, Integer> getRawFingerprint(IAtomContainer atomContainer) throws CDKException {
+    public Map<String, Integer> getRawFingerprint(IAtomContainer atomContainer)
+            throws CDKException {
         aromaticity.apply(atomContainer);
         final String smiles = replaceDigits(gen.create(atomContainer));
         final Map<String, Integer> map = new HashMap<String, Integer>();
         for (int i = 0, l = smiles.length() - n + 1; i < l; i++) {
             String subsmi = smiles.substring(i, i + n);
             Integer count = map.get(subsmi);
-            if (count == null)
-                map.put(subsmi, 1);
-            else
-                map.put(subsmi, count + 1);
+            if (count == null) map.put(subsmi, 1);
+            else map.put(subsmi, count + 1);
         }
         return map;
     }
@@ -117,5 +113,4 @@ public class LingoFingerprinter extends AbstractFingerprinter implements IFinger
     public ICountFingerprint getCountFingerprint(IAtomContainer container) throws CDKException {
         return FingerprinterTool.makeCountFingerprint(getRawFingerprint(container));
     }
-
 }

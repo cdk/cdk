@@ -27,7 +27,7 @@ import org.openscience.cdk.isomorphism.matchers.QueryBond;
 /**
  * Abstract smarts bond.
  *
- * @cdk.module  smarts
+ * @cdk.module smarts
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
@@ -40,13 +40,13 @@ public class SMARTSBond extends QueryBond implements IQueryBond {
         super(builder);
     }
 
-    public SMARTSBond(IQueryAtom atom1, IQueryAtom atom2, IBond.Order order, IChemObjectBuilder builder) {
+    public SMARTSBond(
+            IQueryAtom atom1, IQueryAtom atom2, IBond.Order order, IChemObjectBuilder builder) {
         super(atom1, atom2, order, builder);
     }
 
     @Override
     public boolean matches(IBond bond) {
         return false;
-
     }
 }

@@ -24,6 +24,14 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.ArrayList;
+import java.util.List;
 import nu.xom.Attribute;
 import nu.xom.Document;
 import nu.xom.Element;
@@ -53,20 +61,10 @@ import org.openscience.cdk.libio.cml.ICMLCustomizer;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * Serializes a {@link IAtomContainerSet} or a {@link IAtomContainer} object to CML 2 code.
- * Chemical Markup Language is an XML-based file format {@cdk.cite PMR99}.
- * Output can be redirected to other Writer objects like {@link StringWriter}
- * and {@link FileWriter}. An example:
+ * Serializes a {@link IAtomContainerSet} or a {@link IAtomContainer} object to CML 2 code. Chemical
+ * Markup Language is an XML-based file format {@cdk.cite PMR99}. Output can be redirected to other
+ * Writer objects like {@link StringWriter} and {@link FileWriter}. An example:
  *
  * <pre>
  *   StringWriter output = new StringWriter();
@@ -86,61 +84,60 @@ import java.util.List;
  *   cmlwriter.close();
  * </pre>
  *
- * <p>For atoms it outputs: coordinates, element type and formal charge.
- * For bonds it outputs: order, atoms (2, or more) and wedges.
+ * <p>For atoms it outputs: coordinates, element type and formal charge. For bonds it outputs:
+ * order, atoms (2, or more) and wedges.
  *
- * @cdk.module       libiocml
+ * @cdk.module libiocml
  * @cdk.githash
- * @cdk.require      java1.5+
- * @cdk.bug          1565563
+ * @cdk.require java1.5+
+ * @cdk.bug 1565563
  * @cdk.iooptions
- *
  * @see java.io.FileWriter
  * @see java.io.StringWriter
- *
  * @author Egon Willighagen
- *
  * @cdk.keyword file format, CML
  */
 public class CMLWriter extends DefaultChemObjectWriter {
 
-    private OutputStream         output;
+    private OutputStream output;
 
-    private BooleanIOSetting     cmlIds;
-    private BooleanIOSetting     namespacedOutput;
-    private StringIOSetting      namespacePrefix;
-    private BooleanIOSetting     schemaInstanceOutput;
-    private StringIOSetting      instanceLocation;
-    private BooleanIOSetting     indent;
-    private BooleanIOSetting     xmlDeclaration;
+    private BooleanIOSetting cmlIds;
+    private BooleanIOSetting namespacedOutput;
+    private StringIOSetting namespacePrefix;
+    private BooleanIOSetting schemaInstanceOutput;
+    private StringIOSetting instanceLocation;
+    private BooleanIOSetting indent;
+    private BooleanIOSetting xmlDeclaration;
 
-    private static ILoggingTool  logger      = LoggingToolFactory.createLoggingTool(CMLWriter.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CMLWriter.class);
 
     private List<ICMLCustomizer> customizers = null;
 
     /**
-     * Constructs a new CMLWriter class. Output will be stored in the Writer
-     * class given as parameter. The CML code will be valid CML code with a
-     * XML header. Only one object can be stored.
+     * Constructs a new CMLWriter class. Output will be stored in the Writer class given as
+     * parameter. The CML code will be valid CML code with a XML header. Only one object can be
+     * stored.
      *
      * @param writer Writer to redirect the output to.
      */
     public CMLWriter(final Writer writer) {
 
-        // OutputStream doesn't handle encoding - the serializers read/write in the same format we're okay
+        // OutputStream doesn't handle encoding - the serializers read/write in the same format
+        // we're okay
         logger.warn("possible loss of encoding when using a Writer with CMLWriter");
-        this.output = new OutputStream() {
+        this.output =
+                new OutputStream() {
 
-            @Override
-            public void write(int b) throws IOException {
-                writer.write(b);
-            }
+                    @Override
+                    public void write(int b) throws IOException {
+                        writer.write(b);
+                    }
 
-            @Override
-            public void close() throws IOException {
-                writer.close();
-            }
-        };
+                    @Override
+                    public void close() throws IOException {
+                        writer.close();
+                    }
+                };
 
         initIOSettings();
     }
@@ -169,16 +166,17 @@ public class CMLWriter extends DefaultChemObjectWriter {
     @Override
     public void setWriter(final Writer writer) throws CDKException {
 
-        // OutputStream doesn't handle encoding - the serializers read/write in the same format we're okay
+        // OutputStream doesn't handle encoding - the serializers read/write in the same format
+        // we're okay
         logger.warn("possible loss of encoding when using a Writer with CMLWriter");
-        this.output = new OutputStream() {
+        this.output =
+                new OutputStream() {
 
-            @Override
-            public void write(int b) throws IOException {
-                writer.write(b);
-            }
-        };
-
+                    @Override
+                    public void write(int b) throws IOException {
+                        writer.write(b);
+                    }
+                };
     }
 
     @Override
@@ -186,9 +184,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
         this.output = output;
     }
 
-    /**
-     * Flushes the output and closes this object.
-     */
+    /** Flushes the output and closes this object. */
     @Override
     public void close() throws IOException {
         if (output != null) output.close();
@@ -219,20 +215,30 @@ public class CMLWriter extends DefaultChemObjectWriter {
     @Override
     public void write(IChemObject object) throws CDKException {
 
-        if (!(object instanceof IAtomContainer) && !(object instanceof IAtomContainerSet)
-                && !(object instanceof IReaction) && !(object instanceof IReactionSet)
-                && !(object instanceof IChemSequence) && !(object instanceof IChemModel)
-                && !(object instanceof IChemFile) && !(object instanceof ICrystal) && !(object instanceof IAtom)
+        if (!(object instanceof IAtomContainer)
+                && !(object instanceof IAtomContainerSet)
+                && !(object instanceof IReaction)
+                && !(object instanceof IReactionSet)
+                && !(object instanceof IChemSequence)
+                && !(object instanceof IChemModel)
+                && !(object instanceof IChemFile)
+                && !(object instanceof ICrystal)
+                && !(object instanceof IAtom)
                 && !(object instanceof IBond)) {
-            throw new CDKException("Cannot write this unsupported IChemObject: " + object.getClass().getName());
+            throw new CDKException(
+                    "Cannot write this unsupported IChemObject: " + object.getClass().getName());
         }
 
         logger.debug("Writing object in CML of type: ", object.getClass().getName());
 
         customizeJob();
 
-        Convertor convertor = new Convertor(cmlIds.isSet(),
-                (namespacePrefix.getSetting().length() > 0) ? namespacePrefix.getSetting() : null);
+        Convertor convertor =
+                new Convertor(
+                        cmlIds.isSet(),
+                        (namespacePrefix.getSetting().length() > 0)
+                                ? namespacePrefix.getSetting()
+                                : null);
         // adding the customizer
         if (customizers != null) {
             for (ICMLCustomizer customizer : customizers) {
@@ -253,7 +259,9 @@ public class CMLWriter extends DefaultChemObjectWriter {
         } else if (object instanceof IReaction) {
             root = convertor.cdkReactionToCMLReaction((IReaction) object);
         } else if (object instanceof IReactionScheme) {
-            root = convertor.cdkReactionSchemeToCMLReactionSchemeAndMoleculeList((IReactionScheme) object);
+            root =
+                    convertor.cdkReactionSchemeToCMLReactionSchemeAndMoleculeList(
+                            (IReactionScheme) object);
         } else if (object instanceof IReactionSet) {
             root = convertor.cdkReactionSetToCMLReactionList((IReactionSet) object);
         } else if (object instanceof IAtomContainerSet) {
@@ -283,37 +291,77 @@ public class CMLWriter extends DefaultChemObjectWriter {
 
             if (schemaInstanceOutput.isSet()) {
                 root.addNamespaceDeclaration("xsi", "http://www.w3.org/2001/XMLSchema-instance");
-                root.addAttribute(new Attribute("xsi:schemaLocation=", "http://www.w3.org/2001/XMLSchema-instance",
-                        "http://www.xml-cml.org/schema/cml2/core " + instanceLocation.getSetting()));
+                root.addAttribute(
+                        new Attribute(
+                                "xsi:schemaLocation=",
+                                "http://www.w3.org/2001/XMLSchema-instance",
+                                "http://www.xml-cml.org/schema/cml2/core "
+                                        + instanceLocation.getSetting()));
             }
 
             serializer.write(doc);
         } catch (Exception exception) {
-            throw new CDKException("Could not write XML output: " + exception.getMessage(), exception);
+            throw new CDKException(
+                    "Could not write XML output: " + exception.getMessage(), exception);
         }
     }
 
     private void initIOSettings() {
-        cmlIds = addSetting(new BooleanIOSetting("CMLIDs", IOSetting.Importance.LOW,
-                "Should the output use CML identifiers?", "true"));
+        cmlIds =
+                addSetting(
+                        new BooleanIOSetting(
+                                "CMLIDs",
+                                IOSetting.Importance.LOW,
+                                "Should the output use CML identifiers?",
+                                "true"));
 
-        namespacedOutput = addSetting(new BooleanIOSetting("NamespacedOutput", IOSetting.Importance.LOW,
-                "Should the output use namespaced output?", "true"));
+        namespacedOutput =
+                addSetting(
+                        new BooleanIOSetting(
+                                "NamespacedOutput",
+                                IOSetting.Importance.LOW,
+                                "Should the output use namespaced output?",
+                                "true"));
 
-        namespacePrefix = addSetting(new StringIOSetting("NamespacePrefix", IOSetting.Importance.LOW,
-                "What should the namespace prefix be? [empty is no prefix]", ""));
+        namespacePrefix =
+                addSetting(
+                        new StringIOSetting(
+                                "NamespacePrefix",
+                                IOSetting.Importance.LOW,
+                                "What should the namespace prefix be? [empty is no prefix]",
+                                ""));
 
-        schemaInstanceOutput = addSetting(new BooleanIOSetting("SchemaInstance", IOSetting.Importance.LOW,
-                "Should the output use the Schema-Instance attribute?", "false"));
+        schemaInstanceOutput =
+                addSetting(
+                        new BooleanIOSetting(
+                                "SchemaInstance",
+                                IOSetting.Importance.LOW,
+                                "Should the output use the Schema-Instance attribute?",
+                                "false"));
 
-        instanceLocation = addSetting(new StringIOSetting("InstanceLocation", IOSetting.Importance.LOW,
-                "Where is the schema found?", ""));
+        instanceLocation =
+                addSetting(
+                        new StringIOSetting(
+                                "InstanceLocation",
+                                IOSetting.Importance.LOW,
+                                "Where is the schema found?",
+                                ""));
 
-        indent = addSetting(new BooleanIOSetting("Indenting", IOSetting.Importance.LOW,
-                "Should the output be indented?", "true"));
+        indent =
+                addSetting(
+                        new BooleanIOSetting(
+                                "Indenting",
+                                IOSetting.Importance.LOW,
+                                "Should the output be indented?",
+                                "true"));
 
-        xmlDeclaration = addSetting(new BooleanIOSetting("XMLDeclaration", IOSetting.Importance.LOW,
-                "Should the output contain an XML declaration?", "true"));
+        xmlDeclaration =
+                addSetting(
+                        new BooleanIOSetting(
+                                "XMLDeclaration",
+                                IOSetting.Importance.LOW,
+                                "Should the output contain an XML declaration?",
+                                "true"));
     }
 
     private void customizeJob() {
@@ -329,5 +377,4 @@ public class CMLWriter extends DefaultChemObjectWriter {
         fireIOSettingQuestion(indent);
         fireIOSettingQuestion(xmlDeclaration);
     }
-
 }

@@ -27,6 +27,16 @@
 package org.openscience.cdk.layout;
 
 import com.google.common.collect.FluentIterable;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import javax.vecmath.Point2d;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryUtil;
@@ -48,21 +58,9 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
-import javax.vecmath.Point2d;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 /**
- * Helper class for Structure Diagram Generation. Handles templates. This is
- * our layout solution for ring systems which are notoriously difficult to
- * layout, like cubane, adamantane, porphyrin, etc.
+ * Helper class for Structure Diagram Generation. Handles templates. This is our layout solution for
+ * ring systems which are notoriously difficult to layout, like cubane, adamantane, porphyrin, etc.
  *
  * @author steinbeck
  * @cdk.created 2003-09-04
@@ -75,79 +73,79 @@ import java.util.Set;
  */
 public final class TemplateHandler {
 
-    private final static ILoggingTool         LOGGER       = LoggingToolFactory.createLoggingTool(TemplateHandler.class);
-    private final        List<IAtomContainer> templates    = new ArrayList<>();
-    private final        List<Pattern>        anonPatterns = new ArrayList<>();
-    private final        List<Pattern>        elemPatterns = new ArrayList<>();
+    private static final ILoggingTool LOGGER =
+            LoggingToolFactory.createLoggingTool(TemplateHandler.class);
+    private final List<IAtomContainer> templates = new ArrayList<>();
+    private final List<Pattern> anonPatterns = new ArrayList<>();
+    private final List<Pattern> elemPatterns = new ArrayList<>();
 
+    private final AtomMatcher elemAtomMatcher =
+            new AtomMatcher() {
+                @Override
+                public boolean matches(IAtom a, IAtom b) {
+                    return a.getAtomicNumber().equals(b.getAtomicNumber());
+                }
+            };
+    private final AtomMatcher anonAtomMatcher =
+            new AtomMatcher() {
+                @Override
+                public boolean matches(IAtom a, IAtom b) {
+                    return true;
+                }
+            };
+    private final BondMatcher anonBondMatcher =
+            new BondMatcher() {
+                @Override
+                public boolean matches(IBond a, IBond b) {
+                    return true;
+                }
+            };
 
-    private final AtomMatcher elemAtomMatcher = new AtomMatcher() {
-        @Override
-        public boolean matches(IAtom a, IAtom b) {
-            return a.getAtomicNumber().equals(b.getAtomicNumber());
-        }
-    };
-    private final AtomMatcher anonAtomMatcher = new AtomMatcher() {
-        @Override
-        public boolean matches(IAtom a, IAtom b) {
-            return true;
-        }
-    };
-    private final BondMatcher anonBondMatcher = new BondMatcher() {
-        @Override
-        public boolean matches(IBond a, IBond b) {
-            return true;
-        }
-    };
-
-    /**
-     * Creates a new TemplateHandler with default templates loaded.
-     */
+    /** Creates a new TemplateHandler with default templates loaded. */
     public TemplateHandler(IChemObjectBuilder builder) {
         loadTemplates(builder);
     }
 
-    /**
-     * Creates a new TemplateHandler without any default templates.
-     */
-    public TemplateHandler() {
-    }
+    /** Creates a new TemplateHandler without any default templates. */
+    public TemplateHandler() {}
 
     /**
-     * Loads all existing templates into memory. To add templates to be used in
-     * SDG, place a drawing with the new template in org/openscience/cdk/layout/templates and add the
-     * template filename to org/openscience/cdk/layout/templates/template.list
+     * Loads all existing templates into memory. To add templates to be used in SDG, place a drawing
+     * with the new template in org/openscience/cdk/layout/templates and add the template filename
+     * to org/openscience/cdk/layout/templates/template.list
      */
     public void loadTemplates(IChemObjectBuilder builder) {
         String line = null;
         try {
-            InputStream ins = this.getClass().getClassLoader()
-                                  .getResourceAsStream("org/openscience/cdk/layout/templates/templates.list");
+            InputStream ins =
+                    this.getClass()
+                            .getClassLoader()
+                            .getResourceAsStream(
+                                    "org/openscience/cdk/layout/templates/templates.list");
             BufferedReader reader = new BufferedReader(new InputStreamReader(ins));
             while (reader.ready()) {
                 line = reader.readLine();
                 line = "org/openscience/cdk/layout/templates/" + line;
                 LOGGER.debug("Attempting to read template ", line);
                 try {
-                    CMLReader structureReader = new CMLReader(this.getClass().getClassLoader()
-                                                                  .getResourceAsStream(line));
-                    IChemFile file = (IChemFile) structureReader.read(builder.newInstance(IChemFile.class));
+                    CMLReader structureReader =
+                            new CMLReader(
+                                    this.getClass().getClassLoader().getResourceAsStream(line));
+                    IChemFile file =
+                            (IChemFile) structureReader.read(builder.newInstance(IChemFile.class));
                     List<IAtomContainer> files = ChemFileManipulator.getAllAtomContainers(file);
-                    for (int i = 0; i < files.size(); i++)
-                        addMolecule(files.get(i));
+                    for (int i = 0; i < files.size(); i++) addMolecule(files.get(i));
                     LOGGER.debug("Successfully read template ", line);
                 } catch (CDKException | IllegalArgumentException e) {
                     LOGGER.warn("Could not read template ", line, ", reason: ", e.getMessage());
                     LOGGER.debug(e);
                 }
-
             }
         } catch (IOException e) {
             LOGGER.warn("Could not read (all of the) templates, reason: ", e.getMessage());
             LOGGER.debug(e);
         }
     }
-
 
     /**
      * Adds a Molecule to the list of templates use by this TemplateHandler.
@@ -159,22 +157,20 @@ public final class TemplateHandler {
             throw new IllegalArgumentException("Template did not have 2D coordinates");
 
         // we want a consistent scale!
-        GeometryUtil.scaleMolecule(molecule, GeometryUtil.getScaleFactor(molecule,
-                                                                         StructureDiagramGenerator.DEFAULT_BOND_LENGTH));
+        GeometryUtil.scaleMolecule(
+                molecule,
+                GeometryUtil.getScaleFactor(
+                        molecule, StructureDiagramGenerator.DEFAULT_BOND_LENGTH));
 
         templates.add(molecule);
-        anonPatterns.add(VentoFoggia.findSubstructure(molecule,
-                                                      anonAtomMatcher,
-                                                      anonBondMatcher));
-        elemPatterns.add(VentoFoggia.findSubstructure(molecule,
-                                                      elemAtomMatcher,
-                                                      anonBondMatcher));
+        anonPatterns.add(VentoFoggia.findSubstructure(molecule, anonAtomMatcher, anonBondMatcher));
+        elemPatterns.add(VentoFoggia.findSubstructure(molecule, elemAtomMatcher, anonBondMatcher));
     }
 
     public IAtomContainer removeMolecule(IAtomContainer molecule) throws CDKException {
         for (int i = 0; i < templates.size(); i++) {
             if (VentoFoggia.findIdentical(templates.get(i), anonAtomMatcher, anonBondMatcher)
-                           .matches(molecule)) {
+                    .matches(molecule)) {
                 elemPatterns.remove(i);
                 anonPatterns.remove(i);
                 return templates.remove(i);
@@ -184,33 +180,33 @@ public final class TemplateHandler {
     }
 
     /**
-     * Checks if one of the loaded templates is isomorph to the given
-     * Molecule. If so, it assigns the coordinates from the template to the
-     * respective atoms in the Molecule, and marks the atoms as ISPLACED.
+     * Checks if one of the loaded templates is isomorph to the given Molecule. If so, it assigns
+     * the coordinates from the template to the respective atoms in the Molecule, and marks the
+     * atoms as ISPLACED.
      *
      * @param molecule The molecule to be check for potential templates
      * @return True if there was a possible mapping
      */
     public boolean mapTemplateExact(IAtomContainer molecule) throws CDKException {
         for (IAtomContainer template : templates) {
-            Mappings mappings = VentoFoggia.findIdentical(template, anonAtomMatcher, anonBondMatcher)
-                                           .matchAll(molecule);
+            Mappings mappings =
+                    VentoFoggia.findIdentical(template, anonAtomMatcher, anonBondMatcher)
+                            .matchAll(molecule);
             for (Map<IAtom, IAtom> atoms : mappings.toAtomMap()) {
                 for (Map.Entry<IAtom, IAtom> e : atoms.entrySet()) {
                     e.getValue().setPoint2d(new Point2d(e.getKey().getPoint2d()));
                     e.getValue().setFlag(CDKConstants.ISPLACED, true);
                 }
-                if (!atoms.isEmpty())
-                    return true;
+                if (!atoms.isEmpty()) return true;
             }
         }
         return false;
     }
 
     /**
-     * Checks if one of the loaded templates is a substructure in the given
-     * Molecule. If so, it assigns the coordinates from the template to the
-     * respective atoms in the Molecule, and marks the atoms as ISPLACED.
+     * Checks if one of the loaded templates is a substructure in the given Molecule. If so, it
+     * assigns the coordinates from the template to the respective atoms in the Molecule, and marks
+     * the atoms as ISPLACED.
      *
      * @param molecule The molecule to be check for potential templates
      * @return True if there was a possible mapping
@@ -223,8 +219,7 @@ public final class TemplateHandler {
                     e.getValue().setPoint2d(new Point2d(e.getKey().getPoint2d()));
                     e.getValue().setFlag(CDKConstants.ISPLACED, true);
                 }
-                if (!atoms.isEmpty())
-                    return true;
+                if (!atoms.isEmpty()) return true;
             }
         }
         // no element pattern matched, try anonymous patterns
@@ -234,8 +229,7 @@ public final class TemplateHandler {
                     e.getValue().setPoint2d(new Point2d(e.getKey().getPoint2d()));
                     e.getValue().setFlag(CDKConstants.ISPLACED, true);
                 }
-                if (!atoms.isEmpty())
-                    return true;
+                if (!atoms.isEmpty()) return true;
             }
         }
         return false;
@@ -261,34 +255,28 @@ public final class TemplateHandler {
     }
 
     /**
-     * Checks if one of the loaded templates is a substructure in the given
-     * Molecule and returns all matched substructures in a IAtomContainerSet.
-     * This method does not assign any coordinates.
+     * Checks if one of the loaded templates is a substructure in the given Molecule and returns all
+     * matched substructures in a IAtomContainerSet. This method does not assign any coordinates.
      *
      * @param molecule The molecule to be check for potential templates
-     * @return an IAtomContainerSet of all matched substructures of
-     * the molecule
+     * @return an IAtomContainerSet of all matched substructures of the molecule
      * @throws CDKException if an error occurs
      */
     public IAtomContainerSet getMappedSubstructures(IAtomContainer molecule) throws CDKException {
 
-        final IAtomContainerSet matchedSubstructures = molecule.getBuilder().newInstance(IAtomContainerSet.class);
-        final Set<IChemObject>  matchedChemObjs      = new HashSet<>();
+        final IAtomContainerSet matchedSubstructures =
+                molecule.getBuilder().newInstance(IAtomContainerSet.class);
+        final Set<IChemObject> matchedChemObjs = new HashSet<>();
 
         for (Pattern anonPattern : anonPatterns) {
-            for (Map<IChemObject, IChemObject> map : anonPattern.matchAll(molecule)
-                                                                .uniqueAtoms()
-                                                                .toAtomBondMap()) {
+            for (Map<IChemObject, IChemObject> map :
+                    anonPattern.matchAll(molecule).uniqueAtoms().toAtomBondMap()) {
                 boolean overlaps = false;
-                IAtomContainer matched = molecule.getBuilder()
-                                                 .newInstance(IAtomContainer.class);
+                IAtomContainer matched = molecule.getBuilder().newInstance(IAtomContainer.class);
                 for (Map.Entry<IChemObject, IChemObject> e : map.entrySet()) {
-                    if (matchedChemObjs.contains(e.getValue()))
-                        overlaps = true;
-                    if (e.getValue() instanceof IAtom)
-                        matched.addAtom((IAtom) e.getValue());
-                    else if (e.getValue() instanceof IBond)
-                        matched.addBond((IBond) e.getValue());
+                    if (matchedChemObjs.contains(e.getValue())) overlaps = true;
+                    if (e.getValue() instanceof IAtom) matched.addAtom((IAtom) e.getValue());
+                    else if (e.getValue() instanceof IBond) matched.addBond((IBond) e.getValue());
                 }
 
                 // only add if the atoms/bonds of this match don't overlap existing
@@ -303,10 +291,10 @@ public final class TemplateHandler {
     }
 
     /**
-     * Singleton template instance, mainly useful for aligning molecules. If the template
-     * does not have coordinates an error is thrown.
+     * Singleton template instance, mainly useful for aligning molecules. If the template does not
+     * have coordinates an error is thrown.
      *
-     * For safety we clone the molecule.
+     * <p>For safety we clone the molecule.
      *
      * @param template the molecule
      * @return new template handler
@@ -330,7 +318,8 @@ public final class TemplateHandler {
      * @param mols list of molecules
      * @return new template handler
      */
-    public static TemplateHandler createFromSubstructure(Pattern ptrn, Iterable<IAtomContainer> mols) {
+    public static TemplateHandler createFromSubstructure(
+            Pattern ptrn, Iterable<IAtomContainer> mols) {
         for (IAtomContainer mol : mols) {
             for (IAtomContainer template : ptrn.matchAll(mol).toSubstructures())
                 return createSingleton(template);

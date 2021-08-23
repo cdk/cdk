@@ -18,8 +18,8 @@
 package org.openscience.cdk.smiles.smarts.parser;
 
 /**
- * An AST node. It represents the implicit high precedence and logical operator
- * used between atomic primitives or recursive smarts in smarts.
+ * An AST node. It represents the implicit high precedence and logical operator used between atomic
+ * primitives or recursive smarts in smarts.
  *
  * @author Dazhi Jiao
  * @cdk.created 2007-04-24
@@ -30,16 +30,12 @@ package org.openscience.cdk.smiles.smarts.parser;
 @Deprecated
 class ASTImplicitHighAndExpression extends SimpleNode {
 
-    /**
-     * Creates a new instance.
-     */
+    /** Creates a new instance. */
     public ASTImplicitHighAndExpression(int id) {
         super(id);
     }
 
-    /**
-     * Creates a new instance.
-     */
+    /** Creates a new instance. */
     public ASTImplicitHighAndExpression(SMARTSParser p, int id) {
         super(p, id);
     }

@@ -23,7 +23,6 @@
 package org.openscience.cdk.io.cml;
 
 import java.io.ByteArrayInputStream;
-
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.openscience.cdk.CDKTestCase;
@@ -37,23 +36,30 @@ import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.silent.ChemFile;
 
 /**
- * Atomic tests for reading CML documents. All tested CML strings are valid CML 2.5,
- * as can be determined in cdk/src/org.openscience.cdk/io/cml/cml25TestFramework.xml</code>.
+ * Atomic tests for reading CML documents. All tested CML strings are valid CML 2.5, as can be
+ * determined in cdk/src/org.openscience.cdk/io/cml/cml25TestFramework.xml</code>.
  *
  * @cdk.module test-io
- *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */
 public class CML25FragmentsTest extends CDKTestCase {
 
     @Ignore("Functionality not yet implemented")
     public void testIsotopeRef() throws Exception {
-        String cmlString = "<cml>" + "  <isotopeList>" + "    <isotope id='H1' number='1' elementType='H'>"
-                + "      <scalar dictRef='bo:relativeAbundance'>99.9885</scalar>"
-                + "      <scalar dictRef='bo:exactMass' errorValue='0.0001E-6'>1.007825032</scalar>" + "    </isotope>"
-                + "  </isotopeList>" + "  <molecule>" + "    <atomArray>"
-                + "      <atom id='a1' elementType='H' isotopeRef='H1'/>" + "    </atomArray>" + "  </molecule>"
-                + "</cml>";
+        String cmlString =
+                "<cml>"
+                        + "  <isotopeList>"
+                        + "    <isotope id='H1' number='1' elementType='H'>"
+                        + "      <scalar dictRef='bo:relativeAbundance'>99.9885</scalar>"
+                        + "      <scalar dictRef='bo:exactMass' errorValue='0.0001E-6'>1.007825032</scalar>"
+                        + "    </isotope>"
+                        + "  </isotopeList>"
+                        + "  <molecule>"
+                        + "    <atomArray>"
+                        + "      <atom id='a1' elementType='H' isotopeRef='H1'/>"
+                        + "    </atomArray>"
+                        + "  </molecule>"
+                        + "</cml>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
@@ -75,9 +81,7 @@ public class CML25FragmentsTest extends CDKTestCase {
         return chemFile;
     }
 
-    /**
-     * Tests whether the file is indeed a single molecule file
-     */
+    /** Tests whether the file is indeed a single molecule file */
     private IAtomContainer checkForSingleMoleculeFile(IChemFile chemFile) {
         return checkForXMoleculeFile(chemFile, 1);
     }

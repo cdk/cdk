@@ -31,7 +31,6 @@ import org.openscience.cdk.interfaces.IMolecularFormulaSet;
  * Checks the functionality of the MolecularFormulaSet class.
  *
  * @cdk.module test-data
- *
  * @see MolecularFormulaSet
  */
 public class MolecularFormulaSetTest extends AbstractMolecularFormulaSetTest {
@@ -44,7 +43,7 @@ public class MolecularFormulaSetTest extends AbstractMolecularFormulaSetTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testMolecularFormulaSet() {
@@ -55,11 +54,12 @@ public class MolecularFormulaSetTest extends AbstractMolecularFormulaSetTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testMolecularFormulaSet_IMolecularFormula() {
-        IMolecularFormulaSet mfS = new MolecularFormulaSet(getBuilder().newInstance(IMolecularFormula.class));
+        IMolecularFormulaSet mfS =
+                new MolecularFormulaSet(getBuilder().newInstance(IMolecularFormula.class));
         Assert.assertEquals(1, mfS.size());
     }
 }

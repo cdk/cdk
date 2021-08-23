@@ -20,7 +20,6 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -35,27 +34,31 @@ import org.openscience.cdk.qsar.result.IntegerResultType;
 import org.openscience.cdk.smarts.SmartsPattern;
 
 /**
- * Returns the number of basic groups. The list of basic groups is defined
- * by this SMARTS "[$([NH2]-[CX4])]", "[$([NH](-[CX4])-[CX4])]",
- * "[$(N(-[CX4])(-[CX4])-[CX4])]", "[$([*;+;!$(*~[*;-])])]",
- * "[$(N=C-N)]", and "[$(N-C=N)]" originally presented in
- * JOELib {@cdk.cite WEGNER2006}.
+ * Returns the number of basic groups. The list of basic groups is defined by this SMARTS
+ * "[$([NH2]-[CX4])]", "[$([NH](-[CX4])-[CX4])]", "[$(N(-[CX4])(-[CX4])-[CX4])]",
+ * "[$([*;+;!$(*~[*;-])])]", "[$(N=C-N)]", and "[$(N-C=N)]" originally presented in JOELib
+ * {@cdk.cite WEGNER2006}.
  *
- * @author      egonw
- * @cdk.module  qsarmolecular
+ * @author egonw
+ * @cdk.module qsarmolecular
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:acidicGroupCount
  */
-public class BasicGroupCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
+public class BasicGroupCountDescriptor extends AbstractMolecularDescriptor
+        implements IMolecularDescriptor {
 
-    private final static String[] SMARTS_STRINGS = {"[$([NH2]-[CX4])]", "[$([NH](-[CX4])-[CX4])]",
-            "[$(N(-[CX4])(-[CX4])-[CX4])]", "[$([*;+;!$(*~[*;-])])]", "[$(N=C-N)]", "[$(N-C=N)]"};
-    private final static String[] NAMES          = {"nBase"};
-    private List<SmartsPattern> tools            = new ArrayList<SmartsPattern>();
+    private static final String[] SMARTS_STRINGS = {
+        "[$([NH2]-[CX4])]",
+        "[$([NH](-[CX4])-[CX4])]",
+        "[$(N(-[CX4])(-[CX4])-[CX4])]",
+        "[$([*;+;!$(*~[*;-])])]",
+        "[$(N=C-N)]",
+        "[$(N-C=N)]"
+    };
+    private static final String[] NAMES = {"nBase"};
+    private List<SmartsPattern> tools = new ArrayList<SmartsPattern>();
 
-    /**
-     * Creates a new {@link BasicGroupCountDescriptor}.
-     */
+    /** Creates a new {@link BasicGroupCountDescriptor}. */
     public BasicGroupCountDescriptor() {}
 
     @Override
@@ -69,8 +72,9 @@ public class BasicGroupCountDescriptor extends AbstractMolecularDescriptor imple
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#basicGroupCount", this.getClass()
-                        .getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#basicGroupCount",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     /** {@inheritDoc} */
@@ -94,21 +98,25 @@ public class BasicGroupCountDescriptor extends AbstractMolecularDescriptor imple
     public DescriptorValue calculate(IAtomContainer atomContainer) {
 
         if (tools.isEmpty()) {
-            throw new IllegalStateException("descriptor is not initalised, invoke 'initalise' first");
+            throw new IllegalStateException(
+                    "descriptor is not initalised, invoke 'initalise' first");
         }
 
         atomContainer = clone(atomContainer);
         for (IAtom atom : atomContainer.atoms()) {
-            if (atom.getImplicitHydrogenCount() == null)
-                atom.setImplicitHydrogenCount(0);
+            if (atom.getImplicitHydrogenCount() == null) atom.setImplicitHydrogenCount(0);
         }
 
         int count = 0;
         for (SmartsPattern ptrn : tools) {
             count += ptrn.matchAll(atomContainer).count();
         }
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
-                count), getDescriptorNames());
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new IntegerResult(count),
+                getDescriptorNames());
     }
 
     /** {@inheritDoc} */
@@ -121,7 +129,6 @@ public class BasicGroupCountDescriptor extends AbstractMolecularDescriptor imple
     @Override
     public String[] getParameterNames() {
         return new String[0];
-
     }
 
     /** {@inheritDoc} */
@@ -131,7 +138,12 @@ public class BasicGroupCountDescriptor extends AbstractMolecularDescriptor imple
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception exception) {
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(-1),
-                getDescriptorNames(), exception);
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new IntegerResult(-1),
+                getDescriptorNames(),
+                exception);
     }
 }

@@ -18,6 +18,9 @@
  */
 package org.openscience.cdk.templates;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import javax.vecmath.Point2d;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemFile;
@@ -34,21 +37,19 @@ import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import javax.vecmath.Point2d;
-import java.io.FileInputStream;
-import java.io.IOException;
-
 /**
  * This class contains methods for generating simple organic molecules.
  *
  * @cdk.keyword templates
  * @cdk.githash
- * @deprecated Old CDK class primarily for testing, for CDK Tests please use TestMoleculeFactory in cdk-data (testjar).
+ * @deprecated Old CDK class primarily for testing, for CDK Tests please use TestMoleculeFactory in
+ *     cdk-data (testjar).
  */
 @Deprecated
 public class MoleculeFactory {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MoleculeFactory.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(MoleculeFactory.class);
 
     public static IAtomContainer makeAlphaPinene() {
         IAtomContainer mol = new AtomContainer();
@@ -85,16 +86,15 @@ public class MoleculeFactory {
      *
      * @param chainLength The number of carbon atoms to have in the chain.
      * @return A molecule containing a bonded chain of carbons.
-     *
      * @cdk.created 2003-08-15
      */
     public static IAtomContainer makeAlkane(int chainLength) {
         IAtomContainer currentChain = new AtomContainer();
 
-        //Add the initial atom
+        // Add the initial atom
         currentChain.addAtom(new Atom("C"));
 
-        //Add further atoms and bonds as needed, a pair at a time.
+        // Add further atoms and bonds as needed, a pair at a time.
         for (int atomCount = 1; atomCount < chainLength; atomCount++) {
             currentChain.addAtom(new Atom("C"));
             currentChain.addBond(atomCount, atomCount - 1, IBond.Order.SINGLE);
@@ -213,8 +213,8 @@ public class MoleculeFactory {
 
     /**
      * Returns cyclobutadiene without explicit hydrogens.
-         *
-         * @cdk.inchi InChI=1/C4H4/c1-2-4-3-1/h1-4H
+     *
+     * @cdk.inchi InChI=1/C4H4/c1-2-4-3-1/h1-4H
      */
     public static IAtomContainer makeCyclobutadiene() {
         IAtomContainer mol = new AtomContainer();
@@ -470,7 +470,6 @@ public class MoleculeFactory {
         mol.addBond(9, 0, IBond.Order.SINGLE); // 11
         mol.addBond(5, 10, IBond.Order.SINGLE); // 12
         return mol;
-
     }
 
     public static IAtomContainer makeEthylPropylPhenantren() {
@@ -1212,7 +1211,6 @@ public class MoleculeFactory {
         mol.addBond(0, 6, IBond.Order.SINGLE);
 
         return mol;
-
     }
 
     public static IAtomContainer makeTetrahydropyran() {
@@ -1232,7 +1230,6 @@ public class MoleculeFactory {
         mol.addBond(5, 0, IBond.Order.SINGLE);
 
         return mol;
-
     }
 
     public static IAtomContainer loadMolecule(String inFile) {
@@ -1263,9 +1260,7 @@ public class MoleculeFactory {
         return molecule;
     }
 
-    /**
-     * @cdk.inchi InChI=1/C5H5N5/c6-4-3-5(9-1-7-3)10-2-8-4/h1-2H,(H3,6,7,8,9,10)/f/h7H,6H2
-     */
+    /** @cdk.inchi InChI=1/C5H5N5/c6-4-3-5(9-1-7-3)10-2-8-4/h1-2H,(H3,6,7,8,9,10)/f/h7H,6H2 */
     public static IAtomContainer makeAdenine() {
         IAtomContainer mol = new AtomContainer(); // Adenine
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "C");
@@ -1332,5 +1327,4 @@ public class MoleculeFactory {
             logger.debug(exc);
         }
     }
-
 }

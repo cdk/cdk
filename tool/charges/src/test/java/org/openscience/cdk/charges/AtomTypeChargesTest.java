@@ -24,15 +24,15 @@ import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 
 /**
- * @cdk.module  test-charges
- * @author      egonw
+ * @cdk.module test-charges
+ * @author egonw
  * @cdk.created 2008-01-04
  */
 public class AtomTypeChargesTest extends CDKTestCase {
 
     /**
-     * Tests the initial assignment of partial charges of
-     * atom types matching the HOSE code for pOC atom types.
+     * Tests the initial assignment of partial charges of atom types matching the HOSE code for pOC
+     * atom types.
      */
     @Ignore
     @Test
@@ -41,8 +41,8 @@ public class AtomTypeChargesTest extends CDKTestCase {
     }
 
     /**
-     * Tests the initial assignment of partial charges of
-     * atom types matching the HOSE code for pOP atom types.
+     * Tests the initial assignment of partial charges of atom types matching the HOSE code for pOP
+     * atom types.
      */
     @Ignore
     @Test
@@ -51,8 +51,8 @@ public class AtomTypeChargesTest extends CDKTestCase {
     }
 
     /**
-     * Tests the initial assignment of partial charges of
-     * atom types matching the HOSE code for pOS atom types.
+     * Tests the initial assignment of partial charges of atom types matching the HOSE code for pOS
+     * atom types.
      */
     @Ignore
     @Test
@@ -61,8 +61,8 @@ public class AtomTypeChargesTest extends CDKTestCase {
     }
 
     /**
-     * Tests the initial assignment of partial charges of
-     * atom types matching the HOSE code for p_p atom types.
+     * Tests the initial assignment of partial charges of atom types matching the HOSE code for p_p
+     * atom types.
      */
     @Ignore
     @Test
@@ -71,13 +71,12 @@ public class AtomTypeChargesTest extends CDKTestCase {
     }
 
     /**
-     * Tests the initial assignment of partial charges of
-     * atom types matching the HOSE code for p_n atom types.
+     * Tests the initial assignment of partial charges of atom types matching the HOSE code for p_n
+     * atom types.
      */
     @Ignore
     @Test
     public void testCharges_p_n() throws Exception {
         Assert.fail("Not tested yet");
     }
-
 }

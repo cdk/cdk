@@ -24,10 +24,8 @@
 
 package org.openscience.cdk.hash.stereo;
 
-
 /**
- * A basic implementation suitable for determining the parity of the indicates a
- * provided sub-array.
+ * A basic implementation suitable for determining the parity of the indicates a provided sub-array.
  *
  * @author John May
  * @cdk.module hash
@@ -41,22 +39,23 @@ final class BasicPermutationParity extends PermutationParity {
      * Create a permutation parity for the provided indices.
      *
      * @param indices sub-array of indices
-     * @throws NullPointerException     the provided indices were null
+     * @throws NullPointerException the provided indices were null
      * @throws IllegalArgumentException less then two indices provided
      */
     public BasicPermutationParity(int[] indices) {
         if (indices == null) throw new NullPointerException("no indices[] provided");
         if (indices.length < 2)
-            throw new IllegalArgumentException("at least 2 incides required,"
-                    + "use PermutationParity.IDENTITY for single neighbors");
+            throw new IllegalArgumentException(
+                    "at least 2 incides required,"
+                            + "use PermutationParity.IDENTITY for single neighbors");
         this.indices = indices;
     }
 
     /**
-     * The number values to check is typically small ({@literal < 5}) and thus
-     * we use brute-force to count the number of inversions.
+     * The number values to check is typically small ({@literal < 5}) and thus we use brute-force to
+     * count the number of inversions.
      *
-     *{@inheritDoc}
+     * <p>{@inheritDoc}
      */
     @Override
     public int parity(long[] current) {
@@ -66,8 +65,7 @@ final class BasicPermutationParity extends PermutationParity {
         for (int i = 0, n = indices.length; i < n; i++) {
             for (int j = i + 1; j < n; j++) {
                 int cmp = compare(current[indices[i]], current[indices[j]]);
-                if (cmp == 0)
-                    return 0;
+                if (cmp == 0) return 0;
                 else if (cmp > 0) count++;
             }
         }
@@ -80,5 +78,4 @@ final class BasicPermutationParity extends PermutationParity {
     private static int compare(long a, long b) {
         return a > b ? +1 : a < b ? -1 : 0;
     }
-
 }

@@ -22,6 +22,16 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.StringTokenizer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -39,40 +49,29 @@ import org.openscience.cdk.io.formats.MDLRXNFormat;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.StringTokenizer;
-
 /**
- * Reads a molecule from an MDL RXN file {@cdk.cite DAL92}.
- * This MDL RXN reader uses the MDLV2000 reader to read each mol file
+ * Reads a molecule from an MDL RXN file {@cdk.cite DAL92}. This MDL RXN reader uses the MDLV2000
+ * reader to read each mol file
+ *
  * @cdk.module io
  * @cdk.githash
  * @cdk.iooptions
- *
- * @author     Egon Willighagen
- * @author 	   Thomas Kuhn
- * @cdk.created    2003-07-24
- *
- * @cdk.keyword    file format, MDL RXN
- * @cdk.bug        1849923
+ * @author Egon Willighagen
+ * @author Thomas Kuhn
+ * @cdk.created 2003-07-24
+ * @cdk.keyword file format, MDL RXN
+ * @cdk.bug 1849923
  */
 public class MDLRXNV2000Reader extends DefaultChemObjectReader {
 
-    BufferedReader              input  = null;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNV2000Reader.class);
+    BufferedReader input = null;
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(MDLRXNV2000Reader.class);
 
     /**
      * Constructs a new MDLReader that can read Molecule from a given Reader.
      *
-     * @param  in  The Reader to read from
+     * @param in The Reader to read from
      */
     public MDLRXNV2000Reader(Reader in) {
         this(in, Mode.RELAXED);
@@ -135,15 +134,14 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
     }
 
     /**
-      * Takes an object which subclasses IChemObject, e.g.Molecule, and will read
-      * this (from file, database, internet etc). If the specific implementation
-      * does not support a specific IChemObject it will throw an Exception.
-      *
-      * @param  object                              The object that subclasses
-      *      IChemObject
-      * @return                                     The IChemObject read
-      * @exception  CDKException
-      */
+     * Takes an object which subclasses IChemObject, e.g.Molecule, and will read this (from file,
+     * database, internet etc). If the specific implementation does not support a specific
+     * IChemObject it will throw an Exception.
+     *
+     * @param object The object that subclasses IChemObject
+     * @return The IChemObject read
+     * @exception CDKException
+     */
     @Override
     public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IReaction) {
@@ -161,12 +159,15 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
         } else if (object instanceof IChemFile) {
             IChemFile chemFile = object.getBuilder().newInstance(IChemFile.class);
             IChemSequence sequence = object.getBuilder().newInstance(IChemSequence.class);
-            sequence.addChemModel((IChemModel) read(object.getBuilder().newInstance(IChemModel.class)));
+            sequence.addChemModel(
+                    (IChemModel) read(object.getBuilder().newInstance(IChemModel.class)));
             chemFile.addChemSequence(sequence);
             return (T) chemFile;
         } else {
-            throw new CDKException("Only supported are Reaction and ChemModel, and not " + object.getClass().getName()
-                    + ".");
+            throw new CDKException(
+                    "Only supported are Reaction and ChemModel, and not "
+                            + object.getClass().getName()
+                            + ".");
         }
     }
 
@@ -186,7 +187,7 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
     /**
      * Read a Reaction from a file in MDL RXN format
      *
-     * @return  The Reaction that was read from the MDL file.
+     * @return The Reaction that was read from the MDL file.
      */
     private IReaction readReaction(IChemObjectBuilder builder) throws CDKException {
         IReaction reaction = builder.newInstance(IReaction.class);
@@ -245,18 +246,17 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
             }
 
             // last record
-            if (sb.length() > 0)
-                processMol(builder.newAtomContainer(), components, sb);
+            if (sb.length() > 0) processMol(builder.newAtomContainer(), components, sb);
 
             for (IAtomContainer component : components.subList(0, numReactans)) {
                 reaction.addReactant(component);
             }
-            for (IAtomContainer component : components.subList(numReactans,
-                                                               numReactans+numProducts)) {
+            for (IAtomContainer component :
+                    components.subList(numReactans, numReactans + numProducts)) {
                 reaction.addProduct(component);
             }
-            for (IAtomContainer component : components.subList(numReactans+numProducts,
-                                                               components.size())) {
+            for (IAtomContainer component :
+                    components.subList(numReactans + numProducts, components.size())) {
                 reaction.addAgent(component);
             }
 
@@ -291,9 +291,11 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
                 IAtom eductAtom = reactingSide.getAtom(i);
                 IAtom productAtom = producedSide.getAtom(j);
                 if (eductAtom.getProperty(CDKConstants.ATOM_ATOM_MAPPING) != null
-                        && eductAtom.getProperty(CDKConstants.ATOM_ATOM_MAPPING).equals(
-                                productAtom.getProperty(CDKConstants.ATOM_ATOM_MAPPING))) {
-                    reaction.addMapping(builder.newInstance(IMapping.class, eductAtom, productAtom));
+                        && eductAtom
+                                .getProperty(CDKConstants.ATOM_ATOM_MAPPING)
+                                .equals(productAtom.getProperty(CDKConstants.ATOM_ATOM_MAPPING))) {
+                    reaction.addMapping(
+                            builder.newInstance(IMapping.class, eductAtom, productAtom));
                     mappingCount++;
                     break;
                 }
@@ -304,7 +306,8 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
         return reaction;
     }
 
-    private void processMol(IAtomContainer mol, List<IAtomContainer> components, StringBuilder sb) throws CDKException, IOException {
+    private void processMol(IAtomContainer mol, List<IAtomContainer> components, StringBuilder sb)
+            throws CDKException, IOException {
         MDLV2000Reader reader = new MDLV2000Reader(new StringReader(sb.toString()), super.mode);
         components.add(reader.read(mol));
         reader.close();

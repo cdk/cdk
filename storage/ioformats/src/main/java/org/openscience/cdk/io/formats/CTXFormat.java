@@ -56,7 +56,7 @@ public class CTXFormat extends SimpleChemFormatMatcher implements IChemFormatMat
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"ctx"};
+        return new String[] {"ctx"};
     }
 
     /** {@inheritDoc} */

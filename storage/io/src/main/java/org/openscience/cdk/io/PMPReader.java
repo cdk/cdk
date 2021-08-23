@@ -23,6 +23,19 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
+import java.util.Hashtable;
+import java.util.Map;
+import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.rebond.RebondTool;
 import org.openscience.cdk.interfaces.IAtom;
@@ -39,61 +52,45 @@ import org.openscience.cdk.io.formats.PMPFormat;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import javax.vecmath.Point3d;
-import javax.vecmath.Vector3d;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-import java.util.Hashtable;
-import java.util.Map;
-import java.util.StringTokenizer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
- * Reads an frames from a PMP formated input.
- * Both compilation and use of this class requires Java 1.4.
+ * Reads an frames from a PMP formated input. Both compilation and use of this class requires Java
+ * 1.4.
  *
- * @cdk.module  io
+ * @cdk.module io
  * @cdk.githash
  * @cdk.iooptions
- *
  * @cdk.keyword file format, Polymorph Predictor (tm)
- *
  * @author E.L. Willighagen
  * @cdk.require java1.4+
  */
 public class PMPReader extends DefaultChemObjectReader {
 
-    private static final String   PMP_ZORDER   = "ZOrder";
-    private static final String   PMP_ID       = "Id";
+    private static final String PMP_ZORDER = "ZOrder";
+    private static final String PMP_ID = "Id";
 
-    private BufferedReader        input;
+    private BufferedReader input;
 
-    private static ILoggingTool   logger       = LoggingToolFactory.createLoggingTool(PMPReader.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(PMPReader.class);
 
     /* Keep a copy of the PMP model */
-    private IAtomContainer        modelStructure;
-    private IChemObject           chemObject;
+    private IAtomContainer modelStructure;
+    private IChemObject chemObject;
     /* Keep an index of PMP id -> AtomCountainer id */
-    private Map<Integer, Integer> atomids      = new Hashtable<>();
+    private Map<Integer, Integer> atomids = new Hashtable<>();
     private Map<Integer, Integer> atomGivenIds = new Hashtable<>();
-    private Map<Integer, Integer> bondids      = new Hashtable<>();
+    private Map<Integer, Integer> bondids = new Hashtable<>();
     private Map<Integer, Integer> bondAtomOnes = new Hashtable<>();
     private Map<Integer, Integer> bondAtomTwos = new Hashtable<>();
-    private Map<Integer, Double>  bondOrders   = new Hashtable<>();
+    private Map<Integer, Double> bondOrders = new Hashtable<>();
 
     /* Often used patterns */
-    Pattern                       objHeader;
-    Pattern                       objCommand;
-    Pattern                       atomTypePattern;
+    Pattern objHeader;
+    Pattern objCommand;
+    Pattern atomTypePattern;
 
-    int                           lineNumber;
-    int                           bondCounter  = 0;
-    private RebondTool            rebonder;
+    int lineNumber;
+    int bondCounter = 0;
+    private RebondTool rebonder;
 
     /*
      * construct a new reader from a Reader type object
@@ -152,11 +149,9 @@ public class PMPReader extends DefaultChemObjectReader {
     }
 
     /**
-     * reads the content from a PMP input. It can only return a
-     * IChemObject of type ChemFile
+     * reads the content from a PMP input. It can only return a IChemObject of type ChemFile
      *
      * @param object class must be of type ChemFile
-     *
      * @see IChemFile
      */
     @Override
@@ -179,11 +174,10 @@ public class PMPReader extends DefaultChemObjectReader {
     }
 
     /**
-     *  Private method that actually parses the input to read a ChemFile
-     *  object.
+     * Private method that actually parses the input to read a ChemFile object.
      *
-     *  Each PMP frame is stored as a Crystal in a ChemModel. The PMP
-     *  file is stored as a ChemSequence of ChemModels.
+     * <p>Each PMP frame is stored as a Crystal in a ChemModel. The PMP file is stored as a
+     * ChemSequence of ChemModels.
      *
      * @return A ChemFile containing the data parsed from input.
      */
@@ -201,7 +195,8 @@ public class PMPReader extends DefaultChemObjectReader {
                         if (line.startsWith("%%Version Number")) {
                             String version = readLine().trim();
                             if (!version.equals("3.00")) {
-                                logger.error("The PMPReader only supports PMP files with version 3.00");
+                                logger.error(
+                                        "The PMPReader only supports PMP files with version 3.00");
                                 return null;
                             }
                         }
@@ -240,8 +235,9 @@ public class PMPReader extends DefaultChemObjectReader {
                             }
                             if (chemObject instanceof IAtom) {
                                 atomids.put(id, modelStructure.getAtomCount());
-                                atomGivenIds.put(Integer.valueOf((String) chemObject.getProperty(PMP_ID)),
-                                                 id);
+                                atomGivenIds.put(
+                                        Integer.valueOf((String) chemObject.getProperty(PMP_ID)),
+                                        id);
                                 modelStructure.addAtom((IAtom) chemObject);
                             } else if (chemObject instanceof IBond) {
                                 // ignored: bonds may be defined before their
@@ -260,7 +256,8 @@ public class PMPReader extends DefaultChemObjectReader {
                         // define bonds *before* the involved atoms :(
                         // the next lines dump the cache into the atom container
 
-                        //                  	bondids.put(new Integer(id), new Integer(molecule.getAtomCount()));
+                        //                  	bondids.put(new Integer(id), new
+                        // Integer(molecule.getAtomCount()));
                         //                  	molecule.addBond((IBond)chemObject);
                         int bondsFound = bondids.size();
                         logger.debug("Found #bonds: ", bondsFound);
@@ -268,12 +265,18 @@ public class PMPReader extends DefaultChemObjectReader {
                         logger.debug("#atom twos: ", bondAtomTwos.size());
                         logger.debug("#orders: ", bondOrders.size());
                         for (Integer index : bondids.keySet()) {
-                            double order = (bondOrders.get(index) != null ? bondOrders.get(index) : 1.0);
+                            double order =
+                                    (bondOrders.get(index) != null ? bondOrders.get(index) : 1.0);
                             logger.debug("index: ", index);
                             logger.debug("ones: ", bondAtomOnes.get(index));
-                            IAtom atom1 = modelStructure.getAtom(atomids.get(bondAtomOnes.get(index)));
-                            IAtom atom2 = modelStructure.getAtom(atomids.get(bondAtomTwos.get(index)));
-                            IBond bond = modelStructure.getBuilder().newInstance(IBond.class, atom1, atom2);
+                            IAtom atom1 =
+                                    modelStructure.getAtom(atomids.get(bondAtomOnes.get(index)));
+                            IAtom atom2 =
+                                    modelStructure.getAtom(atomids.get(bondAtomTwos.get(index)));
+                            IBond bond =
+                                    modelStructure
+                                            .getBuilder()
+                                            .newInstance(IBond.class, atom1, atom2);
                             if (order == 1.0) {
                                 bond.setOrder(IBond.Order.SINGLE);
                             } else if (order == 2.0) {
@@ -295,10 +298,13 @@ public class PMPReader extends DefaultChemObjectReader {
                         if (line.startsWith("%%Start Frame")) {
                             chemModel = chemFile.getBuilder().newInstance(IChemModel.class);
                             crystal = chemFile.getBuilder().newInstance(ICrystal.class);
-                            while (input.ready() && line != null && !(line.startsWith("%%End Frame"))) {
+                            while (input.ready()
+                                    && line != null
+                                    && !(line.startsWith("%%End Frame"))) {
                                 // process frame data
                                 if (line.startsWith("%%Atom Coords")) {
-                                    // calculate Z: as it is not explicitely given, try to derive it from the
+                                    // calculate Z: as it is not explicitely given, try to derive it
+                                    // from the
                                     // energy per fragment and the total energy
                                     if (energyFragment != 0.0 && energyTotal != 0.0) {
                                         Z = (int) Math.round(energyTotal / energyFragment);
@@ -307,17 +313,23 @@ public class PMPReader extends DefaultChemObjectReader {
                                     // add atomC as atoms to crystal
                                     int expatoms = modelStructure.getAtomCount();
                                     for (int molCount = 1; molCount <= Z; molCount++) {
-                                        IAtomContainer clone = modelStructure.getBuilder().newInstance(
-                                                IAtomContainer.class);
+                                        IAtomContainer clone =
+                                                modelStructure
+                                                        .getBuilder()
+                                                        .newInstance(IAtomContainer.class);
                                         for (int i = 0; i < expatoms; i++) {
                                             line = readLine();
                                             IAtom a = clone.getBuilder().newInstance(IAtom.class);
                                             StringTokenizer st = new StringTokenizer(line, " ");
-                                            a.setPoint3d(new Point3d(Double.parseDouble(st.nextToken()), Double
-                                                    .parseDouble(st.nextToken()), Double.parseDouble(st.nextToken())));
+                                            a.setPoint3d(
+                                                    new Point3d(
+                                                            Double.parseDouble(st.nextToken()),
+                                                            Double.parseDouble(st.nextToken()),
+                                                            Double.parseDouble(st.nextToken())));
                                             a.setCovalentRadius(0.6);
-                                            IAtom modelAtom = modelStructure.getAtom(atomids.get(atomGivenIds
-                                                    .get(i + 1)));
+                                            IAtom modelAtom =
+                                                    modelStructure.getAtom(
+                                                            atomids.get(atomGivenIds.get(i + 1)));
                                             a.setSymbol(modelAtom.getSymbol());
                                             clone.addAtom(a);
                                         }
@@ -334,16 +346,25 @@ public class PMPReader extends DefaultChemObjectReader {
                                     StringTokenizer st;
                                     line = readLine();
                                     st = new StringTokenizer(line, " ");
-                                    crystal.setA(new Vector3d(Double.parseDouble(st.nextToken()), Double.parseDouble(st
-                                            .nextToken()), Double.parseDouble(st.nextToken())));
+                                    crystal.setA(
+                                            new Vector3d(
+                                                    Double.parseDouble(st.nextToken()),
+                                                    Double.parseDouble(st.nextToken()),
+                                                    Double.parseDouble(st.nextToken())));
                                     line = readLine();
                                     st = new StringTokenizer(line, " ");
-                                    crystal.setB(new Vector3d(Double.parseDouble(st.nextToken()), Double.parseDouble(st
-                                            .nextToken()), Double.parseDouble(st.nextToken())));
+                                    crystal.setB(
+                                            new Vector3d(
+                                                    Double.parseDouble(st.nextToken()),
+                                                    Double.parseDouble(st.nextToken()),
+                                                    Double.parseDouble(st.nextToken())));
                                     line = readLine();
                                     st = new StringTokenizer(line, " ");
-                                    crystal.setC(new Vector3d(Double.parseDouble(st.nextToken()), Double.parseDouble(st
-                                            .nextToken()), Double.parseDouble(st.nextToken())));
+                                    crystal.setC(
+                                            new Vector3d(
+                                                    Double.parseDouble(st.nextToken()),
+                                                    Double.parseDouble(st.nextToken()),
+                                                    Double.parseDouble(st.nextToken())));
                                 } else if (line.startsWith("%%Space Group")) {
                                     line = readLine().trim();
                                     /*
@@ -364,7 +385,7 @@ public class PMPReader extends DefaultChemObjectReader {
                         line = readLine();
                     }
                     chemFile.addChemSequence(chemSequence);
-                }  // else disregard line
+                } // else disregard line
 
                 // read next line
                 line = readLine();

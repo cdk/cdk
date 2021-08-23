@@ -21,14 +21,12 @@ package org.openscience.cdk.isomorphism.matchers;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
- * General concept of a IAtomContainer aimed at doing molecular subgraph
- * queries using the UniversalIsomorphismTester.
+ * General concept of a IAtomContainer aimed at doing molecular subgraph queries using the
+ * UniversalIsomorphismTester.
  *
- * @author      egonw
- * @cdk.module  interfaces
+ * @author egonw
+ * @cdk.module interfaces
  * @cdk.githash
- * @see         org.openscience.cdk.isomorphism.UniversalIsomorphismTester
+ * @see org.openscience.cdk.isomorphism.UniversalIsomorphismTester
  */
-public interface IQueryAtomContainer extends IAtomContainer {
-
-}
+public interface IQueryAtomContainer extends IAtomContainer {}

@@ -24,6 +24,13 @@
 
 package org.openscience.cdk.aromaticity;
 
+import static org.openscience.cdk.CDKConstants.ISAROMATIC;
+import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
+import static org.openscience.cdk.interfaces.IBond.Order.DOUBLE;
+import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
+import static org.openscience.cdk.interfaces.IBond.Order.UNSET;
+
+import java.util.BitSet;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.GraphUtil;
@@ -33,38 +40,25 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.util.BitSet;
-
-import static org.openscience.cdk.CDKConstants.ISAROMATIC;
-import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
-import static org.openscience.cdk.interfaces.IBond.Order.DOUBLE;
-import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
-import static org.openscience.cdk.interfaces.IBond.Order.UNSET;
-
 /**
- * Assign a Kekulé representation to the aromatic systems of a compound. Input
- * from some file-formats provides some bonds as aromatic / delocalised bond
- * types. This method localises the electrons and assigns single and double
- * bonds. Different atom and bond orderings may produce distinct but valid
- * Kekulé forms. Only bond orders are adjusted and any aromatic flags will
- * remain untouched.
- * 
+ * Assign a Kekulé representation to the aromatic systems of a compound. Input from some
+ * file-formats provides some bonds as aromatic / delocalised bond types. This method localises the
+ * electrons and assigns single and double bonds. Different atom and bond orderings may produce
+ * distinct but valid Kekulé forms. Only bond orders are adjusted and any aromatic flags will remain
+ * untouched.
  *
- * The procedure requires that all atoms have defined implicit hydrogens counts
- * and formal charges. If this information is not present it should be assigned
- * first. 
+ * <p>The procedure requires that all atoms have defined implicit hydrogens counts and formal
+ * charges. If this information is not present it should be assigned first.
  *
- * For some inputs it may not be possible to assign a Kekulé form. In general
- * theses cases are rare but usually occur for one of two reasons.
- * 1) Missing / ambiguous implicit hydrogens, this is fundamental to determining the
- * Kekulé form and if guessed may be wrong. Some formats (e.g. molfile) can not
- * include the exact number of implicit hydrogens attached to atom whilst others
- * may omit it or optionally skip encoding. The typical example is found in the
- * example for 1H-pyrrole, a correct SMILES encoding should include the hydrogen
- * on the aromatic nitrogen '[nH]1cccc1' (not: 'n1cccc1').
- * 2) The aromaticity perception algorithm has allowed atoms with abnormal
- * valence. This usually happens when a non-convalent bond has be <i>upgraded</i>
- * to a sigma bond during format conversion. 
+ * <p>For some inputs it may not be possible to assign a Kekulé form. In general theses cases are
+ * rare but usually occur for one of two reasons. 1) Missing / ambiguous implicit hydrogens, this is
+ * fundamental to determining the Kekulé form and if guessed may be wrong. Some formats (e.g.
+ * molfile) can not include the exact number of implicit hydrogens attached to atom whilst others
+ * may omit it or optionally skip encoding. The typical example is found in the example for
+ * 1H-pyrrole, a correct SMILES encoding should include the hydrogen on the aromatic nitrogen
+ * '[nH]1cccc1' (not: 'n1cccc1'). 2) The aromaticity perception algorithm has allowed atoms with
+ * abnormal valence. This usually happens when a non-convalent bond has be <i>upgraded</i> to a
+ * sigma bond during format conversion.
  *
  * @author John May
  * @cdk.keyword kekule
@@ -98,7 +92,8 @@ public final class Kekulization {
         // attempt to find a perfect matching such that a pi bond is placed
         // next to each available atom. if not found the solution is ambiguous
         if (!matching.perfect(graph, available))
-            throw new CDKException("Cannot assign Kekulé structure without randomly creating radicals.");
+            throw new CDKException(
+                    "Cannot assign Kekulé structure without randomly creating radicals.");
 
         // propegate bond order information from the matching
         for (final IBond bond : ac.bonds()) {
@@ -131,7 +126,8 @@ public final class Kekulization {
         final BitSet available = new BitSet();
 
         // for all atoms, select those that require a double-bond
-        ATOMS: for (int i = 0; i < atoms.length; i++) {
+        ATOMS:
+        for (int i = 0; i < atoms.length; i++) {
 
             final IAtom atom = atoms[i];
 
@@ -141,7 +137,8 @@ public final class Kekulization {
             if (atom.getFormalCharge() == null)
                 throw new IllegalArgumentException("atom " + (i + 1) + " had unset formal charge");
             if (atom.getImplicitHydrogenCount() == null)
-                throw new IllegalArgumentException("atom " + (i + 1) + " had unset implicit hydrogen count");
+                throw new IllegalArgumentException(
+                        "atom " + (i + 1) + " had unset implicit hydrogen count");
 
             if (!atom.getFlag(ISAROMATIC)) continue;
 
@@ -170,11 +167,10 @@ public final class Kekulization {
     }
 
     /**
-     * Determine if the specified element with the provided charge and valance
-     * requires a pi bond?
+     * Determine if the specified element with the provided charge and valance requires a pi bond?
      *
      * @param element atomic number >= 0
-     * @param charge  formal charge
+     * @param charge formal charge
      * @param valence bonded electrons
      * @return a double-bond is required
      */

@@ -23,9 +23,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 
-/**
- * @cdk.module test
- */
+/** @cdk.module test */
 public abstract class AbstractLoggingToolTest extends CDKTestCase {
 
     public abstract ILoggingTool getLoggingTool();
@@ -258,5 +256,4 @@ public abstract class AbstractLoggingToolTest extends CDKTestCase {
         ILoggingTool logger = getLoggingTool();
         logger.isDebugEnabled();
     }
-
 }

@@ -23,12 +23,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -39,14 +39,11 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class ProtonAffinityHOSEDescriptorTest extends AtomicDescriptorTest {
 
-    ProtonAffinityHOSEDescriptor            descriptor;
-    LonePairElectronChecker                 lpcheck = new LonePairElectronChecker();
-    private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    ProtonAffinityHOSEDescriptor descriptor;
+    LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+    private static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
-    /**
-     *  Constructor for the ProtonAffinityHOSEDescriptorTest object
-     *
-     */
+    /** Constructor for the ProtonAffinityHOSEDescriptorTest object */
     public ProtonAffinityHOSEDescriptorTest() {
         descriptor = new ProtonAffinityHOSEDescriptor();
     }
@@ -56,9 +53,7 @@ public class ProtonAffinityHOSEDescriptorTest extends AtomicDescriptorTest {
         setDescriptor(ProtonAffinityHOSEDescriptor.class);
     }
 
-    /**
-     *  A unit test for JUnit
-     */
+    /** A unit test for JUnit */
     @Test
     public void testProtonAffinityHOSEDescriptor() throws Exception {
         IAtomicDescriptor descriptor = new ProtonAffinityHOSEDescriptor();
@@ -66,9 +61,9 @@ public class ProtonAffinityHOSEDescriptorTest extends AtomicDescriptorTest {
     }
 
     /**
-     *  A unit test for JUnit with
+     * A unit test for JUnit with
      *
-     *  @cdk.inchi InChI=1/C6H5Cl/c7-6-4-2-1-3-5-6/h1-5H
+     * @cdk.inchi InChI=1/C6H5Cl/c7-6-4-2-1-3-5-6/h1-5H
      */
     @Test
     public void testAffinityDescriptor1() throws Exception {
@@ -94,16 +89,17 @@ public class ProtonAffinityHOSEDescriptorTest extends AtomicDescriptorTest {
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getAtom(6), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getAtom(6), mol).getValue()).doubleValue();
         double resultAccordingNIST = 753.1;
 
         Assert.assertEquals(resultAccordingNIST, result, 0.00001);
     }
 
     /**
-     *  A unit test for JUnit with
+     * A unit test for JUnit with
      *
-     *  @cdk.inchi InChI=1/C2H5Cl/c1-2-3/h2H2,1H3
+     * @cdk.inchi InChI=1/C2H5Cl/c1-2-3/h2H2,1H3
      */
     @Test
     public void testAffinityDescriptor2() throws Exception {
@@ -119,10 +115,10 @@ public class ProtonAffinityHOSEDescriptorTest extends AtomicDescriptorTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
         double resultAccordingNIST = 693.4;
 
         Assert.assertEquals(resultAccordingNIST, result, 0.00001);
     }
-
 }

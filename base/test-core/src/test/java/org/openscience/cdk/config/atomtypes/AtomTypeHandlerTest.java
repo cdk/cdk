@@ -21,9 +21,8 @@ package org.openscience.cdk.config.atomtypes;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.config.atomtypes.AtomTypeHandler;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.ChemObject;
 
 /**
  * Checks the functionality of the IsotopeFactory
@@ -74,5 +73,4 @@ public class AtomTypeHandlerTest extends CDKTestCase {
         // nothing I can test here that AtomTypeFactoryTest doesn't do
         Assert.assertTrue(true);
     }
-
 }

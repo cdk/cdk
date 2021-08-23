@@ -25,7 +25,6 @@ package org.openscience.cdk.smsd.algorithm.vflib;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -51,15 +50,16 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * Unit testing for the {@link VFMapper}, {@link VFState}, {@link Match} class.
+ *
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
  * @cdk.module test-smsd
  */
 public class VFLibTest extends CDKTestCase {
 
     private static IAtomContainer hexane;
-    private static IQuery         hexaneQuery;
+    private static IQuery hexaneQuery;
     private static IAtomContainer benzene;
-    private static IQuery         benzeneQuery;
+    private static IQuery benzeneQuery;
 
     @BeforeClass
     public static void setUp() throws CDKException {
@@ -200,9 +200,7 @@ public class VFLibTest extends CDKTestCase {
         Assert.assertTrue(nextState.hasNextCandidate());
     }
 
-    /**
-     *
-     */
+    /** */
     @Test
     public void testItShouldMatchHexaneToHexaneWhenUsingMolecule() {
         IMapper mapper = new VFMapper(hexane, true);
@@ -210,7 +208,8 @@ public class VFLibTest extends CDKTestCase {
     }
 
     public static IAtomContainer createHexane() throws CDKException {
-        IAtomContainer result = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer result =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c1.setID("1");
         IAtom c2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
@@ -249,7 +248,8 @@ public class VFLibTest extends CDKTestCase {
     }
 
     public static IAtomContainer createBenzene() throws CDKException {
-        IAtomContainer result = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer result =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
 
         IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c1.setID("1");

@@ -37,13 +37,14 @@ public class DebugSingleElectronTest extends AbstractSingleElectronTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new DebugSingleElectron();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new DebugSingleElectron();
+                    }
+                });
     }
 
     @Test

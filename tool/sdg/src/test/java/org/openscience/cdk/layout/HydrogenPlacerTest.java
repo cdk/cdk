@@ -18,6 +18,10 @@
  */
 package org.openscience.cdk.layout;
 
+import static org.junit.Assert.assertNotNull;
+
+import java.io.InputStream;
+import javax.vecmath.Point2d;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -34,16 +38,11 @@ import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import javax.vecmath.Point2d;
-import java.io.InputStream;
-
-import static org.junit.Assert.assertNotNull;
-
 /** @cdk.module test-sdg */
 public class HydrogenPlacerTest extends CDKTestCase {
 
-    public boolean       standAlone = false;
-    private ILoggingTool logger     = LoggingToolFactory.createLoggingTool(HydrogenPlacerTest.class);
+    public boolean standAlone = false;
+    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(HydrogenPlacerTest.class);
 
     @Test(expected = IllegalArgumentException.class)
     public void testAtomWithoutCoordinates() {
@@ -60,8 +59,8 @@ public class HydrogenPlacerTest extends CDKTestCase {
     @Test
     public void testNoConnections() {
         HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
-        AtomContainer  container      = new AtomContainer();
-        Atom           atom         = new Atom("C", new Point2d(0, 0));
+        AtomContainer container = new AtomContainer();
+        Atom atom = new Atom("C", new Point2d(0, 0));
         container.addAtom(atom);
         hydrogenPlacer.placeHydrogens2D(container, atom, 1.5);
     }
@@ -170,5 +169,4 @@ public class HydrogenPlacerTest extends CDKTestCase {
         logger.debug("ended addition of H's");
         hydrogenPlacer.placeHydrogens2D(mol, bondLength);
     }
-
 }

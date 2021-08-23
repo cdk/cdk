@@ -24,14 +24,10 @@
 
 package org.openscience.cdk.hash.stereo;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.openscience.cdk.hash.stereo.GeometricParity;
-import org.openscience.cdk.hash.stereo.Tetrahedral2DParity;
+import static org.hamcrest.CoreMatchers.is;
 
 import javax.vecmath.Point2d;
-
-import static org.hamcrest.CoreMatchers.is;
+import org.junit.Test;
 
 /**
  * @author John May
@@ -39,9 +35,9 @@ import static org.hamcrest.CoreMatchers.is;
  */
 public class Tetrahedral2DParityTest {
 
-    private static final int CLOCKWISE     = -1;
+    private static final int CLOCKWISE = -1;
     private static final int ANTICLOCKWISE = +1;
-    private static final int NONE          = 0;
+    private static final int NONE = 0;
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstruction_InvalidCoords() {
@@ -60,12 +56,14 @@ public class Tetrahedral2DParityTest {
      */
     @Test
     public void testParity_Four_NNND() {
-        Point2d[] coords = new Point2d[]{new Point2d(-7.75, 5.79), // -O
-                new Point2d(-6.42, 3.48), // -N
-                new Point2d(-9.09, 3.48), // -C
-                new Point2d(-9.09, 5.02), // -H (down)
-        };
-        int[] elev = new int[]{0, 0, 0, -1};
+        Point2d[] coords =
+                new Point2d[] {
+                    new Point2d(-7.75, 5.79), // -O
+                    new Point2d(-6.42, 3.48), // -N
+                    new Point2d(-9.09, 3.48), // -C
+                    new Point2d(-9.09, 5.02), // -H (down)
+                };
+        int[] elev = new int[] {0, 0, 0, -1};
         GeometricParity parity = new Tetrahedral2DParity(coords, elev);
         org.hamcrest.MatcherAssert.assertThat(parity.parity(), is(CLOCKWISE));
     }
@@ -77,102 +75,110 @@ public class Tetrahedral2DParityTest {
      */
     @Test
     public void testParity_Four_NNNU() {
-        Point2d[] coords = new Point2d[]{new Point2d(-7.75, 5.79), // -O
-                new Point2d(-6.42, 3.48), // -N
-                new Point2d(-9.09, 3.48), // -C
-                new Point2d(-9.09, 5.02), // -H (up)
-        };
-        int[] elev = new int[]{0, 0, 0, 1};
+        Point2d[] coords =
+                new Point2d[] {
+                    new Point2d(-7.75, 5.79), // -O
+                    new Point2d(-6.42, 3.48), // -N
+                    new Point2d(-9.09, 3.48), // -C
+                    new Point2d(-9.09, 5.02), // -H (up)
+                };
+        int[] elev = new int[] {0, 0, 0, 1};
         GeometricParity parity = new Tetrahedral2DParity(coords, elev);
         org.hamcrest.MatcherAssert.assertThat(parity.parity(), is(ANTICLOCKWISE));
     }
 
     /**
-     * aminoethanol (explicit H) with no wedge/hatch bonds
-     * (none,none,none,none)
+     * aminoethanol (explicit H) with no wedge/hatch bonds (none,none,none,none)
      *
      * @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
      */
     @Test
     public void testParity_Four_NNNN() {
-        Point2d[] coords = new Point2d[]{new Point2d(-7.75, 5.79), // -O
-                new Point2d(-6.42, 3.48), // -N
-                new Point2d(-9.09, 3.48), // -C
-                new Point2d(-9.09, 5.02), // -H
-        };
-        int[] elev = new int[]{0, 0, 0, 0}; // no wedge/hatch bonds
+        Point2d[] coords =
+                new Point2d[] {
+                    new Point2d(-7.75, 5.79), // -O
+                    new Point2d(-6.42, 3.48), // -N
+                    new Point2d(-9.09, 3.48), // -C
+                    new Point2d(-9.09, 5.02), // -H
+                };
+        int[] elev = new int[] {0, 0, 0, 0}; // no wedge/hatch bonds
         GeometricParity parity = new Tetrahedral2DParity(coords, elev);
         org.hamcrest.MatcherAssert.assertThat(parity.parity(), is(NONE));
     }
 
     /**
-     * aminoethanol (explicit H) with a wedge bond on non hydrogens
-     * (up,up,up,none)
+     * aminoethanol (explicit H) with a wedge bond on non hydrogens (up,up,up,none)
      *
      * @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
      */
     @Test
     public void testParity_Four_UUUN() {
-        Point2d[] coords = new Point2d[]{new Point2d(-7.75, 5.79), // -O
-                new Point2d(-6.42, 3.48), // -N
-                new Point2d(-9.09, 3.48), // -C
-                new Point2d(-9.09, 5.02), // -H
-        };
-        int[] elev = new int[]{1, 1, 1, 0}; // no wedge/hatch bonds
+        Point2d[] coords =
+                new Point2d[] {
+                    new Point2d(-7.75, 5.79), // -O
+                    new Point2d(-6.42, 3.48), // -N
+                    new Point2d(-9.09, 3.48), // -C
+                    new Point2d(-9.09, 5.02), // -H
+                };
+        int[] elev = new int[] {1, 1, 1, 0}; // no wedge/hatch bonds
         GeometricParity parity = new Tetrahedral2DParity(coords, elev);
         org.hamcrest.MatcherAssert.assertThat(parity.parity(), is(CLOCKWISE));
     }
 
     /**
-     * aminoethanol (explicit H) with a wedge bond on non hydrogens
-     * (down,down,down,none)
+     * aminoethanol (explicit H) with a wedge bond on non hydrogens (down,down,down,none)
      *
      * @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
      */
     @Test
     public void testParity_Four_DDDN() {
-        Point2d[] coords = new Point2d[]{new Point2d(-7.75, 5.79), // -O
-                new Point2d(-6.42, 3.48), // -N
-                new Point2d(-9.09, 3.48), // -C
-                new Point2d(-9.09, 5.02), // -H
-        };
-        int[] elev = new int[]{-1, -1, -1, 0}; // no wedge/hatch bonds
+        Point2d[] coords =
+                new Point2d[] {
+                    new Point2d(-7.75, 5.79), // -O
+                    new Point2d(-6.42, 3.48), // -N
+                    new Point2d(-9.09, 3.48), // -C
+                    new Point2d(-9.09, 5.02), // -H
+                };
+        int[] elev = new int[] {-1, -1, -1, 0}; // no wedge/hatch bonds
         GeometricParity parity = new Tetrahedral2DParity(coords, elev);
         org.hamcrest.MatcherAssert.assertThat(parity.parity(), is(ANTICLOCKWISE));
     }
 
     /**
-     * aminoethanol (explicit H) with a wedge bond on all atoms (up,up,up,up) -
-     * makes no sense
+     * aminoethanol (explicit H) with a wedge bond on all atoms (up,up,up,up) - makes no sense
      *
      * @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
      */
     @Test
     public void testParity_Four_UUUU() {
-        Point2d[] coords = new Point2d[]{new Point2d(-7.75, 5.79), // -O
-                new Point2d(-6.42, 3.48), // -N
-                new Point2d(-9.09, 3.48), // -C
-                new Point2d(-9.09, 5.02), // -H
-        };
-        int[] elev = new int[]{1, 1, 1, 1}; // no wedge/hatch bonds
+        Point2d[] coords =
+                new Point2d[] {
+                    new Point2d(-7.75, 5.79), // -O
+                    new Point2d(-6.42, 3.48), // -N
+                    new Point2d(-9.09, 3.48), // -C
+                    new Point2d(-9.09, 5.02), // -H
+                };
+        int[] elev = new int[] {1, 1, 1, 1}; // no wedge/hatch bonds
         GeometricParity parity = new Tetrahedral2DParity(coords, elev);
         org.hamcrest.MatcherAssert.assertThat(parity.parity(), is(NONE));
     }
 
     /**
-     * aminoethanol (explicit H) with a hatch bond on all atoms
-     * (down,down,down,down) - makes no sense
+     * aminoethanol (explicit H) with a hatch bond on all atoms (down,down,down,down) - makes no
+     * sense
      *
      * @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
      */
     @Test
     public void testParity_Four_DDDD() {
-        Point2d[] coords = new Point2d[]{new Point2d(-7.75, 5.79), // -O
-                new Point2d(-6.42, 3.48), // -N
-                new Point2d(-9.09, 3.48), // -C
-                new Point2d(-9.09, 5.02), // -H
-        };
-        int[] elev = new int[]{-1, -1, -1, -1}; // no wedge/hatch bonds
+        Point2d[] coords =
+                new Point2d[] {
+                    new Point2d(-7.75, 5.79), // -O
+                    new Point2d(-6.42, 3.48), // -N
+                    new Point2d(-9.09, 3.48), // -C
+                    new Point2d(-9.09, 5.02), // -H
+                };
+        int[] elev = new int[] {-1, -1, -1, -1}; // no wedge/hatch bonds
         GeometricParity parity = new Tetrahedral2DParity(coords, elev);
         org.hamcrest.MatcherAssert.assertThat(parity.parity(), is(NONE));
     }
@@ -184,12 +190,14 @@ public class Tetrahedral2DParityTest {
      */
     @Test
     public void testParity_Three_UNN() {
-        Point2d[] coords = new Point2d[]{new Point2d(-7.75, 5.79), // -O (up)
-                new Point2d(-6.42, 3.48), // -N
-                new Point2d(-9.09, 3.48), // -C
-                new Point2d(-7.75, 4.25), //  C (centre)
-        };
-        int[] elev = new int[]{1, 0, 0, 0};
+        Point2d[] coords =
+                new Point2d[] {
+                    new Point2d(-7.75, 5.79), // -O (up)
+                    new Point2d(-6.42, 3.48), // -N
+                    new Point2d(-9.09, 3.48), // -C
+                    new Point2d(-7.75, 4.25), //  C (centre)
+                };
+        int[] elev = new int[] {1, 0, 0, 0};
         GeometricParity parity = new Tetrahedral2DParity(coords, elev);
         org.hamcrest.MatcherAssert.assertThat(parity.parity(), is(CLOCKWISE));
     }
@@ -201,12 +209,14 @@ public class Tetrahedral2DParityTest {
      */
     @Test
     public void testParity_Three_UUU() {
-        Point2d[] coords = new Point2d[]{new Point2d(-7.75, 5.79), // -O (up)
-                new Point2d(-6.42, 3.48), // -N
-                new Point2d(-9.09, 3.48), // -C
-                new Point2d(-7.75, 4.25), //  C (centre)
-        };
-        int[] elev = new int[]{1, 1, 1, 0};
+        Point2d[] coords =
+                new Point2d[] {
+                    new Point2d(-7.75, 5.79), // -O (up)
+                    new Point2d(-6.42, 3.48), // -N
+                    new Point2d(-9.09, 3.48), // -C
+                    new Point2d(-7.75, 4.25), //  C (centre)
+                };
+        int[] elev = new int[] {1, 1, 1, 0};
         GeometricParity parity = new Tetrahedral2DParity(coords, elev);
         org.hamcrest.MatcherAssert.assertThat(parity.parity(), is(CLOCKWISE));
     }
@@ -218,12 +228,14 @@ public class Tetrahedral2DParityTest {
      */
     @Test
     public void testParity_Three_DNN() {
-        Point2d[] coords = new Point2d[]{new Point2d(-7.75, 5.79), // -O (down)
-                new Point2d(-6.42, 3.48), // -N
-                new Point2d(-9.09, 3.48), // -C
-                new Point2d(-7.75, 4.25), //  C (centre)
-        };
-        int[] elev = new int[]{-1, 0, 0, 0};
+        Point2d[] coords =
+                new Point2d[] {
+                    new Point2d(-7.75, 5.79), // -O (down)
+                    new Point2d(-6.42, 3.48), // -N
+                    new Point2d(-9.09, 3.48), // -C
+                    new Point2d(-7.75, 4.25), //  C (centre)
+                };
+        int[] elev = new int[] {-1, 0, 0, 0};
         GeometricParity parity = new Tetrahedral2DParity(coords, elev);
         org.hamcrest.MatcherAssert.assertThat(parity.parity(), is(ANTICLOCKWISE));
     }
@@ -235,14 +247,15 @@ public class Tetrahedral2DParityTest {
      */
     @Test
     public void testParity_Three_DDD() {
-        Point2d[] coords = new Point2d[]{new Point2d(-7.75, 5.79), // -O (down)
-                new Point2d(-6.42, 3.48), // -N
-                new Point2d(-9.09, 3.48), // -C
-                new Point2d(-7.75, 4.25), //  C (centre)
-        };
-        int[] elev = new int[]{-1, -1, -1, 0};
+        Point2d[] coords =
+                new Point2d[] {
+                    new Point2d(-7.75, 5.79), // -O (down)
+                    new Point2d(-6.42, 3.48), // -N
+                    new Point2d(-9.09, 3.48), // -C
+                    new Point2d(-7.75, 4.25), //  C (centre)
+                };
+        int[] elev = new int[] {-1, -1, -1, 0};
         GeometricParity parity = new Tetrahedral2DParity(coords, elev);
         org.hamcrest.MatcherAssert.assertThat(parity.parity(), is(ANTICLOCKWISE));
     }
-
 }

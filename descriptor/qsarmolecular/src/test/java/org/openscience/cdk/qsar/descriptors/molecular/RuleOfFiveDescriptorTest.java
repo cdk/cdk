@@ -18,6 +18,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import static org.hamcrest.Matchers.is;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,14 +29,11 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
-import static org.hamcrest.Matchers.is;
-
 /**
  * TestSuite that runs all QSAR tests.
  *
  * @cdk.module test-qsarmolecular
  */
-
 public class RuleOfFiveDescriptorTest extends MolecularDescriptorTest {
 
     public RuleOfFiveDescriptorTest() {}
@@ -45,11 +44,13 @@ public class RuleOfFiveDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testRuleOfFiveDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testRuleOfFiveDescriptor()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
         Object[] params = {Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer mol = sp.parseSmiles("CCCC(OCC)OCC(c1cccc2ccccc12)C4CCC(CCCO)C(CC3CNCNC3)C4"); //
+        IAtomContainer mol =
+                sp.parseSmiles("CCCC(OCC)OCC(c1cccc2ccccc12)C4CCC(CCCO)C(CC3CNCNC3)C4"); //
         addExplicitHydrogens(mol);
         Assert.assertEquals(3, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
@@ -59,9 +60,11 @@ public class RuleOfFiveDescriptorTest extends MolecularDescriptorTest {
         Object[] params = {true};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer mol = sp.parseSmiles("CCCC1=CC(NC(=O)CC)=CC(CCC)=C1"); // nRot = 10 (excl. amide C-N bond)
+        IAtomContainer mol =
+                sp.parseSmiles("CCCC1=CC(NC(=O)CC)=CC(CCC)=C1"); // nRot = 10 (excl. amide C-N bond)
         addExplicitHydrogens(mol);
-        org.hamcrest.MatcherAssert.assertThat(((IntegerResult) descriptor.calculate(mol).getValue()).intValue(), is(0));
+        org.hamcrest.MatcherAssert.assertThat(
+                ((IntegerResult) descriptor.calculate(mol).getValue()).intValue(), is(0));
     }
 
     @Test
@@ -69,8 +72,11 @@ public class RuleOfFiveDescriptorTest extends MolecularDescriptorTest {
         Object[] params = {true};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer mol = sp.parseSmiles("CCCCC1=CC(CCC)=CC(NC(=O)CC)=C1"); // nRot = 11 (excl. amide C-N bond)
+        IAtomContainer mol =
+                sp.parseSmiles(
+                        "CCCCC1=CC(CCC)=CC(NC(=O)CC)=C1"); // nRot = 11 (excl. amide C-N bond)
         addExplicitHydrogens(mol);
-        org.hamcrest.MatcherAssert.assertThat(((IntegerResult) descriptor.calculate(mol).getValue()).intValue(), is(1));
+        org.hamcrest.MatcherAssert.assertThat(
+                ((IntegerResult) descriptor.calculate(mol).getValue()).intValue(), is(1));
     }
 }

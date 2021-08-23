@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2006-2012  Egon Willighagen <egonw@users.sf.net>
  *                    2014  Mark B Vine (orcid:0000-0002-7794-0426)
  *
@@ -24,17 +24,15 @@
  */
 package org.openscience.cdk.config;
 
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IElement;
-
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IElement;
 
 /**
- * Enumeration of chemical elements. Data is taken from the Blue Obelisk Data
- * Repository, version 3. This enumeration is auto-generated with utilities
- * found in the 'cdk-build-utils' project.
+ * Enumeration of chemical elements. Data is taken from the Blue Obelisk Data Repository, version 3.
+ * This enumeration is auto-generated with utilities found in the 'cdk-build-utils' project.
  *
  * @author egonw
  * @author john may
@@ -170,35 +168,25 @@ public enum Elements {
     Ununoctium(118, "Uuo", 7, 18, null, null, null),
     Oganesson(118, "Og", 7, 18, null, null, null);
 
-    /**
-     * Atomic number, periodic table period and group.
-     */
+    /** Atomic number, periodic table period and group. */
     private final int number, period, group;
 
-    /**
-     * The symbol of the element.
-     */
+    /** The symbol of the element. */
     private final String symbol;
 
     /**
-     * Covalent radius (<i>r<sub>cov</sub></i>), van der Waals radius
-     * (<i>r<sub>w</sub></i>) and Pauling electronegativity.
+     * Covalent radius (<i>r<sub>cov</sub></i>), van der Waals radius (<i>r<sub>w</sub></i>) and
+     * Pauling electronegativity.
      */
     private final Double rCov, rW, electronegativity;
 
-    /**
-     * An {@link IElement} instance of this element.
-     */
+    /** An {@link IElement} instance of this element. */
     private final IElement instance;
 
-    /**
-     * Lookup elements by atomic number.
-     */
+    /** Lookup elements by atomic number. */
     static final Elements[] NUMER_MAP = new Elements[119];
 
-    /**
-     * Lookup elements by symbol / name.
-     */
+    /** Lookup elements by symbol / name. */
     static final Map<String, Elements> SYMBOL_MAP = new HashMap<String, Elements>(400);
 
     static {
@@ -229,21 +217,27 @@ public enum Elements {
         SYMBOL_MAP.put("sulphur", Sulfur);
         SYMBOL_MAP.put("cesium", Caesium);
         SYMBOL_MAP.put("aluminum", Aluminium);
-
     }
 
     /**
      * Internal constructor.
      *
-     * @param number            atomic number
-     * @param symbol            symbol
-     * @param period            periodic table period
-     * @param group             periodic table group
-     * @param rCov              covalent radius
-     * @param rW                van der Waals radius
+     * @param number atomic number
+     * @param symbol symbol
+     * @param period periodic table period
+     * @param group periodic table group
+     * @param rCov covalent radius
+     * @param rW van der Waals radius
      * @param electronegativity pauling electronegativity
      */
-    private Elements(int number, String symbol, int period, int group, Double rCov, Double rW, Double electronegativity) {
+    private Elements(
+            int number,
+            String symbol,
+            int period,
+            int group,
+            Double rCov,
+            Double rW,
+            Double electronegativity) {
         this.number = number;
         this.period = period;
         this.group = group;
@@ -255,8 +249,7 @@ public enum Elements {
     }
 
     /**
-     * The atomic number of the element. An {@link #Unknown} element
-     * has an atomic number of '0'.
+     * The atomic number of the element. An {@link #Unknown} element has an atomic number of '0'.
      *
      * @return 0 - 116
      */
@@ -265,8 +258,8 @@ public enum Elements {
     }
 
     /**
-     * The element symbol, C for carbon, N for nitrogen, Na for sodium, etc. An
-     * {@link #Unknown} element has no symbol.
+     * The element symbol, C for carbon, N for nitrogen, Na for sodium, etc. An {@link #Unknown}
+     * element has no symbol.
      *
      * @return the symbol
      */
@@ -275,8 +268,8 @@ public enum Elements {
     }
 
     /**
-     * Return the period in the periodic table this element belongs to. If
-     * the element is {@link #Unknown} it's period is 0.
+     * Return the period in the periodic table this element belongs to. If the element is {@link
+     * #Unknown} it's period is 0.
      *
      * @return a period in the periodic table
      */
@@ -285,8 +278,8 @@ public enum Elements {
     }
 
     /**
-     * Return the group in the periodic table this element belongs to. If
-     * the element does not belong to a group then it's group is '0'.
+     * Return the group in the periodic table this element belongs to. If the element does not
+     * belong to a group then it's group is '0'.
      *
      * @return a group in the periodic table
      */
@@ -295,8 +288,8 @@ public enum Elements {
     }
 
     /**
-     * The covalent radius, <i>r<sub>cov</sub></i>, is a measure of the
-     * size of an atom that forms part of one covalent bond.
+     * The covalent radius, <i>r<sub>cov</sub></i>, is a measure of the size of an atom that forms
+     * part of one covalent bond.
      *
      * @return covalent radius - null if not available
      * @see <a href="http://en.wikipedia.org/wiki/Covalent_radius">Covalent radius</a>
@@ -306,9 +299,8 @@ public enum Elements {
     }
 
     /**
-     * The van der Waals radius, <i>r<sub>w</sub></i>, of an atom is the
-     * radius of an imaginary hard sphere which can be used to model the
-     * atom.
+     * The van der Waals radius, <i>r<sub>w</sub></i>, of an atom is the radius of an imaginary hard
+     * sphere which can be used to model the atom.
      *
      * @return van der Waals radius - null if not available
      * @see <a href="http://en.wikipedia.org/wiki/Van_der_Waals_radius">Van de Waals radius</a>
@@ -318,14 +310,15 @@ public enum Elements {
     }
 
     /**
-     * Electronegativity, symbol χ, is a chemical property that describes
-     * the tendency of an atom or a functional group to attract electrons
-     * (or electron density) towards itself. This method provides access to the
-     * Pauling electronegativity value for a chemical element. If no value is
+     * Electronegativity, symbol χ, is a chemical property that describes the tendency of an atom or
+     * a functional group to attract electrons (or electron density) towards itself. This method
+     * provides access to the Pauling electronegativity value for a chemical element. If no value is
      * available 'null' is returned.
      *
      * @return Pauling electronegativity - null if not available
-     * @see <a href="http://en.wikipedia.org/wiki/Electronegativity#Pauling_electronegativity">Pauling Electronegativity</a>
+     * @see <a
+     *     href="http://en.wikipedia.org/wiki/Electronegativity#Pauling_electronegativity">Pauling
+     *     Electronegativity</a>
      */
     public Double electronegativity() {
         return electronegativity;
@@ -341,16 +334,20 @@ public enum Elements {
     }
 
     /**
-     * Obtain the element with the specified atomic number. If no element had
-     * the specified atomic number then {@link #Unknown} is returned.
+     * Obtain the element with the specified atomic number. If no element had the specified atomic
+     * number then {@link #Unknown} is returned.
      *
-     * <blockquote><pre>
+     * <blockquote>
+     *
+     * <pre>
      *     // carbon
      *     Elements e = Elements.ofNumber(6);
      *
      *     // oxygen
      *     Elements e = Elements.ofNumber(8);
-     * </pre></blockquote>
+     * </pre>
+     *
+     * </blockquote>
      *
      * @param number atomic number
      * @return an element, or {@link #Unknown}
@@ -361,17 +358,20 @@ public enum Elements {
     }
 
     /**
-     * Obtain the element with the specified symbol or name. If no element had
-     * the specified symbol or name then {@link #Unknown} is returned. The
-     * input is case-insensitive.
+     * Obtain the element with the specified symbol or name. If no element had the specified symbol
+     * or name then {@link #Unknown} is returned. The input is case-insensitive.
      *
-     * <blockquote><pre>
+     * <blockquote>
+     *
+     * <pre>
      *     // carbon
      *     Elements e = Elements.ofString("c");
      *     Elements e = Elements.ofString("C");
      *     Elements e = Elements.ofString("Carbon");
      *     Elements e = Elements.ofString("carbon");
-     * </pre></blockquote>
+     * </pre>
+     *
+     * </blockquote>
      *
      * @param str input string
      * @return an element, or {@link #Unknown}
@@ -384,144 +384,145 @@ public enum Elements {
     }
 
     /** These instances are for backards compatability. */
-    public final static IElement DUMMY         = Unknown.toIElement();
-    public final static IElement HYDROGEN      = Hydrogen.toIElement();
-    public final static IElement HELIUM        = Helium.toIElement();
-    public final static IElement LITHIUM       = Lithium.toIElement();
-    public final static IElement BERYLLIUM     = Beryllium.toIElement();
-    public final static IElement BORON         = Boron.toIElement();
-    public final static IElement CARBON        = Carbon.toIElement();
-    public final static IElement NITROGEN      = Nitrogen.toIElement();
-    public final static IElement OXYGEN        = Oxygen.toIElement();
-    public final static IElement FLUORINE      = Fluorine.toIElement();
-    public final static IElement NEON          = Neon.toIElement();
-    public final static IElement SODIUM        = Sodium.toIElement();
-    public final static IElement MAGNESIUM     = Magnesium.toIElement();
-    public final static IElement ALUMINIUM     = Aluminium.toIElement();
-    public final static IElement SILICON       = Silicon.toIElement();
-    public final static IElement PHOSPHORUS    = Phosphorus.toIElement();
-    public final static IElement SULFUR        = Sulfur.toIElement();
-    public final static IElement CHLORINE      = Chlorine.toIElement();
-    public final static IElement ARGON         = Argon.toIElement();
-    public final static IElement POTASSIUM     = Potassium.toIElement();
-    public final static IElement CALCIUM       = Calcium.toIElement();
-    public final static IElement SCANDIUM      = Scandium.toIElement();
-    public final static IElement TITANIUM      = Titanium.toIElement();
-    public final static IElement VANADIUM      = Vanadium.toIElement();
-    public final static IElement CHROMIUM      = Chromium.toIElement();
-    public final static IElement MANGANESE     = Manganese.toIElement();
-    public final static IElement IRON          = Iron.toIElement();
-    public final static IElement COBALT        = Cobalt.toIElement();
-    public final static IElement NICKEL        = Nickel.toIElement();
-    public final static IElement COPPER        = Copper.toIElement();
-    public final static IElement ZINC          = Zinc.toIElement();
-    public final static IElement GALLIUM       = Gallium.toIElement();
-    public final static IElement GERMANIUM     = Germanium.toIElement();
-    public final static IElement ARSENIC       = Arsenic.toIElement();
-    public final static IElement SELENIUM      = Selenium.toIElement();
-    public final static IElement BROMINE       = Bromine.toIElement();
-    public final static IElement KRYPTON       = Krypton.toIElement();
-    public final static IElement RUBIDIUM      = Rubidium.toIElement();
-    public final static IElement STRONTIUM     = Strontium.toIElement();
-    public final static IElement YTTRIUM       = Yttrium.toIElement();
-    public final static IElement ZIRCONIUM     = Zirconium.toIElement();
-    public final static IElement NIOBIUM       = Niobium.toIElement();
-    public final static IElement MOLYBDENUM    = Molybdenum.toIElement();
-    public final static IElement TECHNETIUM    = Technetium.toIElement();
-    public final static IElement RUTHENIUM     = Ruthenium.toIElement();
-    public final static IElement RHODIUM       = Rhodium.toIElement();
-    public final static IElement PALLADIUM     = Palladium.toIElement();
-    public final static IElement SILVER        = Silver.toIElement();
-    public final static IElement CADMIUM       = Cadmium.toIElement();
-    public final static IElement INDIUM        = Indium.toIElement();
-    public final static IElement TIN           = Tin.toIElement();
-    public final static IElement ANTIMONY      = Antimony.toIElement();
-    public final static IElement TELLURIUM     = Tellurium.toIElement();
-    public final static IElement IODINE        = Iodine.toIElement();
-    public final static IElement XENON         = Xenon.toIElement();
-    public final static IElement CAESIUM       = Caesium.toIElement();
-    public final static IElement BARIUM        = Barium.toIElement();
-    public final static IElement LANTHANUM     = Lanthanum.toIElement();
-    public final static IElement CERIUM        = Cerium.toIElement();
-    public final static IElement PRASEODYMIUM  = Praseodymium.toIElement();
-    public final static IElement NEODYMIUM     = Neodymium.toIElement();
-    public final static IElement PROMETHIUM    = Promethium.toIElement();
-    public final static IElement SAMARIUM      = Samarium.toIElement();
-    public final static IElement EUROPIUM      = Europium.toIElement();
-    public final static IElement GADOLINIUM    = Gadolinium.toIElement();
-    public final static IElement TERBIUM       = Terbium.toIElement();
-    public final static IElement DYSPROSIUM    = Dysprosium.toIElement();
-    public final static IElement HOLMIUM       = Holmium.toIElement();
-    public final static IElement ERBIUM        = Erbium.toIElement();
-    public final static IElement THULIUM       = Thulium.toIElement();
-    public final static IElement YTTERBIUM     = Ytterbium.toIElement();
-    public final static IElement LUTETIUM      = Lutetium.toIElement();
-    public final static IElement HAFNIUM       = Hafnium.toIElement();
-    public final static IElement TANTALUM      = Tantalum.toIElement();
-    public final static IElement TUNGSTEN      = Tungsten.toIElement();
-    public final static IElement RHENIUM       = Rhenium.toIElement();
-    public final static IElement OSMIUM        = Osmium.toIElement();
-    public final static IElement IRIDIUM       = Iridium.toIElement();
-    public final static IElement PLATINUM      = Platinum.toIElement();
-    public final static IElement GOLD          = Gold.toIElement();
-    public final static IElement MERCURY       = Mercury.toIElement();
-    public final static IElement THALLIUM      = Thallium.toIElement();
-    public final static IElement LEAD          = Lead.toIElement();
-    public final static IElement BISMUTH       = Bismuth.toIElement();
-    public final static IElement POLONIUM      = Polonium.toIElement();
-    public final static IElement ASTATINE      = Astatine.toIElement();
-    public final static IElement RADON         = Radon.toIElement();
-    public final static IElement FRANCIUM      = Francium.toIElement();
-    public final static IElement RADIUM        = Radium.toIElement();
-    public final static IElement ACTINIUM      = Actinium.toIElement();
-    public final static IElement THORIUM       = Thorium.toIElement();
-    public final static IElement PROTACTINIUM  = Protactinium.toIElement();
-    public final static IElement URANIUM       = Uranium.toIElement();
-    public final static IElement NEPTUNIUM     = Neptunium.toIElement();
-    public final static IElement PLUTONIUM     = Plutonium.toIElement();
-    public final static IElement AMERICIUM     = Americium.toIElement();
-    public final static IElement CURIUM        = Curium.toIElement();
-    public final static IElement BERKELIUM     = Berkelium.toIElement();
-    public final static IElement CALIFORNIUM   = Californium.toIElement();
-    public final static IElement EINSTEINIUM   = Einsteinium.toIElement();
-    public final static IElement FERMIUM       = Fermium.toIElement();
-    public final static IElement MENDELEVIUM   = Mendelevium.toIElement();
-    public final static IElement NOBELIUM      = Nobelium.toIElement();
-    public final static IElement LAWRENCIUM    = Lawrencium.toIElement();
-    public final static IElement RUTHERFORDIUM = Rutherfordium.toIElement();
-    public final static IElement DUBNIUM       = Dubnium.toIElement();
-    public final static IElement SEABORGIUM    = Seaborgium.toIElement();
-    public final static IElement BOHRIUM       = Bohrium.toIElement();
-    public final static IElement HASSIUM       = Hassium.toIElement();
-    public final static IElement MEITNERIUM    = Meitnerium.toIElement();
-    public final static IElement DARMSTADTIUM  = Darmstadtium.toIElement();
-    public final static IElement ROENTGENIUM   = Roentgenium.toIElement();
-    public final static IElement UNUNBIUM      = Copernicium.toIElement();
-    public final static IElement UNUNTRIUM     = Ununtrium.toIElement();
-    public final static IElement UNUNQUADIUM   = Flerovium.toIElement();
-    public final static IElement FLEROVIUM     = Flerovium.toIElement();
-    public final static IElement UNUNPENTIUM   = Ununpentium.toIElement();
-    public final static IElement UNUNHEXIUM    = Livermorium.toIElement();
-    public final static IElement LIVERMORIUM   = Livermorium.toIElement();
+    public static final IElement DUMMY = Unknown.toIElement();
+
+    public static final IElement HYDROGEN = Hydrogen.toIElement();
+    public static final IElement HELIUM = Helium.toIElement();
+    public static final IElement LITHIUM = Lithium.toIElement();
+    public static final IElement BERYLLIUM = Beryllium.toIElement();
+    public static final IElement BORON = Boron.toIElement();
+    public static final IElement CARBON = Carbon.toIElement();
+    public static final IElement NITROGEN = Nitrogen.toIElement();
+    public static final IElement OXYGEN = Oxygen.toIElement();
+    public static final IElement FLUORINE = Fluorine.toIElement();
+    public static final IElement NEON = Neon.toIElement();
+    public static final IElement SODIUM = Sodium.toIElement();
+    public static final IElement MAGNESIUM = Magnesium.toIElement();
+    public static final IElement ALUMINIUM = Aluminium.toIElement();
+    public static final IElement SILICON = Silicon.toIElement();
+    public static final IElement PHOSPHORUS = Phosphorus.toIElement();
+    public static final IElement SULFUR = Sulfur.toIElement();
+    public static final IElement CHLORINE = Chlorine.toIElement();
+    public static final IElement ARGON = Argon.toIElement();
+    public static final IElement POTASSIUM = Potassium.toIElement();
+    public static final IElement CALCIUM = Calcium.toIElement();
+    public static final IElement SCANDIUM = Scandium.toIElement();
+    public static final IElement TITANIUM = Titanium.toIElement();
+    public static final IElement VANADIUM = Vanadium.toIElement();
+    public static final IElement CHROMIUM = Chromium.toIElement();
+    public static final IElement MANGANESE = Manganese.toIElement();
+    public static final IElement IRON = Iron.toIElement();
+    public static final IElement COBALT = Cobalt.toIElement();
+    public static final IElement NICKEL = Nickel.toIElement();
+    public static final IElement COPPER = Copper.toIElement();
+    public static final IElement ZINC = Zinc.toIElement();
+    public static final IElement GALLIUM = Gallium.toIElement();
+    public static final IElement GERMANIUM = Germanium.toIElement();
+    public static final IElement ARSENIC = Arsenic.toIElement();
+    public static final IElement SELENIUM = Selenium.toIElement();
+    public static final IElement BROMINE = Bromine.toIElement();
+    public static final IElement KRYPTON = Krypton.toIElement();
+    public static final IElement RUBIDIUM = Rubidium.toIElement();
+    public static final IElement STRONTIUM = Strontium.toIElement();
+    public static final IElement YTTRIUM = Yttrium.toIElement();
+    public static final IElement ZIRCONIUM = Zirconium.toIElement();
+    public static final IElement NIOBIUM = Niobium.toIElement();
+    public static final IElement MOLYBDENUM = Molybdenum.toIElement();
+    public static final IElement TECHNETIUM = Technetium.toIElement();
+    public static final IElement RUTHENIUM = Ruthenium.toIElement();
+    public static final IElement RHODIUM = Rhodium.toIElement();
+    public static final IElement PALLADIUM = Palladium.toIElement();
+    public static final IElement SILVER = Silver.toIElement();
+    public static final IElement CADMIUM = Cadmium.toIElement();
+    public static final IElement INDIUM = Indium.toIElement();
+    public static final IElement TIN = Tin.toIElement();
+    public static final IElement ANTIMONY = Antimony.toIElement();
+    public static final IElement TELLURIUM = Tellurium.toIElement();
+    public static final IElement IODINE = Iodine.toIElement();
+    public static final IElement XENON = Xenon.toIElement();
+    public static final IElement CAESIUM = Caesium.toIElement();
+    public static final IElement BARIUM = Barium.toIElement();
+    public static final IElement LANTHANUM = Lanthanum.toIElement();
+    public static final IElement CERIUM = Cerium.toIElement();
+    public static final IElement PRASEODYMIUM = Praseodymium.toIElement();
+    public static final IElement NEODYMIUM = Neodymium.toIElement();
+    public static final IElement PROMETHIUM = Promethium.toIElement();
+    public static final IElement SAMARIUM = Samarium.toIElement();
+    public static final IElement EUROPIUM = Europium.toIElement();
+    public static final IElement GADOLINIUM = Gadolinium.toIElement();
+    public static final IElement TERBIUM = Terbium.toIElement();
+    public static final IElement DYSPROSIUM = Dysprosium.toIElement();
+    public static final IElement HOLMIUM = Holmium.toIElement();
+    public static final IElement ERBIUM = Erbium.toIElement();
+    public static final IElement THULIUM = Thulium.toIElement();
+    public static final IElement YTTERBIUM = Ytterbium.toIElement();
+    public static final IElement LUTETIUM = Lutetium.toIElement();
+    public static final IElement HAFNIUM = Hafnium.toIElement();
+    public static final IElement TANTALUM = Tantalum.toIElement();
+    public static final IElement TUNGSTEN = Tungsten.toIElement();
+    public static final IElement RHENIUM = Rhenium.toIElement();
+    public static final IElement OSMIUM = Osmium.toIElement();
+    public static final IElement IRIDIUM = Iridium.toIElement();
+    public static final IElement PLATINUM = Platinum.toIElement();
+    public static final IElement GOLD = Gold.toIElement();
+    public static final IElement MERCURY = Mercury.toIElement();
+    public static final IElement THALLIUM = Thallium.toIElement();
+    public static final IElement LEAD = Lead.toIElement();
+    public static final IElement BISMUTH = Bismuth.toIElement();
+    public static final IElement POLONIUM = Polonium.toIElement();
+    public static final IElement ASTATINE = Astatine.toIElement();
+    public static final IElement RADON = Radon.toIElement();
+    public static final IElement FRANCIUM = Francium.toIElement();
+    public static final IElement RADIUM = Radium.toIElement();
+    public static final IElement ACTINIUM = Actinium.toIElement();
+    public static final IElement THORIUM = Thorium.toIElement();
+    public static final IElement PROTACTINIUM = Protactinium.toIElement();
+    public static final IElement URANIUM = Uranium.toIElement();
+    public static final IElement NEPTUNIUM = Neptunium.toIElement();
+    public static final IElement PLUTONIUM = Plutonium.toIElement();
+    public static final IElement AMERICIUM = Americium.toIElement();
+    public static final IElement CURIUM = Curium.toIElement();
+    public static final IElement BERKELIUM = Berkelium.toIElement();
+    public static final IElement CALIFORNIUM = Californium.toIElement();
+    public static final IElement EINSTEINIUM = Einsteinium.toIElement();
+    public static final IElement FERMIUM = Fermium.toIElement();
+    public static final IElement MENDELEVIUM = Mendelevium.toIElement();
+    public static final IElement NOBELIUM = Nobelium.toIElement();
+    public static final IElement LAWRENCIUM = Lawrencium.toIElement();
+    public static final IElement RUTHERFORDIUM = Rutherfordium.toIElement();
+    public static final IElement DUBNIUM = Dubnium.toIElement();
+    public static final IElement SEABORGIUM = Seaborgium.toIElement();
+    public static final IElement BOHRIUM = Bohrium.toIElement();
+    public static final IElement HASSIUM = Hassium.toIElement();
+    public static final IElement MEITNERIUM = Meitnerium.toIElement();
+    public static final IElement DARMSTADTIUM = Darmstadtium.toIElement();
+    public static final IElement ROENTGENIUM = Roentgenium.toIElement();
+    public static final IElement UNUNBIUM = Copernicium.toIElement();
+    public static final IElement UNUNTRIUM = Ununtrium.toIElement();
+    public static final IElement UNUNQUADIUM = Flerovium.toIElement();
+    public static final IElement FLEROVIUM = Flerovium.toIElement();
+    public static final IElement UNUNPENTIUM = Ununpentium.toIElement();
+    public static final IElement UNUNHEXIUM = Livermorium.toIElement();
+    public static final IElement LIVERMORIUM = Livermorium.toIElement();
 
     // Incorrect spelling
-    @Deprecated
-    public final static IElement PLUTOMNIUM    = PLUTONIUM;
+    @Deprecated public static final IElement PLUTOMNIUM = PLUTONIUM;
 
     /**
      * Utility method to determine if an atomic number is a metal.
+     *
      * @param atno atomic number
      * @return the atomic number is a metal (or not)
      */
     public static boolean isMetal(int atno) {
         switch (atno) {
-            case 0:  // *
-            case 1:  // H
-            case 2:  // He
-            case 6:  // C
-            case 7:  // N
-            case 8:  // O
-            case 9:  // F
+            case 0: // *
+            case 1: // H
+            case 2: // He
+            case 6: // C
+            case 7: // N
+            case 8: // O
+            case 9: // F
             case 10: // Ne
             case 15: // P
             case 16: // S
@@ -534,13 +535,13 @@ public enum Elements {
             case 54: // Xe
             case 86: // Rn
                 return false;
-            case 5:   // B
-            case 14:  // Si
-            case 32:  // Ge
-            case 33:  // As
-            case 51:  // Sb
-            case 52:  // Te
-            case 85:  // At
+            case 5: // B
+            case 14: // Si
+            case 32: // Ge
+            case 33: // As
+            case 51: // Sb
+            case 52: // Te
+            case 85: // At
                 return false;
         }
         return true;
@@ -553,7 +554,6 @@ public enum Elements {
      * @return the atom is a metal (or not)
      */
     public static boolean isMetal(IAtom atom) {
-        return atom.getAtomicNumber() != null &&
-               isMetal(atom.getAtomicNumber());
+        return atom.getAtomicNumber() != null && isMetal(atom.getAtomicNumber());
     }
 }

@@ -24,7 +24,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * This matcher checks the number of implicit hydrogens of the Atom.
  *
- * @cdk.module  smarts
+ * @cdk.module smarts
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
@@ -54,8 +54,7 @@ public class ImplicitHCountAtom extends SMARTSAtom {
     @Override
     public boolean matches(IAtom atom) {
         // h counts should be set before match throw runtime exception?
-        if (atom.getImplicitHydrogenCount() == null)
-            return false;
+        if (atom.getImplicitHydrogenCount() == null) return false;
         return atom.getImplicitHydrogenCount() == hcount;
     }
 

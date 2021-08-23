@@ -30,9 +30,12 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- * Atomic descriptor that reflects that Gasteiger-Marsili sigma electronegativity.
- * The used approach is given by <pre>X = a + bq + c(q*q)</pre> where a, b, and c are
- * the Gasteiger-Marsili parameters and q is the sigma charge. For the actual
+ * Atomic descriptor that reflects that Gasteiger-Marsili sigma electronegativity. The used approach
+ * is given by
+ *
+ * <pre>X = a + bq + c(q*q)</pre>
+ *
+ * where a, b, and c are the Gasteiger-Marsili parameters and q is the sigma charge. For the actual
  * calculation it uses the {@link Electronegativity} class.
  *
  * <table border="1"><caption>Parameters for this descriptor:</caption>
@@ -48,48 +51,46 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *   </tr>
  * </table>
  *
- * @author      mfe4
+ * @author mfe4
  * @cdk.created 2004-11-03
- * @cdk.module  qsaratomic
+ * @cdk.module qsaratomic
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:sigmaElectronegativity
  * @see Electronegativity
  */
-public class SigmaElectronegativityDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
+public class SigmaElectronegativityDescriptor extends AbstractAtomicDescriptor
+        implements IAtomicDescriptor {
 
-    /**Number of maximum iterations*/
-    private int                   maxIterations   = 0;
+    /** Number of maximum iterations */
+    private int maxIterations = 0;
 
     private static final String[] NAMES = {"elecSigmA"};
 
-    private Electronegativity     electronegativity;
+    private Electronegativity electronegativity;
 
-    /**
-     *  Constructor for the SigmaElectronegativityDescriptor object
-     */
+    /** Constructor for the SigmaElectronegativityDescriptor object */
     public SigmaElectronegativityDescriptor() {
         electronegativity = new Electronegativity();
     }
 
     /**
-     *  Gets the specification attribute of the SigmaElectronegativityDescriptor
-     *  object
+     * Gets the specification attribute of the SigmaElectronegativityDescriptor object
      *
-     *@return    The specification value
+     * @return The specification value
      */
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#sigmaElectronegativity", this
-                        .getClass().getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#sigmaElectronegativity",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     /**
-     *  Sets the parameters attribute of the SigmaElectronegativityDescriptor
-     *  object
+     * Sets the parameters attribute of the SigmaElectronegativityDescriptor object
      *
-     *@param  params            1: max iterations (optional, defaults to 20)
-     *@exception  CDKException  Description of the Exception
+     * @param params 1: max iterations (optional, defaults to 20)
+     * @exception CDKException Description of the Exception
      */
     @Override
     public void setParameters(Object[] params) throws CDKException {
@@ -104,10 +105,9 @@ public class SigmaElectronegativityDescriptor extends AbstractAtomicDescriptor i
     }
 
     /**
-     *  Gets the parameters attribute of the SigmaElectronegativityDescriptor
-     *  object
+     * Gets the parameters attribute of the SigmaElectronegativityDescriptor object
      *
-     *@return    The parameters value
+     * @return The parameters value
      */
     @Override
     public Object[] getParameters() {
@@ -123,12 +123,12 @@ public class SigmaElectronegativityDescriptor extends AbstractAtomicDescriptor i
     }
 
     /**
-     *  The method calculates the sigma electronegativity of a given atom
-     *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
+     * The method calculates the sigma electronegativity of a given atom It is needed to call the
+     * addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
      *
-     *@param  atom              The IAtom for which the DescriptorValue is requested
-     *@param  ac                AtomContainer
-     *@return                   return the sigma electronegativity
+     * @param atom The IAtom for which the DescriptorValue is requested
+     * @param ac AtomContainer
+     * @return return the sigma electronegativity
      */
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
@@ -140,26 +140,40 @@ public class SigmaElectronegativityDescriptor extends AbstractAtomicDescriptor i
             localAtom = clone.getAtom(ac.indexOf(atom));
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(clone);
         } catch (CDKException e) {
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                    Double.NaN), NAMES, e);
+            return new DescriptorValue(
+                    getSpecification(),
+                    getParameterNames(),
+                    getParameters(),
+                    new DoubleResult(Double.NaN),
+                    NAMES,
+                    e);
         } catch (CloneNotSupportedException e) {
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                    Double.NaN), NAMES, e);
+            return new DescriptorValue(
+                    getSpecification(),
+                    getParameterNames(),
+                    getParameters(),
+                    new DoubleResult(Double.NaN),
+                    NAMES,
+                    e);
         }
 
-        if (maxIterations != -1 && maxIterations != 0) electronegativity.setMaxIterations(maxIterations);
+        if (maxIterations != -1 && maxIterations != 0)
+            electronegativity.setMaxIterations(maxIterations);
 
         double result = electronegativity.calculateSigmaElectronegativity(clone, localAtom);
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(result),
-                                   NAMES);
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new DoubleResult(result),
+                NAMES);
     }
 
     /**
-     *  Gets the parameterNames attribute of the SigmaElectronegativityDescriptor
-     *  object
+     * Gets the parameterNames attribute of the SigmaElectronegativityDescriptor object
      *
-     *@return    The parameterNames value
+     * @return The parameterNames value
      */
     @Override
     public String[] getParameterNames() {
@@ -169,11 +183,10 @@ public class SigmaElectronegativityDescriptor extends AbstractAtomicDescriptor i
     }
 
     /**
-     *  Gets the parameterType attribute of the SigmaElectronegativityDescriptor
-     *  object
+     * Gets the parameterType attribute of the SigmaElectronegativityDescriptor object
      *
-     * @param  name  Description of the Parameter
-     * @return       An Object of class equal to that of the parameter being requested
+     * @param name Description of the Parameter
+     * @return An Object of class equal to that of the parameter being requested
      */
     @Override
     public Object getParameterType(String name) {

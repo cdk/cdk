@@ -28,9 +28,7 @@ import org.junit.Test;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.silent.AtomContainer;
 
-/**
- * @cdk.module test-io
- */
+/** @cdk.module test-io */
 public class Mopac7ReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass
@@ -44,5 +42,4 @@ public class Mopac7ReaderTest extends SimpleChemObjectReaderTest {
         reader.setReaderMode(Mode.STRICT);
         Assert.assertTrue(reader.accepts(AtomContainer.class));
     }
-
 }

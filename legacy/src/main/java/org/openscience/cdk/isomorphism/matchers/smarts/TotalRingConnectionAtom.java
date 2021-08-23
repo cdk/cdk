@@ -27,10 +27,9 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * This matcher checks the number of ring connections of the checked Atom with
- * other Atom's. This cannot be matched without prepossessing Atom - {@link
- * SMARTSAtomInvariants}. The ring connectivity is encoded in smarts using
- * {@code x<NUMBER>}.
+ * This matcher checks the number of ring connections of the checked Atom with other Atom's. This
+ * cannot be matched without prepossessing Atom - {@link SMARTSAtomInvariants}. The ring
+ * connectivity is encoded in smarts using {@code x<NUMBER>}.
  *
  * @cdk.module smarts
  * @cdk.githash
@@ -52,7 +51,7 @@ public final class TotalRingConnectionAtom extends SMARTSAtom {
         this.ringConnectivity = ringConnectivity;
     }
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     public boolean matches(IAtom atom) {
         return invariants(atom).ringConnectivity() == ringConnectivity;

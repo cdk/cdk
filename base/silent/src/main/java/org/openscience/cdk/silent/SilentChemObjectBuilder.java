@@ -19,6 +19,7 @@
  */
 package org.openscience.cdk.silent;
 
+import java.util.Locale;
 import org.openscience.cdk.DynamicFactory;
 import org.openscience.cdk.interfaces.IAdductFormula;
 import org.openscience.cdk.interfaces.IAminoAcid;
@@ -63,24 +64,22 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 
-import java.util.Locale;
-
 /**
  * A factory class to provide implementation independent {@link ICDKObject}s.
- * 
- * <pre>{@code
- *     IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
  *
- *     IAtom a = builder.newInstance(IAtom.class);
- *     IAtom c12 = builder.newInstance(IAtom.class, "C");
- *     IAtom c13 = builder.newInstance(IAtom.class,
- *                                     builder.newInstance(IIsotope.class,
- *                                                         "C", 13));
+ * <pre>{@code
+ * IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+ *
+ * IAtom a = builder.newInstance(IAtom.class);
+ * IAtom c12 = builder.newInstance(IAtom.class, "C");
+ * IAtom c13 = builder.newInstance(IAtom.class,
+ *                                 builder.newInstance(IIsotope.class,
+ *                                                     "C", 13));
  * }</pre>
  *
- * @author        egonw
- * @author        john may
- * @cdk.module    silent
+ * @author egonw
+ * @author john may
+ * @cdk.module silent
  * @cdk.githash
  * @see DynamicFactory
  */
@@ -90,8 +89,7 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
     // an error rather than return false. The default can also be specified.
     private static boolean getSystemProp(final String key, final boolean defaultValue) {
         String val = System.getProperty(key);
-        if (val == null)
-            val = System.getenv(key);
+        if (val == null) val = System.getenv(key);
         if (val == null) {
             return defaultValue;
         } else if (val.isEmpty()) {
@@ -107,17 +105,17 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
                 case "0":
                     return false;
                 default:
-                    throw new IllegalArgumentException("Invalid value, expected true/false: " + val);
+                    throw new IllegalArgumentException(
+                            "Invalid value, expected true/false: " + val);
             }
         }
     }
 
-    private static final boolean CDK_LEGACY_AC
-        = getSystemProp("CdkUseLegacyAtomContainer", false);
+    private static final boolean CDK_LEGACY_AC = getSystemProp("CdkUseLegacyAtomContainer", false);
 
     private static volatile IChemObjectBuilder instance = null;
-    private static final Object                LOCK     = new Object();
-    private final DynamicFactory               factory  = new DynamicFactory(200);
+    private static final Object LOCK = new Object();
+    private final DynamicFactory factory = new DynamicFactory(200);
 
     private SilentChemObjectBuilder() {
 
@@ -177,7 +175,9 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
         factory.register(ISubstance.class, Substance.class);
 
         // stereo components (requires some modification after instantiation)
-        factory.register(ITetrahedralChirality.class, TetrahedralChirality.class,
+        factory.register(
+                ITetrahedralChirality.class,
+                TetrahedralChirality.class,
                 new DynamicFactory.CreationModifier<TetrahedralChirality>() {
 
                     @Override
@@ -185,7 +185,9 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
                         instance.setBuilder(self);
                     }
                 });
-        factory.register(IDoubleBondStereochemistry.class, DoubleBondStereochemistry.class,
+        factory.register(
+                IDoubleBondStereochemistry.class,
+                DoubleBondStereochemistry.class,
                 new DynamicFactory.CreationModifier<DoubleBondStereochemistry>() {
 
                     @Override
@@ -197,13 +199,12 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
         // miscellaneous
         factory.register(IMapping.class, Mapping.class);
         factory.register(IChemObject.class, ChemObject.class);
-
     }
 
     /**
-     * Access the singleton instance of this SilentChemObjectBuilder. 
-     * <pre>{@code
+     * Access the singleton instance of this SilentChemObjectBuilder.
      *
+     * <pre>{@code
      * // get the builder instance
      * IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
      *
@@ -230,39 +231,29 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
         return result;
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
-    public <T extends ICDKObject> T newInstance(Class<T> clazz, Object... params) throws IllegalArgumentException {
+    public <T extends ICDKObject> T newInstance(Class<T> clazz, Object... params)
+            throws IllegalArgumentException {
         return factory.ofClass(clazz, params);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtom newAtom() {
         return new Atom();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IBond newBond() {
         return new Bond();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtomContainer newAtomContainer() {
-        if (CDK_LEGACY_AC)
-            return new AtomContainer(0,0,0,0);
-        else
-            return new AtomContainer2(0,0,0,0);
-
+        if (CDK_LEGACY_AC) return new AtomContainer(0, 0, 0, 0);
+        else return new AtomContainer2(0, 0, 0, 0);
     }
 }

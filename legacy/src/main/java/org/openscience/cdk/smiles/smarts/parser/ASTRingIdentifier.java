@@ -29,21 +29,15 @@ package org.openscience.cdk.smiles.smarts.parser;
 @Deprecated
 class ASTRingIdentifier extends SimpleNode {
 
-    /**
-     * The ring identifier.
-     */
+    /** The ring identifier. */
     private int ringId;
 
-    /**
-     * Creates a new instance.
-     */
+    /** Creates a new instance. */
     public ASTRingIdentifier(int id) {
         super(id);
     }
 
-    /**
-     * Creates a new instance.
-     */
+    /** Creates a new instance. */
     public ASTRingIdentifier(SMARTSParser p, int id) {
         super(p, id);
     }
@@ -59,18 +53,13 @@ class ASTRingIdentifier extends SimpleNode {
         return visitor.visit(this, data);
     }
 
-    /**
-     * Returns the ring identifier.
-     */
+    /** Returns the ring identifier. */
     public int getRingId() {
         return ringId;
     }
 
-    /**
-     * Sets the ring identifier.
-     */
+    /** Sets the ring identifier. */
     public void setRingId(int ringId) {
         this.ringId = ringId;
     }
-
 }

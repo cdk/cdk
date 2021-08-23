@@ -27,7 +27,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.NoSuchElementException;
-
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
+import javax.xml.stream.events.XMLEvent;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -36,46 +39,39 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.PubChemSubstancesXMLFormat;
 import org.openscience.cdk.io.pubchemxml.PubChemXMLHelper;
 
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
-import javax.xml.stream.events.XMLEvent;
-
 /**
  * Iterating PubChem PC-Substances ASN.1 XML reader.
  *
- * @cdk.module   io
+ * @cdk.module io
  * @cdk.githash
  * @cdk.iooptions
- *
  * @author Egon Willighagen &lt;egonw@users.sf.net&gt;
- * @cdk.created  2008-05-05
- *
- * @cdk.keyword  file format, ASN
- * @cdk.keyword  PubChem
+ * @cdk.created 2008-05-05
+ * @cdk.keyword file format, ASN
+ * @cdk.keyword PubChem
  */
 public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectReader<IChemModel> {
 
-    private Reader           primarySource;
-    private XMLStreamReader  parser;
+    private Reader primarySource;
+    private XMLStreamReader parser;
     private PubChemXMLHelper parserHelper;
     private final XMLInputFactory xmlfact;
 
-
-    private boolean          nextAvailableIsKnown;
-    private boolean          hasNext;
-    private IChemModel       nextSubstance;
+    private boolean nextAvailableIsKnown;
+    private boolean hasNext;
+    private IChemModel nextSubstance;
 
     /**
-     * Constructs a new IteratingPCSubstancesXMLReader that can read Molecule from a given Reader and IChemObjectBuilder.
+     * Constructs a new IteratingPCSubstancesXMLReader that can read Molecule from a given Reader
+     * and IChemObjectBuilder.
      *
-     * @param in      The input stream
+     * @param in The input stream
      * @param builder The builder
      * @throws java.io.IOException if there is error in getting the {@link IsotopeFactory}
      * @throws XMLStreamException an error in reading XML
      */
-    public IteratingPCSubstancesXMLReader(Reader in, IChemObjectBuilder builder) throws IOException,
-                                                                                        XMLStreamException {
+    public IteratingPCSubstancesXMLReader(Reader in, IChemObjectBuilder builder)
+            throws IOException, XMLStreamException {
         parserHelper = new PubChemXMLHelper(builder);
         xmlfact = XMLInputFactory.newFactory();
 
@@ -90,13 +86,16 @@ public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectRe
     }
 
     /**
-     * Constructs a new IteratingPCSubstancesXMLReader that can read Molecule from a given InputStream and IChemObjectBuilder.
+     * Constructs a new IteratingPCSubstancesXMLReader that can read Molecule from a given
+     * InputStream and IChemObjectBuilder.
      *
      * @param in The input stream
-     * @param builder The builder. In general, use {@link org.openscience.cdk.DefaultChemObjectBuilder}
+     * @param builder The builder. In general, use {@link
+     *     org.openscience.cdk.DefaultChemObjectBuilder}
      * @throws Exception if there is a problem creating an InputStreamReader
      */
-    public IteratingPCSubstancesXMLReader(InputStream in, IChemObjectBuilder builder) throws Exception {
+    public IteratingPCSubstancesXMLReader(InputStream in, IChemObjectBuilder builder)
+            throws Exception {
         this(new InputStreamReader(in), builder);
     }
 

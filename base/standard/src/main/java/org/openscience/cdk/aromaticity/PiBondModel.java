@@ -24,24 +24,23 @@
 
 package org.openscience.cdk.aromaticity;
 
+import static org.openscience.cdk.interfaces.IBond.Order.DOUBLE;
+
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.ringsearch.RingSearch;
 
-import static org.openscience.cdk.interfaces.IBond.Order.DOUBLE;
-
 /**
- * A simple aromatic model which only allows cyclic pi-bonds to contribute to an
- * aromatic system. Lone pairs are not considered and as such molecules like
- * furan and pyrrole are non-aromatic. This model is suitable for storing
- * aromaticity in the MDL/Mol2 file formats.
+ * A simple aromatic model which only allows cyclic pi-bonds to contribute to an aromatic system.
+ * Lone pairs are not considered and as such molecules like furan and pyrrole are non-aromatic. This
+ * model is suitable for storing aromaticity in the MDL/Mol2 file formats.
  *
  * @author John May
  * @cdk.module standard
  */
 final class PiBondModel extends ElectronDonation {
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     int[] contribution(IAtomContainer container, RingSearch ringSearch) {
 

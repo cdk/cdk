@@ -18,33 +18,31 @@
  */
 package org.openscience.cdk.reaction;
 
+import java.util.List;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 
-import java.util.List;
-
 /**
  * Classes that implement this interface are Reactions types.
  *
- * @author      Miguel Rojas
- * @cdk.module  reaction
+ * @author Miguel Rojas
+ * @cdk.module reaction
  * @cdk.githash
  */
 public interface IReactionProcess {
 
     /**
-     * Returns a <code>Map</code> which specifies which reaction
-     * is implemented by this class.
+     * Returns a <code>Map</code> which specifies which reaction is implemented by this class.
      *
-     * These fields are used in the map:
+     * <p>These fields are used in the map:
+     *
      * <ul>
-     * <li>Specification-Reference: refers to an entry in a unique dictionary or web page
-     * <li>Implementation-Title: anything
-     * <li>Implementation-Identifier: a unique identifier for this version of
-     *  this class
-     * <li>Implementation-Vendor: CDK, JOELib, or anything else
+     *   <li>Specification-Reference: refers to an entry in a unique dictionary or web page
+     *   <li>Implementation-Title: anything
+     *   <li>Implementation-Identifier: a unique identifier for this version of this class
+     *   <li>Implementation-Vendor: CDK, JOELib, or anything else
      * </ul>
      *
      * @return An object containing the reaction specification
@@ -54,13 +52,11 @@ public interface IReactionProcess {
     /**
      * Sets the parameters for this reaction.
      *
-     * Must be done before calling
-     * calculate as the parameters influence the calculation outcome.
+     * <p>Must be done before calling calculate as the parameters influence the calculation outcome.
      *
-     * @param params A List of Objects containing the parameters for this reaction.
-     * 				 The key must be included into the Dictionary reacton-processes
+     * @param params A List of Objects containing the parameters for this reaction. The key must be
+     *     included into the Dictionary reacton-processes
      * @throws CDKException if invalid number of type of parameters are passed to it
-     *
      * @see #getParameterList
      */
     public void setParameterList(List<IParameterReact> params) throws CDKException;
@@ -70,28 +66,28 @@ public interface IReactionProcess {
      *
      * @return A List of Object containing the name and the type of the parameter
      * @see #setParameterList
-     * */
+     */
     public List<IParameterReact> getParameterList();
 
     /**
      * Initiates the process for the given Reaction.
      *
-     * Optionally, parameters may be set which can affect the course of the process.
+     * <p>Optionally, parameters may be set which can affect the course of the process.
      *
-     *
-     * @param reactants   An {@link IAtomContainerSet} for which this process should be initiate.
-     * @param agents      An {@link IAtomContainerSet} for which this process should be initiate.
+     * @param reactants An {@link IAtomContainerSet} for which this process should be initiate.
+     * @param agents An {@link IAtomContainerSet} for which this process should be initiate.
      * @return the set of reactions.
-     * @throws CDKException if an error occurs during the reaction process. See documentation for individual reaction processes
+     * @throws CDKException if an error occurs during the reaction process. See documentation for
+     *     individual reaction processes
      */
-    public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents) throws CDKException;
+    public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents)
+            throws CDKException;
 
     /**
      * Return the IParameterReact if it exists given the class.
      *
      * @param paramClass The class
-     * @return           The IParameterReact
+     * @return The IParameterReact
      */
     public IParameterReact getParameterClass(Class<?> paramClass);
-
 }

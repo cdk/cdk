@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.util.Iterator;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
@@ -39,11 +38,10 @@ import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.io.listener.IReaderListener;
-import org.openscience.cdk.io.random.RandomAccessReader;
 
 /**
- * Random access of SDF file. Doesn't load molecules in memory, uses prebuilt
- * index and seeks to find the correct record offset.
+ * Random access of SDF file. Doesn't load molecules in memory, uses prebuilt index and seeks to
+ * find the correct record offset.
  *
  * @author Nina Jeliazkova &lt;nina@acad.bg&gt;
  * @cdk.module io
@@ -60,7 +58,8 @@ public class RandomAccessSDFReader extends RandomAccessReader {
         this(file, builder, null);
     }
 
-    public RandomAccessSDFReader(File file, IChemObjectBuilder builder, IReaderListener listener) throws IOException {
+    public RandomAccessSDFReader(File file, IChemObjectBuilder builder, IReaderListener listener)
+            throws IOException {
         super(file, builder, listener);
     }
 
@@ -87,14 +86,16 @@ public class RandomAccessSDFReader extends RandomAccessReader {
         /*
          * return chemObjectReader.read(builder.newInstance(IAtomContainer.class));
          */
-        //read(IAtomContainer) doesn't read properties ...
+        // read(IAtomContainer) doesn't read properties ...
         IChemObject co = chemObjectReader.read(builder.newInstance(IChemFile.class));
         if (co instanceof IChemFile) {
             int c = ((IChemFile) co).getChemSequenceCount();
             for (int i = 0; i < c; i++) {
-                Iterator<IChemModel> cm = ((IChemFile) co).getChemSequence(i).chemModels().iterator();
+                Iterator<IChemModel> cm =
+                        ((IChemFile) co).getChemSequence(i).chemModels().iterator();
                 while (cm.hasNext()) {
-                    Iterator<IAtomContainer> sm = (cm.next()).getMoleculeSet().atomContainers().iterator();
+                    Iterator<IAtomContainer> sm =
+                            (cm.next()).getMoleculeSet().atomContainers().iterator();
                     while (sm.hasNext()) {
 
                         co = sm.next();
@@ -105,20 +106,17 @@ public class RandomAccessSDFReader extends RandomAccessReader {
                 cm = null;
                 break;
             }
-            //cs = null;
+            // cs = null;
         }
         return co;
-
     }
 
     public void setReader(Reader reader) throws CDKException {
         throw new UnsupportedOperationException();
-
     }
 
     public void setReader(InputStream reader) throws CDKException {
         throw new UnsupportedOperationException();
-
     }
 
     public boolean accepts(Class<? extends IChemObject> classObject) {
@@ -127,7 +125,7 @@ public class RandomAccessSDFReader extends RandomAccessReader {
 
     @Override
     public void remove() {
-        throw new UnsupportedOperationException("Cannot remove entries with " + "the RandomAccessSDFReader");
+        throw new UnsupportedOperationException(
+                "Cannot remove entries with " + "the RandomAccessSDFReader");
     }
-
 }

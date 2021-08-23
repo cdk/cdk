@@ -18,6 +18,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import static org.hamcrest.Matchers.closeTo;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,8 +27,6 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
-
-import static org.hamcrest.Matchers.closeTo;
 
 /**
  * TestSuite for the VAdjMaDescriptor.
@@ -48,20 +48,26 @@ public class VAdjMaDescriptorTest extends MolecularDescriptorTest {
     public void testCyclic() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C1CCC2CCCCC2C1");
-        org.hamcrest.MatcherAssert.assertThat(((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), closeTo(4.459, 0.001));
+        org.hamcrest.MatcherAssert.assertThat(
+                ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(),
+                closeTo(4.459, 0.001));
     }
 
     @Test
     public void testLinear() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCCCCCCCCC");
-        org.hamcrest.MatcherAssert.assertThat(((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), closeTo(4.17, 0.001));
+        org.hamcrest.MatcherAssert.assertThat(
+                ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(),
+                closeTo(4.17, 0.001));
     }
 
     @Test
     public void testCompound() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCCCC1CCCCC1");
-        org.hamcrest.MatcherAssert.assertThat(((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), closeTo(4.322, 0.001));
+        org.hamcrest.MatcherAssert.assertThat(
+                ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(),
+                closeTo(4.322, 0.001));
     }
 }

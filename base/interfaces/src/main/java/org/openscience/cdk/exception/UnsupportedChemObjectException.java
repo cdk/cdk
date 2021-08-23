@@ -23,7 +23,6 @@
  */
 package org.openscience.cdk.exception;
 
-
 /**
  * @cdk.module standard
  * @cdk.githash

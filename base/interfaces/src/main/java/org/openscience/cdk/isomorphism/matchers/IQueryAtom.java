@@ -25,7 +25,7 @@ import org.openscience.cdk.interfaces.IAtom;
  *
  * @cdk.module interfaces
  * @cdk.githash
- * @see        org.openscience.cdk.isomorphism.Pattern
+ * @see org.openscience.cdk.isomorphism.Pattern
  */
 public interface IQueryAtom extends IAtom {
 
@@ -33,7 +33,7 @@ public interface IQueryAtom extends IAtom {
      * Returns true of the given <code>atom</code> matches this IQueryAtom.
      *
      * @param atom IAtom to match against
-     * @return     true, if this IQueryAtom matches the given IAtom
+     * @return true, if this IQueryAtom matches the given IAtom
      */
     public boolean matches(IAtom atom);
 }

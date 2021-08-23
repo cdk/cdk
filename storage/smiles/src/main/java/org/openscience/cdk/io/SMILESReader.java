@@ -23,6 +23,12 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -38,46 +44,38 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-
 /**
- * This Reader reads files which has one SMILES string on each
- * line, where the format is given as below:
+ * This Reader reads files which has one SMILES string on each line, where the format is given as
+ * below:
+ *
  * <pre>
  * COC ethoxy ethane
  * </pre>
- * Thus first the SMILES, and then after the first space (or tab) on the line a title
- * that is stored as {@link CDKConstants#TITLE}. For legacy comparability the
- * title is also placed in a "SMIdbNAME" property. If a line is invalid an empty
- * molecule is inserted into the container set. The molecule with have the prop
- * {@link IteratingSMILESReader#BAD_SMILES_INPUT} set to the input line that
- * could not be read. 
  *
- * <p>For each line a molecule is generated, and multiple Molecules are
- * read as MoleculeSet.
+ * Thus first the SMILES, and then after the first space (or tab) on the line a title that is stored
+ * as {@link CDKConstants#TITLE}. For legacy comparability the title is also placed in a "SMIdbNAME"
+ * property. If a line is invalid an empty molecule is inserted into the container set. The molecule
+ * with have the prop {@link IteratingSMILESReader#BAD_SMILES_INPUT} set to the input line that
+ * could not be read.
  *
- * @cdk.module  smiles
+ * <p>For each line a molecule is generated, and multiple Molecules are read as MoleculeSet.
+ *
+ * @cdk.module smiles
  * @cdk.githash
  * @cdk.iooptions
  * @cdk.keyword file format, SMILES
- *
  * @see org.openscience.cdk.io.iterator.IteratingSMILESReader
  */
 public class SMILESReader extends DefaultChemObjectReader {
 
-    private BufferedReader      input  = null;
-    private SmilesParser        sp     = null;
+    private BufferedReader input = null;
+    private SmilesParser sp = null;
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(SMILESReader.class);
 
     /**
      * Construct a new reader from a Reader and a specified builder object.
      *
-     * @param input   The Reader object from which to read structures
+     * @param input The Reader object from which to read structures
      */
     public SMILESReader(Reader input) {
         this.input = new BufferedReader(input);
@@ -125,11 +123,10 @@ public class SMILESReader extends DefaultChemObjectReader {
     }
 
     /**
-     * Reads the content from a XYZ input. It can only return a
-     * {@link IChemObject} of type {@link IChemFile}.
+     * Reads the content from a XYZ input. It can only return a {@link IChemObject} of type {@link
+     * IChemFile}.
      *
      * @param object class must be of type ChemFile
-     *
      * @see IChemFile
      */
     @Override
@@ -142,7 +139,8 @@ public class SMILESReader extends DefaultChemObjectReader {
             IChemFile file = (IChemFile) object;
             IChemSequence sequence = file.getBuilder().newInstance(IChemSequence.class);
             IChemModel chemModel = file.getBuilder().newInstance(IChemModel.class);
-            chemModel.setMoleculeSet(readAtomContainerSet(file.getBuilder().newInstance(IAtomContainerSet.class)));
+            chemModel.setMoleculeSet(
+                    readAtomContainerSet(file.getBuilder().newInstance(IAtomContainerSet.class)));
             sequence.addChemModel(chemModel);
             file.addChemSequence(sequence);
             return (T) file;
@@ -154,8 +152,7 @@ public class SMILESReader extends DefaultChemObjectReader {
     // private procedures
 
     /**
-     *  Private method that actually parses the input to read a ChemFile
-     *  object.
+     * Private method that actually parses the input to read a ChemFile object.
      *
      * @param som The set of molecules that came from the file
      * @return A ChemFile containing the data parsed from input.
@@ -176,7 +173,8 @@ public class SMILESReader extends DefaultChemObjectReader {
                     logger.warn("This SMILES could not be parsed: ", line);
                     logger.warn("Because of: ", exception.getMessage());
                     logger.debug(exception);
-                    IAtomContainer empty = som.getBuilder().newInstance(IAtomContainer.class, 0, 0, 0, 0);
+                    IAtomContainer empty =
+                            som.getBuilder().newInstance(IAtomContainer.class, 0, 0, 0, 0);
                     empty.setProperty(IteratingSMILESReader.BAD_SMILES_INPUT, line);
                     som.addAtomContainer(empty);
                 }
@@ -199,8 +197,8 @@ public class SMILESReader extends DefaultChemObjectReader {
     }
 
     /**
-     * Obtain the suffix after a line containing SMILES. The suffix follows
-     * any ' ' or '\t' termination characters.
+     * Obtain the suffix after a line containing SMILES. The suffix follows any ' ' or '\t'
+     * termination characters.
      *
      * @param line input line
      * @return the suffix - or an empty line

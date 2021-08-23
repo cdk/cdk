@@ -24,8 +24,14 @@
 
 package org.openscience.cdk.isomorphism;
 
+import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;
+import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.TOGETHER;
+import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKWISE;
+
 import com.google.common.base.Predicate;
 import com.google.common.collect.Maps;
+import java.util.Arrays;
+import java.util.Map;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -33,24 +39,21 @@ import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;
-import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.TOGETHER;
-import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKWISE;
-
 /**
- * Filters out (sub)graph-isomorphism matches that have invalid stereochemistry
- * configuration. The class is not currently set up to handle partial mappings
- * (MCS) but could easily be extended to handle such cases.  The class
- * implements the Guava predicate and can be used easily filter the mappings.
+ * Filters out (sub)graph-isomorphism matches that have invalid stereochemistry configuration. The
+ * class is not currently set up to handle partial mappings (MCS) but could easily be extended to
+ * handle such cases. The class implements the Guava predicate and can be used easily filter the
+ * mappings.
  *
- * <blockquote><pre>{@code
+ * <blockquote>
+ *
+ * <pre>{@code
  * Predicate<int[]> f              = new StereoMatch(query, target);
  * Iterable<int[]>  mappings       = ...; // from subgraph isomorphism etc.
  * Iterable<int[]>  stereoMappings = Iterables.filter(mappings, f);
- * }</pre></blockquote>
+ * }</pre>
+ *
+ * </blockquote>
  *
  * @author John May
  * @cdk.module isomorphism
@@ -64,25 +67,24 @@ final class StereoMatch implements Predicate<int[]> {
     private final Map<IAtom, Integer> queryMap, targetMap;
 
     /** Indexed array of stereo elements. */
-    private final IStereoElement[]    queryElements, targetElements;
+    private final IStereoElement[] queryElements, targetElements;
 
     /** Indexed array of stereo element types. */
-    private final Type[]              queryTypes, targetTypes;
+    private final Type[] queryTypes, targetTypes;
 
     /** Indices of focus atoms of stereo elements. */
-    private final int[]               queryStereoIndices, targetStereoIndices;
+    private final int[] queryStereoIndices, targetStereoIndices;
 
     /**
      * Indicates the stereo group config for a given atom idx, 0=unsed, 1=stored, -1=inverted.
-     * Initially all entries start as 0, if we hit a stereo-element in a group &1, &2, or1, or2
-     * then we check if we have already "set" the group, if not then we "set" the group to make
-     * the first element match, this means we may choose to flip the group to be the enantiomer.
+     * Initially all entries start as 0, if we hit a stereo-element in a group &1, &2, or1, or2 then
+     * we check if we have already "set" the group, if not then we "set" the group to make the first
+     * element match, this means we may choose to flip the group to be the enantiomer.
      */
     private int[] groupConfigAdjust;
 
     /**
-     * Create a predicate for checking mappings between a provided
-     * {@code query} and {@code target}.
+     * Create a predicate for checking mappings between a provided {@code query} and {@code target}.
      *
      * @param query query container
      * @param target target container
@@ -102,8 +104,7 @@ final class StereoMatch implements Predicate<int[]> {
     }
 
     /**
-     * Is the {@code mapping} of the stereochemistry in the query preserved in
-     * the target.
+     * Is the {@code mapping} of the stereochemistry in the query preserved in the target.
      *
      * @param mapping permutation of the query vertices
      * @return the stereo chemistry is value
@@ -115,8 +116,7 @@ final class StereoMatch implements Predicate<int[]> {
         if (queryStereoIndices.length > targetStereoIndices.length) return false;
 
         // reset augment group config if it was initialised
-        if (groupConfigAdjust != null)
-            Arrays.fill(groupConfigAdjust, 0);
+        if (groupConfigAdjust != null) Arrays.fill(groupConfigAdjust, 0);
 
         for (final int u : queryStereoIndices) {
             switch (queryTypes[u]) {
@@ -132,10 +132,10 @@ final class StereoMatch implements Predicate<int[]> {
     }
 
     /**
-     * Verify the tetrahedral stereochemistry (clockwise/anticlockwise) of atom
-     * {@code u} is preserved in the target when the {@code mapping} is used.
+     * Verify the tetrahedral stereochemistry (clockwise/anticlockwise) of atom {@code u} is
+     * preserved in the target when the {@code mapping} is used.
      *
-     * @param u       tetrahedral index in the target
+     * @param u tetrahedral index in the target
      * @param mapping mapping of vertices
      * @return the tetrahedral configuration is preserved
      */
@@ -158,8 +158,7 @@ final class StereoMatch implements Predicate<int[]> {
 
         int groupInfo = targetElement.getGroupInfo();
         if (groupInfo != 0) {
-            if (groupConfigAdjust == null)
-                groupConfigAdjust = new int[target.getAtomCount()];
+            if (groupConfigAdjust == null) groupConfigAdjust = new int[target.getAtomCount()];
 
             // 'set' the group either to be 'as stored' or 'flipped'
             if (groupConfigAdjust[v] == 0) {
@@ -178,14 +177,13 @@ final class StereoMatch implements Predicate<int[]> {
     }
 
     /**
-     * Transforms the neighbors {@code us} adjacent to {@code u} into the target
-     * indices using the mapping {@code mapping}. The transformation accounts
-     * for an implicit hydrogen in the query being an explicit hydrogen in the
-     * target.
+     * Transforms the neighbors {@code us} adjacent to {@code u} into the target indices using the
+     * mapping {@code mapping}. The transformation accounts for an implicit hydrogen in the query
+     * being an explicit hydrogen in the target.
      *
-     * @param u       central atom of tetrahedral element
-     * @param v       mapped central atom of the tetrahedral element
-     * @param us      neighboring vertices of u (u plural)
+     * @param u central atom of tetrahedral element
+     * @param v mapped central atom of the tetrahedral element
+     * @param us neighboring vertices of u (u plural)
      * @param mapping mapping from the query to the target
      * @return the neighbors us, transformed into the neighbors around v
      */
@@ -193,8 +191,10 @@ final class StereoMatch implements Predicate<int[]> {
 
         // implicit hydrogen in query but explicit in target, modify the mapping
         // such that the central atom, u, mapps to the hydrogen
-        if (query.getAtom(u).getImplicitHydrogenCount() == 1 && target.getAtom(v).getImplicitHydrogenCount() == 0) {
-            IAtom explicitHydrogen = findHydrogen(((ITetrahedralChirality) targetElements[v]).getLigands());
+        if (query.getAtom(u).getImplicitHydrogenCount() == 1
+                && target.getAtom(v).getImplicitHydrogenCount() == 0) {
+            IAtom explicitHydrogen =
+                    findHydrogen(((ITetrahedralChirality) targetElements[v]).getLigands());
             // the substructure had a hydrogen but the superstructure did not
             // the matching is not possible - if we allowed the mapping then
             // we would have different results for implicit/explicit hydrogens
@@ -202,20 +202,18 @@ final class StereoMatch implements Predicate<int[]> {
             mapping[u] = targetMap.get(explicitHydrogen);
         }
 
-        for (int i = 0; i < us.length; i++)
-            us[i] = mapping[us[i]];
+        for (int i = 0; i < us.length; i++) us[i] = mapping[us[i]];
 
         mapping[u] = v; // remove temporary mapping to hydrogen
         return us;
     }
 
     /**
-     * Verify the geometric stereochemistry (cis/trans) of the double bond
-     * {@code u1=u2} is preserved in the target when the {@code mapping} is
-     * used.
+     * Verify the geometric stereochemistry (cis/trans) of the double bond {@code u1=u2} is
+     * preserved in the target when the {@code mapping} is used.
      *
-     * @param u1      one index of the double bond
-     * @param u2      other index of the double bond
+     * @param u1 one index of the double bond
+     * @param u2 other index of the double bond
      * @param mapping mapping of vertices
      * @return the geometric configuration is preserved
      */
@@ -273,14 +271,13 @@ final class StereoMatch implements Predicate<int[]> {
      * Access the neighbors of {@code element} as their indices.
      *
      * @param element tetrahedral element
-     * @param map     atom index lookup
+     * @param map atom index lookup
      * @return the neighbors
      */
     private int[] neighbors(ITetrahedralChirality element, Map<IAtom, Integer> map) {
         IAtom[] atoms = element.getLigands();
         int[] vs = new int[atoms.length];
-        for (int i = 0; i < atoms.length; i++)
-            vs[i] = map.get(atoms[i]);
+        for (int i = 0; i < atoms.length; i++) vs[i] = map.get(atoms[i]);
         return vs;
     }
 
@@ -298,9 +295,8 @@ final class StereoMatch implements Predicate<int[]> {
     }
 
     /**
-     * Compute the permutation parity of the values {@code vs}. The parity is
-     * whether we need to do an odd or even number of swaps to put the values in
-     * sorted order.
+     * Compute the permutation parity of the values {@code vs}. The parity is whether we need to do
+     * an odd or even number of swaps to put the values in sorted order.
      *
      * @param vs values
      * @return parity of the permutation (odd = -1, even = +1)
@@ -308,14 +304,12 @@ final class StereoMatch implements Predicate<int[]> {
     private int permutationParity(int[] vs) {
         int n = 0;
         for (int i = 0; i < vs.length; i++)
-            for (int j = i + 1; j < vs.length; j++)
-                if (vs[i] > vs[j]) n++;
+            for (int j = i + 1; j < vs.length; j++) if (vs[i] > vs[j]) n++;
         return (n & 0x1) == 1 ? -1 : 1;
     }
 
     /**
-     * Given an index of an atom in the query get the index of the other atom in
-     * the double bond.
+     * Given an index of an atom in the query get the index of the other atom in the double bond.
      *
      * @param i query atom index
      * @return the other atom index involved in a double bond
@@ -333,23 +327,24 @@ final class StereoMatch implements Predicate<int[]> {
      */
     private static Map<IAtom, Integer> indexAtoms(IAtomContainer container) {
         Map<IAtom, Integer> map = Maps.newHashMapWithExpectedSize(container.getAtomCount());
-        for (int i = 0; i < container.getAtomCount(); i++)
-            map.put(container.getAtom(i), i);
+        for (int i = 0; i < container.getAtomCount(); i++) map.put(container.getAtom(i), i);
         return map;
     }
 
     /**
-     * Index the stereo elements of the {@code container} into the the {@code
-     * elements} and {@code types} arrays. The {@code map} is used for looking
-     * up the index of atoms.
+     * Index the stereo elements of the {@code container} into the the {@code elements} and {@code
+     * types} arrays. The {@code map} is used for looking up the index of atoms.
      *
-     * @param map       index of atoms
-     * @param elements  array to fill with stereo elements
-     * @param types     type of stereo element indexed
+     * @param map index of atoms
+     * @param elements array to fill with stereo elements
+     * @param types type of stereo element indexed
      * @param container the container to index the elements of
      * @return indices of atoms involved in stereo configurations
      */
-    private static int[] indexElements(Map<IAtom, Integer> map, IStereoElement[] elements, Type[] types,
+    private static int[] indexElements(
+            Map<IAtom, Integer> map,
+            IStereoElement[] elements,
+            Type[] types,
             IAtomContainer container) {
         int[] indices = new int[container.getAtomCount()];
         int nElements = 0;
@@ -394,6 +389,7 @@ final class StereoMatch implements Predicate<int[]> {
 
     // could be moved into the IStereoElement to allow faster introspection
     private static enum Type {
-        Tetrahedral, Geometric
+        Tetrahedral,
+        Geometric
     }
 }

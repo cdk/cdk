@@ -36,13 +36,14 @@ public class DebugChemSequenceTest extends AbstractChemSequenceTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new DebugChemSequence();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new DebugChemSequence();
+                    }
+                });
     }
 
     @Test

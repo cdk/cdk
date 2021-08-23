@@ -32,9 +32,9 @@ import org.openscience.cdk.isomorphism.matchers.smarts.ReactionRoleQueryAtom;
 class ASTGroup extends SimpleNode {
 
     static final int ROLE_REACTANT = ReactionRoleQueryAtom.ROLE_REACTANT;
-    static final int ROLE_AGENT    = ReactionRoleQueryAtom.ROLE_AGENT;
-    static final int ROLE_PRODUCT  = ReactionRoleQueryAtom.ROLE_PRODUCT;
-    static final int ROLE_ANY      = ReactionRoleQueryAtom.ROLE_ANY;
+    static final int ROLE_AGENT = ReactionRoleQueryAtom.ROLE_AGENT;
+    static final int ROLE_PRODUCT = ReactionRoleQueryAtom.ROLE_PRODUCT;
+    static final int ROLE_ANY = ReactionRoleQueryAtom.ROLE_ANY;
 
     private int role = ROLE_ANY;
 

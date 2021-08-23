@@ -25,7 +25,6 @@ package org.openscience.cdk.config;
 
 import java.util.Collections;
 import java.util.Map;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
@@ -41,21 +40,21 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
  */
 final class ImmutableAtomType implements IAtomType {
 
-    private final String  element;
+    private final String element;
     private final Integer atomicNumber;
-    private final Double  naturalAbundance;
-    private final Double  exactMass;
+    private final Double naturalAbundance;
+    private final Double exactMass;
     private final Integer massNumber;
     private final Integer formalCharge;
     private final IAtomType.Hybridization hybridization;
     private final Integer electronValency;
     private final Integer formalNeighbourCount;
-    private final String  identifier;
+    private final String identifier;
     private final IBond.Order maxBondOrder;
-    private final Double  bondOrderSum;
-    private final Double  covalentRadius;
-    private final short   flags;
-    private final Map<Object,Object> properties;
+    private final Double bondOrderSum;
+    private final Double covalentRadius;
+    private final short flags;
+    private final Map<Object, Object> properties;
 
     ImmutableAtomType(IAtomType type) {
         this.element = type.getSymbol();
@@ -70,7 +69,7 @@ final class ImmutableAtomType implements IAtomType {
         this.maxBondOrder = type.getMaxBondOrder();
         this.bondOrderSum = type.getBondOrderSum();
         this.covalentRadius = type.getCovalentRadius();
-        this.flags = (short)type.getFlagValue();
+        this.flags = (short) type.getFlagValue();
         this.properties = Collections.unmodifiableMap(type.getProperties());
         if (type.getValency() != null) {
             this.electronValency = type.getValency();
@@ -130,7 +129,7 @@ final class ImmutableAtomType implements IAtomType {
 
     @Override
     public <T> T getProperty(Object description) {
-    	if (!properties.containsKey(description)) return null;
+        if (!properties.containsKey(description)) return null;
         @SuppressWarnings("unchecked")
         T value = (T) properties.get(description);
         return value;
@@ -138,7 +137,7 @@ final class ImmutableAtomType implements IAtomType {
 
     @Override
     public <T> T getProperty(Object description, Class<T> c) {
-    	Object value = properties.get(description);
+        Object value = properties.get(description);
 
         if (c.isInstance(value)) {
 
@@ -147,8 +146,11 @@ final class ImmutableAtomType implements IAtomType {
             return typed;
 
         } else if (value != null) {
-            throw new IllegalArgumentException("attempted to access a property of incorrect type, expected "
-                    + c.getSimpleName() + " got " + value.getClass().getSimpleName());
+            throw new IllegalArgumentException(
+                    "attempted to access a property of incorrect type, expected "
+                            + c.getSimpleName()
+                            + " got "
+                            + value.getClass().getSimpleName());
         }
 
         return null;
@@ -156,7 +158,7 @@ final class ImmutableAtomType implements IAtomType {
 
     @Override
     public Map<Object, Object> getProperties() {
-    	return properties;
+        return properties;
     }
 
     @Override
@@ -176,7 +178,7 @@ final class ImmutableAtomType implements IAtomType {
 
     @Override
     public boolean getFlag(int flagType) {
-    	return (flags & flagType) != 0;
+        return (flags & flagType) != 0;
     }
 
     @Override
@@ -203,7 +205,6 @@ final class ImmutableAtomType implements IAtomType {
             flagArray[i] = getFlag(mask);
         }
         return flagArray;
-
     }
 
     @Override
@@ -268,85 +269,85 @@ final class ImmutableAtomType implements IAtomType {
         return this;
     }
 
-	@Override
-	public void setAtomTypeName(String identifier) {
+    @Override
+    public void setAtomTypeName(String identifier) {
         throw new UnsupportedOperationException("Immutable atom type cannot be modified");
     }
 
-	@Override
-	public void setMaxBondOrder(Order maxBondOrder) {
+    @Override
+    public void setMaxBondOrder(Order maxBondOrder) {
         throw new UnsupportedOperationException("Immutable atom type cannot be modified");
     }
 
-	@Override
-	public void setBondOrderSum(Double bondOrderSum) {
+    @Override
+    public void setBondOrderSum(Double bondOrderSum) {
         throw new UnsupportedOperationException("Immutable atom type cannot be modified");
     }
 
-	@Override
-	public String getAtomTypeName() {
-		return this.identifier;
-	}
+    @Override
+    public String getAtomTypeName() {
+        return this.identifier;
+    }
 
-	@Override
-	public Order getMaxBondOrder() {
-		return this.maxBondOrder;
-	}
+    @Override
+    public Order getMaxBondOrder() {
+        return this.maxBondOrder;
+    }
 
-	@Override
-	public Double getBondOrderSum() {
-		return this.bondOrderSum;
-	}
+    @Override
+    public Double getBondOrderSum() {
+        return this.bondOrderSum;
+    }
 
-	@Override
-	public void setFormalCharge(Integer charge) {
+    @Override
+    public void setFormalCharge(Integer charge) {
         throw new UnsupportedOperationException("Immutable atom type cannot be modified");
     }
 
-	@Override
-	public Integer getFormalCharge() {
-		return this.formalCharge;
-	}
+    @Override
+    public Integer getFormalCharge() {
+        return this.formalCharge;
+    }
 
-	@Override
-	public void setFormalNeighbourCount(Integer count) {
+    @Override
+    public void setFormalNeighbourCount(Integer count) {
         throw new UnsupportedOperationException("Immutable atom type cannot be modified");
     }
 
-	@Override
-	public Integer getFormalNeighbourCount() {
-		return this.formalNeighbourCount;
-	}
+    @Override
+    public Integer getFormalNeighbourCount() {
+        return this.formalNeighbourCount;
+    }
 
-	@Override
-	public void setHybridization(Hybridization hybridization) {
+    @Override
+    public void setHybridization(Hybridization hybridization) {
         throw new UnsupportedOperationException("Immutable atom type cannot be modified");
     }
 
-	@Override
-	public Hybridization getHybridization() {
-		return this.hybridization;
-	}
+    @Override
+    public Hybridization getHybridization() {
+        return this.hybridization;
+    }
 
-	@Override
-	public void setCovalentRadius(Double radius) {
+    @Override
+    public void setCovalentRadius(Double radius) {
         throw new UnsupportedOperationException("Immutable atom type cannot be modified");
     }
 
-	@Override
-	public Double getCovalentRadius() {
-		return this.covalentRadius;
-	}
+    @Override
+    public Double getCovalentRadius() {
+        return this.covalentRadius;
+    }
 
-	@Override
-	public void setValency(Integer valency) {
+    @Override
+    public void setValency(Integer valency) {
         throw new UnsupportedOperationException("Immutable atom type cannot be modified");
     }
 
-	@Override
-	public Integer getValency() {
-		return this.electronValency;
-	}
+    @Override
+    public Integer getValency() {
+        return this.electronValency;
+    }
 
     @Override
     public String toString() {

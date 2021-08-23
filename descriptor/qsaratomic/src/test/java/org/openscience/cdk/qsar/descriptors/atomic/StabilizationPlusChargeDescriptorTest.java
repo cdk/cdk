@@ -40,8 +40,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest {
 
-    private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-    LonePairElectronChecker                 lpcheck = new LonePairElectronChecker();
+    private static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
     public StabilizationPlusChargeDescriptorTest() {
         descriptor = new StabilizationPlusChargeDescriptor();
@@ -53,7 +53,7 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
     }
 
     /**
-     *  A unit test for JUnit
+     * A unit test for JUnit
      *
      * @throws Exception
      */
@@ -79,9 +79,7 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
         Assert.assertNotSame(0.0, result.doubleValue());
     }
 
-    /**
-     *
-     */
+    /** */
     @Test
     @Category(SlowTest.class)
     public void testNotCharged() throws Exception {
@@ -101,11 +99,10 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
         DoubleResult result = ((DoubleResult) descriptor.calculate(mol.getAtom(0), mol).getValue());
 
         Assert.assertEquals(0.0, result.doubleValue(), 0.00001);
-
     }
 
     /**
-     *  A unit test for JUnit
+     * A unit test for JUnit
      *
      * @throws Exception
      */
@@ -129,11 +126,10 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
         DoubleResult result = ((DoubleResult) descriptor.calculate(mol.getAtom(1), mol).getValue());
 
         Assert.assertNotSame(0.0, result.doubleValue());
-
     }
 
     /**
-     *  A unit test for JUnit
+     * A unit test for JUnit
      *
      * @throws Exception
      */
@@ -154,7 +150,8 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
         addExplicitHydrogens(mol1);
         lpcheck.saturate(mol1);
 
-        DoubleResult result1 = ((DoubleResult) descriptor.calculate(mol1.getAtom(1), mol1).getValue());
+        DoubleResult result1 =
+                ((DoubleResult) descriptor.calculate(mol1.getAtom(1), mol1).getValue());
 
         IAtomContainer mol2 = builder.newInstance(IAtomContainer.class);
         mol2.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -167,7 +164,8 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
         addExplicitHydrogens(mol2);
         lpcheck.saturate(mol2);
 
-        DoubleResult result2 = ((DoubleResult) descriptor.calculate(mol2.getAtom(1), mol2).getValue());
+        DoubleResult result2 =
+                ((DoubleResult) descriptor.calculate(mol2.getAtom(1), mol2).getValue());
 
         IAtomContainer mol3 = builder.newInstance(IAtomContainer.class);
         mol3.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -180,16 +178,17 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
         addExplicitHydrogens(mol3);
         lpcheck.saturate(mol3);
 
-        DoubleResult result3 = ((DoubleResult) descriptor.calculate(mol3.getAtom(1), mol3).getValue());
+        DoubleResult result3 =
+                ((DoubleResult) descriptor.calculate(mol3.getAtom(1), mol3).getValue());
 
         Assert.assertTrue(result3.doubleValue() < result2.doubleValue());
         Assert.assertTrue(result2.doubleValue() < result1.doubleValue());
     }
 
     /**
-     *  A unit test for JUnit with C=CCCl # C=CC[Cl+*]
+     * A unit test for JUnit with C=CCCl # C=CC[Cl+*]
      *
-     *  @cdk.inchi InChI=1/C3H7Cl/c1-2-3-4/h2-3H2,1H3
+     * @cdk.inchi InChI=1/C3H7Cl/c1-2-3-4/h2-3H2,1H3
      */
     @Test
     @Category(SlowTest.class)
@@ -208,7 +207,9 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
         addExplicitHydrogens(molA);
         lpcheck.saturate(molA);
 
-        double resultA = ((DoubleResult) descriptor.calculate(molA.getAtom(3), molA).getValue()).doubleValue();
+        double resultA =
+                ((DoubleResult) descriptor.calculate(molA.getAtom(3), molA).getValue())
+                        .doubleValue();
 
         IAtomContainer molB = builder.newInstance(IAtomContainer.class);
         molB.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -231,9 +232,10 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
         Assert.assertEquals(1, molB.getSingleElectronCount(), 0.00001);
         Assert.assertEquals(2, molB.getLonePairCount(), 0.00001);
 
-        double resultB = ((DoubleResult) descriptor.calculate(molB.getAtom(3), molB).getValue()).doubleValue();
+        double resultB =
+                ((DoubleResult) descriptor.calculate(molB.getAtom(3), molB).getValue())
+                        .doubleValue();
 
         Assert.assertNotSame(resultA, resultB);
     }
-
 }

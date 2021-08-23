@@ -26,13 +26,10 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.openscience.cdk.config.OWLBasedAtomTypeConfigurator;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
-
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -40,14 +37,15 @@ import org.xml.sax.XMLReader;
 /**
  * XML Reader for the {@link OWLBasedAtomTypeConfigurator}.
  *
- * @cdk.module  atomtype
+ * @cdk.module atomtype
  * @cdk.githash
  */
 public class OWLAtomTypeMappingReader {
 
-    private XMLReader           parser;
-    private Reader              input;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(OWLAtomTypeReader.class);
+    private XMLReader parser;
+    private Reader input;
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(OWLAtomTypeReader.class);
 
     /**
      * Instantiates the XML based AtomTypeReader.
@@ -64,7 +62,8 @@ public class OWLAtomTypeMappingReader {
         // If JAXP is preferred (comes with Sun JVM 1.4.0 and higher)
         if (!success) {
             try {
-                javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
+                javax.xml.parsers.SAXParserFactory spf =
+                        javax.xml.parsers.SAXParserFactory.newInstance();
                 spf.setNamespaceAware(true);
                 javax.xml.parsers.SAXParser saxParser = spf.newSAXParser();
                 parser = saxParser.getXMLReader();
@@ -78,11 +77,17 @@ public class OWLAtomTypeMappingReader {
         // Xerces is an alternative
         if (!success) {
             try {
-                parser = (XMLReader) this.getClass().getClassLoader().loadClass("org.apache.xerces.parsers.SAXParser")
-                        .newInstance();
+                parser =
+                        (XMLReader)
+                                this.getClass()
+                                        .getClassLoader()
+                                        .loadClass("org.apache.xerces.parsers.SAXParser")
+                                        .newInstance();
                 logger.info("Using Xerces XML parser.");
                 success = true;
-            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException exception) {
+            } catch (ClassNotFoundException
+                    | InstantiationException
+                    | IllegalAccessException exception) {
                 logger.warn("Could not instantiate Xerces XML reader!");
                 logger.debug(exception);
             }
@@ -95,7 +100,7 @@ public class OWLAtomTypeMappingReader {
     /**
      * Reads the atom type mappings from the data file.
      *
-     * @return         a Map with atom type mappings. Null, if some reading error occurred.
+     * @return a Map with atom type mappings. Null, if some reading error occurred.
      */
     public Map<String, String> readAtomTypeMappings() {
         Map<String, String> mappings = null;
@@ -120,5 +125,4 @@ public class OWLAtomTypeMappingReader {
         }
         return mappings == null ? new HashMap<String, String>() : mappings;
     }
-
 }

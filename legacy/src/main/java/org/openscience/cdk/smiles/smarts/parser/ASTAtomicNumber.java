@@ -29,28 +29,20 @@ package org.openscience.cdk.smiles.smarts.parser;
 @Deprecated
 class ASTAtomicNumber extends SimpleNode {
 
-    /**
-     * The atomic number
-     */
+    /** The atomic number */
     private int number;
 
-    /**
-     * Creates a new instance.
-     */
+    /** Creates a new instance. */
     public ASTAtomicNumber(int id) {
         super(id);
     }
 
-    /**
-     * Creates a new instance.
-     */
+    /** Creates a new instance. */
     public ASTAtomicNumber(SMARTSParser p, int id) {
         super(p, id);
     }
 
-    /**
-     * Returns the atomic number.
-     */
+    /** Returns the atomic number. */
     public int getNumber() {
         return number;
     }
@@ -66,9 +58,7 @@ class ASTAtomicNumber extends SimpleNode {
         return visitor.visit(this, data);
     }
 
-    /**
-     * Sets the atomic number.
-     */
+    /** Sets the atomic number. */
     public void setNumber(int number) {
         this.number = number;
     }

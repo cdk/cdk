@@ -23,19 +23,17 @@
  */
 package org.openscience.cdk.graph;
 
+import java.util.List;
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 
-import java.util.List;
-
 /**
  * This class tests the MinimalPathIteratorTest class.
  *
  * @cdk.module test-standard
- *
  * @author Ulrich Bauer &lt;baueru@cs.tum.edu&gt;
  */
 public class MinimalPathIteratorTest extends CDKTestCase {
@@ -92,7 +90,7 @@ public class MinimalPathIteratorTest extends CDKTestCase {
     @Test
     public void testMinimalPathIterator() {
         int count = 0;
-        for (MinimalPathIterator i = new MinimalPathIterator(g, "a", "l"); i.hasNext();) {
+        for (MinimalPathIterator i = new MinimalPathIterator(g, "a", "l"); i.hasNext(); ) {
             Assert.assertTrue(((List) i.next()).size() == 5);
             count++;
         }
@@ -101,10 +99,9 @@ public class MinimalPathIteratorTest extends CDKTestCase {
 
     @Test(expected = UnsupportedOperationException.class)
     public void testRemove() {
-        for (MinimalPathIterator i = new MinimalPathIterator(g, "a", "l"); i.hasNext();) {
+        for (MinimalPathIterator i = new MinimalPathIterator(g, "a", "l"); i.hasNext(); ) {
             Assert.assertTrue(((List) i.next()).size() == 5);
             i.remove();
         }
     }
-
 }

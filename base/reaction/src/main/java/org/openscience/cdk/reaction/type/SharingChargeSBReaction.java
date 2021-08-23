@@ -18,6 +18,8 @@
  */
 package org.openscience.cdk.reaction.type;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -35,76 +37,76 @@ import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 /**
- * <p>IReactionProcess which participate in movement resonance.
- * This reaction could be represented as [A+]-B =&gt; A| + [B+]. Due to
- * deficiency of charge of the atom A, the double bond is displaced to atom A.</p>
- * <p>Make sure that the molecule has the correspond lone pair electrons
- * for each atom. You can use the method: <pre> LonePairElectronChecker </pre>
- * <p>It is processed by the HeterolyticCleavageMechanism class</p>
+ * IReactionProcess which participate in movement resonance. This reaction could be represented as
+ * [A+]-B =&gt; A| + [B+]. Due to deficiency of charge of the atom A, the double bond is displaced
+ * to atom A.
+ *
+ * <p>Make sure that the molecule has the correspond lone pair electrons for each atom. You can use
+ * the method:
+ *
+ * <pre> LonePairElectronChecker </pre>
+ *
+ * <p>It is processed by the HeterolyticCleavageMechanism class
  *
  * <pre>
  *  IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newAtomContainerSet();
  *  setOfReactants.addAtomContainer(new AtomContainer());
  *  IReactionProcess type = new SharingChargeSBReaction();
  *  Object[] params = {Boolean.FALSE};
-    type.setParameters(params);
+ * type.setParameters(params);
  *  IReactionSet setOfReactions = type.initiate(setOfReactants, null);
  *  </pre>
  *
- * <p>We have the possibility to localize the reactive center. Good method if you
- * want to localize the reaction in a fixed point</p>
+ * <p>We have the possibility to localize the reactive center. Good method if you want to localize
+ * the reaction in a fixed point
+ *
  * <pre>atoms[0].setFlag(CDKConstants.REACTIVE_CENTER,true);</pre>
- * <p>Moreover you must put the parameter Boolean.TRUE</p>
- * <p>If the reactive center is not localized then the reaction process will
- * try to find automatically the possible reactive center.</p>
  *
+ * <p>Moreover you must put the parameter Boolean.TRUE
  *
- * @author         Miguel Rojas
+ * <p>If the reactive center is not localized then the reaction process will try to find
+ * automatically the possible reactive center.
  *
- * @cdk.created    2006-05-05
- * @cdk.module     reaction
+ * @author Miguel Rojas
+ * @cdk.created 2006-05-05
+ * @cdk.module reaction
  * @cdk.githash
- *
  * @see HeterolyticCleavageMechanism
- **/
+ */
 public class SharingChargeSBReaction extends ReactionEngine implements IReactionProcess {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(SharingChargeSBReaction.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(SharingChargeSBReaction.class);
 
-    /**
-     * Constructor of the SharingChargeSBReaction object.
-     *
-     */
+    /** Constructor of the SharingChargeSBReaction object. */
     public SharingChargeSBReaction() {}
 
     /**
-     *  Gets the specification attribute of the SharingChargeSBReaction object
+     * Gets the specification attribute of the SharingChargeSBReaction object
      *
-     *@return    The specification value
+     * @return The specification value
      */
     @Override
     public ReactionSpecification getSpecification() {
         return new ReactionSpecification(
-                "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#SharingChargeSB", this
-                        .getClass().getName(), "$Id$", "The Chemistry Development Kit");
+                "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#SharingChargeSB",
+                this.getClass().getName(),
+                "$Id$",
+                "The Chemistry Development Kit");
     }
 
     /**
-     *  Initiate process.
-     *  It is needed to call the addExplicitHydrogensToSatisfyValency
-     *  from the class tools.HydrogenAdder.
+     * Initiate process. It is needed to call the addExplicitHydrogensToSatisfyValency from the
+     * class tools.HydrogenAdder.
      *
-     *@param  reactants         reactants of the reaction.
-     *@param  agents            agents of the reaction (Must be in this case null).
-     *
-     *@exception  CDKException  Description of the Exception
+     * @param reactants reactants of the reaction.
+     * @param agents agents of the reaction (Must be in this case null).
+     * @exception CDKException Description of the Exception
      */
     @Override
-    public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents) throws CDKException {
+    public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents)
+            throws CDKException {
 
         logger.debug("initiate reaction: SharingChargeSBReaction");
 
@@ -134,10 +136,12 @@ public class SharingChargeSBReaction extends ReactionEngine implements IReaction
                 Iterator<IBond> bondis = reactant.getConnectedBondsList(atomi).iterator();
                 while (bondis.hasNext()) {
                     IBond bondi = bondis.next();
-                    if (bondi.getFlag(CDKConstants.REACTIVE_CENTER) && bondi.getOrder() == IBond.Order.SINGLE) {
+                    if (bondi.getFlag(CDKConstants.REACTIVE_CENTER)
+                            && bondi.getOrder() == IBond.Order.SINGLE) {
 
                         IAtom atomj = bondi.getOther(atomi);
-                        if (atomj.getFlag(CDKConstants.REACTIVE_CENTER) && atomj.getFormalCharge() == 0)
+                        if (atomj.getFlag(CDKConstants.REACTIVE_CENTER)
+                                && atomj.getFormalCharge() == 0)
                             if (reactant.getConnectedSingleElectronsCount(atomj) == 0) {
 
                                 ArrayList<IAtom> atomList = new ArrayList<IAtom>();
@@ -146,26 +150,25 @@ public class SharingChargeSBReaction extends ReactionEngine implements IReaction
                                 ArrayList<IBond> bondList = new ArrayList<IBond>();
                                 bondList.add(bondi);
 
-                                IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(
-                                        IAtomContainerSet.class);
+                                IAtomContainerSet moleculeSet =
+                                        reactant.getBuilder().newInstance(IAtomContainerSet.class);
                                 moleculeSet.addAtomContainer(reactant);
-                                IReaction reaction = mechanism.initiate(moleculeSet, atomList, bondList);
-                                if (reaction == null)
-                                    continue;
-                                else
-                                    setOfReactions.addReaction(reaction);
+                                IReaction reaction =
+                                        mechanism.initiate(moleculeSet, atomList, bondList);
+                                if (reaction == null) continue;
+                                else setOfReactions.addReaction(reaction);
                             }
                     }
                 }
             }
         }
         return setOfReactions;
-
     }
 
     /**
-     * set the active center for this molecule.
-     * The active center will be those which correspond with [A+]-B.
+     * set the active center for this molecule. The active center will be those which correspond
+     * with [A+]-B.
+     *
      * <pre>
      * A: Atom with positive charge
      * -: single bond
@@ -188,11 +191,12 @@ public class SharingChargeSBReaction extends ReactionEngine implements IReaction
                     if (bondi.getOrder() == IBond.Order.SINGLE) {
 
                         IAtom atomj = bondi.getOther(atomi);
-                        if (atomj.getFormalCharge() == 0) if (reactant.getConnectedSingleElectronsCount(atomj) == 0) {
-                            atomi.setFlag(CDKConstants.REACTIVE_CENTER, true);
-                            bondi.setFlag(CDKConstants.REACTIVE_CENTER, true);
-                            atomj.setFlag(CDKConstants.REACTIVE_CENTER, true);
-                        }
+                        if (atomj.getFormalCharge() == 0)
+                            if (reactant.getConnectedSingleElectronsCount(atomj) == 0) {
+                                atomi.setFlag(CDKConstants.REACTIVE_CENTER, true);
+                                bondi.setFlag(CDKConstants.REACTIVE_CENTER, true);
+                                atomj.setFlag(CDKConstants.REACTIVE_CENTER, true);
+                            }
                     }
                 }
             }

@@ -25,7 +25,6 @@ package org.openscience.cdk.formula;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.formula.rules.IRule;
 import org.openscience.cdk.interfaces.IMolecularFormula;
@@ -33,29 +32,29 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * <p> Validate a molecular formula given in IMolecularformula object. The
- * validation is based according different rules that you have to introduce before
- * see IRule.
+ * Validate a molecular formula given in IMolecularformula object. The validation is based according
+ * different rules that you have to introduce before see IRule.
  *
- * @cdk.module  formula
- * @author      miguelrojasch
+ * @cdk.module formula
+ * @author miguelrojasch
  * @cdk.created 2007-11-20
  * @cdk.keyword molecule, molecular formula
  * @cdk.githash
- * @see         IRule
+ * @see IRule
  */
 public class MolecularFormulaChecker {
 
-    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(MolecularFormulaChecker.class);
+    private ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(MolecularFormulaChecker.class);
 
-    /** List of IRules to be applied in the validation.*/
-    private List<IRule>  rules;
+    /** List of IRules to be applied in the validation. */
+    private List<IRule> rules;
 
     /**
-     * Construct an instance of MolecularFormulaChecker. It must be initialized
-     * with the rules to applied.
+     * Construct an instance of MolecularFormulaChecker. It must be initialized with the rules to
+     * applied.
      *
-     * @param rules  A List with IRule to be applied
+     * @param rules A List with IRule to be applied
      */
     public MolecularFormulaChecker(List<IRule> rules) {
         this.rules = rules;
@@ -71,14 +70,13 @@ public class MolecularFormulaChecker {
     }
 
     /**
-     * Validate if a IMolecularFormula is valid. The result more close to 1 means
-     * maximal probability to be valid. Opposite more close to 0 means minimal
-     * probability to be valid. To know the result in each IRule use
-     * {@link #isValid(IMolecularFormula)}
+     * Validate if a IMolecularFormula is valid. The result more close to 1 means maximal
+     * probability to be valid. Opposite more close to 0 means minimal probability to be valid. To
+     * know the result in each IRule use {@link #isValid(IMolecularFormula)}
      *
-     * @param  formula      The IMolecularFormula value
-     * @return              The percent of the validity
-     * @see                 #isValid(IMolecularFormula)
+     * @param formula The IMolecularFormula value
+     * @return The percent of the validity
+     * @see #isValid(IMolecularFormula)
      */
     public Double isValidSum(IMolecularFormula formula) {
         double result = 1.0;
@@ -94,15 +92,13 @@ public class MolecularFormulaChecker {
     }
 
     /**
-     * Validate if a IMolecularFormula is valid. The results of each IRule which
-     * has to be applied is put into IMolecularFormula as properties. To extract
-     * the result final as the product of rule's result use
-     * {@link #isValidSum(IMolecularFormula)}.
+     * Validate if a IMolecularFormula is valid. The results of each IRule which has to be applied
+     * is put into IMolecularFormula as properties. To extract the result final as the product of
+     * rule's result use {@link #isValidSum(IMolecularFormula)}.
      *
-     * @param  formula      The IMolecularFormula value
-     * @return formulaWith  The IMolecularFormula with the results for each
-     *                      IRule into properties
-     * @see                 #isValidSum(IMolecularFormula)
+     * @param formula The IMolecularFormula value
+     * @return formulaWith The IMolecularFormula with the results for each IRule into properties
+     * @see #isValidSum(IMolecularFormula)
      */
     public IMolecularFormula isValid(IMolecularFormula formula) {
         logger.info("Generating the validity of the molecular formula");
@@ -118,7 +114,6 @@ public class MolecularFormulaChecker {
                 IRule rule = iterRules.next();
                 double result = rule.validate(formula);
                 formula.setProperty(rule.getClass(), result);
-
             }
         } catch (CDKException e) {
             e.printStackTrace();

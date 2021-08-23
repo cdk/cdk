@@ -25,9 +25,7 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
-/**
- * @cdk.module test-standard
- */
+/** @cdk.module test-standard */
 public class MoleculeGraphsTest extends CDKTestCase {
 
     public MoleculeGraphsTest() {
@@ -35,8 +33,8 @@ public class MoleculeGraphsTest extends CDKTestCase {
     }
 
     /**
-     * Tests that the jgrapht graph has as many vertices as atoms,
-     * and as many edges as bonds in alpha-pinene.
+     * Tests that the jgrapht graph has as many vertices as atoms, and as many edges as bonds in
+     * alpha-pinene.
      */
     @Test
     public void testGetMoleculeGraph_IAtomContainer() {
@@ -45,5 +43,4 @@ public class MoleculeGraphsTest extends CDKTestCase {
         Assert.assertEquals(apinene.getAtomCount(), graph.vertexSet().size());
         Assert.assertEquals(apinene.getBondCount(), graph.edgeSet().size());
     }
-
 }

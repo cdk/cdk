@@ -18,22 +18,21 @@
  */
 package org.openscience.cdk.io.listener;
 
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.ReaderEvent;
-import org.openscience.cdk.io.setting.IOSetting;
-
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.Properties;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.ReaderEvent;
+import org.openscience.cdk.io.setting.IOSetting;
 
 /**
- * Answers the questions by looking up the values in a Properties
- * object. The question names match the property field names.
- * If no answer is found in the Property object, or if the value
- * is invalid, then the default is taken.
+ * Answers the questions by looking up the values in a Properties object. The question names match
+ * the property field names. If no answer is found in the Property object, or if the value is
+ * invalid, then the default is taken.
  *
  * <p>For the GaussianInputWriter the properties file might look like:
+ *
  * <pre>
  * Basis=6-31g
  * Method=b3lyp
@@ -42,12 +41,11 @@ import java.util.Properties;
  *
  * @cdk.module io
  * @cdk.githash
- *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */
 public class PropertiesListener implements IReaderListener, IWriterListener {
 
-    private Properties  props;
+    private Properties props;
     private PrintWriter out;
 
     public PropertiesListener(Properties props) {
@@ -55,9 +53,7 @@ public class PropertiesListener implements IReaderListener, IWriterListener {
         this.setOutputWriter(new OutputStreamWriter(System.out));
     }
 
-    /**
-     * Overwrites the default writer to which the output is directed.
-     */
+    /** Overwrites the default writer to which the output is directed. */
     public void setOutputWriter(Writer writer) {
         if (writer instanceof PrintWriter) {
             this.out = (PrintWriter) writer;
@@ -72,11 +68,11 @@ public class PropertiesListener implements IReaderListener, IWriterListener {
     public void frameRead(ReaderEvent event) {}
 
     /**
-     * Processes the IOSettings by listing the question, giving the options
-     * and asking the user to provide their choice.
+     * Processes the IOSettings by listing the question, giving the options and asking the user to
+     * provide their choice.
      *
-     * <p>Note: if the input reader is <code>null</code>, then the method
-     * does not wait for an answer, and takes the default.
+     * <p>Note: if the input reader is <code>null</code>, then the method does not wait for an
+     * answer, and takes the default.
      */
     @Override
     public void processIOSettingQuestion(IOSetting setting) {
@@ -91,5 +87,4 @@ public class PropertiesListener implements IReaderListener, IWriterListener {
             }
         }
     }
-
 }

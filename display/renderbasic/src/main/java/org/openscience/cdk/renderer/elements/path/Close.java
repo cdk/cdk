@@ -32,20 +32,18 @@ package org.openscience.cdk.renderer.elements.path;
  */
 public class Close extends PathElement {
 
-    /**
-     * Make a Close PathElement.
-     */
+    /** Make a Close PathElement. */
     public Close() {
         super(Type.Close);
     }
 
-    /** {@inheritDoc} **/
+    /** {@inheritDoc} * */
     @Override
     public float[] points() {
         return new float[0];
     }
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     public void points(double[] coords) {
         // N/A

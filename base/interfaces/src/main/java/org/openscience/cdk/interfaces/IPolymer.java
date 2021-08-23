@@ -27,9 +27,8 @@ import java.util.Collection;
 /**
  * Subclass of Molecule to store Polymer specific attributes that a Polymer has.
  *
- * @cdk.module  interfaces
+ * @cdk.module interfaces
  * @cdk.githash
- *
  * @author Edgar Luttmann &lt;edgar@uni-paderborn.de&gt;
  * @author Martin Eklund &lt;martin.eklund@farmbio.uu.se&gt;
  * @cdk.created 2001-08-06
@@ -38,11 +37,10 @@ import java.util.Collection;
 public interface IPolymer extends IAtomContainer {
 
     /**
-     * Adds the atom oAtom without specifying a Monomer. Therefore the
-     * atom to this AtomContainer, but not to a certain Monomer (intended
-     * e.g. for HETATMs).
+     * Adds the atom oAtom without specifying a Monomer. Therefore the atom to this AtomContainer,
+     * but not to a certain Monomer (intended e.g. for HETATMs).
      *
-     * @param oAtom  The atom to add
+     * @param oAtom The atom to add
      */
     @Override
     public void addAtom(IAtom oAtom);
@@ -50,8 +48,8 @@ public interface IPolymer extends IAtomContainer {
     /**
      * Adds the atom oAtom to a specified Monomer.
      *
-     * @param oAtom  The atom to add
-     * @param oMonomer  The monomer the atom belongs to
+     * @param oAtom The atom to add
+     * @param oMonomer The monomer the atom belongs to
      */
     public void addAtom(IAtom oAtom, IMonomer oMonomer);
 
@@ -65,14 +63,13 @@ public interface IPolymer extends IAtomContainer {
     /**
      * Retrieve a Monomer object by specifying its name.
      *
-     * @param cName  The name of the monomer to look for
+     * @param cName The name of the monomer to look for
      * @return The Monomer object which was asked for
      */
     public IMonomer getMonomer(String cName);
 
     /**
-     * Returns a collection of the names of all <code>Monomer</code>s in this
-     * polymer.
+     * Returns a collection of the names of all <code>Monomer</code>s in this polymer.
      *
      * @return a <code>Collection</code> of all the monomer names.
      */
@@ -85,9 +82,7 @@ public interface IPolymer extends IAtomContainer {
      */
     public void removeMonomer(String name);
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IPolymer clone() throws CloneNotSupportedException;
 }

@@ -27,31 +27,30 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 
 /**
- * Helper class defining the energy for a bond type. The bond
- * type is defined as to element symbols and a bond order.
+ * Helper class defining the energy for a bond type. The bond type is defined as to element symbols
+ * and a bond order.
  *
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is
+ *     available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public class BondEnergy {
 
-    private String      symbol1   = "";
-    private String      symbol2   = "";
+    private String symbol1 = "";
+    private String symbol2 = "";
     private IBond.Order bondOrder = null;
-    private int         energy    = -1;
+    private int energy = -1;
 
     /**
-     * Creates a new bond energy for the given elements and
-     * bond order.
+     * Creates a new bond energy for the given elements and bond order.
      *
      * @param symbol1 element symbol for the first atom
      * @param symbol2 element symbol for the second atom
-     * @param order   bond order
-     * @param energy  energy for this bond type
+     * @param order bond order
+     * @param energy energy for this bond type
      */
     public BondEnergy(String symbol1, String symbol2, IBond.Order order, int energy) {
         this.symbol1 = symbol1;
@@ -100,8 +99,10 @@ public class BondEnergy {
         IAtom atom1 = bond.getBegin();
         IAtom atom2 = bond.getEnd();
 
-        if ((atom1.getSymbol().equalsIgnoreCase(symbol1) && atom2.getSymbol().equalsIgnoreCase(symbol2))
-                || (atom1.getSymbol().equalsIgnoreCase(symbol2) && atom2.getSymbol().equalsIgnoreCase(symbol1))) {
+        if ((atom1.getSymbol().equalsIgnoreCase(symbol1)
+                        && atom2.getSymbol().equalsIgnoreCase(symbol2))
+                || (atom1.getSymbol().equalsIgnoreCase(symbol2)
+                        && atom2.getSymbol().equalsIgnoreCase(symbol1))) {
             if (bond.getOrder().compareTo(bondOrder) == 0) {
                 return true;
             }

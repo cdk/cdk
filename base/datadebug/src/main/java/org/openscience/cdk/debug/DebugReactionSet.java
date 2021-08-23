@@ -19,11 +19,10 @@
 package org.openscience.cdk.debug;
 
 import java.util.Map;
-
 import org.openscience.cdk.ReactionSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -32,7 +31,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * Debugging data class.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module datadebug
  * @cdk.githash
  */
@@ -40,7 +39,7 @@ public class DebugReactionSet extends ReactionSet implements IReactionSet {
 
     private static final long serialVersionUID = 1620489912540131959L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugReactionSet.class);
+    ILoggingTool logger = LoggingToolFactory.createLoggingTool(DebugReactionSet.class);
 
     /** {@inheritDoc} */
     @Override
@@ -215,9 +214,7 @@ public class DebugReactionSet extends ReactionSet implements IReactionSet {
         super.removeReaction(reaction);
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean isEmpty() {
         logger.debug("Checking if reaction set is empty: ", super.isEmpty());

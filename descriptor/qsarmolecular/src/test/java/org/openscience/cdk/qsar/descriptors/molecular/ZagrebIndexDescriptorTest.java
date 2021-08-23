@@ -20,7 +20,6 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import java.io.InputStream;
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,7 +40,6 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *
  * @cdk.module test-qsarmolecular
  */
-
 public class ZagrebIndexDescriptorTest extends MolecularDescriptorTest {
 
     public ZagrebIndexDescriptorTest() {}
@@ -55,13 +53,16 @@ public class ZagrebIndexDescriptorTest extends MolecularDescriptorTest {
     public void testZagrebIndexDescriptor() throws java.lang.Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O=C(O)CC");
-        Assert.assertEquals(16, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.0001);
+        Assert.assertEquals(
+                16, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.0001);
     }
 
     @Test
     public void test2Dvs3D() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer mol = sp.parseSmiles("O1C2C34C(C(C1O)CCCc1cc(cc(c1)C(F)(F)F)C(F)(F)F)CCC(C3CCC(O2)(OO4)C)C");
+        IAtomContainer mol =
+                sp.parseSmiles(
+                        "O1C2C34C(C(C1O)CCCc1cc(cc(c1)C(F)(F)F)C(F)(F)F)CCC(C3CCC(O2)(OO4)C)C");
 
         addExplicitHydrogens(mol);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -81,6 +82,5 @@ public class ZagrebIndexDescriptorTest extends MolecularDescriptorTest {
         double value3D = ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue();
 
         Assert.assertEquals(value2D, value3D, 0.001);
-
     }
 }

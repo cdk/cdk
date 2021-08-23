@@ -20,7 +20,6 @@ package org.openscience.cdk.silent;
 
 import java.io.Serializable;
 import java.util.Iterator;
-
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IReaction;
@@ -29,7 +28,7 @@ import org.openscience.cdk.interfaces.IReactionSet;
 /**
  * A set of reactions, for example those taking part in a reaction.
  *
- * To retrieve the reactions from the set, there are two options:
+ * <p>To retrieve the reactions from the set, there are two options:
  *
  * <pre>
  * Iterator reactions = reactionSet.reactions();
@@ -46,51 +45,45 @@ import org.openscience.cdk.interfaces.IReactionSet;
  * }
  * }</pre>
  *
- * @cdk.module  silent
+ * @cdk.module silent
  * @cdk.githash
- *
  * @cdk.keyword reaction
  */
-public class ReactionSet extends ChemObject implements Serializable, IReactionSet, IChemObjectListener, Cloneable {
+public class ReactionSet extends ChemObject
+        implements Serializable, IReactionSet, IChemObjectListener, Cloneable {
 
     /**
      * Determines if a de-serialized object is compatible with this class.
      *
-     * This value must only be changed if and only if the new version
-     * of this class is incompatible with the old version. See Sun docs
-     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
+     * <p>This value must only be changed if and only if the new version of this class is
+     * incompatible with the old version. See Sun docs for <a
+     * href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
      */
     private static final long serialVersionUID = 1555749911904585204L;
 
-    /**
-     *  Array of Reactions.
-     */
-    private IReaction[]       reactions;
+    /** Array of Reactions. */
+    private IReaction[] reactions;
+
+    /** Number of Reactions contained by this container. */
+    private int reactionCount;
 
     /**
-     *  Number of Reactions contained by this container.
+     * Amount by which the Reactions array grows when elements are added and the array is not large
+     * enough for that.
      */
-    private int               reactionCount;
+    private int growArraySize = 5;
 
-    /**
-     *  Amount by which the Reactions array grows when elements are added and
-     *  the array is not large enough for that.
-     */
-    private int               growArraySize    = 5;
-
-    /**
-     *  Constructs an empty ReactionSet.
-     */
+    /** Constructs an empty ReactionSet. */
     public ReactionSet() {
         reactionCount = 0;
         reactions = new IReaction[growArraySize];
     }
 
     /**
-     *  Adds an reaction to this container.
+     * Adds an reaction to this container.
      *
-     * @param  reaction  The reaction to be added to this container
+     * @param reaction The reaction to be added to this container
      */
     @Override
     public void addReaction(IReaction reaction) {
@@ -102,7 +95,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
     /**
      * Remove a reaction from this set.
      *
-     * @param  pos  The position of the reaction to be removed.
+     * @param pos The position of the reaction to be removed.
      */
     @Override
     public void removeReaction(int pos) {
@@ -114,12 +107,10 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
     }
 
     /**
+     * Returns the Reaction at position <code>number</code> in the container.
      *
-     * Returns the Reaction at position <code>number</code> in the
-     * container.
-     *
-     * @param  number  The position of the Reaction to be returned
-     * @return         The Reaction at position <code>number</code>
+     * @param number The position of the Reaction to be returned
+     * @return The Reaction at position <code>number</code>
      */
     @Override
     public IReaction getReaction(int number) {
@@ -142,10 +133,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
         };
     }
 
-    /**
-     * The inner Iterator class.
-     *
-     */
+    /** The inner Iterator class. */
     private class ReactionIterator implements Iterator<IReaction> {
 
         private int pointer = 0;
@@ -165,13 +153,12 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
         public void remove() {
             removeReaction(--pointer);
         }
-
     }
 
     /**
-     *  Grows the reaction array by a given size.
+     * Grows the reaction array by a given size.
      *
-     * @see    growArraySize
+     * @see growArraySize
      */
     private void growReactionArray() {
         growArraySize = reactions.length;
@@ -183,7 +170,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
     /**
      * Returns the number of Reactions in this Container.
      *
-     * @return     The number of Reactions in this Container
+     * @return The number of Reactions in this Container
      */
     @Override
     public int getReactionCount() {
@@ -204,10 +191,9 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
     }
 
     /**
-     * Clones this <code>ReactionSet</code> and the contained <code>Reaction</code>s
-     * too.
+     * Clones this <code>ReactionSet</code> and the contained <code>Reaction</code>s too.
      *
-     * @return  The cloned ReactionSet
+     * @return The cloned ReactionSet
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
@@ -221,9 +207,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
         return clone;
     }
 
-    /**
-     * Removes all Reactions from this container.
-     */
+    /** Removes all Reactions from this container. */
     @Override
     public void removeAllReactions() {
         for (int pos = this.reactionCount - 1; pos >= 0; pos--) {
@@ -244,9 +228,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
         }
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean isEmpty() {
         return reactionCount == 0;

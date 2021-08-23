@@ -24,12 +24,10 @@ import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 
-/**
- * @cdk.module test-qsarmolecular
- */
+/** @cdk.module test-qsarmolecular */
 public class ChiIndexUtilsTest extends CDKTestCase {
 
     DefaultChemObjectBuilder builder;
@@ -77,5 +75,4 @@ public class ChiIndexUtilsTest extends CDKTestCase {
         double deltav = ChiIndexUtils.deltavSulphur(s, m);
         Assert.assertEquals(2.67, deltav, 0.01);
     }
-
 }

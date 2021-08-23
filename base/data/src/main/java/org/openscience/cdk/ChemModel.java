@@ -20,7 +20,6 @@
 package org.openscience.cdk;
 
 import java.io.Serializable;
-
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
@@ -30,56 +29,45 @@ import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IRingSet;
 
 /**
- * An object containing multiple MoleculeSet and
- * the other lower level concepts like rings, sequences,
- * fragments, etc.
+ * An object containing multiple MoleculeSet and the other lower level concepts like rings,
+ * sequences, fragments, etc.
  *
  * @cdk.module data
  * @cdk.githash
  */
-public class ChemModel extends ChemObject implements Serializable, IChemModel, IChemObjectListener, Cloneable {
+public class ChemModel extends ChemObject
+        implements Serializable, IChemModel, IChemObjectListener, Cloneable {
 
     /**
      * Determines if a de-serialized object is compatible with this class.
      *
-     * This value must only be changed if and only if the new version
-     * of this class is incompatible with the old version. See Sun docs
-     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
+     * <p>This value must only be changed if and only if the new version of this class is
+     * incompatible with the old version. See Sun docs for <a
+     * href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
      */
-    private static final long   serialVersionUID = -5213425310451366185L;
+    private static final long serialVersionUID = -5213425310451366185L;
 
-    /**
-     *  A MoleculeSet.
-     */
-    protected IAtomContainerSet setOfMolecules   = null;
+    /** A MoleculeSet. */
+    protected IAtomContainerSet setOfMolecules = null;
 
-    /**
-     *  A ReactionSet.
-     */
-    protected IReactionSet      setOfReactions   = null;
+    /** A ReactionSet. */
+    protected IReactionSet setOfReactions = null;
 
-    /**
-     *  A RingSet.
-     */
-    protected IRingSet          ringSet          = null;
+    /** A RingSet. */
+    protected IRingSet ringSet = null;
 
-    /**
-     *  A Crystal.
-     */
-    protected ICrystal          crystal          = null;
+    /** A Crystal. */
+    protected ICrystal crystal = null;
 
-    /**
-     *  Constructs an new ChemModel with a null setOfMolecules.
-     */
+    /** Constructs an new ChemModel with a null setOfMolecules. */
     public ChemModel() {}
 
     /**
      * Returns the MoleculeSet of this ChemModel.
      *
-     * @return   The MoleculeSet of this ChemModel
-     *
-     * @see      #setMoleculeSet
+     * @return The MoleculeSet of this ChemModel
+     * @see #setMoleculeSet
      */
     @Override
     public IAtomContainerSet getMoleculeSet() {
@@ -89,9 +77,8 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
     /**
      * Sets the MoleculeSet of this ChemModel.
      *
-     * @param   setOfMolecules  the content of this model
-     *
-     * @see      #getMoleculeSet
+     * @param setOfMolecules the content of this model
+     * @see #getMoleculeSet
      */
     @Override
     public void setMoleculeSet(IAtomContainerSet setOfMolecules) {
@@ -105,8 +92,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
      * Returns the RingSet of this ChemModel.
      *
      * @return the ringset of this model
-     *
-     * @see      #setRingSet
+     * @see #setRingSet
      */
     @Override
     public IRingSet getRingSet() {
@@ -116,9 +102,8 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
     /**
      * Sets the RingSet of this ChemModel.
      *
-     * @param   ringSet         the content of this model
-     *
-     * @see      #getRingSet
+     * @param ringSet the content of this model
+     * @see #getRingSet
      */
     @Override
     public void setRingSet(IRingSet ringSet) {
@@ -132,8 +117,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
      * Gets the Crystal contained in this ChemModel.
      *
      * @return The crystal in this model
-     *
-     * @see      #setCrystal
+     * @see #setCrystal
      */
     @Override
     public ICrystal getCrystal() {
@@ -143,9 +127,8 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
     /**
      * Sets the Crystal contained in this ChemModel.
      *
-     * @param   crystal  the Crystal to store in this model
-     *
-     * @see      #getCrystal
+     * @param crystal the Crystal to store in this model
+     * @see #getCrystal
      */
     @Override
     public void setCrystal(ICrystal crystal) {
@@ -159,8 +142,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
      * Gets the ReactionSet contained in this ChemModel.
      *
      * @return The ReactionSet in this model
-     *
-     * @see      #setReactionSet
+     * @see #setReactionSet
      */
     @Override
     public IReactionSet getReactionSet() {
@@ -171,8 +153,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
      * Sets the ReactionSet contained in this ChemModel.
      *
      * @param sor the ReactionSet to store in this model
-     *
-     * @see       #getReactionSet
+     * @see #getReactionSet
      */
     @Override
     public void setReactionSet(IReactionSet sor) {
@@ -183,8 +164,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
     }
 
     /**
-     * Returns a String representation of the contents of this
-     * IChemObject.
+     * Returns a String representation of the contents of this IChemObject.
      *
      * @return String representation of content
      */
@@ -212,7 +192,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
     /**
      * Clones this <code>ChemModel</code> and its content.
      *
-     * @return  The cloned object
+     * @return The cloned object
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
@@ -242,19 +222,16 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
     }
 
     /**
-     *  Called by objects to which this object has
-     *  registered as a listener.
+     * Called by objects to which this object has registered as a listener.
      *
-     *@param  event  A change event pointing to the source of the change
+     * @param event A change event pointing to the source of the change
      */
     @Override
     public void stateChanged(IChemObjectChangeEvent event) {
         notifyChanged(event);
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean isEmpty() {
         if (setOfMolecules != null && !setOfMolecules.isEmpty()) return false;

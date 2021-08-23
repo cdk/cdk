@@ -23,9 +23,15 @@
  */
 package org.openscience.cdk.libio.jena;
 
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.ResIterator;
+import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.rdf.model.Statement;
+import com.hp.hpl.jena.rdf.model.StmtIterator;
+import com.hp.hpl.jena.vocabulary.RDF;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -40,25 +46,17 @@ import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.ResIterator;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.Statement;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
-import com.hp.hpl.jena.vocabulary.RDF;
-
 /**
- * Helper class that converts a CDK {@link IChemObject} into RDF using a
- * Jena model and the CDK data model ontology.
+ * Helper class that converts a CDK {@link IChemObject} into RDF using a Jena model and the CDK data
+ * model ontology.
  *
- * @cdk.module       iordf
+ * @cdk.module iordf
  * @cdk.githash
- * @cdk.keyword      Resource Description Framework
- * @cdk.keyword      Jena
- * @cdk.keyword      RDF
- * @cdk.keyword      Web Ontology Language
- * @cdk.keyword      OWL
+ * @cdk.keyword Resource Description Framework
+ * @cdk.keyword Jena
+ * @cdk.keyword RDF
+ * @cdk.keyword Web Ontology Language
+ * @cdk.keyword OWL
  */
 public class Convertor {
 
@@ -102,22 +100,26 @@ public class Convertor {
 
     private static void serializePseudoAtomFields(Model model, Resource rdfAtom, IPseudoAtom atom) {
         serializeAtomFields(model, rdfAtom, atom);
-        if (atom.getLabel() != CDKConstants.UNSET) model.add(rdfAtom, CDK.HASLABEL, atom.getLabel());
+        if (atom.getLabel() != CDKConstants.UNSET)
+            model.add(rdfAtom, CDK.HASLABEL, atom.getLabel());
     }
 
     private static void serializeAtomFields(Model model, Resource rdfAtom, IAtom atom) {
         serializeAtomTypeFields(model, rdfAtom, atom);
         model.add(rdfAtom, RDF.type, CDK.ATOM);
-        if (atom.getSymbol() != CDKConstants.UNSET) model.add(rdfAtom, CDK.SYMBOL, atom.getSymbol());
+        if (atom.getSymbol() != CDKConstants.UNSET)
+            model.add(rdfAtom, CDK.SYMBOL, atom.getSymbol());
     }
 
-    private static void serializeElectronContainerFields(Model model, Resource rdfBond, IElectronContainer bond) {
+    private static void serializeElectronContainerFields(
+            Model model, Resource rdfBond, IElectronContainer bond) {
         serializeChemObjectFields(model, rdfBond, bond);
         if (bond.getElectronCount() != null)
             model.add(rdfBond, CDK.HASELECTRONCOUNT, bond.getElectronCount().toString());
     }
 
-    private static void serializeChemObjectFields(Model model, Resource rdfObject, IChemObject object) {
+    private static void serializeChemObjectFields(
+            Model model, Resource rdfObject, IChemObject object) {
         if (object.getID() != null) model.add(rdfObject, CDK.IDENTIFIER, object.getID());
     }
 
@@ -141,28 +143,24 @@ public class Convertor {
         if (atomicNumber != null) element.setAtomicNumber(atomicNumber.getInt());
     }
 
-    private final static Map<Hybridization, Resource> HYBRID_TO_RESOURCE = new HashMap<Hybridization, Resource>(10) {
+    private static final Map<Hybridization, Resource> HYBRID_TO_RESOURCE =
+            new HashMap<Hybridization, Resource>(10) {
 
-                                                                             private static final long serialVersionUID = 1027415392461000485L;
-                                                                             {
-                                                                                 put(Hybridization.S, CDK.HYBRID_S);
-                                                                                 put(Hybridization.SP1, CDK.HYBRID_SP1);
-                                                                                 put(Hybridization.SP2, CDK.HYBRID_SP2);
-                                                                                 put(Hybridization.SP3, CDK.HYBRID_SP3);
-                                                                                 put(Hybridization.PLANAR3,
-                                                                                         CDK.HYBRID_PLANAR3);
-                                                                                 put(Hybridization.SP3D1,
-                                                                                         CDK.HYBRID_SP3D1);
-                                                                                 put(Hybridization.SP3D2,
-                                                                                         CDK.HYBRID_SP3D2);
-                                                                                 put(Hybridization.SP3D3,
-                                                                                         CDK.HYBRID_SP3D3);
-                                                                                 put(Hybridization.SP3D4,
-                                                                                         CDK.HYBRID_SP3D4);
-                                                                                 put(Hybridization.SP3D5,
-                                                                                         CDK.HYBRID_SP3D5);
-                                                                             }
-                                                                         };
+                private static final long serialVersionUID = 1027415392461000485L;
+
+                {
+                    put(Hybridization.S, CDK.HYBRID_S);
+                    put(Hybridization.SP1, CDK.HYBRID_SP1);
+                    put(Hybridization.SP2, CDK.HYBRID_SP2);
+                    put(Hybridization.SP3, CDK.HYBRID_SP3);
+                    put(Hybridization.PLANAR3, CDK.HYBRID_PLANAR3);
+                    put(Hybridization.SP3D1, CDK.HYBRID_SP3D1);
+                    put(Hybridization.SP3D2, CDK.HYBRID_SP3D2);
+                    put(Hybridization.SP3D3, CDK.HYBRID_SP3D3);
+                    put(Hybridization.SP3D4, CDK.HYBRID_SP3D4);
+                    put(Hybridization.SP3D5, CDK.HYBRID_SP3D5);
+                }
+            };
 
     private static void serializeAtomTypeFields(Model model, Resource rdfObject, IAtomType type) {
         serializeIsotopeFields(model, rdfObject, type);
@@ -195,28 +193,24 @@ public class Convertor {
         }
     }
 
-    private final static Map<Resource, Hybridization> RESOURCE_TO_HYBRID = new HashMap<Resource, Hybridization>(10) {
+    private static final Map<Resource, Hybridization> RESOURCE_TO_HYBRID =
+            new HashMap<Resource, Hybridization>(10) {
 
-                                                                             private static final long serialVersionUID = -351285511820100853L;
-                                                                             {
-                                                                                 put(CDK.HYBRID_S, Hybridization.S);
-                                                                                 put(CDK.HYBRID_SP1, Hybridization.SP1);
-                                                                                 put(CDK.HYBRID_SP2, Hybridization.SP2);
-                                                                                 put(CDK.HYBRID_SP3, Hybridization.SP3);
-                                                                                 put(CDK.HYBRID_PLANAR3,
-                                                                                         Hybridization.PLANAR3);
-                                                                                 put(CDK.HYBRID_SP3D1,
-                                                                                         Hybridization.SP3D1);
-                                                                                 put(CDK.HYBRID_SP3D2,
-                                                                                         Hybridization.SP3D2);
-                                                                                 put(CDK.HYBRID_SP3D3,
-                                                                                         Hybridization.SP3D3);
-                                                                                 put(CDK.HYBRID_SP3D4,
-                                                                                         Hybridization.SP3D4);
-                                                                                 put(CDK.HYBRID_SP3D5,
-                                                                                         Hybridization.SP3D5);
-                                                                             }
-                                                                         };
+                private static final long serialVersionUID = -351285511820100853L;
+
+                {
+                    put(CDK.HYBRID_S, Hybridization.S);
+                    put(CDK.HYBRID_SP1, Hybridization.SP1);
+                    put(CDK.HYBRID_SP2, Hybridization.SP2);
+                    put(CDK.HYBRID_SP3, Hybridization.SP3);
+                    put(CDK.HYBRID_PLANAR3, Hybridization.PLANAR3);
+                    put(CDK.HYBRID_SP3D1, Hybridization.SP3D1);
+                    put(CDK.HYBRID_SP3D2, Hybridization.SP3D2);
+                    put(CDK.HYBRID_SP3D3, Hybridization.SP3D3);
+                    put(CDK.HYBRID_SP3D4, Hybridization.SP3D4);
+                    put(CDK.HYBRID_SP3D5, Hybridization.SP3D5);
+                }
+            };
 
     private static void deserializeAtomTypeFields(Resource rdfObject, IAtomType element) {
         deserializeIsotopeFields(rdfObject, element);
@@ -297,14 +291,16 @@ public class Convertor {
         return result.toString();
     }
 
-    private static void deserializeElectronContainerFields(Resource rdfObject, IElectronContainer bond) {
+    private static void deserializeElectronContainerFields(
+            Resource rdfObject, IElectronContainer bond) {
         deserializeChemObjectFields(rdfObject, bond);
         Statement count = rdfObject.getProperty(CDK.HASELECTRONCOUNT);
         if (count != null) bond.setElectronCount(count.getInt());
     }
 
     /**
-     * Converts a {@link Model} into an {@link IAtomContainer} using the given {@link IChemObjectBuilder}.
+     * Converts a {@link Model} into an {@link IAtomContainer} using the given {@link
+     * IChemObjectBuilder}.
      *
      * @param model RDF graph to deserialize into an {@link IAtomContainer}.
      * @param builder {@link IChemObjectBuilder} used to create new {@link IChemObject}s.
@@ -361,5 +357,4 @@ public class Convertor {
         model.setNsPrefix("cdk", "http://cdk.sourceforge.net/model.owl#");
         return model;
     }
-
 }

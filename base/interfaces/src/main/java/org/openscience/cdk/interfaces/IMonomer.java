@@ -23,15 +23,13 @@
 package org.openscience.cdk.interfaces;
 
 /**
- * A Monomer is an AtomContainer which stores additional monomer specific
- * informations for a group of Atoms.
+ * A Monomer is an AtomContainer which stores additional monomer specific informations for a group
+ * of Atoms.
  *
- * @cdk.module  interfaces
+ * @cdk.module interfaces
  * @cdk.githash
- *
  * @author Edgar Luttmann &lt;edgar@uni-paderborn.de&gt;
  * @cdk.created 2001-08-06
- *
  * @cdk.keyword monomer
  */
 public interface IMonomer extends IAtomContainer {
@@ -40,7 +38,7 @@ public interface IMonomer extends IAtomContainer {
      * Retrieve the monomer name.
      *
      * @return The name of the Monomer object
-     * @see    #setMonomerName
+     * @see #setMonomerName
      */
     public String getMonomerName();
 
@@ -48,29 +46,27 @@ public interface IMonomer extends IAtomContainer {
      * Retrieve the monomer type.
      *
      * @return The type of the Monomer object
-     * @see    #setMonomerType
+     * @see #setMonomerType
      */
     public String getMonomerType();
 
     /**
      * Set the name of the Monomer object.
      *
-     * @param cMonomerName  The new name for this monomer
-     * @see    #getMonomerName
+     * @param cMonomerName The new name for this monomer
+     * @see #getMonomerName
      */
     public void setMonomerName(String cMonomerName);
 
     /**
      * Set the type of the Monomer object.
      *
-     * @param cMonomerType  The new type for this monomer
-     * @see    #getMonomerType
+     * @param cMonomerType The new type for this monomer
+     * @see #getMonomerType
      */
     public void setMonomerType(String cMonomerType);
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IMonomer clone() throws CloneNotSupportedException;
 }

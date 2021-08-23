@@ -23,20 +23,16 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.formula.MolecularFormula;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
-/**
- * @cdk.module test-formula
- */
+/** @cdk.module test-formula */
 public class MMElementRuleTest extends FormulaRuleTest {
 
     private static IChemObjectBuilder builder;
 
-    /**
-    *  The JUnit setup method
-    */
+    /** The JUnit setup method */
     @BeforeClass
     public static void setUp() throws Exception {
         builder = DefaultChemObjectBuilder.getInstance();
@@ -46,20 +42,19 @@ public class MMElementRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testMMElementRule() throws Exception {
 
         IRule rule = new MMElementRule();
         Assert.assertNotNull(rule);
-
     }
 
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testDefault() throws Exception {
@@ -69,13 +64,12 @@ public class MMElementRuleTest extends FormulaRuleTest {
 
         Assert.assertSame(MMElementRule.Database.WILEY, objects[0]);
         Assert.assertSame(MMElementRule.RangeMass.Minus500, objects[1]);
-
     }
 
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testSetParameters() throws Exception {
@@ -97,7 +91,7 @@ public class MMElementRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testDefaultValidFalse() throws Exception {
@@ -114,7 +108,7 @@ public class MMElementRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testDefaultValidTrue() throws Exception {

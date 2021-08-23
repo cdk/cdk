@@ -23,9 +23,7 @@
 package org.openscience.cdk.io.cml;
 
 import java.io.ByteArrayInputStream;
-
 import javax.vecmath.Vector3d;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
@@ -40,11 +38,10 @@ import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.io.CMLReader;
 
 /**
- * Atomic tests for reading CML documents. All tested CML strings are valid CML 2,
- * as can be determined in cdk/src/org.openscience.cdk/io/cml/cmlTestFramework.xml.
+ * Atomic tests for reading CML documents. All tested CML strings are valid CML 2, as can be
+ * determined in cdk/src/org.openscience.cdk/io/cml/cmlTestFramework.xml.
  *
  * @cdk.module test-io
- *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */
 public class Jumbo46CMLFragmentsTest extends CDKTestCase {
@@ -87,7 +84,8 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
 
     @Test
     public void testBond() throws Exception {
-        String cmlString = "<molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>";
+        String cmlString =
+                "<molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
@@ -104,7 +102,8 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
 
     @Test
     public void testBond4() throws Exception {
-        String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2 a3'/><bondArray atomRef1='a1 a1' atomRef2='a2 a3' bondID='b1 b2'/></molecule>";
+        String cmlString =
+                "<molecule id='m1'><atomArray atomID='a1 a2 a3'/><bondArray atomRef1='a1 a1' atomRef2='a2 a3' bondID='b1 b2'/></molecule>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
@@ -122,7 +121,8 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
 
     @Test
     public void testBond5() throws Exception {
-        String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2 a3'/><bondArray atomRef1='a1 a1' atomRef2='a2 a3' order='1 1'/></molecule>";
+        String cmlString =
+                "<molecule id='m1'><atomArray atomID='a1 a2 a3'/><bondArray atomRef1='a1 a1' atomRef2='a2 a3' order='1 1'/></molecule>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
@@ -139,7 +139,8 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
 
     @Test
     public void testBondAromatic() throws Exception {
-        String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2'/><bondArray atomRef1='a1' atomRef2='a2' order='A'/></molecule>";
+        String cmlString =
+                "<molecule id='m1'><atomArray atomID='a1 a2'/><bondArray atomRef1='a1' atomRef2='a2' order='A'/></molecule>";
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
@@ -152,7 +153,8 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
 
     @Test
     public void testBondId() throws Exception {
-        String cmlString = "<molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>";
+        String cmlString =
+                "<molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
@@ -165,10 +167,11 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
 
     @Test
     public void testList() throws Exception {
-        String cmlString = "<list>"
-                + "<molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>"
-                + "<molecule id='m2'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>"
-                + "</list>";
+        String cmlString =
+                "<list>"
+                        + "<molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>"
+                        + "<molecule id='m2'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>"
+                        + "</list>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         checkForXMoleculeFile(chemFile, 2);
@@ -176,7 +179,8 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
 
     @Test
     public void testCoordinates2D() throws Exception {
-        String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2' x2='0.0 0.1' y2='1.2 1.3'/></molecule>";
+        String cmlString =
+                "<molecule id='m1'><atomArray atomID='a1 a2' x2='0.0 0.1' y2='1.2 1.3'/></molecule>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
@@ -190,7 +194,8 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
 
     @Test
     public void testCoordinates3D() throws Exception {
-        String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2' x3='0.0 0.1' y3='1.2 1.3' z3='2.1 2.5'/></molecule>";
+        String cmlString =
+                "<molecule id='m1'><atomArray atomID='a1 a2' x3='0.0 0.1' y3='1.2 1.3' z3='2.1 2.5'/></molecule>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
@@ -204,7 +209,8 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
 
     @Test
     public void testFractional3D() throws Exception {
-        String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2' xFract='0.0 0.1' yFract='1.2 1.3' zFract='2.1 2.5'/></molecule>";
+        String cmlString =
+                "<molecule id='m1'><atomArray atomID='a1 a2' xFract='0.0 0.1' yFract='1.2 1.3' zFract='2.1 2.5'/></molecule>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
@@ -218,7 +224,8 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
 
     @Test
     public void testMissing2DCoordinates() throws Exception {
-        String cmlString = "<molecule id='m1'><atomArray><atom id='a1' xy2='0.0 0.1'/><atom id='a2'/><atom id='a3' xy2='0.1 0.0'/></atomArray></molecule>";
+        String cmlString =
+                "<molecule id='m1'><atomArray><atom id='a1' xy2='0.0 0.1'/><atom id='a2'/><atom id='a3' xy2='0.1 0.0'/></atomArray></molecule>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
@@ -235,7 +242,8 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
 
     @Test
     public void testMissing3DCoordinates() throws Exception {
-        String cmlString = "<molecule id='m1'><atomArray><atom id='a1' xyz3='0.0 0.1 0.2'/><atom id='a2'/><atom id='a3' xyz3='0.1 0.0 0.2'/></atomArray></molecule>";
+        String cmlString =
+                "<molecule id='m1'><atomArray><atom id='a1' xyz3='0.0 0.1 0.2'/><atom id='a2'/><atom id='a3' xyz3='0.1 0.0 0.2'/></atomArray></molecule>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
@@ -254,22 +262,26 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
     public void testCrystal() throws Exception {
         StringBuffer cmlStringB = new StringBuffer("  <molecule id=\"m1\">\n");
         cmlStringB.append("    <crystal z=\"4\">\n");
-        cmlStringB
-                .append("      <scalar id=\"sc1\" title=\"a\" errorValue=\"0.001\" units=\"units:angstrom\">4.500</scalar>\n");
-        cmlStringB
-                .append("      <scalar id=\"sc2\" title=\"b\" errorValue=\"0.001\" units=\"units:angstrom\">4.500</scalar>\n");
-        cmlStringB
-                .append("      <scalar id=\"sc3\" title=\"c\" errorValue=\"0.001\" units=\"units:angstrom\">4.500</scalar>\n");
-        cmlStringB.append("      <scalar id=\"sc4\" title=\"alpha\" units=\"units:degrees\">90</scalar>\n");
-        cmlStringB.append("      <scalar id=\"sc5\" title=\"beta\" units=\"units:degrees\">90</scalar>\n");
-        cmlStringB.append("      <scalar id=\"sc6\" title=\"gamma\" units=\"units:degrees\">90</scalar>\n");
+        cmlStringB.append(
+                "      <scalar id=\"sc1\" title=\"a\" errorValue=\"0.001\" units=\"units:angstrom\">4.500</scalar>\n");
+        cmlStringB.append(
+                "      <scalar id=\"sc2\" title=\"b\" errorValue=\"0.001\" units=\"units:angstrom\">4.500</scalar>\n");
+        cmlStringB.append(
+                "      <scalar id=\"sc3\" title=\"c\" errorValue=\"0.001\" units=\"units:angstrom\">4.500</scalar>\n");
+        cmlStringB.append(
+                "      <scalar id=\"sc4\" title=\"alpha\" units=\"units:degrees\">90</scalar>\n");
+        cmlStringB.append(
+                "      <scalar id=\"sc5\" title=\"beta\" units=\"units:degrees\">90</scalar>\n");
+        cmlStringB.append(
+                "      <scalar id=\"sc6\" title=\"gamma\" units=\"units:degrees\">90</scalar>\n");
         cmlStringB.append("      <symmetry id=\"s1\" spaceGroup=\"Fm3m\"/>\n");
         cmlStringB.append("    </crystal>\n");
         cmlStringB.append("    <atomArray>\n");
-        cmlStringB.append("      <atom id=\"a1\" elementType=\"Na\" formalCharge=\"1\" xyzFract=\"0.0 0.0 0.0\"\n");
+        cmlStringB.append(
+                "      <atom id=\"a1\" elementType=\"Na\" formalCharge=\"1\" xyzFract=\"0.0 0.0 0.0\"\n");
         cmlStringB.append("        xy2=\"+23.1 -21.0\"></atom>\n");
-        cmlStringB
-                .append("      <atom id=\"a2\" elementType=\"Cl\" formalCharge=\"-1\" xyzFract=\"0.5 0.0 0.0\"></atom>\n");
+        cmlStringB.append(
+                "      <atom id=\"a2\" elementType=\"Cl\" formalCharge=\"-1\" xyzFract=\"0.5 0.0 0.0\"></atom>\n");
         cmlStringB.append("    </atomArray>\n");
         cmlStringB.append("  </molecule>\n");
 
@@ -309,9 +321,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
         return chemFile;
     }
 
-    /**
-     * Tests whether the file is indeed a single molecule file
-     */
+    /** Tests whether the file is indeed a single molecule file */
     private IAtomContainer checkForSingleMoleculeFile(IChemFile chemFile) {
         return checkForXMoleculeFile(chemFile, 1);
     }
@@ -366,5 +376,4 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
         Assert.fail("no crystal could be found in the ChemModel");
         return crystal;
     }
-
 }

@@ -18,6 +18,9 @@
  */
 package org.openscience.cdk.reaction.type;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
@@ -43,31 +46,22 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 /**
  * TestSuite that runs a test for the ElectronImpactNBEReactionTest.
  *
  * @cdk.module test-reaction
  */
-
 public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 
     private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-    private IChemObjectBuilder            builder = SilentChemObjectBuilder.getInstance();
+    private IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
-    /**
-     *  The JUnit setup method
-     */
+    /** The JUnit setup method */
     public ElectronImpactNBEReactionTest() throws Exception {
         setReaction(ElectronImpactNBEReaction.class);
     }
 
-    /**
-     *  The JUnit setup method
-     */
+    /** The JUnit setup method */
     @Test
     public void testElectronImpactNBEReaction() throws Exception {
         IReactionProcess type = new ElectronImpactNBEReaction();
@@ -75,16 +69,17 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
     }
 
     /**
-     *  A unit test for JUnit with the compound 2_5_Hexen_3_one.
+     * A unit test for JUnit with the compound 2_5_Hexen_3_one.
      *
-     * @return    Description of the Return Value
+     * @return Description of the Return Value
      */
     @Test
     @Override
     public void testInitiate_IAtomContainerSet_IAtomContainerSet() throws Exception {
         /* ionize(>C=O): C=CCC(=O)CC -> C=CCC(=O*)CC , set the reactive center */
 
-        IAtomContainer reactant = builder.newInstance(IAtomContainer.class);//Smiles("C=CCC(=O)CC")
+        IAtomContainer reactant =
+                builder.newInstance(IAtomContainer.class); // Smiles("C=CCC(=O)CC")
         reactant.addAtom(builder.newInstance(IAtom.class, "C"));
         reactant.addAtom(builder.newInstance(IAtom.class, "C"));
         reactant.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -110,7 +105,8 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
             }
         }
 
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         setOfReactants.addAtomContainer(reactant);
 
         /* initiate */
@@ -133,13 +129,12 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         Assert.assertEquals(1, molecule.getConnectedSingleElectronsCount(molecule.getAtom(4)));
 
         Assert.assertTrue(setOfReactions.getReaction(0).mappings().iterator().hasNext());
-
     }
 
     /**
-     *  A unit test for JUnit with the compound 2_5_Hexen_3_one.
+     * A unit test for JUnit with the compound 2_5_Hexen_3_one.
      *
-     * @return    Description of the Return Value
+     * @return Description of the Return Value
      */
     @Test
     public void testAutomatic_Set_Active_Atom() throws Exception {
@@ -147,7 +142,8 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
          * ionize(>C=O): C=CCC(=O)CC -> C=CCC(=O*)CC, without setting the
          * reactive center
          */
-        IAtomContainer reactant = builder.newInstance(IAtomContainer.class);//Smiles("C=CCC(=O)CC")
+        IAtomContainer reactant =
+                builder.newInstance(IAtomContainer.class); // Smiles("C=CCC(=O)CC")
         reactant.addAtom(builder.newInstance(IAtom.class, "C"));
         reactant.addAtom(builder.newInstance(IAtom.class, "C"));
         reactant.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -165,7 +161,8 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
         lpcheck.saturate(reactant);
 
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         setOfReactants.addAtomContainer(reactant);
 
         /* initiate */
@@ -180,20 +177,17 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         IAtomContainer molecule = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         Assert.assertEquals(1, molecule.getAtom(4).getFormalCharge().intValue());
         Assert.assertEquals(1, molecule.getConnectedSingleElectronsCount(molecule.getAtom(4)));
-
     }
 
     /**
-     * A unit test suite for JUnit. Reaction: methanamine.
-     * C-!N! => C[N*+]
+     * A unit test suite for JUnit. Reaction: methanamine. C-!N! => C[N*+]
      *
-     * @cdk.inchi  InChI=1/CH5N/c1-2/h2H2,1H3
-     *
-     * @return    The test suite
+     * @cdk.inchi InChI=1/CH5N/c1-2/h2H2,1H3
+     * @return The test suite
      */
     @Test
     public void testNsp3SingleB() throws Exception {
-        //Smiles("CN")
+        // Smiles("CN")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
         molecule.addAtom(builder.newInstance(IAtom.class, "N"));
@@ -213,7 +207,8 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 
         molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         setOfReactants.addAtomContainer(molecule);
 
         IReactionProcess type = new ElectronImpactNBEReaction();
@@ -230,12 +225,13 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 
         // expected products
 
-        //Smiles("C[N*+]")
+        // Smiles("C[N*+]")
         IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
         expected1.addAtom(builder.newInstance(IAtom.class, "C"));
         expected1.addAtom(builder.newInstance(IAtom.class, "N"));
         expected1.getAtom(1).setFormalCharge(+1);
-        expected1.addSingleElectron(builder.newInstance(ISingleElectron.class, expected1.getAtom(1)));
+        expected1.addSingleElectron(
+                builder.newInstance(ISingleElectron.class, expected1.getAtom(1)));
         expected1.addBond(0, 1, IBond.Order.SINGLE);
         expected1.addAtom(builder.newInstance(IAtom.class, "H"));
         expected1.addAtom(builder.newInstance(IAtom.class, "H"));
@@ -251,22 +247,20 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         lpcheck.saturate(expected1);
 
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
-        QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
+        QueryAtomContainer queryAtom =
+                QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
         Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(product1, queryAtom));
-
     }
 
     /**
-     * A unit test suite for JUnit. Reaction: Methanimine.
-     * C=!N! => C=[N*+]
+     * A unit test suite for JUnit. Reaction: Methanimine. C=!N! => C=[N*+]
      *
-     * @cdk.inchi  InChI=1/CH3N/c1-2/h2H,1H2
-     *
-     * @return    The test suite
+     * @cdk.inchi InChI=1/CH3N/c1-2/h2H,1H2
+     * @return The test suite
      */
     @Test
     public void testNsp2SingleB() throws Exception {
-        //Smiles("C=N")
+        // Smiles("C=N")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "N"));
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -282,7 +276,8 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 
         molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         setOfReactants.addAtomContainer(molecule);
 
         IReactionProcess type = new ElectronImpactNBEReaction();
@@ -300,11 +295,12 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 
         // expected products
 
-        //Smiles("[N*+]=C")
+        // Smiles("[N*+]=C")
         IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
         expected1.addAtom(builder.newInstance(IAtom.class, "N"));
         expected1.getAtom(0).setFormalCharge(1);
-        expected1.addSingleElectron(builder.newInstance(ISingleElectron.class, expected1.getAtom(0)));
+        expected1.addSingleElectron(
+                builder.newInstance(ISingleElectron.class, expected1.getAtom(0)));
         expected1.addAtom(builder.newInstance(IAtom.class, "C"));
         expected1.addBond(0, 1, IBond.Order.DOUBLE);
         expected1.addAtom(builder.newInstance(IAtom.class, "H"));
@@ -317,23 +313,20 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         lpcheck.saturate(expected1);
 
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
-        QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
+        QueryAtomContainer queryAtom =
+                QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
         Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(product1, queryAtom));
-
     }
 
     /**
-     * A unit test suite for JUnit. Reaction: fluoromethane.
-     * F!-!C => [F*+]C
+     * A unit test suite for JUnit. Reaction: fluoromethane. F!-!C => [F*+]C
      *
      * @cdk.inchi InChI=1/CH3F/c1-2/h1H3
-     *
-     *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testFspSingleB() throws Exception {
-        //Smiles("FC")
+        // Smiles("FC")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "F"));
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -349,7 +342,8 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 
         molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         setOfReactants.addAtomContainer(molecule);
 
         IReactionProcess type = new ElectronImpactNBEReaction();
@@ -367,11 +361,12 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 
         // expected products
 
-        //Smiles("[F*+]C")
+        // Smiles("[F*+]C")
         IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
         expected1.addAtom(builder.newInstance(IAtom.class, "F"));
         expected1.getAtom(0).setFormalCharge(1);
-        expected1.addSingleElectron(builder.newInstance(ISingleElectron.class, expected1.getAtom(0)));
+        expected1.addSingleElectron(
+                builder.newInstance(ISingleElectron.class, expected1.getAtom(0)));
         expected1.addAtom(builder.newInstance(IAtom.class, "C"));
         expected1.addBond(0, 1, IBond.Order.SINGLE);
         expected1.addAtom(builder.newInstance(IAtom.class, "H"));
@@ -384,18 +379,16 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         lpcheck.saturate(expected1);
 
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
-        QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
+        QueryAtomContainer queryAtom =
+                QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
         Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(product1, queryAtom));
-
     }
 
     /**
-     * A unit test suite for JUnit. Reaction: C=O => C=[O*+]
-     * Manually put of the reactive center.
+     * A unit test suite for JUnit. Reaction: C=O => C=[O*+] Manually put of the reactive center.
      *
      * @cdk.inchi InChI=1/CH2O/c1-2/h1H2
-     *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testCDKConstants_REACTIVE_CENTER() throws Exception {
@@ -424,12 +417,10 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
     }
 
     /**
-     * A unit test suite for JUnit. Reaction: C=O => C=[O*+]
-     * Manually put of the reactive center.
+     * A unit test suite for JUnit. Reaction: C=O => C=[O*+] Manually put of the reactive center.
      *
      * @cdk.inchi InChI=1/CH2O/c1-2/h1H2
-     *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testMapping() throws Exception {
@@ -449,15 +440,17 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 
         Assert.assertEquals(4, setOfReactions.getReaction(0).getMappingCount());
-        IAtom mappedProductA1 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
-                molecule.getAtom(1));
+        IAtom mappedProductA1 =
+                (IAtom)
+                        ReactionManipulator.getMappedChemObject(
+                                setOfReactions.getReaction(0), molecule.getAtom(1));
         Assert.assertEquals(mappedProductA1, product.getAtom(1));
     }
 
     /**
      * Test to recognize if a IAtomContainer matcher correctly the CDKAtomTypes.
      *
-     * @param molecule          The IAtomContainer to analyze
+     * @param molecule The IAtomContainer to analyze
      * @throws CDKException
      */
     private void makeSureAtomTypesAreRecognized(IAtomContainer molecule) throws CDKException {
@@ -466,7 +459,9 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
         while (atoms.hasNext()) {
             IAtom nextAtom = atoms.next();
-            Assert.assertNotNull("Missing atom type for: " + nextAtom, matcher.findMatchingAtomType(molecule, nextAtom));
+            Assert.assertNotNull(
+                    "Missing atom type for: " + nextAtom,
+                    matcher.findMatchingAtomType(molecule, nextAtom));
         }
     }
 
@@ -476,8 +471,9 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
      * @return The IAtomContainerSet
      */
     private IAtomContainerSet getExampleReactants() {
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
-        IAtomContainer molecule = builder.newInstance(IAtomContainer.class);//Smiles("C=O")
+        IAtomContainerSet setOfReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainer molecule = builder.newInstance(IAtomContainer.class); // Smiles("C=O")
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
         molecule.addAtom(builder.newInstance(IAtom.class, "O"));
         molecule.addBond(0, 1, IBond.Order.DOUBLE);
@@ -499,8 +495,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
     }
 
     /**
-     * Get the expected set of molecules.
-     * TODO:reaction. Set the products
+     * Get the expected set of molecules. TODO:reaction. Set the products
      *
      * @return The IAtomContainerSet
      */

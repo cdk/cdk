@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -49,44 +48,40 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- * This class should be used to find MCS between query
- * graph and target graph.
+ * This class should be used to find MCS between query graph and target graph.
  *
- * First the algorithm runs VF lib {@link org.openscience.cdk.smsd.algorithm.vflib.map.VFMCSMapper}
- * and reports MCS between
- * run query and target graphs. Then these solutions are extended
- * using McGregor {@link org.openscience.cdk.smsd.algorithm.mcgregor.McGregor}
- * algorithm where ever required.
+ * <p>First the algorithm runs VF lib {@link
+ * org.openscience.cdk.smsd.algorithm.vflib.map.VFMCSMapper} and reports MCS between run query and
+ * target graphs. Then these solutions are extended using McGregor {@link
+ * org.openscience.cdk.smsd.algorithm.mcgregor.McGregor} algorithm where ever required.
  *
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is
+ *     available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
 
-    private static       List<Map<IAtom, IAtom>>     allAtomMCS     = null;
-    private static       Map<IAtom, IAtom>           atomsMCS       = null;
-    private static       List<Map<IAtom, IAtom>>     allAtomMCSCopy = null;
-    private static       Map<Integer, Integer>       firstMCS       = null;
-    private static       List<Map<Integer, Integer>> allMCS         = null;
-    private static       List<Map<Integer, Integer>> allMCSCopy     = null;
-    private              List<Map<INode, IAtom>>     vfLibSolutions = null;
-    private              IQueryAtomContainer         queryMol       = null;
-    private              IAtomContainer              mol1           = null;
-    private              IAtomContainer              mol2           = null;
-    private              int                         vfMCSSize      = -1;
-    private              boolean                     bondMatchFlag  = false;
-    private              int                         countR         = 0;
-    private              int                         countP         = 0;
-    private final static ILoggingTool                LOGGER         = LoggingToolFactory
-            .createLoggingTool(VFlibMCSHandler.class);
+    private static List<Map<IAtom, IAtom>> allAtomMCS = null;
+    private static Map<IAtom, IAtom> atomsMCS = null;
+    private static List<Map<IAtom, IAtom>> allAtomMCSCopy = null;
+    private static Map<Integer, Integer> firstMCS = null;
+    private static List<Map<Integer, Integer>> allMCS = null;
+    private static List<Map<Integer, Integer>> allMCSCopy = null;
+    private List<Map<INode, IAtom>> vfLibSolutions = null;
+    private IQueryAtomContainer queryMol = null;
+    private IAtomContainer mol1 = null;
+    private IAtomContainer mol2 = null;
+    private int vfMCSSize = -1;
+    private boolean bondMatchFlag = false;
+    private int countR = 0;
+    private int countP = 0;
+    private static final ILoggingTool LOGGER =
+            LoggingToolFactory.createLoggingTool(VFlibMCSHandler.class);
 
-    /**
-     * Constructor for an extended VF Algorithm for the MCS search
-     */
+    /** Constructor for an extended VF Algorithm for the MCS search */
     public VFlibMCSHandler() {
         allAtomMCS = new ArrayList<Map<IAtom, IAtom>>();
         allAtomMCSCopy = new ArrayList<Map<IAtom, IAtom>>();
@@ -97,7 +92,7 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
     }
 
     /**
-     *{@inheritDoc}
+     * {@inheritDoc}
      *
      * @param bondTypeMatch
      */
@@ -114,8 +109,7 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
             } catch (IOException ex) {
                 LOGGER.error(Level.SEVERE, null, ex);
             }
-        }
-        else if (!allAtomMCSCopy.isEmpty()) {
+        } else if (!allAtomMCSCopy.isEmpty()) {
             allAtomMCS.addAll(allAtomMCSCopy);
             allMCS.addAll(allMCSCopy);
         }
@@ -137,9 +131,10 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
         return false;
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      *
-     * Set the VFLib MCS software
+     * <p>Set the VFLib MCS software
      *
      * @param reactant
      * @param product
@@ -150,7 +145,8 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
         mol2 = product.getMolecule();
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      *
      * @param source
      * @param target
@@ -194,11 +190,11 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
         return Collections.unmodifiableMap(firstMCS);
     }
 
-    private int checkCommonAtomCount(IAtomContainer reactantMolecule, IAtomContainer productMolecule) {
+    private int checkCommonAtomCount(
+            IAtomContainer reactantMolecule, IAtomContainer productMolecule) {
         ArrayList<String> atoms = new ArrayList<String>();
         for (int i = 0; i < reactantMolecule.getAtomCount(); i++) {
             atoms.add(reactantMolecule.getAtom(i).getSymbol());
-
         }
         int common = 0;
         for (int i = 0; i < productMolecule.getAtomCount(); i++) {
@@ -217,10 +213,12 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
         IMapper mapper = null;
 
         if (queryMol == null) {
-            countR = getReactantMol().getAtomCount()
-                    + AtomContainerManipulator.getSingleBondEquivalentSum(getReactantMol());
-            countP = getProductMol().getAtomCount()
-                    + AtomContainerManipulator.getSingleBondEquivalentSum(getProductMol());
+            countR =
+                    getReactantMol().getAtomCount()
+                            + AtomContainerManipulator.getSingleBondEquivalentSum(getReactantMol());
+            countP =
+                    getProductMol().getAtomCount()
+                            + AtomContainerManipulator.getSingleBondEquivalentSum(getProductMol());
         }
         vfLibSolutions = new ArrayList<Map<INode, IAtom>>();
         if (queryMol != null) {
@@ -276,7 +274,7 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
                     }
                 }
             }
-            mgit.startMcGregorIteration(mgit.getMCSSize(), tMapping); //Start McGregor search
+            mgit.startMcGregorIteration(mgit.getMCSSize(), tMapping); // Start McGregor search
             mappings = mgit.getMappings();
             mgit = null;
         }
@@ -327,7 +325,8 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
                     }
                 }
             }
-            if (!atomatomMapping.isEmpty() && !hasMap(indexindexMapping, allMCSCopy)
+            if (!atomatomMapping.isEmpty()
+                    && !hasMap(indexindexMapping, allMCSCopy)
                     && indexindexMapping.size() == vfMCSSize) {
                 allAtomMCSCopy.add(counter, atomatomMapping);
                 allMCSCopy.add(counter, indexindexMapping);
@@ -336,7 +335,8 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
         }
     }
 
-    private void setMcGregorMappings(boolean ronp, List<List<Integer>> mappings) throws CDKException {
+    private void setMcGregorMappings(boolean ronp, List<List<Integer>> mappings)
+            throws CDKException {
         int counter = 0;
         for (List<Integer> mapping : mappings) {
             if (mapping.size() > vfMCSSize) {
@@ -373,7 +373,8 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
                     throw new CDKException("Atom index pointing to NULL");
                 }
             }
-            if (!atomatomMapping.isEmpty() && !hasMap(indexindexMapping, allMCS)
+            if (!atomatomMapping.isEmpty()
+                    && !hasMap(indexindexMapping, allMCS)
                     && (2 * indexindexMapping.size()) == vfMCSSize) {
                 allAtomMCS.add(counter, atomatomMapping);
                 allMCS.add(counter, indexindexMapping);
@@ -382,16 +383,12 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
         }
     }
 
-    /**
-     * @return the shouldMatchBonds
-     */
+    /** @return the shouldMatchBonds */
     public boolean isBondMatchFlag() {
         return bondMatchFlag;
     }
 
-    /**
-     * @param shouldMatchBonds the shouldMatchBonds to set
-     */
+    /** @param shouldMatchBonds the shouldMatchBonds to set */
     public void setBondMatchFlag(boolean shouldMatchBonds) {
         this.bondMatchFlag = shouldMatchBonds;
     }

@@ -22,13 +22,10 @@
  */
 package org.openscience.cdk.io.formats;
 
-/**
- * @cdk.module test-ioformats
- */
+/** @cdk.module test-ioformats */
 public class MDLRXNV3000FormatTest extends ChemFormatMatcherTest {
 
     public MDLRXNV3000FormatTest() {
         super.setChemFormatMatcher((IChemFormatMatcher) MDLRXNV3000Format.getInstance());
     }
-
 }

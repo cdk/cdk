@@ -25,15 +25,14 @@ package org.openscience.cdk.hash.stereo;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertNull;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Collections;
-
 import javax.vecmath.Point2d;
-
+import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
@@ -41,12 +40,9 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
-import org.junit.Test;
-
 /**
  * Some isolated test of the cumulative encoder factory, check out {@link
- * org.openscience.cdk.hash.HashCodeScenariosTest} for actual examples encoding
- * allene and cumulene.
+ * org.openscience.cdk.hash.HashCodeScenariosTest} for actual examples encoding allene and cumulene.
  *
  * @author John May
  * @cdk.module test-hash
@@ -83,8 +79,8 @@ public class GeometricCumulativeDoubleBondFactoryTest {
         IAtomContainer container = mock(IAtomContainer.class);
         IAtom start = mock(IAtom.class);
         IAtom end = mock(IAtom.class);
-        when(container.getConnectedBondsList(start)).thenReturn(Collections.<IBond> emptyList());
-        when(container.getConnectedBondsList(end)).thenReturn(Collections.<IBond> emptyList());
+        when(container.getConnectedBondsList(start)).thenReturn(Collections.<IBond>emptyList());
+        when(container.getConnectedBondsList(end)).thenReturn(Collections.<IBond>emptyList());
         assertNull(GeometricCumulativeDoubleBondFactory.axialEncoder(container, start, end));
     }
 

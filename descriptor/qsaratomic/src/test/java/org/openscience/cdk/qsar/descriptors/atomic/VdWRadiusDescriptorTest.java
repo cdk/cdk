@@ -28,9 +28,7 @@ import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
-/**
- * @cdk.module test-qsaratomic
- */
+/** @cdk.module test-qsaratomic */
 public class VdWRadiusDescriptorTest extends AtomicDescriptorTest {
 
     public VdWRadiusDescriptorTest() {}
@@ -41,12 +39,14 @@ public class VdWRadiusDescriptorTest extends AtomicDescriptorTest {
     }
 
     @Test
-    public void testVdWRadiusDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testVdWRadiusDescriptor()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
         double[] testResult = {1.7};
         IAtomicDescriptor descriptor = new VdWRadiusDescriptor();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("NCCN(C)(C)");
-        double retval = ((DoubleResult) descriptor.calculate(mol.getAtom(1), mol).getValue()).doubleValue();
+        double retval =
+                ((DoubleResult) descriptor.calculate(mol.getAtom(1), mol).getValue()).doubleValue();
 
         Assert.assertEquals(testResult[0], retval, 0.01);
     }

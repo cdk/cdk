@@ -24,51 +24,44 @@ package org.openscience.cdk.renderer.generators;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.util.List;
-
 import javax.vecmath.Point2d;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.renderer.ElementUtility;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.LineElement;
 import org.openscience.cdk.renderer.elements.OvalElement;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
  * Base class for test classes that test {@link IAtomContainerGenerator}s.
  *
- * @author     maclean
+ * @author maclean
  * @cdk.module test-renderbasic
  */
 public abstract class AbstractGeneratorTest {
 
-    protected IChemObjectBuilder  builder = SilentChemObjectBuilder.getInstance();
+    protected IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
-    protected RendererModel       model;
+    protected RendererModel model;
 
-    protected ElementUtility      elementUtil;
+    protected ElementUtility elementUtil;
 
     protected BasicSceneGenerator sceneGenerator;
 
-    private IGenerator            testedGenerator;
+    private IGenerator testedGenerator;
 
-    /**
-     * Sets the {@link IGenerator} that is being tested.
-     */
+    /** Sets the {@link IGenerator} that is being tested. */
     public void setTestedGenerator(IGenerator generator) {
         testedGenerator = generator;
     }
 
-    /**
-     * Sets up the model and transform.
-     * Call from the 'Before' method in subclasses.
-     */
+    /** Sets up the model and transform. Call from the 'Before' method in subclasses. */
     public void setup() {
         if (model != null) return; // things are already set up
         model = new RendererModel();
@@ -85,14 +78,15 @@ public abstract class AbstractGeneratorTest {
         return false;
     }
 
-    public List<IRenderingElement> getAllSimpleElements(IGenerator generator, IAtomContainer container) {
+    public List<IRenderingElement> getAllSimpleElements(
+            IGenerator generator, IAtomContainer container) {
         IRenderingElement root = generator.generate(container, model);
         return elementUtil.getAllSimpleElements(root);
     }
 
     /**
-     * Implement this in derived classes, either returning null if no custom
-     * canvas is desired, or with a Rectangle with the appropriate size.
+     * Implement this in derived classes, either returning null if no custom canvas is desired, or
+     * with a Rectangle with the appropriate size.
      *
      * @return a Rectangle representing a custom drawing canvas
      */
@@ -108,8 +102,7 @@ public abstract class AbstractGeneratorTest {
     }
 
     /**
-     * Gets the transform to be used when converting rendering elements into
-     * graphical objects.
+     * Gets the transform to be used when converting rendering elements into graphical objects.
      *
      * @return the affine transform based on the current canvas
      */
@@ -122,8 +115,7 @@ public abstract class AbstractGeneratorTest {
     }
 
     /**
-     * Uses a rectangle canvas to work out how to translate from model space
-     * to screen space.
+     * Uses a rectangle canvas to work out how to translate from model space to screen space.
      *
      * @param canvas the rectangular canvas to draw on
      * @return the transform needed to translate to screen space
@@ -138,14 +130,14 @@ public abstract class AbstractGeneratorTest {
     }
 
     /**
-     * A utility method to determine the length of a line element (in
-     * model space)
+     * A utility method to determine the length of a line element (in model space)
      *
      * @param line the line element to determine the length of
      * @return a length
      */
     public static double length(LineElement line) {
-        return AbstractGeneratorTest.distance(line.firstPointX, line.firstPointY, line.secondPointX, line.secondPointY);
+        return AbstractGeneratorTest.distance(
+                line.firstPointX, line.firstPointY, line.secondPointX, line.secondPointY);
     }
 
     /**
@@ -226,8 +218,8 @@ public abstract class AbstractGeneratorTest {
     }
 
     /**
-     * Makes a single C-C bond aligned horizontally. The endpoints are (0, -1)
-     * and (0, 1) in model space.
+     * Makes a single C-C bond aligned horizontally. The endpoints are (0, -1) and (0, 1) in model
+     * space.
      *
      * @return an atom container with a single C-C bond
      */
@@ -250,8 +242,8 @@ public abstract class AbstractGeneratorTest {
     }
 
     /**
-     * Make a square (sort-of cyclobutane, without any hydrogens) centered on
-     * the origin, with a bond length of 2.
+     * Make a square (sort-of cyclobutane, without any hydrogens) centered on the origin, with a
+     * bond length of 2.
      *
      * @return four carbon atoms connected by bonds into a square
      */
@@ -269,8 +261,7 @@ public abstract class AbstractGeneratorTest {
     }
 
     /**
-     * Make a square with four different elements, to test things like atom
-     * color.
+     * Make a square with four different elements, to test things like atom color.
      *
      * @return an unlikely S-N-O-P square
      */
@@ -291,6 +282,8 @@ public abstract class AbstractGeneratorTest {
     public void testGetParameters() {
         Assert.assertNotNull("The tested generator is not set.", this.testedGenerator);
 
-        Assert.assertNotNull("The getParameters() must not return a null value.", this.testedGenerator.getParameters());
+        Assert.assertNotNull(
+                "The getParameters() must not return a null value.",
+                this.testedGenerator.getParameters());
     }
 }

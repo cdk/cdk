@@ -22,13 +22,10 @@
  */
 package org.openscience.cdk.io.formats;
 
-/**
- * @cdk.module test-ioformats
- */
+/** @cdk.module test-ioformats */
 public class UniChemXYZFormatTest extends ChemFormatTest {
 
     public UniChemXYZFormatTest() {
         super.setChemFormat((IChemFormat) UniChemXYZFormat.getInstance());
     }
-
 }

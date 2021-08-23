@@ -29,38 +29,32 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * Calculates the orbitals and orbital energies of electron systems
- * without electron electron interactions
+ * Calculates the orbitals and orbital energies of electron systems without electron electron
+ * interactions
  *
  * @author Stephan Michels &lt;stephan@vern.chem.tu-berlin.de&gt;
  * @cdk.githash
  * @cdk.created 2001-09-03
- * @cdk.module  qm
+ * @cdk.module qm
  */
 public class OneElectronJob {
 
-    private Orbitals            orbitals;
-    private Vector              E;
+    private Orbitals orbitals;
+    private Vector E;
 
     private static ILoggingTool log = LoggingToolFactory.createLoggingTool(OneElectronJob.class);
 
-    /**
-     * Constructs a one electron job
-     */
+    /** Constructs a one electron job */
     public OneElectronJob(Orbitals orbitals) {
         this.orbitals = orbitals;
     }
 
-    /**
-     * Returns the energies of the orbitals
-     */
+    /** Returns the energies of the orbitals */
     public Vector getEnergies() {
         return E.duplicate();
     }
 
-    /**
-     * Sorts the orbitals by their energies
-     */
+    /** Sorts the orbitals by their energies */
     private void sort(Matrix C, Vector E) {
         int i, j;
         double value;
@@ -87,9 +81,7 @@ public class OneElectronJob {
         int size = basis.getSize();
         Matrix S = new Matrix(size, size);
         int i, j;
-        for (i = 0; i < size; i++)
-            for (j = 0; j < size; j++)
-                S.matrix[i][j] = basis.calcS(i, j);
+        for (i = 0; i < size; i++) for (j = 0; j < size; j++) S.matrix[i][j] = basis.calcS(i, j);
 
         return S;
     }
@@ -97,7 +89,7 @@ public class OneElectronJob {
     /**
      * Calculates the matrix for the kinetic energy
      *
-     * T_i,j = (1/2) * -<d^2/dx^2 chi_i | chi_j>
+     * <p>T_i,j = (1/2) * -<d^2/dx^2 chi_i | chi_j>
      */
     private Matrix calculateT(IBasis basis) {
         int size = basis.getSize();
@@ -114,15 +106,13 @@ public class OneElectronJob {
     /**
      * Calculates the matrix for the potential matrix
      *
-     * V_i,j = <chi_i | 1/r | chi_j>
+     * <p>V_i,j = <chi_i | 1/r | chi_j>
      */
     private Matrix calculateV(IBasis basis) {
         int size = basis.getSize();
         Matrix V = new Matrix(size, size);
         int i, j;
-        for (i = 0; i < size; i++)
-            for (j = 0; j < size; j++)
-                V.matrix[i][j] = basis.calcV(i, j);
+        for (i = 0; i < size; i++) for (j = 0; j < size; j++) V.matrix[i][j] = basis.calcV(i, j);
 
         return V;
     }
@@ -133,7 +123,7 @@ public class OneElectronJob {
         Matrix C, S, T, V, HAO, H, U;
         IBasis basis = orbitals.getBasis();
 
-        //int count_electrons = orbitals.getCountElectrons();
+        // int count_electrons = orbitals.getCountElectrons();
 
         C = orbitals.getCoefficients().duplicate();
 

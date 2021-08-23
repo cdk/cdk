@@ -18,6 +18,9 @@
  */
 package org.openscience.cdk.qsar.descriptors.bond;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
 import org.openscience.cdk.exception.CDKException;
@@ -33,15 +36,11 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 /**
- *  The calculation of bond total Partial charge is calculated
- *  determining the difference the Partial Total Charge on atoms
- *  A and B of a bond. Based in Gasteiger Charge.
- *  <table border="1"><caption>Parameters for this descriptor:</caption>
+ * The calculation of bond total Partial charge is calculated determining the difference the Partial
+ * Total Charge on atoms A and B of a bond. Based in Gasteiger Charge.
+ *
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>
@@ -54,53 +53,48 @@ import java.util.List;
  *   </tr>
  * </table>
  *
- * @author      Miguel Rojas
+ * @author Miguel Rojas
  * @cdk.created 2006-05-18
- * @cdk.module  qsarbond
+ * @cdk.module qsarbond
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:bondPartialTCharge
- *
  * @see org.openscience.cdk.qsar.descriptors.atomic.PartialPiChargeDescriptor
  * @see org.openscience.cdk.qsar.descriptors.atomic.PartialSigmaChargeDescriptor
  */
 public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
 
     private GasteigerMarsiliPartialCharges peoe = null;
-    private GasteigerPEPEPartialCharges    pepe = null;
+    private GasteigerPEPEPartialCharges pepe = null;
 
-    /**Number of maximum iterations*/
-    private int     maxIterations = -1;
-    /**Number of maximum resonance structures*/
-    private int     maxResonStruc = -1;
-    /** make a lone pair electron checker. Default true*/
-    private boolean lpeChecker    = true;
+    /** Number of maximum iterations */
+    private int maxIterations = -1;
+    /** Number of maximum resonance structures */
+    private int maxResonStruc = -1;
+    /** make a lone pair electron checker. Default true */
+    private boolean lpeChecker = true;
 
     private static final String[] NAMES = {"pCB"};
 
-    /**
-     *  Constructor for the BondPartialTChargeDescriptor object.
-     */
+    /** Constructor for the BondPartialTChargeDescriptor object. */
     public BondPartialTChargeDescriptor() {
         peoe = new GasteigerMarsiliPartialCharges();
         pepe = new GasteigerPEPEPartialCharges();
     }
 
     /**
-     *  Gets the specification attribute of the BondPartialTChargeDescriptor
-     *  object.
+     * Gets the specification attribute of the BondPartialTChargeDescriptor object.
      *
-     *@return The specification value
+     * @return The specification value
      */
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondPartialTCharge", this
-                .getClass().getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondPartialTCharge",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
-    /**
-     * This descriptor does have any parameter.
-     */
+    /** This descriptor does have any parameter. */
     @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 3)
@@ -124,9 +118,9 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
     }
 
     /**
-     *  Gets the parameters attribute of the BondPartialTChargeDescriptor object.
+     * Gets the parameters attribute of the BondPartialTChargeDescriptor object.
      *
-     *@return The parameters value
+     * @return The parameters value
      * @see #setParameters
      */
     @Override
@@ -145,20 +139,26 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                Double.NaN), NAMES, e);
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new DoubleResult(Double.NaN),
+                NAMES,
+                e);
     }
 
     /**
-     *  The method calculates the bond total Partial charge of a given bond
-     *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
+     * The method calculates the bond total Partial charge of a given bond It is needed to call the
+     * addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
      *
-     *@param  ac                AtomContainer
-     *@return return the sigma electronegativity
+     * @param ac AtomContainer
+     * @return return the sigma electronegativity
      */
     @Override
     public DescriptorValue calculate(IBond bond, IAtomContainer ac) {
-        // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
+        // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end
+        // of this method
         Double originalCharge1 = bond.getBegin().getCharge();
         String originalAtomtypeName1 = bond.getBegin().getAtomTypeName();
         Integer originalNeighborCount1 = bond.getBegin().getFormalNeighbourCount();
@@ -191,19 +191,21 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
             try {
                 peoe.assignGasteigerMarsiliSigmaPartialCharges(ac, true);
                 List<Double> peoeBond = new ArrayList<Double>();
-                for (Iterator<IBond> it = ac.bonds().iterator(); it.hasNext();) {
+                for (Iterator<IBond> it = ac.bonds().iterator(); it.hasNext(); ) {
                     IBond bondi = it.next();
-                    double result = Math.abs(bondi.getBegin().getCharge() - bondi.getEnd().getCharge());
+                    double result =
+                            Math.abs(bondi.getBegin().getCharge() - bondi.getEnd().getCharge());
                     peoeBond.add(result);
                 }
 
-                for (Iterator<IAtom> it = ac.atoms().iterator(); it.hasNext();)
+                for (Iterator<IAtom> it = ac.atoms().iterator(); it.hasNext(); )
                     it.next().setCharge(0.0);
 
                 pepe.assignGasteigerPiPartialCharges(ac, true);
                 for (int i = 0; i < ac.getBondCount(); i++) {
                     IBond bondi = ac.getBond(i);
-                    double result = Math.abs(bondi.getBegin().getCharge() - bondi.getEnd().getCharge());
+                    double result =
+                            Math.abs(bondi.getBegin().getCharge() - bondi.getEnd().getCharge());
                     cacheDescriptorValue(bondi, ac, new DoubleResult(peoeBond.get(i) + result));
                 }
             } catch (Exception e) {
@@ -225,15 +227,21 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
         bond.getEnd().setMaxBondOrder(originalMaxBondOrder2);
         bond.getEnd().setBondOrderSum(originalBondOrderSum2);
 
-        return getCachedDescriptorValue(bond) != null ? new DescriptorValue(getSpecification(), getParameterNames(),
-                getParameters(), getCachedDescriptorValue(bond), NAMES) : null;
+        return getCachedDescriptorValue(bond) != null
+                ? new DescriptorValue(
+                        getSpecification(),
+                        getParameterNames(),
+                        getParameters(),
+                        getCachedDescriptorValue(bond),
+                        NAMES)
+                : null;
     }
 
     /**
-    * Gets the parameterNames attribute of the BondPartialTChargeDescriptor object.
-    *
-    * @return    The parameterNames value
-    */
+     * Gets the parameterNames attribute of the BondPartialTChargeDescriptor object.
+     *
+     * @return The parameterNames value
+     */
     @Override
     public String[] getParameterNames() {
         String[] params = new String[3];
@@ -246,8 +254,8 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
     /**
      * Gets the parameterType attribute of the BondPartialTChargeDescriptor object.
      *
-     * @param  name  Description of the Parameter
-     * @return       An Object of class equal to that of the parameter being requested
+     * @param name Description of the Parameter
+     * @return An Object of class equal to that of the parameter being requested
      */
     @Override
     public Object getParameterType(String name) {

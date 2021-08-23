@@ -18,17 +18,14 @@
  */
 package org.openscience.cdk.ringsearch.cyclebasis;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-
-/**
- * @cdk.module test-standard
- */
+/** @cdk.module test-standard */
 public class SimpleCycleTest extends CDKTestCase {
 
     public SimpleCycleTest() {
@@ -46,5 +43,4 @@ public class SimpleCycleTest extends CDKTestCase {
         SimpleCycle cycle = new SimpleCycle(new SimpleGraph(), new HashSet());
         Assert.assertNotNull(cycle);
     }
-
 }

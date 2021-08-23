@@ -18,20 +18,18 @@
  */
 package org.openscience.cdk.tools.diff;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.openscience.cdk.interfaces.IAtomType.Hybridization.PLANAR3;
+import static org.openscience.cdk.interfaces.IAtomType.Hybridization.SP3;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.tools.diff.tree.IDifference;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.openscience.cdk.interfaces.IAtomType.Hybridization.PLANAR3;
-import static org.openscience.cdk.interfaces.IAtomType.Hybridization.SP3;
-
-/**
- * @cdk.module test-diff
- */
+/** @cdk.module test-diff */
 public class AtomTypeDiffTest extends CDKTestCase {
 
     @Test

@@ -29,28 +29,20 @@ package org.openscience.cdk.smiles.smarts.parser;
 @Deprecated
 class ASTTotalConnectivity extends SimpleNode {
 
-    /**
-     * Number of total connections.
-     */
+    /** Number of total connections. */
     private int numOfConnection;
 
-    /**
-     * Creates a new instance.
-     */
+    /** Creates a new instance. */
     public ASTTotalConnectivity(int id) {
         super(id);
     }
 
-    /**
-     * Creates a new instance.
-     */
+    /** Creates a new instance. */
     public ASTTotalConnectivity(SMARTSParser p, int id) {
         super(p, id);
     }
 
-    /**
-     * Returns the number of total connections.
-     */
+    /** Returns the number of total connections. */
     public int getNumOfConnection() {
         return numOfConnection;
     }
@@ -66,9 +58,7 @@ class ASTTotalConnectivity extends SimpleNode {
         return visitor.visit(this, data);
     }
 
-    /**
-     * Sets the number of total connections.
-     */
+    /** Sets the number of total connections. */
     public void setNumOfConnection(int numOfConnection) {
         this.numOfConnection = numOfConnection;
     }

@@ -30,25 +30,19 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-
 /**
- * A partition of a set of integers, such as the discrete partition {{1}, {2},
- * {3}, {4}} or the unit partition {{1, 2, 3, 4}} or an intermediate like {{1,
- * 2}, {3, 4}}.
+ * A partition of a set of integers, such as the discrete partition {{1}, {2}, {3}, {4}} or the unit
+ * partition {{1, 2, 3, 4}} or an intermediate like {{1, 2}, {3, 4}}.
  *
  * @author maclean
  * @cdk.module group
  */
 public class Partition {
 
-    /**
-     * The subsets of the partition, known as cells.
-     */
+    /** The subsets of the partition, known as cells. */
     private List<SortedSet<Integer>> cells;
 
-    /**
-     * Creates a new, empty partition with no cells.
-     */
+    /** Creates a new, empty partition with no cells. */
     public Partition() {
         this.cells = new ArrayList<SortedSet<Integer>>();
     }
@@ -78,8 +72,8 @@ public class Partition {
     }
 
     /**
-     * Create a unit partition - in other words, the coarsest possible partition
-     * where all the elements are in one cell.
+     * Create a unit partition - in other words, the coarsest possible partition where all the
+     * elements are in one cell.
      *
      * @param size the number of elements
      * @return a new Partition with one cell containing all the elements
@@ -93,9 +87,7 @@ public class Partition {
         return unit;
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean equals(Object o) {
 
@@ -105,12 +97,9 @@ public class Partition {
         Partition partition = (Partition) o;
 
         return cells != null ? cells.equals(partition.cells) : partition.cells == null;
-
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int hashCode() {
         return cells != null ? cells.hashCode() : 0;
@@ -139,8 +128,8 @@ public class Partition {
     }
 
     /**
-     * Checks that all the cells are singletons - that is, they only have one
-     * element. A discrete partition is equivalent to a permutation.
+     * Checks that all the cells are singletons - that is, they only have one element. A discrete
+     * partition is equivalent to a permutation.
      *
      * @return true if all the cells are discrete
      */
@@ -167,8 +156,8 @@ public class Partition {
     }
 
     /**
-     * Check whether the cells are ordered such that for cells i and j,
-     * first(j) &gt; first(i) and last(j) &gt; last(i).
+     * Check whether the cells are ordered such that for cells i and j, first(j) &gt; first(i) and
+     * last(j) &gt; last(i).
      *
      * @return true if all cells in the partition are ordered
      */
@@ -211,9 +200,8 @@ public class Partition {
     }
 
     /**
-     * Splits this partition by taking the cell at cellIndex and making two
-     * new cells - the first with the singleton splitElement and the second
-     * with the rest of the elements from that cell.
+     * Splits this partition by taking the cell at cellIndex and making two new cells - the first
+     * with the singleton splitElement and the second with the rest of the elements from that cell.
      *
      * @param cellIndex the index of the cell to split on
      * @param splitElement the element to put in its own cell
@@ -240,9 +228,9 @@ public class Partition {
     }
 
     /**
-     * Splits this partition by taking the cell at cellIndex and making two
-     * new cells - the first with the the rest of the elements from that cell
-     * and the second with the singleton splitElement.
+     * Splits this partition by taking the cell at cellIndex and making two new cells - the first
+     * with the the rest of the elements from that cell and the second with the singleton
+     * splitElement.
      *
      * @param cellIndex the index of the cell to split on
      * @param splitElement the element to put in its own cell
@@ -269,8 +257,8 @@ public class Partition {
     }
 
     /**
-     * Fill the elements of a permutation from the first element of each
-     * cell, up to the point <code>upTo</code>.
+     * Fill the elements of a permutation from the first element of each cell, up to the point
+     * <code>upTo</code>.
      *
      * @param upTo take values from cells up to this one
      * @return the permutation representing the first element of each cell
@@ -284,8 +272,8 @@ public class Partition {
     }
 
     /**
-     * Check to see if the cell at <code>cellIndex</code> is discrete - that is,
-     * it only has one element.
+     * Check to see if the cell at <code>cellIndex</code> is discrete - that is, it only has one
+     * element.
      *
      * @param cellIndex the index of the cell to check
      * @return true of the cell at this index is discrete
@@ -307,8 +295,7 @@ public class Partition {
     }
 
     /**
-     * Add a new singleton cell to the end of the partition containing only
-     * this element.
+     * Add a new singleton cell to the end of the partition containing only this element.
      *
      * @param element the element to add in its own cell
      */
@@ -383,18 +370,17 @@ public class Partition {
         return new TreeSet<Integer>(this.cells.get(cellIndex));
     }
 
-    /**
-     * Sort the cells in increasing order.
-     */
+    /** Sort the cells in increasing order. */
     public void order() {
-        Collections.sort(cells, new Comparator<SortedSet<Integer>>() {
+        Collections.sort(
+                cells,
+                new Comparator<SortedSet<Integer>>() {
 
-            @Override
-            public int compare(SortedSet<Integer> cellA, SortedSet<Integer> cellB) {
-                return cellA.first().compareTo(cellB.first());
-            }
-
-        });
+                    @Override
+                    public int compare(SortedSet<Integer> cellA, SortedSet<Integer> cellB) {
+                        return cellA.first().compareTo(cellB.first());
+                    }
+                });
     }
 
     /**
@@ -414,9 +400,7 @@ public class Partition {
         return false;
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -440,17 +424,17 @@ public class Partition {
     }
 
     /**
-     * Parse a string like "[0,2|1,3]" to form the partition; cells are
-     * separated by '|' characters and elements within the cell by commas.
+     * Parse a string like "[0,2|1,3]" to form the partition; cells are separated by '|' characters
+     * and elements within the cell by commas.
      *
      * @param strForm the partition in string form
      * @return the partition corresponding to the string
-     * @throws IllegalArgumentException thrown if the provided strFrom is
-     *         null or empty
+     * @throws IllegalArgumentException thrown if the provided strFrom is null or empty
      */
     public static Partition fromString(String strForm) {
 
-        if (strForm == null || strForm.isEmpty()) throw new IllegalArgumentException("null or empty string provided");
+        if (strForm == null || strForm.isEmpty())
+            throw new IllegalArgumentException("null or empty string provided");
 
         Partition p = new Partition();
         int index = 0;
@@ -498,5 +482,4 @@ public class Partition {
         p.addToCell(currentCell, lastElement);
         return p;
     }
-
 }

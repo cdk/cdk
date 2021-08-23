@@ -23,16 +23,6 @@
 
 package org.openscience.cdk.layout;
 
-import org.openscience.cdk.graph.AllPairsShortestPaths;
-import org.openscience.cdk.graph.GraphUtil;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Tuple2d;
-import javax.vecmath.Vector2d;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,31 +34,38 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import javax.vecmath.Point2d;
+import javax.vecmath.Tuple2d;
+import javax.vecmath.Vector2d;
+import org.openscience.cdk.graph.AllPairsShortestPaths;
+import org.openscience.cdk.graph.GraphUtil;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- * An overlap resolver that tries to resolve overlaps by rotating (reflecting),
- * bending, and stretching bonds. 
- * 
- * The RBS (rotate, bend, stretch) algorithm is first described by {@cdk.cite Shelley83},
- * and later in more detail by {@cdk.cite HEL99}.
- * 
- * Essentially we have a measure of {@link Congestion}. From that we find 
- * un-bonded atoms that contribute significantly (i.e. overlap). To resolve
- * that overlap we try resolving the overlap by changing (acyclic) bonds in the
- * shortest path between the congested pair. Operations, from most to least 
- * favourable, are:
+ * An overlap resolver that tries to resolve overlaps by rotating (reflecting), bending, and
+ * stretching bonds.
+ *
+ * <p>The RBS (rotate, bend, stretch) algorithm is first described by {@cdk.cite Shelley83}, and
+ * later in more detail by {@cdk.cite HEL99}.
+ *
+ * <p>Essentially we have a measure of {@link Congestion}. From that we find un-bonded atoms that
+ * contribute significantly (i.e. overlap). To resolve that overlap we try resolving the overlap by
+ * changing (acyclic) bonds in the shortest path between the congested pair. Operations, from most
+ * to least favourable, are:
+ *
  * <ul>
- *     <li>Rotation (or reflection), {@link #rotate(Collection)}</li>
- *     <li>Inversion (not described in lit), {@link #invert(Collection)}</li>
- *     <li>Stretch, {@link #stretch(AtomPair, IntStack, Point2d[])}</li>
- *     <li>Bend, {@link #bend(AtomPair, IntStack, Point2d[])}</li>
+ *   <li>Rotation (or reflection), {@link #rotate(Collection)}
+ *   <li>Inversion (not described in lit), {@link #invert(Collection)}
+ *   <li>Stretch, {@link #stretch(AtomPair, IntStack, Point2d[])}
+ *   <li>Bend, {@link #bend(AtomPair, IntStack, Point2d[])}
  * </ul>
  */
 final class LayoutRefiner {
 
-    /**
-     * These value are constants but could be parametrised in future.
-     */
+    /** These value are constants but could be parametrised in future. */
 
     // bond length should be changeable
     private static final double BOND_LENGTH = 1.5;
@@ -100,24 +97,23 @@ final class LayoutRefiner {
     // the improvement is this much better.
     public static final int ROTATE_DELTA_THRESHOLD = 5;
 
-
     // Maximum number of iterations whilst improving
     private static final int MAX_ITERATIONS = 10;
 
     // fast lookup structures
-    private final IAtomContainer          mol;
-    private final Map<IAtom, Integer>     idxs;
-    private final int[][]                 adjList;
+    private final IAtomContainer mol;
+    private final Map<IAtom, Integer> idxs;
+    private final int[][] adjList;
     private final GraphUtil.EdgeToBondMap bondMap;
-    private final IAtom[]                 atoms;
+    private final IAtom[] atoms;
 
     // measuring and finding congestion
-    private final Congestion            congestion;
+    private final Congestion congestion;
     private final AllPairsShortestPaths apsp;
 
     // buffers where we can store and restore different solutions
     private final Point2d[] buffer1, buffer2, backup;
-    private final IntStack  stackBackup;
+    private final IntStack stackBackup;
     private final boolean[] visited;
 
     // ring system index, allows us to quickly tell if two atoms are
@@ -129,18 +125,17 @@ final class LayoutRefiner {
 
     /**
      * Create a new layout refiner for the provided molecule.
-     * 
+     *
      * @param mol molecule to refine
      */
-     LayoutRefiner(IAtomContainer mol, Set<IAtom> afix, Set<IBond> bfix) {
+    LayoutRefiner(IAtomContainer mol, Set<IAtom> afix, Set<IBond> bfix) {
         this.mol = mol;
         this.afix = afix;
         this.bfix = bfix;
         this.bondMap = GraphUtil.EdgeToBondMap.withSpaceFor(mol);
         this.adjList = GraphUtil.toAdjList(mol, bondMap);
         this.idxs = new HashMap<>();
-        for (IAtom atom : mol.atoms())
-            idxs.put(atom, idxs.size());
+        for (IAtom atom : mol.atoms()) idxs.put(atom, idxs.size());
         this.atoms = AtomContainerManipulator.getAtomArray(mol);
 
         // buffers for storing coordinates
@@ -165,8 +160,7 @@ final class LayoutRefiner {
         int rnum = 1;
         this.ringsystems = new int[atoms.length];
         for (int i = 0; i < atoms.length; i++) {
-            if (atoms[i].isInRing() && ringsystems[i] == 0)
-                traverseRing(ringsystems, i, rnum++);
+            if (atoms[i].isInRing() && ringsystems[i] == 0) traverseRing(ringsystems, i, rnum++);
         }
     }
 
@@ -174,8 +168,8 @@ final class LayoutRefiner {
      * Simple method for marking ring systems with a flood-fill.
      *
      * @param ringSystem ring system vector
-     * @param v          start atom
-     * @param rnum       the number to mark atoms of this ring
+     * @param v start atom
+     * @param rnum the number to mark atoms of this ring
      */
     private void traverseRing(int[] ringSystem, int v, int rnum) {
         ringSystem[v] = rnum;
@@ -207,23 +201,22 @@ final class LayoutRefiner {
             for (int v = u + 1; v < numAtoms; v++) {
                 double contribution = congestion.contribution(u, v);
                 // <0 = bonded
-                if (contribution <= 0)
-                    continue;
+                if (contribution <= 0) continue;
 
                 // we don't modify ring bonds with the class to when the atoms
                 // same ring systems we can't reduce the congestion
-                if (ringsystems[u] > 0 && ringsystems[u] == ringsystems[v])
-                    continue;
+                if (ringsystems[u] > 0 && ringsystems[u] == ringsystems[v]) continue;
 
                 // an un-bonded atom pair is congested if they're and with a certain distance
                 // or any of their bonds are crossing
-                if (contribution >= MIN_SCORE || contribution >= maybeCrossed && haveCrossingBonds(u, v)) {
+                if (contribution >= MIN_SCORE
+                        || contribution >= maybeCrossed && haveCrossingBonds(u, v)) {
 
                     int uWeight = mol.getAtom(u).getProperty(AtomPlacer.PRIORITY);
                     int vWeight = mol.getAtom(v).getProperty(AtomPlacer.PRIORITY);
 
-                    int[] path = uWeight > vWeight ? apsp.from(u).pathTo(v)
-                                                   : apsp.from(v).pathTo(u);
+                    int[] path =
+                            uWeight > vWeight ? apsp.from(u).pathTo(v) : apsp.from(v).pathTo(u);
 
                     // something not right here if the len is < 3
                     int len = path.length;
@@ -236,8 +229,9 @@ final class LayoutRefiner {
 
                     // we already know about this collision between these ring systems
                     // so dont add the pair
-                    if (ringsystems[u] > 0 && ringsystems[v] > 0 &&
-                            !ringpairs.add(new IntTuple(ringsystems[u], ringsystems[v])))
+                    if (ringsystems[u] > 0
+                            && ringsystems[v] > 0
+                            && !ringpairs.add(new IntTuple(ringsystems[u], ringsystems[v])))
                         continue;
 
                     // add to pairs to overlap
@@ -247,36 +241,36 @@ final class LayoutRefiner {
         }
 
         // sort the pairs to attempt consistent overlap resolution (order independent)
-        Collections.sort(pairs, new Comparator<AtomPair>() {
-            @Override
-            public int compare(AtomPair a, AtomPair b) {
-                int a1 = atoms[a.fst].getProperty(AtomPlacer.PRIORITY);
-                int a2 = atoms[a.snd].getProperty(AtomPlacer.PRIORITY);
-                int b1 = atoms[b.fst].getProperty(AtomPlacer.PRIORITY);
-                int b2 = atoms[b.snd].getProperty(AtomPlacer.PRIORITY);
-                int amin, amax;
-                int bmin, bmax;
-                if (a1 < a2) {
-                    amin = a1;
-                    amax = a2;
-                }
-                else {
-                    amin = a2;
-                    amax = a1;
-                }
-                if (b1 < b2) {
-                    bmin = b1;
-                    bmax = b2;
-                }
-                else {
-                    bmin = b2;
-                    bmax = b1;
-                }
-                int cmp = Integer.compare(amin, bmin);
-                if (cmp != 0) return cmp;
-                return Integer.compare(amax, bmax);
-            }
-        });
+        Collections.sort(
+                pairs,
+                new Comparator<AtomPair>() {
+                    @Override
+                    public int compare(AtomPair a, AtomPair b) {
+                        int a1 = atoms[a.fst].getProperty(AtomPlacer.PRIORITY);
+                        int a2 = atoms[a.snd].getProperty(AtomPlacer.PRIORITY);
+                        int b1 = atoms[b.fst].getProperty(AtomPlacer.PRIORITY);
+                        int b2 = atoms[b.snd].getProperty(AtomPlacer.PRIORITY);
+                        int amin, amax;
+                        int bmin, bmax;
+                        if (a1 < a2) {
+                            amin = a1;
+                            amax = a2;
+                        } else {
+                            amin = a2;
+                            amax = a1;
+                        }
+                        if (b1 < b2) {
+                            bmin = b1;
+                            bmax = b2;
+                        } else {
+                            bmin = b2;
+                            bmax = b1;
+                        }
+                        int cmp = Integer.compare(amin, bmin);
+                        if (cmp != 0) return cmp;
+                        return Integer.compare(amax, bmax);
+                    }
+                });
 
         return pairs;
     }
@@ -291,7 +285,8 @@ final class LayoutRefiner {
      * @return bond is crossing
      */
     private boolean isCrossed(Point2d beg1, Point2d end1, Point2d beg2, Point2d end2) {
-        return Line2D.linesIntersect(beg1.x, beg1.y, end1.x, end1.y, beg2.x, beg2.y, end2.x, end2.y);
+        return Line2D.linesIntersect(
+                beg1.x, beg1.y, end1.x, end1.y, beg2.x, beg2.y, end2.x, end2.y);
     }
 
     /**
@@ -306,10 +301,12 @@ final class LayoutRefiner {
         int[] vs = adjList[v];
         for (int u1 : us) {
             for (int v1 : vs) {
-                if (u1 == v || v1 == u || u1 == v1)
-                    continue;
-                if (isCrossed(atoms[u].getPoint2d(), atoms[u1].getPoint2d(), atoms[v].getPoint2d(), atoms[v1].getPoint2d()))
-                    return true;
+                if (u1 == v || v1 == u || u1 == v1) continue;
+                if (isCrossed(
+                        atoms[u].getPoint2d(),
+                        atoms[u1].getPoint2d(),
+                        atoms[v].getPoint2d(),
+                        atoms[v1].getPoint2d())) return true;
             }
         }
         return false;
@@ -319,8 +316,7 @@ final class LayoutRefiner {
     private final Set<IBond> probablySymmetric = new HashSet<>();
 
     /**
-     * Attempt to reduce congestion through rotation of flippable bonds between
-     * congest pairs.
+     * Attempt to reduce congestion through rotation of flippable bonds between congest pairs.
      *
      * @param pairs congested pairs of atoms
      */
@@ -335,18 +331,14 @@ final class LayoutRefiner {
             for (IBond bond : pair.bndAt) {
 
                 // only try each bond once per phase and skip
-                if (!tried.add(bond))
-                    continue;
-                if (bfix.contains(bond))
-                    continue;
+                if (!tried.add(bond)) continue;
+                if (bfix.contains(bond)) continue;
 
                 // those we have found to probably be symmetric
-                if (probablySymmetric.contains(bond))
-                    continue;
+                if (probablySymmetric.contains(bond)) continue;
 
                 // can't rotate these
-                if (bond.getOrder() != IBond.Order.SINGLE || bond.isInRing())
-                    continue;
+                if (bond.getOrder() != IBond.Order.SINGLE || bond.isInRing()) continue;
 
                 final IAtom beg = bond.getBegin();
                 final IAtom end = bond.getEnd();
@@ -354,8 +346,7 @@ final class LayoutRefiner {
                 final int endIdx = idxs.get(end);
 
                 // terminal
-                if (adjList[begIdx].length == 1 || adjList[endIdx].length == 1)
-                    continue;
+                if (adjList[begIdx].length == 1 || adjList[endIdx].length == 1) continue;
 
                 int begPriority = beg.getProperty(AtomPlacer.PRIORITY);
                 int endPriority = end.getProperty(AtomPlacer.PRIORITY);
@@ -371,13 +362,11 @@ final class LayoutRefiner {
                             Arrays.fill(visited, false);
                             stackBackup.len = visitAdj(visited, stackBackup.xs, endIdx, begIdx);
                             final int endCnt = numFixedMoved(stackBackup.xs, stackBackup.len);
-                            if (endCnt > 0)
-                                continue;
+                            if (endCnt > 0) continue;
                         }
                     }
 
-                }
-                else {
+                } else {
                     stackBackup.len = visitAdj(visited, stackBackup.xs, endIdx, begIdx);
 
                     // avoid moving fixed atoms
@@ -387,8 +376,7 @@ final class LayoutRefiner {
                             Arrays.fill(visited, false);
                             stackBackup.len = visitAdj(visited, stackBackup.xs, begIdx, endIdx);
                             final int begCnt = numFixedMoved(stackBackup.xs, stackBackup.len);
-                            if (begCnt > 0)
-                                continue;
+                            if (begCnt > 0) continue;
                         }
                     }
                 }
@@ -402,15 +390,14 @@ final class LayoutRefiner {
                 double delta = min - congestion.score();
 
                 // keep if decent improvement or improvement and resolves this overlap
-                if (delta > ROTATE_DELTA_THRESHOLD ||
-                    (delta > 1 && congestion.contribution(pair.fst, pair.snd) < MIN_SCORE)) {
+                if (delta > ROTATE_DELTA_THRESHOLD
+                        || (delta > 1 && congestion.contribution(pair.fst, pair.snd) < MIN_SCORE)) {
                     continue Pair;
                 } else {
 
                     // almost no difference from flipping... bond is probably symmetric
                     // mark to avoid in future iterations
-                    if (Math.abs(delta) < 0.1)
-                        probablySymmetric.add(bond);
+                    if (Math.abs(delta) < 0.1) probablySymmetric.add(bond);
 
                     // restore
                     restoreCoords(stackBackup, backup);
@@ -428,26 +415,22 @@ final class LayoutRefiner {
             amoved.add(mol.getAtom(xs[i]));
         }
         for (IBond bond : bfix) {
-            if (amoved.contains(bond.getBegin()) && amoved.contains(bond.getEnd()))
-                cnt++;
+            if (amoved.contains(bond.getBegin()) && amoved.contains(bond.getEnd())) cnt++;
         }
         return cnt;
     }
 
     /**
-     * Special case congestion minimisation, rotate terminals bonds around ring
-     * systems so they are inside the ring.
+     * Special case congestion minimisation, rotate terminals bonds around ring systems so they are
+     * inside the ring.
      *
      * @param pairs congested atom pairs
      */
     void invert(Collection<AtomPair> pairs) {
         for (AtomPair pair : pairs) {
-            if (congestion.contribution(pair.fst, pair.snd) < MIN_SCORE)
-                continue;
-            if (fusionPointInversion(pair))
-                continue;
-            if (macroCycleInversion(pair))
-                continue;
+            if (congestion.contribution(pair.fst, pair.snd) < MIN_SCORE) continue;
+            if (fusionPointInversion(pair)) continue;
+            if (macroCycleInversion(pair)) continue;
         }
     }
 
@@ -457,27 +440,22 @@ final class LayoutRefiner {
 
         for (int v : pair.seqAt) {
             IAtom atom = mol.getAtom(v);
-            if (!atom.isInRing() || adjList[v].length == 2)
-                continue;
-            if (atom.getProperty(MacroCycleLayout.MACROCYCLE_ATOM_HINT) == null)
-                continue;
+            if (!atom.isInRing() || adjList[v].length == 2) continue;
+            if (atom.getProperty(MacroCycleLayout.MACROCYCLE_ATOM_HINT) == null) continue;
             final List<IBond> acyclic = new ArrayList<>(2);
             final List<IBond> cyclic = new ArrayList<>(2);
             for (int w : adjList[v]) {
                 IBond bond = bondMap.get(v, w);
-                if (bond.isInRing())
-                    cyclic.add(bond);
-                else
-                    acyclic.add(bond);
+                if (bond.isInRing()) cyclic.add(bond);
+                else acyclic.add(bond);
             }
-            if (cyclic.size() > 2)
-                continue;
+            if (cyclic.size() > 2) continue;
 
             for (IBond bond : acyclic) {
-                if (bfix.contains(bond))
-                    continue;
+                if (bfix.contains(bond)) continue;
                 Arrays.fill(visited, false);
-                stackBackup.len = visit(visited, stackBackup.xs, v, idxs.get(bond.getOther(atom)), 0);
+                stackBackup.len =
+                        visit(visited, stackBackup.xs, v, idxs.get(bond.getOther(atom)), 0);
 
                 Point2d a = atom.getPoint2d();
                 Point2d b = bond.getOther(atom).getPoint2d();
@@ -487,7 +465,10 @@ final class LayoutRefiner {
                 double score = congestion.score();
                 backupCoords(backup, stackBackup);
 
-                reflect(stackBackup, new Point2d(a.x - perp.y, a.y + perp.x), new Point2d(a.x + perp.y, a.y - perp.x));
+                reflect(
+                        stackBackup,
+                        new Point2d(a.x - perp.y, a.y + perp.x),
+                        new Point2d(a.x + perp.y, a.y - perp.x));
                 congestion.update(visited, stackBackup.xs, stackBackup.len);
 
                 if (percDiff(score, congestion.score()) >= IMPROVEMENT_PERC_THRESHOLD) {
@@ -504,26 +485,20 @@ final class LayoutRefiner {
     private boolean fusionPointInversion(AtomPair pair) {
         // not candidates for inversion
         // > 3 bonds
-        if (pair.bndAt.length != 3)
-            return false;
-        if (bfix.contains(pair.bndAt[0]) || bfix.contains(pair.bndAt[2]))
-            return false;
+        if (pair.bndAt.length != 3) return false;
+        if (bfix.contains(pair.bndAt[0]) || bfix.contains(pair.bndAt[2])) return false;
         // we want *!@*@*!@*
         if (!pair.bndAt[0].isInRing() || pair.bndAt[1].isInRing() || pair.bndAt[2].isInRing())
             return false;
         // non-terminals
-        if (adjList[pair.fst].length > 1 || adjList[pair.snd].length > 1)
-            return false;
-
+        if (adjList[pair.fst].length > 1 || adjList[pair.snd].length > 1) return false;
 
         IAtom fst = atoms[pair.fst];
 
         // choose which one to invert, preffering hydrogens
         stackBackup.clear();
-        if (fst.getAtomicNumber() == 1)
-            stackBackup.push(pair.fst);
-        else
-            stackBackup.push(pair.snd);
+        if (fst.getAtomicNumber() == 1) stackBackup.push(pair.fst);
+        else stackBackup.push(pair.snd);
 
         reflect(stackBackup, pair.bndAt[0].getBegin(), pair.bndAt[0].getEnd());
         congestion.update(stackBackup.xs, stackBackup.len);
@@ -531,18 +506,18 @@ final class LayoutRefiner {
     }
 
     /**
-     * Bend all bonds in the shortest path between a pair of atoms in an attempt
-     * to resolve the overlap. The bend that produces the minimum congestion is
-     * stored in the provided stack and coords with the congestion score
-     * returned.
+     * Bend all bonds in the shortest path between a pair of atoms in an attempt to resolve the
+     * overlap. The bend that produces the minimum congestion is stored in the provided stack and
+     * coords with the congestion score returned.
      *
-     * @param pair   congested atom pair
-     * @param stack  best result vertices
+     * @param pair congested atom pair
+     * @param stack best result vertices
      * @param coords best result coords
      * @param firstVisit visit map to avoid repeating work
      * @return congestion score of best result
      */
-    private double bend(AtomPair pair, IntStack stack, Point2d[] coords, Map<IBond,AtomPair> firstVisit) {
+    private double bend(
+            AtomPair pair, IntStack stack, Point2d[] coords, Map<IBond, AtomPair> firstVisit) {
 
         stackBackup.clear();
 
@@ -558,18 +533,23 @@ final class LayoutRefiner {
             final IBond bndA = pair.bndAt[2];
             final IBond bndB = pair.bndAt[3];
 
-            if (bfix.contains(bndA) || bfix.contains(bndB))
-                return Integer.MAX_VALUE;
+            if (bfix.contains(bndA) || bfix.contains(bndB)) return Integer.MAX_VALUE;
 
             final IAtom pivotA = getCommon(bndA, pair.bndAt[1]);
             final IAtom pivotB = getCommon(bndB, pair.bndAt[0]);
 
-            if (pivotA == null || pivotB == null)
-                return Integer.MAX_VALUE;
+            if (pivotA == null || pivotB == null) return Integer.MAX_VALUE;
 
             Arrays.fill(visited, false);
-            int split = visit(visited, stack.xs, idxs.get(pivotA), idxs.get(bndA.getOther(pivotA)), 0);
-            stack.len = visit(visited, stack.xs, idxs.get(pivotB), idxs.get(bndB.getOther(pivotB)), split);
+            int split =
+                    visit(visited, stack.xs, idxs.get(pivotA), idxs.get(bndA.getOther(pivotA)), 0);
+            stack.len =
+                    visit(
+                            visited,
+                            stack.xs,
+                            idxs.get(pivotB),
+                            idxs.get(bndB.getOther(pivotB)),
+                            split);
 
             // perform bend one way
             backupCoords(backup, stack);
@@ -589,7 +569,8 @@ final class LayoutRefiner {
             bend(stack.xs, 0, split, pivotA, -BEND_STEP);
             bend(stack.xs, split, stack.len, pivotB, BEND_STEP);
             congestion.update(stack.xs, stack.len);
-            if (percDiff(score, congestion.score()) >= IMPROVEMENT_PERC_THRESHOLD && congestion.score() < min) {
+            if (percDiff(score, congestion.score()) >= IMPROVEMENT_PERC_THRESHOLD
+                    && congestion.score() < min) {
                 backupCoords(coords, stack);
                 stackBackup.copyFrom(stack);
                 min = congestion.score();
@@ -611,10 +592,8 @@ final class LayoutRefiner {
 
                 // has this bond already been tested as part of another pair
                 AtomPair first = firstVisit.get(bond);
-                if (first == null)
-                    firstVisit.put(bond, first = pair);
-                if (first != pair)
-                    continue;
+                if (first == null) firstVisit.put(bond, first = pair);
+                if (first != pair) continue;
 
                 final IAtom beg = bond.getBegin();
                 final IAtom end = bond.getEnd();
@@ -624,20 +603,18 @@ final class LayoutRefiner {
                 Arrays.fill(visited, false);
                 if (begPriority < endPriority)
                     stack.len = visit(visited, stack.xs, idxs.get(beg), idxs.get(end), 0);
-                else
-                    stack.len = visit(visited, stack.xs, idxs.get(end), idxs.get(beg), 0);
+                else stack.len = visit(visited, stack.xs, idxs.get(end), idxs.get(beg), 0);
 
                 backupCoords(backup, stack);
 
                 // bend one way
                 if (begPriority < endPriority)
                     bend(stack.xs, 0, stack.len, beg, pair.attempt * BEND_STEP);
-                else
-                    bend(stack.xs, 0, stack.len, end, pair.attempt * BEND_STEP);
+                else bend(stack.xs, 0, stack.len, end, pair.attempt * BEND_STEP);
                 congestion.update(visited, stack.xs, stack.len);
 
-                if (percDiff(score, congestion.score()) >= IMPROVEMENT_PERC_THRESHOLD &&
-                    congestion.score() < min) {
+                if (percDiff(score, congestion.score()) >= IMPROVEMENT_PERC_THRESHOLD
+                        && congestion.score() < min) {
                     backupCoords(coords, stack);
                     stackBackup.copyFrom(stack);
                     min = congestion.score();
@@ -646,11 +623,11 @@ final class LayoutRefiner {
                 // bend other way
                 if (begPriority < endPriority)
                     bend(stack.xs, 0, stack.len, beg, pair.attempt * -BEND_STEP);
-                else
-                    bend(stack.xs, 0, stack.len, end, pair.attempt * -BEND_STEP);
+                else bend(stack.xs, 0, stack.len, end, pair.attempt * -BEND_STEP);
                 congestion.update(visited, stack.xs, stack.len);
 
-                if (percDiff(score, congestion.score()) >= IMPROVEMENT_PERC_THRESHOLD && congestion.score() < min) {
+                if (percDiff(score, congestion.score()) >= IMPROVEMENT_PERC_THRESHOLD
+                        && congestion.score() < min) {
                     backupCoords(coords, stack);
                     stackBackup.copyFrom(stack);
                     min = congestion.score();
@@ -668,18 +645,18 @@ final class LayoutRefiner {
     }
 
     /**
-     * Stretch all bonds in the shortest path between a pair of atoms in an
-     * attempt to resolve the overlap. The stretch that produces the minimum
-     * congestion is stored in the provided stack and coords with the congestion
-     * score returned.
+     * Stretch all bonds in the shortest path between a pair of atoms in an attempt to resolve the
+     * overlap. The stretch that produces the minimum congestion is stored in the provided stack and
+     * coords with the congestion score returned.
      *
-     * @param pair   congested atom pair
-     * @param stack  best result vertices
+     * @param pair congested atom pair
+     * @param stack best result vertices
      * @param coords best result coords
      * @param firstVisit visit map to avoid repeating work
      * @return congestion score of best result
      */
-    private double stretch(AtomPair pair, IntStack stack, Point2d[] coords, Map<IBond,AtomPair> firstVisit) {
+    private double stretch(
+            AtomPair pair, IntStack stack, Point2d[] coords, Map<IBond, AtomPair> firstVisit) {
 
         stackBackup.clear();
 
@@ -689,16 +666,13 @@ final class LayoutRefiner {
         for (IBond bond : pair.bndAt) {
 
             // don't stretch ring bonds
-            if (bond.isInRing())
-                continue;
+            if (bond.isInRing()) continue;
             if (bfix.contains(bond)) continue;
 
             // has this bond already been tested as part of another pair
             AtomPair first = firstVisit.get(bond);
-            if (first == null)
-                firstVisit.put(bond, first = pair);
-            if (first != pair)
-                continue;
+            if (first == null) firstVisit.put(bond, first = pair);
+            if (first != pair) continue;
 
             final IAtom beg = bond.getBegin();
             final IAtom end = bond.getEnd();
@@ -708,20 +682,17 @@ final class LayoutRefiner {
             int endPriority = end.getProperty(AtomPlacer.PRIORITY);
 
             Arrays.fill(visited, false);
-            if (begPriority < endPriority)
-                stack.len = visit(visited, stack.xs, endIdx, begIdx, 0);
-            else
-                stack.len = visit(visited, stack.xs, begIdx, endIdx, 0);
+            if (begPriority < endPriority) stack.len = visit(visited, stack.xs, endIdx, begIdx, 0);
+            else stack.len = visit(visited, stack.xs, begIdx, endIdx, 0);
 
             backupCoords(backup, stack);
-            if (begPriority < endPriority)
-                stretch(stack, end, beg, pair.attempt * STRETCH_STEP);
-            else
-                stretch(stack, beg, end, pair.attempt * STRETCH_STEP);
+            if (begPriority < endPriority) stretch(stack, end, beg, pair.attempt * STRETCH_STEP);
+            else stretch(stack, beg, end, pair.attempt * STRETCH_STEP);
 
             congestion.update(visited, stack.xs, stack.len);
 
-            if (percDiff(score, congestion.score()) >= IMPROVEMENT_PERC_THRESHOLD && congestion.score() < min) {
+            if (percDiff(score, congestion.score()) >= IMPROVEMENT_PERC_THRESHOLD
+                    && congestion.score() < min) {
                 backupCoords(coords, stack);
                 min = congestion.score();
                 stackBackup.copyFrom(stack);
@@ -738,9 +709,9 @@ final class LayoutRefiner {
     }
 
     /**
-     * Resolves conflicts either by bending bonds or stretching bonds in the
-     * shortest path between an overlapping pair. Bending and stretch are tried
-     * for each pair and the best resolution is used.
+     * Resolves conflicts either by bending bonds or stretching bonds in the shortest path between
+     * an overlapping pair. Bending and stretch are tried for each pair and the best resolution is
+     * used.
      *
      * @param pairs pairs
      */
@@ -748,8 +719,8 @@ final class LayoutRefiner {
 
         // without checking which bonds have been bent/stretch already we
         // could end up repeating a lot of repeated work to no avail
-        Map<IBond,AtomPair> bendVisit    = new HashMap<>();
-        Map<IBond,AtomPair> stretchVisit = new HashMap<>();
+        Map<IBond, AtomPair> bendVisit = new HashMap<>();
+        Map<IBond, AtomPair> stretchVisit = new HashMap<>();
 
         IntStack bendStack = new IntStack(atoms.length);
         IntStack stretchStack = new IntStack(atoms.length);
@@ -766,7 +737,7 @@ final class LayoutRefiner {
 
                 // attempt both bending and stretching storing the
                 // best result in the provided buffer
-                double bendScore    = bend(pair, bendStack, buffer1, bendVisit);
+                double bendScore = bend(pair, bendStack, buffer1, bendVisit);
                 double stretchScore = stretch(pair, stretchStack, buffer2, stretchVisit);
 
                 // bending is better than stretching
@@ -782,20 +753,16 @@ final class LayoutRefiner {
                     congestion.update(stretchStack.xs, stretchStack.len);
                     break;
                 }
-
             }
         }
     }
 
-    /**
-     * Refine the 2D coordinates of a layout to reduce overlap and congestion.
-     */
+    /** Refine the 2D coordinates of a layout to reduce overlap and congestion. */
     public void refine() {
         for (int i = 1; i <= MAX_ITERATIONS; i++) {
             final List<AtomPair> pairs = findCongestedPairs();
 
-            if (pairs.isEmpty())
-                break;
+            if (pairs.isEmpty()) break;
 
             final double min = congestion.score();
 
@@ -804,32 +771,28 @@ final class LayoutRefiner {
 
             // rotation improved, so try more rotation, we may have caused
             // new conflicts that can be resolved through more rotations
-            if (congestion.score() < min)
-                continue;
+            if (congestion.score() < min) continue;
 
             // inversion: terminal atoms can be placed inside rings
             // which is preferable to bending or stretching
             invert(pairs);
 
-            if (congestion.score() < min)
-                continue;
+            if (congestion.score() < min) continue;
 
             // bending or stretching: least favourable but sometimes
             // the only way. We try either and use the best
             bendOrStretch(pairs);
 
-            if (congestion.score() < min)
-                continue;
+            if (congestion.score() < min) continue;
 
             break;
         }
     }
 
     /**
-     * Backup the coordinates of atoms (idxs) in the stack to the provided
-     * destination.
+     * Backup the coordinates of atoms (idxs) in the stack to the provided destination.
      *
-     * @param dest  destination
+     * @param dest destination
      * @param stack atom indexes to backup
      */
     private void backupCoords(Point2d[] dest, IntStack stack) {
@@ -841,11 +804,10 @@ final class LayoutRefiner {
     }
 
     /**
-     * Restore the coordinates of atoms (idxs) in the stack to the provided
-     * source.
+     * Restore the coordinates of atoms (idxs) in the stack to the provided source.
      *
      * @param stack atom indexes to backup
-     * @param src   source of coordinates
+     * @param src source of coordinates
      */
     private void restoreCoords(IntStack stack, Point2d[] src) {
         for (int i = 0; i < stack.len; i++) {
@@ -856,12 +818,12 @@ final class LayoutRefiner {
     }
 
     /**
-     * Reflect all atoms (indexes) int he provided stack around the line formed
-     * of the beg and end atoms.
+     * Reflect all atoms (indexes) int he provided stack around the line formed of the beg and end
+     * atoms.
      *
      * @param stack atom indexes to reflect
-     * @param beg   beg atom of a bond
-     * @param end   end atom of a bond
+     * @param beg beg atom of a bond
+     * @param end end atom of a bond
      */
     private void reflect(IntStack stack, IAtom beg, IAtom end) {
         Point2d begP = beg.getPoint2d();
@@ -884,10 +846,10 @@ final class LayoutRefiner {
     /**
      * Reflect a point (p) in a line formed of 'base', 'a', and 'b'.
      *
-     * @param p    point to reflect
+     * @param p point to reflect
      * @param base base of the refection source
-     * @param a    a reflection coef
-     * @param b    b reflection coef
+     * @param a a reflection coef
+     * @param b b reflection coef
      */
     private static void reflect(Tuple2d p, Tuple2d base, double a, double b) {
         double x = a * (p.x - base.x) + b * (p.y - base.y) + base.x;
@@ -896,15 +858,14 @@ final class LayoutRefiner {
         p.y = y;
     }
 
-
     /**
      * Bend select atoms around a provided pivot by the specified amount (r).
      *
-     * @param indexes  array of atom indexes
-     * @param from     start offset into the array (inclusive)
-     * @param to       end offset into the array (exclusive)
+     * @param indexes array of atom indexes
+     * @param from start offset into the array (inclusive)
+     * @param to end offset into the array (exclusive)
      * @param pivotAtm the point about which we are pivoting
-     * @param r        radians to bend by
+     * @param r radians to bend by
      */
     private void bend(int[] indexes, int from, int to, IAtom pivotAtm, double r) {
         double s = Math.sin(r);
@@ -922,37 +883,33 @@ final class LayoutRefiner {
     }
 
     /**
-     * Stretch the distance between beg and end, moving all atoms provided in
-     * the stack.
+     * Stretch the distance between beg and end, moving all atoms provided in the stack.
      *
-     * @param stack  atoms to be moved
-     * @param beg    begin atom of a bond
-     * @param end    end atom of a bond
+     * @param stack atoms to be moved
+     * @param beg begin atom of a bond
+     * @param end end atom of a bond
      * @param amount amount to try stretching by (absolute)
      */
     private void stretch(IntStack stack, IAtom beg, IAtom end, double amount) {
         Point2d begPoint = beg.getPoint2d();
         Point2d endPoint = end.getPoint2d();
 
-        if (begPoint.distance(endPoint) + amount > MAX_BOND_LENGTH)
-            return;
+        if (begPoint.distance(endPoint) + amount > MAX_BOND_LENGTH) return;
 
         Vector2d vector = new Vector2d(endPoint.x - begPoint.x, endPoint.y - begPoint.y);
         vector.normalize();
         vector.scale(amount);
 
-        for (int i = 0; i < stack.len; i++)
-            atoms[stack.xs[i]].getPoint2d().add(vector);
+        for (int i = 0; i < stack.len; i++) atoms[stack.xs[i]].getPoint2d().add(vector);
     }
 
-
     /**
-     * Internal - makes atom (seq) and bond priority queues for resolving
-     * overlap. Only (acyclic - but not really) atoms and bonds in the shortest
-     * path between the two atoms can resolve an overlap. We create prioritised
-     * sequences of atoms/bonds where the more central in the shortest path.
+     * Internal - makes atom (seq) and bond priority queues for resolving overlap. Only (acyclic -
+     * but not really) atoms and bonds in the shortest path between the two atoms can resolve an
+     * overlap. We create prioritised sequences of atoms/bonds where the more central in the
+     * shortest path.
      *
-     * @param path  shortest path between atoms
+     * @param path shortest path between atoms
      * @param seqAt prioritised atoms, first atom is the middle of the path
      * @param bndAt prioritised bonds, first bond is the middle of the path
      */
@@ -986,13 +943,13 @@ final class LayoutRefiner {
     }
 
     /**
-     * Recursively visit 'v' and all vertices adjacent to it (excluding 'p')
-     * adding all except 'v' to the result array.
+     * Recursively visit 'v' and all vertices adjacent to it (excluding 'p') adding all except 'v'
+     * to the result array.
      *
      * @param visited visit flags array, should be cleared before search
-     * @param result  visited vertices
-     * @param p       previous vertex
-     * @param v       start vertex
+     * @param result visited vertices
+     * @param p previous vertex
+     * @param v start vertex
      * @return number of visited vertices
      */
     private int visitAdj(boolean[] visited, int[] result, int p, int v) {
@@ -1009,14 +966,14 @@ final class LayoutRefiner {
     }
 
     /**
-     * Recursively visit 'v' and all vertices adjacent to it (excluding 'p')
-     * adding them to the result array.
+     * Recursively visit 'v' and all vertices adjacent to it (excluding 'p') adding them to the
+     * result array.
      *
      * @param visited visit flags array, should be cleared before search
-     * @param result  visited vertices
-     * @param p       previous vertex
-     * @param v       start vertex
-     * @param n       current number of visited vertices
+     * @param result visited vertices
+     * @param p previous vertex
+     * @param v start vertex
+     * @param n current number of visited vertices
      * @return new number of visited vertices
      */
     private int visit(boolean[] visited, int[] result, int p, int v, int n) {
@@ -1030,7 +987,6 @@ final class LayoutRefiner {
         return n;
     }
 
-
     /**
      * Access the common atom shared by two bonds.
      *
@@ -1041,29 +997,23 @@ final class LayoutRefiner {
     private static IAtom getCommon(IBond bndA, IBond bndB) {
         IAtom beg = bndA.getBegin();
         IAtom end = bndA.getEnd();
-        if (bndB.contains(beg))
-            return beg;
-        else if (bndB.contains(end))
-            return end;
-        else
-            return null;
+        if (bndB.contains(beg)) return beg;
+        else if (bndB.contains(end)) return end;
+        else return null;
     }
 
     /**
-     * Congested pair of un-bonded atoms, described by the index of the atoms
-     * (fst, snd). The atoms (seqAt) and bonds (bndAt) in the shortest path
-     * between the pair are stored as well as a bndAtCode for checking special
-     * case ring bond patterns.
+     * Congested pair of un-bonded atoms, described by the index of the atoms (fst, snd). The atoms
+     * (seqAt) and bonds (bndAt) in the shortest path between the pair are stored as well as a
+     * bndAtCode for checking special case ring bond patterns.
      */
     private static final class AtomPair {
         final int fst, snd;
-        final int[]   seqAt;
+        final int[] seqAt;
         final IBond[] bndAt;
-        final int     bndAtCode;
+        final int bndAtCode;
 
-        /**
-         * Which attempt are we trying to resolve this overlap with.
-         */
+        /** Which attempt are we trying to resolve this overlap with. */
         int attempt = 1;
 
         public AtomPair(int fst, int snd, int[] seqAt, IBond[] bndAt) {
@@ -1090,9 +1040,8 @@ final class LayoutRefiner {
         }
 
         /**
-         * Create the bond code bit mask, lowest bit is whether the path is
-         * odd/even then the other bits are whether the bonds are in a ring or
-         * not.
+         * Create the bond code bit mask, lowest bit is whether the path is odd/even then the other
+         * bits are whether the bonds are in a ring or not.
          *
          * @param bonds bonds to encode
          * @return the bond code
@@ -1108,12 +1057,10 @@ final class LayoutRefiner {
         }
     }
 
-    /**
-     * Internal - fixed size integer stack.
-     */
+    /** Internal - fixed size integer stack. */
     private static final class IntStack {
         private final int[] xs;
-        private       int   len;
+        private int len;
 
         public IntStack(int cap) {
             this.xs = new int[cap];
@@ -1138,10 +1085,7 @@ final class LayoutRefiner {
         }
     }
 
-    /**
-     * Internal - A hashable tuple of integers, allows to check for previously
-     * seen pairs.
-     */
+    /** Internal - A hashable tuple of integers, allows to check for previously seen pairs. */
     private static final class IntTuple {
         private final int fst, snd;
 
@@ -1157,10 +1101,8 @@ final class LayoutRefiner {
 
             IntTuple that = (IntTuple) o;
 
-
-            return (this.fst == that.fst && this.snd == that.snd) ||
-                    (this.fst == that.snd && this.snd == that.fst);
-
+            return (this.fst == that.fst && this.snd == that.snd)
+                    || (this.fst == that.snd && this.snd == that.fst);
         }
 
         @Override

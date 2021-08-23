@@ -32,7 +32,6 @@ import org.xml.sax.Attributes;
 
 /**
  * @author Egon Willighagen &lt;elw38@cam.ac.uk&gt;
- *
  * @cdk.module io
  * @cdk.githash
  */
@@ -50,7 +49,8 @@ public class CMLReactionModule extends CMLCoreModule {
     }
 
     @Override
-    public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
+    public void startElement(
+            CMLStack xpath, String uri, String local, String raw, Attributes atts) {
         if ("reaction".equals(local)) {
             //            cdo.startObject("Reaction");
             if (currentReactionSet == null)
@@ -69,14 +69,14 @@ public class CMLReactionModule extends CMLCoreModule {
             //            cdo.startObject("Reactant");
             if (currentReaction == null) {
                 if (currentReactionSet == null)
-                    currentReactionSet = currentChemFile.getBuilder().newInstance(IReactionSet.class);
+                    currentReactionSet =
+                            currentChemFile.getBuilder().newInstance(IReactionSet.class);
                 currentReaction = currentChemFile.getBuilder().newInstance(IReaction.class);
             }
             currentMolecule = currentChemFile.getBuilder().newInstance(IAtomContainer.class);
             objectType = "Reactant";
             String id = atts.getValue("id");
-            if (id != null)
-                currentMolecule.setID(id);
+            if (id != null) currentMolecule.setID(id);
             else {
                 String ref = atts.getValue("ref");
                 if (ref != null) currentMolecule.setID(ref);
@@ -86,14 +86,14 @@ public class CMLReactionModule extends CMLCoreModule {
             //            cdo.startObject("Product");
             if (currentReaction == null) {
                 if (currentReactionSet == null)
-                    currentReactionSet = currentChemFile.getBuilder().newInstance(IReactionSet.class);
+                    currentReactionSet =
+                            currentChemFile.getBuilder().newInstance(IReactionSet.class);
                 currentReaction = currentChemFile.getBuilder().newInstance(IReaction.class);
             }
             currentMolecule = currentChemFile.getBuilder().newInstance(IAtomContainer.class);
             objectType = "Product";
             String id = atts.getValue("id");
-            if (id != null)
-                currentMolecule.setID(id);
+            if (id != null) currentMolecule.setID(id);
             else {
                 String ref = atts.getValue("ref");
                 if (ref != null) currentMolecule.setID(ref);
@@ -103,14 +103,14 @@ public class CMLReactionModule extends CMLCoreModule {
             //            cdo.startObject("Agent");
             if (currentReaction == null) {
                 if (currentReactionSet == null)
-                    currentReactionSet = currentChemFile.getBuilder().newInstance(IReactionSet.class);
+                    currentReactionSet =
+                            currentChemFile.getBuilder().newInstance(IReactionSet.class);
                 currentReaction = currentChemFile.getBuilder().newInstance(IReaction.class);
             }
             currentMolecule = currentChemFile.getBuilder().newInstance(IAtomContainer.class);
             objectType = "Agent";
             String id = atts.getValue("id");
-            if (id != null)
-                currentMolecule.setID(id);
+            if (id != null) currentMolecule.setID(id);
             else {
                 String ref = atts.getValue("ref");
                 if (ref != null) currentMolecule.setID(ref);
@@ -170,7 +170,8 @@ public class CMLReactionModule extends CMLCoreModule {
             currentReaction.addAgent(currentMolecule);
         } else if ("molecule".equals(local)) {
             logger.debug("Storing Molecule");
-            //if the current molecule exists in the currentMoleculeSet means that is a reference in these.
+            // if the current molecule exists in the currentMoleculeSet means that is a reference in
+            // these.
             if (currentMoleculeSet.getMultiplier(currentMolecule) == -1) super.storeData();
             // do nothing else but store atom/bond information
         } else {
@@ -181,9 +182,9 @@ public class CMLReactionModule extends CMLCoreModule {
     /**
      * Get the IAtomContainer contained in a IAtomContainerSet object with a ID.
      *
-     * @param molSet   The IAtomContainerSet
-     * @param id       The ID the look
-     * @return         The IAtomContainer with the ID
+     * @param molSet The IAtomContainerSet
+     * @param id The ID the look
+     * @return The IAtomContainer with the ID
      */
     private IAtomContainer getMoleculeFromID(IAtomContainerSet molSet, String id) {
         for (IAtomContainer mol : molSet.atomContainers()) {

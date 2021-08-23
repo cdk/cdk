@@ -28,11 +28,10 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * Match an atom in a specific size ring. The ring size is specified by {@code
- * r<NUMBER>} in a SMARTS pattern. This term is non-portable, depending on the
- * set of rings chosen and which ring sizes are used. The default implementation
- * (Daylight) only stores the smallest ring each atom belongs to whilst other
- * implementations may store multiple values. A more portable term is the
+ * Match an atom in a specific size ring. The ring size is specified by {@code r<NUMBER>} in a
+ * SMARTS pattern. This term is non-portable, depending on the set of rings chosen and which ring
+ * sizes are used. The default implementation (Daylight) only stores the smallest ring each atom
+ * belongs to whilst other implementations may store multiple values. A more portable term is the
  * ring connectivity which is specified as {@code x<NUMBER>}.
  *
  * @cdk.module smarts
@@ -55,10 +54,11 @@ public final class SmallestRingAtom extends SMARTSAtom {
         this.ringSize = ringSize;
     }
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     public boolean matches(IAtom atom) {
-        return ringSize < 0 ? invariants(atom).ringConnectivity() > 0
-                            : invariants(atom).ringSize().contains(ringSize);
+        return ringSize < 0
+                ? invariants(atom).ringConnectivity() > 0
+                : invariants(atom).ringSize().contains(ringSize);
     }
 }

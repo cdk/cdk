@@ -27,9 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Determine the set of cycles which are the shortest through each vertex.
- * Unlike the Smallest Set of Smallest Rings (SSSR), linear dependence of
- * each cycle does not need to be verified.
+ * Determine the set of cycles which are the shortest through each vertex. Unlike the Smallest Set
+ * of Smallest Rings (SSSR), linear dependence of each cycle does not need to be verified.
  *
  * @author John May
  * @cdk.module core
@@ -39,14 +38,12 @@ final class VertexShortCycles {
     /** Shortest cycles stored as closed walks. */
     private final List<int[]> paths;
 
-    /** Construct the vertex short cycles for the
-     *  given graph. */
+    /** Construct the vertex short cycles for the given graph. */
     VertexShortCycles(int[][] graph) {
         this(new InitialCycles(graph));
     }
 
-    /** Construct the vertex short cycles for the
-     *  given initial cycles. */
+    /** Construct the vertex short cycles for the given initial cycles. */
     VertexShortCycles(InitialCycles initialCycles) {
 
         int[][] graph = initialCycles.graph();
@@ -79,15 +76,14 @@ final class VertexShortCycles {
     }
 
     /**
-     * The paths of the shortest cycles, that paths are closed walks such that
-     * the last and first vertex is the same.
+     * The paths of the shortest cycles, that paths are closed walks such that the last and first
+     * vertex is the same.
      *
      * @return the paths
      */
     int[][] paths() {
         int[][] paths = new int[this.paths.size()][0];
-        for (int i = 0; i < this.paths.size(); i++)
-            paths[i] = this.paths.get(i);
+        for (int i = 0; i < this.paths.size(); i++) paths[i] = this.paths.get(i);
         return paths;
     }
 

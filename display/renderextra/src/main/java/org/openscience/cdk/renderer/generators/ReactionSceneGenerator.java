@@ -21,7 +21,6 @@ package org.openscience.cdk.renderer.generators;
 
 import java.util.Arrays;
 import java.util.List;
-
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ElementGroup;
@@ -69,6 +68,6 @@ public class ReactionSceneGenerator implements IGenerator<IReaction> {
     /** {@inheritDoc} */
     @Override
     public List<IGeneratorParameter<?>> getParameters() {
-        return Arrays.asList(new IGeneratorParameter<?>[]{showReactionBoxes, arrowHeadWidth});
+        return Arrays.asList(new IGeneratorParameter<?>[] {showReactionBoxes, arrowHeadWidth});
     }
 }

@@ -29,35 +29,32 @@ package org.openscience.cdk.hash.stereo;
  *
  * @author John May
  * @cdk.module hash
- * @see <a href="http://en.wikipedia.org/wiki/Parity_of_a_permutation">Parity of
- *      a Permutation, Wikipedia</a>
+ * @see <a href="http://en.wikipedia.org/wiki/Parity_of_a_permutation">Parity of a Permutation,
+ *     Wikipedia</a>
  * @cdk.githash
  */
 abstract class PermutationParity {
 
     /**
-     * Identity parity which always returns 1 (even). This is useful for
-     * configurations which do not require ordering, such as, double bonds with
-     * implicit hydrogens.
+     * Identity parity which always returns 1 (even). This is useful for configurations which do not
+     * require ordering, such as, double bonds with implicit hydrogens.
      */
-    public static final PermutationParity IDENTITY = new PermutationParity() {
+    public static final PermutationParity IDENTITY =
+            new PermutationParity() {
 
-                                                       @Override
-                                                       public int parity(long[] current) {
-                                                           return 1;
-                                                       }
-                                                   };
+                @Override
+                public int parity(long[] current) {
+                    return 1;
+                }
+            };
 
     /**
-     * Calculate the permutation parity of a permutation on the current values.
-     * The inversion parity counts whether we need to do an odd or even number
-     * of swaps to put the values in sorted order. If the values contain
-     * duplicates then the parity is returned as 0.
+     * Calculate the permutation parity of a permutation on the current values. The inversion parity
+     * counts whether we need to do an odd or even number of swaps to put the values in sorted
+     * order. If the values contain duplicates then the parity is returned as 0.
      *
      * @param current current values of invariants
-     * @return -1, odd number of swaps, +1, even number of swaps, 0, contains
-     *         duplicates
+     * @return -1, odd number of swaps, +1, even number of swaps, 0, contains duplicates
      */
     abstract int parity(long[] current);
-
 }

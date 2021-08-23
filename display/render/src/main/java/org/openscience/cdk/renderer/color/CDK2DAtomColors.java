@@ -18,13 +18,6 @@
  */
 package org.openscience.cdk.renderer.color;
 
-import java.awt.Color;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.openscience.cdk.config.Elements;
-import org.openscience.cdk.interfaces.IAtom;
-
 import static org.openscience.cdk.config.Elements.Aluminium;
 import static org.openscience.cdk.config.Elements.Argon;
 import static org.openscience.cdk.config.Elements.Barium;
@@ -59,13 +52,16 @@ import static org.openscience.cdk.config.Elements.Titanium;
 import static org.openscience.cdk.config.Elements.Unknown;
 import static org.openscience.cdk.config.Elements.Xenon;
 
+import java.awt.Color;
+import org.openscience.cdk.config.Elements;
+import org.openscience.cdk.interfaces.IAtom;
+
 /**
- * Gives a short table of atom colors for 2D display. The coloring is loosely
- * based on Jmol CPK.
+ * Gives a short table of atom colors for 2D display. The coloring is loosely based on Jmol CPK.
  *
- * The internal color map can be modified by invoking the set method. For convenience the set method
- * returns the colorer instance for chaining.
- * 
+ * <p>The internal color map can be modified by invoking the set method. For convenience the set
+ * method returns the colorer instance for chaining.
+ *
  * <pre>{@code
  * IAtomColorer colorer = new CDK2DAtomColors().set("H", Color.LIGHT_GRAY)
  *                                             .set("O", Color.RED.lighter());
@@ -78,7 +74,7 @@ import static org.openscience.cdk.config.Elements.Xenon;
  */
 public class CDK2DAtomColors implements IAtomColorer, java.io.Serializable {
 
-    private static final long  serialVersionUID = 6712994043820219426L;
+    private static final long serialVersionUID = 6712994043820219426L;
 
     private static final Color hexD9FFFF = new Color(0xD9FFFF);
     private static final Color hexCC80FF = new Color(0xCC80FF);
@@ -188,22 +184,17 @@ public class CDK2DAtomColors implements IAtomColorer, java.io.Serializable {
     private static final Color hexE6002E = new Color(0xE6002E);
     private static final Color hexEB0026 = new Color(0xEB0026);
 
-    /**
-     * {@inheritDoc }
-     */
+    /** {@inheritDoc } */
     @Override
     public Color getAtomColor(IAtom atom) {
         return getAtomColor(atom, hexB31FBA);
     }
 
-    /**
-     * {@inheritDoc }
-     */
+    /** {@inheritDoc } */
     @Override
     public Color getAtomColor(IAtom atom, Color defaultColor) {
         Elements elem = Elements.ofString(atom.getSymbol());
-        if (elem == Unknown)
-            elem = Elements.ofNumber(atom.getAtomicNumber());
+        if (elem == Unknown) elem = Elements.ofNumber(atom.getAtomicNumber());
         switch (elem) {
             case Helium:
                 return hexD9FFFF;

@@ -33,13 +33,12 @@ import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.Bond;
 
 /**
- * Test suite for testing deduce-bond-order implementations.
- * This suite tests deduction from hybridization rich starting
- * points, excluding, but optional, implicit or explicit
- * hydrogen counts.
+ * Test suite for testing deduce-bond-order implementations. This suite tests deduction from
+ * hybridization rich starting points, excluding, but optional, implicit or explicit hydrogen
+ * counts.
  *
- * @author      egonw
- * @cdk.module  test-valencycheck
+ * @author egonw
+ * @cdk.module test-valencycheck
  * @cdk.created 2006-08-16
  */
 public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
@@ -51,9 +50,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
         dboTool = new SaturationChecker();
     }
 
-    /**
-     * Test <div class="inchi">InChI=1/C2H2/c1-2/h1-2H</div>.
-     */
+    /** Test <div class="inchi">InChI=1/C2H2/c1-2/h1-2H</div>. */
     @Test
     public void testAcetylene() throws Exception {
         IAtomContainer keto = new AtomContainer();
@@ -78,9 +75,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
         Assert.assertEquals(Order.TRIPLE, bond1.getOrder());
     }
 
-    /**
-     * Test <div class="inchi">InChI=1/C2H4O/c1-2-3/h2H,1H3</div>.
-     */
+    /** Test <div class="inchi">InChI=1/C2H4O/c1-2-3/h2H,1H3</div>. */
     @Test
     public void testKeto() throws Exception {
         IAtomContainer keto = new AtomContainer();
@@ -110,9 +105,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
         Assert.assertEquals(Order.DOUBLE, bond2.getOrder());
     }
 
-    /**
-     * Test <div class="inchi">InChI=1/C2H6O/c1-2-3/h3H,2H2,1H3</div>.
-     */
+    /** Test <div class="inchi">InChI=1/C2H6O/c1-2-3/h3H,2H2,1H3</div>. */
     @Test
     public void testEnol() throws Exception {
         IAtomContainer enol = new AtomContainer();
@@ -143,9 +136,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
         Assert.assertEquals(Order.SINGLE, bond2.getOrder());
     }
 
-    /**
-     * Test <div class="inchi">InChI=1/C4H6/c1-3-4-2/h3-4H,1-2H2</div>.
-     */
+    /** Test <div class="inchi">InChI=1/C4H6/c1-3-4-2/h3-4H,1-2H2</div>. */
     @Test
     public void xtestButadiene() throws Exception {
         IAtomContainer enol = new AtomContainer();
@@ -182,9 +173,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
         Assert.assertEquals(Order.DOUBLE, bond3.getOrder());
     }
 
-    /**
-     * Test <div class="inchi">InChI=1/C6H4O2/c7-5-1-2-6(8)4-3-5/h1-4H</div>.
-     */
+    /** Test <div class="inchi">InChI=1/C6H4O2/c7-5-1-2-6(8)4-3-5/h1-4H</div>. */
     @Test
     public void testQuinone() throws Exception {
         IAtomContainer enol = new AtomContainer();
@@ -244,9 +233,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
         Assert.assertEquals(Order.DOUBLE, bond8.getOrder());
     }
 
-    /**
-     * Test <div class="inchi">InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H</div>.
-     */
+    /** Test <div class="inchi">InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H</div>. */
     @Test
     public void testBenzene() throws Exception {
         IAtomContainer enol = new AtomContainer();
@@ -290,23 +277,27 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
         dboTool.saturate(enol);
 
         // now check whether it did the right thing
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), bond1
-                .getOrder().numeric() + bond6.getOrder().numeric()); // around atom1
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), bond1
-                .getOrder().numeric() + bond2.getOrder().numeric()); // around atom2
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), bond2
-                .getOrder().numeric() + bond3.getOrder().numeric()); // around atom3
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), bond3
-                .getOrder().numeric() + bond4.getOrder().numeric()); // around atom4
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), bond4
-                .getOrder().numeric() + bond5.getOrder().numeric()); // around atom5
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), bond5
-                .getOrder().numeric() + bond6.getOrder().numeric()); // around atom6
+        Assert.assertEquals(
+                Order.SINGLE.numeric() + Order.DOUBLE.numeric(),
+                bond1.getOrder().numeric() + bond6.getOrder().numeric()); // around atom1
+        Assert.assertEquals(
+                Order.SINGLE.numeric() + Order.DOUBLE.numeric(),
+                bond1.getOrder().numeric() + bond2.getOrder().numeric()); // around atom2
+        Assert.assertEquals(
+                Order.SINGLE.numeric() + Order.DOUBLE.numeric(),
+                bond2.getOrder().numeric() + bond3.getOrder().numeric()); // around atom3
+        Assert.assertEquals(
+                Order.SINGLE.numeric() + Order.DOUBLE.numeric(),
+                bond3.getOrder().numeric() + bond4.getOrder().numeric()); // around atom4
+        Assert.assertEquals(
+                Order.SINGLE.numeric() + Order.DOUBLE.numeric(),
+                bond4.getOrder().numeric() + bond5.getOrder().numeric()); // around atom5
+        Assert.assertEquals(
+                Order.SINGLE.numeric() + Order.DOUBLE.numeric(),
+                bond5.getOrder().numeric() + bond6.getOrder().numeric()); // around atom6
     }
 
-    /**
-     * Test <div class="inchi">InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H</div>.
-     */
+    /** Test <div class="inchi">InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H</div>. */
     @Test
     public void testPyrrole() throws Exception {
         IAtomContainer enol = new AtomContainer();
@@ -352,9 +343,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
         Assert.assertEquals(Order.SINGLE, bond5.getOrder());
     }
 
-    /**
-     * Test <div class="inchi">InChI=1/C5H5N/c1-2-4-6-5-3-1/h1-5H</div>.
-     */
+    /** Test <div class="inchi">InChI=1/C5H5N/c1-2-4-6-5-3-1/h1-5H</div>. */
     @Ignore("previously disabled 'xtest'")
     public void xtestPyridine() throws Exception {
         IAtomContainer enol = new AtomContainer();
@@ -397,24 +386,33 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
         dboTool.saturate(enol);
 
         // now check whether it did the right thing
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), bond1
-                .getOrder().numeric() + bond6.getOrder().numeric()); // around atom1
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), bond1
-                .getOrder().numeric() + bond2.getOrder().numeric()); // around atom2
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), bond2
-                .getOrder().numeric() + bond3.getOrder().numeric()); // around atom3
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), bond3
-                .getOrder().numeric() + bond4.getOrder().numeric()); // around atom4
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), bond4
-                .getOrder().numeric() + bond5.getOrder().numeric()); // around atom5
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), bond5
-                .getOrder().numeric() + bond6.getOrder().numeric()); // around atom6
+        Assert.assertEquals(
+                Order.SINGLE.numeric() + Order.DOUBLE.numeric(),
+                bond1.getOrder().numeric() + bond6.getOrder().numeric()); // around atom1
+        Assert.assertEquals(
+                Order.SINGLE.numeric() + Order.DOUBLE.numeric(),
+                bond1.getOrder().numeric() + bond2.getOrder().numeric()); // around atom2
+        Assert.assertEquals(
+                Order.SINGLE.numeric() + Order.DOUBLE.numeric(),
+                bond2.getOrder().numeric() + bond3.getOrder().numeric()); // around atom3
+        Assert.assertEquals(
+                Order.SINGLE.numeric() + Order.DOUBLE.numeric(),
+                bond3.getOrder().numeric() + bond4.getOrder().numeric()); // around atom4
+        Assert.assertEquals(
+                Order.SINGLE.numeric() + Order.DOUBLE.numeric(),
+                bond4.getOrder().numeric() + bond5.getOrder().numeric()); // around atom5
+        Assert.assertEquals(
+                Order.SINGLE.numeric() + Order.DOUBLE.numeric(),
+                bond5.getOrder().numeric() + bond6.getOrder().numeric()); // around atom6
     }
 
     private void addHydrogens(IAtomContainer container, IAtom atom, int numberOfHydrogens) {
         for (int i = 0; i < numberOfHydrogens; i++)
-            container.addBond(atom.getBuilder().newInstance(IBond.class, atom,
-                    atom.getBuilder().newInstance(IAtom.class, "H")));
+            container.addBond(
+                    atom.getBuilder()
+                            .newInstance(
+                                    IBond.class,
+                                    atom,
+                                    atom.getBuilder().newInstance(IAtom.class, "H")));
     }
-
 }

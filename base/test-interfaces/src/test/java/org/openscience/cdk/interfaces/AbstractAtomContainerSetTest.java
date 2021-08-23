@@ -18,18 +18,17 @@
  */
 package org.openscience.cdk.interfaces;
 
-import java.util.Comparator;
-import java.util.Iterator;
-
-import org.junit.Assert;
-import org.junit.Test;
-import org.mockito.Mockito;
-import org.openscience.cdk.tools.manipulator.AtomContainerComparator;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
+
+import java.util.Comparator;
+import java.util.Iterator;
+import org.junit.Assert;
+import org.junit.Test;
+import org.mockito.Mockito;
+import org.openscience.cdk.tools.manipulator.AtomContainerComparator;
 
 /**
  * Checks the functionality of {@link IAtomContainerSet} implementations.
@@ -38,9 +37,7 @@ import static org.mockito.Mockito.verify;
  */
 public abstract class AbstractAtomContainerSetTest extends AbstractChemObjectTest {
 
-    /**
-     * @cdk.bug 3093241
-     */
+    /** @cdk.bug 3093241 */
     @Test
     public void testSortAtomContainers_Comparator_Null() {
         IAtomContainerSet som = (IAtomContainerSet) newChemObject();
@@ -63,9 +60,7 @@ public abstract class AbstractAtomContainerSetTest extends AbstractChemObjectTes
         Assert.assertEquals(2, som.getAtomContainer(1).getAtomCount());
     }
 
-    /**
-     * ensure coefficients are sorted also
-     */
+    /** ensure coefficients are sorted also */
     @Test
     public void testSort_Coefficients() {
 
@@ -90,31 +85,30 @@ public abstract class AbstractAtomContainerSetTest extends AbstractChemObjectTes
         assertThat(set.getMultiplier(1), is(2D));
 
         // sort by atom container count
-        set.sortAtomContainers(new Comparator<IAtomContainer>() {
+        set.sortAtomContainers(
+                new Comparator<IAtomContainer>() {
 
-            @Override
-            public int compare(IAtomContainer o1, IAtomContainer o2) {
-                int n = o1.getAtomCount();
-                int m = o2.getAtomCount();
-                if (n > m) return +1;
-                if (n < m) return -1;
-                return 0;
-            }
-        });
+                    @Override
+                    public int compare(IAtomContainer o1, IAtomContainer o2) {
+                        int n = o1.getAtomCount();
+                        int m = o2.getAtomCount();
+                        if (n > m) return +1;
+                        if (n < m) return -1;
+                        return 0;
+                    }
+                });
 
         assertThat(set.getAtomContainer(0), is(b));
         assertThat(set.getMultiplier(0), is(2D));
         assertThat(set.getAtomContainer(1), is(a));
         assertThat(set.getMultiplier(1), is(1D));
-
     }
 
     /**
-     * Ensures that sort method of the AtomContainerSet does not include nulls
-     * in the comparator. This is tested using a comparator which sorts null
-     * values as low and thus to the start of an array. By adding two (non-null)
-     * values and sorting we should see that the first two values are not null
-     * despite giving a comparator which sorts null as low.
+     * Ensures that sort method of the AtomContainerSet does not include nulls in the comparator.
+     * This is tested using a comparator which sorts null values as low and thus to the start of an
+     * array. By adding two (non-null) values and sorting we should see that the first two values
+     * are not null despite giving a comparator which sorts null as low.
      *
      * @cdk.bug 1291
      */
@@ -139,30 +133,29 @@ public abstract class AbstractAtomContainerSetTest extends AbstractChemObjectTes
         // this comparator is deliberately broken but serves for the test
         //  - null should be a high value (Interger.MAX)
         //  - also, avoid boxed primitives in comparators
-        set.sortAtomContainers(new Comparator<IAtomContainer>() {
+        set.sortAtomContainers(
+                new Comparator<IAtomContainer>() {
 
-            @Override
-            public int compare(IAtomContainer o1, IAtomContainer o2) {
-                return size(o1).compareTo(size(o2));
-            }
+                    @Override
+                    public int compare(IAtomContainer o1, IAtomContainer o2) {
+                        return size(o1).compareTo(size(o2));
+                    }
 
-            public Integer size(IAtomContainer container) {
-                return container == null ? Integer.MIN_VALUE : container.getAtomCount();
-            }
-
-        });
+                    public Integer size(IAtomContainer container) {
+                        return container == null ? Integer.MIN_VALUE : container.getAtomCount();
+                    }
+                });
 
         // despite null being low, the two atom containers should
         // still be in the first slot
         Assert.assertNotNull(set.getAtomContainer(0));
         Assert.assertNotNull(set.getAtomContainer(1));
         Assert.assertNull(set.getAtomContainer(2));
-
     }
 
     /**
-     * Ensure that sort is not called on an empty set. We mock the comparator
-     * and verify the compare method is never called
+     * Ensure that sort is not called on an empty set. We mock the comparator and verify the compare
+     * method is never called
      */
     @Test
     public void testSort_empty() {
@@ -175,8 +168,8 @@ public abstract class AbstractAtomContainerSetTest extends AbstractChemObjectTes
         set.sortAtomContainers(comparator);
 
         // verify the comparator was called 0 times
-        verify(comparator, Mockito.times(0)).compare(any(IAtomContainer.class), any(IAtomContainer.class));
-
+        verify(comparator, Mockito.times(0))
+                .compare(any(IAtomContainer.class), any(IAtomContainer.class));
     }
 
     @Test
@@ -295,7 +288,10 @@ public abstract class AbstractAtomContainerSetTest extends AbstractChemObjectTes
         IAtomContainerSet som = (IAtomContainerSet) newChemObject();
         som.addAtomContainer(som.getBuilder().newInstance(IAtomContainer.class));
 
-        Assert.assertEquals(-1.0, som.getMultiplier(som.getBuilder().newInstance(IAtomContainer.class)), 0.00001);
+        Assert.assertEquals(
+                -1.0,
+                som.getMultiplier(som.getBuilder().newInstance(IAtomContainer.class)),
+                0.00001);
     }
 
     @Test
@@ -384,13 +380,15 @@ public abstract class AbstractAtomContainerSetTest extends AbstractChemObjectTes
         Assert.assertTrue(clone instanceof IAtomContainerSet);
         IAtomContainerSet clonedSet = (IAtomContainerSet) clone;
         Assert.assertNotSame(containerSet, clonedSet);
-        Assert.assertEquals(containerSet.getAtomContainerCount(), clonedSet.getAtomContainerCount());
+        Assert.assertEquals(
+                containerSet.getAtomContainerCount(), clonedSet.getAtomContainerCount());
     }
 
     @Test
     public void testCloneMultiplier() throws Exception {
         IAtomContainerSet containerSet = (IAtomContainerSet) newChemObject();
-        containerSet.addAtomContainer(containerSet.getBuilder().newInstance(IAtomContainer.class), 2);
+        containerSet.addAtomContainer(
+                containerSet.getBuilder().newInstance(IAtomContainer.class), 2);
         Object clone = containerSet.clone();
         Assert.assertTrue(clone instanceof IAtomContainerSet);
         IAtomContainerSet clonedSet = (IAtomContainerSet) clone;
@@ -483,13 +481,14 @@ public abstract class AbstractAtomContainerSetTest extends AbstractChemObjectTes
         IAtomContainer ac2 = som.getBuilder().newInstance(IAtomContainer.class);
         som.addAtomContainer(ac1);
         som.addAtomContainer(ac2);
-        som.sortAtomContainers(new Comparator<IAtomContainer>() {
+        som.sortAtomContainers(
+                new Comparator<IAtomContainer>() {
 
-            @Override
-            public int compare(IAtomContainer o1, IAtomContainer o2) {
-                return 0;
-            }
-        });
+                    @Override
+                    public int compare(IAtomContainer o1, IAtomContainer o2) {
+                        return 0;
+                    }
+                });
         Assert.assertEquals(2, som.getAtomContainerCount());
     }
 
@@ -502,14 +501,15 @@ public abstract class AbstractAtomContainerSetTest extends AbstractChemObjectTes
         IAtomContainer ac2 = som.getBuilder().newInstance(IAtomContainer.class);
         som.addAtomContainer(ac2, 1.0);
         ac2.setProperty("multiplierSortCode", "1");
-        som.sortAtomContainers(new Comparator<IAtomContainer>() {
+        som.sortAtomContainers(
+                new Comparator<IAtomContainer>() {
 
-            @Override
-            public int compare(IAtomContainer o1, IAtomContainer o2) {
-                return ((String) o1.getProperty("multiplierSortCode")).compareTo((String) o2
-                        .getProperty("multiplierSortCode"));
-            }
-        });
+                    @Override
+                    public int compare(IAtomContainer o1, IAtomContainer o2) {
+                        return ((String) o1.getProperty("multiplierSortCode"))
+                                .compareTo((String) o2.getProperty("multiplierSortCode"));
+                    }
+                });
         Assert.assertEquals(2, som.getAtomContainerCount());
         IAtomContainer newFirstAC = som.getAtomContainer(0);
         Assert.assertEquals(newFirstAC.getProperty("multiplierSortCode"), "1");
@@ -547,12 +547,12 @@ public abstract class AbstractAtomContainerSetTest extends AbstractChemObjectTes
 
         set.addAtomContainer(set.getBuilder().newInstance(IAtomContainer.class));
 
-        Assert.assertFalse("container set with a single container should not be empty", set.isEmpty());
+        Assert.assertFalse(
+                "container set with a single container should not be empty", set.isEmpty());
 
         set.removeAllAtomContainers();
 
-        Assert.assertTrue("container set with all containers removed should be empty", set.isEmpty());
-
+        Assert.assertTrue(
+                "container set with all containers removed should be empty", set.isEmpty());
     }
-
 }

@@ -22,17 +22,14 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 
-import java.util.Map;
-
-/**
- * @cdk.module test-signature
- */
+/** @cdk.module test-signature */
 public class SignatureFingerprinterTest extends AbstractFingerprinterTest {
 
     @Override

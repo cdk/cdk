@@ -39,10 +39,9 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- *
- * @author         Rajarshi Guha
- * @cdk.created    2006-09-18
- * @cdk.module     test-smiles
+ * @author Rajarshi Guha
+ * @cdk.created 2006-09-18
+ * @cdk.module test-smiles
  */
 public class DeduceBondSystemToolTest extends CDKTestCase {
 
@@ -135,12 +134,11 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
         Assert.assertEquals(13, doubleBondCount);
     }
 
-    /**
-     * @cdk.bug 3506770
-     */
+    /** @cdk.bug 3506770 */
     @Ignore("This is an example structure where this class fails")
     public void testLargeBioclipseUseCase() throws Exception {
-        String smiles = "COc1ccc2[C@@H]3[C@H](COc2c1)C(C)(C)OC4=C3C(=O)C(=O)C5=C4OC(C)(C)[C@@H]6COc7cc(OC)ccc7[C@H]56";
+        String smiles =
+                "COc1ccc2[C@@H]3[C@H](COc2c1)C(C)(C)OC4=C3C(=O)C(=O)C5=C4OC(C)(C)[C@@H]6COc7cc(OC)ccc7[C@H]56";
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer molecule = smilesParser.parseSmiles(smiles);
 
@@ -183,9 +181,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
         Assert.assertEquals(6, doubleBondCount);
     }
 
-    /**
-     * @cdk.inchi InChI=1/C6H4O2/c7-5-1-2-6(8)4-3-5/h1-4H
-     */
+    /** @cdk.inchi InChI=1/C6H4O2/c7-5-1-2-6(8)4-3-5/h1-4H */
     @Ignore("previouls disabled 'xtest'")
     public void xtestQuinone() throws Exception {
         IAtomContainer enol = new AtomContainer();
@@ -254,9 +250,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
         Assert.assertEquals(Order.DOUBLE, enol.getBond(7).getOrder());
     }
 
-    /**
-     * @cdk.inchi InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H
-     */
+    /** @cdk.inchi InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H */
     @Test
     public void xtestPyrrole() throws Exception {
         IAtomContainer enol = new AtomContainer();
@@ -301,11 +295,16 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
         Assert.assertTrue(dbst.isOK(enol));
 
         // now check whether it did the right thing
-        Assert.assertEquals(Order.DOUBLE, enol.getBond(0).getOrder());;
-        Assert.assertEquals(Order.SINGLE, enol.getBond(1).getOrder());;
-        Assert.assertEquals(Order.DOUBLE, enol.getBond(2).getOrder());;
-        Assert.assertEquals(Order.SINGLE, enol.getBond(3).getOrder());;
-        Assert.assertEquals(Order.SINGLE, enol.getBond(4).getOrder());;
+        Assert.assertEquals(Order.DOUBLE, enol.getBond(0).getOrder());
+        ;
+        Assert.assertEquals(Order.SINGLE, enol.getBond(1).getOrder());
+        ;
+        Assert.assertEquals(Order.DOUBLE, enol.getBond(2).getOrder());
+        ;
+        Assert.assertEquals(Order.SINGLE, enol.getBond(3).getOrder());
+        ;
+        Assert.assertEquals(Order.SINGLE, enol.getBond(4).getOrder());
+        ;
     }
 
     @Test
@@ -356,29 +355,35 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
         Assert.assertTrue(dbst.isOK(enol));
 
         // now check whether it did the right thing
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
-                .getBond(0).getOrder().numeric()
-                + enol.getBond(5).getOrder().numeric()); // around atom1
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
-                .getBond(0).getOrder().numeric()
-                + enol.getBond(1).getOrder().numeric()); // around atom2
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
-                .getBond(1).getOrder().numeric()
-                + enol.getBond(2).getOrder().numeric()); // around atom3
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
-                .getBond(2).getOrder().numeric()
-                + enol.getBond(3).getOrder().numeric()); // around atom4
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
-                .getBond(3).getOrder().numeric()
-                + enol.getBond(4).getOrder().numeric()); // around atom5
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
-                .getBond(4).getOrder().numeric()
-                + enol.getBond(5).getOrder().numeric()); // around atom6
+        Assert.assertEquals(
+                Order.SINGLE.numeric() + Order.DOUBLE.numeric(),
+                enol.getBond(0).getOrder().numeric()
+                        + enol.getBond(5).getOrder().numeric()); // around atom1
+        Assert.assertEquals(
+                Order.SINGLE.numeric() + Order.DOUBLE.numeric(),
+                enol.getBond(0).getOrder().numeric()
+                        + enol.getBond(1).getOrder().numeric()); // around atom2
+        Assert.assertEquals(
+                Order.SINGLE.numeric() + Order.DOUBLE.numeric(),
+                enol.getBond(1).getOrder().numeric()
+                        + enol.getBond(2).getOrder().numeric()); // around atom3
+        Assert.assertEquals(
+                Order.SINGLE.numeric() + Order.DOUBLE.numeric(),
+                enol.getBond(2).getOrder().numeric()
+                        + enol.getBond(3).getOrder().numeric()); // around atom4
+        Assert.assertEquals(
+                Order.SINGLE.numeric() + Order.DOUBLE.numeric(),
+                enol.getBond(3).getOrder().numeric()
+                        + enol.getBond(4).getOrder().numeric()); // around atom5
+        Assert.assertEquals(
+                Order.SINGLE.numeric() + Order.DOUBLE.numeric(),
+                enol.getBond(4).getOrder().numeric()
+                        + enol.getBond(5).getOrder().numeric()); // around atom6
     }
 
     /**
      * @cdk.inchi InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H
-     * @cdk.bug   1931262
+     * @cdk.bug 1931262
      */
     @Test
     public void xtestBenzene() throws Exception {
@@ -428,23 +433,29 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
         Assert.assertTrue(dbst.isOK(enol));
 
         // now check whether it did the right thing
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
-                .getBond(0).getOrder().numeric()
-                + enol.getBond(5).getOrder().numeric()); // around atom1
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
-                .getBond(0).getOrder().numeric()
-                + enol.getBond(1).getOrder().numeric()); // around atom2
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
-                .getBond(1).getOrder().numeric()
-                + enol.getBond(2).getOrder().numeric()); // around atom3
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
-                .getBond(2).getOrder().numeric()
-                + enol.getBond(3).getOrder().numeric()); // around atom4
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
-                .getBond(3).getOrder().numeric()
-                + enol.getBond(4).getOrder().numeric()); // around atom5
-        Assert.assertEquals(Order.SINGLE.numeric() + Order.DOUBLE.numeric(), enol
-                .getBond(4).getOrder().numeric()
-                + enol.getBond(5).getOrder().numeric()); // around atom6
+        Assert.assertEquals(
+                Order.SINGLE.numeric() + Order.DOUBLE.numeric(),
+                enol.getBond(0).getOrder().numeric()
+                        + enol.getBond(5).getOrder().numeric()); // around atom1
+        Assert.assertEquals(
+                Order.SINGLE.numeric() + Order.DOUBLE.numeric(),
+                enol.getBond(0).getOrder().numeric()
+                        + enol.getBond(1).getOrder().numeric()); // around atom2
+        Assert.assertEquals(
+                Order.SINGLE.numeric() + Order.DOUBLE.numeric(),
+                enol.getBond(1).getOrder().numeric()
+                        + enol.getBond(2).getOrder().numeric()); // around atom3
+        Assert.assertEquals(
+                Order.SINGLE.numeric() + Order.DOUBLE.numeric(),
+                enol.getBond(2).getOrder().numeric()
+                        + enol.getBond(3).getOrder().numeric()); // around atom4
+        Assert.assertEquals(
+                Order.SINGLE.numeric() + Order.DOUBLE.numeric(),
+                enol.getBond(3).getOrder().numeric()
+                        + enol.getBond(4).getOrder().numeric()); // around atom5
+        Assert.assertEquals(
+                Order.SINGLE.numeric() + Order.DOUBLE.numeric(),
+                enol.getBond(4).getOrder().numeric()
+                        + enol.getBond(5).getOrder().numeric()); // around atom6
     }
 }

@@ -24,7 +24,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -37,33 +36,40 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * Tests whether all Reader and Writer classes can be instantiated.
  *
  * @cdk.module test-io
- *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */
 public class ChemObjectIOInstantionTests extends CDKTestCase {
 
-    private final static String      IO_FORMATS_LIST = "io-formats.set";
+    private static final String IO_FORMATS_LIST = "io-formats.set";
 
-    private static ILoggingTool      logger          = LoggingToolFactory
-                                                             .createLoggingTool(ChemObjectIOInstantionTests.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(ChemObjectIOInstantionTests.class);
 
-    private static List<IChemFormat> formats         = null;
+    private static List<IChemFormat> formats = null;
 
     private void loadFormats() {
         if (formats == null) {
             formats = new ArrayList<IChemFormat>();
             try {
                 logger.debug("Starting loading Formats...");
-                BufferedReader reader = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader()
-                        .getResourceAsStream(IO_FORMATS_LIST)));
+                BufferedReader reader =
+                        new BufferedReader(
+                                new InputStreamReader(
+                                        this.getClass()
+                                                .getClassLoader()
+                                                .getResourceAsStream(IO_FORMATS_LIST)));
                 int formatCount = 0;
                 while (reader.ready()) {
                     // load them one by one
                     String formatName = reader.readLine();
                     formatCount++;
                     try {
-                        IResourceFormat format = (IResourceFormat) this.getClass().getClassLoader()
-                                .loadClass(formatName).newInstance();
+                        IResourceFormat format =
+                                (IResourceFormat)
+                                        this.getClass()
+                                                .getClassLoader()
+                                                .loadClass(formatName)
+                                                .newInstance();
                         if (format instanceof IChemFormat) {
                             formats.add((IChemFormat) format);
                             logger.info("Loaded IChemFormat: " + format.getClass().getName());
@@ -109,11 +115,11 @@ public class ChemObjectIOInstantionTests extends CDKTestCase {
             Assert.assertEquals(className, instance.getClass().getName());
         } catch (ClassNotFoundException exception) {
             logger.debug("Could not find this class: " + className);
-            // but that's not error, it can mean that it is a Jmol based IO class, and no Jmol is in the classpath
+            // but that's not error, it can mean that it is a Jmol based IO class, and no Jmol is in
+            // the classpath
         } catch (InstantiationException | IllegalAccessException exception) {
             logger.debug(exception);
             Assert.fail("Could not instantiate this class: " + className);
         }
     }
-
 }

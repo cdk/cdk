@@ -31,12 +31,11 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 
 /**
- * Spanning tree of a molecule.
- * Used to discover the number of cyclic bonds in order to prevent the
+ * Spanning tree of a molecule. Used to discover the number of cyclic bonds in order to prevent the
  * inefficient AllRingsFinder to run for too long.
  *
- * @author      Nina Jeliazkova
- * @cdk.module  core
+ * @author Nina Jeliazkova
+ * @cdk.module core
  * @cdk.githash
  * @cdk.dictref blue-obelisk:graphSpanningTree
  * @cdk.keyword spanning tree
@@ -44,22 +43,22 @@ import org.openscience.cdk.interfaces.IRingSet;
  */
 public class SpanningTree {
 
-    private final static String ATOM_NUMBER = "ST_ATOMNO";
+    private static final String ATOM_NUMBER = "ST_ATOMNO";
 
-    private int[]               parent      = null;
-    private int[][]             cb          = null;       // what is cb??? cyclic bonds?
+    private int[] parent = null;
+    private int[][] cb = null; // what is cb??? cyclic bonds?
 
-    protected boolean[]         bondsInTree;
+    protected boolean[] bondsInTree;
 
-    private int                 sptSize     = 0;
-    private int                 edrSize     = 0;
+    private int sptSize = 0;
+    private int edrSize = 0;
 
-    private int                 bondsAcyclicCount = 0, bondsCyclicCount = 0;
+    private int bondsAcyclicCount = 0, bondsCyclicCount = 0;
 
-    private IAtomContainer      molecule          = null;
-    private int                 totalEdgeCount    = 0, totalVertexCount = 0;
-    private boolean             disconnected;
-    private boolean             identifiedBonds;
+    private IAtomContainer molecule = null;
+    private int totalEdgeCount = 0, totalVertexCount = 0;
+    private boolean disconnected;
+    private boolean identifiedBonds;
 
     /**
      * Is the molecule disconnected and has more then one component.
@@ -82,11 +81,9 @@ public class SpanningTree {
 
     private boolean fastfind(int vertex1, int vertex2, boolean union) {
         int i = vertex1;
-        while (parent[i] > 0)
-            i = parent[i];
+        while (parent[i] > 0) i = parent[i];
         int j = vertex2;
-        while (parent[j] > 0)
-            j = parent[j];
+        while (parent[j] > 0) j = parent[j];
         int t;
         while (parent[vertex1] > 0) {
             t = vertex1;
@@ -142,20 +139,21 @@ public class SpanningTree {
             bond = atomContainer.getBond(b);
             vertex1 = Integer.parseInt((bond.getBegin()).getProperty(ATOM_NUMBER).toString());
             vertex2 = Integer.parseInt((bond.getEnd()).getProperty(ATOM_NUMBER).toString());
-            //this below is a little bit  slower
-            //v1 = atomContainer.indexOf(bond.getAtomAt(0))+1;
-            //v2 = atomContainer.indexOf(bond.getAtomAt(1))+1;
+            // this below is a little bit  slower
+            // v1 = atomContainer.indexOf(bond.getAtomAt(0))+1;
+            // v2 = atomContainer.indexOf(bond.getAtomAt(1))+1;
             if (fastfind(vertex1, vertex2, true)) {
                 bondsInTree[b] = true;
                 sptSize++;
-                //logger.debug("ST : includes bond between atoms "+v1+","+v2);
+                // logger.debug("ST : includes bond between atoms "+v1+","+v2);
             }
             if (sptSize >= (totalVertexCount - 1)) break;
-
         }
-        // if atomcontainer is connected then the number of bonds in the spanning tree = (No atoms-1)
-        //i.e.  edgesRings = new Bond[E-V+1];
-        //but to hold all bonds if atomContainer was disconnected then  edgesRings = new Bond[E-sptSize];
+        // if atomcontainer is connected then the number of bonds in the spanning tree = (No
+        // atoms-1)
+        // i.e.  edgesRings = new Bond[E-V+1];
+        // but to hold all bonds if atomContainer was disconnected then  edgesRings = new
+        // Bond[E-sptSize];
         if (sptSize != (totalVertexCount - 1)) disconnected = true;
         for (int b = 0; b < totalEdgeCount; b++)
             if (!bondsInTree[b]) {
@@ -163,13 +161,10 @@ public class SpanningTree {
                 edrSize++;
             }
         cb = new int[edrSize][totalEdgeCount];
-        for (int i = 0; i < edrSize; i++)
-            for (int a = 0; a < totalEdgeCount; a++)
-                cb[i][a] = 0;
+        for (int i = 0; i < edrSize; i++) for (int a = 0; a < totalEdgeCount; a++) cb[i][a] = 0;
 
         // remove ATOM_NUMBER props again
-        for (IAtom atom : atomContainer.atoms())
-            atom.removeProperty(ATOM_NUMBER);
+        for (IAtom atom : atomContainer.atoms()) atom.removeProperty(ATOM_NUMBER);
     }
 
     /**
@@ -179,30 +174,30 @@ public class SpanningTree {
      */
     public IAtomContainer getSpanningTree() {
         IAtomContainer container = molecule.getBuilder().newInstance(IAtomContainer.class);
-        for (int a = 0; a < totalVertexCount; a++)
-            container.addAtom(molecule.getAtom(a));
+        for (int a = 0; a < totalVertexCount; a++) container.addAtom(molecule.getAtom(a));
         for (int b = 0; b < totalEdgeCount; b++)
             if (bondsInTree[b]) container.addBond(molecule.getBond(b));
         return container;
     }
 
     /**
-     * Find a path connected <i>a1</i> and <i>a2</i> in the tree. If there was
-     * an edge between <i>a1</i> and <i>a2</i> this path is a cycle.
+     * Find a path connected <i>a1</i> and <i>a2</i> in the tree. If there was an edge between
+     * <i>a1</i> and <i>a2</i> this path is a cycle.
      *
      * @param spt spanning tree
-     * @param atom1  start of path (source)
-     * @param atom2  end of path (target)
+     * @param atom1 start of path (source)
+     * @param atom2 end of path (target)
      * @return a path through the spanning tree from the source to the target
-     * @throws NoSuchAtomException thrown if the atom is not in the spanning
-     *                             tree
+     * @throws NoSuchAtomException thrown if the atom is not in the spanning tree
      */
-    public IAtomContainer getPath(IAtomContainer spt, IAtom atom1, IAtom atom2) throws NoSuchAtomException {
+    public IAtomContainer getPath(IAtomContainer spt, IAtom atom1, IAtom atom2)
+            throws NoSuchAtomException {
         IAtomContainer path = spt.getBuilder().newInstance(IAtomContainer.class);
         PathTools.resetFlags(spt);
         path.addAtom(atom1);
         PathTools.depthFirstTargetSearch(spt, atom1, atom2, path);
-        if (path.getAtomCount() == 1) path.removeAtomOnly(atom1); // no path found: remove initial atom
+        if (path.getAtomCount() == 1)
+            path.removeAtomOnly(atom1); // no path found: remove initial atom
         return path;
     }
 
@@ -223,9 +218,8 @@ public class SpanningTree {
     }
 
     /**
-     * The basic rings of the spanning tree. Using the pruned edges, return any path
-     * which connects the end points of the pruned edge in the tree. These paths form
-     * cycles.
+     * The basic rings of the spanning tree. Using the pruned edges, return any path which connects
+     * the end points of the pruned edge in the tree. These paths form cycles.
      *
      * @return basic rings
      * @throws NoSuchAtomException atoms not found in the molecule
@@ -239,8 +233,8 @@ public class SpanningTree {
     }
 
     /**
-     * Returns an IAtomContainer which contains all the atoms and bonds which
-     * are involved in ring systems.
+     * Returns an IAtomContainer which contains all the atoms and bonds which are involved in ring
+     * systems.
      *
      * @see #getAllRings()
      * @see #getBasicRings()
@@ -270,9 +264,7 @@ public class SpanningTree {
         return fragContainer;
     }
 
-    /**
-     * Identifies whether bonds are cyclic or not. It is used by several other methods.
-     */
+    /** Identifies whether bonds are cyclic or not. It is used by several other methods. */
     private void identifyBonds() {
         IAtomContainer spt = getSpanningTree();
         IRing ring;
@@ -295,25 +287,27 @@ public class SpanningTree {
                 s += cb[j][i];
             }
             switch (s) {
-                case (0): {
-                    bondsAcyclicCount++;
-                    break;
-                }
-                case (1): {
-                    bondsCyclicCount++;
-                    break;
-                }
-                default: {
-                    bondsCyclicCount++;
-                }
+                case (0):
+                    {
+                        bondsAcyclicCount++;
+                        break;
+                    }
+                case (1):
+                    {
+                        bondsCyclicCount++;
+                        break;
+                    }
+                default:
+                    {
+                        bondsCyclicCount++;
+                    }
             }
         }
         identifiedBonds = true;
     }
 
     /**
-     * All basic rings and the all pairs of basic rings share at least one edge
-     * combined.
+     * All basic rings and the all pairs of basic rings share at least one edge combined.
      *
      * @return subset of all rings
      * @throws NoSuchAtomException atom was not found in the molecule
@@ -329,9 +323,9 @@ public class SpanningTree {
 
         for (int i = 0; i < nBasicRings; i++) {
             for (int j = i + 1; j < nBasicRings; j++) {
-                //logger.debug("combining rings "+(i+1)+","+(j+1));
+                // logger.debug("combining rings "+(i+1)+","+(j+1));
                 newring = combineRings(ringset, i, j);
-                //newring = combineRings((Ring)ringset.get(i),(Ring)ringset.get(j));
+                // newring = combineRings((Ring)ringset.get(i),(Ring)ringset.get(j));
                 if (newring != null) ringset.addAtomContainer(newring);
             }
         }
@@ -352,7 +346,7 @@ public class SpanningTree {
         int c = 0;
         for (int b = 0; b < cb[i].length; b++) {
             c = cb[i][b] + cb[j][b];
-            if (c > 1) break; //at least one common bond
+            if (c > 1) break; // at least one common bond
         }
         if (c < 2) return null;
         IRing ring = molecule.getBuilder().newInstance(IRing.class);
@@ -360,14 +354,11 @@ public class SpanningTree {
         IRing ring2 = (IRing) ringset.getAtomContainer(j);
         for (int b = 0; b < cb[i].length; b++) {
             c = cb[i][b] + cb[j][b];
-            if ((c == 1) && (cb[i][b] == 1))
-                ring.addBond(molecule.getBond(b));
+            if ((c == 1) && (cb[i][b] == 1)) ring.addBond(molecule.getBond(b));
             else if ((c == 1) && (cb[j][b] == 1)) ring.addBond(molecule.getBond(b));
         }
-        for (int a = 0; a < ring1.getAtomCount(); a++)
-            ring.addAtom(ring1.getAtom(a));
-        for (int a = 0; a < ring2.getAtomCount(); a++)
-            ring.addAtom(ring2.getAtom(a));
+        for (int a = 0; a < ring1.getAtomCount(); a++) ring.addAtom(ring1.getAtom(a));
+        for (int a = 0; a < ring2.getAtomCount(); a++) ring.addAtom(ring2.getAtom(a));
 
         return ring;
     }

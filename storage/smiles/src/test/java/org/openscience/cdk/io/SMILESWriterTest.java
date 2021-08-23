@@ -22,11 +22,13 @@
  */
 package org.openscience.cdk.io;
 
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Properties;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -40,9 +42,6 @@ import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * TestCase for the writer for SMILES files.
@@ -156,15 +155,15 @@ public class SMILESWriterTest extends ChemObjectIOTest {
         assertThat(wtr.toString(), not(containsString("mol 1")));
         assertThat(wtr.toString(), not(containsString("mol 2")));
     }
-    
+
     @Test
     public void testWriteSmiFlavor() throws Exception {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol1 = smipar.parseSmiles("c1ccccc1");
         StringWriter wtr = new StringWriter();
         try (SMILESWriter smigen = new SMILESWriter(wtr)) {
-        	smigen.setFlavor(SmiFlavor.InChILabelling);  
-        	smigen.write(mol1);
+            smigen.setFlavor(SmiFlavor.InChILabelling);
+            smigen.write(mol1);
         }
         String[] lines = wtr.toString().split("\n");
         assertThat(wtr.toString(), containsString("C=1C=CC=CC1"));

@@ -30,7 +30,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -39,7 +38,6 @@ import org.junit.Test;
 
 /**
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- *
  * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
@@ -59,18 +57,14 @@ public class FinalMappingsTest {
     @After
     public void tearDown() {}
 
-    /**
-     * Test of getInstance method, of class FinalMappings.
-     */
+    /** Test of getInstance method, of class FinalMappings. */
     @Test
     public void testGetInstance() {
         FinalMappings result = FinalMappings.getInstance();
         assertNotNull(result);
     }
 
-    /**
-     * Test of add method, of class FinalMappings.
-     */
+    /** Test of add method, of class FinalMappings. */
     @Test
     public void testAdd() {
         Map<Integer, Integer> mapping = new TreeMap<Integer, Integer>();
@@ -83,9 +77,7 @@ public class FinalMappingsTest {
         assertEquals(1, instance.getSize());
     }
 
-    /**
-     * Test of set method, of class FinalMappings.
-     */
+    /** Test of set method, of class FinalMappings. */
     @Test
     public void testSet() {
         Map<Integer, Integer> mapping1 = new TreeMap<Integer, Integer>();
@@ -106,9 +98,7 @@ public class FinalMappingsTest {
         assertEquals(2, instance.getSize());
     }
 
-    /**
-     * Test of getIterator method, of class FinalMappings.
-     */
+    /** Test of getIterator method, of class FinalMappings. */
     @Test
     public void testGetIterator() {
         Map<Integer, Integer> mapping1 = new TreeMap<Integer, Integer>();
@@ -130,9 +120,7 @@ public class FinalMappingsTest {
         assertEquals(true, result.hasNext());
     }
 
-    /**
-     * Test of clear method, of class FinalMappings.
-     */
+    /** Test of clear method, of class FinalMappings. */
     @Test
     public void testClear() {
         Map<Integer, Integer> mapping1 = new TreeMap<Integer, Integer>();
@@ -154,9 +142,7 @@ public class FinalMappingsTest {
         assertEquals(0, instance.getSize());
     }
 
-    /**
-     * Test of getFinalMapping method, of class FinalMappings.
-     */
+    /** Test of getFinalMapping method, of class FinalMappings. */
     @Test
     public void testGetFinalMapping() {
         Map<Integer, Integer> mapping1 = new TreeMap<Integer, Integer>();
@@ -179,9 +165,7 @@ public class FinalMappingsTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of getSize method, of class FinalMappings.
-     */
+    /** Test of getSize method, of class FinalMappings. */
     @Test
     public void testGetSize() {
         Map<Integer, Integer> mapping1 = new TreeMap<Integer, Integer>();

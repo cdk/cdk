@@ -24,77 +24,67 @@
 
 package org.openscience.cdk.graph;
 
-import org.openscience.cdk.group.DisjointSetForest;
-
 import java.util.Arrays;
 import java.util.BitSet;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import org.openscience.cdk.group.DisjointSetForest;
 
 /**
- * Maximum matching in general graphs using Edmond's Blossom Algorithm
- * {@cdk.cite Edmonds65}. 
+ * Maximum matching in general graphs using Edmond's Blossom Algorithm {@cdk.cite Edmonds65}.
  *
- * This implementation was adapted from D Eppstein's python implementation (<a
- * href="http://www.ics.uci.edu/~eppstein/PADS/CardinalityMatching.py">src</a>)
- * providing efficient tree traversal and handling of blossoms. 
+ * <p>This implementation was adapted from D Eppstein's python implementation (<a
+ * href="http://www.ics.uci.edu/~eppstein/PADS/CardinalityMatching.py">src</a>) providing efficient
+ * tree traversal and handling of blossoms.
  *
  * @author John May
- * @see <a href="http://en.wikipedia.org/wiki/Blossom_algorithm">Blossom
- * algorithm, Wikipedia</a>
- * @see <a href="http://research.microsoft.com/apps/video/dl.aspx?id=171055">Presentation
- * from Vazirani on his and Micali O(|E| * sqrt(|V|)) algorithm</a>
- *
+ * @see <a href="http://en.wikipedia.org/wiki/Blossom_algorithm">Blossom algorithm, Wikipedia</a>
+ * @see <a href="http://research.microsoft.com/apps/video/dl.aspx?id=171055">Presentation from
+ *     Vazirani on his and Micali O(|E| * sqrt(|V|)) algorithm</a>
  * @cdk.module standard
  */
 final class EdmondsMaximumMatching {
 
     /** The graph we are matching on. */
-    private final int[][]             graph;
+    private final int[][] graph;
 
     /** The current matching. */
-    private final Matching            matching;
+    private final Matching matching;
 
     /** Subset of vertices to be matched. */
-    private final BitSet              subset;
+    private final BitSet subset;
 
     /* Algorithm data structures below. */
 
     /** Storage of the forest, even and odd levels */
-    private final int[]               even, odd;
+    private final int[] even, odd;
 
     /** Special 'nil' vertex. */
-    private static final int          NIL     = -1;
+    private static final int NIL = -1;
 
     /** Queue of 'even' (free) vertices to start paths from. */
-    private final List<Integer>       queue;
+    private final List<Integer> queue;
 
     /** Union-Find to store blossoms. */
-    private DisjointSetForest         dsf;
+    private DisjointSetForest dsf;
 
-    /**
-     * Map stores the bridges of the blossom - indexed by with support
-     * vertices.
-     */
+    /** Map stores the bridges of the blossom - indexed by with support vertices. */
     private final Map<Integer, Tuple> bridges = new HashMap<Integer, Tuple>();
 
     /** Temporary array to fill with path information. */
-    private final int[]               path;
+    private final int[] path;
 
-    /**
-     * Temporary bit sets when walking down 'trees' to check for
-     * paths/blossoms.
-     */
-    private final BitSet              vAncestors, wAncestors;
+    /** Temporary bit sets when walking down 'trees' to check for paths/blossoms. */
+    private final BitSet vAncestors, wAncestors;
 
     /**
      * Internal constructor.
      *
-     * @param graph    adjacency list graph representation
+     * @param graph adjacency list graph representation
      * @param matching the matching of the graph
-     * @param subset   subset a subset of vertices
+     * @param subset subset a subset of vertices
      */
     private EdmondsMaximumMatching(int[][] graph, Matching matching, BitSet subset) {
 
@@ -114,13 +104,13 @@ final class EdmondsMaximumMatching {
         wAncestors = new BitSet(graph.length);
 
         // continuously augment while we find new paths
-        while (augment());
+        while (augment()) ;
     }
 
     /**
-     * Find an augmenting path an alternate it's matching. If an augmenting path
-     * was found then the search must be restarted. If a blossom was detected
-     * the blossom is contracted and the search continues.
+     * Find an augmenting path an alternate it's matching. If an augmenting path was found then the
+     * search must be restarted. If a blossom was detected the blossom is contracted and the search
+     * continues.
      *
      * @return an augmenting path was found
      */
@@ -177,14 +167,12 @@ final class EdmondsMaximumMatching {
     }
 
     /**
-     * An edge was found which connects two 'even' vertices in the forest. If
-     * the vertices have the same root we have a blossom otherwise we have
-     * identified an augmenting path. This method checks for these cases and
-     * responds accordingly. 
+     * An edge was found which connects two 'even' vertices in the forest. If the vertices have the
+     * same root we have a blossom otherwise we have identified an augmenting path. This method
+     * checks for these cases and responds accordingly.
      *
-     * If an augmenting path was found - then it's edges are alternated and the
-     * method returns true. Otherwise if a blossom was found - it is contracted
-     * and the search continues.
+     * <p>If an augmenting path was found - then it's edges are alternated and the method returns
+     * true. Otherwise if a blossom was found - it is contracted and the search continues.
      *
      * @param v endpoint of an edge
      * @param w another endpoint of an edge
@@ -242,11 +230,11 @@ final class EdmondsMaximumMatching {
     }
 
     /**
-     * Access the next ancestor in a tree of the forest. Note we go back two
-     * places at once as we only need check 'even' vertices.
+     * Access the next ancestor in a tree of the forest. Note we go back two places at once as we
+     * only need check 'even' vertices.
      *
      * @param ancestors temporary set which fills up the path we traversed
-     * @param curr      the current even vertex in the tree
+     * @param curr the current even vertex in the tree
      * @return the next 'even' vertex
      */
     private int parent(BitSet ancestors, int curr) {
@@ -261,8 +249,8 @@ final class EdmondsMaximumMatching {
     /**
      * Create a new blossom for the specified 'bridge' edge.
      *
-     * @param v    adjacent to w
-     * @param w    adjacent to v
+     * @param v adjacent to w
+     * @param w adjacent to v
      * @param base connected to the stem (common ancestor of v and w)
      */
     private void blossom(int v, int w, int base) {
@@ -270,23 +258,20 @@ final class EdmondsMaximumMatching {
         int[] supports1 = blossomSupports(v, w, base);
         int[] supports2 = blossomSupports(w, v, base);
 
-        for (int i = 0; i < supports1.length; i++)
-            dsf.makeUnion(supports1[i], supports1[0]);
-        for (int i = 0; i < supports2.length; i++)
-            dsf.makeUnion(supports2[i], supports2[0]);
+        for (int i = 0; i < supports1.length; i++) dsf.makeUnion(supports1[i], supports1[0]);
+        for (int i = 0; i < supports2.length; i++) dsf.makeUnion(supports2[i], supports2[0]);
 
         even[dsf.getRoot(base)] = even[base];
     }
 
     /**
-     * Creates the blossom 'supports' for the specified blossom 'bridge' edge
-     * (v, w). We travel down each side to the base of the blossom ('base')
-     * collapsing vertices and point any 'odd' vertices to the correct 'bridge'
-     * edge. We do this by indexing the birdie to each vertex in the 'bridges'
-     * map.
+     * Creates the blossom 'supports' for the specified blossom 'bridge' edge (v, w). We travel down
+     * each side to the base of the blossom ('base') collapsing vertices and point any 'odd'
+     * vertices to the correct 'bridge' edge. We do this by indexing the birdie to each vertex in
+     * the 'bridges' map.
      *
-     * @param v    an endpoint of the blossom bridge
-     * @param w    another endpoint of the blossom bridge
+     * @param v an endpoint of the blossom bridge
+     * @param w another endpoint of the blossom bridge
      * @param base the base of the blossom
      */
     private int[] blossomSupports(int v, int w, int base) {
@@ -320,14 +305,13 @@ final class EdmondsMaximumMatching {
     }
 
     /**
-     * Builds the path backwards from the specified 'start' vertex until the
-     * 'goal'. If the path reaches a blossom then the path through the blossom
-     * is lifted to the original graph.
+     * Builds the path backwards from the specified 'start' vertex until the 'goal'. If the path
+     * reaches a blossom then the path through the blossom is lifted to the original graph.
      *
-     * @param path  path storage
-     * @param i     offset (in path)
+     * @param path path storage
+     * @param i offset (in path)
      * @param start start vertex
-     * @param goal  end vertex
+     * @param goal end vertex
      * @return the number of items set to the path[].
      */
     private int buildPath(int[] path, int i, int start, int goal) {
@@ -366,8 +350,8 @@ final class EdmondsMaximumMatching {
      * Reverse a section of a fixed size array.
      *
      * @param path a path
-     * @param i    start index
-     * @param j    end index
+     * @param i start index
+     * @param j end index
      */
     private static void reverse(int[] path, int i, int j) {
         while (i < j) {
@@ -380,12 +364,11 @@ final class EdmondsMaximumMatching {
     }
 
     /**
-     * Attempt to maximise the provided matching over a subset of vertices in a
-     * graph.
+     * Attempt to maximise the provided matching over a subset of vertices in a graph.
      *
      * @param matching the independent edge set to maximise
-     * @param graph    adjacency list graph representation
-     * @param subset   subset of vertices
+     * @param graph adjacency list graph representation
+     * @param subset subset of vertices
      * @return the matching
      */
     static Matching maxamise(Matching matching, int[][] graph, BitSet subset) {
@@ -393,9 +376,7 @@ final class EdmondsMaximumMatching {
         return matching;
     }
 
-    /**
-     * Storage and indexing of a two int values.
-     */
+    /** Storage and indexing of a two int values. */
     private static final class Tuple {
 
         /** Values. */
@@ -404,7 +385,7 @@ final class EdmondsMaximumMatching {
         /**
          * Create a new tuple.
          *
-         * @param first  a value
+         * @param first a value
          * @param second another value
          */
         private Tuple(int first, int second) {
@@ -412,13 +393,13 @@ final class EdmondsMaximumMatching {
             this.second = second;
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         public int hashCode() {
             return 31 * first + second;
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;

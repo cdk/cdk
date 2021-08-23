@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
-
 import org.openscience.cdk.config.atomtypes.OWLAtomTypeReader;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -32,13 +31,14 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * AtomType resource that reads the atom type configuration from an OWL file.
  *
- * @cdk.module  core
+ * @cdk.module core
  * @cdk.githash
  */
 public class OWLBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
 
-    private InputStream         ins    = null;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(OWLBasedAtomTypeConfigurator.class);
+    private InputStream ins = null;
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(OWLBasedAtomTypeConfigurator.class);
 
     public OWLBasedAtomTypeConfigurator() {}
 
@@ -52,8 +52,8 @@ public class OWLBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
      * Reads the atom types from the OWL based atom type list.
      *
      * @param builder IChemObjectBuilder used to construct the IAtomType's.
-     * @throws        IOException when a problem occurred with reading from the InputStream
-     * @return        A List with read IAtomType's.
+     * @throws IOException when a problem occurred with reading from the InputStream
+     * @return A List with read IAtomType's.
      */
     @Override
     public List<IAtomType> readAtomTypes(IChemObjectBuilder builder) throws IOException {
@@ -68,5 +68,4 @@ public class OWLBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
         }
         return atomTypes;
     }
-
 }

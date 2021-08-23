@@ -23,9 +23,8 @@
 package org.openscience.cdk.interfaces;
 
 /**
- * Classes implementing this interface must implement this method
- * such that they react appropriately to changes in the object they
- * are interested in.
+ * Classes implementing this interface must implement this method such that they react appropriately
+ * to changes in the object they are interested in.
  *
  * @cdk.module interfaces
  * @cdk.githash
@@ -33,10 +32,10 @@ package org.openscience.cdk.interfaces;
 public interface IChemObjectListener {
 
     /**
-     * Called by objects to notify objects that implemented this interface
-     * and registered with them as ChemObjectListeners.
+     * Called by objects to notify objects that implemented this interface and registered with them
+     * as ChemObjectListeners.
      *
-     * @param event  a ChemObjectChangeEvent object
+     * @param event a ChemObjectChangeEvent object
      */
     public void stateChanged(IChemObjectChangeEvent event);
 }

@@ -29,15 +29,12 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomType;
 
-import org.junit.Test;
-
 /**
- * This class is for testing the MMFF94 based parameter
- * reading in CDK.
+ * This class is for testing the MMFF94 based parameter reading in CDK.
  *
  * @author danielszisz
  * @version 04/16/2012
@@ -52,7 +49,7 @@ public class MMFF94BasedParameterSetReaderTest {
         Map<String, Object> parameterSet = new Hashtable<String, Object>();
         parameterSet = mmff94bpsr.getParamterSet();
 
-        //test atom type
+        // test atom type
         List<IAtomType> atomtypes = mmff94bpsr.getAtomTypes();
         IAtomType atomtype = atomtypes.get(0);
         String sid = "C";
@@ -64,10 +61,10 @@ public class MMFF94BasedParameterSetReaderTest {
         String satomNr = "6";
         assertEquals(Integer.parseInt(satomNr), (int) atomtype.getAtomicNumber());
 
-        //atom
-        //TODO testing
+        // atom
+        // TODO testing
 
-        //bond
+        // bond
         //		String scode = "0";
         String sid1 = "C";
         String sid2 = "C";
@@ -84,7 +81,7 @@ public class MMFF94BasedParameterSetReaderTest {
         bonddata.add((Double) (new Double(sk4).doubleValue()));
         bonddata.add((Double) (new Double(sbci).doubleValue()));
 
-        //strbnd
+        // strbnd
         //		scode = "0";
         sid1 = "C";
         sid2 = "C";
@@ -96,7 +93,7 @@ public class MMFF94BasedParameterSetReaderTest {
         strbnddata.add((Double) (new Double(value1).doubleValue()));
         strbnddata.add((Double) (new Double(value2).doubleValue()));
 
-        //angle
+        // angle
         //      scode = "0";
         sid1 = "C=";
         sid2 = "C";
@@ -112,7 +109,7 @@ public class MMFF94BasedParameterSetReaderTest {
         angledata.add((Double) (new Double(value3).doubleValue()));
         angledata.add((Double) (new Double(value4).doubleValue()));
 
-        //torsion
+        // torsion
         //	    scode = "0";
         sid1 = "HC";
         sid2 = "C";
@@ -131,7 +128,7 @@ public class MMFF94BasedParameterSetReaderTest {
         torsiondata.add((Double) (new Double(value4).doubleValue()));
         torsiondata.add((Double) (new Double(value5).doubleValue()));
 
-        //opbend
+        // opbend
         //      scode = "0";
         sid1 = "O=";
         sid2 = "C=";
@@ -142,17 +139,13 @@ public class MMFF94BasedParameterSetReaderTest {
         List<Double> opbenddata = new ArrayList<Double>();
         opbenddata.add((Double) (new Double(value1).doubleValue()));
 
-        //TODO data lines testing
+        // TODO data lines testing
 
         for (Entry<String, Object> e : parameterSet.entrySet()) {
-            if (e.getKey().equals(bondkey))
-                assertEquals(bonddata, e.getValue());
-            else if (e.getKey().equals(strbndkey))
-                assertEquals(strbnddata, e.getValue());
-            else if (e.getKey().equals(anglekey))
-                assertEquals(angledata, e.getValue());
-            else if (e.getKey().equals(torsionkey))
-                assertEquals(torsiondata, e.getValue());
+            if (e.getKey().equals(bondkey)) assertEquals(bonddata, e.getValue());
+            else if (e.getKey().equals(strbndkey)) assertEquals(strbnddata, e.getValue());
+            else if (e.getKey().equals(anglekey)) assertEquals(angledata, e.getValue());
+            else if (e.getKey().equals(torsionkey)) assertEquals(torsiondata, e.getValue());
             else if (e.getKey().equals(opbendkey)) assertEquals(opbenddata, e.getValue());
         }
     }

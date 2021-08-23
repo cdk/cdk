@@ -28,7 +28,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.AtomContainer;
@@ -46,8 +45,9 @@ import org.openscience.cdk.smsd.tools.MolHandler;
 
 /**
  * Unit testing for the {@link CDKMCSHandler} class.
- * @author     Syed Asad Rahman
- * @author     egonw
+ *
+ * @author Syed Asad Rahman
+ * @author egonw
  * @cdk.module test-smsd
  */
 public class CDKMCSHandlerTest extends AbstractMCSAlgorithmTest {
@@ -57,9 +57,7 @@ public class CDKMCSHandlerTest extends AbstractMCSAlgorithmTest {
         AbstractMCSAlgorithmTest.setMCSAlgorithm(new CDKMCSHandler());
     }
 
-    /**
-     * Test of searchMCS method, of class CDKMCSHandler.
-     */
+    /** Test of searchMCS method, of class CDKMCSHandler. */
     @Test
     @Override
     public void testSearchMCS() {
@@ -82,6 +80,7 @@ public class CDKMCSHandlerTest extends AbstractMCSAlgorithmTest {
 
     /**
      * Test of set method, of class CDKMCSHandler.
+     *
      * @throws Exception
      */
     @Test
@@ -101,6 +100,7 @@ public class CDKMCSHandlerTest extends AbstractMCSAlgorithmTest {
 
     /**
      * Test of set method, of class CDKMCSHandler.
+     *
      * @throws CDKException
      * @throws IOException
      */
@@ -127,6 +127,7 @@ public class CDKMCSHandlerTest extends AbstractMCSAlgorithmTest {
 
     /**
      * Test of set method, of class CDKMCSHandler.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -145,6 +146,7 @@ public class CDKMCSHandlerTest extends AbstractMCSAlgorithmTest {
 
     /**
      * Test of getAllAtomMapping method, of class CDKMCSHandler.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -164,6 +166,7 @@ public class CDKMCSHandlerTest extends AbstractMCSAlgorithmTest {
 
     /**
      * Test of getAllMapping method, of class CDKMCSHandler.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -185,6 +188,7 @@ public class CDKMCSHandlerTest extends AbstractMCSAlgorithmTest {
 
     /**
      * Test of getFirstAtomMapping method, of class CDKMCSHandler.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -206,6 +210,7 @@ public class CDKMCSHandlerTest extends AbstractMCSAlgorithmTest {
 
     /**
      * Test of getFirstMapping method, of class CDKMCSHandler.
+     *
      * @throws InvalidSmilesException
      */
     @Test

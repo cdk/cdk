@@ -33,13 +33,14 @@ public class SubstanceTest extends AbstractSubstanceTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new Substance();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new Substance();
+                    }
+                });
     }
 
     // Overwrite default methods: no notifications are expected!
@@ -115,5 +116,4 @@ public class SubstanceTest extends AbstractSubstanceTest {
     public void testNotifyChanged_RemoveProperty() {
         ChemObjectTestHelper.testNotifyChanged_RemoveProperty(newChemObject());
     }
-
 }

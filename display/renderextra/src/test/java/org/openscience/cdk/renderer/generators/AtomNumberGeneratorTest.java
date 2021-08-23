@@ -23,17 +23,13 @@ package org.openscience.cdk.renderer.generators;
 
 import java.awt.Rectangle;
 import java.util.List;
-
 import org.junit.Assert;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 
-/**
- * @cdk.module test-renderextra
- */
+/** @cdk.module test-renderextra */
 public class AtomNumberGeneratorTest extends AbstractGeneratorTest {
 
     private AtomNumberGenerator generator;
@@ -64,5 +60,4 @@ public class AtomNumberGeneratorTest extends AbstractGeneratorTest {
         List<IRenderingElement> elements = elementUtil.getAllSimpleElements(root);
         Assert.assertEquals(0, elements.size());
     }
-
 }

@@ -25,26 +25,26 @@ package org.openscience.cdk.interfaces;
 import java.util.Map;
 
 /**
- * Stereochemistry specification for quadrivalent atoms. The data model defines the central, chiral {@link IAtom},
- * and its four ligand {@link IAtom}s, directly bonded to the chiral atom via an {@link IBond}. The ordering of the
- * four ligands is important, and defines together with the {@link Stereo} to spatial geometry around the chiral atom.
- * The first ligand points towards to observer, and the three other ligands point away from the observer; the
- * {@link Stereo} then defines the order of the second, third, and fourth ligand to be clockwise or anti-clockwise.
- * 
- * If the tetrahedral centre has an implicit hydrogen or lone pair then the
- * chiral atom is also stored as one of the ligands. This serves as a
- * placeholder to indicate where the implicit hydrogen or lone pair would be.
+ * Stereochemistry specification for quadrivalent atoms. The data model defines the central, chiral
+ * {@link IAtom}, and its four ligand {@link IAtom}s, directly bonded to the chiral atom via an
+ * {@link IBond}. The ordering of the four ligands is important, and defines together with the
+ * {@link Stereo} to spatial geometry around the chiral atom. The first ligand points towards to
+ * observer, and the three other ligands point away from the observer; the {@link Stereo} then
+ * defines the order of the second, third, and fourth ligand to be clockwise or anti-clockwise.
+ *
+ * <p>If the tetrahedral centre has an implicit hydrogen or lone pair then the chiral atom is also
+ * stored as one of the ligands. This serves as a placeholder to indicate where the implicit
+ * hydrogen or lone pair would be.
  *
  * @cdk.module interfaces
  * @cdk.githash
  */
 public interface ITetrahedralChirality extends IStereoElement<IAtom, IAtom> {
 
-    /**
-     * Enumeration that defines the two possible chiralities for this stereochemistry type.
-     */
+    /** Enumeration that defines the two possible chiralities for this stereochemistry type. */
     enum Stereo {
-        CLOCKWISE, ANTI_CLOCKWISE;
+        CLOCKWISE,
+        ANTI_CLOCKWISE;
 
         public static int toConfig(Stereo stereo) {
             switch (stereo) {
@@ -69,8 +69,8 @@ public interface ITetrahedralChirality extends IStereoElement<IAtom, IAtom> {
         }
 
         /**
-         * Invert this conformation, inv(clockwise) = anti_clockwise,
-         * inv(anti_clockwise) = clockwise.
+         * Invert this conformation, inv(clockwise) = anti_clockwise, inv(anti_clockwise) =
+         * clockwise.
          *
          * @return the inverse conformation
          */
@@ -86,9 +86,8 @@ public interface ITetrahedralChirality extends IStereoElement<IAtom, IAtom> {
     }
 
     /**
-     * Returns an array of ligand atoms around the chiral atom. If the chiral
-     * centre has an implicit hydrogen or lone pair one of the ligands will be
-     * the chiral atom ({@link #getChiralAtom()}).
+     * Returns an array of ligand atoms around the chiral atom. If the chiral centre has an implicit
+     * hydrogen or lone pair one of the ligands will be the chiral atom ({@link #getChiralAtom()}).
      *
      * @return an array of four {@link IAtom}s.
      */
@@ -102,7 +101,8 @@ public interface ITetrahedralChirality extends IStereoElement<IAtom, IAtom> {
     IAtom getChiralAtom();
 
     /**
-     * Defines the stereochemistry around the chiral atom. The value depends on the order of ligand atoms.
+     * Defines the stereochemistry around the chiral atom. The value depends on the order of ligand
+     * atoms.
      *
      * @return the {@link Stereo} for this stereo element.
      */
@@ -110,15 +110,12 @@ public interface ITetrahedralChirality extends IStereoElement<IAtom, IAtom> {
 
     /**
      * Set the stereochemistry of this tetrahedral centre.
-     * 
+     *
      * @param stereo the new stereo assignment
      */
     void setStereo(Stereo stereo);
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public ITetrahedralChirality map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds);
-
 }

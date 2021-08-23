@@ -29,12 +29,10 @@ import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
-/**
- * @cdk.module test-standard
- */
+/** @cdk.module test-standard */
 public class ConnectionMatrixTest extends CDKTestCase {
 
-    private final static SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+    private static final SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
 
     public ConnectionMatrixTest() {
         super();
@@ -52,13 +50,19 @@ public class ConnectionMatrixTest extends CDKTestCase {
     public void testLonePairs() throws Exception {
         IAtomContainer container = new AtomContainer();
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "I"));
-        container.addLonePair(container.getBuilder().newInstance(ILonePair.class, container.getAtom(0)));
+        container.addLonePair(
+                container.getBuilder().newInstance(ILonePair.class, container.getAtom(0)));
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "H"));
-        container.getBuilder().newInstance(IBond.class, container.getAtom(0), container.getAtom(1), IBond.Order.SINGLE);
+        container
+                .getBuilder()
+                .newInstance(
+                        IBond.class,
+                        container.getAtom(0),
+                        container.getAtom(1),
+                        IBond.Order.SINGLE);
 
         double[][] matrix = ConnectionMatrix.getMatrix(container);
         Assert.assertEquals(2, matrix.length);
         Assert.assertEquals(2, matrix[0].length);
     }
-
 }

@@ -23,6 +23,9 @@
  */
 package org.openscience.cdk.graph;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+import static org.openscience.cdk.graph.InitialCycles.Cycle;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
@@ -30,15 +33,11 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-import static org.openscience.cdk.graph.InitialCycles.Cycle;
-
 /**
- * Determine the uniquely defined essential cycles of a graph. A cycle is
- * essential if it a member of all minimum cycle bases. If a graph has a single
- * minimum cycle basis (MCB) then all of its cycles are essential. Unlikely the
- * {@link RelevantCycles} the number of essential cycles is always polynomial
- * however may not be able generate the cycle space of a graph.
+ * Determine the uniquely defined essential cycles of a graph. A cycle is essential if it a member
+ * of all minimum cycle bases. If a graph has a single minimum cycle basis (MCB) then all of its
+ * cycles are essential. Unlikely the {@link RelevantCycles} the number of essential cycles is
+ * always polynomial however may not be able generate the cycle space of a graph.
  *
  * @author John May
  * @cdk.module core
@@ -56,19 +55,18 @@ import static org.openscience.cdk.graph.InitialCycles.Cycle;
 public final class EssentialCycles {
 
     /** Cycles which are essential. */
-    private final List<Cycle>   essential;
+    private final List<Cycle> essential;
 
     /** Initial cycles. */
     private final InitialCycles initial;
 
     /** An MCB extracted from the relevant cycles. */
-    private final GreedyBasis   basis;
+    private final GreedyBasis basis;
 
     /**
-     * Determine the essential cycles given a graph. Adjacency list
-     * representation. For maximum performance the graph should be preprocessed
-     * and run on separate biconnected components or fused cycles (see. {@link
-     * org.openscience.cdk.ringsearch.RingSearch}.
+     * Determine the essential cycles given a graph. Adjacency list representation. For maximum
+     * performance the graph should be preprocessed and run on separate biconnected components or
+     * fused cycles (see. {@link org.openscience.cdk.ringsearch.RingSearch}.
      *
      * @param graph a molecule graph
      * @see GraphUtil#toAdjList(org.openscience.cdk.interfaces.IAtomContainer)
@@ -88,8 +86,7 @@ public final class EssentialCycles {
     }
 
     /**
-     * Determine the essential cycles from a precomputed set of initial cycles
-     * and relevant cycles.
+     * Determine the essential cycles from a precomputed set of initial cycles and relevant cycles.
      *
      * @param initial a molecule graph
      */
@@ -115,8 +112,7 @@ public final class EssentialCycles {
      */
     public int[][] paths() {
         final int[][] paths = new int[size()][];
-        for (int i = 0; i < paths.length; i++)
-            paths[i] = essential.get(i).path();
+        for (int i = 0; i < paths.length; i++) paths[i] = essential.get(i).path();
         return paths;
     }
 
@@ -138,7 +134,8 @@ public final class EssentialCycles {
     private List<List<Cycle>> groupByLength(final RelevantCycles relevant) {
         LinkedList<List<Cycle>> cyclesByLength = new LinkedList<List<Cycle>>();
         for (int[] path : relevant.paths()) {
-            if (cyclesByLength.isEmpty() || path.length > cyclesByLength.getLast().get(0).path().length) {
+            if (cyclesByLength.isEmpty()
+                    || path.length > cyclesByLength.getLast().get(0).path().length) {
                 cyclesByLength.add(new ArrayList<Cycle>());
             }
             cyclesByLength.getLast().add(new MyCycle(path));
@@ -147,8 +144,7 @@ public final class EssentialCycles {
     }
 
     /**
-     * For a list of equal length cycles return those which are members of the
-     * minimum cycle basis.
+     * For a list of equal length cycles return those which are members of the minimum cycle basis.
      *
      * @param cycles cycles to add to the basis
      * @return cycles which were added to the basis
@@ -165,7 +161,7 @@ public final class EssentialCycles {
      * Determines whether the <i>cycle</i> is essential.
      *
      * @param candidate a cycle which is a member of the MCB
-     * @param relevant  relevant cycles of the same length as <i>cycle</i>
+     * @param relevant relevant cycles of the same length as <i>cycle</i>
      * @return whether the candidate is essential
      */
     private boolean isEssential(final Cycle candidate, final Collection<Cycle> relevant) {
@@ -185,35 +181,32 @@ public final class EssentialCycles {
         return BitMatrix.from(alternate).eliminate() < basis.size();
     }
 
-    /**
-     * Simple class for helping find the essential cycles from the relevant
-     * cycles.
-     */
+    /** Simple class for helping find the essential cycles from the relevant cycles. */
     private class MyCycle extends Cycle {
 
         private MyCycle(int[] path) {
             super(null, path);
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         BitSet edges(int[] path) {
             return initial.toEdgeVector(path);
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         int[][] family() {
-            return new int[][]{path()};
+            return new int[][] {path()};
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         int sizeOfFamily() {
             return 1;
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         public String toString() {
             return Arrays.toString(path());

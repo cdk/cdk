@@ -26,34 +26,33 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * Calculation of the electronegativity of orbitals of a molecule
- * by the method Gasteiger based on electronegativity is given by X = a + bq + c(q*q).
+ * Calculation of the electronegativity of orbitals of a molecule by the method Gasteiger based on
+ * electronegativity is given by X = a + bq + c(q*q).
  *
- * @author       Miguel Rojas Cherto
- * @cdk.created  2008-104-31
- * @cdk.module   charges
- * @cdk.keyword  electronegativity
+ * @author Miguel Rojas Cherto
+ * @cdk.created 2008-104-31
+ * @cdk.module charges
+ * @cdk.keyword electronegativity
  * @cdk.githash
  */
 public class PiElectronegativity {
 
-    private GasteigerMarsiliPartialCharges peoe  = null;
-    private GasteigerPEPEPartialCharges    pepe  = null;
+    private GasteigerMarsiliPartialCharges peoe = null;
+    private GasteigerPEPEPartialCharges pepe = null;
 
-    /**Number of maximum iterations*/
-    private int                            maxI  = 6;
-    /**Number of maximum resonance structures*/
-    private int                            maxRS = 50;
+    /** Number of maximum iterations */
+    private int maxI = 6;
+    /** Number of maximum resonance structures */
+    private int maxRS = 50;
 
-    private IAtomContainer                 molPi;
-    private IAtomContainer                 acOldP;
-    private double[][]                     gasteigerFactors;
+    private IAtomContainer molPi;
+    private IAtomContainer acOldP;
+    private double[][] gasteigerFactors;
 
-    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(PiElectronegativity.class);
+    private final ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(PiElectronegativity.class);
 
-    /**
-     * Constructor for the PiElectronegativity object.
-     */
+    /** Constructor for the PiElectronegativity object. */
     public PiElectronegativity() {
         this(6, 50);
     }
@@ -61,8 +60,8 @@ public class PiElectronegativity {
     /**
      * Constructor for the Electronegativity object.
      *
-     * @param maxIterations         The maximal number of Iteration
-     * @param maxResonStruc         The maximal number of Resonance Structures
+     * @param maxIterations The maximal number of Iteration
+     * @param maxResonStruc The maximal number of Resonance Structures
      */
     public PiElectronegativity(int maxIterations, int maxResonStruc) {
         peoe = new GasteigerMarsiliPartialCharges();
@@ -74,9 +73,8 @@ public class PiElectronegativity {
     /**
      * calculate the electronegativity of orbitals pi.
      *
-     * @param ac                    IAtomContainer
-     * @param atom                  atom for which effective atom electronegativity should be calculated
-     *
+     * @param ac IAtomContainer
+     * @param atom atom for which effective atom electronegativity should be calculated
      * @return piElectronegativity
      */
     public double calculatePiElectronegativity(IAtomContainer ac, IAtom atom) {
@@ -87,14 +85,14 @@ public class PiElectronegativity {
     /**
      * calculate the electronegativity of orbitals pi.
      *
-     * @param ac                    IAtomContainer
-     * @param atom                  atom for which effective atom electronegativity should be calculated
-     * @param maxIterations         The maximal number of Iteration
-     * @param maxResonStruc         The maximal number of Resonance Structures
-     *
+     * @param ac IAtomContainer
+     * @param atom atom for which effective atom electronegativity should be calculated
+     * @param maxIterations The maximal number of Iteration
+     * @param maxResonStruc The maximal number of Resonance Structures
      * @return piElectronegativity
      */
-    public double calculatePiElectronegativity(IAtomContainer ac, IAtom atom, int maxIterations, int maxResonStruc) {
+    public double calculatePiElectronegativity(
+            IAtomContainer ac, IAtom atom, int maxIterations, int maxResonStruc) {
         maxI = maxIterations;
         maxRS = maxResonStruc;
 
@@ -120,8 +118,11 @@ public class PiElectronegativity {
             int start = (stepSize * (atomPosition) + atomPosition);
             double q = atomi.getCharge();
             if (molPi.getConnectedLonePairsCount(molPi.getAtom(atomPosition)) > 0
-                    || molPi.getMaximumBondOrder(atomi) != IBond.Order.SINGLE || atomi.getFormalCharge() != 0) {
-                return ((gasteigerFactors[1][start]) + (q * gasteigerFactors[1][start + 1]) + (gasteigerFactors[1][start + 2] * (q * q)));
+                    || molPi.getMaximumBondOrder(atomi) != IBond.Order.SINGLE
+                    || atomi.getFormalCharge() != 0) {
+                return ((gasteigerFactors[1][start])
+                        + (q * gasteigerFactors[1][start + 1])
+                        + (gasteigerFactors[1][start + 2] * (q * q)));
             }
         } catch (Exception e) {
             logger.error(e);
@@ -165,5 +166,4 @@ public class PiElectronegativity {
     public int getMaxResonStruc() {
         return maxRS;
     }
-
 }

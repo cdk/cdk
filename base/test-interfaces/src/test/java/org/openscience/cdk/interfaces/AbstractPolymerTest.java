@@ -24,7 +24,6 @@ package org.openscience.cdk.interfaces;
 
 import java.util.Hashtable;
 import java.util.Map;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -34,7 +33,7 @@ import org.junit.Test;
  * @author Edgar Luttmann &lt;edgar@uni-paderborn.de&gt;
  * @author Martin Eklund &lt;martin.eklund@farmbio.uu.se&gt;
  * @cdk.created 2001-08-09
- * @cdk.module  test-interfaces
+ * @cdk.module test-interfaces
  */
 public abstract class AbstractPolymerTest extends AbstractMoleculeTest {
 
@@ -135,7 +134,7 @@ public abstract class AbstractPolymerTest extends AbstractMoleculeTest {
         oPolymer.addAtom(oAtom2, oMono1);
         oPolymer.addAtom(oAtom3, oMono2);
         Map<String, IMonomer> monomers = new Hashtable<String, IMonomer>();
-        //IMonomer oMon = getBuilder().newMonomer();
+        // IMonomer oMon = getBuilder().newMonomer();
         monomers.put("TRP279", oMono1);
         monomers.put("HOH", oMono2);
 
@@ -160,9 +159,7 @@ public abstract class AbstractPolymerTest extends AbstractMoleculeTest {
         Assert.assertEquals(0, oPolymer.getAtomCount());
     }
 
-    /**
-     * Method to test whether the class complies with RFC #9.
-     */
+    /** Method to test whether the class complies with RFC #9. */
     @Test
     @Override
     public void testToString() {
@@ -182,9 +179,7 @@ public abstract class AbstractPolymerTest extends AbstractMoleculeTest {
         }
     }
 
-    /**
-     * Method to test the clone() method
-     */
+    /** Method to test the clone() method */
     @Test
     @Override
     public void testClone() throws Exception {
@@ -192,5 +187,4 @@ public abstract class AbstractPolymerTest extends AbstractMoleculeTest {
         Object clone = polymer.clone();
         Assert.assertNotNull(clone);
     }
-
 }

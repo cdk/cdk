@@ -39,5 +39,4 @@ public class DescriptorExceptionTest extends CDKTestCase {
         Assert.assertNotNull(exception);
         Assert.assertEquals("Name: Message", exception.getMessage());
     }
-
 }

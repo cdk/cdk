@@ -59,7 +59,8 @@ public class VABCVolumeTest {
 
     @Test
     public void testOmeprazol() throws InvalidSmilesException, CDKException {
-        IAtomContainer methane = smilesParser.parseSmiles("COc2ccc1[nH]c(nc1c2)S(=O)Cc3ncc(C)c(OC)c3C");
+        IAtomContainer methane =
+                smilesParser.parseSmiles("COc2ccc1[nH]c(nc1c2)S(=O)Cc3ncc(C)c(OC)c3C");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(methane);
         double volume = VABCVolume.calculate(methane);
         Assert.assertEquals(292.23, volume, 0.01);
@@ -168,5 +169,4 @@ public class VABCVolumeTest {
         double volume = VABCVolume.calculate(methane);
         Assert.assertEquals(159.9875318718, volume, 0.01);
     }
-
 }

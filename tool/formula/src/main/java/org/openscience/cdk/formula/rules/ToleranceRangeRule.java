@@ -25,9 +25,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 /**
- * This class validate if the mass from an IMolecularFormula is
- * between the tolerance range give a experimental mass. As default
- * the mass to range is 0.0.
+ * This class validate if the mass from an IMolecularFormula is between the tolerance range give a
+ * experimental mass. As default the mass to range is 0.0.
  *
  * <table border="1">
  *   <caption>Table 1: Parameters set by this rule.</caption>
@@ -48,39 +47,40 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  *   </tr>
  * </table>
  *
- * @cdk.module  formula
- * @author      miguelrojasch
+ * @cdk.module formula
+ * @author miguelrojasch
  * @cdk.created 2007-11-20
  * @cdk.githash
  */
 public class ToleranceRangeRule implements IRule {
 
-    private static ILoggingTool logger    = LoggingToolFactory.createLoggingTool(ToleranceRangeRule.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(ToleranceRangeRule.class);
 
-    private double              mass      = 0.0;
+    private double mass = 0.0;
 
-    private double              tolerance = 0.05;
+    private double tolerance = 0.05;
 
-    /**
-     *  Constructor for the ToleranceRangeRule object.
-     */
+    /** Constructor for the ToleranceRangeRule object. */
     public ToleranceRangeRule() {}
 
     /**
      * Sets the parameters attribute of the ToleranceRangeRule object.
      *
-     * @param params          The new parameters value
-     * @throws CDKException   Description of the Exception
-     *
-     * @see                   #getParameters
+     * @param params The new parameters value
+     * @throws CDKException Description of the Exception
+     * @see #getParameters
      */
     @Override
     public void setParameters(Object[] params) throws CDKException {
-        if (params.length > 2) throw new CDKException("ToleranceRangeRule expects only two parameter");
+        if (params.length > 2)
+            throw new CDKException("ToleranceRangeRule expects only two parameter");
 
-        if (!(params[0] instanceof Double)) throw new CDKException("The parameter 0 must be of type Double");
+        if (!(params[0] instanceof Double))
+            throw new CDKException("The parameter 0 must be of type Double");
 
-        if (!(params[1] instanceof Double)) throw new CDKException("The parameter 1 must be of type Double");
+        if (!(params[1] instanceof Double))
+            throw new CDKException("The parameter 1 must be of type Double");
 
         mass = (Double) params[0];
         tolerance = (Double) params[1];
@@ -90,7 +90,7 @@ public class ToleranceRangeRule implements IRule {
      * Gets the parameters attribute of the ToleranceRangeRule object.
      *
      * @return The parameters value
-     * @see    #setParameters
+     * @see #setParameters
      */
     @Override
     public Object[] getParameters() {
@@ -104,20 +104,16 @@ public class ToleranceRangeRule implements IRule {
     /**
      * Validate the Tolerance Range of this IMolecularFormula.
      *
-     * @param formula   Parameter is the IMolecularFormula
-     * @return          A double value meaning 1.0 True, 0.0 False
+     * @param formula Parameter is the IMolecularFormula
+     * @return A double value meaning 1.0 True, 0.0 False
      */
-
     @Override
     public double validate(IMolecularFormula formula) throws CDKException {
         logger.info("Start validation of ", formula);
 
         double totalExactMass = MolecularFormulaManipulator.getTotalExactMass(formula);
 
-        if (Math.abs(totalExactMass - mass) > tolerance)
-            return 0.0;
-        else
-            return 1.0;
+        if (Math.abs(totalExactMass - mass) > tolerance) return 0.0;
+        else return 1.0;
     }
-
 }

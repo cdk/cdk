@@ -23,6 +23,10 @@
  */
 package org.openscience.cdk.geometry;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.TreeMap;
+import javax.vecmath.Point2d;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.MorganNumbersTools;
@@ -31,19 +35,13 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 
-import javax.vecmath.Point2d;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeMap;
-
 /**
- * A set of static utility classes for geometric calculations on {@link IBond}s.
- * The methods for detecting stereo configurations are described in CDK news, vol 2, p. 64 - 66.
+ * A set of static utility classes for geometric calculations on {@link IBond}s. The methods for
+ * detecting stereo configurations are described in CDK news, vol 2, p. 64 - 66.
  *
- * @author      shk3
+ * @author shk3
  * @cdk.created 2005-08-04
- * @cdk.module  standard
+ * @cdk.module standard
  * @cdk.githash
  */
 public class BondTools {
@@ -51,14 +49,14 @@ public class BondTools {
     // FIXME: class JavaDoc should use {@cdk.cite BLA} for the CDK News article
 
     /**
-     *  Tells if a certain bond is center of a valid double bond configuration.
+     * Tells if a certain bond is center of a valid double bond configuration.
      *
-     * @param  container  The atomcontainer.
-     * @param  bond       The bond.
-     * @return            true=is a potential configuration, false=is not.
+     * @param container The atomcontainer.
+     * @param bond The bond.
+     * @return true=is a potential configuration, false=is not.
      */
     public static boolean isValidDoubleBondConfiguration(IAtomContainer container, IBond bond) {
-        //org.openscience.cdk.interfaces.IAtom[] atoms = bond.getAtoms();
+        // org.openscience.cdk.interfaces.IAtom[] atoms = bond.getAtoms();
         List<IAtom> connectedAtoms = container.getConnectedAtomsList(bond.getBegin());
         IAtom from = null;
         for (IAtom connectedAtom : connectedAtoms) {
@@ -80,21 +78,29 @@ public class BondTools {
     }
 
     /**
-     *  Says if two atoms are in cis or trans position around a double bond.
-     *  The atoms have to be given to the method like this:  firstOuterAtom - firstInnerAtom = secondInnterAtom - secondOuterAtom
+     * Says if two atoms are in cis or trans position around a double bond. The atoms have to be
+     * given to the method like this: firstOuterAtom - firstInnerAtom = secondInnterAtom -
+     * secondOuterAtom
      *
-     * @param  firstOuterAtom    See above.
-     * @param  firstInnerAtom    See above.
-     * @param  secondInnerAtom   See above.
-     * @param  secondOuterAtom   See above.
-     * @param  ac                The atom container the atoms are in.
-     * @return                   true=trans, false=cis.
-     * @exception  CDKException  The atoms are not in a double bond configuration (no double bond in the middle, same atoms on one side)
+     * @param firstOuterAtom See above.
+     * @param firstInnerAtom See above.
+     * @param secondInnerAtom See above.
+     * @param secondOuterAtom See above.
+     * @param ac The atom container the atoms are in.
+     * @return true=trans, false=cis.
+     * @exception CDKException The atoms are not in a double bond configuration (no double bond in
+     *     the middle, same atoms on one side)
      */
-    public static boolean isCisTrans(IAtom firstOuterAtom, IAtom firstInnerAtom, IAtom secondInnerAtom,
-            IAtom secondOuterAtom, IAtomContainer ac) throws CDKException {
+    public static boolean isCisTrans(
+            IAtom firstOuterAtom,
+            IAtom firstInnerAtom,
+            IAtom secondInnerAtom,
+            IAtom secondOuterAtom,
+            IAtomContainer ac)
+            throws CDKException {
         if (!isValidDoubleBondConfiguration(ac, ac.getBond(firstInnerAtom, secondInnerAtom))) {
-            throw new CDKException("There is no valid double bond configuration between your inner atoms!");
+            throw new CDKException(
+                    "There is no valid double bond configuration between your inner atoms!");
         }
         boolean firstDirection = isLeft(firstOuterAtom, firstInnerAtom, secondInnerAtom);
         boolean secondDirection = isLeft(secondOuterAtom, secondInnerAtom, firstInnerAtom);
@@ -102,13 +108,12 @@ public class BondTools {
     }
 
     /**
-     *  Says if an atom is on the left side of a another atom seen from a certain
-     *  atom or not.
+     * Says if an atom is on the left side of a another atom seen from a certain atom or not.
      *
-     * @param  whereIs   The atom the position of which is returned
-     * @param  viewFrom  The atom from which to look
-     * @param  viewTo    The atom to which to look
-     * @return           true=is left, false = is not
+     * @param whereIs The atom the position of which is returned
+     * @param viewFrom The atom from which to look
+     * @param viewTo The atom to which to look
+     * @return true=is left, false = is not
      */
     public static boolean isLeft(IAtom whereIs, IAtom viewFrom, IAtom viewTo) {
         double angle = giveAngleBothMethods(viewFrom, viewTo, whereIs, false);
@@ -120,15 +125,14 @@ public class BondTools {
     }
 
     /**
-     * Returns true if the two atoms are within the distance fudge
-     * factor of each other.
+     * Returns true if the two atoms are within the distance fudge factor of each other.
      *
-     * @param  atom1                Description of Parameter
-     * @param  atom2                Description of Parameter
-     * @param  distanceFudgeFactor  Description of Parameter
-     * @return                      Description of the Returned Value
-     * @cdk.keyword                 join-the-dots
-     * @cdk.keyword                 bond creation
+     * @param atom1 Description of Parameter
+     * @param atom2 Description of Parameter
+     * @param distanceFudgeFactor Description of Parameter
+     * @return Description of the Returned Value
+     * @cdk.keyword join-the-dots
+     * @cdk.keyword bond creation
      */
     public static boolean closeEnoughToBond(IAtom atom1, IAtom atom2, double distanceFudgeFactor) {
 
@@ -143,22 +147,22 @@ public class BondTools {
     }
 
     /**
-     *  Gives the angle between two lines starting at atom from and going to to1
-     *  and to2. If bool=false the angle starts from the middle line and goes from
-     *  0 to PI or 0 to -PI if the to2 is on the left or right side of the line. If
-     *  bool=true the angle goes from 0 to 2PI.
+     * Gives the angle between two lines starting at atom from and going to to1 and to2. If
+     * bool=false the angle starts from the middle line and goes from 0 to PI or 0 to -PI if the to2
+     * is on the left or right side of the line. If bool=true the angle goes from 0 to 2PI.
      *
-     * @param  from  the atom to view from.
-     * @param  to1   first direction to look in.
-     * @param  to2   second direction to look in.
-     * @param  bool  true=angle is 0 to 2PI, false=angel is -PI to PI.
-     * @return       The angle in rad.
+     * @param from the atom to view from.
+     * @param to1 first direction to look in.
+     * @param to2 second direction to look in.
+     * @param bool true=angle is 0 to 2PI, false=angel is -PI to PI.
+     * @return The angle in rad.
      */
     public static double giveAngleBothMethods(IAtom from, IAtom to1, IAtom to2, boolean bool) {
         return giveAngleBothMethods(from.getPoint2d(), to1.getPoint2d(), to2.getPoint2d(), bool);
     }
 
-    public static double giveAngleBothMethods(Point2d from, Point2d to1, Point2d to2, boolean bool) {
+    public static double giveAngleBothMethods(
+            Point2d from, Point2d to1, Point2d to2, boolean bool) {
         double[] A = new double[2];
         from.get(A);
         double[] B = new double[2];
@@ -182,43 +186,41 @@ public class BondTools {
     }
 
     /**
-     *  Says if an atom is the end of a double bond configuration
+     * Says if an atom is the end of a double bond configuration
      *
-     * @param  atom                     The atom which is the end of configuration
-     * @param  container                The atomContainer the atom is in
-     * @param  parent                   The atom we came from
-     * @param  doubleBondConfiguration  The array indicating where double bond
-     *      configurations are specified (this method ensures that there is
-     *      actually the possibility of a double bond configuration)
-     * @return                          false=is not end of configuration, true=is
+     * @param atom The atom which is the end of configuration
+     * @param container The atomContainer the atom is in
+     * @param parent The atom we came from
+     * @param doubleBondConfiguration The array indicating where double bond configurations are
+     *     specified (this method ensures that there is actually the possibility of a double bond
+     *     configuration)
+     * @return false=is not end of configuration, true=is
      */
-    private static boolean isEndOfDoubleBond(IAtomContainer container, IAtom atom, IAtom parent,
-            boolean[] doubleBondConfiguration) {
+    private static boolean isEndOfDoubleBond(
+            IAtomContainer container, IAtom atom, IAtom parent, boolean[] doubleBondConfiguration) {
         if (container.indexOf(container.getBond(atom, parent)) == -1
-                || doubleBondConfiguration.length <= container.indexOf(container.getBond(atom, parent))
+                || doubleBondConfiguration.length
+                        <= container.indexOf(container.getBond(atom, parent))
                 || !doubleBondConfiguration[container.indexOf(container.getBond(atom, parent))]) {
             return false;
         }
 
         int hcount;
-        if (atom.getImplicitHydrogenCount() == CDKConstants.UNSET)
-            hcount = 0;
-        else
-            hcount = atom.getImplicitHydrogenCount();
+        if (atom.getImplicitHydrogenCount() == CDKConstants.UNSET) hcount = 0;
+        else hcount = atom.getImplicitHydrogenCount();
 
         int lengthAtom = container.getConnectedAtomsList(atom).size() + hcount;
 
-        if (parent.getImplicitHydrogenCount() == CDKConstants.UNSET)
-            hcount = 0;
-        else
-            hcount = parent.getImplicitHydrogenCount();
+        if (parent.getImplicitHydrogenCount() == CDKConstants.UNSET) hcount = 0;
+        else hcount = parent.getImplicitHydrogenCount();
 
         int lengthParent = container.getConnectedAtomsList(parent).size() + hcount;
 
         if (container.getBond(atom, parent) != null) {
             if (container.getBond(atom, parent).getOrder() == Order.DOUBLE
                     && (lengthAtom == 3 || (lengthAtom == 2 && "N".equals(atom.getSymbol())))
-                    && (lengthParent == 3 || (lengthParent == 2 && "N".equals(parent.getSymbol())))) {
+                    && (lengthParent == 3
+                            || (lengthParent == 2 && "N".equals(parent.getSymbol())))) {
                 List<IAtom> atoms = container.getConnectedAtomsList(atom);
                 IAtom one = null;
                 IAtom two = null;
@@ -229,11 +231,18 @@ public class BondTools {
                         two = conAtom;
                     }
                 }
-                String[] morgannumbers = MorganNumbersTools.getMorganNumbersWithElementSymbol(container);
-                if ((one != null && two == null && "N".equals(atom.getSymbol()) && Math.abs(giveAngleBothMethods(
-                        parent, atom, one, true)) > Math.PI / 10)
-                        || (!"N".equals(atom.getSymbol()) && one != null && two != null && !morgannumbers[container
-                                .indexOf(one)].equals(morgannumbers[container.indexOf(two)]))) {
+                String[] morgannumbers =
+                        MorganNumbersTools.getMorganNumbersWithElementSymbol(container);
+                if ((one != null
+                                && two == null
+                                && "N".equals(atom.getSymbol())
+                                && Math.abs(giveAngleBothMethods(parent, atom, one, true))
+                                        > Math.PI / 10)
+                        || (!"N".equals(atom.getSymbol())
+                                && one != null
+                                && two != null
+                                && !morgannumbers[container.indexOf(one)].equals(
+                                        morgannumbers[container.indexOf(two)]))) {
                     return (true);
                 } else {
                     return (false);
@@ -244,23 +253,21 @@ public class BondTools {
     }
 
     /**
-     *  Says if an atom is the start of a double bond configuration
+     * Says if an atom is the start of a double bond configuration
      *
-     * @param  a                        The atom which is the start of configuration
-     * @param  container                The atomContainer the atom is in
-     * @param  parent                   The atom we came from
-     * @param  doubleBondConfiguration  The array indicating where double bond
-     *      configurations are specified (this method ensures that there is
-     *      actually the possibility of a double bond configuration)
-     * @return                          false=is not start of configuration, true=is
+     * @param a The atom which is the start of configuration
+     * @param container The atomContainer the atom is in
+     * @param parent The atom we came from
+     * @param doubleBondConfiguration The array indicating where double bond configurations are
+     *     specified (this method ensures that there is actually the possibility of a double bond
+     *     configuration)
+     * @return false=is not start of configuration, true=is
      */
-    private static boolean isStartOfDoubleBond(IAtomContainer container, IAtom a, IAtom parent,
-            boolean[] doubleBondConfiguration) {
+    private static boolean isStartOfDoubleBond(
+            IAtomContainer container, IAtom a, IAtom parent, boolean[] doubleBondConfiguration) {
         int hcount;
-        if (a.getImplicitHydrogenCount() == CDKConstants.UNSET)
-            hcount = 0;
-        else
-            hcount = a.getImplicitHydrogenCount();
+        if (a.getImplicitHydrogenCount() == CDKConstants.UNSET) hcount = 0;
+        else hcount = a.getImplicitHydrogenCount();
 
         int lengthAtom = container.getConnectedAtomsList(a).size() + hcount;
 
@@ -273,7 +280,8 @@ public class BondTools {
         boolean doubleBond = false;
         IAtom nextAtom = null;
         for (IAtom atom : atoms) {
-            if (!atom.equals(parent) && container.getBond(atom, a).getOrder() == Order.DOUBLE
+            if (!atom.equals(parent)
+                    && container.getBond(atom, a).getOrder() == Order.DOUBLE
                     && isEndOfDoubleBond(container, atom, a, doubleBondConfiguration)) {
                 doubleBond = true;
                 nextAtom = atom;
@@ -287,11 +295,16 @@ public class BondTools {
         String[] morgannumbers = MorganNumbersTools.getMorganNumbersWithElementSymbol(container);
         if (one != null
                 && ((!"N".equals(a.getSymbol())
-                        && two != null
-                        && !morgannumbers[container.indexOf(one)].equals(morgannumbers[container
-                                .indexOf(two)]) && doubleBond && doubleBondConfiguration[container.indexOf(container.getBond(
-                        a, nextAtom))]) || (doubleBond && "N".equals(a.getSymbol()) && Math.abs(giveAngleBothMethods(
-                        nextAtom, a, parent, true)) > Math.PI / 10))) {
+                                && two != null
+                                && !morgannumbers[container.indexOf(one)].equals(
+                                        morgannumbers[container.indexOf(two)])
+                                && doubleBond
+                                && doubleBondConfiguration[
+                                        container.indexOf(container.getBond(a, nextAtom))])
+                        || (doubleBond
+                                && "N".equals(a.getSymbol())
+                                && Math.abs(giveAngleBothMethods(nextAtom, a, parent, true))
+                                        > Math.PI / 10))) {
             return (true);
         } else {
             return (false);
@@ -299,14 +312,14 @@ public class BondTools {
     }
 
     /**
-     *  Says if an atom as a center of a tetrahedral chirality.
-     *  This method uses wedge bonds. 3D coordinates are not taken into account. If there
-     *  are no wedge bonds around a potential stereo center, it will not be found.
+     * Says if an atom as a center of a tetrahedral chirality. This method uses wedge bonds. 3D
+     * coordinates are not taken into account. If there are no wedge bonds around a potential stereo
+     * center, it will not be found.
      *
-     *@param  atom          The atom which is the center
-     *@param  container  The atomContainer the atom is in
-     *@return            0=is not tetrahedral; &gt;1 is a certain depiction of
-     *      tetrahedrality (evaluated in parse chain)
+     * @param atom The atom which is the center
+     * @param container The atomContainer the atom is in
+     * @return 0=is not tetrahedral; &gt;1 is a certain depiction of tetrahedrality (evaluated in
+     *     parse chain)
      */
     public static int isTetrahedral(IAtomContainer container, IAtom atom, boolean strict) {
         List<IAtom> atoms = container.getConnectedAtomsList(atom);
@@ -349,13 +362,13 @@ public class BondTools {
     }
 
     /**
-     *  Says if an atom as a center of a trigonal-bipyramidal or actahedral
-     *  chirality. This method uses wedge bonds. 3D coordinates are not taken into account. If there
-     *  are no wedge bonds around a potential stereo center, it will not be found.
+     * Says if an atom as a center of a trigonal-bipyramidal or actahedral chirality. This method
+     * uses wedge bonds. 3D coordinates are not taken into account. If there are no wedge bonds
+     * around a potential stereo center, it will not be found.
      *
-     *@param  atom          The atom which is the center
-     *@param  container  The atomContainer the atom is in
-     *@return            true=is square planar, false=is not
+     * @param atom The atom which is the center
+     * @param container The atomContainer the atom is in
+     * @return true=is square planar, false=is not
      */
     public static int isTrigonalBipyramidalOrOctahedral(IAtomContainer container, IAtom atom) {
         List<IAtom> atoms = container.getConnectedAtomsList(atom);
@@ -374,22 +387,20 @@ public class BondTools {
             }
         }
         if (up == 1 && down == 1) {
-            if (atoms.size() == 5)
-                return 1;
-            else
-                return 2;
+            if (atoms.size() == 5) return 1;
+            else return 2;
         }
         return 0;
     }
 
     /**
-     *  Says if an atom as a center of any valid stereo configuration or not.
-     *  This method uses wedge bonds. 3D coordinates are not taken into account. If there
-     *  are no wedge bonds around a potential stereo center, it will not be found.
+     * Says if an atom as a center of any valid stereo configuration or not. This method uses wedge
+     * bonds. 3D coordinates are not taken into account. If there are no wedge bonds around a
+     * potential stereo center, it will not be found.
      *
-     *@param  stereoAtom          The atom which is the center
-     *@param  container  The atomContainer the atom is in
-     *@return            true=is a stereo atom, false=is not
+     * @param stereoAtom The atom which is the center
+     * @param container The atomContainer the atom is in
+     * @return true=is a stereo atom, false=is not
      */
     public static boolean isStereo(IAtomContainer container, IAtom stereoAtom) {
         List<IAtom> atoms = container.getConnectedAtomsList(stereoAtom);
@@ -438,14 +449,16 @@ public class BondTools {
                 }
             }
             boolean[] symbolsWithDifferentMorganNumbers = new boolean[differentSymbols.size()];
-            List<Long>[] symbolsMorganNumbers = new ArrayList[symbolsWithDifferentMorganNumbers.length];
+            List<Long>[] symbolsMorganNumbers =
+                    new ArrayList[symbolsWithDifferentMorganNumbers.length];
             for (int i = 0; i < symbolsWithDifferentMorganNumbers.length; i++) {
                 symbolsWithDifferentMorganNumbers[i] = true;
                 symbolsMorganNumbers[i] = new ArrayList<Long>();
             }
             for (IAtom atom : atoms) {
                 int elementNumber = differentSymbols.indexOf(atom.getSymbol());
-                if (symbolsMorganNumbers[elementNumber].contains(morgannumbers[container.indexOf(atom)])) {
+                if (symbolsMorganNumbers[elementNumber].contains(
+                        morgannumbers[container.indexOf(atom)])) {
                     symbolsWithDifferentMorganNumbers[elementNumber] = false;
                 } else {
                     symbolsMorganNumbers[elementNumber].add(morgannumbers[container.indexOf(atom)]);
@@ -459,26 +472,30 @@ public class BondTools {
             }
             if (numberOfSymbolsWithDifferentMorganNumbers != differentSymbols.size()) {
                 if ((atoms.size() == 5 || atoms.size() == 6)
-                        && (numberOfSymbolsWithDifferentMorganNumbers + differentAtoms > 2 || (differentAtoms == 2
-                                && onlyRelevantIfTwo[0] > 1 && onlyRelevantIfTwo[1] > 1))) {
+                        && (numberOfSymbolsWithDifferentMorganNumbers + differentAtoms > 2
+                                || (differentAtoms == 2
+                                        && onlyRelevantIfTwo[0] > 1
+                                        && onlyRelevantIfTwo[1] > 1))) {
                     return (true);
                 }
                 return isSquarePlanar(container, stereoAtom)
-                        && (numberOfSymbolsWithDifferentMorganNumbers + differentAtoms > 2 || (differentAtoms == 2
-                                && onlyRelevantIfTwo[0] > 1 && onlyRelevantIfTwo[1] > 1));
+                        && (numberOfSymbolsWithDifferentMorganNumbers + differentAtoms > 2
+                                || (differentAtoms == 2
+                                        && onlyRelevantIfTwo[0] > 1
+                                        && onlyRelevantIfTwo[1] > 1));
             }
         }
         return (true);
     }
 
     /**
-     *  Says if an atom as a center of a square planar chirality.
-     *  This method uses wedge bonds. 3D coordinates are not taken into account. If there
-     *  are no wedge bonds around a potential stereo center, it will not be found.
+     * Says if an atom as a center of a square planar chirality. This method uses wedge bonds. 3D
+     * coordinates are not taken into account. If there are no wedge bonds around a potential stereo
+     * center, it will not be found.
      *
-     *@param  atom          The atom which is the center
-     *@param  container  The atomContainer the atom is in
-     *@return            true=is square planar, false=is not
+     * @param atom The atom which is the center
+     * @param container The atomContainer the atom is in
+     * @return true=is square planar, false=is not
      */
     public static boolean isSquarePlanar(IAtomContainer container, IAtom atom) {
         List<IAtom> atoms = container.getConnectedAtomsList(atom);
@@ -500,13 +517,13 @@ public class BondTools {
     }
 
     /**
-     *  Says if of four atoms connected two one atom the up and down bonds are
-     *  opposite or not, i. e.if it's tetrehedral or square planar. The method
-     *  does not check if there are four atoms and if two or up and two are down
+     * Says if of four atoms connected two one atom the up and down bonds are opposite or not, i.
+     * e.if it's tetrehedral or square planar. The method does not check if there are four atoms and
+     * if two or up and two are down
      *
-     *@param  atom          The atom which is the center
-     *@param  container  The atomContainer the atom is in
-     *@return            true=are opposite, false=are not
+     * @param atom The atom which is the center
+     * @param container The atomContainer the atom is in
+     * @return true=are opposite, false=are not
      */
     public static boolean stereosAreOpposite(IAtomContainer container, IAtom atom) {
         List<IAtom> atoms = container.getConnectedAtomsList(atom);
@@ -516,29 +533,30 @@ public class BondTools {
         }
         Object[] ohere = hm.values().toArray();
         IBond.Stereo stereoOne = container.getBond(atom, atoms.get(0)).getStereo();
-        IBond.Stereo stereoOpposite = container.getBond(atom, atoms.get((Integer) ohere[1])).getStereo();
+        IBond.Stereo stereoOpposite =
+                container.getBond(atom, atoms.get((Integer) ohere[1])).getStereo();
         return stereoOpposite == stereoOne;
     }
 
     /**
-     *  Calls giveAngleBothMethods with bool = true.
+     * Calls giveAngleBothMethods with bool = true.
      *
-     *@param  from  the atom to view from
-     *@param  to1   first direction to look in
-     *@param  to2   second direction to look in
-     *@return       The angle in rad from 0 to 2*PI
+     * @param from the atom to view from
+     * @param to1 first direction to look in
+     * @param to2 second direction to look in
+     * @return The angle in rad from 0 to 2*PI
      */
     public static double giveAngle(IAtom from, IAtom to1, IAtom to2) {
         return (giveAngleBothMethods(from, to1, to2, true));
     }
 
     /**
-     *  Calls giveAngleBothMethods with bool = false.
+     * Calls giveAngleBothMethods with bool = false.
      *
-     *@param  from  the atom to view from
-     *@param  to1   first direction to look in
-     *@param  to2   second direction to look in
-     *@return       The angle in rad from -PI to PI
+     * @param from the atom to view from
+     * @param to1 first direction to look in
+     * @param to2 second direction to look in
+     * @return The angle in rad from -PI to PI
      */
     public static double giveAngleFromMiddle(IAtom from, IAtom to1, IAtom to2) {
         return (giveAngleBothMethods(from, to1, to2, false));

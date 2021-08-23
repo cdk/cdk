@@ -19,7 +19,6 @@
 package org.openscience.cdk.graph;
 
 import java.util.List;
-
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.junit.Assert;
 import org.junit.Test;
@@ -27,9 +26,7 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
-/**
- * @cdk.module test-standard
- */
+/** @cdk.module test-standard */
 public class BFSShortestPathTest extends CDKTestCase {
 
     public BFSShortestPathTest() {

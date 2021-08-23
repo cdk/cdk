@@ -24,24 +24,22 @@ package org.openscience.cdk.io;
 
 import java.io.InputStream;
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
-/**
- * @cdk.module test-io
- */
+/** @cdk.module test-io */
 public class PCCompoundASNReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(PCCompoundASNReaderTest.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(PCCompoundASNReaderTest.class);
 
     @BeforeClass
     public static void setup() throws Exception {
@@ -82,8 +80,10 @@ public class PCCompoundASNReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(molecule.getAtom(11), molecule.getBond(3).getEnd());
 
         // some extracted props
-        Assert.assertEquals("InChI=1/C9H17NO4/c1-7(11)14-8(5-9(12)13)6-10(2,3)4/h8H,5-6H2,1-4H3",
+        Assert.assertEquals(
+                "InChI=1/C9H17NO4/c1-7(11)14-8(5-9(12)13)6-10(2,3)4/h8H,5-6H2,1-4H3",
                 molecule.getProperty(CDKConstants.INCHI));
-        Assert.assertEquals("CC(=O)OC(CC(=O)[O-])C[N+](C)(C)C", molecule.getProperty(CDKConstants.SMILES));
+        Assert.assertEquals(
+                "CC(=O)OC(CC(=O)[O-])C[N+](C)(C)C", molecule.getProperty(CDKConstants.SMILES));
     }
 }

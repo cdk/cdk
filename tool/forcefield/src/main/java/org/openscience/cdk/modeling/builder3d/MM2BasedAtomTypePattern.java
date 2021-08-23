@@ -28,187 +28,183 @@ import java.util.Vector;
 import java.util.regex.Pattern;
 
 /**
- *  Class stores hose code patterns to identify mm2 force field atom types.
+ * Class stores hose code patterns to identify mm2 force field atom types.
  *
- * @author      chhoppe
+ * @author chhoppe
  * @cdk.created 2004-09-07
- * @cdk.module  forcefield
+ * @cdk.module forcefield
  * @cdk.githash
  */
 public class MM2BasedAtomTypePattern {
 
     private List<Pattern> atomTypePatterns = new Vector<Pattern>();
 
-    /**
-     *Constructor for the MM2BasedAtomTypePattern object
-     */
+    /** Constructor for the MM2BasedAtomTypePattern object */
     MM2BasedAtomTypePattern() {
         this.createPattern();
     }
 
     /**
-     *  Gets the atomTypePatterns attribute of the MM2BasedAtomTypePattern object
+     * Gets the atomTypePatterns attribute of the MM2BasedAtomTypePattern object
      *
-     * @return    The atomTypePatterns as a vector
+     * @return The atomTypePatterns as a vector
      */
     public List<Pattern> getAtomTypePatterns() {
         return atomTypePatterns;
     }
 
-    /**
-     *  Creates the atom type pattern
-     */
+    /** Creates the atom type pattern */
     private void createPattern() {
         atomTypePatterns.add(Pattern.compile("[CSP]-[0-4][-]?+;[A-Za-z+-]{0,6}[(].*+"));
-        //Csp3
+        // Csp3
         atomTypePatterns.add(Pattern.compile("[CS]-[0-3];[H]{0,2}+[A-Za-z]*+=[A-Z]{1,2}+.*+"));
-        //Csp2
+        // Csp2
         atomTypePatterns.add(Pattern.compile("C-[0-3];=O.*+"));
-        //C carbonyl
+        // C carbonyl
         atomTypePatterns.add(Pattern.compile("C-[1-2][-]?+;[H]{0,1}+%.*+"));
-        //csp
+        // csp
         atomTypePatterns.add(Pattern.compile("H-[0-1];[C].*+"));
-        //H
+        // H
         atomTypePatterns.add(Pattern.compile("[OS]-[0-2][-]?+;[A-Za-z]{1,4}+[+]?+[(].*+"));
-        //O Ether,Alcohol
+        // O Ether,Alcohol
         atomTypePatterns.add(Pattern.compile("O-[1-2][+]?+;[H]{0,1}+=[SPC].[^O]++.*+"));
-        //=0 Carbonyl
+        // =0 Carbonyl
         atomTypePatterns.add(Pattern.compile("N-[0-3][+-]?+;[A-Z &&[^=%]]{1,3}+.*+"));
-        //nsp3
+        // nsp3
         atomTypePatterns.add(Pattern.compile("N-[1-3][-+]?+;=?+[ON]?+[+]?+[CH]*+.(=O)?+.*+"));
-        //nsp2amide
+        // nsp2amide
         atomTypePatterns.add(Pattern.compile("N-[1-2][+]?+;%.*+"));
-        //nsp (10)
+        // nsp (10)
         atomTypePatterns.add(Pattern.compile("F.*+"));
-        //F
+        // F
         atomTypePatterns.add(Pattern.compile("Cl.*+"));
-        //Cl
+        // Cl
         atomTypePatterns.add(Pattern.compile("Br.*+"));
-        //Br
+        // Br
         atomTypePatterns.add(Pattern.compile("I.*+"));
-        //I
+        // I
         atomTypePatterns.add(Pattern.compile("S-[1-2][-]?+;[HCSON]{1,2}+[(].*+"));
-        //S Sulfide
+        // S Sulfide
         atomTypePatterns.add(Pattern.compile("S-3+;.?+[A-Za-z]++.*+"));
-        //S+Sulfonium
+        // S+Sulfonium
         atomTypePatterns.add(Pattern.compile("S-[1-2][+]?+;=[OCNP][A-Z]++.*+"));
-        //S=0
+        // S=0
         atomTypePatterns.add(Pattern.compile("S-4;=O=O[A-Za-z]++.*+"));
-        //So2
+        // So2
         atomTypePatterns.add(Pattern.compile("Si.*+"));
-        //Silane
+        // Silane
         atomTypePatterns.add(Pattern.compile("LP.*+"));
-        //Lonepair (20)
+        // Lonepair (20)
         atomTypePatterns.add(Pattern.compile("H-1;O[+-]?+.[PSCN]{0,2}+/.*+"));
-        //H- OH
+        // H- OH
         atomTypePatterns.add(Pattern.compile("C-3;CCC..?+&?+[A-Za-z]?+,?+.?+&?+,?+.?+&?+.*+"));
-        //C Cyclopropane
+        // C Cyclopropane
         atomTypePatterns.add(Pattern.compile("H-1;[NP][+]?+[(][H]{0,2}+=?+[A-Z]{0,2}+/.*+"));
-        //H- NH amine
+        // H- NH amine
         atomTypePatterns.add(Pattern.compile("H-1;O[+]?+.=?+C/=?+[OCSP]{1,2}+/.*+"));
-        //H- COOH
+        // H- COOH
         atomTypePatterns.add(Pattern.compile("P-[0-3];[A-Za-z]{1,3}[(].*+"));
-        //>P
+        // >P
         atomTypePatterns.add(Pattern.compile("B-[0-3];[A-Za-z]{1,2}.*+"));
-        //>B
+        // >B
         atomTypePatterns.add(Pattern.compile("B-4;[A-Za-z]{1,4}.*+"));
-        //>B<
+        // >B<
         atomTypePatterns.add(Pattern.compile("SPECIAL DEFINITON "));
-        //H- Amide/Enol
+        // H- Amide/Enol
         atomTypePatterns.add(Pattern.compile("NOT Implemented"));
-        //C* Carbonradical
+        // C* Carbonradical
         atomTypePatterns.add(Pattern.compile("C-[0-9][+];.*+"));
-        //C+ (30)
+        // C+ (30)
         atomTypePatterns.add(Pattern.compile("Ge.*+"));
-        //Ge
+        // Ge
         atomTypePatterns.add(Pattern.compile("Sn.*+"));
-        //Sn
+        // Sn
         atomTypePatterns.add(Pattern.compile("Pb.*+"));
-        //Pb
+        // Pb
         atomTypePatterns.add(Pattern.compile("Se.*+"));
-        //Se
+        // Se
         atomTypePatterns.add(Pattern.compile("Te.*+"));
-        //Te
+        // Te
         atomTypePatterns.add(Pattern.compile("D-1;.*+"));
-        //D
+        // D
         atomTypePatterns.add(Pattern.compile("N-2;=CC..*+"));
-        //-N= azo,Pyridin
+        // -N= azo,Pyridin
         atomTypePatterns.add(Pattern.compile("C-2;=CC..?+[A-Za-z]?+,?+&?+,?+C?+&?+.*+"));
-        //Csp2 Cyclopropene
+        // Csp2 Cyclopropene
         atomTypePatterns.add(Pattern.compile("N-4[+]?+;.*+"));
-        //nsp3 ammonium
+        // nsp3 ammonium
         atomTypePatterns.add(Pattern.compile("N-[2-3];H?+CC.[^(=O)].*+"));
-        //nsp2pyrrole (40)
+        // nsp2pyrrole (40)
         atomTypePatterns.add(Pattern.compile("O-2;CC.=C.*+&.*+&.*+"));
-        //osp2furan
+        // osp2furan
         atomTypePatterns.add(Pattern.compile("S-2;CC.*+"));
-        //s sp2 thiophene
+        // s sp2 thiophene
         atomTypePatterns.add(Pattern.compile("N-[2-3][+]?+;=N.*+C?+O?+[-]?+.*+"));
-        //-N=N-O
+        // -N=N-O
         atomTypePatterns.add(Pattern.compile("H-1;S.*+"));
-        //H- S hiol
+        // H- S hiol
         atomTypePatterns.add(Pattern.compile("N-2[+];=?+%?+[NC][-=]{0,2}+[NC][-]?+.*+"));
-        //Azide Center n
+        // Azide Center n
         atomTypePatterns.add(Pattern.compile("N-3[+];=O[A-Z]-?+[A-Z]-?+.*+"));
-        //n no2
+        // n no2
         atomTypePatterns.add(Pattern.compile("O-1-?+;=?+[CS][(][=0]?+[OCSNH]*+/.*+"));
-        //0 carboxylate
+        // 0 carboxylate
         atomTypePatterns.add(Pattern.compile("H-1;N[+].[A-Z]{0,3}+/.*+"));
-        //h ammonium
+        // h ammonium
         atomTypePatterns.add(Pattern.compile("O-2;CC.H?+,?+H?+,?+&,&.*+"));
-        //Epoxy
+        // Epoxy
         atomTypePatterns.add(Pattern.compile("C-2;=CC.*+"));
-        //C Benzene (50)
+        // C Benzene (50)
         atomTypePatterns.add(Pattern.compile("He.*+"));
-        //He
+        // He
         atomTypePatterns.add(Pattern.compile("Ne.*+"));
-        //Ne
+        // Ne
         atomTypePatterns.add(Pattern.compile("Ar.*+"));
-        //Ar
+        // Ar
         atomTypePatterns.add(Pattern.compile("Kr.*+"));
-        //Kr
+        // Kr
         atomTypePatterns.add(Pattern.compile("Xe.*+"));
-        //Xe
+        // Xe
         atomTypePatterns.add(Pattern.compile("NotImplemented"));
         atomTypePatterns.add(Pattern.compile("NotImplemented"));
         atomTypePatterns.add(Pattern.compile("NotImplemented"));
         atomTypePatterns.add(Pattern.compile("Mg.*+"));
-        //Mg
+        // Mg
         atomTypePatterns.add(Pattern.compile("P-[2-4];.*"));
-        //P (60)
+        // P (60)
         atomTypePatterns.add(Pattern.compile("Fe.*+"));
-        //Fe 2
+        // Fe 2
         atomTypePatterns.add(Pattern.compile("Fe.*+"));
-        //Fe 3
+        // Fe 3
         atomTypePatterns.add(Pattern.compile("Ni.*+"));
-        //Ni 2
+        // Ni 2
         atomTypePatterns.add(Pattern.compile("Ni.*+"));
-        //Ni 3
+        // Ni 3
         atomTypePatterns.add(Pattern.compile("Co.*+"));
-        //Co 2
+        // Co 2
         atomTypePatterns.add(Pattern.compile("Co.*+"));
-        //Co 3
+        // Co 3
         atomTypePatterns.add(Pattern.compile("NotImplemented"));
         atomTypePatterns.add(Pattern.compile("NotImplemented"));
         atomTypePatterns.add(Pattern.compile("O-1[-]?+;=?+N.*+"));
-        //Amineoxide
+        // Amineoxide
         atomTypePatterns.add(Pattern.compile("O-3[+];[H]{0,3}+[C]{0,3}+[(].*+"));
-        //Ketoniumoxygen (70)
+        // Ketoniumoxygen (70)
         atomTypePatterns.add(Pattern.compile("C-1NotImplemented"));
-        //Ketoniumcarbon
+        // Ketoniumcarbon
         atomTypePatterns.add(Pattern.compile("N-2;=C[^CO].*+"));
-        //N =N-Imine,Oxime
+        // N =N-Imine,Oxime
         atomTypePatterns.add(Pattern.compile("N-3[+];[H]{0,2}+=?+[C]{0,3}+[(].*+"));
-        //N+ =N+Pyridinium
+        // N+ =N+Pyridinium
         atomTypePatterns.add(Pattern.compile("N-[2-3][+];=C[CO]{2}+.?+[(].*+"));
-        //N+ =N+Imminium
+        // N+ =N+Imminium
         atomTypePatterns.add(Pattern.compile("N-[2-3][+]?+;=CO.*+"));
-        //N-0H Oxime
+        // N-0H Oxime
         atomTypePatterns.add(Pattern.compile("H-1;N[(]{1}+[CH]{2,2}+/[H]{0,3}+[,]?+=OC.*+"));
-        //H- Amide
+        // H- Amide
         atomTypePatterns.add(Pattern.compile("H-1;O.C/=CC/.*+"));
-        //H- AEnol (77)
+        // H- AEnol (77)
         atomTypePatterns.add(Pattern.compile("N-[1-3];[CH]{1,3}.{1}+[A-Z]{0,3}+[,]?+=OC.*+"));
-        //amid
+        // amid
     }
 }

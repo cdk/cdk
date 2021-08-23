@@ -27,5 +27,4 @@ public class BitSetFingerprintTest extends AbstractBitFingerprintTest {
     public BitSetFingerprintTest() throws Exception {
         super(BitSetFingerprint.class);
     }
-
 }

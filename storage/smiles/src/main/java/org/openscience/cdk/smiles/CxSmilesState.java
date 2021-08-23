@@ -30,24 +30,21 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-/**
- * Light-weight intermediate data-structure for transferring information CDK to/from
- * CXSMILES.
- */
+/** Light-weight intermediate data-structure for transferring information CDK to/from CXSMILES. */
 final class CxSmilesState {
 
-    Map<Integer, String>        atomLabels  = null;
-    Map<Integer, String>        atomValues  = null;
-    List<double[]>              atomCoords  = null;
-    List<List<Integer>>         fragGroups  = null;
-    Map<Integer, Radical>       atomRads    = null;
+    Map<Integer, String> atomLabels = null;
+    Map<Integer, String> atomValues = null;
+    List<double[]> atomCoords = null;
+    List<List<Integer>> fragGroups = null;
+    Map<Integer, Radical> atomRads = null;
     Map<Integer, List<Integer>> ligandOrdering = null;
     Map<Integer, List<Integer>> positionVar = null;
-    List<CxSgroup>              mysgroups   = null;
-    boolean                     coordFlag   = false;
-    boolean                     racemic     = false;
+    List<CxSgroup> mysgroups = null;
+    boolean coordFlag = false;
+    boolean racemic = false;
     List<Integer> racemicFrags = null;
-    Map<Integer,Integer> stereoGrps = null;
+    Map<Integer, Integer> stereoGrps = null;
 
     enum Radical {
         Monovalent,
@@ -66,13 +63,19 @@ final class CxSmilesState {
     }
 
     static final class CxDataSgroup extends CxSgroup {
-        final String       field;
-        final String       value;
-        final String       operator;
-        final String       unit;
-        final String       tag;
+        final String field;
+        final String value;
+        final String operator;
+        final String unit;
+        final String tag;
 
-        public CxDataSgroup(List<Integer> atoms, String field, String value, String operator, String unit, String tag) {
+        public CxDataSgroup(
+                List<Integer> atoms,
+                String field,
+                String value,
+                String operator,
+                String unit,
+                String tag) {
             this.atoms = atoms;
             this.field = field;
             this.value = value;
@@ -91,10 +94,10 @@ final class CxSmilesState {
             if (atoms != null ? !atoms.equals(that.atoms) : that.atoms != null) return false;
             if (field != null ? !field.equals(that.field) : that.field != null) return false;
             if (value != null ? !value.equals(that.value) : that.value != null) return false;
-            if (operator != null ? !operator.equals(that.operator) : that.operator != null) return false;
+            if (operator != null ? !operator.equals(that.operator) : that.operator != null)
+                return false;
             if (unit != null ? !unit.equals(that.unit) : that.unit != null) return false;
             return tag != null ? tag.equals(that.tag) : that.tag == null;
-
         }
 
         @Override
@@ -110,21 +113,32 @@ final class CxSmilesState {
 
         @Override
         public String toString() {
-            return "DataSgroup{" +
-                   "atoms=" + atoms +
-                   ", field='" + field + '\'' +
-                   ", value='" + value + '\'' +
-                   ", operator='" + operator + '\'' +
-                   ", unit='" + unit + '\'' +
-                   ", tag='" + tag + '\'' +
-                   '}';
+            return "DataSgroup{"
+                    + "atoms="
+                    + atoms
+                    + ", field='"
+                    + field
+                    + '\''
+                    + ", value='"
+                    + value
+                    + '\''
+                    + ", operator='"
+                    + operator
+                    + '\''
+                    + ", unit='"
+                    + unit
+                    + '\''
+                    + ", tag='"
+                    + tag
+                    + '\''
+                    + '}';
         }
     }
 
     static final class CxPolymerSgroup extends CxSgroup {
-        final String        type;
-        final String        subscript;
-        final String        supscript;
+        final String type;
+        final String subscript;
+        final String supscript;
 
         CxPolymerSgroup(String type, List<Integer> atomset, String subscript, String supscript) {
             assert type != null && atomset != null;
@@ -141,10 +155,10 @@ final class CxSmilesState {
 
             CxPolymerSgroup that = (CxPolymerSgroup) o;
 
-            return type.equals(that.type) &&
-                   atoms.equals(that.atoms) &&
-                   subscript.equals(that.subscript) &&
-                   supscript.equals(that.supscript);
+            return type.equals(that.type)
+                    && atoms.equals(that.atoms)
+                    && subscript.equals(that.subscript)
+                    && supscript.equals(that.supscript);
         }
 
         @Override
@@ -154,30 +168,34 @@ final class CxSmilesState {
 
         @Override
         public String toString() {
-            return "PolymerSgroup{" +
-                   "type='" + type + '\'' +
-                   ", atomset=" + atoms +
-                   ", subscript='" + subscript + '\'' +
-                   ", supscript='" + supscript + '\'' +
-                   '}';
+            return "PolymerSgroup{"
+                    + "type='"
+                    + type
+                    + '\''
+                    + ", atomset="
+                    + atoms
+                    + ", subscript='"
+                    + subscript
+                    + '\''
+                    + ", supscript='"
+                    + supscript
+                    + '\''
+                    + '}';
         }
     }
-
 
     static String escape(String str) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < str.length(); i++) {
             char c = str.charAt(i);
-            if (isEscapeChar(c))
-                sb.append("&#").append((int) c).append(';');
-            else
-                sb.append(c);
+            if (isEscapeChar(c)) sb.append("&#").append((int) c).append(';');
+            else sb.append(c);
         }
         return sb.toString();
-
     }
 
     private static boolean isEscapeChar(char c) {
-        return c < 32 || c > 126 || c == '|' || c == '{' || c == '}' || c == ',' || c == ';' || c == ':' || c == '$';
+        return c < 32 || c > 126 || c == '|' || c == '{' || c == '}' || c == ',' || c == ';'
+                || c == ':' || c == '$';
     }
 }

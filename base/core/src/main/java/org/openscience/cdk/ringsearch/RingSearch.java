@@ -22,6 +22,11 @@
  */
 package org.openscience.cdk.ringsearch;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Set;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
@@ -29,44 +34,42 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Set;
-
 /**
- * Efficiently search for atoms that are members of a ring. A depth first search
- * (DFS) determines which vertices belong to cycles (rings). As cycles are
- * discovered they are separated into two sets of cycle systems, fused and
- * isolated. A ring is in a fused cycle systems if it shares at least one edge
- * (bond) with another cycle. The isolated cycles consist of cycles which at
- * most share only one vertex (atom) with another cyclic system. A molecule may
- * contain more then one isolated and/or fused cycle system (see. Examples).
- * Additional computations such as C<sub>R</sub> (relevant cycles), Minimum
- * Cycle Basis (MCB) (aka. Smallest Set of Smallest Rings (SSSR)) or the Set of
- * All Rings can be completely bypassed for members of the isolated rings. Since
- * every isolated cycle (ring) does not share any edges (bonds) with any other
- * elementary cycle it cannot be made by composing any other cycles (rings).
- * Therefore, all isolated cycles (rings) are relevant and are members of all
- * minimum cycle bases (SSSRs). <b>Important</b> the cycle sets returned are not
- * ordered in the path of the cycle.
+ * Efficiently search for atoms that are members of a ring. A depth first search (DFS) determines
+ * which vertices belong to cycles (rings). As cycles are discovered they are separated into two
+ * sets of cycle systems, fused and isolated. A ring is in a fused cycle systems if it shares at
+ * least one edge (bond) with another cycle. The isolated cycles consist of cycles which at most
+ * share only one vertex (atom) with another cyclic system. A molecule may contain more then one
+ * isolated and/or fused cycle system (see. Examples). Additional computations such as C<sub>R</sub>
+ * (relevant cycles), Minimum Cycle Basis (MCB) (aka. Smallest Set of Smallest Rings (SSSR)) or the
+ * Set of All Rings can be completely bypassed for members of the isolated rings. Since every
+ * isolated cycle (ring) does not share any edges (bonds) with any other elementary cycle it cannot
+ * be made by composing any other cycles (rings). Therefore, all isolated cycles (rings) are
+ * relevant and are members of all minimum cycle bases (SSSRs). <b>Important</b> the cycle sets
+ * returned are not ordered in the path of the cycle. <br>
+ * <b>Further Explanation</b> The diagram below illustrates the isolated and fused sets of cyclic
+ * atoms. The colored circles indicate the atoms and bonds that are returned for each molecules.
+ * <br>
+ * <br>
+ * <img alt="isolated and fused cycle systems"
+ * src="http://cdk.github.io/cdk/img/isolated-and-fused-cycles-01_zpse0311377.PNG"> <br>
  *
- * <br> <b>Further Explanation</b> The diagram below illustrates the isolated
- * and fused sets of cyclic atoms. The colored circles indicate the atoms and
- * bonds that are returned for each molecules. <br><br> <img alt="isolated and
- * fused cycle systems" src="http://cdk.github.io/cdk/img/isolated-and-fused-cycles-01_zpse0311377.PNG">
- * <br>  <ol type="a"> <li>Two separate isolated cycles</li> <li>Two
- * separate fused cycle systems. The bridged systems are fused but separate from
- * each other</li> <li>Fused rings - a single fused cycle system</li> <li>Spiro
- * rings - three separate isolated systems, no bonds are shared</li>
- * <li>Cyclophane - a single fused system, the perimeter rings share bonds with
- * the smaller rings </li> <li>One isolated system and one fused system</li>
+ * <ol type="a">
+ *   <li>Two separate isolated cycles
+ *   <li>Two separate fused cycle systems. The bridged systems are fused but separate from each
+ *       other
+ *   <li>Fused rings - a single fused cycle system
+ *   <li>Spiro rings - three separate isolated systems, no bonds are shared
+ *   <li>Cyclophane - a single fused system, the perimeter rings share bonds with the smaller rings
+ *   <li>One isolated system and one fused system
  * </ol>
  *
  * <br>
  * <b>Example Usage</b>
- * <blockquote><pre>{@code
+ *
+ * <blockquote>
+ *
+ * <pre>{@code
  * // construct the search for a given molecule, if an adjacency list
  * // representation (int[][]) is available this can be passed to the
  * // constructor for improved performance
@@ -95,15 +98,18 @@ import java.util.Set;
  * for(IAtomContainer fragment : ringSearch.isolatedRingFragments()){
  *     ....
  * }
- * }</pre></blockquote>
+ * }</pre>
+ *
+ * </blockquote>
  *
  * @author John May
  * @cdk.module core
  * @cdk.githash
- * @see <a href="http://en.wikipedia.org/wiki/Cycle_(graph_theory)">Cycle (Graph
- *      Theory) - Wikipedia</a>
- * @see <a href="http://efficientbits.blogspot.co.uk/2012/12/scaling-up-faster-ring-detection-in-cdk.html">Scaling
- *      Up: Faster Ring Detecting in CDK - Efficient Bits, Blog</a>
+ * @see <a href="http://en.wikipedia.org/wiki/Cycle_(graph_theory)">Cycle (Graph Theory) -
+ *     Wikipedia</a>
+ * @see <a
+ *     href="http://efficientbits.blogspot.co.uk/2012/12/scaling-up-faster-ring-detection-in-cdk.html">Scaling
+ *     Up: Faster Ring Detecting in CDK - Efficient Bits, Blog</a>
  * @see org.openscience.cdk.graph.SpanningTree
  * @see SSSRFinder
  * @see AllRingsFinder
@@ -115,29 +121,27 @@ public final class RingSearch {
     private final CyclicVertexSearch searcher;
 
     /* input atom container */
-    private final IAtomContainer     container;
+    private final IAtomContainer container;
 
     /**
      * Create a new RingSearch for the specified container.
      *
      * @param container non-null input structure
-     * @throws NullPointerException     if the container was null
-     * @throws IllegalArgumentException if the container contains a bond which
-     *                                  references an atom which could not be
-     *                                  found
+     * @throws NullPointerException if the container was null
+     * @throws IllegalArgumentException if the container contains a bond which references an atom
+     *     which could not be found
      */
     public RingSearch(IAtomContainer container) {
         this(container, GraphUtil.toAdjList(container));
     }
 
     /**
-     * Create a new RingSearch for the specified container and graph. The
-     * adjacency list allows much faster graph traversal but is not free to
-     * create. If the adjacency list representation of the input container has
-     * already been created you can bypass the creation with this constructor.
+     * Create a new RingSearch for the specified container and graph. The adjacency list allows much
+     * faster graph traversal but is not free to create. If the adjacency list representation of the
+     * input container has already been created you can bypass the creation with this constructor.
      *
      * @param container non-null input structure
-     * @param graph     non-null adjacency list representation of the container
+     * @param graph non-null adjacency list representation of the container
      * @throws NullPointerException if the container or graph was null
      */
     public RingSearch(IAtomContainer container, int[][] graph) {
@@ -145,11 +149,10 @@ public final class RingSearch {
     }
 
     /**
-     * Create a new RingSearch for the specified container using the provided
-     * search.
+     * Create a new RingSearch for the specified container using the provided search.
      *
      * @param container non-null input structure
-     * @param searcher  non-null adjacency list representation of the container
+     * @param searcher non-null adjacency list representation of the container
      * @throws NullPointerException if the container or searcher was null
      */
     public RingSearch(IAtomContainer container, CyclicVertexSearch searcher) {
@@ -160,8 +163,7 @@ public final class RingSearch {
     }
 
     /**
-     * Utility method making a new {@link CyclicVertexSearch} during
-     * construction.
+     * Utility method making a new {@link CyclicVertexSearch} during construction.
      *
      * @param graph non-null graph
      * @return a new cyclic vertex search for the given graph
@@ -191,8 +193,7 @@ public final class RingSearch {
     }
 
     /**
-     * Determine whether the edge between the vertices <i>u</i> and <i>v</i> is
-     * cyclic.
+     * Determine whether the edge between the vertices <i>u</i> and <i>v</i> is cyclic.
      *
      * @param u an end point of the edge
      * @param v another end point of the edge
@@ -205,7 +206,9 @@ public final class RingSearch {
     /**
      * Determine whether the provided atom belongs to a ring (is cyclic).
      *
-     * <blockquote><pre>{@code
+     * <blockquote>
+     *
+     * <pre>{@code
      * IAtomContainer mol        = ...;
      * RingSearch     ringSearch = new RingSearch(mol);
      *
@@ -214,7 +217,9 @@ public final class RingSearch {
      *         ...
      *     }
      * }
-     * }</pre></blockquote>
+     * }</pre>
+     *
+     * </blockquote>
      *
      * @param atom an atom
      * @return whether the atom is in a ring
@@ -227,8 +232,8 @@ public final class RingSearch {
     }
 
     /**
-     * Determine whether the bond is cyclic. Note this currently requires a
-     * linear search to look-up the indices of each atoms.
+     * Determine whether the bond is cyclic. Note this currently requires a linear search to look-up
+     * the indices of each atoms.
      *
      * @param bond a bond of the container
      * @return whether the vertex at the given index is in a cycle
@@ -237,14 +242,17 @@ public final class RingSearch {
         // XXX: linear search - but okay for now
         int u = container.indexOf(bond.getBegin());
         int v = container.indexOf(bond.getEnd());
-        if (u < 0 || v < 0) throw new NoSuchElementException("atoms of the bond are not found in the container");
+        if (u < 0 || v < 0)
+            throw new NoSuchElementException("atoms of the bond are not found in the container");
         return searcher.cyclic(u, v);
     }
 
     /**
      * Determine whether the vertex at index <i>i</i> is a cyclic vertex.
      *
-     * <blockquote><pre>{@code
+     * <blockquote>
+     *
+     * <pre>{@code
      * IAtomContainer  mol    = ...;
      * RingSearch      tester = new RingSearch(mol);
      *
@@ -254,7 +262,9 @@ public final class RingSearch {
      *         ...
      *     }
      * }
-     * }</pre></blockquote>
+     * }</pre>
+     *
+     * </blockquote>
      *
      * @param i atom index
      * @return whether the vertex at the given index is in a cycle
@@ -275,7 +285,9 @@ public final class RingSearch {
     /**
      * Construct the sets of vertices which belong to isolated rings.
      *
-     * <blockquote><pre>{@code
+     * <blockquote>
+     *
+     * <pre>{@code
      * IAtomContainer  biphenyl   = ...;
      * RingSearch      ringSearch = new RingSearch(biphenyl);
      *
@@ -285,10 +297,11 @@ public final class RingSearch {
      * isolated[0].length; // 6 vertices in one benzene
      * isolated[1].length; // 6 vertices in the other benzene
      *
-     * }</pre></blockquote>
+     * }</pre>
      *
-     * @return array of isolated fragments, defined by the vertices in the
-     *         fragment
+     * </blockquote>
+     *
+     * @return array of isolated fragments, defined by the vertices in the fragment
      */
     public int[][] isolated() {
         return searcher.isolated();
@@ -297,7 +310,9 @@ public final class RingSearch {
     /**
      * Construct the sets of vertices which belong to fused ring systems.
      *
-     * <blockquote><pre>{@code
+     * <blockquote>
+     *
+     * <pre>{@code
      * IAtomContainer  mol        = ...;
      * RingSearch      ringSearch = new RingSearch(mol);
      *
@@ -308,19 +323,19 @@ public final class RingSearch {
      * fused[1].length; // e.g. 10 vertices in the second system
      * fused[2].length; // e.g. 4 vertices in the third system
      *
-     * }</pre></blockquote>
+     * }</pre>
      *
-     * @return array of fused fragments, defined by the vertices in the
-     *         fragment
+     * </blockquote>
+     *
+     * @return array of fused fragments, defined by the vertices in the fragment
      */
     public int[][] fused() {
         return searcher.fused();
     }
 
     /**
-     * Extract the cyclic atom and bond fragments of the container. Bonds which
-     * join two different isolated/fused cycles (e.g. biphenyl) are not be
-     * included.
+     * Extract the cyclic atom and bond fragments of the container. Bonds which join two different
+     * isolated/fused cycles (e.g. biphenyl) are not be included.
      *
      * @return a new container with only the cyclic atoms and bonds
      * @see org.openscience.cdk.graph.SpanningTree#getCyclicFragmentsContainer()
@@ -357,16 +372,14 @@ public final class RingSearch {
         fragment.setBonds(bonds.toArray(new IBond[bonds.size()]));
 
         return fragment;
-
     }
 
     /**
-     * Determines whether the two vertex colors match. This method provides the
-     * conditional as to whether to include a bond in the construction of the
-     * {@link #ringFragments()}.
+     * Determines whether the two vertex colors match. This method provides the conditional as to
+     * whether to include a bond in the construction of the {@link #ringFragments()}.
      *
      * @param eitherColor either vertex color
-     * @param otherColor  other vertex color
+     * @param otherColor other vertex color
      * @return whether the two vertex colours match
      */
     static boolean match(int eitherColor, int otherColor) {
@@ -375,11 +388,10 @@ public final class RingSearch {
     }
 
     /**
-     * Construct a list of {@link IAtomContainer}s each of which only contains a
-     * single isolated ring. A ring is consider isolated if it does not share
-     * any bonds with another ring. By this definition each ring of a spiro ring
-     * system is considered isolated. The atoms are <b>not</b> arranged
-     * sequential.
+     * Construct a list of {@link IAtomContainer}s each of which only contains a single isolated
+     * ring. A ring is consider isolated if it does not share any bonds with another ring. By this
+     * definition each ring of a spiro ring system is considered isolated. The atoms are <b>not</b>
+     * arranged sequential.
      *
      * @return list of isolated ring fragments
      * @see #isolated()
@@ -389,10 +401,9 @@ public final class RingSearch {
     }
 
     /**
-     * Construct a list of {@link IAtomContainer}s which only contain fused
-     * rings. A ring is consider fused if it shares any bonds with another ring.
-     * By this definition bridged ring systems are also included. The atoms are
-     * <b>not</b> arranged sequential.
+     * Construct a list of {@link IAtomContainer}s which only contain fused rings. A ring is
+     * consider fused if it shares any bonds with another ring. By this definition bridged ring
+     * systems are also included. The atoms are <b>not</b> arranged sequential.
      *
      * @return list of fused ring fragments
      * @see #fused()
@@ -421,8 +432,7 @@ public final class RingSearch {
     /**
      * Utility method for creating a fragment from an array of vertices
      *
-     * @param vertices array of vertices length=cycle weight, values 0 ...
-     *                 nAtoms
+     * @param vertices array of vertices length=cycle weight, values 0 ... nAtoms
      * @return atom container only containing the specified atoms (and bonds)
      */
     private IAtomContainer toFragment(int[] vertices) {
@@ -446,7 +456,8 @@ public final class RingSearch {
             }
         }
 
-        IAtomContainer fragment = container.getBuilder().newInstance(IAtomContainer.class, 0, 0, 0, 0);
+        IAtomContainer fragment =
+                container.getBuilder().newInstance(IAtomContainer.class, 0, 0, 0, 0);
 
         fragment.setAtoms(atoms.toArray(new IAtom[n]));
         fragment.setBonds(bonds.toArray(new IBond[bonds.size()]));

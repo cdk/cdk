@@ -22,12 +22,13 @@
  */
 package org.openscience.cdk.geometry.cip;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.vecmath.Point3d;
-
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -56,27 +57,26 @@ import org.openscience.cdk.stereo.StereoTool;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-/**
- * @cdk.module test-cip
- */
+/** @cdk.module test-cip */
 public class CIPToolTest extends CDKTestCase {
 
-    static SmilesParser   smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
+    static SmilesParser smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
     static IAtomContainer molecule;
-    static ILigand[]      ligands;
+    static ILigand[] ligands;
 
     @BeforeClass
     public static void setup() throws Exception {
         molecule = smiles.parseSmiles("ClC(Br)(I)[H]");
         VisitedAtoms visitedAtoms = new VisitedAtoms();
-        ILigand ligand1 = new Ligand(molecule, visitedAtoms, molecule.getAtom(1), molecule.getAtom(4));
-        ILigand ligand2 = new Ligand(molecule, visitedAtoms, molecule.getAtom(1), molecule.getAtom(3));
-        ILigand ligand3 = new Ligand(molecule, visitedAtoms, molecule.getAtom(1), molecule.getAtom(2));
-        ILigand ligand4 = new Ligand(molecule, visitedAtoms, molecule.getAtom(1), molecule.getAtom(0));
-        ligands = new ILigand[]{ligand1, ligand2, ligand3, ligand4};
+        ILigand ligand1 =
+                new Ligand(molecule, visitedAtoms, molecule.getAtom(1), molecule.getAtom(4));
+        ILigand ligand2 =
+                new Ligand(molecule, visitedAtoms, molecule.getAtom(1), molecule.getAtom(3));
+        ILigand ligand3 =
+                new Ligand(molecule, visitedAtoms, molecule.getAtom(1), molecule.getAtom(2));
+        ILigand ligand4 =
+                new Ligand(molecule, visitedAtoms, molecule.getAtom(1), molecule.getAtom(0));
+        ligands = new ILigand[] {ligand1, ligand2, ligand3, ligand4};
     }
 
     @Test
@@ -86,7 +86,7 @@ public class CIPToolTest extends CDKTestCase {
 
     @Test
     public void testCheckIfAllLigandsAreDifferent_False() {
-        ILigand[] sameLigands = new ILigand[]{ligands[0], ligands[0], ligands[1], ligands[2]};
+        ILigand[] sameLigands = new ILigand[] {ligands[0], ligands[0], ligands[1], ligands[2]};
         Assert.assertFalse(CIPTool.checkIfAllLigandsAreDifferent(sameLigands));
     }
 
@@ -101,17 +101,18 @@ public class CIPToolTest extends CDKTestCase {
 
     @Test
     public void testGetCIPChirality() {
-        LigancyFourChirality chirality = new LigancyFourChirality(molecule.getAtom(1), ligands, Stereo.CLOCKWISE);
+        LigancyFourChirality chirality =
+                new LigancyFourChirality(molecule.getAtom(1), ligands, Stereo.CLOCKWISE);
         CIP_CHIRALITY rsChirality = CIPTool.getCIPChirality(chirality);
         Assert.assertEquals(CIP_CHIRALITY.S, rsChirality);
     }
 
     @Test
     public void testGetCIPChirality_Anti() {
-        ILigand[] antiLigands = new ILigand[]{ligands[0], ligands[1], ligands[3], ligands[2]};
+        ILigand[] antiLigands = new ILigand[] {ligands[0], ligands[1], ligands[3], ligands[2]};
 
-        LigancyFourChirality chirality = new LigancyFourChirality(molecule.getAtom(1), antiLigands,
-                Stereo.ANTI_CLOCKWISE);
+        LigancyFourChirality chirality =
+                new LigancyFourChirality(molecule.getAtom(1), antiLigands, Stereo.ANTI_CLOCKWISE);
         CIP_CHIRALITY rsChirality = CIPTool.getCIPChirality(chirality);
         Assert.assertEquals(CIP_CHIRALITY.S, rsChirality);
     }
@@ -119,70 +120,95 @@ public class CIPToolTest extends CDKTestCase {
     @Test
     public void testGetCIPChirality_ILigancyFourChirality() {
         List<IAtom> ligandAtoms = new ArrayList<IAtom>();
-        for (ILigand ligand : ligands)
-            ligandAtoms.add(ligand.getLigandAtom());
-        ITetrahedralChirality chirality = new TetrahedralChirality(molecule.getAtom(1),
-                (IAtom[]) ligandAtoms.toArray(new IAtom[]{}), Stereo.CLOCKWISE);
+        for (ILigand ligand : ligands) ligandAtoms.add(ligand.getLigandAtom());
+        ITetrahedralChirality chirality =
+                new TetrahedralChirality(
+                        molecule.getAtom(1),
+                        (IAtom[]) ligandAtoms.toArray(new IAtom[] {}),
+                        Stereo.CLOCKWISE);
         CIP_CHIRALITY rsChirality = CIPTool.getCIPChirality(molecule, chirality);
         Assert.assertEquals(CIP_CHIRALITY.S, rsChirality);
     }
 
     @Test
     public void testGetCIPChirality_Anti_ILigancyFourChirality() {
-        ILigand[] antiLigands = new ILigand[]{ligands[0], ligands[1], ligands[3], ligands[2]};
+        ILigand[] antiLigands = new ILigand[] {ligands[0], ligands[1], ligands[3], ligands[2]};
         List<IAtom> ligandAtoms = new ArrayList<IAtom>();
-        for (ILigand ligand : antiLigands)
-            ligandAtoms.add(ligand.getLigandAtom());
+        for (ILigand ligand : antiLigands) ligandAtoms.add(ligand.getLigandAtom());
 
-        ITetrahedralChirality chirality = new TetrahedralChirality(molecule.getAtom(1),
-                (IAtom[]) ligandAtoms.toArray(new IAtom[]{}), Stereo.ANTI_CLOCKWISE);
+        ITetrahedralChirality chirality =
+                new TetrahedralChirality(
+                        molecule.getAtom(1),
+                        (IAtom[]) ligandAtoms.toArray(new IAtom[] {}),
+                        Stereo.ANTI_CLOCKWISE);
         CIP_CHIRALITY rsChirality = CIPTool.getCIPChirality(molecule, chirality);
         Assert.assertEquals(CIP_CHIRALITY.S, rsChirality);
     }
 
     @Test
     public void testGetCIPChirality_DoubleBond_Together() throws Exception {
-        IAtomContainer container = new SmilesParser(SilentChemObjectBuilder.getInstance()).parseSmiles("CCC(C)=C(C)CC");
-        CIP_CHIRALITY label = CIPTool.getCIPChirality(
-                container,
-                new DoubleBondStereochemistry(container.getBond(container.getAtom(2), container.getAtom(4)),
-                        new IBond[]{container.getBond(container.getAtom(2), container.getAtom(3)),
-                                container.getBond(container.getAtom(4), container.getAtom(5))},
-                        IDoubleBondStereochemistry.Conformation.TOGETHER));
+        IAtomContainer container =
+                new SmilesParser(SilentChemObjectBuilder.getInstance())
+                        .parseSmiles("CCC(C)=C(C)CC");
+        CIP_CHIRALITY label =
+                CIPTool.getCIPChirality(
+                        container,
+                        new DoubleBondStereochemistry(
+                                container.getBond(container.getAtom(2), container.getAtom(4)),
+                                new IBond[] {
+                                    container.getBond(container.getAtom(2), container.getAtom(3)),
+                                    container.getBond(container.getAtom(4), container.getAtom(5))
+                                },
+                                IDoubleBondStereochemistry.Conformation.TOGETHER));
         assertThat(label, is(CIPTool.CIP_CHIRALITY.Z));
     }
 
     @Test
     public void testGetCIPChirality_DoubleBond_Opposite() throws Exception {
-        IAtomContainer container = new SmilesParser(SilentChemObjectBuilder.getInstance()).parseSmiles("CCC(C)=C(C)CC");
-        CIP_CHIRALITY label = CIPTool.getCIPChirality(
-                container,
-                new DoubleBondStereochemistry(container.getBond(container.getAtom(2), container.getAtom(4)),
-                        new IBond[]{container.getBond(container.getAtom(2), container.getAtom(3)),
-                                container.getBond(container.getAtom(4), container.getAtom(6))},
-                        IDoubleBondStereochemistry.Conformation.OPPOSITE));
+        IAtomContainer container =
+                new SmilesParser(SilentChemObjectBuilder.getInstance())
+                        .parseSmiles("CCC(C)=C(C)CC");
+        CIP_CHIRALITY label =
+                CIPTool.getCIPChirality(
+                        container,
+                        new DoubleBondStereochemistry(
+                                container.getBond(container.getAtom(2), container.getAtom(4)),
+                                new IBond[] {
+                                    container.getBond(container.getAtom(2), container.getAtom(3)),
+                                    container.getBond(container.getAtom(4), container.getAtom(6))
+                                },
+                                IDoubleBondStereochemistry.Conformation.OPPOSITE));
         assertThat(label, is(CIPTool.CIP_CHIRALITY.Z));
     }
 
     @Test
     public void label() throws Exception {
-        IAtomContainer container = new SmilesParser(SilentChemObjectBuilder.getInstance())
-                .parseSmiles("C/C=C/[C@@H](C)C(/C)=C(/C)C[C@H](C)O");
+        IAtomContainer container =
+                new SmilesParser(SilentChemObjectBuilder.getInstance())
+                        .parseSmiles("C/C=C/[C@@H](C)C(/C)=C(/C)C[C@H](C)O");
         CIPTool.label(container);
-        assertThat(container.getAtom(3).getProperty(CDKConstants.CIP_DESCRIPTOR, String.class), CoreMatchers.is("R"));
-        assertThat(container.getAtom(10).getProperty(CDKConstants.CIP_DESCRIPTOR, String.class), CoreMatchers.is("S"));
         assertThat(
-                container.getBond(container.getAtom(1), container.getAtom(2)).getProperty(CDKConstants.CIP_DESCRIPTOR,
-                        String.class), CoreMatchers.is("E"));
+                container.getAtom(3).getProperty(CDKConstants.CIP_DESCRIPTOR, String.class),
+                CoreMatchers.is("R"));
         assertThat(
-                container.getBond(container.getAtom(5), container.getAtom(7)).getProperty(CDKConstants.CIP_DESCRIPTOR,
-                        String.class), CoreMatchers.is("Z"));
+                container.getAtom(10).getProperty(CDKConstants.CIP_DESCRIPTOR, String.class),
+                CoreMatchers.is("S"));
+        assertThat(
+                container
+                        .getBond(container.getAtom(1), container.getAtom(2))
+                        .getProperty(CDKConstants.CIP_DESCRIPTOR, String.class),
+                CoreMatchers.is("E"));
+        assertThat(
+                container
+                        .getBond(container.getAtom(5), container.getAtom(7))
+                        .getProperty(CDKConstants.CIP_DESCRIPTOR, String.class),
+                CoreMatchers.is("Z"));
     }
 
     @Test
     public void testDefineLigancyFourChirality() {
-        LigancyFourChirality chirality = CIPTool.defineLigancyFourChirality(molecule, 1, 0, 2, 3, 4,
-                Stereo.ANTI_CLOCKWISE);
+        LigancyFourChirality chirality =
+                CIPTool.defineLigancyFourChirality(molecule, 1, 0, 2, 3, 4, Stereo.ANTI_CLOCKWISE);
         Assert.assertEquals(molecule.getAtom(1), chirality.getChiralAtom());
         Assert.assertEquals(Stereo.ANTI_CLOCKWISE, chirality.getStereo());
         ILigand[] ligands = chirality.getLigands();
@@ -208,9 +234,7 @@ public class CIPToolTest extends CDKTestCase {
         Assert.assertEquals(molecule.getAtom(2), ligand.getLigandAtom());
     }
 
-    /**
-     * Tests if it returns the right number of ligands, for single bonds only.
-     */
+    /** Tests if it returns the right number of ligands, for single bonds only. */
     @Test
     public void testGetLigandLigands() throws Exception {
         IAtomContainer molecule = smiles.parseSmiles("CC(C)C(CC)(C(C)(C)C)[H]");
@@ -228,9 +252,7 @@ public class CIPToolTest extends CDKTestCase {
         Assert.assertEquals(0, sideChains.length);
     }
 
-    /**
-     * Tests if it returns the right number of ligands, for single bonds only.
-     */
+    /** Tests if it returns the right number of ligands, for single bonds only. */
     @Test
     public void testGetLigandLigands_VisitedTracking() throws Exception {
         IAtomContainer molecule = smiles.parseSmiles("CC(C)C(CC)(C(C)(C)C)[H]");
@@ -241,9 +263,7 @@ public class CIPToolTest extends CDKTestCase {
         }
     }
 
-    /**
-     * Tests if it returns the right number of ligands, for double bonds.
-     */
+    /** Tests if it returns the right number of ligands, for double bonds. */
     @Test
     public void testGetLigandLigands_DoubleTriple() throws Exception {
         IAtomContainer molecule = smiles.parseSmiles("CC(C)C(C#N)(C(=C)C)[H]");
@@ -269,7 +289,7 @@ public class CIPToolTest extends CDKTestCase {
     }
 
     @Test
-    //(timeout=5000)
+    // (timeout=5000)
     public void testTermination() {
         int ringSize = 7;
         IAtomContainer ring = new AtomContainer();
@@ -287,9 +307,15 @@ public class CIPToolTest extends CDKTestCase {
         ring.addBond(0, ringSize + 1, IBond.Order.SINGLE);
         ring.addAtom(new Atom("O"));
         ring.addBond(1, ringSize + 2, IBond.Order.SINGLE);
-        IAtom[] atoms = new IAtom[]{ring.getAtom(ringSize), ring.getAtom(ringSize + 1), ring.getAtom(ringSize - 1),
-                ring.getAtom(1)};
-        ITetrahedralChirality stereoCenter = new TetrahedralChirality(ring.getAtom(0), atoms, Stereo.ANTI_CLOCKWISE);
+        IAtom[] atoms =
+                new IAtom[] {
+                    ring.getAtom(ringSize),
+                    ring.getAtom(ringSize + 1),
+                    ring.getAtom(ringSize - 1),
+                    ring.getAtom(1)
+                };
+        ITetrahedralChirality stereoCenter =
+                new TetrahedralChirality(ring.getAtom(0), atoms, Stereo.ANTI_CLOCKWISE);
         ring.addStereoElement(stereoCenter);
         SmilesGenerator generator = new SmilesGenerator();
         CIPTool.getCIPChirality(ring, stereoCenter);
@@ -307,17 +333,23 @@ public class CIPToolTest extends CDKTestCase {
         for (IAtom atom : mol.atoms()) {
             List<IAtom> neighbors = mol.getConnectedAtomsList(atom);
             if (neighbors.size() == 4) {
-                Stereo stereo = StereoTool.getStereo(neighbors.get(0), neighbors.get(1), neighbors.get(2),
-                        neighbors.get(3));
-                ITetrahedralChirality stereoCenter = new TetrahedralChirality(mol.getAtom(0),
-                        neighbors.toArray(new IAtom[]{}), stereo);
+                Stereo stereo =
+                        StereoTool.getStereo(
+                                neighbors.get(0),
+                                neighbors.get(1),
+                                neighbors.get(2),
+                                neighbors.get(3));
+                ITetrahedralChirality stereoCenter =
+                        new TetrahedralChirality(
+                                mol.getAtom(0), neighbors.toArray(new IAtom[] {}), stereo);
                 CIP_CHIRALITY chirality = CIPTool.getCIPChirality(mol, stereoCenter);
             }
         }
     }
 
     /**
-     * @cdk.inchi InChI=1S/C27H43FO6/c1-23(2,28)9-8-22(32)26(5,33)21-7-11-27(34)16-12-18(29)17-13-19(30)20(31)14-24(17,3)15(16)6-10-25(21,27)4/h12,15,17,19-22,30-34H,6-11,13-14H2,1-5H3/t15-,17-,19+,20-,21-,22+,24+,25+,26+,27+/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C27H43FO6/c1-23(2,28)9-8-22(32)26(5,33)21-7-11-27(34)16-12-18(29)17-13-19(30)20(31)14-24(17,3)15(16)6-10-25(21,27)4/h12,15,17,19-22,30-34H,6-11,13-14H2,1-5H3/t15-,17-,19+,20-,21-,22+,24+,25+,26+,27+/m0/s1
      */
     @Test
     public void testSteroid() {
@@ -761,7 +793,9 @@ public class CIPToolTest extends CDKTestCase {
         ligandAtoms[1] = a33; // Me
         ligandAtoms[2] = a34; // Me
         ligandAtoms[3] = a31; // rest of molecule
-        Stereo stereo = StereoTool.getStereo(ligandAtoms[0], ligandAtoms[1], ligandAtoms[2], ligandAtoms[3]);
+        Stereo stereo =
+                StereoTool.getStereo(
+                        ligandAtoms[0], ligandAtoms[1], ligandAtoms[2], ligandAtoms[3]);
         ITetrahedralChirality tetraStereo = new TetrahedralChirality(a32, ligandAtoms, stereo);
 
         Assert.assertEquals(CIP_CHIRALITY.NONE, CIPTool.getCIPChirality(mol, tetraStereo));

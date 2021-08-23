@@ -27,35 +27,40 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Enumeration of Ctab Sgroup types.
- * 
- * <br>
+ * Enumeration of Ctab Sgroup types. <br>
  * <b>Display shortcuts</b>
+ *
  * <ul>
- * <li>SUP, abbreviation Sgroup (formerly called superatom)</li>
- * <li>MUL, multiple group</li>
- * <li>GEN, generic</li>
+ *   <li>SUP, abbreviation Sgroup (formerly called superatom)
+ *   <li>MUL, multiple group
+ *   <li>GEN, generic
  * </ul>
+ *
  * <b>Polymers</b>
+ *
  * <ul>
- * <li>SRU, SRU type</li>
- * <li>MON, monomer</li>
- * <li>MER, Mer type</li>
- * <li>COP, copolymer</li>
- * <li>CRO, crosslink</li>
- * <li>MOD, modification</li>
- * <li>GRA, graft</li>
- * <li>ANY, any polymer</li>
+ *   <li>SRU, SRU type
+ *   <li>MON, monomer
+ *   <li>MER, Mer type
+ *   <li>COP, copolymer
+ *   <li>CRO, crosslink
+ *   <li>MOD, modification
+ *   <li>GRA, graft
+ *   <li>ANY, any polymer
  * </ul>
+ *
  * <b>Components, Mixtures, and formulations</b>
+ *
  * <ul>
- * <li>COM, component</li>
- * <li>MIX, mixture</li>
- * <li>FOR, formulation</li>
+ *   <li>COM, component
+ *   <li>MIX, mixture
+ *   <li>FOR, formulation
  * </ul>
+ *
  * <b>Non-chemical</b>
+ *
  * <ul>
- * <li>DAT, data Sgroup</li>
+ *   <li>DAT, data Sgroup
  * </ul>
  */
 public enum SgroupType {
@@ -80,15 +85,13 @@ public enum SgroupType {
     // extension for handling bond attachment, LO: in CXSMILES
     ExtAttachOrdering("_APO", false);
 
-
     static final Map<String, SgroupType> map = new HashMap<>();
 
     static {
-        for (SgroupType t : values())
-            map.put(t.ctabKey, t);
+        for (SgroupType t : values()) map.put(t.ctabKey, t);
     }
 
-    private final String  ctabKey;
+    private final String ctabKey;
     private final boolean ctabStandard;
 
     SgroupType(String ctabKey) {
@@ -96,20 +99,18 @@ public enum SgroupType {
     }
 
     SgroupType(String ctabKey, boolean ctabStandard) {
-        this.ctabKey      = ctabKey;
+        this.ctabKey = ctabKey;
         this.ctabStandard = ctabStandard;
     }
 
-
     /**
-     * Indicates if this SGroup type is support by standard CTAB
-     * (Molfile/SDfile) sgroups.
+     * Indicates if this SGroup type is support by standard CTAB (Molfile/SDfile) sgroups.
+     *
      * @return true/false
      */
     public boolean isCtabStandard() {
         return ctabStandard;
     }
-
 
     public String getKey() {
         return ctabKey;
@@ -117,8 +118,7 @@ public enum SgroupType {
 
     public static SgroupType parseCtabKey(String str) {
         SgroupType type = map.get(str);
-        if (type == null)
-            return SgroupType.CtabGeneric;
+        if (type == null) return SgroupType.CtabGeneric;
         return type;
     }
 }

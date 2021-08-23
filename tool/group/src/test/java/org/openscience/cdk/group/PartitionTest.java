@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -34,7 +33,6 @@ import org.openscience.cdk.CDKTestCase;
 /**
  * @author maclean
  * @cdk.module test-group
- *
  */
 public class PartitionTest extends CDKTestCase {
 
@@ -55,7 +53,7 @@ public class PartitionTest extends CDKTestCase {
 
     @Test
     public void cellDataConstructor() {
-        int[][] cellData = new int[][]{{0, 1}, {2, 3, 4}, {5, 6}};
+        int[][] cellData = new int[][] {{0, 1}, {2, 3, 4}, {5, 6}};
         Partition p = new Partition(cellData);
         Assert.assertEquals(cellData.length, p.size());
         Assert.assertEquals(7, p.numberOfElements());
@@ -113,14 +111,14 @@ public class PartitionTest extends CDKTestCase {
 
     @Test
     public void inOrderTest() {
-        int[][] cellData = new int[][]{{0, 1}, {2, 3, 4}, {5, 6}};
+        int[][] cellData = new int[][] {{0, 1}, {2, 3, 4}, {5, 6}};
         Partition p = new Partition(cellData);
         Assert.assertTrue(p.inOrder());
     }
 
     @Test
     public void getFirstInCellTest() {
-        int[][] cellData = new int[][]{{0, 1}, {2, 3, 4}, {5, 6}};
+        int[][] cellData = new int[][] {{0, 1}, {2, 3, 4}, {5, 6}};
         Partition p = new Partition(cellData);
         for (int i = 0; i < cellData.length; i++) {
             Assert.assertEquals(cellData[i][0], p.getFirstInCell(i));
@@ -129,10 +127,10 @@ public class PartitionTest extends CDKTestCase {
 
     @Test
     public void getCellTest() {
-        int[][] cellData = new int[][]{{0, 1}, {2, 3, 4}, {5, 6}};
+        int[][] cellData = new int[][] {{0, 1}, {2, 3, 4}, {5, 6}};
         Partition p = new Partition(cellData);
         for (int i = 0; i < cellData.length; i++) {
-            Integer[] cell = p.getCell(i).toArray(new Integer[]{});
+            Integer[] cell = p.getCell(i).toArray(new Integer[] {});
             Assert.assertEquals(cellData[i].length, cell.length);
             for (int j = 0; j < cell.length; j++) {
                 Assert.assertEquals(cellData[i][j], (int) cell[j]);
@@ -142,7 +140,7 @@ public class PartitionTest extends CDKTestCase {
 
     @Test
     public void splitBeforeTest() {
-        int[][] cellData = new int[][]{{0, 1}, {2, 3, 4}, {5, 6}};
+        int[][] cellData = new int[][] {{0, 1}, {2, 3, 4}, {5, 6}};
         Partition p = new Partition(cellData);
         int cellIndex = 1;
         int splitElement = 3;
@@ -156,7 +154,7 @@ public class PartitionTest extends CDKTestCase {
 
     @Test
     public void splitAfterTest() {
-        int[][] cellData = new int[][]{{0, 1}, {2, 3, 4}, {5, 6}};
+        int[][] cellData = new int[][] {{0, 1}, {2, 3, 4}, {5, 6}};
         Partition p = new Partition(cellData);
         int cellIndex = 1;
         int splitElement = 3;
@@ -184,7 +182,7 @@ public class PartitionTest extends CDKTestCase {
 
     @Test
     public void isDiscreteCellTest() {
-        int[][] cellData = new int[][]{{0}, {1}, {2}, {3}, {4}, {5}};
+        int[][] cellData = new int[][] {{0}, {1}, {2}, {3}, {4}, {5}};
         Partition p = new Partition(cellData);
         for (int i = 0; i < p.size(); i++) {
             Assert.assertTrue(p.isDiscreteCell(i));
@@ -193,7 +191,7 @@ public class PartitionTest extends CDKTestCase {
 
     @Test
     public void getIndexOfFirstNonDiscreteCellTest() {
-        int[][] cellData = new int[][]{{0}, {1}, {2, 3, 4}, {5, 6}};
+        int[][] cellData = new int[][] {{0}, {1}, {2, 3, 4}, {5, 6}};
         Partition p = new Partition(cellData);
         Assert.assertEquals(2, p.getIndexOfFirstNonDiscreteCell());
     }
@@ -247,7 +245,7 @@ public class PartitionTest extends CDKTestCase {
 
     @Test
     public void insertCellTest() {
-        int[][] cellData = new int[][]{{0}, {2}, {3}};
+        int[][] cellData = new int[][] {{0}, {2}, {3}};
         Partition p = new Partition(cellData);
         SortedSet<Integer> cell = new TreeSet<Integer>();
         cell.add(1);
@@ -257,7 +255,7 @@ public class PartitionTest extends CDKTestCase {
 
     @Test
     public void copyBlockTest() {
-        int[][] cellData = new int[][]{{0}, {1}, {2}};
+        int[][] cellData = new int[][] {{0}, {1}, {2}};
         Partition p = new Partition(cellData);
         int cellIndex = 1;
         SortedSet<Integer> copyCell = p.copyBlock(cellIndex);
@@ -281,27 +279,27 @@ public class PartitionTest extends CDKTestCase {
 
     @Test
     public void equalsTest_null() {
-        Partition p = new Partition(new int[][]{{0}, {1}});
+        Partition p = new Partition(new int[][] {{0}, {1}});
         Assert.assertNotSame(p, null);
     }
 
     @Test
     public void equalsTest_different() {
-        Partition p = new Partition(new int[][]{{0}, {1}});
-        Partition o = new Partition(new int[][]{{1}, {0}});
+        Partition p = new Partition(new int[][] {{0}, {1}});
+        Partition o = new Partition(new int[][] {{1}, {0}});
         Assert.assertNotSame(p, o);
     }
 
     @Test
     public void equalsTest() {
-        Partition p = new Partition(new int[][]{{0}, {1}});
-        Partition o = new Partition(new int[][]{{0}, {1}});
+        Partition p = new Partition(new int[][] {{0}, {1}});
+        Partition o = new Partition(new int[][] {{0}, {1}});
         Assert.assertEquals(p, o);
     }
 
     @Test
     public void orderTest() {
-        Partition p = new Partition(new int[][]{{1, 3}, {0, 2}});
+        Partition p = new Partition(new int[][] {{1, 3}, {0, 2}});
         p.order();
         SortedSet<Integer> cell0 = p.getCell(0);
         SortedSet<Integer> cell1 = p.getCell(1);
@@ -311,8 +309,7 @@ public class PartitionTest extends CDKTestCase {
 
     @Test
     public void inSameCellTest() {
-        Partition p = new Partition(new int[][]{{0, 2}, {1, 3}});
+        Partition p = new Partition(new int[][] {{0, 2}, {1, 3}});
         Assert.assertTrue(p.inSameCell(1, 3));
     }
-
 }

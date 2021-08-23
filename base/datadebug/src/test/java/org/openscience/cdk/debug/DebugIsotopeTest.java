@@ -37,13 +37,14 @@ public class DebugIsotopeTest extends AbstractIsotopeTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new DebugIsotope("C");
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new DebugIsotope("C");
+                    }
+                });
     }
 
     @Test

@@ -24,26 +24,25 @@ package org.openscience.cdk.structgen.stochastic.operator;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.openscience.cdk.graph.matrix.ConnectionMatrix;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.math.RandomNumbersTool;
 
 /**
- * @cdk.module     structgen
+ * @cdk.module structgen
  * @cdk.githash
  */
 public class ChemGraph {
 
     /* Number of atoms in this structure */
-    protected int           dim;
+    protected int dim;
     /* Number of atoms needed to form subgraph */
-    protected int           numAtoms;
-    protected double[][]    contab;
+    protected int numAtoms;
+    protected double[][] contab;
     /* Number of atoms that have been traversed */
-    protected int           travIndex;
+    protected int travIndex;
     /* Flag: true if atom visited during a traversal */
-    protected boolean[]     visited;
+    protected boolean[] visited;
     /* Depth first traversal of the graph */
     protected List<Integer> subGraph;
 
@@ -55,13 +54,12 @@ public class ChemGraph {
     }
 
     public List<Integer> pickDFgraph() {
-        //depth first search from a randomly selected atom
+        // depth first search from a randomly selected atom
 
         travIndex = 0;
         subGraph = new ArrayList<Integer>();
         visited = new boolean[dim];
-        for (int atom = 0; atom < dim; atom++)
-            visited[atom] = false;
+        for (int atom = 0; atom < dim; atom++) visited[atom] = false;
         int seedAtom = RandomNumbersTool.randomInt(0, dim - 1);
         recursiveDFT(seedAtom);
 
@@ -87,18 +85,16 @@ public class ChemGraph {
                 recursiveDFT(((Integer) adjSet.get(adjIndex)).intValue());
                 adjSet.remove(adjIndex);
             }
-
         }
     }
 
     public List<Integer> pickBFgraph() {
-        //breadth first search from a randomly selected atom
+        // breadth first search from a randomly selected atom
 
         travIndex = 0;
         subGraph = new ArrayList<Integer>();
         visited = new boolean[dim];
-        for (int atom = 0; atom < dim; atom++)
-            visited[atom] = false;
+        for (int atom = 0; atom < dim; atom++) visited[atom] = false;
         int seedAtom = RandomNumbersTool.randomInt(0, dim - 1);
 
         List<Integer> atomQueue = new ArrayList<Integer>();
@@ -123,7 +119,6 @@ public class ChemGraph {
                 visited[((Integer) adjSet.get(adjIndex)).intValue()] = true;
                 adjSet.remove(adjIndex);
             }
-
         }
         return subGraph;
     }

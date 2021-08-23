@@ -20,12 +20,10 @@
 package org.openscience.cdk.interfaces;
 
 /**
- * A LonePair is an orbital primarily located with one Atom, containing
- * two electrons.
+ * A LonePair is an orbital primarily located with one Atom, containing two electrons.
  *
  * @cdk.module interfaces
  * @cdk.githash
- *
  * @cdk.keyword orbital
  * @cdk.keyword lone-pair
  */
@@ -35,7 +33,7 @@ public interface ILonePair extends IElectronContainer {
      * Returns the associated Atom.
      *
      * @return the associated Atom.
-     * @see    #setAtom
+     * @see #setAtom
      */
     public IAtom getAtom();
 
@@ -43,16 +41,15 @@ public interface ILonePair extends IElectronContainer {
      * Sets the associated Atom.
      *
      * @param atom the Atom this lone pair will be associated with
-     * @see    #getAtom
+     * @see #getAtom
      */
     public void setAtom(IAtom atom);
 
     /**
      * Returns true if the given atom participates in this lone pair.
      *
-     * @param   atom  The atom to be tested if it participates in this bond
-     * @return     true if this lone pair is associated with the atom
+     * @param atom The atom to be tested if it participates in this bond
+     * @return true if this lone pair is associated with the atom
      */
     public boolean contains(IAtom atom);
-
 }

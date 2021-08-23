@@ -43,14 +43,11 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
 
-    private SmilesParser            sp      = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-    private IChemObjectBuilder      builder = SilentChemObjectBuilder.getInstance();
+    private SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+    private IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
     private LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
-    /**
-     *  Constructor for the IPMolecularLearningDescriptorTest object
-     *
-     */
+    /** Constructor for the IPMolecularLearningDescriptorTest object */
     public IPMolecularLearningDescriptorTest() {}
 
     @Before
@@ -64,9 +61,9 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
     }
 
     /**
-     *  A unit test for JUnit with CC(C)C(C)C
+     * A unit test for JUnit with CC(C)C(C)C
      *
-     *  @cdk.inchi InChI=1/C6H14/c1-5(2)6(3)4/h5-6H,1-4H3
+     * @cdk.inchi InChI=1/C6H14/c1-5(2)6(3)4/h5-6H,1-4H3
      */
     @Test
     @Category(SlowTest.class)
@@ -96,10 +93,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(resultAccordingNIST, result, 0.0001);
     }
 
-    /**
-     *  A unit test for JUnit with C-Cl
-     *
-     */
+    /** A unit test for JUnit with C-Cl */
     @Test
     @Category(SlowTest.class)
     public void testIPDescriptor_1() throws Exception {
@@ -117,9 +111,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(resultAccordingNIST, result, 0.53);
     }
 
-    /**
-     *  A unit test for JUnit with COCCCC=O
-     */
+    /** A unit test for JUnit with COCCCC=O */
     @Test
     @Category(SlowTest.class)
     public void testIPDescriptor_2() throws Exception {
@@ -139,9 +131,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(resultAccordingNIST, dar.get(0), 0.3);
     }
 
-    /**
-     *  A unit test for JUnit with C=CCC(=O)CC
-     */
+    /** A unit test for JUnit with C=CCC(=O)CC */
     @Test
     @Category(SlowTest.class)
     public void testIPDescriptor_3() throws Exception {
@@ -153,13 +143,13 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
         lpcheck.saturate(mol);
 
         IPMolecularLearningDescriptor descriptor = new IPMolecularLearningDescriptor();
-        DoubleArrayResult dar = ((DoubleArrayResult) ((IPMolecularLearningDescriptor) descriptor).calculatePlus(mol)
-                .getValue());
+        DoubleArrayResult dar =
+                ((DoubleArrayResult)
+                        ((IPMolecularLearningDescriptor) descriptor).calculatePlus(mol).getValue());
 
         double resultAccordingNIST = 9.50;
         Assert.assertEquals(2, dar.length());
         Assert.assertEquals(resultAccordingNIST, dar.get(0), 0.6);
-
     }
 
     //    /**
@@ -169,7 +159,8 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
     //     * @throws CDKException
     //     * @throws java.lang.Exception
     //     */
-    //    @Test public void testIPDescriptorReaction() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    //    @Test public void testIPDescriptorReaction() throws ClassNotFoundException, CDKException,
+    // java.lang.Exception{
     //    	IAtomContainer mol = sp.parseSmiles("C-Cl");
     //
     //		addExplicitHydrogens(mol);
@@ -181,7 +172,8 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
     //		IReactionSet reactionSet = ((IPMolecularLearningDescriptor)descriptor).getReactionSet();
     //		double resultAccordingNIST = 11.26;
     //
-    //		double result = ((Double) reactionSet.getReaction(0).getProperty("IonizationEnergy")).doubleValue();
+    //		double result = ((Double)
+    // reactionSet.getReaction(0).getProperty("IonizationEnergy")).doubleValue();
     //        Assert.assertEquals(1, reactionSet.getReactionCount());
     //        Assert.assertEquals(resultAccordingNIST, result, 0.53);
     //    }
@@ -192,7 +184,8 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
     //     * @throws CDKException
     //     * @throws java.lang.Exception
     //     */
-    //    @Test public void testIPDescriptorReaction2() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    //    @Test public void testIPDescriptorReaction2() throws ClassNotFoundException, CDKException,
+    // java.lang.Exception{
     //    	IAtomContainer mol = sp.parseSmiles("CCCC");
     //
     //		addExplicitHydrogens(mol);
@@ -212,7 +205,8 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
     //     * @throws CDKException
     //     * @throws java.lang.Exception
     //     */
-    //    @Test public void testIPDescriptorReaction3() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    //    @Test public void testIPDescriptorReaction3() throws ClassNotFoundException, CDKException,
+    // java.lang.Exception{
     //    	IAtomContainer mol = sp.parseSmiles("CCC#CCCO");
     //
     //		addExplicitHydrogens(mol);
@@ -232,7 +226,8 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
     //     * @throws CDKException
     //     * @throws java.lang.Exception
     //     */
-    //    @Test public void testIPDescriptorReaction4() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    //    @Test public void testIPDescriptorReaction4() throws ClassNotFoundException, CDKException,
+    // java.lang.Exception{
     //    	IAtomContainer mol = sp.parseSmiles("CCCCC=CO");
     //
     //		addExplicitHydrogens(mol);
@@ -246,35 +241,33 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
     //        Assert.assertEquals(3, reactionSet.getReactionCount());
     //    }
     /**
-     *
-     *  A unit test for JUnit with Triclosan. Oc2cc(ccc2(Oc1ccc(cc1Cl)Cl))Cl
+     * A unit test for JUnit with Triclosan. Oc2cc(ccc2(Oc1ccc(cc1Cl)Cl))Cl
      *
      * @cdk.inchi InChI=1S/C12H7Cl3O2/c13-7-1-3-11(9(15)5-7)17-12-4-2-8(14)6-10(12)16/h1-6,16H
      * @cdk.bug 2787332
-     *
      * @throws org.openscience.cdk.exception.CDKException
      */
     @Test
     @Category(SlowTest.class)
     public void testBug_2787332_triclosan() throws Exception {
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
-        mol.addAtom(builder.newInstance(IAtom.class, "C"));//0
-        mol.addAtom(builder.newInstance(IAtom.class, "C"));//1
-        mol.addAtom(builder.newInstance(IAtom.class, "C"));//2
-        mol.addAtom(builder.newInstance(IAtom.class, "C"));//3
-        mol.addAtom(builder.newInstance(IAtom.class, "C"));//4
-        mol.addAtom(builder.newInstance(IAtom.class, "C"));//5
-        mol.addAtom(builder.newInstance(IAtom.class, "O"));//6
-        mol.addAtom(builder.newInstance(IAtom.class, "C"));//7
-        mol.addAtom(builder.newInstance(IAtom.class, "C"));//8
-        mol.addAtom(builder.newInstance(IAtom.class, "C"));//9
-        mol.addAtom(builder.newInstance(IAtom.class, "C"));//10
-        mol.addAtom(builder.newInstance(IAtom.class, "C"));//11
-        mol.addAtom(builder.newInstance(IAtom.class, "C"));//12
-        mol.addAtom(builder.newInstance(IAtom.class, "Cl"));//13
-        mol.addAtom(builder.newInstance(IAtom.class, "Cl"));//14
-        mol.addAtom(builder.newInstance(IAtom.class, "O"));//15
-        mol.addAtom(builder.newInstance(IAtom.class, "Cl"));//16
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 0
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 1
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 2
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 3
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 4
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 5
+        mol.addAtom(builder.newInstance(IAtom.class, "O")); // 6
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 7
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 8
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 9
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 10
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 11
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // 12
+        mol.addAtom(builder.newInstance(IAtom.class, "Cl")); // 13
+        mol.addAtom(builder.newInstance(IAtom.class, "Cl")); // 14
+        mol.addAtom(builder.newInstance(IAtom.class, "O")); // 15
+        mol.addAtom(builder.newInstance(IAtom.class, "Cl")); // 16
 
         mol.addBond(0, 1, Order.SINGLE);
         mol.addBond(1, 2, Order.DOUBLE);
@@ -301,8 +294,9 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
 
         IPMolecularLearningDescriptor descriptor = new IPMolecularLearningDescriptor();
-        DoubleArrayResult dar = ((DoubleArrayResult) ((IPMolecularLearningDescriptor) descriptor).calculatePlus(mol)
-                .getValue());
+        DoubleArrayResult dar =
+                ((DoubleArrayResult)
+                        ((IPMolecularLearningDescriptor) descriptor).calculatePlus(mol).getValue());
 
         Assert.assertEquals(6, dar.length());
     }

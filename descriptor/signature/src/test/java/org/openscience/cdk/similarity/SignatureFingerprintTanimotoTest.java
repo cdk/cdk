@@ -24,6 +24,8 @@
 
 package org.openscience.cdk.similarity;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -37,12 +39,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
-import java.util.HashMap;
-import java.util.Map;
-
-/**
- * @cdk.module test-signature
- */
+/** @cdk.module test-signature */
 public class SignatureFingerprintTanimotoTest extends CDKTestCase {
 
     /**
@@ -52,14 +49,18 @@ public class SignatureFingerprintTanimotoTest extends CDKTestCase {
     @Test
     public void testRawTanimotoBetween0and1() throws Exception {
         SmilesParser smilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        IAtomContainer mol1 = smilesParser.parseSmiles("Cc1nc(C(=O)NC23CC4CC(CC(C4)C2)C3)c(C)n1C5CCCCC5");
-        IAtomContainer mol2 = smilesParser
-                .parseSmiles("CS(=O)(=O)Nc1ccc(Cc2onc(n2)c3ccc(cc3)S(=O)(=O)Nc4ccc(CCNC[C@H](O)c5cccnc5)cc4)cc1");
+        IAtomContainer mol1 =
+                smilesParser.parseSmiles("Cc1nc(C(=O)NC23CC4CC(CC(C4)C2)C3)c(C)n1C5CCCCC5");
+        IAtomContainer mol2 =
+                smilesParser.parseSmiles(
+                        "CS(=O)(=O)Nc1ccc(Cc2onc(n2)c3ccc(cc3)S(=O)(=O)Nc4ccc(CCNC[C@H](O)c5cccnc5)cc4)cc1");
         SignatureFingerprinter fingerprinter = new SignatureFingerprinter(0);
         Map<String, Integer> fp1 = fingerprinter.getRawFingerprint(mol1);
         Map<String, Integer> fp2 = fingerprinter.getRawFingerprint(mol2);
         float tanimoto = Tanimoto.calculate(fp1, fp2);
-        Assert.assertTrue("Tanimoto expected to be between 0 and 1, was:" + tanimoto, tanimoto > 0 && tanimoto < 1);
+        Assert.assertTrue(
+                "Tanimoto expected to be between 0 and 1, was:" + tanimoto,
+                tanimoto > 0 && tanimoto < 1);
     }
 
     @Test
@@ -71,7 +72,6 @@ public class SignatureFingerprintTanimotoTest extends CDKTestCase {
         ICountFingerprint fp2 = fingerprinter.getCountFingerprint(mol2);
         double tanimoto = Tanimoto.calculate(fp1, fp2);
         Assert.assertEquals(1.0, tanimoto, 0.001);
-
     }
 
     @Test
@@ -90,18 +90,22 @@ public class SignatureFingerprintTanimotoTest extends CDKTestCase {
 
     @Test
     public void testCountMethod1and2() throws CDKException {
-        ICountFingerprint fp1 = new IntArrayCountFingerprint(new HashMap<String, Integer>() {
+        ICountFingerprint fp1 =
+                new IntArrayCountFingerprint(
+                        new HashMap<String, Integer>() {
 
-            {
-                put("A", 3);
-            }
-        });
-        ICountFingerprint fp2 = new IntArrayCountFingerprint(new HashMap<String, Integer>() {
+                            {
+                                put("A", 3);
+                            }
+                        });
+        ICountFingerprint fp2 =
+                new IntArrayCountFingerprint(
+                        new HashMap<String, Integer>() {
 
-            {
-                put("A", 4);
-            }
-        });
+                            {
+                                put("A", 4);
+                            }
+                        });
         Assert.assertEquals(0.923, Tanimoto.method1(fp1, fp2), 0.001);
         Assert.assertEquals(0.75, Tanimoto.method2(fp1, fp2), 0.001);
 

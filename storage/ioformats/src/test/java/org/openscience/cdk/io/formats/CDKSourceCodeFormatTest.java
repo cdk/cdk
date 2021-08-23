@@ -22,13 +22,10 @@
  */
 package org.openscience.cdk.io.formats;
 
-/**
- * @cdk.module test-ioformats
- */
+/** @cdk.module test-ioformats */
 public class CDKSourceCodeFormatTest extends ChemFormatTest {
 
     public CDKSourceCodeFormatTest() {
         super.setChemFormat((IChemFormat) CDKSourceCodeFormat.getInstance());
     }
-
 }

@@ -19,10 +19,8 @@
 package org.openscience.cdk.isomorphism.matchers;
 
 import java.util.Iterator;
-
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-
 import org.openscience.cdk.BondRef;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
@@ -31,8 +29,8 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * Implements the concept of a "query bond" between two or more atoms.
- * Query bonds can be used to capture types such as "Single or Double" or "Any".
+ * Implements the concept of a "query bond" between two or more atoms. Query bonds can be used to
+ * capture types such as "Single or Double" or "Any".
  *
  * @cdk.module isomorphism
  * @cdk.githash
@@ -40,29 +38,19 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  */
 public class QueryBond extends QueryChemObject implements IQueryBond {
 
-    /**
-     * The bond order of this query bond.
-     */
-    protected IQueryBond.Order  order     = (Order) CDKConstants.UNSET;
+    /** The bond order of this query bond. */
+    protected IQueryBond.Order order = (Order) CDKConstants.UNSET;
 
-    /**
-     * Number of atoms contained by this object.
-     */
-    protected int               atomCount = 0;
+    /** Number of atoms contained by this object. */
+    protected int atomCount = 0;
 
-    /**
-     * A list of atoms participating in this query bond.
-     */
-    protected IAtom[]           atoms     = null;
+    /** A list of atoms participating in this query bond. */
+    protected IAtom[] atoms = null;
 
-    /**
-     * A descriptor the stereochemical orientation of this query bond.
-     */
+    /** A descriptor the stereochemical orientation of this query bond. */
     protected IQueryBond.Stereo stereo;
 
-    /**
-     * The bond expression.
-     */
+    /** The bond expression. */
     private Expr expr = new Expr(Expr.Type.TRUE);
 
     /**
@@ -114,9 +102,7 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
         atomCount = 2;
     }
 
-    /**
-     * Constructs an empty query bond.
-     */
+    /** Constructs an empty query bond. */
     public QueryBond(IChemObjectBuilder builder) {
         this(null, null, null, IQueryBond.Stereo.NONE, builder);
         atomCount = 0;
@@ -170,15 +156,19 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
     }
 
     /**
-     * Constructs a query bond with a given order and stereo orientation from an array
-     * of atoms.
+     * Constructs a query bond with a given order and stereo orientation from an array of atoms.
      *
-     * @param atom1  the first Atom in the query bond
-     * @param atom2  the second Atom in the query bond
-     * @param order  the query bond order
+     * @param atom1 the first Atom in the query bond
+     * @param atom2 the second Atom in the query bond
+     * @param order the query bond order
      * @param stereo a descriptor the stereochemical orientation of this query bond
      */
-    public QueryBond(IAtom atom1, IAtom atom2, Order order, IQueryBond.Stereo stereo, IChemObjectBuilder builder) {
+    public QueryBond(
+            IAtom atom1,
+            IAtom atom2,
+            Order order,
+            IQueryBond.Stereo stereo,
+            IChemObjectBuilder builder) {
         super(builder);
         atoms = new IAtom[2];
         atoms[0] = atom1;
@@ -189,8 +179,8 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
     }
 
     /**
-     * Returns the Iterator to atoms making up this query bond.
-     * Iterator.remove() is not implemented.
+     * Returns the Iterator to atoms making up this query bond. Iterator.remove() is not
+     * implemented.
      *
      * @return An Iterator to atoms participating in this query bond
      * @see #setAtoms
@@ -206,25 +196,19 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
         };
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getIndex() {
         return 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtomContainer getContainer() {
         return null;
     }
 
-    /**
-     * The inner Iterator class.
-     */
+    /** The inner Iterator class. */
     private class AtomsIterator implements Iterator<IAtom> {
 
         private int pointer = 0;
@@ -242,7 +226,6 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
 
         @Override
         public void remove() {}
-
     }
 
     /**
@@ -277,58 +260,43 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
      */
     @Override
     public IAtom getAtom(int position) {
-        if (atoms == null)
-            return null;
-        else
-            return atoms[position];
+        if (atoms == null) return null;
+        else return atoms[position];
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public IAtom getBegin() {
         return atoms[0];
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public IAtom getEnd() {
         return atoms[1];
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtom getOther(IAtom atom) {
-        if (atoms[0].equals(atom))
-            return atoms[1];
-        else if (atoms[1].equals(atom))
-            return atoms[0];
+        if (atoms[0].equals(atom)) return atoms[1];
+        else if (atoms[1].equals(atom)) return atoms[0];
         return null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtom getConnectedAtom(IAtom atom) {
         return getOther(atom);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtom[] getConnectedAtoms(IAtom atom) {
         if (atomCount < 1) return null;
-        IAtom[] connected = new IAtom[atomCount-1];
+        IAtom[] connected = new IAtom[atomCount - 1];
         int j = 0;
         for (int i = 0; i < atomCount; i++) {
             if (!this.atoms[i].equals(atom)) {
-                if (j >= connected.length)
-                    return null;
+                if (j >= connected.length) return null;
                 connected[j++] = this.atoms[i];
             }
         }
@@ -353,7 +321,7 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
     /**
      * Sets an atom in this query bond.
      *
-     * @param atom     The atom to be set
+     * @param atom The atom to be set
      * @param position The position in this query bond where the atom is to be inserted
      * @see #getAtom
      */
@@ -369,8 +337,7 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
      * Returns the query bond order of this query bond.
      *
      * @return The query bond order of this query bond
-     * @see org.openscience.cdk.CDKConstants org.openscience.cdk.CDKConstants
-     *      for predefined values.
+     * @see org.openscience.cdk.CDKConstants org.openscience.cdk.CDKConstants for predefined values.
      * @see #setOrder
      */
     @Override
@@ -382,8 +349,7 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
      * Sets the bond order of this query bond.
      *
      * @param order The query bond order to be assigned to this query bond
-     * @see org.openscience.cdk.CDKConstants
-     *      org.openscience.cdk.CDKConstants for predefined values.
+     * @see org.openscience.cdk.CDKConstants org.openscience.cdk.CDKConstants for predefined values.
      * @see #getOrder
      */
     @Override
@@ -417,21 +383,15 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
         notifyChanged();
     }
 
-    /**
-     * Not used for query bonds. {@inheritDoc}
-     */
+    /** Not used for query bonds. {@inheritDoc} */
     @Override
     public Display getDisplay() {
         return null;
     }
 
-    /**
-     * Not used for query bonds. {@inheritDoc}
-     */
+    /** Not used for query bonds. {@inheritDoc} */
     @Override
-    public void setDisplay(Display display) {
-
-    }
+    public void setDisplay(Display display) {}
 
     /**
      * Returns the geometric 2D center of the query bond.
@@ -447,7 +407,8 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
             yOfCenter += atom.getPoint2d().y;
         }
 
-        return new Point2d(xOfCenter / ((double) getAtomCount()), yOfCenter / ((double) getAtomCount()));
+        return new Point2d(
+                xOfCenter / ((double) getAtomCount()), yOfCenter / ((double) getAtomCount()));
     }
 
     /**
@@ -466,7 +427,8 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
             zOfCenter += atom.getPoint3d().z;
         }
 
-        return new Point3d(xOfCenter / getAtomCount(), yOfCenter / getAtomCount(), zOfCenter / getAtomCount());
+        return new Point3d(
+                xOfCenter / getAtomCount(), yOfCenter / getAtomCount(), zOfCenter / getAtomCount());
     }
 
     /**
@@ -490,8 +452,8 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
     }
 
     /**
-     * Checks whether a query bond is connected to another one.
-     * This can only be true if the query bonds have an Atom in common.
+     * Checks whether a query bond is connected to another one. This can only be true if the query
+     * bonds have an Atom in common.
      *
      * @param bond bond The query bond which is checked to be connect with this one
      * @return true if the query bonds share an atom, otherwise false
@@ -505,8 +467,8 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
     }
 
     /**
-     * Clones this query bond object, including clones of the atoms between which the
-     * query bond is defined.
+     * Clones this query bond object, including clones of the atoms between which the query bond is
+     * defined.
      *
      * @return The cloned object
      */
@@ -549,14 +511,15 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
         return resultString.toString();
     }
 
-    //From ElectronContainer
+    // From ElectronContainer
     /** Number of electrons in the ElectronContainer. */
     protected Integer electronCount;
 
     /**
      * Returns the number of electrons in this bond
+     *
      * @return The number of electrons in this electron container.
-     * @see     #setElectronCount
+     * @see #setElectronCount
      */
     @Override
     public Integer getElectronCount() {
@@ -589,8 +552,9 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
 
     /**
      * Sets the number of electrons in this bond
-     * @param   electronCount The number of electrons in this electron container.
-     * @see     #getElectronCount
+     *
+     * @param electronCount The number of electrons in this electron container.
+     * @see #getElectronCount
      */
     @Override
     public void setElectronCount(Integer electronCount) {
@@ -598,26 +562,22 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
         notifyChanged();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int hashCode() {
         return super.hashCode();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof BondRef)
-            return super.equals(((BondRef) obj).deref());
+        if (obj instanceof BondRef) return super.equals(((BondRef) obj).deref());
         return super.equals(obj);
     }
 
     /**
      * Access the bond expression predicate associated with this query bond.
+     *
      * @return the bond expression
      */
     public Expr getExpression() {
@@ -626,15 +586,14 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
 
     /**
      * Set the bond expression for this query bond.
+     *
      * @param expr the new bond expression
      */
     public void setExpression(Expr expr) {
         this.expr = expr;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean matches(IBond bond) {
         return expr.matches(bond);

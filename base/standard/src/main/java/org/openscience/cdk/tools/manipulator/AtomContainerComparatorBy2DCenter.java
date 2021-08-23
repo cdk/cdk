@@ -21,26 +21,25 @@
 package org.openscience.cdk.tools.manipulator;
 
 import java.util.Comparator;
-
 import javax.vecmath.Point2d;
-
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  * Compares two IAtomContainers based on their 2D position.
- * <p>
- * Implemented specifically to be used in JChemPaint.
+ *
+ * <p>Implemented specifically to be used in JChemPaint.
  *
  * @author Mark Rijnbeek
- * @cdk.created  2009-10-14
- * @cdk.module   standard
+ * @cdk.created 2009-10-14
+ * @cdk.module standard
  * @cdk.githash
  */
 public class AtomContainerComparatorBy2DCenter implements Comparator<IAtomContainer> {
 
     /**
      * Compare two AtomContainers based on their 2D position.
+     *
      * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
      */
     @Override
@@ -55,7 +54,6 @@ public class AtomContainerComparatorBy2DCenter implements Comparator<IAtomContai
         if (p1.y < p2.y) return -1;
 
         return 0;
-
     }
 
     /*
@@ -67,5 +65,4 @@ public class AtomContainerComparatorBy2DCenter implements Comparator<IAtomContai
     private static Point2d center(IAtomContainer container) {
         return container != null ? GeometryUtil.get2DCenter(container) : MAXIMUM;
     }
-
 }

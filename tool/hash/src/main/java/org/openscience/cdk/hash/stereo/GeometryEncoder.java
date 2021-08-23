@@ -24,12 +24,11 @@
 
 package org.openscience.cdk.hash.stereo;
 
-
 import java.util.Arrays;
 
 /**
- * Given a geometric parity and a permutation parity encode the parity of the
- * combination at the specified stereo centre indices.
+ * Given a geometric parity and a permutation parity encode the parity of the combination at the
+ * specified stereo centre indices.
  *
  * @author John May
  * @cdk.module hash
@@ -37,30 +36,30 @@ import java.util.Arrays;
 final class GeometryEncoder implements StereoEncoder {
 
     /* value for a clockwise configuration */
-    private static final long       CLOCKWISE     = 15543053;
+    private static final long CLOCKWISE = 15543053;
 
     /* value for a anticlockwise configuration */
-    private static final long       ANTICLOCKWISE = 15521419;
+    private static final long ANTICLOCKWISE = 15521419;
 
     /* for calculation the permutation parity */
     private final PermutationParity permutation;
 
     /* for calculating the geometric parity */
-    private final GeometricParity   geometric;
+    private final GeometricParity geometric;
 
     /* index to encode */
-    private final int[]             centres;
+    private final int[] centres;
 
     /**
-     * Create a new encoder for multiple stereo centres (specified as an
-     * array).
+     * Create a new encoder for multiple stereo centres (specified as an array).
      *
-     * @param centres     the stereo centres which will be configured
+     * @param centres the stereo centres which will be configured
      * @param permutation calculator for permutation parity
-     * @param geometric   geometric calculator
+     * @param geometric geometric calculator
      * @throws IllegalArgumentException if the centres[] were empty
      */
-    public GeometryEncoder(int[] centres, PermutationParity permutation, GeometricParity geometric) {
+    public GeometryEncoder(
+            int[] centres, PermutationParity permutation, GeometricParity geometric) {
         if (centres.length == 0) throw new IllegalArgumentException("no centres[] provided");
         this.permutation = permutation;
         this.geometric = geometric;
@@ -70,24 +69,23 @@ final class GeometryEncoder implements StereoEncoder {
     /**
      * Convenience method to create a new encoder for a single stereo centre.
      *
-     * @param centre      a stereo centre which will be configured
+     * @param centre a stereo centre which will be configured
      * @param permutation calculator for permutation parity
-     * @param geometric   geometric calculator
+     * @param geometric geometric calculator
      * @throws IllegalArgumentException if the centres[] were empty
      */
     public GeometryEncoder(int centre, PermutationParity permutation, GeometricParity geometric) {
-        this(new int[]{centre}, permutation, geometric);
+        this(new int[] {centre}, permutation, geometric);
     }
 
     /**
-     * Encodes the {@code centres[]} specified in the constructor as either
-     * clockwise/anticlockwise or none. If there is a permutation parity but no
-     * geometric parity then we can not encode the configuration and 'true' is
-     * returned to indicate the perception is done. If there is no permutation
-     * parity this may changed with the next {@code current[]} values and so
-     * 'false' is returned.
+     * Encodes the {@code centres[]} specified in the constructor as either clockwise/anticlockwise
+     * or none. If there is a permutation parity but no geometric parity then we can not encode the
+     * configuration and 'true' is returned to indicate the perception is done. If there is no
+     * permutation parity this may changed with the next {@code current[]} values and so 'false' is
+     * returned.
      *
-     *{@inheritDoc}
+     * <p>{@inheritDoc}
      */
     @Override
     public boolean encode(long[] current, long[] next) {
@@ -118,9 +116,7 @@ final class GeometryEncoder implements StereoEncoder {
         return false;
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void reset() {
         // never inactive

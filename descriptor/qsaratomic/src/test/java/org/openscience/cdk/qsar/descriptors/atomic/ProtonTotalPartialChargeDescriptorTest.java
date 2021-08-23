@@ -27,9 +27,7 @@ import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
-/**
- * @cdk.module test-qsaratomic
- */
+/** @cdk.module test-qsaratomic */
 public class ProtonTotalPartialChargeDescriptorTest extends AtomicDescriptorTest {
 
     public ProtonTotalPartialChargeDescriptorTest() {}
@@ -47,22 +45,22 @@ public class ProtonTotalPartialChargeDescriptorTest extends AtomicDescriptorTest
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CF");
         addExplicitHydrogens(mol);
-        DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(mol.getAtom(0), mol).getValue();
+        DoubleArrayResult retval =
+                (DoubleArrayResult) descriptor.calculate(mol.getAtom(0), mol).getValue();
         for (int i = 0; i < testResult.length; ++i) {
             Assert.assertEquals(testResult[i], retval.get(i), 0.00001);
         }
     }
 
-    /**
-     * @cdk.bug 2039739
-     */
+    /** @cdk.bug 2039739 */
     @Test
     public void testNaNs() throws java.lang.Exception {
         IAtomicDescriptor descriptor = new ProtonTotalPartialChargeDescriptor();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C(F)(F)");
         addExplicitHydrogens(mol);
-        DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(mol.getAtom(0), mol).getValue();
+        DoubleArrayResult retval =
+                (DoubleArrayResult) descriptor.calculate(mol.getAtom(0), mol).getValue();
         Assert.assertEquals(5, retval.length());
         Assert.assertTrue(Double.isNaN(retval.get(3)));
         Assert.assertTrue(Double.isNaN(retval.get(4)));

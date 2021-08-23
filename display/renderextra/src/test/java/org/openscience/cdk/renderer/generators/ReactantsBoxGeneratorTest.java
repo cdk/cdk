@@ -23,17 +23,13 @@ package org.openscience.cdk.renderer.generators;
 
 import java.awt.Rectangle;
 import java.util.List;
-
 import org.junit.Assert;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 
-/**
- * @cdk.module test-renderextra
- */
+/** @cdk.module test-renderextra */
 public class ReactantsBoxGeneratorTest extends AbstractGeneratorTest {
 
     private ReactantsBoxGenerator generator;
@@ -63,5 +59,4 @@ public class ReactantsBoxGeneratorTest extends AbstractGeneratorTest {
         List<IRenderingElement> elements = elementUtil.getAllSimpleElements(root);
         Assert.assertEquals(0, elements.size());
     }
-
 }

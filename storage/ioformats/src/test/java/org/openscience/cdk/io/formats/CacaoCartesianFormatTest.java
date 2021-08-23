@@ -22,13 +22,10 @@
  */
 package org.openscience.cdk.io.formats;
 
-/**
- * @cdk.module test-ioformats
- */
+/** @cdk.module test-ioformats */
 public class CacaoCartesianFormatTest extends ChemFormatTest {
 
     public CacaoCartesianFormatTest() {
         super.setChemFormat((IChemFormat) CacaoCartesianFormat.getInstance());
     }
-
 }

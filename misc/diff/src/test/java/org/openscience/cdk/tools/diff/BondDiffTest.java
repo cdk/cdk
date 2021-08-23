@@ -18,6 +18,9 @@
  */
 package org.openscience.cdk.tools.diff;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -25,12 +28,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.diff.tree.IDifference;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-/**
- * @cdk.module test-diff
- */
+/** @cdk.module test-diff */
 public class BondDiffTest extends CDKTestCase {
 
     @Test

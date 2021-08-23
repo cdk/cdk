@@ -25,14 +25,13 @@ package org.openscience.cdk.fingerprint;
 import java.io.Serializable;
 
 /**
- * Interface for count fingerprint representations. The fingerprint is
- * regarded as a list of hashes and a list of counts where the the list of
- * counts keeps track of how many times the corresponding hash is found in
- * the fingerprint. So index refers to position in the list. The list must
- * be sorted in natural order (ascending).
+ * Interface for count fingerprint representations. The fingerprint is regarded as a list of hashes
+ * and a list of counts where the the list of counts keeps track of how many times the corresponding
+ * hash is found in the fingerprint. So index refers to position in the list. The list must be
+ * sorted in natural order (ascending).
  *
  * @author jonalv
- * @cdk.module     core
+ * @cdk.module core
  * @cdk.githash
  */
 public interface ICountFingerprint extends Serializable {
@@ -45,11 +44,11 @@ public interface ICountFingerprint extends Serializable {
     public long size();
 
     /**
-     * Returns the number of bins that are populated. This number is typically smaller
-     * then the total number of bins.
+     * Returns the number of bins that are populated. This number is typically smaller then the
+     * total number of bins.
      *
      * @return the number of populated bins
-     * @see    #size()
+     * @see #size()
      */
     public int numOfPopulatedbins();
 
@@ -77,8 +76,8 @@ public interface ICountFingerprint extends Serializable {
     public void merge(ICountFingerprint fp);
 
     /**
-     * Changes behaviour, if true is given the count fingerprint will
-     * behave as a bit fingerprint and return 0 or 1 for counts.
+     * Changes behaviour, if true is given the count fingerprint will behave as a bit fingerprint
+     * and return 0 or 1 for counts.
      *
      * @param behaveAsBitFingerprint
      */

@@ -33,39 +33,33 @@ import org.xml.sax.helpers.DefaultHandler;
 /**
  * SAX2 implementation for INChI XML fragment parsing.
  *
- * <p>The supported elements are: identifier, formula and
- * connections. All other elements are not parsed (at this moment).
- * This parser is written based on the INChI files in data/ichi
- * for version 1.1Beta.
+ * <p>The supported elements are: identifier, formula and connections. All other elements are not
+ * parsed (at this moment). This parser is written based on the INChI files in data/ichi for version
+ * 1.1Beta.
  *
- * <p>The returned ChemFile contains a ChemSequence in
- * which the ChemModel represents the molecule.
+ * <p>The returned ChemFile contains a ChemSequence in which the ChemModel represents the molecule.
  *
  * @cdk.module extra
  * @cdk.githash
- *
  * @see org.openscience.cdk.io.INChIReader
- *
  * @cdk.require java1.4+
  */
 @Deprecated
 public class INChIHandler extends DefaultHandler {
 
-    private static ILoggingTool       logger = LoggingToolFactory.createLoggingTool(INChIHandler.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(INChIHandler.class);
     private INChIContentProcessorTool inchiTool;
 
-    private ChemFile                  chemFile;
-    private ChemSequence              chemSequence;
-    private ChemModel                 chemModel;
-    private IAtomContainerSet         setOfMolecules;
-    private IAtomContainer            tautomer;
+    private ChemFile chemFile;
+    private ChemSequence chemSequence;
+    private ChemModel chemModel;
+    private IAtomContainerSet setOfMolecules;
+    private IAtomContainer tautomer;
 
     /** Used to store all chars between two tags */
-    private String                    currentChars;
+    private String currentChars;
 
-    /**
-     * Constructor for the IChIHandler.
-     **/
+    /** Constructor for the IChIHandler. */
     public INChIHandler() {
         inchiTool = new INChIContentProcessorTool();
     }
@@ -102,8 +96,13 @@ public class INChIHandler extends DefaultHandler {
         } else if ("formula".equals(local)) {
             if (tautomer != null) {
                 logger.info("Parsing <formula> chars: ", currentChars);
-                tautomer = new AtomContainer(inchiTool.processFormula(
-                        setOfMolecules.getBuilder().newInstance(IAtomContainer.class), currentChars));
+                tautomer =
+                        new AtomContainer(
+                                inchiTool.processFormula(
+                                        setOfMolecules
+                                                .getBuilder()
+                                                .newInstance(IAtomContainer.class),
+                                        currentChars));
             } else {
                 logger.warn("Cannot set atom info for empty tautomer");
             }
@@ -120,13 +119,12 @@ public class INChIHandler extends DefaultHandler {
     }
 
     /**
-     * Implementation of the startElement() procedure overwriting the
-     * DefaultHandler interface.
+     * Implementation of the startElement() procedure overwriting the DefaultHandler interface.
      *
-     * @param uri       the Universal Resource Identifier
-     * @param local     the local name (without namespace part)
-     * @param raw       the complete element name (with namespace part)
-     * @param atts      the attributes of this element
+     * @param uri the Universal Resource Identifier
+     * @param local the local name (without namespace part)
+     * @param raw the complete element name (with namespace part)
+     * @param atts the attributes of this element
      */
     @Override
     public void startElement(String uri, String local, String raw, Attributes atts) {
@@ -138,7 +136,8 @@ public class INChIHandler extends DefaultHandler {
         if ("INChI".equals(local)) {
             // check version
             for (int i = 0; i < atts.getLength(); i++) {
-                if (atts.getQName(i).equals("version")) logger.info("INChI version: ", atts.getValue(i));
+                if (atts.getQName(i).equals("version"))
+                    logger.info("INChI version: ", atts.getValue(i));
             }
         } else if ("structure".equals(local)) {
             tautomer = new AtomContainer();
@@ -148,10 +147,9 @@ public class INChIHandler extends DefaultHandler {
     }
 
     /**
-     * Implementation of the characters() procedure overwriting the
-     * DefaultHandler interface.
+     * Implementation of the characters() procedure overwriting the DefaultHandler interface.
      *
-     * @param ch        characters to handle
+     * @param ch characters to handle
      */
     @Override
     public void characters(char ch[], int start, int length) {
@@ -162,5 +160,4 @@ public class INChIHandler extends DefaultHandler {
     public ChemFile getChemFile() {
         return chemFile;
     }
-
 }

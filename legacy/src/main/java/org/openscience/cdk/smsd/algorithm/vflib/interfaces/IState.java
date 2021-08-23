@@ -53,29 +53,28 @@ import org.openscience.cdk.smsd.algorithm.vflib.map.Match;
 
 /**
  * Interface for the storing the states of the mapping in the VF algorithm.
+ *
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is
+ *     available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public interface IState {
 
     /**
-     * Returns the current mapping of query atoms onto target atoms.
-     * This map is shared among all states obtained through nextState.
+     * Returns the current mapping of query atoms onto target atoms. This map is shared among all
+     * states obtained through nextState.
      *
      * @return the current mapping of query atoms onto target atoms
      */
     public Map<INode, IAtom> getMap();
 
     /**
-     * Returns true if another candidate match can be found or
-     * false otherwise.
+     * Returns true if another candidate match can be found or false otherwise.
      *
-     * @return true if another candidate mapping can be found or
-     * false otherwise.
+     * @return true if another candidate mapping can be found or false otherwise.
      */
     public boolean hasNextCandidate();
 
@@ -87,21 +86,17 @@ public interface IState {
     public Match nextCandidate();
 
     /**
-     * Returns true if the given match will work with the current
-     * map, or false otherwise.
+     * Returns true if the given match will work with the current map, or false otherwise.
      *
      * @param match the match to consider
-     * @return true if the given match will work with the current
-     * map, or false otherwise.
+     * @return true if the given match will work with the current map, or false otherwise.
      */
     public boolean isMatchFeasible(Match match);
 
     /**
-     * Returns true if all atoms in the query molecule have been
-     * mapped.
+     * Returns true if all atoms in the query molecule have been mapped.
      *
-     * @return true if all atoms in the query molecule have been
-     * mapped.
+     * @return true if all atoms in the query molecule have been mapped.
      */
     public boolean isGoal();
 
@@ -113,17 +108,13 @@ public interface IState {
     public boolean isDead();
 
     /**
-     * Returns a state in which the atoms in match have been
-     * added to the current mapping.
+     * Returns a state in which the atoms in match have been added to the current mapping.
      *
      * @param match the match to consider.
-     * @return  a state in which the atoms in match have been
-     * added to the current mapping.
+     * @return a state in which the atoms in match have been added to the current mapping.
      */
     public IState nextState(Match match);
 
-    /**
-     * Returns this IState's atom map to its original condition.
-     */
+    /** Returns this IState's atom map to its original condition. */
     public void backTrack();
 }

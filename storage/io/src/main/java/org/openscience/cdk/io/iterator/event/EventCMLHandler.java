@@ -20,10 +20,8 @@ package org.openscience.cdk.io.iterator.event;
 
 import java.util.Hashtable;
 import java.util.Map;
-
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -36,40 +34,36 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * CDO object needed as interface with the JCFL library for reading CML
- * in a event based manner.
+ * CDO object needed as interface with the JCFL library for reading CML in a event based manner.
  *
  * <p>The CDO only takes care about atoms, bonds and molecules.
  *
  * @cdk.module io
  * @cdk.githash
- *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
-*/
+ */
 public class EventCMLHandler extends CMLHandler {
 
-    private IChemObjectBuilder           builder;
-    private IAtomContainer               currentMolecule;
-    private IAtom                        currentAtom;
+    private IChemObjectBuilder builder;
+    private IAtomContainer currentMolecule;
+    private IAtom currentAtom;
 
-    private Map<String, Integer>         atomEnumeration;
+    private Map<String, Integer> atomEnumeration;
 
-    private int                          numberOfAtoms = 0;
+    private int numberOfAtoms = 0;
 
-    private int                          bond_a1;
-    private int                          bond_a2;
-    private IBond.Order                  bond_order;
-    private IBond.Stereo                 bond_stereo;
-    private String                       bond_id;
+    private int bond_a1;
+    private int bond_a2;
+    private IBond.Order bond_order;
+    private IBond.Stereo bond_stereo;
+    private String bond_id;
 
-    protected static ILoggingTool        logger        = LoggingToolFactory.createLoggingTool(EventCMLHandler.class);
+    protected static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(EventCMLHandler.class);
 
     private DefaultEventChemObjectReader eventReader;
 
-    /**
-    * Constructs an iterating-abled CDO. After reading one molecule it
-    * fires a frameRead event.
-    */
+    /** Constructs an iterating-abled CDO. After reading one molecule it fires a frameRead event. */
     public EventCMLHandler(DefaultEventChemObjectReader eventReader, IChemObjectBuilder builder) {
         super(builder.newInstance(IChemFile.class));
         this.eventReader = eventReader;
@@ -90,18 +84,18 @@ public class EventCMLHandler extends CMLHandler {
     // procedures required by CDOInterface
 
     /**
-    * Procedure required by the CDOInterface. This function is only
-    * supposed to be called by the JCFL library
-    */
+     * Procedure required by the CDOInterface. This function is only supposed to be called by the
+     * JCFL library
+     */
     @Override
     public void startDocument() {
         logger.info("New CDO Object");
     }
 
     /**
-    * Procedure required by the CDOInterface. This function is only
-    * supposed to be called by the JCFL library
-    */
+     * Procedure required by the CDOInterface. This function is only supposed to be called by the
+     * JCFL library
+     */
     @Override
     public void endDocument() {
         logger.debug("Closing document");
@@ -109,15 +103,15 @@ public class EventCMLHandler extends CMLHandler {
     }
 
     /**
-    * Procedure required by the CDOInterface. This function is only
-    * supposed to be called by the JCFL library
-    */
+     * Procedure required by the CDOInterface. This function is only supposed to be called by the
+     * JCFL library
+     */
     public void setDocumentProperty(String type, String value) {}
 
     /**
-    * Procedure required by the CDOInterface. This function is only
-    * supposed to be called by the JCFL library
-    */
+     * Procedure required by the CDOInterface. This function is only supposed to be called by the
+     * JCFL library
+     */
     public void startObject(String objectType) {
         logger.debug("START:" + objectType);
         if (objectType.equals("Molecule")) {
@@ -134,9 +128,9 @@ public class EventCMLHandler extends CMLHandler {
     }
 
     /**
-    * Procedure required by the CDOInterface. This function is only
-    * supposed to be called by the JCFL library
-    */
+     * Procedure required by the CDOInterface. This function is only supposed to be called by the
+     * JCFL library
+     */
     public void endObject(String objectType) {
         logger.debug("END: " + objectType);
         if (objectType.equals("Molecule")) {
@@ -146,8 +140,13 @@ public class EventCMLHandler extends CMLHandler {
             currentMolecule.addAtom(currentAtom);
         } else if (objectType.equals("Bond")) {
             logger.debug("Bond(" + bond_id + "): " + bond_a1 + ", " + bond_a2 + ", " + bond_order);
-            if (bond_a1 > currentMolecule.getAtomCount() || bond_a2 > currentMolecule.getAtomCount()) {
-                logger.error("Cannot add bond between at least one non-existant atom: " + bond_a1 + " and " + bond_a2);
+            if (bond_a1 > currentMolecule.getAtomCount()
+                    || bond_a2 > currentMolecule.getAtomCount()) {
+                logger.error(
+                        "Cannot add bond between at least one non-existant atom: "
+                                + bond_a1
+                                + " and "
+                                + bond_a2);
             } else {
                 IAtom a1 = currentMolecule.getAtom(bond_a1);
                 IAtom a2 = currentMolecule.getAtom(bond_a2);
@@ -162,9 +161,9 @@ public class EventCMLHandler extends CMLHandler {
     }
 
     /**
-    * Procedure required by the CDOInterface. This function is only
-    * supposed to be called by the JCFL library
-    */
+     * Procedure required by the CDOInterface. This function is only supposed to be called by the
+     * JCFL library
+     */
     public void setObjectProperty(String objectType, String propertyType, String propertyValue) {
         logger.debug("objectType: " + objectType);
         logger.debug("propType: " + propertyType);
@@ -295,5 +294,4 @@ public class EventCMLHandler extends CMLHandler {
         }
         logger.debug("Object property set...");
     }
-
 }

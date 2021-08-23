@@ -23,12 +23,11 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemSequence;
 
 /**
- * This Validator tests the internal data structures, and
- * tries to detect inconsistencies in it.
+ * This Validator tests the internal data structures, and tries to detect inconsistencies in it.
  *
- * @author   Egon Willighagen
+ * @author Egon Willighagen
  * @cdk.githash
- * @cdk.created  2003-08-22
+ * @cdk.created 2003-08-22
  */
 public class CDKValidator extends AbstractValidator {
 
@@ -46,7 +45,8 @@ public class CDKValidator extends AbstractValidator {
 
     private ValidationReport validateChemFileNulls(IChemFile chemFile) {
         ValidationReport report = new ValidationReport();
-        ValidationTest hasNulls = new ValidationTest(chemFile, "ChemFile contains a null ChemSequence.");
+        ValidationTest hasNulls =
+                new ValidationTest(chemFile, "ChemFile contains a null ChemSequence.");
         for (int i = 0; i < chemFile.getChemSequenceCount(); i++) { // DIRTY !!!! FIXME !!!!!
             // but it does not seem to work on 1.4.2 otherwise....
             if (chemFile.getChemSequence(i) == null) {
@@ -60,7 +60,8 @@ public class CDKValidator extends AbstractValidator {
 
     private ValidationReport validateChemSequenceNulls(IChemSequence sequence) {
         ValidationReport report = new ValidationReport();
-        ValidationTest hasNulls = new ValidationTest(sequence, "ChemSequence contains a null ChemModel.");
+        ValidationTest hasNulls =
+                new ValidationTest(sequence, "ChemSequence contains a null ChemModel.");
         for (int i = 0; i < sequence.getChemModelCount(); i++) { // DIRTY !!!! FIXME !!!!!
             // but it does not seem to work on 1.4.2 otherwise....
             if (sequence.getChemModel(i) == null) {
@@ -71,5 +72,4 @@ public class CDKValidator extends AbstractValidator {
         }
         return report;
     }
-
 }

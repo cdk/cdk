@@ -22,9 +22,9 @@ package org.openscience.cdk.silent;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractFragmentAtomTest;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IFragmentAtom;
-import org.openscience.cdk.interfaces.AbstractFragmentAtomTest;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
@@ -36,13 +36,14 @@ public class FragmentAtomTest extends AbstractFragmentAtomTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new FragmentAtom();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new FragmentAtom();
+                    }
+                });
     }
 
     @Test

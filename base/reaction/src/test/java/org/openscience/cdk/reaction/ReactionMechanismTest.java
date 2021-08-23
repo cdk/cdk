@@ -20,8 +20,8 @@ package org.openscience.cdk.reaction;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.exception.CDKException;
 
 /**
  * Tests for IReactionProcess implementations.
@@ -49,8 +49,9 @@ public abstract class ReactionMechanismTest extends CDKTestCase {
     }
 
     /**
-     * Makes sure that the extending class has set the super.descriptor.
-     * Each extending class should have this bit of code (JUnit3 formalism):
+     * Makes sure that the extending class has set the super.descriptor. Each extending class should
+     * have this bit of code (JUnit3 formalism):
+     *
      * <pre>
      * public void setUp() {
      *   // Pass a Class, not an Object!
@@ -64,8 +65,8 @@ public abstract class ReactionMechanismTest extends CDKTestCase {
      */
     @Test
     public void testHasSetSuperDotDescriptor() {
-        Assert.assertNotNull("The extending class must set the super.descriptor in its setUp() method.",
+        Assert.assertNotNull(
+                "The extending class must set the super.descriptor in its setUp() method.",
                 reactionMechanism);
     }
-
 }

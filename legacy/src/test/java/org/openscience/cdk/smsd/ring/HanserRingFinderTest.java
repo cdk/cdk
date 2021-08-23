@@ -26,26 +26,21 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Collection;
 import java.util.List;
-
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smsd.algorithm.vflib.Molecules;
 
-import org.junit.Before;
-import org.junit.Test;
-
 /**
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- *
  * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
 public class HanserRingFinderTest {
 
-    /**
-     * Test of findRings method, of class HanserRingFinder.
-     */
+    /** Test of findRings method, of class HanserRingFinder. */
     @Test
     public void testFindRings() {
         IAtomContainer molecule = null;

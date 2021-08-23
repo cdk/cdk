@@ -20,7 +20,6 @@ package org.openscience.cdk.config.atomtypes;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond.Order;
@@ -34,27 +33,28 @@ import org.xml.sax.helpers.DefaultHandler;
 /**
  * SAX Handler for the {@link OWLAtomTypeReader}.
  *
- * @cdk.module  core
+ * @cdk.module core
  * @cdk.githash
  */
 public class OWLAtomTypeHandler extends DefaultHandler {
 
-    private final String              NS_ATOMTYPE = "http://cdk.sf.net/ontologies/atomtypes#";
+    private final String NS_ATOMTYPE = "http://cdk.sf.net/ontologies/atomtypes#";
 
-    private static ILoggingTool       logger      = LoggingToolFactory.createLoggingTool(OWLAtomTypeHandler.class);
-    private String                    currentChars;
-    private List<IAtomType>           atomTypes;
-    private IAtomType                 currentAtomType;
-    private int                       piBondCount;
-    private int                       neighborCount;
-    private Order                     maxBondOrder;
-    private double                    bondOrderSum;
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(OWLAtomTypeHandler.class);
+    private String currentChars;
+    private List<IAtomType> atomTypes;
+    private IAtomType currentAtomType;
+    private int piBondCount;
+    private int neighborCount;
+    private Order maxBondOrder;
+    private double bondOrderSum;
 
     private static IChemObjectBuilder builder;
 
     /**
-     * Constructs a new AtomTypeHandler and will create IAtomType
-     * implementations using the given IChemObjectBuilder.
+     * Constructs a new AtomTypeHandler and will create IAtomType implementations using the given
+     * IChemObjectBuilder.
      *
      * @param build The IChemObjectBuilder used to create the IAtomType's.
      */
@@ -104,9 +104,11 @@ public class OWLAtomTypeHandler extends DefaultHandler {
         } else if ("formalNeighbourCount".equals(local)) {
             neighborCount = Integer.parseInt(currentChars);
         } else if ("lonePairCount".equals(local)) {
-            currentAtomType.setProperty(CDKConstants.LONE_PAIR_COUNT, Integer.parseInt(currentChars));
+            currentAtomType.setProperty(
+                    CDKConstants.LONE_PAIR_COUNT, Integer.parseInt(currentChars));
         } else if ("singleElectronCount".equals(local)) {
-            currentAtomType.setProperty(CDKConstants.SINGLE_ELECTRON_COUNT, Integer.parseInt(currentChars));
+            currentAtomType.setProperty(
+                    CDKConstants.SINGLE_ELECTRON_COUNT, Integer.parseInt(currentChars));
         } else if ("piBondCount".equals(local)) {
             piBondCount = Integer.parseInt(currentChars);
         }
@@ -186,5 +188,4 @@ public class OWLAtomTypeHandler extends DefaultHandler {
         logger.debug("character data");
         currentChars += new String(chars, start, length);
     }
-
 }

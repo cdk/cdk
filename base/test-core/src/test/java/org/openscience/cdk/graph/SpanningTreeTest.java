@@ -19,7 +19,6 @@
 package org.openscience.cdk.graph;
 
 import java.io.InputStream;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,13 +39,11 @@ import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
-/**
- * @cdk.module test-core
- */
+/** @cdk.module test-core */
 public class SpanningTreeTest extends CDKTestCase {
 
     private static SpanningTree azulene = null;
-    private static SpanningTree ethane  = null;
+    private static SpanningTree ethane = null;
 
     @Before
     public void setUp() throws Exception {
@@ -112,8 +109,11 @@ public class SpanningTreeTest extends CDKTestCase {
         disconnectedStructure.getAtom(0).setFormalCharge(+1);
         disconnectedStructure.addAtom(builder.newInstance(IAtom.class, "Cl"));
         disconnectedStructure.getAtom(1).setFormalCharge(-1);
-        path = ethane
-                .getPath(disconnectedStructure, disconnectedStructure.getAtom(0), disconnectedStructure.getAtom(1));
+        path =
+                ethane.getPath(
+                        disconnectedStructure,
+                        disconnectedStructure.getAtom(0),
+                        disconnectedStructure.getAtom(1));
         Assert.assertNotNull(path);
         Assert.assertEquals(0, path.getAtomCount());
         Assert.assertEquals(0, path.getBondCount());
@@ -176,5 +176,4 @@ public class SpanningTreeTest extends CDKTestCase {
         Assert.assertEquals(6, spanningTree.getCyclicFragmentsContainer().getAtomCount());
         Assert.assertEquals(0, spanningTree.getBondsAcyclicCount());
     }
-
 }

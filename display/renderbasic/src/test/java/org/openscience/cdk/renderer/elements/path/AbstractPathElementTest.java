@@ -24,9 +24,7 @@ package org.openscience.cdk.renderer.elements.path;
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * @cdk.module test-renderbasic
- */
+/** @cdk.module test-renderbasic */
 public abstract class AbstractPathElementTest {
 
     private static PathElement pathElement;
@@ -51,5 +49,4 @@ public abstract class AbstractPathElementTest {
         Assert.assertNotNull(points);
         Assert.assertNotSame(0, points.length);
     }
-
 }

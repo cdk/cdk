@@ -26,9 +26,7 @@ import static org.openscience.cdk.renderer.BoundsCalculator.calculateBounds;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
-
 import javax.vecmath.Point2d;
-
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -43,17 +41,19 @@ import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 
 /**
- * A general renderer for {@link IChemModel}s, {@link IReaction}s, and
- * {@link IAtomContainer}s. The chem object
- * is converted into a 'diagram' made up of {@link IRenderingElement}s. It takes
- * an {@link IDrawVisitor} to do the drawing of the generated diagram. Various
- * display properties can be set using the {@link RendererModel}.<p>
+ * A general renderer for {@link IChemModel}s, {@link IReaction}s, and {@link IAtomContainer}s. The
+ * chem object is converted into a 'diagram' made up of {@link IRenderingElement}s. It takes an
+ * {@link IDrawVisitor} to do the drawing of the generated diagram. Various display properties can
+ * be set using the {@link RendererModel}.
  *
- * This class has several usage patterns. For just painting fit-to-screen do:
+ * <p>This class has several usage patterns. For just painting fit-to-screen do:
+ *
  * <pre>
  *   renderer.paintMolecule(molecule, visitor, drawArea)
  * </pre>
+ *
  * for painting at a scale determined by the bond length in the RendererModel:
+ *
  * <pre>
  *   if (moleculeIsNew) {
  *     renderer.setup(molecule, drawArea);
@@ -61,7 +61,9 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  *   Rectangle diagramSize = renderer.paintMolecule(molecule, visitor);
  *   // ...update scroll bars here
  * </pre>
+ *
  * to paint at full screen size, but not resize with each change:
+ *
  * <pre>
  *   if (moleculeIsNew) {
  *     renderer.setScale(molecule);
@@ -73,53 +75,53 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  *   // ...update scroll bars here
  *   }
  * </pre>
+ *
  * finally, if you are scrolling, and have not changed the diagram:
+ *
  * <pre>
  *   renderer.repaint(visitor)
  * </pre>
- * will just repaint the previously generated diagram, at the same scale.<p>
  *
- * There are two sets of methods for painting IChemObjects - those that take
- * a Rectangle that represents the desired draw area, and those that return a
- * Rectangle that represents the actual draw area. The first are intended for
- * drawing molecules fitted to the screen (where 'screen' means any drawing
- * area) while the second type of method are for drawing bonds at the length
- * defined by the {@link RendererModel} parameter bondLength.<p>
+ * will just repaint the previously generated diagram, at the same scale.
  *
- * There are two numbers used to transform the model so that it fits on screen.
- * The first is <tt>scale</tt>, which is used to map model coordinates to
- * screen coordinates. The second is <tt>zoom</tt> which is used to, well,
- * zoom the on screen coordinates. If the diagram is fit-to-screen, then the
- * ratio of the bounds when drawn using bondLength and the bounds of
- * the screen is used as the zoom.<p>
+ * <p>There are two sets of methods for painting IChemObjects - those that take a Rectangle that
+ * represents the desired draw area, and those that return a Rectangle that represents the actual
+ * draw area. The first are intended for drawing molecules fitted to the screen (where 'screen'
+ * means any drawing area) while the second type of method are for drawing bonds at the length
+ * defined by the {@link RendererModel} parameter bondLength.
  *
- * So, if the bond length on screen is set to 40, and the average bond length
- * of the model is 2 (unitless, but roughly &Aring;ngstrom scale) then the
- * scale will be 20. If the model is 10 units wide, then the diagram drawn at
- * 100% zoom will be 10 * 20 = 200 in width on screen. If the screen is 400
- * pixels wide, then fitting it to the screen will make the zoom 200%. Since the
- * zoom is just a floating point number, 100% = 1 and 200% = 2.
+ * <p>There are two numbers used to transform the model so that it fits on screen. The first is
+ * <tt>scale</tt>, which is used to map model coordinates to screen coordinates. The second is
+ * <tt>zoom</tt> which is used to, well, zoom the on screen coordinates. If the diagram is
+ * fit-to-screen, then the ratio of the bounds when drawn using bondLength and the bounds of the
+ * screen is used as the zoom.
+ *
+ * <p>So, if the bond length on screen is set to 40, and the average bond length of the model is 2
+ * (unitless, but roughly &Aring;ngstrom scale) then the scale will be 20. If the model is 10 units
+ * wide, then the diagram drawn at 100% zoom will be 10 * 20 = 200 in width on screen. If the screen
+ * is 400 pixels wide, then fitting it to the screen will make the zoom 200%. Since the zoom is just
+ * a floating point number, 100% = 1 and 200% = 2.
  *
  * @author maclean
  * @cdk.module renderextra
  * @cdk.githash
  */
-public class ChemModelRenderer extends AbstractRenderer<IChemModel> implements IRenderer<IChemModel> {
+public class ChemModelRenderer extends AbstractRenderer<IChemModel>
+        implements IRenderer<IChemModel> {
 
     private IRenderer<IAtomContainerSet> moleculeSetRenderer;
 
-    private IRenderer<IReactionSet>      reactionSetRenderer;
+    private IRenderer<IReactionSet> reactionSetRenderer;
 
     /**
-     * A renderer that generates diagrams using the specified
-     * generators and manages fonts with the supplied font manager.
+     * A renderer that generates diagrams using the specified generators and manages fonts with the
+     * supplied font manager.
      *
-     * @param generators
-     *            a list of classes that implement the IGenerator interface
-     * @param fontManager
-     *            a class that manages mappings between zoom and font sizes
+     * @param generators a list of classes that implement the IGenerator interface
+     * @param fontManager a class that manages mappings between zoom and font sizes
      */
-    public ChemModelRenderer(List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
+    public ChemModelRenderer(
+            List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
         super(new RendererModel());
         this.fontManager = fontManager;
         for (IGenerator<IAtomContainer> generator : generators) {
@@ -130,8 +132,10 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel> implements I
         this.setup();
     }
 
-    public ChemModelRenderer(List<IGenerator<IAtomContainer>> generators,
-            List<IGenerator<IReaction>> reactionGenerators, IFontManager fontManager) {
+    public ChemModelRenderer(
+            List<IGenerator<IAtomContainer>> generators,
+            List<IGenerator<IReaction>> reactionGenerators,
+            IFontManager fontManager) {
         super(new RendererModel());
         this.fontManager = fontManager;
         for (IGenerator<IAtomContainer> generator : generators) {
@@ -140,7 +144,8 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel> implements I
         for (IGenerator<IReaction> generator : reactionGenerators) {
             rendererModel.registerParameters(generator);
         }
-        reactionSetRenderer = new ReactionSetRenderer(rendererModel, generators, reactionGenerators, fontManager);
+        reactionSetRenderer =
+                new ReactionSetRenderer(rendererModel, generators, reactionGenerators, fontManager);
         this.setup();
     }
 
@@ -154,15 +159,16 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel> implements I
     public void setup(IChemModel chemModel, Rectangle screen) {
         this.setScale(chemModel);
         Rectangle2D bounds = BoundsCalculator.calculateBounds(chemModel);
-        if (bounds != null) this.modelCenter = new Point2d(bounds.getCenterX(), bounds.getCenterY());
+        if (bounds != null)
+            this.modelCenter = new Point2d(bounds.getCenterX(), bounds.getCenterY());
         this.drawCenter = new Point2d(screen.getCenterX(), screen.getCenterY());
         this.setup();
     }
 
     /**
-     * Set the scale for an IChemModel. It calculates the average bond length of
-     * the model and calculates the multiplication factor to transform this
-     * to the bond length that is set in the RendererModel.
+     * Set the scale for an IChemModel. It calculates the average bond length of the model and
+     * calculates the multiplication factor to transform this to the bond length that is set in the
+     * RendererModel.
      *
      * @param chemModel
      */
@@ -176,13 +182,11 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel> implements I
     }
 
     /**
-     * Paint an IChemModel using the IDrawVisitor at a scale determined by the
-     * bond length in RendererModel.
+     * Paint an IChemModel using the IDrawVisitor at a scale determined by the bond length in
+     * RendererModel.
      *
-     * @param chemModel
-     *            the chem model to draw
-     * @param drawVisitor
-     *            the visitor used to draw with
+     * @param chemModel the chem model to draw
+     * @param drawVisitor the visitor used to draw with
      * @return the rectangular area that the diagram will occupy on screen
      */
     @Override
@@ -269,11 +273,14 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel> implements I
      * @param chemModel
      * @param drawVisitor the visitor that does the drawing
      * @param bounds the bounds of the area to paint on.
-     * @param resetCenter
-     *     if true, set the modelCenter to the center of the ChemModel's bounds.
+     * @param resetCenter if true, set the modelCenter to the center of the ChemModel's bounds.
      */
     @Override
-    public void paint(IChemModel chemModel, IDrawVisitor drawVisitor, Rectangle2D bounds, boolean resetCenter) {
+    public void paint(
+            IChemModel chemModel,
+            IDrawVisitor drawVisitor,
+            Rectangle2D bounds,
+            boolean resetCenter) {
         // check for an empty model
         IAtomContainerSet moleculeSet = chemModel.getMoleculeSet();
         IReactionSet reactionSet = chemModel.getReactionSet();
@@ -290,8 +297,11 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel> implements I
         // calculate the total bounding box
         Rectangle2D modelBounds = BoundsCalculator.calculateBounds(moleculeSet);
 
-        this.setupTransformToFit(bounds, modelBounds,
-                AverageBondLengthCalculator.calculateAverageBondLength(chemModel), resetCenter);
+        this.setupTransformToFit(
+                bounds,
+                modelBounds,
+                AverageBondLengthCalculator.calculateAverageBondLength(chemModel),
+                resetCenter);
 
         // generate the elements
         IRenderingElement diagram = moleculeSetRenderer.generateDiagram(moleculeSet);
@@ -345,12 +355,12 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel> implements I
     }
 
     /**
-     * Given a bond length for a model, calculate the scale that will transform
-     * this length to the on screen bond length in RendererModel.
+     * Given a bond length for a model, calculate the scale that will transform this length to the
+     * on screen bond length in RendererModel.
      *
-     * @param  modelBondLength the wanted model bond length in screen length
-     * @return returns the scale that causes the drawn bond lengths in pixels to match
-     *         the given model bond length
+     * @param modelBondLength the wanted model bond length in screen length
+     * @return returns the scale that causes the drawn bond lengths in pixels to match the given
+     *     model bond length
      */
     @Override
     public double calculateScaleForBondLength(double modelBondLength) {

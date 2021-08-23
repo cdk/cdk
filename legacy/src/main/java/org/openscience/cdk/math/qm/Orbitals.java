@@ -32,34 +32,28 @@ import org.openscience.cdk.math.Vector;
  * @author Stephan Michels &lt;stephan@vern.chem.tu-berlin.de&gt;
  * @cdk.githash
  * @cdk.created 2001-06-14
- * @cdk.module  qm
+ * @cdk.module qm
  */
 public class Orbitals {
 
-    private int    count_basis;
-    private int    count_orbitals;
+    private int count_basis;
+    private int count_orbitals;
     private Matrix C;
     private IBasis basis;
-    private int    count_electrons = 1;
+    private int count_electrons = 1;
 
-    /**
-     * Constructs orbitals with a specified base set
-     */
+    /** Constructs orbitals with a specified base set */
     public Orbitals(IBasis basis) {
         this.basis = basis;
         count_orbitals = count_basis = basis.getSize();
         C = new Matrix(count_basis, count_basis);
         for (int i = 0; i < count_basis; i++)
             for (int j = 0; j < count_basis; j++)
-                if (i == j)
-                    C.matrix[i][j] = 1d;
-                else
-                    C.matrix[i][j] = 0d;
+                if (i == j) C.matrix[i][j] = 1d;
+                else C.matrix[i][j] = 0d;
     }
 
-    /**
-     * Constructs orbitals with a specified base set and a coefficient matrix
-     */
+    /** Constructs orbitals with a specified base set and a coefficient matrix */
     public Orbitals(IBasis basis, Matrix C) {
         this.basis = basis;
         count_basis = basis.getSize();
@@ -70,17 +64,13 @@ public class Orbitals {
             this.C = new Matrix(count_basis, count_basis);
             for (int i = 0; i < count_basis; i++)
                 for (int j = 0; j < count_basis; j++)
-                    if (i == j)
-                        this.C.matrix[i][j] = 1d;
-                    else
-                        this.C.matrix[i][j] = 0d;
+                    if (i == j) this.C.matrix[i][j] = 1d;
+                    else this.C.matrix[i][j] = 0d;
             count_orbitals = count_basis;
         }
     }
 
-    /**
-     * Set a coefficient matrix
-     */
+    /** Set a coefficient matrix */
     public void setCoefficients(Matrix C) {
         if (count_basis == C.rows) {
             this.C = C;
@@ -88,16 +78,12 @@ public class Orbitals {
         }
     }
 
-    /**
-     * Get the coefficient matrix
-     */
+    /** Get the coefficient matrix */
     public Matrix getCoefficients() {
         return C;
     }
 
-    /**
-     * Get the function value of a orbital at the position (x,y,z)
-     */
+    /** Get the function value of a orbital at the position (x,y,z) */
     public double getValue(int index, double x, double y, double z) {
         double sum = 0;
         for (int i = 0; i < count_basis; i++)
@@ -105,9 +91,7 @@ public class Orbitals {
         return sum;
     }
 
-    /**
-     * Get the function value of a orbital
-     */
+    /** Get the function value of a orbital */
     public Vector getValues(int index, Matrix m) {
         if (m.rows != 3) return null;
 
@@ -117,37 +101,27 @@ public class Orbitals {
         return result;
     }
 
-    /**
-     * Returns the basis set of this orbitals
-     */
+    /** Returns the basis set of this orbitals */
     public IBasis getBasis() {
         return basis;
     }
 
-    /**
-     * Set the count of bases
-     */
+    /** Set the count of bases */
     public int getCountBasis() {
         return count_basis;
     }
 
-    /**
-     * Returns the count of orbitals
-     */
+    /** Returns the count of orbitals */
     public int getCountOrbitals() {
         return count_orbitals;
     }
 
-    /**
-     * Sets the count of electrons, which occupies the orbitals
-     */
+    /** Sets the count of electrons, which occupies the orbitals */
     public void setCountElectrons(int count) {
         if (count > 0) count_electrons = count;
     }
 
-    /**
-     * Gets the count of electrons, which occupies the orbitals
-     */
+    /** Gets the count of electrons, which occupies the orbitals */
     public int getCountElectrons() {
         return count_electrons;
     }

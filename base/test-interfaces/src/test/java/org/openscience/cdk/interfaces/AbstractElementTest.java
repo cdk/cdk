@@ -26,7 +26,6 @@ import org.openscience.cdk.tools.diff.ElementDiff;
  * Checks the functionality of {@link IElement} implementations.
  *
  * @cdk.module test-interfaces
- *
  * @see org.openscience.cdk.Element
  */
 public abstract class AbstractElementTest extends AbstractChemObjectTest {

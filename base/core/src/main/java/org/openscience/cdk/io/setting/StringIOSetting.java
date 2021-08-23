@@ -25,7 +25,6 @@ import org.openscience.cdk.exception.CDKException;
  *
  * @cdk.module io
  * @cdk.githash
- *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */
 public class StringIOSetting extends IOSetting {
@@ -35,13 +34,12 @@ public class StringIOSetting extends IOSetting {
     }
 
     /**
-     * Sets the setting for a certain question. The setting
-     * is of type String, and any string is accepted.
+     * Sets the setting for a certain question. The setting is of type String, and any string is
+     * accepted.
      */
     @Override
     public void setSetting(String setting) throws CDKException {
         // anything is accepted
         super.setSetting(setting);
     }
-
 }

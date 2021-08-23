@@ -58,7 +58,7 @@ public class INChIFormat extends SimpleChemFormatMatcher implements IChemFormatM
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"inchi"};
+        return new String[] {"inchi"};
     }
 
     /** {@inheritDoc} */

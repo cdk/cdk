@@ -24,14 +24,11 @@
 package org.openscience.cdk.io.cml;
 
 /**
- * This interface describes the procedures classes must implement to be plugable
- * into the CMLHandler. Most procedures reflect those in SAX2.
+ * This interface describes the procedures classes must implement to be plugable into the
+ * CMLHandler. Most procedures reflect those in SAX2.
  *
  * @cdk.module io
  * @cdk.githash
- *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
- **/
-public interface ICMLConvention extends ICMLModule {
-
-}
+ */
+public interface ICMLConvention extends ICMLModule {}

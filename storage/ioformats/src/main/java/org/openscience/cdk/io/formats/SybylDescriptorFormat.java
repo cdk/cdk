@@ -58,7 +58,7 @@ public class SybylDescriptorFormat extends AbstractResourceFormat implements ICh
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"mpd"};
+        return new String[] {"mpd"};
     }
 
     /** {@inheritDoc} */

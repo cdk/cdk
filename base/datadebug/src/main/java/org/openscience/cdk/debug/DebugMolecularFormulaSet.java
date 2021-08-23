@@ -19,7 +19,6 @@
 package org.openscience.cdk.debug;
 
 import java.util.Iterator;
-
 import org.openscience.cdk.formula.MolecularFormulaSet;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecularFormula;
@@ -35,7 +34,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class DebugMolecularFormulaSet extends MolecularFormulaSet implements IMolecularFormulaSet {
 
-    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(DebugMolecularFormulaSet.class);
+    private ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(DebugMolecularFormulaSet.class);
 
     public DebugMolecularFormulaSet() {
         super();
@@ -120,5 +120,4 @@ public class DebugMolecularFormulaSet extends MolecularFormulaSet implements IMo
     public IChemObjectBuilder getBuilder() {
         return DebugChemObjectBuilder.getInstance();
     }
-
 }

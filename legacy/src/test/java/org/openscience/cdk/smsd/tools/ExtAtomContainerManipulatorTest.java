@@ -25,6 +25,11 @@ package org.openscience.cdk.smsd.tools;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.InvalidSmilesException;
@@ -32,12 +37,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.smiles.SmilesParser;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 /**
  * @cdk.module test-smsd
@@ -61,6 +60,7 @@ public class ExtAtomContainerManipulatorTest {
 
     /**
      * Test of makeDeepCopy method, of class ExtAtomContainerManipulator.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -79,11 +79,11 @@ public class ExtAtomContainerManipulatorTest {
             assertEquals(result.getAtom(i).getSymbol(), container.getAtom(i).getSymbol());
             assertEquals(result.getAtom(i).getID(), container.getAtom(i).getID());
         }
-
     }
 
     /**
      * Test of aromatizeMolecule method, of class ExtAtomContainerManipulator.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -103,6 +103,7 @@ public class ExtAtomContainerManipulatorTest {
 
     /**
      * Test of getExplicitHydrogenCount method, of class ExtAtomContainerManipulator.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -126,6 +127,7 @@ public class ExtAtomContainerManipulatorTest {
 
     /**
      * Test of getImplicitHydrogenCount method, of class ExtAtomContainerManipulator.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -149,6 +151,7 @@ public class ExtAtomContainerManipulatorTest {
 
     /**
      * Test of getHydrogenCount method, of class ExtAtomContainerManipulator.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -170,6 +173,7 @@ public class ExtAtomContainerManipulatorTest {
 
     /**
      * Test of removeHydrogensAndPreserveAtomID method, of class ExtAtomContainerManipulator.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -186,7 +190,9 @@ public class ExtAtomContainerManipulatorTest {
                 break;
             }
         }
-        IAtomContainer result = ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(atomContainer);
+        IAtomContainer result =
+                ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(
+                        atomContainer);
 
         for (IAtom a : result.atoms()) {
             if (a.getSymbol().equalsIgnoreCase("P")) {
@@ -200,6 +206,7 @@ public class ExtAtomContainerManipulatorTest {
 
     /**
      * Test of convertExplicitToImplicitHydrogens method, of class ExtAtomContainerManipulator.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -208,12 +215,14 @@ public class ExtAtomContainerManipulatorTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles(rawMolSmiles);
         int expResult = 11;
-        IAtomContainer result = ExtAtomContainerManipulator.convertExplicitToImplicitHydrogens(atomContainer);
+        IAtomContainer result =
+                ExtAtomContainerManipulator.convertExplicitToImplicitHydrogens(atomContainer);
         assertEquals(expResult, result.getAtomCount());
     }
 
     /**
      * Test of percieveAtomTypesAndConfigureAtoms method, of class ExtAtomContainerManipulator.
+     *
      * @throws Exception
      */
     @Test

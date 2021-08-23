@@ -24,7 +24,6 @@ package org.openscience.cdk.stereo;
 
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -40,10 +39,10 @@ import org.openscience.cdk.stereo.StereoTool.TetrahedralSign;
  */
 public class StereoToolTest extends CDKTestCase {
 
-    private static final Point3d  ORIGIN = new Point3d(0, 0, 0);
-    private static final Vector3d XAXIS  = new Vector3d(1, 0, 0);
-    private static final Vector3d YAXIS  = new Vector3d(0, 1, 0);
-    private static final Vector3d ZAXIS  = new Vector3d(0, 0, 1);
+    private static final Point3d ORIGIN = new Point3d(0, 0, 0);
+    private static final Vector3d XAXIS = new Vector3d(1, 0, 0);
+    private static final Vector3d YAXIS = new Vector3d(0, 1, 0);
+    private static final Vector3d ZAXIS = new Vector3d(0, 0, 1);
 
     @Test
     public void positivePointPlaneDistanceTest() {
@@ -57,7 +56,8 @@ public class StereoToolTest extends CDKTestCase {
         // make a positive point on the X axis = same direction as the normal
         Point3d pointToMeasurePos = new Point3d(2, 0, 0);
 
-        double distancePos = StereoTool.signedDistanceToPlane(planeNormal, pointInPlane, pointToMeasurePos);
+        double distancePos =
+                StereoTool.signedDistanceToPlane(planeNormal, pointInPlane, pointToMeasurePos);
         Assert.assertEquals(2.0, distancePos, 0.1);
     }
 
@@ -73,7 +73,8 @@ public class StereoToolTest extends CDKTestCase {
         // make a negative point on the X axis = opposite direction to normal
         Point3d pointToMeasureNeg = new Point3d(-2, 0, 0);
 
-        double distance = StereoTool.signedDistanceToPlane(planeNormal, pointInPlane, pointToMeasureNeg);
+        double distance =
+                StereoTool.signedDistanceToPlane(planeNormal, pointInPlane, pointToMeasureNeg);
         Assert.assertEquals(-2.0, distance, 0.1);
     }
 
@@ -219,7 +220,8 @@ public class StereoToolTest extends CDKTestCase {
         IAtom atomD = new Atom("C", new Point3d(1, 0, 1));
         IAtom atomE = new Atom("C", new Point3d(2, 2, 1));
         IAtom atomF = new Atom("C", new Point3d(1, 1, 0)); // axis point 2
-        Assert.assertTrue(StereoTool.isTrigonalBipyramidal(atomA, atomB, atomC, atomD, atomE, atomF));
+        Assert.assertTrue(
+                StereoTool.isTrigonalBipyramidal(atomA, atomB, atomC, atomD, atomE, atomF));
     }
 
     @Test
@@ -254,7 +256,8 @@ public class StereoToolTest extends CDKTestCase {
         Point3d pointF = new Point3d(3, 3, 0);
 
         Vector3d normal = StereoTool.getNormal(pointA, pointB, pointC);
-        Assert.assertTrue(StereoTool.allCoplanar(normal, pointA, pointB, pointC, pointD, pointE, pointF));
+        Assert.assertTrue(
+                StereoTool.allCoplanar(normal, pointA, pointB, pointC, pointD, pointE, pointF));
     }
 
     @Test
@@ -263,8 +266,13 @@ public class StereoToolTest extends CDKTestCase {
         IAtom highestCIPPriority = new Atom("I", new Point3d(0, 1, 2));
         IAtom middleCIPPriority = new Atom("Br", new Point3d(0, 0, 0));
         IAtom nearlylowestCIPPriority = new Atom("Cl", new Point3d(0, 2, 0));
-        Assert.assertEquals(Stereo.ANTI_CLOCKWISE, StereoTool.getStereo(closestAtomToViewer, highestCIPPriority,
-                middleCIPPriority, nearlylowestCIPPriority));
+        Assert.assertEquals(
+                Stereo.ANTI_CLOCKWISE,
+                StereoTool.getStereo(
+                        closestAtomToViewer,
+                        highestCIPPriority,
+                        middleCIPPriority,
+                        nearlylowestCIPPriority));
     }
 
     @Test
@@ -273,7 +281,12 @@ public class StereoToolTest extends CDKTestCase {
         IAtom highestCIPPriority = new Atom("I", new Point3d(0, 1, 2));
         IAtom middleCIPPriority = new Atom("Br", new Point3d(0, 2, 0));
         IAtom nearlylowestCIPPriority = new Atom("Cl", new Point3d(0, 0, 0));
-        Assert.assertEquals(Stereo.CLOCKWISE, StereoTool.getStereo(closestAtomToViewer, highestCIPPriority,
-                middleCIPPriority, nearlylowestCIPPriority));
+        Assert.assertEquals(
+                Stereo.CLOCKWISE,
+                StereoTool.getStereo(
+                        closestAtomToViewer,
+                        highestCIPPriority,
+                        middleCIPPriority,
+                        nearlylowestCIPPriority));
     }
 }

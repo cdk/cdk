@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.qsar.result;
 
-
 /**
  * Object that provides access to the calculated descriptor value.
  *
@@ -29,7 +28,7 @@ public class IntegerResult implements IDescriptorResult {
 
     private static final long serialVersionUID = -8066984646119839996L;
 
-    private int               value;
+    private int value;
 
     public IntegerResult(int value) {
         this.value = value;
@@ -48,5 +47,4 @@ public class IntegerResult implements IDescriptorResult {
     public int length() {
         return 1;
     }
-
 }

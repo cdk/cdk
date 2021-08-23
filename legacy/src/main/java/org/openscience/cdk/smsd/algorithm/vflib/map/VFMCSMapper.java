@@ -52,7 +52,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smsd.algorithm.vflib.builder.TargetProperties;
@@ -65,49 +64,39 @@ import org.openscience.cdk.smsd.global.TimeOut;
 import org.openscience.cdk.smsd.tools.TimeManager;
 
 /**
- * This class finds MCS between query and target molecules
- * using VF2 algorithm.
+ * This class finds MCS between query and target molecules using VF2 algorithm.
  *
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is
+ *     available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public class VFMCSMapper implements IMapper {
 
-    private IQuery                  query          = null;
-    private List<Map<INode, IAtom>> maps           = null;
-    private int                     currentMCSSize = -1;
-    private static TimeManager      timeManager    = null;
+    private IQuery query = null;
+    private List<Map<INode, IAtom>> maps = null;
+    private int currentMCSSize = -1;
+    private static TimeManager timeManager = null;
 
-    /**
-     * @return the timeout
-     */
-    protected synchronized static double getTimeout() {
+    /** @return the timeout */
+    protected static synchronized double getTimeout() {
         return TimeOut.getInstance().getTimeOut();
     }
 
-    /**
-     * @return the timeManager
-     */
-    protected synchronized static TimeManager getTimeManager() {
+    /** @return the timeManager */
+    protected static synchronized TimeManager getTimeManager() {
         return timeManager;
     }
 
-    /**
-     * @param aTimeManager the timeManager to set
-     */
-    protected synchronized static void setTimeManager(TimeManager aTimeManager) {
+    /** @param aTimeManager the timeManager to set */
+    protected static synchronized void setTimeManager(TimeManager aTimeManager) {
         TimeOut.getInstance().setTimeOutFlag(false);
         timeManager = aTimeManager;
     }
 
-    /**
-     *
-     * @param query
-     */
+    /** @param query */
     public VFMCSMapper(IQuery query) {
         setTimeManager(new TimeManager());
         this.query = query;
@@ -115,7 +104,6 @@ public class VFMCSMapper implements IMapper {
     }
 
     /**
-     *
      * @param queryMolecule
      * @param bondMatcher
      */
@@ -125,7 +113,9 @@ public class VFMCSMapper implements IMapper {
         this.maps = new ArrayList<Map<INode, IAtom>>();
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
+     *
      * @param targetMolecule targetMolecule graph
      */
     @Override
@@ -144,10 +134,10 @@ public class VFMCSMapper implements IMapper {
         return new ArrayList<Map<INode, IAtom>>(maps);
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      *
      * @param target
-     *
      */
     @Override
     public Map<INode, IAtom> getFirstMap(IAtomContainer target) {
@@ -166,7 +156,9 @@ public class VFMCSMapper implements IMapper {
         return maps.size();
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
+     *
      * @param targetMolecule targetMolecule graph
      */
     @Override
@@ -176,7 +168,9 @@ public class VFMCSMapper implements IMapper {
         return mapFirst(state);
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
+     *
      * @param targetMolecule
      */
     @Override
@@ -187,10 +181,10 @@ public class VFMCSMapper implements IMapper {
         return new ArrayList<Map<INode, IAtom>>(maps);
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      *
      * @param targetMolecule
-     *
      */
     @Override
     public Map<INode, IAtom> getFirstMap(TargetProperties targetMolecule) {
@@ -200,7 +194,9 @@ public class VFMCSMapper implements IMapper {
         return maps.isEmpty() ? new HashMap<INode, IAtom>() : maps.get(0);
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
+     *
      * @param targetMolecule
      */
     @Override
@@ -278,7 +274,7 @@ public class VFMCSMapper implements IMapper {
         return false;
     }
 
-    public synchronized static boolean isTimeOut() {
+    public static synchronized boolean isTimeOut() {
         if (getTimeout() > -1 && getTimeManager().getElapsedTimeInMinutes() > getTimeout()) {
             TimeOut.getInstance().setTimeOutFlag(true);
             return true;

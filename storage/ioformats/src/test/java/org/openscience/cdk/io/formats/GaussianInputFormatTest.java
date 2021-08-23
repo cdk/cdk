@@ -22,13 +22,10 @@
  */
 package org.openscience.cdk.io.formats;
 
-/**
- * @cdk.module test-ioformats
- */
+/** @cdk.module test-ioformats */
 public class GaussianInputFormatTest extends ChemFormatTest {
 
     public GaussianInputFormatTest() {
         super.setChemFormat((IChemFormat) GaussianInputFormat.getInstance());
     }
-
 }

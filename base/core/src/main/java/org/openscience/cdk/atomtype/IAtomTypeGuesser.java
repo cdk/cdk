@@ -18,35 +18,32 @@
 package org.openscience.cdk.atomtype;
 
 import java.util.List;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 
 /**
- * Classes that implement this interface are atom type guessers. As compared
- * to the IAtomTypeMatcher, this guesser has room for missing information.
- * Not uncommonly, one bit of information is missing.
+ * Classes that implement this interface are atom type guessers. As compared to the
+ * IAtomTypeMatcher, this guesser has room for missing information. Not uncommonly, one bit of
+ * information is missing.
  *
- * @author      egonw
+ * @author egonw
  * @cdk.created 2006-09-22
- * @cdk.module  core
+ * @cdk.module core
  * @cdk.githash
- *
- * @see         IAtomTypeMatcher
+ * @see IAtomTypeMatcher
  */
 public interface IAtomTypeGuesser {
 
     /**
-     * Method that returns an iterator with a suitable list of atom types
-     * given the provided atom.
+     * Method that returns an iterator with a suitable list of atom types given the provided atom.
      *
-     * @param  container AtomContainer of which the <code>atom</code> is part
-     * @param  atom      Atom for which a matching atom type is searched
-     * @return           The matching AtomTypes
-     * @throws           CDKException when something went wrong with going through
-     *                   the AtomType's
+     * @param container AtomContainer of which the <code>atom</code> is part
+     * @param atom Atom for which a matching atom type is searched
+     * @return The matching AtomTypes
+     * @throws CDKException when something went wrong with going through the AtomType's
      */
-    public List<IAtomType> possibleAtomTypes(IAtomContainer container, IAtom atom) throws CDKException;
+    public List<IAtomType> possibleAtomTypes(IAtomContainer container, IAtom atom)
+            throws CDKException;
 }

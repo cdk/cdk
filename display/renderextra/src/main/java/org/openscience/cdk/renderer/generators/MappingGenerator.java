@@ -22,9 +22,7 @@ package org.openscience.cdk.renderer.generators;
 import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.vecmath.Point2d;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IReaction;
@@ -36,17 +34,14 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
 import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
 
 /**
- * {@link IGenerator} that will show how atoms map between the reactant and
- * product side.
+ * {@link IGenerator} that will show how atoms map between the reactant and product side.
  *
  * @cdk.module renderextra
  * @cdk.githash
  */
 public class MappingGenerator implements IGenerator<IReaction> {
 
-    /**
-     * The width on screen of an atom-atom mapping line.
-     */
+    /** The width on screen of an atom-atom mapping line. */
     public static class AtomAtomMappingLineColor extends AbstractGeneratorParameter<Color> {
 
         /** {@inheritDoc} */
@@ -58,9 +53,7 @@ public class MappingGenerator implements IGenerator<IReaction> {
 
     private IGeneratorParameter<Color> atomAtomMappingLineColor = new AtomAtomMappingLineColor();
 
-    /**
-     * The width on screen of an atom-atom mapping line.
-     */
+    /** The width on screen of an atom-atom mapping line. */
     public static class MappingLineWidth extends AbstractGeneratorParameter<Double> {
 
         /** {@inheritDoc} */
@@ -99,16 +92,21 @@ public class MappingGenerator implements IGenerator<IReaction> {
             IAtom endPointB = (IAtom) mapping.getChemObject(1);
             Point2d pointA = endPointA.getPoint2d();
             Point2d pointB = endPointB.getPoint2d();
-            elementGroup.add(new LineElement(pointA.x, pointA.y, pointB.x, pointB.y, getWidthForMappingLine(model),
-                    mappingColor));
+            elementGroup.add(
+                    new LineElement(
+                            pointA.x,
+                            pointA.y,
+                            pointB.x,
+                            pointB.y,
+                            getWidthForMappingLine(model),
+                            mappingColor));
         }
         return elementGroup;
     }
 
     /**
-     * Determine the width of an atom atom mapping, returning the width defined
-     * in the model. Note that this will be scaled
-     * to the space of the model.
+     * Determine the width of an atom atom mapping, returning the width defined in the model. Note
+     * that this will be scaled to the space of the model.
      *
      * @param model the renderer model
      * @return a double in chem-model space
@@ -121,7 +119,9 @@ public class MappingGenerator implements IGenerator<IReaction> {
     /** {@inheritDoc} */
     @Override
     public List<IGeneratorParameter<?>> getParameters() {
-        return Arrays.asList(new IGeneratorParameter<?>[]{showAtomAtomMapping, mappingLineWidth,
-                atomAtomMappingLineColor});
+        return Arrays.asList(
+                new IGeneratorParameter<?>[] {
+                    showAtomAtomMapping, mappingLineWidth, atomAtomMappingLineColor
+                });
     }
 }

@@ -21,7 +21,6 @@ package org.openscience.cdk.atomtype;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -43,23 +42,18 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Checks the functionality of the AtomType-MMFF2AtomTypeMatcher.
  *
  * @cdk.module test-extra
- *
  * @see MM2AtomTypeMatcher
  */
 @Category(SlowTest.class)
 public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
 
-    private static ILoggingTool         logger          = LoggingToolFactory
-                                                                .createLoggingTool(MM2AtomTypeMatcherTest.class);
-    private static IAtomContainer       testMolecule    = null;
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(MM2AtomTypeMatcherTest.class);
+    private static IAtomContainer testMolecule = null;
 
     private static Map<String, Integer> testedAtomTypes = new HashMap<String, Integer>();
 
@@ -70,8 +64,10 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
             AtomTypeTools att = new AtomTypeTools();
             MM2AtomTypeMatcher atm = new MM2AtomTypeMatcher();
             logger.debug("**** reading MOL file ******");
-            InputStream ins = MM2AtomTypeMatcher.class.getClassLoader().getResourceAsStream(
-                    "data/mdl/mmff94AtomTypeTest_molecule.mol");
+            InputStream ins =
+                    MM2AtomTypeMatcher.class
+                            .getClassLoader()
+                            .getResourceAsStream("data/mdl/mmff94AtomTypeTest_molecule.mol");
             ISimpleChemObjectReader mdl = new MDLV2000Reader(ins);
             testMolecule = mdl.read(new AtomContainer());
             logger.debug("Molecule load:" + testMolecule.getAtomCount());
@@ -157,14 +153,15 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
     }
 
     /**
-     * The test seems to be run by JUnit in the order in which they are found
-     * in the source. Ugly, but @AfterClass does not work because that
-     * method cannot Assert.assert anything.
+     * The test seems to be run by JUnit in the order in which they are found in the source. Ugly,
+     * but @AfterClass does not work because that method cannot Assert.assert anything.
      */
     @Ignore("Atom type matcher is incomplete")
     public void countTestedAtomTypes() {
-        AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/mm2_atomtypes.xml",
-                SilentChemObjectBuilder.getInstance());
+        AtomTypeFactory factory =
+                AtomTypeFactory.getInstance(
+                        "org/openscience/cdk/config/data/mm2_atomtypes.xml",
+                        SilentChemObjectBuilder.getInstance());
 
         IAtomType[] expectedTypes = factory.getAllAtomTypes();
         if (expectedTypes.length != testedAtomTypes.size()) {
@@ -173,7 +170,8 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
                 if (!testedAtomTypes.containsKey(expectedTypes[i].getAtomTypeName()))
                     errorMessage += " " + expectedTypes[i].getAtomTypeName();
             }
-            Assert.assertEquals(errorMessage, factory.getAllAtomTypes().length, testedAtomTypes.size());
+            Assert.assertEquals(
+                    errorMessage, factory.getAllAtomTypes().length, testedAtomTypes.size());
         }
     }
 
@@ -184,7 +182,8 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
 
     @Override
     public AtomTypeFactory getFactory() {
-        return AtomTypeFactory.getInstance("org/openscience/cdk/config/data/mm2_atomtypes.xml",
+        return AtomTypeFactory.getInstance(
+                "org/openscience/cdk/config/data/mm2_atomtypes.xml",
                 SilentChemObjectBuilder.getInstance());
     }
 

@@ -38,13 +38,14 @@ public class RingTest extends AbstractRingTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new Ring();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new Ring();
+                    }
+                });
     }
 
     @Test

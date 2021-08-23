@@ -19,7 +19,6 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import javax.vecmath.Point3d;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -70,7 +69,8 @@ public abstract class AtomicDescriptorTest extends DescriptorTest<IAtomicDescrip
         }
         Assert.assertNotNull(v);
         assert v != null;
-        Assert.assertNotSame("The descriptor did not calculate any value.", 0, v.getValue().length());
+        Assert.assertNotSame(
+                "The descriptor did not calculate any value.", 0, v.getValue().length());
     }
 
     /**
@@ -86,7 +86,8 @@ public abstract class AtomicDescriptorTest extends DescriptorTest<IAtomicDescrip
         DescriptorValue v = descriptor.calculate(mol.getAtom(1), mol);
         Assert.assertNotNull(v);
         String[] names = v.getNames();
-        Assert.assertNotNull("The descriptor must return labels using the getNames() method.", names);
+        Assert.assertNotNull(
+                "The descriptor must return labels using the getNames() method.", names);
         Assert.assertNotSame("At least one label must be given.", 0, names.length);
         for (String name : names) {
             Assert.assertNotNull("A descriptor label may not be null.", name);
@@ -95,14 +96,14 @@ public abstract class AtomicDescriptorTest extends DescriptorTest<IAtomicDescrip
         }
         Assert.assertNotNull(v.getValue());
         int valueCount = v.getValue().length();
-        Assert.assertEquals("The number of labels must equals the number of values.", names.length, valueCount);
+        Assert.assertEquals(
+                "The number of labels must equals the number of values.", names.length, valueCount);
     }
 
     /**
-     * Check if the names obtained directly from the descriptor without
-     * calculation match those obtained from the descriptor value object.
-     * Also ensure that the number of actual values matches the length
-     * of the names
+     * Check if the names obtained directly from the descriptor without calculation match those
+     * obtained from the descriptor value object. Also ensure that the number of actual values
+     * matches the length of the names
      */
     @Test
     @Category(SlowTest.class)
@@ -113,7 +114,8 @@ public abstract class AtomicDescriptorTest extends DescriptorTest<IAtomicDescrip
         DescriptorValue v = descriptor.calculate(mol.getAtom(1), mol);
         String[] names2 = v.getNames();
 
-        Assert.assertEquals("(" + descriptor.getClass().toString() + ") fails. ", names1.length, names2.length);
+        Assert.assertEquals(
+                "(" + descriptor.getClass().toString() + ") fails. ", names1.length, names2.length);
         Assert.assertArrayEquals(names1, names2);
 
         int valueCount = v.getValue().length();
@@ -128,12 +130,16 @@ public abstract class AtomicDescriptorTest extends DescriptorTest<IAtomicDescrip
         IAtom clone = (IAtom) mol.getAtom(1).clone();
         descriptor.calculate(atom, mol);
         String diff = AtomDiff.diff(clone, atom);
-        Assert.assertEquals("The descriptor must not change the passed atom in any respect, but found this diff: "
-                + diff, 0, diff.length());
+        Assert.assertEquals(
+                "The descriptor must not change the passed atom in any respect, but found this diff: "
+                        + diff,
+                0,
+                diff.length());
     }
 
     private IAtomContainer someoneBringMeSomeWater() {
-        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer mol =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "O");
         c1.setPoint3d(new Point3d(0.0, 0.0, 0.0));
         IAtom h1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "H");
@@ -147,5 +153,4 @@ public abstract class AtomicDescriptorTest extends DescriptorTest<IAtomicDescrip
         mol.addBond(0, 2, IBond.Order.SINGLE);
         return mol;
     }
-
 }

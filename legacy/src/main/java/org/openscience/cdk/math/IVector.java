@@ -25,9 +25,7 @@
 
 package org.openscience.cdk.math;
 
-/**
- * @cdk.module qm
- */
+/** @cdk.module qm */
 public class IVector {
 
     // Attention! The variables are unprotected
@@ -37,36 +35,28 @@ public class IVector {
     public double[] imagvector;
 
     /** Size of this vector */
-    public int      size;
+    public int size;
 
-    /**
-     * Constructs a vector with "size"-elements
-     */
+    /** Constructs a vector with "size"-elements */
     public IVector(int size) {
         realvector = new double[size];
         imagvector = new double[size];
         this.size = size;
     }
 
-    /**
-     * Return the size from this vector
-     */
+    /** Return the size from this vector */
     public int getSize() {
         return size;
     }
 
-    /**
-     *  Addition from two vectors
-     */
+    /** Addition from two vectors */
     public IVector add(IVector b) {
         IVector result = new IVector(size);
         add(b, result);
         return result;
     }
 
-    /**
-     *  Addition from two vectors
-     */
+    /** Addition from two vectors */
     public void add(IVector b, IVector result) {
         if ((b == null) || (size != b.size)) return;
 
@@ -79,18 +69,14 @@ public class IVector {
         }
     }
 
-    /**
-     *  Subtraction from two vectors
-     */
+    /** Subtraction from two vectors */
     public IVector sub(IVector b) {
         IVector result = new IVector(size);
         sub(b, result);
         return result;
     }
 
-    /**
-     *  Subtraction from two vectors
-     */
+    /** Subtraction from two vectors */
     public void sub(IVector b, IVector result) {
         if ((b == null) || (size != b.size)) return;
 
@@ -103,18 +89,14 @@ public class IVector {
         }
     }
 
-    /**
-     *  Multiplication from a vectors with an double
-     */
+    /** Multiplication from a vectors with an double */
     public IVector mul(double b) {
         IVector result = new IVector(size);
         mul(b, result);
         return result;
     }
 
-    /**
-     *  Multiplication from a vectors with an double
-     */
+    /** Multiplication from a vectors with an double */
     public void mul(double b, IVector result) {
         if (result.size != size) result.reshape(size);
 
@@ -125,9 +107,7 @@ public class IVector {
         }
     }
 
-    /**
-     *  Multiplication from two vectors
-     */
+    /** Multiplication from two vectors */
     public Complex dot(IVector b) {
         if ((b == null) || (size != b.size)) return new Complex(Double.NaN, Double.NaN);
 
@@ -140,18 +120,14 @@ public class IVector {
         return result;
     }
 
-    /**
-     *  Copy a vector
-     */
+    /** Copy a vector */
     public IVector duplicate() {
         IVector result = new IVector(size);
         duplicate(result);
         return result;
     }
 
-    /**
-     *  Copy a vector
-     */
+    /** Copy a vector */
     public void duplicate(IVector result) {
         if (result.size != size) result.reshape(size);
 
@@ -162,23 +138,18 @@ public class IVector {
         }
     }
 
-    /**
-     *  Return a vector as a string
-     */
+    /** Return a vector as a string */
     @Override
     public String toString() {
         int i;
         StringBuffer str = new StringBuffer();
         str.append("[ ");
-        for (i = 0; i < (size - 1); i++)
-            str.append(realvector[i] + "+i*" + imagvector[i] + " ");
+        for (i = 0; i < (size - 1); i++) str.append(realvector[i] + "+i*" + imagvector[i] + " ");
         str.append(realvector[size - 1] + "+i*" + imagvector[size - 1] + " ]");
         return str.toString();
     }
 
-    /**
-     * Resize this vector
-     */
+    /** Resize this vector */
     public void reshape(int newsize) {
         if ((newsize == size) || (newsize <= 0)) return;
 

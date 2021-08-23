@@ -22,6 +22,10 @@
  *  */
 package org.openscience.cdk;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Map;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -33,17 +37,11 @@ import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.tools.manipulator.SgroupManipulator;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Map;
-
 /**
  * Subclass of Molecule to store Polymer specific attributes that a Polymer has.
  *
  * @cdk.module data
  * @cdk.githash
- *
  * @author Edgar Luttmann &lt;edgar@uni-paderborn.de&gt;
  * @author Martin Eklund &lt;martin.eklund@farmbio.uu.se&gt;
  * @cdk.created 2001-08-06
@@ -54,17 +52,15 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
     /**
      * Determines if a de-serialized object is compatible with this class.
      *
-     * This value must only be changed if and only if the new version
-     * of this class is incompatible with the old version. See Sun docs
-     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide/serialization/spec/version.doc.html>details</a>.
+     * <p>This value must only be changed if and only if the new version of this class is
+     * incompatible with the old version. See Sun docs for <a
+     * href=http://java.sun.com/products/jdk/1.1/docs/guide/serialization/spec/version.doc.html>details</a>.
      */
-    private static final long     serialVersionUID = -2596790658835319339L;
+    private static final long serialVersionUID = -2596790658835319339L;
 
-    private Map<String, IMonomer> monomers;                                // the list of all the contained Monomers.
+    private Map<String, IMonomer> monomers; // the list of all the contained Monomers.
 
-    /**
-     * Constructs a new Polymer to store the Monomers.
-     */
+    /** Constructs a new Polymer to store the Monomers. */
     public Polymer() {
         super();
         monomers = new Hashtable<String, IMonomer>();
@@ -73,8 +69,8 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
     /**
      * Adds the atom oAtom to a specified Monomer.
      *
-     * @param oAtom  The atom to add
-     * @param oMonomer  The monomer the atom belongs to
+     * @param oAtom The atom to add
+     * @param oMonomer The monomer the atom belongs to
      */
     @Override
     public void addAtom(IAtom oAtom, IMonomer oMonomer) {
@@ -107,7 +103,7 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
     /**
      * Retrieves a Monomer object by specifying its name.
      *
-     * @param cName  The name of the monomer to look for
+     * @param cName The name of the monomer to look for
      * @return The Monomer object which was asked for
      */
     @Override
@@ -116,8 +112,7 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
     }
 
     /**
-     * Returns a collection of the names of all <code>Monomer</code>s in this
-     * polymer.
+     * Returns a collection of the names of all <code>Monomer</code>s in this polymer.
      *
      * @return a <code>Collection</code> of all the monomer names.
      */
@@ -170,10 +165,12 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
         // we need this mapping to correctly clone bonds, single/paired electrons
         // and stereo elements
         // - the expected size stop the map be resized - method from Google Guava
-        Map<IAtom, IAtom> atomMap = new HashMap<IAtom, IAtom>(atomCount >= 3 ? atomCount + atomCount / 3
-                : atomCount + 1);
-        Map<IBond, IBond> bondMap = new HashMap<IBond, IBond>(bondCount >= 3 ? bondCount + bondCount / 3
-                : bondCount + 1);
+        Map<IAtom, IAtom> atomMap =
+                new HashMap<IAtom, IAtom>(
+                        atomCount >= 3 ? atomCount + atomCount / 3 : atomCount + 1);
+        Map<IBond, IBond> bondMap =
+                new HashMap<IBond, IBond>(
+                        bondCount >= 3 ? bondCount + bondCount / 3 : bondCount + 1);
 
         // now consider atoms that are not associated with any monomer
         for (IAtom atom : atoms()) {
@@ -229,11 +226,10 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
         // update sgroups
         Collection<Sgroup> sgroups = getProperty(CDKConstants.CTAB_SGROUPS);
         if (sgroups != null) {
-            Map<IChemObject,IChemObject> replace = new HashMap<>();
+            Map<IChemObject, IChemObject> replace = new HashMap<>();
             replace.putAll(atomMap);
             replace.putAll(bondMap);
-            clone.setProperty(CDKConstants.CTAB_SGROUPS,
-                              SgroupManipulator.copy(sgroups, replace));
+            clone.setProperty(CDKConstants.CTAB_SGROUPS, SgroupManipulator.copy(sgroups, replace));
         }
 
         return clone;

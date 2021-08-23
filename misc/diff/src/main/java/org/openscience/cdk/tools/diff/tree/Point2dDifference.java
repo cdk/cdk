@@ -18,13 +18,13 @@
  */
 package org.openscience.cdk.tools.diff.tree;
 
-import javax.vecmath.Point2d;
 import java.util.Iterator;
+import javax.vecmath.Point2d;
 
 /**
  * Difference between two boolean[]'s.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module diff
  * @cdk.githash
  */
@@ -39,19 +39,21 @@ public class Point2dDifference extends AbstractDifferenceList implements IDiffer
     /**
      * Constructs a new {@link IDifference} object.
      *
-     * @param name   a name reflecting the nature of the created {@link IDifference}
-     * @param first  the first object to compare
+     * @param name a name reflecting the nature of the created {@link IDifference}
+     * @param first the first object to compare
      * @param second the second object to compare
-     * @return       an {@link IDifference} reflecting the differences between the first and second object
+     * @return an {@link IDifference} reflecting the differences between the first and second object
      */
     public static IDifference construct(String name, Point2d first, Point2d second) {
         if (first == null && second == null) return null;
 
         Point2dDifference totalDiff = new Point2dDifference(name);
-        totalDiff.addChild(DoubleDifference.construct("x", first == null ? null : first.x, second == null ? null
-                : second.x));
-        totalDiff.addChild(DoubleDifference.construct("y", first == null ? null : first.y, second == null ? null
-                : second.y));
+        totalDiff.addChild(
+                DoubleDifference.construct(
+                        "x", first == null ? null : first.x, second == null ? null : second.x));
+        totalDiff.addChild(
+                DoubleDifference.construct(
+                        "y", first == null ? null : first.y, second == null ? null : second.y));
         if (totalDiff.childCount() == 0) {
             return null;
         }

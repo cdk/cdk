@@ -24,7 +24,6 @@ import org.openscience.cdk.tools.DataFeatures;
  * See <a href="http://www.pqs-chem.com/">here</a>.
  *
  * @author Miguel Rojas
- *
  * @cdk.module ioformats
  * @cdk.githash
  */
@@ -60,7 +59,7 @@ public class PQSChemFormat extends AbstractResourceFormat implements IChemFormat
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"pqs"};
+        return new String[] {"pqs"};
     }
 
     /** {@inheritDoc} */

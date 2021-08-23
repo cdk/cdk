@@ -39,7 +39,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- *
  * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
@@ -69,7 +68,6 @@ public class SMSDBondInsensitiveTest {
         sbf.init(Benzene, Benzene, true, true);
         sbf.setChemFilters(true, true, true);
         Assert.assertTrue(sbf.isSubgraph());
-
     }
 
     @Test
@@ -91,7 +89,7 @@ public class SMSDBondInsensitiveTest {
 
     @Test
     public void testMCSPlus() throws Exception {
-        //TO DO fix me this error
+        // TO DO fix me this error
         Isomorphism ebimcs = new Isomorphism(Algorithm.MCSPlus, false);
         ebimcs.init(Cyclohexane, Benzene, true, true);
         ebimcs.setChemFilters(true, true, true);
@@ -145,8 +143,11 @@ public class SMSDBondInsensitiveTest {
         ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(cycloPropane);
         ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(isobutane);
 
-        IAtomContainer source = ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(cycloPropane);
-        IAtomContainer target = ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(isobutane);
+        IAtomContainer source =
+                ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(
+                        cycloPropane);
+        IAtomContainer target =
+                ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(isobutane);
 
         Aromaticity.cdkLegacy().apply(source);
         Aromaticity.cdkLegacy().apply(target);
@@ -190,11 +191,11 @@ public class SMSDBondInsensitiveTest {
 
         Assert.assertTrue(comparison.isSubgraph());
         Assert.assertEquals(7, comparison.getAllMapping().size());
-
     }
 
     /**
      * frag is a subgraph of the het mol
+     *
      * @throws Exception
      */
     @Test
@@ -210,8 +211,10 @@ public class SMSDBondInsensitiveTest {
         ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
         ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
 
-        IAtomContainer source = ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(mol1);
-        IAtomContainer target = ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(mol2);
+        IAtomContainer source =
+                ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(mol1);
+        IAtomContainer target =
+                ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(mol2);
 
         //	Calling the main algorithm to perform MCS cearch
 
@@ -230,11 +233,11 @@ public class SMSDBondInsensitiveTest {
 
         Assert.assertTrue(comparison.isSubgraph());
         Assert.assertEquals(13, comparison.getFirstMapping().size());
-
     }
 
     private IAtomContainer create4Toluene() throws CDKException {
-        IAtomContainer result = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer result =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c1.setID("1");
         IAtom c2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
@@ -280,7 +283,8 @@ public class SMSDBondInsensitiveTest {
     }
 
     public IAtomContainer createMethane() {
-        IAtomContainer result = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer result =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         result.addAtom(c1);
 
@@ -288,7 +292,8 @@ public class SMSDBondInsensitiveTest {
     }
 
     public IAtomContainer createPropane() {
-        IAtomContainer result = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer result =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         IAtom c2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         IAtom c3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
@@ -307,7 +312,8 @@ public class SMSDBondInsensitiveTest {
     }
 
     public IAtomContainer createHexane() throws CDKException {
-        IAtomContainer result = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer result =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
 
         IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c1.setID("1");
@@ -347,7 +353,8 @@ public class SMSDBondInsensitiveTest {
     }
 
     public static IAtomContainer createBenzene() throws CDKException {
-        IAtomContainer result = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer result =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
 
         IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c1.setID("1");
@@ -450,7 +457,8 @@ public class SMSDBondInsensitiveTest {
     //    }
 
     public static IAtomContainer createNaphthalene() throws CDKException {
-        IAtomContainer result = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer result =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
 
         IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c1.setID("1");
@@ -612,7 +620,8 @@ public class SMSDBondInsensitiveTest {
 
     public static IAtomContainer createCyclohexane() throws CDKException {
 
-        IAtomContainer result = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer result =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
 
         IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         c1.setID("1");
@@ -651,11 +660,11 @@ public class SMSDBondInsensitiveTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
 
         return result;
-
     }
 
     public static IAtomContainer createCyclopropane() {
-        IAtomContainer result = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer result =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
 
         IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         IAtom c2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
@@ -677,7 +686,8 @@ public class SMSDBondInsensitiveTest {
     }
 
     public static IAtomContainer createIsobutane() {
-        IAtomContainer result = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer result =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
 
         IAtom c1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");
         IAtom c2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C");

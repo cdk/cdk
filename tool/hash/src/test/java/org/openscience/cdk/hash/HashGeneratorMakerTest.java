@@ -24,20 +24,12 @@
 
 package org.openscience.cdk.hash;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.openscience.cdk.hash.stereo.StereoEncoderFactory;
-
-import java.lang.reflect.Field;
-import java.util.Collections;
-import java.util.List;
-
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertNotNull;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.openscience.cdk.hash.BasicAtomEncoder.ATOMIC_NUMBER;
@@ -45,6 +37,12 @@ import static org.openscience.cdk.hash.BasicAtomEncoder.FORMAL_CHARGE;
 import static org.openscience.cdk.hash.BasicAtomEncoder.FREE_RADICALS;
 import static org.openscience.cdk.hash.BasicAtomEncoder.MASS_NUMBER;
 import static org.openscience.cdk.hash.BasicAtomEncoder.ORBITAL_HYBRIDIZATION;
+
+import java.lang.reflect.Field;
+import java.util.Collections;
+import java.util.List;
+import org.junit.Test;
+import org.openscience.cdk.hash.stereo.StereoEncoderFactory;
 
 /**
  * @author John May
@@ -89,12 +87,14 @@ public class HashGeneratorMakerTest {
         AtomHashGenerator generator = new HashGeneratorMaker().depth(0).orbital().atomic();
         List<AtomEncoder> encoders = getEncoders((BasicAtomHashGenerator) generator);
         org.hamcrest.MatcherAssert.assertThat(encoders.size(), is(1));
-        org.hamcrest.MatcherAssert.assertThat(encoders.get(0), is((AtomEncoder) ORBITAL_HYBRIDIZATION));
+        org.hamcrest.MatcherAssert.assertThat(
+                encoders.get(0), is((AtomEncoder) ORBITAL_HYBRIDIZATION));
     }
 
     @Test
     public void testChiral() {
-        AtomHashGenerator generator = new HashGeneratorMaker().depth(0).elemental().chiral().atomic();
+        AtomHashGenerator generator =
+                new HashGeneratorMaker().depth(0).elemental().chiral().atomic();
         assertThat(encoder(generator), is(not(StereoEncoderFactory.EMPTY)));
     }
 
@@ -108,7 +108,8 @@ public class HashGeneratorMakerTest {
     @Test
     public void testPerturbedWith() throws NoSuchFieldException, IllegalAccessException {
         EquivalentSetFinder mock = mock(EquivalentSetFinder.class);
-        AtomHashGenerator g1 = new HashGeneratorMaker().depth(0).elemental().perturbWith(mock).atomic();
+        AtomHashGenerator g1 =
+                new HashGeneratorMaker().depth(0).elemental().perturbWith(mock).atomic();
 
         assertTrue(g1 instanceof PerturbedAtomHashGenerator);
         Field field = g1.getClass().getDeclaredField("finder");
@@ -118,8 +119,10 @@ public class HashGeneratorMakerTest {
 
     @Test
     public void testOrdering() {
-        AtomHashGenerator g1 = new HashGeneratorMaker().depth(0).elemental().isotopic().charged().atomic();
-        AtomHashGenerator g2 = new HashGeneratorMaker().depth(0).isotopic().charged().elemental().atomic();
+        AtomHashGenerator g1 =
+                new HashGeneratorMaker().depth(0).elemental().isotopic().charged().atomic();
+        AtomHashGenerator g2 =
+                new HashGeneratorMaker().depth(0).isotopic().charged().elemental().atomic();
         assertThat(getEncoders(g1).size(), is(3));
         assertThat(getEncoders(g1), is(getEncoders(g2)));
     }
@@ -133,7 +136,8 @@ public class HashGeneratorMakerTest {
     public void testEncode() {
         AtomEncoder e1 = mock(AtomEncoder.class);
         AtomEncoder e2 = mock(AtomEncoder.class);
-        AtomHashGenerator generator = new HashGeneratorMaker().depth(0).encode(e1).encode(e2).atomic();
+        AtomHashGenerator generator =
+                new HashGeneratorMaker().depth(0).encode(e1).encode(e2).atomic();
         List<AtomEncoder> encoders = getEncoders((BasicAtomHashGenerator) generator);
         assertThat(encoders.size(), is(2));
         assertThat(encoders.get(0), is(e1));
@@ -178,7 +182,8 @@ public class HashGeneratorMakerTest {
 
     @Test
     public void suppressHydrogens() {
-        AtomHashGenerator generator = new HashGeneratorMaker().elemental().depth(0).suppressHydrogens().atomic();
+        AtomHashGenerator generator =
+                new HashGeneratorMaker().elemental().depth(0).suppressHydrogens().atomic();
         assertThat(generator, is(instanceOf(SuppressedAtomHashGenerator.class)));
     }
 
@@ -244,5 +249,4 @@ public class HashGeneratorMakerTest {
         }
         return Collections.emptyList();
     }
-
 }

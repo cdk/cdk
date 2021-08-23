@@ -22,6 +22,11 @@
  */
 package org.openscience.cdk.ringsearch;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -29,12 +34,6 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-
-import java.util.List;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 /**
  * ring search unit tests for a hexaphenylene (ChEBI:33157)
@@ -98,7 +97,8 @@ public final class RingSearchTest_Hexaphenylene {
     }
 
     /**
-     * @cdk.inchi InChI=1S/C36H24/c1-2-14-26-25(13-1)27-15-3-4-17-29(27)31-19-7-8-21-33(31)35-23-11-12-24-36(35)34-22-10-9-20-32(34)30-18-6-5-16-28(26)30/h1-24H/b27-25-,28-26-,31-29-,32-30-,35-33-,36-34-
+     * @cdk.inchi
+     *     InChI=1S/C36H24/c1-2-14-26-25(13-1)27-15-3-4-17-29(27)31-19-7-8-21-33(31)35-23-11-12-24-36(35)34-22-10-9-20-32(34)30-18-6-5-16-28(26)30/h1-24H/b27-25-,28-26-,31-29-,32-30-,35-33-,36-34-
      */
     public static IAtomContainer hexaphenylene() {
         IAtomContainer mol = new AtomContainer();
@@ -260,5 +260,4 @@ public final class RingSearchTest_Hexaphenylene {
         mol.addBond(b42);
         return mol;
     }
-
 }

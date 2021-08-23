@@ -25,10 +25,8 @@ package org.openscience.cdk.renderer.generators;
 import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.renderer.RendererModel;
@@ -41,11 +39,10 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
 import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
 
 /**
- * {@link IGenerator} for {@link IAtomContainer}s that will draw atom numbers
- * for the atoms.
+ * {@link IGenerator} for {@link IAtomContainer}s that will draw atom numbers for the atoms.
  *
- * @author      maclean
- * @cdk.module  renderextra
+ * @author maclean
+ * @cdk.module renderextra
  * @cdk.githash
  */
 public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
@@ -62,8 +59,10 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
 
     private IGeneratorParameter<Color> textColor = new AtomNumberTextColor();
 
-    /** Boolean parameter indicating if atom numbers should be drawn, allowing
-     * this feature to be disabled temporarily. */
+    /**
+     * Boolean parameter indicating if atom numbers should be drawn, allowing this feature to be
+     * disabled temporarily.
+     */
     public static class WillDrawAtomNumbers extends AbstractGeneratorParameter<Boolean> {
 
         /** {@inheritDoc} */
@@ -75,8 +74,10 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
 
     private WillDrawAtomNumbers willDrawAtomNumbers = new WillDrawAtomNumbers();
 
-    /** The color scheme by which to color the atom numbers, if
-     * the {@link ColorByType} boolean is true. */
+    /**
+     * The color scheme by which to color the atom numbers, if the {@link ColorByType} boolean is
+     * true.
+     */
     public static class AtomColorer extends AbstractGeneratorParameter<IAtomColorer> {
 
         /** {@inheritDoc} */
@@ -100,10 +101,7 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
 
     private IGeneratorParameter<Boolean> colorByType = new ColorByType();
 
-    /**
-     * Offset vector in screen space coordinates where the atom number label
-     * will be placed.
-     */
+    /** Offset vector in screen space coordinates where the atom number label will be placed. */
     public static class Offset extends AbstractGeneratorParameter<Vector2d> {
 
         /** {@inheritDoc} */
@@ -128,8 +126,14 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
         for (IAtom atom : container.atoms()) {
             Point2d point = new Point2d(atom.getPoint2d());
             point.add(offset);
-            numbers.add(new TextElement(point.x, point.y, String.valueOf(number), colorByType.getValue() ? atomColorer
-                    .getValue().getAtomColor(atom) : textColor.getValue()));
+            numbers.add(
+                    new TextElement(
+                            point.x,
+                            point.y,
+                            String.valueOf(number),
+                            colorByType.getValue()
+                                    ? atomColorer.getValue().getAtomColor(atom)
+                                    : textColor.getValue()));
             number++;
         }
         return numbers;
@@ -138,8 +142,9 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
     /** {@inheritDoc} */
     @Override
     public List<IGeneratorParameter<?>> getParameters() {
-        return Arrays.asList(new IGeneratorParameter<?>[]{textColor, willDrawAtomNumbers, offset, atomColorer,
-                colorByType});
+        return Arrays.asList(
+                new IGeneratorParameter<?>[] {
+                    textColor, willDrawAtomNumbers, offset, atomColorer, colorByType
+                });
     }
-
 }

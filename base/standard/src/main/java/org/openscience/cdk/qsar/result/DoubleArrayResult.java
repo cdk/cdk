@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.qsar.result;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +27,7 @@ import java.util.List;
  */
 public class DoubleArrayResult extends DoubleArrayResultType {
 
-    private List<Double>      array;
+    private List<Double> array;
     private static final long serialVersionUID = 2345607580017306612L;
 
     public DoubleArrayResult() {
@@ -45,9 +44,7 @@ public class DoubleArrayResult extends DoubleArrayResultType {
         array.add(value);
     }
 
-    /**
-     * The first double is at index = 0;
-     */
+    /** The first double is at index = 0; */
     public double get(int index) {
         if (index >= this.array.size()) {
             return 0.0;

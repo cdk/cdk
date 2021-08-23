@@ -27,7 +27,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
-
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamReader;
+import javax.xml.stream.events.XMLEvent;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -36,29 +38,23 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.PubChemSubstanceXMLFormat;
 import org.openscience.cdk.io.pubchemxml.PubChemXMLHelper;
 
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamReader;
-import javax.xml.stream.events.XMLEvent;
-
 /**
- * Reads an object from ASN.1 XML formated input for PubChem Compound entries.
- * The following bits are supported: atoms.aid, atoms.element, atoms.2d,
- * atoms.3d, bonds.aid1, bonds.aid2.
+ * Reads an object from ASN.1 XML formated input for PubChem Compound entries. The following bits
+ * are supported: atoms.aid, atoms.element, atoms.2d, atoms.3d, bonds.aid1, bonds.aid2.
  *
- * @cdk.module  io
+ * @cdk.module io
  * @cdk.githash
  * @cdk.iooptions
- *
  * @cdk.keyword file format, PubChem Compound XML
  */
 public class PCCompoundXMLReader extends DefaultChemObjectReader {
 
-    private Reader             input;
-    private XMLStreamReader    parser;
-    private PubChemXMLHelper   parserHelper;
+    private Reader input;
+    private XMLStreamReader parser;
+    private PubChemXMLHelper parserHelper;
     private IChemObjectBuilder builder;
 
-    IAtomContainer             molecule = null;
+    IAtomContainer molecule = null;
 
     /**
      * Construct a new reader from a Reader type object.
@@ -90,7 +86,8 @@ public class PCCompoundXMLReader extends DefaultChemObjectReader {
             parser = xmlfact.createXMLStreamReader(input);
             this.input = input;
         } catch (Exception exception) {
-            throw new CDKException("Error while creating reader: " + exception.getMessage(), exception);
+            throw new CDKException(
+                    "Error while creating reader: " + exception.getMessage(), exception);
         }
     }
 
@@ -145,5 +142,4 @@ public class PCCompoundXMLReader extends DefaultChemObjectReader {
         }
         return null;
     }
-
 }

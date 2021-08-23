@@ -26,22 +26,15 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
- *  TestSuite that runs a test for the MMFF94PartialCharges.
+ * TestSuite that runs a test for the MMFF94PartialCharges.
  *
  * @cdk.module test-forcefield
- *
- *@author        cubic
- *@cdk.created       2004-11-04
+ * @author cubic
+ * @cdk.created 2004-11-04
  */
-
 public class MMFF94PartialChargesTest extends CDKTestCase {
 
-    /**
-
-    /**
-     *  A unit test for JUnit with beta-amino-acetic-acid
-     *
-     */
+    /** /** A unit test for JUnit with beta-amino-acetic-acid */
     @Test
     public void testMMFF94PartialCharges() throws Exception {
         double[] testResult = {-0.99, 0.314, 0.66, -0.57, -0.65, 0.36, 0.36, 0, 0, 0.5};
@@ -51,8 +44,12 @@ public class MMFF94PartialChargesTest extends CDKTestCase {
         MMFF94PartialCharges mmff = new MMFF94PartialCharges();
         mmff.assignMMFF94PartialCharges(ac);
         for (int i = 0; i < ac.getAtomCount(); i++) {
-            Assert.assertEquals(testResult[i], ((Double) ac.getAtom(i).getProperty("MMFF94charge")).doubleValue(), 0.05);
-            //logger.debug("CHARGE AT " + ac.getAtomAt(i).getSymbol() + " " + ac.getAtomAt(i).getProperty("MMFF94charge"));
+            Assert.assertEquals(
+                    testResult[i],
+                    ((Double) ac.getAtom(i).getProperty("MMFF94charge")).doubleValue(),
+                    0.05);
+            // logger.debug("CHARGE AT " + ac.getAtomAt(i).getSymbol() + " " +
+            // ac.getAtomAt(i).getProperty("MMFF94charge"));
         }
     }
 }

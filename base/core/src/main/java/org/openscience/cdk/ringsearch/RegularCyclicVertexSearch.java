@@ -27,8 +27,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * CyclicVertexSearch for graphs with 64 vertices or less. This search is
- * optimised using primitive {@literal long} values to represent vertex sets.
+ * CyclicVertexSearch for graphs with 64 vertices or less. This search is optimised using primitive
+ * {@literal long} values to represent vertex sets.
  *
  * @author John May
  * @cdk.module core
@@ -36,22 +36,22 @@ import java.util.List;
 class RegularCyclicVertexSearch implements CyclicVertexSearch {
 
     /* graph representation */
-    private final int[][]  g;
+    private final int[][] g;
 
     /* set of known cyclic vertices */
-    private long           cyclic;
+    private long cyclic;
 
     /* cycle systems as they are discovered */
-    private List<Long>     cycles = new ArrayList<Long>(1);
+    private List<Long> cycles = new ArrayList<Long>(1);
 
     /* indicates if the 'cycle' at 'i' in 'cycles' is fused */
-    private List<Boolean>  fused  = new ArrayList<Boolean>(1);
+    private List<Boolean> fused = new ArrayList<Boolean>(1);
 
     /* set of visited vertices */
-    private long           visited;
+    private long visited;
 
     /* the vertices in our path at a given vertex index */
-    private long[]         state;
+    private long[] state;
 
     /** Vertex colors - which component does each vertex belong. */
     private volatile int[] colors;
@@ -89,13 +89,12 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
 
         // no longer needed for the lifetime of the object
         state = null;
-
     }
 
     /**
      * Perform a depth first search from the vertex <i>v</i>.
      *
-     * @param v    vertex to search from
+     * @param v vertex to search from
      * @param prev the state before we vistaed our parent (previous state)
      * @param curr the current state (including our parent)
      */
@@ -145,9 +144,8 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
     }
 
     /**
-     * Add the cycle vertices to our discovered cycles. The cycle is first
-     * checked to see if it is isolated (shares at most one vertex) or
-     * <i>potentially</i> fused.
+     * Add the cycle vertices to our discovered cycles. The cycle is first checked to see if it is
+     * isolated (shares at most one vertex) or <i>potentially</i> fused.
      *
      * @param cycle newly discovered cyclic vertex set
      */
@@ -163,12 +161,10 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
         }
 
         cyclic |= cycle;
-
     }
 
     /**
-     * Add an a new isolated cycle which is currently edge disjoint with all
-     * other cycles.
+     * Add an a new isolated cycle which is currently edge disjoint with all other cycles.
      *
      * @param cycle newly discovered cyclic vertices
      */
@@ -178,11 +174,10 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
     }
 
     /**
-     * Adds a <i>potentially</i> fused cycle. If the cycle is discovered not be
-     * fused it will still be added as isolated.
+     * Adds a <i>potentially</i> fused cycle. If the cycle is discovered not be fused it will still
+     * be added as isolated.
      *
-     * @param cycle vertex set of a potentially fused cycle, indicated by the
-     *              set bits
+     * @param cycle vertex set of a potentially fused cycle, indicated by the set bits
      */
     private void addFused(long cycle) {
 
@@ -209,9 +204,9 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
     }
 
     /**
-     * Find the next index that the <i>cycle</i> intersects with by at least two
-     * vertices. If the intersect of a vertex set with another contains more
-     * then two vertices it cannot be edge disjoint.
+     * Find the next index that the <i>cycle</i> intersects with by at least two vertices. If the
+     * intersect of a vertex set with another contains more then two vertices it cannot be edge
+     * disjoint.
      *
      * @param start start searching from here
      * @param cycle test whether any current cycles are fused with this one
@@ -231,10 +226,9 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
     private final Object lock = new Object();
 
     /**
-     * Lazily build an indexed lookup of vertex color. The vertex color
-     * indicates which cycle a given vertex belongs. If a vertex belongs to more
-     * then one cycle it is colored '0'. If a vertex belongs to no cycle it is
-     * colored '-1'.
+     * Lazily build an indexed lookup of vertex color. The vertex color indicates which cycle a
+     * given vertex belongs. If a vertex belongs to more then one cycle it is colored '0'. If a
+     * vertex belongs to no cycle it is colored '-1'.
      *
      * @return vertex colors
      */
@@ -253,9 +247,9 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
     }
 
     /**
-     * Build an indexed lookup of vertex color. The vertex color indicates which
-     * cycle a given vertex belongs. If a vertex belongs to more then one cycle
-     * it is colored '0'. If a vertex belongs to no cycle it is colored '-1'.
+     * Build an indexed lookup of vertex color. The vertex color indicates which cycle a given
+     * vertex belongs. If a vertex belongs to more then one cycle it is colored '0'. If a vertex
+     * belongs to no cycle it is colored '-1'.
      *
      * @return vertex colors
      */
@@ -275,17 +269,13 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
         return color;
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean cyclic(int v) {
         return isBitSet(cyclic, v);
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean cyclic(int u, int v) {
 
@@ -313,17 +303,13 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
         return colors[u] == colors[v];
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int[] cyclic() {
         return toArray(cyclic);
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int[][] isolated() {
         List<int[]> isolated = new ArrayList<int[]>(cycles.size());
@@ -333,9 +319,7 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
         return isolated.toArray(new int[isolated.size()][]);
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int[][] fused() {
         List<int[]> fused = new ArrayList<int[]>(cycles.size());
@@ -346,8 +330,8 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
     }
 
     /**
-     * Convert the bits of a {@code long} to an array of integers. The size of
-     * the output array is the number of bits set in the value.
+     * Convert the bits of a {@code long} to an array of integers. The size of the output array is
+     * the number of bits set in the value.
      *
      * @param set value to convert
      * @return array of the set bits in the long value
@@ -369,7 +353,7 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
      * Determine if the specified bit on the value is set.
      *
      * @param value bits indicate that vertex is in the set
-     * @param bit   bit to test
+     * @param bit bit to test
      * @return whether the specified bit is set
      */
     static boolean isBitSet(long value, int bit) {
@@ -380,11 +364,10 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
      * Set the specified bit on the value and return the modified value.
      *
      * @param value the value to set the bit on
-     * @param bit   the bit to set
+     * @param bit the bit to set
      * @return modified value
      */
     static long setBit(long value, int bit) {
         return value | 1L << bit;
     }
-
 }

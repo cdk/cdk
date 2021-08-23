@@ -23,8 +23,8 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.AbstractChemFileTest;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
@@ -37,13 +37,14 @@ public class ChemFileTest extends AbstractChemFileTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new ChemFile();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new ChemFile();
+                    }
+                });
     }
 
     @Test
@@ -51,5 +52,4 @@ public class ChemFileTest extends AbstractChemFileTest {
         IChemFile cs = new ChemFile();
         Assert.assertNotNull(cs);
     }
-
 }

@@ -29,21 +29,15 @@ package org.openscience.cdk.smiles.smarts.parser;
 @Deprecated
 class ASTTotalHCount extends SimpleNode {
 
-    /**
-     * Total H count.
-     */
+    /** Total H count. */
     private int count;
 
-    /**
-     * Creates a new instance.
-     */
+    /** Creates a new instance. */
     public ASTTotalHCount(int id) {
         super(id);
     }
 
-    /**
-     * Creates a new instance.
-     */
+    /** Creates a new instance. */
     public ASTTotalHCount(SMARTSParser p, int id) {
         super(p, id);
     }
@@ -59,16 +53,12 @@ class ASTTotalHCount extends SimpleNode {
         return visitor.visit(this, data);
     }
 
-    /**
-     * Returns total H count.
-     */
+    /** Returns total H count. */
     public int getCount() {
         return count;
     }
 
-    /**
-     * Sets total H count.
-     */
+    /** Sets total H count. */
     public void setCount(int count) {
         this.count = count;
     }

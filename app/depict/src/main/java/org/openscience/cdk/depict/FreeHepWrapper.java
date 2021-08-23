@@ -23,10 +23,6 @@
 
 package org.openscience.cdk.depict;
 
-import org.freehep.graphicsio.pdf.PDFGraphics2D;
-import org.freehep.graphicsio.svg.SVGGraphics2D;
-import org.freehep.graphicsio.ps.PSGraphics2D;
-
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.io.ByteArrayOutputStream;
@@ -34,37 +30,40 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
+import org.freehep.graphicsio.pdf.PDFGraphics2D;
+import org.freehep.graphicsio.ps.PSGraphics2D;
+import org.freehep.graphicsio.svg.SVGGraphics2D;
 
 /**
- * Internal - wrapper around the FreeHEP vector graphics output that makes things consistent
- * in terms of writing the required headers and footers.
+ * Internal - wrapper around the FreeHEP vector graphics output that makes things consistent in
+ * terms of writing the required headers and footers.
+ *
  * @see <a href="http://java.freehep.org/">java.freehep.org</a>
- *
- * The toString() method cites the following documents:
- *
- * [PLDS92] {@cdk.cite Adobe1992}
- * [EPSF92] {@cdk.cite Adobe1992a}
- * [EGFF96] {@cdk.cite Murray1996}
+ *     <p>The toString() method cites the following documents:
+ *     <p>[PLDS92] {@cdk.cite Adobe1992} [EPSF92] {@cdk.cite Adobe1992a} [EGFF96] {@cdk.cite
+ *     Murray1996}
  */
 final class FreeHepWrapper {
 
     private final ByteArrayOutputStream bout;
-    private final String                fmt;
-    final         Graphics2D            g2;
+    private final String fmt;
+    final Graphics2D g2;
     private final Dimension dim;
 
     public FreeHepWrapper(String fmt, double w, double h) {
         this.dim = new Dimension((int) Math.ceil(w), (int) Math.ceil(h));
         try {
-            this.g2 = createGraphics2d(this.fmt = fmt,
-                                       this.bout = new ByteArrayOutputStream(),
-                                       this.dim);
+            this.g2 =
+                    createGraphics2d(
+                            this.fmt = fmt, this.bout = new ByteArrayOutputStream(), this.dim);
         } catch (IOException e) {
-            throw new InstantiationError("Could not create Vector Graphics output: " + e.getMessage());
+            throw new InstantiationError(
+                    "Could not create Vector Graphics output: " + e.getMessage());
         }
     }
 
-    private static Graphics2D createGraphics2d(String fmt, OutputStream out, Dimension dim) throws IOException {
+    private static Graphics2D createGraphics2d(String fmt, OutputStream out, Dimension dim)
+            throws IOException {
         switch (fmt) {
             case Depiction.SVG_FMT:
                 SVGGraphics2D svg = new SVGGraphics2D(out, dim);
@@ -130,31 +129,34 @@ final class FreeHepWrapper {
             result = result.replaceAll("\"([-+0-9.]+)px\"", "\"$1mm\"");
         } else if (fmt.equals(Depiction.EPS_FMT)) {
             String nl;
-            // We should determine new-line separator (nl) not from OS type, but from the line-endings
-            // in the actual EPS outpu; there is nothing that would prevent us from generating Unix-style
+            // We should determine new-line separator (nl) not from OS type, but from the
+            // line-endings
+            // in the actual EPS outpu; there is nothing that would prevent us from generating
+            // Unix-style
             // file in Windows :)
-            if( result.contains("\r\n")) {
+            if (result.contains("\r\n")) {
                 nl = "\r\n";
-            } else if( result.contains("\r")) {
+            } else if (result.contains("\r")) {
                 nl = "\r";
             } else {
                 nl = "\n";
             }
-            String split[] = result.split(nl,2);
-            if( split.length > 1 && split[0].startsWith("%!PS-") ) {
+            String split[] = result.split(nl, 2);
+            if (split.length > 1 && split[0].startsWith("%!PS-")) {
                 String boundingBox;
-                if( this.dim != null ) {
-                    boundingBox = "%%BoundingBox: 0 0 " +
-                        dim.width + " " + dim.height + nl;
+                if (this.dim != null) {
+                    boundingBox = "%%BoundingBox: 0 0 " + dim.width + " " + dim.height + nl;
                 } else {
                     boundingBox = "";
                 }
-                if(!split[0].contains("EPS") && !boundingBox.equals("")) {
+                if (!split[0].contains("EPS") && !boundingBox.equals("")) {
                     split[0] += " EPSF-3.0";
                 }
                 // EGFF96 (p. 379):
-                // "Both the %%PS-Adobe- [sic] and the %%BoundingBox: lines must appear in every EPS file.
-                // Ordinary PostScript files may formally be changed into EPS files by adding these two lines
+                // "Both the %%PS-Adobe- [sic] and the %%BoundingBox: lines must appear in every EPS
+                // file.
+                // Ordinary PostScript files may formally be changed into EPS files by adding these
+                // two lines
                 // to the PostScript header."
 
                 // PLDS92 (p. 29):
@@ -163,17 +165,19 @@ final class FreeHepWrapper {
                 // header section, %%DocumentResources:, %%Title:, and %%Creator: may
                 // appear in any order."
                 //
-                // Thus, I infer that the "%%BoundingBox:" comment may be added immediately after the
+                // Thus, I infer that the "%%BoundingBox:" comment may be added immediately after
+                // the
                 // "%!PS-..." header line. This is also given as a valid example in EPSF92, p. 4.
 
-                result = split[0] + nl +
-                    boundingBox +
-                    split[1].
-                    replaceFirst("(\\d+ ){4}setmargins",
-                                 "0 0 0 0 setmargins").
-                    replaceFirst("(\\d+ ){2}setpagesize",
-                                 dim.width + " " + dim.height +
-                                 " setpagesize");
+                result =
+                        split[0]
+                                + nl
+                                + boundingBox
+                                + split[1].replaceFirst(
+                                                "(\\d+ ){4}setmargins", "0 0 0 0 setmargins")
+                                        .replaceFirst(
+                                                "(\\d+ ){2}setpagesize",
+                                                dim.width + " " + dim.height + " setpagesize");
             }
         }
         return result;

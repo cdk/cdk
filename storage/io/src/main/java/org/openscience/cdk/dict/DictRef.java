@@ -23,22 +23,21 @@
  */
 package org.openscience.cdk.dict;
 
-
 /**
- * Object that can be used as key in IChemObject.setProperty(key, value) to
- * denote that this property is a dictionary reference for this IChemObject.
+ * Object that can be used as key in IChemObject.setProperty(key, value) to denote that this
+ * property is a dictionary reference for this IChemObject.
  *
- * @author      Egon Willighagen
+ * @author Egon Willighagen
  * @cdk.created 2003-08-24
- * @cdk.module  standard
+ * @cdk.module standard
  * @cdk.githash
  */
 public class DictRef implements java.io.Serializable, Cloneable {
 
     private static final long serialVersionUID = -3691244168587563625L;
 
-    String                    type;
-    String                    reference;
+    String type;
+    String reference;
 
     public DictRef(String type, String dictRef) {
         this.type = type;
@@ -57,5 +56,4 @@ public class DictRef implements java.io.Serializable, Cloneable {
     public String toString() {
         return "DictRef{T=" + this.type + ", R=" + reference + "}";
     }
-
 }

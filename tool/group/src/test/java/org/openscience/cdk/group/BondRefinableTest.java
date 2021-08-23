@@ -26,7 +26,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -37,16 +36,16 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  * @cdk.module group
  */
 public class BondRefinableTest {
-    
+
     public static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-    
+
     @Test
     public void getVertexCount() {
         String acpString = "C0C1C2C3 0:1(1),1:2(1),2:3(1)";
         BondRefinable bondRefinable = refinable(acpString);
         assertEquals(3, bondRefinable.getVertexCount());
     }
-    
+
     @Test
     public void getConnectivity() {
         String acpString = "C0C1C2C3 0:1(1),0:3(1),1:2(1),2:3(1)";
@@ -56,7 +55,7 @@ public class BondRefinableTest {
         assertEquals(1, bondRefinable.getConnectivity(1, 3));
         assertEquals(1, bondRefinable.getConnectivity(2, 3));
     }
-    
+
     @Test
     public void neighboursInBlock() {
         String acpString = "C0C1C2C3 0:1(1),0:3(1),1:2(1),2:3(1)";
@@ -67,7 +66,7 @@ public class BondRefinableTest {
         assertEquals(new IntegerInvariant(1), bondRefinable.neighboursInBlock(block, 0));
         assertEquals(new IntegerInvariant(1), bondRefinable.neighboursInBlock(block, 2));
     }
-    
+
     @Test
     public void getBondPartitionTest() {
         String acpString = "C0C1C2C3O4 0:1(2),0:4(1),1:2(1),2:3(2),3:4(1)";
@@ -77,9 +76,8 @@ public class BondRefinableTest {
         Partition expected = Partition.fromString("0,3|1,4|2");
         assertEquals(expected, bondPartition);
     }
-    
+
     private BondRefinable refinable(String acpString) {
         return new BondRefinable(AtomContainerPrinter.fromString(acpString, builder));
     }
-
 }

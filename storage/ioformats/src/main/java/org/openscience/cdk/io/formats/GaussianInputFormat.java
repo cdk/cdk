@@ -54,7 +54,7 @@ public class GaussianInputFormat extends AbstractResourceFormat implements IChem
 
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"gau", "com"};
+        return new String[] {"gau", "com"};
     }
 
     @Override

@@ -24,7 +24,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -57,14 +56,16 @@ public class SMARTSQueryToolTest extends CDKTestCase {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testLexicalError() throws Exception {
-        SMARTSQueryTool sqt = new SMARTSQueryTool("Epoxide", DefaultChemObjectBuilder.getInstance());
+        SMARTSQueryTool sqt =
+                new SMARTSQueryTool("Epoxide", DefaultChemObjectBuilder.getInstance());
     }
 
     @Test
     public void testQueryTool() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C");
-        SMARTSQueryTool querytool = new SMARTSQueryTool("O=CO", DefaultChemObjectBuilder.getInstance());
+        SMARTSQueryTool querytool =
+                new SMARTSQueryTool("O=CO", DefaultChemObjectBuilder.getInstance());
 
         boolean status = querytool.matches(atomContainer);
         assertTrue(status);
@@ -100,7 +101,8 @@ public class SMARTSQueryToolTest extends CDKTestCase {
     public void testQueryToolSingleAtomCase() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("C1CCC12CCCC2");
-        SMARTSQueryTool querytool = new SMARTSQueryTool("C", DefaultChemObjectBuilder.getInstance());
+        SMARTSQueryTool querytool =
+                new SMARTSQueryTool("C", DefaultChemObjectBuilder.getInstance());
 
         boolean status = querytool.matches(atomContainer);
         assertTrue(status);
@@ -113,7 +115,8 @@ public class SMARTSQueryToolTest extends CDKTestCase {
     public void testQueryToolResetSmarts() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("C1CCC12CCCC2");
-        SMARTSQueryTool querytool = new SMARTSQueryTool("C", DefaultChemObjectBuilder.getInstance());
+        SMARTSQueryTool querytool =
+                new SMARTSQueryTool("C", DefaultChemObjectBuilder.getInstance());
 
         boolean status = querytool.matches(atomContainer);
         assertTrue(status);
@@ -138,7 +141,8 @@ public class SMARTSQueryToolTest extends CDKTestCase {
         IAtomContainer atomContainer = sp.parseSmiles("c1ccccc1CCCNCCCc1ccccc1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
         Aromaticity.cdkLegacy().apply(atomContainer);
-        SMARTSQueryTool querytool = new SMARTSQueryTool("c1ccccc1", DefaultChemObjectBuilder.getInstance());
+        SMARTSQueryTool querytool =
+                new SMARTSQueryTool("c1ccccc1", DefaultChemObjectBuilder.getInstance());
 
         boolean status = querytool.matches(atomContainer);
         assertTrue(status);
@@ -156,7 +160,8 @@ public class SMARTSQueryToolTest extends CDKTestCase {
         IAtomContainer atomContainer = sp.parseSmiles("c12cc(CCN)ccc1c(COC)ccc2");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
         Aromaticity.cdkLegacy().apply(atomContainer);
-        SMARTSQueryTool querytool = new SMARTSQueryTool("c12ccccc1cccc2", DefaultChemObjectBuilder.getInstance());
+        SMARTSQueryTool querytool =
+                new SMARTSQueryTool("c12ccccc1cccc2", DefaultChemObjectBuilder.getInstance());
 
         boolean status = querytool.matches(atomContainer);
         assertTrue(status);
@@ -169,9 +174,8 @@ public class SMARTSQueryToolTest extends CDKTestCase {
     }
 
     /**
-     * Note that we don't test the generated SMILES against the
-     * molecule obtained from the factory since the factory derived
-     * molecule does not have an explicit hydrogen, which it really should
+     * Note that we don't test the generated SMILES against the molecule obtained from the factory
+     * since the factory derived molecule does not have an explicit hydrogen, which it really should
      * have.
      *
      * @cdk.bug 1985811
@@ -188,16 +192,16 @@ public class SMARTSQueryToolTest extends CDKTestCase {
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         indole = smilesParser.parseSmiles(indoleSmiles);
 
-        SMARTSQueryTool querytool = new SMARTSQueryTool(indoleSmiles, DefaultChemObjectBuilder.getInstance());
+        SMARTSQueryTool querytool =
+                new SMARTSQueryTool(indoleSmiles, DefaultChemObjectBuilder.getInstance());
         assertTrue(querytool.matches(indole));
     }
 
-    /**
-     * @cdk.bug 2149621
-     */
+    /** @cdk.bug 2149621 */
     @Test
     public void testMethane() throws Exception {
-        IAtomContainer methane = SilentChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer methane =
+                SilentChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         IAtom carbon = methane.getBuilder().newInstance(IAtom.class, Elements.CARBON);
         carbon.setImplicitHydrogenCount(4);
         methane.addAtom(carbon);
@@ -205,7 +209,6 @@ public class SMARTSQueryToolTest extends CDKTestCase {
         SMARTSQueryTool sqt = new SMARTSQueryTool("CC", DefaultChemObjectBuilder.getInstance());
         boolean matches = sqt.matches(methane);
         assertFalse(matches);
-
     }
 
     @Test(expected = NullPointerException.class)

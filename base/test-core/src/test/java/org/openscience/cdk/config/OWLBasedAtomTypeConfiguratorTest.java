@@ -20,7 +20,6 @@
 package org.openscience.cdk.config;
 
 import java.io.InputStream;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -52,5 +51,4 @@ public class OWLBasedAtomTypeConfiguratorTest extends CDKTestCase {
     public void testSetInputStream_InputStream() throws Exception {
         testReadAtomTypes_IChemObjectBuilder();
     }
-
 }

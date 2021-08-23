@@ -26,8 +26,8 @@ package org.openscience.cdk.graph;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertFalse;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -35,10 +35,8 @@ import static org.openscience.cdk.graph.BitMatrixTest.toBitSet;
 
 import java.util.Arrays;
 import java.util.BitSet;
-
-import org.openscience.cdk.graph.InitialCycles.Cycle;
-
 import org.junit.Test;
+import org.openscience.cdk.graph.InitialCycles.Cycle;
 
 /**
  * @author John May
@@ -97,7 +95,6 @@ public class GreedyBasisTest {
         assertFalse(basis.isSubsetOfBasis(c3));
         basis.add(c2);
         assertTrue(basis.isSubsetOfBasis(c3));
-
     }
 
     @Test
@@ -139,5 +136,4 @@ public class GreedyBasisTest {
         basis.add(c3);
         assertThat(basis.size(), is(3));
     }
-
 }

@@ -30,34 +30,34 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 /**
- * CDK's SAX2 ErrorHandler for giving feedback on XML errors in the CML document.
- * Output is redirected to org.openscience.cdk.tools.LoggingTool.
+ * CDK's SAX2 ErrorHandler for giving feedback on XML errors in the CML document. Output is
+ * redirected to org.openscience.cdk.tools.LoggingTool.
  *
  * @cdk.module io
  * @cdk.githash
- *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
- **/
+ */
 public class CMLErrorHandler implements ErrorHandler {
 
-    private static ILoggingTool logger        = LoggingToolFactory.createLoggingTool(CMLErrorHandler.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(CMLErrorHandler.class);
 
-    public boolean              reportErrors  = true;
-    public boolean              abortOnErrors = false;
+    public boolean reportErrors = true;
+    public boolean abortOnErrors = false;
 
     /**
-     * Constructor a SAX2 ErrorHandler that uses the cdk.tools.LoggingTool
-     * class to output errors and warnings to.
-     **/
+     * Constructor a SAX2 ErrorHandler that uses the cdk.tools.LoggingTool class to output errors
+     * and warnings to.
+     */
     public CMLErrorHandler() {
         logger.info("instantiated");
     }
 
     /**
-     * Internal procedure that outputs an SAXParseException with a significance level
-     * to the cdk.tools.LoggingTool logger.
+     * Internal procedure that outputs an SAXParseException with a significance level to the
+     * cdk.tools.LoggingTool logger.
      *
-     * @param level     significance level
+     * @param level significance level
      * @param exception Exception to output
      */
     private void print(String level, SAXParseException exception) {
@@ -77,8 +77,8 @@ public class CMLErrorHandler implements ErrorHandler {
     /**
      * Outputs a SAXParseException error to the logger.
      *
-     * @param exception   Exception to output
-     **/
+     * @param exception Exception to output
+     */
     @Override
     public void error(SAXParseException exception) throws SAXException {
         if (reportErrors) print("error", exception);
@@ -88,8 +88,8 @@ public class CMLErrorHandler implements ErrorHandler {
     /**
      * Outputs as fatal SAXParseException error to the logger.
      *
-     * @param exception   Exception to output
-     **/
+     * @param exception Exception to output
+     */
     @Override
     public void fatalError(SAXParseException exception) throws SAXException {
         if (reportErrors) print("fatal", exception);
@@ -99,11 +99,10 @@ public class CMLErrorHandler implements ErrorHandler {
     /**
      * Outputs a SAXParseException warning to the logger.
      *
-     * @param exception   Exception to output
-     **/
+     * @param exception Exception to output
+     */
     @Override
     public void warning(SAXParseException exception) throws SAXException {
         if (reportErrors) print("warning", exception);
     }
-
 }

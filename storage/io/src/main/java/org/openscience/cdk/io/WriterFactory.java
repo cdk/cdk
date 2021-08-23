@@ -32,7 +32,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -44,21 +43,18 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @author Egon Willighagen &lt;ewilligh@uni-koeln.de&gt;
  * @cdk.module io
  * @cdk.githash
- **/
+ */
 public class WriterFactory {
 
-    private final static String                          IO_FORMATS_LIST = "io-formats.set";
+    private static final String IO_FORMATS_LIST = "io-formats.set";
 
-    private static ILoggingTool                          logger          = LoggingToolFactory
-                                                                                 .createLoggingTool(WriterFactory.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(WriterFactory.class);
 
-    private static List<IChemFormat>                     formats         = null;
+    private static List<IChemFormat> formats = null;
 
     private static Map<String, Class<IChemObjectWriter>> registeredReaders;
 
-    /**
-     * Constructs a ChemObjectIOInstantionTests.
-     */
+    /** Constructs a ChemObjectIOInstantionTests. */
     public WriterFactory() {
         registeredReaders = new HashMap<String, Class<IChemObjectWriter>>();
     }
@@ -71,13 +67,12 @@ public class WriterFactory {
     }
 
     /**
-     * Finds IChemFormats that provide a container for serialization for the
-     * given features. The syntax of the integer is explained in the DataFeatures class.
+     * Finds IChemFormats that provide a container for serialization for the given features. The
+     * syntax of the integer is explained in the DataFeatures class.
      *
-     * @param  features the data features for which a IChemFormat is searched
-     * @return          an array of IChemFormat's that can contain the given features
-     *
-     * @see    org.openscience.cdk.tools.DataFeatures
+     * @param features the data features for which a IChemFormat is searched
+     * @return an array of IChemFormat's that can contain the given features
+     * @see org.openscience.cdk.tools.DataFeatures
      */
     public IChemFormat[] findChemFormats(int features) {
         if (formats == null) loadFormats();
@@ -103,17 +98,24 @@ public class WriterFactory {
             formats = new ArrayList<IChemFormat>();
             try {
                 logger.debug("Starting loading Formats...");
-                BufferedReader reader = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader()
-                        .getResourceAsStream(IO_FORMATS_LIST)));
+                BufferedReader reader =
+                        new BufferedReader(
+                                new InputStreamReader(
+                                        this.getClass()
+                                                .getClassLoader()
+                                                .getResourceAsStream(IO_FORMATS_LIST)));
                 int formatCount = 0;
                 while (reader.ready()) {
                     // load them one by one
                     String formatName = reader.readLine();
                     formatCount++;
                     try {
-                        Class<?> formatClass = this.getClass().getClassLoader().loadClass(formatName);
-                        Method getinstanceMethod = formatClass.getMethod("getInstance", new Class[0]);
-                        IResourceFormat format = (IResourceFormat) getinstanceMethod.invoke(null, new Object[0]);
+                        Class<?> formatClass =
+                                this.getClass().getClassLoader().loadClass(formatName);
+                        Method getinstanceMethod =
+                                formatClass.getMethod("getInstance", new Class[0]);
+                        IResourceFormat format =
+                                (IResourceFormat) getinstanceMethod.invoke(null, new Object[0]);
                         if (format instanceof IChemFormat) {
                             formats.add((IChemFormat) format);
                             logger.info("Loaded IChemFormat: " + format.getClass().getName());
@@ -121,7 +123,11 @@ public class WriterFactory {
                     } catch (ClassNotFoundException exception) {
                         logger.error("Could not find this IResourceFormat: ", formatName);
                         logger.debug(exception);
-                    } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException exception) {
+                    } catch (NoSuchMethodException
+                            | SecurityException
+                            | IllegalAccessException
+                            | IllegalArgumentException
+                            | InvocationTargetException exception) {
                         logger.error("Could not load this IResourceFormat: ", formatName);
                         logger.debug(exception);
                     }
@@ -134,9 +140,7 @@ public class WriterFactory {
         }
     }
 
-    /**
-     * Creates a new IChemObjectWriter based on the given IChemFormat.
-     */
+    /** Creates a new IChemObjectWriter based on the given IChemFormat. */
     public IChemObjectWriter createWriter(IChemFormat format) {
         if (format != null) {
             String writerClassName = format.getWriterClassName();
@@ -147,8 +151,11 @@ public class WriterFactory {
                         if (writer != null) return writer.newInstance();
                     }
                     // make a new instance of this class
-                    return (IChemObjectWriter) this.getClass().getClassLoader().loadClass(writerClassName)
-                            .newInstance();
+                    return (IChemObjectWriter)
+                            this.getClass()
+                                    .getClassLoader()
+                                    .loadClass(writerClassName)
+                                    .newInstance();
                 } catch (ClassNotFoundException exception) {
                     logger.error("Could not find this ChemObjectWriter: ", writerClassName);
                     logger.debug(exception);

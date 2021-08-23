@@ -51,11 +51,12 @@ import org.openscience.cdk.smsd.algorithm.vflib.interfaces.INode;
 
 /**
  * Holds matching query and target nodes.
+ *
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is
+ *     available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public class Match {
@@ -65,6 +66,7 @@ public class Match {
 
     /**
      * Constructor
+     *
      * @param query
      * @param target
      */
@@ -75,6 +77,7 @@ public class Match {
 
     /**
      * Return query node
+     *
      * @return query node
      */
     public INode getQueryNode() {
@@ -83,6 +86,7 @@ public class Match {
 
     /**
      * Return Target Atom
+     *
      * @return target Atom
      */
     public IAtom getTargetAtom() {

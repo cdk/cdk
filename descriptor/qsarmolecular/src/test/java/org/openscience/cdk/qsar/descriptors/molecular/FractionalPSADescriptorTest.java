@@ -28,6 +28,8 @@
 
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -36,18 +38,15 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import org.junit.Before;
-import org.junit.Test;
-
 /**
  * Test for fractional PSA descriptor.
  *
  * @cdk.module test-qsarmolecular
  */
-
 public class FractionalPSADescriptorTest extends MolecularDescriptorTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(FractionalPSADescriptorTest.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(FractionalPSADescriptorTest.class);
 
     public FractionalPSADescriptorTest() {}
 
@@ -59,7 +58,8 @@ public class FractionalPSADescriptorTest extends MolecularDescriptorTest {
     @Test
     public void testDescriptors() throws Exception {
         String fnmol = "data/cdd/pyridineacid.mol";
-        MDLV2000Reader mdl = new MDLV2000Reader(this.getClass().getClassLoader().getResourceAsStream(fnmol));
+        MDLV2000Reader mdl =
+                new MDLV2000Reader(this.getClass().getClassLoader().getResourceAsStream(fnmol));
         AtomContainer mol = new AtomContainer();
         mdl.read(mol);
         mdl.close();
@@ -73,7 +73,9 @@ public class FractionalPSADescriptorTest extends MolecularDescriptorTest {
             throw new CDKException("Only expecting 'tpsaEfficiency'");
         DoubleResult value = (DoubleResult) results.getValue();
         double tpsaEfficiency = value.doubleValue();
-        final double ANSWER = 0.4036, ANSWER_LO = ANSWER * 0.999, ANSWER_HI = ANSWER * 1.001; // (we can tolerate rounding errors)
+        final double ANSWER = 0.4036,
+                ANSWER_LO = ANSWER * 0.999,
+                ANSWER_HI = ANSWER * 1.001; // (we can tolerate rounding errors)
         if (tpsaEfficiency < ANSWER_LO || tpsaEfficiency > ANSWER_HI) {
             throw new CDKException("Got " + tpsaEfficiency + ", expected " + ANSWER);
         }

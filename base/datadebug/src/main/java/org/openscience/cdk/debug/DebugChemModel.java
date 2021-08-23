@@ -19,7 +19,6 @@
 package org.openscience.cdk.debug;
 
 import java.util.Map;
-
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -35,7 +34,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * Debugging data class.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module datadebug
  * @cdk.githash
  */
@@ -43,7 +42,7 @@ public class DebugChemModel extends ChemModel implements IChemModel {
 
     private static final long serialVersionUID = -920209300005079592L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugChemModel.class);
+    ILoggingTool logger = LoggingToolFactory.createLoggingTool(DebugChemModel.class);
 
     /** {@inheritDoc} */
     @Override
@@ -232,9 +231,7 @@ public class DebugChemModel extends ChemModel implements IChemModel {
         super.setReactionSet(sor);
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean isEmpty() {
         boolean res = true;

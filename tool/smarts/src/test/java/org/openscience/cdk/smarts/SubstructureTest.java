@@ -24,6 +24,12 @@
 
 package org.openscience.cdk.smarts;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.io.IOException;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openscience.cdk.SlowTest;
@@ -33,19 +39,10 @@ import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
-import java.io.IOException;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.openscience.cdk.CDKConstants.TITLE;
-
 /**
- * A collection of substructure integration tests. These give a high-level view
- * of what we expect to match. To run these tests the subclass should {@link
- * #create(org.openscience.cdk.interfaces.IAtomContainer)} a pattern for the
- * input.
+ * A collection of substructure integration tests. These give a high-level view of what we expect to
+ * match. To run these tests the subclass should {@link
+ * #create(org.openscience.cdk.interfaces.IAtomContainer)} a pattern for the input.
  *
  * @author John May
  * @cdk.module test-smarts
@@ -304,7 +301,8 @@ public abstract class SubstructureTest {
     public void fullerene_c60() throws Exception {
         assertMatch(
                 smi("C1CCCCC1"),
-                smi("C12C3C4C5C1C1C6C7C2C2C8C3C3C9C4C4C%10C5C5C1C1C6C6C%11C7C2C2C7C8C3C3C8C9C4C4C9C%10C5C5C1C1C6C6C%11C2C2C7C3C3C8C4C4C9C5C1C1C6C2C3C41"),
+                smi(
+                        "C12C3C4C5C1C1C6C7C2C2C8C3C3C9C4C4C%10C5C5C1C1C6C6C%11C7C2C2C7C8C3C3C8C9C4C4C9C%10C5C5C1C1C6C6C%11C2C2C7C3C3C8C4C4C9C5C1C1C6C2C3C41"),
                 240);
     }
 
@@ -312,7 +310,8 @@ public abstract class SubstructureTest {
     public void fullerene_c70() throws Exception {
         assertMatch(
                 smi("C1CCCCC1"),
-                smi("C12C3C4C5C1C1C6C7C5C5C8C4C4C9C3C3C%10C2C2C1C1C%11C%12C%13C%14C%15C%16C%17C%18C%19C%20C%16C%16C%14C%12C%12C%14C%21C%22C(C%20C%16%14)C%14C%19C%16C(C4C8C(C%18%16)C4C%17C%15C(C7C54)C%13C61)C1C%14C%22C(C3C91)C1C%21C%12C%11C2C%101"),
+                smi(
+                        "C12C3C4C5C1C1C6C7C5C5C8C4C4C9C3C3C%10C2C2C1C1C%11C%12C%13C%14C%15C%16C%17C%18C%19C%20C%16C%16C%14C%12C%12C%14C%21C%22C(C%20C%16%14)C%14C%19C%16C(C4C8C(C%18%16)C4C%17C%15C(C7C54)C%13C61)C1C%14C%22C(C3C91)C1C%21C%12C%11C2C%101"),
                 300);
     }
 
@@ -320,8 +319,10 @@ public abstract class SubstructureTest {
     @Test
     public void fullerene_c70_automorphisms() throws Exception {
         assertMatch(
-                smi("C12C3C4C5C1C1C6C7C5C5C8C4C4C9C3C3C%10C2C2C1C1C%11C%12C%13C%14C%15C%16C%17C%18C%19C%20C%16C%16C%14C%12C%12C%14C%21C%22C(C%20C%16%14)C%14C%19C%16C(C4C8C(C%18%16)C4C%17C%15C(C7C54)C%13C61)C1C%14C%22C(C3C91)C1C%21C%12C%11C2C%101"),
-                smi("C12C3C4C5C1C1C6C7C5C5C8C4C4C9C3C3C%10C2C2C1C1C%11C%12C%13C%14C%15C%16C%17C%18C%19C%20C%16C%16C%14C%12C%12C%14C%21C%22C(C%20C%16%14)C%14C%19C%16C(C4C8C(C%18%16)C4C%17C%15C(C7C54)C%13C61)C1C%14C%22C(C3C91)C1C%21C%12C%11C2C%101"),
+                smi(
+                        "C12C3C4C5C1C1C6C7C5C5C8C4C4C9C3C3C%10C2C2C1C1C%11C%12C%13C%14C%15C%16C%17C%18C%19C%20C%16C%16C%14C%12C%12C%14C%21C%22C(C%20C%16%14)C%14C%19C%16C(C4C8C(C%18%16)C4C%17C%15C(C7C54)C%13C61)C1C%14C%22C(C3C91)C1C%21C%12C%11C2C%101"),
+                smi(
+                        "C12C3C4C5C1C1C6C7C5C5C8C4C4C9C3C3C%10C2C2C1C1C%11C%12C%13C%14C%15C%16C%17C%18C%19C%20C%16C%16C%14C%12C%12C%14C%21C%22C(C%20C%16%14)C%14C%19C%16C(C4C8C(C%18%16)C4C%17C%15C(C7C54)C%13C61)C1C%14C%22C(C3C91)C1C%21C%12C%11C2C%101"),
                 20);
     }
 
@@ -332,7 +333,9 @@ public abstract class SubstructureTest {
 
     @Test
     public void ferrocene_automorphisms() throws Exception {
-        assertMatch(smi("[Fe]123456789C%10C1C2C3C4%10.C51C6C7C8C91"), smi("[Fe]123456789C%10C1C2C3C4%10.C51C6C7C8C91"),
+        assertMatch(
+                smi("[Fe]123456789C%10C1C2C3C4%10.C51C6C7C8C91"),
+                smi("[Fe]123456789C%10C1C2C3C4%10.C51C6C7C8C91"),
                 200);
     }
 
@@ -373,10 +376,16 @@ public abstract class SubstructureTest {
 
     @Test
     public void stereoGroupsQuery() throws Exception {
-        assertMatch(sma("C[C;@,@@](O)[C@H](O)[C@H](O)CC"), smi("C[C@H](O)[C@H](O)[C@H](O)CC |r|"), 1);
-        assertMatch(sma("C[C;@,@@](O)[C@H](O)[C@H](O)CC"), smi("C[C@@H](O)[C@@H](O)[C@@H](O)CC |r|"), 1);
-        assertMismatch(sma("C[C;@,@@](O)[C@H](O)[C@H](O)CC"), smi("C[C@H](O)[C@@H](O)[C@H](O)CC |r|"));
-        assertMismatch(sma("C[C;@,@@](O)[C@H](O)[C@H](O)CC"), smi("C[C@H](O)[C@H](O)[C@@H](O)CC |r|"));
+        assertMatch(
+                sma("C[C;@,@@](O)[C@H](O)[C@H](O)CC"), smi("C[C@H](O)[C@H](O)[C@H](O)CC |r|"), 1);
+        assertMatch(
+                sma("C[C;@,@@](O)[C@H](O)[C@H](O)CC"),
+                smi("C[C@@H](O)[C@@H](O)[C@@H](O)CC |r|"),
+                1);
+        assertMismatch(
+                sma("C[C;@,@@](O)[C@H](O)[C@H](O)CC"), smi("C[C@H](O)[C@@H](O)[C@H](O)CC |r|"));
+        assertMismatch(
+                sma("C[C;@,@@](O)[C@H](O)[C@H](O)CC"), smi("C[C@H](O)[C@H](O)[C@@H](O)CC |r|"));
     }
 
     // doesn't matter if the match takes place but it should not cause and error
@@ -397,18 +406,22 @@ public abstract class SubstructureTest {
     }
 
     void assertMatch(IAtomContainer query, IAtomContainer target, int count) {
-        assertThat(query.getTitle() + " should match " + target.getTitle() + " " + count + " times",
-                create(query).matchAll(target).count(), is(count));
+        assertThat(
+                query.getTitle() + " should match " + target.getTitle() + " " + count + " times",
+                create(query).matchAll(target).count(),
+                is(count));
     }
 
     void assertMatch(IAtomContainer query, IAtomContainer target) {
-        assertTrue(query.getTitle() + " should match " + target.getTitle(),
+        assertTrue(
+                query.getTitle() + " should match " + target.getTitle(),
                 create(query).matches(target));
     }
 
     void assertMismatch(IAtomContainer query, IAtomContainer target) {
-        assertFalse(query.getTitle() + " should not matched " + target.getTitle(), create(query)
-                .matches(target));
+        assertFalse(
+                query.getTitle() + " should not matched " + target.getTitle(),
+                create(query).matches(target));
     }
 
     private static final SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());

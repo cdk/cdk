@@ -24,23 +24,20 @@
 
 package org.openscience.cdk.hash;
 
+import java.util.BitSet;
 import org.openscience.cdk.hash.stereo.StereoEncoder;
 
-import java.util.BitSet;
-
 /**
- * Defines an internal super-class for AtomHashGenerators. The single required
- * method allows atom hash generators to either ignore 'suppressed' atoms or use
- * the information.
+ * Defines an internal super-class for AtomHashGenerators. The single required method allows atom
+ * hash generators to either ignore 'suppressed' atoms or use the information.
  *
  * @author John May
  * @cdk.module hash
  */
-abstract class AbstractAtomHashGenerator extends AbstractHashGenerator implements AtomHashGenerator {
+abstract class AbstractAtomHashGenerator extends AbstractHashGenerator
+        implements AtomHashGenerator {
 
-    /**
-     * Empty BitSet for use when the 'suppressed' atoms are ignored.
-     */
+    /** Empty BitSet for use when the 'suppressed' atoms are ignored. */
     final BitSet EMPTY_BITSET = new BitSet();
 
     public AbstractAtomHashGenerator(Pseudorandom pseudorandom) {
@@ -50,13 +47,12 @@ abstract class AbstractAtomHashGenerator extends AbstractHashGenerator implement
     /**
      * Internal method invoked by 'molecule' hash generators.
      *
-     * @param current    the current invariants
-     * @param encoder    encoder used for encoding stereo-chemistry
-     * @param graph      adjacency list representation of the molecule
-     * @param suppressed bit set marks vertices which are 'suppressed' (may be
-     *                   ignored)
+     * @param current the current invariants
+     * @param encoder encoder used for encoding stereo-chemistry
+     * @param graph adjacency list representation of the molecule
+     * @param suppressed bit set marks vertices which are 'suppressed' (may be ignored)
      * @return the atom hash values
      */
-    abstract long[] generate(long[] current, StereoEncoder encoder, int[][] graph, Suppressed suppressed);
-
+    abstract long[] generate(
+            long[] current, StereoEncoder encoder, int[][] graph, Suppressed suppressed);
 }

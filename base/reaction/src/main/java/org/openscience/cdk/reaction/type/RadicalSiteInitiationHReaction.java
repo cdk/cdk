@@ -18,6 +18,8 @@
  */
 package org.openscience.cdk.reaction.type;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -35,74 +37,74 @@ import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 /**
- * <p>IReactionProcess which participate mass spectrum process. Homolitic dissocitation.
- * This reaction could be represented as H-B-[C*] =&gt; [H*] + B=C. H is hydrogen atom</p>
- * <p>Make sure that the molecule has the correspond lone pair electrons
- * for each atom. You can use the method: <pre> LonePairElectronChecker </pre>
- * <p>It is processed by the RadicalSiteIonizationMechanism class</p>
+ * IReactionProcess which participate mass spectrum process. Homolitic dissocitation. This reaction
+ * could be represented as H-B-[C*] =&gt; [H*] + B=C. H is hydrogen atom
+ *
+ * <p>Make sure that the molecule has the correspond lone pair electrons for each atom. You can use
+ * the method:
+ *
+ * <pre> LonePairElectronChecker </pre>
+ *
+ * <p>It is processed by the RadicalSiteIonizationMechanism class
  *
  * <pre>
  *  IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newAtomContainerSet();
  *  setOfReactants.addAtomContainer(new AtomContainer());
  *  IReactionProcess type = new RadicalSiteInitiationHReaction();
  *  Object[] params = {Boolean.FALSE};
-    type.setParameters(params);
+ * type.setParameters(params);
  *  IReactionSet setOfReactions = type.initiate(setOfReactants, null);
  *  </pre>
  *
- * <p>We have the possibility to localize the reactive center. Good method if you
- * want to localize the reaction in a fixed point</p>
+ * <p>We have the possibility to localize the reactive center. Good method if you want to localize
+ * the reaction in a fixed point
+ *
  * <pre>atoms[0].setFlag(CDKConstants.REACTIVE_CENTER,true);</pre>
- * <p>Moreover you must put the parameter Boolean.TRUE</p>
- * <p>If the reactive center is not localized then the reaction process will
- * try to find automatically the possible reactive center.</p>
  *
+ * <p>Moreover you must put the parameter Boolean.TRUE
  *
- * @author         Miguel Rojas
+ * <p>If the reactive center is not localized then the reaction process will try to find
+ * automatically the possible reactive center.
  *
- * @cdk.created    2006-10-18
- * @cdk.module     reaction
+ * @author Miguel Rojas
+ * @cdk.created 2006-10-18
+ * @cdk.module reaction
  * @cdk.githash
- *
  * @see RadicalSiteIonizationMechanism
- **/
+ */
 public class RadicalSiteInitiationHReaction extends ReactionEngine implements IReactionProcess {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(RadicalSiteInitiationHReaction.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(RadicalSiteInitiationHReaction.class);
 
-    /**
-     * Constructor of the RadicalSiteInitiationHReaction object
-     *
-     */
+    /** Constructor of the RadicalSiteInitiationHReaction object */
     public RadicalSiteInitiationHReaction() {}
 
     /**
-     *  Gets the specification attribute of the RadicalSiteInitiationHReaction object
+     * Gets the specification attribute of the RadicalSiteInitiationHReaction object
      *
-     *@return    The specification value
+     * @return The specification value
      */
     @Override
     public ReactionSpecification getSpecification() {
         return new ReactionSpecification(
                 "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#RadicalSiteInitiationH",
-                this.getClass().getName(), "$Id$", "The Chemistry Development Kit");
+                this.getClass().getName(),
+                "$Id$",
+                "The Chemistry Development Kit");
     }
 
     /**
-     *  Initiate process.
+     * Initiate process.
      *
-     *
-     *@exception  CDKException  Description of the Exception
-
-     * @param  reactants         reactants of the reaction.
-    * @param  agents            agents of the reaction (Must be in this case null).
+     * @exception CDKException Description of the Exception
+     * @param reactants reactants of the reaction.
+     * @param agents agents of the reaction (Must be in this case null).
      */
     @Override
-    public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents) throws CDKException {
+    public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents)
+            throws CDKException {
         logger.debug("initiate reaction: RadicalSiteInitiationHReaction");
 
         if (reactants.getAtomContainerCount() != 1) {
@@ -125,7 +127,8 @@ public class RadicalSiteInitiationHReaction extends ReactionEngine implements IR
         Iterator<IAtom> atoms = reactants.getAtomContainer(0).atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atomi = atoms.next();
-            if (atomi.getFlag(CDKConstants.REACTIVE_CENTER) && reactant.getConnectedSingleElectronsCount(atomi) == 1
+            if (atomi.getFlag(CDKConstants.REACTIVE_CENTER)
+                    && reactant.getConnectedSingleElectronsCount(atomi) == 1
                     && atomi.getFormalCharge() == 0) {
 
                 Iterator<IBond> bondis = reactant.getConnectedBondsList(atomi).iterator();
@@ -133,12 +136,15 @@ public class RadicalSiteInitiationHReaction extends ReactionEngine implements IR
                 while (bondis.hasNext()) {
                     IBond bondi = bondis.next();
 
-                    if (bondi.getFlag(CDKConstants.REACTIVE_CENTER) && bondi.getOrder() == IBond.Order.SINGLE) {
+                    if (bondi.getFlag(CDKConstants.REACTIVE_CENTER)
+                            && bondi.getOrder() == IBond.Order.SINGLE) {
 
                         IAtom atomj = bondi.getOther(atomi);
-                        if (atomj.getFlag(CDKConstants.REACTIVE_CENTER) && atomj.getFormalCharge() == 0) {
+                        if (atomj.getFlag(CDKConstants.REACTIVE_CENTER)
+                                && atomj.getFormalCharge() == 0) {
 
-                            Iterator<IBond> bondjs = reactant.getConnectedBondsList(atomj).iterator();
+                            Iterator<IBond> bondjs =
+                                    reactant.getConnectedBondsList(atomj).iterator();
                             while (bondjs.hasNext()) {
                                 IBond bondj = bondjs.next();
 
@@ -148,7 +154,8 @@ public class RadicalSiteInitiationHReaction extends ReactionEngine implements IR
                                         && bondj.getOrder() == IBond.Order.SINGLE) {
 
                                     IAtom atomk = bondj.getOther(atomj);
-                                    if (atomk.getFlag(CDKConstants.REACTIVE_CENTER) && atomk.getSymbol().equals("H")
+                                    if (atomk.getFlag(CDKConstants.REACTIVE_CENTER)
+                                            && atomk.getSymbol().equals("H")
                                             && atomk.getFormalCharge() == 0) {
 
                                         ArrayList<IAtom> atomList = new ArrayList<IAtom>();
@@ -159,14 +166,14 @@ public class RadicalSiteInitiationHReaction extends ReactionEngine implements IR
                                         bondList.add(bondi);
                                         bondList.add(bondj);
 
-                                        IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(
-                                                IAtomContainerSet.class);
+                                        IAtomContainerSet moleculeSet =
+                                                reactant.getBuilder()
+                                                        .newInstance(IAtomContainerSet.class);
                                         moleculeSet.addAtomContainer(reactant);
-                                        IReaction reaction = mechanism.initiate(moleculeSet, atomList, bondList);
-                                        if (reaction == null)
-                                            continue;
-                                        else
-                                            setOfReactions.addReaction(reaction);
+                                        IReaction reaction =
+                                                mechanism.initiate(moleculeSet, atomList, bondList);
+                                        if (reaction == null) continue;
+                                        else setOfReactions.addReaction(reaction);
                                     }
                                 }
                             }
@@ -179,8 +186,9 @@ public class RadicalSiteInitiationHReaction extends ReactionEngine implements IR
     }
 
     /**
-     * set the active center for this molecule.
-     * The active center will be those which correspond with H-B-[C*] .
+     * set the active center for this molecule. The active center will be those which correspond
+     * with H-B-[C*] .
+     *
      * <pre>
      * H: Hydrogen Atom
      * -: bond
@@ -196,7 +204,8 @@ public class RadicalSiteInitiationHReaction extends ReactionEngine implements IR
         Iterator<IAtom> atoms = reactant.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atomi = atoms.next();
-            if (reactant.getConnectedSingleElectronsCount(atomi) == 1 && atomi.getFormalCharge() == 0) {
+            if (reactant.getConnectedSingleElectronsCount(atomi) == 1
+                    && atomi.getFormalCharge() == 0) {
 
                 Iterator<IBond> bondis = reactant.getConnectedBondsList(atomi).iterator();
 
@@ -208,7 +217,8 @@ public class RadicalSiteInitiationHReaction extends ReactionEngine implements IR
                         IAtom atomj = bondi.getOther(atomi);
                         if (atomj.getFormalCharge() == 0) {
 
-                            Iterator<IBond> bondjs = reactant.getConnectedBondsList(atomj).iterator();
+                            Iterator<IBond> bondjs =
+                                    reactant.getConnectedBondsList(atomj).iterator();
                             while (bondjs.hasNext()) {
                                 IBond bondj = bondjs.next();
 
@@ -217,7 +227,8 @@ public class RadicalSiteInitiationHReaction extends ReactionEngine implements IR
                                 if (bondj.getOrder() == IBond.Order.SINGLE) {
 
                                     IAtom atomk = bondj.getOther(atomj);
-                                    if (atomk.getSymbol().equals("H") && atomk.getFormalCharge() == 0) {
+                                    if (atomk.getSymbol().equals("H")
+                                            && atomk.getFormalCharge() == 0) {
                                         atomi.setFlag(CDKConstants.REACTIVE_CENTER, true);
                                         atomj.setFlag(CDKConstants.REACTIVE_CENTER, true);
                                         atomk.setFlag(CDKConstants.REACTIVE_CENTER, true);

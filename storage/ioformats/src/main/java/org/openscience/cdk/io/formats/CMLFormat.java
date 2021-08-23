@@ -58,7 +58,7 @@ public class CMLFormat extends SimpleChemFormatMatcher implements IChemFormatMat
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"cml", "xml"};
+        return new String[] {"cml", "xml"};
     }
 
     /** {@inheritDoc} */
@@ -76,9 +76,12 @@ public class CMLFormat extends SimpleChemFormatMatcher implements IChemFormatMat
     /** {@inheritDoc} */
     @Override
     public boolean matches(int lineNumber, String line) {
-        if ((line.indexOf("http://www.xml-cml.org/schema") != -1) || (line.indexOf("<atom") != -1)
-                || (line.indexOf("<molecule") != -1) || (line.indexOf("<reaction") != -1)
-                || (line.indexOf("<cml") != -1) || (line.indexOf("<bond") != -1)) {
+        if ((line.indexOf("http://www.xml-cml.org/schema") != -1)
+                || (line.indexOf("<atom") != -1)
+                || (line.indexOf("<molecule") != -1)
+                || (line.indexOf("<reaction") != -1)
+                || (line.indexOf("<cml") != -1)
+                || (line.indexOf("<bond") != -1)) {
             return true;
         }
         return false;
@@ -93,10 +96,14 @@ public class CMLFormat extends SimpleChemFormatMatcher implements IChemFormatMat
     /** {@inheritDoc} */
     @Override
     public int getSupportedDataFeatures() {
-        return DataFeatures.HAS_2D_COORDINATES | DataFeatures.HAS_3D_COORDINATES
-                | DataFeatures.HAS_ATOM_PARTIAL_CHARGES | DataFeatures.HAS_ATOM_FORMAL_CHARGES
-                | DataFeatures.HAS_ATOM_MASS_NUMBERS | DataFeatures.HAS_ATOM_ISOTOPE_NUMBERS
-                | DataFeatures.HAS_GRAPH_REPRESENTATION | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
+        return DataFeatures.HAS_2D_COORDINATES
+                | DataFeatures.HAS_3D_COORDINATES
+                | DataFeatures.HAS_ATOM_PARTIAL_CHARGES
+                | DataFeatures.HAS_ATOM_FORMAL_CHARGES
+                | DataFeatures.HAS_ATOM_MASS_NUMBERS
+                | DataFeatures.HAS_ATOM_ISOTOPE_NUMBERS
+                | DataFeatures.HAS_GRAPH_REPRESENTATION
+                | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
     }
 
     /** {@inheritDoc} */

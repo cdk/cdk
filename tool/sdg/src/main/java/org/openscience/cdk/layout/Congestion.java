@@ -23,16 +23,14 @@
 
 package org.openscience.cdk.layout;
 
+import javax.vecmath.Point2d;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import javax.vecmath.Point2d;
-
 /**
- * Measure and update a score of congestion in a molecule layout 
- * {@cdk.cite HEL99}, {@cdk.cite Clark06}. This can be tuned in
- * several ways but currently uses a basic '1/(dist^2)'.
+ * Measure and update a score of congestion in a molecule layout {@cdk.cite HEL99}, {@cdk.cite
+ * Clark06}. This can be tuned in several ways but currently uses a basic '1/(dist^2)'.
  */
 final class Congestion {
 
@@ -40,16 +38,15 @@ final class Congestion {
     private static final double MIN_SCORE = 0.00001;
 
     double[][] contribution;
-    double     score;
-    IAtom[]    atoms;
+    double score;
+    IAtom[] atoms;
 
     Congestion(IAtomContainer mol, int[][] adjList) {
         final int numAtoms = mol.getAtomCount();
         this.contribution = new double[numAtoms][numAtoms];
         this.atoms = AtomContainerManipulator.getAtomArray(mol);
         for (int v = 0; v < numAtoms; v++)
-            for (int w : adjList[v])
-                contribution[v][v] = contribution[v][w] = -1;
+            for (int w : adjList[v]) contribution[v][v] = contribution[v][w] = -1;
         this.score = initScore();
     }
 
@@ -76,10 +73,9 @@ final class Congestion {
     }
 
     /**
-     * Update the score considering that some atoms have moved. We only
-     * need to update the score of atom that have moved vs those that haven't
-     * since all those that moved did so together.
-     * 
+     * Update the score considering that some atoms have moved. We only need to update the score of
+     * atom that have moved vs those that haven't since all those that moved did so together.
+     *
      * @param visit visit flags
      * @param vs visit list
      * @param n number of visited in visit list
@@ -94,9 +90,9 @@ final class Congestion {
                 if (visit[w] || contribution[v][w] < 0) continue;
                 subtract += contribution[v][w];
                 final Point2d p2 = atoms[w].getPoint2d();
-                final double  x    = p1.x - p2.x;
-                final double  y    = p1.y - p2.y;
-                final double  len2 = x * x + y * y;
+                final double x = p1.x - p2.x;
+                final double y = p1.y - p2.y;
+                final double len2 = x * x + y * y;
                 score += contribution[w][v] = contribution[v][w] = 1 / Math.max(len2, MIN_SCORE);
             }
         }
@@ -104,7 +100,7 @@ final class Congestion {
     }
 
     /**
-     * Update the score considering the atoms have moved (provided). 
+     * Update the score considering the atoms have moved (provided).
      *
      * @param vs visit list
      * @param n number of visited in visit list
@@ -118,10 +114,10 @@ final class Congestion {
             for (int w = 0; w < len; w++) {
                 if (contribution[v][w] < 0) continue;
                 subtract += contribution[v][w];
-                final Point2d p2   = atoms[w].getPoint2d();
-                final double  x    = p1.x - p2.x;
-                final double  y    = p1.y - p2.y;
-                final double  len2 = x * x + y * y;
+                final Point2d p2 = atoms[w].getPoint2d();
+                final double x = p1.x - p2.x;
+                final double y = p1.y - p2.y;
+                final double len2 = x * x + y * y;
                 score += contribution[w][v] = contribution[v][w] = 1 / Math.max(len2, MIN_SCORE);
             }
         }

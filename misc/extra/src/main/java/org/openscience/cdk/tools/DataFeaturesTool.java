@@ -33,8 +33,7 @@ import org.openscience.cdk.tools.features.MoleculeFeaturesTool;
  *
  * @author egonw
  * @cdk.githash
- *
- * @see    org.openscience.cdk.tools.DataFeatures
+ * @see org.openscience.cdk.tools.DataFeatures
  */
 public class DataFeaturesTool {
 
@@ -42,15 +41,16 @@ public class DataFeaturesTool {
      * Determines the features present in the given {@link IAtomContainer}.
      *
      * @param molecule IAtomContainer to determine the features off
-     *
      * @return integer representation of the present features
      */
     public static int getSupportedDataFeatures(IAtomContainer molecule) {
         int features = DataFeatures.NONE;
         if (MoleculeFeaturesTool.hasElementSymbols(molecule))
             features = features | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
-        if (GeometryUtil.has2DCoordinates(molecule)) features = features | DataFeatures.HAS_2D_COORDINATES;
-        if (GeometryUtil.has3DCoordinates(molecule)) features = features | DataFeatures.HAS_3D_COORDINATES;
+        if (GeometryUtil.has2DCoordinates(molecule))
+            features = features | DataFeatures.HAS_2D_COORDINATES;
+        if (GeometryUtil.has3DCoordinates(molecule))
+            features = features | DataFeatures.HAS_3D_COORDINATES;
         if (CrystalGeometryTools.hasCrystalCoordinates(molecule))
             features = features | DataFeatures.HAS_FRACTIONAL_CRYSTAL_COORDINATES;
         if (MoleculeFeaturesTool.hasFormalCharges(molecule))
@@ -61,5 +61,4 @@ public class DataFeaturesTool {
             features = features | DataFeatures.HAS_GRAPH_REPRESENTATION;
         return features;
     }
-
 }

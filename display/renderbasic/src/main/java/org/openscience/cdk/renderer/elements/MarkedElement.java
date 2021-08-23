@@ -23,24 +23,22 @@
 
 package org.openscience.cdk.renderer.elements;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 /**
- * A marked element adds meta-data (id and tags) to a CDK rendering
- * element (or group of elements). The id should be unique per depiction.
- * The primary use case it to be able to set the 'id' and 'class'
- * attributes in SVG.
- * 
- * To set the mol, atom, or bond id set a String property to {@link #ID_KEY}.
- * Similarly, the {@link #CLASS_KEY} can be used to set the classes.
- * 
+ * A marked element adds meta-data (id and tags) to a CDK rendering element (or group of elements).
+ * The id should be unique per depiction. The primary use case it to be able to set the 'id' and
+ * 'class' attributes in SVG.
+ *
+ * <p>To set the mol, atom, or bond id set a String property to {@link #ID_KEY}. Similarly, the
+ * {@link #CLASS_KEY} can be used to set the classes.
+ *
  * <pre>{@code
  * IAtomContainer mol;
  * atom.setProperty(MarkedElement.ID_KEY, "my_atm_id");
@@ -50,11 +48,11 @@ import java.util.List;
  */
 public final class MarkedElement implements IRenderingElement {
 
-    public static final String ID_KEY    = MarkedElement.class.getName() + "_ID";
+    public static final String ID_KEY = MarkedElement.class.getName() + "_ID";
     public static final String CLASS_KEY = MarkedElement.class.getName() + "_CLS";
 
-    final   IRenderingElement elem;
-    private String            id;
+    final IRenderingElement elem;
+    private String id;
     private final List<String> classes = new ArrayList<>(5);
 
     private MarkedElement(IRenderingElement elem) {
@@ -76,8 +74,7 @@ public final class MarkedElement implements IRenderingElement {
      * @param cls a cls
      */
     private void aggClass(String cls) {
-        if (cls != null)
-            this.classes.add(cls);
+        if (cls != null) this.classes.add(cls);
     }
 
     /**
@@ -98,9 +95,7 @@ public final class MarkedElement implements IRenderingElement {
         return Collections.unmodifiableList(classes);
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void accept(IRenderingVisitor visitor) {
         visitor.visit(this);
@@ -125,8 +120,7 @@ public final class MarkedElement implements IRenderingElement {
     public static MarkedElement markup(IRenderingElement elem, String... classes) {
         assert elem != null;
         MarkedElement tagElem = new MarkedElement(elem);
-        for (String cls : classes)
-            tagElem.aggClass(cls);
+        for (String cls : classes) tagElem.aggClass(cls);
         return tagElem;
     }
 
@@ -141,8 +135,7 @@ public final class MarkedElement implements IRenderingElement {
     }
 
     /**
-     * Markup a molecule with the class 'mol' and optionally the ids/classes
-     * from it's properties.
+     * Markup a molecule with the class 'mol' and optionally the ids/classes from it's properties.
      *
      * @param elem rendering element
      * @param mol molecule
@@ -156,24 +149,21 @@ public final class MarkedElement implements IRenderingElement {
     }
 
     /**
-     * Markup a atom with the class 'atom' and optionally the ids/classes
-     * from it's properties.
+     * Markup a atom with the class 'atom' and optionally the ids/classes from it's properties.
      *
      * @param elem rendering element
      * @param atom atom
      * @return the marked element
      */
     public static MarkedElement markupAtom(IRenderingElement elem, IAtom atom) {
-        if (elem == null)
-            return null;
+        if (elem == null) return null;
         MarkedElement tagElem = markupChemObj(elem, atom);
         tagElem.aggClass("atom");
         return tagElem;
     }
 
     /**
-     * Markup a bond with the class 'bond' and optionally the ids/classes
-     * from it's properties.
+     * Markup a bond with the class 'bond' and optionally the ids/classes from it's properties.
      *
      * @param elem rendering element
      * @param bond bond

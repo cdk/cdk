@@ -32,28 +32,29 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  * Checks the functionality of the Mapping class.
  *
  * @cdk.module test-data
- *
  * @see org.openscience.cdk.Mapping
  */
 public class MappingTest extends AbstractMappingTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new Mapping(new Atom(), new Atom());
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new Mapping(new Atom(), new Atom());
+                    }
+                });
     }
 
     @Test
     public void testMapping_IChemObject_IChemObject() {
         IChemObject object = newChemObject();
-        IMapping mapping = new Mapping(object.getBuilder().newInstance(IAtom.class), object.getBuilder().newInstance(
-                IAtom.class));
+        IMapping mapping =
+                new Mapping(
+                        object.getBuilder().newInstance(IAtom.class),
+                        object.getBuilder().newInstance(IAtom.class));
         Assert.assertNotNull(mapping);
     }
-
 }

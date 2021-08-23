@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Diff between two IChemObjects.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module diff
  * @cdk.githash
  */
@@ -70,5 +70,4 @@ public abstract class AbstractDifferenceList implements IDifferenceList {
     public int childCount() {
         return differences.size();
     }
-
 }

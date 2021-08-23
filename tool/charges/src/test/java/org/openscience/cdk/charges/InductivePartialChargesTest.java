@@ -18,6 +18,7 @@
  */
 package org.openscience.cdk.charges;
 
+import javax.vecmath.Point3d;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -31,17 +32,13 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
-import javax.vecmath.Point3d;
-
 /**
- *  TestSuite that runs a test for the MMFF94PartialCharges.
+ * TestSuite that runs a test for the MMFF94PartialCharges.
  *
  * @cdk.module test-charges
- *
- *@author        mfe4
- *@cdk.created       2004-11-04
+ * @author mfe4
+ * @cdk.created 2004-11-04
  */
-
 public class InductivePartialChargesTest extends CDKTestCase {
 
     private static IAtomContainer mol;
@@ -78,10 +75,7 @@ public class InductivePartialChargesTest extends CDKTestCase {
         mol.addBond(bond4);
     }
 
-    /**
-     *  A unit test for JUnit with beta-amino-acetic-acid
-     *
-     */
+    /** A unit test for JUnit with beta-amino-acetic-acid */
     @Test
     public void testCalculateCharges_IAtomContainer() throws java.lang.Exception {
         double[] testResult = {0.197, -0.492, 0.051, 0.099, 0.099};
@@ -89,7 +83,8 @@ public class InductivePartialChargesTest extends CDKTestCase {
         Point3d f_coord = new Point3d(0.0, 0.0, 0.0);
         Point3d h1_coord = new Point3d(1.7439615035767404, 1.0558845107302222, 0.0);
         Point3d h2_coord = new Point3d(1.7439615035767404, -0.5279422553651107, 0.914422809754875);
-        Point3d h3_coord = new Point3d(1.7439615035767402, -0.5279422553651113, -0.9144228097548747);
+        Point3d h3_coord =
+                new Point3d(1.7439615035767402, -0.5279422553651113, -0.9144228097548747);
 
         IAtomContainer mol = new AtomContainer(); // molecule is CF
 
@@ -120,16 +115,16 @@ public class InductivePartialChargesTest extends CDKTestCase {
         InductivePartialCharges ipc = new InductivePartialCharges();
         ipc.assignInductivePartialCharges(mol);
         for (int i = 0; i < mol.getAtomCount(); i++) {
-            Assert.assertEquals(testResult[i],
-                    ((Double) mol.getAtom(i).getProperty("InductivePartialCharge")).doubleValue(), 0.1);
-            //logger.debug("CHARGE AT " + ac.getAtomAt(i).getSymbol() + " " + ac.getAtomAt(i).getProperty("MMFF94charge"));
+            Assert.assertEquals(
+                    testResult[i],
+                    ((Double) mol.getAtom(i).getProperty("InductivePartialCharge")).doubleValue(),
+                    0.1);
+            // logger.debug("CHARGE AT " + ac.getAtomAt(i).getSymbol() + " " +
+            // ac.getAtomAt(i).getProperty("MMFF94charge"));
         }
     }
 
-    /**
-     *  A unit test for JUnit with beta-amino-acetic-acid
-     *
-     */
+    /** A unit test for JUnit with beta-amino-acetic-acid */
     @Test
     public void testInductivePartialCharges() throws java.lang.Exception {
         double[] testResult = {0.197, -0.492, 0.051, 0.099, 0.099};
@@ -137,7 +132,8 @@ public class InductivePartialChargesTest extends CDKTestCase {
         Point3d f_coord = new Point3d(0.0, 0.0, 0.0);
         Point3d h1_coord = new Point3d(1.7439615035767404, 1.0558845107302222, 0.0);
         Point3d h2_coord = new Point3d(1.7439615035767404, -0.5279422553651107, 0.914422809754875);
-        Point3d h3_coord = new Point3d(1.7439615035767402, -0.5279422553651113, -0.9144228097548747);
+        Point3d h3_coord =
+                new Point3d(1.7439615035767402, -0.5279422553651113, -0.9144228097548747);
 
         IAtomContainer mol = new AtomContainer(); // molecule is CF
 
@@ -168,9 +164,12 @@ public class InductivePartialChargesTest extends CDKTestCase {
         InductivePartialCharges ipc = new InductivePartialCharges();
         ipc.assignInductivePartialCharges(mol);
         for (int i = 0; i < mol.getAtomCount(); i++) {
-            Assert.assertEquals(testResult[i],
-                    ((Double) mol.getAtom(i).getProperty("InductivePartialCharge")).doubleValue(), 0.1);
-            //logger.debug("CHARGE AT " + ac.getAtomAt(i).getSymbol() + " " + ac.getAtomAt(i).getProperty("MMFF94charge"));
+            Assert.assertEquals(
+                    testResult[i],
+                    ((Double) mol.getAtom(i).getProperty("InductivePartialCharge")).doubleValue(),
+                    0.1);
+            // logger.debug("CHARGE AT " + ac.getAtomAt(i).getSymbol() + " " +
+            // ac.getAtomAt(i).getProperty("MMFF94charge"));
         }
     }
 
@@ -193,5 +192,4 @@ public class InductivePartialChargesTest extends CDKTestCase {
         double softness = ipc.getAtomicSoftnessCore(mol, 0);
         Assert.fail("Not validated - need known values");
     }
-
 }

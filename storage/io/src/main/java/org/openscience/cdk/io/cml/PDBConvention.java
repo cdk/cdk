@@ -26,13 +26,10 @@ package org.openscience.cdk.io.cml;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Isotopes;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemFile;
@@ -48,37 +45,37 @@ import org.xml.sax.Attributes;
 /**
  * Implements the PDB convention used by PDB2CML.
  *
- * <p>This is a lousy implementation, though. Problems that will arise:</p>
+ * <p>This is a lousy implementation, though. Problems that will arise:
+ *
  * <ul>
- *   <li>when this new convention is adopted in the root element no
- *     currentFrame was set. This is done when {@code <list sequence="">} is found</li>
- *   <li>multiple sequences are not yet supported</li>
- *   <li>the frame is now added when the doc is ended, which will result in problems
- *     but work for one sequence files made by PDB2CML v.??</li>
+ *   <li>when this new convention is adopted in the root element no currentFrame was set. This is
+ *       done when {@code <list sequence="">} is found
+ *   <li>multiple sequences are not yet supported
+ *   <li>the frame is now added when the doc is ended, which will result in problems but work for
+ *       one sequence files made by PDB2CML v.??
  * </ul>
  *
- * <p>What is does:</p>
+ * <p>What is does:
+ *
  * <ul>
- *   <li>work for now</li>
- *   <li>give an idea on the API of the plugable CML import filter
- *     (a real one will be made)</li>
- *   <li>read CML files generated with Steve Zara's PDB 2 CML converter
- *     (of which version 1999 produces invalid CML 1.0)</li>
+ *   <li>work for now
+ *   <li>give an idea on the API of the plugable CML import filter (a real one will be made)
+ *   <li>read CML files generated with Steve Zara's PDB 2 CML converter (of which version 1999
+ *       produces invalid CML 1.0)
  * </ul>
  *
  * @cdk.module io
  * @cdk.githash
- *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */
 public class PDBConvention extends CMLCoreModule {
 
-    private boolean      connectionTable;
-    private boolean      isELSYM;
-    private boolean      isBond;
-    private String       connect_root;
-    private boolean      hasScalar;
-    private String       idValue = "";
+    private boolean connectionTable;
+    private boolean isELSYM;
+    private boolean isBond;
+    private String connect_root;
+    private boolean hasScalar;
+    private String idValue = "";
     private List<String> altLocV;
     private List<String> chainIDV;
     private List<String> hetAtomV;
@@ -107,7 +104,8 @@ public class PDBConvention extends CMLCoreModule {
     }
 
     @Override
-    public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
+    public void startElement(
+            CMLStack xpath, String uri, String local, String raw, Attributes atts) {
         String name = raw;
         isELSYM = false;
         if ("molecule".equals(name)) {
@@ -139,21 +137,25 @@ public class PDBConvention extends CMLCoreModule {
                     currentStrand = currentChemFile.getBuilder().newInstance(IStrand.class);
                     currentStrand.setStrandName("A");
                     currentMolecule = currentChemFile.getBuilder().newInstance(IPDBPolymer.class);
-                } else if (atts.getQName(j).equals("dictRef") && atts.getValue(j).equals("pdb:sequence")) {
+                } else if (atts.getQName(j).equals("dictRef")
+                        && atts.getValue(j).equals("pdb:sequence")) {
 
                     newSequence();
                     BUILTIN = "";
                     for (int i = 0; i < atts.getLength(); i++) {
                         if (atts.getQName(i).equals("id")) {
-                            //                            cdo.setObjectProperty("Molecule", "id", atts.getValue(i));
+                            //                            cdo.setObjectProperty("Molecule", "id",
+                            // atts.getValue(i));
                             currentMolecule.setID(atts.getValue(i));
                         } else if (atts.getQName(i).equals("dictRef")) {
-                            //                        	cdo.setObjectProperty("Molecule", "dictRef", atts.getValue(i));
+                            //                        	cdo.setObjectProperty("Molecule", "dictRef",
+                            // atts.getValue(i));
                             // FIXME: has no equivalent in ChemFileCDO
                         }
                     }
 
-                } else if (atts.getQName(j).equals("title") && atts.getValue(j).equals("connections")) {
+                } else if (atts.getQName(j).equals("title")
+                        && atts.getValue(j).equals("connections")) {
                     // assume that Atom's have been read
                     logger.debug("Assuming that Atom's have been read: storing them");
                     super.storeAtomData();
@@ -196,7 +198,6 @@ public class PDBConvention extends CMLCoreModule {
         segIDV = new ArrayList<String>();
         serialV = new ArrayList<String>();
         tempFactorV = new ArrayList<String>();
-
     }
 
     @Override
@@ -226,7 +227,6 @@ public class PDBConvention extends CMLCoreModule {
         }
         isELSYM = false;
         isBond = false;
-
     }
 
     @Override
@@ -238,33 +238,21 @@ public class PDBConvention extends CMLCoreModule {
         while (st1.hasMoreElements()) {
 
             dictpdb += (String) st1.nextElement();
-            if (st1.hasMoreElements())
-                dictpdb += " ";
+            if (st1.hasMoreElements()) dictpdb += " ";
             else if (idValue.equals("pdb:record")) dictpdb += " ";
         }
 
-        if (idValue.equals("pdb:altLoc"))
-            altLocV.add(dictpdb);
-        else if (idValue.equals("pdb:chainID"))
-            chainIDV.add(dictpdb);
-        else if (idValue.equals("pdb:hetAtom"))
-            hetAtomV.add(dictpdb);
-        else if (idValue.equals("pdb:iCode"))
-            iCodeV.add(dictpdb);
-        else if (idValue.equals("pdb:name"))
-            nameV.add(dictpdb);
-        else if (idValue.equals("pdb:oxt"))
-            oxtV.add(dictpdb);
-        else if (idValue.equals("pdb:record"))
-            recordV.add(dictpdb);
-        else if (idValue.equals("pdb:resName"))
-            resNameV.add(dictpdb);
-        else if (idValue.equals("pdb:resSeq"))
-            resSeqV.add(dictpdb);
-        else if (idValue.equals("pdb:segID"))
-            segIDV.add(dictpdb);
-        else if (idValue.equals("pdb:serial"))
-            serialV.add(dictpdb);
+        if (idValue.equals("pdb:altLoc")) altLocV.add(dictpdb);
+        else if (idValue.equals("pdb:chainID")) chainIDV.add(dictpdb);
+        else if (idValue.equals("pdb:hetAtom")) hetAtomV.add(dictpdb);
+        else if (idValue.equals("pdb:iCode")) iCodeV.add(dictpdb);
+        else if (idValue.equals("pdb:name")) nameV.add(dictpdb);
+        else if (idValue.equals("pdb:oxt")) oxtV.add(dictpdb);
+        else if (idValue.equals("pdb:record")) recordV.add(dictpdb);
+        else if (idValue.equals("pdb:resName")) resNameV.add(dictpdb);
+        else if (idValue.equals("pdb:resSeq")) resSeqV.add(dictpdb);
+        else if (idValue.equals("pdb:segID")) segIDV.add(dictpdb);
+        else if (idValue.equals("pdb:serial")) serialV.add(dictpdb);
         else if (idValue.equals("pdb:tempFactor")) tempFactorV.add(dictpdb);
 
         idValue = "";
@@ -286,9 +274,15 @@ public class PDBConvention extends CMLCoreModule {
                         //                                (new Integer(atom1)).toString());
                         //                        cdo.setObjectProperty("Bond", "atom2",
                         //                                (new Integer(atom2)).toString());
-                        currentBond = currentMolecule.getBuilder().newInstance(IBond.class,
-                                currentMolecule.getAtom(Integer.parseInt(connect_root) - 1),
-                                currentMolecule.getAtom(Integer.parseInt(atom) - 1), Order.SINGLE);
+                        currentBond =
+                                currentMolecule
+                                        .getBuilder()
+                                        .newInstance(
+                                                IBond.class,
+                                                currentMolecule.getAtom(
+                                                        Integer.parseInt(connect_root) - 1),
+                                                currentMolecule.getAtom(Integer.parseInt(atom) - 1),
+                                                Order.SINGLE);
                         currentMolecule.addBond(currentBond);
                     }
                 }
@@ -345,17 +339,28 @@ public class PDBConvention extends CMLCoreModule {
             logger.debug("No atom titles: " + eltitles.size(), " != " + atomCounter);
         }
 
-        if ((x3.size() == atomCounter) && (y3.size() == atomCounter) && (z3.size() == atomCounter)) {
+        if ((x3.size() == atomCounter)
+                && (y3.size() == atomCounter)
+                && (z3.size() == atomCounter)) {
             has3D = true;
         } else {
-            logger.debug("No 3D info: " + x3.size(), " " + y3.size(), " " + z3.size(), " != " + atomCounter);
+            logger.debug(
+                    "No 3D info: " + x3.size(),
+                    " " + y3.size(),
+                    " " + z3.size(),
+                    " != " + atomCounter);
         }
 
-        if ((xfract.size() == atomCounter) && (yfract.size() == atomCounter) && (zfract.size() == atomCounter)) {
+        if ((xfract.size() == atomCounter)
+                && (yfract.size() == atomCounter)
+                && (zfract.size() == atomCounter)) {
             has3Dfract = true;
         } else {
-            logger.debug("No 3D fractional info: " + xfract.size(), " " + yfract.size(), " " + zfract.size(), " != "
-                    + atomCounter);
+            logger.debug(
+                    "No 3D fractional info: " + xfract.size(),
+                    " " + yfract.size(),
+                    " " + zfract.size(),
+                    " != " + atomCounter);
         }
 
         if ((x2.size() == atomCounter) && (y2.size() == atomCounter)) {
@@ -385,7 +390,8 @@ public class PDBConvention extends CMLCoreModule {
         if (spinMultiplicities.size() == atomCounter) {
             hasSpinMultiplicities = true;
         } else {
-            logger.debug("No spinMultiplicity info: " + spinMultiplicities.size(), " != " + atomCounter);
+            logger.debug(
+                    "No spinMultiplicity info: " + spinMultiplicities.size(), " != " + atomCounter);
         }
 
         if (occupancies.size() == atomCounter) {
@@ -422,18 +428,24 @@ public class PDBConvention extends CMLCoreModule {
                 if (hasSymbols) {
                     String symbol = (String) elsym.get(i);
                     if (symbol.equals("Du") || symbol.equals("Dummy")) {
-                        //                        cdo.setObjectProperty("PseudoAtom", "label", (String)eltitles.get(i));
+                        //                        cdo.setObjectProperty("PseudoAtom", "label",
+                        // (String)eltitles.get(i));
                         if (!(currentAtom instanceof IPseudoAtom)) {
-                            currentAtom = currentChemFile.getBuilder().newInstance(IPseudoAtom.class, currentAtom);
+                            currentAtom =
+                                    currentChemFile
+                                            .getBuilder()
+                                            .newInstance(IPseudoAtom.class, currentAtom);
                         }
                         ((IPseudoAtom) currentAtom).setLabel((String) eltitles.get(i));
                     } else {
-                        //                        cdo.setObjectProperty("Atom", "title", (String)eltitles.get(i));
+                        //                        cdo.setObjectProperty("Atom", "title",
+                        // (String)eltitles.get(i));
                         // FIXME: is a guess, Atom.title is not found in ChemFileCDO
                         currentAtom.setProperty(CDKConstants.TITLE, (String) eltitles.get(i));
                     }
                 } else {
-                    //                    cdo.setObjectProperty("Atom", "title", (String)eltitles.get(i));
+                    //                    cdo.setObjectProperty("Atom", "title",
+                    // (String)eltitles.get(i));
                     //               	 FIXME: is a guess, Atom.title is not found in ChemFileCDO
                     currentAtom.setProperty(CDKConstants.TITLE, (String) eltitles.get(i));
                 }
@@ -447,7 +459,10 @@ public class PDBConvention extends CMLCoreModule {
                 }
                 //                cdo.setObjectProperty("Atom", "type", symbol);
                 if (symbol.equals("R") && !(currentAtom instanceof IPseudoAtom)) {
-                    currentAtom = currentChemFile.getBuilder().newInstance(IPseudoAtom.class, currentAtom);
+                    currentAtom =
+                            currentChemFile
+                                    .getBuilder()
+                                    .newInstance(IPseudoAtom.class, currentAtom);
                 }
                 currentAtom.setSymbol(symbol);
                 try {
@@ -462,8 +477,11 @@ public class PDBConvention extends CMLCoreModule {
                 //                cdo.setObjectProperty("Atom", "x3", (String)x3.get(i));
                 //                cdo.setObjectProperty("Atom", "y3", (String)y3.get(i));
                 //                cdo.setObjectProperty("Atom", "z3", (String)z3.get(i));
-                currentAtom.setPoint3d(new Point3d(Double.parseDouble((String) x3.get(i)), Double
-                        .parseDouble((String) y3.get(i)), Double.parseDouble((String) z3.get(i))));
+                currentAtom.setPoint3d(
+                        new Point3d(
+                                Double.parseDouble((String) x3.get(i)),
+                                Double.parseDouble((String) y3.get(i)),
+                                Double.parseDouble((String) z3.get(i))));
             }
 
             if (has3Dfract) {
@@ -471,8 +489,11 @@ public class PDBConvention extends CMLCoreModule {
                 //                cdo.setObjectProperty("Atom", "xFract", (String)xfract.get(i));
                 //                cdo.setObjectProperty("Atom", "yFract", (String)yfract.get(i));
                 //                cdo.setObjectProperty("Atom", "zFract", (String)zfract.get(i));
-                currentAtom.setFractionalPoint3d(new Point3d(Double.parseDouble((String) xfract.get(i)), Double
-                        .parseDouble((String) yfract.get(i)), Double.parseDouble((String) zfract.get(i))));
+                currentAtom.setFractionalPoint3d(
+                        new Point3d(
+                                Double.parseDouble((String) xfract.get(i)),
+                                Double.parseDouble((String) yfract.get(i)),
+                                Double.parseDouble((String) zfract.get(i))));
             }
 
             if (hasFormalCharge) {
@@ -498,27 +519,34 @@ public class PDBConvention extends CMLCoreModule {
                 if (x2.get(i) != null && y2.get(i) != null) {
                     //                    cdo.setObjectProperty("Atom", "x2", (String)x2.get(i));
                     //                    cdo.setObjectProperty("Atom", "y2", (String)y2.get(i));
-                    currentAtom.setPoint2d(new Point2d(Double.parseDouble((String) x2.get(i)), Double
-                            .parseDouble((String) y2.get(i))));
+                    currentAtom.setPoint2d(
+                            new Point2d(
+                                    Double.parseDouble((String) x2.get(i)),
+                                    Double.parseDouble((String) y2.get(i))));
                 }
             }
 
             if (hasDictRefs) {
-                //                cdo.setObjectProperty("Atom", "dictRef", (String)atomDictRefs.get(i));
+                //                cdo.setObjectProperty("Atom", "dictRef",
+                // (String)atomDictRefs.get(i));
                 currentAtom.setProperty("org.openscience.cdk.dict", (String) atomDictRefs.get(i));
             }
 
             if (hasSpinMultiplicities && spinMultiplicities.get(i) != null) {
-                //                cdo.setObjectProperty("Atom", "spinMultiplicity", (String)spinMultiplicities.get(i));
+                //                cdo.setObjectProperty("Atom", "spinMultiplicity",
+                // (String)spinMultiplicities.get(i));
                 int unpairedElectrons = Integer.parseInt((String) spinMultiplicities.get(i)) - 1;
                 for (int sm = 0; sm < unpairedElectrons; sm++) {
-                    currentMolecule.addSingleElectron(currentChemFile.getBuilder().newInstance(ISingleElectron.class,
-                            currentAtom));
+                    currentMolecule.addSingleElectron(
+                            currentChemFile
+                                    .getBuilder()
+                                    .newInstance(ISingleElectron.class, currentAtom));
                 }
             }
 
             if (hasOccupancies && occupancies.get(i) != null) {
-                //                cdo.setObjectProperty("PDBAtom", "occupancy", (String)occupancies.get(i));
+                //                cdo.setObjectProperty("PDBAtom", "occupancy",
+                // (String)occupancies.get(i));
                 double occ = Double.parseDouble((String) occupancies.get(i));
                 if (occ >= 0.0) ((IPDBAtom) currentAtom).setOccupancy(occ);
             }
@@ -530,39 +558,56 @@ public class PDBConvention extends CMLCoreModule {
 
             if (hasScalar) {
                 IPDBAtom pdbAtom = (IPDBAtom) currentAtom;
-                //                cdo.setObjectProperty("PDBAtom", "altLoc", altLocV.get(i).toString());
+                //                cdo.setObjectProperty("PDBAtom", "altLoc",
+                // altLocV.get(i).toString());
                 if (altLocV.size() > 0) pdbAtom.setAltLoc(altLocV.get(i).toString());
-                //                cdo.setObjectProperty("PDBAtom", "chainID", chainIDV.get(i).toString());
+                //                cdo.setObjectProperty("PDBAtom", "chainID",
+                // chainIDV.get(i).toString());
                 if (chainIDV.size() > 0) pdbAtom.setChainID(chainIDV.get(i).toString());
-                //                cdo.setObjectProperty("PDBAtom", "hetAtom", hetAtomV.get(i).toString());
-                if (hetAtomV.size() > 0) pdbAtom.setHetAtom(hetAtomV.get(i).toString().equals("true"));
-                //                cdo.setObjectProperty("PDBAtom", "iCode", iCodeV.get(i).toString());
+                //                cdo.setObjectProperty("PDBAtom", "hetAtom",
+                // hetAtomV.get(i).toString());
+                if (hetAtomV.size() > 0)
+                    pdbAtom.setHetAtom(hetAtomV.get(i).toString().equals("true"));
+                //                cdo.setObjectProperty("PDBAtom", "iCode",
+                // iCodeV.get(i).toString());
                 if (iCodeV.size() > 0) pdbAtom.setICode(iCodeV.get(i).toString());
                 //                cdo.setObjectProperty("PDBAtom", "name", nameV.get(i).toString());
                 if (nameV.size() > 0) pdbAtom.setName(nameV.get(i).toString());
                 //                cdo.setObjectProperty("PDBAtom", "oxt", oxtV.get(i).toString());
                 if (oxtV.size() > 0) pdbAtom.setOxt(oxtV.get(i).toString().equals("true"));
-                //                cdo.setObjectProperty("PDBAtom", "resSeq", resSeqV.get(i).toString());
+                //                cdo.setObjectProperty("PDBAtom", "resSeq",
+                // resSeqV.get(i).toString());
                 if (resSeqV.size() > 0) pdbAtom.setResSeq(resSeqV.get(i).toString());
-                //                cdo.setObjectProperty("PDBAtom", "record", recordV.get(i).toString());
+                //                cdo.setObjectProperty("PDBAtom", "record",
+                // recordV.get(i).toString());
                 if (recordV.size() > 0) pdbAtom.setRecord(recordV.get(i).toString());
-                //                cdo.setObjectProperty("PDBAtom", "resName", resNameV.get(i).toString());
+                //                cdo.setObjectProperty("PDBAtom", "resName",
+                // resNameV.get(i).toString());
                 if (resNameV.size() > 0) pdbAtom.setResName(resNameV.get(i).toString());
-                //                cdo.setObjectProperty("PDBAtom", "segID", segIDV.get(i).toString());
+                //                cdo.setObjectProperty("PDBAtom", "segID",
+                // segIDV.get(i).toString());
                 if (segIDV.size() > 0) pdbAtom.setSegID(segIDV.get(i).toString());
-                //                cdo.setObjectProperty("PDBAtom", "serial", serialV.get(i).toString());
-                if (serialV.size() > 0) pdbAtom.setSerial(Integer.parseInt(serialV.get(i).toString()));
-                //                cdo.setObjectProperty("PDBAtom", "tempFactor", tempFactorV.get(i).toString());
-                if (tempFactorV.size() > 0) pdbAtom.setTempFactor(Double.parseDouble(tempFactorV.get(i).toString()));
+                //                cdo.setObjectProperty("PDBAtom", "serial",
+                // serialV.get(i).toString());
+                if (serialV.size() > 0)
+                    pdbAtom.setSerial(Integer.parseInt(serialV.get(i).toString()));
+                //                cdo.setObjectProperty("PDBAtom", "tempFactor",
+                // tempFactorV.get(i).toString());
+                if (tempFactorV.size() > 0)
+                    pdbAtom.setTempFactor(Double.parseDouble(tempFactorV.get(i).toString()));
             }
 
             //            cdo.endObject("PDBAtom");
-            String cResidue = ((IPDBAtom) currentAtom).getResName() + "A" + ((IPDBAtom) currentAtom).getResSeq();
+            String cResidue =
+                    ((IPDBAtom) currentAtom).getResName()
+                            + "A"
+                            + ((IPDBAtom) currentAtom).getResSeq();
             ((IPDBMonomer) currentMonomer).setMonomerName(cResidue);
             ((IPDBMonomer) currentMonomer).setMonomerType(((IPDBAtom) currentAtom).getResName());
             ((IPDBMonomer) currentMonomer).setChainID(((IPDBAtom) currentAtom).getChainID());
             ((IPDBMonomer) currentMonomer).setICode(((IPDBAtom) currentAtom).getICode());
-            ((IPDBPolymer) currentMolecule).addAtom(((IPDBAtom) currentAtom), currentMonomer, currentStrand);
+            ((IPDBPolymer) currentMolecule)
+                    .addAtom(((IPDBAtom) currentAtom), currentMonomer, currentStrand);
         }
         //		cdo.endObject("PDBMonomer");
         // nothing done in the CDO for this event
@@ -572,5 +617,4 @@ public class PDBConvention extends CMLCoreModule {
         }
         newAtomData();
     }
-
 }

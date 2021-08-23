@@ -28,83 +28,74 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- * Compute the shortest cycles through each vertex triple. This allows one to
- * directly obtain the envelope rings of bicyclic fused system. These cycles
- * can be thought of as the 'ESSSR' (extended smallest set of smallest rings)
- * and 'envelope' rings as used by PubChem fingerprints (CACTVS Substructure
- * Keys). The PubChem fingerprint documentation exclusively refers to the ESSSR
- * and envelopes as just the ESSSR and the rest of this documentation does the
- * same. This class provides the cycles (vertex paths) for each ring in the
- * ESSSR.
+ * Compute the shortest cycles through each vertex triple. This allows one to directly obtain the
+ * envelope rings of bicyclic fused system. These cycles can be thought of as the 'ESSSR' (extended
+ * smallest set of smallest rings) and 'envelope' rings as used by PubChem fingerprints (CACTVS
+ * Substructure Keys). The PubChem fingerprint documentation exclusively refers to the ESSSR and
+ * envelopes as just the ESSSR and the rest of this documentation does the same. This class provides
+ * the cycles (vertex paths) for each ring in the ESSSR.
  *
- * The ESSSR should not be confused with the extended set of smallest rings
- * (ESSR) {@cdk.cite Downs89}. 
+ * <p>The ESSSR should not be confused with the extended set of smallest rings (ESSR) {@cdk.cite
+ * Downs89}.
  *
- * <b>Algorithm</b>  To our knowledge no algorithm has been published for
- * the ESSSR. The <a href="ftp://ftp.ncbi.nlm.nih.gov/pubchem/specifications/pubchem_fingerprints.pdf">PubChem
- * Specifications</a> states - <i>"An ESSSR ring is any ring which does not
- * share three consecutive atoms with any other ring in the chemical structure.
- * For example, naphthalene has three ESSSR rings (two phenyl fragments and the
- * 10-membered envelope), while biphenyl will yield a count of only two ESSSR
- * rings"</i>. The name implies the use of the smallest set of smallest rings
- * (SSSR). Not every graph has an SSSR and so the minimum cycle basis is used
- * instead. With this modification the algorithm is outlined below. <ol>
- * <li>Compute a minimum cycle basis (or SSSR) of the graph (may not be
- * unique)</li> <li>For each vertex <i>v</i> and two adjacent vertices (<i>u</i>
- * and <i>w</i>) check if the path <i>-u-v-w-</i> belongs to any cycles already
- * in the basis</li> <li>If no such cycle can be found compute the shortest
- * cycle which travels through <i>-u-v-w-</i> and add it to the basis. The
- * shortest cycle is the shortest path from <i>u</i> to <i>w</i> which does not
- * travel through <i>v</i></li> </ol>  In the case of <i>naphthalene</i> the
- * minimum cycle basis is the two phenyl rings. Taking either bridgehead atom of
- * <i>naphthalene</i> to be <i>v</i> and choosing <i>u</i> and <i>w</i> to be in
- * different phenyl rings it is easy to see the shortest cycle through
- * <i>-u-v-w-</i> is the 10 member envelope ring.
+ * <p><b>Algorithm</b> To our knowledge no algorithm has been published for the ESSSR. The <a
+ * href="ftp://ftp.ncbi.nlm.nih.gov/pubchem/specifications/pubchem_fingerprints.pdf">PubChem
+ * Specifications</a> states - <i>"An ESSSR ring is any ring which does not share three consecutive
+ * atoms with any other ring in the chemical structure. For example, naphthalene has three ESSSR
+ * rings (two phenyl fragments and the 10-membered envelope), while biphenyl will yield a count of
+ * only two ESSSR rings"</i>. The name implies the use of the smallest set of smallest rings (SSSR).
+ * Not every graph has an SSSR and so the minimum cycle basis is used instead. With this
+ * modification the algorithm is outlined below.
  *
- * <b>Canonical and Non-Canonical Generation</b>
+ * <ol>
+ *   <li>Compute a minimum cycle basis (or SSSR) of the graph (may not be unique)
+ *   <li>For each vertex <i>v</i> and two adjacent vertices (<i>u</i> and <i>w</i>) check if the
+ *       path <i>-u-v-w-</i> belongs to any cycles already in the basis
+ *   <li>If no such cycle can be found compute the shortest cycle which travels through
+ *       <i>-u-v-w-</i> and add it to the basis. The shortest cycle is the shortest path from
+ *       <i>u</i> to <i>w</i> which does not travel through <i>v</i>
+ * </ol>
  *
- * The algorithm can generate a canonical or non-canonical (preferred) set of
- * cycles. As one can see from the above description depending on the order we
- * check each triple (-u-v-w-) and add it to basis we may end up with a
- * different set.
- * 
+ * In the case of <i>naphthalene</i> the minimum cycle basis is the two phenyl rings. Taking either
+ * bridgehead atom of <i>naphthalene</i> to be <i>v</i> and choosing <i>u</i> and <i>w</i> to be in
+ * different phenyl rings it is easy to see the shortest cycle through <i>-u-v-w-</i> is the 10
+ * member envelope ring.
  *
- * To avoid this PubChem fingerprints uses a canonical labelling ensuring the
- * vertices are always checked in the same order. The vertex order used by this
- * class is the natural order of the vertices as provided in the graph. To
- * ensure the generated set is always the same vertices should be ordered
- * beforehand or the non-canonical option should be used.
+ * <p><b>Canonical and Non-Canonical Generation</b>
  *
- * Although this canonical sorting allows one to reliable generate the same set
- * of cycles for a graph this is not true for subgraphs. For two graphs
- * <i>G</i>, <i>H</i> and a canonical ordering (<i>π</i>). If <i>H</i> is a
- * subgraph of <i>G</i> then for two vertices <i>u</i>, <i>v</i>. It follows
- * that <i>π(u)</i> &lt; <i>π(v)</i> ∈ <i>H</i> ⇏ <i>π(u)</i> &lt; <i>π(v)</i> ∈
- * <i>G</i>. In other words, we can canonically label a graph and inspect the
- * ordering of vertices <i>u</i> and <i>v</i>. We now take a subgraph which
- * contains both <i>u</i> and <i>v</i> - the ordering does not need to be the
- * same as the full graph. This means that a subgraph may contain a ring in its
- * ESSSR which does not belong to the ESSSR of the full graph.
+ * <p>The algorithm can generate a canonical or non-canonical (preferred) set of cycles. As one can
+ * see from the above description depending on the order we check each triple (-u-v-w-) and add it
+ * to basis we may end up with a different set.
  *
- * To resolve this problem you can turn off the <i>canonical</i> option. This
- * relaxes the existing condition (Step 2.) and adds all shortest cycles through
- * each triple (-u-v-w-) to the basis. The number of cycles generated may be
- * larger however it is now possible to ensure that if <i>H</i> is a subgraph of
- * <i>G</i> then ESSSR of <i>H</i> will be a subset of the ESSSR or <i>G</i>.
- * Alternatively one may consider using the {@link RelevantCycles} which is the
- * the smallest set of short cycles which is <i>uniquely</i> defined for a
- * graph. 
+ * <p>To avoid this PubChem fingerprints uses a canonical labelling ensuring the vertices are always
+ * checked in the same order. The vertex order used by this class is the natural order of the
+ * vertices as provided in the graph. To ensure the generated set is always the same vertices should
+ * be ordered beforehand or the non-canonical option should be used.
  *
- * To better explain the issue with the canonical labelling several examples are
- * shown below. The table outlining the size of rings found for each molecule
- * when using canonical and non-canonical generation. Also shown are the sizes
- * of rings stored in the PubChem fingerprint associated with the entry. The
- * fingerprints were obtained directly from PubChem and decoded using the <a
- * href= "ftp://ftp.ncbi.nlm.nih.gov/pubchem/specifications/pubchem_fingerprints.pdf">
- * specification</a>. Sizes underlined and coloured red represent rings which may
- * or may not be present depending on the atom ordering. It can be seen from the
- * PubChem fingerprint that even using a consistent canonical labelling rings
- * may be absent which would be present if the subgraph was used.
+ * <p>Although this canonical sorting allows one to reliable generate the same set of cycles for a
+ * graph this is not true for subgraphs. For two graphs <i>G</i>, <i>H</i> and a canonical ordering
+ * (<i>π</i>). If <i>H</i> is a subgraph of <i>G</i> then for two vertices <i>u</i>, <i>v</i>. It
+ * follows that <i>π(u)</i> &lt; <i>π(v)</i> ∈ <i>H</i> ⇏ <i>π(u)</i> &lt; <i>π(v)</i> ∈ <i>G</i>.
+ * In other words, we can canonically label a graph and inspect the ordering of vertices <i>u</i>
+ * and <i>v</i>. We now take a subgraph which contains both <i>u</i> and <i>v</i> - the ordering
+ * does not need to be the same as the full graph. This means that a subgraph may contain a ring in
+ * its ESSSR which does not belong to the ESSSR of the full graph.
+ *
+ * <p>To resolve this problem you can turn off the <i>canonical</i> option. This relaxes the
+ * existing condition (Step 2.) and adds all shortest cycles through each triple (-u-v-w-) to the
+ * basis. The number of cycles generated may be larger however it is now possible to ensure that if
+ * <i>H</i> is a subgraph of <i>G</i> then ESSSR of <i>H</i> will be a subset of the ESSSR or
+ * <i>G</i>. Alternatively one may consider using the {@link RelevantCycles} which is the the
+ * smallest set of short cycles which is <i>uniquely</i> defined for a graph.
+ *
+ * <p>To better explain the issue with the canonical labelling several examples are shown below. The
+ * table outlining the size of rings found for each molecule when using canonical and non-canonical
+ * generation. Also shown are the sizes of rings stored in the PubChem fingerprint associated with
+ * the entry. The fingerprints were obtained directly from PubChem and decoded using the <a href=
+ * "ftp://ftp.ncbi.nlm.nih.gov/pubchem/specifications/pubchem_fingerprints.pdf"> specification</a>.
+ * Sizes underlined and coloured red represent rings which may or may not be present depending on
+ * the atom ordering. It can be seen from the PubChem fingerprint that even using a consistent
+ * canonical labelling rings may be absent which would be present if the subgraph was used.
  *
  * <table style="font-family: courier; font-size: 9pt; color: #666666;">
  * <caption></caption>
@@ -232,25 +223,24 @@ import java.util.TreeSet;
 public final class TripletShortCycles {
 
     /** Adjacency list representation of the graph. */
-    private final int[][]   graph;
+    private final int[][] graph;
 
     /**
-     * Whether the basis should be canonical. By definition a canonical set
-     * depends on the atom order.
+     * Whether the basis should be canonical. By definition a canonical set depends on the atom
+     * order.
      */
-    private final boolean   canonical;
+    private final boolean canonical;
 
     /** The current cycle basis. */
     private final Set<Path> basis = new TreeSet<Path>();
 
     /**
-     * Compute the cycles of the extended smallest set of smallest rings (ESSSR)
-     * for an existing minimum cycle basis. Choosing the set to be canonical
-     * means the set depends on the order of the vertices and may <b>not</b> be
-     * consistent in subgraphs. Given a different order of vertices the same
-     * cycles may not be found.
+     * Compute the cycles of the extended smallest set of smallest rings (ESSSR) for an existing
+     * minimum cycle basis. Choosing the set to be canonical means the set depends on the order of
+     * the vertices and may <b>not</b> be consistent in subgraphs. Given a different order of
+     * vertices the same cycles may not be found.
      *
-     * @param mcb       minimum cycle basis
+     * @param mcb minimum cycle basis
      * @param canonical should the set be canonical (non-unique)
      */
     public TripletShortCycles(final MinimumCycleBasis mcb, final boolean canonical) {
@@ -281,8 +271,7 @@ public final class TripletShortCycles {
         int i = 0;
         int[][] paths = new int[size()][];
 
-        for (final Path path : basis)
-            paths[i++] = path.toArray();
+        for (final Path path : basis) paths[i++] = path.toArray();
 
         return paths;
     }
@@ -297,8 +286,7 @@ public final class TripletShortCycles {
     }
 
     /**
-     * Try and find cycles through the triple formed from <i>v</i> and any two
-     * of it's neighbours.
+     * Try and find cycles through the triple formed from <i>v</i> and any two of it's neighbours.
      *
      * @param v a vertex in the graph
      */
@@ -329,9 +317,8 @@ public final class TripletShortCycles {
 
                     // canonic, use the a shortest path (dependant on vertex
                     // order) - non-canonic, use all possible shortest paths
-                    int[][] paths = canonical ? new int[][]{sp.pathTo(ws[j])} : sp.pathsTo(ws[j]);
-                    for (int[] path : paths)
-                        basis.add(new Path(append(path, v)));
+                    int[][] paths = canonical ? new int[][] {sp.pathTo(ws[j])} : sp.pathsTo(ws[j]);
+                    for (int[] path : paths) basis.add(new Path(append(path, v)));
                 }
             }
         }
@@ -340,8 +327,8 @@ public final class TripletShortCycles {
     }
 
     /**
-     * Is there a cycle already in the basis in which vertices <i>u</i>,
-     * <i>v</i> and <i>w</i> can be found in succession.
+     * Is there a cycle already in the basis in which vertices <i>u</i>, <i>v</i> and <i>w</i> can
+     * be found in succession.
      *
      * @param u a vertex adjacent to <i>v</i>
      * @param v a vertex adjacent to <i>u</i> and <i>w</i>
@@ -356,14 +343,13 @@ public final class TripletShortCycles {
     }
 
     /**
-     * Temporarily disconnect <i>v</i> from the <i>graph</i> by forming loops
-     * for each of it's neighbours, <i>ws</i>. A loop is an edge in which both
-     * end points are the. Technically <i>v</i> is never removed but we can't
-     * reach <i>v</i> from any other vertex which is sufficient to trace the
-     * triple cycles using {@link ShortestPaths}.
+     * Temporarily disconnect <i>v</i> from the <i>graph</i> by forming loops for each of it's
+     * neighbours, <i>ws</i>. A loop is an edge in which both end points are the. Technically
+     * <i>v</i> is never removed but we can't reach <i>v</i> from any other vertex which is
+     * sufficient to trace the triple cycles using {@link ShortestPaths}.
      *
      * @param ws vertices adjacent to <i>v</i>
-     * @param v  a vertex <i>v</i>
+     * @param v a vertex <i>v</i>
      * @see #reconnect(int[], int)
      */
     private void disconnect(final int[] ws, final int v) {
@@ -376,11 +362,10 @@ public final class TripletShortCycles {
     }
 
     /**
-     * Reconnect <i>v</i> with the <i>graph</i> by un-looping each of it's
-     * neighbours, <i>ws</i>.
+     * Reconnect <i>v</i> with the <i>graph</i> by un-looping each of it's neighbours, <i>ws</i>.
      *
      * @param ws vertices adjacent to <i>v</i>
-     * @param v  a vertex <i>v</i>
+     * @param v a vertex <i>v</i>
      * @see #disconnect(int[], int)
      */
     private void reconnect(final int[] ws, final int v) {
@@ -409,23 +394,20 @@ public final class TripletShortCycles {
      * Count how many cycles each vertex belongs to in the given basis.
      *
      * @param basis current basis
-     * @param ord   order of the graph
+     * @param ord order of the graph
      */
     private static int[] nCycles(final Iterable<Path> basis, int ord) {
 
         final int[] nCycles = new int[ord];
 
-        for (final Path path : basis)
-            for (final int v : path.vertices)
-                nCycles[v]++;
+        for (final Path path : basis) for (final int v : path.vertices) nCycles[v]++;
 
         return nCycles;
     }
 
     /**
-     * Transform the cycle to that of lowest lexicographic rank. For example the
-     * paths {3,2,1,0} , {3,0,1,2} and {2,1,0,3} are all the same and in the
-     * lexicographic order are {0,1,2,3}.
+     * Transform the cycle to that of lowest lexicographic rank. For example the paths {3,2,1,0} ,
+     * {3,0,1,2} and {2,1,0,3} are all the same and in the lexicographic order are {0,1,2,3}.
      *
      * @param p path forming a simple cycle
      * @return path of lowest rank
@@ -443,11 +425,9 @@ public final class TripletShortCycles {
 
         // copy data offset by the min into 'q', reverse if needed
         if (rev) {
-            for (int i = 0; i < len; i++)
-                q[(len - i) % len] = p[(off + i) % len];
+            for (int i = 0; i < len; i++) q[(len - i) % len] = p[(off + i) % len];
         } else {
-            for (int i = 0; i < len; i++)
-                q[i] = p[(off + i) % len];
+            for (int i = 0; i < len; i++) q[i] = p[(off + i) % len];
         }
 
         return q;
@@ -478,17 +458,15 @@ public final class TripletShortCycles {
         int ord = g.length;
         int[][] h = new int[ord][];
 
-        for (int v = 0; v < ord; v++)
-            h[v] = Arrays.copyOf(g[v], g[v].length);
+        for (int v = 0; v < ord; v++) h[v] = Arrays.copyOf(g[v], g[v].length);
 
         return h;
     }
 
     /**
-     * Simple wrapper class for a path of vertices (specified as an int[]). The
-     * class provides comparison with other paths. This is required as the
-     * algorithm can generate the same cycle more then once, and so the cycles
-     * must be stored in a {@link Set}.
+     * Simple wrapper class for a path of vertices (specified as an int[]). The class provides
+     * comparison with other paths. This is required as the algorithm can generate the same cycle
+     * more then once, and so the cycles must be stored in a {@link Set}.
      */
     private static class Path implements Comparable<Path> {
 
@@ -505,8 +483,7 @@ public final class TripletShortCycles {
         }
 
         /**
-         * Does this path contain the vertices <i>u</i>, <i>v</i> and <i>w</i>
-         * in succession.
+         * Does this path contain the vertices <i>u</i>, <i>v</i> and <i>w</i> in succession.
          *
          * @param u a vertex connected to <i>v</i>
          * @param v a vertex connected to <i>u</i> and <i>w</i>
@@ -546,7 +523,7 @@ public final class TripletShortCycles {
             return p;
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         public int compareTo(final Path that) {
             if (this.len() > that.len()) return +1;

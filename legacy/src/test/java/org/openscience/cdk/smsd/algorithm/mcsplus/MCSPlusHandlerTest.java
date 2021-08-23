@@ -28,7 +28,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -48,8 +47,9 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * Unit testing for the {@link MCSPlusHandler} class.
- * @author     Syed Asad Rahman
- * @author     egonw
+ *
+ * @author Syed Asad Rahman
+ * @author egonw
  * @cdk.module test-smsd
  */
 public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
@@ -59,9 +59,7 @@ public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
         AbstractMCSAlgorithmTest.setMCSAlgorithm(new MCSPlusHandler());
     }
 
-    /**
-     * Test of searchMCS method, of class MCSPlusHandler.
-     */
+    /** Test of searchMCS method, of class MCSPlusHandler. */
     @Test
     @Override
     public void testSearchMCS() {
@@ -84,6 +82,7 @@ public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
 
     /**
      * Test of set method, of class MCSPlusHandler.
+     *
      * @throws Exception
      */
     @Test
@@ -102,6 +101,7 @@ public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
 
     /**
      * Test of set method, of class MCSPlusHandler.
+     *
      * @throws CDKException
      * @throws IOException
      */
@@ -128,6 +128,7 @@ public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
 
     /**
      * Test of set method, of class MCSPlusHandler.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -146,6 +147,7 @@ public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
 
     /**
      * Test of getAllAtomMapping method, of class MCSPlusHandler.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -170,6 +172,7 @@ public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
 
     /**
      * Test of getAllMapping method, of class MCSPlusHandler.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -194,6 +197,7 @@ public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
 
     /**
      * Test of getFirstAtomMapping method, of class MCSPlusHandler.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -214,6 +218,7 @@ public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
 
     /**
      * Test of getFirstMapping method, of class MCSPlusHandler.
+     *
      * @throws InvalidSmilesException
      */
     @Test

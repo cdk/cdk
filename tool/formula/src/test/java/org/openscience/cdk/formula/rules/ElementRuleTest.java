@@ -21,24 +21,20 @@ package org.openscience.cdk.formula.rules;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.Isotope;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Isotope;
 import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.formula.MolecularFormulaRange;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
-/**
- * @cdk.module test-formula
- */
+/** @cdk.module test-formula */
 public class ElementRuleTest extends FormulaRuleTest {
 
     private static IChemObjectBuilder builder;
 
-    /**
-    *  The JUnit setup method
-    */
+    /** The JUnit setup method */
     @BeforeClass
     public static void setUp() throws Exception {
         builder = DefaultChemObjectBuilder.getInstance();
@@ -48,20 +44,19 @@ public class ElementRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testElementRule() throws Exception {
 
         IRule rule = new ElementRule();
         Assert.assertNotNull(rule);
-
     }
 
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testDefault() throws Exception {
@@ -85,13 +80,12 @@ public class ElementRuleTest extends FormulaRuleTest {
         Assert.assertEquals(93, mfRange.getIsotopeCount());
         Assert.assertEquals(0, mfRange.getIsotopeCountMin(new Isotope("C")));
         Assert.assertEquals(50, mfRange.getIsotopeCountMax(new Isotope("C")));
-
     }
 
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testSetParameters() throws Exception {
@@ -112,14 +106,18 @@ public class ElementRuleTest extends FormulaRuleTest {
 
         MolecularFormulaRange mfRange2 = (MolecularFormulaRange) objects[0];
         Assert.assertEquals(mfRange.getIsotopeCount(), mfRange2.getIsotopeCount());
-        Assert.assertEquals(mfRange.getIsotopeCountMin(new Isotope("C")), mfRange2.getIsotopeCountMin(new Isotope("C")));
-        Assert.assertEquals(mfRange.getIsotopeCountMax(new Isotope("C")), mfRange2.getIsotopeCountMax(new Isotope("C")));
+        Assert.assertEquals(
+                mfRange.getIsotopeCountMin(new Isotope("C")),
+                mfRange2.getIsotopeCountMin(new Isotope("C")));
+        Assert.assertEquals(
+                mfRange.getIsotopeCountMax(new Isotope("C")),
+                mfRange2.getIsotopeCountMax(new Isotope("C")));
     }
 
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testDefaultValidFalse() throws Exception {
@@ -136,7 +134,7 @@ public class ElementRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testDefaultValidFalse_SetParam() throws Exception {
@@ -162,7 +160,7 @@ public class ElementRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testDefaultValidTrue() throws Exception {
@@ -175,5 +173,4 @@ public class ElementRuleTest extends FormulaRuleTest {
 
         Assert.assertEquals(1.0, rule.validate(formula), 0.0001);
     }
-
 }

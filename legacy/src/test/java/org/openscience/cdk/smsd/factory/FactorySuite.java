@@ -32,7 +32,6 @@ import org.junit.runners.Suite;
 
 /**
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- *
  * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
@@ -51,5 +50,4 @@ public class FactorySuite {
 
     @After
     public void tearDown() throws Exception {}
-
 }

@@ -24,13 +24,11 @@
 package org.openscience.cdk.qsar;
 
 /**
- * A super class for atom pair descriptors allowing default implementations for
- * interface methods.
+ * A super class for atom pair descriptors allowing default implementations for interface methods.
  *
  * @author John May
  * @cdk.module qsar
  * @cdk.githash
  */
-public abstract class AbstractAtomPairDescriptor extends AbstractDescriptor implements IAtomPairDescriptor {
-
-}
+public abstract class AbstractAtomPairDescriptor extends AbstractDescriptor
+        implements IAtomPairDescriptor {}

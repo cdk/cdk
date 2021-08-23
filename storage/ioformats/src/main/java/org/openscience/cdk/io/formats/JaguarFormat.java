@@ -58,7 +58,7 @@ public class JaguarFormat extends SimpleChemFormatMatcher implements IChemFormat
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"j", "jin", "jout"};
+        return new String[] {"j", "jin", "jout"};
     }
 
     /** {@inheritDoc} */

@@ -20,9 +20,8 @@ package org.openscience.cdk.config.isotopes;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.xml.sax.Attributes;
@@ -30,6 +29,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * Reads an isotope list in CML2 format. An example definition is:
+ *
  * <pre>{@code
  * <isotopeList id="H">
  *   <isotope id="H1" isotopeNumber="1" elementTyp="H">
@@ -45,20 +45,20 @@ import org.xml.sax.helpers.DefaultHandler;
  * </isotopeList>
  * }</pre>
  *
- * @cdk.module  extra
+ * @cdk.module extra
  * @cdk.githash
  */
 public class IsotopeHandler extends DefaultHandler {
 
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(IsotopeHandler.class);
-    private String              currentChars;
-    private List<IIsotope>      isotopes;
+    private String currentChars;
+    private List<IIsotope> isotopes;
 
-    private IIsotope            workingIsotope;
-    private String              currentElement;
-    private String              dictRef;
+    private IIsotope workingIsotope;
+    private String currentElement;
+    private String dictRef;
 
-    private IChemObjectBuilder  builder;
+    private IChemObjectBuilder builder;
 
     /**
      * Constructs an IsotopeHandler used by the IsotopeReader.
@@ -173,5 +173,4 @@ public class IsotopeHandler extends DefaultHandler {
         }
         return "";
     }
-
 }

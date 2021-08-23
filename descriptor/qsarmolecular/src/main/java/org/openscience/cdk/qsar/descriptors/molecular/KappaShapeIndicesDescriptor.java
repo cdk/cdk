@@ -18,6 +18,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.util.ArrayList;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -30,23 +31,23 @@ import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.util.ArrayList;
-
 /**
- * Kier and Hall kappa molecular shape indices compare the molecular graph with minimal and maximal molecular graphs;
- * a description is given at: http://www.chemcomp.com/Journal_of_CCG/Features/descr.htm#KH :
- * "they are intended to capture different aspects of molecular shape.  Note that hydrogens are ignored.
- * In the following description, n denotes the number of atoms in the hydrogen suppressed graph,
- * m is the number of bonds in the hydrogen suppressed graph. Also, let p2 denote the number of paths of length 2
- * and let p3 denote the number of paths of length 3".
- * 
- * Returns three values in the order
+ * Kier and Hall kappa molecular shape indices compare the molecular graph with minimal and maximal
+ * molecular graphs; a description is given at:
+ * http://www.chemcomp.com/Journal_of_CCG/Features/descr.htm#KH : "they are intended to capture
+ * different aspects of molecular shape. Note that hydrogens are ignored. In the following
+ * description, n denotes the number of atoms in the hydrogen suppressed graph, m is the number of
+ * bonds in the hydrogen suppressed graph. Also, let p2 denote the number of paths of length 2 and
+ * let p3 denote the number of paths of length 3".
+ *
+ * <p>Returns three values in the order
+ *
  * <ol>
- * <li>Kier1 -  First kappa shape index
- * <li>Kier2 - Second kappa shape index
- * <li>Kier3 -  Third kappa (&kappa;) shape index
+ *   <li>Kier1 - First kappa shape index
+ *   <li>Kier2 - Second kappa shape index
+ *   <li>Kier3 - Third kappa (&kappa;) shape index
  * </ol>
- * 
+ *
  * <p>This descriptor does not have any parameters.
  *
  * @author mfe4
@@ -57,31 +58,29 @@ import java.util.ArrayList;
  * @cdk.keyword Kappe shape index
  * @cdk.keyword descriptor
  */
-public class KappaShapeIndicesDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
+public class KappaShapeIndicesDescriptor extends AbstractMolecularDescriptor
+        implements IMolecularDescriptor {
 
     private static final String[] NAMES = {"Kier1", "Kier2", "Kier3"};
 
-    /**
-     * Constructor for the KappaShapeIndicesDescriptor object
-     */
+    /** Constructor for the KappaShapeIndicesDescriptor object */
     public KappaShapeIndicesDescriptor() {}
 
     /**
-     * Gets the specification attribute of the
-     * KappaShapeIndicesDescriptor object
+     * Gets the specification attribute of the KappaShapeIndicesDescriptor object
      *
      * @return The specification value
      */
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#kierValues", this.getClass()
-                        .getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#kierValues",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     /**
-     * Sets the parameters attribute of the
-     * KappaShapeIndicesDescriptor object
+     * Sets the parameters attribute of the KappaShapeIndicesDescriptor object
      *
      * @param params The new parameters value
      * @throws CDKException Description of the Exception
@@ -92,8 +91,7 @@ public class KappaShapeIndicesDescriptor extends AbstractMolecularDescriptor imp
     }
 
     /**
-     * Gets the parameters attribute of the
-     * KappaShapeIndicesDescriptor object
+     * Gets the parameters attribute of the KappaShapeIndicesDescriptor object
      *
      * @return The parameters value
      */
@@ -124,12 +122,16 @@ public class KappaShapeIndicesDescriptor extends AbstractMolecularDescriptor imp
             kierValues.add(Double.NaN);
             kierValues.add(Double.NaN);
             kierValues.add(Double.NaN);
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), kierValues,
+            return new DescriptorValue(
+                    getSpecification(),
+                    getParameterNames(),
+                    getParameters(),
+                    kierValues,
                     getDescriptorNames());
         }
         atomContainer = AtomContainerManipulator.removeHydrogens(atomContainer);
 
-        //org.openscience.cdk.interfaces.IAtom[] atoms = atomContainer.getAtoms();
+        // org.openscience.cdk.interfaces.IAtom[] atoms = atomContainer.getAtoms();
         java.util.List firstAtomNeighboors;
         java.util.List secondAtomNeighboors;
         java.util.List thirdAtomNeighboors;
@@ -153,15 +155,23 @@ public class KappaShapeIndicesDescriptor extends AbstractMolecularDescriptor imp
             bond1 = 0;
             firstAtomNeighboors = atomContainer.getConnectedAtomsList(atomContainer.getAtom(a1));
             for (int a2 = 0; a2 < firstAtomNeighboors.size(); a2++) {
-                bond1 = atomContainer.indexOf(atomContainer.getBond(atomContainer.getAtom(a1), (IAtom) firstAtomNeighboors.get(a2)));
+                bond1 =
+                        atomContainer.indexOf(
+                                atomContainer.getBond(
+                                        atomContainer.getAtom(a1),
+                                        (IAtom) firstAtomNeighboors.get(a2)));
                 if (!singlePaths.contains(new Double(bond1))) {
                     singlePaths.add(bond1);
                     java.util.Collections.sort(singlePaths);
                 }
-                secondAtomNeighboors = atomContainer.getConnectedAtomsList((IAtom) firstAtomNeighboors.get(a2));
+                secondAtomNeighboors =
+                        atomContainer.getConnectedAtomsList((IAtom) firstAtomNeighboors.get(a2));
                 for (int a3 = 0; a3 < secondAtomNeighboors.size(); a3++) {
-                    bond2 = atomContainer.indexOf(atomContainer.getBond((IAtom) firstAtomNeighboors.get(a2),
-                            (IAtom) secondAtomNeighboors.get(a3)));
+                    bond2 =
+                            atomContainer.indexOf(
+                                    atomContainer.getBond(
+                                            (IAtom) firstAtomNeighboors.get(a2),
+                                            (IAtom) secondAtomNeighboors.get(a3)));
                     if (!singlePaths.contains(new Double(bond2))) {
                         singlePaths.add(bond2);
                     }
@@ -174,10 +184,15 @@ public class KappaShapeIndicesDescriptor extends AbstractMolecularDescriptor imp
                     if (!doublePaths.contains(tmpbond2) && (bond1 != bond2)) {
                         doublePaths.add(tmpbond2);
                     }
-                    thirdAtomNeighboors = atomContainer.getConnectedAtomsList((IAtom) secondAtomNeighboors.get(a3));
+                    thirdAtomNeighboors =
+                            atomContainer.getConnectedAtomsList(
+                                    (IAtom) secondAtomNeighboors.get(a3));
                     for (int a4 = 0; a4 < thirdAtomNeighboors.size(); a4++) {
-                        bond3 = atomContainer.indexOf(atomContainer.getBond((IAtom) secondAtomNeighboors.get(a3),
-                                (IAtom) thirdAtomNeighboors.get(a4)));
+                        bond3 =
+                                atomContainer.indexOf(
+                                        atomContainer.getBond(
+                                                (IAtom) secondAtomNeighboors.get(a3),
+                                                (IAtom) thirdAtomNeighboors.get(a4)));
                         if (!singlePaths.contains(new Double(bond3))) {
                             singlePaths.add(bond3);
                         }
@@ -202,31 +217,33 @@ public class KappaShapeIndicesDescriptor extends AbstractMolecularDescriptor imp
             kier2 = 0;
             kier3 = 0;
         } else {
-            kier1 = (((atomsCount) * ((atomsCount - 1) * (atomsCount - 1))) / (singlePaths.size() * singlePaths.size()));
+            kier1 =
+                    (((atomsCount) * ((atomsCount - 1) * (atomsCount - 1)))
+                            / (singlePaths.size() * singlePaths.size()));
             if (atomsCount == 2) {
                 kier2 = 0;
                 kier3 = 0;
             } else {
-                if (doublePaths.size() == 0)
-                    kier2 = Double.NaN;
+                if (doublePaths.size() == 0) kier2 = Double.NaN;
                 else
-                    kier2 = (((atomsCount - 1) * ((atomsCount - 2) * (atomsCount - 2))) / (doublePaths.size() * doublePaths
-                            .size()));
+                    kier2 =
+                            (((atomsCount - 1) * ((atomsCount - 2) * (atomsCount - 2)))
+                                    / (doublePaths.size() * doublePaths.size()));
                 if (atomsCount == 3) {
                     kier3 = 0;
                 } else {
                     if (atomsCount % 2 != 0) {
-                        if (triplePaths.size() == 0)
-                            kier3 = Double.NaN;
+                        if (triplePaths.size() == 0) kier3 = Double.NaN;
                         else
-                            kier3 = (((atomsCount - 1) * ((atomsCount - 3) * (atomsCount - 3))) / (triplePaths.size() * triplePaths
-                                    .size()));
+                            kier3 =
+                                    (((atomsCount - 1) * ((atomsCount - 3) * (atomsCount - 3)))
+                                            / (triplePaths.size() * triplePaths.size()));
                     } else {
-                        if (triplePaths.size() == 0)
-                            kier3 = Double.NaN;
+                        if (triplePaths.size() == 0) kier3 = Double.NaN;
                         else
-                            kier3 = (((atomsCount - 3) * ((atomsCount - 2) * (atomsCount - 2))) / (triplePaths.size() * triplePaths
-                                    .size()));
+                            kier3 =
+                                    (((atomsCount - 3) * ((atomsCount - 2) * (atomsCount - 2)))
+                                            / (triplePaths.size() * triplePaths.size()));
                     }
                 }
             }
@@ -235,20 +252,26 @@ public class KappaShapeIndicesDescriptor extends AbstractMolecularDescriptor imp
         kierValues.add(kier1);
         kierValues.add(kier2);
         kierValues.add(kier3);
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), kierValues,
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                kierValues,
                 getDescriptorNames());
     }
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * 
-     * The return value from this method really indicates what type of result will
-     * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
-     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
-     * allows you to do the same thing, without actually calculating the descriptor.
      *
-     * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
-     *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
+     * <p>The return value from this method really indicates what type of result will be obtained
+     * from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
+     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object;
+     * this method allows you to do the same thing, without actually calculating the descriptor.
+     *
+     * @return an object that implements the {@link
+     *     org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating the actual type
+     *     of values returned by the descriptor in the {@link
+     *     org.openscience.cdk.qsar.DescriptorValue} object
      */
     @Override
     public IDescriptorResult getDescriptorResultType() {
@@ -256,8 +279,7 @@ public class KappaShapeIndicesDescriptor extends AbstractMolecularDescriptor imp
     }
 
     /**
-     * Gets the parameterNames attribute of the
-     * KappaShapeIndicesDescriptor object
+     * Gets the parameterNames attribute of the KappaShapeIndicesDescriptor object
      *
      * @return The parameterNames value
      */
@@ -268,8 +290,7 @@ public class KappaShapeIndicesDescriptor extends AbstractMolecularDescriptor imp
     }
 
     /**
-     * Gets the parameterType attribute of the
-     * KappaShapeIndicesDescriptor object
+     * Gets the parameterType attribute of the KappaShapeIndicesDescriptor object
      *
      * @param name Description of the Parameter
      * @return The parameterType value

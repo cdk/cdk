@@ -33,7 +33,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.UndirectedGraph;
 import org._3pq.jgrapht.alg.DijkstraShortestPath;
@@ -41,15 +40,12 @@ import org._3pq.jgrapht.graph.UndirectedSubgraph;
 import org.openscience.cdk.graph.BiconnectivityInspector;
 
 /**
- * A minimum basis of all cycles in a graph.
- * All cycles in a graph G can be constructed from the basis cycles by binary
- * addition of their invidence vectors.
+ * A minimum basis of all cycles in a graph. All cycles in a graph G can be constructed from the
+ * basis cycles by binary addition of their invidence vectors.
  *
- * A minimum cycle basis is a Matroid.
+ * <p>A minimum cycle basis is a Matroid.
  *
  * @author Ulrich Bauer &lt;ulrich.bauer@alumni.tum.de&gt;
- *
- *
  * @cdk.module standard
  * @cdk.githash
  * @deprecated internal implemenation detail from SSSRFinder, do not use
@@ -57,21 +53,21 @@ import org.openscience.cdk.graph.BiconnectivityInspector;
 @Deprecated
 public class CycleBasis {
 
-    //private List cycles = new Vector();
-    private List<SimpleCycle>      mulitEdgeCycles = new ArrayList<SimpleCycle>();
-    private List<Edge>             multiEdgeList   = new ArrayList<Edge>();
+    // private List cycles = new Vector();
+    private List<SimpleCycle> mulitEdgeCycles = new ArrayList<SimpleCycle>();
+    private List<Edge> multiEdgeList = new ArrayList<Edge>();
 
-    private SimpleCycleBasis       cachedCycleBasis;
+    private SimpleCycleBasis cachedCycleBasis;
 
-    //private List edgeList = new Vector();
-    //private List multiEdgeList = new Vector();
-    private UndirectedGraph        baseGraph;
-    private List<SimpleCycleBasis> subgraphBases   = new ArrayList<SimpleCycleBasis>();
+    // private List edgeList = new Vector();
+    // private List multiEdgeList = new Vector();
+    private UndirectedGraph baseGraph;
+    private List<SimpleCycleBasis> subgraphBases = new ArrayList<SimpleCycleBasis>();
 
     /**
      * Constructs a minimum cycle basis of a graph.
      *
-     * @param   g the graph for the cycle basis
+     * @param g the graph for the cycle basis
      */
     public CycleBasis(UndirectedGraph g) {
 
@@ -86,7 +82,7 @@ public class CycleBasis {
         UndirectedGraph simpleGraph = new UndirectedSubgraph(g, null, null);
 
         // Iterate over the edges and discard all edges with the same source and target
-        for (Iterator it = g.edgeSet().iterator(); it.hasNext();) {
+        for (Iterator it = g.edgeSet().iterator(); it.hasNext(); ) {
             Edge edge = (Edge) it.next();
             Object u = edge.getSource();
             Object v = edge.getTarget();
@@ -96,13 +92,13 @@ public class CycleBasis {
                 // Keep the edge with the least weight
 
                 Edge minEdge = edge;
-                for (Iterator jt = edges.iterator(); jt.hasNext();) {
+                for (Iterator jt = edges.iterator(); jt.hasNext(); ) {
                     Edge nextEdge = (Edge) jt.next();
                     minEdge = nextEdge.getWeight() < minEdge.getWeight() ? nextEdge : minEdge;
                 }
 
                 //  ...and remove the others.
-                for (Iterator jt = edges.iterator(); jt.hasNext();) {
+                for (Iterator jt = edges.iterator(); jt.hasNext(); ) {
                     Edge nextEdge = (Edge) jt.next();
                     if (nextEdge != minEdge) {
                         // Remove edge from the graph
@@ -112,25 +108,24 @@ public class CycleBasis {
                         // a shortest path between the vertices of the edge
                         Set edgesOfCycle = new HashSet();
                         edgesOfCycle.add(nextEdge);
-                        edgesOfCycle.addAll(DijkstraShortestPath.findPathBetween(simpleGraph, u, v));
+                        edgesOfCycle.addAll(
+                                DijkstraShortestPath.findPathBetween(simpleGraph, u, v));
 
                         multiEdgeList.add(nextEdge);
                         mulitEdgeCycles.add(new SimpleCycle(baseGraph, edgesOfCycle));
-
                     }
                 }
-
             }
         }
 
         List biconnectedComponents = new BiconnectivityInspector(simpleGraph).biconnectedSets();
 
-        for (Iterator it = biconnectedComponents.iterator(); it.hasNext();) {
+        for (Iterator it = biconnectedComponents.iterator(); it.hasNext(); ) {
             Set edges = (Set) it.next();
 
             if (edges.size() > 1) {
                 Set vertices = new HashSet();
-                for (Iterator edgeIt = edges.iterator(); edgeIt.hasNext();) {
+                for (Iterator edgeIt = edges.iterator(); edgeIt.hasNext(); ) {
                     Edge edge = (Edge) edgeIt.next();
                     vertices.add(edge.getSource());
                     vertices.add(edge.getTarget());
@@ -175,13 +170,12 @@ public class CycleBasis {
             cycles.addAll(mulitEdgeCycles);
             edgeList.addAll(multiEdgeList);
 
-            //edgeList.addAll(baseGraph.edgeSet());
+            // edgeList.addAll(baseGraph.edgeSet());
 
             cachedCycleBasis = new SimpleCycleBasis(cycles, edgeList, baseGraph);
         }
 
         return cachedCycleBasis;
-
     }
 
     /**
@@ -189,21 +183,19 @@ public class CycleBasis {
      *
      * @return a <Code>Collection</code> of the basis cycles
      */
-
     public Collection cycles() {
         return simpleBasis().cycles();
     }
 
     /**
-     * Returns the essential cycles of this cycle basis.
-     * A essential cycle is contained in every minimum cycle basis of a graph.
+     * Returns the essential cycles of this cycle basis. A essential cycle is contained in every
+     * minimum cycle basis of a graph.
      *
      * @return a <Code>Collection</code> of the essential cycles
      */
-
     public Collection essentialCycles() {
         Collection result = new HashSet();
-        //minimize();
+        // minimize();
 
         for (Object subgraphBase : subgraphBases) {
             SimpleCycleBasis cycleBasis = (SimpleCycleBasis) subgraphBase;
@@ -214,16 +206,15 @@ public class CycleBasis {
     }
 
     /**
-     * Returns the essential cycles of this cycle basis.
-     * A relevant cycle is contained in some minimum cycle basis of a graph.
+     * Returns the essential cycles of this cycle basis. A relevant cycle is contained in some
+     * minimum cycle basis of a graph.
      *
-     * @return a <Code>Map</code> mapping each relevant cycles to the corresponding
-     * basis cycle in this basis
+     * @return a <Code>Map</code> mapping each relevant cycles to the corresponding basis cycle in
+     *     this basis
      */
-
     public Map relevantCycles() {
         Map result = new HashMap();
-        //minimize();
+        // minimize();
 
         for (SimpleCycleBasis subgraphBase : subgraphBases) {
             SimpleCycleBasis cycleBasis = subgraphBase;
@@ -234,17 +225,16 @@ public class CycleBasis {
     }
 
     /**
-     * Returns the connected components of this cycle basis, in regard to matroid theory.
-     * Two cycles belong to the same commected component if there is a circuit (a minimal
-     * dependent set) containing both cycles.
+     * Returns the connected components of this cycle basis, in regard to matroid theory. Two cycles
+     * belong to the same commected component if there is a circuit (a minimal dependent set)
+     * containing both cycles.
      *
-     * @return a <Code>List</code> of <Code>Set</code>s consisting of the cycles in a
-     * equivalence class.
+     * @return a <Code>List</code> of <Code>Set</code>s consisting of the cycles in a equivalence
+     *     class.
      */
-
     public List equivalenceClasses() {
         List result = new ArrayList();
-        //minimize();
+        // minimize();
 
         for (SimpleCycleBasis subgraphBase : subgraphBases) {
             SimpleCycleBasis cycleBasis = subgraphBase;
@@ -253,5 +243,4 @@ public class CycleBasis {
 
         return result;
     }
-
 }

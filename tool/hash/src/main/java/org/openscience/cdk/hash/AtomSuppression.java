@@ -24,15 +24,14 @@
 
 package org.openscience.cdk.hash;
 
+import java.util.BitSet;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 
-import java.util.BitSet;
-
 /**
- * Defines a method of suppressing certain atoms from an {@link IAtomContainer}
- * when computing the hash codes for the molecule or its atoms.
+ * Defines a method of suppressing certain atoms from an {@link IAtomContainer} when computing the
+ * hash codes for the molecule or its atoms.
  *
  * @author John May
  * @cdk.module hash
@@ -40,8 +39,7 @@ import java.util.BitSet;
 abstract class AtomSuppression {
 
     /**
-     * Returns a new instance indicating which atoms are suppressed for this
-     * suppression method.
+     * Returns a new instance indicating which atoms are suppressed for this suppression method.
      *
      * @param container molecule with 0 or more atoms
      * @return the vertices (atom index) which should be suppressed
@@ -58,12 +56,11 @@ abstract class AtomSuppression {
     }
 
     /**
-     * Suppresses any explicit hydrogen regardless of whether the atom is a
-     * hydrogen ion or isotope.
+     * Suppresses any explicit hydrogen regardless of whether the atom is a hydrogen ion or isotope.
      */
     private static final class AnyHydrogens extends AtomSuppression {
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         Suppressed suppress(IAtomContainer container) {
             BitSet hydrogens = new BitSet();
@@ -78,7 +75,7 @@ abstract class AtomSuppression {
     /** Suppresses any pseudo atom. */
     private static final class AnyPseudos extends AtomSuppression {
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         Suppressed suppress(IAtomContainer container) {
             BitSet hydrogens = new BitSet();
@@ -95,7 +92,7 @@ abstract class AtomSuppression {
     /** internal reference for factory. */
     private static final AtomSuppression anyHydrogens = new AnyHydrogens();
     /** internal reference for factory. */
-    private static final AtomSuppression anyPseudos   = new AnyPseudos();
+    private static final AtomSuppression anyPseudos = new AnyPseudos();
 
     /**
      * Do not suppress any atoms.

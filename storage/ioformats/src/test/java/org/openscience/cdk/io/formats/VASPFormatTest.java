@@ -22,13 +22,10 @@
  */
 package org.openscience.cdk.io.formats;
 
-/**
- * @cdk.module test-ioformats
- */
+/** @cdk.module test-ioformats */
 public class VASPFormatTest extends ChemFormatMatcherTest {
 
     public VASPFormatTest() {
         super.setChemFormatMatcher((IChemFormatMatcher) VASPFormat.getInstance());
     }
-
 }

@@ -25,8 +25,6 @@ import java.awt.geom.AffineTransform;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.AtomSymbolElement;
 import org.openscience.cdk.renderer.elements.Bounds;
 import org.openscience.cdk.renderer.elements.ElementGroup;
@@ -40,18 +38,18 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 /**
  * Utility class for testing.
  *
- * @author     maclean
+ * @author maclean
  * @cdk.module test-renderbasic
  */
 public class ElementUtility implements IDrawVisitor {
 
-    private List<IRenderingElement> elements         = new ArrayList<IRenderingElement>();
+    private List<IRenderingElement> elements = new ArrayList<IRenderingElement>();
 
-    private AffineTransform         transform;
+    private AffineTransform transform;
 
-    private RendererModel           model;
+    private RendererModel model;
 
-    private boolean                 getElementGroups = false;
+    private boolean getElementGroups = false;
 
     public int numberOfElements() {
         return this.elements.size();
@@ -90,10 +88,10 @@ public class ElementUtility implements IDrawVisitor {
     }
 
     public int[] transformPoint(double x, double y) {
-        double[] src = new double[]{x, y};
+        double[] src = new double[] {x, y};
         double[] dest = new double[2];
         this.transform.transform(src, 0, dest, 0, 1);
-        return new int[]{(int) dest[0], (int) dest[1]};
+        return new int[] {(int) dest[0], (int) dest[1]};
     }
 
     @Override
@@ -155,5 +153,4 @@ public class ElementUtility implements IDrawVisitor {
             stream.print(toString(element));
         }
     }
-
 }

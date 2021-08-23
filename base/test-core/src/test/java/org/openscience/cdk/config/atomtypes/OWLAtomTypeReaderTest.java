@@ -21,7 +21,6 @@ package org.openscience.cdk.config.atomtypes;
 
 import java.io.StringReader;
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
@@ -36,24 +35,30 @@ import org.openscience.cdk.interfaces.IAtomType;
  */
 public class OWLAtomTypeReaderTest extends CDKTestCase {
 
-    private final String OWL_CONTENT = "<?xml version=\"1.0\"?>" + "<!DOCTYPE rdf:RDF ["
-                                             + "  <!ENTITY rdf  \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" >"
-                                             + "  <!ENTITY elem \"http://cdk.sf.net/ontologies/elements#\" >"
-                                             + "  <!ENTITY at   \"http://cdk.sf.net/ontologies/atomtypes#\" >"
-                                             + "  <!ENTITY cdkat \"http://cdk.sf.net/ontologies/atomtypes/cdk#\" >"
-                                             + "]>" + "<rdf:RDF xmlns=\"&cdkat;\" xml:base=\"&cdkat;\""
-                                             + "         xmlns:at=\"&at;\"" + "         xmlns:elem=\"&elem;\""
-                                             + "         xmlns:rdf=\"&rdf;\"" + ">"
-                                             + "  <at:AtomType rdf:ID=\"C.sp3.0\">"
-                                             + "    <at:categorizedAs rdf:resource=\"&cdkat;C.sp3\"/>"
-                                             + "    <at:hasElement rdf:resource=\"&elem;C\"/>"
-                                             + "    <at:hybridization rdf:resource=\"&at;sp3\"/>"
-                                             + "    <at:formalCharge>0</at:formalCharge>"
-                                             + "    <at:lonePairCount>0</at:lonePairCount>"
-                                             + "    <at:formalNeighbourCount>4</at:formalNeighbourCount>"
-                                             + "    <at:piBondCount>0</at:piBondCount>"
-                                             + "    <at:singleElectronCount>0</at:singleElectronCount>"
-                                             + "  </at:AtomType>" + "</rdf:RDF>";
+    private final String OWL_CONTENT =
+            "<?xml version=\"1.0\"?>"
+                    + "<!DOCTYPE rdf:RDF ["
+                    + "  <!ENTITY rdf  \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" >"
+                    + "  <!ENTITY elem \"http://cdk.sf.net/ontologies/elements#\" >"
+                    + "  <!ENTITY at   \"http://cdk.sf.net/ontologies/atomtypes#\" >"
+                    + "  <!ENTITY cdkat \"http://cdk.sf.net/ontologies/atomtypes/cdk#\" >"
+                    + "]>"
+                    + "<rdf:RDF xmlns=\"&cdkat;\" xml:base=\"&cdkat;\""
+                    + "         xmlns:at=\"&at;\""
+                    + "         xmlns:elem=\"&elem;\""
+                    + "         xmlns:rdf=\"&rdf;\""
+                    + ">"
+                    + "  <at:AtomType rdf:ID=\"C.sp3.0\">"
+                    + "    <at:categorizedAs rdf:resource=\"&cdkat;C.sp3\"/>"
+                    + "    <at:hasElement rdf:resource=\"&elem;C\"/>"
+                    + "    <at:hybridization rdf:resource=\"&at;sp3\"/>"
+                    + "    <at:formalCharge>0</at:formalCharge>"
+                    + "    <at:lonePairCount>0</at:lonePairCount>"
+                    + "    <at:formalNeighbourCount>4</at:formalNeighbourCount>"
+                    + "    <at:piBondCount>0</at:piBondCount>"
+                    + "    <at:singleElectronCount>0</at:singleElectronCount>"
+                    + "  </at:AtomType>"
+                    + "</rdf:RDF>";
 
     @Test
     public void testAtomTypeReader_Reader() {
@@ -88,9 +93,8 @@ public class OWLAtomTypeReaderTest extends CDKTestCase {
         Assert.assertEquals(0, atomType.getFormalCharge().intValue());
         Assert.assertEquals(IAtomType.Hybridization.SP3, atomType.getHybridization());
         Assert.assertEquals(4, atomType.getFormalNeighbourCount().intValue());
-        Assert.assertEquals((Integer)0, atomType.getProperty(CDKConstants.LONE_PAIR_COUNT));
-        Assert.assertEquals((Integer)0, atomType.getProperty(CDKConstants.PI_BOND_COUNT));
-        Assert.assertEquals((Integer)0, atomType.getProperty(CDKConstants.SINGLE_ELECTRON_COUNT));
+        Assert.assertEquals((Integer) 0, atomType.getProperty(CDKConstants.LONE_PAIR_COUNT));
+        Assert.assertEquals((Integer) 0, atomType.getProperty(CDKConstants.PI_BOND_COUNT));
+        Assert.assertEquals((Integer) 0, atomType.getProperty(CDKConstants.SINGLE_ELECTRON_COUNT));
     }
-
 }

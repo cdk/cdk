@@ -22,7 +22,6 @@ import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 import java.util.Arrays;
 import java.util.List;
-
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.renderer.BoundsCalculator;
 import org.openscience.cdk.renderer.RendererModel;
@@ -47,18 +46,29 @@ public class ReactionBoxGenerator implements IGenerator<IReaction> {
     @Override
     public IRenderingElement generate(IReaction reaction, RendererModel model) {
         if (!model.getParameter(ShowReactionBoxes.class).getValue()) return null;
-        double separation = model.getParameter(BondLength.class).getValue()
-                / model.getParameter(Scale.class).getValue();
+        double separation =
+                model.getParameter(BondLength.class).getValue()
+                        / model.getParameter(Scale.class).getValue();
         Rectangle2D totalBounds = BoundsCalculator.calculateBounds(reaction);
         if (totalBounds == null) return null;
 
         ElementGroup diagram = new ElementGroup();
-        Color foregroundColor = model.getParameter(BasicSceneGenerator.ForegroundColor.class).getValue();
-        diagram.add(new RectangleElement(totalBounds.getMinX() - separation, totalBounds.getMinY() - separation,
-                totalBounds.getMaxX() + separation, totalBounds.getMaxY() + separation, foregroundColor));
+        Color foregroundColor =
+                model.getParameter(BasicSceneGenerator.ForegroundColor.class).getValue();
+        diagram.add(
+                new RectangleElement(
+                        totalBounds.getMinX() - separation,
+                        totalBounds.getMinY() - separation,
+                        totalBounds.getMaxX() + separation,
+                        totalBounds.getMaxY() + separation,
+                        foregroundColor));
         if (reaction.getID() != null) {
-            diagram.add(new TextElement((totalBounds.getMinX() + totalBounds.getMaxX()) / 2, totalBounds.getMinY()
-                    - separation, reaction.getID(), foregroundColor));
+            diagram.add(
+                    new TextElement(
+                            (totalBounds.getMinX() + totalBounds.getMaxX()) / 2,
+                            totalBounds.getMinY() - separation,
+                            reaction.getID(),
+                            foregroundColor));
         }
         return diagram;
     }
@@ -66,6 +76,6 @@ public class ReactionBoxGenerator implements IGenerator<IReaction> {
     /** {@inheritDoc} */
     @Override
     public List<IGeneratorParameter<?>> getParameters() {
-        return Arrays.asList(new IGeneratorParameter<?>[]{});
+        return Arrays.asList(new IGeneratorParameter<?>[] {});
     }
 }

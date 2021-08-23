@@ -26,17 +26,15 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
- * A common interface for tools that deduce bond orders from connectivity
- * and optionally additional information, like number of implicit or
- * explicit hydrogens, or hybridization states.
+ * A common interface for tools that deduce bond orders from connectivity and optionally additional
+ * information, like number of implicit or explicit hydrogens, or hybridization states.
  *
- * @author      Egon Willighagen
+ * @author Egon Willighagen
  * @cdk.created 2006-08-16
- * @cdk.module  valencycheck
+ * @cdk.module valencycheck
  * @cdk.githash
  */
 public interface IDeduceBondOrderTool {
 
     public void saturate(IAtomContainer ac) throws CDKException;
-
 }

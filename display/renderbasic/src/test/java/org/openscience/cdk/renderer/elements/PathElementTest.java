@@ -23,27 +23,25 @@ package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
 import java.util.ArrayList;
-
 import javax.vecmath.Point2d;
-
 import org.junit.BeforeClass;
 
-/**
- * @cdk.module test-renderbasic
- */
+/** @cdk.module test-renderbasic */
 public class PathElementTest extends AbstractElementTest {
 
     @SuppressWarnings("serial")
     @BeforeClass
     public static void setup() {
-        IRenderingElement element = new PathElement(new ArrayList<Point2d>() {
+        IRenderingElement element =
+                new PathElement(
+                        new ArrayList<Point2d>() {
 
-            {
-                add(new Point2d(0, 0));
-                add(new Point2d(1, 1));
-            }
-        }, Color.orange);
+                            {
+                                add(new Point2d(0, 0));
+                                add(new Point2d(1, 1));
+                            }
+                        },
+                        Color.orange);
         setRenderingElement(element);
     }
-
 }

@@ -31,17 +31,13 @@ import org.openscience.cdk.reaction.ReactionMechanismTest;
  */
 public class RemovingSEofNBMechanismTest extends ReactionMechanismTest {
 
-    /**
-     *  The JUnit setup method
-     */
+    /** The JUnit setup method */
     @BeforeClass
     public static void setUp() throws Exception {
         setMechanism(RemovingSEofNBMechanism.class);
     }
 
-    /**
-     *  Constructor for the RemovingSEofNBMechanismTest object.
-     */
+    /** Constructor for the RemovingSEofNBMechanismTest object. */
     public RemovingSEofNBMechanismTest() {
         super();
     }
@@ -58,8 +54,7 @@ public class RemovingSEofNBMechanismTest extends ReactionMechanismTest {
     }
 
     /**
-     * Junit test.
-     * TODDO: REACT: add an example
+     * Junit test. TODDO: REACT: add an example
      *
      * @throws Exception
      */

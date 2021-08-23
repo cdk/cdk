@@ -28,9 +28,8 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * This matches an atom using total number of connections - referred to in
- * SMARTS as the connectivity. The connectivity is specified using the {@code
- * X<number>} pattern.
+ * This matches an atom using total number of connections - referred to in SMARTS as the
+ * connectivity. The connectivity is specified using the {@code X<number>} pattern.
  *
  * @cdk.module smarts
  * @cdk.githash
@@ -48,7 +47,7 @@ public final class TotalConnectionAtom extends SMARTSAtom {
         this.connectivity = connectivity;
     }
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     public boolean matches(IAtom atom) {
         return invariants(atom).connectivity() == connectivity;

@@ -34,20 +34,19 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  *
  * @cdk.module qsarmolecular
  * @cdk.githash
- *
  * @cdk.dictref qsar-descriptors:vabc
  * @cdk.keyword volume
  * @cdk.keyword descriptor
  */
 public class VABCDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public DescriptorSpecification getSpecification() {
-        return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#vabc",
-                this.getClass().getName(), "The Chemistry Development Kit");
+        return new DescriptorSpecification(
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#vabc",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     /** {@inheritDoc} */
@@ -62,17 +61,21 @@ public class VABCDescriptor extends AbstractMolecularDescriptor implements IMole
     @Override
     public Object[] getParameters() {
         return new Object[0];
-
     }
 
     @Override
     public String[] getDescriptorNames() {
-        return new String[]{"VABC"};
+        return new String[] {"VABC"};
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                Double.NaN), getDescriptorNames(), e);
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new DoubleResult(Double.NaN),
+                getDescriptorNames(),
+                e);
     }
 
     /**
@@ -91,7 +94,11 @@ public class VABCDescriptor extends AbstractMolecularDescriptor implements IMole
             return getDummyDescriptorValue(exception);
         }
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(volume),
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new DoubleResult(volume),
                 getDescriptorNames());
     }
 

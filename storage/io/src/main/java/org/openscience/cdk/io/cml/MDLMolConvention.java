@@ -32,7 +32,6 @@ import org.xml.sax.Attributes;
  *
  * @cdk.module io
  * @cdk.githash
- *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */
 public class MDLMolConvention extends CMLCoreModule {
@@ -53,7 +52,8 @@ public class MDLMolConvention extends CMLCoreModule {
     }
 
     @Override
-    public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
+    public void startElement(
+            CMLStack xpath, String uri, String local, String raw, Attributes atts) {
         logger.debug("MDLMol element: name");
         super.startElement(xpath, uri, local, raw, atts);
     }

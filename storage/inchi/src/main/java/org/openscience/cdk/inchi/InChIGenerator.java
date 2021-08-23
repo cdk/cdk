@@ -19,15 +19,13 @@
 package org.openscience.cdk.inchi;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Collections;
-
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-
 import net.sf.jniinchi.INCHI_BOND_STEREO;
 import net.sf.jniinchi.INCHI_BOND_TYPE;
 import net.sf.jniinchi.INCHI_KEY;
@@ -44,10 +42,7 @@ import net.sf.jniinchi.JniInchiOutput;
 import net.sf.jniinchi.JniInchiOutputKey;
 import net.sf.jniinchi.JniInchiStereo0D;
 import net.sf.jniinchi.JniInchiWrapper;
-
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.config.Isotopes;
-import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -62,14 +57,14 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * <p>This class generates the IUPAC International Chemical Identifier (InChI) for
- * a CDK IAtomContainer. It places calls to a JNI wrapper for the InChI C++ library.
+ * This class generates the IUPAC International Chemical Identifier (InChI) for a CDK
+ * IAtomContainer. It places calls to a JNI wrapper for the InChI C++ library.
  *
- * <p>If the atom container has 3D coordinates for all of its atoms then they
- * will be used, otherwise 2D coordinates will be used if available.
+ * <p>If the atom container has 3D coordinates for all of its atoms then they will be used,
+ * otherwise 2D coordinates will be used if available.
  *
- * <p><i>Spin multiplicities and some aspects of stereochemistry are not
- * currently handled completely.</i>
+ * <p><i>Spin multiplicities and some aspects of stereochemistry are not currently handled
+ * completely.</i>
  *
  * <h3>Example usage</h3>
  *
@@ -90,15 +85,13 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * <code></code><br>
  * <code>String inchi = gen.getInchi();</code><br>
  * <code>String auxinfo = gen.getAuxInfo();</code><br>
- * <p>
- * <b>
- * TODO: distinguish between singlet and undefined spin multiplicity<br>
+ *
+ * <p><b> TODO: distinguish between singlet and undefined spin multiplicity<br>
  * TODO: double bond and allene parities<br>
  * TODO: problem recognising bond stereochemistry<br>
  * </b>
  *
  * @author Sam Adams
- *
  * @cdk.module inchi
  * @cdk.githash
  */
@@ -110,42 +103,44 @@ public class InChIGenerator {
 
     private final boolean auxNone;
 
-    private static final ILoggingTool LOGGER = LoggingToolFactory.createLoggingTool(InChIGenerator.class);
+    private static final ILoggingTool LOGGER =
+            LoggingToolFactory.createLoggingTool(InChIGenerator.class);
 
-    /**
-     * AtomContainer instance refers to.
-     */
+    /** AtomContainer instance refers to. */
     protected IAtomContainer atomContainer;
 
     /**
-     * <p>Constructor. Generates InChI from CDK AtomContainer.
+     * Constructor. Generates InChI from CDK AtomContainer.
      *
-     * <p>Reads atoms, bonds etc from atom container and converts to format
-     * InChI library requires, then calls the library.
+     * <p>Reads atoms, bonds etc from atom container and converts to format InChI library requires,
+     * then calls the library.
      *
-     * @param atomContainer      AtomContainer to generate InChI for.
-     * @param ignoreAromaticBonds if aromatic bonds should be treated as bonds of type single and double
-     * @throws org.openscience.cdk.exception.CDKException if there is an
-     * error during InChI generation
+     * @param atomContainer AtomContainer to generate InChI for.
+     * @param ignoreAromaticBonds if aromatic bonds should be treated as bonds of type single and
+     *     double
+     * @throws org.openscience.cdk.exception.CDKException if there is an error during InChI
+     *     generation
      */
-    protected InChIGenerator(IAtomContainer atomContainer, boolean ignoreAromaticBonds) throws CDKException {
+    protected InChIGenerator(IAtomContainer atomContainer, boolean ignoreAromaticBonds)
+            throws CDKException {
         this(atomContainer, Collections.singletonList(INCHI_OPTION.AuxNone), ignoreAromaticBonds);
     }
 
     /**
-     * <p>Constructor. Generates InChI from CDK AtomContainer.
+     * Constructor. Generates InChI from CDK AtomContainer.
      *
-     * <p>Reads atoms, bonds etc from atom container and converts to format
-     * InChI library requires, then calls the library.
+     * <p>Reads atoms, bonds etc from atom container and converts to format InChI library requires,
+     * then calls the library.
      *
-     * @param atomContainer      AtomContainer to generate InChI for.
-     * @param options   Space delimited string of options to pass to InChI library.
-     *                  Each option may optionally be preceded by a command line
-     *                  switch (/ or -).
-     * @param ignoreAromaticBonds if aromatic bonds should be treated as bonds of type single and double
+     * @param atomContainer AtomContainer to generate InChI for.
+     * @param options Space delimited string of options to pass to InChI library. Each option may
+     *     optionally be preceded by a command line switch (/ or -).
+     * @param ignoreAromaticBonds if aromatic bonds should be treated as bonds of type single and
+     *     double
      * @throws CDKException
      */
-    protected InChIGenerator(IAtomContainer atomContainer, String options, boolean ignoreAromaticBonds)
+    protected InChIGenerator(
+            IAtomContainer atomContainer, String options, boolean ignoreAromaticBonds)
             throws CDKException {
         try {
             input = new JniInChIInputAdapter(options);
@@ -157,17 +152,19 @@ public class InChIGenerator {
     }
 
     /**
-     * <p>Constructor. Generates InChI from CDK AtomContainer.
+     * Constructor. Generates InChI from CDK AtomContainer.
      *
-     * <p>Reads atoms, bonds etc from atom container and converts to format
-     * InChI library requires, then calls the library.
+     * <p>Reads atoms, bonds etc from atom container and converts to format InChI library requires,
+     * then calls the library.
      *
-     * @param atomContainer     AtomContainer to generate InChI for.
-     * @param options           List of INCHI_OPTION.
-     * @param ignoreAromaticBonds if aromatic bonds should be treated as bonds of type single and double
+     * @param atomContainer AtomContainer to generate InChI for.
+     * @param options List of INCHI_OPTION.
+     * @param ignoreAromaticBonds if aromatic bonds should be treated as bonds of type single and
+     *     double
      * @throws CDKException
      */
-    protected InChIGenerator(IAtomContainer atomContainer, List<INCHI_OPTION> options, boolean ignoreAromaticBonds)
+    protected InChIGenerator(
+            IAtomContainer atomContainer, List<INCHI_OPTION> options, boolean ignoreAromaticBonds)
             throws CDKException {
         try {
             input = new JniInChIInputAdapter(options);
@@ -179,14 +176,14 @@ public class InChIGenerator {
     }
 
     /**
-     * <p>Reads atoms, bonds etc from atom container and converts to format
-     * InChI library requires, then places call for the library to generate
-     * the InChI.
+     * Reads atoms, bonds etc from atom container and converts to format InChI library requires,
+     * then places call for the library to generate the InChI.
      *
-     * @param atomContainer      AtomContainer to generate InChI for.
+     * @param atomContainer AtomContainer to generate InChI for.
      * @throws CDKException
      */
-    private void generateInchiFromCDKAtomContainer(IAtomContainer atomContainer, boolean ignore) throws CDKException {
+    private void generateInchiFromCDKAtomContainer(IAtomContainer atomContainer, boolean ignore)
+            throws CDKException {
         this.atomContainer = atomContainer;
 
         Iterator<IAtom> atoms = atomContainer.atoms().iterator();
@@ -267,8 +264,7 @@ public class InChIGenerator {
                     // a little brittle
                     if (spin.name().equals("DivalentSinglet"))
                         iatom.setRadical(INCHI_RADICAL.SINGLET);
-                    else
-                        iatom.setRadical(INCHI_RADICAL.TRIPLET);
+                    else iatom.setRadical(INCHI_RADICAL.TRIPLET);
                 } else {
                     iatom.setRadical(INCHI_RADICAL.TRIPLET);
                 }
@@ -285,7 +281,7 @@ public class InChIGenerator {
 
             // Get bond order
             INCHI_BOND_TYPE order;
-            Order           bo = bond.getOrder();
+            Order bo = bond.getOrder();
             if (!ignore && bond.getFlag(CDKConstants.ISAROMATIC)) {
                 order = INCHI_BOND_TYPE.ALTERN;
             } else if (bo == Order.SINGLE) {
@@ -361,16 +357,18 @@ public class InChIGenerator {
                     throw new CDKException("Unknown tetrahedral chirality");
                 }
 
-                JniInchiStereo0D jniStereo = new JniInchiStereo0D(atC, at0, at1, at2, at3,
-                        INCHI_STEREOTYPE.TETRAHEDRAL, p);
+                JniInchiStereo0D jniStereo =
+                        new JniInchiStereo0D(
+                                atC, at0, at1, at2, at3, INCHI_STEREOTYPE.TETRAHEDRAL, p);
                 input.addStereo0D(jniStereo);
             } else if (stereoElem instanceof IDoubleBondStereochemistry) {
                 IDoubleBondStereochemistry dbStereo = (IDoubleBondStereochemistry) stereoElem;
                 IBond[] surroundingBonds = dbStereo.getBonds();
                 if (surroundingBonds[0] == null || surroundingBonds[1] == null)
-                    throw new CDKException("Cannot generate an InChI with incomplete double bond info");
-                org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation stereoType = dbStereo
-                        .getStereo();
+                    throw new CDKException(
+                            "Cannot generate an InChI with incomplete double bond info");
+                org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation stereoType =
+                        dbStereo.getStereo();
 
                 IBond stereoBond = dbStereo.getStereoBond();
                 JniInchiAtom at0 = null;
@@ -398,16 +396,21 @@ public class InChIGenerator {
                     at3 = (JniInchiAtom) atomMap.get(surroundingBonds[1].getBegin());
                 }
                 INCHI_PARITY p = INCHI_PARITY.UNKNOWN;
-                if (stereoType == org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.TOGETHER) {
+                if (stereoType
+                        == org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation
+                                .TOGETHER) {
                     p = INCHI_PARITY.ODD;
-                } else if (stereoType == org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.OPPOSITE) {
+                } else if (stereoType
+                        == org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation
+                                .OPPOSITE) {
                     p = INCHI_PARITY.EVEN;
                 } else {
                     throw new CDKException("Unknown double bond stereochemistry");
                 }
 
-                JniInchiStereo0D jniStereo = new JniInchiStereo0D(null, at0, at1, at2, at3,
-                        INCHI_STEREOTYPE.DOUBLEBOND, p);
+                JniInchiStereo0D jniStereo =
+                        new JniInchiStereo0D(
+                                null, at0, at1, at2, at3, INCHI_STEREOTYPE.DOUBLEBOND, p);
                 input.addStereo0D(jniStereo);
             } else if (stereoElem instanceof ExtendedTetrahedral) {
 
@@ -432,8 +435,10 @@ public class InChIGenerator {
                 // be in the peripherals allready and so we correct the winding
                 // and reposition as needed.
 
-                List<IBond> t0Bonds = onlySingleBonded(atomContainer.getConnectedBondsList(terminals[0]));
-                List<IBond> t1Bonds = onlySingleBonded(atomContainer.getConnectedBondsList(terminals[1]));
+                List<IBond> t0Bonds =
+                        onlySingleBonded(atomContainer.getConnectedBondsList(terminals[0]));
+                List<IBond> t1Bonds =
+                        onlySingleBonded(atomContainer.getConnectedBondsList(terminals[1]));
 
                 // first if there are two explicit atoms we need to replace one
                 // with the terminal atom - the configuration does not change
@@ -473,16 +478,19 @@ public class InChIGenerator {
                 }
 
                 INCHI_PARITY parity = INCHI_PARITY.UNKNOWN;
-                if (winding == Stereo.ANTI_CLOCKWISE)
-                    parity = INCHI_PARITY.ODD;
-                else if (winding == Stereo.CLOCKWISE)
-                    parity = INCHI_PARITY.EVEN;
-                else
-                    throw new CDKException("Unknown extended tetrahedral chirality");
+                if (winding == Stereo.ANTI_CLOCKWISE) parity = INCHI_PARITY.ODD;
+                else if (winding == Stereo.CLOCKWISE) parity = INCHI_PARITY.EVEN;
+                else throw new CDKException("Unknown extended tetrahedral chirality");
 
-                JniInchiStereo0D jniStereo = new JniInchiStereo0D(atomMap.get(extendedTetrahedral.focus()),
-                        atomMap.get(peripherals[0]), atomMap.get(peripherals[1]), atomMap.get(peripherals[2]),
-                        atomMap.get(peripherals[3]), INCHI_STEREOTYPE.ALLENE, parity);
+                JniInchiStereo0D jniStereo =
+                        new JniInchiStereo0D(
+                                atomMap.get(extendedTetrahedral.focus()),
+                                atomMap.get(peripherals[0]),
+                                atomMap.get(peripherals[1]),
+                                atomMap.get(peripherals[2]),
+                                atomMap.get(peripherals[3]),
+                                INCHI_STEREOTYPE.ALLENE,
+                                parity);
                 input.addStereo0D(jniStereo);
             }
         }
@@ -509,24 +517,19 @@ public class InChIGenerator {
     }
 
     /**
-     * Gets return status from InChI process.  OKAY and WARNING indicate
-     * InChI has been generated, in all other cases InChI generation
-     * has failed.
+     * Gets return status from InChI process. OKAY and WARNING indicate InChI has been generated, in
+     * all other cases InChI generation has failed.
      */
     public INCHI_RET getReturnStatus() {
         return (output.getReturnStatus());
     }
 
-    /**
-     * Gets generated InChI string.
-     */
+    /** Gets generated InChI string. */
     public String getInchi() {
         return (output.getInchi());
     }
 
-    /**
-     * Gets generated InChIKey string.
-     */
+    /** Gets generated InChIKey string. */
     public String getInchiKey() throws CDKException {
         JniInchiOutputKey key;
         try {
@@ -537,13 +540,12 @@ public class InChIGenerator {
                 throw new CDKException("Error while creating InChIKey: " + key.getReturnStatus());
             }
         } catch (JniInchiException exception) {
-            throw new CDKException("Error while creating InChIKey: " + exception.getMessage(), exception);
+            throw new CDKException(
+                    "Error while creating InChIKey: " + exception.getMessage(), exception);
         }
     }
 
-    /**
-     * Gets auxillary information.
-     */
+    /** Gets auxillary information. */
     public String getAuxInfo() {
         if (auxNone) {
             LOGGER.warn("AuxInfo requested but AuxNone option is set (default).");
@@ -551,16 +553,12 @@ public class InChIGenerator {
         return (output.getAuxInfo());
     }
 
-    /**
-     * Gets generated (error/warning) messages.
-     */
+    /** Gets generated (error/warning) messages. */
     public String getMessage() {
         return (output.getMessage());
     }
 
-    /**
-     * Gets generated log.
-     */
+    /** Gets generated log. */
     public String getLog() {
         return (output.getLog());
     }

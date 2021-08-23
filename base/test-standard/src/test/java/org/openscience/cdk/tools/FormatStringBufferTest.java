@@ -26,10 +26,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.tools.FormatStringBuffer;
 
 /**
- * @author     egonw
+ * @author egonw
  * @cdk.module test-standard
  */
 public class FormatStringBufferTest extends CDKTestCase {

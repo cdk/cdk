@@ -25,9 +25,7 @@ package org.openscience.cdk.fingerprint;
 import java.io.InputStream;
 import java.util.BitSet;
 import java.util.List;
-
 import javax.vecmath.Point2d;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -45,9 +43,7 @@ import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.diff.AtomContainerDiff;
 
-/**
- * @cdk.module test-fingerprint
- */
+/** @cdk.module test-fingerprint */
 public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
     @Override
@@ -256,17 +252,21 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
         molcondensed.addBond(b11);
         IBond b12 = molcondensed.getBuilder().newInstance(IBond.class, a9, a11, IBond.Order.SINGLE);
         molcondensed.addBond(b12);
-        IBond b13 = molcondensed.getBuilder().newInstance(IBond.class, a11, a12, IBond.Order.SINGLE);
+        IBond b13 =
+                molcondensed.getBuilder().newInstance(IBond.class, a11, a12, IBond.Order.SINGLE);
         molcondensed.addBond(b13);
-        IBond b14 = molcondensed.getBuilder().newInstance(IBond.class, a12, a13, IBond.Order.SINGLE);
+        IBond b14 =
+                molcondensed.getBuilder().newInstance(IBond.class, a12, a13, IBond.Order.SINGLE);
         molcondensed.addBond(b14);
-        IBond b15 = molcondensed.getBuilder().newInstance(IBond.class, a13, a14, IBond.Order.SINGLE);
+        IBond b15 =
+                molcondensed.getBuilder().newInstance(IBond.class, a13, a14, IBond.Order.SINGLE);
         molcondensed.addBond(b15);
         IBond b16 = molcondensed.getBuilder().newInstance(IBond.class, a14, a8, IBond.Order.SINGLE);
         molcondensed.addBond(b16);
         IBond b17 = molcondensed.getBuilder().newInstance(IBond.class, a2, a15, IBond.Order.SINGLE);
         molcondensed.addBond(b17);
-        IBond b18 = molcondensed.getBuilder().newInstance(IBond.class, a13, a16, IBond.Order.SINGLE);
+        IBond b18 =
+                molcondensed.getBuilder().newInstance(IBond.class, a13, a16, IBond.Order.SINGLE);
         molcondensed.addBond(b18);
 
         IAtomContainer molsingle = new AtomContainer();
@@ -354,25 +354,35 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
         molsingle.addBond(b10s);
         IBond b11s = molsingle.getBuilder().newInstance(IBond.class, a9s, a11s, IBond.Order.SINGLE);
         molsingle.addBond(b11s);
-        IBond b12s = molsingle.getBuilder().newInstance(IBond.class, a12s, a10s, IBond.Order.SINGLE);
+        IBond b12s =
+                molsingle.getBuilder().newInstance(IBond.class, a12s, a10s, IBond.Order.SINGLE);
         molsingle.addBond(b12s);
-        IBond b13s = molsingle.getBuilder().newInstance(IBond.class, a10s, a13s, IBond.Order.SINGLE);
+        IBond b13s =
+                molsingle.getBuilder().newInstance(IBond.class, a10s, a13s, IBond.Order.SINGLE);
         molsingle.addBond(b13s);
-        IBond b14s = molsingle.getBuilder().newInstance(IBond.class, a11s, a12s, IBond.Order.SINGLE);
+        IBond b14s =
+                molsingle.getBuilder().newInstance(IBond.class, a11s, a12s, IBond.Order.SINGLE);
         molsingle.addBond(b14s);
-        IBond b15s = molsingle.getBuilder().newInstance(IBond.class, a14s, a13s, IBond.Order.SINGLE);
+        IBond b15s =
+                molsingle.getBuilder().newInstance(IBond.class, a14s, a13s, IBond.Order.SINGLE);
         molsingle.addBond(b15s);
-        IBond b16s = molsingle.getBuilder().newInstance(IBond.class, a13s, a16s, IBond.Order.SINGLE);
+        IBond b16s =
+                molsingle.getBuilder().newInstance(IBond.class, a13s, a16s, IBond.Order.SINGLE);
         molsingle.addBond(b16s);
-        IBond b18s = molsingle.getBuilder().newInstance(IBond.class, a17s, a14s, IBond.Order.SINGLE);
+        IBond b18s =
+                molsingle.getBuilder().newInstance(IBond.class, a17s, a14s, IBond.Order.SINGLE);
         molsingle.addBond(b18s);
-        IBond b19s = molsingle.getBuilder().newInstance(IBond.class, a16s, a18s, IBond.Order.SINGLE);
+        IBond b19s =
+                molsingle.getBuilder().newInstance(IBond.class, a16s, a18s, IBond.Order.SINGLE);
         molsingle.addBond(b19s);
-        IBond b20s = molsingle.getBuilder().newInstance(IBond.class, a19s, a17s, IBond.Order.SINGLE);
+        IBond b20s =
+                molsingle.getBuilder().newInstance(IBond.class, a19s, a17s, IBond.Order.SINGLE);
         molsingle.addBond(b20s);
-        IBond b21s = molsingle.getBuilder().newInstance(IBond.class, a18s, a19s, IBond.Order.SINGLE);
+        IBond b21s =
+                molsingle.getBuilder().newInstance(IBond.class, a18s, a19s, IBond.Order.SINGLE);
         molsingle.addBond(b21s);
-        IBond b22s = molsingle.getBuilder().newInstance(IBond.class, a17s, a20s, IBond.Order.SINGLE);
+        IBond b22s =
+                molsingle.getBuilder().newInstance(IBond.class, a17s, a20s, IBond.Order.SINGLE);
         molsingle.addBond(b22s);
 
         IFingerprinter fingerprinter = new ExtendedFingerprinter();
@@ -381,7 +391,6 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
 
         Assert.assertFalse(FingerprinterTool.isSubset(bs1, bs2));
         Assert.assertTrue(FingerprinterTool.isSubset(bs2, bs1));
-
     }
 
     /*

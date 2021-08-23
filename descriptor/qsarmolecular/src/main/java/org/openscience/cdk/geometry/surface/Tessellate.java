@@ -25,25 +25,24 @@ import javax.vecmath.Point3d;
 /**
  * Performs a tessellation of the unit sphere.
  *
- * This class generates the coordinates of the triangles that will
- * tessellate the unit sphere. The algorithm is recursive subdivision
- * of an initial representation which can be tetrahedral, octahedral or
- * icosahedral. The default is icosahedral. The number of points generated
- * depends on the level of subdivision. The default is 4 levels and with the
- * initial icosahedral representation this gives 1536 points.
- * <p>
- * The constants for the tetrahedral and icosahedral representations were
- * taken from http://eeg.sourceforge.net/eegdoc/eeg_toolbox/sphere_tri.html
+ * <p>This class generates the coordinates of the triangles that will tessellate the unit sphere.
+ * The algorithm is recursive subdivision of an initial representation which can be tetrahedral,
+ * octahedral or icosahedral. The default is icosahedral. The number of points generated depends on
+ * the level of subdivision. The default is 4 levels and with the initial icosahedral representation
+ * this gives 1536 points.
+ *
+ * <p>The constants for the tetrahedral and icosahedral representations were taken from
+ * http://eeg.sourceforge.net/eegdoc/eeg_toolbox/sphere_tri.html
  *
  * @author Rajarshi Guha
  * @cdk.created 2005-05-08
- * @cdk.module  qsarmolecular
+ * @cdk.module qsarmolecular
  * @cdk.githash
  */
 public class Tessellate {
 
     Triangle[] oldtess;
-    int        maxlevel;
+    int maxlevel;
 
     public Tessellate() {
         this.oldtess = this.repIco();
@@ -51,10 +50,8 @@ public class Tessellate {
     }
 
     public Tessellate(String type, int level) {
-        if (type.equals("tet"))
-            this.oldtess = this.repTet();
-        else if (type.equals("oct"))
-            this.oldtess = this.repOct();
+        if (type.equals("tet")) this.oldtess = this.repTet();
+        else if (type.equals("oct")) this.oldtess = this.repOct();
         else if (type.equals("ico")) this.oldtess = this.repIco();
         this.maxlevel = level;
     }
@@ -101,8 +98,7 @@ public class Tessellate {
             }
 
             oldtess = new Triangle[newN];
-            for (int i = 0; i < newN; i++)
-                oldtess[i] = newtess[i];
+            for (int i = 0; i < newN; i++) oldtess[i] = newtess[i];
         }
     }
 
@@ -126,36 +122,82 @@ public class Tessellate {
 
     private Triangle[] repTet() {
         double sqrt3 = 0.5773502692;
-        Point3d[] v = {new Point3d(sqrt3, sqrt3, sqrt3), new Point3d(-sqrt3, -sqrt3, sqrt3),
-                new Point3d(-sqrt3, sqrt3, -sqrt3), new Point3d(sqrt3, -sqrt3, -sqrt3)};
-        Triangle[] rep = {new Triangle(v[0], v[1], v[2]), new Triangle(v[0], v[3], v[1]),
-                new Triangle(v[2], v[1], v[3]), new Triangle(v[3], v[0], v[2])};
+        Point3d[] v = {
+            new Point3d(sqrt3, sqrt3, sqrt3),
+            new Point3d(-sqrt3, -sqrt3, sqrt3),
+            new Point3d(-sqrt3, sqrt3, -sqrt3),
+            new Point3d(sqrt3, -sqrt3, -sqrt3)
+        };
+        Triangle[] rep = {
+            new Triangle(v[0], v[1], v[2]),
+            new Triangle(v[0], v[3], v[1]),
+            new Triangle(v[2], v[1], v[3]),
+            new Triangle(v[3], v[0], v[2])
+        };
         return (rep);
     }
 
     private Triangle[] repOct() {
-        Point3d[] v = {new Point3d(1.0, 0.0, 0.0), new Point3d(-1.0, 0.0, 0.0), new Point3d(0.0, 1.0, 0.0),
-                new Point3d(0.0, -1.0, 0.0), new Point3d(0.0, 0.0, 1.0), new Point3d(0.0, 0.0, -1.0)};
-        Triangle[] rep = {new Triangle(v[0], v[4], v[2]), new Triangle(v[2], v[4], v[1]),
-                new Triangle(v[1], v[4], v[3]), new Triangle(v[3], v[4], v[0]), new Triangle(v[0], v[2], v[5]),
-                new Triangle(v[2], v[1], v[5]), new Triangle(v[1], v[3], v[5]), new Triangle(v[3], v[0], v[5])};
+        Point3d[] v = {
+            new Point3d(1.0, 0.0, 0.0),
+            new Point3d(-1.0, 0.0, 0.0),
+            new Point3d(0.0, 1.0, 0.0),
+            new Point3d(0.0, -1.0, 0.0),
+            new Point3d(0.0, 0.0, 1.0),
+            new Point3d(0.0, 0.0, -1.0)
+        };
+        Triangle[] rep = {
+            new Triangle(v[0], v[4], v[2]),
+            new Triangle(v[2], v[4], v[1]),
+            new Triangle(v[1], v[4], v[3]),
+            new Triangle(v[3], v[4], v[0]),
+            new Triangle(v[0], v[2], v[5]),
+            new Triangle(v[2], v[1], v[5]),
+            new Triangle(v[1], v[3], v[5]),
+            new Triangle(v[3], v[0], v[5])
+        };
         return (rep);
     }
 
     private Triangle[] repIco() {
         double tau = 0.8506508084;
         double one = 0.5257311121;
-        Point3d[] v = {new Point3d(tau, one, 0.0), new Point3d(-tau, one, 0.0), new Point3d(-tau, -one, 0.0),
-                new Point3d(tau, -one, 0.0), new Point3d(one, 0.0, tau), new Point3d(one, 0.0, -tau),
-                new Point3d(-one, 0.0, -tau), new Point3d(-one, 0.0, tau), new Point3d(0.0, tau, one),
-                new Point3d(0.0, -tau, one), new Point3d(0.0, -tau, -one), new Point3d(0.0, tau, -one)};
-        Triangle[] rep = {new Triangle(v[4], v[8], v[7]), new Triangle(v[4], v[7], v[9]),
-                new Triangle(v[5], v[6], v[11]), new Triangle(v[5], v[10], v[6]), new Triangle(v[0], v[4], v[3]),
-                new Triangle(v[0], v[3], v[5]), new Triangle(v[2], v[7], v[1]), new Triangle(v[2], v[1], v[6]),
-                new Triangle(v[8], v[0], v[11]), new Triangle(v[8], v[11], v[1]), new Triangle(v[9], v[10], v[3]),
-                new Triangle(v[9], v[2], v[10]), new Triangle(v[8], v[4], v[0]), new Triangle(v[11], v[0], v[5]),
-                new Triangle(v[4], v[9], v[3]), new Triangle(v[5], v[3], v[10]), new Triangle(v[7], v[8], v[1]),
-                new Triangle(v[6], v[1], v[11]), new Triangle(v[7], v[2], v[9]), new Triangle(v[6], v[10], v[2])};
+        Point3d[] v = {
+            new Point3d(tau, one, 0.0),
+            new Point3d(-tau, one, 0.0),
+            new Point3d(-tau, -one, 0.0),
+            new Point3d(tau, -one, 0.0),
+            new Point3d(one, 0.0, tau),
+            new Point3d(one, 0.0, -tau),
+            new Point3d(-one, 0.0, -tau),
+            new Point3d(-one, 0.0, tau),
+            new Point3d(0.0, tau, one),
+            new Point3d(0.0, -tau, one),
+            new Point3d(0.0, -tau, -one),
+            new Point3d(0.0, tau, -one)
+        };
+        Triangle[] rep = {
+            new Triangle(v[4], v[8], v[7]),
+            new Triangle(v[4], v[7], v[9]),
+            new Triangle(v[5], v[6], v[11]),
+            new Triangle(v[5], v[10], v[6]),
+            new Triangle(v[0], v[4], v[3]),
+            new Triangle(v[0], v[3], v[5]),
+            new Triangle(v[2], v[7], v[1]),
+            new Triangle(v[2], v[1], v[6]),
+            new Triangle(v[8], v[0], v[11]),
+            new Triangle(v[8], v[11], v[1]),
+            new Triangle(v[9], v[10], v[3]),
+            new Triangle(v[9], v[2], v[10]),
+            new Triangle(v[8], v[4], v[0]),
+            new Triangle(v[11], v[0], v[5]),
+            new Triangle(v[4], v[9], v[3]),
+            new Triangle(v[5], v[3], v[10]),
+            new Triangle(v[7], v[8], v[1]),
+            new Triangle(v[6], v[1], v[11]),
+            new Triangle(v[7], v[2], v[9]),
+            new Triangle(v[6], v[10], v[2])
+        };
         return (rep);
     }
 }

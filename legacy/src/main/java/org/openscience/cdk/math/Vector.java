@@ -28,44 +28,38 @@ import javax.vecmath.Tuple3d;
 /**
  * This class handles vectors.
  *
- * @cdk.module  qm
+ * @cdk.module qm
  */
 public class Vector {
 
     /** Null vector in 3 dimensional space */
-    public final static Vector NULLVECTOR = new Vector(new double[]{0d, 0d, 0d});
+    public static final Vector NULLVECTOR = new Vector(new double[] {0d, 0d, 0d});
     /** Unary vector in 3 dimensional space */
-    public final static Vector EX         = new Vector(new double[]{1d, 0d, 0d});
+    public static final Vector EX = new Vector(new double[] {1d, 0d, 0d});
     /** Unary vector in 3 dimensional space */
-    public final static Vector EY         = new Vector(new double[]{0d, 1d, 0d});
+    public static final Vector EY = new Vector(new double[] {0d, 1d, 0d});
     /** Unary vector in 3 dimensional space */
-    public final static Vector EZ         = new Vector(new double[]{0d, 0d, 1d});
+    public static final Vector EZ = new Vector(new double[] {0d, 0d, 1d});
 
     // Attention! Variables are unprotected
     /** The content of this vector */
-    public double[]            vector;
+    public double[] vector;
     /** The size of this vector */
-    public int                 size;
+    public int size;
 
-    /**
-     * Constructs a Vector with "size" elements
-     */
+    /** Constructs a Vector with "size" elements */
     public Vector(int size) {
         vector = new double[size];
         this.size = size;
     }
 
-    /**
-     * Constructs a vector with the content of a array
-     */
+    /** Constructs a vector with the content of a array */
     public Vector(double[] array) {
         vector = array;
         size = array.length;
     }
 
-    /**
-     * Constructs a Vector with a Tuple3d, Vector3d or Point3d
-     */
+    /** Constructs a Vector with a Tuple3d, Vector3d or Point3d */
     public Vector(Tuple3d t) {
         vector = new double[3];
         size = 3;
@@ -74,66 +68,50 @@ public class Vector {
         vector[2] = t.z;
     }
 
-    /**
-     * Returns the size of this vector
-     */
+    /** Returns the size of this vector */
     public int getSize() {
         return size;
     }
 
-    /**
-     *  Addition from two vectors
-     */
+    /** Addition from two vectors */
     public Vector add(Vector b) {
         if ((b == null) || (size != b.size)) return null;
 
         int i;
         Vector result = new Vector(size);
-        for (i = 0; i < size; i++)
-            result.vector[i] = vector[i] + b.vector[i];
+        for (i = 0; i < size; i++) result.vector[i] = vector[i] + b.vector[i];
         return result;
     }
 
-    /**
-     *  Subtraktion from two vectors
-     */
+    /** Subtraktion from two vectors */
     public Vector sub(Vector b) {
         if ((b == null) || (size != b.size)) return null;
 
         int i;
         Vector result = new Vector(size);
-        for (i = 0; i < size; i++)
-            result.vector[i] = vector[i] - b.vector[i];
+        for (i = 0; i < size; i++) result.vector[i] = vector[i] - b.vector[i];
         return result;
     }
 
-    /**
-     *  Multiplikation from a vectors with an double
-     */
+    /** Multiplikation from a vectors with an double */
     public Vector mul(double b) {
         Vector result = new Vector(size);
         int i;
-        for (i = 0; i < size; i++)
-            result.vector[i] = vector[i] * b;
+        for (i = 0; i < size; i++) result.vector[i] = vector[i] * b;
         return result;
     }
 
-    /**
-     *  Multiplikation from two vectors
-     */
+    /** Multiplikation from two vectors */
     public double dot(Vector b) {
         if ((b == null) || (size != b.size)) return Double.NaN;
 
         double result = 0;
         int i;
-        for (i = 0; i < size; i++)
-            result += vector[i] * b.vector[i];
+        for (i = 0; i < size; i++) result += vector[i] * b.vector[i];
         return result;
     }
 
-    /**
-     * Cross product, only well definited in R^3
-     */
+    /** Cross product, only well definited in R^3 */
     public Vector cross(Vector b) {
         if ((b == null) || (size != 3) || (b.size != 3)) return null;
 
@@ -144,58 +122,43 @@ public class Vector {
         return result;
     }
 
-    /**
-     * Return the length from this vector
-     */
+    /** Return the length from this vector */
     public double length() {
         double value = 0;
-        for (int i = 0; i < size; i++)
-            value += vector[i] * vector[i];
+        for (int i = 0; i < size; i++) value += vector[i] * vector[i];
         return Math.sqrt(value);
     }
 
-    /**
-     * Normalize this vector
-     */
+    /** Normalize this vector */
     public Vector normalize() {
         Vector result = new Vector(size);
         double length = length();
-        for (int i = 0; i < size; i++)
-            result.vector[i] = vector[i] / length;
+        for (int i = 0; i < size; i++) result.vector[i] = vector[i] / length;
         return result;
     }
 
-    /**
-     * Negates this vector
-     */
+    /** Negates this vector */
     public Vector negate() {
         Vector result = new Vector(size);
-        for (int i = 0; i < size; i++)
-            result.vector[i] = -vector[i];
+        for (int i = 0; i < size; i++) result.vector[i] = -vector[i];
         return result;
     }
 
-    /**
-     *  Copy a vector
-     */
+    /** Copy a vector */
     public Vector duplicate() {
         Vector result = new Vector(size);
         int i;
-        for (i = 0; i < size; i++)
-            result.vector[i] = vector[i];
+        for (i = 0; i < size; i++) result.vector[i] = vector[i];
         return result;
     }
 
-    /**
-     *  Return a vector as a string
-     */
+    /** Return a vector as a string */
     @Override
     public String toString() {
         int i;
         StringBuffer str = new StringBuffer();
         str.append("[ ");
-        for (i = 0; i < (size - 1); i++)
-            str.append(vector[i] + " ");
+        for (i = 0; i < (size - 1); i++) str.append(vector[i] + " ");
         str.append(vector[size - 1] + " ]");
         return str.toString();
     }

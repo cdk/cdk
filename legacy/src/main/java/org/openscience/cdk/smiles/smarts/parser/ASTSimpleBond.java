@@ -29,28 +29,20 @@ package org.openscience.cdk.smiles.smarts.parser;
 @Deprecated
 class ASTSimpleBond extends SimpleNode {
 
-    /**
-     * Type of bond.
-     */
+    /** Type of bond. */
     private int bondType;
 
-    /**
-     * Creates a new instance.
-     */
+    /** Creates a new instance. */
     public ASTSimpleBond(int id) {
         super(id);
     }
 
-    /**
-     * Creates a new instance.
-     */
+    /** Creates a new instance. */
     public ASTSimpleBond(SMARTSParser p, int id) {
         super(p, id);
     }
 
-    /**
-     * Returns type of bond.
-     */
+    /** Returns type of bond. */
     public int getBondType() {
         return bondType;
     }
@@ -66,9 +58,7 @@ class ASTSimpleBond extends SimpleNode {
         return visitor.visit(this, data);
     }
 
-    /**
-     * Sets type of bond.
-     */
+    /** Sets type of bond. */
     public void setBondType(int bondType) {
         this.bondType = bondType;
     }

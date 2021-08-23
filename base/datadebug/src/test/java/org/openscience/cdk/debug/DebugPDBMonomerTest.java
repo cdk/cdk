@@ -36,13 +36,14 @@ public class DebugPDBMonomerTest extends AbstractPDBMonomerTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new DebugPDBMonomer();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new DebugPDBMonomer();
+                    }
+                });
     }
 
     @Test

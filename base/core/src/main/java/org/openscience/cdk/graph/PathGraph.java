@@ -27,8 +27,7 @@ package org.openscience.cdk.graph;
 import java.util.List;
 
 /**
- * Describes a path graph (<b>P-Graph</b>) to find all cycles in a graph
- * {@cdk.cite HAN96}.
+ * Describes a path graph (<b>P-Graph</b>) to find all cycles in a graph {@cdk.cite HAN96}.
  *
  * @author John May
  * @cdk.keyword cycle
@@ -42,11 +41,9 @@ import java.util.List;
 abstract class PathGraph {
 
     /**
-     * The current degree of vertex <i>x</i>. The degree provides an upper bound
-     * on the number of new edges that could be introduced by {@link
-     * #remove(int, java.util.List)}. The number of new edges is at most
-     * <i>d</i>(<i>d</i>-1)/2 where d is the degree of the vertex being
-     * removed.
+     * The current degree of vertex <i>x</i>. The degree provides an upper bound on the number of
+     * new edges that could be introduced by {@link #remove(int, java.util.List)}. The number of new
+     * edges is at most <i>d</i>(<i>d</i>-1)/2 where d is the degree of the vertex being removed.
      *
      * @param x a vertex
      * @return degree
@@ -55,17 +52,15 @@ abstract class PathGraph {
     abstract int degree(int x);
 
     /**
-     * Remove vertex <i>x</i> from the P-graph and reduce all incident edges.Any
-     * newly discovered cycles are added to the provided list of <i>cycles</i>.
-     * Removing a vertex with a large number of incident edges may create many
-     * edges in the graph. To avoid generating a potentially exponential number
-     * of cycles checking the {@link #degree(int)} of a vertex before removal
-     * can provide a fast fail approach.
+     * Remove vertex <i>x</i> from the P-graph and reduce all incident edges.Any newly discovered
+     * cycles are added to the provided list of <i>cycles</i>. Removing a vertex with a large number
+     * of incident edges may create many edges in the graph. To avoid generating a potentially
+     * exponential number of cycles checking the {@link #degree(int)} of a vertex before removal can
+     * provide a fast fail approach.
      *
-     * @param x      a vertex
+     * @param x a vertex
      * @param cycles a list to add newly discovered cycles to
      * @see #degree(int)
      */
     abstract void remove(int x, List<int[]> cycles);
-
 }

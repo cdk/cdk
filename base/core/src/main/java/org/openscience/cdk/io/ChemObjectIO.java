@@ -23,21 +23,19 @@
  */
 package org.openscience.cdk.io;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.listener.IChemObjectIOListener;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.io.setting.SettingManager;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
 /**
- * Provides some basic functionality for readers and writers. This includes
- * managing the {@link IChemObjectIOListener}'s and managing of {@link IOSetting}'s.
- * The IOSettings are managed via the {@link SettingManager} class with most
- * method's wrapped to more descriptive method names (e.g.
+ * Provides some basic functionality for readers and writers. This includes managing the {@link
+ * IChemObjectIOListener}'s and managing of {@link IOSetting}'s. The IOSettings are managed via the
+ * {@link SettingManager} class with most method's wrapped to more descriptive method names (e.g.
  * {@link SettingManager#get(String)} is invoked by {@link #getSetting(String)}).
  *
  * @author johnmay
@@ -47,47 +45,36 @@ import java.util.List;
  */
 public abstract class ChemObjectIO implements IChemObjectIO {
 
-    /**
-     * Holder of reader event listeners.
-     */
+    /** Holder of reader event listeners. */
     private List<IChemObjectIOListener> listeners = new ArrayList<IChemObjectIOListener>(2);
-    private SettingManager<IOSetting>   settings  = new SettingManager<IOSetting>();
 
-    /**
-     *{@inheritDoc}
-     */
+    private SettingManager<IOSetting> settings = new SettingManager<IOSetting>();
+
+    /** {@inheritDoc} */
     @Override
     public List<IChemObjectIOListener> getListeners() {
         return Collections.unmodifiableList(listeners);
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void addChemObjectIOListener(IChemObjectIOListener listener) {
         listeners.add(listener);
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void removeChemObjectIOListener(IChemObjectIOListener listener) {
         listeners.remove(listener);
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public <S extends IOSetting> S addSetting(IOSetting setting) {
         return (S) settings.add(setting);
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void addSettings(Collection<IOSetting> settings) {
         for (IOSetting setting : settings) {
@@ -104,49 +91,40 @@ public abstract class ChemObjectIO implements IChemObjectIO {
         }
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean hasSetting(String name) {
         return settings.has(name);
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public <S extends IOSetting> S getSetting(String name) {
         return settings.get(name);
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public <S extends IOSetting> S getSetting(String name, Class<S> c) {
         return settings.get(name, c);
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IOSetting[] getIOSettings() {
         return settings.toArray(new IOSetting[0]);
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Collection<IOSetting> getSettings() {
         return settings.getSettings();
     }
 
     /**
-     * Fires {@link IChemObjectIOListener#processIOSettingQuestion(org.openscience.cdk.io.setting.IOSetting)}
-     * for all managed listeners.
+     * Fires {@link
+     * IChemObjectIOListener#processIOSettingQuestion(org.openscience.cdk.io.setting.IOSetting)} for
+     * all managed listeners.
      *
      * @param setting the setting to process
      */

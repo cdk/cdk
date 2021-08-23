@@ -23,14 +23,13 @@
  */
 package org.openscience.cdk.hash;
 
-
 /**
  * A fast pseudorandom number generator based on feedback shift registers.
  *
  * @author John May
  * @see <a href="http://en.wikipedia.org/wiki/Xorshift">Xorshift</a>
- * @see <a href="http://www.javamex.com/tutorials/random_numbers/xorshift.shtml">Xorshift
- *      random number generators</a>
+ * @see <a href="http://www.javamex.com/tutorials/random_numbers/xorshift.shtml">Xorshift random
+ *     number generators</a>
  * @cdk.githash
  * @cdk.module hash
  */

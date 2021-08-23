@@ -23,17 +23,13 @@ package org.openscience.cdk.renderer.generators;
 
 import java.awt.Rectangle;
 import java.util.List;
-
 import org.junit.Assert;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 
-/**
- * @cdk.module test-renderbasic
- */
+/** @cdk.module test-renderbasic */
 public class RingGeneratorTest extends AbstractGeneratorTest {
 
     private RingGenerator generator;
@@ -63,5 +59,4 @@ public class RingGeneratorTest extends AbstractGeneratorTest {
         List<IRenderingElement> elements = elementUtil.getAllSimpleElements(root);
         Assert.assertEquals(0, elements.size());
     }
-
 }

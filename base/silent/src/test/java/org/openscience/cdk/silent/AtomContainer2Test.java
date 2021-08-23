@@ -22,9 +22,12 @@
  */
 package org.openscience.cdk.silent;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertNull;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.AbstractAtomContainerTest;
 import org.openscience.cdk.interfaces.IAtom;
@@ -33,10 +36,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertNull;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * Checks the functionality of the {@link AtomContainer}.
@@ -47,15 +46,15 @@ public class AtomContainer2Test extends AbstractAtomContainerTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new AtomContainer2();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new AtomContainer2();
+                    }
+                });
     }
-
 
     @Test
     public void testAtomContainer_int_int_int_int() {
@@ -68,12 +67,13 @@ public class AtomContainer2Test extends AbstractAtomContainerTest {
 
         // test whether the ElectronContainer is correctly initialized
         IAtom c1 = container.getBuilder().newInstance(IAtom.class, "C");
-        IAtom c2  = container.getBuilder().newInstance(IAtom.class, "C");
+        IAtom c2 = container.getBuilder().newInstance(IAtom.class, "C");
         IAtom n = container.getBuilder().newInstance(IAtom.class, "N");
         container.addAtom(c1);
         container.addAtom(c2);
         container.addAtom(n);
-        container.addBond(container.getBuilder().newInstance(IBond.class, c1, c2, IBond.Order.DOUBLE));
+        container.addBond(
+                container.getBuilder().newInstance(IBond.class, c1, c2, IBond.Order.DOUBLE));
         container.addLonePair(container.getBuilder().newInstance(ILonePair.class, n));
     }
 
@@ -87,12 +87,13 @@ public class AtomContainer2Test extends AbstractAtomContainerTest {
 
         // test whether the ElectronContainer is correctly initialized
         IAtom c1 = container.getBuilder().newInstance(IAtom.class, "C");
-        IAtom c2  = container.getBuilder().newInstance(IAtom.class, "C");
+        IAtom c2 = container.getBuilder().newInstance(IAtom.class, "C");
         IAtom n = container.getBuilder().newInstance(IAtom.class, "N");
         container.addAtom(c1);
         container.addAtom(c2);
         container.addAtom(n);
-        container.addBond(container.getBuilder().newInstance(IBond.class, c1, c2, IBond.Order.DOUBLE));
+        container.addBond(
+                container.getBuilder().newInstance(IBond.class, c1, c2, IBond.Order.DOUBLE));
         container.addLonePair(container.getBuilder().newInstance(ILonePair.class, n));
     }
 
@@ -202,8 +203,8 @@ public class AtomContainer2Test extends AbstractAtomContainerTest {
     @Test
     public void testAtomAdjacencyOnClone() throws CloneNotSupportedException {
         IAtomContainer org = (IAtomContainer) newChemObject();
-        IAtom          a1 = org.getBuilder().newAtom();
-        IAtom          a2 = org.getBuilder().newAtom();
+        IAtom a1 = org.getBuilder().newAtom();
+        IAtom a2 = org.getBuilder().newAtom();
         a1.setSymbol("C");
         a2.setSymbol("C");
         org.addAtom(a1);
@@ -219,9 +220,9 @@ public class AtomContainer2Test extends AbstractAtomContainerTest {
     @Test
     public void testAtomGetBond() {
         IAtomContainer mol = (IAtomContainer) newChemObject();
-        IAtom          a1 = mol.getBuilder().newAtom();
-        IAtom          a2 = mol.getBuilder().newAtom();
-        IAtom          a3 = mol.getBuilder().newAtom();
+        IAtom a1 = mol.getBuilder().newAtom();
+        IAtom a2 = mol.getBuilder().newAtom();
+        IAtom a3 = mol.getBuilder().newAtom();
         a1.setSymbol("CH3");
         a2.setSymbol("CH2");
         a3.setSymbol("OH");
@@ -230,10 +231,8 @@ public class AtomContainer2Test extends AbstractAtomContainerTest {
         mol.addAtom(a3);
         mol.addBond(0, 1, IBond.Order.SINGLE);
         mol.addBond(1, 2, IBond.Order.SINGLE);
-        assertThat(mol.getBond(0),
-                   is(mol.getAtom(0).getBond(mol.getAtom(1))));
-        assertThat(mol.getBond(1),
-                   is(mol.getAtom(1).getBond(mol.getAtom(2))));
+        assertThat(mol.getBond(0), is(mol.getAtom(0).getBond(mol.getAtom(1))));
+        assertThat(mol.getBond(1), is(mol.getAtom(1).getBond(mol.getAtom(2))));
         assertNull(mol.getAtom(0).getBond(mol.getAtom(2)));
     }
 }

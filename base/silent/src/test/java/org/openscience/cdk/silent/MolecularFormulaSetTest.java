@@ -46,8 +46,8 @@ public class MolecularFormulaSetTest extends AbstractMolecularFormulaSetTest {
 
     @Test
     public void testMolecularFormulaSet_IMolecularFormula() {
-        IMolecularFormulaSet mfS = new MolecularFormulaSet(getBuilder().newInstance(IMolecularFormula.class));
+        IMolecularFormulaSet mfS =
+                new MolecularFormulaSet(getBuilder().newInstance(IMolecularFormula.class));
         Assert.assertEquals(1, mfS.size());
     }
-
 }

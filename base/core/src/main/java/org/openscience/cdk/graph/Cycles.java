@@ -24,6 +24,12 @@
 
 package org.openscience.cdk.graph;
 
+import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.BitSet;
+import java.util.List;
 import org.openscience.cdk.exception.Intractable;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -33,54 +39,44 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.RingSearch;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.BitSet;
-import java.util.List;
-
-import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
-
 /**
- * A utility class for storing and computing the cycles of a chemical graph.
- * Utilities are also provided for converting the cycles to {@link IRing}s. A
- * brief description of each cycle set is given below - for a more comprehensive
- * review please see - {@cdk.cite Berger04}.
+ * A utility class for storing and computing the cycles of a chemical graph. Utilities are also
+ * provided for converting the cycles to {@link IRing}s. A brief description of each cycle set is
+ * given below - for a more comprehensive review please see - {@cdk.cite Berger04}.
  *
- * <ul> <li>{@link #all()} - all simple cycles in the graph, the number of
- * cycles generated may be very large and may not be feasible for some
- * molecules, such as, fullerene.</li> <li>{@link #mcb()} (aka. SSSR) - minimum
- * cycle basis (MCB) of a graph, these cycles are linearly independent and can
- * be used to generate all of cycles in the graph. It is important to note the
- * MCB is not unique and a that there may be multiple equally valid MCBs. The
- * smallest set of smallest rings (SSSR) is often used to refer to the MCB but
- * originally SSSR was defined as a strictly fundamental cycle basis {@cdk.cite
- * Berger04}. Not every graph has a strictly fundamental cycle basis the
- * definition has come to mean the MCB. Due to the non-uniqueness of the
- * MCB/SSSR its use is discouraged.</li> <li>{@link #relevant()} - relevant
- * cycles of a graph, the smallest set of uniquely defined short cycles. If a
- * graph has a single MCB then the relevant cycles and MCB are the same. If the
- * graph has multiple MCB then the relevant cycles is the union of all MCBs. The
- * number of relevant cycles may be exponential but it is possible to determine
- * how many relevant cycles there are in polynomial time without generating
- * them. For chemical graphs the number of relevant cycles is usually within
- * manageable bounds. </li> <li>{@link #essential()} - essential cycles of a
- * graph. Similar to the relevant cycles the set is unique for a graph. If a
- * graph has a single MCB then the essential cycles and MCB are the same. If the
- * graph has multiple MCB then the essential cycles is the intersect of all
- * MCBs. That is the cycles which appear in every MCB. This means that is is
- * possible to have no essential cycles in a molecule which clearly has cycles
- * (e.g. bridged system like bicyclo[2.2.2]octane). </li> <li> {@link
- * #tripletShort()} - the triple short cycles are the shortest cycle through
- * each triple of vertices. This allows one to generate the envelope rings of
- * some molecules (e.g. naphthalene) without generating all cycles. The cycles
- * are primarily useful for the CACTVS Substructure Keys (PubChem fingerprint).
- * </li> <li> {@link #vertexShort()} - the shortest cycles through each vertex.
- * Unlike the MCB, linear independence is not checked and it may not be possible
- * to generate all other cycles from this set. In practice the vertex/edge short
- * cycles are similar to MCB. </li> <li> {@link #edgeShort()} - the shortest
- * cycles through each edge. Unlike the MCB, linear independence is not checked
- * and it may not be possible to generate all other cycles from this set. In
- * practice the vertex/edge short cycles are similar to MCB. </li> </ul>
+ * <ul>
+ *   <li>{@link #all()} - all simple cycles in the graph, the number of cycles generated may be very
+ *       large and may not be feasible for some molecules, such as, fullerene.
+ *   <li>{@link #mcb()} (aka. SSSR) - minimum cycle basis (MCB) of a graph, these cycles are
+ *       linearly independent and can be used to generate all of cycles in the graph. It is
+ *       important to note the MCB is not unique and a that there may be multiple equally valid
+ *       MCBs. The smallest set of smallest rings (SSSR) is often used to refer to the MCB but
+ *       originally SSSR was defined as a strictly fundamental cycle basis {@cdk.cite Berger04}. Not
+ *       every graph has a strictly fundamental cycle basis the definition has come to mean the MCB.
+ *       Due to the non-uniqueness of the MCB/SSSR its use is discouraged.
+ *   <li>{@link #relevant()} - relevant cycles of a graph, the smallest set of uniquely defined
+ *       short cycles. If a graph has a single MCB then the relevant cycles and MCB are the same. If
+ *       the graph has multiple MCB then the relevant cycles is the union of all MCBs. The number of
+ *       relevant cycles may be exponential but it is possible to determine how many relevant cycles
+ *       there are in polynomial time without generating them. For chemical graphs the number of
+ *       relevant cycles is usually within manageable bounds.
+ *   <li>{@link #essential()} - essential cycles of a graph. Similar to the relevant cycles the set
+ *       is unique for a graph. If a graph has a single MCB then the essential cycles and MCB are
+ *       the same. If the graph has multiple MCB then the essential cycles is the intersect of all
+ *       MCBs. That is the cycles which appear in every MCB. This means that is is possible to have
+ *       no essential cycles in a molecule which clearly has cycles (e.g. bridged system like
+ *       bicyclo[2.2.2]octane).
+ *   <li>{@link #tripletShort()} - the triple short cycles are the shortest cycle through each
+ *       triple of vertices. This allows one to generate the envelope rings of some molecules (e.g.
+ *       naphthalene) without generating all cycles. The cycles are primarily useful for the CACTVS
+ *       Substructure Keys (PubChem fingerprint).
+ *   <li>{@link #vertexShort()} - the shortest cycles through each vertex. Unlike the MCB, linear
+ *       independence is not checked and it may not be possible to generate all other cycles from
+ *       this set. In practice the vertex/edge short cycles are similar to MCB.
+ *   <li>{@link #edgeShort()} - the shortest cycles through each edge. Unlike the MCB, linear
+ *       independence is not checked and it may not be possible to generate all other cycles from
+ *       this set. In practice the vertex/edge short cycles are similar to MCB.
+ * </ul>
  *
  * @author John May
  * @cdk.module core
@@ -89,19 +85,19 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 public final class Cycles {
 
     /** Vertex paths for each cycle. */
-    private final int[][]        paths;
+    private final int[][] paths;
 
     /** The input container - allows us to create 'Ring' objects. */
     private final IAtomContainer container;
 
     /** Mapping for quick lookup of bond mapping. */
-    private final EdgeToBondMap  bondMap;
+    private final EdgeToBondMap bondMap;
 
     /**
-     * Internal constructor - may change in future but currently just takes the
-     * cycle paths and the container from which they came.
+     * Internal constructor - may change in future but currently just takes the cycle paths and the
+     * container from which they came.
      *
-     * @param paths     the cycle paths (closed vertex walks)
+     * @param paths the cycle paths (closed vertex walks)
      * @param container the input container
      */
     private Cycles(int[][] paths, IAtomContainer container, EdgeToBondMap bondMap) {
@@ -121,14 +117,13 @@ public final class Cycles {
 
     public int[][] paths() {
         int[][] cpy = new int[paths.length][];
-        for (int i = 0; i < paths.length; i++)
-            cpy[i] = paths[i].clone();
+        for (int i = 0; i < paths.length; i++) cpy[i] = paths[i].clone();
         return cpy;
     }
 
     /**
-     * Convert the cycles to a {@link IRingSet} containing the {@link IAtom}s
-     * and {@link IBond}s of the input molecule.
+     * Convert the cycles to a {@link IRingSet} containing the {@link IAtom}s and {@link IBond}s of
+     * the input molecule.
      *
      * @return ringset for the cycles
      */
@@ -137,16 +132,15 @@ public final class Cycles {
     }
 
     /**
-     * Create a cycle finder which will compute all simple cycles in a molecule.
-     * The threshold values can not be tuned and is set at a value which will
-     * complete in reasonable time for most molecules. To change the threshold
-     * values please use the stand-alone {@link AllCycles} or {@link
-     * org.openscience.cdk.ringsearch.AllRingsFinder}. All cycles is every
-     * possible simple cycle (i.e. non-repeating vertices) in the chemical
-     * graph. As an example - all simple cycles of anthracene includes, 3 cycles
-     * of length 6, 2 of length 10 and 1 of length 14.
+     * Create a cycle finder which will compute all simple cycles in a molecule. The threshold
+     * values can not be tuned and is set at a value which will complete in reasonable time for most
+     * molecules. To change the threshold values please use the stand-alone {@link AllCycles} or
+     * {@link org.openscience.cdk.ringsearch.AllRingsFinder}. All cycles is every possible simple
+     * cycle (i.e. non-repeating vertices) in the chemical graph. As an example - all simple cycles
+     * of anthracene includes, 3 cycles of length 6, 2 of length 10 and 1 of length 14.
      *
      * <blockquote>
+     *
      * <pre>
      * CycleFinder cf = Cycles.all();
      * for (IAtomContainer m : ms) {
@@ -159,6 +153,7 @@ public final class Cycles {
      *     }
      * }
      * </pre>
+     *
      * </blockquote>
      *
      * @return finder for all simple cycles
@@ -171,9 +166,8 @@ public final class Cycles {
     }
 
     /**
-     * All cycles of smaller than or equal to the specified length. If a length
-     * is also provided to {@link CycleFinder#find(IAtomContainer, int)} the
-     * minimum of the two limits is used.
+     * All cycles of smaller than or equal to the specified length. If a length is also provided to
+     * {@link CycleFinder#find(IAtomContainer, int)} the minimum of the two limits is used.
      *
      * @param length maximum size or cycle to find
      * @return cycle finder
@@ -183,10 +177,10 @@ public final class Cycles {
     }
 
     /**
-     * Create a cycle finder which will compute the minimum cycle basis (MCB) of
-     * a molecule.
+     * Create a cycle finder which will compute the minimum cycle basis (MCB) of a molecule.
      *
      * <blockquote>
+     *
      * <pre>
      * CycleFinder cf = Cycles.mcb();
      * for (IAtomContainer m : ms) {
@@ -198,6 +192,7 @@ public final class Cycles {
      *     }
      * }
      * </pre>
+     *
      * </blockquote>
      *
      * @return finder for all simple cycles
@@ -209,10 +204,10 @@ public final class Cycles {
     }
 
     /**
-     * Create a cycle finder which will compute the relevant cycle basis (RC) of
-     * a molecule.
+     * Create a cycle finder which will compute the relevant cycle basis (RC) of a molecule.
      *
      * <blockquote>
+     *
      * <pre>
      * CycleFinder cf = Cycles.relevant();
      * for (IAtomContainer m : ms) {
@@ -225,6 +220,7 @@ public final class Cycles {
      *     }
      * }
      * </pre>
+     *
      * </blockquote>
      *
      * @return finder for relevant cycles
@@ -236,10 +232,10 @@ public final class Cycles {
     }
 
     /**
-     * Create a cycle finder which will compute the essential cycles of a
-     * molecule.
+     * Create a cycle finder which will compute the essential cycles of a molecule.
      *
      * <blockquote>
+     *
      * <pre>
      * CycleFinder cf = Cycles.essential();
      * for (IAtomContainer m : ms) {
@@ -251,6 +247,7 @@ public final class Cycles {
      *     }
      * }
      * </pre>
+     *
      * </blockquote>
      *
      * @return finder for essential cycles
@@ -262,14 +259,14 @@ public final class Cycles {
     }
 
     /**
-     * Create a cycle finder which will compute the triplet short cycles of a
-     * molecule. These cycles are the shortest through each triplet of vertices
-     * are utilised in the generation of CACTVS Substructure Keys (PubChem
-     * Fingerprint). Currently the triplet cycles are non-canonical (which in
-     * this algorithms case means unique). For finer tuning of options please
-     * use the {@link TripletShortCycles}.
+     * Create a cycle finder which will compute the triplet short cycles of a molecule. These cycles
+     * are the shortest through each triplet of vertices are utilised in the generation of CACTVS
+     * Substructure Keys (PubChem Fingerprint). Currently the triplet cycles are non-canonical
+     * (which in this algorithms case means unique). For finer tuning of options please use the
+     * {@link TripletShortCycles}.
      *
      * <blockquote>
+     *
      * <pre>
      * CycleFinder cf = Cycles.tripletShort();
      * for (IAtomContainer m : ms) {
@@ -281,6 +278,7 @@ public final class Cycles {
      *     }
      * }
      * </pre>
+     *
      * </blockquote>
      *
      * @return finder for triplet short cycles
@@ -292,13 +290,13 @@ public final class Cycles {
     }
 
     /**
-     * Create a cycle finder which will compute the shortest cycles of each
-     * vertex in a molecule. Unlike the SSSR/MCB computation linear independence
-     * is not required and provides some performance gain. In practise typical
-     * chemical graphs are small and the linear independence check is relatively
-     * fast.
+     * Create a cycle finder which will compute the shortest cycles of each vertex in a molecule.
+     * Unlike the SSSR/MCB computation linear independence is not required and provides some
+     * performance gain. In practise typical chemical graphs are small and the linear independence
+     * check is relatively fast.
      *
      * <blockquote>
+     *
      * <pre>
      * CycleFinder cf = Cycles.vertexShort();
      * for (IAtomContainer m : ms) {
@@ -310,6 +308,7 @@ public final class Cycles {
      *     }
      * }
      * </pre>
+     *
      * </blockquote>
      *
      * @return finder for vertex short cycles
@@ -320,13 +319,13 @@ public final class Cycles {
     }
 
     /**
-     * Create a cycle finder which will compute the shortest cycles of each
-     * vertex in a molecule. Unlike the SSSR/MCB computation linear independence
-     * is not required and provides some performance gain. In practise typical
-     * chemical graphs are small and the linear independence check is relatively
-     * fast.
+     * Create a cycle finder which will compute the shortest cycles of each vertex in a molecule.
+     * Unlike the SSSR/MCB computation linear independence is not required and provides some
+     * performance gain. In practise typical chemical graphs are small and the linear independence
+     * check is relatively fast.
      *
      * <blockquote>
+     *
      * <pre>
      * CycleFinder cf = Cycles.edgeShort();
      * for (IAtomContainer m : ms) {
@@ -338,6 +337,7 @@ public final class Cycles {
      *     }
      * }
      * </pre>
+     *
      * </blockquote>
      *
      * @return finder for edge short cycles
@@ -348,19 +348,18 @@ public final class Cycles {
     }
 
     /**
-     * Create a cycle finder which will compute a set of cycles traditionally
-     * used by the CDK to test for aromaticity. This set of cycles is the
-     * MCB/SSSR and {@link #all} cycles for fused systems with 3 or less rings.
-     * This allows on to test aromaticity of envelope rings in compounds such as
-     * azulene without generating an huge number of cycles for large fused
-     * systems (e.g. fullerenes). The use case was that computation of all
-     * cycles previously took a long time and ring systems with more than 2
-     * rings were too difficult. However it is now more efficient to simply
-     * check all cycles/rings without using the MCB/SSSR. This computation will
-     * fail for complex fused systems but the failure is fast and one can easily
-     * 'fall back' to a smaller set of cycles after catching the exception.
+     * Create a cycle finder which will compute a set of cycles traditionally used by the CDK to
+     * test for aromaticity. This set of cycles is the MCB/SSSR and {@link #all} cycles for fused
+     * systems with 3 or less rings. This allows on to test aromaticity of envelope rings in
+     * compounds such as azulene without generating an huge number of cycles for large fused systems
+     * (e.g. fullerenes). The use case was that computation of all cycles previously took a long
+     * time and ring systems with more than 2 rings were too difficult. However it is now more
+     * efficient to simply check all cycles/rings without using the MCB/SSSR. This computation will
+     * fail for complex fused systems but the failure is fast and one can easily 'fall back' to a
+     * smaller set of cycles after catching the exception.
      *
      * <blockquote>
+     *
      * <pre>
      * CycleFinder cf = Cycles.cdkAromaticSet();
      * for (IAtomContainer m : ms) {
@@ -372,6 +371,7 @@ public final class Cycles {
      *     }
      * }
      * </pre>
+     *
      * </blockquote>
      *
      * @return finder for cdk aromatic cycles
@@ -382,12 +382,12 @@ public final class Cycles {
     }
 
     /**
-     * Find all cycles in a fused system or if there were too many cycles
-     * fallback and use the shortest cycles through each vertex. Typically the
-     * types of molecules which the vertex short cycles are provided for are
-     * fullerenes. This cycle finder is well suited to aromaticity.
+     * Find all cycles in a fused system or if there were too many cycles fallback and use the
+     * shortest cycles through each vertex. Typically the types of molecules which the vertex short
+     * cycles are provided for are fullerenes. This cycle finder is well suited to aromaticity.
      *
      * <blockquote>
+     *
      * <pre>
      * CycleFinder cf = Cycles.allOrVertexShort();
      * for (IAtomContainer m : ms) {
@@ -399,17 +399,17 @@ public final class Cycles {
      *     }
      * }
      * </pre>
+     *
      * </blockquote>
      *
-     * @return a cycle finder which computes all cycles if possible or provides
-     * the vertex short cycles
+     * @return a cycle finder which computes all cycles if possible or provides the vertex short
+     *     cycles
      * @deprecated use {@link #or} to define a custom fall-back
      */
     @Deprecated
     public static CycleFinder allOrVertexShort() {
         return or(all(), vertexShort());
     }
-
 
     /**
      * Find and mark all cyclic atoms and bonds in the provided molecule.
@@ -436,7 +436,8 @@ public final class Cycles {
      * @return Number of rings found (circuit rank)
      * @see <a href="https://en.wikipedia.org/wiki/Circuit_rank">Circuit Rank</a>
      */
-    public static int markRingAtomsAndBonds(IAtomContainer mol, int[][] adjList, EdgeToBondMap bondMap) {
+    public static int markRingAtomsAndBonds(
+            IAtomContainer mol, int[][] adjList, EdgeToBondMap bondMap) {
         RingSearch ringSearch = new RingSearch(mol, adjList);
         for (int v = 0; v < mol.getAtomCount(); v++) {
             mol.getAtom(v).setIsInRing(false);
@@ -458,21 +459,29 @@ public final class Cycles {
     /**
      * Use an auxiliary cycle finder if the primary method was intractable.
      *
-     * <blockquote><pre>{@code
+     * <blockquote>
+     *
+     * <pre>{@code
      * // all cycles or all cycles size <= 6
      * CycleFinder cf = Cycles.or(Cycles.all(), Cycles.all(6));
-     * }</pre></blockquote>
+     * }</pre>
+     *
+     * </blockquote>
      *
      * It is possible to nest multiple levels.
      *
-     * <blockquote><pre>
+     * <blockquote>
+     *
+     * <pre>
      * // all cycles or relevant or essential
      * CycleFinder cf = Cycles.or(Cycles.all(),
      *                            Cycles.or(Cycles.relevant(),
      *                                      Cycles.essential()));
-     * </pre></blockquote>
+     * </pre>
      *
-     * @param primary   primary cycle finding method
+     * </blockquote>
+     *
+     * @param primary primary cycle finding method
      * @param auxiliary auxiliary cycle finding method if the primary failed
      * @return a new cycle finder
      */
@@ -481,15 +490,15 @@ public final class Cycles {
     }
 
     /**
-     * Find all simple cycles in a molecule. The threshold values can not be
-     * tuned and is set at a value which will complete in reasonable time for
-     * most molecules. To change the threshold values please use the stand-alone
-     * {@link AllCycles} or {@link org.openscience.cdk.ringsearch.AllRingsFinder}.
-     * All cycles is every possible simple cycle (i.e. non-repeating vertices)
-     * in the chemical graph. As an example - all simple cycles of anthracene
-     * includes, 3 cycles of length 6, 2 of length 10 and 1 of length 14.
+     * Find all simple cycles in a molecule. The threshold values can not be tuned and is set at a
+     * value which will complete in reasonable time for most molecules. To change the threshold
+     * values please use the stand-alone {@link AllCycles} or {@link
+     * org.openscience.cdk.ringsearch.AllRingsFinder}. All cycles is every possible simple cycle
+     * (i.e. non-repeating vertices) in the chemical graph. As an example - all simple cycles of
+     * anthracene includes, 3 cycles of length 6, 2 of length 10 and 1 of length 14.
      *
      * <blockquote>
+     *
      * <pre>
      * for (IAtomContainer m : ms) {
      *     try {
@@ -501,11 +510,11 @@ public final class Cycles {
      *     }
      * }
      * </pre>
+     *
      * </blockquote>
      *
      * @return all simple cycles
-     * @throws Intractable the algorithm reached a limit which caused it to
-     *                     abort in reasonable time
+     * @throws Intractable the algorithm reached a limit which caused it to abort in reasonable time
      * @see #all()
      * @see AllCycles
      * @see org.openscience.cdk.ringsearch.AllRingsFinder
@@ -518,7 +527,7 @@ public final class Cycles {
      * All cycles of smaller than or equal to the specified length.
      *
      * @param container input container
-     * @param length    maximum size or cycle to find
+     * @param length maximum size or cycle to find
      * @return all cycles
      * @throws Intractable computation was not feasible
      */
@@ -530,12 +539,14 @@ public final class Cycles {
      * Find the minimum cycle basis (MCB) of a molecule.
      *
      * <blockquote>
+     *
      * <pre>
      * for (IAtomContainer m : ms) {
      *     Cycles   cycles = Cycles.mcb(m);
      *     IRingSet rings  = cycles.toRingSet();
      * }
      * </pre>
+     *
      * </blockquote>
      *
      * @return cycles belonging to the minimum cycle basis
@@ -547,16 +558,17 @@ public final class Cycles {
     }
 
     /**
-     * Find the smallest set of smallest rings (SSSR) - aka minimum cycle basis
-     * (MCB) of a molecule.
+     * Find the smallest set of smallest rings (SSSR) - aka minimum cycle basis (MCB) of a molecule.
      *
      * <blockquote>
+     *
      * <pre>
      * for (IAtomContainer m : ms) {
      *     Cycles   cycles = Cycles.sssr(m);
      *     IRingSet rings  = cycles.toRingSet();
      * }
      * </pre>
+     *
      * </blockquote>
      *
      * @return cycles belonging to the minimum cycle basis
@@ -572,12 +584,14 @@ public final class Cycles {
      * Find the relevant cycles of a molecule.
      *
      * <blockquote>
+     *
      * <pre>
      * for (IAtomContainer m : ms) {
      *     Cycles   cycles = Cycles.relevant(m);
      *     IRingSet rings  = cycles.toRingSet();
      * }
      * </pre>
+     *
      * </blockquote>
      *
      * @return relevant cycles
@@ -592,12 +606,14 @@ public final class Cycles {
      * Find the essential cycles of a molecule.
      *
      * <blockquote>
+     *
      * <pre>
      * for (IAtomContainer m : ms) {
      *     Cycles   cycles = Cycles.essential(m);
      *     IRingSet rings  = cycles.toRingSet();
      * }
      * </pre>
+     *
      * </blockquote>
      *
      * @return essential cycles
@@ -612,12 +628,14 @@ public final class Cycles {
      * Find the triplet short cycles of a molecule.
      *
      * <blockquote>
+     *
      * <pre>
      * for (IAtomContainer m : ms) {
      *     Cycles   cycles = Cycles.tripletShort(m);
      *     IRingSet rings  = cycles.toRingSet();
      * }
      * </pre>
+     *
      * </blockquote>
      *
      * @return triplet short cycles
@@ -632,12 +650,14 @@ public final class Cycles {
      * Find the vertex short cycles of a molecule.
      *
      * <blockquote>
+     *
      * <pre>
      * for (IAtomContainer m : ms) {
      *     Cycles   cycles = Cycles.vertexShort(m);
      *     IRingSet rings  = cycles.toRingSet();
      * }
      * </pre>
+     *
      * </blockquote>
      *
      * @return triplet short cycles
@@ -652,12 +672,14 @@ public final class Cycles {
      * Find the edge short cycles of a molecule.
      *
      * <blockquote>
+     *
      * <pre>
      * for (IAtomContainer m : ms) {
      *     Cycles   cycles = Cycles.edgeShort(m);
      *     IRingSet rings  = cycles.toRingSet();
      * }
      * </pre>
+     *
      * </blockquote>
      *
      * @return edge short cycles
@@ -679,12 +701,11 @@ public final class Cycles {
     }
 
     /**
-     * Internal method to wrap cycle computations which <i>should</i> be
-     * tractable. That is they currently won't throw the exception - if the
-     * method does throw an exception an internal error is triggered as a sanity
-     * check.
+     * Internal method to wrap cycle computations which <i>should</i> be tractable. That is they
+     * currently won't throw the exception - if the method does throw an exception an internal error
+     * is triggered as a sanity check.
      *
-     * @param finder    the cycle finding method
+     * @param finder the cycle finding method
      * @param container the molecule to find the cycles of
      * @return the cycles of the molecule
      */
@@ -693,14 +714,13 @@ public final class Cycles {
     }
 
     /**
-     * Internal method to wrap cycle computations which <i>should</i> be
-     * tractable. That is they currently won't throw the exception - if the
-     * method does throw an exception an internal error is triggered as a sanity
-     * check.
+     * Internal method to wrap cycle computations which <i>should</i> be tractable. That is they
+     * currently won't throw the exception - if the method does throw an exception an internal error
+     * is triggered as a sanity check.
      *
-     * @param finder    the cycle finding method
+     * @param finder the cycle finding method
      * @param container the molecule to find the cycles of
-     * @param length    maximum size or cycle to find
+     * @param length maximum size or cycle to find
      * @return the cycles of the molecule
      */
     private static Cycles _invoke(CycleFinder finder, IAtomContainer container, int length) {
@@ -749,10 +769,11 @@ public final class Cycles {
                 final int threshold = 3072; // see. AllRingsFinder.Threshold.Pubchem_994
                 AllCycles ac = new AllCycles(graph, Math.min(length, graph.length), threshold);
                 if (!ac.completed())
-                    throw new Intractable("A large number of cycles were being generated and the"
-                            + " computation was aborted. Please use AllCycles/AllRingsFinder with"
-                            + " and specify a larger threshold or use a CycleFinder with a fall-back"
-                            + " to a set unique cycles: e.g. Cycles.allOrVertexShort().");
+                    throw new Intractable(
+                            "A large number of cycles were being generated and the"
+                                    + " computation was aborted. Please use AllCycles/AllRingsFinder with"
+                                    + " and specify a larger threshold or use a CycleFinder with a fall-back"
+                                    + " to a set unique cycles: e.g. Cycles.allOrVertexShort().");
                 return ac.paths();
             }
         },
@@ -815,8 +836,7 @@ public final class Cycles {
         };
 
         /**
-         * Apply cycle perception to the graph (g) - graph is expeced to be
-         * biconnected.
+         * Apply cycle perception to the graph (g) - graph is expeced to be biconnected.
          *
          * @param graph the graph (adjacency list)
          * @return the cycles of the graph
@@ -824,7 +844,7 @@ public final class Cycles {
          */
         abstract int[][] apply(int[][] graph, int length) throws Intractable;
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         public Cycles find(IAtomContainer molecule) throws Intractable {
             return find(molecule, molecule.getAtomCount());
@@ -860,7 +880,7 @@ public final class Cycles {
             return new Cycles(walks.toArray(new int[walks.size()][0]), molecule, bondMap);
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         public Cycles find(IAtomContainer molecule, int[][] graph, int length) throws Intractable {
 
@@ -892,7 +912,7 @@ public final class Cycles {
     /**
      * Internal - lifts a path in a subgraph back to the original graph.
      *
-     * @param path    a path
+     * @param path a path
      * @param mapping vertex mapping
      * @return the lifted path
      */
@@ -907,12 +927,12 @@ public final class Cycles {
      * Internal - convert a set of cycles to an ring set.
      *
      * @param container molecule
-     * @param cycles    a cycle of the chemical graph
-     * @param bondMap   mapping of the edges (int,int) to the bonds of the
-     *                  container
+     * @param cycles a cycle of the chemical graph
+     * @param bondMap mapping of the edges (int,int) to the bonds of the container
      * @return the ring set
      */
-    private static IRingSet toRingSet(IAtomContainer container, int[][] cycles, EdgeToBondMap bondMap) {
+    private static IRingSet toRingSet(
+            IAtomContainer container, int[][] cycles, EdgeToBondMap bondMap) {
 
         // note currently no way to say the size of the RingSet
         // even through we know it
@@ -930,9 +950,8 @@ public final class Cycles {
      * Internal - convert a set of cycles to a ring.
      *
      * @param container molecule
-     * @param cycle     a cycle of the chemical graph
-     * @param bondMap   mapping of the edges (int,int) to the bonds of the
-     *                  container
+     * @param cycle a cycle of the chemical graph
+     * @param bondMap mapping of the edges (int,int) to the bonds of the container
      * @return the ring for the specified cycle
      */
     private static IRing toRing(IAtomContainer container, int[] cycle, EdgeToBondMap bondMap) {
@@ -956,14 +975,13 @@ public final class Cycles {
     }
 
     /**
-     * Obtain the bond between the atoms at index 'u' and 'v'. If the 'bondMap'
-     * is non-null it is used for direct lookup otherwise the slower linear
-     * lookup in 'container' is used.
+     * Obtain the bond between the atoms at index 'u' and 'v'. If the 'bondMap' is non-null it is
+     * used for direct lookup otherwise the slower linear lookup in 'container' is used.
      *
      * @param container a structure
-     * @param bondMap   optimised map of atom indices to bond instances
-     * @param u         an atom index
-     * @param v         an atom index (connected to u)
+     * @param bondMap optimised map of atom indices to bond instances
+     * @param u an atom index
+     * @param v an atom index (connected to u)
      * @return the bond between u and v
      */
     private static IBond getBond(IAtomContainer container, EdgeToBondMap bondMap, int u, int v) {
@@ -971,9 +989,7 @@ public final class Cycles {
         return container.getBond(container.getAtom(u), container.getAtom(v));
     }
 
-    /**
-     * All cycles smaller than or equal to a specified length.
-     */
+    /** All cycles smaller than or equal to a specified length. */
     private static final class AllUpToLength implements CycleFinder {
 
         private final int predefinedLength;
@@ -985,19 +1001,19 @@ public final class Cycles {
             this.predefinedLength = length;
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         public Cycles find(IAtomContainer molecule) throws Intractable {
             return find(molecule, molecule.getAtomCount());
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         public Cycles find(IAtomContainer molecule, int length) throws Intractable {
             return find(molecule, GraphUtil.toAdjList(molecule), length);
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         public Cycles find(IAtomContainer molecule, int[][] graph, int length) throws Intractable {
             RingSearch ringSearch = new RingSearch(molecule, graph);
@@ -1036,16 +1052,17 @@ public final class Cycles {
         private int[][] findInFused(int[][] g, int length) throws Intractable {
             AllCycles allCycles = new AllCycles(g, Math.min(g.length, length), threshold);
             if (!allCycles.completed())
-                throw new Intractable("A large number of cycles were being generated and the"
-                        + " computation was aborted. Please us AllCycles/AllRingsFinder with"
-                        + " and specify a larger threshold or an alternative cycle set.");
+                throw new Intractable(
+                        "A large number of cycles were being generated and the"
+                                + " computation was aborted. Please us AllCycles/AllRingsFinder with"
+                                + " and specify a larger threshold or an alternative cycle set.");
             return allCycles.paths();
         }
     }
 
     /**
-     * Find cycles using a primary cycle finder, if the computation was
-     * intractable fallback to an auxiliary cycle finder.
+     * Find cycles using a primary cycle finder, if the computation was intractable fallback to an
+     * auxiliary cycle finder.
      */
     private static final class Fallback implements CycleFinder {
 
@@ -1054,7 +1071,7 @@ public final class Cycles {
         /**
          * Create a fallback for two cycle finders.
          *
-         * @param primary   the primary cycle finder
+         * @param primary the primary cycle finder
          * @param auxiliary the auxiliary cycle finder
          */
         private Fallback(CycleFinder primary, CycleFinder auxiliary) {
@@ -1062,19 +1079,19 @@ public final class Cycles {
             this.auxiliary = auxiliary;
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         public Cycles find(IAtomContainer molecule) throws Intractable {
             return find(molecule, molecule.getAtomCount());
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         public Cycles find(IAtomContainer molecule, int length) throws Intractable {
             return find(molecule, GraphUtil.toAdjList(molecule), length);
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         public Cycles find(IAtomContainer molecule, int[][] graph, int length) throws Intractable {
             try {
@@ -1086,16 +1103,14 @@ public final class Cycles {
         }
     }
 
-    /**
-     * Remove cycles with a chord from an existing set of cycles.
-     */
+    /** Remove cycles with a chord from an existing set of cycles. */
     private static final class Unchorded implements CycleFinder {
 
         private CycleFinder primary;
 
         /**
-         * Filter any cycles produced by the {@code primary} cycle finder and
-         * only allow those without a chord.
+         * Filter any cycles produced by the {@code primary} cycle finder and only allow those
+         * without a chord.
          *
          * @param primary the primary cycle finder
          */
@@ -1103,19 +1118,19 @@ public final class Cycles {
             this.primary = primary;
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         public Cycles find(IAtomContainer molecule) throws Intractable {
             return find(molecule, molecule.getAtomCount());
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         public Cycles find(IAtomContainer molecule, int length) throws Intractable {
             return find(molecule, GraphUtil.toAdjList(molecule), length);
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         public Cycles find(IAtomContainer molecule, int[][] graph, int length) throws Intractable {
 
@@ -1134,15 +1149,14 @@ public final class Cycles {
         /**
          * The cycle path is accepted if it does not have chord.
          *
-         * @param path  a path
+         * @param path a path
          * @param graph the adjacency of atoms
          * @return accept the path as unchorded
          */
         private boolean accept(int[] path, int[][] graph) {
             BitSet vertices = new BitSet();
 
-            for (int v : path)
-                vertices.set(v);
+            for (int v : path) vertices.set(v);
 
             for (int j = 1; j < path.length; j++) {
                 int v = path[j];
@@ -1153,7 +1167,6 @@ public final class Cycles {
                     // chord found
                     if (w != prev && w != next && vertices.get(w)) return false;
                 }
-
             }
 
             return true;

@@ -53,40 +53,36 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 
 /**
  * Checks if atom is matching between query and target molecules.
+ *
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public
- *             access to internal implementation details. SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK
+ *     or provides public access to internal implementation details. SMSD has been deprecated from
+ *     the CDK with a newer, more recent version of SMSD is available at <a
+ *     href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public class DefaultMCSPlusAtomMatcher implements AtomMatcher {
 
-    static final long  serialVersionUID = -7861469841127327812L;
-    private int        maximumNeighbors;
-    private String     symbol           = null;
-    private IAtom      qAtom            = null;
-    private IQueryAtom smartQueryAtom   = null;
-    private boolean    shouldMatchBonds = false;
+    static final long serialVersionUID = -7861469841127327812L;
+    private int maximumNeighbors;
+    private String symbol = null;
+    private IAtom qAtom = null;
+    private IQueryAtom smartQueryAtom = null;
+    private boolean shouldMatchBonds = false;
 
-    /**
-     * @return the shouldMatchBonds
-     */
+    /** @return the shouldMatchBonds */
     public boolean isBondMatchFlag() {
         return shouldMatchBonds;
     }
 
-    /**
-     * @param shouldMatchBonds the shouldMatchBonds to set
-     */
+    /** @param shouldMatchBonds the shouldMatchBonds to set */
     public final void setBondMatchFlag(boolean shouldMatchBonds) {
         this.shouldMatchBonds = shouldMatchBonds;
     }
 
-    /**
-     * Constructor
-     */
+    /** Constructor */
     public DefaultMCSPlusAtomMatcher() {
         this.qAtom = null;
         symbol = null;
@@ -95,11 +91,13 @@ public class DefaultMCSPlusAtomMatcher implements AtomMatcher {
 
     /**
      * Constructor
+     *
      * @param queryContainer query atom container
      * @param atom query atom
      * @param shouldMatchBonds bond matching flag
      */
-    public DefaultMCSPlusAtomMatcher(IAtomContainer queryContainer, IAtom atom, boolean shouldMatchBonds) {
+    public DefaultMCSPlusAtomMatcher(
+            IAtomContainer queryContainer, IAtom atom, boolean shouldMatchBonds) {
         this();
         this.qAtom = atom;
         this.symbol = atom.getSymbol();
@@ -111,6 +109,7 @@ public class DefaultMCSPlusAtomMatcher implements AtomMatcher {
 
     /**
      * Constructor
+     *
      * @param smartQueryAtom query atom
      * @param container
      */
@@ -122,29 +121,30 @@ public class DefaultMCSPlusAtomMatcher implements AtomMatcher {
 
     /**
      * Constructor
+     *
      * @param queryContainer query atom container
      * @param template query atom
      * @param blockedPositions
      * @param shouldMatchBonds bond matching flag
      */
-    public DefaultMCSPlusAtomMatcher(IAtomContainer queryContainer, IAtom template, int blockedPositions,
+    public DefaultMCSPlusAtomMatcher(
+            IAtomContainer queryContainer,
+            IAtom template,
+            int blockedPositions,
             boolean shouldMatchBonds) {
         this(queryContainer, template, shouldMatchBonds);
-        this.maximumNeighbors = countImplicitHydrogens(template) + queryContainer.getConnectedBondsCount(template)
-                - blockedPositions;
+        this.maximumNeighbors =
+                countImplicitHydrogens(template)
+                        + queryContainer.getConnectedBondsCount(template)
+                        - blockedPositions;
     }
 
-    /**
-     *
-     * @param maximum numbers of connected atoms allowed
-     */
+    /** @param maximum numbers of connected atoms allowed */
     public void setMaximumNeighbors(int maximum) {
         this.maximumNeighbors = maximum;
     }
 
-    /**
-     * @param symbol
-     */
+    /** @param symbol */
     public void setSymbol(String symbol) {
         this.symbol = symbol;
     }
@@ -169,8 +169,7 @@ public class DefaultMCSPlusAtomMatcher implements AtomMatcher {
         return (atom.getImplicitHydrogenCount() == null) ? 0 : atom.getImplicitHydrogenCount();
     }
 
-    /** {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean matches(IAtomContainer targetContainer, IAtom targetAtom) {
         if (smartQueryAtom != null && qAtom == null) {

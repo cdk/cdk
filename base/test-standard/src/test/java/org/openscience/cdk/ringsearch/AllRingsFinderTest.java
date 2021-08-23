@@ -18,9 +18,12 @@
  */
 package org.openscience.cdk.ringsearch;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.openscience.cdk.ringsearch.AllRingsFinder.Threshold.PubChem_994;
+
 import java.io.InputStream;
 import java.util.Iterator;
-
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Ignore;
@@ -42,13 +45,7 @@ import org.openscience.cdk.silent.ChemFile;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.openscience.cdk.ringsearch.AllRingsFinder.Threshold.PubChem_994;
-
-/**
- * @cdk.module test-standard
- */
+/** @cdk.module test-standard */
 public class AllRingsFinderTest extends CDKTestCase {
 
     boolean standAlone = false;
@@ -72,22 +69,20 @@ public class AllRingsFinderTest extends CDKTestCase {
         IRingSet ringSet = null;
         AllRingsFinder arf = new AllRingsFinder();
         IAtomContainer molecule = TestMoleculeFactory.makeEthylPropylPhenantren();
-        //display(molecule);
+        // display(molecule);
 
         ringSet = arf.findAllRings(molecule);
 
         Assert.assertEquals(6, ringSet.getAtomContainerCount());
     }
 
-    /**
-     * @cdk.bug 746067
-     */
+    /** @cdk.bug 746067 */
     @Test
     public void testBondsWithinRing() throws Exception {
         IRingSet ringSet = null;
         AllRingsFinder arf = new AllRingsFinder();
         IAtomContainer molecule = TestMoleculeFactory.makeEthylPropylPhenantren();
-        //display(molecule);
+        // display(molecule);
 
         ringSet = arf.findAllRings(molecule);
         for (int i = 0; i < ringSet.getAtomContainerCount(); i++) {
@@ -204,7 +199,8 @@ public class AllRingsFinderTest extends CDKTestCase {
     }
 
     /**
-     * @cdk.inchi InChI=1S/C90H74O28/c91-48-18-8-36(28-58(48)101)81-64(107)34-35-4-3-6-43(80(35)114-81)66-44-14-24-55(98)72(87(44)115-83(75(66)108)38-10-20-50(93)60(103)30-38)68-46-16-26-57(100)74(89(46)117-85(77(68)110)40-12-22-52(95)62(105)32-40)70-47-17-27-56(99)73(90(47)118-86(79(70)112)41-13-23-53(96)63(106)33-41)69-45-15-25-54(97)71(88(45)116-84(78(69)111)39-11-21-51(94)61(104)31-39)67-42-5-1-2-7-65(42)113-82(76(67)109)37-9-19-49(92)59(102)29-37/h1-33,64,66-70,75-79,81-86,91-112H,34H2
+     * @cdk.inchi
+     *     InChI=1S/C90H74O28/c91-48-18-8-36(28-58(48)101)81-64(107)34-35-4-3-6-43(80(35)114-81)66-44-14-24-55(98)72(87(44)115-83(75(66)108)38-10-20-50(93)60(103)30-38)68-46-16-26-57(100)74(89(46)117-85(77(68)110)40-12-22-52(95)62(105)32-40)70-47-17-27-56(99)73(90(47)118-86(79(70)112)41-13-23-53(96)63(106)33-41)69-45-15-25-54(97)71(88(45)116-84(78(69)111)39-11-21-51(94)61(104)31-39)67-42-5-1-2-7-65(42)113-82(76(67)109)37-9-19-49(92)59(102)29-37/h1-33,64,66-70,75-79,81-86,91-112H,34H2
      */
     @Test
     public void testBigMoleculeWithIsolatedRings() throws Exception {
@@ -220,12 +216,12 @@ public class AllRingsFinderTest extends CDKTestCase {
         IChemModel model = seq.getChemModel(0);
         IAtomContainer mol = model.getMoleculeSet().getAtomContainer(0);
 
-        //logger.debug("Constructed Molecule");
-        //logger.debug("Starting AllRingsFinder");
+        // logger.debug("Constructed Molecule");
+        // logger.debug("Starting AllRingsFinder");
         ringSet = new AllRingsFinder().findAllRings(mol);
-        //logger.debug("Finished AllRingsFinder");
+        // logger.debug("Finished AllRingsFinder");
         Assert.assertEquals(24, ringSet.getAtomContainerCount());
-        //display(mol);
+        // display(mol);
 
         // check sizes of rings
         int[] ringSize = new int[mol.getAtomCount()];
@@ -238,10 +234,9 @@ public class AllRingsFinderTest extends CDKTestCase {
     }
 
     /**
-     * This test takes a very long time. It was to ensure that
-     * AllRingsFinder actually stops for the given examples.
-     * And it does, after a very long time.
-     * So, the test is commented out because of its long runtime.
+     * This test takes a very long time. It was to ensure that AllRingsFinder actually stops for the
+     * given examples. And it does, after a very long time. So, the test is commented out because of
+     * its long runtime.
      *
      * @cdk.bug 777488
      */
@@ -249,10 +244,10 @@ public class AllRingsFinderTest extends CDKTestCase {
     public void testBug777488() throws Exception {
         Assume.assumeTrue(runSlowTests());
 
-        //String filename = "data/Bug646.cml";
+        // String filename = "data/Bug646.cml";
         String filename = "data/cml/testBug777488-1-AllRingsFinder.cml";
-        //String filename = "data/NCI_diversity_528.mol.cml";
-        //String filename = "data/NCI_diversity_978.mol.cml";
+        // String filename = "data/NCI_diversity_528.mol.cml";
+        // String filename = "data/NCI_diversity_978.mol.cml";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
@@ -265,15 +260,14 @@ public class AllRingsFinderTest extends CDKTestCase {
         if (standAlone) System.out.println("Finished AllRingsFinder");
         if (standAlone) System.out.println("Found " + ringSet.getAtomContainerCount() + " rings.");
 
-        //display(mol);
+        // display(mol);
     }
 
     @Test
     public void testRingFlags1() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer molecule = sp.parseSmiles("c1ccccc1");
-        for (IAtom a : molecule.atoms())
-            a.setFlag(CDKConstants.ISINRING, false);
+        for (IAtom a : molecule.atoms()) a.setFlag(CDKConstants.ISINRING, false);
         AllRingsFinder arf = new AllRingsFinder();
         arf.findAllRings(molecule);
 
@@ -290,8 +284,7 @@ public class AllRingsFinderTest extends CDKTestCase {
     public void testRingFlags2() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer molecule = sp.parseSmiles("C1CCCC1CC");
-        for (IAtom a : molecule.atoms())
-            a.setFlag(CDKConstants.ISINRING, false);
+        for (IAtom a : molecule.atoms()) a.setFlag(CDKConstants.ISINRING, false);
 
         AllRingsFinder arf = new AllRingsFinder();
         arf.findAllRings(molecule);
@@ -302,7 +295,8 @@ public class AllRingsFinderTest extends CDKTestCase {
             IAtom atom = atoms.next();
             if (atom.getFlag(CDKConstants.ISINRING)) count++;
         }
-        Assert.assertEquals("All atoms in 1-ethyl-cyclopentane were not marked as being in a ring", 5, count);
+        Assert.assertEquals(
+                "All atoms in 1-ethyl-cyclopentane were not marked as being in a ring", 5, count);
     }
 
     @Test
@@ -353,5 +347,4 @@ public class AllRingsFinderTest extends CDKTestCase {
         ringSet = arf.findAllRings(molecule, 6);
         Assert.assertEquals(135, ringSet.getAtomContainerCount());
     }
-
 }

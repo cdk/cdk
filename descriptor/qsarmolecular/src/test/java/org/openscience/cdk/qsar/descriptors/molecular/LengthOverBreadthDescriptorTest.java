@@ -1,5 +1,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.io.InputStream;
+import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,15 +14,11 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
-import java.io.InputStream;
-import java.util.List;
-
 /**
  * TestSuite that runs all QSAR tests.
  *
  * @cdk.module test-qsarmolecular
  */
-
 public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
 
     public LengthOverBreadthDescriptorTest() {}
@@ -95,9 +93,7 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(2.0880171, result.get(1), 0.000001);
     }
 
-    /**
-     * @cdk.bug 1965254
-     */
+    /** @cdk.bug 1965254 */
     @Test
     public void testLOBDescriptor2() throws Exception {
         String filename = "data/mdl/lobtest2.sdf";
@@ -111,5 +107,4 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
         DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();
         Assert.assertNotNull(result);
     }
-
 }

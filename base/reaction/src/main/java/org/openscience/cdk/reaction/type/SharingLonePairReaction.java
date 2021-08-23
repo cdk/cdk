@@ -18,6 +18,8 @@
  */
 package org.openscience.cdk.reaction.type;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -34,76 +36,73 @@ import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 /**
- * <p>IReactionProcess which participate in movement resonance.
- * This reaction could be represented as [A+]-B| =&gt; A=[B+]. Due to
- * deficiency of charge of the atom A, the lone pair electron of the atom A is
- * desplaced.</p>
- * <p>Make sure that the molecule has the correspond lone pair electrons
- * for each atom. You can use the method: <pre> LonePairElectronChecker </pre>
+ * IReactionProcess which participate in movement resonance. This reaction could be represented as
+ * [A+]-B| =&gt; A=[B+]. Due to deficiency of charge of the atom A, the lone pair electron of the
+ * atom A is desplaced.
+ *
+ * <p>Make sure that the molecule has the correspond lone pair electrons for each atom. You can use
+ * the method:
+ *
+ * <pre> LonePairElectronChecker </pre>
  *
  * <pre>
  *  IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newAtomContainerSet();
  *  setOfReactants.addAtomContainer(new AtomContainer());
  *  IReactionProcess type = new SharingLonePairReaction();
  *  Object[] params = {Boolean.FALSE};
-    type.setParameters(params);
+ * type.setParameters(params);
  *  IReactionSet setOfReactions = type.initiate(setOfReactants, null);
  *  </pre>
  *
- * <p>We have the possibility to localize the reactive center. Good method if you
- * want to localize the reaction in a fixed point</p>
+ * <p>We have the possibility to localize the reactive center. Good method if you want to localize
+ * the reaction in a fixed point
+ *
  * <pre>atoms[0].setFlag(CDKConstants.REACTIVE_CENTER,true);</pre>
- * <p>Moreover you must put the parameter Boolean.TRUE</p>
- * <p>If the reactive center is not localized then the reaction process will
- * try to find automatically the possible reactive center.</p>
  *
+ * <p>Moreover you must put the parameter Boolean.TRUE
  *
- * @author         Miguel Rojas
+ * <p>If the reactive center is not localized then the reaction process will try to find
+ * automatically the possible reactive center.
  *
- * @cdk.created    2006-05-05
- * @cdk.module     reaction
+ * @author Miguel Rojas
+ * @cdk.created 2006-05-05
+ * @cdk.module reaction
  * @cdk.githash
- *
- **/
+ */
 public class SharingLonePairReaction extends ReactionEngine implements IReactionProcess {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(SharingLonePairReaction.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(SharingLonePairReaction.class);
 
-    /**
-     * Constructor of the SharingLonePairReaction object.
-     *
-     */
+    /** Constructor of the SharingLonePairReaction object. */
     public SharingLonePairReaction() {}
 
     /**
-     *  Gets the specification attribute of the SharingLonePairReaction object.
+     * Gets the specification attribute of the SharingLonePairReaction object.
      *
-     *@return    The specification value
+     * @return The specification value
      */
     @Override
     public ReactionSpecification getSpecification() {
         return new ReactionSpecification(
-                "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#SharingLonePair", this
-                        .getClass().getName(), "$Id$", "The Chemistry Development Kit");
+                "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#SharingLonePair",
+                this.getClass().getName(),
+                "$Id$",
+                "The Chemistry Development Kit");
     }
 
     /**
-     *  Initiate process.
-     *  It is needed to call the addExplicitHydrogensToSatisfyValency
-     *  from the class tools.HydrogenAdder.
+     * Initiate process. It is needed to call the addExplicitHydrogensToSatisfyValency from the
+     * class tools.HydrogenAdder.
      *
-     *
-     *@exception  CDKException  Description of the Exception
-
-     * @param  reactants         reactants of the reaction.
-    * @param  agents            agents of the reaction (Must be in this case null).
+     * @exception CDKException Description of the Exception
+     * @param reactants reactants of the reaction.
+     * @param agents agents of the reaction (Must be in this case null).
      */
     @Override
-    public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents) throws CDKException {
+    public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents)
+            throws CDKException {
 
         logger.debug("initiate reaction: SharingLonePairReaction");
 
@@ -126,16 +125,19 @@ public class SharingLonePairReaction extends ReactionEngine implements IReaction
         Iterator<IAtom> atomis = reactant.atoms().iterator();
         while (atomis.hasNext()) {
             IAtom atomi = atomis.next();
-            if (atomi.getFlag(CDKConstants.REACTIVE_CENTER) && atomi.getFormalCharge() == 0
+            if (atomi.getFlag(CDKConstants.REACTIVE_CENTER)
+                    && atomi.getFormalCharge() == 0
                     && reactant.getConnectedSingleElectronsCount(atomi) == 0
                     && reactant.getConnectedLonePairsList(atomi).size() > 0) {
 
                 Iterator<IBond> bondis = reactant.getConnectedBondsList(atomi).iterator();
                 while (bondis.hasNext()) {
                     IBond bondi = bondis.next();
-                    if (bondi.getFlag(CDKConstants.REACTIVE_CENTER) && bondi.getOrder() == IBond.Order.SINGLE) {
+                    if (bondi.getFlag(CDKConstants.REACTIVE_CENTER)
+                            && bondi.getOrder() == IBond.Order.SINGLE) {
                         IAtom atomj = bondi.getOther(atomi);
-                        if (atomj.getFlag(CDKConstants.REACTIVE_CENTER) && atomj.getFormalCharge() == 1
+                        if (atomj.getFlag(CDKConstants.REACTIVE_CENTER)
+                                && atomj.getFormalCharge() == 1
                                 && reactant.getConnectedSingleElectronsCount(atomj) == 0) {
 
                             ArrayList<IAtom> atomList = new ArrayList<IAtom>();
@@ -144,13 +146,13 @@ public class SharingLonePairReaction extends ReactionEngine implements IReaction
                             ArrayList<IBond> bondList = new ArrayList<IBond>();
                             bondList.add(bondi);
 
-                            IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(IAtomContainerSet.class);
+                            IAtomContainerSet moleculeSet =
+                                    reactant.getBuilder().newInstance(IAtomContainerSet.class);
                             moleculeSet.addAtomContainer(reactant);
-                            IReaction reaction = mechanism.initiate(moleculeSet, atomList, bondList);
-                            if (reaction == null)
-                                continue;
-                            else
-                                setOfReactions.addReaction(reaction);
+                            IReaction reaction =
+                                    mechanism.initiate(moleculeSet, atomList, bondList);
+                            if (reaction == null) continue;
+                            else setOfReactions.addReaction(reaction);
                         }
                     }
                 }
@@ -158,12 +160,12 @@ public class SharingLonePairReaction extends ReactionEngine implements IReaction
         }
 
         return setOfReactions;
-
     }
 
     /**
-     * set the active center for this molecule.
-     * The active center will be those which correspond with [A+]-B|.
+     * set the active center for this molecule. The active center will be those which correspond
+     * with [A+]-B|.
+     *
      * <pre>
      * A: Atom with positive charge
      * -: Single bond
@@ -177,7 +179,8 @@ public class SharingLonePairReaction extends ReactionEngine implements IReaction
         Iterator<IAtom> atomis = reactant.atoms().iterator();
         while (atomis.hasNext()) {
             IAtom atomi = atomis.next();
-            if (atomi.getFormalCharge() == 0 && reactant.getConnectedSingleElectronsCount(atomi) == 0
+            if (atomi.getFormalCharge() == 0
+                    && reactant.getConnectedSingleElectronsCount(atomi) == 0
                     && reactant.getConnectedLonePairsList(atomi).size() > 0) {
 
                 Iterator<IBond> bondis = reactant.getConnectedBondsList(atomi).iterator();
@@ -185,7 +188,8 @@ public class SharingLonePairReaction extends ReactionEngine implements IReaction
                     IBond bondi = bondis.next();
                     if (bondi.getOrder() == IBond.Order.SINGLE) {
                         IAtom atomj = bondi.getOther(atomi);
-                        if (atomj.getFormalCharge() == 1 && reactant.getConnectedSingleElectronsCount(atomj) == 0) {
+                        if (atomj.getFormalCharge() == 1
+                                && reactant.getConnectedSingleElectronsCount(atomj) == 0) {
                             atomi.setFlag(CDKConstants.REACTIVE_CENTER, true);
                             atomj.setFlag(CDKConstants.REACTIVE_CENTER, true);
                             bondi.setFlag(CDKConstants.REACTIVE_CENTER, true);

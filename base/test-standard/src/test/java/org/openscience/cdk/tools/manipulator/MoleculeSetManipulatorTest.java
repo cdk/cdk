@@ -19,7 +19,6 @@
 package org.openscience.cdk.tools.manipulator;
 
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,18 +35,17 @@ import org.openscience.cdk.interfaces.IChemObject;
 
 /**
  * @cdk.module test-standard
- *
- * @author     Kai Hartmann
- * @cdk.created    2004-02-20
+ * @author Kai Hartmann
+ * @cdk.created 2004-02-20
  */
 public class MoleculeSetManipulatorTest extends CDKTestCase {
 
-    IAtomContainer    mol1       = null;
-    IAtomContainer    mol2       = null;
-    IAtom             atomInMol1 = null;
-    IBond             bondInMol1 = null;
-    IAtom             atomInMol2 = null;
-    IAtomContainerSet som        = new AtomContainerSet();
+    IAtomContainer mol1 = null;
+    IAtomContainer mol2 = null;
+    IAtom atomInMol1 = null;
+    IBond bondInMol1 = null;
+    IAtom atomInMol2 = null;
+    IAtomContainerSet som = new AtomContainerSet();
 
     public MoleculeSetManipulatorTest() {
         super();
@@ -178,6 +176,10 @@ public class MoleculeSetManipulatorTest extends CDKTestCase {
     @Test
     public void testGetAllChemObjects_IAtomContainerSet() {
         List<IChemObject> list = MoleculeSetManipulator.getAllChemObjects(som);
-        Assert.assertEquals(3, list.size()); // only MoleculeSets and AtomContainers at the moment (see source code comment)
+        Assert.assertEquals(
+                3,
+                list
+                        .size()); // only MoleculeSets and AtomContainers at the moment (see source
+                                  // code comment)
     }
 }

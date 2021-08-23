@@ -20,10 +20,8 @@
 package org.openscience.cdk.interfaces;
 
 import java.util.Iterator;
-
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
@@ -323,7 +321,9 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
         IAtom c = object.getBuilder().newInstance(IAtom.class, "C");
         IAtom o = object.getBuilder().newInstance(IAtom.class, "O");
 
-        IBond b = object.getBuilder().newInstance(IBond.class, c, o, IBond.Order.DOUBLE, IBond.Stereo.UP);
+        IBond b =
+                object.getBuilder()
+                        .newInstance(IBond.class, c, o, IBond.Order.DOUBLE, IBond.Stereo.UP);
         Assert.assertEquals(IBond.Stereo.UP, b.getStereo());
     }
 
@@ -390,7 +390,10 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
         IChemObject object = newChemObject();
         IAtom atom1 = object.getBuilder().newInstance(IAtom.class, "C");
         IAtom atom2 = object.getBuilder().newInstance(IAtom.class, "O");
-        IBond bond = object.getBuilder().newInstance(IBond.class, atom1, atom2, IBond.Order.SINGLE, IBond.Stereo.UP);
+        IBond bond =
+                object.getBuilder()
+                        .newInstance(
+                                IBond.class, atom1, atom2, IBond.Order.SINGLE, IBond.Stereo.UP);
         IBond clone = (IBond) bond.clone();
 
         // test cloning of bond order
@@ -398,9 +401,7 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
         Assert.assertEquals(IBond.Stereo.UP, clone.getStereo());
     }
 
-    /**
-     * Test for RFC #9
-     */
+    /** Test for RFC #9 */
     @Test
     @Override
     public void testToString() {
@@ -419,7 +420,8 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
         IAtom atom2 = object.getBuilder().newInstance(IAtom.class, "O");
         IAtom atom3 = object.getBuilder().newInstance(IAtom.class, "C");
 
-        IBond bond = object.getBuilder().newInstance(IBond.class, new IAtom[]{atom1, atom2, atom3});
+        IBond bond =
+                object.getBuilder().newInstance(IBond.class, new IAtom[] {atom1, atom2, atom3});
         Assert.assertEquals(3, bond.getAtomCount());
         Assert.assertEquals(atom1, bond.getAtom(0));
         Assert.assertEquals(atom2, bond.getAtom(1));
@@ -435,13 +437,16 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
         IAtom atom2 = object.getBuilder().newInstance(IAtom.class, "O");
         IAtom atom3 = object.getBuilder().newInstance(IAtom.class, "C");
 
-        IBond bond1 = object.getBuilder().newInstance(IBond.class, new IAtom[]{atom1, atom2, atom3});
-        IBond bond2 = object.getBuilder().newInstance(IBond.class, new IAtom[]{atom1, atom2, atom3});
+        IBond bond1 =
+                object.getBuilder().newInstance(IBond.class, new IAtom[] {atom1, atom2, atom3});
+        IBond bond2 =
+                object.getBuilder().newInstance(IBond.class, new IAtom[] {atom1, atom2, atom3});
 
         Assert.assertTrue(bond1.compare(bond2));
 
         IAtom atom4 = object.getBuilder().newInstance(IAtom.class, "C");
-        IBond bond3 = object.getBuilder().newInstance(IBond.class, new IAtom[]{atom1, atom2, atom4});
+        IBond bond3 =
+                object.getBuilder().newInstance(IBond.class, new IAtom[] {atom1, atom2, atom4});
         Assert.assertFalse(bond1.compare(bond3));
     }
 
@@ -453,7 +458,8 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
         IAtom atom3 = object.getBuilder().newInstance(IAtom.class, "C");
         IAtom atom4 = object.getBuilder().newInstance(IAtom.class, "C");
 
-        IBond bond1 = object.getBuilder().newInstance(IBond.class, new IAtom[]{atom1, atom2, atom3});
+        IBond bond1 =
+                object.getBuilder().newInstance(IBond.class, new IAtom[] {atom1, atom2, atom3});
         Assert.assertTrue(bond1.contains(atom1));
         Assert.assertTrue(bond1.contains(atom2));
         Assert.assertTrue(bond1.contains(atom3));
@@ -468,7 +474,9 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
         IAtom atom3 = object.getBuilder().newInstance(IAtom.class, "C");
         IAtom atom4 = object.getBuilder().newInstance(IAtom.class, "C");
 
-        IBond bond1 = object.getBuilder().newInstance(IBond.class, new IAtom[]{atom1, atom2, atom3, atom4});
+        IBond bond1 =
+                object.getBuilder()
+                        .newInstance(IBond.class, new IAtom[] {atom1, atom2, atom3, atom4});
         Iterator<IAtom> atoms = bond1.atoms().iterator();
         int natom = 0;
         while (atoms.hasNext()) {
@@ -487,7 +495,9 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
         IAtom atom3 = object.getBuilder().newInstance(IAtom.class, "C");
         IAtom atom4 = object.getBuilder().newInstance(IAtom.class, "C");
 
-        IBond bond1 = object.getBuilder().newInstance(IBond.class, new IAtom[]{atom1, atom2, atom3, atom4});
+        IBond bond1 =
+                object.getBuilder()
+                        .newInstance(IBond.class, new IAtom[] {atom1, atom2, atom3, atom4});
         Assert.assertEquals(atom2, bond1.getOther(atom1));
         Assert.assertNull(bond1.getOther(object.getBuilder().newInstance(IAtom.class)));
 
@@ -521,15 +531,16 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
         IAtom atom4 = object.getBuilder().newInstance(IAtom.class, "C");
         IAtom atom5 = object.getBuilder().newInstance(IAtom.class, "C");
 
-        IBond bond1 = object.getBuilder().newInstance(IBond.class, new IAtom[]{atom1, atom2, atom3});
-        IBond bond2 = object.getBuilder().newInstance(IBond.class, new IAtom[]{atom2, atom3, atom4});
-        IBond bond3 = object.getBuilder().newInstance(IBond.class, new IAtom[]{atom2, atom4});
-        IBond bond4 = object.getBuilder().newInstance(IBond.class, new IAtom[]{atom5, atom4});
+        IBond bond1 =
+                object.getBuilder().newInstance(IBond.class, new IAtom[] {atom1, atom2, atom3});
+        IBond bond2 =
+                object.getBuilder().newInstance(IBond.class, new IAtom[] {atom2, atom3, atom4});
+        IBond bond3 = object.getBuilder().newInstance(IBond.class, new IAtom[] {atom2, atom4});
+        IBond bond4 = object.getBuilder().newInstance(IBond.class, new IAtom[] {atom5, atom4});
 
         Assert.assertTrue(bond1.isConnectedTo(bond2));
         Assert.assertTrue(bond2.isConnectedTo(bond1));
         Assert.assertTrue(bond1.isConnectedTo(bond3));
         Assert.assertFalse(bond4.isConnectedTo(bond1));
     }
-
 }

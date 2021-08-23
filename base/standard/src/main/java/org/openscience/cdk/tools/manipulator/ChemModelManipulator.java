@@ -24,7 +24,6 @@ package org.openscience.cdk.tools.manipulator;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -37,18 +36,18 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 
 /**
- * Class with convenience methods that provide methods from
- * methods from ChemObjects within the ChemModel. For example:
+ * Class with convenience methods that provide methods from methods from ChemObjects within the
+ * ChemModel. For example:
+ *
  * <pre>
  * ChemModelManipulator.removeAtom(chemModel, atom);
  * </pre>
- * will find the Atom in the model by traversing the ChemModel's
- * MoleculeSet, Crystal and ReactionSet fields and remove
- * it with the removeAtom(Atom) method.
+ *
+ * will find the Atom in the model by traversing the ChemModel's MoleculeSet, Crystal and
+ * ReactionSet fields and remove it with the removeAtom(Atom) method.
  *
  * @cdk.module standard
  * @cdk.githash
- *
  * @see org.openscience.cdk.AtomContainer#removeAtomAndConnectedElectronContainers(IAtom)
  */
 public class ChemModelManipulator {
@@ -56,8 +55,8 @@ public class ChemModelManipulator {
     /**
      * Get the total number of atoms inside an IChemModel.
      *
-     * @param chemModel  The IChemModel object.
-     * @return           The number of Atom object inside.
+     * @param chemModel The IChemModel object.
+     * @return The number of Atom object inside.
      */
     public static int getAtomCount(IChemModel chemModel) {
         int count = 0;
@@ -79,8 +78,8 @@ public class ChemModelManipulator {
     /**
      * Get the total number of bonds inside an IChemModel.
      *
-     * @param chemModel  The IChemModel object.
-     * @return           The number of Bond object inside.
+     * @param chemModel The IChemModel object.
+     * @return The number of Bond object inside.
      */
     public static int getBondCount(IChemModel chemModel) {
         int count = 0;
@@ -100,13 +99,12 @@ public class ChemModelManipulator {
     }
 
     /**
-     * Remove an Atom and the connected ElectronContainers from all AtomContainers
-     * inside an IChemModel.
+     * Remove an Atom and the connected ElectronContainers from all AtomContainers inside an
+     * IChemModel.
      *
-     * @param chemModel  The IChemModel object.
-     * @param atom       The Atom object to remove.
+     * @param chemModel The IChemModel object.
+     * @param atom The Atom object to remove.
      */
-
     public static void removeAtomAndConnectedElectronContainers(IChemModel chemModel, IAtom atom) {
         ICrystal crystal = chemModel.getCrystal();
         if (crystal != null) {
@@ -126,11 +124,10 @@ public class ChemModelManipulator {
     }
 
     /**
-     * Remove an ElectronContainer from all AtomContainers
-     * inside an IChemModel.
+     * Remove an ElectronContainer from all AtomContainers inside an IChemModel.
      *
-     * @param chemModel  The IChemModel object.
-     * @param electrons  The ElectronContainer to remove.
+     * @param chemModel The IChemModel object.
+     * @param electrons The ElectronContainer to remove.
      */
     public static void removeElectronContainer(IChemModel chemModel, IElectronContainer electrons) {
         ICrystal crystal = chemModel.getCrystal();
@@ -151,11 +148,11 @@ public class ChemModelManipulator {
     }
 
     /**
-     * Adds a new Molecule to the MoleculeSet inside a given ChemModel.
-     * Creates a MoleculeSet if none is contained.
+     * Adds a new Molecule to the MoleculeSet inside a given ChemModel. Creates a MoleculeSet if
+     * none is contained.
      *
-     * @param chemModel  The ChemModel object.
-     * @return           The created Molecule object.
+     * @param chemModel The ChemModel object.
+     * @return The created Molecule object.
      */
     public static IAtomContainer createNewMolecule(IChemModel chemModel) {
         // Add a new molecule either the set of molecules
@@ -170,7 +167,8 @@ public class ChemModelManipulator {
             }
             moleculeSet.addAtomContainer(molecule);
         } else {
-            IAtomContainerSet moleculeSet = chemModel.getBuilder().newInstance(IAtomContainerSet.class);
+            IAtomContainerSet moleculeSet =
+                    chemModel.getBuilder().newInstance(IAtomContainerSet.class);
             moleculeSet.addAtomContainer(molecule);
             chemModel.setMoleculeSet(moleculeSet);
         }
@@ -178,12 +176,11 @@ public class ChemModelManipulator {
     }
 
     /**
-     * Create a new ChemModel containing an IAtomContainer. It will create an
-     * {@link IAtomContainer} from the passed IAtomContainer when needed, which may cause
-     * information loss.
+     * Create a new ChemModel containing an IAtomContainer. It will create an {@link IAtomContainer}
+     * from the passed IAtomContainer when needed, which may cause information loss.
      *
-     * @param  atomContainer  The AtomContainer to have inside the ChemModel.
-     * @return                The new IChemModel object.
+     * @param atomContainer The AtomContainer to have inside the ChemModel.
+     * @return The new IChemModel object.
      */
     public static IChemModel newChemModel(IAtomContainer atomContainer) {
         IChemModel model = atomContainer.getBuilder().newInstance(IChemModel.class);
@@ -194,8 +191,8 @@ public class ChemModelManipulator {
     }
 
     /**
-     * This badly named methods tries to determine which AtomContainer in the
-     * ChemModel is best suited to contain added Atom's and Bond's.
+     * This badly named methods tries to determine which AtomContainer in the ChemModel is best
+     * suited to contain added Atom's and Bond's.
      */
     public static IAtomContainer getRelevantAtomContainer(IChemModel chemModel, IAtom atom) {
         IAtomContainer result = null;
@@ -214,18 +211,18 @@ public class ChemModelManipulator {
             return chemModel.getCrystal();
         }
         if (chemModel.getRingSet() != null) {
-            return AtomContainerSetManipulator.getRelevantAtomContainer(chemModel.getRingSet(), atom);
+            return AtomContainerSetManipulator.getRelevantAtomContainer(
+                    chemModel.getRingSet(), atom);
         }
         throw new IllegalArgumentException("The provided atom is not part of this IChemModel.");
     }
 
     /**
-     * Retrieves the first IAtomContainer containing a given IBond from an
-     * IChemModel.
+     * Retrieves the first IAtomContainer containing a given IBond from an IChemModel.
      *
-     * @param chemModel  The IChemModel object.
-     * @param bond       The IBond object to search.
-     * @return           The IAtomContainer object found, null if none is found.
+     * @param chemModel The IChemModel object.
+     * @param bond The IBond object to search.
+     * @return The IAtomContainer object found, null if none is found.
      */
     public static IAtomContainer getRelevantAtomContainer(IChemModel chemModel, IBond bond) {
         IAtomContainer result = null;
@@ -245,12 +242,11 @@ public class ChemModelManipulator {
     }
 
     /**
-     * Retrieves the first IReaction containing a given IAtom from an
-     * IChemModel.
+     * Retrieves the first IReaction containing a given IAtom from an IChemModel.
      *
-     * @param chemModel  The IChemModel object.
-     * @param atom       The IAtom object to search.
-     * @return           The IAtomContainer object found, null if none is found.
+     * @param chemModel The IChemModel object.
+     * @param atom The IAtom object to search.
+     * @return The IAtomContainer object found, null if none is found.
      */
     public static IReaction getRelevantReaction(IChemModel chemModel, IAtom atom) {
         IReaction reaction = null;
@@ -261,9 +257,7 @@ public class ChemModelManipulator {
         return reaction;
     }
 
-    /**
-     * Returns all the AtomContainer's of a ChemModel.
-     */
+    /** Returns all the AtomContainer's of a ChemModel. */
     public static List<IAtomContainer> getAllAtomContainers(IChemModel chemModel) {
         IAtomContainerSet moleculeSet = chemModel.getBuilder().newInstance(IAtomContainerSet.class);
         if (chemModel.getMoleculeSet() != null) {
@@ -278,9 +272,9 @@ public class ChemModelManipulator {
     /**
      * Sets the AtomProperties of all Atoms inside an IChemModel.
      *
-     * @param chemModel  The IChemModel object.
-     * @param propKey    The key of the property.
-     * @param propVal    The value of the property.
+     * @param chemModel The IChemModel object.
+     * @param propKey The key of the property.
+     * @param propVal The value of the property.
      */
     public static void setAtomProperties(IChemModel chemModel, Object propKey, Object propVal) {
         if (chemModel.getMoleculeSet() != null) {
@@ -297,8 +291,8 @@ public class ChemModelManipulator {
     /**
      * Retrieve a List of all ChemObject objects within an IChemModel.
      *
-     * @param chemModel  The IChemModel object.
-     * @return           A List of all ChemObjects inside.
+     * @param chemModel The IChemModel object.
+     * @return A List of all ChemObjects inside.
      */
     public static List<IChemObject> getAllChemObjects(IChemModel chemModel) {
         List<IChemObject> list = new ArrayList<IChemObject>();

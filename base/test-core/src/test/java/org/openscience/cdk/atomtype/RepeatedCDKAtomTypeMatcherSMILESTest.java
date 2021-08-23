@@ -29,14 +29,14 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
- * This class tests that a second atom typing results in the same atom
- * types as the first perception.
+ * This class tests that a second atom typing results in the same atom types as the first
+ * perception.
  *
  * @cdk.module test-core
  */
 public class RepeatedCDKAtomTypeMatcherSMILESTest extends CDKTestCase {
 
-    private static SmilesParser       smilesParser;
+    private static SmilesParser smilesParser;
     private static CDKAtomTypeMatcher atomTypeMatcher;
 
     @BeforeClass
@@ -108,13 +108,25 @@ public class RepeatedCDKAtomTypeMatcherSMILESTest extends CDKTestCase {
         }
         IAtomType[] retyped = atomTypeMatcher.findMatchingAtomTypes(mol);
         for (int i = 0; i < types.length; i++) {
-            Assert.assertEquals("First perception resulted in " + types[i] + " but the second perception " + "gave "
-                    + retyped[i], types[i], retyped[i]);
+            Assert.assertEquals(
+                    "First perception resulted in "
+                            + types[i]
+                            + " but the second perception "
+                            + "gave "
+                            + retyped[i],
+                    types[i],
+                    retyped[i]);
         }
         retyped = atomTypeMatcher.findMatchingAtomTypes(mol);
         for (int i = 0; i < types.length; i++) {
-            Assert.assertEquals("First perception resulted in " + types[i] + " but the third perception " + "gave "
-                    + retyped[i], types[i], retyped[i]);
+            Assert.assertEquals(
+                    "First perception resulted in "
+                            + types[i]
+                            + " but the third perception "
+                            + "gave "
+                            + retyped[i],
+                    types[i],
+                    retyped[i]);
         }
     }
 }

@@ -27,11 +27,6 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.primitives.Ints;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.ReactionRole;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -39,10 +34,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ReactionRole;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
- * A filter for substructure matches implementing the logic for Atom-Atom Mapping matching. The following
- * table from the Daylight theory manual summarises the expected functionality:
+ * A filter for substructure matches implementing the logic for Atom-Atom Mapping matching. The
+ * following table from the Daylight theory manual summarises the expected functionality:
  *
  * <pre>
  * C>>C                 CC>>CC    4 hits                        No maps, normal match.
@@ -64,7 +63,8 @@ import java.util.Set;
  *                                                              bind to class 7 only.
  * </pre>
  *
- * @see <a href="http://www.daylight.com/dayhtml/doc/theory/theory.smarts.html">Daylight Theory Manual</a>
+ * @see <a href="http://www.daylight.com/dayhtml/doc/theory/theory.smarts.html">Daylight Theory
+ *     Manual</a>
  */
 final class AtomMapFilter implements Predicate<int[]> {
 
@@ -73,8 +73,8 @@ final class AtomMapFilter implements Predicate<int[]> {
 
     AtomMapFilter(IAtomContainer query, IAtomContainer target) {
 
-        Multimap<Integer,Integer> reactInvMap = null;
-        Multimap<Integer,Integer> prodInvMap  = null;
+        Multimap<Integer, Integer> reactInvMap = null;
+        Multimap<Integer, Integer> prodInvMap = null;
 
         this.target = target;
 
@@ -100,8 +100,7 @@ final class AtomMapFilter implements Predicate<int[]> {
             for (Map.Entry<Integer, Collection<Integer>> e : reactInvMap.asMap().entrySet()) {
                 int[] reacMaps = Ints.toArray(e.getValue());
                 int[] prodMaps = Ints.toArray(prodInvMap.get(e.getKey()));
-                if (prodMaps.length == 0)
-                    continue; // unpaired
+                if (prodMaps.length == 0) continue; // unpaired
                 mapped.add(new MappedPairs(reacMaps, prodMaps));
             }
         }
@@ -115,8 +114,7 @@ final class AtomMapFilter implements Predicate<int[]> {
      */
     private int mapidx(IAtom atom) {
         Integer mapidx = atom.getProperty(CDKConstants.ATOM_ATOM_MAPPING);
-        if (mapidx != null)
-            return mapidx;
+        if (mapidx != null) return mapidx;
         return 0;
     }
 
@@ -128,14 +126,13 @@ final class AtomMapFilter implements Predicate<int[]> {
      */
     private ReactionRole role(IAtom atom) {
         ReactionRole role = atom.getProperty(CDKConstants.REACTION_ROLE);
-        if (role != null)
-            return role;
+        if (role != null) return role;
         return ReactionRole.None;
     }
 
     /**
-     * Filters a structure match (described as an index permutation query -> target) for
-     * those where the atom-atom maps are acceptable.
+     * Filters a structure match (described as an index permutation query -> target) for those where
+     * the atom-atom maps are acceptable.
      *
      * @param perm permuation
      * @return whether the match should be accepted
@@ -156,8 +153,7 @@ final class AtomMapFilter implements Predicate<int[]> {
 
                 // check product maps
                 for (int pIdx : mpair.pIdxs) {
-                    if (!bound.contains(mapidx(target.getAtom(perm[pIdx]))))
-                        return false;
+                    if (!bound.contains(mapidx(target.getAtom(perm[pIdx])))) return false;
                 }
             }
             // no 'or' of query atom map (more common case)
@@ -165,22 +161,18 @@ final class AtomMapFilter implements Predicate<int[]> {
                 final int refidx = mapidx(target.getAtom(perm[mpair.rIdxs[0]]));
                 if (refidx == 0) return false; // unmapped in target
                 // pairwise mismatch
-                if (refidx != mapidx(target.getAtom(perm[mpair.pIdxs[0]])))
-                    return false;
+                if (refidx != mapidx(target.getAtom(perm[mpair.pIdxs[0]]))) return false;
                 for (int i = 1; i < mpair.pIdxs.length; i++) {
-                    if (refidx != mapidx(target.getAtom(perm[mpair.pIdxs[i]])))
-                        return false;
+                    if (refidx != mapidx(target.getAtom(perm[mpair.pIdxs[i]]))) return false;
                 }
             }
-
-
         }
         return true;
     }
 
     /**
-     * Helper class list all reactant atom indices (rIdxs) and product
-     * atom indices (pIdxs) that are in the same Atom-Atom-Mapping class.
+     * Helper class list all reactant atom indices (rIdxs) and product atom indices (pIdxs) that are
+     * in the same Atom-Atom-Mapping class.
      */
     private final class MappedPairs {
         final int[] rIdxs, pIdxs;

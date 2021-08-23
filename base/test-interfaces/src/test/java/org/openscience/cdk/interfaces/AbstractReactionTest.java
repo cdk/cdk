@@ -22,10 +22,9 @@
  */
 package org.openscience.cdk.interfaces;
 
+import java.util.Iterator;
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.util.Iterator;
 
 /**
  * TestCase for {@link IReaction} implementations.
@@ -157,8 +156,11 @@ public abstract class AbstractReactionTest extends AbstractChemObjectTest {
         reaction.addReactant(proton, 2.0);
         Assert.assertEquals(2.0, reaction.getReactantCoefficient(proton), 0.00001);
 
-        Assert.assertEquals(-1.0,
-                reaction.getReactantCoefficient(reaction.getBuilder().newInstance(IAtomContainer.class)), 0.00001);
+        Assert.assertEquals(
+                -1.0,
+                reaction.getReactantCoefficient(
+                        reaction.getBuilder().newInstance(IAtomContainer.class)),
+                0.00001);
     }
 
     @Test
@@ -168,8 +170,11 @@ public abstract class AbstractReactionTest extends AbstractChemObjectTest {
         reaction.addProduct(proton, 2.0);
         Assert.assertEquals(2.0, reaction.getProductCoefficient(proton), 0.00001);
 
-        Assert.assertEquals(-1.0,
-                reaction.getProductCoefficient(reaction.getBuilder().newInstance(IAtomContainer.class)), 0.00001);
+        Assert.assertEquals(
+                -1.0,
+                reaction.getProductCoefficient(
+                        reaction.getBuilder().newInstance(IAtomContainer.class)),
+                0.00001);
     }
 
     @Test
@@ -291,9 +296,7 @@ public abstract class AbstractReactionTest extends AbstractChemObjectTest {
         Assert.assertEquals(IReaction.Direction.FORWARD, reaction.getDirection());
     }
 
-    /**
-     * Method to test whether the class complies with RFC #9.
-     */
+    /** Method to test whether the class complies with RFC #9. */
     @Test
     public void testToString() {
         IReaction reaction = (IReaction) newChemObject();
@@ -316,9 +319,12 @@ public abstract class AbstractReactionTest extends AbstractChemObjectTest {
     @Test
     public void testClone_Mapping() throws Exception {
         IReaction reaction = (IReaction) newChemObject();
-        IMapping mapping = reaction.getBuilder().newInstance(IMapping.class,
-                reaction.getBuilder().newInstance(IAtom.class, "C"),
-                reaction.getBuilder().newInstance(IAtom.class, "C"));
+        IMapping mapping =
+                reaction.getBuilder()
+                        .newInstance(
+                                IMapping.class,
+                                reaction.getBuilder().newInstance(IAtom.class, "C"),
+                                reaction.getBuilder().newInstance(IAtom.class, "C"));
         reaction.addMapping(mapping);
         IReaction clonedReaction = (IReaction) reaction.clone();
         Iterator<IMapping> mappings = reaction.mappings().iterator();
@@ -332,9 +338,12 @@ public abstract class AbstractReactionTest extends AbstractChemObjectTest {
     @Test
     public void testAddMapping_IMapping() {
         IReaction reaction = (IReaction) newChemObject();
-        IMapping mapping = reaction.getBuilder().newInstance(IMapping.class,
-                reaction.getBuilder().newInstance(IAtom.class, "C"),
-                reaction.getBuilder().newInstance(IAtom.class, "C"));
+        IMapping mapping =
+                reaction.getBuilder()
+                        .newInstance(
+                                IMapping.class,
+                                reaction.getBuilder().newInstance(IAtom.class, "C"),
+                                reaction.getBuilder().newInstance(IAtom.class, "C"));
         reaction.addMapping(mapping);
         Iterator<IMapping> mappings = reaction.mappings().iterator();
         Assert.assertNotNull(mappings);
@@ -345,9 +354,12 @@ public abstract class AbstractReactionTest extends AbstractChemObjectTest {
     @Test
     public void testRemoveMapping_int() {
         IReaction reaction = (IReaction) newChemObject();
-        IMapping mapping = reaction.getBuilder().newInstance(IMapping.class,
-                reaction.getBuilder().newInstance(IAtom.class, "C"),
-                reaction.getBuilder().newInstance(IAtom.class, "C"));
+        IMapping mapping =
+                reaction.getBuilder()
+                        .newInstance(
+                                IMapping.class,
+                                reaction.getBuilder().newInstance(IAtom.class, "C"),
+                                reaction.getBuilder().newInstance(IAtom.class, "C"));
         reaction.addMapping(mapping);
         Assert.assertEquals(1, reaction.getMappingCount());
         reaction.removeMapping(0);
@@ -357,9 +369,12 @@ public abstract class AbstractReactionTest extends AbstractChemObjectTest {
     @Test
     public void testGetMapping_int() {
         IReaction reaction = (IReaction) newChemObject();
-        IMapping mapping = reaction.getBuilder().newInstance(IMapping.class,
-                reaction.getBuilder().newInstance(IAtom.class, "C"),
-                reaction.getBuilder().newInstance(IAtom.class, "C"));
+        IMapping mapping =
+                reaction.getBuilder()
+                        .newInstance(
+                                IMapping.class,
+                                reaction.getBuilder().newInstance(IAtom.class, "C"),
+                                reaction.getBuilder().newInstance(IAtom.class, "C"));
         reaction.addMapping(mapping);
         IMapping gotIt = reaction.getMapping(0);
         Assert.assertEquals(mapping, gotIt);
@@ -368,9 +383,12 @@ public abstract class AbstractReactionTest extends AbstractChemObjectTest {
     @Test
     public void testGetMappingCount() {
         IReaction reaction = (IReaction) newChemObject();
-        IMapping mapping = reaction.getBuilder().newInstance(IMapping.class,
-                reaction.getBuilder().newInstance(IAtom.class, "C"),
-                reaction.getBuilder().newInstance(IAtom.class, "C"));
+        IMapping mapping =
+                reaction.getBuilder()
+                        .newInstance(
+                                IMapping.class,
+                                reaction.getBuilder().newInstance(IAtom.class, "C"),
+                                reaction.getBuilder().newInstance(IAtom.class, "C"));
         reaction.addMapping(mapping);
         Assert.assertEquals(1, reaction.getMappingCount());
     }
@@ -378,9 +396,12 @@ public abstract class AbstractReactionTest extends AbstractChemObjectTest {
     @Test
     public void testMappings() {
         IReaction reaction = (IReaction) newChemObject();
-        IMapping mapping = reaction.getBuilder().newInstance(IMapping.class,
-                reaction.getBuilder().newInstance(IAtom.class, "C"),
-                reaction.getBuilder().newInstance(IAtom.class, "C"));
+        IMapping mapping =
+                reaction.getBuilder()
+                        .newInstance(
+                                IMapping.class,
+                                reaction.getBuilder().newInstance(IAtom.class, "C"),
+                                reaction.getBuilder().newInstance(IAtom.class, "C"));
         reaction.addMapping(mapping);
         Assert.assertEquals(1, reaction.getMappingCount());
     }

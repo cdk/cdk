@@ -21,22 +21,19 @@ package org.openscience.cdk.renderer.elements;
 import java.awt.geom.AffineTransform;
 
 /**
- * An {@link IRenderingVisitor} is responsible of converting an abstract
- * chemical drawing into a widget set specific drawing. This approach ensures
- * that the rendering engine is widget toolkit independent. Current
- * supported widget toolkits include SWT, Swing, and SVG.
+ * An {@link IRenderingVisitor} is responsible of converting an abstract chemical drawing into a
+ * widget set specific drawing. This approach ensures that the rendering engine is widget toolkit
+ * independent. Current supported widget toolkits include SWT, Swing, and SVG.
  *
- * @cdk.module  render
+ * @cdk.module render
  * @cdk.githash
  */
 public interface IRenderingVisitor {
 
     /**
-     * Translates a {@link IRenderingElement} into a widget toolkit specific
-     * rendering element.
+     * Translates a {@link IRenderingElement} into a widget toolkit specific rendering element.
      *
-     * @param element Abstract rendering element reflecting some part of the
-     *                chemical drawing.
+     * @param element Abstract rendering element reflecting some part of the chemical drawing.
      */
     public abstract void visit(IRenderingElement element);
 
@@ -46,5 +43,4 @@ public interface IRenderingVisitor {
      * @param transform the affine transformation used.
      */
     public abstract void setTransform(AffineTransform transform);
-
 }

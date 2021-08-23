@@ -19,7 +19,6 @@
 package org.openscience.cdk.modeling.builder3d;
 
 import javax.vecmath.Point3d;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -76,13 +75,16 @@ public class AtomTetrahedralLigandPlacer3DTest extends CDKTestCase {
         IAtom atom2 = new Atom("C");
         atom2.setPoint3d(new Point3d(2, 2, 2));
         atom2.setCovalentRadius(0.2);
-        Point3d newpoint = new AtomTetrahedralLigandPlacer3D().rescaleBondLength(atom1, atom2, atom2.getPoint3d());
+        Point3d newpoint =
+                new AtomTetrahedralLigandPlacer3D()
+                        .rescaleBondLength(atom1, atom2, atom2.getPoint3d());
         Assert.assertEquals(0.4, newpoint.distance(atom1.getPoint3d()), 0.001);
     }
 
     @Test
-    public void testGet3DCoordinatesForLigands_IAtom_IAtomContainer_IAtomContainer_IAtom_int_double_double()
-            throws Exception {
+    public void
+            testGet3DCoordinatesForLigands_IAtom_IAtomContainer_IAtomContainer_IAtom_int_double_double()
+                    throws Exception {
         IAtom atom1 = new Atom("C");
         atom1.setPoint3d(new Point3d(1, 1, 1));
         IAtom atom2 = new Atom("H");
@@ -108,10 +110,20 @@ public class AtomTetrahedralLigandPlacer3DTest extends CDKTestCase {
         ac.addBond(bond2);
         ac.addBond(bond3);
         ac.addBond(bond4);
-        IAtomContainer noCoords = new AtomTetrahedralLigandPlacer3D().getUnsetAtomsInAtomContainer(atom1, ac);
-        IAtomContainer withCoords = new AtomTetrahedralLigandPlacer3D().getPlacedAtomsInAtomContainer(atom1, ac);
-        Point3d[] newPoints = new AtomTetrahedralLigandPlacer3D().get3DCoordinatesForLigands(atom1, noCoords,
-                withCoords, null, 4, AtomTetrahedralLigandPlacer3D.DEFAULT_BOND_LENGTH_H, -1);
+        IAtomContainer noCoords =
+                new AtomTetrahedralLigandPlacer3D().getUnsetAtomsInAtomContainer(atom1, ac);
+        IAtomContainer withCoords =
+                new AtomTetrahedralLigandPlacer3D().getPlacedAtomsInAtomContainer(atom1, ac);
+        Point3d[] newPoints =
+                new AtomTetrahedralLigandPlacer3D()
+                        .get3DCoordinatesForLigands(
+                                atom1,
+                                noCoords,
+                                withCoords,
+                                null,
+                                4,
+                                AtomTetrahedralLigandPlacer3D.DEFAULT_BOND_LENGTH_H,
+                                -1);
         for (int j = 0; j < noCoords.getAtomCount(); j++) {
             if (newPoints[j] == null) Assert.fail("No coordinates generated for atom " + j);
             IAtom ligand = noCoords.getAtom(j);

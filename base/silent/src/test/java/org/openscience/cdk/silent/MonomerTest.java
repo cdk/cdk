@@ -22,9 +22,9 @@ package org.openscience.cdk.silent;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractMonomerTest;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMonomer;
-import org.openscience.cdk.interfaces.AbstractMonomerTest;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
@@ -36,13 +36,14 @@ public class MonomerTest extends AbstractMonomerTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new Monomer();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new Monomer();
+                    }
+                });
     }
 
     @Test

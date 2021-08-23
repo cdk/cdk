@@ -23,20 +23,19 @@
  */
 package org.openscience.cdk.graph;
 
-import com.google.common.collect.Lists;
-import org.junit.Test;
-
-import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
-
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertFalse;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import com.google.common.collect.Lists;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
+import org.junit.Test;
 
 /**
  * @author John May
@@ -125,8 +124,11 @@ public class InitialCyclesTest {
     @Test
     public void toEdgeVector_K4() {
         InitialCycles initial = new InitialCycles(k4());
-        assertThat(initial.toEdgeVector(new int[]{0, 1, 2, 3, 0}), is(BitMatrixTest.toBitSet("101101")));
-        assertThat(initial.toEdgeVector(new int[]{0, 1, 2, 0}), is(BitMatrixTest.toBitSet("110100")));
+        assertThat(
+                initial.toEdgeVector(new int[] {0, 1, 2, 3, 0}),
+                is(BitMatrixTest.toBitSet("101101")));
+        assertThat(
+                initial.toEdgeVector(new int[] {0, 1, 2, 0}), is(BitMatrixTest.toBitSet("110100")));
     }
 
     @Test
@@ -139,8 +141,8 @@ public class InitialCyclesTest {
         InitialCycles initial = new InitialCycles(naphthalene());
         List<InitialCycles.Cycle> cycles = Lists.newArrayList(initial.cycles());
         assertThat(cycles.size(), is(2));
-        assertThat(cycles.get(0).path(), is(new int[]{5, 0, 1, 2, 3, 4, 5}));
-        assertThat(cycles.get(1).path(), is(new int[]{5, 4, 7, 8, 9, 6, 5}));
+        assertThat(cycles.get(0).path(), is(new int[] {5, 0, 1, 2, 3, 4, 5}));
+        assertThat(cycles.get(1).path(), is(new int[] {5, 4, 7, 8, 9, 6, 5}));
     }
 
     @Test
@@ -153,9 +155,9 @@ public class InitialCyclesTest {
         InitialCycles initial = new InitialCycles(anthracene());
         List<InitialCycles.Cycle> cycles = Lists.newArrayList(initial.cycles());
         assertThat(cycles.size(), is(3));
-        assertThat(cycles.get(0).path(), is(new int[]{5, 0, 1, 2, 3, 4, 5}));
-        assertThat(cycles.get(1).path(), is(new int[]{9, 6, 5, 4, 7, 8, 9}));
-        assertThat(cycles.get(2).path(), is(new int[]{9, 8, 10, 11, 12, 13, 9}));
+        assertThat(cycles.get(0).path(), is(new int[] {5, 0, 1, 2, 3, 4, 5}));
+        assertThat(cycles.get(1).path(), is(new int[] {9, 6, 5, 4, 7, 8, 9}));
+        assertThat(cycles.get(2).path(), is(new int[] {9, 8, 10, 11, 12, 13, 9}));
     }
 
     @Test
@@ -168,9 +170,9 @@ public class InitialCyclesTest {
         InitialCycles initial = new InitialCycles(bicyclo());
         List<InitialCycles.Cycle> cycles = Lists.newArrayList(initial.cycles());
         assertThat(cycles.size(), is(3));
-        assertThat(cycles.get(0).path(), is(new int[]{5, 0, 1, 2, 3, 4, 5}));
-        assertThat(cycles.get(1).path(), is(new int[]{5, 0, 1, 2, 7, 6, 5}));
-        assertThat(cycles.get(2).path(), is(new int[]{5, 4, 3, 2, 7, 6, 5}));
+        assertThat(cycles.get(0).path(), is(new int[] {5, 0, 1, 2, 3, 4, 5}));
+        assertThat(cycles.get(1).path(), is(new int[] {5, 0, 1, 2, 7, 6, 5}));
+        assertThat(cycles.get(2).path(), is(new int[] {5, 4, 3, 2, 7, 6, 5}));
     }
 
     @Test
@@ -188,8 +190,8 @@ public class InitialCyclesTest {
         InitialCycles initial = new InitialCycles(cyclophane_odd());
         List<InitialCycles.Cycle> cycles = Lists.newArrayList(initial.cycles());
         assertThat(cycles.size(), is(2));
-        assertThat(cycles.get(0).path(), is(new int[]{3, 2, 1, 0, 5, 4, 3}));
-        assertThat(cycles.get(1).path(), is(new int[]{3, 2, 1, 0, 10, 9, 8, 7, 6, 3}));
+        assertThat(cycles.get(0).path(), is(new int[] {3, 2, 1, 0, 5, 4, 3}));
+        assertThat(cycles.get(1).path(), is(new int[] {3, 2, 1, 0, 10, 9, 8, 7, 6, 3}));
     }
 
     @Test
@@ -204,7 +206,7 @@ public class InitialCyclesTest {
         InitialCycles initial = new InitialCycles(cyclophane_odd(), 6);
         List<InitialCycles.Cycle> cycles = Lists.newArrayList(initial.cycles());
         assertThat(cycles.size(), is(1));
-        assertThat(cycles.get(0).path(), is(new int[]{3, 2, 1, 0, 5, 4, 3}));
+        assertThat(cycles.get(0).path(), is(new int[] {3, 2, 1, 0, 5, 4, 3}));
     }
 
     @Test
@@ -212,29 +214,29 @@ public class InitialCyclesTest {
         InitialCycles initial = new InitialCycles(cyclophane_odd(), 7);
         List<InitialCycles.Cycle> cycles = Lists.newArrayList(initial.cycles());
         assertThat(cycles.size(), is(1));
-        assertThat(cycles.get(0).path(), is(new int[]{3, 2, 1, 0, 5, 4, 3}));
+        assertThat(cycles.get(0).path(), is(new int[] {3, 2, 1, 0, 5, 4, 3}));
     }
 
     @Test
     public void cycles_family_odd() {
         InitialCycles initial = new InitialCycles(cyclophane_odd());
         List<InitialCycles.Cycle> cycles = Lists.newArrayList(initial.cycles());
-        assertThat(cycles.get(1).path(), is(new int[]{3, 2, 1, 0, 10, 9, 8, 7, 6, 3}));
+        assertThat(cycles.get(1).path(), is(new int[] {3, 2, 1, 0, 10, 9, 8, 7, 6, 3}));
         int[][] family = cycles.get(1).family();
         assertThat(family.length, is(2));
-        assertThat(family[0], is(new int[]{3, 2, 1, 0, 10, 9, 8, 7, 6, 3}));
-        assertThat(family[1], is(new int[]{3, 4, 5, 0, 10, 9, 8, 7, 6, 3}));
+        assertThat(family[0], is(new int[] {3, 2, 1, 0, 10, 9, 8, 7, 6, 3}));
+        assertThat(family[1], is(new int[] {3, 4, 5, 0, 10, 9, 8, 7, 6, 3}));
     }
 
     @Test
     public void cycles_family_even() {
         InitialCycles initial = new InitialCycles(cyclophane_even());
         List<InitialCycles.Cycle> cycles = Lists.newArrayList(initial.cycles());
-        assertThat(cycles.get(1).path(), is(new int[]{3, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3}));
+        assertThat(cycles.get(1).path(), is(new int[] {3, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3}));
         int[][] family = cycles.get(1).family();
         assertThat(family.length, is(2));
-        assertThat(family[0], is(new int[]{3, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3}));
-        assertThat(family[1], is(new int[]{3, 6, 7, 8, 9, 10, 11, 0, 5, 4, 3}));
+        assertThat(family[0], is(new int[] {3, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3}));
+        assertThat(family[1], is(new int[] {3, 6, 7, 8, 9, 10, 11, 0, 5, 4, 3}));
     }
 
     // ensure using the biconnected optimisation will still find the cycle in
@@ -259,43 +261,43 @@ public class InitialCyclesTest {
 
     @Test
     public void join() {
-        int[] a = new int[]{0, 1, 2};
-        int[] b = new int[]{0, 3, 4};
-        assertThat(InitialCycles.join(a, b), is(new int[]{0, 1, 2, 4, 3, 0}));
+        int[] a = new int[] {0, 1, 2};
+        int[] b = new int[] {0, 3, 4};
+        assertThat(InitialCycles.join(a, b), is(new int[] {0, 1, 2, 4, 3, 0}));
     }
 
     @Test
     public void joinWith() {
-        int[] a = new int[]{0, 1, 2};
-        int[] b = new int[]{0, 3, 4};
-        assertThat(InitialCycles.join(a, 5, b), is(new int[]{0, 1, 2, 5, 4, 3, 0}));
+        int[] a = new int[] {0, 1, 2};
+        int[] b = new int[] {0, 3, 4};
+        assertThat(InitialCycles.join(a, 5, b), is(new int[] {0, 1, 2, 5, 4, 3, 0}));
     }
 
     @Test
     public void singleton() {
-        int[] a = new int[]{0, 1, 3, 5, 7, 9};
-        int[] b = new int[]{0, 2, 4, 6, 8, 10};
+        int[] a = new int[] {0, 1, 3, 5, 7, 9};
+        int[] b = new int[] {0, 2, 4, 6, 8, 10};
         assertTrue(InitialCycles.singletonIntersect(a, b));
     }
 
     @Test
     public void startOverlap() {
-        int[] a = new int[]{0, 1, 2, 3, 4, 6};
-        int[] b = new int[]{0, 1, 2, 3, 5, 7};
+        int[] a = new int[] {0, 1, 2, 3, 4, 6};
+        int[] b = new int[] {0, 1, 2, 3, 5, 7};
         assertFalse(InitialCycles.singletonIntersect(a, b));
     }
 
     @Test
     public void middleOverlap() {
-        int[] a = new int[]{0, 1, 3, 5, 6, 7, 9};
-        int[] b = new int[]{0, 2, 4, 5, 6, 8, 10};
+        int[] a = new int[] {0, 1, 3, 5, 6, 7, 9};
+        int[] b = new int[] {0, 2, 4, 5, 6, 8, 10};
         assertFalse(InitialCycles.singletonIntersect(a, b));
     }
 
     @Test
     public void endOverlap() {
-        int[] a = new int[]{0, 1, 3, 5, 7, 9, 10};
-        int[] b = new int[]{0, 2, 4, 6, 8, 9, 10};
+        int[] a = new int[] {0, 1, 3, 5, 7, 9, 10};
+        int[] b = new int[] {0, 2, 4, 6, 8, 9, 10};
         assertFalse(InitialCycles.singletonIntersect(a, b));
     }
 
@@ -318,46 +320,74 @@ public class InitialCyclesTest {
     }
 
     /**
-     * Simple undirected graph where every pair of of the four vertices is
-     * connected. The graph is known as a complete graph and is referred to as
-     * K<sub>4</sub>.
+     * Simple undirected graph where every pair of of the four vertices is connected. The graph is
+     * known as a complete graph and is referred to as K<sub>4</sub>.
      *
      * @return adjacency list of K<sub>4</sub>
      */
     static int[][] k4() {
-        return new int[][]{{1, 2, 3}, {0, 2, 3}, {0, 1, 3}, {0, 1, 2}};
+        return new int[][] {{1, 2, 3}, {0, 2, 3}, {0, 1, 3}, {0, 1, 2}};
     }
 
     /** benzene/cyclohexane graph */
     static int[][] cyclohexane() {
-        return new int[][]{{1, 5}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {4, 0}};
+        return new int[][] {{1, 5}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {4, 0}};
     }
 
     /** @cdk.inchi InChI=1S/C10H8/c1-2-6-10-8-4-3-7-9(10)5-1/h1-8H */
     static int[][] naphthalene() {
-        return new int[][]{{1, 5}, {0, 2}, {1, 3}, {2, 4}, {3, 5, 7}, {0, 6, 4}, {5, 9}, {4, 8}, {7, 9}, {6, 8}};
+        return new int[][] {
+            {1, 5}, {0, 2}, {1, 3}, {2, 4}, {3, 5, 7}, {0, 6, 4}, {5, 9}, {4, 8}, {7, 9}, {6, 8}
+        };
     }
 
     /** @cdk.inchi InChI=1S/C14H10/c1-2-6-12-10-14-8-4-3-7-13(14)9-11(12)5-1/h1-10H */
     static int[][] anthracene() {
-        return new int[][]{{1, 5}, {0, 2}, {1, 3}, {2, 4}, {3, 5, 7}, {0, 6, 4}, {5, 9}, {4, 8}, {7, 10, 9},
-                {6, 8, 13}, {8, 11}, {10, 12}, {11, 13}, {9, 12}};
+        return new int[][] {
+            {1, 5},
+            {0, 2},
+            {1, 3},
+            {2, 4},
+            {3, 5, 7},
+            {0, 6, 4},
+            {5, 9},
+            {4, 8},
+            {7, 10, 9},
+            {6, 8, 13},
+            {8, 11},
+            {10, 12},
+            {11, 13},
+            {9, 12}
+        };
     }
 
     /** @cdk.inchi InChI=1S/C8H14/c1-2-8-5-3-7(1)4-6-8/h7-8H,1-6H2 */
     static int[][] bicyclo() {
-        return new int[][]{{1, 5}, {0, 2}, {1, 3, 7}, {2, 4}, {3, 5}, {0, 4, 6}, {5, 7}, {2, 6}};
+        return new int[][] {{1, 5}, {0, 2}, {1, 3, 7}, {2, 4}, {3, 5}, {0, 4, 6}, {5, 7}, {2, 6}};
     }
 
     /** @cdk.inchi InChI=1S/C7H12/c1-2-7-4-3-6(1)5-7/h6-7H,1-5H2 */
     static int[][] norbornane() {
-        return new int[][]{{1, 5}, {0, 2}, {1, 3, 6}, {2, 4}, {3, 5}, {0, 4, 6}, {2, 5},};
+        return new int[][] {
+            {1, 5}, {0, 2}, {1, 3, 6}, {2, 4}, {3, 5}, {0, 4, 6}, {2, 5},
+        };
     }
 
     /** @cdk.inchi InChI=1S/C11H14/c1-2-4-10-6-8-11(5-3-1)9-7-10/h6-9H,1-5H2 */
     static int[][] cyclophane_odd() {
-        return new int[][]{{1, 5, 10}, {0, 2}, {1, 3}, {2, 4, 6}, {3, 5}, {0, 4}, {3, 7}, {6, 8}, {7, 9}, {8, 10},
-                {0, 9},};
+        return new int[][] {
+            {1, 5, 10},
+            {0, 2},
+            {1, 3},
+            {2, 4, 6},
+            {3, 5},
+            {0, 4},
+            {3, 7},
+            {6, 8},
+            {7, 9},
+            {8, 10},
+            {0, 9},
+        };
     }
 
     /**
@@ -365,8 +395,19 @@ public class InitialCyclesTest {
      * org.openscience.cdk.graph.InitialCycles.Cycle#family()} method.
      */
     static int[][] cyclophane_even() {
-        return new int[][]{{1, 5, 11}, {0, 2}, {1, 3}, {2, 4, 6}, {3, 5}, {0, 4}, {3, 7}, {6, 8}, {7, 9}, {8, 10},
-                {9, 11}, {0, 10}};
+        return new int[][] {
+            {1, 5, 11},
+            {0, 2},
+            {1, 3},
+            {2, 4, 6},
+            {3, 5},
+            {0, 4},
+            {3, 7},
+            {6, 8},
+            {7, 9},
+            {8, 10},
+            {9, 11},
+            {0, 10}
+        };
     }
-
 }

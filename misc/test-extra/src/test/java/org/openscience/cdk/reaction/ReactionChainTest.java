@@ -33,11 +33,9 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  */
 public class ReactionChainTest extends CDKTestCase {
 
-    private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    private static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
-    /**
-     *  Constructor for the ReactionEngineTest object.
-     */
+    /** Constructor for the ReactionEngineTest object. */
     public ReactionChainTest() {
         super();
     }
@@ -72,7 +70,6 @@ public class ReactionChainTest extends CDKTestCase {
         chain.addReaction(reaction3, 2);
 
         Assert.assertNotNull(chain);
-
     }
 
     /**
@@ -117,6 +114,5 @@ public class ReactionChainTest extends CDKTestCase {
         chain.addReaction(reaction3, 2);
 
         Assert.assertEquals(reaction2, chain.getReaction(1));
-
     }
 }

@@ -17,14 +17,13 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * This class matches aromatic atom with element symbol specified.
  *
- * @cdk.module  smarts
+ * @cdk.module smarts
  * @cdk.githash
  * @cdk.keyword SMARTS
  */

@@ -24,31 +24,29 @@
 
 package org.openscience.cdk.hash;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.ringsearch.RingSearch;
-
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.ringsearch.RingSearch;
 
 /**
- * Finds the smallest set of equivalent values are members of a ring. If there
- * are multiple smallest sets then the set with the lowest invariant value is
- * returned. This class is intended to drive the systematic perturbation of the
- * {@link org.openscience.cdk.hash.PerturbedAtomHashGenerator}.
+ * Finds the smallest set of equivalent values are members of a ring. If there are multiple smallest
+ * sets then the set with the lowest invariant value is returned. This class is intended to drive
+ * the systematic perturbation of the {@link org.openscience.cdk.hash.PerturbedAtomHashGenerator}.
  *
- * This method will not distinguish all possible molecules but represents a good
- * enough approximation to quickly narrow down an identity search. At the time
- * of writing (Feb, 2013) there are only 128 molecules (64 false positives) in
- * PubChem-Compound (46E6 molecules) which are not separated. In many data sets
- * this method will suffice however the exact {@link AllEquivalentCyclicSet} is
- * provided. <br/>
- *
+ * <p>This method will not distinguish all possible molecules but represents a good enough
+ * approximation to quickly narrow down an identity search. At the time of writing (Feb, 2013) there
+ * are only 128 molecules (64 false positives) in PubChem-Compound (46E6 molecules) which are not
+ * separated. In many data sets this method will suffice however the exact {@link
+ * AllEquivalentCyclicSet} is provided. <br>
  * This method is currently the default used by the {@link
- * org.openscience.cdk.hash.HashGeneratorMaker} but can also be explicitly
- * specified. <blockquote>
+ * org.openscience.cdk.hash.HashGeneratorMaker} but can also be explicitly specified.
+ *
+ * <blockquote>
+ *
  * <pre>
  * MoleculeHashGenerator generator =
  *   new HashGeneratorMaker().depth(6)
@@ -63,6 +61,7 @@ import java.util.TreeMap;
  *                           .perturbWith(new MinimumEquivalentCyclicSet())
  *                           .molecular();
  * </pre>
+ *
  * </blockquote>
  *
  * @author John May
@@ -75,9 +74,7 @@ import java.util.TreeMap;
  */
 final class MinimumEquivalentCyclicSet extends EquivalentSetFinder {
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     Set<Integer> find(long[] invariants, IAtomContainer container, int[][] graph) {
 
@@ -119,5 +116,4 @@ final class MinimumEquivalentCyclicSet extends EquivalentSetFinder {
 
         return min;
     }
-
 }

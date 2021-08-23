@@ -23,13 +23,10 @@ package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
-
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * @cdk.module test-render
- */
+/** @cdk.module test-render */
 public class TextElementTest {
 
     @Test
@@ -61,5 +58,4 @@ public class TextElementTest {
         elem.accept(visitor);
         Assert.assertTrue(visitor.isVisited);
     }
-
 }

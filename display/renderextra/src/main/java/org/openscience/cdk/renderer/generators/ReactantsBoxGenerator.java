@@ -22,7 +22,6 @@ import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 import java.util.Arrays;
 import java.util.List;
-
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.renderer.BoundsCalculator;
 import org.openscience.cdk.renderer.RendererModel;
@@ -49,8 +48,10 @@ public class ReactantsBoxGenerator implements IGenerator<IReaction> {
         if (!model.getParameter(ShowReactionBoxes.class).getValue()) return null;
         if (reaction.getReactantCount() == 0) return new ElementGroup();
 
-        double separation = model.getParameter(BondLength.class).getValue()
-                / model.getParameter(Scale.class).getValue() / 2;
+        double separation =
+                model.getParameter(BondLength.class).getValue()
+                        / model.getParameter(Scale.class).getValue()
+                        / 2;
         Rectangle2D totalBounds = BoundsCalculator.calculateBounds(reaction.getReactants());
 
         ElementGroup diagram = new ElementGroup();
@@ -58,16 +59,24 @@ public class ReactantsBoxGenerator implements IGenerator<IReaction> {
         double minY = totalBounds.getMinY();
         double maxX = totalBounds.getMaxX();
         double maxY = totalBounds.getMaxY();
-        Color foregroundColor = model.getParameter(BasicSceneGenerator.ForegroundColor.class).getValue();
-        diagram.add(new RectangleElement(minX - separation, minY - separation, maxX + separation, maxY + separation,
-                foregroundColor));
-        diagram.add(new TextElement((minX + maxX) / 2, minY - separation, "Reactants", foregroundColor));
+        Color foregroundColor =
+                model.getParameter(BasicSceneGenerator.ForegroundColor.class).getValue();
+        diagram.add(
+                new RectangleElement(
+                        minX - separation,
+                        minY - separation,
+                        maxX + separation,
+                        maxY + separation,
+                        foregroundColor));
+        diagram.add(
+                new TextElement(
+                        (minX + maxX) / 2, minY - separation, "Reactants", foregroundColor));
         return diagram;
     }
 
     /** {@inheritDoc} */
     @Override
     public List<IGeneratorParameter<?>> getParameters() {
-        return Arrays.asList(new IGeneratorParameter<?>[]{});
+        return Arrays.asList(new IGeneratorParameter<?>[] {});
     }
 }

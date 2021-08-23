@@ -29,7 +29,6 @@ import org.junit.Test;
  * TestCase for {@link IMonomer} implementations.
  *
  * @cdk.module test-interfaces
- *
  * @author Edgar Luttman &lt;edgar@uni-paderborn.de&gt;
  * @cdk.created 2001-08-09
  */
@@ -59,9 +58,7 @@ public abstract class AbstractMonomerTest extends AbstractAtomContainerTest {
         testSetMonomerType_String();
     }
 
-    /**
-     * Method to test whether the class complies with RFC #9.
-     */
+    /** Method to test whether the class complies with RFC #9. */
     @Test
     @Override
     public void testToString() {

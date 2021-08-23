@@ -25,7 +25,6 @@ package org.openscience.cdk.io.cml;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
@@ -44,8 +43,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
- * TestCase for the reading CML 2 files using a few test files
- * in data/cmltest.
+ * TestCase for the reading CML 2 files using a few test files in data/cmltest.
  *
  * @cdk.module test-libiocml
  * @cdk.require java1.5+
@@ -67,18 +65,18 @@ public class CML2Test extends CDKTestCase {
         IAtomContainer mol = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
 
         for (int i = 0; i <= 3; i++) {
-            Assert.assertFalse("Bond " + (i + 1) + " is not aromatic in the file",
+            Assert.assertFalse(
+                    "Bond " + (i + 1) + " is not aromatic in the file",
                     mol.getBond(i).getFlag(CDKConstants.ISAROMATIC));
         }
         for (int i = 4; i <= 9; i++) {
-            Assert.assertTrue("Bond " + (i + 1) + " is aromatic in the file",
+            Assert.assertTrue(
+                    "Bond " + (i + 1) + " is aromatic in the file",
                     mol.getBond(i).getFlag(CDKConstants.ISAROMATIC));
         }
     }
 
-    /**
-     * @cdk.bug 2114987
-     */
+    /** @cdk.bug 2114987 */
     @Test
     public void testCMLTestCase() throws Exception {
         String filename = "data/cml/olaCmlAtomType.cml";
@@ -123,7 +121,8 @@ public class CML2Test extends CDKTestCase {
         Iterator<IAtom> atoms = mol.atoms().iterator();
         while (atoms.hasNext()) {
             org.openscience.cdk.interfaces.IAtom atom = atoms.next();
-            if (atom.getSymbol().equals("Na")) Assert.assertEquals(+1, atom.getFormalCharge().intValue());
+            if (atom.getSymbol().equals("Na"))
+                Assert.assertEquals(+1, atom.getFormalCharge().intValue());
         }
     }
 
@@ -157,7 +156,8 @@ public class CML2Test extends CDKTestCase {
         Iterator<IAtom> atoms = mol.atoms().iterator();
         while (atoms.hasNext()) {
             org.openscience.cdk.interfaces.IAtom atom = atoms.next();
-            if (atom.getSymbol().equals("N")) Assert.assertEquals(+1, atom.getFormalCharge().intValue());
+            if (atom.getSymbol().equals("N"))
+                Assert.assertEquals(+1, atom.getFormalCharge().intValue());
         }
     }
 
@@ -498,8 +498,8 @@ public class CML2Test extends CDKTestCase {
     }
 
     /**
-     * This test tests whether the CMLReader is able to ignore the CMLSpect part
-     * of a CML file, while extracting the molecule.
+     * This test tests whether the CMLReader is able to ignore the CMLSpect part of a CML file,
+     * while extracting the molecule.
      */
     @Test
     public void testCMLSpectMolExtraction() throws Exception {
@@ -530,8 +530,8 @@ public class CML2Test extends CDKTestCase {
     }
 
     /**
-     * This test tests whether the CMLReader is able to ignore the CMLReaction part
-     * of a CML file, while extracting the reaction.
+     * This test tests whether the CMLReader is able to ignore the CMLReaction part of a CML file,
+     * while extracting the reaction.
      */
     @Test
     public void testCMLReaction() throws Exception {
@@ -557,14 +557,15 @@ public class CML2Test extends CDKTestCase {
         Assert.assertNotNull(reaction);
         Assert.assertEquals("react", reaction.getReactants().getAtomContainer(0).getID());
         Assert.assertEquals("product", reaction.getProducts().getAtomContainer(0).getID());
-        Assert.assertEquals("a14293164", reaction.getReactants().getAtomContainer(0).getAtom(0).getID());
+        Assert.assertEquals(
+                "a14293164", reaction.getReactants().getAtomContainer(0).getAtom(0).getID());
         Assert.assertEquals(6, reaction.getProducts().getAtomContainer(0).getAtomCount());
         Assert.assertEquals(6, reaction.getReactants().getAtomContainer(0).getAtomCount());
     }
 
     /**
-     * This test tests whether the CMLReader is able to ignore the CMLReaction part
-     * of a CML file, while extracting the reaction.
+     * This test tests whether the CMLReader is able to ignore the CMLReaction part of a CML file,
+     * while extracting the reaction.
      */
     @Test
     public void testCMLReactionWithAgents() throws Exception {
@@ -597,8 +598,8 @@ public class CML2Test extends CDKTestCase {
     }
 
     /**
-     * This test tests whether the CMLReader is able to ignore the CMLReaction part
-     * of a CML file, while extracting the reaction.
+     * This test tests whether the CMLReader is able to ignore the CMLReaction part of a CML file,
+     * while extracting the reaction.
      */
     @Test
     public void testCMLReactionList() throws Exception {
@@ -624,14 +625,13 @@ public class CML2Test extends CDKTestCase {
         IReaction reaction = model.getReactionSet().getReaction(0);
         Assert.assertNotNull(reaction);
         Assert.assertEquals("actey", reaction.getReactants().getAtomContainer(0).getID());
-        Assert.assertEquals("a14293164", reaction.getReactants().getAtomContainer(0).getAtom(0).getID());
+        Assert.assertEquals(
+                "a14293164", reaction.getReactants().getAtomContainer(0).getAtom(0).getID());
         Assert.assertEquals(6, reaction.getProducts().getAtomContainer(0).getAtomCount());
         Assert.assertEquals(6, reaction.getReactants().getAtomContainer(0).getAtomCount());
     }
 
-    /**
-     * @cdk.bug 1560486
-     */
+    /** @cdk.bug 1560486 */
     @Test
     public void testCMLWithFormula() throws Exception {
         String filename = "data/cml/cmlWithFormula.cml";
@@ -658,9 +658,7 @@ public class CML2Test extends CDKTestCase {
         Assert.assertEquals(32, mol.getBondCount());
     }
 
-    /**
-     * Only Molecule with concise MolecularFormula
-     */
+    /** Only Molecule with concise MolecularFormula */
     @Test
     public void testCMLConciseFormula() throws Exception {
         String filename = "data/cml/cmlConciseFormula.cml";
@@ -683,12 +681,11 @@ public class CML2Test extends CDKTestCase {
         Assert.assertNotNull(mol);
 
         // FIXME: REACT: It should return two different formulas
-        Assert.assertEquals("[C 18 H 21 Cl 2 Mn 1 N 5 O 1]", mol.getProperty(CDKConstants.FORMULA).toString());
+        Assert.assertEquals(
+                "[C 18 H 21 Cl 2 Mn 1 N 5 O 1]", mol.getProperty(CDKConstants.FORMULA).toString());
     }
 
-    /**
-     * Only Molecule with concise MolecularFormula
-     */
+    /** Only Molecule with concise MolecularFormula */
     @Test
     public void testCMLConciseFormula2() throws Exception {
         String filename = "data/cml/cmlConciseFormula2.cml";
@@ -711,12 +708,14 @@ public class CML2Test extends CDKTestCase {
         Assert.assertNotNull(mol);
 
         // FIXME: REACT: It should return two different formulas
-        Assert.assertEquals("[C 18 H 21 Cl 2 Mn 1 N 5 O 1, C 4 H 10]", mol.getProperty(CDKConstants.FORMULA).toString());
+        Assert.assertEquals(
+                "[C 18 H 21 Cl 2 Mn 1 N 5 O 1, C 4 H 10]",
+                mol.getProperty(CDKConstants.FORMULA).toString());
     }
 
     /**
-     * This test tests whether the CMLReader is able to ignore the CMLReaction part
-     * of a CML file, while extracting the reaction.
+     * This test tests whether the CMLReader is able to ignore the CMLReaction part of a CML file,
+     * while extracting the reaction.
      */
     @Test
     public void testCMLScheme1() throws Exception {
@@ -749,13 +748,14 @@ public class CML2Test extends CDKTestCase {
             Assert.assertEquals(idProducts[i], reaction.getProducts().getAtomContainer(0).getID());
 
             Assert.assertEquals(1, reaction.getReactants().getAtomContainerCount());
-            Assert.assertEquals(idReactants[i], reaction.getReactants().getAtomContainer(0).getID());
+            Assert.assertEquals(
+                    idReactants[i], reaction.getReactants().getAtomContainer(0).getID());
         }
     }
 
     /**
-     * This test tests whether the CMLReader is able to ignore the CMLReaction part
-     * of a CML file, while extracting the reaction.
+     * This test tests whether the CMLReader is able to ignore the CMLReaction part of a CML file,
+     * while extracting the reaction.
      */
     @Test
     public void testCMLScheme2() throws Exception {
@@ -788,13 +788,14 @@ public class CML2Test extends CDKTestCase {
             Assert.assertEquals(idProducts[i], reaction.getProducts().getAtomContainer(0).getID());
 
             Assert.assertEquals(1, reaction.getReactants().getAtomContainerCount());
-            Assert.assertEquals(idReactants[i], reaction.getReactants().getAtomContainer(0).getID());
+            Assert.assertEquals(
+                    idReactants[i], reaction.getReactants().getAtomContainer(0).getID());
         }
     }
 
     /**
-     * This test tests whether the CMLReader is able to ignore the CMLReaction part
-     * of a CML file, while extracting the reaction.
+     * This test tests whether the CMLReader is able to ignore the CMLReaction part of a CML file,
+     * while extracting the reaction.
      */
     @Test
     public void testCMLSchemeStepList1() throws Exception {
@@ -827,14 +828,14 @@ public class CML2Test extends CDKTestCase {
             Assert.assertEquals(idProducts[i], reaction.getProducts().getAtomContainer(0).getID());
 
             Assert.assertEquals(1, reaction.getReactants().getAtomContainerCount());
-            Assert.assertEquals(idReactants[i], reaction.getReactants().getAtomContainer(0).getID());
+            Assert.assertEquals(
+                    idReactants[i], reaction.getReactants().getAtomContainer(0).getID());
         }
-
     }
 
     /**
-     * This test tests whether the CMLReader is able to ignore the CMLReaction part
-     * of a CML file, while extracting the reaction.
+     * This test tests whether the CMLReader is able to ignore the CMLReaction part of a CML file,
+     * while extracting the reaction.
      */
     @Test
     public void testCMLStepList() throws Exception {
@@ -867,14 +868,14 @@ public class CML2Test extends CDKTestCase {
             Assert.assertEquals(idProducts[i], reaction.getProducts().getAtomContainer(0).getID());
 
             Assert.assertEquals(1, reaction.getReactants().getAtomContainerCount());
-            Assert.assertEquals(idReactants[i], reaction.getReactants().getAtomContainer(0).getID());
+            Assert.assertEquals(
+                    idReactants[i], reaction.getReactants().getAtomContainer(0).getID());
         }
-
     }
 
     /**
-     * This test tests whether the CMLReader is able to read a reactionscheme object with
-     * references to list of molecules.
+     * This test tests whether the CMLReader is able to read a reactionscheme object with references
+     * to list of molecules.
      */
     @Test
     public void testCMLSchemeMoleculeSet() throws Exception {
@@ -905,19 +906,27 @@ public class CML2Test extends CDKTestCase {
         // test molecule
         Assert.assertEquals(2, reaction.getProducts().getAtomContainerCount());
         Assert.assertEquals(idProducts[0], reaction.getProducts().getAtomContainer(0).getID());
-        Assert.assertEquals("C 9 H 20 N 1", ((ArrayList<String>) reaction.getProducts().getAtomContainer(0)
-                .getProperty(CDKConstants.FORMULA)).get(0));
+        Assert.assertEquals(
+                "C 9 H 20 N 1",
+                ((ArrayList<String>)
+                                reaction.getProducts()
+                                        .getAtomContainer(0)
+                                        .getProperty(CDKConstants.FORMULA))
+                        .get(0));
         Assert.assertEquals(idProducts[1], reaction.getProducts().getAtomContainer(1).getID());
 
         Assert.assertEquals(1, reaction.getReactants().getAtomContainerCount());
         Assert.assertEquals(idReactants[0], reaction.getReactants().getAtomContainer(0).getID());
-        Assert.assertEquals("C 28 H 60 N 1", ((ArrayList<String>) reaction.getReactants().getAtomContainer(0)
-                .getProperty(CDKConstants.FORMULA)).get(0));
+        Assert.assertEquals(
+                "C 28 H 60 N 1",
+                ((ArrayList<String>)
+                                reaction.getReactants()
+                                        .getAtomContainer(0)
+                                        .getProperty(CDKConstants.FORMULA))
+                        .get(0));
     }
 
-    /**
-     * @cdk.bug 2697568
-     */
+    /** @cdk.bug 2697568 */
     @Test
     public void testReadReactionWithPointersToMoleculeSet() throws Exception {
         String filename = "data/cml/AlanineTree.cml";
@@ -926,13 +935,17 @@ public class CML2Test extends CDKTestCase {
         IChemFile chemFile = new ChemFile();
         chemFile = (IChemFile) reader.read(chemFile);
         reader.close();
-        Assert.assertSame(chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0), chemFile
-                .getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0).getReactants().getAtomContainer(0));
+        Assert.assertSame(
+                chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0),
+                chemFile.getChemSequence(0)
+                        .getChemModel(0)
+                        .getReactionSet()
+                        .getReaction(0)
+                        .getReactants()
+                        .getAtomContainer(0));
     }
 
-    /**
-     * @cdk.bug 2697568
-     */
+    /** @cdk.bug 2697568 */
     @Test
     public void testBug2697568() throws Exception {
         String filename = "data/cml/AlanineTreeReverse.cml";
@@ -941,12 +954,17 @@ public class CML2Test extends CDKTestCase {
         IChemFile chemFile = new ChemFile();
         chemFile = (IChemFile) reader.read(chemFile);
         reader.close();
-        Assert.assertSame(chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0), chemFile
-                .getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0).getReactants().getAtomContainer(0));
+        Assert.assertSame(
+                chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0),
+                chemFile.getChemSequence(0)
+                        .getChemModel(0)
+                        .getReactionSet()
+                        .getReaction(0)
+                        .getReactants()
+                        .getAtomContainer(0));
     }
 
-    /**
-     */
+    /** */
     @Test
     public void testReactionProperties() throws Exception {
         String filename = "data/cml/reaction.2.cml";
@@ -955,7 +973,8 @@ public class CML2Test extends CDKTestCase {
         IChemFile chemFile = new ChemFile();
         chemFile = (IChemFile) reader.read(chemFile);
         reader.close();
-        IReaction reaction = chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0);
+        IReaction reaction =
+                chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0);
 
         Assert.assertEquals("3", (String) reaction.getProperty("Ka"));
     }

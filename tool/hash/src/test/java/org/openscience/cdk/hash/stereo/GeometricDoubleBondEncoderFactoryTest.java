@@ -24,28 +24,27 @@
 
 package org.openscience.cdk.hash.stereo;
 
-import org.junit.Test;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.List;
-
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertFalse;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.openscience.cdk.hash.stereo.GeometricDoubleBondEncoderFactory.geometric;
 import static org.openscience.cdk.hash.stereo.GeometricDoubleBondEncoderFactory.moveToBack;
 import static org.openscience.cdk.hash.stereo.GeometricDoubleBondEncoderFactory.permutation;
+
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.List;
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
 
 /**
  * @author John May
@@ -123,7 +122,7 @@ public class GeometricDoubleBondEncoderFactoryTest {
 
         StereoEncoderFactory factory = new GeometricDoubleBondEncoderFactory();
 
-        int[][] g = new int[][]{{1}, {0, 2, 4}, {1, 3, 5}, {2}, {1}, {2}};
+        int[][] g = new int[][] {{1}, {0, 2, 4}, {1, 3, 5}, {2}, {1}, {2}};
 
         assertTrue(factory.create(mol, g) instanceof MultiStereoEncoder);
     }
@@ -191,7 +190,7 @@ public class GeometricDoubleBondEncoderFactoryTest {
 
         StereoEncoderFactory factory = new GeometricDoubleBondEncoderFactory();
 
-        int[][] g = new int[][]{{1}, {0, 2, 4}, {1, 3, 5}, {2}, {1}, {2}};
+        int[][] g = new int[][] {{1}, {0, 2, 4}, {1, 3, 5}, {2}, {1}, {2}};
 
         assertTrue(factory.create(mol, g) == StereoEncoder.EMPTY);
     }
@@ -258,24 +257,24 @@ public class GeometricDoubleBondEncoderFactoryTest {
     public void testPermutation_SingleSubstituents() throws Exception {
         // for a double atom with only one substituent the permutation parity
         // should be the identity (i.e. 1)
-        assertThat(permutation(new int[]{1, 2}), is(PermutationParity.IDENTITY));
+        assertThat(permutation(new int[] {1, 2}), is(PermutationParity.IDENTITY));
     }
 
     @Test
     public void testPermutation_TwoSubstituents() throws Exception {
-        PermutationParity p = permutation(new int[]{1, 2, 0});
+        PermutationParity p = permutation(new int[] {1, 2, 0});
         assertTrue(p instanceof BasicPermutationParity);
         Field field = p.getClass().getDeclaredField("indices");
         field.setAccessible(true);
-        assertArrayEquals((int[]) field.get(p), new int[]{1, 2});
+        assertArrayEquals((int[]) field.get(p), new int[] {1, 2});
     }
 
     @Test
     public void testMoveToBack() throws Exception {
-        assertThat(moveToBack(new int[]{0, 1, 2}, 0), is(new int[]{1, 2, 0}));
-        assertThat(moveToBack(new int[]{0, 1, 2}, 1), is(new int[]{0, 2, 1}));
-        assertThat(moveToBack(new int[]{0, 1, 2}, 2), is(new int[]{0, 1, 2}));
-        assertThat(moveToBack(new int[]{0, 1, 2, 4, 5, 6}, 2), is(new int[]{0, 1, 4, 5, 6, 2}));
+        assertThat(moveToBack(new int[] {0, 1, 2}, 0), is(new int[] {1, 2, 0}));
+        assertThat(moveToBack(new int[] {0, 1, 2}, 1), is(new int[] {0, 2, 1}));
+        assertThat(moveToBack(new int[] {0, 1, 2}, 2), is(new int[] {0, 1, 2}));
+        assertThat(moveToBack(new int[] {0, 1, 2, 4, 5, 6}, 2), is(new int[] {0, 1, 4, 5, 6, 2}));
     }
 
     @Test

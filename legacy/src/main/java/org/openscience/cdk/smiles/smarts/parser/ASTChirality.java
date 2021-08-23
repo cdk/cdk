@@ -30,7 +30,7 @@ package org.openscience.cdk.smiles.smarts.parser;
 class ASTChirality extends SimpleNode {
 
     private boolean unspecified = false;
-    private boolean clockwise   = true;
+    private boolean clockwise = true;
 
     /**
      * Creates a new instance

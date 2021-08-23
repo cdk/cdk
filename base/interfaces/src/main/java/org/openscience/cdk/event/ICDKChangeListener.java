@@ -29,7 +29,7 @@ import java.util.EventObject;
 /**
  * A ChangeListener for the CDK, to be independent from the Swing package.
  *
- * @cdk.module  interfaces
+ * @cdk.module interfaces
  * @cdk.githash
  */
 public interface ICDKChangeListener extends EventListener {
@@ -37,7 +37,7 @@ public interface ICDKChangeListener extends EventListener {
     /**
      * Invoked when the target of the listener has changed its state.
      *
-     * @param   event  The EventObject
+     * @param event The EventObject
      */
     void stateChanged(EventObject event);
 }

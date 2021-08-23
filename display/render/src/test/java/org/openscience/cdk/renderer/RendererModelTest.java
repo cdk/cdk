@@ -21,14 +21,15 @@
  */
 package org.openscience.cdk.renderer;
 
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EventObject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -45,36 +46,32 @@ import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 import org.openscience.cdk.renderer.selection.IChemObjectSelection;
 
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-/**
- * @cdk.module test-render
- */
+/** @cdk.module test-render */
 public class RendererModelTest {
 
     @Test
     public void testGetRenderingParameter() {
-        IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
+        IGenerator<IChemObject> generator =
+                new IGenerator<IChemObject>() {
 
-            IGeneratorParameter<Boolean> someParam = new SomeParam();
+                    IGeneratorParameter<Boolean> someParam = new SomeParam();
 
-            @Override
-            public List<IGeneratorParameter<?>> getParameters() {
-                return new ArrayList<IGeneratorParameter<?>>() {
+                    @Override
+                    public List<IGeneratorParameter<?>> getParameters() {
+                        return new ArrayList<IGeneratorParameter<?>>() {
 
-                    {
-                        add(someParam);
+                            {
+                                add(someParam);
+                            }
+                        };
+                    }
+
+                    @Override
+                    public IRenderingElement generate(IChemObject object, RendererModel model) {
+                        // TODO Auto-generated method stub
+                        return null;
                     }
                 };
-            }
-
-            @Override
-            public IRenderingElement generate(IChemObject object, RendererModel model) {
-                // TODO Auto-generated method stub
-                return null;
-            }
-        };
         RendererModel model = new RendererModel();
         model.registerParameters(generator);
         Assert.assertEquals(Boolean.FALSE, model.getParameter(SomeParam.class).getDefault());
@@ -82,26 +79,27 @@ public class RendererModelTest {
 
     @Test
     public void testHasParameter() {
-        IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
+        IGenerator<IChemObject> generator =
+                new IGenerator<IChemObject>() {
 
-            IGeneratorParameter<Boolean> someParam = new SomeParam();
+                    IGeneratorParameter<Boolean> someParam = new SomeParam();
 
-            @Override
-            public List<IGeneratorParameter<?>> getParameters() {
-                return new ArrayList<IGeneratorParameter<?>>() {
+                    @Override
+                    public List<IGeneratorParameter<?>> getParameters() {
+                        return new ArrayList<IGeneratorParameter<?>>() {
 
-                    {
-                        add(someParam);
+                            {
+                                add(someParam);
+                            }
+                        };
+                    }
+
+                    @Override
+                    public IRenderingElement generate(IChemObject object, RendererModel model) {
+                        // TODO Auto-generated method stub
+                        return null;
                     }
                 };
-            }
-
-            @Override
-            public IRenderingElement generate(IChemObject object, RendererModel model) {
-                // TODO Auto-generated method stub
-                return null;
-            }
-        };
         RendererModel model = new RendererModel();
         Assert.assertFalse(model.hasParameter(SomeParam.class));
         model.registerParameters(generator);
@@ -110,26 +108,27 @@ public class RendererModelTest {
 
     @Test
     public void testReturningTheRealParamaterValue() {
-        IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
+        IGenerator<IChemObject> generator =
+                new IGenerator<IChemObject>() {
 
-            IGeneratorParameter<Boolean> someParam = new SomeParam();
+                    IGeneratorParameter<Boolean> someParam = new SomeParam();
 
-            @Override
-            public List<IGeneratorParameter<?>> getParameters() {
-                return new ArrayList<IGeneratorParameter<?>>() {
+                    @Override
+                    public List<IGeneratorParameter<?>> getParameters() {
+                        return new ArrayList<IGeneratorParameter<?>>() {
 
-                    {
-                        add(someParam);
+                            {
+                                add(someParam);
+                            }
+                        };
+                    }
+
+                    @Override
+                    public IRenderingElement generate(IChemObject object, RendererModel model) {
+                        // TODO Auto-generated method stub
+                        return null;
                     }
                 };
-            }
-
-            @Override
-            public IRenderingElement generate(IChemObject object, RendererModel model) {
-                // TODO Auto-generated method stub
-                return null;
-            }
-        };
         RendererModel model = new RendererModel();
         model.registerParameters(generator);
         IGeneratorParameter<Boolean> param = model.getParameter(SomeParam.class);
@@ -141,26 +140,27 @@ public class RendererModelTest {
 
     @Test
     public void testSetRenderingParameter() {
-        IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
+        IGenerator<IChemObject> generator =
+                new IGenerator<IChemObject>() {
 
-            IGeneratorParameter<Boolean> someParam = new SomeParam();
+                    IGeneratorParameter<Boolean> someParam = new SomeParam();
 
-            @Override
-            public List<IGeneratorParameter<?>> getParameters() {
-                return new ArrayList<IGeneratorParameter<?>>() {
+                    @Override
+                    public List<IGeneratorParameter<?>> getParameters() {
+                        return new ArrayList<IGeneratorParameter<?>>() {
 
-                    {
-                        add(someParam);
+                            {
+                                add(someParam);
+                            }
+                        };
+                    }
+
+                    @Override
+                    public IRenderingElement generate(IChemObject object, RendererModel model) {
+                        // TODO Auto-generated method stub
+                        return null;
                     }
                 };
-            }
-
-            @Override
-            public IRenderingElement generate(IChemObject object, RendererModel model) {
-                // TODO Auto-generated method stub
-                return null;
-            }
-        };
         RendererModel model = new RendererModel();
         model.registerParameters(generator);
         Assert.assertEquals(Boolean.FALSE, model.get(SomeParam.class));
@@ -170,26 +170,27 @@ public class RendererModelTest {
 
     @Test
     public void testGetDefaultRenderingParameter() {
-        IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
+        IGenerator<IChemObject> generator =
+                new IGenerator<IChemObject>() {
 
-            IGeneratorParameter<Boolean> someParam = new SomeParam();
+                    IGeneratorParameter<Boolean> someParam = new SomeParam();
 
-            @Override
-            public List<IGeneratorParameter<?>> getParameters() {
-                return new ArrayList<IGeneratorParameter<?>>() {
+                    @Override
+                    public List<IGeneratorParameter<?>> getParameters() {
+                        return new ArrayList<IGeneratorParameter<?>>() {
 
-                    {
-                        add(someParam);
+                            {
+                                add(someParam);
+                            }
+                        };
+                    }
+
+                    @Override
+                    public IRenderingElement generate(IChemObject object, RendererModel model) {
+                        // TODO Auto-generated method stub
+                        return null;
                     }
                 };
-            }
-
-            @Override
-            public IRenderingElement generate(IChemObject object, RendererModel model) {
-                // TODO Auto-generated method stub
-                return null;
-            }
-        };
         RendererModel model = new RendererModel();
         model.registerParameters(generator);
         Assert.assertEquals(Boolean.FALSE, model.getDefault(SomeParam.class));
@@ -197,26 +198,27 @@ public class RendererModelTest {
 
     @Test
     public void testGetRenderingParameters() {
-        IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
+        IGenerator<IChemObject> generator =
+                new IGenerator<IChemObject>() {
 
-            IGeneratorParameter<Boolean> someParam = new SomeParam();
+                    IGeneratorParameter<Boolean> someParam = new SomeParam();
 
-            @Override
-            public List<IGeneratorParameter<?>> getParameters() {
-                return new ArrayList<IGeneratorParameter<?>>() {
+                    @Override
+                    public List<IGeneratorParameter<?>> getParameters() {
+                        return new ArrayList<IGeneratorParameter<?>>() {
 
-                    {
-                        add(someParam);
+                            {
+                                add(someParam);
+                            }
+                        };
+                    }
+
+                    @Override
+                    public IRenderingElement generate(IChemObject object, RendererModel model) {
+                        // TODO Auto-generated method stub
+                        return null;
                     }
                 };
-            }
-
-            @Override
-            public IRenderingElement generate(IChemObject object, RendererModel model) {
-                // TODO Auto-generated method stub
-                return null;
-            }
-        };
         RendererModel model = new RendererModel();
         int nDefaultParams = model.getRenderingParameters().size();
         model.registerParameters(generator);
@@ -225,8 +227,7 @@ public class RendererModelTest {
         Assert.assertEquals(nDefaultParams + 1, params.size()); // the registered one + defaults
 
         List<Class<?>> paramClasses = new ArrayList<Class<?>>();
-        for (IGeneratorParameter<?> param : params)
-            paramClasses.add(param.getClass());
+        for (IGeneratorParameter<?> param : params) paramClasses.add(param.getClass());
 
         assertThat(paramClasses, hasItem(SomeParam.class));
     }

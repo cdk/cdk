@@ -37,13 +37,14 @@ public class DebugAtomTypeTest extends AbstractAtomTypeTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new DebugAtomType("C");
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new DebugAtomType("C");
+                    }
+                });
     }
 
     @Test

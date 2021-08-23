@@ -19,62 +19,53 @@
  */
 package org.openscience.cdk.isomorphism;
 
+import java.util.Arrays;
+import java.util.Objects;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.graph.invariant.MorganNumbersTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
-import java.util.Arrays;
-import java.util.Objects;
-
 /**
  * A too simplistic implementation of an isomorphism test for chemical graphs.
  *
- * <p><b>Important:</b> as it uses the MorganNumbersTools it does not take bond
- * order into account.
+ * <p><b>Important:</b> as it uses the MorganNumbersTools it does not take bond order into account.
  *
  * <p>Alternatively, you can use the UniversalIsomorphismTester.
  *
  * @cdk.module standard
  * @cdk.githash
- *
- * @author     steinbeck
- * @cdk.created    2001-09-10
- *
- * @cdk.keyword    isomorphism
- *
- * @see        org.openscience.cdk.graph.invariant.MorganNumbersTools
- * @see        org.openscience.cdk.isomorphism.UniversalIsomorphismTester
+ * @author steinbeck
+ * @cdk.created 2001-09-10
+ * @cdk.keyword isomorphism
+ * @see org.openscience.cdk.graph.invariant.MorganNumbersTools
+ * @see org.openscience.cdk.isomorphism.UniversalIsomorphismTester
  */
 public class IsomorphismTester implements java.io.Serializable {
 
     private static final long serialVersionUID = 2499779110996693974L;
-    long[]                    baseTable;
-    long[]                    sortedBaseTable;
-    long[]                    compareTable;
-    long[]                    sortedCompareTable;
-    IAtomContainer            base             = null;
-    IAtomContainer            compare          = null;
+    long[] baseTable;
+    long[] sortedBaseTable;
+    long[] compareTable;
+    long[] sortedCompareTable;
+    IAtomContainer base = null;
+    IAtomContainer compare = null;
 
-    /**
-     *  Constructor for the IsomorphismTester object
-     */
+    /** Constructor for the IsomorphismTester object */
     public IsomorphismTester() {}
 
-    /**
-     *  Constructor for the IsomorphismTester object
-     */
+    /** Constructor for the IsomorphismTester object */
     public IsomorphismTester(IAtomContainer mol) throws NoSuchAtomException {
         setBaseTable(mol);
     }
 
     /**
-     *  Checks whether a given molecule is isomorphic with the one
-     *  that has been assigned to this IsomorphismTester at construction time.
+     * Checks whether a given molecule is isomorphic with the one that has been assigned to this
+     * IsomorphismTester at construction time.
      *
-     * @param  mol1                     A first molecule to check against the second one
-     * @param  mol2                     A second molecule to check against the first
-     * @return                          True, if the two molecules are isomorphic
+     * @param mol1 A first molecule to check against the second one
+     * @param mol2 A second molecule to check against the first
+     * @return True, if the two molecules are isomorphic
      */
     public boolean isIsomorphic(IAtomContainer mol1, IAtomContainer mol2) {
         setBaseTable(mol1);
@@ -82,11 +73,11 @@ public class IsomorphismTester implements java.io.Serializable {
     }
 
     /**
-     *  Checks whether a given molecule is isomorphic with the one
-     *  that has been assigned to this IsomorphismTester at construction time.
+     * Checks whether a given molecule is isomorphic with the one that has been assigned to this
+     * IsomorphismTester at construction time.
      *
-     * @param  mol2                     A molecule to check
-     * @return                          True, if the two molecules are isomorphic
+     * @param mol2 A molecule to check
+     * @return True, if the two molecules are isomorphic
      */
     public boolean isIsomorphic(IAtomContainer mol2) {
         boolean found;
@@ -106,7 +97,9 @@ public class IsomorphismTester implements java.io.Serializable {
                     atom1 = base.getAtom(f);
                     atom2 = compare.getAtom(g);
                     if (!(atom1.getSymbol().equals(atom2.getSymbol()))
-                        && Objects.equals(atom1.getImplicitHydrogenCount(), atom2.getImplicitHydrogenCount())) {
+                            && Objects.equals(
+                                    atom1.getImplicitHydrogenCount(),
+                                    atom2.getImplicitHydrogenCount())) {
                         return false;
                     }
                     found = true;
@@ -120,9 +113,9 @@ public class IsomorphismTester implements java.io.Serializable {
     }
 
     /**
-     *  Sets the BaseTable attribute of the IsomorphismTester object
+     * Sets the BaseTable attribute of the IsomorphismTester object
      *
-     * @param  mol                      The new BaseTable value
+     * @param mol The new BaseTable value
      */
     private void setBaseTable(IAtomContainer mol) {
         this.base = mol;
@@ -133,9 +126,9 @@ public class IsomorphismTester implements java.io.Serializable {
     }
 
     /**
-     *  Sets the CompareTable attribute of the IsomorphismTester object
+     * Sets the CompareTable attribute of the IsomorphismTester object
      *
-     * @param  mol                      The new CompareTable value
+     * @param mol The new CompareTable value
      */
     private void setCompareTable(IAtomContainer mol) {
         this.compare = mol;
@@ -143,6 +136,5 @@ public class IsomorphismTester implements java.io.Serializable {
         sortedCompareTable = new long[compareTable.length];
         System.arraycopy(compareTable, 0, sortedCompareTable, 0, compareTable.length);
         Arrays.sort(sortedCompareTable);
-
     }
 }

@@ -20,13 +20,9 @@ package org.openscience.cdk.qsar.result;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.qsar.result.IDescriptorResult;
-import org.openscience.cdk.qsar.result.IntegerResultType;
 import org.openscience.cdk.CDKTestCase;
 
-/**
- * @cdk.module test-standard
- */
+/** @cdk.module test-standard */
 public class IntegerResultTypeTest extends CDKTestCase {
 
     public IntegerResultTypeTest() {
@@ -48,5 +44,4 @@ public class IntegerResultTypeTest extends CDKTestCase {
     public void testLength() {
         Assert.assertEquals(1, new IntegerResultType().length());
     }
-
 }

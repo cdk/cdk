@@ -24,18 +24,17 @@
 
 package org.openscience.cdk.graph;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.util.BitSet;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
-
-import java.util.BitSet;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 /**
  * @author John May
@@ -43,8 +42,8 @@ import static org.junit.Assert.assertTrue;
  */
 public class MatchingTest {
 
-    private IChemObjectBuilder bldr   = SilentChemObjectBuilder.getInstance();
-    private SmilesParser       smipar = new SmilesParser(bldr);
+    private IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+    private SmilesParser smipar = new SmilesParser(bldr);
 
     @Ignore("no operation performed")
     public void nop() {}
@@ -101,7 +100,7 @@ public class MatchingTest {
         Matching matching = Matching.withCapacity(4);
         BitSet subset = new BitSet();
         subset.flip(0, 4);
-        assertTrue(matching.arbitaryMatching(new int[][]{{1}, {0, 2}, {1, 3}, {2}}, subset));
+        assertTrue(matching.arbitaryMatching(new int[][] {{1}, {0, 2}, {1, 3}, {2}}, subset));
     }
 
     @Test
@@ -109,7 +108,8 @@ public class MatchingTest {
         Matching matching = Matching.withCapacity(5);
         BitSet subset = new BitSet();
         subset.flip(0, 5);
-        assertFalse(matching.arbitaryMatching(new int[][]{{1}, {0, 2}, {1, 3}, {2, 4}, {3}}, subset));
+        assertFalse(
+                matching.arbitaryMatching(new int[][] {{1}, {0, 2}, {1, 3}, {2, 4}, {3}}, subset));
     }
 
     @Test
@@ -146,5 +146,4 @@ public class MatchingTest {
         matching.match(4, 8);
         assertThat(matching.toString(), is("[1=3, 4=8]"));
     }
-
 }

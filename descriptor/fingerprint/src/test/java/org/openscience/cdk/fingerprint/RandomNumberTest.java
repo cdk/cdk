@@ -38,17 +38,19 @@ public class RandomNumberTest {
     private RandomNumber rn = new RandomNumber();
 
     /**
-     * Tests the pseudorandom number generation to make sure we alway generate
-     * the same "next" random number.
+     * Tests the pseudorandom number generation to make sure we alway generate the same "next"
+     * random number.
      */
     @Test
     public void testGenerateMersenneTwisterRandomNumber() {
 
-        Assert.assertEquals("Expected next random number to be 444", 444,
+        Assert.assertEquals(
+                "Expected next random number to be 444",
+                444,
                 rn.generateMersenneTwisterRandomNumber(1024, 42));
-        Assert.assertEquals("Expected next random number to be 748", 748,
+        Assert.assertEquals(
+                "Expected next random number to be 748",
+                748,
                 rn.generateMersenneTwisterRandomNumber(1024, 444));
-
     }
-
 }

@@ -25,20 +25,17 @@ package org.openscience.cdk.protein.data;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 import org.openscience.cdk.Strand;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMonomer;
 
 /**
- * An entry in the PDB database. It is not just a regular protein, but the
- * regular PDB mix of protein or protein complexes, ligands, water molecules
- * and other species.
+ * An entry in the PDB database. It is not just a regular protein, but the regular PDB mix of
+ * protein or protein complexes, ligands, water molecules and other species.
  *
- * @cdk.module  pdb
+ * @cdk.module pdb
  * @cdk.githash
- *
- * @author      Egon Willighagen
+ * @author Egon Willighagen
  * @cdk.created 2006-04-19
  * @cdk.keyword polymer
  */
@@ -46,22 +43,19 @@ public class PDBStrand extends Strand {
 
     private static final long serialVersionUID = 8278569309787734236L;
 
-    List<String>              sequentialListOfMonomers;
+    List<String> sequentialListOfMonomers;
 
-    /**
-     * Constructs a new Polymer to store the Monomers.
-     */
+    /** Constructs a new Polymer to store the Monomers. */
     public PDBStrand() {
         super();
         sequentialListOfMonomers = new ArrayList<String>();
     }
 
     /**
-     * Adds the atom oAtom to a specified Monomer. Additionally, it keeps
-     * record of the iCode.
+     * Adds the atom oAtom to a specified Monomer. Additionally, it keeps record of the iCode.
      *
-     * @param oAtom  The atom to add
-     * @param oMonomer  The monomer the atom belongs to
+     * @param oAtom The atom to add
+     * @param oMonomer The monomer the atom belongs to
      */
     @Override
     public void addAtom(IAtom oAtom, IMonomer oMonomer) {
@@ -89,5 +83,4 @@ public class PDBStrand extends Strand {
         stringContent.append(')');
         return stringContent.toString();
     }
-
 }

@@ -33,7 +33,6 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import org.openscience.cdk.event.ICDKChangeListener;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -53,30 +52,28 @@ import org.openscience.cdk.renderer.selection.IChemObjectSelection;
  */
 public class RendererModel implements Serializable, Cloneable {
 
-    private static final long                  serialVersionUID     = -4420308906715213445L;
+    private static final long serialVersionUID = -4420308906715213445L;
 
     /* If true, the class will notify its listeners of changes */
-    private boolean                            notification         = true;
+    private boolean notification = true;
 
-    private transient List<ICDKChangeListener> listeners            = new ArrayList<ICDKChangeListener>();
+    private transient List<ICDKChangeListener> listeners = new ArrayList<ICDKChangeListener>();
 
-    private Map<IAtom, String>                 toolTipTextMap       = new HashMap<IAtom, String>();
+    private Map<IAtom, String> toolTipTextMap = new HashMap<IAtom, String>();
 
-    private IAtom                              highlightedAtom      = null;
+    private IAtom highlightedAtom = null;
 
-    private IBond                              highlightedBond      = null;
+    private IBond highlightedBond = null;
 
-    private IAtomContainer                     externalSelectedPart = null;
+    private IAtomContainer externalSelectedPart = null;
 
-    private IAtomContainer                     clipboardContent     = null;
+    private IAtomContainer clipboardContent = null;
 
-    private IChemObjectSelection               selection;
+    private IChemObjectSelection selection;
 
-    private Map<IAtom, IAtom>                  merge                = new HashMap<IAtom, IAtom>();
+    private Map<IAtom, IAtom> merge = new HashMap<IAtom, IAtom>();
 
-    /**
-     * Color of a selection.
-     */
+    /** Color of a selection. */
     public static class SelectionColor extends AbstractGeneratorParameter<Color> {
 
         /** {@inheritDoc} */
@@ -86,9 +83,7 @@ public class RendererModel implements Serializable, Cloneable {
         }
     }
 
-    /**
-     * The color used to highlight external selections.
-     */
+    /** The color used to highlight external selections. */
     public static class ExternalHighlightColor extends AbstractGeneratorParameter<Color> {
 
         /** {@inheritDoc} */
@@ -100,9 +95,7 @@ public class RendererModel implements Serializable, Cloneable {
 
     private IGeneratorParameter<Color> externalHighlightColor = new ExternalHighlightColor();
 
-    /**
-     * Padding between molecules in a grid or row.
-     */
+    /** Padding between molecules in a grid or row. */
     public static class Padding extends AbstractGeneratorParameter<Double> {
 
         /** {@inheritDoc} */
@@ -112,9 +105,7 @@ public class RendererModel implements Serializable, Cloneable {
         }
     }
 
-    /**
-     * The color hash is used to color substructures.
-     */
+    /** The color hash is used to color substructures. */
     public static class ColorHash extends AbstractGeneratorParameter<Map<IChemObject, Color>> {
 
         /** {@inheritDoc} */
@@ -124,11 +115,9 @@ public class RendererModel implements Serializable, Cloneable {
         }
     }
 
-    private IGeneratorParameter<Map<IChemObject, Color>> colorHash           = new ColorHash();
+    private IGeneratorParameter<Map<IChemObject, Color>> colorHash = new ColorHash();
 
-    /**
-     * Size of title font relative compared to atom symbols
-     */
+    /** Size of title font relative compared to atom symbols */
     public static class TitleFontScale extends AbstractGeneratorParameter<Double> {
 
         /** {@inheritDoc} */
@@ -138,9 +127,7 @@ public class RendererModel implements Serializable, Cloneable {
         }
     }
 
-    /**
-     * Color of title text.
-     */
+    /** Color of title text. */
     public static class TitleColor extends AbstractGeneratorParameter<Color> {
 
         /** {@inheritDoc} */
@@ -150,10 +137,7 @@ public class RendererModel implements Serializable, Cloneable {
         }
     }
 
-    /**
-     * If format supports it (e.g. SVG) should marked up elements (id and classes)
-     * be output.
-     */
+    /** If format supports it (e.g. SVG) should marked up elements (id and classes) be output. */
     public static class MarkedOutput extends AbstractGeneratorParameter<Boolean> {
 
         /** {@inheritDoc} */
@@ -163,18 +147,18 @@ public class RendererModel implements Serializable, Cloneable {
         }
     }
 
-    /**
-     * A map of {@link IGeneratorParameter} class names to instances.
-     */
-    private Map<String, IGeneratorParameter<?>>          renderingParameters = new HashMap<String, IGeneratorParameter<?>>();
+    /** A map of {@link IGeneratorParameter} class names to instances. */
+    private Map<String, IGeneratorParameter<?>> renderingParameters =
+            new HashMap<String, IGeneratorParameter<?>>();
 
     /**
-     * Construct a renderer model with no parameters. To put parameters into
-     * the model, use the registerParameters method.
+     * Construct a renderer model with no parameters. To put parameters into the model, use the
+     * registerParameters method.
      */
     public RendererModel() {
         renderingParameters.put(colorHash.getClass().getName(), colorHash);
-        renderingParameters.put(externalHighlightColor.getClass().getName(), externalHighlightColor);
+        renderingParameters.put(
+                externalHighlightColor.getClass().getName(), externalHighlightColor);
         renderingParameters.put(SelectionColor.class.getName(), new SelectionColor());
         renderingParameters.put(Padding.class.getName(), new Padding());
         renderingParameters.put(TitleFontScale.class.getName(), new TitleFontScale());
@@ -183,8 +167,7 @@ public class RendererModel implements Serializable, Cloneable {
     }
 
     /**
-     * Returns all {@link IGeneratorParameter}s for the current
-     * {@link RendererModel}.
+     * Returns all {@link IGeneratorParameter}s for the current {@link RendererModel}.
      *
      * @return a new List with {@link IGeneratorParameter}s
      */
@@ -195,68 +178,74 @@ public class RendererModel implements Serializable, Cloneable {
     }
 
     /**
-     * Returns the {@link IGeneratorParameter} for the active {@link IRenderer}.
-     * It returns a new instance of it was unregistered.
+     * Returns the {@link IGeneratorParameter} for the active {@link IRenderer}. It returns a new
+     * instance of it was unregistered.
      *
      * @param param {@link IGeneratorParameter} to get the value of.
      * @return the {@link IGeneratorParameter} instance with the active value.
      */
     public <T extends IGeneratorParameter<?>> T getParameter(Class<T> param) {
-        if (renderingParameters.containsKey(param.getName())) return (T) renderingParameters.get(param.getName());
+        if (renderingParameters.containsKey(param.getName()))
+            return (T) renderingParameters.get(param.getName());
 
         // the parameter was not registered yet, so we throw an exception to
         // indicate that the API is not used correctly.
-        throw new IllegalAccessError("You requested the active parameter of type " + param.getName() + ", but it "
-                + "has not been registered yet. Did you " + "make sure the IGeneratorParameter is registered, by "
-                + "registring the appropriate IGenerator? Alternatively, "
-                + "you can use getDefault() to query the default value for " + "any parameter on the classpath.");
+        throw new IllegalAccessError(
+                "You requested the active parameter of type "
+                        + param.getName()
+                        + ", but it "
+                        + "has not been registered yet. Did you "
+                        + "make sure the IGeneratorParameter is registered, by "
+                        + "registring the appropriate IGenerator? Alternatively, "
+                        + "you can use getDefault() to query the default value for "
+                        + "any parameter on the classpath.");
     }
 
     /**
-     * Returns the default value for the {@link IGeneratorParameter} for the
-     * active {@link IRenderer}.
+     * Returns the default value for the {@link IGeneratorParameter} for the active {@link
+     * IRenderer}.
      *
      * @param param {@link IGeneratorParameter} to get the value of.
-     * @return the default value for which the type is defined by the provided
-     *         {@link IGeneratorParameter}-typed <code>param</code> parameter.
-     *
+     * @return the default value for which the type is defined by the provided {@link
+     *     IGeneratorParameter}-typed <code>param</code> parameter.
      * @see #get(Class)
      */
     public <T extends IGeneratorParameter<S>, S> S getDefault(Class<T> param) {
-        if (renderingParameters.containsKey(param.getName())) return getParameter(param).getDefault();
+        if (renderingParameters.containsKey(param.getName()))
+            return getParameter(param).getDefault();
 
         // OK, this parameter is not registered, but that's fine, as we are
         // only to return the default value anyway...
         try {
             return param.newInstance().getDefault();
         } catch (InstantiationException exception) {
-            throw new IllegalArgumentException("Could not instantiate a default " + param.getClass().getName(),
-                    exception);
+            throw new IllegalArgumentException(
+                    "Could not instantiate a default " + param.getClass().getName(), exception);
         } catch (IllegalAccessException exception) {
-            throw new IllegalArgumentException("Could not instantiate a default " + param.getClass().getName(),
-                    exception);
+            throw new IllegalArgumentException(
+                    "Could not instantiate a default " + param.getClass().getName(), exception);
         }
     }
 
     /**
      * Sets the {@link IGeneratorParameter} for the active {@link IRenderer}.
-     * @param <T>
      *
+     * @param <T>
      * @param paramType {@link IGeneratorParameter} to set the value of.
-     * @param value     new {@link IGeneratorParameter} value
+     * @param value new {@link IGeneratorParameter} value
      */
-    public <T extends IGeneratorParameter<S>, S, U extends S> void set(Class<T> paramType, U value) {
+    public <T extends IGeneratorParameter<S>, S, U extends S> void set(
+            Class<T> paramType, U value) {
         T parameter = getParameter(paramType);
         parameter.setValue(value);
     }
 
     /**
      * Returns the {@link IGeneratorParameter} for the active {@link IRenderer}.
-     * @param <T>
      *
+     * @param <T>
      * @param paramType {@link IGeneratorParameter} to get the value of.
      * @return the {@link IGeneratorParameter} value.
-     *
      * @see #getParameter(Class)
      */
     public <T extends IGeneratorParameter<S>, S> S get(Class<T> paramType) {
@@ -264,16 +253,14 @@ public class RendererModel implements Serializable, Cloneable {
     }
 
     /**
-     * Registers rendering parameters from {@link IGenerator}s
-     * with this model.
+     * Registers rendering parameters from {@link IGenerator}s with this model.
      *
      * @param generator
      */
     public void registerParameters(IGenerator<? extends IChemObject> generator) {
         for (IGeneratorParameter<?> param : generator.getParameters()) {
             try {
-                renderingParameters.put(param.getClass().getName(),
-                                        param.getClass().newInstance());
+                renderingParameters.put(param.getClass().getName(), param.getClass().newInstance());
             } catch (InstantiationException | IllegalAccessException e) {
                 throw new IllegalStateException("Could not create a copy of rendering parameter.");
             }
@@ -283,16 +270,14 @@ public class RendererModel implements Serializable, Cloneable {
     /**
      * Set the selected {@link IChemObject}s.
      *
-     * @param selection an {@link IChemObjectSelection} with selected
-     *                  {@link IChemObject}s
+     * @param selection an {@link IChemObjectSelection} with selected {@link IChemObject}s
      */
     public void setSelection(IChemObjectSelection selection) {
         this.selection = selection;
     }
 
     /**
-     * Returns an {@link IChemObjectSelection} with the currently selected
-     * {@link IChemObject}s.
+     * Returns an {@link IChemObjectSelection} with the currently selected {@link IChemObject}s.
      *
      * @return the current selected {@link IChemObject}s
      */
@@ -301,9 +286,11 @@ public class RendererModel implements Serializable, Cloneable {
     }
 
     /**
-     * This is the central facility for handling "merges" of atoms. A merge occures if during moving atoms an atom is in Range of another atom.
-     * These atoms are then put into the merge map as a key-value pair. During the move, the atoms are then marked by a circle and on releasing the mouse
-     * they get actually merged, meaning one atom is removed and bonds pointing to this atom are made to point to the atom it has been marged with.
+     * This is the central facility for handling "merges" of atoms. A merge occures if during moving
+     * atoms an atom is in Range of another atom. These atoms are then put into the merge map as a
+     * key-value pair. During the move, the atoms are then marked by a circle and on releasing the
+     * mouse they get actually merged, meaning one atom is removed and bonds pointing to this atom
+     * are made to point to the atom it has been marged with.
      *
      * @return Returns the merge.map
      */
@@ -323,8 +310,7 @@ public class RendererModel implements Serializable, Cloneable {
     /**
      * Sets the atom currently highlighted.
      *
-     * @param highlightedAtom
-     *            The atom to be highlighted
+     * @param highlightedAtom The atom to be highlighted
      */
     public void setHighlightedAtom(IAtom highlightedAtom) {
         if ((this.highlightedAtom != null) || (highlightedAtom != null)) {
@@ -345,8 +331,7 @@ public class RendererModel implements Serializable, Cloneable {
     /**
      * Sets the Bond currently highlighted.
      *
-     * @param highlightedBond
-     *            The Bond to be currently highlighted
+     * @param highlightedBond The Bond to be currently highlighted
      */
     public void setHighlightedBond(IBond highlightedBond) {
         if ((this.highlightedBond != null) || (highlightedBond != null)) {
@@ -356,8 +341,8 @@ public class RendererModel implements Serializable, Cloneable {
     }
 
     /**
-     * Returns the atoms and bonds on the Renderer2D clipboard. If the clipboard
-     * is empty it returns null. Primarily used for copy/paste.
+     * Returns the atoms and bonds on the Renderer2D clipboard. If the clipboard is empty it returns
+     * null. Primarily used for copy/paste.
      *
      * @return an atomcontainer with the atoms and bonds on the clipboard.
      */
@@ -366,11 +351,9 @@ public class RendererModel implements Serializable, Cloneable {
     }
 
     /**
-     * Sets the atoms and bonds on the Renderer2D clipboard. Primarily used for
-     * copy/paste.
+     * Sets the atoms and bonds on the Renderer2D clipboard. Primarily used for copy/paste.
      *
-     * @param content
-     *            the new content of the clipboard.
+     * @param content the new content of the clipboard.
      */
     public void setClipboardContent(IAtomContainer content) {
         this.clipboardContent = content;
@@ -379,8 +362,7 @@ public class RendererModel implements Serializable, Cloneable {
     /**
      * Adds a change listener to the list of listeners.
      *
-     * @param listener
-     *            The listener added to the list
+     * @param listener The listener added to the list
      */
     public void addCDKChangeListener(ICDKChangeListener listener) {
         if (listeners == null) {
@@ -394,17 +376,13 @@ public class RendererModel implements Serializable, Cloneable {
     /**
      * Removes a change listener from the list of listeners.
      *
-     * @param listener
-     *            The listener removed from the list
+     * @param listener The listener removed from the list
      */
     public void removeCDKChangeListener(ICDKChangeListener listener) {
         listeners.remove(listener);
     }
 
-    /**
-     * Notifies registered listeners of certain changes that have occurred in
-     * this model.
-     */
+    /** Notifies registered listeners of certain changes that have occurred in this model. */
     public void fireChange() {
         if (getNotification() && listeners != null) {
             EventObject event = new EventObject(this);
@@ -417,8 +395,7 @@ public class RendererModel implements Serializable, Cloneable {
     /**
      * Gets the toolTipText for atom certain atom.
      *
-     * @param atom
-     *            The atom.
+     * @param atom The atom.
      * @return The toolTipText value.
      */
     public String getToolTipText(IAtom atom) {
@@ -432,10 +409,8 @@ public class RendererModel implements Serializable, Cloneable {
     /**
      * Sets the toolTipTextMap.
      *
-     * @param map
-     *            A map containing Atoms of the current molecule as keys and
-     *            Strings to display as values. A line break will be inserted
-     *            where a \n is in the string.
+     * @param map A map containing Atoms of the current molecule as keys and Strings to display as
+     *     values. A line break will be inserted where a \n is in the string.
      */
     public void setToolTipTextMap(Map<IAtom, String> map) {
         toolTipTextMap = map;
@@ -452,8 +427,8 @@ public class RendererModel implements Serializable, Cloneable {
     }
 
     /**
-     * Get externally selected atoms. These are atoms selected externally in e.
-     * g. Bioclipse via the ChemObjectTree, painted in externalSelectedPartColor
+     * Get externally selected atoms. These are atoms selected externally in e. g. Bioclipse via the
+     * ChemObjectTree, painted in externalSelectedPartColor
      *
      * @return the selected part
      */
@@ -462,11 +437,10 @@ public class RendererModel implements Serializable, Cloneable {
     }
 
     /**
-     * Set externally selected atoms. These are atoms selected externally in e.
-     * g. Bioclipse via the ChemObjectTree, painted in externalSelectedPartColor
+     * Set externally selected atoms. These are atoms selected externally in e. g. Bioclipse via the
+     * ChemObjectTree, painted in externalSelectedPartColor
      *
-     * @param externalSelectedPart
-     *            the selected part
+     * @param externalSelectedPart the selected part
      */
     public void setExternalSelectedPart(IAtomContainer externalSelectedPart) {
         this.externalSelectedPart = externalSelectedPart;
@@ -474,7 +448,9 @@ public class RendererModel implements Serializable, Cloneable {
         colorHash.clear();
         if (externalSelectedPart != null) {
             for (int i = 0; i < externalSelectedPart.getAtomCount(); i++) {
-                colorHash.put(externalSelectedPart.getAtom(i), getParameter(ExternalHighlightColor.class).getValue());
+                colorHash.put(
+                        externalSelectedPart.getAtom(i),
+                        getParameter(ExternalHighlightColor.class).getValue());
             }
             Iterator<IBond> bonds = externalSelectedPart.bonds().iterator();
             while (bonds.hasNext()) {
@@ -494,10 +470,9 @@ public class RendererModel implements Serializable, Cloneable {
     }
 
     /**
-     * Returns true if the passed {@link IGeneratorParameter}s has been
-     * registered.
+     * Returns true if the passed {@link IGeneratorParameter}s has been registered.
      *
-     * @param  param   parameter for which it is tested if it is registered
+     * @param param parameter for which it is tested if it is registered
      * @return boolean indicating the parameters is registered
      */
     public <T extends IGeneratorParameter<?>> boolean hasParameter(Class<T> param) {
@@ -512,5 +487,4 @@ public class RendererModel implements Serializable, Cloneable {
     public void setNotification(boolean notification) {
         this.notification = notification;
     };
-
 }

@@ -19,43 +19,41 @@
 package org.openscience.cdk.interfaces;
 
 /**
- * A helper class to instantiate a {@link ICDKObject} instance for a specific
- * implementation.
+ * A helper class to instantiate a {@link ICDKObject} instance for a specific implementation.
  *
- * @author        egonw
- * @cdk.module    interfaces
+ * @author egonw
+ * @cdk.module interfaces
  * @cdk.githash
  */
 public interface IChemObjectBuilder {
 
     /**
-     * Creates a new instance of an {@link ICDKObject}, using the constructor defined by the
-     * given parameters.
+     * Creates a new instance of an {@link ICDKObject}, using the constructor defined by the given
+     * parameters.
      *
-     * @param <T>    Class of an interface extending {@link ICDKObject} or {@link ICDKObject}
-     *               itself.
-     * @param clazz  Interface class to instantiate an instance for.
+     * @param <T> Class of an interface extending {@link ICDKObject} or {@link ICDKObject} itself.
+     * @param clazz Interface class to instantiate an instance for.
      * @param params Parameters passed to the constructor of the created instance.
-     * @return       Instance created.
-     *
-     * @throws IllegalArgumentException Exception thrown when the {@link IChemObjectBuilder}
-     *               builder cannot instantiate the <code>clazz</code> with the given parameters.
+     * @return Instance created.
+     * @throws IllegalArgumentException Exception thrown when the {@link IChemObjectBuilder} builder
+     *     cannot instantiate the <code>clazz</code> with the given parameters.
      */
-    <T extends ICDKObject> T newInstance(Class<T> clazz, Object... params) throws IllegalArgumentException;
+    <T extends ICDKObject> T newInstance(Class<T> clazz, Object... params)
+            throws IllegalArgumentException;
 
     /**
-     * Create a new atom using the default constructor. This method is considerably faster
-     * than the dynamic dispatch of {@code newInstance(IAtom.class)} and should be used for
-     * high throughput applications (e.g. IO).
+     * Create a new atom using the default constructor. This method is considerably faster than the
+     * dynamic dispatch of {@code newInstance(IAtom.class)} and should be used for high throughput
+     * applications (e.g. IO).
      *
      * @return new atom
      */
     IAtom newAtom();
 
     /**
-     * Create a new bond using the default constructor. This method is considerably faster
-     * than the dynamic dispatch of {@code newInstance(IAtom.class)} and should be used for
-     * high throughput applications (e.g. IO).
+     * Create a new bond using the default constructor. This method is considerably faster than the
+     * dynamic dispatch of {@code newInstance(IAtom.class)} and should be used for high throughput
+     * applications (e.g. IO).
      *
      * @return new bond
      */
@@ -63,8 +61,8 @@ public interface IChemObjectBuilder {
 
     /**
      * Create a new atom container using the default constructor. This method is considerably faster
-     * than the dynamic dispatch of {@code newInstance(IAtom.class)} and should be used for
-     * high throughput applications (e.g. IO).
+     * than the dynamic dispatch of {@code newInstance(IAtom.class)} and should be used for high
+     * throughput applications (e.g. IO).
      *
      * @return the new atom container
      */

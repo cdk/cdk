@@ -22,19 +22,18 @@
  */
 package org.openscience.cdk.ringsearch;
 
-import org.junit.Test;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.templates.TestMoleculeFactory;
-
-import java.util.List;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.templates.TestMoleculeFactory;
+
 /**
- * Unit tests for ring search. These unit tests ensure bicyclo rings (a bridged
- * system) is found correctly.
+ * Unit tests for ring search. These unit tests ensure bicyclo rings (a bridged system) is found
+ * correctly.
  *
  * @author John May
  * @cdk.module test-standard
@@ -46,7 +45,9 @@ public final class RingSearchTest_Bicyclo {
     @Test
     public void testCyclic() {
         int n = bicyclo.getAtomCount();
-        assertThat("cyclic vertices should be invariant for any ordering", new RingSearch(bicyclo).cyclic().length,
+        assertThat(
+                "cyclic vertices should be invariant for any ordering",
+                new RingSearch(bicyclo).cyclic().length,
                 is(n));
     }
 
@@ -55,21 +56,21 @@ public final class RingSearchTest_Bicyclo {
         int n = bicyclo.getAtomCount();
 
         RingSearch ringSearch = new RingSearch(bicyclo);
-        for (int i = 0; i < n; i++)
-            assertTrue("all atoms should be cyclic", ringSearch.cyclic(i));
-
+        for (int i = 0; i < n; i++) assertTrue("all atoms should be cyclic", ringSearch.cyclic(i));
     }
 
     @Test
     public void testIsolated() {
-        assertThat("no isolated cycle should be found", new RingSearch(bicyclo).isolated().length, is(0));
-
+        assertThat(
+                "no isolated cycle should be found",
+                new RingSearch(bicyclo).isolated().length,
+                is(0));
     }
 
     @Test
     public void testFused() {
-        assertThat("one fused cycle should be found", new RingSearch(bicyclo).fused().length, is(1));
-
+        assertThat(
+                "one fused cycle should be found", new RingSearch(bicyclo).fused().length, is(1));
     }
 
     @Test
@@ -79,7 +80,6 @@ public final class RingSearchTest_Bicyclo {
         IAtomContainer fragment = new RingSearch(bicyclo).ringFragments();
         assertThat(fragment.getAtomCount(), is(bicyclo.getAtomCount()));
         assertThat(fragment.getBondCount(), is(bicyclo.getBondCount()));
-
     }
 
     @Test
@@ -88,7 +88,6 @@ public final class RingSearchTest_Bicyclo {
 
         List<IAtomContainer> fragments = new RingSearch(bicyclo).isolatedRingFragments();
         assertTrue(fragments.isEmpty());
-
     }
 
     @Test
@@ -99,7 +98,5 @@ public final class RingSearchTest_Bicyclo {
         IAtomContainer fragment = fragments.get(0);
         assertThat(fragment.getAtomCount(), is(bicyclo.getAtomCount()));
         assertThat(fragment.getBondCount(), is(bicyclo.getBondCount()));
-
     }
-
 }

@@ -27,18 +27,11 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
-/**
- * @cdk.module test-qsarbond
- */
+/** @cdk.module test-qsarbond */
 public class AtomicNumberDifferenceDescriptorTest extends BondDescriptorTest {
 
-    /**
-     *  Constructor for the MassNumberDifferenceDescriptorTest object
-     *
-     */
-    public AtomicNumberDifferenceDescriptorTest() {
-
-    }
+    /** Constructor for the MassNumberDifferenceDescriptorTest object */
+    public AtomicNumberDifferenceDescriptorTest() {}
 
     @Before
     public void setUp() throws Exception {
@@ -49,7 +42,9 @@ public class AtomicNumberDifferenceDescriptorTest extends BondDescriptorTest {
     public void testDescriptor1() throws InvalidSmilesException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol1 = sp.parseSmiles("CC");
-        double value = ((DoubleResult) descriptor.calculate(mol1.getBond(0), mol1).getValue()).doubleValue();
+        double value =
+                ((DoubleResult) descriptor.calculate(mol1.getBond(0), mol1).getValue())
+                        .doubleValue();
         Assert.assertEquals(0, value, 0.0000);
     }
 
@@ -57,8 +52,9 @@ public class AtomicNumberDifferenceDescriptorTest extends BondDescriptorTest {
     public void testDescriptor2() throws InvalidSmilesException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol1 = sp.parseSmiles("CO");
-        double value = ((DoubleResult) descriptor.calculate(mol1.getBond(0), mol1).getValue()).doubleValue();
+        double value =
+                ((DoubleResult) descriptor.calculate(mol1.getBond(0), mol1).getValue())
+                        .doubleValue();
         Assert.assertEquals(2, value, 0.0000);
     }
-
 }

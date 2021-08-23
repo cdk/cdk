@@ -24,7 +24,6 @@ package org.openscience.cdk.interfaces;
 
 import java.util.Hashtable;
 import java.util.Map;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -52,11 +51,10 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
         Assert.assertEquals("DNA", oStrand.getStrandType());
     }
 
-    /** The methods above effectively test SetStrandName and
-     * SetStrandType as well, but I include SetStrandName and
-     * SetStrandType explicitly as well (for concinstency).
+    /**
+     * The methods above effectively test SetStrandName and SetStrandType as well, but I include
+     * SetStrandName and SetStrandType explicitly as well (for concinstency).
      */
-
     @Test
     public void testSetStrandName_String() {
         IStrand oStrand = (IStrand) newChemObject();
@@ -199,9 +197,7 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
         Assert.assertEquals(monomers.keySet(), oStrand.getMonomerNames());
     }
 
-    /**
-     * Method to test whether the class complies with RFC #9.
-     */
+    /** Method to test whether the class complies with RFC #9. */
     @Test
     @Override
     public void testToString() {
@@ -224,9 +220,7 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
         }
     }
 
-    /**
-     * Method to test the clone() method
-     */
+    /** Method to test the clone() method */
     @Test
     @Override
     public void testClone() throws Exception {
@@ -234,5 +228,4 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
         Object clone = strand.clone();
         Assert.assertNotNull(clone);
     }
-
 }

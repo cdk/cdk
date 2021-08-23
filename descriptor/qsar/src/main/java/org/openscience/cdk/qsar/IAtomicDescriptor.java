@@ -32,12 +32,10 @@ public interface IAtomicDescriptor extends IDescriptor {
     /**
      * Calculates the descriptor value for the given IAtom.
      *
-     * @param  atom         An {@link IAtom} for which this descriptor should be
-     *                      calculated
+     * @param atom An {@link IAtom} for which this descriptor should be calculated
      * @param container TODO
-     * @return              An object of {@link DescriptorValue} that contain the
-     *                      calculated value as well as specification details
+     * @return An object of {@link DescriptorValue} that contain the calculated value as well as
+     *     specification details
      */
     public DescriptorValue calculate(IAtom atom, IAtomContainer container);
-
 }

@@ -38,8 +38,8 @@ public abstract class SMARTSAtom extends QueryAtom implements IQueryAtom {
     }
 
     /**
-     * Access the atom invariants for this atom. If the invariants have not been
-     * set an exception is thrown.
+     * Access the atom invariants for this atom. If the invariants have not been set an exception is
+     * thrown.
      *
      * @param atom the atom to obtain the invariants of
      * @return the atom invariants for the atom
@@ -59,19 +59,17 @@ public abstract class SMARTSAtom extends QueryAtom implements IQueryAtom {
     }
 
     /**
-     * Check if the atom-based chirality of the target matches. This check is
-     * done post-matching and should only be checked on atoms which are know to
-     * have already been matched ({@link #matches(IAtom)}.
+     * Check if the atom-based chirality of the target matches. This check is done post-matching and
+     * should only be checked on atoms which are know to have already been matched ({@link
+     * #matches(IAtom)}.
      *
-     * Currently the only atom-based chirality allowed is tetrahedral stereo-
-     * chemistry. The
+     * <p>Currently the only atom-based chirality allowed is tetrahedral stereo- chemistry. The
      *
-     * @param target     the matched target (required to verify 'OR'
-     *                   conditions)
-     * @param tParity    the parity (winding) of the target centre,
-     *                   0=unspecified, 1=clockwise and -1=anticlockwise
-     * @param permParity permutation parity of the query neighbors (will be
-     *                   multiplied by the query parity)
+     * @param target the matched target (required to verify 'OR' conditions)
+     * @param tParity the parity (winding) of the target centre, 0=unspecified, 1=clockwise and
+     *     -1=anticlockwise
+     * @param permParity permutation parity of the query neighbors (will be multiplied by the query
+     *     parity)
      */
     public boolean chiralityMatches(IAtom target, int tParity, int permParity) {
         return true; // no specification => chirality matches

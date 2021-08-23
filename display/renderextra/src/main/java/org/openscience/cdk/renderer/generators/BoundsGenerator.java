@@ -23,7 +23,6 @@ import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 import java.util.Arrays;
 import java.util.List;
-
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.renderer.BoundsCalculator;
@@ -42,10 +41,7 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
  */
 public class BoundsGenerator implements IGenerator<IReaction> {
 
-    /**
-     * The color of the box drawn at the bounds of a
-     * molecule, molecule set, or reaction.
-     */
+    /** The color of the box drawn at the bounds of a molecule, molecule set, or reaction. */
     public static class BoundsColor extends AbstractGeneratorParameter<Color> {
 
         /** {@inheritDoc} */
@@ -79,13 +75,17 @@ public class BoundsGenerator implements IGenerator<IReaction> {
     private IRenderingElement generate(IAtomContainerSet moleculeSet) {
         Rectangle2D totalBounds = BoundsCalculator.calculateBounds(moleculeSet);
 
-        return new RectangleElement(totalBounds.getMinX(), totalBounds.getMinY(), totalBounds.getMaxX(),
-                totalBounds.getMaxY(), boundsColor.getValue());
+        return new RectangleElement(
+                totalBounds.getMinX(),
+                totalBounds.getMinY(),
+                totalBounds.getMaxX(),
+                totalBounds.getMaxY(),
+                boundsColor.getValue());
     }
 
     /** {@inheritDoc} */
     @Override
     public List<IGeneratorParameter<?>> getParameters() {
-        return Arrays.asList(new IGeneratorParameter<?>[]{boundsColor});
+        return Arrays.asList(new IGeneratorParameter<?>[] {boundsColor});
     }
 }

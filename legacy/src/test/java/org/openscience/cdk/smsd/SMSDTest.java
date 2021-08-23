@@ -29,7 +29,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -55,7 +54,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- *
  * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
@@ -77,6 +75,7 @@ public class SMSDTest {
 
     /**
      * Test of init method, of class Isomorphism.
+     *
      * @throws CDKException
      */
     @Test
@@ -94,6 +93,7 @@ public class SMSDTest {
 
     /**
      * Test of init method, of class Isomorphism.
+     *
      * @throws CDKException
      */
     @Test
@@ -111,6 +111,7 @@ public class SMSDTest {
 
     /**
      * Test of searchMCS method, of class Isomorphism.
+     *
      * @throws CDKException
      */
     @Test
@@ -138,6 +139,7 @@ public class SMSDTest {
 
     /**
      * Test of set method, of class Isomorphism.
+     *
      * @throws CDKException
      */
     @Test
@@ -150,11 +152,11 @@ public class SMSDTest {
         smsd1.init(queryac, target, true, true);
         smsd1.setChemFilters(true, true, true);
         assertNotNull(smsd1.getFirstMapping());
-
     }
 
     /**
      * Test of set method, of class Isomorphism.
+     *
      * @throws CDKException
      * @throws IOException
      */
@@ -181,6 +183,7 @@ public class SMSDTest {
 
     /**
      * Test of set method, of class Isomorphism.
+     *
      * @throws CDKException
      */
     @Test
@@ -199,6 +202,7 @@ public class SMSDTest {
 
     /**
      * Test of getAllAtomMapping method, of class Isomorphism.
+     *
      * @throws CDKException
      */
     @Test
@@ -229,6 +233,7 @@ public class SMSDTest {
 
     /**
      * Test of getAllMapping method, of class Isomorphism.
+     *
      * @throws CDKException
      */
     @Test
@@ -252,6 +257,7 @@ public class SMSDTest {
 
     /**
      * Test of getFirstAtomMapping method, of class Isomorphism.
+     *
      * @throws CDKException
      */
     @Test
@@ -270,6 +276,7 @@ public class SMSDTest {
 
     /**
      * Test of getFirstMapping method, of class Isomorphism.
+     *
      * @throws CDKException
      */
     @Test
@@ -288,6 +295,7 @@ public class SMSDTest {
 
     /**
      * Test of setChemFilters method, of class Isomorphism.
+     *
      * @throws CDKException
      */
     @Test
@@ -304,6 +312,7 @@ public class SMSDTest {
 
     /**
      * Test of getFragmentSize method, of class Isomorphism.
+     *
      * @throws CDKException
      */
     @Test
@@ -321,6 +330,7 @@ public class SMSDTest {
 
     /**
      * Test of getStereoScore method, of class Isomorphism.
+     *
      * @throws CDKException
      */
     @Test
@@ -338,6 +348,7 @@ public class SMSDTest {
 
     /**
      * Test of getEnergyScore method, of class Isomorphism.
+     *
      * @throws CDKException
      */
     @Test
@@ -355,6 +366,7 @@ public class SMSDTest {
 
     /**
      * Test of getReactantMolecule method, of class Isomorphism.
+     *
      * @throws CDKException
      */
     @Test
@@ -372,6 +384,7 @@ public class SMSDTest {
 
     /**
      * Test of getProductMolecule method, of class Isomorphism.
+     *
      * @throws CDKException
      */
     @Test
@@ -389,6 +402,7 @@ public class SMSDTest {
 
     /**
      * Test of getTanimotoSimilarity method, of class Isomorphism.
+     *
      * @throws Exception
      */
     @Test
@@ -407,6 +421,7 @@ public class SMSDTest {
 
     /**
      * Test of isStereoMisMatch method, of class Isomorphism.
+     *
      * @throws CDKException
      */
     @Test
@@ -423,6 +438,7 @@ public class SMSDTest {
 
     /**
      * Test of isSubgraph method, of class Isomorphism.
+     *
      * @throws CDKException
      */
     @Test
@@ -439,6 +455,7 @@ public class SMSDTest {
 
     /**
      * Test of getEuclideanDistance method, of class Isomorphism.
+     *
      * @throws Exception
      */
     @Test
@@ -472,7 +489,8 @@ public class SMSDTest {
         boolean foundMatches = smsd.isSubgraph();
         Assert.assertTrue(foundMatches);
 
-        IQueryAtomContainer queryContainer = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
+        IQueryAtomContainer queryContainer =
+                QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
         smsd.init(queryContainer, target);
         foundMatches = smsd.isSubgraph();
         Assert.assertTrue(foundMatches);
@@ -489,7 +507,8 @@ public class SMSDTest {
         boolean foundMatches = smsd.isSubgraph();
         Assert.assertTrue(foundMatches);
 
-        IQueryAtomContainer queryContainer = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
+        IQueryAtomContainer queryContainer =
+                QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
         smsd.init(queryContainer, target);
         foundMatches = smsd.isSubgraph();
         Assert.assertTrue(foundMatches);
@@ -514,7 +533,8 @@ public class SMSDTest {
         boolean foundMatches = smsd.isSubgraph();
         Assert.assertTrue(foundMatches);
 
-        //        IQueryAtomContainer queryContainer = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
+        //        IQueryAtomContainer queryContainer =
+        // QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
         //
         //        Isomorphism smsd1 = new Isomorphism(Algorithm.SubStructure, true);
         //        smsd1.init(queryContainer, target, true, true);
@@ -534,7 +554,8 @@ public class SMSDTest {
         Assert.assertEquals(18, smsd.getAllAtomMapping().size());
         Assert.assertTrue(foundMatches);
 
-        IQueryAtomContainer queryContainer = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
+        IQueryAtomContainer queryContainer =
+                QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
         smsd.init(queryContainer, target);
         foundMatches = smsd.isSubgraph();
         Assert.assertTrue(foundMatches);
@@ -552,7 +573,8 @@ public class SMSDTest {
         Assert.assertEquals(18, smsd.getAllAtomMapping().size());
         Assert.assertTrue(foundMatches);
 
-        IQueryAtomContainer queryContainer = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
+        IQueryAtomContainer queryContainer =
+                QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
         smsd.init(queryContainer, target);
         foundMatches = smsd.isSubgraph();
         Assert.assertTrue(foundMatches);
@@ -570,7 +592,8 @@ public class SMSDTest {
         Assert.assertEquals(18, smsd.getAllAtomMapping().size());
         Assert.assertTrue(foundMatches);
 
-        IQueryAtomContainer queryContainer = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
+        IQueryAtomContainer queryContainer =
+                QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
         smsd.init(queryContainer, target);
         foundMatches = smsd.isSubgraph();
         Assert.assertTrue(foundMatches);

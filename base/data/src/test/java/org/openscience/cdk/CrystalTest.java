@@ -39,13 +39,14 @@ public class CrystalTest extends AbstractCrystalTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new Crystal();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new Crystal();
+                    }
+                });
     }
 
     @Test
@@ -80,5 +81,4 @@ public class CrystalTest extends AbstractCrystalTest {
         Assert.assertEquals(4, crystal.getAtomCount());
         Assert.assertEquals(3, crystal.getBondCount());
     }
-
 }

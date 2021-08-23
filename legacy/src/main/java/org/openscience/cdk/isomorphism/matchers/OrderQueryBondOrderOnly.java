@@ -23,10 +23,10 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * <code>IQueryBond</code> that matches IBond object only based on bond order, and
- * disregarding any aromaticity flag.
+ * <code>IQueryBond</code> that matches IBond object only based on bond order, and disregarding any
+ * aromaticity flag.
  *
- * @cdk.module  isomorphism
+ * @cdk.module isomorphism
  * @cdk.githash
  * @deprecated Use {@code new QueryBond(beg, end, ORDER, bord)}
  */
@@ -39,7 +39,8 @@ public class OrderQueryBondOrderOnly extends QueryBond implements IQueryBond {
         super(builder);
     }
 
-    public OrderQueryBondOrderOnly(IQueryAtom atom1, IQueryAtom atom2, IBond.Order order, IChemObjectBuilder builder) {
+    public OrderQueryBondOrderOnly(
+            IQueryAtom atom1, IQueryAtom atom2, IBond.Order order, IChemObjectBuilder builder) {
         super(atom1, atom2, order, builder);
     }
 

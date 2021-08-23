@@ -25,9 +25,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-/**
- * @cdk.module test-renderbasic
- */
+/** @cdk.module test-renderbasic */
 public class AWTFontManagerTest extends AbstractFontManagerTest {
 
     @BeforeClass
@@ -40,5 +38,4 @@ public class AWTFontManagerTest extends AbstractFontManagerTest {
         IFontManager fontManager = new AWTFontManager();
         Assert.assertNotNull(fontManager);
     }
-
 }

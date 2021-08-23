@@ -24,31 +24,30 @@
 
 package org.openscience.cdk.hash;
 
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
 import org.openscience.cdk.hash.stereo.DoubleBondElementEncoderFactory;
-import org.openscience.cdk.hash.stereo.StereoEncoder;
 import org.openscience.cdk.hash.stereo.GeometricCumulativeDoubleBondFactory;
 import org.openscience.cdk.hash.stereo.GeometricDoubleBondEncoderFactory;
 import org.openscience.cdk.hash.stereo.GeometricTetrahedralEncoderFactory;
+import org.openscience.cdk.hash.stereo.StereoEncoder;
 import org.openscience.cdk.hash.stereo.StereoEncoderFactory;
 import org.openscience.cdk.hash.stereo.TetrahedralElementEncoderFactory;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
-import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.List;
-
 /**
- * Fluent API for creating hash generators. The maker is first configured with
- * one or more attributes. Once fully configured the generator is made by
- * invoking {@link #atomic()}, {@link #molecular()} or {@link #ensemble()}. The
- * order of the built-in configuration methods does not matter however when
- * specifying custom encoders with {@link #encode(AtomEncoder)} the order they
- * are added is the order they will be used. Therefore one can expect different
- * hash codes if there is a change in the order they are specified.
- *
- * <br>
+ * Fluent API for creating hash generators. The maker is first configured with one or more
+ * attributes. Once fully configured the generator is made by invoking {@link #atomic()}, {@link
+ * #molecular()} or {@link #ensemble()}. The order of the built-in configuration methods does not
+ * matter however when specifying custom encoders with {@link #encode(AtomEncoder)} the order they
+ * are added is the order they will be used. Therefore one can expect different hash codes if there
+ * is a change in the order they are specified. <br>
  * <b>Examples</b>
- * <blockquote><pre>
+ *
+ * <blockquote>
+ *
+ * <pre>
  * // simple
  * MoleculeHashGenerator generator = new HashGeneratorMaker().depth(16)
  *                                                           .elemental()
@@ -69,7 +68,9 @@ import java.util.List;
  *                                                           .chiral()
  *                                                           .perturbed()
  *                                                           .molecular();
- * </pre></blockquote>
+ * </pre>
+ *
+ * </blockquote>
  *
  * @author John May
  * @cdk.module hash
@@ -78,26 +79,25 @@ import java.util.List;
 public final class HashGeneratorMaker {
 
     /* no default depth */
-    private int                        depth          = -1;
+    private int depth = -1;
 
     /* ordered list of custom encoders */
-    private List<AtomEncoder>          customEncoders = new ArrayList<AtomEncoder>();
+    private List<AtomEncoder> customEncoders = new ArrayList<AtomEncoder>();
 
     /* ordered set of basic encoders */
-    private EnumSet<BasicAtomEncoder>  encoderSet     = EnumSet.noneOf(BasicAtomEncoder.class);
+    private EnumSet<BasicAtomEncoder> encoderSet = EnumSet.noneOf(BasicAtomEncoder.class);
 
     /* list of stereo encoders */
     private List<StereoEncoderFactory> stereoEncoders = new ArrayList<StereoEncoderFactory>();
 
     /* whether we want to use perturbed hash generators */
-    private EquivalentSetFinder        equivSetFinder = null;
+    private EquivalentSetFinder equivSetFinder = null;
 
     /* function determines whether any atoms are suppressed */
-    private AtomSuppression            suppression    = AtomSuppression.unsuppressed();
+    private AtomSuppression suppression = AtomSuppression.unsuppressed();
 
     /**
-     * Specify the depth of the hash generator. Larger values discriminate more
-     * molecules.
+     * Specify the depth of the hash generator. Larger values discriminate more molecules.
      *
      * @param depth how deep should the generator hash
      * @return reference for fluent API
@@ -165,13 +165,12 @@ public final class HashGeneratorMaker {
     }
 
     /**
-     * Generate different hash codes for stereoisomers. The currently supported
-     * geometries are:
+     * Generate different hash codes for stereoisomers. The currently supported geometries are:
      *
      * <ul>
-     *     <li>Tetrahedral</li>
-     *     <li>Double Bond</li>
-     *     <li>Cumulative Double Bonds</li>
+     *   <li>Tetrahedral
+     *   <li>Double Bond
+     *   <li>Cumulative Double Bonds
      * </ul>
      *
      * @return fluent API reference (self)
@@ -186,9 +185,8 @@ public final class HashGeneratorMaker {
     }
 
     /**
-     * Suppress any explicit hydrogens in the encoding of hash values. The
-     * generation of hashes acts as though the hydrogens are not present and as
-     * such preserves stereo-encoding.
+     * Suppress any explicit hydrogens in the encoding of hash values. The generation of hashes acts
+     * as though the hydrogens are not present and as such preserves stereo-encoding.
      *
      * @return fluent API reference (self)
      */
@@ -198,11 +196,10 @@ public final class HashGeneratorMaker {
     }
 
     /**
-     * Discriminate atoms experiencing uniform environments. This method uses
-     * {@link MinimumEquivalentCyclicSet}  to break symmetry but depending on
-     * application one may need a more comprehensive method. Please refer to
-     * {@link #perturbWith(EquivalentSetFinder)} for further configuration
-     * details.
+     * Discriminate atoms experiencing uniform environments. This method uses {@link
+     * MinimumEquivalentCyclicSet} to break symmetry but depending on application one may need a
+     * more comprehensive method. Please refer to {@link #perturbWith(EquivalentSetFinder)} for
+     * further configuration details.
      *
      * @return fluent API reference (self)
      * @see MinimumEquivalentCyclicSet
@@ -213,37 +210,38 @@ public final class HashGeneratorMaker {
     }
 
     /**
-     * Discriminate atoms experiencing uniform environments using the provided
-     * method. Depending on the level of identity required one can choose how
-     * the atoms a perturbed in an attempt to break symmetry.  As with all
-     * hashing there is always a probability of collision but some of these
-     * collisions may be due to an insufficiency in the algorithm opposed to a
-     * random chance of collision. Currently there are three strategies but one
-     * should choose either to use the fast, but good, heuristic {@link
-     * MinimumEquivalentCyclicSet} or the exact {@link AllEquivalentCyclicSet}.
-     * In practice {@link MinimumEquivalentCyclicSet} is good enough for most
-     * applications but it is important to understand the potential trade off.
-     * The {@link MinimumEquivalentCyclicSetUnion} is provided for demonstration
-     * only, and as such, is deprecated.
+     * Discriminate atoms experiencing uniform environments using the provided method. Depending on
+     * the level of identity required one can choose how the atoms a perturbed in an attempt to
+     * break symmetry. As with all hashing there is always a probability of collision but some of
+     * these collisions may be due to an insufficiency in the algorithm opposed to a random chance
+     * of collision. Currently there are three strategies but one should choose either to use the
+     * fast, but good, heuristic {@link MinimumEquivalentCyclicSet} or the exact {@link
+     * AllEquivalentCyclicSet}. In practice {@link MinimumEquivalentCyclicSet} is good enough for
+     * most applications but it is important to understand the potential trade off. The {@link
+     * MinimumEquivalentCyclicSetUnion} is provided for demonstration only, and as such, is
+     * deprecated.
      *
-     * <ul> <li>MinimumEquivalentCyclicSet - fastest, attempt to break symmetry
-     * by changing a single smallest set of the equivalent atoms which occur in
-     * a ring</li> <li><strike>MinimumEquivalentCyclicSetUnion</strike>
-     * (deprecated) - distinguishes more molecules by changing all smallest sets
-     * of the equivalent atoms which occur in a ring. This method is provided
-     * from example only</li> <li>AllEquivalentCyclicSet - slowest,
-     * systematically perturb all equivalent atoms that occur in a ring</li>
+     * <ul>
+     *   <li>MinimumEquivalentCyclicSet - fastest, attempt to break symmetry by changing a single
+     *       smallest set of the equivalent atoms which occur in a ring
+     *   <li><strike>MinimumEquivalentCyclicSetUnion</strike> (deprecated) - distinguishes more
+     *       molecules by changing all smallest sets of the equivalent atoms which occur in a ring.
+     *       This method is provided from example only
+     *   <li>AllEquivalentCyclicSet - slowest, systematically perturb all equivalent atoms that
+     *       occur in a ring
      * </ul>
      *
-     * At the time of writing (Feb, 2013) the number of known false possibles
-     * found in PubChem-Compound (aprx. 46,000,000 structures) are as follows:
+     * At the time of writing (Feb, 2013) the number of known false possibles found in
+     * PubChem-Compound (aprx. 46,000,000 structures) are as follows:
      *
-     * <ul> <li>MinimumEquivalentCyclicSet - 128 molecules, 64 false positives
-     * (128/2)</li> <li>MinimumEquivalentCyclicSetUnion - 8 molecules, 4 false
-     * positives (8/2)</li> <li>AllEquivalentCyclicSet - 0 molecules</li> </ul>
+     * <ul>
+     *   <li>MinimumEquivalentCyclicSet - 128 molecules, 64 false positives (128/2)
+     *   <li>MinimumEquivalentCyclicSetUnion - 8 molecules, 4 false positives (8/2)
+     *   <li>AllEquivalentCyclicSet - 0 molecules
+     * </ul>
      *
-     * @param equivSetFinder equivalent set finder, used to determine which
-     *                       atoms will be perturbed to try and break symmetry.
+     * @param equivSetFinder equivalent set finder, used to determine which atoms will be perturbed
+     *     to try and break symmetry.
      * @return fluent API reference (self)
      * @see AllEquivalentCyclicSet
      * @see MinimumEquivalentCyclicSet
@@ -255,9 +253,8 @@ public final class HashGeneratorMaker {
     }
 
     /**
-     * Add a custom encoder to the hash generator which will be built. Although
-     * not enforced, the encoder should be stateless and should not modify any
-     * passed inputs.
+     * Add a custom encoder to the hash generator which will be built. Although not enforced, the
+     * encoder should be stateless and should not modify any passed inputs.
      *
      * @param encoder an atom encoder
      * @return fluent API reference (self)
@@ -280,7 +277,8 @@ public final class HashGeneratorMaker {
         } else if (stereoEncoders.size() == 1) {
             return stereoEncoders.get(0);
         } else {
-            StereoEncoderFactory factory = new ConjugatedEncoderFactory(stereoEncoders.get(0), stereoEncoders.get(1));
+            StereoEncoderFactory factory =
+                    new ConjugatedEncoderFactory(stereoEncoders.get(0), stereoEncoders.get(1));
             for (int i = 2; i < stereoEncoders.size(); i++) {
                 factory = new ConjugatedEncoderFactory(factory, stereoEncoders.get(i));
             }
@@ -333,33 +331,42 @@ public final class HashGeneratorMaker {
         AtomEncoder encoder = new ConjugatedAtomEncoder(encoders);
         SeedGenerator seeds = new SeedGenerator(encoder, suppression);
 
-        AbstractAtomHashGenerator simple = suppress ? new SuppressedAtomHashGenerator(seeds, new Xorshift(),
-                makeStereoEncoderFactory(), suppression, depth) : new BasicAtomHashGenerator(seeds, new Xorshift(),
-                makeStereoEncoderFactory(), depth);
+        AbstractAtomHashGenerator simple =
+                suppress
+                        ? new SuppressedAtomHashGenerator(
+                                seeds,
+                                new Xorshift(),
+                                makeStereoEncoderFactory(),
+                                suppression,
+                                depth)
+                        : new BasicAtomHashGenerator(
+                                seeds, new Xorshift(), makeStereoEncoderFactory(), depth);
 
         // if there is a finder for checking equivalent vertices then the user
         // wants to 'perturb' the hashed
         if (equivSetFinder != null) {
-            return new PerturbedAtomHashGenerator(seeds, simple, new Xorshift(), makeStereoEncoderFactory(),
-                    equivSetFinder, suppression);
+            return new PerturbedAtomHashGenerator(
+                    seeds,
+                    simple,
+                    new Xorshift(),
+                    makeStereoEncoderFactory(),
+                    equivSetFinder,
+                    suppression);
         } else {
             // no equivalence set finder - just use the simple hash
             return simple;
         }
     }
 
-    /**
-     * Help class to combined two stereo encoder factories
-     */
+    /** Help class to combined two stereo encoder factories */
     private final class ConjugatedEncoderFactory implements StereoEncoderFactory {
 
         private final StereoEncoderFactory left, right;
 
         /**
-         * Create a new conjugated encoder factory from the left and right
-         * factories.
+         * Create a new conjugated encoder factory from the left and right factories.
          *
-         * @param left  encoder factory
+         * @param left encoder factory
          * @param right encoder factory
          */
         private ConjugatedEncoderFactory(StereoEncoderFactory left, StereoEncoderFactory right) {
@@ -367,18 +374,15 @@ public final class HashGeneratorMaker {
             this.right = right;
         }
 
-        /**
-         *{@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
         public StereoEncoder create(IAtomContainer container, int[][] graph) {
-            return new ConjugatedEncoder(left.create(container, graph), right.create(container, graph));
+            return new ConjugatedEncoder(
+                    left.create(container, graph), right.create(container, graph));
         }
     }
 
-    /**
-     * Help class to combined two stereo encoders
-     */
+    /** Help class to combined two stereo encoders */
     private final class ConjugatedEncoder implements StereoEncoder {
 
         private final StereoEncoder left, right;
@@ -386,7 +390,7 @@ public final class HashGeneratorMaker {
         /**
          * Create a new conjugated encoder from a left and right encoder.
          *
-         * @param left  encoder
+         * @param left encoder
          * @param right encoder
          */
         private ConjugatedEncoder(StereoEncoder left, StereoEncoder right) {
@@ -398,7 +402,7 @@ public final class HashGeneratorMaker {
          * Encodes using the left and then the right encoder.
          *
          * @param current current invariants
-         * @param next    next invariants
+         * @param next next invariants
          * @return whether either encoder modified any values
          */
         @Override
@@ -407,14 +411,11 @@ public final class HashGeneratorMaker {
             return right.encode(current, next) || modified;
         }
 
-        /**
-         * reset the left and right encoders
-         */
+        /** reset the left and right encoders */
         @Override
         public void reset() {
             left.reset();
             right.reset();
         }
     }
-
 }

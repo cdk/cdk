@@ -32,16 +32,15 @@ import java.util.Set;
 
 /**
  * @author jonalv
- * @cdk.module     standard
+ * @cdk.module standard
  * @cdk.githash
  */
 public class IntArrayFingerprint implements IBitFingerprint {
 
-    /**
-     *
-     */
+    /** */
     private static final long serialVersionUID = 5175105019921245323L;
-    private volatile int[]    trueBits;
+
+    private volatile int[] trueBits;
 
     public IntArrayFingerprint(Map<String, Integer> rawFingerPrint) {
         trueBits = new int[rawFingerPrint.size()];
@@ -92,9 +91,10 @@ public class IntArrayFingerprint implements IBitFingerprint {
         if (fingerprint instanceof IntArrayFingerprint) {
             and((IntArrayFingerprint) fingerprint);
         } else {
-            //TODO add support for this?
-            throw new UnsupportedOperationException("AND on IntArrayFingerPrint only supported for other "
-                    + "IntArrayFingerPrints for the moment");
+            // TODO add support for this?
+            throw new UnsupportedOperationException(
+                    "AND on IntArrayFingerPrint only supported for other "
+                            + "IntArrayFingerPrints for the moment");
         }
     }
 
@@ -128,9 +128,10 @@ public class IntArrayFingerprint implements IBitFingerprint {
         if (fingerprint instanceof IntArrayFingerprint) {
             or((IntArrayFingerprint) fingerprint);
         } else {
-            //TODO add support for this?
-            throw new UnsupportedOperationException("OR on IntArrayFingerPrint only supported for other "
-                    + "IntArrayFingerPrints for the moment");
+            // TODO add support for this?
+            throw new UnsupportedOperationException(
+                    "OR on IntArrayFingerPrint only supported for other "
+                            + "IntArrayFingerPrints for the moment");
         }
     }
 
@@ -183,7 +184,7 @@ public class IntArrayFingerprint implements IBitFingerprint {
 
     @Override
     public BitSet asBitSet() {
-        //TODO support this?
+        // TODO support this?
         throw new UnsupportedOperationException();
     }
 
@@ -213,5 +214,4 @@ public class IntArrayFingerprint implements IBitFingerprint {
         System.arraycopy(trueBits, 0, copy, 0, trueBits.length);
         return copy;
     }
-
 }

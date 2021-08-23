@@ -22,14 +22,11 @@
  */
 package org.openscience.cdk.fingerprint;
 
-/**
- * @cdk.module test-standard
- */
+/** @cdk.module test-standard */
 public class HybridizationFingerprinterTest extends AbstractFingerprinterTest {
 
     @Override
     public IFingerprinter getBitFingerprinter() {
         return new HybridizationFingerprinter();
     }
-
 }

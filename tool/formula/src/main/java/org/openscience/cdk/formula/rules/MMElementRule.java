@@ -20,7 +20,6 @@ package org.openscience.cdk.formula.rules;
 
 import java.util.HashMap;
 import java.util.Iterator;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IMolecularFormula;
@@ -29,11 +28,12 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 /**
- * This class validate if the occurrence of the IElements in the IMolecularFormula, for
- * metabolites, are into a maximal limit according paper: . The study is from 2 different mass spectral
- * databases and according different mass of the metabolites. The analysis don't
- * take account if the IElement is not contained in the matrix. It will be jumped. <p>
- * The rules is based from Tobias Kind paper with the title "Seven Golden Rules for heuristic
+ * This class validate if the occurrence of the IElements in the IMolecularFormula, for metabolites,
+ * are into a maximal limit according paper: . The study is from 2 different mass spectral databases
+ * and according different mass of the metabolites. The analysis don't take account if the IElement
+ * is not contained in the matrix. It will be jumped.
+ *
+ * <p>The rules is based from Tobias Kind paper with the title "Seven Golden Rules for heuristic
  * filtering of molecular formula" {@cdk.cite kind2007}.
  *
  * <table border="1">
@@ -55,25 +55,24 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  *   </tr>
  * </table>
  *
- * @cdk.module  formula
- * @author      miguelrojasch
+ * @cdk.module formula
+ * @author miguelrojasch
  * @cdk.created 2007-11-20
  * @cdk.githash
  */
 public class MMElementRule implements IRule {
 
-    /** Database used. As default Willey.*/
-    private Database                 databaseUsed  = Database.WILEY;
+    /** Database used. As default Willey. */
+    private Database databaseUsed = Database.WILEY;
 
-    /** Mass range used. As default lower than 500.*/
-    private RangeMass                rangeMassUsed = RangeMass.Minus500;
+    /** Mass range used. As default lower than 500. */
+    private RangeMass rangeMassUsed = RangeMass.Minus500;
 
     private HashMap<String, Integer> hashMap;
 
-    private static ILoggingTool      logger        = LoggingToolFactory.createLoggingTool(MMElementRule.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MMElementRule.class);
 
-    /** A enumeration of the possible mass range
-     * according the rules. */
+    /** A enumeration of the possible mass range according the rules. */
     public static enum RangeMass {
         /** IMolecularFormula from a metabolite with a mass lower than 500 Da. */
         Minus500,
@@ -85,8 +84,7 @@ public class MMElementRule implements IRule {
         Minus3000
     }
 
-    /** A enumeration of the possible databases
-     * according the rules. */
+    /** A enumeration of the possible databases according the rules. */
     public static enum Database {
         /** Wiley mass spectral database. */
         WILEY,
@@ -94,9 +92,7 @@ public class MMElementRule implements IRule {
         DNP
     }
 
-    /**
-     *  Constructor for the MMElementRule object.
-     */
+    /** Constructor for the MMElementRule object. */
     public MMElementRule() {
         // initiate Hashmap default
         this.hashMap = getWisley_500();
@@ -105,14 +101,14 @@ public class MMElementRule implements IRule {
     /**
      * Sets the parameters attribute of the MMElementRule object.
      *
-     * @param params          The new parameters value
-     * @throws CDKException   Description of the Exception
-     *
-     * @see                   #getParameters
+     * @param params The new parameters value
+     * @throws CDKException Description of the Exception
+     * @see #getParameters
      */
     @Override
     public void setParameters(Object[] params) throws CDKException {
-        if (params.length > 2) throw new CDKException("MMElementRule only expects maximal two parameters");
+        if (params.length > 2)
+            throw new CDKException("MMElementRule only expects maximal two parameters");
 
         if (params[0] != null) {
             if (!(params[0] instanceof Database))
@@ -146,7 +142,7 @@ public class MMElementRule implements IRule {
      * Gets the parameters attribute of the MMElementRule object.
      *
      * @return The parameters value
-     * @see    #setParameters
+     * @see #setParameters
      */
     @Override
     public Object[] getParameters() {
@@ -160,10 +156,9 @@ public class MMElementRule implements IRule {
     /**
      * Validate the occurrence of this IMolecularFormula.
      *
-     * @param formula   Parameter is the IMolecularFormula
-     * @return          An ArrayList containing 9 elements in the order described above
+     * @param formula Parameter is the IMolecularFormula
+     * @return An ArrayList containing 9 elements in the order described above
      */
-
     @Override
     public double validate(IMolecularFormula formula) throws CDKException {
         logger.info("Start validation of ", formula);
@@ -182,8 +177,8 @@ public class MMElementRule implements IRule {
     }
 
     /**
-     * Get the map linking the symbol of the element and number maximum of occurrence.
-     * For the analysis with the DNP database and mass lower than 500 Da.
+     * Get the map linking the symbol of the element and number maximum of occurrence. For the
+     * analysis with the DNP database and mass lower than 500 Da.
      *
      * @return The HashMap of the symbol linked with the maximum occurrence
      */
@@ -204,8 +199,8 @@ public class MMElementRule implements IRule {
     }
 
     /**
-     * Get the map linking the symbol of the element and number maximum of occurrence.
-     * For the analysis with the DNP database and mass lower than 1000 Da.
+     * Get the map linking the symbol of the element and number maximum of occurrence. For the
+     * analysis with the DNP database and mass lower than 1000 Da.
      *
      * @return The HashMap of the symbol linked with the maximum occurrence
      */
@@ -226,8 +221,8 @@ public class MMElementRule implements IRule {
     }
 
     /**
-     * Get the map linking the symbol of the element and number maximum of occurrence.
-     * For the analysis with the DNP database and mass lower than 2000 Da.
+     * Get the map linking the symbol of the element and number maximum of occurrence. For the
+     * analysis with the DNP database and mass lower than 2000 Da.
      *
      * @return The HashMap of the symbol linked with the maximum occurrence
      */
@@ -248,8 +243,8 @@ public class MMElementRule implements IRule {
     }
 
     /**
-     * Get the map linking the symbol of the element and number maximum of occurrence.
-     * For the analysis with the DNP database and mass lower than 3000 Da.
+     * Get the map linking the symbol of the element and number maximum of occurrence. For the
+     * analysis with the DNP database and mass lower than 3000 Da.
      *
      * @return The HashMap of the symbol linked with the maximum occurrence
      */
@@ -270,8 +265,8 @@ public class MMElementRule implements IRule {
     }
 
     /**
-     * Get the map linking the symbol of the element and number maximum of occurrence.
-     * For the analysis with the Wisley database and mass lower than 500 Da.
+     * Get the map linking the symbol of the element and number maximum of occurrence. For the
+     * analysis with the Wisley database and mass lower than 500 Da.
      *
      * @return The HashMap of the symbol linked with the maximum occurrence
      */
@@ -293,8 +288,8 @@ public class MMElementRule implements IRule {
     }
 
     /**
-     * Get the map linking the symbol of the element and number maximum of occurrence.
-     * For the analysis with the Wisley database and mass lower than 1000 Da.
+     * Get the map linking the symbol of the element and number maximum of occurrence. For the
+     * analysis with the Wisley database and mass lower than 1000 Da.
      *
      * @return The HashMap of the symbol linked with the maximum occurrence
      */
@@ -316,8 +311,8 @@ public class MMElementRule implements IRule {
     }
 
     /**
-     * Get the map linking the symbol of the element and number maximum of occurrence.
-     * For the analysis with the Wisley database and mass lower than 2000 Da.
+     * Get the map linking the symbol of the element and number maximum of occurrence. For the
+     * analysis with the Wisley database and mass lower than 2000 Da.
      *
      * @return The HashMap of the symbol linked with the maximum occurrence
      */

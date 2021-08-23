@@ -27,7 +27,6 @@ package org.openscience.cdk.io.formats;
  *
  * @cdk.module ioformats
  * @cdk.githash
- *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  * @cdk.created 2004-10-25
  */
@@ -48,18 +47,16 @@ public interface IChemFormat extends IResourceFormat {
     public String getWriterClassName();
 
     /**
-     * Returns an integer indicating the data features that this
-     * format supports. The integer is composed as explained in
-     * DataFeatures. May be set to DataFeatures.NONE as default.
+     * Returns an integer indicating the data features that this format supports. The integer is
+     * composed as explained in DataFeatures. May be set to DataFeatures.NONE as default.
      *
      * @see org.openscience.cdk.tools.DataFeatures
      */
     public int getSupportedDataFeatures();
 
     /**
-     * Returns an integer indicating the data features that this
-     * format requires. For example, the XYZ format requires 3D
-     * coordinates.
+     * Returns an integer indicating the data features that this format requires. For example, the
+     * XYZ format requires 3D coordinates.
      *
      * @see org.openscience.cdk.tools.DataFeatures
      */

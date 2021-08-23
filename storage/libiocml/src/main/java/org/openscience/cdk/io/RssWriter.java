@@ -14,14 +14,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Vector;
-
 import nu.xom.Attribute;
 import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.ProcessingInstruction;
 import nu.xom.Text;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -40,42 +37,38 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.libio.cml.Convertor;
 
 /**
- * Generates an RSS feed. It the object is a {@link IAtomContainerSet}, the molecules
- * are put in separately. All other objects are made CML and put in.
+ * Generates an RSS feed. It the object is a {@link IAtomContainerSet}, the molecules are put in
+ * separately. All other objects are made CML and put in.
  *
- * @cdk.module       libiocml
+ * @cdk.module libiocml
  * @cdk.githash
  * @cdk.iooptions
- *
  * @author Stefan Kuhn
- *
  * @cdk.keyword RSS
  */
 public class RssWriter extends DefaultChemObjectWriter {
 
-    private final static String NS_RSS10      = "http://purl.org/rss/1.0/";
-    private final static String NS_RDF        = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
-    private final static String NS_DCELEMENTS = "http://purl.org/dc/elements/1.1/";
+    private static final String NS_RSS10 = "http://purl.org/rss/1.0/";
+    private static final String NS_RDF = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+    private static final String NS_DCELEMENTS = "http://purl.org/dc/elements/1.1/";
 
-    private BufferedWriter      writer;
-    private Map                 linkmap       = new HashMap();
-    private Map                 datemap       = new HashMap();
-    private Map                 titlemap      = new HashMap();
-    private Map                 creatormap    = new HashMap();
-    private Map                 inchimap      = new HashMap();
-    private String              creator       = "";
-    private String              title         = "";
-    private String              link          = "";
-    private String              description   = "";
-    private String              publisher     = "";
-    private String              imagelink     = "";
-    private String              about         = "";
-    private String              timezone      = "+01:00";
-    private Map                 multiMap      = new HashMap();
+    private BufferedWriter writer;
+    private Map linkmap = new HashMap();
+    private Map datemap = new HashMap();
+    private Map titlemap = new HashMap();
+    private Map creatormap = new HashMap();
+    private Map inchimap = new HashMap();
+    private String creator = "";
+    private String title = "";
+    private String link = "";
+    private String description = "";
+    private String publisher = "";
+    private String imagelink = "";
+    private String about = "";
+    private String timezone = "+01:00";
+    private Map multiMap = new HashMap();
 
-    /**
-     * Flushes the output and closes this object.
-     */
+    /** Flushes the output and closes this object. */
     @Override
     public void close() throws IOException {
         writer.close();
@@ -119,8 +112,10 @@ public class RssWriter extends DefaultChemObjectWriter {
     @Override
     public void write(IChemObject object) throws CDKException {
         try {
-            ProcessingInstruction processingInstruction = new ProcessingInstruction("xml-stylesheet",
-                    "href=\"http://www.w3.org/2000/08/w3c-synd/style.css\" type=\"text/css\"");
+            ProcessingInstruction processingInstruction =
+                    new ProcessingInstruction(
+                            "xml-stylesheet",
+                            "href=\"http://www.w3.org/2000/08/w3c-synd/style.css\" type=\"text/css\"");
             Element rdfElement = new Element("rdf:RDF", NS_RDF);
             rdfElement.addNamespaceDeclaration("", NS_RSS10);
             rdfElement.addNamespaceDeclaration("mn", "http://usefulinc.com/rss/manifest/");
@@ -165,7 +160,8 @@ public class RssWriter extends DefaultChemObjectWriter {
                 IChemObject chemObject = (IChemObject) list.get(i);
                 Element itemElement = new Element("item", NS_RSS10);
                 String easylink = (String) linkmap.get(chemObject);
-                if (easylink != null) itemElement.addAttribute(new Attribute("rdf:about", NS_RDF, easylink));
+                if (easylink != null)
+                    itemElement.addAttribute(new Attribute("rdf:about", NS_RDF, easylink));
                 Element link2Element = new Element("link", NS_RSS10);
                 link2Element.appendChild(new Text(easylink));
                 itemElement.appendChild(link2Element);
@@ -185,8 +181,10 @@ public class RssWriter extends DefaultChemObjectWriter {
                 }
                 if (datemap.get(chemObject) != null) {
                     Element dateElement = new Element("dc:date", NS_DCELEMENTS);
-                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ROOT);
-                    dateElement.appendChild(new Text(formatter.format((Date) datemap.get(chemObject)) + timezone));
+                    SimpleDateFormat formatter =
+                            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ROOT);
+                    dateElement.appendChild(
+                            new Text(formatter.format((Date) datemap.get(chemObject)) + timezone));
                     itemElement.appendChild(dateElement);
                 }
                 Element creator2Element = new Element("dc:creator", NS_DCELEMENTS);
@@ -194,7 +192,9 @@ public class RssWriter extends DefaultChemObjectWriter {
                 itemElement.appendChild(creator2Element);
                 // add the InChI to the CMLRSS feed
                 if (inchimap.get(chemObject) != null) {
-                    Element inchiElement = new Element("cml:identifier", "http://www.xml-cml.org/schema/cml2/core/");
+                    Element inchiElement =
+                            new Element(
+                                    "cml:identifier", "http://www.xml-cml.org/schema/cml2/core/");
                     inchiElement.appendChild(new Text((String) inchimap.get(chemObject)));
                     itemElement.appendChild(inchiElement);
                 }
@@ -222,7 +222,8 @@ public class RssWriter extends DefaultChemObjectWriter {
                 } else if (object instanceof IChemFile) {
                     root = convertor.cdkChemFileToCMLList((IChemFile) object);
                 } else {
-                    throw new CDKException("Unsupported chemObject: " + object.getClass().getName());
+                    throw new CDKException(
+                            "Unsupported chemObject: " + object.getClass().getName());
                 }
                 itemElement.appendChild(root);
                 if (multiMap.get(chemObject) != null) {
@@ -234,7 +235,8 @@ public class RssWriter extends DefaultChemObjectWriter {
                 }
                 rdfElement.appendChild(itemElement);
                 Element imageElement2 = new Element("rdf:li", NS_RDF);
-                imageElement2.addAttribute(new Attribute("rdf:resource", NS_RDF, (String) linkmap.get(chemObject)));
+                imageElement2.addAttribute(
+                        new Attribute("rdf:resource", NS_RDF, (String) linkmap.get(chemObject)));
                 seqElement.appendChild(imageElement2);
             }
             writer.write(doc.toXML());
@@ -242,147 +244,151 @@ public class RssWriter extends DefaultChemObjectWriter {
         } catch (IOException ex) {
             throw new CDKException(ex.getMessage(), ex);
         }
-
     }
 
     /**
-     * @return the datemap. If you put a java.util.Date in this map with one of the objects you want to write as key, it will be added as a date to this object (no validity check is done)
+     * @return the datemap. If you put a java.util.Date in this map with one of the objects you want
+     *     to write as key, it will be added as a date to this object (no validity check is done)
      */
     public Map getDatemap() {
         return datemap;
     }
 
     /**
-     * @param datemap the datemap. If you put a java.uitl.Date in this map with one of the objects you want to write as key, it will be added as a datek to this object (no validity check is done)
+     * @param datemap the datemap. If you put a java.uitl.Date in this map with one of the objects
+     *     you want to write as key, it will be added as a datek to this object (no validity check
+     *     is done)
      */
     public void setDatemap(Map datemap) {
         this.datemap = datemap;
     }
 
     /**
-     * @return the linkmap. If you put a String in this map with one of the objects you want to write as key, it will be added as a link to this object (no validity check is done)
+     * @return the linkmap. If you put a String in this map with one of the objects you want to
+     *     write as key, it will be added as a link to this object (no validity check is done)
      */
     public Map getLinkmap() {
         return linkmap;
     }
 
     /**
-     * @param linkmap the linkmap. If you put a String in this map with one of the objects you want to write as key, it will be added as a link to this object (no validity check is done)
+     * @param linkmap the linkmap. If you put a String in this map with one of the objects you want
+     *     to write as key, it will be added as a link to this object (no validity check is done)
      */
     public void setLinkmap(Map linkmap) {
         this.linkmap = linkmap;
     }
 
     /**
-     * @return the titlemap. If you put a String in this map with one of the objects you want to write as key, it will be added as a title to this object (no validity check is done)
+     * @return the titlemap. If you put a String in this map with one of the objects you want to
+     *     write as key, it will be added as a title to this object (no validity check is done)
      */
     public Map getTitlemap() {
         return titlemap;
     }
 
     /**
-     * @param titlemap the titlemap. If you put a String in this map with one of the objects you want to write as key, it will be added as a titel to this object (no validity check is done)
+     * @param titlemap the titlemap. If you put a String in this map with one of the objects you
+     *     want to write as key, it will be added as a titel to this object (no validity check is
+     *     done)
      */
     public void setTitlemap(Map titlemap) {
         this.titlemap = titlemap;
     }
 
     /**
-     * @return the creatoremap. If you put a String in this map with one of the objects you want to write as key, it will be added as a creator to this object (no validity check is done)
+     * @return the creatoremap. If you put a String in this map with one of the objects you want to
+     *     write as key, it will be added as a creator to this object (no validity check is done)
      */
     public Map getCreatormap() {
         return creatormap;
     }
 
     /**
-     * @param creatormap the creatormap. If you put a String in this map with one of the objects you want to write as key, it will be added as a creator to this object (no validity check is done)
+     * @param creatormap the creatormap. If you put a String in this map with one of the objects you
+     *     want to write as key, it will be added as a creator to this object (no validity check is
+     *     done)
      */
     public void setCreatormap(Map creatormap) {
         this.creatormap = creatormap;
     }
 
-    /**
-     * @param about This will be the about for the rss feed
-     */
+    /** @param about This will be the about for the rss feed */
     public void setAbout(String about) {
         this.about = about;
     }
 
-    /**
-     * @param creator This will be the creator for the rss feed
-     */
+    /** @param creator This will be the creator for the rss feed */
     public void setCreator(String creator) {
         this.creator = creator;
     }
 
-    /**
-     * @param description This will be the description for the rss feed
-     */
+    /** @param description This will be the description for the rss feed */
     public void setDescription(String description) {
         this.description = description;
     }
 
-    /**
-     * @param imagelink This will be the imagelink for the rss feed
-     */
+    /** @param imagelink This will be the imagelink for the rss feed */
     public void setImagelink(String imagelink) {
         this.imagelink = imagelink;
     }
 
-    /**
-     * @param link This will be the link for the rss feed
-     */
+    /** @param link This will be the link for the rss feed */
     public void setLink(String link) {
         this.link = link;
     }
 
-    /**
-     * @param publisher This will be the publisher for the rss feed
-     */
+    /** @param publisher This will be the publisher for the rss feed */
     public void setPublisher(String publisher) {
         this.publisher = publisher;
     }
 
-    /**
-     * @param title This will be the title for the rss feed
-     */
+    /** @param title This will be the title for the rss feed */
     public void setTitle(String title) {
         this.title = title;
     }
 
     /**
-     * @return the multimap. If you put any number of nu.xom.Elements in this map with one of the objects you want to write as key, it will be added as a child to the same node as the cml code of the object
+     * @return the multimap. If you put any number of nu.xom.Elements in this map with one of the
+     *     objects you want to write as key, it will be added as a child to the same node as the cml
+     *     code of the object
      */
     public Map getMultiMap() {
         return multiMap;
     }
 
     /**
-     * @param multiMap If you put any number of nu.xom.Elements in this map with one of the objects you want to write as key, it will be added as a child to the same node as the cml code of the object
+     * @param multiMap If you put any number of nu.xom.Elements in this map with one of the objects
+     *     you want to write as key, it will be added as a child to the same node as the cml code of
+     *     the object
      */
     public void setMultiMap(Map multiMap) {
         this.multiMap = multiMap;
     }
 
     /**
-     * @param timezone This will be added to the data as timezone. format according to 23c. Examples "+01:00" "-05:00"
+     * @param timezone This will be added to the data as timezone. format according to 23c. Examples
+     *     "+01:00" "-05:00"
      */
     public void setTimezone(String timezone) {
         this.timezone = timezone;
     }
 
     /**
-     * @return inchimap If you put any number of Strings in this map with one of the objects you want to write as key, it will be added as a child to the same node as the cml code of the object
+     * @return inchimap If you put any number of Strings in this map with one of the objects you
+     *     want to write as key, it will be added as a child to the same node as the cml code of the
+     *     object
      */
     public Map getInchimap() {
         return inchimap;
     }
 
     /**
-     * @param inchimap If you put any number of Strings in this map with one of the objects you want to write as key, it will be added as a child to the same node as the cml code of the object
+     * @param inchimap If you put any number of Strings in this map with one of the objects you want
+     *     to write as key, it will be added as a child to the same node as the cml code of the
+     *     object
      */
     public void setInchimap(Map inchimap) {
         this.inchimap = inchimap;
     }
-
 }

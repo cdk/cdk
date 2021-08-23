@@ -1,26 +1,22 @@
 /**
+ * Copyright (C) 2006-2010 Syed Asad Rahman <asad@ebi.ac.uk>
  *
- * Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
+ * <p>Contact: cdk-devel@lists.sourceforge.net
  *
- * Contact: cdk-devel@lists.sourceforge.net
+ * <p>This program is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation; either version
+ * 2.1 of the License, or (at your option) any later version. All we ask is that proper credit is
+ * given for our work, which includes - but is not limited to - adding the above copyright notice to
+ * the beginning of your source code files, and to any copyright notice that you may distribute with
+ * programs based on this work.
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1
- * of the License, or (at your option) any later version.
- * All we ask is that proper credit is given for our work, which includes
- * - but is not limited to - adding the above copyright notice to the beginning
- * of your source code files, and to any copyright notice that you may distribute
- * with programs based on this work.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * <p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ * <p>You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+ * Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.smsd.tools;
 
@@ -39,17 +35,19 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
  * Class that cleans a molecule before MCS search.
+ *
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is
+ *     available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public class MoleculeSanityCheck {
 
     /**
      * Modules for cleaning a molecule
+     *
      * @param molecule
      * @return cleaned AtomContainer
      */
@@ -89,8 +87,9 @@ public class MoleculeSanityCheck {
     }
 
     /**
-     * Fixes Aromaticity of the molecule
-     * i.e. need to find rings and aromaticity again since added H's
+     * Fixes Aromaticity of the molecule i.e. need to find rings and aromaticity again since added
+     * H's
+     *
      * @param mol
      */
     public static void configure(IAtomContainer mol) {
@@ -106,7 +105,8 @@ public class MoleculeSanityCheck {
 
         try {
             // figure out which atoms are in aromatic rings:
-            CDKHydrogenAdder cdk = CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance());
+            CDKHydrogenAdder cdk =
+                    CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance());
             ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
             cdk.addImplicitHydrogens(mol);
 
@@ -120,14 +120,15 @@ public class MoleculeSanityCheck {
 
             for (int i = 0; i < mol.getAtomCount(); i++) {
                 mol.getAtom(i).setFlag(CDKConstants.ISAROMATIC, false);
-                jloop: for (int j = 0; j < ringSet.getAtomContainerCount(); j++) {
-                    //logger.debug(i+"\t"+j);
+                jloop:
+                for (int j = 0; j < ringSet.getAtomContainerCount(); j++) {
+                    // logger.debug(i+"\t"+j);
                     IRing ring = (IRing) ringSet.getAtomContainer(j);
                     if (!ring.getFlag(CDKConstants.ISAROMATIC)) {
                         continue jloop;
                     }
                     boolean haveatom = ring.contains(mol.getAtom(i));
-                    //logger.debug("haveatom="+haveatom);
+                    // logger.debug("haveatom="+haveatom);
                     if (haveatom && ring.getAtomCount() == 6) {
                         mol.getAtom(i).setFlag(CDKConstants.ISAROMATIC, true);
                     }

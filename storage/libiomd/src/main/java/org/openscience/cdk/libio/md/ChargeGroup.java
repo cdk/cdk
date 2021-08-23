@@ -29,7 +29,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 /**
  * A ChargeGroup (CG) is a numbered collection of atoms in an MDMolecule.
  *
- * A CG is a small set of atoms with total zero or Integer charge.
+ * <p>A CG is a small set of atoms with total zero or Integer charge.
  *
  * @author ola
  * @cdk.module libiomd
@@ -39,18 +39,14 @@ public class ChargeGroup extends AtomContainer {
 
     private static final long serialVersionUID = 362147331841737028L;
 
-    private int               number;
-    private MDMolecule        parentMolecule;
-    private IAtom             switchingAtom;
+    private int number;
+    private MDMolecule parentMolecule;
+    private IAtom switchingAtom;
 
-    /**
-     * Empty constructor.
-     */
+    /** Empty constructor. */
     public ChargeGroup() {}
 
-    /**
-     * Constructor to create a ChargeGroup based on an AC, a number, and a MDMolecule.
-     */
+    /** Constructor to create a ChargeGroup based on an AC, a number, and a MDMolecule. */
     public ChargeGroup(IAtomContainer container, int number, MDMolecule parentMolecule) {
         super(container);
         this.number = number;
@@ -80,5 +76,4 @@ public class ChargeGroup extends AtomContainer {
     public void setSwitchingAtom(IAtom switchingAtom) {
         this.switchingAtom = switchingAtom;
     }
-
 }

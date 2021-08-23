@@ -24,36 +24,35 @@
 
 package org.openscience.cdk.renderer.generators.standard;
 
+import java.util.List;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.SymbolVisibility;
 
-import java.util.List;
-
 /**
  * Extended existing symbol visibility options to account for selection of atoms in the standard
- * generator. 
+ * generator.
  *
- * The selection viability displays an atom symbol regardless as to whether it is normally 'shown'.
- * By default, the symbol is shown if the atom is selected an not next to any selected bonds
- * (disconnected). Alternatively, all select atoms can be displayed. 
+ * <p>The selection viability displays an atom symbol regardless as to whether it is normally
+ * 'shown'. By default, the symbol is shown if the atom is selected an not next to any selected
+ * bonds (disconnected). Alternatively, all select atoms can be displayed.
  *
- * An atom or bond is selected if the {@link StandardGenerator#HIGHLIGHT_COLOR} is non-null.
+ * <p>An atom or bond is selected if the {@link StandardGenerator#HIGHLIGHT_COLOR} is non-null.
  *
  * @author John May
  */
 public final class SelectionVisibility extends SymbolVisibility {
 
     private final SymbolVisibility delegate;
-    private final boolean          showAll;
+    private final boolean showAll;
 
     /**
      * Internal constructor.
      *
      * @param delegate default viability
-     * @param showAll      all select atoms are displayed
+     * @param showAll all select atoms are displayed
      */
     private SelectionVisibility(SymbolVisibility delegate, boolean showAll) {
         this.delegate = delegate;
@@ -81,9 +80,7 @@ public final class SelectionVisibility extends SymbolVisibility {
         return new SelectionVisibility(visibility, true);
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean visible(IAtom atom, List<IBond> neighbors, RendererModel model) {
         if (isSelected(atom, model) && (showAll || !hasSelectedBond(neighbors, model))) return true;

@@ -22,13 +22,10 @@
  */
 package org.openscience.cdk.io.formats;
 
-/**
- * @cdk.module test-ioformats
- */
+/** @cdk.module test-ioformats */
 public class PCModelFormatTest extends ChemFormatTest {
 
     public PCModelFormatTest() {
         super.setChemFormat((IChemFormat) PCModelFormat.getInstance());
     }
-
 }

@@ -18,6 +18,9 @@
  */
 package org.openscience.cdk.reaction.type;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
@@ -43,31 +46,23 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 /**
- * TestSuite that runs a test for the SharingChargeDBReactionTest.
- * Generalized Reaction: [A+]=B => A| + [B+].
+ * TestSuite that runs a test for the SharingChargeDBReactionTest. Generalized Reaction: [A+]=B =>
+ * A| + [B+].
  *
  * @cdk.module test-reaction
  */
 public class SharingChargeSBReactionTest extends ReactionProcessTest {
 
     private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-    private IChemObjectBuilder            builder = SilentChemObjectBuilder.getInstance();
+    private IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
-    /**
-     *  The JUnit setup method
-     */
+    /** The JUnit setup method */
     public SharingChargeSBReactionTest() throws Exception {
         setReaction(SharingChargeSBReaction.class);
     }
 
-    /**
-     *  The JUnit setup method
-     */
+    /** The JUnit setup method */
     @Test
     public void testSharingChargeSBReaction() throws Exception {
         IReactionProcess type = new SharingChargeSBReaction();
@@ -75,11 +70,9 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
     }
 
     /**
-     * A unit test suite for JUnit. Reaction:  methoxymethane.
-     * C[O+]!-!C =>  CO + [C+]
+     * A unit test suite for JUnit. Reaction: methoxymethane. C[O+]!-!C => CO + [C+]
      *
-     *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     @Override
@@ -103,22 +96,21 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
         IAtomContainer product1 = setOfReactions.getReaction(1).getProducts().getAtomContainer(0);
 
         IAtomContainer molecule1 = getExpectedProducts().getAtomContainer(0);
-        IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product1);
+        IQueryAtomContainer queryAtom =
+                QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product1);
         Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule1, queryAtom));
 
         IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
         IAtomContainer expected2 = getExpectedProducts().getAtomContainer(0);
         queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected2);
         Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(product2, queryAtom));
-
     }
 
     /**
-     * A unit test suite for JUnit. Reaction:  methoxymethane.
-     * C[O+]!-!C =>  CO + [C+]
-     * Manually put of the center active.
+     * A unit test suite for JUnit. Reaction: methoxymethane. C[O+]!-!C => CO + [C+] Manually put of
+     * the center active.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testManuallyCentreActive() throws Exception {
@@ -146,7 +138,8 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
 
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         IAtomContainer molecule1 = getExpectedProducts().getAtomContainer(0);
-        IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product1);
+        IQueryAtomContainer queryAtom =
+                QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product1);
         Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule1, queryAtom));
 
         IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
@@ -158,7 +151,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testCDKConstants_REACTIVE_CENTER() throws Exception {
@@ -193,7 +186,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testMapping() throws Exception {
@@ -221,33 +214,30 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
 
         Assert.assertEquals(10, setOfReactions.getReaction(0).getMappingCount());
 
-        IAtom mappedProductA1 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
-                molecule.getAtom(1));
+        IAtom mappedProductA1 =
+                (IAtom)
+                        ReactionManipulator.getMappedChemObject(
+                                setOfReactions.getReaction(0), molecule.getAtom(1));
         Assert.assertEquals(mappedProductA1, product1.getAtom(1));
-        mappedProductA1 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
-                molecule.getAtom(2));
+        mappedProductA1 =
+                (IAtom)
+                        ReactionManipulator.getMappedChemObject(
+                                setOfReactions.getReaction(0), molecule.getAtom(2));
         Assert.assertEquals(mappedProductA1, product2.getAtom(0));
-
     }
 
-    /**
-     * Test to recognize if this IAtomContainer_1 matches correctly into the CDKAtomTypes.
-     */
+    /** Test to recognize if this IAtomContainer_1 matches correctly into the CDKAtomTypes. */
     @Test
     public void testAtomTypesAtomContainer1() throws Exception {
         IAtomContainer moleculeTest = getExampleReactants().getAtomContainer(0);
         makeSureAtomTypesAreRecognized(moleculeTest);
-
     }
 
-    /**
-     * Test to recognize if this IAtomContainer_2 matches correctly into the CDKAtomTypes.
-     */
+    /** Test to recognize if this IAtomContainer_2 matches correctly into the CDKAtomTypes. */
     @Test
     public void testAtomTypesAtomContainer2() throws Exception {
         IAtomContainer moleculeTest = getExpectedProducts().getAtomContainer(0);
         makeSureAtomTypesAreRecognized(moleculeTest);
-
     }
 
     /**
@@ -256,7 +246,8 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
      * @return The IAtomContainerSet
      */
     private IAtomContainerSet getExampleReactants() {
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
 
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -340,7 +331,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
     /**
      * Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
      *
-     * @param molecule          The IAtomContainer to analyze
+     * @param molecule The IAtomContainer to analyze
      * @throws CDKException
      */
     private void makeSureAtomTypesAreRecognized(IAtomContainer molecule) throws Exception {
@@ -349,19 +340,20 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
         while (atoms.hasNext()) {
             IAtom nextAtom = atoms.next();
-            Assert.assertNotNull("Missing atom type for: " + nextAtom, matcher.findMatchingAtomType(molecule, nextAtom));
+            Assert.assertNotNull(
+                    "Missing atom type for: " + nextAtom,
+                    matcher.findMatchingAtomType(molecule, nextAtom));
         }
     }
 
     /**
-     * A unit test suite for JUnit. Reaction:.
-     * C[N+]!-!C => CN + [C+]
+     * A unit test suite for JUnit. Reaction:. C[N+]!-!C => CN + [C+]
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testNsp3ChargeSingleB() throws Exception {
-        //Smiles("C[N+]C")
+        // Smiles("C[N+]C")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
         molecule.addAtom(builder.newInstance(IAtom.class, "N"));
@@ -392,7 +384,8 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
         molecule.getAtom(2).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         setOfReactants.addAtomContainer(molecule);
 
         IReactionProcess type = new SharingChargeSBReaction();
@@ -409,7 +402,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
 
         // expected products
 
-        //Smiles("CN")
+        // Smiles("CN")
         IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
         expected1.addAtom(builder.newInstance(IAtom.class, "C"));
         expected1.addAtom(builder.newInstance(IAtom.class, "N"));
@@ -427,10 +420,11 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
         lpcheck.saturate(expected1);
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
-        QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
+        QueryAtomContainer queryAtom =
+                QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
         Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(product1, queryAtom));
 
-        //Smiles("[C+]")
+        // Smiles("[C+]")
         IAtomContainer expected2 = builder.newInstance(IAtomContainer.class);
         expected2.addAtom(builder.newInstance(IAtom.class, "C"));
         expected2.getAtom(0).setFormalCharge(+1);
@@ -444,19 +438,16 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
         IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
         queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected2);
         Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(product2, queryAtom));
-
     }
 
     /**
-     * A unit test suite for JUnit. Reaction:.
-     * C=[N+]!-!C => C=N + [C+]
+     * A unit test suite for JUnit. Reaction:. C=[N+]!-!C => C=N + [C+]
      *
-     *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testNsp2ChargeSingleB() throws Exception {
-        //Smiles("C=[N+]C")
+        // Smiles("C=[N+]C")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
         molecule.addAtom(builder.newInstance(IAtom.class, "N"));
@@ -483,7 +474,8 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
         molecule.getAtom(2).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         setOfReactants.addAtomContainer(molecule);
 
         IReactionProcess type = new SharingChargeSBReaction();
@@ -500,7 +492,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
 
         // expected products
 
-        //Smiles("C=N")
+        // Smiles("C=N")
         IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
         expected1.addAtom(builder.newInstance(IAtom.class, "C"));
         expected1.addAtom(builder.newInstance(IAtom.class, "N"));
@@ -514,10 +506,11 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
         lpcheck.saturate(expected1);
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
-        QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
+        QueryAtomContainer queryAtom =
+                QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
         Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(product1, queryAtom));
 
-        //Smiles("[C+]")
+        // Smiles("[C+]")
         IAtomContainer expected2 = builder.newInstance(IAtomContainer.class);
         expected2.addAtom(builder.newInstance(IAtom.class, "C"));
         expected2.getAtom(0).setFormalCharge(+1);
@@ -531,18 +524,16 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
         IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
         queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected2);
         Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(product2, queryAtom));
-
     }
 
     /**
-     * A unit test suite for JUnit. Reaction:.
-     * [F+]!-!C => F + [C+]
+     * A unit test suite for JUnit. Reaction:. [F+]!-!C => F + [C+]
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testFspChargeSingleB() throws Exception {
-        //Smiles("[F+]C")
+        // Smiles("[F+]C")
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "F"));
         molecule.getAtom(0).setFormalCharge(+1);
@@ -563,7 +554,8 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
         molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         setOfReactants.addAtomContainer(molecule);
 
         IReactionProcess type = new SharingChargeSBReaction();
@@ -578,7 +570,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
 
         Assert.assertEquals(1, setOfReactions.getReactionCount());
 
-        //Smiles("FH")
+        // Smiles("FH")
         IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
         expected1.addAtom(builder.newInstance(IAtom.class, "F"));
         expected1.addAtom(builder.newInstance(IAtom.class, "H"));
@@ -586,10 +578,11 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
         lpcheck.saturate(expected1);
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
-        QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
+        QueryAtomContainer queryAtom =
+                QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
         Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(product1, queryAtom));
 
-        //Smiles("[C+]")
+        // Smiles("[C+]")
         IAtomContainer expected2 = builder.newInstance(IAtomContainer.class);
         expected2.addAtom(builder.newInstance(IAtom.class, "C"));
         expected2.getAtom(0).setFormalCharge(+1);
@@ -604,5 +597,4 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
         queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected2);
         Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(product2, queryAtom));
     }
-
 }

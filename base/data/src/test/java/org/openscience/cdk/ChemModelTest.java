@@ -23,36 +23,36 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractChemModelTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.AbstractChemModelTest;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the ChemModel class.
  *
  * @cdk.module test-data
- *
  * @see org.openscience.cdk.ChemModel
  */
 public class ChemModelTest extends AbstractChemModelTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new ChemModel();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new ChemModel();
+                    }
+                });
     }
 
     @Test
@@ -107,5 +107,4 @@ public class ChemModelTest extends AbstractChemModelTest {
         model3.setCrystal(null);
         Assert.assertTrue(model3.isEmpty());
     }
-
 }

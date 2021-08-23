@@ -26,12 +26,10 @@ package org.openscience.cdk.modeling.builder3d;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
 import javax.vecmath.AxisAngle4d;
 import javax.vecmath.Matrix3d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -40,73 +38,83 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElement;
 
 /**
- *  A set of static utility classes for geometric calculations on Atoms.
+ * A set of static utility classes for geometric calculations on Atoms.
  *
- *@author         Peter Murray-Rust,chhoppe,egonw
- *@cdk.created    2003-??-??
- * @cdk.module    builder3d
+ * @author Peter Murray-Rust,chhoppe,egonw
+ * @cdk.created 2003-??-??
+ * @cdk.module builder3d
  * @cdk.githash
  */
 public class AtomTetrahedralLigandPlacer3D {
 
-    private Map                 pSet                  = null;
-    public final static double  DEFAULT_BOND_LENGTH_H = 1.0;
+    private Map pSet = null;
+    public static final double DEFAULT_BOND_LENGTH_H = 1.0;
 
-    public final static double  TETRAHEDRAL_ANGLE     = 2.0 * Math.acos(1.0 / Math.sqrt(3.0));
+    public static final double TETRAHEDRAL_ANGLE = 2.0 * Math.acos(1.0 / Math.sqrt(3.0));
 
-    private final static double SP2_ANGLE             = 120 * Math.PI / 180;
-    private final static double SP_ANGLE              = Math.PI;
+    private static final double SP2_ANGLE = 120 * Math.PI / 180;
+    private static final double SP_ANGLE = Math.PI;
 
-    final static Vector3d       XV                    = new Vector3d(1.0, 0.0, 0.0);
-    final static Vector3d       YV                    = new Vector3d(0.0, 1.0, 0.0);
+    static final Vector3d XV = new Vector3d(1.0, 0.0, 0.0);
+    static final Vector3d YV = new Vector3d(0.0, 1.0, 0.0);
 
-    /**
-     *  Constructor for the AtomTetrahedralLigandPlacer3D object.
-     */
+    /** Constructor for the AtomTetrahedralLigandPlacer3D object. */
     AtomTetrahedralLigandPlacer3D() {}
 
     /**
-     *  Constructor for the setParameterSet object.
+     * Constructor for the setParameterSet object.
      *
-     *@param  moleculeParameter  Description of the Parameter
+     * @param moleculeParameter Description of the Parameter
      */
     public void setParameterSet(Map moleculeParameter) {
         pSet = moleculeParameter;
     }
 
     /**
-     *  Generate coordinates for all atoms which are singly bonded and have no
-     *  coordinates. This is useful when hydrogens are present but have no coordinates.
-     *  It knows about C, O, N, S only and will give tetrahedral or trigonal
-     *  geometry elsewhere. Bond lengths are computed from covalent radii or taken
-     *  out of a parameter set if available. Angles are tetrahedral or trigonal
+     * Generate coordinates for all atoms which are singly bonded and have no coordinates. This is
+     * useful when hydrogens are present but have no coordinates. It knows about C, O, N, S only and
+     * will give tetrahedral or trigonal geometry elsewhere. Bond lengths are computed from covalent
+     * radii or taken out of a parameter set if available. Angles are tetrahedral or trigonal
      *
-     * @param  atomContainer  the set of atoms involved
+     * @param atomContainer the set of atoms involved
      * @throws CDKException
-     * @cdk.keyword           coordinate calculation
-     * @cdk.keyword           3D model
+     * @cdk.keyword coordinate calculation
+     * @cdk.keyword 3D model
      */
-    public void add3DCoordinatesForSinglyBondedLigands(IAtomContainer atomContainer) throws CDKException {
+    public void add3DCoordinatesForSinglyBondedLigands(IAtomContainer atomContainer)
+            throws CDKException {
         IAtom refAtom = null;
         IAtom atomC = null;
         int nwanted = 0;
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
             refAtom = atomContainer.getAtom(i);
-            if (refAtom.getAtomicNumber() != IElement.H && hasUnsetNeighbour(refAtom, atomContainer)) {
+            if (refAtom.getAtomicNumber() != IElement.H
+                    && hasUnsetNeighbour(refAtom, atomContainer)) {
                 IAtomContainer noCoords = getUnsetAtomsInAtomContainer(refAtom, atomContainer);
                 IAtomContainer withCoords = getPlacedAtomsInAtomContainer(refAtom, atomContainer);
                 if (withCoords.getAtomCount() > 0) {
-                    atomC = getPlacedHeavyAtomInAtomContainer(withCoords.getAtom(0), refAtom, atomContainer);
+                    atomC =
+                            getPlacedHeavyAtomInAtomContainer(
+                                    withCoords.getAtom(0), refAtom, atomContainer);
                 }
-                if (refAtom.getFormalNeighbourCount() == 0 && refAtom.getAtomicNumber() == IElement.C) {
+                if (refAtom.getFormalNeighbourCount() == 0
+                        && refAtom.getAtomicNumber() == IElement.C) {
                     nwanted = noCoords.getAtomCount();
-                } else if (refAtom.getFormalNeighbourCount() == 0 && refAtom.getAtomicNumber() != IElement.C) {
+                } else if (refAtom.getFormalNeighbourCount() == 0
+                        && refAtom.getAtomicNumber() != IElement.C) {
                     nwanted = 4;
                 } else {
                     nwanted = refAtom.getFormalNeighbourCount() - withCoords.getAtomCount();
                 }
-                Point3d[] newPoints = get3DCoordinatesForLigands(refAtom, noCoords, withCoords, atomC, nwanted,
-                        DEFAULT_BOND_LENGTH_H, -1);
+                Point3d[] newPoints =
+                        get3DCoordinatesForLigands(
+                                refAtom,
+                                noCoords,
+                                withCoords,
+                                atomC,
+                                nwanted,
+                                DEFAULT_BOND_LENGTH_H,
+                                -1);
                 for (int j = 0; j < noCoords.getAtomCount(); j++) {
                     IAtom ligand = noCoords.getAtom(j);
                     Point3d newPoint = rescaleBondLength(refAtom, ligand, newPoints[j]);
@@ -121,13 +129,13 @@ public class AtomTetrahedralLigandPlacer3D {
     }
 
     /**
-     *  Rescales Point2 so that length 1-2 is sum of covalent radii.
-     *  If covalent radii cannot be found, use bond length of 1.0
+     * Rescales Point2 so that length 1-2 is sum of covalent radii. If covalent radii cannot be
+     * found, use bond length of 1.0
      *
-     *@param  atom1          stationary atom
-     *@param  atom2          movable atom
-     *@param  point2         coordinates for atom 2
-     *@return                new coordinates for atom 2
+     * @param atom1 stationary atom
+     * @param atom2 movable atom
+     * @param point2 coordinates for atom 2
+     * @return new coordinates for atom 2
      */
     public Point3d rescaleBondLength(IAtom atom1, IAtom atom2, Point3d point2) {
         Point3d point1 = atom1.getPoint3d();
@@ -148,46 +156,46 @@ public class AtomTetrahedralLigandPlacer3D {
     }
 
     /**
-     *  Adds 3D coordinates for singly-bonded ligands of a reference atom (A).
-     *  Initially designed for hydrogens. The ligands of refAtom are identified and
-     *  those with 3D coordinates used to generate the new points. (This allows
-     *  structures with partially known 3D coordinates to be used, as when groups
-     *  are added.) "Bent" and "non-planar" groups can be formed by taking a subset
-     *  of the calculated points. Thus R-NH2 could use 2 of the 3 points calculated
-     *  from (1,iii) nomenclature: A is point to which new ones are "attached". A
-     *  may have ligands B, C... B may have ligands J, K.. points X1, X2... are
-     *  returned The cases (see individual routines, which use idealised geometry
-     *  by default): (0) zero ligands of refAtom. The resultant points are randomly
-     *  oriented: (i) 1 points required; +x,0,0 (ii) 2 points: use +x,0,0 and
-     *  -x,0,0 (iii) 3 points: equilateral triangle in xy plane (iv) 4 points
-     *  x,x,x, x,-x,-x, -x,x,-x, -x,-x,x (1a) 1 ligand(B) of refAtom which itself
-     *  has a ligand (J) (i) 1 points required; vector along AB vector (ii) 2
-     *  points: 2 vectors in ABJ plane, staggered and eclipsed wrt J (iii) 3
-     *  points: 1 staggered wrt J, the others +- gauche wrt J (1b) 1 ligand(B) of
-     *  refAtom which has no other ligands. A random J is generated and (1a)
-     *  applied (2) 2 ligands(B, C) of refAtom A (i) 1 points required; vector in
-     *  ABC plane bisecting AB, AC. If ABC is linear, no points (ii) 2 points: 2
-     *  vectors at angle ang, whose resultant is 2i (3) 3 ligands(B, C, D) of
-     *  refAtom A (i) 1 points required; if A, B, C, D coplanar, no points. else
-     *  vector is resultant of BA, CA, DA fails if atom itself has no coordinates
-     *  or &gt;4 ligands
+     * Adds 3D coordinates for singly-bonded ligands of a reference atom (A). Initially designed for
+     * hydrogens. The ligands of refAtom are identified and those with 3D coordinates used to
+     * generate the new points. (This allows structures with partially known 3D coordinates to be
+     * used, as when groups are added.) "Bent" and "non-planar" groups can be formed by taking a
+     * subset of the calculated points. Thus R-NH2 could use 2 of the 3 points calculated from
+     * (1,iii) nomenclature: A is point to which new ones are "attached". A may have ligands B, C...
+     * B may have ligands J, K.. points X1, X2... are returned The cases (see individual routines,
+     * which use idealised geometry by default): (0) zero ligands of refAtom. The resultant points
+     * are randomly oriented: (i) 1 points required; +x,0,0 (ii) 2 points: use +x,0,0 and -x,0,0
+     * (iii) 3 points: equilateral triangle in xy plane (iv) 4 points x,x,x, x,-x,-x, -x,x,-x,
+     * -x,-x,x (1a) 1 ligand(B) of refAtom which itself has a ligand (J) (i) 1 points required;
+     * vector along AB vector (ii) 2 points: 2 vectors in ABJ plane, staggered and eclipsed wrt J
+     * (iii) 3 points: 1 staggered wrt J, the others +- gauche wrt J (1b) 1 ligand(B) of refAtom
+     * which has no other ligands. A random J is generated and (1a) applied (2) 2 ligands(B, C) of
+     * refAtom A (i) 1 points required; vector in ABC plane bisecting AB, AC. If ABC is linear, no
+     * points (ii) 2 points: 2 vectors at angle ang, whose resultant is 2i (3) 3 ligands(B, C, D) of
+     * refAtom A (i) 1 points required; if A, B, C, D coplanar, no points. else vector is resultant
+     * of BA, CA, DA fails if atom itself has no coordinates or &gt;4 ligands
      *
-     * @param  refAtom        (A) to which new ligands coordinates could be added
-     * @param  length         A-X length
-     * @param  angle          B-A-X angle (used in certain cases)
-     * @param  nwanted        Description of the Parameter
-     * @param  noCoords       Description of the Parameter
-     * @param  withCoords     Description of the Parameter
-     * @param  atomC          Description of the Parameter
-     * @return                Point3D[] points calculated. If request could not be
-     *      fulfilled (e.g. too many atoms, or strange geometry, returns empty
-     *      array (zero length, not null)
+     * @param refAtom (A) to which new ligands coordinates could be added
+     * @param length A-X length
+     * @param angle B-A-X angle (used in certain cases)
+     * @param nwanted Description of the Parameter
+     * @param noCoords Description of the Parameter
+     * @param withCoords Description of the Parameter
+     * @param atomC Description of the Parameter
+     * @return Point3D[] points calculated. If request could not be fulfilled (e.g. too many atoms,
+     *     or strange geometry, returns empty array (zero length, not null)
      * @throws CDKException
-     * @cdk.keyword           coordinate generation
+     * @cdk.keyword coordinate generation
      */
-
-    public Point3d[] get3DCoordinatesForLigands(IAtom refAtom, IAtomContainer noCoords, IAtomContainer withCoords,
-            IAtom atomC, int nwanted, double length, double angle) throws CDKException {
+    public Point3d[] get3DCoordinatesForLigands(
+            IAtom refAtom,
+            IAtomContainer noCoords,
+            IAtomContainer withCoords,
+            IAtom atomC,
+            int nwanted,
+            double length,
+            double angle)
+            throws CDKException {
         Point3d newPoints[] = new Point3d[1];
 
         if (noCoords.getAtomCount() == 0 && withCoords.getAtomCount() == 0) {
@@ -202,39 +210,49 @@ public class AtomTetrahedralLigandPlacer3D {
         IBond.Order refMaxBondOrder = refAtom.getMaxBondOrder();
         if (refAtom.getFormalNeighbourCount() == 1) {
             //        	WTF???
-        } else if (refAtom.getFormalNeighbourCount() == 2 || refMaxBondOrder == IBond.Order.TRIPLE) {
-            //sp
+        } else if (refAtom.getFormalNeighbourCount() == 2
+                || refMaxBondOrder == IBond.Order.TRIPLE) {
+            // sp
             if (angle == -1) {
                 angle = SP_ANGLE;
             }
             newPoints[0] = get3DCoordinatesForSPLigands(refAtom, withCoords, length, angle);
-        } else if (refAtom.getFormalNeighbourCount() == 3 || (refMaxBondOrder == IBond.Order.DOUBLE)) {
-            //sp2
+        } else if (refAtom.getFormalNeighbourCount() == 3
+                || (refMaxBondOrder == IBond.Order.DOUBLE)) {
+            // sp2
             if (angle == -1) {
                 angle = SP2_ANGLE;
             }
             try {
-                newPoints = get3DCoordinatesForSP2Ligands(refAtom, noCoords, withCoords, atomC, length, angle);
+                newPoints =
+                        get3DCoordinatesForSP2Ligands(
+                                refAtom, noCoords, withCoords, atomC, length, angle);
             } catch (Exception ex1) {
-                //				logger.debug("Get3DCoordinatesForLigandsERROR: Cannot place SP2 Ligands due to:" + ex1.toString());
+                //				logger.debug("Get3DCoordinatesForLigandsERROR: Cannot place SP2 Ligands due
+                // to:" + ex1.toString());
                 throw new CDKException("Cannot place sp2 substituents\n" + ex1.getMessage(), ex1);
             }
 
         } else {
-            //sp3
+            // sp3
             try {
-                newPoints = get3DCoordinatesForSP3Ligands(refAtom, noCoords, withCoords, atomC, nwanted, length, angle);
+                newPoints =
+                        get3DCoordinatesForSP3Ligands(
+                                refAtom, noCoords, withCoords, atomC, nwanted, length, angle);
             } catch (Exception ex1) {
-                //				logger.debug("Get3DCoordinatesForLigandsERROR: Cannot place SP3 Ligands due to:" + ex1.toString());
+                //				logger.debug("Get3DCoordinatesForLigandsERROR: Cannot place SP3 Ligands due
+                // to:" + ex1.toString());
                 throw new CDKException("Cannot place sp3 substituents\n" + ex1.getMessage(), ex1);
             }
         }
-        //logger.debug("...Ready "+newPoints.length+" "+newPoints[0].toString());
+        // logger.debug("...Ready "+newPoints.length+" "+newPoints[0].toString());
         return newPoints;
     }
 
-    public Point3d get3DCoordinatesForSPLigands(IAtom refAtom, IAtomContainer withCoords, double length, double angle) {
-        //logger.debug(" SP Ligands start "+refAtom.getPoint3d()+" "+(withCoords.getAtomAt(0)).getPoint3d());
+    public Point3d get3DCoordinatesForSPLigands(
+            IAtom refAtom, IAtomContainer withCoords, double length, double angle) {
+        // logger.debug(" SP Ligands start "+refAtom.getPoint3d()+"
+        // "+(withCoords.getAtomAt(0)).getPoint3d());
         Vector3d ca = new Vector3d(refAtom.getPoint3d());
         ca.sub((withCoords.getAtom(0)).getPoint3d());
         ca.normalize();
@@ -245,55 +263,75 @@ public class AtomTetrahedralLigandPlacer3D {
     }
 
     /**
-     *  Main method for the calculation of the ligand coordinates for sp2 atoms.
-     *  Decides if one or two coordinates should be created
+     * Main method for the calculation of the ligand coordinates for sp2 atoms. Decides if one or
+     * two coordinates should be created
      *
-     *@param  refAtom            central atom (Atom)
-     *@param  noCoords           Description of the Parameter
-     *@param  withCoords         Description of the Parameter
-     *@param  atomC              Description of the Parameter
-     *@param  length             Description of the Parameter
-     *@param  angle              Description of the Parameter
-     *@return                    coordinates as Points3d []
+     * @param refAtom central atom (Atom)
+     * @param noCoords Description of the Parameter
+     * @param withCoords Description of the Parameter
+     * @param atomC Description of the Parameter
+     * @param length Description of the Parameter
+     * @param angle Description of the Parameter
+     * @return coordinates as Points3d []
      */
-    public Point3d[] get3DCoordinatesForSP2Ligands(IAtom refAtom, IAtomContainer noCoords, IAtomContainer withCoords,
-            IAtom atomC, double length, double angle) {
-        //logger.debug(" SP2 Ligands start");
+    public Point3d[] get3DCoordinatesForSP2Ligands(
+            IAtom refAtom,
+            IAtomContainer noCoords,
+            IAtomContainer withCoords,
+            IAtom atomC,
+            double length,
+            double angle) {
+        // logger.debug(" SP2 Ligands start");
         Point3d newPoints[] = new Point3d[1];
         if (angle < 0) {
             angle = SP2_ANGLE;
         }
         if (withCoords.getAtomCount() >= 2) {
-            //logger.debug("Wanted:1 "+noCoords.getAtomCount());
-            newPoints[0] = calculate3DCoordinatesSP2_1(refAtom.getPoint3d(), (withCoords.getAtom(0)).getPoint3d(),
-                    (withCoords.getAtom(1)).getPoint3d(), length, -1 * angle);
+            // logger.debug("Wanted:1 "+noCoords.getAtomCount());
+            newPoints[0] =
+                    calculate3DCoordinatesSP2_1(
+                            refAtom.getPoint3d(),
+                            (withCoords.getAtom(0)).getPoint3d(),
+                            (withCoords.getAtom(1)).getPoint3d(),
+                            length,
+                            -1 * angle);
 
         } else if (withCoords.getAtomCount() <= 1) {
-            //logger.debug("NoCoords 2:"+noCoords.getAtomCount());
-            newPoints = calculate3DCoordinatesSP2_2(refAtom.getPoint3d(), (withCoords.getAtom(0)).getPoint3d(),
-                    (atomC != null) ? atomC.getPoint3d() : null, length, angle);
+            // logger.debug("NoCoords 2:"+noCoords.getAtomCount());
+            newPoints =
+                    calculate3DCoordinatesSP2_2(
+                            refAtom.getPoint3d(),
+                            (withCoords.getAtom(0)).getPoint3d(),
+                            (atomC != null) ? atomC.getPoint3d() : null,
+                            length,
+                            angle);
         }
-        //logger.debug("Ready SP2");
+        // logger.debug("Ready SP2");
         return newPoints;
     }
 
     /**
-     *  Main method for the calculation of the ligand coordinates for sp3 atoms.
-     *  Decides how many coordinates should be created
+     * Main method for the calculation of the ligand coordinates for sp3 atoms. Decides how many
+     * coordinates should be created
      *
-     *@param  refAtom            central atom (Atom)
-     *@param  nwanted            how many ligands should be created
-     *@param  length             bond length
-     *@param  angle              angle in a B-A-(X) system; a=central atom;
-     *      x=ligand with unknown coordinates
-     *@param  noCoords           Description of the Parameter
-     *@param  withCoords         Description of the Parameter
-     *@param  atomC              Description of the Parameter
-     *@return                    Description of the Return Value
+     * @param refAtom central atom (Atom)
+     * @param nwanted how many ligands should be created
+     * @param length bond length
+     * @param angle angle in a B-A-(X) system; a=central atom; x=ligand with unknown coordinates
+     * @param noCoords Description of the Parameter
+     * @param withCoords Description of the Parameter
+     * @param atomC Description of the Parameter
+     * @return Description of the Return Value
      */
-    public Point3d[] get3DCoordinatesForSP3Ligands(IAtom refAtom, IAtomContainer noCoords, IAtomContainer withCoords,
-            IAtom atomC, int nwanted, double length, double angle) {
-        //logger.debug("SP3 Ligands start ");
+    public Point3d[] get3DCoordinatesForSP3Ligands(
+            IAtom refAtom,
+            IAtomContainer noCoords,
+            IAtomContainer withCoords,
+            IAtom atomC,
+            int nwanted,
+            double length,
+            double angle) {
+        // logger.debug("SP3 Ligands start ");
         Point3d newPoints[] = new Point3d[0];
         Point3d aPoint = refAtom.getPoint3d();
         int nwithCoords = withCoords.getAtomCount();
@@ -303,8 +341,14 @@ public class AtomTetrahedralLigandPlacer3D {
         if (nwithCoords == 0) {
             newPoints = calculate3DCoordinates0(refAtom.getPoint3d(), nwanted, length);
         } else if (nwithCoords == 1) {
-            newPoints = calculate3DCoordinates1(aPoint, (withCoords.getAtom(0)).getPoint3d(),
-                    (atomC != null) ? atomC.getPoint3d() : null, nwanted, length, angle);
+            newPoints =
+                    calculate3DCoordinates1(
+                            aPoint,
+                            (withCoords.getAtom(0)).getPoint3d(),
+                            (atomC != null) ? atomC.getPoint3d() : null,
+                            nwanted,
+                            length,
+                            angle);
         } else if (nwithCoords == 2) {
             Point3d bPoint = withCoords.getAtom(0).getPoint3d();
             Point3d cPoint = withCoords.getAtom(1).getPoint3d();
@@ -316,21 +360,20 @@ public class AtomTetrahedralLigandPlacer3D {
             Point3d dPoint = withCoords.getAtom(2).getPoint3d();
             newPoints[0] = calculate3DCoordinates3(aPoint, bPoint, cPoint, dPoint, length);
         }
-        //logger.debug("...Ready");
+        // logger.debug("...Ready");
         return newPoints;
     }
 
     /**
-     *  Calculates substituent points. Calculate substituent points for (0) zero
-     *  ligands of aPoint. The resultant points are randomly oriented: (i) 1 points
-     *  required; +x,0,0 (ii) 2 points: use +x,0,0 and -x,0,0 (iii) 3 points:
-     *  equilateral triangle in the xy plane (iv) 4 points x,x,x, x,-x,-x, -x,x,-x,
-     *  -x,-x,x where 3x**2 = bond length
+     * Calculates substituent points. Calculate substituent points for (0) zero ligands of aPoint.
+     * The resultant points are randomly oriented: (i) 1 points required; +x,0,0 (ii) 2 points: use
+     * +x,0,0 and -x,0,0 (iii) 3 points: equilateral triangle in the xy plane (iv) 4 points x,x,x,
+     * x,-x,-x, -x,x,-x, -x,-x,x where 3x**2 = bond length
      *
-     *@param  aPoint   to which substituents are added
-     *@param  nwanted  number of points to calculate (1-4)
-     *@param  length   from aPoint
-     *@return          Point3d[] nwanted points (or zero if failed)
+     * @param aPoint to which substituents are added
+     * @param nwanted number of points to calculate (1-4)
+     * @param length from aPoint
+     * @return Point3d[] nwanted points (or zero if failed)
      */
     public Point3d[] calculate3DCoordinates0(Point3d aPoint, int nwanted, double length) {
         Point3d points[] = new Point3d[0];
@@ -368,23 +411,27 @@ public class AtomTetrahedralLigandPlacer3D {
     }
 
     /**
-     *  Calculate new point(s) X in a B-A system to form B-A-X. Use C as reference
-     *  for * staggering about the B-A bond (1a) 1 ligand(B) of refAtom (A) which
-     *  itself has a ligand (C) (i) 1 points required; vector along AB vector (ii)
-     *  2 points: 2 vectors in ABC plane, staggered and eclipsed wrt C (iii) 3
-     *  points: 1 staggered wrt C, the others +- gauche wrt C If C is null, a
-     *  random non-colinear C is generated
+     * Calculate new point(s) X in a B-A system to form B-A-X. Use C as reference for * staggering
+     * about the B-A bond (1a) 1 ligand(B) of refAtom (A) which itself has a ligand (C) (i) 1 points
+     * required; vector along AB vector (ii) 2 points: 2 vectors in ABC plane, staggered and
+     * eclipsed wrt C (iii) 3 points: 1 staggered wrt C, the others +- gauche wrt C If C is null, a
+     * random non-colinear C is generated
      *
-     *@param  aPoint   to which substituents are added
-     *@param  nwanted  number of points to calculate (1-3)
-     *@param  length   A-X length
-     *@param  angle    B-A-X angle
-     *@param  bPoint   Description of the Parameter
-     *@param  cPoint   Description of the Parameter
-     *@return          Point3d[] nwanted points (or zero if failed)
+     * @param aPoint to which substituents are added
+     * @param nwanted number of points to calculate (1-3)
+     * @param length A-X length
+     * @param angle B-A-X angle
+     * @param bPoint Description of the Parameter
+     * @param cPoint Description of the Parameter
+     * @return Point3d[] nwanted points (or zero if failed)
      */
-    public Point3d[] calculate3DCoordinates1(Point3d aPoint, Point3d bPoint, Point3d cPoint, int nwanted,
-            double length, double angle) {
+    public Point3d[] calculate3DCoordinates1(
+            Point3d aPoint,
+            Point3d bPoint,
+            Point3d cPoint,
+            int nwanted,
+            double length,
+            double angle) {
         Point3d points[] = new Point3d[nwanted];
         // BA vector
         Vector3d ba = new Vector3d(aPoint);
@@ -436,22 +483,26 @@ public class AtomTetrahedralLigandPlacer3D {
     }
 
     /**
-     *  Calculate new point(s) X in a B-A-C system, it forms a B-A(-C)-X
-     *  system. (2) 2 ligands(B, C) of refAtom A (i) 1 points required; vector in
-     *  ABC plane bisecting AB, AC. If ABC is linear, no points (ii) 2 points: 2
-     *  points X1, X2, X1-A-X2 = angle about 2i vector
+     * Calculate new point(s) X in a B-A-C system, it forms a B-A(-C)-X system. (2) 2 ligands(B, C)
+     * of refAtom A (i) 1 points required; vector in ABC plane bisecting AB, AC. If ABC is linear,
+     * no points (ii) 2 points: 2 points X1, X2, X1-A-X2 = angle about 2i vector
      *
-     *@param  aPoint   to which substituents are added
-     *@param  bPoint   first ligand of A
-     *@param  cPoint   second ligand of A
-     *@param  nwanted  number of points to calculate (1-2)
-     *@param  length   A-X length
-     *@param  angle    B-A-X angle
-     *@return          Point3d[] nwanted points (or zero if failed)
+     * @param aPoint to which substituents are added
+     * @param bPoint first ligand of A
+     * @param cPoint second ligand of A
+     * @param nwanted number of points to calculate (1-2)
+     * @param length A-X length
+     * @param angle B-A-X angle
+     * @return Point3d[] nwanted points (or zero if failed)
      */
-    public Point3d[] calculate3DCoordinates2(Point3d aPoint, Point3d bPoint, Point3d cPoint, int nwanted,
-            double length, double angle) {
-        //logger.debug("3DCoordinates2");
+    public Point3d[] calculate3DCoordinates2(
+            Point3d aPoint,
+            Point3d bPoint,
+            Point3d cPoint,
+            int nwanted,
+            double length,
+            double angle) {
+        // logger.debug("3DCoordinates2");
         Point3d newPoints[] = new Point3d[0];
         double ang2 = angle / 2.0;
 
@@ -461,8 +512,7 @@ public class AtomTetrahedralLigandPlacer3D {
         ca.sub(cPoint);
         Vector3d baxca = new Vector3d();
         baxca.cross(ba, ca);
-        if (baxca.length() < 0.00000001) {
-            ;
+        if (baxca.length() < 0.00000001) {;
             // linear
         } else if (nwanted == 1) {
             newPoints = new Point3d[1];
@@ -494,19 +544,20 @@ public class AtomTetrahedralLigandPlacer3D {
     }
 
     /**
-     *  Calculate new point X in a B-A(-D)-C system. It forms a B-A(-D)(-C)-X
-     *  system. (3) 3 ligands(B, C, D) of refAtom A (i) 1 points required; if A, B,
-     *  C, D coplanar, no points. else vector is resultant of BA, CA, DA
+     * Calculate new point X in a B-A(-D)-C system. It forms a B-A(-D)(-C)-X system. (3) 3
+     * ligands(B, C, D) of refAtom A (i) 1 points required; if A, B, C, D coplanar, no points. else
+     * vector is resultant of BA, CA, DA
      *
-     *@param  aPoint  to which substituents are added
-     *@param  bPoint  first ligand of A
-     *@param  cPoint  second ligand of A
-     *@param  dPoint  third ligand of A
-     *@param  length  A-X length
-     *@return         Point3d nwanted points (or null if failed (coplanar))
+     * @param aPoint to which substituents are added
+     * @param bPoint first ligand of A
+     * @param cPoint second ligand of A
+     * @param dPoint third ligand of A
+     * @param length A-X length
+     * @return Point3d nwanted points (or null if failed (coplanar))
      */
-    public Point3d calculate3DCoordinates3(Point3d aPoint, Point3d bPoint, Point3d cPoint, Point3d dPoint, double length) {
-        //logger.debug("3DCoordinates3");
+    public Point3d calculate3DCoordinates3(
+            Point3d aPoint, Point3d bPoint, Point3d cPoint, Point3d dPoint, double length) {
+        // logger.debug("3DCoordinates3");
         Vector3d bc = new Vector3d(bPoint);
         bc.sub(cPoint);
         Vector3d dc = new Vector3d(dPoint);
@@ -552,19 +603,18 @@ public class AtomTetrahedralLigandPlacer3D {
     }
 
     /**
-     *  Calculate new point in B-A-C system. It forms B-A(-X)-C system, where A is
-     *  sp2
+     * Calculate new point in B-A-C system. It forms B-A(-X)-C system, where A is sp2
      *
-     *@param  aPoint  central point A (Point3d)
-     *@param  bPoint  B (Point3d)
-     *@param  cPoint  C (Point3d)
-     *@param  length  bond length
-     *@param  angle   angle between B(C)-A-X
-     *@return         new Point (Point3d)
+     * @param aPoint central point A (Point3d)
+     * @param bPoint B (Point3d)
+     * @param cPoint C (Point3d)
+     * @param length bond length
+     * @param angle angle between B(C)-A-X
+     * @return new Point (Point3d)
      */
-    public Point3d calculate3DCoordinatesSP2_1(Point3d aPoint, Point3d bPoint, Point3d cPoint, double length,
-            double angle) {
-        //logger.debug("3DCoordinatesSP2_1");
+    public Point3d calculate3DCoordinatesSP2_1(
+            Point3d aPoint, Point3d bPoint, Point3d cPoint, double length, double angle) {
+        // logger.debug("3DCoordinatesSP2_1");
         Vector3d ba = new Vector3d(bPoint);
         ba.sub(aPoint);
         Vector3d ca = new Vector3d(cPoint);
@@ -588,19 +638,18 @@ public class AtomTetrahedralLigandPlacer3D {
     }
 
     /**
-     *  Calculate two new points in B-A system. It forms B-A(-X)(-X) system, where
-     *  A is sp2
+     * Calculate two new points in B-A system. It forms B-A(-X)(-X) system, where A is sp2
      *
-     *@param  aPoint  central point A (Point3d)
-     *@param  bPoint  B (Point3d)
-     *@param  cPoint  C (Point3d)
-     *@param  length  bond length
-     *@param  angle   angle between B(C)-A-X
-     *@return         new Points (Point3d [])
+     * @param aPoint central point A (Point3d)
+     * @param bPoint B (Point3d)
+     * @param cPoint C (Point3d)
+     * @param length bond length
+     * @param angle angle between B(C)-A-X
+     * @return new Points (Point3d [])
      */
-    public Point3d[] calculate3DCoordinatesSP2_2(Point3d aPoint, Point3d bPoint, Point3d cPoint, double length,
-            double angle) {
-        //logger.debug("3DCoordinatesSP_2");
+    public Point3d[] calculate3DCoordinatesSP2_2(
+            Point3d aPoint, Point3d bPoint, Point3d cPoint, double length, double angle) {
+        // logger.debug("3DCoordinatesSP_2");
         Vector3d ca = new Vector3d();
         Point3d newPoints[] = new Point3d[2];
         Vector3d ba = new Vector3d(bPoint);
@@ -638,10 +687,10 @@ public class AtomTetrahedralLigandPlacer3D {
     }
 
     /**
-     *  Gets the nonColinearVector attribute of the AtomLigandPlacer3D class
+     * Gets the nonColinearVector attribute of the AtomLigandPlacer3D class
      *
-     *@param  ab  Description of the Parameter
-     *@return     The nonColinearVector value
+     * @param ab Description of the Parameter
+     * @return The nonColinearVector value
      */
     private Vector3d getNonColinearVector(Vector3d ab) {
         Vector3d cr = new Vector3d();
@@ -654,13 +703,12 @@ public class AtomTetrahedralLigandPlacer3D {
     }
 
     /**
-     *  Rotates a vector around an axis.
+     * Rotates a vector around an axis.
      *
-     *@param  vector  vector to be rotated around axis
-     *@param  axis    axis of rotation
-     *@param  angle   angle to vector rotate around
-     *@return         rotated vector
-     *author:         egonw
+     * @param vector vector to be rotated around axis
+     * @param axis axis of rotation
+     * @param angle angle to vector rotate around
+     * @return rotated vector author: egonw
      */
     public static Vector3d rotate(Vector3d vector, Vector3d axis, double angle) {
         Matrix3d rotate = new Matrix3d();
@@ -673,10 +721,10 @@ public class AtomTetrahedralLigandPlacer3D {
     /**
      * Gets the distance between two atoms out of the parameter set.
      *
-     *@param  id1            id of the parameter set for atom1 (atom1.getAtomTypeName())
-     *@param  id2            id of the parameter set for atom2
-     *@return                The distanceValue value
-     *@exception  Exception  Description of the Exception
+     * @param id1 id of the parameter set for atom1 (atom1.getAtomTypeName())
+     * @param id2 id of the parameter set for atom2
+     * @return The distanceValue value
+     * @exception Exception Description of the Exception
      */
     private double getDistanceValue(String id1, String id2) {
         String dkey = "";
@@ -685,19 +733,20 @@ public class AtomTetrahedralLigandPlacer3D {
         } else if (pSet.containsKey(("bond" + id2 + ";" + id1))) {
             dkey = "bond" + id2 + ";" + id1;
         } else {
-            //			logger.debug("DistanceKEYError:pSet has no key:" + id2 + " ; " + id1 + " take default bond length:" + DEFAULT_BOND_LENGTH_H);
+            //			logger.debug("DistanceKEYError:pSet has no key:" + id2 + " ; " + id1 + " take
+            // default bond length:" + DEFAULT_BOND_LENGTH_H);
             return DEFAULT_BOND_LENGTH_H;
         }
         return ((Double) (((List) pSet.get(dkey)).get(0))).doubleValue();
     }
 
     /**
-     *  Gets the angleKey attribute of the AtomPlacer3D object.
+     * Gets the angleKey attribute of the AtomPlacer3D object.
      *
-     * @param  id1            Description of the Parameter
-     * @param  id2            Description of the Parameter
-     * @param  id3            Description of the Parameter
-     * @return                The angleKey value
+     * @param id1 Description of the Parameter
+     * @param id2 Description of the Parameter
+     * @param id3 Description of the Parameter
+     * @return The angleKey value
      */
     public double getAngleValue(String id1, String id2, String id3) {
         String akey = "";
@@ -714,31 +763,35 @@ public class AtomTetrahedralLigandPlacer3D {
         } else if (pSet.containsKey(("angle" + id2 + ";" + id3 + ";" + id1))) {
             akey = "angle" + id2 + ";" + id3 + ";" + id1;
         } else {
-            System.out.println("AngleKEYError:Unknown angle " + id1 + " " + id2 + " " + id3 + " take default angle:"
-                    + TETRAHEDRAL_ANGLE);
+            System.out.println(
+                    "AngleKEYError:Unknown angle "
+                            + id1
+                            + " "
+                            + id2
+                            + " "
+                            + id3
+                            + " take default angle:"
+                            + TETRAHEDRAL_ANGLE);
             return TETRAHEDRAL_ANGLE;
         }
         return ((Double) (((List) pSet.get(akey)).get(0))).doubleValue();
     }
 
     /**
-     *  set Atoms in respect to stereoinformation.
-     *	take placed neighbours to stereocenter
-     *		create a x b
-     *	     if right handed system (spatproduct &gt;0)
-     *			if unplaced is not up (relative to stereocenter)
-     *				n=b x a
-     *	     Determine angle between n and possible ligand place points
-     *	     if angle smaller than 90 degrees take this branch point
+     * set Atoms in respect to stereoinformation. take placed neighbours to stereocenter create a x
+     * b if right handed system (spatproduct &gt;0) if unplaced is not up (relative to stereocenter)
+     * n=b x a Determine angle between n and possible ligand place points if angle smaller than 90
+     * degrees take this branch point
      *
-     *@param  atomA         placed Atom - stereocenter
-     *@param  ax            bond between stereocenter and unplaced atom
-     *@param  atomB         neighbour of atomA (in plane created by atomA, atomB and atomC)
-     *@param  atomC         neighbour of atomA
-     *@param  branchPoints  the two possible placement points for unplaced atom (up and down)
-     *@return               int value of branch point position
+     * @param atomA placed Atom - stereocenter
+     * @param ax bond between stereocenter and unplaced atom
+     * @param atomB neighbour of atomA (in plane created by atomA, atomB and atomC)
+     * @param atomC neighbour of atomA
+     * @param branchPoints the two possible placement points for unplaced atom (up and down)
+     * @return int value of branch point position
      */
-    public int makeStereocenter(Point3d atomA, IBond ax, Point3d atomB, Point3d atomC, Point3d[] branchPoints) {
+    public int makeStereocenter(
+            Point3d atomA, IBond ax, Point3d atomB, Point3d atomC, Point3d[] branchPoints) {
 
         Vector3d b = new Vector3d((atomB.x - atomA.x), (atomB.y - atomA.y), (atomB.z - atomA.z));
         Vector3d c = new Vector3d((atomC.x - atomA.x), (atomC.y - atomA.y), (atomC.z - atomA.z));
@@ -765,25 +818,27 @@ public class AtomTetrahedralLigandPlacer3D {
     }
 
     /**
-     *  Gets the spatproduct of three vectors.
+     * Gets the spatproduct of three vectors.
      *
-     *@param  a  vector a
-     *@param  b  vector b
-     *@param  c  vector c
-     *@return    double value of the spatproduct
+     * @param a vector a
+     * @param b vector b
+     * @param c vector c
+     * @return double value of the spatproduct
      */
     public double getSpatproduct(Vector3d a, Vector3d b, Vector3d c) {
-        return (c.x * (b.y * a.z - b.z * a.y) + c.y * (b.z * a.x - b.x * a.z) + c.z * (b.x * a.y - b.y * a.x));
+        return (c.x * (b.y * a.z - b.z * a.y)
+                + c.y * (b.z * a.x - b.x * a.z)
+                + c.z * (b.x * a.y - b.y * a.x));
     }
 
     /**
-     *  Calculates the torsionAngle of a-b-c-d.
+     * Calculates the torsionAngle of a-b-c-d.
      *
-     *@param  a  Point3d
-     *@param  b  Point3d
-     *@param  c  Point3d
-     *@param  d  Point3d
-     *@return    The torsionAngle value
+     * @param a Point3d
+     * @param b Point3d
+     * @param c Point3d
+     * @param d Point3d
+     * @return The torsionAngle value
      */
     public double getTorsionAngle(Point3d a, Point3d b, Point3d c, Point3d d) {
         Vector3d ab = new Vector3d(a.x - b.x, a.y - b.y, a.z - b.z);
@@ -807,12 +862,11 @@ public class AtomTetrahedralLigandPlacer3D {
     }
 
     /**
-     *  Gets all placed neighbouring atoms of a atom.
+     * Gets all placed neighbouring atoms of a atom.
      *
-     *@param  atom  central atom (Atom)
-     *@param  ac    the molecule
-     *@return       all connected and placed atoms to the central atom
-     *      ((AtomContainer)
+     * @param atom central atom (Atom)
+     * @param ac the molecule
+     * @return all connected and placed atoms to the central atom ((AtomContainer)
      */
     public IAtomContainer getPlacedAtomsInAtomContainer(IAtom atom, IAtomContainer ac) {
 
@@ -829,19 +883,18 @@ public class AtomTetrahedralLigandPlacer3D {
     }
 
     /**
-     *  Gets the unsetAtomsInAtomContainer attribute of the
-     *  AtomTetrahedralLigandPlacer3D object.
+     * Gets the unsetAtomsInAtomContainer attribute of the AtomTetrahedralLigandPlacer3D object.
      *
-     *@param  atom  Description of the Parameter
-     *@param  ac    Description of the Parameter
-     *@return       The unsetAtomsInAtomContainer value
+     * @param atom Description of the Parameter
+     * @param ac Description of the Parameter
+     * @return The unsetAtomsInAtomContainer value
      */
     public IAtomContainer getUnsetAtomsInAtomContainer(IAtom atom, IAtomContainer ac) {
         List atoms = ac.getConnectedAtomsList(atom);
         IAtomContainer connectedAtoms = atom.getBuilder().newInstance(IAtomContainer.class);
         for (int i = 0; i < atoms.size(); i++) {
             IAtom curAtom = (IAtom) atoms.get(i);
-            if (!curAtom.getFlag(CDKConstants.ISPLACED)) {//&& atoms[i].getPoint3d() == null) {
+            if (!curAtom.getFlag(CDKConstants.ISPLACED)) { // && atoms[i].getPoint3d() == null) {
                 connectedAtoms.addAtom(curAtom);
             }
         }
@@ -852,7 +905,7 @@ public class AtomTetrahedralLigandPlacer3D {
         List atoms = ac.getConnectedAtomsList(atom);
         for (int i = 0; i < atoms.size(); i++) {
             IAtom curAtom = (IAtom) atoms.get(i);
-            if (!curAtom.getFlag(CDKConstants.ISPLACED)) {//&& atoms[i].getPoint3d() == null) {
+            if (!curAtom.getFlag(CDKConstants.ISPLACED)) { // && atoms[i].getPoint3d() == null) {
                 return true;
             }
         }
@@ -860,20 +913,21 @@ public class AtomTetrahedralLigandPlacer3D {
     }
 
     /**
-     *  Returns a placed neighbouring atom of a central atom atomA, which is not
-     *  atomB.
+     * Returns a placed neighbouring atom of a central atom atomA, which is not atomB.
      *
-     *@param  atomA  central atom (Atom)
-     *@param  atomB  atom connected to atomA (Atom)
-     *@param  ac     molecule
-     *@return        returns a connected atom (Atom)
+     * @param atomA central atom (Atom)
+     * @param atomB atom connected to atomA (Atom)
+     * @param ac molecule
+     * @return returns a connected atom (Atom)
      */
     public IAtom getPlacedHeavyAtomInAtomContainer(IAtom atomA, IAtom atomB, IAtomContainer ac) {
         List atoms = ac.getConnectedAtomsList(atomA);
         IAtom atom = null;
         for (int i = 0; i < atoms.size(); i++) {
             IAtom curAtom = (IAtom) atoms.get(i);
-            if (curAtom.getFlag(CDKConstants.ISPLACED) && curAtom.getAtomicNumber() != IElement.H && !Objects.equals(curAtom, atomB)) {
+            if (curAtom.getFlag(CDKConstants.ISPLACED)
+                    && curAtom.getAtomicNumber() != IElement.H
+                    && !Objects.equals(curAtom, atomB)) {
                 return curAtom;
             }
         }

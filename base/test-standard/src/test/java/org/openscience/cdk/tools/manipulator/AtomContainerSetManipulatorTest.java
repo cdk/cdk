@@ -19,7 +19,6 @@
 package org.openscience.cdk.tools.manipulator;
 
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,18 +39,17 @@ import org.openscience.cdk.interfaces.IRing;
 
 /**
  * @cdk.module test-standard
- *
- * @author     Kai Hartmann
- * @cdk.created    2004-02-20
+ * @author Kai Hartmann
+ * @cdk.created 2004-02-20
  */
 public class AtomContainerSetManipulatorTest extends CDKTestCase {
 
-    IAtomContainer    mol1       = null;
-    IAtomContainer    mol2       = null;
-    IAtom             atomInMol1 = null;
-    IBond             bondInMol1 = null;
-    IAtom             atomInMol2 = null;
-    IAtomContainerSet som        = new AtomContainerSet();
+    IAtomContainer mol1 = null;
+    IAtomContainer mol2 = null;
+    IAtom atomInMol1 = null;
+    IBond bondInMol1 = null;
+    IAtom atomInMol2 = null;
+    IAtomContainerSet som = new AtomContainerSet();
 
     public AtomContainerSetManipulatorTest() {
         super();
@@ -182,7 +180,11 @@ public class AtomContainerSetManipulatorTest extends CDKTestCase {
     @Test
     public void testGetAllChemObjects_IAtomContainerSet() {
         List<IChemObject> list = AtomContainerSetManipulator.getAllChemObjects(som);
-        Assert.assertEquals(3, list.size()); // only AtomContainerSets and AtomContainers at the moment (see source code comment)
+        Assert.assertEquals(
+                3,
+                list
+                        .size()); // only AtomContainerSets and AtomContainers at the moment (see
+                                  // source code comment)
     }
 
     @Test
@@ -209,21 +211,37 @@ public class AtomContainerSetManipulatorTest extends CDKTestCase {
         AtomContainerSetManipulator.sort(atomContainerSet);
 
         // Assert.assert the correct order
-        Assert.assertSame("first order: cycloPentane", cycloPentane, atomContainerSet.getAtomContainer(0));
-        Assert.assertSame("second order: cycloHexane", cycloHexane, atomContainerSet.getAtomContainer(1));
-        Assert.assertSame("third order: hexaneNitrogen", hexaneNitrogen, atomContainerSet.getAtomContainer(2));
-        Assert.assertSame("forth order: cycloHexaneNitrogen", cycloHexaneNitrogen, atomContainerSet.getAtomContainer(3));
-        Assert.assertSame("firth order: cycloHexeneNitrogen", cycloHexeneNitrogen, atomContainerSet.getAtomContainer(4));
+        Assert.assertSame(
+                "first order: cycloPentane", cycloPentane, atomContainerSet.getAtomContainer(0));
+        Assert.assertSame(
+                "second order: cycloHexane", cycloHexane, atomContainerSet.getAtomContainer(1));
+        Assert.assertSame(
+                "third order: hexaneNitrogen",
+                hexaneNitrogen,
+                atomContainerSet.getAtomContainer(2));
+        Assert.assertSame(
+                "forth order: cycloHexaneNitrogen",
+                cycloHexaneNitrogen,
+                atomContainerSet.getAtomContainer(3));
+        Assert.assertSame(
+                "firth order: cycloHexeneNitrogen",
+                cycloHexeneNitrogen,
+                atomContainerSet.getAtomContainer(4));
     }
 
     @Test
     public void testContainsByID_IAtomContainerSet_IAtomContainer() {
-        IAtomContainer relevantAtomContainer = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
-        IAtomContainerSet atomContainerSet = DefaultChemObjectBuilder.getInstance()
-                .newInstance(IAtomContainerSet.class);
+        IAtomContainer relevantAtomContainer =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainerSet atomContainerSet =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         atomContainerSet.addAtomContainer(relevantAtomContainer);
-        Assert.assertFalse(AtomContainerSetManipulator.containsByID(atomContainerSet, relevantAtomContainer.getID()));
+        Assert.assertFalse(
+                AtomContainerSetManipulator.containsByID(
+                        atomContainerSet, relevantAtomContainer.getID()));
         relevantAtomContainer.setID("1");
-        Assert.assertTrue(AtomContainerSetManipulator.containsByID(atomContainerSet, relevantAtomContainer.getID()));
+        Assert.assertTrue(
+                AtomContainerSetManipulator.containsByID(
+                        atomContainerSet, relevantAtomContainer.getID()));
     }
 }

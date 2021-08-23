@@ -24,7 +24,6 @@ package org.openscience.cdk.group;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -32,12 +31,11 @@ import org.openscience.cdk.CDKTestCase;
 /**
  * @author maclean
  * @cdk.module test-group
- *
  */
 public class PermutationGroupTest extends CDKTestCase {
 
     // the first 7 factorials
-    private final static int[] lookup = {1, 1, 2, 6, 24, 120, 720, 5040};
+    private static final int[] lookup = {1, 1, 2, 6, 24, 120, 720, 5040};
 
     private int factorial(int n) {
         if (n < lookup.length) {
@@ -188,18 +186,19 @@ public class PermutationGroupTest extends CDKTestCase {
         final List<Permutation> all = new ArrayList<Permutation>();
         int size = 4;
         PermutationGroup group = PermutationGroup.makeSymN(size);
-        group.apply(new PermutationGroup.Backtracker() {
+        group.apply(
+                new PermutationGroup.Backtracker() {
 
-            @Override
-            public boolean isFinished() {
-                return false;
-            }
+                    @Override
+                    public boolean isFinished() {
+                        return false;
+                    }
 
-            @Override
-            public void applyTo(Permutation p) {
-                all.add(p);
-            }
-        });
+                    @Override
+                    public void applyTo(Permutation p) {
+                        all.add(p);
+                    }
+                });
         Assert.assertEquals(factorial(size), all.size());
     }
 
@@ -209,18 +208,19 @@ public class PermutationGroupTest extends CDKTestCase {
         final int max = 5; // stop after this many seen
         int size = 4;
         PermutationGroup group = PermutationGroup.makeSymN(size);
-        group.apply(new PermutationGroup.Backtracker() {
+        group.apply(
+                new PermutationGroup.Backtracker() {
 
-            @Override
-            public boolean isFinished() {
-                return all.size() >= max;
-            }
+                    @Override
+                    public boolean isFinished() {
+                        return all.size() >= max;
+                    }
 
-            @Override
-            public void applyTo(Permutation p) {
-                all.add(p);
-            }
-        });
+                    @Override
+                    public void applyTo(Permutation p) {
+                        all.add(p);
+                    }
+                });
         Assert.assertEquals(max, all.size());
     }
 

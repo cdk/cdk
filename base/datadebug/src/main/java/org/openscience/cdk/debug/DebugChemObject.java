@@ -19,19 +19,18 @@
 package org.openscience.cdk.debug;
 
 import java.util.Map;
-
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module datadebug
  * @cdk.githash
  */
@@ -39,7 +38,7 @@ public class DebugChemObject extends ChemObject implements IChemObject {
 
     private static final long serialVersionUID = -8547443535884526365L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugChemObject.class);
+    ILoggingTool logger = LoggingToolFactory.createLoggingTool(DebugChemObject.class);
 
     public DebugChemObject(IChemObject object) {
         super(object);
@@ -107,12 +106,12 @@ public class DebugChemObject extends ChemObject implements IChemObject {
         return super.getProperty(description);
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public <T> T getProperty(Object description, Class<T> c) {
-        logger.debug("Getting property of description: ", description + " and type " + c.getSimpleName());
+        logger.debug(
+                "Getting property of description: ",
+                description + " and type " + c.getSimpleName());
         return super.getProperty(description, c);
     }
 
@@ -151,7 +150,7 @@ public class DebugChemObject extends ChemObject implements IChemObject {
         return super.getFlag(flagType);
     }
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     public void setProperties(Map<Object, Object> properties) {
         logger.debug("Setting properties: ", properties);

@@ -23,11 +23,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
-
 import javax.vecmath.Point2d;
-
-import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IPseudoAtom;
@@ -59,8 +57,7 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
 
     private IGeneratorParameter<Boolean> showImplicitHydrogens = new ShowImplicitHydrogens();
 
-    /** Boolean that indicates if atom type names should be given instead
-     * of element symbols. */
+    /** Boolean that indicates if atom type names should be given instead of element symbols. */
     public static class ShowAtomTypeNames extends AbstractGeneratorParameter<Boolean> {
 
         /** {@inheritDoc} */
@@ -79,7 +76,8 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
         if (model.hasParameter(WillDrawAtomNumbers.class)) {
             drawNumbers = model.getParameter(WillDrawAtomNumbers.class).getValue();
         }
-        if (!hasCoordinates(atom) || invisibleHydrogen(atom, model)
+        if (!hasCoordinates(atom)
+                || invisibleHydrogen(atom, model)
                 || (invisibleCarbon(atom, container, model) && !drawNumbers)) {
             return null;
         } else if (model.getParameter(CompactAtom.class).getValue()) {
@@ -101,7 +99,8 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
         }
     }
 
-    private void decorate(TextGroupElement textGroup, IAtomContainer container, IAtom atom, RendererModel model) {
+    private void decorate(
+            TextGroupElement textGroup, IAtomContainer container, IAtom atom, RendererModel model) {
         Stack<Position> unused = getUnusedPositions(container, atom);
 
         if (model.hasParameter(WillDrawAtomNumbers.class)) {

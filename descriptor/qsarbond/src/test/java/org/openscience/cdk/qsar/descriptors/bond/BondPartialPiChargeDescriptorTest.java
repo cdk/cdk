@@ -35,28 +35,20 @@ import org.openscience.cdk.smiles.SmilesParser;
  */
 public class BondPartialPiChargeDescriptorTest extends BondDescriptorTest {
 
-    /**
-     *  Constructor for the BondPartialPiChargeDescriptorTest object
-     *
-     */
-    public BondPartialPiChargeDescriptorTest() {
-
-    }
+    /** Constructor for the BondPartialPiChargeDescriptorTest object */
+    public BondPartialPiChargeDescriptorTest() {}
 
     @Before
     public void setUp() throws Exception {
         setDescriptor(BondPartialPiChargeDescriptor.class);
     }
 
-    /**
-     *  A unit test for JUnit
-     */
-
+    /** A unit test for JUnit */
     @Test
-    public void testBondPiElectronegativityDescriptor() throws ClassNotFoundException, CDKException,
-            java.lang.Exception {
+    public void testBondPiElectronegativityDescriptor()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
         descriptor = new BondPartialPiChargeDescriptor();
-        double[] testResult = {0.0, 0.0};/*
+        double[] testResult = {0.0, 0.0}; /*
                                           * from Petra online:
                                           * http://www2.chemie
                                           * .uni-erlangen.de/services
@@ -68,18 +60,17 @@ public class BondPartialPiChargeDescriptorTest extends BondDescriptorTest {
         addExplicitHydrogens(mol);
 
         for (int i = 0; i < 2; i++) {
-            double result = ((DoubleResult) descriptor.calculate(mol.getBond(i), mol).getValue()).doubleValue();
+            double result =
+                    ((DoubleResult) descriptor.calculate(mol.getBond(i), mol).getValue())
+                            .doubleValue();
             Assert.assertEquals(testResult[i], result, 0.01);
         }
-
     }
 
-    /**
-     *  A unit test for JUnit with Allyl bromide
-     */
+    /** A unit test for JUnit with Allyl bromide */
     @Test
-    public void testBondPiElectronegativityDescriptor_Allyl_bromide() throws ClassNotFoundException, CDKException,
-            java.lang.Exception {
+    public void testBondPiElectronegativityDescriptor_Allyl_bromide()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
         descriptor = new BondPartialPiChargeDescriptor();
         double[] testResult = {0.0022, 0.0011, 0.0011, 0.0011, 0.0011, 0.0, 0.0, 0.0}; /*
                                                                                         * from
@@ -114,17 +105,17 @@ public class BondPartialPiChargeDescriptorTest extends BondDescriptorTest {
         addExplicitHydrogens(mol);
 
         for (int i = 0; i < 8; i++) {
-            double result = ((DoubleResult) descriptor.calculate(mol.getBond(i), mol).getValue()).doubleValue();
+            double result =
+                    ((DoubleResult) descriptor.calculate(mol.getBond(i), mol).getValue())
+                            .doubleValue();
             Assert.assertEquals(testResult[i], result, 0.03);
         }
     }
 
-    /**
-     *  A unit test for JUnit with Isopentyl iodide
-     */
+    /** A unit test for JUnit with Isopentyl iodide */
     @Test
-    public void testBondPiElectronegativityDescriptor_Isopentyl_iodide() throws ClassNotFoundException, CDKException,
-            java.lang.Exception {
+    public void testBondPiElectronegativityDescriptor_Isopentyl_iodide()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
         descriptor = new BondPartialPiChargeDescriptor();
         double testResult = 0.0; /*
                                   * from Petra online:
@@ -136,17 +127,17 @@ public class BondPartialPiChargeDescriptorTest extends BondDescriptorTest {
         IAtomContainer mol = sp.parseSmiles("C(C)(C)CCI");
         addExplicitHydrogens(mol);
         for (int i = 0; i < 6; i++) {
-            double result = ((DoubleResult) descriptor.calculate(mol.getBond(i), mol).getValue()).doubleValue();
+            double result =
+                    ((DoubleResult) descriptor.calculate(mol.getBond(i), mol).getValue())
+                            .doubleValue();
             Assert.assertEquals(testResult, result, 0.001);
         }
     }
 
-    /**
-     *  A unit test for JUnit with Allyl mercaptan
-     */
+    /** A unit test for JUnit with Allyl mercaptan */
     @Test
-    public void testBondPiElectronegativityDescriptor_Allyl_mercaptan() throws ClassNotFoundException, CDKException,
-            java.lang.Exception {
+    public void testBondPiElectronegativityDescriptor_Allyl_mercaptan()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
         descriptor = new BondPartialPiChargeDescriptor();
         double[] testResult = {0.0006, 0.0003, 0.0003, 0.0003, 0.0003, 0.0, 0.0, 0.0, 0.0}; /*
                                                                                              * from
@@ -181,7 +172,9 @@ public class BondPartialPiChargeDescriptorTest extends BondDescriptorTest {
         addExplicitHydrogens(mol);
 
         for (int i = 0; i < 9; i++) {
-            double result = ((DoubleResult) descriptor.calculate(mol.getBond(i), mol).getValue()).doubleValue();
+            double result =
+                    ((DoubleResult) descriptor.calculate(mol.getBond(i), mol).getValue())
+                            .doubleValue();
             Assert.assertEquals(testResult[i], result, 0.03);
         }
     }

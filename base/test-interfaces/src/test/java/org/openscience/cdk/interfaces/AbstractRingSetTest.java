@@ -19,14 +19,13 @@
  */
 package org.openscience.cdk.interfaces;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.Assert;
-import org.junit.Test;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
+
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * Checks the functionality of {@link IRingSet} implementations.
@@ -79,7 +78,8 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
     public void testContains_IAtom() {
         IRingSet ringset = (IRingSet) newChemObject();
 
-        IAtom ring1Atom1 = ringset.getBuilder().newInstance(IAtom.class, "C"); // rather artificial molecule
+        IAtom ring1Atom1 =
+                ringset.getBuilder().newInstance(IAtom.class, "C"); // rather artificial molecule
         IAtom ring1Atom2 = ringset.getBuilder().newInstance(IAtom.class, "C");
         IAtom sharedAtom1 = ringset.getBuilder().newInstance(IAtom.class, "C");
         IAtom sharedAtom2 = ringset.getBuilder().newInstance(IAtom.class, "C");
@@ -127,7 +127,8 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
     public void testContains_IAtomContainer() {
         IRingSet ringset = (IRingSet) newChemObject();
 
-        IAtom ring1Atom1 = ringset.getBuilder().newInstance(IAtom.class, "C"); // rather artificial molecule
+        IAtom ring1Atom1 =
+                ringset.getBuilder().newInstance(IAtom.class, "C"); // rather artificial molecule
         IAtom ring1Atom2 = ringset.getBuilder().newInstance(IAtom.class, "C");
         IAtom sharedAtom1 = ringset.getBuilder().newInstance(IAtom.class, "C");
         IAtom sharedAtom2 = ringset.getBuilder().newInstance(IAtom.class, "C");
@@ -171,7 +172,8 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
     public void testGetRings_IBond() {
         IRingSet ringset = (IRingSet) newChemObject();
 
-        IAtom ring1Atom1 = ringset.getBuilder().newInstance(IAtom.class, "C"); // rather artificial molecule
+        IAtom ring1Atom1 =
+                ringset.getBuilder().newInstance(IAtom.class, "C"); // rather artificial molecule
         IAtom ring1Atom2 = ringset.getBuilder().newInstance(IAtom.class, "C");
         IAtom sharedAtom1 = ringset.getBuilder().newInstance(IAtom.class, "C");
         IAtom sharedAtom2 = ringset.getBuilder().newInstance(IAtom.class, "C");
@@ -220,7 +222,8 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
     public void testGetRings_IAtom() {
         IRingSet ringset = (IRingSet) newChemObject();
 
-        IAtom ring1Atom1 = ringset.getBuilder().newInstance(IAtom.class, "C"); // rather artificial molecule
+        IAtom ring1Atom1 =
+                ringset.getBuilder().newInstance(IAtom.class, "C"); // rather artificial molecule
         IAtom ring1Atom2 = ringset.getBuilder().newInstance(IAtom.class, "C");
         IAtom sharedAtom1 = ringset.getBuilder().newInstance(IAtom.class, "C");
         IAtom sharedAtom2 = ringset.getBuilder().newInstance(IAtom.class, "C");
@@ -268,7 +271,8 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
     public void testGetConnectedRings_IRing() {
         IRingSet ringset = (IRingSet) newChemObject();
 
-        IAtom ring1Atom1 = ringset.getBuilder().newInstance(IAtom.class, "C"); // rather artificial molecule
+        IAtom ring1Atom1 =
+                ringset.getBuilder().newInstance(IAtom.class, "C"); // rather artificial molecule
         IAtom ring1Atom2 = ringset.getBuilder().newInstance(IAtom.class, "C");
         IAtom sharedAtom1 = ringset.getBuilder().newInstance(IAtom.class, "C");
         IAtom sharedAtom2 = ringset.getBuilder().newInstance(IAtom.class, "C");
@@ -309,10 +313,10 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
     }
 
     /**
-     * Test for RingSetTest bug #1772613.
-     * When using method getConnectedRings(...) of RingSet.java fused or bridged rings
-     * returned a list of connected rings that contained duplicates.
-     * Bug fix by Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
+     * Test for RingSetTest bug #1772613. When using method getConnectedRings(...) of RingSet.java
+     * fused or bridged rings returned a list of connected rings that contained duplicates. Bug fix
+     * by Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
+     *
      * @cdk.bug 1772613
      */
     @Test
@@ -324,19 +328,32 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
         IRing rightCyclopentane = ringSet.getBuilder().newInstance(IRing.class, 5, "C");
 
         IRing leftCyclopentane = ringSet.getBuilder().newInstance(IRing.class);
-        IBond leftCyclohexane0RightCyclopentane4 = ringSet.getBuilder().newInstance(IBond.class,
-                leftCyclohexane.getAtom(0), rightCyclopentane.getAtom(4));
-        IBond leftCyclohexane1RightCyclopentane2 = ringSet.getBuilder().newInstance(IBond.class,
-                leftCyclohexane.getAtom(1), rightCyclopentane.getAtom(2));
+        IBond leftCyclohexane0RightCyclopentane4 =
+                ringSet.getBuilder()
+                        .newInstance(
+                                IBond.class,
+                                leftCyclohexane.getAtom(0),
+                                rightCyclopentane.getAtom(4));
+        IBond leftCyclohexane1RightCyclopentane2 =
+                ringSet.getBuilder()
+                        .newInstance(
+                                IBond.class,
+                                leftCyclohexane.getAtom(1),
+                                rightCyclopentane.getAtom(2));
         leftCyclopentane.addAtom(leftCyclohexane.getAtom(0));
         leftCyclopentane.addAtom(leftCyclohexane.getAtom(1));
         leftCyclopentane.addAtom(rightCyclopentane.getAtom(2));
         leftCyclopentane.addAtom(rightCyclopentane.getAtom(3));
         leftCyclopentane.addAtom(rightCyclopentane.getAtom(4));
-        leftCyclopentane.addBond(leftCyclohexane.getBond(leftCyclohexane.getAtom(0), leftCyclohexane.getAtom(1)));
+        leftCyclopentane.addBond(
+                leftCyclohexane.getBond(leftCyclohexane.getAtom(0), leftCyclohexane.getAtom(1)));
         leftCyclopentane.addBond(leftCyclohexane1RightCyclopentane2);
-        leftCyclopentane.addBond(rightCyclopentane.getBond(rightCyclopentane.getAtom(2), rightCyclopentane.getAtom(3)));
-        leftCyclopentane.addBond(rightCyclopentane.getBond(rightCyclopentane.getAtom(3), rightCyclopentane.getAtom(4)));
+        leftCyclopentane.addBond(
+                rightCyclopentane.getBond(
+                        rightCyclopentane.getAtom(2), rightCyclopentane.getAtom(3)));
+        leftCyclopentane.addBond(
+                rightCyclopentane.getBond(
+                        rightCyclopentane.getAtom(3), rightCyclopentane.getAtom(4)));
         leftCyclopentane.addBond(leftCyclohexane0RightCyclopentane4);
 
         IRing rightCyclohexane = ringSet.getBuilder().newInstance(IRing.class);
@@ -344,16 +361,23 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
         IAtom rightCyclohexaneAtom1 = ringSet.getBuilder().newInstance(IAtom.class, "C");
         IAtom rightCyclohexaneAtom2 = ringSet.getBuilder().newInstance(IAtom.class, "C");
         IAtom rightCyclohexaneAtom5 = ringSet.getBuilder().newInstance(IAtom.class, "C");
-        IBond rightCyclohexaneAtom0Atom1 = ringSet.getBuilder().newInstance(IBond.class, rightCyclohexaneAtom0,
-                rightCyclohexaneAtom1);
-        IBond rightCyclohexaneAtom1Atom2 = ringSet.getBuilder().newInstance(IBond.class, rightCyclohexaneAtom1,
-                rightCyclohexaneAtom2);
-        IBond rightCyclohexane2rightCyclopentane1 = ringSet.getBuilder().newInstance(IBond.class,
-                rightCyclohexaneAtom2, rightCyclopentane.getAtom(1));
-        IBond rightCyclohexane5rightCyclopentane0 = ringSet.getBuilder().newInstance(IBond.class,
-                rightCyclohexaneAtom5, rightCyclopentane.getAtom(0));
-        IBond rightCyclohexaneAtom0Atom5 = ringSet.getBuilder().newInstance(IBond.class, rightCyclohexaneAtom0,
-                rightCyclohexaneAtom5);
+        IBond rightCyclohexaneAtom0Atom1 =
+                ringSet.getBuilder()
+                        .newInstance(IBond.class, rightCyclohexaneAtom0, rightCyclohexaneAtom1);
+        IBond rightCyclohexaneAtom1Atom2 =
+                ringSet.getBuilder()
+                        .newInstance(IBond.class, rightCyclohexaneAtom1, rightCyclohexaneAtom2);
+        IBond rightCyclohexane2rightCyclopentane1 =
+                ringSet.getBuilder()
+                        .newInstance(
+                                IBond.class, rightCyclohexaneAtom2, rightCyclopentane.getAtom(1));
+        IBond rightCyclohexane5rightCyclopentane0 =
+                ringSet.getBuilder()
+                        .newInstance(
+                                IBond.class, rightCyclohexaneAtom5, rightCyclopentane.getAtom(0));
+        IBond rightCyclohexaneAtom0Atom5 =
+                ringSet.getBuilder()
+                        .newInstance(IBond.class, rightCyclohexaneAtom0, rightCyclohexaneAtom5);
         rightCyclohexane.addAtom(rightCyclohexaneAtom0);
         rightCyclohexane.addAtom(rightCyclohexaneAtom1);
         rightCyclohexane.addAtom(rightCyclohexaneAtom2);
@@ -363,7 +387,9 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
         rightCyclohexane.addBond(rightCyclohexaneAtom0Atom1);
         rightCyclohexane.addBond(rightCyclohexaneAtom1Atom2);
         rightCyclohexane.addBond(rightCyclohexane2rightCyclopentane1);
-        rightCyclohexane.addBond(rightCyclopentane.getBond(rightCyclopentane.getAtom(0), rightCyclopentane.getAtom(1)));
+        rightCyclohexane.addBond(
+                rightCyclopentane.getBond(
+                        rightCyclopentane.getAtom(0), rightCyclopentane.getAtom(1)));
         rightCyclohexane.addBond(rightCyclohexane5rightCyclopentane0);
         rightCyclohexane.addBond(rightCyclohexaneAtom0Atom5);
 
@@ -379,7 +405,8 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
         List<IRing> foundRings = new ArrayList<IRing>();
         for (IAtomContainer container : connectedRings.atomContainers()) {
             IRing connectedRing = (IRing) container;
-            if (foundRings.contains(connectedRing)) Assert.fail("The list of connected rings contains duplicates.");
+            if (foundRings.contains(connectedRing))
+                Assert.fail("The list of connected rings contains duplicates.");
             foundRings.add(connectedRing);
         }
     }
@@ -390,16 +417,21 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
 
         IRingSet ringSet = (IRingSet) newChemObject();
 
-        org.hamcrest.MatcherAssert.assertThat("new ringset should be empty", ringSet.isEmpty(), is(true));
+        org.hamcrest.MatcherAssert.assertThat(
+                "new ringset should be empty", ringSet.isEmpty(), is(true));
 
         ringSet.addAtomContainer(ringSet.getBuilder().newInstance(IAtomContainer.class));
 
-        org.hamcrest.MatcherAssert.assertThat("ringset with an atom container should not be empty", ringSet.isEmpty(), is(not(true)));
+        org.hamcrest.MatcherAssert.assertThat(
+                "ringset with an atom container should not be empty",
+                ringSet.isEmpty(),
+                is(not(true)));
 
         ringSet.removeAllAtomContainers();
 
-        org.hamcrest.MatcherAssert.assertThat("ringset with removed atom containers should be empty", ringSet.isEmpty(), is(true));
-
+        org.hamcrest.MatcherAssert.assertThat(
+                "ringset with removed atom containers should be empty",
+                ringSet.isEmpty(),
+                is(true));
     }
-
 }

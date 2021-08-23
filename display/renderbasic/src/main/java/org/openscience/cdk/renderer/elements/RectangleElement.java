@@ -20,7 +20,6 @@ package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
 
-
 /**
  * A rectangle, with width and height.
  *
@@ -29,23 +28,23 @@ import java.awt.Color;
  */
 public class RectangleElement implements IRenderingElement {
 
-    /** The x-coordinate of the center of the rectangle. **/
-    public final double  xCoord;
+    /** The x-coordinate of the center of the rectangle. * */
+    public final double xCoord;
 
-    /** The y-coordinate of the center of the rectangle. **/
-    public final double  yCoord;
+    /** The y-coordinate of the center of the rectangle. * */
+    public final double yCoord;
 
-    /** The width of the rectangle. **/
-    public final double  width;
+    /** The width of the rectangle. * */
+    public final double width;
 
-    /** The height of the rectangle. **/
-    public final double  height;
+    /** The height of the rectangle. * */
+    public final double height;
 
-    /** If true, the rectangle is drawn as filled. **/
+    /** If true, the rectangle is drawn as filled. * */
     public final boolean filled;
 
-    /** The color of the rectangle. **/
-    public final Color   color;
+    /** The color of the rectangle. * */
+    public final Color color;
 
     /**
      * Make a rectangle from two opposite corners (x1, y1) and (x2, y2).
@@ -56,7 +55,8 @@ public class RectangleElement implements IRenderingElement {
      * @param yCoord2 the y-coordinate of the second point
      * @param color the color of the rectangle
      */
-    public RectangleElement(double xCoord1, double yCoord1, double xCoord2, double yCoord2, Color color) {
+    public RectangleElement(
+            double xCoord1, double yCoord1, double xCoord2, double yCoord2, Color color) {
 
         this(xCoord1, yCoord1, xCoord2 - xCoord1, yCoord2 - yCoord1, false, color);
     }
@@ -71,7 +71,13 @@ public class RectangleElement implements IRenderingElement {
      * @param filled if true, the rectangle is drawn as filled
      * @param color the color of the rectangle
      */
-    public RectangleElement(double xCoord, double yCoord, double width, double height, boolean filled, Color color) {
+    public RectangleElement(
+            double xCoord,
+            double yCoord,
+            double width,
+            double height,
+            boolean filled,
+            Color color) {
         this.xCoord = xCoord;
         this.yCoord = yCoord;
         this.width = width;
@@ -80,10 +86,9 @@ public class RectangleElement implements IRenderingElement {
         this.color = color;
     }
 
-    /** {@inheritDoc }**/
+    /** {@inheritDoc }* */
     @Override
     public void accept(IRenderingVisitor visitor) {
         visitor.visit(this);
     }
-
 }

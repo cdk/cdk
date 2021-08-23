@@ -1,5 +1,5 @@
 /* Copyright (c) 2018 Kazuya Ujihara <ujihara.kazuya@gmail.com>
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -35,24 +35,26 @@ import org.openscience.cdk.qsar.result.DoubleResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 
 /**
- * An implementation of the Fractional CSP3 descriptor described in {@cdk.cite Lovering2009}. 
- * This descriptor is characterizing non-flatness of a molecule.
- * 
- * This descriptor returns a single double value, labeled as "Fsp3"
- * 
+ * An implementation of the Fractional CSP3 descriptor described in {@cdk.cite Lovering2009}. This
+ * descriptor is characterizing non-flatness of a molecule.
+ *
+ * <p>This descriptor returns a single double value, labeled as "Fsp3"
+ *
  * @author Kazuya Ujihara
  * @cdk.module qsarmolecular
  * @cdk.dictref qsar-descriptors:Fsp3
  */
-public class FractionalCSP3Descriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
-    public FractionalCSP3Descriptor() { }
-    
+public class FractionalCSP3Descriptor extends AbstractMolecularDescriptor
+        implements IMolecularDescriptor {
+    public FractionalCSP3Descriptor() {}
 
     /** {@inheritDoc} */
     @Override
     public DescriptorSpecification getSpecification() {
-        return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#Fsp3",
-                this.getClass().getName(), "The Chemistry Development Kit");
+        return new DescriptorSpecification(
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#Fsp3",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     /** {@inheritDoc} */
@@ -85,9 +87,9 @@ public class FractionalCSP3Descriptor extends AbstractMolecularDescriptor implem
      * Calculates the Fsp<sup>3</sup> descriptor value for the given {@link IAtomContainer}.
      *
      * @param mol An {@link org.openscience.cdk.interfaces.IAtomContainer} for which this descriptor
-     *            should be calculated
+     *     should be calculated
      * @return An object of {@link org.openscience.cdk.qsar.DescriptorValue} that contains the
-     *         calculated Fsp<sup>3</sup> descriptor value
+     *     calculated Fsp<sup>3</sup> descriptor value
      */
     @Override
     public DescriptorValue calculate(IAtomContainer mol) {
@@ -95,30 +97,34 @@ public class FractionalCSP3Descriptor extends AbstractMolecularDescriptor implem
         try {
             int nC = 0;
             int nCSP3 = 0;
-	        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
-	        for (IAtom atom : mol.atoms()) {
-	            if (atom.getAtomicNumber() == 6) {
-	            	nC++;
-	                IAtomType matched = matcher.findMatchingAtomType(mol, atom);
-	                if (matched != null && matched.getHybridization() == IAtomType.Hybridization.SP3) {
-	                	nCSP3++;
-	                }
-	            }
-	        }
-	        result = new DoubleResult(nC == 0 ? 0 : (double)nCSP3 / nC);
+            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+            for (IAtom atom : mol.atoms()) {
+                if (atom.getAtomicNumber() == 6) {
+                    nC++;
+                    IAtomType matched = matcher.findMatchingAtomType(mol, atom);
+                    if (matched != null
+                            && matched.getHybridization() == IAtomType.Hybridization.SP3) {
+                        nCSP3++;
+                    }
+                }
+            }
+            result = new DoubleResult(nC == 0 ? 0 : (double) nCSP3 / nC);
+        } catch (CDKException e) {
+            result = new DoubleResult(Double.NaN);
         }
-        catch (CDKException e) {
-        	result = new DoubleResult(Double.NaN);
-        }
-        
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result,
+
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                result,
                 getDescriptorNames());
     }
 
     /**
      * Returns the specific type of the Fsp3 descriptor value.
      *
-     * The Fsp3 descriptor is a single, double value.
+     * <p>The Fsp3 descriptor is a single, double value.
      *
      * @return an instance of the {@link org.openscience.cdk.qsar.result.DoubleResultType}
      */
@@ -129,6 +135,6 @@ public class FractionalCSP3Descriptor extends AbstractMolecularDescriptor implem
 
     @Override
     public String[] getDescriptorNames() {
-        return new String[]{"Fsp3"};
+        return new String[] {"Fsp3"};
     }
 }

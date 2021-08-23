@@ -18,6 +18,8 @@
  */
 package org.openscience.cdk.reaction.type;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
@@ -41,30 +43,23 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * TestSuite that runs a test for the AdductionProtonPBReactionTest.
- * Generalized Reaction: A=B + [H+] => [A+]-B-H.
+ * TestSuite that runs a test for the AdductionProtonPBReactionTest. Generalized Reaction: A=B +
+ * [H+] => [A+]-B-H.
  *
  * @cdk.module test-reaction
  */
 public class AdductionProtonPBReactionTest extends ReactionProcessTest {
 
     private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-    private IChemObjectBuilder            builder = SilentChemObjectBuilder.getInstance();
+    private IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
-    /**
-     *  The JUnit setup method
-     */
+    /** The JUnit setup method */
     public AdductionProtonPBReactionTest() throws Exception {
         setReaction(AdductionProtonPBReaction.class);
     }
 
-    /**
-     *  The JUnit setup method
-     */
+    /** The JUnit setup method */
     @Test
     public void testAdductionProtonPBReaction() throws Exception {
         IReactionProcess type = new AdductionProtonPBReaction();
@@ -72,13 +67,11 @@ public class AdductionProtonPBReactionTest extends ReactionProcessTest {
     }
 
     /**
-     * A unit test suite for JUnit for Ethene.
-     * Reaction: O=C-C-H => O(H)-C=C.
-     * Automatic looking for active center.
+     * A unit test suite for JUnit for Ethene. Reaction: O=C-C-H => O(H)-C=C. Automatic looking for
+     * active center.
      *
      * @cdk.inchi InChI=1/C2H4/c1-2/h1-2H2
-     *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     @Override
@@ -103,19 +96,17 @@ public class AdductionProtonPBReactionTest extends ReactionProcessTest {
 
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
 
-        IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
+        IQueryAtomContainer queryAtom =
+                QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
         Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, queryAtom));
-
     }
 
     /**
-     * A unit test suite for JUnit for Ethene.
-     * Reaction: O=C-C-H => O(H)-C=C.
-     * Manually putting for active center.
+     * A unit test suite for JUnit for Ethene. Reaction: O=C-C-H => O(H)-C=C. Manually putting for
+     * active center.
      *
      * @cdk.inchi InChI=1/C2H4/c1-2/h1-2H2
-     *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testManuallyCentreActive() throws Exception {
@@ -144,18 +135,17 @@ public class AdductionProtonPBReactionTest extends ReactionProcessTest {
 
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
 
-        IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
+        IQueryAtomContainer queryAtom =
+                QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
         Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, queryAtom));
-
     }
 
     /**
-    * A unit test suite for JUnit.
-    *
-    * @cdk.inchi InChI=1/C2H4/c1-2/h1-2H2
-    *
-    * @return    The test suite
-    */
+     * A unit test suite for JUnit.
+     *
+     * @cdk.inchi InChI=1/C2H4/c1-2/h1-2H2
+     * @return The test suite
+     */
     @Test
     public void testCDKConstants_REACTIVE_CENTER() throws Exception {
         IReactionProcess type = new AdductionProtonPBReaction();
@@ -190,8 +180,7 @@ public class AdductionProtonPBReactionTest extends ReactionProcessTest {
      * A unit test suite for JUnit.
      *
      * @cdk.inchi InChI=1/C2H4/c1-2/h1-2H2
-     *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testMapping() throws Exception {
@@ -215,13 +204,16 @@ public class AdductionProtonPBReactionTest extends ReactionProcessTest {
 
         Assert.assertEquals(7, setOfReactions.getReaction(0).getMappingCount());
 
-        IAtom mappedProductA1 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
-                molecule.getAtom(0));
+        IAtom mappedProductA1 =
+                (IAtom)
+                        ReactionManipulator.getMappedChemObject(
+                                setOfReactions.getReaction(0), molecule.getAtom(0));
         Assert.assertEquals(mappedProductA1, product.getAtom(0));
-        mappedProductA1 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
-                molecule.getAtom(1));
+        mappedProductA1 =
+                (IAtom)
+                        ReactionManipulator.getMappedChemObject(
+                                setOfReactions.getReaction(0), molecule.getAtom(1));
         Assert.assertEquals(mappedProductA1, product.getAtom(1));
-
     }
 
     /**
@@ -231,7 +223,8 @@ public class AdductionProtonPBReactionTest extends ReactionProcessTest {
      * @throws CDKException
      */
     private IAtomContainerSet getExampleReactants() {
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));

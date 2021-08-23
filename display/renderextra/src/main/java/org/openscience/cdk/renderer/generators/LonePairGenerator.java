@@ -21,9 +21,7 @@ package org.openscience.cdk.renderer.generators;
 import java.awt.Color;
 import java.util.Collections;
 import java.util.List;
-
 import javax.vecmath.Point2d;
-
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -85,8 +83,20 @@ public class LonePairGenerator implements IGenerator<IAtomContainer> {
                 yRadius += modelAtomRadius;
                 diffx += modelSeparation;
             }
-            group.add(new OvalElement(xRadius + diffx, yRadius + diffy, modelPointRadius, true, RADICAL_COLOR));
-            group.add(new OvalElement(xRadius - diffx, yRadius - diffy, modelPointRadius, true, RADICAL_COLOR));
+            group.add(
+                    new OvalElement(
+                            xRadius + diffx,
+                            yRadius + diffy,
+                            modelPointRadius,
+                            true,
+                            RADICAL_COLOR));
+            group.add(
+                    new OvalElement(
+                            xRadius - diffx,
+                            yRadius - diffy,
+                            modelPointRadius,
+                            true,
+                            RADICAL_COLOR));
         }
         return group;
     }

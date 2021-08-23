@@ -24,23 +24,23 @@
 
 package org.openscience.cdk.graph;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+import static org.openscience.cdk.graph.InitialCycles.Cycle;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-import static org.openscience.cdk.graph.InitialCycles.Cycle;
-
 /**
- * Compute the relevant cycles (<i>C<sub>R</sub></i>) of a graph. A cycle is
- * relevant if it cannot be represented as the &oplus;-sum (xor) of strictly
- * shorter cycles {@cdk.cite Berger04}. This is the smallest set of short cycles
- * which is <i>uniquely</i> defined for a graph. The set can also be thought of
- * as the union of all minimum cycle bases. The set of cycles may be exponential
- * in number but can be checked (see {@link #size()}) before construction
- * {@cdk.cite Vismara97}.
+ * Compute the relevant cycles (<i>C<sub>R</sub></i>) of a graph. A cycle is relevant if it cannot
+ * be represented as the &oplus;-sum (xor) of strictly shorter cycles {@cdk.cite Berger04}. This is
+ * the smallest set of short cycles which is <i>uniquely</i> defined for a graph. The set can also
+ * be thought of as the union of all minimum cycle bases. The set of cycles may be exponential in
+ * number but can be checked (see {@link #size()}) before construction {@cdk.cite Vismara97}.
  *
- * <blockquote><pre>{@code
+ * <blockquote>
+ *
+ * <pre>{@code
  * // import static org.openscience.cdk.graph.GraphUtil.*;
  * IAtomContainer m = ...;
  *
@@ -69,8 +69,9 @@ import static org.openscience.cdk.graph.InitialCycles.Cycle;
  *         }
  *     }
  * }
- * }
- * </pre></blockquote>
+ * }</pre>
+ *
+ * </blockquote>
  *
  * @author John May
  * @cdk.module core
@@ -103,8 +104,7 @@ public final class RelevantCycles {
     }
 
     /**
-     * Generate the relevant cycle basis from a precomputed set of initial
-     * cycles.
+     * Generate the relevant cycle basis from a precomputed set of initial cycles.
      *
      * @param initial set of initial cycles.
      * @throws NullPointerException null InitialCycles provided
@@ -122,8 +122,8 @@ public final class RelevantCycles {
     }
 
     /**
-     * Given a list of cycles return those which are independent (&oplus;-sum)
-     * from the current basis.
+     * Given a list of cycles return those which are independent (&oplus;-sum) from the current
+     * basis.
      *
      * @param cycles cycles of a given length
      * @return cycles which were independent
@@ -139,7 +139,9 @@ public final class RelevantCycles {
     /**
      * Reconstruct the paths of all relevant cycles.
      *
-     * <blockquote><pre>{@code
+     * <blockquote>
+     *
+     * <pre>{@code
      * RelevantCycles relevant = ...
      *
      * // ensure the number is manageable
@@ -148,7 +150,9 @@ public final class RelevantCycles {
      *     // process the path
      *   }
      * }
-     * }</pre></blockquote>
+     * }</pre>
+     *
+     * </blockquote>
      *
      * @return array of vertex paths
      */
@@ -156,8 +160,7 @@ public final class RelevantCycles {
         final int[][] paths = new int[size()][0];
         int i = 0;
         for (final Cycle c : basis.members()) {
-            for (final int[] path : c.family())
-                paths[i++] = path;
+            for (final int[] path : c.family()) paths[i++] = path;
         }
         return paths;
     }
@@ -169,8 +172,7 @@ public final class RelevantCycles {
      */
     public int size() {
         int size = 0;
-        for (final Cycle c : basis.members())
-            size += c.sizeOfFamily();
+        for (final Cycle c : basis.members()) size += c.sizeOfFamily();
         return size;
     }
 }

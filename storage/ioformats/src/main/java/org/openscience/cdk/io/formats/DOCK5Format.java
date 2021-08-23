@@ -24,7 +24,6 @@ import org.openscience.cdk.tools.DataFeatures;
  * See <a href="http://dock.compbio.ucsf.edu">here</a>.
  *
  * @author Miguel Rojas
- *
  * @cdk.module ioformats
  * @cdk.githash
  */
@@ -60,7 +59,7 @@ public class DOCK5Format extends AbstractResourceFormat implements IChemFormat {
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"bgf"};
+        return new String[] {"bgf"};
     }
 
     /** {@inheritDoc} */

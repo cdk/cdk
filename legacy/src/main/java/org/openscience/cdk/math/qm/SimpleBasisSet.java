@@ -32,30 +32,25 @@ import org.openscience.cdk.math.Vector;
  * @author Stephan Michels &lt;stephan@vern.chem.tu-berlin.de&gt;
  * @cdk.githash
  * @cdk.created 2001-07-11
- * @cdk.module  qm
+ * @cdk.module qm
  */
 public class SimpleBasisSet extends GaussiansBasis {
 
-    private final static double f1 = 0.1;
-    private final static double f2 = 0.3;
-    private final static double f3 = 0.9;
-    private final static double f4 = 2.7;
+    private static final double f1 = 0.1;
+    private static final double f2 = 0.3;
+    private static final double f3 = 0.9;
+    private static final double f4 = 2.7;
 
-    /**
-     * Create a base set
-     */
+    /** Create a base set */
     public SimpleBasisSet(IAtom[] atoms) {
         int i, j;
         int size = 0;
         int atomicnumber;
         for (i = 0; i < atoms.length; i++) {
             atomicnumber = atoms[i].getAtomicNumber();
-            if (atomicnumber <= 2)
-                size += 4;
-            else if (atomicnumber <= 18)
-                size += 4 + 12;
-            else
-                size += 4 + 12 + 12;
+            if (atomicnumber <= 2) size += 4;
+            else if (atomicnumber <= 18) size += 4 + 12;
+            else size += 4 + 12 + 12;
         }
 
         int[] nx = new int[size];

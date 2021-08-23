@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.hash.stereo;
 
-
 /**
  * Describes the geometric parity of a stereo configuration.
  *
@@ -42,8 +41,8 @@ abstract class GeometricParity {
     abstract int parity();
 
     /**
-     * Simple implementation allows us to wrap a predefined parity up for access
-     * later. See {@link TetrahedralElementEncoderFactory} for usage example.
+     * Simple implementation allows us to wrap a predefined parity up for access later. See {@link
+     * TetrahedralElementEncoderFactory} for usage example.
      */
     private static final class Predefined extends GeometricParity {
 
@@ -59,7 +58,7 @@ abstract class GeometricParity {
             this.parity = parity;
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         int parity() {
             return parity;

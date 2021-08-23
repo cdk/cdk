@@ -25,8 +25,8 @@ import java.io.StringWriter;
 import java.util.Locale;
 
 /**
- * Implementation of the {@link ILoggingTool} interface that sends output to
- * the {@link System#err} channel.
+ * Implementation of the {@link ILoggingTool} interface that sends output to the {@link System#err}
+ * channel.
  *
  * @cdk.module core
  * @cdk.githash
@@ -37,14 +37,13 @@ public class SystemOutLoggingTool implements ILoggingTool {
     private int level = ILoggingTool.WARN;
 
     /** Name of the class for which this {@link ILoggingTool} is reporting. */
-    private String              classname;
+    private String classname;
 
     /** Length of the stack to print for reported {@link Exception}s. */
-    private int                 stackLength;
+    private int stackLength;
 
     /**
-     * Constructs a ILoggingTool which produces log lines indicating them to be
-     * for the given Class.
+     * Constructs a ILoggingTool which produces log lines indicating them to be for the given Class.
      *
      * @param classInst Class from which the log messages originate
      */
@@ -151,7 +150,8 @@ public class SystemOutLoggingTool implements ILoggingTool {
                     }
                 }
             } catch (Exception ioException) {
-                error("Serious error in LoggingTool while printing exception " + "stack trace: ",
+                error(
+                        "Serious error in LoggingTool while printing exception " + "stack trace: ",
                         ioException.getMessage());
                 ioException.printStackTrace();
             }
@@ -261,7 +261,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
      * Creates a new {@link SystemOutLoggingTool} for the given class.
      *
      * @param sourceClass Class for which logging messages are recorded.
-     * @return            A {@link SystemOutLoggingTool}.
+     * @return A {@link SystemOutLoggingTool}.
      */
     public static ILoggingTool create(Class<?> sourceClass) {
         return new SystemOutLoggingTool(sourceClass);
@@ -269,27 +269,22 @@ public class SystemOutLoggingTool implements ILoggingTool {
 
     /**
      * Protected method which must not be used, except for testing purposes.
+     *
      * @deprecated use {@link #setLevel(int)}
      */
     @Deprecated
     protected void setDebugEnabled(boolean enabled) {
-        if (enabled)
-            setLevel(DEBUG);
-        else
-            setLevel(FATAL);
+        if (enabled) setLevel(DEBUG);
+        else setLevel(FATAL);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setLevel(int level) {
         this.level = level;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getLevel() {
         return level;

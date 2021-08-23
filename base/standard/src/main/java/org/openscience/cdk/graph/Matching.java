@@ -24,25 +24,23 @@
 
 package org.openscience.cdk.graph;
 
-
 import java.util.Arrays;
 import java.util.BitSet;
 
 /**
- * A matching is an independent edge set of a graph. This is a set of edges that
- * share no common vertices. A matching is perfect if every vertex in the graph
- * is matched. Each vertex can be matched with exactly one other vertex.
+ * A matching is an independent edge set of a graph. This is a set of edges that share no common
+ * vertices. A matching is perfect if every vertex in the graph is matched. Each vertex can be
+ * matched with exactly one other vertex.
  *
- * This class provides storage and manipulation of a matching. A new match is
- * added with {@link #match(int, int)}, any existing match for the newly matched
- * vertices is no-longer available. The status of a vertex can be queried with
- * {@link #matched(int)} and the matched vertex obtained with {@link
- * #other(int)}. 
+ * <p>This class provides storage and manipulation of a matching. A new match is added with {@link
+ * #match(int, int)}, any existing match for the newly matched vertices is no-longer available. The
+ * status of a vertex can be queried with {@link #matched(int)} and the matched vertex obtained with
+ * {@link #other(int)}.
  *
  * @author John May
  * @cdk.module standard
- * @see <a href="http://en.wikipedia.org/wiki/Matching_(graph_theory)">Matching
- * (graph theory), Wikipedia</a>
+ * @see <a href="http://en.wikipedia.org/wiki/Matching_(graph_theory)">Matching (graph theory),
+ *     Wikipedia</a>
  */
 public final class Matching {
 
@@ -50,7 +48,7 @@ public final class Matching {
     private static final int NIL = -1;
 
     /** Match storage. */
-    private final int[]      match;
+    private final int[] match;
 
     /**
      * Create a matching of the given size.
@@ -63,8 +61,8 @@ public final class Matching {
     }
 
     /**
-     * Add the edge '{u,v}' to the matched edge set. Any existing matches for
-     * 'u' or 'v' are removed from the matched set.
+     * Add the edge '{u,v}' to the matched edge set. Any existing matches for 'u' or 'v' are removed
+     * from the matched set.
      *
      * @param u a vertex
      * @param v another vertex
@@ -118,14 +116,13 @@ public final class Matching {
     }
 
     /**
-     * Attempt to augment the matching such that it is perfect over the subset
-     * of vertices in the provided graph.
+     * Attempt to augment the matching such that it is perfect over the subset of vertices in the
+     * provided graph.
      *
-     * @param graph  adjacency list representation of graph
+     * @param graph adjacency list representation of graph
      * @param subset subset of vertices
      * @return the matching was perfect
-     * @throws IllegalArgumentException the graph was a different size to the
-     *                                  matching capacity
+     * @throws IllegalArgumentException the graph was a different size to the matching capacity
      */
     public boolean perfect(int[][] graph, BitSet subset) {
 
@@ -150,7 +147,7 @@ public final class Matching {
     /**
      * Assign an arbitrary matching that covers the subset of vertices.
      *
-     * @param graph  adjacency list representation of graph
+     * @param graph adjacency list representation of graph
      * @param subset subset of vertices in the graph
      * @return the matching was perfect
      */
@@ -172,8 +169,7 @@ public final class Matching {
                 continue;
             }
             unmatched.set(v);
-            for (int w : graph[v])
-                if (subset.get(w) && unmatched(w)) deg[v]++;
+            for (int w : graph[v]) if (subset.get(w) && unmatched(w)) deg[v]++;
             if (deg[v] == 1) deg1[nd1++] = v;
         }
 
@@ -225,7 +221,7 @@ public final class Matching {
         return new Matching(capacity);
     }
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(4 * match.length);

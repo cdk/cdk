@@ -28,7 +28,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-
 /**
  * A list of atom indices, and the label of the orbit.
  *
@@ -38,20 +37,14 @@ import java.util.List;
  */
 public class Orbit implements Iterable<Integer>, Cloneable {
 
-    /**
-     * The atom indices in this orbit
-     */
+    /** The atom indices in this orbit */
     private List<Integer> atomIndices;
 
-    /**
-     * The label that all the atoms in the orbit share
-     */
-    private String        label;
+    /** The label that all the atoms in the orbit share */
+    private String label;
 
-    /**
-     * The maximum height of the signature string
-     */
-    private int           height;
+    /** The maximum height of the signature string */
+    private int height;
 
     /**
      * @param label
@@ -79,9 +72,7 @@ public class Orbit implements Iterable<Integer>, Cloneable {
         return orbit;
     }
 
-    /**
-     * Sorts the atom indices in this orbit.
-     */
+    /** Sorts the atom indices in this orbit. */
     public void sort() {
         // TODO : change the list to a sorted set?
         Collections.sort(this.atomIndices);
@@ -175,5 +166,4 @@ public class Orbit implements Iterable<Integer>, Cloneable {
     public String toString() {
         return label + " " + Arrays.deepToString(atomIndices.toArray());
     }
-
 }

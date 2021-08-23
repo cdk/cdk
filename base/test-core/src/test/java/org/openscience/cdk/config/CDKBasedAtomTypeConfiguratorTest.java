@@ -19,13 +19,11 @@
  */
 package org.openscience.cdk.config;
 
+import java.io.InputStream;
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.config.CDKBasedAtomTypeConfigurator;
 import org.openscience.cdk.CDKTestCase;
-
-import java.io.InputStream;
+import org.openscience.cdk.ChemObject;
 
 /**
  * Checks the functionality of the TXTBasedAtomTypeConfigurator.
@@ -53,5 +51,4 @@ public class CDKBasedAtomTypeConfiguratorTest extends CDKTestCase {
     public void testSetInputStream_InputStream() throws Exception {
         testReadAtomTypes_IChemObjectBuilder();
     }
-
 }

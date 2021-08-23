@@ -22,9 +22,9 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractBioPolymerTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBioPolymer;
-import org.openscience.cdk.interfaces.AbstractBioPolymerTest;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IStrand;
@@ -34,20 +34,20 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  * Checks the functionality of the BioPolymer class.
  *
  * @cdk.module test-data
- *
  * @see org.openscience.cdk.BioPolymer
  */
 public class BioPolymerTest extends AbstractBioPolymerTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new BioPolymer();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new BioPolymer();
+                    }
+                });
     }
 
     @Test
@@ -103,5 +103,4 @@ public class BioPolymerTest extends AbstractBioPolymerTest {
         Assert.assertNull(oBioPolymer.getStrand("C"));
         Assert.assertNotNull(oBioPolymer.getStrand("B"));
     }
-
 }

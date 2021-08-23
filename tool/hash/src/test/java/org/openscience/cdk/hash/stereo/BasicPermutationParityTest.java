@@ -24,9 +24,9 @@
 
 package org.openscience.cdk.hash.stereo;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 
 /**
  * @author John May
@@ -34,7 +34,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class BasicPermutationParityTest {
 
-    BasicPermutationParity permutationParity = new BasicPermutationParity(new int[]{0, 1, 2, 3});
+    BasicPermutationParity permutationParity = new BasicPermutationParity(new int[] {0, 1, 2, 3});
 
     @Test(expected = NullPointerException.class)
     public void testConstruction_Null() {
@@ -48,56 +48,54 @@ public class BasicPermutationParityTest {
 
     @Test
     public void testParity_Even() throws Exception {
-        assertEquals(1, permutationParity.parity(new long[]{4, 3, 2, 1}));
+        assertEquals(1, permutationParity.parity(new long[] {4, 3, 2, 1}));
     }
 
     @Test
     public void testParity_Odd() throws Exception {
-        assertEquals(-1, permutationParity.parity(new long[]{4, 2, 3, 1}));
+        assertEquals(-1, permutationParity.parity(new long[] {4, 2, 3, 1}));
     }
 
     @Test
     public void testParity_Even_Negative() throws Exception {
-        assertEquals(1, permutationParity.parity(new long[]{4, 3, -1, -2}));
+        assertEquals(1, permutationParity.parity(new long[] {4, 3, -1, -2}));
     }
 
     @Test
     public void testParity_Odd_Negative() throws Exception {
-        assertEquals(-1, permutationParity.parity(new long[]{4, -1, 3, -2}));
+        assertEquals(-1, permutationParity.parity(new long[] {4, -1, 3, -2}));
     }
 
     @Test
     public void testParity_Duplicate() throws Exception {
-        assertEquals(0, permutationParity.parity(new long[]{4, 3, -1, -1}));
+        assertEquals(0, permutationParity.parity(new long[] {4, 3, -1, -1}));
     }
 
     @Test
     public void testParity_All() throws Exception {
-        assertEquals(1, permutationParity.parity(new long[]{1, 2, 3, 4}));
-        assertEquals(-1, permutationParity.parity(new long[]{2, 1, 3, 4}));
-        assertEquals(-1, permutationParity.parity(new long[]{1, 3, 2, 4}));
-        assertEquals(1, permutationParity.parity(new long[]{3, 1, 2, 4}));
-        assertEquals(1, permutationParity.parity(new long[]{2, 3, 1, 4}));
-        assertEquals(-1, permutationParity.parity(new long[]{3, 2, 1, 4}));
-        assertEquals(-1, permutationParity.parity(new long[]{1, 2, 4, 3}));
-        assertEquals(1, permutationParity.parity(new long[]{2, 1, 4, 3}));
-        assertEquals(1, permutationParity.parity(new long[]{1, 4, 2, 3}));
-        assertEquals(-1, permutationParity.parity(new long[]{4, 1, 2, 3}));
-        assertEquals(-1, permutationParity.parity(new long[]{2, 4, 1, 3}));
-        assertEquals(1, permutationParity.parity(new long[]{4, 2, 1, 3}));
-        assertEquals(1, permutationParity.parity(new long[]{1, 3, 4, 2}));
-        assertEquals(-1, permutationParity.parity(new long[]{3, 1, 4, 2}));
-        assertEquals(-1, permutationParity.parity(new long[]{1, 4, 3, 2}));
-        assertEquals(1, permutationParity.parity(new long[]{4, 1, 3, 2}));
-        assertEquals(1, permutationParity.parity(new long[]{3, 4, 1, 2}));
-        assertEquals(-1, permutationParity.parity(new long[]{4, 3, 1, 2}));
-        assertEquals(-1, permutationParity.parity(new long[]{2, 3, 4, 1}));
-        assertEquals(1, permutationParity.parity(new long[]{3, 2, 4, 1}));
-        assertEquals(1, permutationParity.parity(new long[]{2, 4, 3, 1}));
-        assertEquals(-1, permutationParity.parity(new long[]{4, 2, 3, 1}));
-        assertEquals(-1, permutationParity.parity(new long[]{3, 4, 2, 1}));
-        assertEquals(1, permutationParity.parity(new long[]{4, 3, 2, 1}));
-
+        assertEquals(1, permutationParity.parity(new long[] {1, 2, 3, 4}));
+        assertEquals(-1, permutationParity.parity(new long[] {2, 1, 3, 4}));
+        assertEquals(-1, permutationParity.parity(new long[] {1, 3, 2, 4}));
+        assertEquals(1, permutationParity.parity(new long[] {3, 1, 2, 4}));
+        assertEquals(1, permutationParity.parity(new long[] {2, 3, 1, 4}));
+        assertEquals(-1, permutationParity.parity(new long[] {3, 2, 1, 4}));
+        assertEquals(-1, permutationParity.parity(new long[] {1, 2, 4, 3}));
+        assertEquals(1, permutationParity.parity(new long[] {2, 1, 4, 3}));
+        assertEquals(1, permutationParity.parity(new long[] {1, 4, 2, 3}));
+        assertEquals(-1, permutationParity.parity(new long[] {4, 1, 2, 3}));
+        assertEquals(-1, permutationParity.parity(new long[] {2, 4, 1, 3}));
+        assertEquals(1, permutationParity.parity(new long[] {4, 2, 1, 3}));
+        assertEquals(1, permutationParity.parity(new long[] {1, 3, 4, 2}));
+        assertEquals(-1, permutationParity.parity(new long[] {3, 1, 4, 2}));
+        assertEquals(-1, permutationParity.parity(new long[] {1, 4, 3, 2}));
+        assertEquals(1, permutationParity.parity(new long[] {4, 1, 3, 2}));
+        assertEquals(1, permutationParity.parity(new long[] {3, 4, 1, 2}));
+        assertEquals(-1, permutationParity.parity(new long[] {4, 3, 1, 2}));
+        assertEquals(-1, permutationParity.parity(new long[] {2, 3, 4, 1}));
+        assertEquals(1, permutationParity.parity(new long[] {3, 2, 4, 1}));
+        assertEquals(1, permutationParity.parity(new long[] {2, 4, 3, 1}));
+        assertEquals(-1, permutationParity.parity(new long[] {4, 2, 3, 1}));
+        assertEquals(-1, permutationParity.parity(new long[] {3, 4, 2, 1}));
+        assertEquals(1, permutationParity.parity(new long[] {4, 3, 2, 1}));
     }
-
 }

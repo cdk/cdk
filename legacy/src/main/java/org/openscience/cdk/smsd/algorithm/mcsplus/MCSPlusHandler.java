@@ -27,7 +27,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -39,28 +38,27 @@ import org.openscience.cdk.smsd.interfaces.IMCSBase;
 import org.openscience.cdk.smsd.tools.MolHandler;
 
 /**
- * This class acts as a handler class for MCSPlus algorithm.
- * {@link org.openscience.cdk.smsd.algorithm.mcsplus.MCSPlus}
+ * This class acts as a handler class for MCSPlus algorithm. {@link
+ * org.openscience.cdk.smsd.algorithm.mcsplus.MCSPlus}
+ *
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is
+ *     available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
 
-    private static List<Map<IAtom, IAtom>>     allAtomMCS   = null;
-    private static Map<IAtom, IAtom>           atomsMCS     = null;
-    private static Map<Integer, Integer>       firstMCS     = null;
-    private static List<Map<Integer, Integer>> allMCS       = null;
-    private IAtomContainer                     source       = null;
-    private IAtomContainer                     target       = null;
-    private boolean                            flagExchange = false;
+    private static List<Map<IAtom, IAtom>> allAtomMCS = null;
+    private static Map<IAtom, IAtom> atomsMCS = null;
+    private static Map<Integer, Integer> firstMCS = null;
+    private static List<Map<Integer, Integer>> allMCS = null;
+    private IAtomContainer source = null;
+    private IAtomContainer target = null;
+    private boolean flagExchange = false;
 
-    /**
-     * Constructor for the MCS Plus algorithm class
-     */
+    /** Constructor for the MCS Plus algorithm class */
     public MCSPlusHandler() {
         allAtomMCS = new ArrayList<Map<IAtom, IAtom>>();
         atomsMCS = new HashMap<IAtom, IAtom>();
@@ -68,7 +66,8 @@ public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
         allMCS = new ArrayList<Map<Integer, Integer>>();
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      *
      * @param source
      * @param target
@@ -79,7 +78,8 @@ public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
         this.target = target.getMolecule();
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      *
      * @param source
      * @param target
@@ -90,8 +90,9 @@ public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
         this.target = target;
     }
 
-    /** {@inheritDoc}
-     * Function is called by the main program and serves as a starting point for the comparison procedure.
+    /**
+     * {@inheritDoc} Function is called by the main program and serves as a starting point for the
+     * comparison procedure.
      *
      * @param shouldMatchBonds
      */
@@ -118,7 +119,8 @@ public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
     private synchronized void setAllMapping() {
         try {
 
-            List<Map<Integer, Integer>> finalSolution = FinalMappings.getInstance().getFinalMapping();
+            List<Map<Integer, Integer>> finalSolution =
+                    FinalMappings.getInstance().getFinalMapping();
             int counter = 0;
             for (Map<Integer, Integer> solution : finalSolution) {
                 //                System.out.println("Number of MCS solution: " + solution);
@@ -138,7 +140,6 @@ public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
     }
 
     private synchronized void setAllAtomMapping() {
@@ -164,7 +165,6 @@ public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
         } catch (Exception I) {
             I.getCause();
         }
-
     }
 
     private synchronized void setFirstMapping() {
@@ -179,29 +179,25 @@ public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
         }
     }
 
-    /** {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public synchronized List<Map<Integer, Integer>> getAllMapping() {
         return allMCS;
     }
 
-    /** {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public synchronized Map<Integer, Integer> getFirstMapping() {
         return firstMCS;
     }
 
-    /** {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public synchronized List<Map<IAtom, IAtom>> getAllAtomMapping() {
         return allAtomMCS;
     }
 
-    /** {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public synchronized Map<IAtom, IAtom> getFirstAtomMapping() {
         return atomsMCS;

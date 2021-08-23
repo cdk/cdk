@@ -23,15 +23,15 @@
 
 package org.openscience.cdk.renderer.color;
 
+import static org.openscience.cdk.config.Elements.Unknown;
+
+import java.awt.Color;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 
-import java.awt.Color;
-
-import static org.openscience.cdk.config.Elements.Unknown;
-
 /**
  * Default Jmol colors.
+ *
  * @see <a href="http://Jmol.sourceforge.net/jscolors/">Jmol, Colors</a>
  */
 public final class JmolColors implements IAtomColorer {
@@ -154,8 +154,7 @@ public final class JmolColors implements IAtomColorer {
     @Override
     public Color getAtomColor(IAtom atom, Color defaultColor) {
         Elements elem = Elements.ofString(atom.getSymbol());
-        if (elem == Unknown)
-            elem = Elements.ofNumber(atom.getAtomicNumber());
+        if (elem == Unknown) elem = Elements.ofNumber(atom.getAtomicNumber());
         switch (elem) {
             case Hydrogen:
                 return hexFFFFFF;

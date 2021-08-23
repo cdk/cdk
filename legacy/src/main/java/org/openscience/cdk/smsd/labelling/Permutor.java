@@ -8,56 +8,47 @@ import java.util.Random;
  */
 
 /**
- * General permutation generator, that uses orderly generation by ranking and
- * unranking. The basic idea is that all permutations of length N can be ordered
- * (lexicographically) like:
+ * General permutation generator, that uses orderly generation by ranking and unranking. The basic
+ * idea is that all permutations of length N can be ordered (lexicographically) like:
+ *
  * <pre>
  * 0 [0, 1, 2]
  * 1 [0, 2, 1]
  * 2 [1, 0, 2]
  * ...
  * </pre>
- * where the number to the left of each permutation is the <i>rank</i> - really
- * just the index in this ordered list. The list is created on demand, by a
- * process called <i>unranking</i> where the rank is converted to the
- * permutation that appears at that point in the list.
  *
- * <p>The algorithms used are from the book "Combinatorial Generation :
- * Algorithms, Generation, and Search" (or C.A.G.E.S.) by D.L. Kreher and D.R.
- * Stinson</p>
+ * where the number to the left of each permutation is the <i>rank</i> - really just the index in
+ * this ordered list. The list is created on demand, by a process called <i>unranking</i> where the
+ * rank is converted to the permutation that appears at that point in the list.
+ *
+ * <p>The algorithms used are from the book "Combinatorial Generation : Algorithms, Generation, and
+ * Search" (or C.A.G.E.S.) by D.L. Kreher and D.R. Stinson
  *
  * @author maclean
  * @cdk.githash
- * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public
- *             access to internal implementation details. SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK
+ *     or provides public access to internal implementation details. SMSD has been deprecated from
+ *     the CDK with a newer, more recent version of SMSD is available at <a
+ *     href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public class Permutor {
 
-    /**
-     * The current rank of the permutation to use
-     */
-    private int    currentRank;
+    /** The current rank of the permutation to use */
+    private int currentRank;
 
-    /**
-     * The maximum rank possible, given the size
-     */
-    private int    maxRank;
+    /** The maximum rank possible, given the size */
+    private int maxRank;
 
-    /**
-     * The number of objects to permute
-     */
-    private int    size;
+    /** The number of objects to permute */
+    private int size;
 
-    /**
-     * For accessing part of the permutation space
-     */
+    /** For accessing part of the permutation space */
     private Random random;
 
     /**
-     * Create a permutor that will generate permutations of numbers up to
-     * <code>size</code>.
+     * Create a permutor that will generate permutations of numbers up to <code>size</code>.
      *
      * @param size the size of the permutations to generate
      */
@@ -146,9 +137,8 @@ public class Permutor {
     }
 
     /**
-     * Convert a permutation (in the form of an int array) into a 'rank' - which
-     * is just a single number that is the order of the permutation in a lexico-
-     * graphically ordered list.
+     * Convert a permutation (in the form of an int array) into a 'rank' - which is just a single
+     * number that is the order of the permutation in a lexico- graphically ordered list.
      *
      * @param permutation the permutation to use
      * @return the rank as a number
@@ -170,13 +160,13 @@ public class Permutor {
     }
 
     /**
-     * Performs the opposite to the rank method, producing the permutation that
-     * has the order <code>rank</code> in the lexicographically ordered list.
+     * Performs the opposite to the rank method, producing the permutation that has the order <code>
+     * rank</code> in the lexicographically ordered list.
      *
-     * As an implementation note, the algorithm assumes that the permutation is
-     * in the form [1,...N] not the more usual [0,...N-1] for a list of size N.
-     * This is why there is the final step of 'shifting' the permutation. The
-     * shift also reduces the numbers by one to make them array indices.
+     * <p>As an implementation note, the algorithm assumes that the permutation is in the form
+     * [1,...N] not the more usual [0,...N-1] for a list of size N. This is why there is the final
+     * step of 'shifting' the permutation. The shift also reduces the numbers by one to make them
+     * array indices.
      *
      * @param rank the order of the permutation to generate
      * @param size the length/size of the permutation
@@ -203,5 +193,4 @@ public class Permutor {
         }
         return shiftedPermutation;
     }
-
 }

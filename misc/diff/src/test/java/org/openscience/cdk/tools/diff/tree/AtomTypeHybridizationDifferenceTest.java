@@ -23,22 +23,22 @@ import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomType;
 
-/**
- * @cdk.module test-diff
- */
+/** @cdk.module test-diff */
 public class AtomTypeHybridizationDifferenceTest extends CDKTestCase {
 
     @Test
     public void testDiff() {
-        IDifference result = AtomTypeHybridizationDifference.construct("Foo", IAtomType.Hybridization.SP1,
-                IAtomType.Hybridization.SP2);
+        IDifference result =
+                AtomTypeHybridizationDifference.construct(
+                        "Foo", IAtomType.Hybridization.SP1, IAtomType.Hybridization.SP2);
         Assert.assertNotNull(result);
     }
 
     @Test
     public void testSame() {
-        IDifference result = AtomTypeHybridizationDifference.construct("Foo", IAtomType.Hybridization.SP1,
-                IAtomType.Hybridization.SP1);
+        IDifference result =
+                AtomTypeHybridizationDifference.construct(
+                        "Foo", IAtomType.Hybridization.SP1, IAtomType.Hybridization.SP1);
         Assert.assertNull(result);
     }
 
@@ -50,16 +50,19 @@ public class AtomTypeHybridizationDifferenceTest extends CDKTestCase {
 
     @Test
     public void testOneNull() {
-        IDifference result = AtomTypeHybridizationDifference.construct("Foo", null, IAtomType.Hybridization.SP1);
+        IDifference result =
+                AtomTypeHybridizationDifference.construct("Foo", null, IAtomType.Hybridization.SP1);
         Assert.assertNotNull(result);
 
-        result = AtomTypeHybridizationDifference.construct("Foo", IAtomType.Hybridization.SP1, null);
+        result =
+                AtomTypeHybridizationDifference.construct("Foo", IAtomType.Hybridization.SP1, null);
         Assert.assertNotNull(result);
     }
 
     @Test
     public void testToString() {
-        IDifference result = AtomTypeHybridizationDifference.construct("Foo", null, IAtomType.Hybridization.SP1);
+        IDifference result =
+                AtomTypeHybridizationDifference.construct("Foo", null, IAtomType.Hybridization.SP1);
         String diffString = result.toString();
         Assert.assertNotNull(diffString);
         assertOneLiner(diffString);

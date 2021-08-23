@@ -23,6 +23,16 @@
 
 package org.openscience.cdk.layout;
 
+import static org.openscience.cdk.CDKConstants.ISPLACED;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import javax.vecmath.Point2d;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -33,35 +43,23 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import javax.vecmath.Point2d;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import static org.openscience.cdk.CDKConstants.ISPLACED;
-
-/**
- * A class for helping layout macrocycles.
- */
+/** A class for helping layout macrocycles. */
 final class MacroCycleLayout {
 
     // Macrocycle templates
-    private static IdentityTemplateLibrary TEMPLATES            = IdentityTemplateLibrary.loadFromResource("macro.smi");
+    private static IdentityTemplateLibrary TEMPLATES =
+            IdentityTemplateLibrary.loadFromResource("macro.smi");
 
     // Hint for placing substituents
-    public static  String                  MACROCYCLE_ATOM_HINT = "layout.macrocycle.atom.hint";
+    public static String MACROCYCLE_ATOM_HINT = "layout.macrocycle.atom.hint";
 
     // (counter)clockwise
-    private static final int CW  = -1;
+    private static final int CW = -1;
     private static final int CCW = +1;
 
     // molecule representations
     private final IAtomContainer mol;
-    private final int[][]        adjList;
+    private final int[][] adjList;
     private final Map<IAtom, Integer> idxs = new HashMap<>();
 
     /**
@@ -72,15 +70,14 @@ final class MacroCycleLayout {
     public MacroCycleLayout(IAtomContainer mol) {
         this.mol = mol;
         this.adjList = GraphUtil.toAdjList(mol);
-        for (IAtom atom : mol.atoms())
-            idxs.put(atom, idxs.size());
+        for (IAtom atom : mol.atoms()) idxs.put(atom, idxs.size());
     }
 
     /**
      * Layout a macro cycle (the rest of the ring set is untouched).
      *
      * @param macrocycle the macrocycle
-     * @param ringset    the ring set the macrocycle belongs to (may only be it's self)
+     * @param ringset the ring set the macrocycle belongs to (may only be it's self)
      * @return layout was successfully, if false caller fall-back to regular polygons
      */
     boolean layout(IRing macrocycle, IRingSet ringset) {
@@ -88,8 +85,7 @@ final class MacroCycleLayout {
         final IAtomContainer anon = roundUpIfNeeded(AtomContainerManipulator.anonymise(macrocycle));
         final Collection<Point2d[]> coords = TEMPLATES.getCoordinates(anon);
 
-        if (coords.isEmpty())
-            return false;
+        if (coords.isEmpty()) return false;
 
         Point2d[] best = new Point2d[anon.getAtomCount()];
         int bestOffset = selectCoords(coords, best, macrocycle, ringset);
@@ -122,12 +118,10 @@ final class MacroCycleLayout {
 
         // hetero atoms
         for (int i = 0; i < numAtoms; i++) {
-            if (macrocycle.getAtom(i).getAtomicNumber() != 6)
-                heteroIdxs.add(i);
+            if (macrocycle.getAtom(i).getAtomicNumber() != 6) heteroIdxs.add(i);
         }
         for (IAtomContainer other : ringset.atomContainers()) {
-            if (other == macrocycle)
-                continue;
+            if (other == macrocycle) continue;
             IAtomContainer shared = AtomContainerManipulator.getIntersection(macrocycle, other);
 
             if (shared.getAtomCount() >= 2 && shared.getAtomCount() <= 4)
@@ -151,40 +145,34 @@ final class MacroCycleLayout {
                         r1 = (ringAttach.get(0) + i) % numAtoms;
                         r2 = (ringAttach.get(1) + i) % numAtoms;
                         if (winding[r1] == winding[r2]) {
-                            if (winding[r1] == convex)
-                                nRingClick += 5;
-                            else
-                                nRingClick++;
+                            if (winding[r1] == convex) nRingClick += 5;
+                            else nRingClick++;
                         }
                         break;
                     case 3:
                         r1 = (ringAttach.get(0) + i) % numAtoms;
                         r2 = (ringAttach.get(1) + i) % numAtoms;
                         r3 = (ringAttach.get(2) + i) % numAtoms;
-                        if (winding[r1] == convex &&
-                            winding[r2] == concave &&
-                            winding[r3] == convex)
-                            nRingClick += 5;
-                        else if (winding[r1] == concave &&
-                                 winding[r2] == convex &&
-                                 winding[r3] == concave)
-                            nRingClick++;
+                        if (winding[r1] == convex
+                                && winding[r2] == concave
+                                && winding[r3] == convex) nRingClick += 5;
+                        else if (winding[r1] == concave
+                                && winding[r2] == convex
+                                && winding[r3] == concave) nRingClick++;
                         break;
                     case 4:
                         r1 = (ringAttach.get(0) + i) % numAtoms;
                         r2 = (ringAttach.get(1) + i) % numAtoms;
                         r3 = (ringAttach.get(2) + i) % numAtoms;
                         r4 = (ringAttach.get(3) + i) % numAtoms;
-                        if (winding[r1] == convex &&
-                            winding[r2] == concave &&
-                            winding[r3] == concave &&
-                            winding[r4] == convex)
-                            nRingClick++;
-                        else if (winding[r1] == concave &&
-                                 winding[r2] == convex &&
-                                 winding[r3] == convex &&
-                                 winding[r4] == concave)
-                            nRingClick++;
+                        if (winding[r1] == convex
+                                && winding[r2] == concave
+                                && winding[r3] == concave
+                                && winding[r4] == convex) nRingClick++;
+                        else if (winding[r1] == concave
+                                && winding[r2] == convex
+                                && winding[r3] == convex
+                                && winding[r4] == concave) nRingClick++;
                         break;
                 }
             }
@@ -193,20 +181,19 @@ final class MacroCycleLayout {
             int nConcaveHetero = 0;
             for (int heteroIdx : heteroIdxs) {
                 int k = (heteroIdx + i) % numAtoms;
-                if (winding[k] == concave)
-                    nConcaveHetero++;
+                if (winding[k] == concave) nConcaveHetero++;
             }
 
-            int nCorrectStereo   = 0;
+            int nCorrectStereo = 0;
             int nIncorrectStereo = 0;
             for (IStereoElement se : macrocycle.stereoElements()) {
                 if (se.getConfigClass() == IStereoElement.CisTrans) {
                     IBond bond = (IBond) se.getFocus();
-                    IAtom beg  = bond.getBegin();
-                    IAtom end  = bond.getEnd();
+                    IAtom beg = bond.getBegin();
+                    IAtom end = bond.getEnd();
                     int cfg;
-                    if (winding[(macrocycle.indexOf(beg) + i) % numAtoms] ==
-                        winding[(macrocycle.indexOf(end) + i) % numAtoms]) {
+                    if (winding[(macrocycle.indexOf(beg) + i) % numAtoms]
+                            == winding[(macrocycle.indexOf(end) + i) % numAtoms]) {
                         cfg = IStereoElement.TOGETHER;
                     } else {
                         cfg = IStereoElement.OPPOSITE;
@@ -218,10 +205,7 @@ final class MacroCycleLayout {
                     }
                 }
             }
-            MacroScore score = new MacroScore(i,
-                                              nConcaveHetero,
-                                              nCorrectStereo,
-                                              nRingClick);
+            MacroScore score = new MacroScore(i, nConcaveHetero, nCorrectStereo, nRingClick);
             if (score.compareTo(best) < 0) {
                 best = score;
             }
@@ -265,7 +249,8 @@ final class MacroCycleLayout {
      * @param ringset rest of the ring system
      * @return offset into the coordinates
      */
-    private int selectCoords(Collection<Point2d[]> ps, Point2d[] coords, IRing macrocycle, IRingSet ringset) {
+    private int selectCoords(
+            Collection<Point2d[]> ps, Point2d[] coords, IRing macrocycle, IRingSet ringset) {
         assert ps.size() != 0;
         final int[] winding = new int[coords.length];
 
@@ -299,18 +284,14 @@ final class MacroCycleLayout {
             Point2d next = coords[(i + 1) % coords.length];
             winding[i] = winding(prev, curr, next);
 
-            if (winding[i] < 0)
-                cw++;
-            else if (winding[i] > 0)
-                ccw++;
-            else
-                return 0;
+            if (winding[i] < 0) cw++;
+            else if (winding[i] > 0) ccw++;
+            else return 0;
 
             prev = curr;
         }
 
-        if (cw == ccw)
-            return 0;
+        if (cw == ccw) return 0;
 
         return cw > ccw ? CW : CCW;
     }
@@ -327,9 +308,7 @@ final class MacroCycleLayout {
         return (int) Math.signum((b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x));
     }
 
-    /**
-     * Helper class for storing/ranking macrocycle templates.
-     */
+    /** Helper class for storing/ranking macrocycle templates. */
     private static final class MacroScore implements Comparable<MacroScore> {
         final int offset;
         final int nConcaveHetero;
@@ -345,15 +324,12 @@ final class MacroCycleLayout {
 
         @Override
         public int compareTo(MacroScore o) {
-            if (o == null)
-                return -1;
+            if (o == null) return -1;
             int cmp = 0;
             cmp = -Integer.compare(this.nRingClick, o.nRingClick);
-            if (cmp != 0)
-                return cmp;
+            if (cmp != 0) return cmp;
             cmp = -Integer.compare(this.nCorrectStereo, o.nCorrectStereo);
-            if (cmp != 0)
-                return cmp;
+            if (cmp != 0) return cmp;
             cmp = -Integer.compare(this.nConcaveHetero, o.nConcaveHetero);
             return cmp;
         }

@@ -34,13 +34,11 @@ import org.openscience.cdk.CDKTestCase;
  * This class tests the CycleBasis class.
  *
  * @cdk.module test-standard
- *
  * @author Ulrich Bauer &lt;baueru@cs.tum.edu&gt;
  */
-
 public class CycleBasisTest extends CDKTestCase {
 
-    CycleBasis  basis;
+    CycleBasis basis;
     SimpleGraph g;
 
     @Before
@@ -87,14 +85,16 @@ public class CycleBasisTest extends CDKTestCase {
 
     @Test
     public void testCycles() {
-        int trueCycleCount = g.edgeSet().size() - g.vertexSet().size()
-                + new ConnectivityInspector(g).connectedSets().size();
+        int trueCycleCount =
+                g.edgeSet().size()
+                        - g.vertexSet().size()
+                        + new ConnectivityInspector(g).connectedSets().size();
         Assert.assertEquals(trueCycleCount, basis.cycles().size());
     }
 
     @Test
     public void testWeightVector() {
-        Assert.assertArrayEquals(basis.weightVector(), new int[]{3, 3, 3, 3});
+        Assert.assertArrayEquals(basis.weightVector(), new int[] {3, 3, 3, 3});
     }
 
     @Test
@@ -111,5 +111,4 @@ public class CycleBasisTest extends CDKTestCase {
     public void testEquivalenceClasses() {
         Assert.assertEquals(4, basis.equivalenceClasses().size());
     }
-
 }

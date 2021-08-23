@@ -18,14 +18,13 @@
  */
 package org.openscience.cdk.qsar.result;
 
-
 /**
  * @cdk.module standard
  * @cdk.githash
  */
 public class DoubleResult implements IDescriptorResult {
 
-    private double            value;
+    private double value;
     private static final long serialVersionUID = 7711619468523616757L;
 
     public DoubleResult(double value) {
@@ -45,5 +44,4 @@ public class DoubleResult implements IDescriptorResult {
     public int length() {
         return 1;
     }
-
 }

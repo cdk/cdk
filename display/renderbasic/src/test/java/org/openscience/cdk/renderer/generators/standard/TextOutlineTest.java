@@ -25,15 +25,14 @@
 package org.openscience.cdk.renderer.generators.standard;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.number.IsCloseTo.closeTo;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.awt.Font;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -149,8 +148,18 @@ public class TextOutlineTest {
     public void testToString() throws Exception {
         TextOutline outline = new TextOutline("Cl", font);
         Rectangle2D bounds = outline.getBounds();
-        assertThat(outline.toString(), is("Cl [x=" + toString(bounds.getX()) + ", y=" + toString(bounds.getY())
-                + ", w=" + toString(bounds.getWidth()) + ", h=" + toString(bounds.getHeight()) + "]"));
+        assertThat(
+                outline.toString(),
+                is(
+                        "Cl [x="
+                                + toString(bounds.getX())
+                                + ", y="
+                                + toString(bounds.getY())
+                                + ", w="
+                                + toString(bounds.getWidth())
+                                + ", h="
+                                + toString(bounds.getHeight())
+                                + "]"));
     }
 
     static String toString(double x) {

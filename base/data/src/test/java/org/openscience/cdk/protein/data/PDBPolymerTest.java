@@ -20,7 +20,6 @@
 package org.openscience.cdk.protein.data;
 
 import java.util.Iterator;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -36,20 +35,20 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  * Checks the functionality of the PDBPolymer class.
  *
  * @cdk.module test-data
- *
  * @see PDBPolymer
  */
 public class PDBPolymerTest extends AbstractPDBPolymerTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new PDBPolymer();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new PDBPolymer();
+                    }
+                });
     }
 
     @Test
@@ -130,5 +129,4 @@ public class PDBPolymerTest extends AbstractPDBPolymerTest {
         Assert.assertEquals("TRP279", monomers.next());
         Assert.assertEquals("CYS280", monomers.next());
     }
-
 }

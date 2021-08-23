@@ -25,7 +25,6 @@ package org.openscience.cdk.smsd.tools;
 import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
@@ -33,177 +32,64 @@ import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.smsd.helper.BondEnergy;
 
 /**
- *
  * Class that stores bond breaking/formation energy between two atoms.
  *
- * Reference: Huheey, pps. A-21 to A-34; T.L. Cottrell,
- * "The Strengths of Chemical Bonds," 2nd ed., Butterworths, London, 1958;
- * B. deB. Darwent, "National Standard Reference Data Series,
- * "National Bureau of Standards, No. 31, Washington, DC, 1970;
- * S.W. Benson, J. Chem. Educ., 42, 502 (1965).
+ * <p>Reference: Huheey, pps. A-21 to A-34; T.L. Cottrell, "The Strengths of Chemical Bonds," 2nd
+ * ed., Butterworths, London, 1958; B. deB. Darwent, "National Standard Reference Data Series,
+ * "National Bureau of Standards, No. 31, Washington, DC, 1970; S.W. Benson, J. Chem. Educ., 42, 502
+ * (1965).
  *
+ * <p>Common Bond Energies (D) and Bond Lengths (r)
  *
- * Common Bond Energies (D) and Bond Lengths (r)
+ * <p>Hydrogen Bond D(kJ/mol) r(pm)
  *
- * Hydrogen
- * Bond	D(kJ/mol) r(pm)
+ * <p>H-H 432 74 H-B 389 119 H-C 411 109 H-Si 318 148 H-Ge 288 153 H-Sn 251 170 H-N 386 101 H-P 322
+ * 144 H-As 247 152 H-O 459 96 H-S 363 134 H-Se 276 146 H-Te 238 170 H-F 565 92 H-Cl 428 127 H-Br
+ * 362 141 H-I 295 161
  *
- * H-H	432	74
- * H-B	389	119
- * H-C	411	109
- * H-Si	318	148
- * H-Ge	288	153
- * H-Sn	251	170
- * H-N	386	101
- * H-P	322	144
- * H-As	247	152
- * H-O	459	96
- * H-S	363	134
- * H-Se	276	146
- * H-Te	238	170
- * H-F	565	92
- * H-Cl	428	127
- * H-Br	362	141
- * H-I	295	161
+ * <p>Group 13 Bond D(kJ/mol) r(pm) B-B 293 B-O 536 B-F 613 B-Cl 456 175 B-Br 377
  *
+ * <p>Group 14 Bond D(kJ/mol) r(pm) C-C 346 154 C=C 602 134 C#C 835 120 C-Si 318 185 C-Ge 238 195
+ * C-Sn 192 216 C-Pb 130 230 C-N 305 147 C=N 615 129 C#N 887 116 C-P 264 184 C-O 358 143 C=O 799 120
+ * C#O 1072 113 C-B 356 C-S 272 182 C=S 573 160 C-F 485 135 C-Cl 327 177 C-Br 285 194 C-I 213 214
  *
- * Group 13
- * Bond	D(kJ/mol) r(pm)
- * B-B	293
- * B-O	536
- * B-F	613
- * B-Cl	456	175
- * B-Br	377
+ * <p>Group 14 Bond D(kJ/mol) r(pm) Si-Si 222 233 Si-N 355 Si-O 452 163 Si-S 293 200 Si-F 565 160
+ * Si-Cl 381 202 Si-Br 310 215 Si-I 234 243 Ge-Ge 188 241 Ge-N 257 Ge-F 470 168 Ge-Cl 349 210 Ge-Br
+ * 276 230 Ge-I 212 Sn-F 414 Sn-Cl 323 233 Sn-Br 273 250 Sn-I 205 270 Pb-F 331 Pb-Cl 243 242 Pb-Br
+ * 201 Pb-I 142 279
  *
+ * <p>Group 15 Bond D(kJ/mol) r(pm) N-N 167 145 N=N 418 125 N#N 942 110 N-O 201 140 N=O 607 121 N-F
+ * 283 136 N-Cl 313 175 P-P 201 221 P-O 335 163 P=O 544 150 P=S 335 186 P-F 490 154 P-Cl 326 203
+ * P-Br 264 P-I 184 As-As 146 243 As-O 301 178 As-F 484 171 As-Cl 322 216 As-Br 458 233 As-I 200 254
+ * Sb-Sb 121 Sb-F 440 Sb-Cl (SbCl5) 248 Sb-Cl (SbCl3) 315 232
  *
- * Group 14
- * Bond	D(kJ/mol) r(pm)
- * C-C	346	154
- * C=C	602	134
- * C#C	835	120
- * C-Si	318	185
- * C-Ge	238	195
- * C-Sn	192	216
- * C-Pb	130	230
- * C-N	305	147
- * C=N	615	129
- * C#N	887	116
- * C-P	264	184
- * C-O	358	143
- * C=O	799	120
- * C#O	1072	113
- * C-B	356
- * C-S	272	182
- * C=S	573	160
- * C-F	485	135
- * C-Cl	327	177
- * C-Br	285	194
- * C-I	213	214
+ * <p>Group 16 Bond D(kJ/mol) r(pm) O-O 142 148 O=O 494 121 O-F 190 142 S=O 522 143 S-S (S8) 226 205
+ * S=S 425 149 S-F 284 156 S-Cl 255 207 Se-Se 172 Se=Se 272 215
  *
+ * <p>Group 17 Bond D(kJ/mol) r(pm)) F-F 155 142 Cl-Cl 240 199 Br-Br 190 228 I-I 148 267 At-At 116
+ * I-O 201 I-F 273 191 I-Cl 208 232 I-Br 175
  *
- * Group 14
- * Bond	D(kJ/mol) r(pm)
- * Si-Si	222	233
- * Si-N	355
- * Si-O	452	163
- * Si-S	293	200
- * Si-F	565	160
- * Si-Cl	381	202
- * Si-Br	310	215
- * Si-I	234	243
- * Ge-Ge	188	241
- * Ge-N	257
- * Ge-F	470	168
- * Ge-Cl	349	210
- * Ge-Br	276	230
- * Ge-I	212
- * Sn-F	414
- * Sn-Cl	323	233
- * Sn-Br	273	250
- * Sn-I	205	270
- * Pb-F	331
- * Pb-Cl	243	242
- * Pb-Br	201
- * Pb-I	142	279
- *
- *
- * Group 15
- * Bond	D(kJ/mol) r(pm)
- * N-N	167	145
- * N=N	418	125
- * N#N	942	110
- * N-O	201	140
- * N=O	607	121
- * N-F	283	136
- * N-Cl	313	175
- * P-P	201	221
- * P-O	335	163
- * P=O	544	150
- * P=S	335	186
- * P-F	490	154
- * P-Cl	326	203
- * P-Br	264
- * P-I	184
- * As-As	146	243
- * As-O	301	178
- * As-F	484	171
- * As-Cl	322	216
- * As-Br	458	233
- * As-I	200	254
- * Sb-Sb	121
- * Sb-F	440
- * Sb-Cl (SbCl5)	248
- * Sb-Cl (SbCl3)	315	232
- *
- * Group 16
- * Bond	D(kJ/mol) r(pm)
- * O-O	142	148
- * O=O	494	121
- * O-F	190	142
- * S=O	522	143
- * S-S (S8)	226	205
- * S=S	425	149
- * S-F	284	156
- * S-Cl	255	207
- * Se-Se	172
- * Se=Se	272	215
- *
- * Group 17
- * Bond	D(kJ/mol) r(pm))
- * F-F	155	142
- * Cl-Cl	240	199
- * Br-Br	190	228
- * I-I	148	267
- * At-At	116
- * I-O	201
- * I-F	273	191
- * I-Cl	208	232
- * I-Br	175
- *
- * Group 18
- * Bond	D(kJ/mol) r(pm)
- * Kr-F (KrF2)	50	190
- * Xe-O	84	175
- * Xe-F	130	195
+ * <p>Group 18 Bond D(kJ/mol) r(pm) Kr-F (KrF2) 50 190 Xe-O 84 175 Xe-F 130 195
  *
  * @cdk.githash
  * @cdk.module smsd
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is
+ *     available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public class BondEnergies {
 
     private static Map<Integer, BondEnergy> bondEngergies = null;
-    private static BondEnergies             instance      = null;
+    private static BondEnergies instance = null;
 
     /**
      * Returns Singleton pattern instance for the Bond Energy class
+     *
      * @return instance
      * @throws CDKException
      */
-    public synchronized static BondEnergies getInstance() throws CDKException {
+    public static synchronized BondEnergies getInstance() throws CDKException {
         if (null == instance) {
             instance = new BondEnergies();
         }
@@ -236,6 +122,7 @@ public class BondEnergies {
 
     /**
      * Returns bond energy for a bond type, given atoms and bond type
+     *
      * @param sourceAtom First bondEnergy
      * @param targetAtom Second bondEnergy
      * @param bondOrder (single, double etc)
@@ -248,9 +135,10 @@ public class BondEnergies {
             BondEnergy bondEnergy = entry.getValue();
             String atom1 = bondEnergy.getSymbolFirstAtom();
             String atom2 = bondEnergy.getSymbolSecondAtom();
-            if ((atom1.equalsIgnoreCase(sourceAtom.getSymbol()) && atom2.equalsIgnoreCase(targetAtom.getSymbol()))
-                    || (atom2.equalsIgnoreCase(sourceAtom.getSymbol()) && atom1
-                            .equalsIgnoreCase(targetAtom.getSymbol()))) {
+            if ((atom1.equalsIgnoreCase(sourceAtom.getSymbol())
+                            && atom2.equalsIgnoreCase(targetAtom.getSymbol()))
+                    || (atom2.equalsIgnoreCase(sourceAtom.getSymbol())
+                            && atom1.equalsIgnoreCase(targetAtom.getSymbol()))) {
 
                 Order order = bondEnergy.getBondOrder();
                 if (order.compareTo(bondOrder) == 0) {
@@ -263,6 +151,7 @@ public class BondEnergies {
 
     /**
      * Returns bond energy for a bond type, given atoms and bond type
+     *
      * @param sourceAtom First bondEnergy
      * @param targetAtom Second bondEnergy
      * @param bondOrder (single, double etc)
@@ -289,6 +178,7 @@ public class BondEnergies {
 
     /**
      * Returns bond energy for a bond type, given atoms and bond type
+     *
      * @param bond (single, double etc)
      * @return bond energy
      */
@@ -421,7 +311,6 @@ public class BondEnergies {
         //          Sb-Cl (SbCl 3)
         bondEngergies.put(key++, new BondEnergy("Sb", "Cl", Order.SINGLE, 315));
         return key;
-
     }
 
     private int setGroup16(int key) {
@@ -438,7 +327,6 @@ public class BondEnergies {
         bondEngergies.put(key++, new BondEnergy("Se", "Se", Order.SINGLE, 172));
         bondEngergies.put(key++, new BondEnergy("Se", "Se", Order.DOUBLE, 272));
         return key;
-
     }
 
     private int setGroup17(int key) {
@@ -453,7 +341,6 @@ public class BondEnergies {
         bondEngergies.put(key++, new BondEnergy("I", "Cl", Order.SINGLE, 208));
         bondEngergies.put(key++, new BondEnergy("I", "Br", Order.SINGLE, 175));
         return key;
-
     }
 
     private int setGroup18(int key) {

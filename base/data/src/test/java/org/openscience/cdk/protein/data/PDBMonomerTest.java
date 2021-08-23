@@ -31,20 +31,20 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  * Checks the functionality of the PDBMonomer class.
  *
  * @cdk.module test-data
- *
  * @see PDBPolymer
  */
 public class PDBMonomerTest extends AbstractPDBMonomerTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new PDBMonomer();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new PDBMonomer();
+                    }
+                });
     }
 
     @Test
@@ -53,5 +53,4 @@ public class PDBMonomerTest extends AbstractPDBMonomerTest {
         Assert.assertNotNull(monomer);
         Assert.assertEquals(monomer.getICode(), null);
     }
-
 }

@@ -22,9 +22,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 
-/**
- * @cdk.module test-standard
- */
+/** @cdk.module test-standard */
 public class RMapTest extends CDKTestCase {
 
     @Test
@@ -34,5 +32,4 @@ public class RMapTest extends CDKTestCase {
         Assert.assertEquals(1, node.getId1());
         Assert.assertEquals(2, node.getId2());
     }
-
 }

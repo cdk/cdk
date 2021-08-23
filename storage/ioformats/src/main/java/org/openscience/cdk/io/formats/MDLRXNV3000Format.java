@@ -20,8 +20,6 @@ package org.openscience.cdk.io.formats;
 
 import org.openscience.cdk.tools.DataFeatures;
 
-import java.util.List;
-
 /**
  * See <a href="http://www.mdl.com/downloads/public/ctfile/ctfile.jsp">here</a>.
  *
@@ -60,7 +58,7 @@ public class MDLRXNV3000Format extends SimpleChemFormatMatcher implements IChemF
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"rxn"};
+        return new String[] {"rxn"};
     }
 
     /** {@inheritDoc} */
@@ -74,7 +72,7 @@ public class MDLRXNV3000Format extends SimpleChemFormatMatcher implements IChemF
     public String getWriterClassName() {
         return null;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean matches(int lineNumber, String line) {

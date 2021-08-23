@@ -30,7 +30,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -38,74 +37,63 @@ import org.openscience.cdk.interfaces.IBond;
 
 /**
  * Wraps an atom container to provide information on the atom connectivity.
- * 
+ *
  * @author maclean
  * @cdk.module group
- *
  */
 class AtomRefinable implements Refinable {
-    
+
     private final IAtomContainer atomContainer;
-    
-    /**
-     * A convenience lookup table for atom-atom connections.
-     */
+
+    /** A convenience lookup table for atom-atom connections. */
     private int[][] connectionTable;
 
-    /**
-     * A convenience lookup table for bond orders.
-     */
+    /** A convenience lookup table for bond orders. */
     private int[][] bondOrders;
-    
-    /**
-     * Ignore the elements when creating the initial partition.
-     */
+
+    /** Ignore the elements when creating the initial partition. */
     private boolean ignoreElements;
-    
-    /**
-     * Specialised option to allow generating automorphisms
-     * that ignore the bond order.
-     */
+
+    /** Specialised option to allow generating automorphisms that ignore the bond order. */
     private boolean ignoreBondOrders;
-    
+
     private int maxBondOrder;
-    
+
     /**
      * Create a refinable from an atom container with flags set to false.
-     * 
+     *
      * @param atomContainer the atom and bond data
      */
     public AtomRefinable(IAtomContainer atomContainer) {
         this(atomContainer, false, false);
     }
-    
+
     /**
      * Create a refinable from an atom container with supplied flags.
-     * 
+     *
      * @param atomContainer the atom and bond data
-     * @param ignoreElements 
+     * @param ignoreElements
      * @param ignoreBondOrders
      */
-    public AtomRefinable(IAtomContainer atomContainer, boolean ignoreElements, boolean ignoreBondOrders) {
+    public AtomRefinable(
+            IAtomContainer atomContainer, boolean ignoreElements, boolean ignoreBondOrders) {
         this.atomContainer = atomContainer;
         this.ignoreElements = ignoreElements;
         this.ignoreBondOrders = ignoreBondOrders;
         setupConnectionTable(atomContainer);
     }
-    
+
     @Override
     public Invariant neighboursInBlock(Set<Integer> block, int vertexIndex) {
-        // choose the invariant to use 
+        // choose the invariant to use
         if (ignoreBondOrders || maxBondOrder == 1) {
             return getSimpleInvariant(block, vertexIndex);
         } else {
             return getMultipleInvariant(block, vertexIndex);
         }
     }
-    
-    /**
-     * @return a simple count of the neighbours of vertexIndex that are in block
-     */
+
+    /** @return a simple count of the neighbours of vertexIndex that are in block */
     private Invariant getSimpleInvariant(Set<Integer> block, int vertexIndex) {
         int neighbours = 0;
         for (int connected : getConnectedIndices(vertexIndex)) {
@@ -115,7 +103,7 @@ class AtomRefinable implements Refinable {
         }
         return new IntegerInvariant(neighbours);
     }
-    
+
     /**
      * @return a list of bond orders of connections to neighbours of vertexIndex that are in block
      */
@@ -162,14 +150,13 @@ class AtomRefinable implements Refinable {
     private int[] getConnectedIndices(int vertexIndex) {
         return connectionTable[vertexIndex];
     }
-    
+
     /**
-     * Get the element partition from an atom container, which is simply a list
-     * of sets of atom indices where all atoms in one set have the same element
-     * symbol.
+     * Get the element partition from an atom container, which is simply a list of sets of atom
+     * indices where all atoms in one set have the same element symbol.
      *
-     * So for atoms [C0, N1, C2, P3, C4, N5] the partition would be
-     * [{0, 2, 4}, {1, 5}, {3}] with cells for elements C, N, and P.
+     * <p>So for atoms [C0, N1, C2, P3, C4, N5] the partition would be [{0, 2, 4}, {1, 5}, {3}] with
+     * cells for elements C, N, and P.
      *
      * @return a partition of the atom indices based on the element symbols
      */
@@ -205,10 +192,10 @@ class AtomRefinable implements Refinable {
 
         return elementPartition;
     }
-    
+
     /**
-     * Makes a lookup table for the connection between atoms, to avoid looking
-     * through the bonds each time.
+     * Makes a lookup table for the connection between atoms, to avoid looking through the bonds
+     * each time.
      *
      * @param atomContainer the atom
      */
@@ -235,7 +222,7 @@ class AtomRefinable implements Refinable {
                     boolean isArom = bond.getFlag(CDKConstants.ISAROMATIC);
                     int orderNumber = (isArom) ? 5 : bond.getOrder().numeric();
                     bondOrders[atomIndex][i] = orderNumber;
-                    
+
                     // TODO
                     if (orderNumber > maxBondOrder) {
                         maxBondOrder = orderNumber;

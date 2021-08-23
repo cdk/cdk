@@ -27,24 +27,25 @@ import org.openscience.cdk.tools.diff.tree.IDifferenceList;
 /**
  * Compares two {@link ILonePair} classes.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module diff
  * @cdk.githash
  */
 public class LonePairDiff {
 
     /**
-     * Overwrite the default public constructor because this class is not
-     * supposed to be instantiated.
+     * Overwrite the default public constructor because this class is not supposed to be
+     * instantiated.
      */
     private LonePairDiff() {}
 
     /**
      * Compare two {@link IChemObject} classes and return the difference as a {@link String}.
      *
-     * @param first  the first of the two classes to compare
+     * @param first the first of the two classes to compare
      * @param second the second of the two classes to compare
-     * @return a {@link String} representation of the difference between the first and second {@link IChemObject}.
+     * @return a {@link String} representation of the difference between the first and second {@link
+     *     IChemObject}.
      */
     public static String diff(IChemObject first, IChemObject second) {
         IDifference diff = difference(first, second);
@@ -58,9 +59,10 @@ public class LonePairDiff {
     /**
      * Compare two {@link IChemObject} classes and return the difference as an {@link IDifference}.
      *
-     * @param first  the first of the two classes to compare
+     * @param first the first of the two classes to compare
      * @param second the second of the two classes to compare
-     * @return an {@link IDifference} representation of the difference between the first and second {@link IChemObject}.
+     * @return an {@link IDifference} representation of the difference between the first and second
+     *     {@link IChemObject}.
      */
     public static IDifference difference(IChemObject first, IChemObject second) {
         if (!(first instanceof ILonePair && second instanceof ILonePair)) {
@@ -77,5 +79,4 @@ public class LonePairDiff {
             return null;
         }
     }
-
 }

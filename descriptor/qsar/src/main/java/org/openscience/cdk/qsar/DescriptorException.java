@@ -45,13 +45,13 @@ public class DescriptorException extends CDKException {
     }
 
     /**
-     *  Constructs a new DescriptorException with from the supplied descriptor name and associated message.
+     * Constructs a new DescriptorException with from the supplied descriptor name and associated
+     * message.
      *
-     *  @param name Name of the descriptor raising the exception
-     *  @param message The message associated with the exception
+     * @param name Name of the descriptor raising the exception
+     * @param message The message associated with the exception
      */
     public DescriptorException(String name, String message) {
         super(name + ": " + message);
     }
-
 }

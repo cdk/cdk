@@ -18,22 +18,20 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.config.Elements;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.silent.Atom;
-import org.openscience.cdk.silent.AtomType;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-/**
- * @cdk.module test-standard
- */
+import org.junit.Assert;
+import org.junit.Test;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.config.Elements;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.silent.Atom;
+import org.openscience.cdk.silent.AtomType;
+
+/** @cdk.module test-standard */
 public class AtomTypeManipulatorTest extends CDKTestCase {
 
     public AtomTypeManipulatorTest() {
@@ -46,7 +44,8 @@ public class AtomTypeManipulatorTest extends CDKTestCase {
         IAtomType atomType = new AtomType(Elements.CARBON);
         atomType.setFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR, true);
         AtomTypeManipulator.configure(atom, atomType);
-        Assert.assertEquals(atomType.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR),
+        Assert.assertEquals(
+                atomType.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR),
                 atom.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR));
     }
 
@@ -86,9 +85,7 @@ public class AtomTypeManipulatorTest extends CDKTestCase {
         assertThat(atom.getAtomicNumber(), is(6));
     }
 
-    /**
-     * @cdk.bug 1322
-     */
+    /** @cdk.bug 1322 */
     @Test
     public void aromaticityIsNotOverwritten() {
         IAtom atom = new Atom(Elements.CARBON);
@@ -100,9 +97,7 @@ public class AtomTypeManipulatorTest extends CDKTestCase {
         assertThat(atom.getFlag(CDKConstants.ISAROMATIC), is(true));
     }
 
-    /**
-     * @cdk.bug 1322
-     */
+    /** @cdk.bug 1322 */
     @Test
     public void aromaticitySetIfForType() {
         IAtom atom = new Atom(Elements.CARBON);

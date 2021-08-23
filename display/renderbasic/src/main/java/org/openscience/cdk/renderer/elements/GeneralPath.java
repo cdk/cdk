@@ -29,7 +29,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.PathIterator;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.openscience.cdk.renderer.elements.path.Close;
 import org.openscience.cdk.renderer.elements.path.CubicTo;
 import org.openscience.cdk.renderer.elements.path.LineTo;
@@ -47,29 +46,25 @@ import org.openscience.cdk.renderer.elements.path.QuadTo;
 public class GeneralPath implements IRenderingElement {
 
     /** The color of the path. */
-    public final Color             color;
+    public final Color color;
 
     /** The width of the stroke. */
-    public final double            stroke;
+    public final double stroke;
 
     /** Fill the shape instead of drawing outline. */
-    public final boolean           fill;
+    public final boolean fill;
 
     /** The elements in the path. */
     public final List<PathElement> elements;
 
     /** Winding rule for determining path interior. */
-    public final int               winding;
+    public final int winding;
 
-    /**
-     * @see PathIterator#WIND_EVEN_ODD
-     */
-    public static final int        WIND_EVEN_ODD = 0;
+    /** @see PathIterator#WIND_EVEN_ODD */
+    public static final int WIND_EVEN_ODD = 0;
 
-    /**
-     * @see PathIterator#WIND_NON_ZERO
-     */
-    public static final int        WIND_NON_ZERO = 1;
+    /** @see PathIterator#WIND_NON_ZERO */
+    public static final int WIND_NON_ZERO = 1;
 
     /**
      * Make a path from a list of path elements.
@@ -79,7 +74,6 @@ public class GeneralPath implements IRenderingElement {
      */
     public GeneralPath(List<PathElement> elements, Color color) {
         this(elements, color, WIND_EVEN_ODD, 1, true);
-
     }
 
     /**
@@ -88,7 +82,8 @@ public class GeneralPath implements IRenderingElement {
      * @param elements the elements that make up the path
      * @param color the color of the path
      */
-    private GeneralPath(List<PathElement> elements, Color color, int winding, double stroke, boolean fill) {
+    private GeneralPath(
+            List<PathElement> elements, Color color, int winding, double stroke, boolean fill) {
         this.elements = elements;
         this.color = color;
         this.winding = winding;
@@ -189,5 +184,4 @@ public class GeneralPath implements IRenderingElement {
         }
         return new GeneralPath(elements, color, pathIt.getWindingRule(), stroke, false);
     }
-
 }

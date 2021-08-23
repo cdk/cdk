@@ -18,53 +18,52 @@
  */
 package org.openscience.cdk.graph.invariant;
 
+import java.util.List;
+import java.util.Stack;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 
-import java.util.List;
-import java.util.Stack;
-
 /**
- * @author       kaihartmann
+ * @author kaihartmann
  * @cdk.githash
- * @cdk.created  2004-09-17
- * @cdk.module   reaction
- *
+ * @cdk.created 2004-09-17
+ * @cdk.module reaction
  * @cdk.todo add negatively charged atoms (e.g. O-) to the pi system
  */
 public class ConjugatedPiSystemsDetector {
 
     /**
-     *  Detect all conjugated pi systems in an AtomContainer. This method returns a AtomContainerSet
-     *  with Atom and Bond objects from the original AtomContainer. The aromaticity has to be known
-     *  before calling this method.
+     * Detect all conjugated pi systems in an AtomContainer. This method returns a AtomContainerSet
+     * with Atom and Bond objects from the original AtomContainer. The aromaticity has to be known
+     * before calling this method.
      *
-     *  <p>An example for detection of Radical Allyl:
-     *  <pre>
-     *	Atom a0 = new Atom("C"); mol.addAtom(a0);
-     *	Atom a1 = new Atom("C"); mol.addAtom(a1);
-     *	Atom a2 = new Atom("C"); mol.addAtom(a2);
-     *	Atom h1 = new Atom("H"); mol.addAtom(h1);
-     *	Atom h2 = new Atom("H"); mol.addAtom(h2);
-     *	Atom h3 = new Atom("H"); mol.addAtom(h3);
-     *	Atom h4 = new Atom("H"); mol.addAtom(h4);
-     *	Atom h5 = new Atom("H"); mol.addAtom(h5);
-     *	mol.addBond(0, 1, IBond.Order.DOUBLE);
-     *	mol.addBond(1, 2, IBond.Order.SINGLE);
-     *	mol.addBond(0, 3, IBond.Order.SINGLE);
-     *	mol.addBond(0, 4, IBond.Order.SINGLE);
-     *	mol.addBond(1, 5, IBond.Order.SINGLE);
-     *	mol.addBond(2, 6, IBond.Order.SINGLE);
-     *	mol.addBond(2, 7, IBond.Order.SINGLE);
-     *	SingleElectron se = new SingleElectron(a2);
-     *	mol.addElectronContainer(se);
+     * <p>An example for detection of Radical Allyl:
+     *
+     * <pre>
+     * Atom a0 = new Atom("C"); mol.addAtom(a0);
+     * Atom a1 = new Atom("C"); mol.addAtom(a1);
+     * Atom a2 = new Atom("C"); mol.addAtom(a2);
+     * Atom h1 = new Atom("H"); mol.addAtom(h1);
+     * Atom h2 = new Atom("H"); mol.addAtom(h2);
+     * Atom h3 = new Atom("H"); mol.addAtom(h3);
+     * Atom h4 = new Atom("H"); mol.addAtom(h4);
+     * Atom h5 = new Atom("H"); mol.addAtom(h5);
+     * mol.addBond(0, 1, IBond.Order.DOUBLE);
+     * mol.addBond(1, 2, IBond.Order.SINGLE);
+     * mol.addBond(0, 3, IBond.Order.SINGLE);
+     * mol.addBond(0, 4, IBond.Order.SINGLE);
+     * mol.addBond(1, 5, IBond.Order.SINGLE);
+     * mol.addBond(2, 6, IBond.Order.SINGLE);
+     * mol.addBond(2, 7, IBond.Order.SINGLE);
+     * SingleElectron se = new SingleElectron(a2);
+     * mol.addElectronContainer(se);
      *  </pre>
      *
-     *@param  ac  The AtomContainer for which to detect conjugated pi systems
-     *@return     The set of AtomContainers with conjugated pi systems
+     * @param ac The AtomContainer for which to detect conjugated pi systems
+     * @return The set of AtomContainers with conjugated pi systems
      */
     public static IAtomContainerSet detect(IAtomContainer ac) {
         IAtomContainerSet piSystemSet = ac.getBuilder().newInstance(IAtomContainerSet.class);
@@ -88,7 +87,7 @@ public class ConjugatedPiSystemsDetector {
             firstAtom.setFlag(CDKConstants.VISITED, true);
             // Start DFS from firstAtom
             while (!stack.empty()) {
-                //boolean addAtom = false;
+                // boolean addAtom = false;
                 IAtom currentAtom = stack.pop();
                 List<IAtom> atoms = ac.getConnectedAtomsList(currentAtom);
                 List<IBond> bonds = ac.getConnectedBondsList(currentAtom);
@@ -126,11 +125,11 @@ public class ConjugatedPiSystemsDetector {
     }
 
     /**
-     *  Check an Atom whether it may be conjugated or not.
+     * Check an Atom whether it may be conjugated or not.
      *
-     *@param  ac           The AtomContainer containing currentAtom
-     *@param  currentAtom  The Atom to check
-     *@return              -1 if isolated, 0 if conjugated, 1 if cumulative db
+     * @param ac The AtomContainer containing currentAtom
+     * @param currentAtom The Atom to check
+     * @return -1 if isolated, 0 if conjugated, 1 if cumulative db
      */
     private static int checkAtom(IAtomContainer ac, IAtom currentAtom) {
         int check = -1;
@@ -156,10 +155,10 @@ public class ConjugatedPiSystemsDetector {
         } else {
             int se = ac.getConnectedSingleElectronsCount(currentAtom);
             if (se == 1) {
-                check = 0; //// DETECTION of radicals
+                check = 0; // // DETECTION of radicals
             } else if (ac.getConnectedLonePairsCount(currentAtom) > 0
-            /* && (currentAtom.getSymbol().equals("N") */) {
-                check = 0; //// DETECTION of  lone pair
+            /* && (currentAtom.getSymbol().equals("N") */ ) {
+                check = 0; // // DETECTION of  lone pair
             } else {
                 int highOrderBondCount = 0;
                 for (int j = 0; j < atoms.size(); j++) {

@@ -18,9 +18,8 @@
  */
 package org.openscience.cdk.io.formats;
 
-import org.openscience.cdk.tools.DataFeatures;
-
 import java.util.List;
+import org.openscience.cdk.tools.DataFeatures;
 
 /**
  * See <a href="http://www.mdl.com/downloads/public/ctfile/ctfile.jsp">here</a>.
@@ -60,7 +59,7 @@ public class MDLRXNV2000Format extends AbstractResourceFormat implements IChemFo
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"rxn"};
+        return new String[] {"rxn"};
     }
 
     /** {@inheritDoc} */

@@ -22,6 +22,15 @@
  */
 package org.openscience.cdk.stereo;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -31,28 +40,16 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-/**
- * @cdk.module test-core
- */
+/** @cdk.module test-core */
 public class TetrahedralChiralityTest extends CDKTestCase {
 
     private static IAtomContainer molecule;
-    private static IAtom[]        ligands;
+    private static IAtom[] ligands;
 
     @BeforeClass
     public static void setup() throws Exception {
@@ -66,32 +63,42 @@ public class TetrahedralChiralityTest extends CDKTestCase {
         molecule.addBond(1, 2, Order.SINGLE);
         molecule.addBond(1, 3, Order.SINGLE);
         molecule.addBond(1, 4, Order.SINGLE);
-        ligands = new IAtom[]{molecule.getAtom(4), molecule.getAtom(3), molecule.getAtom(2), molecule.getAtom(0)};
+        ligands =
+                new IAtom[] {
+                    molecule.getAtom(4),
+                    molecule.getAtom(3),
+                    molecule.getAtom(2),
+                    molecule.getAtom(0)
+                };
     }
 
     @Test
     public void testTetrahedralChirality_IAtom_arrayIAtom_ITetrahedralChirality_Stereo() {
-        TetrahedralChirality chirality = new TetrahedralChirality(molecule.getAtom(1), ligands, Stereo.CLOCKWISE);
+        TetrahedralChirality chirality =
+                new TetrahedralChirality(molecule.getAtom(1), ligands, Stereo.CLOCKWISE);
         Assert.assertNotNull(chirality);
     }
 
     @Test
     public void testBuilder() {
-        TetrahedralChirality chirality = new TetrahedralChirality(molecule.getAtom(1), ligands, Stereo.CLOCKWISE);
+        TetrahedralChirality chirality =
+                new TetrahedralChirality(molecule.getAtom(1), ligands, Stereo.CLOCKWISE);
         chirality.setBuilder(DefaultChemObjectBuilder.getInstance());
         Assert.assertEquals(DefaultChemObjectBuilder.getInstance(), chirality.getBuilder());
     }
 
     @Test
     public void testGetChiralAtom() {
-        TetrahedralChirality chirality = new TetrahedralChirality(molecule.getAtom(1), ligands, Stereo.CLOCKWISE);
+        TetrahedralChirality chirality =
+                new TetrahedralChirality(molecule.getAtom(1), ligands, Stereo.CLOCKWISE);
         Assert.assertNotNull(chirality);
         Assert.assertEquals(molecule.getAtom(1), chirality.getChiralAtom());
     }
 
     @Test
     public void testGetStereo() {
-        TetrahedralChirality chirality = new TetrahedralChirality(molecule.getAtom(1), ligands, Stereo.CLOCKWISE);
+        TetrahedralChirality chirality =
+                new TetrahedralChirality(molecule.getAtom(1), ligands, Stereo.CLOCKWISE);
         Assert.assertNotNull(chirality);
         Assert.assertEquals(molecule.getAtom(1), chirality.getChiralAtom());
         for (int i = 0; i < ligands.length; i++) {
@@ -102,7 +109,8 @@ public class TetrahedralChiralityTest extends CDKTestCase {
 
     @Test
     public void testGetLigands() {
-        TetrahedralChirality chirality = new TetrahedralChirality(molecule.getAtom(1), ligands, Stereo.CLOCKWISE);
+        TetrahedralChirality chirality =
+                new TetrahedralChirality(molecule.getAtom(1), ligands, Stereo.CLOCKWISE);
         Assert.assertNotNull(chirality);
         for (int i = 0; i < ligands.length; i++) {
             Assert.assertEquals(ligands[i], chirality.getLigands()[i]);
@@ -121,7 +129,8 @@ public class TetrahedralChiralityTest extends CDKTestCase {
         IAtom h5 = builder.newInstance(IAtom.class, "H");
 
         // new stereo element
-        ITetrahedralChirality original = new TetrahedralChirality(c1, new IAtom[]{o2, n3, c4, h5}, Stereo.CLOCKWISE);
+        ITetrahedralChirality original =
+                new TetrahedralChirality(c1, new IAtom[] {o2, n3, c4, h5}, Stereo.CLOCKWISE);
 
         // clone the atoms and place in a map
         Map<IAtom, IAtom> mapping = new HashMap<IAtom, IAtom>();
@@ -139,28 +148,53 @@ public class TetrahedralChiralityTest extends CDKTestCase {
         // map the existing element a new element
         ITetrahedralChirality mapped = original.map(mapping, Collections.EMPTY_MAP);
 
-        org.hamcrest.MatcherAssert.assertThat("mapped chiral atom was the same as the original", mapped.getChiralAtom(),
+        org.hamcrest.MatcherAssert.assertThat(
+                "mapped chiral atom was the same as the original",
+                mapped.getChiralAtom(),
                 is(not(sameInstance(original.getChiralAtom()))));
-        org.hamcrest.MatcherAssert.assertThat("mapped chiral atom was not the clone", mapped.getChiralAtom(), is(sameInstance(c1clone)));
+        org.hamcrest.MatcherAssert.assertThat(
+                "mapped chiral atom was not the clone",
+                mapped.getChiralAtom(),
+                is(sameInstance(c1clone)));
 
         IAtom[] originalLigands = original.getLigands();
         IAtom[] mappedLigands = mapped.getLigands();
 
-        org.hamcrest.MatcherAssert.assertThat("first ligand was te same as the original", mappedLigands[0],
+        org.hamcrest.MatcherAssert.assertThat(
+                "first ligand was te same as the original",
+                mappedLigands[0],
                 is(not(sameInstance(originalLigands[0]))));
-        org.hamcrest.MatcherAssert.assertThat("first mapped ligand was not the clone", mappedLigands[0], is(sameInstance(o2clone)));
-        org.hamcrest.MatcherAssert.assertThat("second ligand was te same as the original", mappedLigands[1],
+        org.hamcrest.MatcherAssert.assertThat(
+                "first mapped ligand was not the clone",
+                mappedLigands[0],
+                is(sameInstance(o2clone)));
+        org.hamcrest.MatcherAssert.assertThat(
+                "second ligand was te same as the original",
+                mappedLigands[1],
                 is(not(sameInstance(originalLigands[1]))));
-        org.hamcrest.MatcherAssert.assertThat("second mapped ligand was not the clone", mappedLigands[1], is(sameInstance(n3clone)));
-        org.hamcrest.MatcherAssert.assertThat("third ligand was te same as the original", mappedLigands[2],
+        org.hamcrest.MatcherAssert.assertThat(
+                "second mapped ligand was not the clone",
+                mappedLigands[1],
+                is(sameInstance(n3clone)));
+        org.hamcrest.MatcherAssert.assertThat(
+                "third ligand was te same as the original",
+                mappedLigands[2],
                 is(not(sameInstance(originalLigands[2]))));
-        org.hamcrest.MatcherAssert.assertThat("third mapped ligand was not the clone", mappedLigands[2], is(sameInstance(c4clone)));
-        org.hamcrest.MatcherAssert.assertThat("forth ligand was te same as the original", mappedLigands[3],
+        org.hamcrest.MatcherAssert.assertThat(
+                "third mapped ligand was not the clone",
+                mappedLigands[2],
+                is(sameInstance(c4clone)));
+        org.hamcrest.MatcherAssert.assertThat(
+                "forth ligand was te same as the original",
+                mappedLigands[3],
                 is(not(sameInstance(originalLigands[3]))));
-        org.hamcrest.MatcherAssert.assertThat("forth mapped ligand was not the clone", mappedLigands[3], is(sameInstance(h5clone)));
+        org.hamcrest.MatcherAssert.assertThat(
+                "forth mapped ligand was not the clone",
+                mappedLigands[3],
+                is(sameInstance(h5clone)));
 
-        org.hamcrest.MatcherAssert.assertThat("stereo was not mapped", mapped.getStereo(), is(original.getStereo()));
-
+        org.hamcrest.MatcherAssert.assertThat(
+                "stereo was not mapped", mapped.getStereo(), is(original.getStereo()));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -175,11 +209,11 @@ public class TetrahedralChiralityTest extends CDKTestCase {
         IAtom h5 = builder.newInstance(IAtom.class, "H");
 
         // new stereo element
-        ITetrahedralChirality original = new TetrahedralChirality(c1, new IAtom[]{o2, n3, c4, h5}, Stereo.CLOCKWISE);
+        ITetrahedralChirality original =
+                new TetrahedralChirality(c1, new IAtom[] {o2, n3, c4, h5}, Stereo.CLOCKWISE);
 
         // map the existing element a new element - should through an IllegalArgumentException
         ITetrahedralChirality mapped = original.map(null, Collections.EMPTY_MAP);
-
     }
 
     @Test
@@ -194,7 +228,8 @@ public class TetrahedralChiralityTest extends CDKTestCase {
         IAtom h5 = builder.newInstance(IAtom.class, "H");
 
         // new stereo element
-        ITetrahedralChirality original = new TetrahedralChirality(c1, new IAtom[]{o2, n3, c4, h5}, Stereo.CLOCKWISE);
+        ITetrahedralChirality original =
+                new TetrahedralChirality(c1, new IAtom[] {o2, n3, c4, h5}, Stereo.CLOCKWISE);
 
         // map the existing element a new element - should through an IllegalArgumentException
         ITetrahedralChirality mapped = original.map(Collections.EMPTY_MAP, Collections.EMPTY_MAP);
@@ -213,7 +248,8 @@ public class TetrahedralChiralityTest extends CDKTestCase {
         IAtom h5 = builder.newInstance(IAtom.class, "H");
 
         // new stereo element
-        ITetrahedralChirality element = new TetrahedralChirality(c1, new IAtom[]{o2, n3, c4, h5}, Stereo.CLOCKWISE);
+        ITetrahedralChirality element =
+                new TetrahedralChirality(c1, new IAtom[] {o2, n3, c4, h5}, Stereo.CLOCKWISE);
 
         assertTrue(element.contains(c1));
         assertTrue(element.contains(o2));
@@ -227,7 +263,8 @@ public class TetrahedralChiralityTest extends CDKTestCase {
 
     @Test
     public void testToString() {
-        TetrahedralChirality chirality = new TetrahedralChirality(molecule.getAtom(1), ligands, Stereo.CLOCKWISE);
+        TetrahedralChirality chirality =
+                new TetrahedralChirality(molecule.getAtom(1), ligands, Stereo.CLOCKWISE);
         String stringRepr = chirality.toString();
         Assert.assertNotSame(0, stringRepr.length());
         Assert.assertFalse(stringRepr.contains("\n"));

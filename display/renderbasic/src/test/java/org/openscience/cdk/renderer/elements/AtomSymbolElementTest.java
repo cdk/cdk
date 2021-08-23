@@ -22,12 +22,9 @@
 package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
-
 import org.junit.BeforeClass;
 
-/**
- * @cdk.module test-renderbasic
- */
+/** @cdk.module test-renderbasic */
 public class AtomSymbolElementTest extends AbstractElementTest {
 
     @BeforeClass
@@ -35,5 +32,4 @@ public class AtomSymbolElementTest extends AbstractElementTest {
         IRenderingElement element = new AtomSymbolElement(3, 4, "C", 0, 0, 0, Color.black);
         setRenderingElement(element);
     }
-
 }

@@ -24,19 +24,15 @@ package org.openscience.cdk.io;
 
 import java.io.StringReader;
 import java.io.StringWriter;
-
 import javax.vecmath.Vector3d;
-
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.Crystal;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.Crystal;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.ICrystal;
 
-/**
- * @cdk.module test-extra
- */
+/** @cdk.module test-extra */
 public class ShelXWriterTest extends CDKTestCase {
 
     @Test

@@ -21,12 +21,11 @@ package org.openscience.cdk.renderer.color;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
- * Atom coloring following RasMol/Chime Color scheme
- * <a href="http://www.umass.edu/microbio/rasmol/rascolor.htm"
+ * Atom coloring following RasMol/Chime Color scheme <a
+ * href="http://www.umass.edu/microbio/rasmol/rascolor.htm"
  * >http://www.umass.edu/microbio/rasmol/rascolor.htm</a>.
  *
  * @cdk.module render
@@ -34,9 +33,9 @@ import org.openscience.cdk.interfaces.IAtom;
  */
 public class RasmolColors implements IAtomColorer, java.io.Serializable {
 
-    private static final long         serialVersionUID = 2588969984094169759L;
+    private static final long serialVersionUID = 2588969984094169759L;
 
-    private final static Color        DEFAULT          = new Color(255, 20, 147);
+    private static final Color DEFAULT = new Color(255, 20, 147);
 
     private static Map<String, Color> colorMap;
 
@@ -75,14 +74,13 @@ public class RasmolColors implements IAtomColorer, java.io.Serializable {
         colorMap.put("I", new Color(160, 32, 240));
         colorMap.put("Li", new Color(178, 34, 34));
         colorMap.put("He", new Color(255, 192, 203));
-
     }
 
     /**
      * Returns the Rasmol color for the given atom's element.
      *
      * @param atom IAtom to get a color for
-     * @return     the atom's color according to this coloring scheme.
+     * @return the atom's color according to this coloring scheme.
      */
     @Override
     public Color getAtomColor(IAtom atom) {
@@ -90,13 +88,13 @@ public class RasmolColors implements IAtomColorer, java.io.Serializable {
     }
 
     /**
-     * Returns the Rasmol color for the given atom's element, or
-     * defaults to the given color if no color is defined.
+     * Returns the Rasmol color for the given atom's element, or defaults to the given color if no
+     * color is defined.
      *
-     * @param atom         IAtom to get a color for
-     * @param defaultColor Color returned if this scheme does not define
-     *                     a color for the passed IAtom
-     * @return             the atom's color according to this coloring scheme.
+     * @param atom IAtom to get a color for
+     * @param defaultColor Color returned if this scheme does not define a color for the passed
+     *     IAtom
+     * @return the atom's color according to this coloring scheme.
      */
     @Override
     public Color getAtomColor(IAtom atom, Color defaultColor) {

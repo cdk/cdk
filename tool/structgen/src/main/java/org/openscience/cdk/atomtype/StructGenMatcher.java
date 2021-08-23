@@ -28,27 +28,25 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
- * AtomTypeMatcher that finds an AtomType by matching the Atom's element symbol.
- * This atom type matcher takes into account formal charge and number of
- * implicit hydrogens, and requires bond orders to be given.
+ * AtomTypeMatcher that finds an AtomType by matching the Atom's element symbol. This atom type
+ * matcher takes into account formal charge and number of implicit hydrogens, and requires bond
+ * orders to be given.
  *
- * <p>This class uses the <b>cdk/config/data/structgen_atomtypes.xml</b>
- * list. If there is not an atom type defined for the tested atom, then null
- * is returned.
+ * <p>This class uses the <b>cdk/config/data/structgen_atomtypes.xml</b> list. If there is not an
+ * atom type defined for the tested atom, then null is returned.
  *
- * @author         egonw
- * @cdk.created    2006-09-22
- * @cdk.module     structgen
+ * @author egonw
+ * @cdk.created 2006-09-22
+ * @cdk.module structgen
  * @cdk.githash
  */
 public class StructGenMatcher implements IAtomTypeMatcher {
 
     private static AtomTypeFactory factory = null;
-    private static ILoggingTool    logger  = LoggingToolFactory.createLoggingTool(StructGenMatcher.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(StructGenMatcher.class);
 
-    /**
-     * Constructor for the StructGenMatcher object.
-     */
+    /** Constructor for the StructGenMatcher object. */
     public StructGenMatcher() {}
 
     @Override
@@ -63,20 +61,22 @@ public class StructGenMatcher implements IAtomTypeMatcher {
     }
 
     /**
-     * Finds the AtomType matching the Atom's element symbol, formal charge and
-     * hybridization state.
+     * Finds the AtomType matching the Atom's element symbol, formal charge and hybridization state.
      *
-     * @param  atomContainer  AtomContainer
-     * @param  atom            the target atom
+     * @param atomContainer AtomContainer
+     * @param atom the target atom
      * @exception CDKException Exception thrown if something goes wrong
-     * @return                 the matching AtomType
+     * @return the matching AtomType
      */
     @Override
-    public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+    public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom)
+            throws CDKException {
         if (factory == null) {
             try {
-                factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/structgen_atomtypes.xml",
-                        atom.getBuilder());
+                factory =
+                        AtomTypeFactory.getInstance(
+                                "org/openscience/cdk/config/data/structgen_atomtypes.xml",
+                                atom.getBuilder());
             } catch (Exception ex1) {
                 logger.error(ex1.getMessage());
                 logger.debug(ex1);

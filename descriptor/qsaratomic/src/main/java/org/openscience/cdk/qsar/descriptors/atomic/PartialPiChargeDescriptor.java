@@ -32,9 +32,10 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- *  <p>The calculation of pi partial charges in pi-bonded systems of an heavy
- *  atom was made by Saller-Gasteiger. It is based on the qualitative concept of resonance and
- *  implemented with the Partial Equalization of Pi-Electronegativity (PEPE).</p>
+ * The calculation of pi partial charges in pi-bonded systems of an heavy atom was made by
+ * Saller-Gasteiger. It is based on the qualitative concept of resonance and implemented with the
+ * Partial Equalization of Pi-Electronegativity (PEPE).
+ *
  * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
@@ -48,53 +49,49 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *   </tr>
  * </table>
  *
- *
- * @author      Miguel Rojas
+ * @author Miguel Rojas
  * @cdk.created 2006-04-15
- * @cdk.module  qsaratomic
+ * @cdk.module qsaratomic
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:partialPiCharge
- * @see         GasteigerPEPEPartialCharges
+ * @see GasteigerPEPEPartialCharges
  */
 public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
 
-    private static final String[]       NAMES = {"pepe"};
+    private static final String[] NAMES = {"pepe"};
 
-    private GasteigerPEPEPartialCharges pepe          = null;
-    /**Number of maximum iterations*/
-    private int                         maxIterations = -1;
-    /**Number of maximum resonance structures*/
-    private int                         maxResonStruc = -1;
-    /** make a lone pair electron checker. Default true*/
-    private boolean                     lpeChecker    = true;
+    private GasteigerPEPEPartialCharges pepe = null;
+    /** Number of maximum iterations */
+    private int maxIterations = -1;
+    /** Number of maximum resonance structures */
+    private int maxResonStruc = -1;
+    /** make a lone pair electron checker. Default true */
+    private boolean lpeChecker = true;
 
-    /**
-     *  Constructor for the PartialPiChargeDescriptor object
-     */
+    /** Constructor for the PartialPiChargeDescriptor object */
     public PartialPiChargeDescriptor() {
         pepe = new GasteigerPEPEPartialCharges();
     }
 
     /**
-     *  Gets the specification attribute of the PartialPiChargeDescriptor
-     *  object
+     * Gets the specification attribute of the PartialPiChargeDescriptor object
      *
-     *@return The specification value
+     * @return The specification value
      */
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialPiCharge", this.getClass()
-                                                                                                          .getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialPiCharge",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     /**
-     *  Sets the parameters attribute of the PartialPiChargeDescriptor
-     *  object
+     * Sets the parameters attribute of the PartialPiChargeDescriptor object
      *
-     *@param  params            1:Number of maximum iterations, 2: checking lone pair electrons, 3:
-     *							number of maximum resonance structures to be searched.
-     *@exception CDKException  Description of the Exception
+     * @param params 1:Number of maximum iterations, 2: checking lone pair electrons, 3: number of
+     *     maximum resonance structures to be searched.
+     * @exception CDKException Description of the Exception
      */
     @Override
     public void setParameters(Object[] params) throws CDKException {
@@ -119,9 +116,9 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
     }
 
     /**
-     *  Gets the parameters attribute of the PartialPiChargeDescriptor object
+     * Gets the parameters attribute of the PartialPiChargeDescriptor object
      *
-     *@return The parameters value
+     * @return The parameters value
      */
     @Override
     public Object[] getParameters() {
@@ -139,22 +136,28 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                Double.NaN), NAMES, e);
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new DoubleResult(Double.NaN),
+                NAMES,
+                e);
     }
 
     /**
-     *  The method returns apha partial charges assigned to an heavy atom through Gasteiger Marsili
-     *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
-     *  For this method will be only possible if the heavy atom has single bond.
+     * The method returns apha partial charges assigned to an heavy atom through Gasteiger Marsili
+     * It is needed to call the addExplicitHydrogensToSatisfyValency method from the class
+     * tools.HydrogenAdder. For this method will be only possible if the heavy atom has single bond.
      *
-     *@param  atom              The IAtom for which the DescriptorValue is requested
-     *@param  ac                AtomContainer
-     *@return                   Value of the alpha partial charge
+     * @param atom The IAtom for which the DescriptorValue is requested
+     * @param ac AtomContainer
+     * @return Value of the alpha partial charge
      */
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
-        // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
+        // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end
+        // of this method
         Double originalCharge = atom.getCharge();
         String originalAtomtypeName = atom.getAtomTypeName();
         Integer originalNeighborCount = atom.getFormalNeighbourCount();
@@ -181,12 +184,12 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
             if (maxIterations != -1) pepe.setMaxGasteigerIters(maxIterations);
             if (maxResonStruc != -1) pepe.setMaxResoStruc(maxResonStruc);
             try {
-                for (int i = 0; i < ac.getAtomCount(); i++)
-                    ac.getAtom(i).setCharge(0.0);
+                for (int i = 0; i < ac.getAtomCount(); i++) ac.getAtom(i).setCharge(0.0);
                 pepe.assignGasteigerPiPartialCharges(ac, true);
                 for (int i = 0; i < ac.getAtomCount(); i++) {
                     // assume same order, so mol.getAtom(i) == ac.getAtom(i)
-                    cacheDescriptorValue(ac.getAtom(i), ac, new DoubleResult(ac.getAtom(i).getCharge()));
+                    cacheDescriptorValue(
+                            ac.getAtom(i), ac, new DoubleResult(ac.getAtom(i).getCharge()));
                 }
             } catch (Exception exception) {
                 return getDummyDescriptorValue(exception);
@@ -201,15 +204,20 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
         atom.setMaxBondOrder(originalMaxBondOrder);
         atom.setBondOrderSum(originalBondOrderSum);
 
-        return getCachedDescriptorValue(atom) != null ? new DescriptorValue(getSpecification(), getParameterNames(),
-                getParameters(), getCachedDescriptorValue(atom), NAMES) : null;
+        return getCachedDescriptorValue(atom) != null
+                ? new DescriptorValue(
+                        getSpecification(),
+                        getParameterNames(),
+                        getParameters(),
+                        getCachedDescriptorValue(atom),
+                        NAMES)
+                : null;
     }
 
     /**
-     *  Gets the parameterNames attribute of the PartialPiChargeDescriptor
-     *  object
+     * Gets the parameterNames attribute of the PartialPiChargeDescriptor object
      *
-     *@return    The parameterNames value
+     * @return The parameterNames value
      */
     @Override
     public String[] getParameterNames() {
@@ -221,11 +229,10 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
     }
 
     /**
-     *  Gets the parameterType attribute of the PartialPiChargeDescriptor
-     *  object
+     * Gets the parameterType attribute of the PartialPiChargeDescriptor object
      *
-     *@param  name  Description of the Parameter
-     *@return       The parameterType value
+     * @param name Description of the Parameter
+     * @return The parameterType value
      */
     @Override
     public Object getParameterType(String name) {

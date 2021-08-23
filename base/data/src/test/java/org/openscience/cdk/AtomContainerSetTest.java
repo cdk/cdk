@@ -21,8 +21,8 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.AbstractAtomContainerSetTest;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
@@ -30,20 +30,20 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  * Checks the functionality of the MoleculeSet class.
  *
  * @cdk.module test-data
- *
  * @see org.openscience.cdk.MoleculeSet
  */
 public class AtomContainerSetTest extends AbstractAtomContainerSetTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new AtomContainerSet();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new AtomContainerSet();
+                    }
+                });
     }
 
     @Test
@@ -52,5 +52,4 @@ public class AtomContainerSetTest extends AbstractAtomContainerSetTest {
         Assert.assertNotNull(som);
         Assert.assertEquals(0, som.getAtomContainerCount());
     }
-
 }

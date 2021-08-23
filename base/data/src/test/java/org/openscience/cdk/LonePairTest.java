@@ -22,30 +22,30 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractLonePairTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ILonePair;
-import org.openscience.cdk.interfaces.AbstractLonePairTest;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the LonePair class.
  *
  * @see org.openscience.cdk.LonePair
- *
  * @cdk.module test-data
  */
 public class LonePairTest extends AbstractLonePairTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new LonePair();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new LonePair();
+                    }
+                });
     }
 
     @Test
@@ -63,5 +63,4 @@ public class LonePairTest extends AbstractLonePairTest {
         Assert.assertEquals(atom, lp.getAtom());
         Assert.assertTrue(lp.contains(atom));
     }
-
 }

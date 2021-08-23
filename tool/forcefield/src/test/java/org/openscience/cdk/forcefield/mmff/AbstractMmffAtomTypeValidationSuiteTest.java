@@ -1,16 +1,16 @@
 package org.openscience.cdk.forcefield.mmff;
 
+import static org.openscience.cdk.interfaces.IBond.Order.DOUBLE;
+import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
+import static org.openscience.cdk.interfaces.IBond.Order.TRIPLE;
+
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.AtomContainer;
 
-import static org.openscience.cdk.interfaces.IBond.Order.DOUBLE;
-import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
-import static org.openscience.cdk.interfaces.IBond.Order.TRIPLE;
-
 /**
- * This test class is generated from MMFF94hypervalent.mol2 and  MMFF94opti.log available at
+ * This test class is generated from MMFF94hypervalent.mol2 and MMFF94opti.log available at
  * http://server.ccl.net/cca/data/MMFF94/.
  */
 public abstract class AbstractMmffAtomTypeValidationSuiteTest {
@@ -85,15 +85,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 9, SINGLE);
         container.addBond(8, 11, SINGLE);
 
-        String[] expected = {"OC=O", "O=CO", "OR", "OR", "O2CM", "O2CM", "COO", "CR", "CR", "CO2M", "HC", "HC", "HOR",
-                "HOR", "HOCO"};
+        String[] expected = {
+            "OC=O", "O=CO", "OR", "OR", "O2CM", "O2CM", "COO", "CR", "CR", "CO2M", "HC", "HC",
+            "HOR", "HOR", "HOCO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for AMPTRB10
      *
-     * @cdk.inchi InChI=1S/C8H10N6/c1-3-4(2)12-7-5(11-3)6(9)13-8(10)14-7/h1-2H3,(H4,9,10,12,13,14)/p+1
+     * @cdk.inchi
+     *     InChI=1S/C8H10N6/c1-3-4(2)12-7-5(11-3)6(9)13-8(10)14-7/h1-2H3,(H4,9,10,12,13,14)/p+1
      */
     @Test
     public void testAMPTRB10() {
@@ -150,15 +153,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 22, SINGLE);
         container.addBond(12, 13, SINGLE);
 
-        String[] expected = {"NPD+", "CB", "NC=N", "NPYD", "CB", "NC=C", "CB", "NPYD", "CB", "CR", "CB", "CR", "NPYD",
-                "CB", "HPD+", "HNCN", "HNCN", "HNCC", "HNCC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NPD+", "CB", "NC=N", "NPYD", "CB", "NC=C", "CB", "NPYD", "CB", "CR", "CB", "CR",
+            "NPYD", "CB", "HPD+", "HNCN", "HNCN", "HNCC", "HNCC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for ARGIND11
      *
-     * @cdk.inchi InChI=1S/C6H14N4O2/c7-4(5(11)12)2-1-3-10-6(8)9/h4H,1-3,7H2,(H,11,12)(H4,8,9,10)/t4-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C6H14N4O2/c7-4(5(11)12)2-1-3-10-6(8)9/h4H,1-3,7H2,(H,11,12)(H4,8,9,10)/t4-/m0/s1
      */
     @Test
     public void testARGIND11() {
@@ -215,8 +221,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(18, 23, SINGLE);
         container.addBond(19, 23, SINGLE);
 
-        String[] expected = {"CO2M", "CR", "CR", "CR", "CR", "CGD+", "HNR", "HC", "HNR", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HGD+", "HGD+", "HGD+", "HGD+", "HGD+", "NR", "NGD+", "NGD+", "NGD+", "O2CM", "O2CM"};
+        String[] expected = {
+            "CO2M", "CR", "CR", "CR", "CR", "CGD+", "HNR", "HC", "HNR", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HGD+", "HGD+", "HGD+", "HGD+", "HGD+", "NR", "NGD+", "NGD+", "NGD+",
+            "O2CM", "O2CM"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -247,7 +256,8 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
     /**
      * Generated test for BBSPRT10
      *
-     * @cdk.inchi InChI=1S/C9H8BrNO3S2/c10-6-1-3-7(4-2-6)16(13,14)11-8-5-15-9(8)12/h1-4,8,11H,5H2/t8-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C9H8BrNO3S2/c10-6-1-3-7(4-2-6)16(13,14)11-8-5-15-9(8)12/h1-4,8,11H,5H2/t8-/m0/s1
      */
     @Test
     public void testBBSPRT10() {
@@ -302,8 +312,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 15, DOUBLE);
         container.addBond(15, 23, SINGLE);
 
-        String[] expected = {"BR", "S", "SO2N", "O=C", "O2S", "O2S", "NSO2", "C=OS", "CR4R", "CR4R", "CB", "CB", "CB",
-                "CB", "CB", "CB", "HNSO", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "BR", "S", "SO2N", "O=C", "O2S", "O2S", "NSO2", "C=OS", "CR4R", "CR4R", "CB", "CB",
+            "CB", "CB", "CB", "CB", "HNSO", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -364,15 +376,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(18, 22, TRIPLE);
         container.addBond(19, 23, TRIPLE);
 
-        String[] expected = {"CE4R", "CE4R", "C=C", "CSP", "NSP", "CSP", "NSP", "C=C", "CSP", "NSP", "CSP", "NSP",
-                "CE4R", "CE4R", "C=C", "C=C", "CSP", "CSP", "CSP", "CSP", "NSP", "NSP", "NSP", "NSP"};
+        String[] expected = {
+            "CE4R", "CE4R", "C=C", "CSP", "NSP", "CSP", "NSP", "C=C", "CSP", "NSP", "CSP", "NSP",
+            "CE4R", "CE4R", "C=C", "C=C", "CSP", "CSP", "CSP", "CSP", "NSP", "NSP", "NSP", "NSP"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for BEWCUB
      *
-     * @cdk.inchi InChI=1S/C23H23N3O9S/c1-13(11-34-15(3)28)20-18-10-19(36(33)9-8-24-14(2)27)21(25(18)22(20)29)23(30)35-12-16-4-6-17(7-5-16)26(31)32/h4-9,18H,10-12H2,1-3H3,(H,24,27)/b9-8+,20-13+/t18-,36-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C23H23N3O9S/c1-13(11-34-15(3)28)20-18-10-19(36(33)9-8-24-14(2)27)21(25(18)22(20)29)23(30)35-12-16-4-6-17(7-5-16)26(31)32/h4-9,18H,10-12H2,1-3H3,(H,24,27)/b9-8+,20-13+/t18-,36-/m1/s1
      */
     @Test
     public void testBEWCUB() {
@@ -498,17 +513,21 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(33, 34, SINGLE);
         container.addBond(33, 35, DOUBLE);
 
-        String[] expected = {"NC=O", "C=C", "C=C", "CR", "CR4R", "CE4R", "C=ON", "C=C", "S=O", "C=C", "C=C", "NC=O",
-                "C=ON", "O=CN", "CR", "O=S", "CR", "CR", "OC=O", "COO", "O=CO", "CR", "O=CN", "COO", "O=CO", "OC=O",
-                "CR", "CB", "CB", "CB", "CB", "CB", "CB", "NO2", "O2N", "O2N", "HC", "HC", "HC", "HC", "HC", "HNCO",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NC=O", "C=C", "C=C", "CR", "CR4R", "CE4R", "C=ON", "C=C", "S=O", "C=C", "C=C", "NC=O",
+            "C=ON", "O=CN", "CR", "O=S", "CR", "CR", "OC=O", "COO", "O=CO", "CR", "O=CN", "COO",
+            "O=CO", "OC=O", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "NO2", "O2N", "O2N", "HC",
+            "HC", "HC", "HC", "HC", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for BEWKUJ04
      *
-     * @cdk.inchi InChI=1S/C11H10N3O2S/c12-9-4-6-10(7-5-9)17(15,16)14-11-3-1-2-8-13-11/h1-8H,12H2/q-1/p+1
+     * @cdk.inchi
+     *     InChI=1S/C11H10N3O2S/c12-9-4-6-10(7-5-9)17(15,16)14-11-3-1-2-8-13-11/h1-8H,12H2/q-1/p+1
      */
     @Test
     public void testBEWKUJ04() {
@@ -571,8 +590,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 16, DOUBLE);
         container.addBond(16, 24, SINGLE);
 
-        String[] expected = {"SO2N", "O2S", "O2S", "NM", "NC=C", "NPD+", "CB", "CB", "CB", "CB", "CB", "CB", "CB",
-                "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HNCC", "HNCC", "HC", "HC", "HC", "HC", "HPD+"};
+        String[] expected = {
+            "SO2N", "O2S", "O2S", "NM", "NC=C", "NPD+", "CB", "CB", "CB", "CB", "CB", "CB", "CB",
+            "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HNCC", "HNCC", "HC", "HC", "HC", "HC",
+            "HPD+"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -628,15 +650,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 20, SINGLE);
         container.addBond(10, 11, SINGLE);
 
-        String[] expected = {"OM2", "OR", "OR", "NPD+", "CB", "CB", "CR", "CB", "CB", "CR", "CR", "CB", "HOR", "HPD+",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OM2", "OR", "OR", "NPD+", "CB", "CB", "CR", "CB", "CB", "CR", "CR", "CB", "HOR",
+            "HPD+", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for BIPDEJ02
      *
-     * @cdk.inchi InChI=1S/C8H9FN2O3/c9-5-4-11(6-2-1-3-14-6)8(13)10-7(5)12/h4,6H,1-3H2,(H,10,12,13)/t6-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C8H9FN2O3/c9-5-4-11(6-2-1-3-14-6)8(13)10-7(5)12/h4,6H,1-3H2,(H,10,12,13)/t6-/m0/s1
      */
     @Test
     public void testBIPDEJ02() {
@@ -689,8 +714,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 21, SINGLE);
         container.addBond(12, 22, SINGLE);
 
-        String[] expected = {"NC=O", "CONN", "O=CN", "NC=O", "C=ON", "O=CN", "C=C", "F", "C=C", "CR", "CR", "CR", "CR",
-                "OR", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NC=O", "CONN", "O=CN", "NC=O", "C=ON", "O=CN", "C=C", "F", "C=C", "CR", "CR", "CR",
+            "CR", "OR", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -741,8 +768,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 13, SINGLE);
         container.addBond(12, 14, DOUBLE);
 
-        String[] expected = {"CB", "CB", "CB", "CB", "CB", "CB", "COO", "OC=O", "O=CO", "NO2", "O2N", "O2N", "NO2",
-                "O2N", "O2N", "HOCO", "HC", "HC", "HC"};
+        String[] expected = {
+            "CB", "CB", "CB", "CB", "CB", "CB", "COO", "OC=O", "O=CO", "NO2", "O2N", "O2N", "NO2",
+            "O2N", "O2N", "HOCO", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -800,8 +829,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 11, SINGLE);
         container.addBond(11, 21, SINGLE);
 
-        String[] expected = {"NPD+", "CB", "CB", "CB", "CB", "CB", "NPD+", "CB", "CB", "CB", "CB", "CB", "HPD+", "HC",
-                "HC", "HC", "HC", "HPD+", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NPD+", "CB", "CB", "CB", "CB", "CB", "NPD+", "CB", "CB", "CB", "CB", "CB", "HPD+",
+            "HC", "HC", "HC", "HC", "HPD+", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -870,8 +901,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 25, SINGLE);
         container.addBond(15, 24, SINGLE);
 
-        String[] expected = {"C5A", "CB", "CB", "CB", "CB", "C5B", "N5B", "C5A", "STHI", "NPYL", "C5A", "C5B", "C5B",
-                "N5A", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "C5A", "CB", "CB", "CB", "CB", "C5B", "N5B", "C5A", "STHI", "NPYL", "C5A", "C5B", "C5B",
+            "N5A", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -932,15 +965,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 22, SINGLE);
         container.addBond(10, 20, SINGLE);
 
-        String[] expected = {"CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "NC=C", "S", "CB", "CB", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HNCC", "HC", "HC"};
+        String[] expected = {
+            "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "NC=C", "S", "CB", "CB",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HNCC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for BODKOU
      *
-     * @cdk.inchi InChI=1S/C6H8N4O2S.C4H8N2S2/c1-12-10-4(5(7)11)3-2-13-6(8)9-3;1-3-5-6-4(7-2)8-3/h2H,1H3,(H2,7,11)(H2,8,9);3,5H,1-2H3/b10-4-;/t;3-/m.1/s1
+     * @cdk.inchi
+     *     InChI=1S/C6H8N4O2S.C4H8N2S2/c1-12-10-4(5(7)11)3-2-13-6(8)9-3;1-3-5-6-4(7-2)8-3/h2H,1H3,(H2,7,11)(H2,8,9);3,5H,1-2H3/b10-4-;/t;3-/m.1/s1
      */
     @Test
     public void testBODKOU() {
@@ -1020,9 +1056,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(20, 33, SINGLE);
         container.addBond(20, 32, SINGLE);
 
-        String[] expected = {"CR", "S", "C=N", "S", "CR", "NR", "N=C", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HNR", "N5B", "C5A", "STHI", "C5A", "NC=N", "NC=O", "C=ON", "O=CN", "C=N", "N=C", "OR", "HNCO", "HNCO",
-                "HC", "HC", "HC", "HNCN", "HNCN", "CR", "C5B", "HC"};
+        String[] expected = {
+            "CR", "S", "C=N", "S", "CR", "NR", "N=C", "CR", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HNR", "N5B", "C5A", "STHI", "C5A", "NC=N", "NC=O", "C=ON", "O=CN", "C=N", "N=C",
+            "OR", "HNCO", "HNCO", "HC", "HC", "HC", "HNCN", "HNCN", "CR", "C5B", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -1086,8 +1124,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 23, SINGLE);
         container.addBond(15, 24, SINGLE);
 
-        String[] expected = {"BR", "OC=C", "N=C", "NPYD", "CB", "CB", "CB", "CB", "CB", "CB", "C=N", "CB", "CB", "CB",
-                "CB", "CB", "HOCC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "BR", "OC=C", "N=C", "NPYD", "CB", "CB", "CB", "CB", "CB", "CB", "C=N", "CB", "CB",
+            "CB", "CB", "CB", "HOCC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -1175,9 +1215,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(25, 36, SINGLE);
         container.addBond(25, 37, SINGLE);
 
-        String[] expected = {"PTET", "S-P", "CR", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "PTET", "S-P", "CR", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "PTET", "S-P", "CR", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "PTET", "S-P", "CR", "CR", "CR", "CR", "CR", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -1267,16 +1309,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 37, SINGLE);
         container.addBond(14, 38, SINGLE);
 
-        String[] expected = {"PTET", "PTET", "S-P", "S-P", "S", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR",
-                "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "PTET", "PTET", "S-P", "S-P", "S", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR",
+            "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for BUYTIY10
      *
-     * @cdk.inchi InChI=1S/C11H12N4O4/c12-3-6-4-15(14-2-1-13-10(6)14)11-9(18)8(17)7(5-16)19-11/h1-2,4,7-9,11,16-18H,5H2/t7-,8-,9-,11-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C11H12N4O4/c12-3-6-4-15(14-2-1-13-10(6)14)11-9(18)8(17)7(5-16)19-11/h1-2,4,7-9,11,16-18H,5H2/t7-,8-,9-,11-/m1/s1
      */
     @Test
     public void testBUYTIY10() {
@@ -1346,16 +1391,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 29, SINGLE);
         container.addBond(17, 30, SINGLE);
 
-        String[] expected = {"N5B", "C5B", "C5A", "NPYL", "NC=C", "C=C", "C=C", "C5A", "CSP", "NSP", "CR", "CR", "OR",
-                "CR", "OR", "CR", "CR", "OR", "OR", "HC", "HC", "HC", "HC", "HC", "HOR", "HC", "HOR", "HC", "HC", "HC",
-                "HOR"};
+        String[] expected = {
+            "N5B", "C5B", "C5A", "NPYL", "NC=C", "C=C", "C=C", "C5A", "CSP", "NSP", "CR", "CR",
+            "OR", "CR", "OR", "CR", "CR", "OR", "OR", "HC", "HC", "HC", "HC", "HC", "HOR", "HC",
+            "HOR", "HC", "HC", "HC", "HOR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for BUYTOE10
      *
-     * @cdk.inchi InChI=1S/C11H12N4O4/c12-3-6-4-13-15-2-1-14(10(6)15)11-9(18)8(17)7(5-16)19-11/h1-2,4,7-9,11,16-18H,5H2/t7-,8-,9-,11-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C11H12N4O4/c12-3-6-4-13-15-2-1-14(10(6)15)11-9(18)8(17)7(5-16)19-11/h1-2,4,7-9,11,16-18H,5H2/t7-,8-,9-,11-/m1/s1
      */
     @Test
     public void testBUYTOE10() {
@@ -1425,16 +1473,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 17, SINGLE);
         container.addBond(17, 30, SINGLE);
 
-        String[] expected = {"NC=C", "C=C", "C=C", "NPYL", "N5A", "C5B", "C5B", "C5A", "CSP", "NSP", "CR", "CR", "OR",
-                "CR", "OR", "CR", "CR", "OR", "OR", "HC", "HC", "HC", "HC", "HC", "HOR", "HC", "HOR", "HC", "HC", "HC",
-                "HOR"};
+        String[] expected = {
+            "NC=C", "C=C", "C=C", "NPYL", "N5A", "C5B", "C5B", "C5A", "CSP", "NSP", "CR", "CR",
+            "OR", "CR", "OR", "CR", "CR", "OR", "OR", "HC", "HC", "HC", "HC", "HC", "HOR", "HC",
+            "HOR", "HC", "HC", "HC", "HOR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for BUYXEY10
      *
-     * @cdk.inchi InChI=1S/C11H20N2O4S/c1-7(2)9(11(16)17)13-10(15)8(12-6-14)4-5-18-3/h6-9H,4-5H2,1-3H3,(H,12,14)(H,13,15)(H,16,17)/t8-,9-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C11H20N2O4S/c1-7(2)9(11(16)17)13-10(15)8(12-6-14)4-5-18-3/h6-9H,4-5H2,1-3H3,(H,12,14)(H,13,15)(H,16,17)/t8-,9-/m0/s1
      */
     @Test
     public void testBUYXEY10() {
@@ -1515,16 +1566,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 17, DOUBLE);
         container.addBond(16, 21, SINGLE);
 
-        String[] expected = {"O=CN", "C=ON", "NC=O", "CR", "C=ON", "O=CN", "CR", "CR", "S", "CR", "NC=O", "CR", "CR",
-                "CR", "CR", "COO", "OC=O", "O=CO", "HC", "HC", "HC", "HOCO", "HC", "HC", "HNCO", "HC", "HC", "HNCO",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "O=CN", "C=ON", "NC=O", "CR", "C=ON", "O=CN", "CR", "CR", "S", "CR", "NC=O", "CR", "CR",
+            "CR", "CR", "COO", "OC=O", "O=CO", "HC", "HC", "HC", "HOCO", "HC", "HC", "HNCO", "HC",
+            "HC", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for BYITOT02
      *
-     * @cdk.inchi InChI=1S/C11H12N2O2S/c1-13-7-8-15-16-11(13)12-10(14)9-5-3-2-4-6-9/h2-6H,7-8H2,1H3/b12-11-
+     * @cdk.inchi
+     *     InChI=1S/C11H12N2O2S/c1-13-7-8-15-16-11(13)12-10(14)9-5-3-2-4-6-9/h2-6H,7-8H2,1H3/b12-11-
      */
     @Test
     public void testBYITOT02() {
@@ -1587,8 +1641,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 26, SINGLE);
         container.addBond(15, 27, SINGLE);
 
-        String[] expected = {"-OS", "S", "C=N", "NC=N", "CR", "CR", "N=C", "C=ON", "O=CN", "CB", "CB", "CB", "CB",
-                "CB", "CB", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "-OS", "S", "C=N", "NC=N", "CR", "CR", "N=C", "C=ON", "O=CN", "CB", "CB", "CB", "CB",
+            "CB", "CB", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -1648,8 +1704,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 12, SINGLE);
         container.addBond(12, 21, SINGLE);
 
-        String[] expected = {"SO2", "CB", "O2S", "O2S", "CR", "C=C", "C=C", "CR", "CB", "CB", "CB", "CB", "CB", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2", "CB", "O2S", "O2S", "CR", "C=C", "C=C", "CR", "CB", "CB", "CB", "CB", "CB", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -1725,15 +1783,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 19, SINGLE);
         container.addBond(15, 20, SINGLE);
 
-        String[] expected = {"SO4", "SO3", "OSO3", "OSO3", "O2S", "O2S", "O2S", "O2S", "N=C", "C=N", "CB", "CB", "CB",
-                "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO4", "SO3", "OSO3", "OSO3", "O2S", "O2S", "O2S", "O2S", "N=C", "C=N", "CB", "CB",
+            "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for CALXES20
      *
-     * @cdk.inchi InChI=1S/C7H13N3O4/c1-4(8)7(14)10-2-5(11)9-3-6(12)13/h4H,2-3,8H2,1H3,(H,9,11)(H,10,14)(H,12,13)/t4-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C7H13N3O4/c1-4(8)7(14)10-2-5(11)9-3-6(12)13/h4H,2-3,8H2,1H3,(H,9,11)(H,10,14)(H,12,13)/t4-/m0/s1
      */
     @Test
     public void testCALXES20() {
@@ -1792,8 +1853,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 12, DOUBLE);
         container.addBond(11, 13, SINGLE);
 
-        String[] expected = {"NR+", "CR", "CR", "C=ON", "O=CN", "NC=O", "CR", "C=ON", "O=CN", "NC=O", "CR", "CO2M",
-                "O2CM", "O2CM", "HNR+", "HNR+", "HNR+", "HC", "HC", "HC", "HC", "HNCO", "HC", "HC", "HNCO", "HC", "HC"};
+        String[] expected = {
+            "NR+", "CR", "CR", "C=ON", "O=CN", "NC=O", "CR", "C=ON", "O=CN", "NC=O", "CR", "CO2M",
+            "O2CM", "O2CM", "HNR+", "HNR+", "HNR+", "HC", "HC", "HC", "HC", "HNCO", "HC", "HC",
+            "HNCO", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -1830,7 +1894,8 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
     /**
      * Generated test for CEFMEN
      *
-     * @cdk.inchi InChI=1S/C16H17N9O5S3/c1-24-16(20-22-23-24)33-4-6-3-31-13-9(12(27)25(13)10(6)14(28)29)19-11(26)8(21-30-2)7-5-32-15(17)18-7/h5,9,13H,3-4H2,1-2H3,(H2,17,18)(H,19,26)(H,28,29)/b21-8-/t9-,13-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C16H17N9O5S3/c1-24-16(20-22-23-24)33-4-6-3-31-13-9(12(27)25(13)10(6)14(28)29)19-11(26)8(21-30-2)7-5-32-15(17)18-7/h5,9,13H,3-4H2,1-2H3,(H2,17,18)(H,19,26)(H,28,29)/b21-8-/t9-,13-/m1/s1
      */
     @Test
     public void testCEFMEN() {
@@ -1939,17 +2004,20 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(32, 48, SINGLE);
         container.addBond(32, 49, SINGLE);
 
-        String[] expected = {"S", "STHI", "S", "O=CN", "O=CO", "OC=O", "O=CN", "OR", "NC=O", "NC=O", "N=C", "N5B",
-                "NC=N", "NPYL", "N5A", "N5B", "N5B", "CR", "C=C", "C=C", "CR4R", "CR4R", "C=ON", "COO", "C=ON", "C=N",
-                "CR", "C5B", "C5A", "C5A", "CR", "C5A", "CR", "HC", "HC", "HOCO", "HC", "HC", "HNCO", "HC", "HC",
-                "HNCN", "HNCN", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "STHI", "S", "O=CN", "O=CO", "OC=O", "O=CN", "OR", "NC=O", "NC=O", "N=C", "N5B",
+            "NC=N", "NPYL", "N5A", "N5B", "N5B", "CR", "C=C", "C=C", "CR4R", "CR4R", "C=ON", "COO",
+            "C=ON", "C=N", "CR", "C5B", "C5A", "C5A", "CR", "C5A", "CR", "HC", "HC", "HOCO", "HC",
+            "HC", "HNCO", "HC", "HC", "HNCN", "HNCN", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for CETROI01
      *
-     * @cdk.inchi InChI=1S/C10H15NO5S/c1-4-6(2-11)17-10-9(15-4)8(14)7(13)5(3-12)16-10/h4-10,12-14H,3H2,1H3/t4-,5+,6+,7+,8-,9+,10-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H15NO5S/c1-4-6(2-11)17-10-9(15-4)8(14)7(13)5(3-12)16-10/h4-10,12-14H,3H2,1H3/t4-,5+,6+,7+,8-,9+,10-/m0/s1
      */
     @Test
     public void testCETROI01() {
@@ -2020,15 +2088,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 28, SINGLE);
         container.addBond(16, 31, SINGLE);
 
-        String[] expected = {"S", "CR", "CR", "OR", "CR", "CR", "CR", "CR", "OR", "CR", "CSP", "NSP", "CR", "OR", "OR",
-                "CR", "OR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOR", "HOR", "HOR"};
+        String[] expected = {
+            "S", "CR", "CR", "OR", "CR", "CR", "CR", "CR", "OR", "CR", "CSP", "NSP", "CR", "OR",
+            "OR", "CR", "OR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HOR", "HOR", "HOR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for CEWCUC10
      *
-     * @cdk.inchi InChI=1S/C18H15OP/c19-20(16-10-4-1-5-11-16,17-12-6-2-7-13-17)18-14-8-3-9-15-18/h1-15H
+     * @cdk.inchi
+     *     InChI=1S/C18H15OP/c19-20(16-10-4-1-5-11-16,17-12-6-2-7-13-17)18-14-8-3-9-15-18/h1-15H
      */
     @Test
     public void testCEWCUC10() {
@@ -2106,16 +2178,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(18, 33, SINGLE);
         container.addBond(19, 34, SINGLE);
 
-        String[] expected = {"PO", "OP", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB",
-                "CB", "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC"};
+        String[] expected = {
+            "PO", "OP", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB",
+            "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for CEWVIJ10
      *
-     * @cdk.inchi InChI=1S/C10H14N4O2/c1-6(2)4-14-8-7(11-5-12-8)9(15)13(3)10(14)16/h5-6H,4H2,1-3H3,(H,11,12)
+     * @cdk.inchi
+     *     InChI=1S/C10H14N4O2/c1-6(2)4-14-8-7(11-5-12-8)9(15)13(3)10(14)16/h5-6H,4H2,1-3H3,(H,11,12)
      */
     @Test
     public void testCEWVIJ10() {
@@ -2182,9 +2257,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 28, SINGLE);
         container.addBond(15, 29, SINGLE);
 
-        String[] expected = {"O=CN", "O=CN", "NC=O", "NC=O", "NPYL", "N5B", "CONN", "C5B", "C5A", "C=ON", "C5A", "CR",
-                "CR", "CR", "CR", "CR", "HPYL", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC"};
+        String[] expected = {
+            "O=CN", "O=CN", "NC=O", "NC=O", "NPYL", "N5B", "CONN", "C5B", "C5A", "C=ON", "C5A",
+            "CR", "CR", "CR", "CR", "CR", "HPYL", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -2243,8 +2320,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 21, SINGLE);
         container.addBond(12, 13, DOUBLE);
 
-        String[] expected = {"OC=C", "OC=C", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB",
-                "HOCC", "HOCC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OC=C", "OC=C", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB",
+            "HOCC", "HOCC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -2293,15 +2372,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 15, SINGLE);
         container.addBond(8, 16, SINGLE);
 
-        String[] expected = {"OR", "OR", "OR", "CR3R", "CR3R", "CR3R", "CR3R", "CR3R", "CR3R", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OR", "OR", "OR", "CR3R", "CR3R", "CR3R", "CR3R", "CR3R", "CR3R", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for CIJXOI10
      *
-     * @cdk.inchi InChI=1S/C9H13NO/c1-5-3-7-4-8(11)9(5)6(2)10-7/h5,7,9H,3-4H2,1-2H3/p+1/t5-,7-,9-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C9H13NO/c1-5-3-7-4-8(11)9(5)6(2)10-7/h5,7,9H,3-4H2,1-2H3/p+1/t5-,7-,9-/m0/s1
      */
     @Test
     public void testCIJXOI10() {
@@ -2358,8 +2440,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 22, SINGLE);
         container.addBond(9, 11, SINGLE);
 
-        String[] expected = {"CR", "CR", "CR", "CR", "C=N", "C=OR", "CR", "CR", "CR", "N+=C", "O=CR", "HNC+", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR", "CR", "CR", "CR", "C=N", "C=OR", "CR", "CR", "CR", "N+=C", "O=CR", "HNC+", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -2414,15 +2498,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 12, SINGLE);
         container.addBond(13, 14, TRIPLE);
 
-        String[] expected = {"N=C", "C=N", "N=C", "C=N", "C=C", "C=C", "N=C", "C=N", "C=C", "C=C", "C=C", "C=C",
-                "NC=N", "CSP", "NSP", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "N=C", "C=N", "N=C", "C=N", "C=C", "C=C", "N=C", "C=N", "C=C", "C=C", "C=C", "C=C",
+            "NC=N", "CSP", "NSP", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for CILBII
      *
-     * @cdk.inchi InChI=1S/C7H10N4O14/c1-20-7-6(25-11(18)19)5(24-10(16)17)4(23-9(14)15)3(22-7)2-21-8(12)13/h3-7H,2H2,1H3/t3-,4-,5+,6-,7-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C7H10N4O14/c1-20-7-6(25-11(18)19)5(24-10(16)17)4(23-9(14)15)3(22-7)2-21-8(12)13/h3-7H,2H2,1H3/t3-,4-,5+,6-,7-/m1/s1
      */
     @Test
     public void testCILBII() {
@@ -2498,16 +2585,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(19, 24, SINGLE);
         container.addBond(20, 24, DOUBLE);
 
-        String[] expected = {"CR", "CR", "CR", "CR", "CR", "CR", "CR", "OR", "ONO2", "O2NO", "O2NO", "ONO2", "O2NO",
-                "O2NO", "ONO2", "O2NO", "O2NO", "OR", "ONO2", "O2NO", "O2NO", "NO3", "NO3", "NO3", "NO3", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR", "CR", "CR", "CR", "CR", "CR", "CR", "OR", "ONO2", "O2NO", "O2NO", "ONO2", "O2NO",
+            "O2NO", "ONO2", "O2NO", "O2NO", "OR", "ONO2", "O2NO", "O2NO", "NO3", "NO3", "NO3",
+            "NO3", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for CILDOQ
      *
-     * @cdk.inchi InChI=1S/C6H9N3O4S/c7-6(14)9-8-3(5(12)13)1-2-4(10)11/h1-2H2,(H,10,11)(H,12,13)(H3,7,9,14)/b8-3+
+     * @cdk.inchi
+     *     InChI=1S/C6H9N3O4S/c7-6(14)9-8-3(5(12)13)1-2-4(10)11/h1-2H2,(H,10,11)(H,12,13)(H3,7,9,14)/b8-3+
      */
     @Test
     public void testCILDOQ() {
@@ -2558,8 +2648,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 20, SINGLE);
         container.addBond(12, 21, SINGLE);
 
-        String[] expected = {"S=C", "OC=O", "O=CO", "OC=O", "O=CO", "NC=S", "N=C", "NC=S", "C=SN", "C=N", "COO", "CR",
-                "CR", "COO", "HNCS", "HNCS", "HNCS", "HOCO", "HC", "HC", "HC", "HC", "HOCO"};
+        String[] expected = {
+            "S=C", "OC=O", "O=CO", "OC=O", "O=CO", "NC=S", "N=C", "NC=S", "C=SN", "C=N", "COO",
+            "CR", "CR", "COO", "HNCS", "HNCS", "HNCS", "HOCO", "HC", "HC", "HC", "HC", "HOCO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -2597,7 +2689,8 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
     /**
      * Generated test for CIMRUL10
      *
-     * @cdk.inchi InChI=1S/C12H12ClNO3/c1-17-11(16)12(7-9(12)13)14-10(15)8-5-3-2-4-6-8/h2-6,9H,7H2,1H3,(H,14,15)/t9-,12-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C12H12ClNO3/c1-17-11(16)12(7-9(12)13)14-10(15)8-5-3-2-4-6-8/h2-6,9H,7H2,1H3,(H,14,15)/t9-,12-/m0/s1
      */
     @Test
     public void testCIMRUL10() {
@@ -2662,15 +2755,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 27, SINGLE);
         container.addBond(16, 28, SINGLE);
 
-        String[] expected = {"CL", "O=CN", "O=CO", "OC=O", "NC=O", "CR3R", "CR3R", "CR3R", "C=ON", "CB", "CB", "CB",
-                "CB", "CB", "CB", "COO", "CR", "HC", "HC", "HC", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "O=CN", "O=CO", "OC=O", "NC=O", "CR3R", "CR3R", "CR3R", "C=ON", "CB", "CB", "CB",
+            "CB", "CB", "CB", "COO", "CR", "HC", "HC", "HC", "HNCO", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for CINVIE
      *
-     * @cdk.inchi InChI=1S/C10H11N3O8/c1-9(15)7(14)6(11(16)17)4-10(13(20)21,5-2-3-5)8(9)12(18)19/h4-5,8,15H,2-3H2,1H3/t8-,9-,10-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H11N3O8/c1-9(15)7(14)6(11(16)17)4-10(13(20)21,5-2-3-5)8(9)12(18)19/h4-5,8,15H,2-3H2,1H3/t8-,9-,10-/m1/s1
      */
     @Test
     public void testCINVIE() {
@@ -2741,9 +2838,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(20, 30, SINGLE);
         container.addBond(20, 31, SINGLE);
 
-        String[] expected = {"O=CR", "OR", "O2N", "O2N", "O2N", "O2N", "O2N", "O2N", "NO2", "NO2", "NO2", "C=OR", "CR",
-                "CR", "CR", "C=C", "C=C", "CR3R", "CR3R", "CR3R", "CR", "HOR", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "O=CR", "OR", "O2N", "O2N", "O2N", "O2N", "O2N", "O2N", "NO2", "NO2", "NO2", "C=OR",
+            "CR", "CR", "CR", "C=C", "C=C", "CR3R", "CR3R", "CR3R", "CR", "HOR", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -2809,8 +2908,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 24, SINGLE);
         container.addBond(14, 23, SINGLE);
 
-        String[] expected = {"N=N", "N=N", "NN=N", "NPYL", "N5A", "C5B", "C5B", "C5A", "CR", "CR", "O=CO", "COO",
-                "OC=O", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "N=N", "N=N", "NN=N", "NPYL", "N5A", "C5B", "C5B", "C5A", "CR", "CR", "O=CO", "COO",
+            "OC=O", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -2859,8 +2960,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 16, TRIPLE);
         container.addBond(11, 17, TRIPLE);
 
-        String[] expected = {"C=C", "C=C", "C=C", "C=C", "C=C", "C=C", "CSP", "CSP", "CSP", "CSP", "CSP", "CSP", "NSP",
-                "NSP", "NSP", "NSP", "NSP", "NSP"};
+        String[] expected = {
+            "C=C", "C=C", "C=C", "C=C", "C=C", "C=C", "CSP", "CSP", "CSP", "CSP", "CSP", "CSP",
+            "NSP", "NSP", "NSP", "NSP", "NSP", "NSP"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -2903,15 +3006,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 13, DOUBLE);
         container.addBond(12, 13, SINGLE);
 
-        String[] expected = {"STHI", "N5A", "N5A", "C5B", "C5B", "CB", "HC", "C5B", "CB", "N5A", "C5B", "HC", "STHI",
-                "N5A"};
+        String[] expected = {
+            "STHI", "N5A", "N5A", "C5B", "C5B", "CB", "HC", "C5B", "CB", "N5A", "C5B", "HC", "STHI",
+            "N5A"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for CISPOJ
      *
-     * @cdk.inchi InChI=1S/C8H4N8O4/c17-15(18)4-1-6-5(7(2-4)16(19)20)3-9-14(6)8-10-12-13-11-8/h1-3H,(H,10,11,12,13)
+     * @cdk.inchi
+     *     InChI=1S/C8H4N8O4/c17-15(18)4-1-6-5(7(2-4)16(19)20)3-9-14(6)8-10-12-13-11-8/h1-3H,(H,10,11,12,13)
      */
     @Test
     public void testCISPOJ() {
@@ -2967,8 +3073,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 18, SINGLE);
         container.addBond(15, 19, DOUBLE);
 
-        String[] expected = {"CB", "C5A", "C5B", "CB", "CB", "CB", "C5B", "C5A", "N5B", "N5B", "N5A", "NPYL", "NPYL",
-                "N5A", "NO2", "NO2", "O2N", "O2N", "O2N", "O2N", "HC", "HC", "HC", "HPYL"};
+        String[] expected = {
+            "CB", "C5A", "C5B", "CB", "CB", "CB", "C5B", "C5A", "N5B", "N5B", "N5A", "NPYL", "NPYL",
+            "N5A", "NO2", "NO2", "O2N", "O2N", "O2N", "O2N", "HC", "HC", "HC", "HPYL"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -3017,15 +3125,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 16, SINGLE);
         container.addBond(14, 17, SINGLE);
 
-        String[] expected = {"CB", "CB", "CL", "CB", "CL", "CB", "HC", "CB", "HC", "CB", "CL", "OC=O", "COO", "O=CO",
-                "CR", "HC", "HC", "HC"};
+        String[] expected = {
+            "CB", "CB", "CL", "CB", "CL", "CB", "HC", "CB", "HC", "CB", "CL", "OC=O", "COO", "O=CO",
+            "CR", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for CITNOI10
      *
-     * @cdk.inchi InChI=1S/C11H13NO2S/c1-2-15-10(13)8-12-11(14)9-6-4-3-5-7-9/h3-7H,2,8H2,1H3,(H,12,14)
+     * @cdk.inchi
+     *     InChI=1S/C11H13NO2S/c1-2-15-10(13)8-12-11(14)9-6-4-3-5-7-9/h3-7H,2,8H2,1H3,(H,12,14)
      */
     @Test
     public void testCITNOI10() {
@@ -3087,15 +3198,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 26, SINGLE);
         container.addBond(14, 27, SINGLE);
 
-        String[] expected = {"S", "O=C", "O=CN", "NC=O", "CR", "CR", "C=OS", "CR", "C=ON", "CB", "CB", "CB", "CB",
-                "CB", "CB", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "O=C", "O=CN", "NC=O", "CR", "CR", "C=OS", "CR", "C=ON", "CB", "CB", "CB", "CB",
+            "CB", "CB", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for CITPEA10
      *
-     * @cdk.inchi InChI=1S/C12H15NOS2/c1-3-16-12(15)9(2)13-11(14)10-7-5-4-6-8-10/h4-9H,3H2,1-2H3,(H,13,14)/t9-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C12H15NOS2/c1-3-16-12(15)9(2)13-11(14)10-7-5-4-6-8-10/h4-9H,3H2,1-2H3,(H,13,14)/t9-/m0/s1
      */
     @Test
     public void testCITPEA10() {
@@ -3163,8 +3278,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 29, SINGLE);
         container.addBond(15, 30, SINGLE);
 
-        String[] expected = {"S", "S=C", "O=CN", "NC=O", "CR", "CR", "CSS", "CR", "CR", "C=ON", "CB", "CB", "CB", "CB",
-                "CB", "CB", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "S=C", "O=CN", "NC=O", "CR", "CR", "CSS", "CR", "CR", "C=ON", "CB", "CB", "CB",
+            "CB", "CB", "CB", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -3201,7 +3319,8 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
     /**
      * Generated test for CIVCEP02
      *
-     * @cdk.inchi InChI=1S/C12H15N3O6/c16-10-13(1-7-4-19-7)11(17)15(3-9-6-21-9)12(18)14(10)2-8-5-20-8/h7-9H,1-6H2/t7-,8-,9-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C12H15N3O6/c16-10-13(1-7-4-19-7)11(17)15(3-9-6-21-9)12(18)14(10)2-8-5-20-8/h7-9H,1-6H2/t7-,8-,9-/m0/s1
      */
     @Test
     public void testCIVCEP02() {
@@ -3282,16 +3401,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(32, 34, SINGLE);
         container.addBond(32, 35, SINGLE);
 
-        String[] expected = {"O=CN", "OR", "NC=O", "CONN", "CR", "CR3R", "CR3R", "HC", "HC", "HC", "HC", "HC", "NC=O",
-                "CONN", "CONN", "CR", "O=CN", "NC=O", "O=CN", "CR3R", "HC", "HC", "CR", "OR", "CR3R", "HC", "CR3R",
-                "HC", "HC", "HC", "HC", "OR", "CR3R", "HC", "HC", "HC"};
+        String[] expected = {
+            "O=CN", "OR", "NC=O", "CONN", "CR", "CR3R", "CR3R", "HC", "HC", "HC", "HC", "HC",
+            "NC=O", "CONN", "CONN", "CR", "O=CN", "NC=O", "O=CN", "CR3R", "HC", "HC", "CR", "OR",
+            "CR3R", "HC", "CR3R", "HC", "HC", "HC", "HC", "OR", "CR3R", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for CIVLAU02
      *
-     * @cdk.inchi InChI=1S/C11H14O6/c1-14-9(12)5-7-6(10(13)15-2)8(5)11(7)16-3-4-17-11/h5-8H,3-4H2,1-2H3/t5-,6+,7+,8-
+     * @cdk.inchi
+     *     InChI=1S/C11H14O6/c1-14-9(12)5-7-6(10(13)15-2)8(5)11(7)16-3-4-17-11/h5-8H,3-4H2,1-2H3/t5-,6+,7+,8-
      */
     @Test
     public void testCIVLAU02() {
@@ -3361,9 +3483,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 29, SINGLE);
         container.addBond(16, 30, SINGLE);
 
-        String[] expected = {"CR4R", "CR4R", "CR4R", "CR4R", "CR4R", "OR", "CR", "CR", "OR", "COO", "O=CO", "OC=O",
-                "CR", "COO", "O=CO", "OC=O", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC"};
+        String[] expected = {
+            "CR4R", "CR4R", "CR4R", "CR4R", "CR4R", "OR", "CR", "CR", "OR", "COO", "O=CO", "OC=O",
+            "CR", "COO", "O=CO", "OC=O", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -3419,8 +3543,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 19, SINGLE);
         container.addBond(9, 20, SINGLE);
 
-        String[] expected = {"OR", "OC=O", "O=CO", "OC=O", "CR", "CR", "CR", "CR", "CR", "CR", "COOO", "HOR", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OR", "OC=O", "O=CO", "OC=O", "CR", "CR", "CR", "CR", "CR", "CR", "COOO", "HOR", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -3463,15 +3589,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 13, SINGLE);
         container.addBond(12, 13, SINGLE);
 
-        String[] expected = {"STHI", "O=CR", "N5A", "N5A", "C5B", "C5B", "C=OR", "C=OR", "C5B", "O=CR", "C5B", "N5A",
-                "N5A", "STHI"};
+        String[] expected = {
+            "STHI", "O=CR", "N5A", "N5A", "C5B", "C5B", "C=OR", "C=OR", "C5B", "O=CR", "C5B", "N5A",
+            "N5A", "STHI"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for CIZFIA
      *
-     * @cdk.inchi InChI=1S/C9H13NO3S/c1-6-5-8-4-3-7(2)14(12)10(8)9(11)13-6/h3-4,6-8H,5H2,1-2H3/t6-,7+,8+,14-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C9H13NO3S/c1-6-5-8-4-3-7(2)14(12)10(8)9(11)13-6/h3-4,6-8H,5H2,1-2H3/t6-,7+,8+,14-/m0/s1
      */
     @Test
     public void testCIZFIA() {
@@ -3532,15 +3661,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 25, SINGLE);
         container.addBond(13, 26, SINGLE);
 
-        String[] expected = {"S=O", "OC=O", "O=S", "O=CN", "NC=O", "CR", "C=C", "C=C", "CR", "C=ON", "CR", "CR", "CR",
-                "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S=O", "OC=O", "O=S", "O=CN", "NC=O", "CR", "C=C", "C=C", "CR", "C=ON", "CR", "CR",
+            "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for CIZJAW
      *
-     * @cdk.inchi InChI=1S/C12H30Cl2Si4/c1-15(2,3)11(13)17(7,8)12(14,16(4,5)6)18(11,9)10/h1-10H3/t11-,12+
+     * @cdk.inchi
+     *     InChI=1S/C12H30Cl2Si4/c1-15(2,3)11(13)17(7,8)12(14,16(4,5)6)18(11,9)10/h1-10H3/t11-,12+
      */
     @Test
     public void testCIZJAW() {
@@ -3642,9 +3774,12 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(17, 46, SINGLE);
         container.addBond(17, 45, SINGLE);
 
-        String[] expected = {"SI", "SI", "SI", "SI", "CL", "CL", "CR4R", "CR4R", "CR", "CR", "CR", "CR", "CR", "CR",
-                "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SI", "SI", "SI", "SI", "CL", "CL", "CR4R", "CR4R", "CR", "CR", "CR", "CR", "CR", "CR",
+            "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -3687,8 +3822,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(7, 10, SINGLE);
         container.addBond(7, 8, DOUBLE);
 
-        String[] expected = {"CB", "CB", "CB", "CB", "CB", "CSP", "NPYD", "N2OX", "N=N", "NSP", "OXN", "HC", "HC",
-                "HC", "HC"};
+        String[] expected = {
+            "CB", "CB", "CB", "CB", "CB", "CSP", "NPYD", "N2OX", "N=N", "NSP", "OXN", "HC", "HC",
+            "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -3759,8 +3896,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 27, SINGLE);
         container.addBond(12, 28, SINGLE);
 
-        String[] expected = {"S", "CSP", "C=C", "C=C", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "CR", "CR", "NC=C",
-                "NSP", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "CSP", "C=C", "C=C", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "CR", "CR", "NC=C",
+            "NSP", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -3814,15 +3954,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 18, SINGLE);
         container.addBond(12, 19, SINGLE);
 
-        String[] expected = {"STHI", "C5A", "N5B", "C5B", "C5A", "NO2", "O2N", "O2N", "NC=O", "CONN", "NC=O", "CR",
-                "CR", "O=CN", "HC", "HNCO", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "STHI", "C5A", "N5B", "C5B", "C5A", "NO2", "O2N", "O2N", "NC=O", "CONN", "NC=O", "CR",
+            "CR", "O=CN", "HC", "HNCO", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for COBKIN01
      *
-     * @cdk.inchi InChI=1S/C7H12N2O4/c1-3-13-6(11)7(5(8)10)4-9(7)12-2/h3-4H2,1-2H3,(H2,8,10)/t7-,9+/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C7H12N2O4/c1-3-13-6(11)7(5(8)10)4-9(7)12-2/h3-4H2,1-2H3,(H2,8,10)/t7-,9+/m0/s1
      */
     @Test
     public void testCOBKIN01() {
@@ -3878,15 +4021,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 18, SINGLE);
         container.addBond(12, 19, SINGLE);
 
-        String[] expected = {"OR", "O=CN", "OC=O", "O=CO", "NR", "NC=O", "CR3R", "CR3R", "C=ON", "COO", "CR", "CR",
-                "CR", "HNCO", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OR", "O=CN", "OC=O", "O=CO", "NR", "NC=O", "CR3R", "CR3R", "C=ON", "COO", "CR", "CR",
+            "CR", "HNCO", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for COCXUN
      *
-     * @cdk.inchi InChI=1S/C12H6N4/c13-7-15-11-5-6-12(16-8-14)10-4-2-1-3-9(10)11/h1-6H/b15-11+,16-12+
+     * @cdk.inchi
+     *     InChI=1S/C12H6N4/c13-7-15-11-5-6-12(16-8-14)10-4-2-1-3-9(10)11/h1-6H/b15-11+,16-12+
      */
     @Test
     public void testCOCXUN() {
@@ -3937,8 +4083,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 15, SINGLE);
         container.addBond(11, 14, TRIPLE);
 
-        String[] expected = {"C=N", "C=C", "C=C", "C=N", "CB", "CB", "CB", "CB", "CB", "CB", "CSP", "CSP", "NSP",
-                "N=C", "NSP", "N=C", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "C=N", "C=C", "C=C", "C=N", "CB", "CB", "CB", "CB", "CB", "CB", "CSP", "CSP", "NSP",
+            "N=C", "NSP", "N=C", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -4000,8 +4148,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 16, DOUBLE);
         container.addBond(16, 22, SINGLE);
 
-        String[] expected = {"N5B", "N5B", "N5A", "NPYL", "N=C", "N=C", "C5A", "C=N", "C=N", "C=C", "C=C", "CB", "CB",
-                "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "N5B", "N5B", "N5A", "NPYL", "N=C", "N=C", "C5A", "C=N", "C=N", "C=C", "C=C", "CB",
+            "CB", "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -4051,8 +4201,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 16, SINGLE);
         container.addBond(11, 17, SINGLE);
 
-        String[] expected = {"CL", "N5A", "NPYL", "N5A", "C5B", "C5B", "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC",
-                "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "N5A", "NPYL", "N5A", "C5B", "C5B", "CB", "CB", "CB", "CB", "CB", "CB", "HC",
+            "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -4095,8 +4247,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 13, SINGLE);
         container.addBond(10, 14, SINGLE);
 
-        String[] expected = {"STHI", "OC=N", "N5A", "N5B", "NSP", "N=C", "C5B", "C5A", "CSP", "C=N", "CR", "HN=C",
-                "HC", "HC", "HC"};
+        String[] expected = {
+            "STHI", "OC=N", "N5A", "N5B", "NSP", "N=C", "C5B", "C5A", "CSP", "C=N", "CR", "HN=C",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -4156,8 +4310,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 20, SINGLE);
         container.addBond(11, 19, SINGLE);
 
-        String[] expected = {"NPD+", "CB", "NPYD", "C5", "C5", "CB", "NC=N", "NIM+", "CIM+", "NIM+", "CR", "CR",
-                "HPD+", "HIM+", "HC", "HIM+", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NPD+", "CB", "NPYD", "C5", "C5", "CB", "NC=N", "NIM+", "CIM+", "NIM+", "CR", "CR",
+            "HPD+", "HIM+", "HC", "HIM+", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -4219,15 +4375,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 23, SINGLE);
         container.addBond(10, 24, SINGLE);
 
-        String[] expected = {"S=O", "O=S", "OS=O", "CR", "CR", "CSP", "CSP", "CR", "CR", "CR", "CR", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S=O", "O=S", "OS=O", "CR", "CR", "CSP", "CSP", "CR", "CR", "CR", "CR", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for COKROJ
      *
-     * @cdk.inchi InChI=1S/C10H10N3O3S/c1-7-6-10(12-16-7)13-17(14,15)9-4-2-8(11)3-5-9/h2-6H,11H2,1H3/q-1
+     * @cdk.inchi
+     *     InChI=1S/C10H10N3O3S/c1-7-6-10(12-16-7)13-17(14,15)9-4-2-8(11)3-5-9/h2-6H,11H2,1H3/q-1
      */
     @Test
     public void testCOKROJ() {
@@ -4288,15 +4447,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(24, 26, DOUBLE);
         container.addBond(25, 26, DOUBLE);
 
-        String[] expected = {"HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNCC", "HNCC", "OFUR", "N5A", "C5B",
-                "C5B", "C5A", "CR", "NM", "CB", "CB", "CB", "CB", "CB", "CB", "NC=C", "O2S", "O2S", "SO2N"};
+        String[] expected = {
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNCC", "HNCC", "OFUR", "N5A", "C5B",
+            "C5B", "C5A", "CR", "NM", "CB", "CB", "CB", "CB", "CB", "CB", "NC=C", "O2S", "O2S",
+            "SO2N"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for COLZUY
      *
-     * @cdk.inchi InChI=1S/C12H26N4P2/c1-17-13-5-3-6-14(17)10-12-16-8-4-7-15(11-9-13)18(16)2/h3-12H2,1-2H3/t17-,18-
+     * @cdk.inchi
+     *     InChI=1S/C12H26N4P2/c1-17-13-5-3-6-14(17)10-12-16-8-4-7-15(11-9-13)18(16)2/h3-12H2,1-2H3/t17-,18-
      */
     @Test
     public void testCOLZUY() {
@@ -4392,16 +4555,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(17, 43, SINGLE);
         container.addBond(17, 42, SINGLE);
 
-        String[] expected = {"P", "CR", "CR", "NR", "CR", "CR", "NR", "CR", "CR", "NR", "CR", "P", "CR", "CR", "NR",
-                "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "P", "CR", "CR", "NR", "CR", "CR", "NR", "CR", "CR", "NR", "CR", "P", "CR", "CR", "NR",
+            "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for COMDIR
      *
-     * @cdk.inchi InChI=1S/C11H8Br2O2/c12-7-4-8(14)11(13)6-2-1-5(3-6)9(11)10(7)15/h1-2,4-6,9H,3H2/t5-,6+,9+,11+/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C11H8Br2O2/c12-7-4-8(14)11(13)6-2-1-5(3-6)9(11)10(7)15/h1-2,4-6,9H,3H2/t5-,6+,9+,11+/m1/s1
      */
     @Test
     public void testCOMDIR() {
@@ -4455,8 +4621,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 21, SINGLE);
         container.addBond(14, 22, SINGLE);
 
-        String[] expected = {"BR", "BR", "O=CR", "O=CR", "C=OR", "C=C", "C=C", "C=OR", "CR", "CR", "CR", "C=C", "C=C",
-                "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "BR", "BR", "O=CR", "O=CR", "C=OR", "C=C", "C=C", "C=OR", "CR", "CR", "CR", "C=C",
+            "C=C", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -4504,8 +4672,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(7, 16, SINGLE);
         container.addBond(8, 9, TRIPLE);
 
-        String[] expected = {"COO", "O=CO", "OC=O", "CR", "CR4R", "CR4R", "CR4R", "CR4R", "CSP", "NSP", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "COO", "O=CO", "OC=O", "CR", "CR4R", "CR4R", "CR4R", "CR4R", "CSP", "NSP", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -4555,8 +4725,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 17, SINGLE);
         container.addBond(9, 10, DOUBLE);
 
-        String[] expected = {"NPYL", "C5A", "C5B", "CB", "CB", "CB", "CB", "C5A", "C5B", "C=OR", "O=CR", "HPYL", "HC",
-                "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NPYL", "C5A", "C5B", "CB", "CB", "CB", "CB", "C5A", "C5B", "C=OR", "O=CR", "HPYL",
+            "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -4624,15 +4796,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 22, SINGLE);
         container.addBond(12, 21, SINGLE);
 
-        String[] expected = {"NPYL", "NR", "C5A", "C5B", "CB", "CB", "CB", "CB", "C5A", "C5B", "CR", "CR", "CR",
-                "HPYL", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NPYL", "NR", "C5A", "C5B", "CB", "CB", "CB", "CB", "C5A", "C5B", "CR", "CR", "CR",
+            "HPYL", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for CONBAI
      *
-     * @cdk.inchi InChI=1S/C12H14F2N4O4/c1-15-5-6-12(14,8(20)18(4)10(22)16(6)2)11(5,13)7(19)17(3)9(15)21/h5-6H,1-4H3/t5-,6+,11-,12+
+     * @cdk.inchi
+     *     InChI=1S/C12H14F2N4O4/c1-15-5-6-12(14,8(20)18(4)10(22)16(6)2)11(5,13)7(19)17(3)9(15)21/h5-6H,1-4H3/t5-,6+,11-,12+
      */
     @Test
     public void testCONBAI() {
@@ -4712,9 +4887,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(19, 21, SINGLE);
         container.addBond(21, 35, SINGLE);
 
-        String[] expected = {"NC=O", "CR", "CONN", "O=CN", "NC=O", "CR", "C=ON", "O=CN", "CR4R", "F", "CR4R", "NC=O",
-                "CR", "CONN", "O=CN", "NC=O", "CR", "C=ON", "O=CN", "CR4R", "F", "CR4R", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NC=O", "CR", "CONN", "O=CN", "NC=O", "CR", "C=ON", "O=CN", "CR4R", "F", "CR4R", "NC=O",
+            "CR", "CONN", "O=CN", "NC=O", "CR", "C=ON", "O=CN", "CR4R", "F", "CR4R", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -4813,8 +4990,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 25, SINGLE);
         container.addBond(8, 26, SINGLE);
 
-        String[] expected = {"NR+", "NR+", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NR+", "NR+", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -4873,8 +5052,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 21, SINGLE);
         container.addBond(10, 22, SINGLE);
 
-        String[] expected = {"SO2", "CL", "CR", "CR", "C=OR", "CB", "CB", "CB", "CB", "CB", "CB", "O2S", "O2S", "O=CR",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2", "CL", "CR", "CR", "C=OR", "CB", "CB", "CB", "CB", "CB", "CB", "O2S", "O2S",
+            "O=CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -4952,8 +5133,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 16, SINGLE);
         container.addBond(10, 17, SINGLE);
 
-        String[] expected = {"S", "O=CN", "NC=O", "CB", "CB", "CB", "CB", "CB", "CB", "C=ON", "CR", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "O=CN", "NC=O", "CB", "CB", "CB", "CB", "CB", "CB", "C=ON", "CR", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -4997,15 +5180,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 15, SINGLE);
         container.addBond(12, 14, DOUBLE);
 
-        String[] expected = {"S2CM", "S2CM", "CS2M", "NC=S", "CR", "HNCS", "HC", "HC", "CR", "NC=S", "HC", "HC",
-                "CS2M", "HNCS", "S2CM", "S2CM"};
+        String[] expected = {
+            "S2CM", "S2CM", "CS2M", "NC=S", "CR", "HNCS", "HC", "HC", "CR", "NC=S", "HC", "HC",
+            "CS2M", "HNCS", "S2CM", "S2CM"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for COSWIQ
      *
-     * @cdk.inchi InChI=1S/C11H10N2O/c1-3-10-6-4-9(8-12)5-7-11(13-10)14-2/h3-7H,1H2,2H3/b6-4-,7-5-,9-4+,9-5+,10-6-,11-7+,13-10?,13-11+
+     * @cdk.inchi
+     *     InChI=1S/C11H10N2O/c1-3-10-6-4-9(8-12)5-7-11(13-10)14-2/h3-7H,1H2,2H3/b6-4-,7-5-,9-4+,9-5+,10-6-,11-7+,13-10?,13-11+
      */
     @Test
     public void testCOSWIQ() {
@@ -5059,8 +5245,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 23, SINGLE);
         container.addBond(13, 22, SINGLE);
 
-        String[] expected = {"N=C", "C=N", "C=C", "C=C", "C=C", "C=C", "C=C", "C=C", "OC=N", "CR", "CSP", "NSP", "C=C",
-                "C=C", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "N=C", "C=N", "C=C", "C=C", "C=C", "C=C", "C=C", "C=C", "OC=N", "CR", "CSP", "NSP",
+            "C=C", "C=C", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -5113,8 +5301,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 18, SINGLE);
         container.addBond(9, 19, SINGLE);
 
-        String[] expected = {"NR", "NC=S", "C=SN", "NC=S", "CB", "CB", "CB", "CB", "CB", "CB", "CL", "S=C", "HNR",
-                "HNR", "HNCS", "HNCS", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NR", "NC=S", "C=SN", "NC=S", "CB", "CB", "CB", "CB", "CB", "CB", "CL", "S=C", "HNR",
+            "HNR", "HNCS", "HNCS", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -5156,8 +5346,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 13, SINGLE);
         container.addBond(8, 14, SINGLE);
 
-        String[] expected = {"O2CM", "O2CM", "O=CR", "O=CO", "OC=O", "CO2M", "C=OR", "CR", "CR", "COO", "HOCO", "HC",
-                "HC", "HC", "HC"};
+        String[] expected = {
+            "O2CM", "O2CM", "O=CR", "O=CO", "OC=O", "CO2M", "C=OR", "CR", "CR", "COO", "HOCO", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -5221,8 +5413,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 15, DOUBLE);
         container.addBond(15, 24, SINGLE);
 
-        String[] expected = {"OXN", "OXN", "NPOX", "N2OX", "N=N", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB",
-                "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OXN", "OXN", "NPOX", "N2OX", "N=N", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB",
+            "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -5268,8 +5462,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 15, SINGLE);
         container.addBond(13, 16, SINGLE);
 
-        String[] expected = {"CR", "C=OS", "O=C", "S", "S", "S", "HC", "HC", "HC", "S", "C=OS", "O=C", "S", "CR", "HC",
-                "HC", "HC"};
+        String[] expected = {
+            "CR", "C=OS", "O=C", "S", "S", "S", "HC", "HC", "HC", "S", "C=OS", "O=C", "S", "CR",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -5345,16 +5541,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(22, 30, SINGLE);
         container.addBond(22, 31, SINGLE);
 
-        String[] expected = {"N=C", "C=N", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "C=N", "N=C", "HC", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC"};
+        String[] expected = {
+            "N=C", "C=N", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "C=N", "N=C", "HC", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for COVXIU
      *
-     * @cdk.inchi InChI=1S/C12H14N4O2S/c1-8-7-9(2)15-12(14-8)16-19(17,18)11-5-3-10(13)4-6-11/h3-7H,13H2,1-2H3,(H,14,15,16)
+     * @cdk.inchi
+     *     InChI=1S/C12H14N4O2S/c1-8-7-9(2)15-12(14-8)16-19(17,18)11-5-3-10(13)4-6-11/h3-7H,13H2,1-2H3,(H,14,15,16)
      */
     @Test
     public void testCOVXIU() {
@@ -5427,16 +5626,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(18, 31, SINGLE);
         container.addBond(18, 32, SINGLE);
 
-        String[] expected = {"CB", "CB", "CB", "CB", "CB", "CB", "NC=C", "SO2N", "O2S", "O2S", "NSO2", "CB", "NPYD",
-                "CB", "CB", "CB", "NPYD", "CR", "CR", "HC", "HC", "HC", "HC", "HNCC", "HNCC", "HNSO", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CB", "CB", "CB", "CB", "CB", "CB", "NC=C", "SO2N", "O2S", "O2S", "NSO2", "CB", "NPYD",
+            "CB", "CB", "CB", "NPYD", "CR", "CR", "HC", "HC", "HC", "HC", "HNCC", "HNCC", "HNSO",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for COWTIR
      *
-     * @cdk.inchi InChI=1S/C10H16NO4P/c1-7(2)11-10(16(13,14)15)8-5-3-4-6-9(8)12/h3-7,10-12H,1-2H3,(H2,13,14,15)/t10-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H16NO4P/c1-7(2)11-10(16(13,14)15)8-5-3-4-6-9(8)12/h3-7,10-12H,1-2H3,(H2,13,14,15)/t10-/m1/s1
      */
     @Test
     public void testCOWTIR() {
@@ -5506,9 +5708,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 30, SINGLE);
         container.addBond(15, 31, SINGLE);
 
-        String[] expected = {"PO3", "OPO2", "O2P", "O2P", "OC=C", "NR+", "CR", "CR", "CR", "CR", "CB", "CB", "CB",
-                "CB", "CB", "CB", "HOP", "HC", "HNR+", "HNR+", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOCC", "HC",
-                "HC", "HC", "HC"};
+        String[] expected = {
+            "PO3", "OPO2", "O2P", "O2P", "OC=C", "NR+", "CR", "CR", "CR", "CR", "CB", "CB", "CB",
+            "CB", "CB", "CB", "HOP", "HC", "HNR+", "HNR+", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HOCC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -5567,8 +5771,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 20, SINGLE);
         container.addBond(11, 19, SINGLE);
 
-        String[] expected = {"PO3", "S", "S", "S", "OP", "OPO2", "OPO2", "CR", "CR", "CR", "CR", "CR", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "PO3", "S", "S", "S", "OP", "OPO2", "OPO2", "CR", "CR", "CR", "CR", "CR", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -5610,15 +5816,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(7, 9, SINGLE);
         container.addBond(7, 8, SINGLE);
 
-        String[] expected = {"S", "S=C", "N=C", "NC=N", "NC=N", "CGD", "CSS", "CR", "HC", "HC", "HC", "HNCN", "HNCN",
-                "HNCN", "HNCN"};
+        String[] expected = {
+            "S", "S=C", "N=C", "NC=N", "NC=N", "CGD", "CSS", "CR", "HC", "HC", "HC", "HNCN", "HNCN",
+            "HNCN", "HNCN"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for COYMOS
      *
-     * @cdk.inchi InChI=1S/C10H11N3O2/c11-8(14)10(9(12)15)6-13(10)7-4-2-1-3-5-7/h1-5H,6H2,(H2,11,14)(H2,12,15)/t13-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H11N3O2/c11-8(14)10(9(12)15)6-13(10)7-4-2-1-3-5-7/h1-5H,6H2,(H2,11,14)(H2,12,15)/t13-/m0/s1
      */
     @Test
     public void testCOYMOS() {
@@ -5677,8 +5886,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 24, SINGLE);
         container.addBond(14, 25, SINGLE);
 
-        String[] expected = {"O=CN", "O=CN", "NC=O", "NC=O", "NC=C", "C=ON", "C=ON", "CR3R", "CR3R", "CB", "CB", "CB",
-                "CB", "CB", "CB", "HNCO", "HNCO", "HNCO", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "O=CN", "O=CN", "NC=O", "NC=O", "NC=C", "C=ON", "C=ON", "CR3R", "CR3R", "CB", "CB",
+            "CB", "CB", "CB", "CB", "HNCO", "HNCO", "HNCO", "HNCO", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -5728,15 +5940,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 17, SINGLE);
         container.addBond(10, 11, SINGLE);
 
-        String[] expected = {"NR", "NC=O", "O=CN", "O=CN", "C=ON", "CB", "CB", "CB", "CB", "CB", "CB", "C=ON", "HNR",
-                "HNR", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NR", "NC=O", "O=CN", "O=CN", "C=ON", "CB", "CB", "CB", "CB", "CB", "CB", "C=ON", "HNR",
+            "HNR", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for COYVIV
      *
-     * @cdk.inchi InChI=1S/C9H10N4O2S2/c1-11-17(14,15)7-5-3-2-4-6(7)8-12-13-9(10)16-8/h2-5,11H,1H3,(H2,10,13)
+     * @cdk.inchi
+     *     InChI=1S/C9H10N4O2S2/c1-11-17(14,15)7-5-3-2-4-6(7)8-12-13-9(10)16-8/h2-5,11H,1H3,(H2,10,13)
      */
     @Test
     public void testCOYVIV() {
@@ -5797,15 +6012,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 25, SINGLE);
         container.addBond(16, 26, SINGLE);
 
-        String[] expected = {"STHI", "C5A", "N5B", "N5B", "C5A", "CB", "CB", "CB", "CB", "CB", "CB", "NC=N", "SO2N",
-                "O2S", "O2S", "NSO2", "CR", "HNCN", "HNCN", "HC", "HC", "HC", "HC", "HNSO", "HC", "HC", "HC"};
+        String[] expected = {
+            "STHI", "C5A", "N5B", "N5B", "C5A", "CB", "CB", "CB", "CB", "CB", "CB", "NC=N", "SO2N",
+            "O2S", "O2S", "NSO2", "CR", "HNCN", "HNCN", "HC", "HC", "HC", "HC", "HNSO", "HC", "HC",
+            "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for CUBTUO
      *
-     * @cdk.inchi InChI=1S/C12H14N2/c1-9-4-3-5-11(10(9)2)6-12-7-13-8-14-12/h3-5,7-8H,6H2,1-2H3,(H,13,14)/p+1
+     * @cdk.inchi
+     *     InChI=1S/C12H14N2/c1-9-4-3-5-11(10(9)2)6-12-7-13-8-14-12/h3-5,7-8H,6H2,1-2H3,(H,13,14)/p+1
      */
     @Test
     public void testCUBTUO() {
@@ -5870,15 +6089,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 26, SINGLE);
         container.addBond(13, 27, SINGLE);
 
-        String[] expected = {"NIM+", "NIM+", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "C5", "CIM+", "C5", "CR", "CR",
-                "HC", "HC", "HIM+", "HC", "HIM+", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NIM+", "NIM+", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "C5", "CIM+", "C5", "CR",
+            "CR", "HC", "HC", "HIM+", "HC", "HIM+", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for CUCDAF
      *
-     * @cdk.inchi InChI=1S/C12H12O3/c1-6-4-3-5-7-8(6)12(2,14)11-10(15-11)9(7)13/h3-5,10-11,14H,1-2H3/t10-,11-,12+/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C12H12O3/c1-6-4-3-5-7-8(6)12(2,14)11-10(15-11)9(7)13/h3-5,10-11,14H,1-2H3/t10-,11-,12+/m0/s1
      */
     @Test
     public void testCUCDAF() {
@@ -5940,15 +6163,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 25, SINGLE);
         container.addBond(14, 24, SINGLE);
 
-        String[] expected = {"OR", "OR", "O=CR", "CR", "CR3R", "CR3R", "C=OR", "CB", "CB", "CB", "CB", "CB", "CB",
-                "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HOR", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OR", "OR", "O=CR", "CR", "CR3R", "CR3R", "C=OR", "CB", "CB", "CB", "CB", "CB", "CB",
+            "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HOR", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for CUCHOX
      *
-     * @cdk.inchi InChI=1S/C11H14O4/c1-6(12)10-5-11(10,7(2)13)9(3,15)4-8(10)14/h15H,4-5H2,1-3H3/t9-,10-,11+/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C11H14O4/c1-6(12)10-5-11(10,7(2)13)9(3,15)4-8(10)14/h15H,4-5H2,1-3H3/t9-,10-,11+/m0/s1
      */
     @Test
     public void testCUCHOX() {
@@ -6013,8 +6239,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 27, SINGLE);
         container.addBond(14, 28, SINGLE);
 
-        String[] expected = {"OR", "CR", "O=CR", "C=OR", "O=CR", "CR3R", "CR", "C=OR", "CR", "CR3R", "C=OR", "CR3R",
-                "CR", "O=CR", "CR", "HOR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OR", "CR", "O=CR", "C=OR", "O=CR", "CR3R", "CR", "C=OR", "CR", "CR3R", "C=OR", "CR3R",
+            "CR", "O=CR", "CR", "HOR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -6078,15 +6307,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 23, SINGLE);
         container.addBond(16, 24, SINGLE);
 
-        String[] expected = {"S", "C5A", "C5B", "N5B", "C5A", "NPYL", "CB", "NPYD", "CB", "CB", "CB", "CB", "NO2",
-                "O2N", "O2N", "CR", "OC=C", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOCC"};
+        String[] expected = {
+            "S", "C5A", "C5B", "N5B", "C5A", "NPYL", "CB", "NPYD", "CB", "CB", "CB", "CB", "NO2",
+            "O2N", "O2N", "CR", "OC=C", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOCC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for CUDJAM
      *
-     * @cdk.inchi InChI=1S/C6H10N4O3/c1-3(8-12)6(9-13)10-2-4(10)5(7)11/h4,12-13H,2H2,1H3,(H2,7,11)/b8-3+,9-6-/t4-,10+/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C6H10N4O3/c1-3(8-12)6(9-13)10-2-4(10)5(7)11/h4,12-13H,2H2,1H3,(H2,7,11)/b8-3+,9-6-/t4-,10+/m1/s1
      */
     @Test
     public void testCUDJAM() {
@@ -6138,15 +6370,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 21, SINGLE);
         container.addBond(11, 22, SINGLE);
 
-        String[] expected = {"O=CN", "-O-", "-O-", "NC=N", "N=C", "N=C", "NC=O", "C=N", "C=N", "CR3R", "CR3R", "CR",
-                "C=ON", "HO", "HO", "HNCO", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "O=CN", "-O-", "-O-", "NC=N", "N=C", "N=C", "NC=O", "C=N", "C=N", "CR3R", "CR3R", "CR",
+            "C=ON", "HO", "HO", "HNCO", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for CUDNEU
      *
-     * @cdk.inchi InChI=1S/C10H22O2Si/c1-12-10(13(2,3)4)8-6-5-7-9(10)11/h9,11H,5-8H2,1-4H3/t9-,10+/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H22O2Si/c1-12-10(13(2,3)4)8-6-5-7-9(10)11/h9,11H,5-8H2,1-4H3/t9-,10+/m1/s1
      */
     @Test
     public void testCUDNEU() {
@@ -6222,9 +6457,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 33, SINGLE);
         container.addBond(12, 34, SINGLE);
 
-        String[] expected = {"SI", "OR", "OR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "HOR", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC"};
+        String[] expected = {
+            "SI", "OR", "OR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "HOR",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -6271,8 +6508,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 11, SINGLE);
         container.addBond(10, 12, DOUBLE);
 
-        String[] expected = {"NPYD", "CB", "CB", "CB", "CB", "CB", "OC=C", "C=N", "N=C", "OM2", "NO2", "O2N", "O2N",
-                "HC", "HC", "HC", "HOCC"};
+        String[] expected = {
+            "NPYD", "CB", "CB", "CB", "CB", "CB", "OC=C", "C=N", "N=C", "OM2", "NO2", "O2N", "O2N",
+            "HC", "HC", "HC", "HOCC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -6336,8 +6575,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 17, SINGLE);
         container.addBond(13, 18, SINGLE);
 
-        String[] expected = {"S=C", "NC=S", "N=N", "N=N", "C=SN", "CR", "CR", "CR", "CB", "CB", "CB", "CB", "CB", "CB",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S=C", "NC=S", "N=N", "N=N", "C=SN", "CR", "CR", "CR", "CB", "CB", "CB", "CB", "CB",
+            "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -6372,14 +6613,17 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(4, 5, DOUBLE);
         container.addBond(5, 8, SINGLE);
 
-        String[] expected = {"STHI", "NIM+", "NCN+", "CIM+", "C5B", "C5A", "HIM+", "HC", "HC", "HNN+", "HNN+"};
+        String[] expected = {
+            "STHI", "NIM+", "NCN+", "CIM+", "C5B", "C5A", "HIM+", "HC", "HC", "HNN+", "HNN+"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for CUFFAK
      *
-     * @cdk.inchi InChI=1S/C20H12O5/c21-11-5-7-15-17(9-11)24-18-10-12(22)6-8-16(18)20(15)14-4-2-1-3-13(14)19(23)25-20/h1-10,21-22H
+     * @cdk.inchi
+     *     InChI=1S/C20H12O5/c21-11-5-7-15-17(9-11)24-18-10-12(22)6-8-16(18)20(15)14-4-2-1-3-13(14)19(23)25-20/h1-10,21-22H
      */
     @Test
     public void testCUFFAK() {
@@ -6463,16 +6707,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(34, 35, SINGLE);
         container.addBond(35, 36, DOUBLE);
 
-        String[] expected = {"OC=C", "CB", "OC=C", "CB", "OC=C", "CB", "OC=O", "COO", "O=CO", "HOCC", "CB", "HOCC",
-                "CB", "HC", "CB", "HC", "CB", "HC", "CB", "HC", "CB", "HC", "CR", "HC", "CB", "HC", "CB", "HC", "CB",
-                "HC", "CB", "HC", "CB", "CB", "CB", "CB", "CB"};
+        String[] expected = {
+            "OC=C", "CB", "OC=C", "CB", "OC=C", "CB", "OC=O", "COO", "O=CO", "HOCC", "CB", "HOCC",
+            "CB", "HC", "CB", "HC", "CB", "HC", "CB", "HC", "CB", "HC", "CR", "HC", "CB", "HC",
+            "CB", "HC", "CB", "HC", "CB", "HC", "CB", "CB", "CB", "CB", "CB"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for CUGBEL
      *
-     * @cdk.inchi InChI=1S/C12H14N2O2/c1-2-16-12-10(7-13)8-5-3-4-6-9(8)11(15)14-12/h2-6H2,1H3,(H,14,15)
+     * @cdk.inchi
+     *     InChI=1S/C12H14N2O2/c1-2-16-12-10(7-13)8-5-3-4-6-9(8)11(15)14-12/h2-6H2,1H3,(H,14,15)
      */
     @Test
     public void testCUGBEL() {
@@ -6539,16 +6786,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 29, SINGLE);
         container.addBond(13, 14, TRIPLE);
 
-        String[] expected = {"C=C", "C=C", "C=C", "CR", "CR", "CR", "CR", "C=C", "C=ON", "NC=O", "OC=C", "CR", "CR",
-                "CSP", "NSP", "O=CN", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNCO", "HC", "HC", "HC", "HC",
-                "HC"};
+        String[] expected = {
+            "C=C", "C=C", "C=C", "CR", "CR", "CR", "CR", "C=C", "C=ON", "NC=O", "OC=C", "CR", "CR",
+            "CSP", "NSP", "O=CN", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNCO", "HC",
+            "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for CUGGOA
      *
-     * @cdk.inchi InChI=1S/C7H6Cl5NO4/c1-6(10,5(14)15)2-3(8)4(9)7(11,12)13(16)17/h2,4H,1H3,(H,14,15)/b3-2+/t4-,6-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C7H6Cl5NO4/c1-6(10,5(14)15)2-3(8)4(9)7(11,12)13(16)17/h2,4H,1H3,(H,14,15)/b3-2+/t4-,6-/m1/s1
      */
     @Test
     public void testCUGGOA() {
@@ -6599,15 +6849,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 21, SINGLE);
         container.addBond(16, 20, SINGLE);
 
-        String[] expected = {"CL", "CL", "CL", "CL", "CL", "O=CO", "OC=O", "O2N", "O2N", "NO2", "COO", "CR", "C=C",
-                "C=C", "CR", "CR", "CR", "HOCO", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "CL", "CL", "CL", "CL", "O=CO", "OC=O", "O2N", "O2N", "NO2", "COO", "CR", "C=C",
+            "C=C", "CR", "CR", "CR", "HOCO", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for CUGLOF
      *
-     * @cdk.inchi InChI=1S/C10H9N3O6/c14-11(15)9-3-1-2-4-5(3)6(9)7(4)10(8(2)9,12(16)17)13(18)19/h2-8H,1H2/t2-,3+,4-,5+,6+,7-,8+,9-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H9N3O6/c14-11(15)9-3-1-2-4-5(3)6(9)7(4)10(8(2)9,12(16)17)13(18)19/h2-8H,1H2/t2-,3+,4-,5+,6+,7-,8+,9-/m1/s1
      */
     @Test
     public void testCUGLOF() {
@@ -6673,8 +6926,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 17, SINGLE);
         container.addBond(12, 18, DOUBLE);
 
-        String[] expected = {"CR4R", "CR", "CR", "CR4R", "CR4R", "CR4R", "CR4R", "CR4R", "CR", "CR", "NO2", "NO2",
-                "NO2", "O2N", "O2N", "O2N", "O2N", "O2N", "O2N", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR4R", "CR", "CR", "CR4R", "CR4R", "CR4R", "CR4R", "CR4R", "CR", "CR", "NO2", "NO2",
+            "NO2", "O2N", "O2N", "O2N", "O2N", "O2N", "O2N", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -6733,8 +6989,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 21, SINGLE);
         container.addBond(9, 20, SINGLE);
 
-        String[] expected = {"S", "-O-", "CB", "CB", "CB", "CB", "CR", "CB", "C=N", "CR", "NPD+", "N=C", "HO", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "-O-", "CB", "CB", "CB", "CB", "CR", "CB", "C=N", "CR", "NPD+", "N=C", "HO", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -6792,8 +7050,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 20, SINGLE);
         container.addBond(12, 21, SINGLE);
 
-        String[] expected = {"SO2N", "NSO2", "O2S", "O2S", "OR", "CR3R", "CB", "CB", "CB", "CB", "CB", "CB", "CR",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2N", "NSO2", "O2S", "O2S", "OR", "CR3R", "CB", "CB", "CB", "CB", "CB", "CB", "CR",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -6885,9 +7145,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 37, SINGLE);
         container.addBond(13, 38, SINGLE);
 
-        String[] expected = {"CR", "CR", "CR", "CR", "CR", "NR", "CR", "CR", "N3OX", "CR", "CR", "CR", "CR", "CR",
-                "OXN", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR", "CR", "CR", "CR", "CR", "NR", "CR", "CR", "N3OX", "CR", "CR", "CR", "CR", "CR",
+            "OXN", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -6958,15 +7220,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 27, SINGLE);
         container.addBond(12, 28, SINGLE);
 
-        String[] expected = {"PO3", "CL", "OPO2", "OP", "OPO2", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "PO3", "CL", "OPO2", "OP", "OPO2", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for CUNVAI
      *
-     * @cdk.inchi InChI=1S/C10H10N4O5/c1-6(7(2)15)11-12-9-4-3-8(13(16)17)5-10(9)14(18)19/h3-5,12H,1-2H3/b11-6+
+     * @cdk.inchi
+     *     InChI=1S/C10H10N4O5/c1-6(7(2)15)11-12-9-4-3-8(13(16)17)5-10(9)14(18)19/h3-5,12H,1-2H3/b11-6+
      */
     @Test
     public void testCUNVAI() {
@@ -7030,15 +7295,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(18, 27, SINGLE);
         container.addBond(18, 26, SINGLE);
 
-        String[] expected = {"CB", "CB", "CB", "CB", "CB", "CB", "C=N", "C=OR", "O=CR", "NO2", "NO2", "NC=C", "N=C",
-                "O2N", "O2N", "O2N", "O2N", "CR", "CR", "HC", "HC", "HC", "HNCC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CB", "CB", "CB", "CB", "CB", "CB", "C=N", "C=OR", "O=CR", "NO2", "NO2", "NC=C", "N=C",
+            "O2N", "O2N", "O2N", "O2N", "CR", "CR", "HC", "HC", "HC", "HNCC", "HC", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for CUNVEM
      *
-     * @cdk.inchi InChI=1S/C10H14ClNO2S/c1-8(2,3)15-9(6-12)5-10(9,11)7(13)14-4/h5H2,1-4H3/t9-,10+/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H14ClNO2S/c1-8(2,3)15-9(6-12)5-10(9,11)7(13)14-4/h5H2,1-4H3/t9-,10+/m1/s1
      */
     @Test
     public void testCUNVEM() {
@@ -7102,15 +7371,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 25, SINGLE);
         container.addBond(14, 26, SINGLE);
 
-        String[] expected = {"CL", "S", "OC=O", "O=CO", "NSP", "CR3R", "CR3R", "CR3R", "CSP", "COO", "CR", "CR", "CR",
-                "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "S", "OC=O", "O=CO", "NSP", "CR3R", "CR3R", "CR3R", "CSP", "COO", "CR", "CR",
+            "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for CURZIY
      *
-     * @cdk.inchi InChI=1S/C8H12O3S/c1-2-5-4-3-6(12(5,9)10)8-7(4)11-8/h4-8H,2-3H2,1H3/t4-,5-,6-,7-,8+/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C8H12O3S/c1-2-5-4-3-6(12(5,9)10)8-7(4)11-8/h4-8H,2-3H2,1H3/t4-,5-,6-,7-,8+/m1/s1
      */
     @Test
     public void testCURZIY() {
@@ -7166,15 +7439,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 22, SINGLE);
         container.addBond(11, 23, SINGLE);
 
-        String[] expected = {"SO2", "OR", "O2S", "O2S", "CR", "CR", "CR", "CR3R", "CR3R", "CR", "CR", "CR", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2", "OR", "O2S", "O2S", "CR", "CR", "CR", "CR3R", "CR3R", "CR", "CR", "CR", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for CUVFOO
      *
-     * @cdk.inchi InChI=1S/C6H11NO4S2/c7-4(6(10)11)3-13-12-2-1-5(8)9/h4H,1-3,7H2,(H,8,9)(H,10,11)/t4-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C6H11NO4S2/c7-4(6(10)11)3-13-12-2-1-5(8)9/h4H,1-3,7H2,(H,8,9)(H,10,11)/t4-/m0/s1
      */
     @Test
     public void testCUVFOO() {
@@ -7227,15 +7503,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 12, SINGLE);
         container.addBond(12, 23, SINGLE);
 
-        String[] expected = {"O2CM", "O2CM", "CO2M", "CR", "NR+", "CR", "S", "S", "CR", "CR", "COO", "O=CO", "OC=O",
-                "HC", "HNR+", "HNR+", "HNR+", "HC", "HC", "HC", "HC", "HC", "HC", "HOCO"};
+        String[] expected = {
+            "O2CM", "O2CM", "CO2M", "CR", "NR+", "CR", "S", "S", "CR", "CR", "COO", "O=CO", "OC=O",
+            "HC", "HNR+", "HNR+", "HNR+", "HC", "HC", "HC", "HC", "HC", "HC", "HOCO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for CUVGAB
      *
-     * @cdk.inchi InChI=1S/C6H13O4P/c1-5(7)3-4-6(2,8)11(5,9)10/h7-8H,3-4H2,1-2H3,(H,9,10)/t5-,6-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C6H13O4P/c1-5(7)3-4-6(2,8)11(5,9)10/h7-8H,3-4H2,1-2H3,(H,9,10)/t5-,6-/m0/s1
      */
     @Test
     public void testCUVGAB() {
@@ -7289,8 +7568,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 22, SINGLE);
         container.addBond(10, 21, SINGLE);
 
-        String[] expected = {"PO2", "OPO", "OP", "OR", "OR", "CR", "CR", "CR", "CR", "CR", "CR", "HOP", "HOR", "HOR",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "PO2", "OPO", "OP", "OR", "OR", "CR", "CR", "CR", "CR", "CR", "CR", "HOP", "HOR", "HOR",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -7392,8 +7673,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 24, SINGLE);
         container.addBond(15, 27, SINGLE);
 
-        String[] expected = {"OFUR", "O=CR", "OC=C", "OC=C", "C5A", "C5B", "CB", "CB", "CB", "CB", "C5A", "C5B",
-                "C=OR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OFUR", "O=CR", "OC=C", "OC=C", "C5A", "C5B", "CB", "CB", "CB", "CB", "C5A", "C5B",
+            "C=OR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -7422,7 +7706,8 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
     /**
      * Generated test for CYGUAN01
      *
-     * @cdk.inchi InChI=1S/C11H14ClN5/c1-11(2)16-9(13)15-10(14)17(11)8-5-3-7(12)4-6-8/h3-6H,1-2H3,(H4,13,14,15,16)/p+1
+     * @cdk.inchi
+     *     InChI=1S/C11H14ClN5/c1-11(2)16-9(13)15-10(14)17(11)8-5-3-7(12)4-6-8/h3-6H,1-2H3,(H4,13,14,15,16)/p+1
      */
     @Test
     public void testCYGUAN01() {
@@ -7493,16 +7778,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 16, SINGLE);
         container.addBond(16, 31, SINGLE);
 
-        String[] expected = {"CL", "NCN+", "CR", "NC=N", "CGD", "N=C", "CNN+", "CR", "CR", "NC=N", "NCN+", "CB", "CB",
-                "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HNCN", "HNCN", "HNCN", "HNN+", "HNN+",
-                "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "NCN+", "CR", "NC=N", "CGD", "N=C", "CNN+", "CR", "CR", "NC=N", "NCN+", "CB",
+            "CB", "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HNCN", "HNCN",
+            "HNCN", "HNN+", "HNN+", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DABHAP
      *
-     * @cdk.inchi InChI=1S/C12H14N4O3S/c1-8-14-11(7-12(15-8)19-2)16-20(17,18)10-5-3-9(13)4-6-10/h3-7H,13H2,1-2H3,(H,14,15,16)
+     * @cdk.inchi
+     *     InChI=1S/C12H14N4O3S/c1-8-14-11(7-12(15-8)19-2)16-20(17,18)10-5-3-9(13)4-6-10/h3-7H,13H2,1-2H3,(H,14,15,16)
      */
     @Test
     public void testDABHAP() {
@@ -7577,9 +7865,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(19, 32, SINGLE);
         container.addBond(19, 33, SINGLE);
 
-        String[] expected = {"CB", "CB", "CB", "CB", "CB", "CB", "NC=C", "SO2N", "O2S", "O2S", "N=C", "C=N", "C=C",
-                "C=C", "N=C", "C=N", "NC=N", "OC=C", "CR", "CR", "HC", "HC", "HC", "HC", "HNCC", "HNCC", "HC", "HNCN",
-                "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CB", "CB", "CB", "CB", "CB", "CB", "NC=C", "SO2N", "O2S", "O2S", "N=C", "C=N", "C=C",
+            "C=C", "N=C", "C=N", "NC=N", "OC=C", "CR", "CR", "HC", "HC", "HC", "HC", "HNCC", "HNCC",
+            "HC", "HNCN", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -7634,15 +7924,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 18, SINGLE);
         container.addBond(13, 19, SINGLE);
 
-        String[] expected = {"CR3R", "CR", "CR3R", "F", "F", "HC", "HC", "CR3R", "CR3R", "HC", "CR", "HC", "CR3R",
-                "CR3R", "HC", "HC", "HC", "HC", "F", "F"};
+        String[] expected = {
+            "CR3R", "CR", "CR3R", "F", "F", "HC", "HC", "CR3R", "CR3R", "HC", "CR", "HC", "CR3R",
+            "CR3R", "HC", "HC", "HC", "HC", "F", "F"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DACSAB
      *
-     * @cdk.inchi InChI=1S/C11H15FNO2P/c1-10(11-6-3-2-4-7-11)13-8-5-9-15-16(13,12)14/h2-4,6-7,10H,5,8-9H2,1H3/t10-,16+/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C11H15FNO2P/c1-10(11-6-3-2-4-7-11)13-8-5-9-15-16(13,12)14/h2-4,6-7,10H,5,8-9H2,1H3/t10-,16+/m0/s1
      */
     @Test
     public void testDACSAB() {
@@ -7711,8 +8004,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 29, SINGLE);
         container.addBond(15, 30, SINGLE);
 
-        String[] expected = {"F", "OP", "OPO", "PO2", "NR", "CR", "CR", "CR", "CR", "CR", "CB", "CB", "CB", "CB", "CB",
-                "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "F", "OP", "OPO", "PO2", "NR", "CR", "CR", "CR", "CR", "CR", "CB", "CB", "CB", "CB",
+            "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -7795,16 +8091,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(25, 33, SINGLE);
         container.addBond(25, 34, SINGLE);
 
-        String[] expected = {"S-P", "PTET", "NR", "CR4R", "CR4R", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "CR4R", "CR", "HC", "CR", "CR", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S-P", "PTET", "NR", "CR4R", "CR4R", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "CR4R", "CR", "HC", "CR", "CR", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DADDAN
      *
-     * @cdk.inchi InChI=1S/C12H15NO4/c14-10-1-2-11(15)17-9-4-6-13-5-3-8(7-16-10)12(9)13/h3,9,12H,1-2,4-7H2/t9-,12-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C12H15NO4/c14-10-1-2-11(15)17-9-4-6-13-5-3-8(7-16-10)12(9)13/h3,9,12H,1-2,4-7H2/t9-,12-/m1/s1
      */
     @Test
     public void testDADDAN() {
@@ -7876,9 +8175,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 30, SINGLE);
         container.addBond(15, 31, SINGLE);
 
-        String[] expected = {"OC=O", "O=CO", "O=CO", "OC=O", "NR", "C=C", "C=C", "CR", "CR", "CR", "CR", "CR", "CR",
-                "COO", "CR", "CR", "COO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC"};
+        String[] expected = {
+            "OC=O", "O=CO", "O=CO", "OC=O", "NR", "C=C", "C=C", "CR", "CR", "CR", "CR", "CR", "CR",
+            "COO", "CR", "CR", "COO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -7929,8 +8230,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 14, SINGLE);
         container.addBond(10, 15, SINGLE);
 
-        String[] expected = {"O=CN", "O=CR", "NC=O", "NC=C", "C=ON", "C=C", "C=C", "C=C", "C=OR", "CR", "C=C", "HNCO",
-                "HNCC", "HNCC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "O=CN", "O=CR", "NC=O", "NC=C", "C=ON", "C=C", "C=C", "C=C", "C=OR", "CR", "C=C",
+            "HNCO", "HNCC", "HNCC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -7981,8 +8284,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 12, SINGLE);
         container.addBond(10, 11, SINGLE);
 
-        String[] expected = {"OC=C", "C=N", "C=C", "C=C", "C=C", "N=C", "NC=C", "C=OR", "O=CR", "C=C", "CR", "HC",
-                "HC", "HC", "HNCC", "HNCC", "HC", "HC", "HN=C"};
+        String[] expected = {
+            "OC=C", "C=N", "C=C", "C=C", "C=C", "N=C", "NC=C", "C=OR", "O=CR", "C=C", "CR", "HC",
+            "HC", "HC", "HNCC", "HNCC", "HC", "HC", "HN=C"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -8039,8 +8344,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 10, SINGLE);
         container.addBond(10, 21, SINGLE);
 
-        String[] expected = {"CB", "CB", "CB", "CB", "CB", "CB", "CR", "CR", "N=N", "N=N", "NN=N", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNNN"};
+        String[] expected = {
+            "CB", "CB", "CB", "CB", "CB", "CB", "CR", "CR", "N=N", "N=N", "NN=N", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNNN"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -8075,7 +8382,9 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(6, 10, SINGLE);
         container.addBond(7, 8, SINGLE);
 
-        String[] expected = {"OFUR", "O2N", "O2N", "N5A", "N5A", "NO2", "NC=N", "C5B", "C5B", "HNCN", "HNCN"};
+        String[] expected = {
+            "OFUR", "O2N", "O2N", "N5A", "N5A", "NO2", "NC=N", "C5B", "C5B", "HNCN", "HNCN"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -8139,8 +8448,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 24, SINGLE);
         container.addBond(13, 25, SINGLE);
 
-        String[] expected = {"SO2N", "SO2N", "OR", "O2S", "OR", "O2S", "O2S", "O2S", "NSO2", "NSO2", "CR", "CR", "CR",
-                "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2N", "SO2N", "OR", "O2S", "OR", "O2S", "O2S", "O2S", "NSO2", "NSO2", "CR", "CR",
+            "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -8199,8 +8510,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 21, SINGLE);
         container.addBond(12, 22, SINGLE);
 
-        String[] expected = {"-O-", "O=CN", "O=CN", "NC=O", "NC=O", "C=C", "C=C", "C=C", "C=C", "C=ON", "C=ON", "CR",
-                "CR", "HC", "HC", "HC", "HO", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "-O-", "O=CN", "O=CN", "NC=O", "NC=O", "C=C", "C=C", "C=C", "C=C", "C=ON", "C=ON", "CR",
+            "CR", "HC", "HC", "HC", "HO", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -8264,15 +8577,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(19, 24, SINGLE);
         container.addBond(19, 25, SINGLE);
 
-        String[] expected = {"SI", "CL", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "CR", "SI",
-                "HC", "HC", "CL", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SI", "CL", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "CR",
+            "SI", "HC", "HC", "CL", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DAJXER
      *
-     * @cdk.inchi InChI=1S/C11H14N4O2/c1-11-7-6-8(11)15(10(17)13-9(11)16)4-2-3-14(6)5-12-7/h5-8H,2-4H2,1H3,(H,13,16,17)/t6-,7+,8-,11+/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C11H14N4O2/c1-11-7-6-8(11)15(10(17)13-9(11)16)4-2-3-14(6)5-12-7/h5-8H,2-4H2,1H3,(H,13,16,17)/t6-,7+,8-,11+/m0/s1
      */
     @Test
     public void testDAJXER() {
@@ -8343,16 +8659,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 29, SINGLE);
         container.addBond(16, 30, SINGLE);
 
-        String[] expected = {"NC=O", "CONN", "O=CN", "NC=O", "C=ON", "O=CN", "CR4R", "CR4R", "CR", "NC=N", "C=N",
-                "N=C", "CR4R", "CR4R", "CR", "CR", "CR", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NC=O", "CONN", "O=CN", "NC=O", "C=ON", "O=CN", "CR4R", "CR4R", "CR", "NC=N", "C=N",
+            "N=C", "CR4R", "CR4R", "CR", "CR", "CR", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DAKBAS
      *
-     * @cdk.inchi InChI=1S/C15H13N3O3S/c1-8-13(9(2)19)14(11(7-16)15(22)17-8)10-5-3-4-6-12(10)18(20)21/h3-6,14,17,22H,1-2H3/p-1/t14-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C15H13N3O3S/c1-8-13(9(2)19)14(11(7-16)15(22)17-8)10-5-3-4-6-12(10)18(20)21/h3-6,14,17,22H,1-2H3/p-1/t14-/m1/s1
      */
     @Test
     public void testDAKBAS() {
@@ -8427,9 +8746,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(21, 32, SINGLE);
         container.addBond(21, 31, SINGLE);
 
-        String[] expected = {"SM", "O=CR", "O2N", "O2N", "NC=C", "NSP", "NO2", "C=C", "C=C", "C=C", "CR", "C=C", "CSP",
-                "CR", "CB", "CB", "CB", "CB", "CB", "CB", "C=OR", "CR", "HNCC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SM", "O=CR", "O2N", "O2N", "NC=C", "NSP", "NO2", "C=C", "C=C", "C=C", "CR", "C=C",
+            "CSP", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "C=OR", "CR", "HNCC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -8484,15 +8805,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 14, DOUBLE);
         container.addBond(14, 15, DOUBLE);
 
-        String[] expected = {"N5B", "N5B", "N5A", "NPYL", "N=C", "C=N", "CB", "CB", "C5A", "CB", "CB", "CB", "CB",
-                "N=N", "=N=", "NAZT", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "N5B", "N5B", "N5A", "NPYL", "N=C", "C=N", "CB", "CB", "C5A", "CB", "CB", "CB", "CB",
+            "N=N", "=N=", "NAZT", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DAKDOI
      *
-     * @cdk.inchi InChI=1S/C16H11ClN4O3S/c17-8-1-3-10-11(5-8)13(7-15(22)23)21(19-16(10)24)9-2-4-14-12(6-9)18-20-25-14/h1-6,13H,7H2,(H,19,24)(H,22,23)/t13-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C16H11ClN4O3S/c17-8-1-3-10-11(5-8)13(7-15(22)23)21(19-16(10)24)9-2-4-14-12(6-9)18-20-25-14/h1-6,13H,7H2,(H,19,24)(H,22,23)/t13-/m0/s1
      */
     @Test
     public void testDAKDOI() {
@@ -8573,9 +8897,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(20, 24, SINGLE);
         container.addBond(23, 35, SINGLE);
 
-        String[] expected = {"C=ON", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "CR", "COO", "CB", "CB", "CB", "C5A",
-                "C5B", "CB", "CL", "NC=O", "NC=C", "N5B", "N5A", "O=CN", "O=CO", "OC=O", "STHI", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HNCO", "HOCO"};
+        String[] expected = {
+            "C=ON", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "CR", "COO", "CB", "CB", "CB", "C5A",
+            "C5B", "CB", "CL", "NC=O", "NC=C", "N5B", "N5A", "O=CN", "O=CO", "OC=O", "STHI", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNCO", "HOCO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -8623,8 +8949,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 15, SINGLE);
         container.addBond(12, 16, SINGLE);
 
-        String[] expected = {"SI", "S", "S", "CR", "CR", "HC", "HC", "HC", "HC", "S", "S", "CR", "CR", "HC", "HC",
-                "HC", "HC"};
+        String[] expected = {
+            "SI", "S", "S", "CR", "CR", "HC", "HC", "HC", "HC", "S", "S", "CR", "CR", "HC", "HC",
+            "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -8696,15 +9024,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 16, DOUBLE);
         container.addBond(16, 24, SINGLE);
 
-        String[] expected = {"SO2", "O2S", "O2S", "NC=C", "NC=C", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB",
-                "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNCC", "HNCC", "HNCC", "HNCC"};
+        String[] expected = {
+            "SO2", "O2S", "O2S", "NC=C", "NC=C", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB",
+            "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNCC", "HNCC",
+            "HNCC", "HNCC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DARDEF
      *
-     * @cdk.inchi InChI=1S/C10H14N4S2/c1-6-8(13-5-12-6)9-14-7(3-15-9)4-16-10(14)11-2/h5,7,9H,3-4H2,1-2H3,(H,12,13)/b11-10-/t7-,9-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H14N4S2/c1-6-8(13-5-12-6)9-14-7(3-15-9)4-16-10(14)11-2/h5,7,9H,3-4H2,1-2H3,(H,12,13)/b11-10-/t7-,9-/m0/s1
      */
     @Test
     public void testDARDEF() {
@@ -8772,8 +9104,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 28, SINGLE);
         container.addBond(15, 29, SINGLE);
 
-        String[] expected = {"CR", "S", "C=N", "NC=N", "CR", "S", "CR", "CR", "N=C", "CR", "C5B", "C5A", "NPYL", "C5A",
-                "N5B", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HPYL", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR", "S", "C=N", "NC=N", "CR", "S", "CR", "CR", "N=C", "CR", "C5B", "C5A", "NPYL",
+            "C5A", "N5B", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HPYL", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -8863,9 +9198,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 36, SINGLE);
         container.addBond(13, 35, SINGLE);
 
-        String[] expected = {"-P=C", "SI", "NC=P", "NC=P", "CR", "CR", "CR", "C=P", "CR", "CR", "CR", "CR", "CR", "CR",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "-P=C", "SI", "NC=P", "NC=P", "CR", "CR", "CR", "C=P", "CR", "CR", "CR", "CR", "CR",
+            "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -8931,8 +9268,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 24, SINGLE);
         container.addBond(13, 25, SINGLE);
 
-        String[] expected = {"S=C", "NC=S", "NC=C", "C=SN", "C=C", "C=C", "CR", "CR", "CB", "CB", "CB", "CB", "CB",
-                "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S=C", "NC=S", "NC=C", "C=SN", "C=C", "C=C", "CR", "CR", "CB", "CB", "CB", "CB", "CB",
+            "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -8994,15 +9333,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 17, SINGLE);
         container.addBond(12, 19, SINGLE);
 
-        String[] expected = {"N=N", "N=N", "NN=N", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "CR", "OR", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HOR", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "N=N", "N=N", "NN=N", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "CR", "OR", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HOR", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DAVWEC
      *
-     * @cdk.inchi InChI=1S/C9H9Br2N3O7/c1-7(12(16)17)4(10)5(11)8(2,13(18)19)9(3,6(7)15)14(20)21/h1-3H3/t7-,8+,9-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C9H9Br2N3O7/c1-7(12(16)17)4(10)5(11)8(2,13(18)19)9(3,6(7)15)14(20)21/h1-3H3/t7-,8+,9-/m1/s1
      */
     @Test
     public void testDAVWEC() {
@@ -9068,15 +9410,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 19, SINGLE);
         container.addBond(13, 20, DOUBLE);
 
-        String[] expected = {"BR", "BR", "C=OR", "CR", "C=C", "C=C", "CR", "CR", "CR", "CR", "CR", "NO2", "NO2", "NO2",
-                "O=CR", "O2N", "O2N", "O2N", "O2N", "O2N", "O2N", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "BR", "BR", "C=OR", "CR", "C=C", "C=C", "CR", "CR", "CR", "CR", "CR", "NO2", "NO2",
+            "NO2", "O=CR", "O2N", "O2N", "O2N", "O2N", "O2N", "O2N", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DAVXED
      *
-     * @cdk.inchi InChI=1S/C10H12N4O9/c1-5-6(11(16)17)9(3,13(20)21)10(4,14(22)23)7(15)8(5,2)12(18)19/h1-4H3/t8-,9+,10+/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H12N4O9/c1-5-6(11(16)17)9(3,13(20)21)10(4,14(22)23)7(15)8(5,2)12(18)19/h1-4H3/t8-,9+,10+/m0/s1
      */
     @Test
     public void testDAVXED() {
@@ -9152,9 +9498,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 21, SINGLE);
         container.addBond(13, 22, DOUBLE);
 
-        String[] expected = {"C=OR", "CR", "C=C", "C=C", "CR", "CR", "CR", "CR", "CR", "CR", "NO2", "NO2", "NO2",
-                "NO2", "O=CR", "O2N", "O2N", "O2N", "O2N", "O2N", "O2N", "O2N", "O2N", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "C=OR", "CR", "C=C", "C=C", "CR", "CR", "CR", "CR", "CR", "CR", "NO2", "NO2", "NO2",
+            "NO2", "O=CR", "O2N", "O2N", "O2N", "O2N", "O2N", "O2N", "O2N", "O2N", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -9209,8 +9557,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 19, SINGLE);
         container.addBond(8, 18, SINGLE);
 
-        String[] expected = {"CE4R", "CE4R", "CR4R", "CR4R", "NC=C", "CR", "N2OX", "N=N", "CR", "OXN", "F", "F", "F",
-                "F", "HNCC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CE4R", "CE4R", "CR4R", "CR4R", "NC=C", "CR", "N2OX", "N=N", "CR", "OXN", "F", "F", "F",
+            "F", "HNCC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -9258,8 +9608,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 16, SINGLE);
         container.addBond(9, 10, DOUBLE);
 
-        String[] expected = {"CL", "OC=O", "COO", "C=C", "C=C", "CB", "CB", "CB", "CB", "CB", "CB", "O=CO", "HC", "HC",
-                "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "OC=O", "COO", "C=C", "C=C", "CB", "CB", "CB", "CB", "CB", "CB", "O=CO", "HC",
+            "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -9327,8 +9679,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 25, SINGLE);
         container.addBond(14, 26, SINGLE);
 
-        String[] expected = {"PO4", "PO4", "OPO3", "OPO3", "OPO3", "OP", "CR", "CR", "CR", "OPO3", "OPO3", "OP", "CR",
-                "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "PO4", "PO4", "OPO3", "OPO3", "OPO3", "OP", "CR", "CR", "CR", "OPO3", "OPO3", "OP",
+            "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -9398,8 +9752,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 25, SINGLE);
         container.addBond(14, 26, SINGLE);
 
-        String[] expected = {"C=OR", "O=CR", "CR3R", "CR3R", "CR3R", "C=OR", "O=CR", "CR3R", "CR3R", "CR3R", "C=OR",
-                "O=CR", "CR3R", "CR3R", "CR3R", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "C=OR", "O=CR", "CR3R", "CR3R", "CR3R", "C=OR", "O=CR", "CR3R", "CR3R", "CR3R", "C=OR",
+            "O=CR", "CR3R", "CR3R", "CR3R", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -9433,14 +9790,17 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(6, 7, SINGLE);
         container.addBond(6, 10, SINGLE);
 
-        String[] expected = {"O=CO", "OC=O", "O2CM", "O2CM", "COO", "C=C", "C=C", "CO2M", "HOCO", "HC", "HC"};
+        String[] expected = {
+            "O=CO", "OC=O", "O2CM", "O2CM", "COO", "C=C", "C=C", "CO2M", "HOCO", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DECJAW
      *
-     * @cdk.inchi InChI=1S/C7H8N2O4/c10-6-3-1-2-8-4(7(11)12)5(3)13-9-6/h4,8H,1-2H2,(H,9,10)(H,11,12)/t4-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C7H8N2O4/c10-6-3-1-2-8-4(7(11)12)5(3)13-9-6/h4,8H,1-2H2,(H,9,10)(H,11,12)/t4-/m0/s1
      */
     @Test
     public void testDECJAW() {
@@ -9489,15 +9849,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 11, SINGLE);
         container.addBond(12, 20, SINGLE);
 
-        String[] expected = {"OFUR", "N5A", "C5B", "C5B", "CR", "CR", "NR+", "CR", "C5A", "CO2M", "O2CM", "O2CM",
-                "OC=N", "HC", "HC", "HC", "HC", "HNR+", "HNR+", "HC", "HOCN"};
+        String[] expected = {
+            "OFUR", "N5A", "C5B", "C5B", "CR", "CR", "NR+", "CR", "C5A", "CO2M", "O2CM", "O2CM",
+            "OC=N", "HC", "HC", "HC", "HC", "HNR+", "HNR+", "HC", "HOCN"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DECKUR
      *
-     * @cdk.inchi InChI=1S/C10H15N3O2/c1-12-6-7(9(11)14)10(15)13-5-3-2-4-8(12)13/h6,8H,2-5H2,1H3,(H2,11,14)/t8-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H15N3O2/c1-12-6-7(9(11)14)10(15)13-5-3-2-4-8(12)13/h6,8H,2-5H2,1H3,(H2,11,14)/t8-/m1/s1
      */
     @Test
     public void testDECKUR() {
@@ -9564,9 +9927,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 28, SINGLE);
         container.addBond(14, 29, SINGLE);
 
-        String[] expected = {"NC=C", "C=C", "C=C", "C=ON", "NC=O", "CR", "CR", "CR", "CR", "CR", "C=ON", "O=CN",
-                "NC=O", "O=CN", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNCO", "HNCO", "HC",
-                "HC", "HC"};
+        String[] expected = {
+            "NC=C", "C=C", "C=C", "C=ON", "NC=O", "CR", "CR", "CR", "CR", "CR", "C=ON", "O=CN",
+            "NC=O", "O=CN", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HNCO", "HNCO", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -9632,15 +9997,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 21, SINGLE);
         container.addBond(12, 22, SINGLE);
 
-        String[] expected = {"OFUR", "NIM+", "NCN+", "CIM+", "C5A", "CB", "CB", "CB", "CB", "C5B", "CR", "CR", "CR",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OFUR", "NIM+", "NCN+", "CIM+", "C5A", "CB", "CB", "CB", "CB", "C5B", "CR", "CR", "CR",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DEDCIY
      *
-     * @cdk.inchi InChI=1S/C9H6Cl3NO/c1-9(12)5-2-4(10)3-6(11)7(5)13-8(9)14/h2-3H,1H3,(H,13,14)/t9-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C9H6Cl3NO/c1-9(12)5-2-4(10)3-6(11)7(5)13-8(9)14/h2-3H,1H3,(H,13,14)/t9-/m0/s1
      */
     @Test
     public void testDEDCIY() {
@@ -9687,15 +10055,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 18, SINGLE);
         container.addBond(13, 19, SINGLE);
 
-        String[] expected = {"CL", "CL", "CL", "O=CN", "NC=O", "CB", "CB", "CB", "CB", "CB", "CB", "C=ON", "CR", "CR",
-                "HC", "HC", "HNCO", "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "CL", "CL", "O=CN", "NC=O", "CB", "CB", "CB", "CB", "CB", "CB", "C=ON", "CR",
+            "CR", "HC", "HC", "HNCO", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DEDSIO
      *
-     * @cdk.inchi InChI=1S/C11H14INO3/c1-11(2,3)16-10(15)4-5-13-8(7-12)6-9(13)14/h8H,6-7H2,1-3H3/t8-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C11H14INO3/c1-11(2,3)16-10(15)4-5-13-8(7-12)6-9(13)14/h8H,6-7H2,1-3H3/t8-/m1/s1
      */
     @Test
     public void testDEDSIO() {
@@ -9761,16 +10132,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 28, SINGLE);
         container.addBond(15, 29, SINGLE);
 
-        String[] expected = {"I", "NC=O", "O=CN", "C=ON", "CR4R", "CR4R", "CR", "CSP", "CSP", "COO", "O=CO", "OC=O",
-                "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC"};
+        String[] expected = {
+            "I", "NC=O", "O=CN", "C=ON", "CR4R", "CR4R", "CR", "CSP", "CSP", "COO", "O=CO", "OC=O",
+            "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DEFGIE
      *
-     * @cdk.inchi InChI=1S/C8H10N4O2/c1-12(14)11-10-7-4-2-6(3-5-7)8(9)13/h2-5,10H,1H3,(H2,9,13)/b12-11-
+     * @cdk.inchi
+     *     InChI=1S/C8H10N4O2/c1-12(14)11-10-7-4-2-6(3-5-7)8(9)13/h2-5,10H,1H3,(H2,9,13)/b12-11-
      */
     @Test
     public void testDEFGIE() {
@@ -9824,15 +10198,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 22, SINGLE);
         container.addBond(12, 21, SINGLE);
 
-        String[] expected = {"OXN", "O=CN", "NC=C", "N=N", "N2OX", "NC=O", "CB", "CB", "CB", "CB", "CB", "CB", "CR",
-                "C=ON", "HNCC", "HC", "HC", "HNCO", "HNCO", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OXN", "O=CN", "NC=C", "N=N", "N2OX", "NC=O", "CB", "CB", "CB", "CB", "CB", "CB", "CR",
+            "C=ON", "HNCC", "HC", "HC", "HNCO", "HNCO", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DEFLEF
      *
-     * @cdk.inchi InChI=1S/C8H8N6O8/c1-3(15)9-5-6(12(7(9)17)14(21)22)10(4(2)16)8(18)11(5)13(19)20/h5-6H,1-2H3/t5-,6-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C8H8N6O8/c1-3(15)9-5-6(12(7(9)17)14(21)22)10(4(2)16)8(18)11(5)13(19)20/h5-6H,1-2H3/t5-,6-/m1/s1
      */
     @Test
     public void testDEFLEF() {
@@ -9899,9 +10276,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(20, 25, SINGLE);
         container.addBond(20, 24, SINGLE);
 
-        String[] expected = {"CR", "NC=O", "NO2", "O2N", "O2N", "CONN", "O=CN", "NC=O", "C=ON", "CR", "O=CN", "CR",
-                "NC=O", "NO2", "O2N", "O2N", "CONN", "O=CN", "NC=O", "C=ON", "CR", "O=CN", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR", "NC=O", "NO2", "O2N", "O2N", "CONN", "O=CN", "NC=O", "C=ON", "CR", "O=CN", "CR",
+            "NC=O", "NO2", "O2N", "O2N", "CONN", "O=CN", "NC=O", "C=ON", "CR", "O=CN", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -9950,8 +10329,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 16, SINGLE);
         container.addBond(8, 15, SINGLE);
 
-        String[] expected = {"STHI", "N5A", "NIM+", "NC=N", "NCN+", "C5B", "CIM+", "CR", "CR", "HNCN", "HNN+", "HNN+",
-                "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "STHI", "N5A", "NIM+", "NC=N", "NCN+", "C5B", "CIM+", "CR", "CR", "HNCN", "HNN+",
+            "HNN+", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -10019,8 +10400,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 15, DOUBLE);
         container.addBond(15, 20, SINGLE);
 
-        String[] expected = {"NC=O", "N=N", "N=N", "C=N", "NC=N", "CR", "CR", "N=C", "CONN", "O=CN", "CB", "CB", "CB",
-                "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NC=O", "N=N", "N=N", "C=N", "NC=N", "CR", "CR", "N=C", "CONN", "O=CN", "CB", "CB",
+            "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -10096,9 +10479,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 22, SINGLE);
         container.addBond(16, 21, SINGLE);
 
-        String[] expected = {"N=N", "N+=N", "CONN", "O=CN", "N=C", "C=N", "NC=N", "CR", "CR", "NC=C", "CB", "CB", "CB",
-                "CB", "CB", "CB", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HNCC"};
+        String[] expected = {
+            "N=N", "N+=N", "CONN", "O=CN", "N=C", "C=N", "NC=N", "CR", "CR", "NC=C", "CB", "CB",
+            "CB", "CB", "CB", "CB", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HNCC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -10147,8 +10532,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 16, SINGLE);
         container.addBond(8, 17, SINGLE);
 
-        String[] expected = {"S=C", "S", "NC=C", "CSS", "C=C", "C=C", "CR", "CR", "CR", "HS", "HNCC", "HNCC", "HC",
-                "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S=C", "S", "NC=C", "CSS", "C=C", "C=C", "CR", "CR", "CR", "HS", "HNCC", "HNCC", "HC",
+            "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -10188,15 +10575,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(5, 12, SINGLE);
         container.addBond(5, 11, SINGLE);
 
-        String[] expected = {"CL", "NCN+", "NCN+", "CNN+", "CR", "CR", "HNN+", "HNN+", "HC", "HC", "HC", "HC", "HC",
-                "HC"};
+        String[] expected = {
+            "CL", "NCN+", "NCN+", "CNN+", "CR", "CR", "HNN+", "HNN+", "HC", "HC", "HC", "HC", "HC",
+            "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DEGRIQ
      *
-     * @cdk.inchi InChI=1S/C17H18N2/c1-12-3-5-16-14(7-12)9-18-11-19(16)10-15-8-13(2)4-6-17(15)18/h3-8H,9-11H2,1-2H3
+     * @cdk.inchi
+     *     InChI=1S/C17H18N2/c1-12-3-5-16-14(7-12)9-18-11-19(16)10-15-8-13(2)4-6-17(15)18/h3-8H,9-11H2,1-2H3
      */
     @Test
     public void testDEGRIQ() {
@@ -10279,16 +10669,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 35, SINGLE);
         container.addBond(16, 36, SINGLE);
 
-        String[] expected = {"CB", "CB", "CB", "CB", "CB", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "CB", "CR",
-                "CR", "CR", "NC=C", "NC=C", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CB", "CB", "CB", "CB", "CB", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "CB",
+            "CR", "CR", "CR", "NC=C", "NC=C", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DEKRUG
      *
-     * @cdk.inchi InChI=1S/C6H5N3O5/c1-9-4(12)7-2(10)6(9)3(11)8-5(13)14-6/h1H3,(H2,7,8,10,11,12,13)/p-1/t6-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C6H5N3O5/c1-9-4(12)7-2(10)6(9)3(11)8-5(13)14-6/h1H3,(H2,7,8,10,11,12,13)/p-1/t6-/m1/s1
      */
     @Test
     public void testDEKRUG() {
@@ -10331,15 +10724,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 13, SINGLE);
         container.addBond(11, 12, DOUBLE);
 
-        String[] expected = {"NC=O", "CR", "CONN", "O=CN", "NC=O", "C=ON", "O=CN", "CR", "C=ON", "O=CN", "NM", "C=ON",
-                "O=CN", "OC=O", "HC", "HC", "HC", "HNCO"};
+        String[] expected = {
+            "NC=O", "CR", "CONN", "O=CN", "NC=O", "C=ON", "O=CN", "CR", "C=ON", "O=CN", "NM",
+            "C=ON", "O=CN", "OC=O", "HC", "HC", "HC", "HNCO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DEMBIG
      *
-     * @cdk.inchi InChI=1S/C7H7ClN6O2/c8-1-2-14-7(16)13-3-10-4(5(9)15)6(13)11-12-14/h3H,1-2H2,(H2,9,15)
+     * @cdk.inchi
+     *     InChI=1S/C7H7ClN6O2/c8-1-2-14-7(16)13-3-10-4(5(9)15)6(13)11-12-14/h3H,1-2H2,(H2,9,15)
      */
     @Test
     public void testDEMBIG() {
@@ -10392,8 +10788,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 21, SINGLE);
         container.addBond(14, 22, SINGLE);
 
-        String[] expected = {"N=N", "N=N", "NC=O", "CONN", "NPYL", "C5A", "N5B", "C5B", "C5A", "CR", "CR", "CL",
-                "O=CN", "C=ON", "NC=O", "O=CN", "HC", "HC", "HC", "HC", "HC", "HNCO", "HNCO"};
+        String[] expected = {
+            "N=N", "N=N", "NC=O", "CONN", "NPYL", "C5A", "N5B", "C5B", "C5A", "CR", "CR", "CL",
+            "O=CN", "C=ON", "NC=O", "O=CN", "HC", "HC", "HC", "HC", "HC", "HNCO", "HNCO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -10446,15 +10844,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 18, SINGLE);
         container.addBond(12, 13, DOUBLE);
 
-        String[] expected = {"S", "CB", "NPYD", "CB", "CB", "NPYD", "CB", "OC=C", "CB", "CB", "CB", "CB", "NPYD", "CB",
-                "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "CB", "NPYD", "CB", "CB", "NPYD", "CB", "OC=C", "CB", "CB", "CB", "CB", "NPYD",
+            "CB", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DERZUV
      *
-     * @cdk.inchi InChI=1S/C9H13F3N4O2/c1-8(2)6(15(3)4)16(7(18)13-8)14-5(17)9(10,11)12/h1-4H3,(H-,13,14,17,18)
+     * @cdk.inchi
+     *     InChI=1S/C9H13F3N4O2/c1-8(2)6(15(3)4)16(7(18)13-8)14-5(17)9(10,11)12/h1-4H3,(H-,13,14,17,18)
      */
     @Test
     public void testDERZUV() {
@@ -10522,9 +10923,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(17, 29, SINGLE);
         container.addBond(17, 30, SINGLE);
 
-        String[] expected = {"NCN+", "CONN", "O=CN", "NC=O", "CR", "CNN+", "N=C", "C=N", "OM2", "CR", "F", "F", "F",
-                "CR", "CR", "NCN+", "CR", "CR", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC"};
+        String[] expected = {
+            "NCN+", "CONN", "O=CN", "NC=O", "CR", "CNN+", "N=C", "C=N", "OM2", "CR", "F", "F", "F",
+            "CR", "CR", "NCN+", "CR", "CR", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -10575,8 +10978,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 16, SINGLE);
         container.addBond(10, 17, SINGLE);
 
-        String[] expected = {"STHI", "C5A", "N5B", "C5B", "C5A", "NC=C", "COO", "O=CO", "OC=O", "CR", "CR", "HNCC",
-                "HNCC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "STHI", "C5A", "N5B", "C5B", "C5A", "NC=C", "COO", "O=CO", "OC=O", "CR", "CR", "HNCC",
+            "HNCC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -10613,7 +11018,8 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
     /**
      * Generated test for DEWHOC
      *
-     * @cdk.inchi InChI=1S/C12H10N2O5/c1-2-14-7-4-9-8(18-5-19-9)3-6(7)11(15)10(13-14)12(16)17/h3-4H,2,5H2,1H3,(H,16,17)
+     * @cdk.inchi
+     *     InChI=1S/C12H10N2O5/c1-2-14-7-4-9-8(18-5-19-9)3-6(7)11(15)10(13-14)12(16)17/h3-4H,2,5H2,1H3,(H,16,17)
      */
     @Test
     public void testDEWHOC() {
@@ -10679,8 +11085,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(18, 27, SINGLE);
         container.addBond(18, 26, SINGLE);
 
-        String[] expected = {"NC=C", "N=C", "OC=O", "O=CO", "O=CR", "OC=C", "OC=C", "COO", "C=N", "C=OR", "CB", "CB",
-                "CB", "CR", "CB", "CB", "CB", "CR", "CR", "HOCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NC=C", "N=C", "OC=O", "O=CO", "O=CR", "OC=C", "OC=C", "COO", "C=N", "C=OR", "CB", "CB",
+            "CB", "CR", "CB", "CB", "CB", "CR", "CR", "HOCO", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -10765,16 +11174,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(26, 34, SINGLE);
         container.addBond(26, 35, SINGLE);
 
-        String[] expected = {"SI", "NC=C", "C=C", "C=C", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "C=C", "C=C", "NC=C", "HC", "HC", "SI", "CR", "CR", "CR", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SI", "NC=C", "C=C", "C=C", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "C=C", "C=C", "NC=C", "HC", "HC", "SI", "CR", "CR", "CR", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DEXCIS
      *
-     * @cdk.inchi InChI=1S/C11H13NO2/c1-7(13)9-10(12-11(9)14)8-5-3-2-4-6-8/h2-7,9-10,13H,1H3,(H,12,14)/t7-,9+,10-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C11H13NO2/c1-7(13)9-10(12-11(9)14)8-5-3-2-4-6-8/h2-7,9-10,13H,1H3,(H,12,14)/t7-,9+,10-/m1/s1
      */
     @Test
     public void testDEXCIS() {
@@ -10835,15 +11247,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 13, DOUBLE);
         container.addBond(13, 25, SINGLE);
 
-        String[] expected = {"O=CN", "C=ON", "CR4R", "CR4R", "NC=O", "CR", "CR", "OR", "CB", "CB", "CB", "CB", "CB",
-                "CB", "HC", "HC", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOR"};
+        String[] expected = {
+            "O=CN", "C=ON", "CR4R", "CR4R", "NC=O", "CR", "CR", "OR", "CB", "CB", "CB", "CB", "CB",
+            "CB", "HC", "HC", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DEXGIW
      *
-     * @cdk.inchi InChI=1S/C9H9N3O3/c13-5-10-9(15)6-1-3-12-4-2-7(14)11-8(6)12/h1,3,5H,2,4H2,(H,11,14)(H,10,13,15)
+     * @cdk.inchi
+     *     InChI=1S/C9H9N3O3/c13-5-10-9(15)6-1-3-12-4-2-7(14)11-8(6)12/h1,3,5H,2,4H2,(H,11,14)(H,10,13,15)
      */
     @Test
     public void testDEXGIW() {
@@ -10898,15 +11313,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 14, DOUBLE);
         container.addBond(13, 23, SINGLE);
 
-        String[] expected = {"NC=O", "C=ON", "O=CN", "CR", "CR", "NPYL", "C5A", "C5B", "C5B", "C5A", "C=ON", "O=CN",
-                "NC=O", "C=ON", "O=CN", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HNCO", "HC"};
+        String[] expected = {
+            "NC=O", "C=ON", "O=CN", "CR", "CR", "NPYL", "C5A", "C5B", "C5B", "C5A", "C=ON", "O=CN",
+            "NC=O", "C=ON", "O=CN", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HNCO", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DEZDUH
      *
-     * @cdk.inchi InChI=1S/C8H6F6/c9-5(10)1-3-4-2-6(11,12)7(3,13)8(4,5)14/h3-4H,1-2H2/t3-,4-,7+,8+/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C8H6F6/c9-5(10)1-3-4-2-6(11,12)7(3,13)8(4,5)14/h3-4H,1-2H2/t3-,4-,7+,8+/m1/s1
      */
     @Test
     public void testDEZDUH() {
@@ -10954,15 +11372,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 18, SINGLE);
         container.addBond(12, 19, SINGLE);
 
-        String[] expected = {"F", "F", "F", "F", "F", "F", "CR4R", "CR4R", "CR", "CR", "CR4R", "CR4R", "CR", "CR",
-                "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "F", "F", "F", "F", "F", "F", "CR4R", "CR4R", "CR", "CR", "CR4R", "CR4R", "CR", "CR",
+            "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DEZNIF
      *
-     * @cdk.inchi InChI=1S/C11H13NO2S/c1-15(13,14)11-10-5-3-2-4-9(8-10)6-7-12-11/h2-7,9-10H,8H2,1H3/t9-,10-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C11H13NO2S/c1-15(13,14)11-10-5-3-2-4-9(8-10)6-7-12-11/h2-7,9-10H,8H2,1H3/t9-,10-/m0/s1
      */
     @Test
     public void testDEZNIF() {
@@ -11025,8 +11446,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 24, SINGLE);
         container.addBond(14, 23, SINGLE);
 
-        String[] expected = {"SO2", "O2S", "O2S", "N=C", "C=N", "CR", "C=C", "C=C", "C=C", "C=C", "CR", "C=C", "C=C",
-                "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2", "O2S", "O2S", "N=C", "C=N", "CR", "C=C", "C=C", "C=C", "C=C", "CR", "C=C", "C=C",
+            "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -11076,15 +11499,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 9, SINGLE);
         container.addBond(9, 10, DOUBLE);
 
-        String[] expected = {"NC=O", "C=C", "C=C", "C=C", "C=C", "C=C", "C=C", "CR", "OC=O", "C=ON", "O=CN", "CL",
-                "CL", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NC=O", "C=C", "C=C", "C=C", "C=C", "C=C", "C=C", "CR", "OC=O", "C=ON", "O=CN", "CL",
+            "CL", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DHOADS01
      *
-     * @cdk.inchi InChI=1S/C10H11N5O2/c11-9-8-10(13-4-12-9)15(5-14-8)7-2-1-6(3-16)17-7/h1-2,4-7,16H,3H2,(H2,11,12,13)/t6-,7+/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H11N5O2/c11-9-8-10(13-4-12-9)15(5-14-8)7-2-1-6(3-16)17-7/h1-2,4-7,16H,3H2,(H2,11,12,13)/t6-,7+/m0/s1
      */
     @Test
     public void testDHOADS01() {
@@ -11148,15 +11574,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 19, SINGLE);
         container.addBond(16, 27, SINGLE);
 
-        String[] expected = {"CB", "C5A", "C5B", "CB", "C5A", "CR", "C=C", "C=C", "CR", "CR", "NPYD", "NPYD", "NC=N",
-                "N5B", "NPYL", "OR", "OR", "HC", "HNCN", "HNCN", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOR"};
+        String[] expected = {
+            "CB", "C5A", "C5B", "CB", "C5A", "CR", "C=C", "C=C", "CR", "CR", "NPYD", "NPYD", "NC=N",
+            "N5B", "NPYL", "OR", "OR", "HC", "HNCN", "HNCN", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HOR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DICKIJ
      *
-     * @cdk.inchi InChI=1S/C16H12N2S/c1-2-4-14-12(3-1)9-13(10-18-7-6-17-11-18)15-5-8-19-16(14)15/h1-9,11H,10H2/p+1
+     * @cdk.inchi
+     *     InChI=1S/C16H12N2S/c1-2-4-14-12(3-1)9-13(10-18-7-6-17-11-18)15-5-8-19-16(14)15/h1-9,11H,10H2/p+1
      */
     @Test
     public void testDICKIJ() {
@@ -11229,9 +11659,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(17, 18, DOUBLE);
         container.addBond(18, 31, SINGLE);
 
-        String[] expected = {"STHI", "C5A", "C5B", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "C5B", "C5A", "CR",
-                "NIM+", "CIM+", "NIM+", "C5", "C5", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HIM+",
-                "HC", "HC"};
+        String[] expected = {
+            "STHI", "C5A", "C5B", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "C5B", "C5A",
+            "CR", "NIM+", "CIM+", "NIM+", "C5", "C5", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HIM+", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -11281,8 +11713,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 10, SINGLE);
         container.addBond(9, 10, SINGLE);
 
-        String[] expected = {"C5B", "C5B", "CB", "CB", "CB", "CB", "CB", "CB", "N5AX", "N5A", "OFUR", "OXN", "HC",
-                "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "C5B", "C5B", "CB", "CB", "CB", "CB", "CB", "CB", "N5AX", "N5A", "OFUR", "OXN", "HC",
+            "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -11332,8 +11766,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 11, SINGLE);
         container.addBond(9, 10, SINGLE);
 
-        String[] expected = {"C5B", "C5B", "CB", "CB", "CB", "CB", "CB", "CB", "N5A", "N5AX", "OFUR", "OXN", "HC",
-                "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "C5B", "C5B", "CB", "CB", "CB", "CB", "CB", "CB", "N5A", "N5AX", "OFUR", "OXN", "HC",
+            "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -11389,8 +11825,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(6, 20, SINGLE);
         container.addBond(6, 21, SINGLE);
 
-        String[] expected = {"SI", "NR", "CR", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SI", "NR", "CR", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -11454,15 +11892,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 24, SINGLE);
         container.addBond(15, 25, SINGLE);
 
-        String[] expected = {"CL", "CL", "CL", "CL", "O=C", "O=CN", "N=C", "NC=N", "C=O", "CR", "C=ON", "C=N", "CR",
-                "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "CL", "CL", "CL", "O=C", "O=CN", "N=C", "NC=N", "C=O", "CR", "C=ON", "C=N", "CR",
+            "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DIDYOE
      *
-     * @cdk.inchi InChI=1S/C7H11NO5/c1-12-7(11)6(10)5(9)4-2-3-8-13-4/h3-6,9-10H,2H2,1H3/t4-,5-,6+/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C7H11NO5/c1-12-7(11)6(10)5(9)4-2-3-8-13-4/h3-6,9-10H,2H2,1H3/t4-,5-,6+/m1/s1
      */
     @Test
     public void testDIDYOE() {
@@ -11516,8 +11957,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 22, SINGLE);
         container.addBond(12, 23, SINGLE);
 
-        String[] expected = {"OR", "OR", "OR", "O=CO", "OC=O", "N=C", "C=N", "CR", "CR", "CR", "CR", "COO", "CR",
-                "HOR", "HOR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OR", "OR", "OR", "O=CO", "OC=O", "N=C", "C=N", "CR", "CR", "CR", "CR", "COO", "CR",
+            "HOR", "HOR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -11587,8 +12030,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(18, 26, SINGLE);
         container.addBond(19, 27, SINGLE);
 
-        String[] expected = {"S=O", "O=S", "O2N", "O2N", "O2N", "O2N", "NO2", "NO2", "CB", "CB", "CB", "CB", "CB",
-                "CB", "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S=O", "O=S", "O2N", "O2N", "O2N", "O2N", "NO2", "NO2", "CB", "CB", "CB", "CB", "CB",
+            "CB", "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -11620,7 +12065,9 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(6, 8, DOUBLE);
         container.addBond(6, 9, SINGLE);
 
-        String[] expected = {"S2CM", "S2CM", "NC=S", "CS2M", "HNCS", "NC=S", "CS2M", "HNCS", "S2CM", "S2CM"};
+        String[] expected = {
+            "S2CM", "S2CM", "NC=S", "CS2M", "HNCS", "NC=S", "CS2M", "HNCS", "S2CM", "S2CM"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -11676,15 +12123,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(18, 20, SINGLE);
         container.addBond(18, 21, SINGLE);
 
-        String[] expected = {"S=C", "S", "S", "CR", "CSS", "CR", "HC", "HC", "HC", "HC", "HC", "CR", "S", "HC", "HC",
-                "CSS", "S=C", "S", "CR", "HC", "HC", "HC"};
+        String[] expected = {
+            "S=C", "S", "S", "CR", "CSS", "CR", "HC", "HC", "HC", "HC", "HC", "CR", "S", "HC", "HC",
+            "CSS", "S=C", "S", "CR", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DIGLEK
      *
-     * @cdk.inchi InChI=1S/C17H14N2O7/c20-12-3-1-2-11(15(12)21)16(22)18-14-13(26-17(14)23)8-9-4-6-10(7-5-9)19(24)25/h1-7,13-14,20-21H,8H2,(H,18,22)/t13-,14+/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C17H14N2O7/c20-12-3-1-2-11(15(12)21)16(22)18-14-13(26-17(14)23)8-9-4-6-10(7-5-9)19(24)25/h1-7,13-14,20-21H,8H2,(H,18,22)/t13-,14+/m1/s1
      */
     @Test
     public void testDIGLEK() {
@@ -11772,9 +12222,12 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(24, 35, SINGLE);
         container.addBond(25, 36, SINGLE);
 
-        String[] expected = {"O=CO", "OC=O", "O=CN", "OC=C", "OC=C", "O2N", "O2N", "NC=O", "NO2", "COO", "CR4R",
-                "CR4R", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "C=ON", "CB", "CB", "CB", "CB", "CB", "CB", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNCO", "HOCC", "HOCC"};
+        String[] expected = {
+            "O=CO", "OC=O", "O=CN", "OC=C", "OC=C", "O2N", "O2N", "NC=O", "NO2", "COO", "CR4R",
+            "CR4R", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "C=ON", "CB", "CB", "CB", "CB", "CB",
+            "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNCO", "HOCC",
+            "HOCC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -11830,8 +12283,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 16, SINGLE);
         container.addBond(12, 17, SINGLE);
 
-        String[] expected = {"O=CR", "O=CR", "NPYL", "N5A", "C5B", "C=OR", "C=C", "C=C", "C=OR", "C5A", "C5B", "CR",
-                "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "O=CR", "O=CR", "NPYL", "N5A", "C5B", "C=OR", "C=C", "C=C", "C=OR", "C5A", "C5B", "CR",
+            "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -11894,8 +12349,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 22, SINGLE);
         container.addBond(13, 14, SINGLE);
 
-        String[] expected = {"CL", "CL", "CL", "SO2N", "O=CN", "O2S", "O2S", "NSO2", "CR4R", "CR4R", "CR", "CR", "CR",
-                "C=ON", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "CL", "CL", "SO2N", "O=CN", "O2S", "O2S", "NSO2", "CR4R", "CR4R", "CR", "CR",
+            "CR", "C=ON", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -11958,15 +12415,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 21, SINGLE);
         container.addBond(14, 23, SINGLE);
 
-        String[] expected = {"SO2N", "CL", "CL", "CL", "OC=N", "O2S", "O2S", "N=C", "CR", "C=N", "CR", "CR", "CR",
-                "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2N", "CL", "CL", "CL", "OC=N", "O2S", "O2S", "N=C", "CR", "C=N", "CR", "CR", "CR",
+            "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DIKWID
      *
-     * @cdk.inchi InChI=1S/C12H21N3O2/c16-15-11-7-3-1-5-9(11)13-10-6-2-4-8-12(10,15)17-14-11/h9-10,13-14,16H,1-8H2/t9-,10+,11-,12-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C12H21N3O2/c16-15-11-7-3-1-5-9(11)13-10-6-2-4-8-12(10,15)17-14-11/h9-10,13-14,16H,1-8H2/t9-,10+,11-,12-/m0/s1
      */
     @Test
     public void testDIKWID() {
@@ -12051,9 +12511,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 36, SINGLE);
         container.addBond(16, 37, SINGLE);
 
-        String[] expected = {"CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "NR", "NR", "NR",
-                "OR", "-O-", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HNR", "HNR", "HO"};
+        String[] expected = {
+            "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "NR", "NR",
+            "NR", "OR", "-O-", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNR", "HNR", "HO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -12103,15 +12565,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 16, SINGLE);
         container.addBond(11, 17, SINGLE);
 
-        String[] expected = {"CL", "CL", "O=CR", "O=CR", "CR4R", "C=OR", "CR4R", "C=C", "C=C", "CR", "CR4R", "C=OR",
-                "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "CL", "O=CR", "O=CR", "CR4R", "C=OR", "CR4R", "C=C", "C=C", "CR", "CR4R", "C=OR",
+            "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DILCOQ
      *
-     * @cdk.inchi InChI=1S/C11H17NO3/c1-6(2)7-8(13)12-9(7)15-10(14)11(3,4)5/h9H,1-5H3,(H,12,13)/t9-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C11H17NO3/c1-6(2)7-8(13)12-9(7)15-10(14)11(3,4)5/h9H,1-5H3,(H,12,13)/t9-/m0/s1
      */
     @Test
     public void testDILCOQ() {
@@ -12181,9 +12646,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 30, SINGLE);
         container.addBond(14, 31, SINGLE);
 
-        String[] expected = {"NC=O", "C=ON", "O=CN", "CE4R", "CR4R", "OC=O", "COO", "O=CO", "CR", "CR", "CR", "CR",
-                "C=C", "CR", "CR", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NC=O", "C=ON", "O=CN", "CE4R", "CR4R", "OC=O", "COO", "O=CO", "CR", "CR", "CR", "CR",
+            "C=C", "CR", "CR", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -12249,15 +12716,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 19, DOUBLE);
         container.addBond(17, 19, DOUBLE);
 
-        String[] expected = {"C5A", "C5B", "C5B", "C5A", "CB", "CB", "CB", "CB", "CB", "CB", "NO2", "NO2", "O2N",
-                "O2N", "O2N", "O2N", "O2S", "O2S", "STHI", "SO2", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "C5A", "C5B", "C5B", "C5A", "CB", "CB", "CB", "CB", "CB", "CB", "NO2", "NO2", "O2N",
+            "O2N", "O2N", "O2N", "O2S", "O2S", "STHI", "SO2", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DIPDAH10
      *
-     * @cdk.inchi InChI=1S/C10H12N2O5/c1-4-2-6(14)11-10-12(4)9-8(17-10)7(15)5(3-13)16-9/h2,5,7-9,13,15H,3H2,1H3/t5-,7-,8+,9-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H12N2O5/c1-4-2-6(14)11-10-12(4)9-8(17-10)7(15)5(3-13)16-9/h2,5,7-9,13,15H,3H2,1H3/t5-,7-,8+,9-/m1/s1
      */
     @Test
     public void testDIPDAH10() {
@@ -12323,8 +12793,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 25, SINGLE);
         container.addBond(16, 26, SINGLE);
 
-        String[] expected = {"O=CN", "OC=N", "OR", "OR", "OR", "NC=N", "N=C", "CR", "C=N", "C=ON", "C=C", "C=C", "CR",
-                "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOR", "HOR"};
+        String[] expected = {
+            "O=CN", "OC=N", "OR", "OR", "OR", "NC=N", "N=C", "CR", "C=N", "C=ON", "C=C", "C=C",
+            "CR", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HOR", "HOR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -12379,8 +12852,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 20, SINGLE);
         container.addBond(8, 19, SINGLE);
 
-        String[] expected = {"NIM+", "NIM+", "NGD+", "NR+", "CIM+", "C5", "C5", "CR", "CR", "HIM+", "HIM+", "HGD+",
-                "HGD+", "HC", "HC", "HC", "HNR+", "HNR+", "HNR+", "HC", "HC"};
+        String[] expected = {
+            "NIM+", "NIM+", "NGD+", "NR+", "CIM+", "C5", "C5", "CR", "CR", "HIM+", "HIM+", "HGD+",
+            "HGD+", "HC", "HC", "HC", "HNR+", "HNR+", "HNR+", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -12414,7 +12889,9 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(5, 8, SINGLE);
         container.addBond(5, 9, SINGLE);
 
-        String[] expected = {"SO2N", "O2S", "O2S", "-O-", "NSO2", "CR", "HNSO", "HC", "HC", "HC", "HO"};
+        String[] expected = {
+            "SO2N", "O2S", "O2S", "-O-", "NSO2", "CR", "HNSO", "HC", "HC", "HC", "HO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -12482,8 +12959,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 25, SINGLE);
         container.addBond(13, 26, SINGLE);
 
-        String[] expected = {"O=CR", "N=C", "C=N", "C=C", "C=C", "C=OR", "C=C", "C=C", "C=C", "C=C", "CR", "CR", "CR",
-                "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "O=CR", "N=C", "C=N", "C=C", "C=C", "C=OR", "C=C", "C=C", "C=C", "C=C", "CR", "CR",
+            "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -12525,8 +13004,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 12, SINGLE);
         container.addBond(9, 14, SINGLE);
 
-        String[] expected = {"CL", "O2N", "O2N", "OM2", "OC=C", "NO2", "C=C", "C=C", "CR", "CR", "HC", "HC", "HC",
-                "HC", "HC"};
+        String[] expected = {
+            "CL", "O2N", "O2N", "OM2", "OC=C", "NO2", "C=C", "C=C", "CR", "CR", "HC", "HC", "HC",
+            "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -12566,8 +13047,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(5, 12, SINGLE);
         container.addBond(5, 11, SINGLE);
 
-        String[] expected = {"S", "CNN+", "NCN+", "NCN+", "NR", "CR", "HNN+", "HNN+", "HNN+", "HNR", "HNR", "HC", "HC",
-                "HC"};
+        String[] expected = {
+            "S", "CNN+", "NCN+", "NCN+", "NR", "CR", "HNN+", "HNN+", "HNN+", "HNR", "HNR", "HC",
+            "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -12635,8 +13118,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 25, SINGLE);
         container.addBond(13, 26, SINGLE);
 
-        String[] expected = {"CL", "O=CR", "CB", "CB", "CB", "CB", "CB", "CB", "C=OR", "CR", "CR4R", "CR4R", "CR4R",
-                "CR4R", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "O=CR", "CB", "CB", "CB", "CB", "CB", "CB", "C=OR", "CR", "CR4R", "CR4R", "CR4R",
+            "CR4R", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -12689,15 +13174,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(7, 12, SINGLE);
         container.addBond(8, 11, SINGLE);
 
-        String[] expected = {"C=N", "CNN+", "CR", "CR", "CR", "NCN+", "N=C", "NCN+", "-O-", "S", "HNN+", "HO", "HNN+",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "C=N", "CNN+", "CR", "CR", "CR", "NCN+", "N=C", "NCN+", "-O-", "S", "HNN+", "HO",
+            "HNN+", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DIVTUX
      *
-     * @cdk.inchi InChI=1S/C11H12O2/c12-11-7-3-1-2-4-9(7)13-10-6-5-8(10)11/h1-4,8,10-12H,5-6H2/t8-,10+,11+/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C11H12O2/c12-11-7-3-1-2-4-9(7)13-10-6-5-8(10)11/h1-4,8,10-12H,5-6H2/t8-,10+,11+/m1/s1
      */
     @Test
     public void testDIVTUX() {
@@ -12755,8 +13243,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 12, SINGLE);
         container.addBond(12, 23, SINGLE);
 
-        String[] expected = {"OR", "OC=C", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "CR4R", "CR4R", "CR4R", "CR4R",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOR"};
+        String[] expected = {
+            "OR", "OC=C", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "CR4R", "CR4R", "CR4R", "CR4R",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -12796,15 +13286,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(6, 12, SINGLE);
         container.addBond(6, 13, SINGLE);
 
-        String[] expected = {"O=CN", "CONN", "CGD+", "NC=O", "NGD+", "NGD+", "NGD+", "HNCO", "HNCO", "HGD+", "HGD+",
-                "HGD+", "HGD+", "HGD+"};
+        String[] expected = {
+            "O=CN", "CONN", "CGD+", "NC=O", "NGD+", "NGD+", "NGD+", "HNCO", "HNCO", "HGD+", "HGD+",
+            "HGD+", "HGD+", "HGD+"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DIVWEK
      *
-     * @cdk.inchi InChI=1S/C18H12O4/c19-16-14(11-12-7-3-1-4-8-12)22-17(18(20)21)15(16)13-9-5-2-6-10-13/h1-11H,(H,20,21)/b14-11-
+     * @cdk.inchi
+     *     InChI=1S/C18H12O4/c19-16-14(11-12-7-3-1-4-8-12)22-17(18(20)21)15(16)13-9-5-2-6-10-13/h1-11H,(H,20,21)/b14-11-
      */
     @Test
     public void testDIVWEK() {
@@ -12880,9 +13373,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(19, 21, SINGLE);
         container.addBond(21, 22, SINGLE);
 
-        String[] expected = {"OC=C", "C=C", "C=OR", "C=C", "C=C", "C=C", "CB", "CB", "CB", "CB", "CB", "CB", "O=CR",
-                "CB", "CB", "CB", "CB", "CB", "CB", "COO", "O=CO", "OC=O", "HOCO", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OC=C", "C=C", "C=OR", "C=C", "C=C", "C=C", "CB", "CB", "CB", "CB", "CB", "CB", "O=CR",
+            "CB", "CB", "CB", "CB", "CB", "CB", "COO", "O=CO", "OC=O", "HOCO", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -12926,8 +13421,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(6, 15, SINGLE);
         container.addBond(6, 14, SINGLE);
 
-        String[] expected = {"CGD+", "NGD+", "NR", "NGD+", "NR", "NGD+", "NR", "HGD+", "HNR", "HNR", "HGD+", "HNR",
-                "HNR", "HGD+", "HNR", "HNR"};
+        String[] expected = {
+            "CGD+", "NGD+", "NR", "NGD+", "NR", "NGD+", "NR", "HGD+", "HNR", "HNR", "HGD+", "HNR",
+            "HNR", "HGD+", "HNR", "HNR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -12985,8 +13482,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 20, SINGLE);
         container.addBond(11, 19, SINGLE);
 
-        String[] expected = {"NPYD", "CB", "NPD+", "C5A", "C5B", "CB", "NC=N", "N5B", "C5A", "NPYL", "CR", "CR", "HC",
-                "HPD+", "HC", "HPYL", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NPYD", "CB", "NPD+", "C5A", "C5B", "CB", "NC=N", "N5B", "C5A", "NPYL", "CR", "CR",
+            "HC", "HPD+", "HC", "HPYL", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -13041,15 +13540,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 12, DOUBLE);
         container.addBond(11, 19, SINGLE);
 
-        String[] expected = {"CB", "CB", "CB", "CB", "CB", "CB", "OC=C", "CR", "COO", "O=CO", "OC=O", "C=OR", "O=CR",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOCO"};
+        String[] expected = {
+            "CB", "CB", "CB", "CB", "CB", "CB", "OC=C", "CR", "COO", "O=CO", "OC=O", "C=OR", "O=CR",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOCO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DIYPOQ
      *
-     * @cdk.inchi InChI=1S/C9H15N5O3/c1-3(15)6(16)4-2-11-7-5(12-4)8(17)14-9(10)13-7/h3-4,6,12,15-16H,2H2,1H3,(H4,10,11,13,14,17)/p+2/t3-,4+,6-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C9H15N5O3/c1-3(15)6(16)4-2-11-7-5(12-4)8(17)14-9(10)13-7/h3-4,6,12,15-16H,2H2,1H3,(H4,10,11,13,14,17)/p+2/t3-,4+,6-/m0/s1
      */
     @Test
     public void testDIYPOQ() {
@@ -13124,9 +13626,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 32, SINGLE);
         container.addBond(16, 31, SINGLE);
 
-        String[] expected = {"NGD+", "CGD+", "NGD+", "C=ON", "NR+", "CR", "CR", "NC=C", "C=C", "C=C", "NGD+", "O=CN",
-                "CR", "OR", "CR", "OR", "CR", "HGD+", "HGD+", "HNR+", "HNR+", "HC", "HC", "HC", "HNCC", "HGD+", "HGD+",
-                "HC", "HOR", "HC", "HOR", "HC", "HC", "HC"};
+        String[] expected = {
+            "NGD+", "CGD+", "NGD+", "C=ON", "NR+", "CR", "CR", "NC=C", "C=C", "C=C", "NGD+", "O=CN",
+            "CR", "OR", "CR", "OR", "CR", "HGD+", "HGD+", "HNR+", "HNR+", "HC", "HC", "HC", "HNCC",
+            "HGD+", "HGD+", "HC", "HOR", "HC", "HOR", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -13172,15 +13676,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 14, SINGLE);
         container.addBond(11, 15, SINGLE);
 
-        String[] expected = {"O=CN", "CONN", "NC=O", "CR3R", "CR3R", "HC", "HC", "HC", "HC", "NC=O", "CR3R", "CR3R",
-                "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "O=CN", "CONN", "NC=O", "CR3R", "CR3R", "HC", "HC", "HC", "HC", "NC=O", "CR3R", "CR3R",
+            "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DIZPUX
      *
-     * @cdk.inchi InChI=1S/C10H15NO/c1-7(12)9-4-2-3-8-5-6-10(9)11-8/h4,8,10-11H,2-3,5-6H2,1H3/p+1/t8-,10-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H15NO/c1-7(12)9-4-2-3-8-5-6-10(9)11-8/h4,8,10-11H,2-3,5-6H2,1H3/p+1/t8-,10-/m1/s1
      */
     @Test
     public void testDIZPUX() {
@@ -13243,8 +13750,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 26, SINGLE);
         container.addBond(11, 27, SINGLE);
 
-        String[] expected = {"O=CR", "NR+", "CR", "CR", "CR", "CR", "CR", "CR", "C=C", "C=C", "C=OR", "CR", "HNR+",
-                "HNR+", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "O=CR", "NR+", "CR", "CR", "CR", "CR", "CR", "CR", "C=C", "C=C", "C=OR", "CR", "HNR+",
+            "HNR+", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -13284,8 +13794,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 12, SINGLE);
         container.addBond(10, 13, SINGLE);
 
-        String[] expected = {"COO", "CR", "O=CO", "OC=O", "HC", "HC", "HC", "COO", "O=CO", "OC=O", "CR", "HC", "HC",
-                "HC"};
+        String[] expected = {
+            "COO", "CR", "O=CO", "OC=O", "HC", "HC", "HC", "COO", "O=CO", "OC=O", "CR", "HC", "HC",
+            "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -13330,15 +13842,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 15, SINGLE);
         container.addBond(13, 14, DOUBLE);
 
-        String[] expected = {"S2CM", "S2CM", "CS2M", "CB", "CB", "CB", "HC", "HC", "CB", "CB", "CB", "HC", "HC",
-                "CS2M", "S2CM", "S2CM"};
+        String[] expected = {
+            "S2CM", "S2CM", "CS2M", "CB", "CB", "CB", "HC", "HC", "CB", "CB", "CB", "HC", "HC",
+            "CS2M", "S2CM", "S2CM"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DOCFIK
      *
-     * @cdk.inchi InChI=1S/C8Cl2N8S3/c9-5(7-13-3(1-11)15-19-7)17-21-18-6(10)8-14-4(2-12)16-20-8/b17-5-,18-6-
+     * @cdk.inchi
+     *     InChI=1S/C8Cl2N8S3/c9-5(7-13-3(1-11)15-19-7)17-21-18-6(10)8-14-4(2-12)16-20-8/b17-5-,18-6-
      */
     @Test
     public void testDOCFIK() {
@@ -13387,15 +13902,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(17, 18, DOUBLE);
         container.addBond(19, 20, TRIPLE);
 
-        String[] expected = {"S", "N=C", "C=N", "CL", "STHI", "N5A", "C5B", "N5B", "C5A", "CSP", "NSP", "N=C", "C=N",
-                "CL", "STHI", "N5A", "C5B", "N5B", "C5A", "CSP", "NSP"};
+        String[] expected = {
+            "S", "N=C", "C=N", "CL", "STHI", "N5A", "C5B", "N5B", "C5A", "CSP", "NSP", "N=C", "C=N",
+            "CL", "STHI", "N5A", "C5B", "N5B", "C5A", "CSP", "NSP"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DOCWUN
      *
-     * @cdk.inchi InChI=1S/C9H11N3O3/c1-6-4-3-5-12(9(6)13)8(11-15)7(2)10-14/h3-5,14-15H,1-2H3/b10-7+,11-8-
+     * @cdk.inchi
+     *     InChI=1S/C9H11N3O3/c1-6-4-3-5-12(9(6)13)8(11-15)7(2)10-14/h3-5,14-15H,1-2H3/b10-7+,11-8-
      */
     @Test
     public void testDOCWUN() {
@@ -13453,8 +13971,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 24, SINGLE);
         container.addBond(14, 23, SINGLE);
 
-        String[] expected = {"O=CN", "-O-", "-O-", "NC=O", "N=C", "N=C", "CR", "C=ON", "C=C", "C=C", "C=C", "C=C",
-                "C=N", "C=N", "CR", "HO", "HO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "O=CN", "-O-", "-O-", "NC=O", "N=C", "N=C", "CR", "C=ON", "C=C", "C=C", "C=C", "C=C",
+            "C=N", "C=N", "CR", "HO", "HO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -13528,9 +14048,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 29, SINGLE);
         container.addBond(15, 30, SINGLE);
 
-        String[] expected = {"NSO2", "SO2N", "O2S", "O2S", "CR", "CR", "SO2N", "O2S", "O2S", "CR", "CR", "SO2N", "O2S",
-                "O2S", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC"};
+        String[] expected = {
+            "NSO2", "SO2N", "O2S", "O2S", "CR", "CR", "SO2N", "O2S", "O2S", "CR", "CR", "SO2N",
+            "O2S", "O2S", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -13586,8 +14108,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 20, SINGLE);
         container.addBond(10, 21, SINGLE);
 
-        String[] expected = {"NSO2", "SO2N", "O2S", "O2S", "CR", "CR", "SO2N", "O2S", "O2S", "CR", "CR", "HNSO", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NSO2", "SO2N", "O2S", "O2S", "CR", "CR", "SO2N", "O2S", "O2S", "CR", "CR", "HNSO",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -13644,15 +14168,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 19, SINGLE);
         container.addBond(10, 20, SINGLE);
 
-        String[] expected = {"SO2", "O2S", "O2S", "CR", "CR4R", "CR4R", "CE4R", "CE4R", "CR4R", "CR4R", "CR", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2", "O2S", "O2S", "CR", "CR4R", "CR4R", "CE4R", "CE4R", "CR4R", "CR4R", "CR", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DONFOB
      *
-     * @cdk.inchi InChI=1S/C5H13NO6S4/c1-6(2)5(3-13-15(7,8)9)4-14-16(10,11)12/h5H,3-4H2,1-2H3,(H,7,8,9)(H,10,11,12)/p-1
+     * @cdk.inchi
+     *     InChI=1S/C5H13NO6S4/c1-6(2)5(3-13-15(7,8)9)4-14-16(10,11)12/h5H,3-4H2,1-2H3,(H,7,8,9)(H,10,11,12)/p-1
      */
     @Test
     public void testDONFOB() {
@@ -13713,8 +14240,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 25, SINGLE);
         container.addBond(15, 26, SINGLE);
 
-        String[] expected = {"SO3", "SO3", "S", "S", "NR+", "O3S", "O3S", "O3S", "O3S", "O3S", "O3S", "CR", "CR", "CR",
-                "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNR+"};
+        String[] expected = {
+            "SO3", "SO3", "S", "S", "NR+", "O3S", "O3S", "O3S", "O3S", "O3S", "O3S", "CR", "CR",
+            "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HNR+"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -13757,8 +14287,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 11, SINGLE);
         container.addBond(10, 12, SINGLE);
 
-        String[] expected = {"NSO2", "SO2N", "CR4R", "HC", "HC", "CR4R", "HC", "HC", "CONN", "O=CN", "NC=O", "HNCO",
-                "HNCO", "O2S", "O2S"};
+        String[] expected = {
+            "NSO2", "SO2N", "CR4R", "HC", "HC", "CR4R", "HC", "HC", "CONN", "O=CN", "NC=O", "HNCO",
+            "HNCO", "O2S", "O2S"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -13807,8 +14339,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 16, SINGLE);
         container.addBond(13, 17, SINGLE);
 
-        String[] expected = {"S=C", "NC=S", "C=SN", "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "C=SN", "CB", "CB",
-                "S=C", "HC", "HC", "HC"};
+        String[] expected = {
+            "S=C", "NC=S", "C=SN", "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "C=SN", "CB",
+            "CB", "S=C", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -13851,15 +14385,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 13, SINGLE);
         container.addBond(9, 10, SINGLE);
 
-        String[] expected = {"SO2N", "NSO2", "C=ON", "CR", "C=N", "N=C", "O2S", "O2S", "O=CN", "NC=N", "HNCN", "HC",
-                "HNSO", "HNCN", "HC"};
+        String[] expected = {
+            "SO2N", "NSO2", "C=ON", "CR", "C=N", "N=C", "O2S", "O2S", "O=CN", "NC=N", "HNCN", "HC",
+            "HNSO", "HNCN", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DOTWOY
      *
-     * @cdk.inchi InChI=1S/C12H12Cl2O3/c1-2-17-9-5-3-8(4-6-9)11(10(15)16)7-12(11,13)14/h3-6H,2,7H2,1H3,(H,15,16)/t11-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C12H12Cl2O3/c1-2-17-9-5-3-8(4-6-9)11(10(15)16)7-12(11,13)14/h3-6H,2,7H2,1H3,(H,15,16)/t11-/m0/s1
      */
     @Test
     public void testDOTWOY() {
@@ -13924,8 +14461,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 28, SINGLE);
         container.addBond(15, 17, SINGLE);
 
-        String[] expected = {"CL", "CL", "CR3R", "CR3R", "CR3R", "COO", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "CR",
-                "O=CO", "OC=O", "OC=C", "HOCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "CL", "CR3R", "CR3R", "CR3R", "COO", "CB", "CB", "CB", "CB", "CB", "CB", "CR",
+            "CR", "O=CO", "OC=O", "OC=C", "HOCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -13972,8 +14512,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 16, SINGLE);
         container.addBond(9, 10, TRIPLE);
 
-        String[] expected = {"OC=O", "C=N", "N=C", "C=C", "C=C", "COO", "NC=N", "S", "CR", "CSP", "NSP", "O=CO",
-                "HNCN", "HNCN", "HC", "HC", "HC"};
+        String[] expected = {
+            "OC=O", "C=N", "N=C", "C=C", "C=C", "COO", "NC=N", "S", "CR", "CSP", "NSP", "O=CO",
+            "HNCN", "HNCN", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -14019,8 +14561,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(5, 9, SINGLE);
         container.addBond(9, 16, SINGLE);
 
-        String[] expected = {"CO2M", "CR", "CR", "NR+", "N2OX", "N=N", "O2CM", "O2CM", "OXN", "-O-", "HC", "HC", "HC",
-                "HNR+", "HNR+", "HNR+", "HO"};
+        String[] expected = {
+            "CO2M", "CR", "CR", "NR+", "N2OX", "N=N", "O2CM", "O2CM", "OXN", "-O-", "HC", "HC",
+            "HC", "HNR+", "HNR+", "HNR+", "HO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -14068,8 +14612,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 16, SINGLE);
         container.addBond(8, 9, DOUBLE);
 
-        String[] expected = {"-O-", "N=C", "C=N", "CR4R", "CB", "CB", "CB", "CB", "CB", "CB", "HO", "HC", "HC", "HC",
-                "HC", "HC", "HC"};
+        String[] expected = {
+            "-O-", "N=C", "C=N", "CR4R", "CB", "CB", "CB", "CB", "CB", "CB", "HO", "HC", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -14121,8 +14667,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 17, SINGLE);
         container.addBond(11, 16, SINGLE);
 
-        String[] expected = {"F", "F", "O=CN", "O2N", "O2N", "NC=O", "NR+", "NO2", "C=ON", "CR", "CR", "CR", "HNR+",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HNCO"};
+        String[] expected = {
+            "F", "F", "O=CN", "O2N", "O2N", "NC=O", "NR+", "NO2", "C=ON", "CR", "CR", "CR", "HNR+",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HNCO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -14165,8 +14713,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 12, SINGLE);
         container.addBond(9, 10, SINGLE);
 
-        String[] expected = {"O2N", "O2N", "O2N", "O2N", "NO2", "NC=N", "N5M", "N5M", "N5M", "NC=N", "NO2", "C5", "C5",
-                "HNCN", "HNCN"};
+        String[] expected = {
+            "O2N", "O2N", "O2N", "O2N", "NO2", "NC=N", "N5M", "N5M", "N5M", "NC=N", "NO2", "C5",
+            "C5", "HNCN", "HNCN"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -14225,8 +14775,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 20, SINGLE);
         container.addBond(12, 21, SINGLE);
 
-        String[] expected = {"O=CN", "O=CN", "NC=O", "NC=O", "NC=O", "CR", "C=C", "C=C", "CR", "CR", "CONN", "CONN",
-                "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "O=CN", "O=CN", "NC=O", "NC=O", "NC=O", "CR", "C=C", "C=C", "CR", "CR", "CONN", "CONN",
+            "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -14279,8 +14831,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 15, SINGLE);
         container.addBond(9, 18, SINGLE);
 
-        String[] expected = {"NR", "N=C", "C=N", "N=N", "N=N", "CR", "CR", "CR", "CR", "OR", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HOR", "HC"};
+        String[] expected = {
+            "NR", "N=C", "C=N", "N=N", "N=N", "CR", "CR", "CR", "CR", "OR", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HOR", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -14327,8 +14881,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 15, SINGLE);
         container.addBond(10, 16, SINGLE);
 
-        String[] expected = {"-O-", "N=C", "NSP", "C=N", "CSP", "CB", "CB", "CB", "CB", "CB", "CB", "HO", "HC", "HC",
-                "HC", "HC", "HC"};
+        String[] expected = {
+            "-O-", "N=C", "NSP", "C=N", "CSP", "CB", "CB", "CB", "CB", "CB", "CB", "HO", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -14378,8 +14934,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 17, SINGLE);
         container.addBond(9, 18, SINGLE);
 
-        String[] expected = {"SO2N", "SO2N", "O2S", "O2S", "O2S", "O2S", "NSO2", "CR", "CR", "CR", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2N", "SO2N", "O2S", "O2S", "O2S", "O2S", "NSO2", "CR", "CR", "CR", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -14428,15 +14986,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 16, SINGLE);
         container.addBond(9, 17, SINGLE);
 
-        String[] expected = {"SO2", "O2S", "O2S", "C=C", "C=C", "C=C", "C=C", "NC=O", "C=ON", "CR", "O=CN", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2", "O2S", "O2S", "C=C", "C=C", "C=C", "C=C", "NC=O", "C=ON", "CR", "O=CN", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DUJMEA
      *
-     * @cdk.inchi InChI=1S/C12H18N2O3/c1-13-5-9-17-12(10-4-3-7-15-10)11(13)16-8-6-14(12)2/h3-4,7,11H,5-6,8-9H2,1-2H3/t11-,12-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C12H18N2O3/c1-13-5-9-17-12(10-4-3-7-15-10)11(13)16-8-6-14(12)2/h3-4,7,11H,5-6,8-9H2,1-2H3/t11-,12-/m0/s1
      */
     @Test
     public void testDUJMEA() {
@@ -14514,9 +15075,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 19, SINGLE);
         container.addBond(16, 20, SINGLE);
 
-        String[] expected = {"CR", "OR", "CR", "CR", "NR", "CR", "CR", "OR", "CR", "CR", "NR", "CR", "C5A", "C5B",
-                "OFUR", "C5A", "C5B", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR", "OR", "CR", "CR", "NR", "CR", "CR", "OR", "CR", "CR", "NR", "CR", "C5A", "C5B",
+            "OFUR", "C5A", "C5B", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -14553,15 +15116,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(4, 10, SINGLE);
         container.addBond(4, 6, SINGLE);
 
-        String[] expected = {"STHI", "NIM+", "N5B", "NCN+", "NC=N", "CIM+", "C5A", "HIM+", "HNN+", "HNN+", "HNCN",
-                "HNCN"};
+        String[] expected = {
+            "STHI", "NIM+", "N5B", "NCN+", "NC=N", "CIM+", "C5A", "HIM+", "HNN+", "HNN+", "HNCN",
+            "HNCN"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DUKWUB
      *
-     * @cdk.inchi InChI=1S/C6H13NO7S/c7-3-5(9)4(8)2(14-6(3)10)1-15(11,12)13/h2-6,8-10H,1,7H2,(H,11,12,13)/t2-,3-,4-,5-,6+/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C6H13NO7S/c7-3-5(9)4(8)2(14-6(3)10)1-15(11,12)13/h2-6,8-10H,1,7H2,(H,11,12,13)/t2-,3-,4-,5-,6+/m1/s1
      */
     @Test
     public void testDUKWUB() {
@@ -14623,15 +15189,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 17, SINGLE);
         container.addBond(14, 18, SINGLE);
 
-        String[] expected = {"SO3", "OR", "OR", "O2S", "OSO2", "O2S", "OR", "OR", "NR", "CR", "CR", "CR", "CR", "CR",
-                "CR", "HNR", "HNR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOR", "HOR", "HOR", "HOS"};
+        String[] expected = {
+            "SO3", "OR", "OR", "O2S", "OSO2", "O2S", "OR", "OR", "NR", "CR", "CR", "CR", "CR", "CR",
+            "CR", "HNR", "HNR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOR", "HOR", "HOR", "HOS"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DULTIN
      *
-     * @cdk.inchi InChI=1S/C8H12BrNO2/c9-6-3-10-2-1-5-7(10)8(6,4-11)12-5/h5-7,11H,1-4H2/t5-,6-,7+,8+/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C8H12BrNO2/c9-6-3-10-2-1-5-7(10)8(6,4-11)12-5/h5-7,11H,1-4H2/t5-,6-,7+,8+/m1/s1
      */
     @Test
     public void testDULTIN() {
@@ -14687,15 +15256,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 22, SINGLE);
         container.addBond(11, 23, SINGLE);
 
-        String[] expected = {"BR", "CR4R", "CR", "CR", "NR", "CR", "CR", "CR4R", "CR4R", "CR", "OR", "OR", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOR"};
+        String[] expected = {
+            "BR", "CR4R", "CR", "CR", "NR", "CR", "CR", "CR4R", "CR4R", "CR", "OR", "OR", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DUMHIC
      *
-     * @cdk.inchi InChI=1S/C8H12O5S/c1-9-6-5-4(12-8(14)13-5)3-11-7(6)10-2/h4-7H,3H2,1-2H3/t4-,5-,6+,7-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C8H12O5S/c1-9-6-5-4(12-8(14)13-5)3-11-7(6)10-2/h4-7H,3H2,1-2H3/t4-,5-,6+,7-/m0/s1
      */
     @Test
     public void testDUMHIC() {
@@ -14754,8 +15326,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 24, SINGLE);
         container.addBond(13, 25, SINGLE);
 
-        String[] expected = {"OR", "CR", "CR", "OC=S", "C=S", "S=C", "CR", "OC=S", "CR", "OR", "CR", "CR", "OR", "CR",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OR", "CR", "CR", "OC=S", "C=S", "S=C", "CR", "OC=S", "CR", "OR", "CR", "CR", "OR",
+            "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -14828,8 +15402,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 14, SINGLE);
         container.addBond(13, 15, DOUBLE);
 
-        String[] expected = {"OR", "CR4R", "CR4R", "CR4R", "CR", "CR", "NR", "CR", "NO2", "O2N", "O2N", "NR", "CR",
-                "NO2", "O2N", "O2N", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OR", "CR4R", "CR4R", "CR4R", "CR", "CR", "NR", "CR", "NO2", "O2N", "O2N", "NR", "CR",
+            "NO2", "O2N", "O2N", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -14890,8 +15467,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 14, DOUBLE);
         container.addBond(12, 23, SINGLE);
 
-        String[] expected = {"S", "CL", "C=C", "C=C", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "NO2", "NC=C", "O2N",
-                "O2N", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNCC"};
+        String[] expected = {
+            "S", "CL", "C=C", "C=C", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "NO2", "NC=C", "O2N",
+            "O2N", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNCC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -14951,8 +15530,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 13, DOUBLE);
         container.addBond(13, 22, SINGLE);
 
-        String[] expected = {"NPYL", "C5A", "C5B", "C5B", "C5A", "SO2N", "O2S", "O2S", "CB", "CB", "CB", "CB", "CB",
-                "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NPYL", "C5A", "C5B", "C5B", "C5A", "SO2N", "O2S", "O2S", "CB", "CB", "CB", "CB", "CB",
+            "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -15005,15 +15586,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(6, 7, DOUBLE);
         container.addBond(7, 9, SINGLE);
 
-        String[] expected = {"C=C", "C=C", "CR", "CR", "CR", "CR", "N2OX", "N2OX", "OXN", "OXN", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "C=C", "C=C", "CR", "CR", "CR", "CR", "N2OX", "N2OX", "OXN", "OXN", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DUTHIJ
      *
-     * @cdk.inchi InChI=1S/C12H14N2O3/c1-15-12(11-13-6-7-14-11)8-16-9-4-2-3-5-10(9)17-12/h2-5H,6-8H2,1H3,(H,13,14)/p+1/t12-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C12H14N2O3/c1-15-12(11-13-6-7-14-11)8-16-9-4-2-3-5-10(9)17-12/h2-5H,6-8H2,1H3,(H,13,14)/p+1/t12-/m1/s1
      */
     @Test
     public void testDUTHIJ() {
@@ -15085,9 +15669,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 23, SINGLE);
         container.addBond(16, 28, SINGLE);
 
-        String[] expected = {"CB", "CB", "CB", "CB", "CB", "CB", "CR", "CR", "CNN+", "CR", "CR", "CR", "OC=C", "OC=C",
-                "OR", "NCN+", "NCN+", "HC", "HC", "HC", "HC", "HC", "HC", "HNN+", "HC", "HC", "HC", "HC", "HNN+", "HC",
-                "HC", "HC"};
+        String[] expected = {
+            "CB", "CB", "CB", "CB", "CB", "CB", "CR", "CR", "CNN+", "CR", "CR", "CR", "OC=C",
+            "OC=C", "OR", "NCN+", "NCN+", "HC", "HC", "HC", "HC", "HC", "HC", "HNN+", "HC", "HC",
+            "HC", "HC", "HNN+", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -15147,8 +15733,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 21, SINGLE);
         container.addBond(14, 22, SINGLE);
 
-        String[] expected = {"S", "S", "S=C", "NPYD", "NPYD", "CB", "CB", "CB", "CB", "C=C", "C=C", "CSS", "C=C",
-                "C=C", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "S", "S=C", "NPYD", "NPYD", "CB", "CB", "CB", "CB", "C=C", "C=C", "CSS", "C=C",
+            "C=C", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -15196,8 +15784,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 14, SINGLE);
         container.addBond(10, 13, SINGLE);
 
-        String[] expected = {"NC=O", "CONN", "NC=O", "C5B", "C5B", "C=ON", "N5A", "NPYL", "N5A", "O=CN", "CR", "O=CN",
-                "HNCO", "HC", "HC", "HC", "HPYL"};
+        String[] expected = {
+            "NC=O", "CONN", "NC=O", "C5B", "C5B", "C=ON", "N5A", "NPYL", "N5A", "O=CN", "CR",
+            "O=CN", "HNCO", "HC", "HC", "HC", "HPYL"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -15254,15 +15844,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 20, SINGLE);
         container.addBond(8, 19, SINGLE);
 
-        String[] expected = {"P", "CL", "NR", "CR", "CR", "CR", "NR+", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "P", "CL", "NR", "CR", "CR", "CR", "NR+", "CR", "CR", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DUWKUB
      *
-     * @cdk.inchi InChI=1S/C5H6Cl3N5O2/c1-14-13-4(5(6,7)8)10-3-2(9)11-15-12-3/h1H3,(H2,9,11)(H,10,12,13)
+     * @cdk.inchi
+     *     InChI=1S/C5H6Cl3N5O2/c1-14-13-4(5(6,7)8)10-3-2(9)11-15-12-3/h1H3,(H2,9,11)(H,10,12,13)
      */
     @Test
     public void testDUWKUB() {
@@ -15310,15 +15903,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 16, SINGLE);
         container.addBond(14, 17, SINGLE);
 
-        String[] expected = {"CL", "CL", "CL", "OFUR", "C5B", "OR", "NC=N", "N5A", "N5A", "C5B", "C=N", "N=C", "CR",
-                "NC=N", "CR", "HC", "HC", "HC", "HNCN", "HNCN", "HNCN"};
+        String[] expected = {
+            "CL", "CL", "CL", "OFUR", "C5B", "OR", "NC=N", "N5A", "N5A", "C5B", "C=N", "N=C", "CR",
+            "NC=N", "CR", "HC", "HC", "HC", "HNCN", "HNCN", "HNCN"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DUWRIW
      *
-     * @cdk.inchi InChI=1S/C6H9NO6/c8-2-4-6(10)3(9)1-5(13-4)7(11)12/h1,3-4,6,8-10H,2H2/t3-,4-,6+/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C6H9NO6/c8-2-4-6(10)3(9)1-5(13-4)7(11)12/h1,3-4,6,8-10H,2H2/t3-,4-,6+/m1/s1
      */
     @Test
     public void testDUWRIW() {
@@ -15368,8 +15964,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 20, SINGLE);
         container.addBond(12, 21, SINGLE);
 
-        String[] expected = {"C=C", "NO2", "O2N", "O2N", "C=C", "CR", "OR", "CR", "OR", "CR", "OC=C", "CR", "OR", "HC",
-                "HC", "HOR", "HC", "HOR", "HC", "HC", "HC", "HOR"};
+        String[] expected = {
+            "C=C", "NO2", "O2N", "O2N", "C=C", "CR", "OR", "CR", "OR", "CR", "OC=C", "CR", "OR",
+            "HC", "HC", "HOR", "HC", "HOR", "HC", "HC", "HC", "HOR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -15405,14 +16003,17 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(7, 10, SINGLE);
         container.addBond(9, 11, SINGLE);
 
-        String[] expected = {"C=ON", "NC=O", "-O-", "O=CN", "HNCO", "HO", "C=ON", "NC=O", "O=CN", "-O-", "HNCO", "HO"};
+        String[] expected = {
+            "C=ON", "NC=O", "-O-", "O=CN", "HNCO", "HO", "C=ON", "NC=O", "O=CN", "-O-", "HNCO", "HO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DUXWUO
      *
-     * @cdk.inchi InChI=1S/C11H12N2O2S2/c1-8(14)13-10(9-6-4-3-5-7-9)16-11(12-13)17(2)15/h3-7,10H,1-2H3/t10-,17+/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C11H12N2O2S2/c1-8(14)13-10(9-6-4-3-5-7-9)16-11(12-13)17(2)15/h3-7,10H,1-2H3/t10-,17+/m0/s1
      */
     @Test
     public void testDUXWUO() {
@@ -15477,15 +16078,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 27, SINGLE);
         container.addBond(16, 28, SINGLE);
 
-        String[] expected = {"S", "CR", "NC=O", "N=C", "C=N", "CB", "CB", "CB", "CB", "CB", "CB", "C=ON", "CR", "O=CN",
-                "S=O", "O=S", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "CR", "NC=O", "N=C", "C=N", "CB", "CB", "CB", "CB", "CB", "CB", "C=ON", "CR",
+            "O=CN", "S=O", "O=S", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DUXXAV
      *
-     * @cdk.inchi InChI=1S/C11H12N2O3S2/c1-8(14)13-10(9-6-4-3-5-7-9)18(16)11(12-13)17(2)15/h3-7,10H,1-2H3/t10-,17-,18+/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C11H12N2O3S2/c1-8(14)13-10(9-6-4-3-5-7-9)18(16)11(12-13)17(2)15/h3-7,10H,1-2H3/t10-,17-,18+/m0/s1
      */
     @Test
     public void testDUXXAV() {
@@ -15552,16 +16157,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 28, SINGLE);
         container.addBond(16, 29, SINGLE);
 
-        String[] expected = {"S=O", "CR", "NC=O", "N=C", "C=N", "CB", "CB", "CB", "CB", "CB", "CB", "C=ON", "CR",
-                "O=CN", "S=O", "O=S", "CR", "O=S", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC"};
+        String[] expected = {
+            "S=O", "CR", "NC=O", "N=C", "C=N", "CB", "CB", "CB", "CB", "CB", "CB", "C=ON", "CR",
+            "O=CN", "S=O", "O=S", "CR", "O=S", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DUYNOA
      *
-     * @cdk.inchi InChI=1S/C11H22N4O/c1-8-5-9(2)14(12)10(3,6-8)16-11(4,7-8)15(9)13/h5-7,12-13H2,1-4H3/t8-,9+,10-,11+
+     * @cdk.inchi
+     *     InChI=1S/C11H22N4O/c1-8-5-9(2)14(12)10(3,6-8)16-11(4,7-8)15(9)13/h5-7,12-13H2,1-4H3/t8-,9+,10-,11+
      */
     @Test
     public void testDUYNOA() {
@@ -15645,16 +16253,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 18, SINGLE);
         container.addBond(15, 19, SINGLE);
 
-        String[] expected = {"CR", "OR", "CR", "NR", "CR", "CR", "CR", "CR", "NR", "CR", "CR", "CR", "NR", "CR", "CR",
-                "NR", "HNR", "HNR", "HNR", "HNR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR", "OR", "CR", "NR", "CR", "CR", "CR", "CR", "NR", "CR", "CR", "CR", "NR", "CR",
+            "CR", "NR", "HNR", "HNR", "HNR", "HNR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DUYPES
      *
-     * @cdk.inchi InChI=1S/C20H23N2O2/c1-21(2)20(22(3)4)24-19(17-13-9-6-10-14-17)15-18(23)16-11-7-5-8-12-16/h5-15H,1-4H3/q+1/b19-15+
+     * @cdk.inchi
+     *     InChI=1S/C20H23N2O2/c1-21(2)20(22(3)4)24-19(17-13-9-6-10-14-17)15-18(23)16-11-7-5-8-12-16/h5-15H,1-4H3/q+1/b19-15+
      */
     @Test
     public void testDUYPES() {
@@ -15755,17 +16366,20 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(22, 23, DOUBLE);
         container.addBond(23, 46, SINGLE);
 
-        String[] expected = {"OC=C", "O=CR", "NCN+", "NCN+", "CR", "CR", "CR", "CR", "CNN+", "C=C", "C=C", "C=OR",
-                "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC"};
+        String[] expected = {
+            "OC=C", "O=CR", "NCN+", "NCN+", "CR", "CR", "CR", "CR", "CNN+", "C=C", "C=C", "C=OR",
+            "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for DUYRAQ
      *
-     * @cdk.inchi InChI=1S/C9H22N2P2/c1-8(2,3)12-7-13(11-10-12)9(4,5)6/h10-11H,7H2,1-6H3/t12-,13-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C9H22N2P2/c1-8(2,3)12-7-13(11-10-12)9(4,5)6/h10-11H,7H2,1-6H3/t12-,13-/m1/s1
      */
     @Test
     public void testDUYRAQ() {
@@ -15841,16 +16455,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 33, SINGLE);
         container.addBond(14, 34, SINGLE);
 
-        String[] expected = {"P", "P", "NR", "HNR", "NR", "HNR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC"};
+        String[] expected = {
+            "P", "P", "NR", "HNR", "NR", "HNR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR",
+            "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FACMIF
      *
-     * @cdk.inchi InChI=1S/C10H13N2OP/c1-6-10-8-3-4-9(5-8)14(10)12(11-6)7(2)13/h3-4,8-10H,5H2,1-2H3/t8-,9+,10+,14-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H13N2OP/c1-6-10-8-3-4-9(5-8)14(10)12(11-6)7(2)13/h3-4,8-10H,5H2,1-2H3/t8-,9+,10+,14-/m0/s1
      */
     @Test
     public void testFACMIF() {
@@ -15912,8 +16529,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 25, SINGLE);
         container.addBond(13, 26, SINGLE);
 
-        String[] expected = {"P", "O=CN", "NC=O", "N=C", "C=ON", "CR", "C=N", "CR", "CR", "CR", "CR", "CR", "C=C",
-                "C=C", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "P", "O=CN", "NC=O", "N=C", "C=ON", "CR", "C=N", "CR", "CR", "CR", "CR", "CR", "C=C",
+            "C=C", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -15968,8 +16587,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 20, SINGLE);
         container.addBond(19, 20, SINGLE);
 
-        String[] expected = {"CR", "NO2", "O2N", "O2N", "CR", "OR", "CR", "OR", "CR", "OR", "CR", "HC", "HC", "HOR",
-                "HC", "HOR", "HC", "HC", "HC", "HOR", "OR"};
+        String[] expected = {
+            "CR", "NO2", "O2N", "O2N", "CR", "OR", "CR", "OR", "CR", "OR", "CR", "HC", "HC", "HOR",
+            "HC", "HOR", "HC", "HC", "HC", "HOR", "OR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -16022,8 +16643,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 17, SINGLE);
         container.addBond(13, 18, SINGLE);
 
-        String[] expected = {"C5A", "OFUR", "C5A", "C5B", "CB", "CB", "CB", "CB", "C5B", "CSP", "NSP", "OC=C", "OC=C",
-                "CR", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "C5A", "OFUR", "C5A", "C5B", "CB", "CB", "CB", "CB", "C5B", "CSP", "NSP", "OC=C",
+            "OC=C", "CR", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -16069,8 +16692,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(7, 15, SINGLE);
         container.addBond(7, 8, SINGLE);
 
-        String[] expected = {"NC=C", "NC=O", "C=ON", "CB", "CB", "CB", "CB", "CB", "CB", "O=CN", "HNCC", "HNCO", "HC",
-                "HC", "HC", "HC"};
+        String[] expected = {
+            "NC=C", "NC=O", "C=ON", "CB", "CB", "CB", "CB", "CB", "CB", "O=CN", "HNCC", "HNCO",
+            "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -16128,15 +16753,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 21, SINGLE);
         container.addBond(13, 22, SINGLE);
 
-        String[] expected = {"SO2N", "SO3", "SO2N", "O2S", "O2S", "OSO2", "O2S", "O2S", "O2S", "O2S", "NSO2", "CR",
-                "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2N", "SO3", "SO2N", "O2S", "O2S", "OSO2", "O2S", "O2S", "O2S", "O2S", "NSO2", "CR",
+            "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FADVUB
      *
-     * @cdk.inchi InChI=1S/C5H12N2O3S/c1-11(7,10)3-2-4(6)5(8)9/h4,7H,2-3,6H2,1H3,(H,8,9)/t4-,11-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C5H12N2O3S/c1-11(7,10)3-2-4(6)5(8)9/h4,7H,2-3,6H2,1H3,(H,8,9)/t4-,11-/m0/s1
      */
     @Test
     public void testFADVUB() {
@@ -16187,8 +16815,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 10, SINGLE);
         container.addBond(8, 9, DOUBLE);
 
-        String[] expected = {"SNO", "O-S", "NSO", "CR", "CR", "CR", "CR", "NR+", "CO2M", "O2CM", "O2CM", "HNSO", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNR+", "HNR+", "HNR+"};
+        String[] expected = {
+            "SNO", "O-S", "NSO", "CR", "CR", "CR", "CR", "NR+", "CO2M", "O2CM", "O2CM", "HNSO",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNR+", "HNR+", "HNR+"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -16282,16 +16912,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(28, 39, SINGLE);
         container.addBond(28, 38, SINGLE);
 
-        String[] expected = {"PO2", "O2P", "NCN+", "NCN+", "CNN+", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "O2P", "CNN+", "NCN+", "NCN+", "CR", "CR", "CR", "CR",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "PO2", "O2P", "NCN+", "NCN+", "CNN+", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "O2P", "CNN+", "NCN+", "NCN+", "CR",
+            "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FAGCOF
      *
-     * @cdk.inchi InChI=1S/C10H11NO3S/c1-15(13,14)11-9(7-10(11)12)8-5-3-2-4-6-8/h2-6,9H,7H2,1H3/t9-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H11NO3S/c1-15(13,14)11-9(7-10(11)12)8-5-3-2-4-6-8/h2-6,9H,7H2,1H3/t9-/m0/s1
      */
     @Test
     public void testFAGCOF() {
@@ -16350,8 +16983,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 24, SINGLE);
         container.addBond(14, 25, SINGLE);
 
-        String[] expected = {"SO2N", "O=CN", "O2S", "O2S", "NSO2", "C=ON", "CR4R", "CR4R", "CB", "CB", "CB", "CB",
-                "CB", "CB", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2N", "O=CN", "O2S", "O2S", "NSO2", "C=ON", "CR4R", "CR4R", "CB", "CB", "CB", "CB",
+            "CB", "CB", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -16393,7 +17028,9 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 9, DOUBLE);
         container.addBond(8, 13, SINGLE);
 
-        String[] expected = {"CL", "P", "OPO", "OPO", "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "P", "OPO", "OPO", "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -16459,14 +17096,17 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(7, 10, SINGLE);
         container.addBond(9, 11, SINGLE);
 
-        String[] expected = {"BR", "OM2", "O=CR", "C=C", "C=OR", "C=C", "C=OR", "C=C", "O=CR", "C=C", "OM2", "BR"};
+        String[] expected = {
+            "BR", "OM2", "O=CR", "C=C", "C=OR", "C=C", "C=OR", "C=C", "O=CR", "C=C", "OM2", "BR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FAHPUZ
      *
-     * @cdk.inchi InChI=1S/C12H12N2O2S/c15-17(16)7-8-5-6-10-9-3-1-2-4-11(9)14(17)12(10)13-8/h1-6,8,10,12-13H,7H2/t8-,10+,12-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C12H12N2O2S/c15-17(16)7-8-5-6-10-9-3-1-2-4-11(9)14(17)12(10)13-8/h1-6,8,10,12-13H,7H2/t8-,10+,12-/m1/s1
      */
     @Test
     public void testFAHPUZ() {
@@ -16533,8 +17173,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 26, SINGLE);
         container.addBond(16, 27, SINGLE);
 
-        String[] expected = {"SO2N", "O2S", "O2S", "NSO2", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "CR", "C=C",
-                "C=C", "CR", "NR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNR"};
+        String[] expected = {
+            "SO2N", "O2S", "O2S", "NSO2", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "CR", "C=C",
+            "C=C", "CR", "NR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HNR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -16600,8 +17243,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 17, SINGLE);
         container.addBond(13, 15, SINGLE);
 
-        String[] expected = {"NPYD", "CB", "NPD+", "CB", "CB", "CB", "NC=O", "CONN", "NC=O", "O=CN", "CR", "CR",
-                "NC=N", "CR", "HC", "HC", "HC", "HC", "HC", "HNCO", "HC", "HC", "HNCN", "HC", "HC", "HC"};
+        String[] expected = {
+            "NPYD", "CB", "NPD+", "CB", "CB", "CB", "NC=O", "CONN", "NC=O", "O=CN", "CR", "CR",
+            "NC=N", "CR", "HC", "HC", "HC", "HC", "HC", "HNCO", "HC", "HC", "HNCN", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -16660,8 +17305,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 21, SINGLE);
         container.addBond(11, 20, SINGLE);
 
-        String[] expected = {"S", "OXN", "N2OX", "CB", "CB", "CB", "CB", "CB", "CB", "C=N", "CR", "CR", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "OXN", "N2OX", "CB", "CB", "CB", "CB", "CB", "CB", "C=N", "CR", "CR", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -16725,8 +17372,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 19, SINGLE);
         container.addBond(15, 20, SINGLE);
 
-        String[] expected = {"SO3", "OSO2", "O=CN", "O2S", "O2S", "NSO3", "C=C", "C=C", "C=ON", "CR", "CB", "CB", "CB",
-                "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HNSO", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO3", "OSO2", "O=CN", "O2S", "O2S", "NSO3", "C=C", "C=C", "C=ON", "CR", "CB", "CB",
+            "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HNSO", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -16775,15 +17424,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 16, SINGLE);
         container.addBond(8, 17, SINGLE);
 
-        String[] expected = {"OC=N", "O=CN", "OC=N", "NC=O", "N=C", "N=C", "CR", "CONN", "CR", "C=N", "C=N", "HNCO",
-                "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OC=N", "O=CN", "OC=N", "NC=O", "N=C", "N=C", "CR", "CONN", "CR", "C=N", "C=N", "HNCO",
+            "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FAMHAC
      *
-     * @cdk.inchi InChI=1S/C10H14NOPS/c1-8-9-6-4-5-7-10(9)13(14,12-8)11(2)3/h4-8H,1-3H3/t8-,13-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H14NOPS/c1-8-9-6-4-5-7-10(9)13(14,12-8)11(2)3/h4-8H,1-3H3/t8-,13-/m1/s1
      */
     @Test
     public void testFAMHAC() {
@@ -16846,8 +17498,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 26, SINGLE);
         container.addBond(13, 27, SINGLE);
 
-        String[] expected = {"S-P", "PO", "-OP", "NR", "CR", "CR", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "CR",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S-P", "PO", "-OP", "NR", "CR", "CR", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "CR",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -16884,7 +17538,9 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(5, 11, SINGLE);
         container.addBond(6, 7, DOUBLE);
 
-        String[] expected = {"BR", "NC=O", "C=ON", "O=CN", "CR", "CR", "C=ON", "O=CN", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "BR", "NC=O", "C=ON", "O=CN", "CR", "CR", "C=ON", "O=CN", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -16923,8 +17579,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(4, 8, DOUBLE);
         container.addBond(5, 9, DOUBLE);
 
-        String[] expected = {"PO2", "NC=O", "NC=O", "NC=O", "CONN", "CONN", "SM", "O2P", "O=CN", "O=CN", "HNCO",
-                "HNCO", "HNCO"};
+        String[] expected = {
+            "PO2", "NC=O", "NC=O", "NC=O", "CONN", "CONN", "SM", "O2P", "O=CN", "O=CN", "HNCO",
+            "HNCO", "HNCO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -16988,8 +17646,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 14, SINGLE);
         container.addBond(14, 15, SINGLE);
 
-        String[] expected = {"C=C", "C=C", "C=C", "C=C", "C5A", "N5B", "C5B", "N5B", "C5A", "C=C", "C=C", "C=C", "C=C",
-                "NPYL", "C5A", "NPYL", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "C=C", "C=C", "C=C", "C=C", "C5A", "N5B", "C5B", "N5B", "C5A", "C=C", "C=C", "C=C",
+            "C=C", "NPYL", "C5A", "NPYL", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -17048,8 +17708,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(17, 21, SINGLE);
         container.addBond(18, 21, SINGLE);
 
-        String[] expected = {"STHI", "N5A", "C5B", "C5B", "N5A", "C=C", "C=C", "C=C", "C=C", "CSP", "CSP", "NSP",
-                "NSP", "C5B", "C5B", "CSP", "CSP", "N5A", "N5A", "NSP", "NSP", "STHI"};
+        String[] expected = {
+            "STHI", "N5A", "C5B", "C5B", "N5A", "C=C", "C=C", "C=C", "C=C", "CSP", "CSP", "NSP",
+            "NSP", "C5B", "C5B", "CSP", "CSP", "N5A", "N5A", "NSP", "NSP", "STHI"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -17085,7 +17747,9 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(6, 10, SINGLE);
         container.addBond(6, 11, SINGLE);
 
-        String[] expected = {"S2CM", "S2CM", "N=C", "NC=N", "CS2M", "C=N", "CR", "HNCN", "HNCN", "HC", "HC", "HC"};
+        String[] expected = {
+            "S2CM", "S2CM", "N=C", "NC=N", "CS2M", "C=N", "CR", "HNCN", "HNCN", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -17127,15 +17791,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(6, 13, SINGLE);
         container.addBond(6, 14, SINGLE);
 
-        String[] expected = {"CGD", "N=C", "NR", "NC=N", "NR", "NC=N", "NR", "HNR", "HNR", "HNCN", "HNR", "HNR",
-                "HNCN", "HNR", "HNR"};
+        String[] expected = {
+            "CGD", "N=C", "NR", "NC=N", "NR", "NC=N", "NR", "HNR", "HNR", "HNCN", "HNR", "HNR",
+            "HNCN", "HNR", "HNR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FASJIS
      *
-     * @cdk.inchi InChI=1S/C10H19N5O2P2S/c1-13(2)18(16)11-14(3)19(20,15(4)12-18)17-10-8-6-5-7-9-10/h5-9H,1-4H3,(H2,11,12,16)/t18-,19+
+     * @cdk.inchi
+     *     InChI=1S/C10H19N5O2P2S/c1-13(2)18(16)11-14(3)19(20,15(4)12-18)17-10-8-6-5-7-9-10/h5-9H,1-4H3,(H2,11,12,16)/t18-,19+
      */
     @Test
     public void testFASJIS() {
@@ -17220,16 +17887,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(19, 37, SINGLE);
         container.addBond(19, 38, SINGLE);
 
-        String[] expected = {"PO", "PO", "S-P", "-OP", "OP", "NR", "NR", "NR", "NR", "NR", "CB", "CB", "CB", "CB",
-                "CB", "CB", "CR", "CR", "CR", "CR", "HNR", "HC", "HC", "HC", "HC", "HC", "HNR", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "PO", "PO", "S-P", "-OP", "OP", "NR", "NR", "NR", "NR", "NR", "CB", "CB", "CB", "CB",
+            "CB", "CB", "CR", "CR", "CR", "CR", "HNR", "HC", "HC", "HC", "HC", "HC", "HNR", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FATLIV
      *
-     * @cdk.inchi InChI=1S/C12H16N3O3P/c1-18-11-4-2-3-10(9-11)12(16)13-19(17,14-5-6-14)15-7-8-15/h2-4,9H,5-8H2,1H3,(H,13,16,17)
+     * @cdk.inchi
+     *     InChI=1S/C12H16N3O3P/c1-18-11-4-2-3-10(9-11)12(16)13-19(17,14-5-6-14)15-7-8-15/h2-4,9H,5-8H2,1H3,(H,13,16,17)
      */
     @Test
     public void testFATLIV() {
@@ -17307,9 +17977,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(18, 33, SINGLE);
         container.addBond(18, 34, SINGLE);
 
-        String[] expected = {"PO", "OP", "O=CN", "OC=C", "NC=O", "NR", "NR", "C=ON", "CB", "CB", "CB", "CB", "CB",
-                "CB", "CR3R", "CR3R", "CR3R", "CR3R", "CR", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "PO", "OP", "O=CN", "OC=C", "NC=O", "NR", "NR", "C=ON", "CB", "CB", "CB", "CB", "CB",
+            "CB", "CR3R", "CR3R", "CR3R", "CR3R", "CR", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -17353,8 +18025,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(7, 8, SINGLE);
         container.addBond(9, 13, SINGLE);
 
-        String[] expected = {"O=CN", "NCN+", "NCN+", "NPYL", "N5A", "CNN+", "C5B", "C5B", "C=ON", "C5A", "HNN+", "HC",
-                "HNN+", "HC", "HPYL"};
+        String[] expected = {
+            "O=CN", "NCN+", "NCN+", "NPYL", "N5A", "CNN+", "C5B", "C5B", "C=ON", "C5A", "HNN+",
+            "HC", "HNN+", "HC", "HPYL"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -17412,8 +18086,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 20, SINGLE);
         container.addBond(13, 19, SINGLE);
 
-        String[] expected = {"SO2N", "O2S", "O2S", "O=CN", "NSO2", "NSO2", "CB", "CB", "CB", "CB", "CB", "CB", "C=ON",
-                "CR", "HNSO", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2N", "O2S", "O2S", "O=CN", "NSO2", "NSO2", "CB", "CB", "CB", "CB", "CB", "CB",
+            "C=ON", "CR", "HNSO", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -17474,15 +18150,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 22, SINGLE);
         container.addBond(9, 21, SINGLE);
 
-        String[] expected = {"NPD+", "CB", "CB", "CB", "CB", "CB", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NPD+", "CB", "CB", "CB", "CB", "CB", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FAXVIJ
      *
-     * @cdk.inchi InChI=1S/C12H6F3N3O2/c13-12(14,15)7-5-8-11(9(6-7)18(19)20)17-4-2-1-3-10(17)16-8/h1-6H
+     * @cdk.inchi
+     *     InChI=1S/C12H6F3N3O2/c13-12(14,15)7-5-8-11(9(6-7)18(19)20)17-4-2-1-3-10(17)16-8/h1-6H
      */
     @Test
     public void testFAXVIJ() {
@@ -17542,8 +18221,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 16, SINGLE);
         container.addBond(18, 19, SINGLE);
 
-        String[] expected = {"C=C", "C=C", "C=C", "C=C", "C5A", "N5B", "C5B", "CB", "CB", "CR", "F", "F", "F", "CB",
-                "CB", "NO2", "O2N", "O2N", "C5A", "NPYL", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "C=C", "C=C", "C=C", "C=C", "C5A", "N5B", "C5B", "CB", "CB", "CR", "F", "F", "F", "CB",
+            "CB", "NO2", "O2N", "O2N", "C5A", "NPYL", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -17579,7 +18260,9 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 10, SINGLE);
         container.addBond(8, 11, SINGLE);
 
-        String[] expected = {"S", "OM2", "C=C", "C=C", "CSP", "CSP", "NSP", "NSP", "CR", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "OM2", "C=C", "C=C", "CSP", "CSP", "NSP", "NSP", "CR", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -17615,14 +18298,17 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 10, SINGLE);
         container.addBond(8, 11, SINGLE);
 
-        String[] expected = {"CL", "CL", "CL", "CL", "SI", "C=C", "C=C", "CL", "SI", "CL", "CL", "CL"};
+        String[] expected = {
+            "CL", "CL", "CL", "CL", "SI", "C=C", "C=C", "CL", "SI", "CL", "CL", "CL"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FBATNB
      *
-     * @cdk.inchi InChI=1S/C10H11FN4O6/c1-10(2,3)12(11)9-7(14(18)19)4-6(13(16)17)5-8(9)15(20)21/h4-5H,1-3H3
+     * @cdk.inchi
+     *     InChI=1S/C10H11FN4O6/c1-10(2,3)12(11)9-7(14(18)19)4-6(13(16)17)5-8(9)15(20)21/h4-5H,1-3H3
      */
     @Test
     public void testFBATNB() {
@@ -17692,9 +18378,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(25, 31, DOUBLE);
         container.addBond(25, 30, SINGLE);
 
-        String[] expected = {"CB", "CR", "CB", "CB", "CB", "CB", "CB", "CR", "CR", "CR", "F", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "NC=C", "NO2", "NO2", "NO2", "O2N", "O2N", "O2N", "O2N",
-                "O2N", "O2N"};
+        String[] expected = {
+            "CB", "CR", "CB", "CB", "CB", "CB", "CB", "CR", "CR", "CR", "F", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "NC=C", "NO2", "NO2", "NO2", "O2N", "O2N",
+            "O2N", "O2N", "O2N", "O2N"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -17755,8 +18443,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 23, SINGLE);
         container.addBond(9, 10, SINGLE);
 
-        String[] expected = {"C=N", "C=OR", "C=C", "C=C", "C=C", "C=C", "CR", "CR", "CR", "NC=C", "N=C", "O=CR", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "C=N", "C=OR", "C=C", "C=C", "C=C", "C=C", "CR", "CR", "CR", "NC=C", "N=C", "O=CR",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -17805,8 +18495,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 16, SINGLE);
         container.addBond(8, 17, SINGLE);
 
-        String[] expected = {"PO3", "OPO2", "OPO2", "OP", "O=CN", "NC=O", "CR", "CR", "CR", "C=ON", "HOP", "HOP", "HC",
-                "HNCO", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "PO3", "OPO2", "OPO2", "OP", "O=CN", "NC=O", "CR", "CR", "CR", "C=ON", "HOP", "HOP",
+            "HC", "HNCO", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -17847,15 +18539,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(6, 12, SINGLE);
         container.addBond(6, 13, SINGLE);
 
-        String[] expected = {"C=C", "CR3R", "CR3R", "C=C", "C=ON", "O=CN", "NC=O", "HC", "HC", "HC", "HC", "HC",
-                "HNCO", "HNCO"};
+        String[] expected = {
+            "C=C", "CR3R", "CR3R", "C=C", "C=ON", "O=CN", "NC=O", "HC", "HC", "HC", "HC", "HC",
+            "HNCO", "HNCO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FEJJEJ
      *
-     * @cdk.inchi InChI=1S/C12H11NO/c1-2-10-11(13-12(10)14)8-9-6-4-3-5-7-9/h3-7,11H,1,8H2,(H,13,14)/t11-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C12H11NO/c1-2-10-11(13-12(10)14)8-9-6-4-3-5-7-9/h3-7,11H,1,8H2,(H,13,14)/t11-/m1/s1
      */
     @Test
     public void testFEJJEJ() {
@@ -17912,8 +18607,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 23, SINGLE);
         container.addBond(13, 24, SINGLE);
 
-        String[] expected = {"O=CN", "C=ON", "CE4R", "CR4R", "NC=O", "=C=", "C=C", "CR", "CB", "CB", "CB", "CB", "CB",
-                "CB", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "O=CN", "C=ON", "CE4R", "CR4R", "NC=O", "=C=", "C=C", "CR", "CB", "CB", "CB", "CB",
+            "CB", "CB", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -18004,9 +18701,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(32, 36, SINGLE);
         container.addBond(32, 37, SINGLE);
 
-        String[] expected = {"NR+", "CR", "CR", "CR", "CR3R", "CR3R", "CR3R", "HNR+", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "CR", "CR", "NR+", "HC", "HC", "HC", "HC", "CR", "HNR+", "CR3R",
-                "HC", "HC", "CR3R", "CR3R", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NR+", "CR", "CR", "CR", "CR3R", "CR3R", "CR3R", "HNR+", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "CR", "CR", "NR+", "HC", "HC", "HC", "HC", "CR",
+            "HNR+", "CR3R", "HC", "HC", "CR3R", "CR3R", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -18059,8 +18758,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 18, SINGLE);
         container.addBond(10, 19, SINGLE);
 
-        String[] expected = {"S=C", "OFUR", "OR", "NC=S", "C=SN", "C5A", "C5B", "C5B", "C5A", "CR", "CR", "HC", "HC",
-                "HC", "HNCS", "HOR", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S=C", "OFUR", "OR", "NC=S", "C=SN", "C5A", "C5B", "C5B", "C5A", "CR", "CR", "HC", "HC",
+            "HC", "HNCS", "HOR", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -18123,15 +18824,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 23, SINGLE);
         container.addBond(13, 22, SINGLE);
 
-        String[] expected = {"CB", "CB", "CB", "CB", "CB", "CB", "C=OR", "O=CR", "CR", "NC=O", "-O-", "C=ON", "O=CN",
-                "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HO", "HC", "HC", "HC"};
+        String[] expected = {
+            "CB", "CB", "CB", "CB", "CB", "CB", "C=OR", "O=CR", "CR", "NC=O", "-O-", "C=ON", "O=CN",
+            "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HO", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FEMGEJ
      *
-     * @cdk.inchi InChI=1S/C10H14O2/c11-10(12)9-7-5-3-1-2-4-6-8(7)9/h3,5,7-9H,1-2,4,6H2,(H,11,12)/p-1/b5-3-/t7-,8+,9+/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H14O2/c11-10(12)9-7-5-3-1-2-4-6-8(7)9/h3,5,7-9H,1-2,4,6H2,(H,11,12)/p-1/b5-3-/t7-,8+,9+/m1/s1
      */
     @Test
     public void testFEMGEJ() {
@@ -18188,8 +18892,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 11, SINGLE);
         container.addBond(10, 24, SINGLE);
 
-        String[] expected = {"O2CM", "O2CM", "CR3R", "C=C", "C=C", "CR", "CR", "CR", "CR", "CR3R", "CR3R", "CO2M",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "O2CM", "O2CM", "CR3R", "C=C", "C=C", "CR", "CR", "CR", "CR", "CR3R", "CR3R", "CO2M",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -18238,8 +18944,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 15, SINGLE);
         container.addBond(10, 14, SINGLE);
 
-        String[] expected = {"OFUR", "OXN", "-O-", "N5AX", "N5A", "N=C", "C5B", "C5B", "CR", "C=N", "CR", "HO", "HC",
-                "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OFUR", "OXN", "-O-", "N5AX", "N5A", "N=C", "C5B", "C5B", "CR", "C=N", "CR", "HO", "HC",
+            "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -18286,15 +18994,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 15, SINGLE);
         container.addBond(9, 16, SINGLE);
 
-        String[] expected = {"C5B", "N5B", "C5A", "OFUR", "N5A", "C=ON", "O=CN", "NC=O", "CR", "CR", "HNCO", "HC",
-                "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "C5B", "N5B", "C5A", "OFUR", "N5A", "C=ON", "O=CN", "NC=O", "CR", "CR", "HNCO", "HC",
+            "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FENJIR
      *
-     * @cdk.inchi InChI=1S/C9H17N3S2/c1-8(2)9(11(3)4)12(5-6-14-9)7(13)10-8/h5-6H2,1-4H3,(H,10,13)/t9-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C9H17N3S2/c1-8(2)9(11(3)4)12(5-6-14-9)7(13)10-8/h5-6H2,1-4H3,(H,10,13)/t9-/m1/s1
      */
     @Test
     public void testFENJIR() {
@@ -18363,15 +19074,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 29, SINGLE);
         container.addBond(13, 30, SINGLE);
 
-        String[] expected = {"S", "CR", "CR", "NC=S", "C=SN", "S=C", "NC=S", "CR", "CR", "NR", "CR", "CR", "CR", "CR",
-                "HC", "HC", "HC", "HC", "HNCS", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "CR", "CR", "NC=S", "C=SN", "S=C", "NC=S", "CR", "CR", "NR", "CR", "CR", "CR",
+            "CR", "HC", "HC", "HC", "HC", "HNCS", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FENJOX
      *
-     * @cdk.inchi InChI=1S/C10H19N3S2/c1-5-10(2,8-11-6-7-15-8)12-9(14)13(3)4/h5-7H2,1-4H3,(H,12,14)/t10-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H19N3S2/c1-5-10(2,8-11-6-7-15-8)12-9(14)13(3)4/h5-7H2,1-4H3,(H,12,14)/t10-/m0/s1
      */
     @Test
     public void testFENJOX() {
@@ -18445,9 +19160,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 31, SINGLE);
         container.addBond(14, 30, SINGLE);
 
-        String[] expected = {"S", "C=N", "N=C", "CR", "CR", "CR", "CR", "CR", "CR", "NC=S", "C=SN", "S=C", "NC=S",
-                "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNCS", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "C=N", "N=C", "CR", "CR", "CR", "CR", "CR", "CR", "NC=S", "C=SN", "S=C", "NC=S",
+            "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNCS",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -18517,8 +19234,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 26, SINGLE);
         container.addBond(13, 27, SINGLE);
 
-        String[] expected = {"NC=S", "C=SN", "S=C", "NC=O", "C=ON", "O=CN", "CR", "CR", "CR", "CR", "CR", "CR", "CR",
-                "S", "HNCS", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HS"};
+        String[] expected = {
+            "NC=S", "C=SN", "S=C", "NC=O", "C=ON", "O=CN", "CR", "CR", "CR", "CR", "CR", "CR", "CR",
+            "S", "HNCS", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HS"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -18572,15 +19292,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(7, 19, SINGLE);
         container.addBond(7, 18, SINGLE);
 
-        String[] expected = {"-P=C", "NC=P", "NC=P", "C=P", "CR", "CR", "CR", "CR", "HP", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "-P=C", "NC=P", "NC=P", "C=P", "CR", "CR", "CR", "CR", "HP", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FENYIG
      *
-     * @cdk.inchi InChI=1S/C12H16N4O4/c1-12(2,3)20-11(19)7-5-4-6-15-9(17)8(14-13)10(18)16(7)15/h7H,4-6H2,1-3H3/t7-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C12H16N4O4/c1-12(2,3)20-11(19)7-5-4-6-15-9(17)8(14-13)10(18)16(7)15/h7H,4-6H2,1-3H3/t7-/m1/s1
      */
     @Test
     public void testFENYIG() {
@@ -18659,9 +19382,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(19, 34, SINGLE);
         container.addBond(19, 33, SINGLE);
 
-        String[] expected = {"C=ON", "O=CN", "C=N", "C=ON", "O=CN", "NC=O", "CR", "CR", "CR", "CR", "NC=O", "=N=",
-                "NAZT", "COO", "O=CO", "OC=O", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "C=ON", "O=CN", "C=N", "C=ON", "O=CN", "NC=O", "CR", "CR", "CR", "CR", "NC=O", "=N=",
+            "NAZT", "COO", "O=CO", "OC=O", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -18699,8 +19424,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(6, 11, SINGLE);
         container.addBond(6, 12, SINGLE);
 
-        String[] expected = {"S2CM", "S2CM", "NCN+", "NCN+", "CS2M", "CNN+", "CR", "HNN+", "HNN+", "HNN+", "HC", "HC",
-                "HC"};
+        String[] expected = {
+            "S2CM", "S2CM", "NCN+", "NCN+", "CS2M", "CNN+", "CR", "HNN+", "HNN+", "HNN+", "HC",
+            "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -18768,14 +19495,17 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(5, 8, DOUBLE);
         container.addBond(5, 9, SINGLE);
 
-        String[] expected = {"NC=O", "C=ON", "O=CN", "HC", "C=ON", "C=ON", "O=CN", "HC", "O=CN", "HC"};
+        String[] expected = {
+            "NC=O", "C=ON", "O=CN", "HC", "C=ON", "C=ON", "O=CN", "HC", "O=CN", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FESMIZ
      *
-     * @cdk.inchi InChI=1S/C9H9Cl3N2O2/c10-9(11,12)8(15)16-14-7(13)6-4-2-1-3-5-6/h1-5,8,15H,(H2,13,14)/t8-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C9H9Cl3N2O2/c10-9(11,12)8(15)16-14-7(13)6-4-2-1-3-5-6/h1-5,8,15H,(H2,13,14)/t8-/m1/s1
      */
     @Test
     public void testFESMIZ() {
@@ -18831,8 +19561,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 23, SINGLE);
         container.addBond(14, 24, SINGLE);
 
-        String[] expected = {"CL", "CL", "CL", "CR", "CR", "C=N", "CB", "CB", "CB", "CB", "CB", "CB", "N=C", "NC=N",
-                "OR", "OR", "HC", "HC", "HC", "HC", "HC", "HC", "HNCN", "HNCN", "HOR"};
+        String[] expected = {
+            "CL", "CL", "CL", "CR", "CR", "C=N", "CB", "CB", "CB", "CB", "CB", "CB", "N=C", "NC=N",
+            "OR", "OR", "HC", "HC", "HC", "HC", "HC", "HC", "HNCN", "HNCN", "HOR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -18893,15 +19625,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(20, 21, SINGLE);
         container.addBond(20, 22, SINGLE);
 
-        String[] expected = {"NR+", "CR", "NR", "CR", "HNR+", "HC", "HC", "HC", "CR", "CR", "HC", "CR", "NR", "NR",
-                "HC", "HC", "HC", "HC", "HC", "HC", "CR", "HC", "HC"};
+        String[] expected = {
+            "NR+", "CR", "NR", "CR", "HNR+", "HC", "HC", "HC", "CR", "CR", "HC", "CR", "NR", "NR",
+            "HC", "HC", "HC", "HC", "HC", "HC", "CR", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FETWOQ
      *
-     * @cdk.inchi InChI=1S/C11H13NO5/c13-5-3-4-8(11(5)17)9(10(4)16)12-6(14)1-2-7(12)15/h4-5,8-9,11,13,17H,1-3H2/t4-,5-,8+,9+,11-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C11H13NO5/c13-5-3-4-8(11(5)17)9(10(4)16)12-6(14)1-2-7(12)15/h4-5,8-9,11,13,17H,1-3H2/t4-,5-,8+,9+,11-/m1/s1
      */
     @Test
     public void testFETWOQ() {
@@ -18969,16 +19704,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 28, SINGLE);
         container.addBond(13, 29, SINGLE);
 
-        String[] expected = {"CR4R", "CR", "CR", "CR", "CR4R", "CR4R", "C=OR", "C=ON", "CR", "CR", "C=ON", "NC=O",
-                "OR", "OR", "O=CR", "O=CN", "O=CN", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HOR", "HOR"};
+        String[] expected = {
+            "CR4R", "CR", "CR", "CR", "CR4R", "CR4R", "C=OR", "C=ON", "CR", "CR", "C=ON", "NC=O",
+            "OR", "OR", "O=CR", "O=CN", "O=CN", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HOR", "HOR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FEVNUP
      *
-     * @cdk.inchi InChI=1S/C5H6Cl3N3O2/c1-11-3(12)5(6,7)2(10-8)9-4(11)13/h3,12H,1H3,(H,9,10,13)/t3-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C5H6Cl3N3O2/c1-11-3(12)5(6,7)2(10-8)9-4(11)13/h3,12H,1H3,(H,9,10,13)/t3-/m0/s1
      */
     @Test
     public void testFEVNUP() {
@@ -19022,8 +19760,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 17, SINGLE);
         container.addBond(12, 18, SINGLE);
 
-        String[] expected = {"CL", "CL", "CL", "NC=O", "CR", "CONN", "O=CN", "NC=O", "C=N", "N=C", "CR", "CR", "OR",
-                "HC", "HC", "HC", "HNCO", "HC", "HOR"};
+        String[] expected = {
+            "CL", "CL", "CL", "NC=O", "CR", "CONN", "O=CN", "NC=O", "C=N", "N=C", "CR", "CR", "OR",
+            "HC", "HC", "HC", "HNCO", "HC", "HOR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -19075,8 +19815,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 18, SINGLE);
         container.addBond(13, 14, SINGLE);
 
-        String[] expected = {"OFUR", "O2N", "O2N", "O2N", "O2N", "N5A", "N5A", "NC=N", "NC=N", "NO2", "NO2", "CR",
-                "CR", "C5B", "C5B", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OFUR", "O2N", "O2N", "O2N", "O2N", "N5A", "N5A", "NC=N", "NC=N", "NO2", "NO2", "CR",
+            "CR", "C5B", "C5B", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -19108,14 +19850,17 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(6, 8, DOUBLE);
         container.addBond(6, 9, SINGLE);
 
-        String[] expected = {"S=C", "OM2", "NC=S", "C=SN", "HNCS", "NC=S", "C=SN", "HNCS", "S=C", "OM2"};
+        String[] expected = {
+            "S=C", "OM2", "NC=S", "C=SN", "HNCS", "NC=S", "C=SN", "HNCS", "S=C", "OM2"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FEZRUX
      *
-     * @cdk.inchi InChI=1S/C12H11N5O/c1-8-14-15-12-13-10(7-11(18)17(12)16-8)9-5-3-2-4-6-9/h2-7H,1H3,(H,13,15)(H,14,16)
+     * @cdk.inchi
+     *     InChI=1S/C12H11N5O/c1-8-14-15-12-13-10(7-11(18)17(12)16-8)9-5-3-2-4-6-9/h2-7H,1H3,(H,13,15)(H,14,16)
      */
     @Test
     public void testFEZRUX() {
@@ -19181,16 +19926,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 27, SINGLE);
         container.addBond(17, 28, SINGLE);
 
-        String[] expected = {"O=CN", "NC=O", "NC=N", "N=C", "NC=N", "N=C", "CR", "C=N", "CGD", "C=ON", "C=C", "C=C",
-                "CB", "CB", "CB", "CB", "CB", "CB", "HNCN", "HNCN", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC"};
+        String[] expected = {
+            "O=CN", "NC=O", "NC=N", "N=C", "NC=N", "N=C", "CR", "C=N", "CGD", "C=ON", "C=C", "C=C",
+            "CB", "CB", "CB", "CB", "CB", "CB", "HNCN", "HNCN", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FIBLIL
      *
-     * @cdk.inchi InChI=1S/C11H12N2O4/c14-11(12-7-1-2-8-17-12)9-3-5-10(6-4-9)13(15)16/h3-6H,1-2,7-8H2
+     * @cdk.inchi
+     *     InChI=1S/C11H12N2O4/c14-11(12-7-1-2-8-17-12)9-3-5-10(6-4-9)13(15)16/h3-6H,1-2,7-8H2
      */
     @Test
     public void testFIBLIL() {
@@ -19255,8 +20003,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 15, SINGLE);
         container.addBond(14, 16, DOUBLE);
 
-        String[] expected = {"NC=O", "OR", "CR", "CR", "CR", "CR", "C=ON", "O=CN", "CB", "CB", "CB", "CB", "CB", "CB",
-                "NO2", "O2N", "O2N", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NC=O", "OR", "CR", "CR", "CR", "CR", "C=ON", "O=CN", "CB", "CB", "CB", "CB", "CB",
+            "CB", "NO2", "O2N", "O2N", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -19305,15 +20056,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 16, SINGLE);
         container.addBond(10, 17, SINGLE);
 
-        String[] expected = {"NPYL", "CR", "C5A", "N5B", "C5B", "NO2", "O2N", "O2N", "C5A", "OC=C", "CR", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NPYL", "CR", "C5A", "N5B", "C5B", "NO2", "O2N", "O2N", "C5A", "OC=C", "CR", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FIFGUW
      *
-     * @cdk.inchi InChI=1S/C11H20O2S/c1-9(2)6-10(3,4)8-11(7-9,13-8)14(5)12/h8H,6-7H2,1-5H3/t8-,11-,14-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C11H20O2S/c1-9(2)6-10(3,4)8-11(7-9,13-8)14(5)12/h8H,6-7H2,1-5H3/t8-,11-,14-/m1/s1
      */
     @Test
     public void testFIFGUW() {
@@ -19388,9 +20142,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 32, SINGLE);
         container.addBond(13, 33, SINGLE);
 
-        String[] expected = {"S=O", "O=S", "OR", "CR3R", "CR3R", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC"};
+        String[] expected = {
+            "S=O", "O=S", "OR", "CR3R", "CR3R", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR",
+            "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -19425,14 +20181,17 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(3, 9, SINGLE);
         container.addBond(3, 10, SINGLE);
 
-        String[] expected = {"CR3R", "CR3R", "CR3R", "NR", "HC", "HC", "HC", "HC", "HC", "HNR", "HNR"};
+        String[] expected = {
+            "CR3R", "CR3R", "CR3R", "NR", "HC", "HC", "HC", "HC", "HC", "HNR", "HNR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FIHXID
      *
-     * @cdk.inchi InChI=1S/C11H13BrN2O5/c12-2-1-6-4-14(11(18)13-10(6)17)9-3-7(16)8(5-15)19-9/h1-2,4,7-9,15-16H,3,5H2,(H,13,17,18)/b2-1-/t7-,8+,9+/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C11H13BrN2O5/c12-2-1-6-4-14(11(18)13-10(6)17)9-3-7(16)8(5-15)19-9/h1-2,4,7-9,15-16H,3,5H2,(H,13,17,18)/b2-1-/t7-,8+,9+/m0/s1
      */
     @Test
     public void testFIHXID() {
@@ -19503,9 +20262,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(17, 20, SINGLE);
         container.addBond(18, 21, SINGLE);
 
-        String[] expected = {"BR", "OR", "O=CN", "OR", "O=CN", "OR", "NC=O", "NC=O", "CR", "CONN", "CR", "CR", "C=ON",
-                "CR", "C=C", "CR", "C=C", "C=C", "C=C", "HC", "HC", "HC", "HC", "HC", "HC", "HNCO", "HC", "HC", "HC",
-                "HC", "HOR", "HOR"};
+        String[] expected = {
+            "BR", "OR", "O=CN", "OR", "O=CN", "OR", "NC=O", "NC=O", "CR", "CONN", "CR", "CR",
+            "C=ON", "CR", "C=C", "CR", "C=C", "C=C", "C=C", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HNCO", "HC", "HC", "HC", "HC", "HOR", "HOR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -19564,8 +20325,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 17, SINGLE);
         container.addBond(11, 18, SINGLE);
 
-        String[] expected = {"C=C", "C=C", "CR", "CR", "CR", "CR", "CSP", "CSP", "CSP", "CSP", "CSP", "NC=C", "NSP",
-                "NSP", "NSP", "NSP", "NSP", "HNCC", "HNCC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "C=C", "C=C", "CR", "CR", "CR", "CR", "CSP", "CSP", "CSP", "CSP", "CSP", "NC=C", "NSP",
+            "NSP", "NSP", "NSP", "NSP", "HNCC", "HNCC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -19617,8 +20380,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 11, DOUBLE);
         container.addBond(9, 18, SINGLE);
 
-        String[] expected = {"CB", "CB", "CB", "CB", "CB", "CB", "C=C", "C=C", "C=SN", "NC=S", "S", "S=C", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HNCS"};
+        String[] expected = {
+            "CB", "CB", "CB", "CB", "CB", "CB", "C=C", "C=C", "C=SN", "NC=S", "S", "S=C", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HNCS"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -19682,8 +20447,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 24, SINGLE);
         container.addBond(12, 16, SINGLE);
 
-        String[] expected = {"C=C", "C=C", "C=ON", "C=C", "C=C", "CR", "CSP", "CB", "CB", "CB", "CB", "CB", "NC=O",
-                "NSP", "NPYD", "O=CN", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "C=C", "C=C", "C=ON", "C=C", "C=C", "CR", "CSP", "CB", "CB", "CB", "CB", "CB", "NC=O",
+            "NSP", "NPYD", "O=CN", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -19745,15 +20512,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 22, SINGLE);
         container.addBond(12, 23, SINGLE);
 
-        String[] expected = {"S=O", "O=S", "-O-", "NR", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "CR", "HO",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S=O", "O=S", "-O-", "NR", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "CR", "HO",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FINBIN
      *
-     * @cdk.inchi InChI=1S/C6H3Cl9O3P2/c7-4(8,9)1-16-20-17-2(5(10,11)12)19(1)3(18-20)6(13,14)15/h1-3H/t1-,2-,3-,19-,20+/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C6H3Cl9O3P2/c7-4(8,9)1-16-20-17-2(5(10,11)12)19(1)3(18-20)6(13,14)15/h1-3H/t1-,2-,3-,19-,20+/m0/s1
      */
     @Test
     public void testFINBIN() {
@@ -19806,8 +20576,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 19, SINGLE);
         container.addBond(16, 22, SINGLE);
 
-        String[] expected = {"CL", "CL", "CL", "CL", "CL", "CL", "CL", "CL", "CL", "P", "P", "OPO2", "OPO2", "OPO2",
-                "CR", "CR", "CR", "CR", "CR", "CR", "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "CL", "CL", "CL", "CL", "CL", "CL", "CL", "CL", "P", "P", "OPO2", "OPO2", "OPO2",
+            "CR", "CR", "CR", "CR", "CR", "CR", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -19864,8 +20636,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 15, SINGLE);
         container.addBond(9, 16, SINGLE);
 
-        String[] expected = {"OC=O", "O=CO", "OR", "NR+", "CR4R", "CR4R", "CR4R", "CR4R", "COO", "CR", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HOR", "HNR+", "HNR+", "HNR+", "HOCO"};
+        String[] expected = {
+            "OC=O", "O=CO", "OR", "NR+", "CR4R", "CR4R", "CR4R", "CR4R", "COO", "CR", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HOR", "HNR+", "HNR+", "HNR+", "HOCO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -19934,8 +20708,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 26, SINGLE);
         container.addBond(13, 27, SINGLE);
 
-        String[] expected = {"N=C", "C=N", "CR", "C=C", "COO", "O=CO", "OC=O", "CR", "CR", "C=C", "NC=C", "CR", "CR",
-                "OR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNCC", "HNCC", "HC", "HC", "HC", "HOR"};
+        String[] expected = {
+            "N=C", "C=N", "CR", "C=C", "COO", "O=CO", "OC=O", "CR", "CR", "C=C", "NC=C", "CR", "CR",
+            "OR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNCC", "HNCC", "HC", "HC", "HC",
+            "HOR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -19972,7 +20749,9 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 10, SINGLE);
         container.addBond(9, 11, TRIPLE);
 
-        String[] expected = {"CR3R", "CSP", "NSP", "CR3R", "CSP", "NSP", "HC", "HC", "CR3R", "CSP", "HC", "NSP"};
+        String[] expected = {
+            "CR3R", "CSP", "NSP", "CR3R", "CSP", "NSP", "HC", "HC", "CR3R", "CSP", "HC", "NSP"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -20024,15 +20803,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 17, SINGLE);
         container.addBond(10, 16, SINGLE);
 
-        String[] expected = {"NPYD", "CB", "NPD+", "C5B", "C5A", "CB", "NPYL", "C5A", "N5B", "NC=N", "CR", "HC",
-                "HPYL", "HNCN", "HNCN", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NPYD", "CB", "NPD+", "C5B", "C5A", "CB", "NPYL", "C5A", "N5B", "NC=N", "CR", "HC",
+            "HPYL", "HNCN", "HNCN", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FIVNUT
      *
-     * @cdk.inchi InChI=1S/C12H15N3OS/c1-7-5-15(3)6-10(11(7)16)8(2)9(4-13)12(14)17/h5-6,8-9H,1-3H3,(H2,14,17)/t8-,9-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C12H15N3OS/c1-7-5-15(3)6-10(11(7)16)8(2)9(4-13)12(14)17/h5-6,8-9H,1-3H3,(H2,14,17)/t8-,9-/m1/s1
      */
     @Test
     public void testFIVNUT() {
@@ -20102,16 +20884,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 30, SINGLE);
         container.addBond(16, 31, SINGLE);
 
-        String[] expected = {"S=C", "O=CR", "NC=C", "NC=S", "NSP", "C=C", "C=C", "C=OR", "C=C", "C=C", "CR", "CR",
-                "CR", "CR", "C=SN", "CSP", "CR", "HNCS", "HNCS", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S=C", "O=CR", "NC=C", "NC=S", "NSP", "C=C", "C=C", "C=OR", "C=C", "C=C", "CR", "CR",
+            "CR", "CR", "C=SN", "CSP", "CR", "HNCS", "HNCS", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FIVRAD
      *
-     * @cdk.inchi InChI=1S/C12H15N3OS/c1-2-3-8-13-12(16)14-11-9-6-4-5-7-10(9)17-15-11/h4-7H,2-3,8H2,1H3,(H2,13,14,15,16)
+     * @cdk.inchi
+     *     InChI=1S/C12H15N3OS/c1-2-3-8-13-12(16)14-11-9-6-4-5-7-10(9)17-15-11/h4-7H,2-3,8H2,1H3,(H2,13,14,15,16)
      */
     @Test
     public void testFIVRAD() {
@@ -20182,9 +20967,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 30, SINGLE);
         container.addBond(16, 29, SINGLE);
 
-        String[] expected = {"STHI", "O=CN", "N5A", "NC=O", "NC=O", "C5B", "C5B", "C5A", "CB", "CB", "CB", "CB",
-                "CONN", "CR", "CR", "CR", "CR", "HNCO", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "STHI", "O=CN", "N5A", "NC=O", "NC=O", "C5B", "C5B", "C5A", "CB", "CB", "CB", "CB",
+            "CONN", "CR", "CR", "CR", "CR", "HNCO", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -20250,15 +21037,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 12, DOUBLE);
         container.addBond(12, 13, SINGLE);
 
-        String[] expected = {"CB", "CB", "CB", "CB", "CB", "CB", "C5B", "C5A", "C=OR", "CR", "CR", "N5B+", "N5A",
-                "OFUR", "OM2", "O=CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CB", "CB", "CB", "CB", "CB", "CB", "C5B", "C5A", "C=OR", "CR", "CR", "N5B+", "N5A",
+            "OFUR", "OM2", "O=CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FIYBIY
      *
-     * @cdk.inchi InChI=1S/C10H11NO3S/c1-8-7-15(13,11-10(12)14-8)9-5-3-2-4-6-9/h2-6,8H,7H2,1H3/t8-,15-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H11NO3S/c1-8-7-15(13,11-10(12)14-8)9-5-3-2-4-6-9/h2-6,8H,7H2,1H3/t8-,15-/m1/s1
      */
     @Test
     public void testFIYBIY() {
@@ -20317,15 +21107,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 24, SINGLE);
         container.addBond(14, 23, SINGLE);
 
-        String[] expected = {"SNO", "O-S", "O=CN", "OC=O", "NSO", "CB", "CB", "CB", "CB", "CB", "CB", "C=ON", "CR",
-                "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SNO", "O-S", "O=CN", "OC=O", "NSO", "CB", "CB", "CB", "CB", "CB", "CB", "C=ON", "CR",
+            "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FIZGEA
      *
-     * @cdk.inchi InChI=1S/C11H7Cl4NO2S2/c1-6-2-4-7(5-3-6)20(17,18)16-19-10(14)8(12)9(13)11(19)15/h2-5H,1H3
+     * @cdk.inchi
+     *     InChI=1S/C11H7Cl4NO2S2/c1-6-2-4-7(5-3-6)20(17,18)16-19-10(14)8(12)9(13)11(19)15/h2-5H,1H3
      */
     @Test
     public void testFIZGEA() {
@@ -20386,8 +21179,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(19, 25, SINGLE);
         container.addBond(19, 24, SINGLE);
 
-        String[] expected = {">S=N", "C=C", "C=C", "C=C", "C=C", "CL", "CL", "CL", "CL", "NSO2", "SO2N", "O2S", "O2S",
-                "CB", "CB", "CB", "CB", "CB", "CB", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            ">S=N", "C=C", "C=C", "C=C", "C=C", "CL", "CL", "CL", "CL", "NSO2", "SO2N", "O2S",
+            "O2S", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -20442,8 +21238,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 19, SINGLE);
         container.addBond(14, 20, SINGLE);
 
-        String[] expected = {"SNO", "C=C", "C=C", "C=C", "C=C", "CL", "CL", "CL", "CL", "NSO", "C=ON", "O=CN", "OC=O",
-                "CR", "CR", "O-S", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SNO", "C=C", "C=C", "C=C", "C=C", "CL", "CL", "CL", "CL", "NSO", "C=ON", "O=CN",
+            "OC=O", "CR", "CR", "O-S", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -20488,8 +21286,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 14, SINGLE);
         container.addBond(12, 13, SINGLE);
 
-        String[] expected = {"NPYD", "NPYD", "CB", "OC=N", "CR", "HC", "HC", "HC", "CB", "NPYD", "NPYD", "OC=N", "CR",
-                "HC", "HC", "HC"};
+        String[] expected = {
+            "NPYD", "NPYD", "CB", "OC=N", "CR", "HC", "HC", "HC", "CB", "NPYD", "NPYD", "OC=N",
+            "CR", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -20530,15 +21330,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(6, 12, SINGLE);
         container.addBond(6, 13, SINGLE);
 
-        String[] expected = {"O2CM", "O2CM", "NR+", "CO2M", "CR3R", "CR3R", "CR3R", "HNR+", "HNR+", "HNR+", "HC", "HC",
-                "HC", "HC"};
+        String[] expected = {
+            "O2CM", "O2CM", "NR+", "CO2M", "CR3R", "CR3R", "CR3R", "HNR+", "HNR+", "HNR+", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FODTUN
      *
-     * @cdk.inchi InChI=1S/C9H14N2O2/c1-6(12)11-5-7-3-9(11,4-7)8(13)10-2/h7H,3-5H2,1-2H3,(H,10,13)/t7-,9+
+     * @cdk.inchi
+     *     InChI=1S/C9H14N2O2/c1-6(12)11-5-7-3-9(11,4-7)8(13)10-2/h7H,3-5H2,1-2H3,(H,10,13)/t7-,9+
      */
     @Test
     public void testFODTUN() {
@@ -20599,8 +21402,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 25, SINGLE);
         container.addBond(12, 26, SINGLE);
 
-        String[] expected = {"CR", "C=ON", "O=CN", "NC=O", "CR4R", "CR4R", "CR4R", "CR4R", "CR", "C=ON", "O=CN",
-                "NC=O", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNCO", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR", "C=ON", "O=CN", "NC=O", "CR4R", "CR4R", "CR4R", "CR4R", "CR", "C=ON", "O=CN",
+            "NC=O", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNCO", "HC",
+            "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -20668,15 +21474,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 25, SINGLE);
         container.addBond(9, 10, SINGLE);
 
-        String[] expected = {"SI", "OC=N", "N+=C", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "C=N", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SI", "OC=N", "N+=C", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "C=N", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FOGVIG01
      *
-     * @cdk.inchi InChI=1S/C8H15N7O2S3/c9-6(15-20(12,16)17)1-2-18-3-5-4-19-8(13-5)14-7(10)11/h4H,1-3H2,(H2,9,15)(H2,12,16,17)(H4,10,11,13,14)
+     * @cdk.inchi
+     *     InChI=1S/C8H15N7O2S3/c9-6(15-20(12,16)17)1-2-18-3-5-4-19-8(13-5)14-7(10)11/h4H,1-3H2,(H2,9,15)(H2,12,16,17)(H4,10,11,13,14)
      */
     @Test
     public void testFOGVIG01() {
@@ -20752,9 +21561,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(19, 33, SINGLE);
         container.addBond(19, 34, SINGLE);
 
-        String[] expected = {"NC=N", "NC=N", "CGD", "N=C", "C5A", "N5B", "C5B", "C5A", "STHI", "CR", "S", "CR", "CR",
-                "C=N", "N=C", "SO2N", "O2S", "O2S", "NSO2", "NC=N", "HNCN", "HNCN", "HNCN", "HNCN", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HNSO", "HNSO", "HNCN", "HNCN"};
+        String[] expected = {
+            "NC=N", "NC=N", "CGD", "N=C", "C5A", "N5B", "C5B", "C5A", "STHI", "CR", "S", "CR", "CR",
+            "C=N", "N=C", "SO2N", "O2S", "O2S", "NSO2", "NC=N", "HNCN", "HNCN", "HNCN", "HNCN",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNSO", "HNSO", "HNCN", "HNCN"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -20820,8 +21631,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 24, SINGLE);
         container.addBond(13, 25, SINGLE);
 
-        String[] expected = {"S=C", "S", "NC=N", "CGD", "N=C", "C=N", "N=C", "C=SN", "NC=S", "CR", "CR", "CR", "CR",
-                "CR", "HNCN", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S=C", "S", "NC=N", "CGD", "N=C", "C=N", "N=C", "C=SN", "NC=S", "CR", "CR", "CR", "CR",
+            "CR", "HNCN", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -20870,8 +21683,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 16, SINGLE);
         container.addBond(10, 17, SINGLE);
 
-        String[] expected = {"SO2", "CL", "O2S", "O2S", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2", "CL", "O2S", "O2S", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -20938,15 +21753,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 25, SINGLE);
         container.addBond(10, 26, SINGLE);
 
-        String[] expected = {"S=O", "OR", "O=S", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S=O", "OR", "O=S", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FOJPAV
      *
-     * @cdk.inchi InChI=1S/C12H9NO2S2/c1-7-2-4-8(5-3-7)10-11-13(12(15)17-10)9(14)6-16-11/h2-5H,6H2,1H3
+     * @cdk.inchi
+     *     InChI=1S/C12H9NO2S2/c1-7-2-4-8(5-3-7)10-11-13(12(15)17-10)9(14)6-16-11/h2-5H,6H2,1H3
      */
     @Test
     public void testFOJPAV() {
@@ -21006,15 +21824,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 24, SINGLE);
         container.addBond(16, 25, SINGLE);
 
-        String[] expected = {"S", "CR", "C=ON", "O=CN", "NC=O", "C=ON", "O=CN", "S", "C=C", "C=C", "CB", "CB", "CB",
-                "CB", "CB", "CB", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "CR", "C=ON", "O=CN", "NC=O", "C=ON", "O=CN", "S", "C=C", "C=C", "CB", "CB", "CB",
+            "CB", "CB", "CB", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FONCOA
      *
-     * @cdk.inchi InChI=1S/C10H16N2O2/c1-6(2)5-7-10(14)12-4-3-8(12)9(13)11-7/h6-8H,3-5H2,1-2H3,(H,11,13)/t7-,8-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H16N2O2/c1-6(2)5-7-10(14)12-4-3-8(12)9(13)11-7/h6-8H,3-5H2,1-2H3,(H,11,13)/t7-,8-/m1/s1
      */
     @Test
     public void testFONCOA() {
@@ -21081,9 +21902,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 27, SINGLE);
         container.addBond(13, 26, SINGLE);
 
-        String[] expected = {"CR", "CR", "C=ON", "CR", "O=CN", "C=ON", "NC=O", "CR", "CR4R", "O=CN", "NC=O", "CR4R",
-                "CR4R", "CR", "HC", "HC", "HC", "HC", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC"};
+        String[] expected = {
+            "CR", "CR", "C=ON", "CR", "O=CN", "C=ON", "NC=O", "CR", "CR4R", "O=CN", "NC=O", "CR4R",
+            "CR4R", "CR", "HC", "HC", "HC", "HC", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -21132,8 +21955,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 16, SINGLE);
         container.addBond(10, 17, SINGLE);
 
-        String[] expected = {"I", "O=CO", "OC=O", "CB", "CB", "CB", "CB", "CB", "CB", "COO", "CR", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "I", "O=CO", "OC=O", "CB", "CB", "CB", "CB", "CB", "CB", "COO", "CR", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -21177,15 +22002,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(6, 7, SINGLE);
         container.addBond(6, 8, DOUBLE);
 
-        String[] expected = {"CR", "C=C", "C=C", "CR", "CSP", "NSP", "NO2", "O2N", "O2N", "S", "HC", "HC", "HC", "HC",
-                "HC", "HC"};
+        String[] expected = {
+            "CR", "C=C", "C=C", "CR", "CSP", "NSP", "NO2", "O2N", "O2N", "S", "HC", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FORJIF
      *
-     * @cdk.inchi InChI=1S/C10H2Cl10/c11-3-1-5(13)4(12)2(7(3,15)9(5,17)18)8(3,16)10(19,20)6(1,4)14/h1-2H/t1-,2-,3-,4-,5-,6+,7-,8+
+     * @cdk.inchi
+     *     InChI=1S/C10H2Cl10/c11-3-1-5(13)4(12)2(7(3,15)9(5,17)18)8(3,16)10(19,20)6(1,4)14/h1-2H/t1-,2-,3-,4-,5-,6+,7-,8+
      */
     @Test
     public void testFORJIF() {
@@ -21239,15 +22067,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 20, SINGLE);
         container.addBond(16, 21, SINGLE);
 
-        String[] expected = {"CL", "CL", "CL", "CL", "CL", "CR4R", "CR4R", "CR4R", "CR4R", "CR", "HC", "CR4R", "CR4R",
-                "CR", "CR4R", "CL", "CR4R", "HC", "CL", "CL", "CL", "CL"};
+        String[] expected = {
+            "CL", "CL", "CL", "CL", "CL", "CR4R", "CR4R", "CR4R", "CR4R", "CR", "HC", "CR4R",
+            "CR4R", "CR", "CR4R", "CL", "CR4R", "HC", "CL", "CL", "CL", "CL"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FORJUR
      *
-     * @cdk.inchi InChI=1S/C11H14N4S/c1-7-5-4-6-8(2)9(7)15-10(12)13-11(14-15)16-3/h4-6H,1-3H3,(H2,12,13,14)
+     * @cdk.inchi
+     *     InChI=1S/C11H14N4S/c1-7-5-4-6-8(2)9(7)15-10(12)13-11(14-15)16-3/h4-6H,1-3H3,(H2,12,13,14)
      */
     @Test
     public void testFORJUR() {
@@ -21314,8 +22145,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 26, SINGLE);
         container.addBond(15, 27, SINGLE);
 
-        String[] expected = {"S", "NPYL", "N5A", "C5B", "N5B", "C5A", "NC=N", "CB", "CB", "CB", "CB", "CB", "CB", "CR",
-                "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNCN", "HNCN"};
+        String[] expected = {
+            "S", "NPYL", "N5A", "C5B", "N5B", "C5A", "NC=N", "CB", "CB", "CB", "CB", "CB", "CB",
+            "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HNCN", "HNCN"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -21373,8 +22207,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 20, SINGLE);
         container.addBond(9, 19, SINGLE);
 
-        String[] expected = {"S2CM", "S2CM", "CS2M", "CR", "NR", "CR", "CR", "NR", "CR", "CR", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S2CM", "S2CM", "CS2M", "CR", "NR", "CR", "CR", "NR", "CR", "CR", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -21447,8 +22283,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 27, SINGLE);
         container.addBond(15, 28, SINGLE);
 
-        String[] expected = {"CL", "CL", "CL", "S-P", "PTET", "NR", "NR", "NC=N", "N=C", "CR3R", "CR3R", "CR3R",
-                "CR3R", "C=N", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "CL", "CL", "S-P", "PTET", "NR", "NR", "NC=N", "N=C", "CR3R", "CR3R", "CR3R",
+            "CR3R", "C=N", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -21497,15 +22336,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 16, SINGLE);
         container.addBond(12, 15, SINGLE);
 
-        String[] expected = {"N=C", "C=N", "NC=N", "HNCN", "HNCN", "N=C", "CR", "NR", "HNR", "HNR", "NC=N", "C=N",
-                "CR", "HC", "HNCN", "HC", "HC", "HC"};
+        String[] expected = {
+            "N=C", "C=N", "NC=N", "HNCN", "HNCN", "N=C", "CR", "NR", "HNR", "HNR", "NC=N", "C=N",
+            "CR", "HC", "HNCN", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FOVJIJ
      *
-     * @cdk.inchi InChI=1S/C10H12O3/c1-5-4-7-8(9(5)12)10(7,3)13-6(2)11/h4,7-8H,1-3H3/t7-,8-,10+/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H12O3/c1-5-4-7-8(9(5)12)10(7,3)13-6(2)11/h4,7-8H,1-3H3/t7-,8-,10+/m1/s1
      */
     @Test
     public void testFOVJIJ() {
@@ -21562,15 +22404,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 23, SINGLE);
         container.addBond(12, 24, SINGLE);
 
-        String[] expected = {"O=CR", "OC=O", "O=CO", "CR3R", "C=OR", "C=C", "C=C", "CR3R", "CR", "CR3R", "CR", "COO",
-                "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "O=CR", "OC=O", "O=CO", "CR3R", "C=OR", "C=C", "C=C", "CR3R", "CR", "CR3R", "CR", "COO",
+            "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FOVRAJ
      *
-     * @cdk.inchi InChI=1S/C14H14N4O/c1-10-12(15)18-8-7-16-14(13(18)17-10)19-9-11-5-3-2-4-6-11/h2-8H,9,15H2,1H3/p+1
+     * @cdk.inchi
+     *     InChI=1S/C14H14N4O/c1-10-12(15)18-8-7-16-14(13(18)17-10)19-9-11-5-3-2-4-6-11/h2-8H,9,15H2,1H3/p+1
      */
     @Test
     public void testFOVRAJ() {
@@ -21646,16 +22491,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(17, 18, DOUBLE);
         container.addBond(18, 33, SINGLE);
 
-        String[] expected = {"NIM+", "C5", "C5", "NIM+", "C=C", "C=C", "N=C", "C=N", "CIM+", "CR", "NC=C", "OC=N",
-                "CR", "CB", "CB", "CB", "CB", "CB", "CB", "HIM+", "HC", "HC", "HC", "HC", "HC", "HNCC", "HNCC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NIM+", "C5", "C5", "NIM+", "C=C", "C=C", "N=C", "C=N", "CIM+", "CR", "NC=C", "OC=N",
+            "CR", "CB", "CB", "CB", "CB", "CB", "CB", "HIM+", "HC", "HC", "HC", "HC", "HC", "HNCC",
+            "HNCC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FOVRUD
      *
-     * @cdk.inchi InChI=1S/C14H14N4O/c1-10-8-13(19)16-17-14(10)11-2-4-12(5-3-11)18-7-6-15-9-18/h2-7,9-10H,8H2,1H3,(H,16,19)/p+1/t10-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C14H14N4O/c1-10-8-13(19)16-17-14(10)11-2-4-12(5-3-11)18-7-6-15-9-18/h2-7,9-10H,8H2,1H3,(H,16,19)/p+1/t10-/m0/s1
      */
     @Test
     public void testFOVRUD() {
@@ -21731,9 +22579,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(17, 18, DOUBLE);
         container.addBond(18, 33, SINGLE);
 
-        String[] expected = {"N=C", "NC=O", "C=ON", "CR", "CR", "C=N", "O=CN", "CR", "CB", "CB", "CB", "CB", "CB",
-                "CB", "NIM+", "CIM+", "NIM+", "C5", "C5", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HIM+", "HC", "HC"};
+        String[] expected = {
+            "N=C", "NC=O", "C=ON", "CR", "CR", "C=N", "O=CN", "CR", "CB", "CB", "CB", "CB", "CB",
+            "CB", "NIM+", "CIM+", "NIM+", "C5", "C5", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HIM+", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -21794,15 +22644,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 21, SINGLE);
         container.addBond(14, 22, SINGLE);
 
-        String[] expected = {"CL", "N5B", "C5B", "C5A", "NPYL", "N=C", "C=N", "C=C", "N=N", "N=N", "CR", "C=C", "C5A",
-                "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "N5B", "C5B", "C5A", "NPYL", "N=C", "C=N", "C=C", "N=N", "N=N", "CR", "C=C",
+            "C5A", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FOWPOW
      *
-     * @cdk.inchi InChI=1S/C10H9N7O2/c1-19-7-4-2-6(3-5-7)11-8-9(18)12-10-13-15-16-17(10)14-8/h2-5H,1H3,(H,11,14)(H,12,13,16,18)
+     * @cdk.inchi
+     *     InChI=1S/C10H9N7O2/c1-19-7-4-2-6(3-5-7)11-8-9(18)12-10-13-15-16-17(10)14-8/h2-5H,1H3,(H,11,14)(H,12,13,16,18)
      */
     @Test
     public void testFOWPOW() {
@@ -21866,8 +22719,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(18, 26, SINGLE);
         container.addBond(18, 25, SINGLE);
 
-        String[] expected = {"O=CN", "OC=C", "N5B", "N5B", "N5A", "NPYL", "N=C", "NC=O", "NC=N", "C5A", "C=N", "C=ON",
-                "CB", "CB", "CB", "CB", "CB", "CB", "CR", "HNCO", "HNCN", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "O=CN", "OC=C", "N5B", "N5B", "N5A", "NPYL", "N=C", "NC=O", "NC=N", "C5A", "C=N",
+            "C=ON", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "HNCO", "HNCN", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -21914,15 +22770,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 13, SINGLE);
         container.addBond(13, 15, DOUBLE);
 
-        String[] expected = {"S", "S", "O=C", "O=C", "C=C", "C=C", "C=OS", "C=OS", "C=C", "C=C", "C=OS", "S", "S",
-                "C=OS", "O=C", "O=C"};
+        String[] expected = {
+            "S", "S", "O=C", "O=C", "C=C", "C=C", "C=OS", "C=OS", "C=C", "C=C", "C=OS", "S", "S",
+            "C=OS", "O=C", "O=C"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FOWZAS
      *
-     * @cdk.inchi InChI=1S/C12H14O3/c13-4-15-12-5-1-6-7-3-9(14)10(6)8(2-5)11(7)12/h4-8,10-12H,1-3H2/t5-,6-,7-,8-,10+,11+,12+/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C12H14O3/c13-4-15-12-5-1-6-7-3-9(14)10(6)8(2-5)11(7)12/h4-8,10-12H,1-3H2/t5-,6-,7-,8-,10+,11+,12+/m1/s1
      */
     @Test
     public void testFOWZAS() {
@@ -21989,8 +22848,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 14, DOUBLE);
         container.addBond(11, 28, SINGLE);
 
-        String[] expected = {"CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "C=OR", "CR", "COO", "O=CR", "OC=O",
-                "O=CO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "C=OR", "CR", "COO", "O=CR",
+            "OC=O", "O=CO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -22039,8 +22901,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(7, 8, DOUBLE);
         container.addBond(8, 13, SINGLE);
 
-        String[] expected = {"NCN+", "NCN+", "CNN+", "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC",
-                "HNN+", "HNN+", "HNN+", "HNN+"};
+        String[] expected = {
+            "NCN+", "NCN+", "CNN+", "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC",
+            "HC", "HNN+", "HNN+", "HNN+", "HNN+"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -22109,8 +22973,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 14, SINGLE);
         container.addBond(13, 15, DOUBLE);
 
-        String[] expected = {"OFUR", "C5A", "C5B", "CB", "CB", "CR", "CR", "CR", "CR", "CB", "CB", "C5B", "C5A", "NO2",
-                "O2N", "O2N", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OFUR", "C5A", "C5B", "CB", "CB", "CR", "CR", "CR", "CR", "CB", "CB", "C5B", "C5A",
+            "NO2", "O2N", "O2N", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -22148,7 +23014,9 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(5, 9, SINGLE);
         container.addBond(5, 8, SINGLE);
 
-        String[] expected = {"CL", "CL", "SI", "NR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HSI", "HC"};
+        String[] expected = {
+            "CL", "CL", "SI", "NR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HSI", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -22209,7 +23077,8 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
     /**
      * Generated test for FUCWIJ
      *
-     * @cdk.inchi InChI=1S/C11H15N5O4/c1-15-3-14-10-6(9(15)12)13-4-16(10)11-8(19)7(18)5(2-17)20-11/h3-5,7-8,11-12,17-19H,2H2,1H3/b12-9+/t5-,7-,8-,11-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C11H15N5O4/c1-15-3-14-10-6(9(15)12)13-4-16(10)11-8(19)7(18)5(2-17)20-11/h3-5,7-8,11-12,17-19H,2H2,1H3/b12-9+/t5-,7-,8-,11-/m1/s1
      */
     @Test
     public void testFUCWIJ() {
@@ -22287,16 +23156,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(18, 33, SINGLE);
         container.addBond(19, 34, SINGLE);
 
-        String[] expected = {"NC=N", "C=N", "N=C", "C5A", "C5B", "C=N", "N5B", "C5A", "NPYL", "CR", "N=C", "CR", "CR",
-                "CR", "CR", "CR", "OR", "OR", "OR", "OR", "HC", "HC", "HN=C", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HOR", "HOR", "HOR"};
+        String[] expected = {
+            "NC=N", "C=N", "N=C", "C5A", "C5B", "C=N", "N5B", "C5A", "NPYL", "CR", "N=C", "CR",
+            "CR", "CR", "CR", "CR", "OR", "OR", "OR", "OR", "HC", "HC", "HN=C", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HOR", "HOR", "HOR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FUCWOP
      *
-     * @cdk.inchi InChI=1S/C10H9N6/c11-10-14-8-7(12-6-13-8)9(15-10)16-4-2-1-3-5-16/h1-6H,(H3,11,12,13,14,15)/q+1
+     * @cdk.inchi
+     *     InChI=1S/C10H9N6/c11-10-14-8-7(12-6-13-8)9(15-10)16-4-2-1-3-5-16/h1-6H,(H3,11,12,13,14,15)/q+1
      */
     @Test
     public void testFUCWOP() {
@@ -22354,8 +23226,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 15, SINGLE);
         container.addBond(15, 24, SINGLE);
 
-        String[] expected = {"NPYD", "CB", "NC=N", "NPYD", "C5A", "C5B", "CB", "N5B", "C5A", "NPYL", "NPD+", "CB",
-                "CB", "CB", "CB", "CB", "HNCN", "HNCN", "HC", "HPYL", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NPYD", "CB", "NC=N", "NPYD", "C5A", "C5B", "CB", "N5B", "C5A", "NPYL", "NPD+", "CB",
+            "CB", "CB", "CB", "CB", "HNCN", "HNCN", "HC", "HPYL", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -22420,14 +23294,17 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(4, 10, SINGLE);
         container.addBond(4, 11, SINGLE);
 
-        String[] expected = {"NSP", "NR+", "CSP", "CR", "CR", "HNR+", "HNR+", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NSP", "NR+", "CSP", "CR", "CR", "HNR+", "HNR+", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FUFDIT
      *
-     * @cdk.inchi InChI=1S/C5H8N2O5/c1-5(10)2(8)6-4(9)7-3(5)12-11/h3,10-11H,1H3,(H2,6,7,8,9)/t3-,5-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C5H8N2O5/c1-5(10)2(8)6-4(9)7-3(5)12-11/h3,10-11H,1H3,(H2,6,7,8,9)/t3-,5-/m0/s1
      */
     @Test
     public void testFUFDIT() {
@@ -22473,15 +23350,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 11, SINGLE);
         container.addBond(11, 19, SINGLE);
 
-        String[] expected = {"NC=O", "CONN", "NC=O", "C=ON", "CR", "CR", "O=CN", "CR", "O=CN", "OR", "OR", "-O-",
-                "HNCO", "HNCO", "HC", "HC", "HC", "HC", "HOR", "HO"};
+        String[] expected = {
+            "NC=O", "CONN", "NC=O", "C=ON", "CR", "CR", "O=CN", "CR", "O=CN", "OR", "OR", "-O-",
+            "HNCO", "HNCO", "HC", "HC", "HC", "HC", "HOR", "HO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FUGWIN
      *
-     * @cdk.inchi InChI=1S/C10H13N5O3/c11-10-8-6(12-3-13-10)7(14-15-8)9-5(17)1-4(2-16)18-9/h3-5,9,16-17H,1-2H2,(H,14,15)(H2,11,12,13)/p+1/t4-,5+,9+/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H13N5O3/c11-10-8-6(12-3-13-10)7(14-15-8)9-5(17)1-4(2-16)18-9/h3-5,9,16-17H,1-2H2,(H,14,15)(H2,11,12,13)/p+1/t4-,5+,9+/m0/s1
      */
     @Test
     public void testFUGWIN() {
@@ -22553,9 +23433,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(17, 24, SINGLE);
         container.addBond(17, 19, SINGLE);
 
-        String[] expected = {"OR", "OR", "N5A", "OR", "NPYD", "NPD+", "NPYL", "NC=C", "CB", "C5A", "C5B", "CR", "CR",
-                "CB", "C5B", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNCC", "HNCC", "HPD+",
-                "HPYL", "HOR", "HOR"};
+        String[] expected = {
+            "OR", "OR", "N5A", "OR", "NPYD", "NPD+", "NPYL", "NC=C", "CB", "C5A", "C5B", "CR", "CR",
+            "CB", "C5B", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNCC",
+            "HNCC", "HPD+", "HPYL", "HOR", "HOR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -22591,7 +23473,9 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(7, 9, SINGLE);
         container.addBond(7, 8, SINGLE);
 
-        String[] expected = {"NR", "OR", "CR", "HC", "HC", "HC", "OR", "CR", "HC", "HC", "HC", "HNR"};
+        String[] expected = {
+            "NR", "OR", "CR", "HC", "HC", "HC", "OR", "CR", "HC", "HC", "HC", "HNR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -22642,15 +23526,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 17, SINGLE);
         container.addBond(12, 18, SINGLE);
 
-        String[] expected = {"O2N", "O2N", "NSP", "NO2", "CSP", "C=C", "C=C", "CB", "CB", "CB", "CB", "CB", "CB", "HC",
-                "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "O2N", "O2N", "NSP", "NO2", "CSP", "C=C", "C=C", "CB", "CB", "CB", "CB", "CB", "CB",
+            "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FULRAF
      *
-     * @cdk.inchi InChI=1S/C8H14N6O4/c9-5(10)6-12-8(11)14(13-6)7-4(17)3(16)2(1-15)18-7/h2-4,7,15-17H,1H2,(H3,9,10)(H2,11,12,13)/p+1/t2-,3-,4-,7-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C8H14N6O4/c9-5(10)6-12-8(11)14(13-6)7-4(17)3(16)2(1-15)18-7/h2-4,7,15-17H,1H2,(H3,9,10)(H2,11,12,13)/p+1/t2-,3-,4-,7-/m1/s1
      */
     @Test
     public void testFULRAF() {
@@ -22723,16 +23610,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 31, SINGLE);
         container.addBond(17, 32, SINGLE);
 
-        String[] expected = {"NPYL", "N5A", "C5B", "N5B", "C5A", "CNN+", "NCN+", "NCN+", "NC=N", "CR", "CR", "CR",
-                "CR", "CR", "OR", "OR", "OR", "OR", "HNN+", "HNN+", "HNN+", "HNN+", "HNCN", "HNCN", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HOR", "HOR", "HOR"};
+        String[] expected = {
+            "NPYL", "N5A", "C5B", "N5B", "C5A", "CNN+", "NCN+", "NCN+", "NC=N", "CR", "CR", "CR",
+            "CR", "CR", "OR", "OR", "OR", "OR", "HNN+", "HNN+", "HNN+", "HNN+", "HNCN", "HNCN",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HOR", "HOR", "HOR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FUNSIQ
      *
-     * @cdk.inchi InChI=1S/C4H7NO7S/c1-2-12-4(6)3(5(7)8)13(9,10)11/h3H,2H2,1H3,(H,9,10,11)/p-1/t3-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C4H7NO7S/c1-2-12-4(6)3(5(7)8)13(9,10)11/h3H,2H2,1H3,(H,9,10,11)/p-1/t3-/m0/s1
      */
     @Test
     public void testFUNSIQ() {
@@ -22775,8 +23665,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 17, SINGLE);
         container.addBond(12, 18, SINGLE);
 
-        String[] expected = {"SO3", "O=CO", "OC=O", "O2N", "O2N", "O3S", "O3S", "O3S", "NO2", "COO", "CR", "CR", "CR",
-                "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO3", "O=CO", "OC=O", "O2N", "O2N", "O3S", "O3S", "O3S", "NO2", "COO", "CR", "CR",
+            "CR", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -22840,8 +23732,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 23, SINGLE);
         container.addBond(14, 24, SINGLE);
 
-        String[] expected = {"OFUR", "C5A", "C5B", "C5B", "C5A", "C=OR", "O=CR", "CB", "CB", "CB", "CB", "CB", "CB",
-                "OC=C", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OFUR", "C5A", "C5B", "C5B", "C5A", "C=OR", "O=CR", "CB", "CB", "CB", "CB", "CB", "CB",
+            "OC=C", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -22915,9 +23809,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(25, 28, SINGLE);
         container.addBond(25, 27, SINGLE);
 
-        String[] expected = {"N5BX", "OXN", "N5A", "NPYL", "C5A", "CB", "CB", "CB", "CB", "C5B", "C=ON", "O=CN",
-                "OC=O", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "CR", "HC", "HC", "HC",
-                "HC"};
+        String[] expected = {
+            "N5BX", "OXN", "N5A", "NPYL", "C5A", "CB", "CB", "CB", "CB", "C5B", "C=ON", "O=CN",
+            "OC=O", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "CR",
+            "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -22973,15 +23869,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 19, SINGLE);
         container.addBond(13, 20, SINGLE);
 
-        String[] expected = {"N5B", "N5A", "NPYL", "CB", "CB", "CB", "CB", "C5B", "C5A", "OSO2", "SO3", "O2S", "O2S",
-                "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "N5B", "N5A", "NPYL", "CB", "CB", "CB", "CB", "C5B", "C5A", "OSO2", "SO3", "O2S", "O2S",
+            "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FUPKOQ
      *
-     * @cdk.inchi InChI=1S/C12H10N6O3S/c1-21-15-10(7-6-22-12(13)14-7)11(19)17-8-4-2-3-5-9(8)18(20)16-17/h2-6H,1H3,(H2,13,14)/b15-10-
+     * @cdk.inchi
+     *     InChI=1S/C12H10N6O3S/c1-21-15-10(7-6-22-12(13)14-7)11(19)17-8-4-2-3-5-9(8)18(20)16-17/h2-6H,1H3,(H2,13,14)/b15-10-
      */
     @Test
     public void testFUPKOQ() {
@@ -23053,16 +23952,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(21, 30, SINGLE);
         container.addBond(21, 29, SINGLE);
 
-        String[] expected = {"NPYL", "N5A", "N5BX", "C5B", "C5A", "CB", "CB", "CB", "CB", "OXN", "C=ON", "O=CN", "C=N",
-                "C5B", "C5A", "STHI", "C5A", "N5B", "NC=N", "N=C", "OR", "CR", "HC", "HC", "HC", "HC", "HC", "HNCN",
-                "HNCN", "HC", "HC", "HC"};
+        String[] expected = {
+            "NPYL", "N5A", "N5BX", "C5B", "C5A", "CB", "CB", "CB", "CB", "OXN", "C=ON", "O=CN",
+            "C=N", "C5B", "C5A", "STHI", "C5A", "N5B", "NC=N", "N=C", "OR", "CR", "HC", "HC", "HC",
+            "HC", "HC", "HNCN", "HNCN", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FUPTOZ
      *
-     * @cdk.inchi InChI=1S/C6H2Cl8OS2/c7-1(8)2-16-3(5(9,10)11)15-4(17-2)6(12,13)14/h3-4H/t3-,4-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C6H2Cl8OS2/c7-1(8)2-16-3(5(9,10)11)15-4(17-2)6(12,13)14/h3-4H/t3-,4-/m1/s1
      */
     @Test
     public void testFUPTOZ() {
@@ -23106,15 +24008,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 17, SINGLE);
         container.addBond(15, 18, SINGLE);
 
-        String[] expected = {"OR", "S", "S", "C=C", "C=C", "CL", "CL", "CR", "HC", "CR", "CL", "CL", "CL", "CR", "HC",
-                "CR", "CL", "CL", "CL"};
+        String[] expected = {
+            "OR", "S", "S", "C=C", "C=C", "CL", "CL", "CR", "HC", "CR", "CL", "CL", "CL", "CR",
+            "HC", "CR", "CL", "CL", "CL"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FUPZEV
      *
-     * @cdk.inchi InChI=1S/C12H18O3/c1-7-5-6-9-11(3,4)10(12(7,9)14)15-8(2)13/h5,9-10,14H,6H2,1-4H3/t9-,10+,12+/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C12H18O3/c1-7-5-6-9-11(3,4)10(12(7,9)14)15-8(2)13/h5,9-10,14H,6H2,1-4H3/t9-,10+,12+/m0/s1
      */
     @Test
     public void testFUPZEV() {
@@ -23187,9 +24092,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 31, SINGLE);
         container.addBond(14, 32, SINGLE);
 
-        String[] expected = {"OR", "OC=O", "O=CO", "CR4R", "C=C", "C=C", "CR", "CR4R", "CR4R", "CR4R", "COO", "CR",
-                "CR", "CR", "CR", "HOR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OR", "OC=O", "O=CO", "CR4R", "C=C", "C=C", "CR", "CR4R", "CR4R", "CR4R", "COO", "CR",
+            "CR", "CR", "CR", "HOR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -23281,8 +24188,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 23, SINGLE);
         container.addBond(11, 24, SINGLE);
 
-        String[] expected = {"NC=O", "NR", "CR4R", "C=ON", "CR", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "O=CN",
-                "HNR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NC=O", "NR", "CR4R", "C=ON", "CR", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "O=CN",
+            "HNR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -23319,7 +24228,8 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
     /**
      * Generated test for FUVDOP
      *
-     * @cdk.inchi InChI=1S/C12H15N3O6/c1-4(16)19-10-7-11(20-5(2)17)9-12(21-6(3)18)8(10)14-13(7)15(9)14/h7-12H,1-3H3/t7-,8+,9-,10-,11+,12-,13+,14-,15+
+     * @cdk.inchi
+     *     InChI=1S/C12H15N3O6/c1-4(16)19-10-7-11(20-5(2)17)9-12(21-6(3)18)8(10)14-13(7)15(9)14/h7-12H,1-3H3/t7-,8+,9-,10-,11+,12-,13+,14-,15+
      */
     @Test
     public void testFUVDOP() {
@@ -23400,9 +24310,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(20, 34, SINGLE);
         container.addBond(20, 35, SINGLE);
 
-        String[] expected = {"OC=O", "OC=O", "OC=O", "O=CO", "O=CO", "O=CO", "NR", "NR", "NR", "CR", "CR", "CR", "CR",
-                "CR", "CR", "COO", "COO", "COO", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OC=O", "OC=O", "OC=O", "O=CO", "O=CO", "O=CO", "NR", "NR", "NR", "CR", "CR", "CR",
+            "CR", "CR", "CR", "COO", "COO", "COO", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -23480,16 +24392,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 31, SINGLE);
         container.addBond(12, 30, SINGLE);
 
-        String[] expected = {"CR", "CR", "NC=O", "C=ON", "O=+", "CR", "CR", "CR", "C=ON", "O=+", "NC=O", "CR", "CR",
-                "HO=+", "HO=+", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR", "CR", "NC=O", "C=ON", "O=+", "CR", "CR", "CR", "C=ON", "O=+", "NC=O", "CR", "CR",
+            "HO=+", "HO=+", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for FUVNEP
      *
-     * @cdk.inchi InChI=1S/C17H20N2O/c1-18(2)15-9-5-13(6-10-15)17(20)14-7-11-16(12-8-14)19(3)4/h5-12H,1-4H3
+     * @cdk.inchi
+     *     InChI=1S/C17H20N2O/c1-18(2)15-9-5-13(6-10-15)17(20)14-7-11-16(12-8-14)19(3)4/h5-12H,1-4H3
      */
     @Test
     public void testFUVNEP() {
@@ -23576,9 +24491,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(19, 30, SINGLE);
         container.addBond(19, 29, SINGLE);
 
-        String[] expected = {"O=CR", "NC=C", "NC=C", "CR", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "C=OR", "CB",
-                "CB", "CB", "CB", "CB", "CB", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "O=CR", "NC=C", "NC=C", "CR", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "C=OR", "CB",
+            "CB", "CB", "CB", "CB", "CB", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -23633,8 +24550,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 17, SINGLE);
         container.addBond(10, 18, SINGLE);
 
-        String[] expected = {"OC=C", "-O-", "N+=C", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "C=N", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HNC+", "HO"};
+        String[] expected = {
+            "OC=C", "-O-", "N+=C", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "C=N", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HNC+", "HO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -23700,8 +24619,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 19, SINGLE);
         container.addBond(15, 20, SINGLE);
 
-        String[] expected = {"OC=O", "C=ON", "O=CN", "NSO2", "CR", "CR", "SO2N", "O2S", "O2S", "NSO2", "CB", "CB",
-                "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HNSO", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OC=O", "C=ON", "O=CN", "NSO2", "CR", "CR", "SO2N", "O2S", "O2S", "NSO2", "CB", "CB",
+            "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HNSO", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -23756,8 +24677,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 18, SINGLE);
         container.addBond(10, 19, SINGLE);
 
-        String[] expected = {"S-P", "S", "S", "PTET", "P", "P", "CR", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S-P", "S", "S", "PTET", "P", "P", "CR", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -23823,8 +24746,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 15, SINGLE);
         container.addBond(11, 16, SINGLE);
 
-        String[] expected = {"S", "PO3", "O3P", "O3P", "O3P", "CR", "CR", "NR+", "CR", "CR", "CR", "NR+", "HNR+",
-                "HNR+", "HNR+", "HNR+", "HNR+", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "PO3", "O3P", "O3P", "O3P", "CR", "CR", "NR+", "CR", "CR", "CR", "NR+", "HNR+",
+            "HNR+", "HNR+", "HNR+", "HNR+", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -23882,8 +24808,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 21, SINGLE);
         container.addBond(14, 22, SINGLE);
 
-        String[] expected = {"SO2", "O2S", "O2S", "OC=C", "OC=C", "NSP", "NSP", "C=C", "C=C", "C=C", "C=C", "CSP",
-                "CR", "CSP", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2", "O2S", "O2S", "OC=C", "OC=C", "NSP", "NSP", "C=C", "C=C", "C=C", "C=C", "CSP",
+            "CR", "CSP", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -23967,16 +24895,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 33, SINGLE);
         container.addBond(15, 32, SINGLE);
 
-        String[] expected = {"NC=C", "NR+", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "CR",
-                "CR", "CR", "HNR+", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NC=C", "NR+", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "CR",
+            "CR", "CR", "HNR+", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for GAFNUW
      *
-     * @cdk.inchi InChI=1S/C12H12N2O5/c1-6(15)19-11-3-7-2-9(11)8-4-12(14(17)18)13(16)5-10(7)8/h4-5,7,9,11H,2-3H2,1H3/t7-,9-,11+/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C12H12N2O5/c1-6(15)19-11-3-7-2-9(11)8-4-12(14(17)18)13(16)5-10(7)8/h4-5,7,9,11H,2-3H2,1H3/t7-,9-,11+/m1/s1
      */
     @Test
     public void testGAFNUW() {
@@ -24046,9 +24977,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 17, DOUBLE);
         container.addBond(15, 16, SINGLE);
 
-        String[] expected = {"CR", "CR", "CR", "CR", "CB", "CB", "NPOX", "CB", "CB", "CB", "CR", "OC=O", "COO", "O=CO",
-                "CR", "NO2", "O2N", "O2N", "OXN", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC"};
+        String[] expected = {
+            "CR", "CR", "CR", "CR", "CB", "CB", "NPOX", "CB", "CB", "CB", "CR", "OC=O", "COO",
+            "O=CO", "CR", "NO2", "O2N", "O2N", "OXN", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -24104,8 +25037,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 12, SINGLE);
         container.addBond(10, 13, SINGLE);
 
-        String[] expected = {"O=CO", "OC=O", "-O-", "O=CN", "NC=O", "COO", "CR", "CR", "CR", "C=ON", "CR", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOCO", "HO"};
+        String[] expected = {
+            "O=CO", "OC=O", "-O-", "O=CN", "NC=O", "COO", "CR", "CR", "CR", "C=ON", "CR", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOCO", "HO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -24148,8 +25083,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 9, SINGLE);
         container.addBond(9, 14, SINGLE);
 
-        String[] expected = {"SO3", "O3S", "O3S", "O3S", "NPD+", "CB", "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC",
-                "HC"};
+        String[] expected = {
+            "SO3", "O3S", "O3S", "O3S", "NPD+", "CB", "CB", "CB", "CB", "CB", "HC", "HC", "HC",
+            "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -24220,8 +25157,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 26, SINGLE);
         container.addBond(13, 27, SINGLE);
 
-        String[] expected = {"OC=O", "COO", "O=CO", "C=C", "CR", "C=C", "NC=C", "CR", "CR", "CR", "C=C", "C=C", "C=C",
-                "CR", "C=C", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OC=O", "COO", "O=CO", "C=C", "CR", "C=C", "NC=C", "CR", "CR", "CR", "C=C", "C=C",
+            "C=C", "CR", "C=C", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -24265,8 +25205,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 14, SINGLE);
         container.addBond(11, 12, SINGLE);
 
-        String[] expected = {"CL", "OFUR", "O2N", "O2N", "N5A", "N5A", "NO2", "C5B", "CB", "CB", "CB", "CB", "C5B",
-                "HC", "HC"};
+        String[] expected = {
+            "CL", "OFUR", "O2N", "O2N", "N5A", "N5A", "NO2", "C5B", "CB", "CB", "CB", "CB", "C5B",
+            "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -24319,8 +25261,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 18, SINGLE);
         container.addBond(9, 19, SINGLE);
 
-        String[] expected = {"S=O", "S=O", "O=S", "O=S", "C=C", "CR", "CR", "CR", "C=C", "CR", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S=O", "S=O", "O=S", "O=S", "C=C", "CR", "CR", "CR", "C=C", "CR", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -24374,8 +25318,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 18, SINGLE);
         container.addBond(9, 19, SINGLE);
 
-        String[] expected = {"SO2", "C=C", "C=C", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "O2S", "O2S", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2", "C=C", "C=C", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "O2S", "O2S", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -24420,8 +25366,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 13, SINGLE);
         container.addBond(10, 14, SINGLE);
 
-        String[] expected = {"STHI", "STHI", "STHI", "C5", "C5B", "C5B", "C5", "C5A", "C5A", "C5A", "C5A", "HC", "HC",
-                "HC", "HC"};
+        String[] expected = {
+            "STHI", "STHI", "STHI", "C5", "C5B", "C5B", "C5", "C5A", "C5A", "C5A", "C5A", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -24500,8 +25448,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 11, DOUBLE);
         container.addBond(10, 13, SINGLE);
 
-        String[] expected = {"BR", "SO2", "O2S", "O2S", "C=C", "C=C", "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC",
-                "HC", "HC", "HC"};
+        String[] expected = {
+            "BR", "SO2", "O2S", "O2S", "C=C", "C=C", "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -24540,7 +25490,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(7, 11, SINGLE);
         container.addBond(7, 10, SINGLE);
 
-        String[] expected = {"OFUR", "OXN", "N5A", "N5AX", "NC=N", "C5B", "C5B", "CR", "HNCN", "HNCN", "HC", "HC", "HC"};
+        String[] expected = {
+            "OFUR", "OXN", "N5A", "N5AX", "NC=N", "C5B", "C5B", "CR", "HNCN", "HNCN", "HC", "HC",
+            "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -24598,15 +25551,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 21, SINGLE);
         container.addBond(12, 17, SINGLE);
 
-        String[] expected = {"C5A", "STHI", "C5A", "N5B", "C5B", "OC=C", "CR", "CB", "CB", "CB", "CB", "CB", "CB",
-                "HOCC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "C5A", "STHI", "C5A", "N5B", "C5B", "OC=C", "CR", "CB", "CB", "CB", "CB", "CB", "CB",
+            "HOCC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for GAWWOQ
      *
-     * @cdk.inchi InChI=1S/C11H14NO4P/c1-12-8-5-9-15-17(12,14)16-11(13)10-6-3-2-4-7-10/h2-4,6-7H,5,8-9H2,1H3/t17-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C11H14NO4P/c1-12-8-5-9-15-17(12,14)16-11(13)10-6-3-2-4-7-10/h2-4,6-7H,5,8-9H2,1H3/t17-/m0/s1
      */
     @Test
     public void testGAWWOQ() {
@@ -24675,16 +25631,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 24, SINGLE);
         container.addBond(16, 25, SINGLE);
 
-        String[] expected = {"PO3", "OPO2", "OP", "OPO2", "NR", "O=CO", "CR", "CR", "CR", "COO", "CB", "CB", "CB",
-                "CB", "CB", "CB", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC"};
+        String[] expected = {
+            "PO3", "OPO2", "OP", "OPO2", "NR", "O=CO", "CR", "CR", "CR", "COO", "CB", "CB", "CB",
+            "CB", "CB", "CB", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for GEHBOK
      *
-     * @cdk.inchi InChI=1S/C12H13NO6S/c13-11(9(14)15)6-12(7-11,10(16)17)20(18,19)8-4-2-1-3-5-8/h1-5H,6-7,13H2,(H,14,15)(H,16,17)/p-1/t11-,12-
+     * @cdk.inchi
+     *     InChI=1S/C12H13NO6S/c13-11(9(14)15)6-12(7-11,10(16)17)20(18,19)8-4-2-1-3-5-8/h1-5H,6-7,13H2,(H,14,15)(H,16,17)/p-1/t11-,12-
      */
     @Test
     public void testGEHBOK() {
@@ -24755,16 +25714,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(18, 30, SINGLE);
         container.addBond(19, 31, SINGLE);
 
-        String[] expected = {"CR4R", "CR4R", "CR4R", "CR4R", "CO2M", "O2CM", "O2CM", "NR+", "CO2M", "O2CM", "O2CM",
-                "SO2", "O2S", "O2S", "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HNR+", "HNR+",
-                "HNR+", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR4R", "CR4R", "CR4R", "CR4R", "CO2M", "O2CM", "O2CM", "NR+", "CO2M", "O2CM", "O2CM",
+            "SO2", "O2S", "O2S", "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HNR+",
+            "HNR+", "HNR+", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for GEHPUE
      *
-     * @cdk.inchi InChI=1S/C4H6N4O4S3/c5-1(9)3(11)7-13-15-14-8-4(12)2(6)10/h(H2,5,9)(H2,6,10)(H,7,11)(H,8,12)
+     * @cdk.inchi
+     *     InChI=1S/C4H6N4O4S3/c5-1(9)3(11)7-13-15-14-8-4(12)2(6)10/h(H2,5,9)(H2,6,10)(H,7,11)(H,8,12)
      */
     @Test
     public void testGEHPUE() {
@@ -24811,15 +25773,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 12, SINGLE);
         container.addBond(13, 14, SINGLE);
 
-        String[] expected = {"S", "S", "S", "O=CN", "O=CN", "O=CN", "O=CN", "NC=O", "NC=O", "NC=O", "NC=O", "C=ON",
-                "C=ON", "C=ON", "C=ON", "HNCO", "HNCO", "HNCO", "HNCO", "HNCO", "HNCO"};
+        String[] expected = {
+            "S", "S", "S", "O=CN", "O=CN", "O=CN", "O=CN", "NC=O", "NC=O", "NC=O", "NC=O", "C=ON",
+            "C=ON", "C=ON", "C=ON", "HNCO", "HNCO", "HNCO", "HNCO", "HNCO", "HNCO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for GEHXEW
      *
-     * @cdk.inchi InChI=1S/C12H18Cl2N4O2/c1-3-19-9-15-11-7-5-6-8-12(11,17(9)13)16-10(18(11)14)20-4-2/h3-8H2,1-2H3/t11-,12-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C12H18Cl2N4O2/c1-3-19-9-15-11-7-5-6-8-12(11,17(9)13)16-10(18(11)14)20-4-2/h3-8H2,1-2H3/t11-,12-/m0/s1
      */
     @Test
     public void testGEHXEW() {
@@ -24903,9 +25868,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(19, 31, SINGLE);
         container.addBond(19, 32, SINGLE);
 
-        String[] expected = {"CL", "NC=N", "C=N", "OC=N", "N=C", "CR", "CR", "CR", "CR", "N=C", "NC=N", "CL", "OC=N",
-                "CR", "CR", "C=N", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "NC=N", "C=N", "OC=N", "N=C", "CR", "CR", "CR", "CR", "N=C", "NC=N", "CL", "OC=N",
+            "CR", "CR", "C=N", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -24949,8 +25916,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 14, SINGLE);
         container.addBond(9, 13, SINGLE);
 
-        String[] expected = {"-P=C", "F", "F", "F", "F", "NC=P", "CR", "C=P", "CR", "CR", "HC", "HC", "HC", "HC", "HC",
-                "HC"};
+        String[] expected = {
+            "-P=C", "F", "F", "F", "F", "NC=P", "CR", "C=P", "CR", "CR", "HC", "HC", "HC", "HC",
+            "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -24998,8 +25967,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(5, 7, SINGLE);
         container.addBond(5, 8, SINGLE);
 
-        String[] expected = {"CR", "CR", "CR", "CR", "NR", "NR", "HNR", "HNR", "HNR", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR", "CR", "CR", "CR", "NR", "NR", "HNR", "HNR", "HNR", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -25046,8 +26017,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(5, 16, SINGLE);
         container.addBond(6, 8, TRIPLE);
 
-        String[] expected = {"CR3R", "CR3R", "CR3R", "CSP", "CR", "CR", "CSP", "NSP", "NSP", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR3R", "CR3R", "CR3R", "CSP", "CR", "CR", "CSP", "NSP", "NSP", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -25098,8 +26071,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(5, 18, SINGLE);
         container.addBond(6, 8, TRIPLE);
 
-        String[] expected = {"CR3R", "CR3R", "CR3R", "CSP", "CR", "CR", "CSP", "NSP", "NSP", "OR", "OR", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR3R", "CR3R", "CR3R", "CSP", "CR", "CR", "CSP", "NSP", "NSP", "OR", "OR", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -25166,8 +26141,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 25, SINGLE);
         container.addBond(12, 26, SINGLE);
 
-        String[] expected = {"CR3R", "CR3R", "CR3R", "CSP", "NSP", "NR", "CR", "CR", "CSP", "NSP", "NR", "CR", "CR",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR3R", "CR3R", "CR3R", "CSP", "NSP", "NR", "CR", "CR", "CSP", "NSP", "NR", "CR", "CR",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -25219,15 +26196,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 17, SINGLE);
         container.addBond(9, 18, SINGLE);
 
-        String[] expected = {"SO3", "CIM+", "C5", "C5", "CB", "CB", "CB", "CB", "NIM+", "NIM+", "O3S", "O3S", "O3S",
-                "HC", "HC", "HC", "HC", "HIM+", "HIM+"};
+        String[] expected = {
+            "SO3", "CIM+", "C5", "C5", "CB", "CB", "CB", "CB", "NIM+", "NIM+", "O3S", "O3S", "O3S",
+            "HC", "HC", "HC", "HC", "HIM+", "HIM+"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for GESCIQ
      *
-     * @cdk.inchi InChI=1S/C12H17N4OS/c1-8-11(3-4-17)18-7-16(8)6-10-5-14-9(2)15-12(10)13/h5,7,17H,3-4,6H2,1-2H3,(H2,13,14,15)/q+1
+     * @cdk.inchi
+     *     InChI=1S/C12H17N4OS/c1-8-11(3-4-17)18-7-16(8)6-10-5-14-9(2)15-12(10)13/h5,7,17H,3-4,6H2,1-2H3,(H2,13,14,15)/q+1
      */
     @Test
     public void testGESCIQ() {
@@ -25304,9 +26284,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 17, DOUBLE);
         container.addBond(17, 32, SINGLE);
 
-        String[] expected = {"STHI", "C5A", "N5B+", "C5B", "CR", "C5A", "CR", "CR", "OR", "CR", "NPYD", "CB", "CR",
-                "NPYD", "CB", "NC=N", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOR", "HC", "HC",
-                "HC", "HNCN", "HNCN", "HC", "HC", "HC"};
+        String[] expected = {
+            "STHI", "C5A", "N5B+", "C5B", "CR", "C5A", "CR", "CR", "OR", "CR", "NPYD", "CB", "CR",
+            "NPYD", "CB", "NC=N", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOR",
+            "HC", "HC", "HC", "HNCN", "HNCN", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -25346,7 +26328,9 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(6, 11, SINGLE);
         container.addBond(6, 12, SINGLE);
 
-        String[] expected = {"CB", "CB", "CB", "CB", "CB", "CB", "CR3R", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CB", "CB", "CB", "CB", "CB", "CB", "CR3R", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -25411,8 +26395,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 24, SINGLE);
         container.addBond(12, 25, SINGLE);
 
-        String[] expected = {"SO2N", "O2S", "O2S", "NSO2", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "CR", "CR", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2N", "O2S", "O2S", "NSO2", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "CR", "CR",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -25459,8 +26445,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 13, SINGLE);
         container.addBond(9, 14, DOUBLE);
 
-        String[] expected = {"C=OR", "C=N", "C=C", "C=C", "C=C", "C=C", "=N=", "NAZT", "NO2", "NO2", "O=CR", "O2N",
-                "O2N", "O2N", "O2N", "HC", "HC"};
+        String[] expected = {
+            "C=OR", "C=N", "C=C", "C=C", "C=C", "C=C", "=N=", "NAZT", "NO2", "NO2", "O=CR", "O2N",
+            "O2N", "O2N", "O2N", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -25507,15 +26495,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 14, DOUBLE);
         container.addBond(9, 13, SINGLE);
 
-        String[] expected = {"CB", "CB", "CB", "CB", "CB", "CB", "NR%", "NSP", "NO2", "NO2", "OM2", "O2N", "O2N",
-                "O2N", "O2N", "CL", "HC"};
+        String[] expected = {
+            "CB", "CB", "CB", "CB", "CB", "CB", "NR%", "NSP", "NO2", "NO2", "OM2", "O2N", "O2N",
+            "O2N", "O2N", "CL", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for GETJOE
      *
-     * @cdk.inchi InChI=1S/C12H10P2S6/c15-13(17-11-7-3-1-4-8-11)19-14(16,20-13)18-12-9-5-2-6-10-12/h1-10H/t13-,14-
+     * @cdk.inchi
+     *     InChI=1S/C12H10P2S6/c15-13(17-11-7-3-1-4-8-11)19-14(16,20-13)18-12-9-5-2-6-10-12/h1-10H/t13-,14-
      */
     @Test
     public void testGETJOE() {
@@ -25583,8 +26574,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(24, 28, SINGLE);
         container.addBond(26, 29, SINGLE);
 
-        String[] expected = {"S", "PTET", "S-P", "S", "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC",
-                "PTET", "S", "S-P", "S", "CB", "CB", "CB", "CB", "HC", "CB", "HC", "CB", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "PTET", "S-P", "S", "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC",
+            "HC", "PTET", "S", "S-P", "S", "CB", "CB", "CB", "CB", "HC", "CB", "HC", "CB", "HC",
+            "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -25640,15 +26634,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 11, DOUBLE);
         container.addBond(11, 19, SINGLE);
 
-        String[] expected = {"NC=C", "CR", "C=OR", "O=CR", "C=C", "C=C", "CB", "CB", "CB", "CB", "CB", "CB", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NC=C", "CR", "C=OR", "O=CR", "C=C", "C=C", "CB", "CB", "CB", "CB", "CB", "CB", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for GEXGIZ
      *
-     * @cdk.inchi InChI=1S/C7H8N2O4/c10-6(11)3-8-1-2-9(5-8)4-7(12)13/h1-2,5H,3-4H2,(H-,10,11,12,13)/p+1
+     * @cdk.inchi
+     *     InChI=1S/C7H8N2O4/c10-6(11)3-8-1-2-9(5-8)4-7(12)13/h1-2,5H,3-4H2,(H-,10,11,12,13)/p+1
      */
     @Test
     public void testGEXGIZ() {
@@ -25698,15 +26695,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 19, SINGLE);
         container.addBond(11, 12, SINGLE);
 
-        String[] expected = {"O=CO", "OC=O", "OC=O", "O=CO", "NIM+", "NIM+", "CIM+", "C5", "C5", "CR", "COO", "CR",
-                "COO", "HOCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOCO"};
+        String[] expected = {
+            "O=CO", "OC=O", "OC=O", "O=CO", "NIM+", "NIM+", "CIM+", "C5", "C5", "CR", "COO", "CR",
+            "COO", "HOCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOCO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for GEYWOW
      *
-     * @cdk.inchi InChI=1S/C12H13N3O4/c1-8-11(12(17)13-6-7-16)15(19)10-5-3-2-4-9(10)14(8)18/h2-5,16H,6-7H2,1H3,(H,13,17)
+     * @cdk.inchi
+     *     InChI=1S/C12H13N3O4/c1-8-11(12(17)13-6-7-16)15(19)10-5-3-2-4-9(10)14(8)18/h2-5,16H,6-7H2,1H3,(H,13,17)
      */
     @Test
     public void testGEYWOW() {
@@ -25777,9 +26777,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(18, 30, SINGLE);
         container.addBond(18, 29, SINGLE);
 
-        String[] expected = {"OXN", "OXN", "O=CN", "OR", "NPOX", "NPOX", "NC=O", "CB", "CB", "CB", "CB", "CB", "CB",
-                "CB", "CB", "C=ON", "CR", "CR", "CR", "HOR", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC"};
+        String[] expected = {
+            "OXN", "OXN", "O=CN", "OR", "NPOX", "NPOX", "NC=O", "CB", "CB", "CB", "CB", "CB", "CB",
+            "CB", "CB", "C=ON", "CR", "CR", "CR", "HOR", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -25833,15 +26835,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 18, SINGLE);
         container.addBond(16, 19, DOUBLE);
 
-        String[] expected = {"C5A", "C5B", "N5A", "NPYL", "N5B", "N=N", "NO2", "O2N", "O2N", "HC", "N=N", "C5B", "N5A",
-                "N5B", "NPYL", "C5A", "NO2", "HC", "O2N", "O2N"};
+        String[] expected = {
+            "C5A", "C5B", "N5A", "NPYL", "N5B", "N=N", "NO2", "O2N", "O2N", "HC", "N=N", "C5B",
+            "N5A", "N5B", "NPYL", "C5A", "NO2", "HC", "O2N", "O2N"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for GIDJUY
      *
-     * @cdk.inchi InChI=1S/C10H10BrNO4/c1-15-7(13)9-2-3-10(11,5-12)6(4-9)16-8(9)14/h6H,2-4H2,1H3/t6-,9-,10+/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H10BrNO4/c1-15-7(13)9-2-3-10(11,5-12)6(4-9)16-8(9)14/h6H,2-4H2,1H3/t6-,9-,10+/m1/s1
      */
     @Test
     public void testGIDJUY() {
@@ -25900,8 +26905,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 25, SINGLE);
         container.addBond(14, 15, TRIPLE);
 
-        String[] expected = {"BR", "CR", "CR", "CR", "CR", "CR", "OC=O", "COO", "O=CO", "CR", "O=CO", "COO", "OC=O",
-                "CR", "CSP", "NSP", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "BR", "CR", "CR", "CR", "CR", "CR", "OC=O", "COO", "O=CO", "CR", "O=CO", "COO", "OC=O",
+            "CR", "CSP", "NSP", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -25961,15 +26968,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 22, SINGLE);
         container.addBond(13, 14, SINGLE);
 
-        String[] expected = {"NPD+", "CB", "NC=N", "NPYD", "CB", "NC=N", "CB", "CB", "CB", "N=N", "=N=", "NAZT", "CB",
-                "CB", "CB", "HPD+", "HNCN", "HNCN", "HNCN", "HNCN", "HC", "HC", "HC"};
+        String[] expected = {
+            "NPD+", "CB", "NC=N", "NPYD", "CB", "NC=N", "CB", "CB", "CB", "N=N", "=N=", "NAZT",
+            "CB", "CB", "CB", "HPD+", "HNCN", "HNCN", "HNCN", "HNCN", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for GIDTIW
      *
-     * @cdk.inchi InChI=1S/C11H15N5O6/c12-9(19)15-10(20)13-7-1-2-16(11(21)14-7)8-3-5(18)6(4-17)22-8/h1-2,5-6,8,17-18H,3-4H2,(H4,12,13,14,15,19,20,21)/t5-,6+,8+/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C11H15N5O6/c12-9(19)15-10(20)13-7-1-2-16(11(21)14-7)8-3-5(18)6(4-17)22-8/h1-2,5-6,8,17-18H,3-4H2,(H4,12,13,14,15,19,20,21)/t5-,6+,8+/m0/s1
      */
     @Test
     public void testGIDTIW() {
@@ -26050,16 +27060,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(21, 35, SINGLE);
         container.addBond(21, 36, SINGLE);
 
-        String[] expected = {"O=CN", "O=CN", "O=CN", "OR", "OR", "OR", "NC=O", "N=C", "NC=O", "NC=O", "NC=O", "CONN",
-                "C=N", "C=C", "C=C", "CONN", "CONN", "CR", "CR", "CR", "CR", "CR", "HOR", "HOR", "HNCO", "HNCO",
-                "HNCO", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "O=CN", "O=CN", "O=CN", "OR", "OR", "OR", "NC=O", "N=C", "NC=O", "NC=O", "NC=O", "CONN",
+            "C=N", "C=C", "C=C", "CONN", "CONN", "CR", "CR", "CR", "CR", "CR", "HOR", "HOR", "HNCO",
+            "HNCO", "HNCO", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for GIFRAO
      *
-     * @cdk.inchi InChI=1S/C12H13N4O2S/c1-8-7-9(2)15-12(14-8)16-19(17,18)11-5-3-10(13)4-6-11/h3-7H,13H2,1-2H3/q-1
+     * @cdk.inchi
+     *     InChI=1S/C12H13N4O2S/c1-8-7-9(2)15-12(14-8)16-19(17,18)11-5-3-10(13)4-6-11/h3-7H,13H2,1-2H3/q-1
      */
     @Test
     public void testGIFRAO() {
@@ -26130,9 +27143,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(18, 30, SINGLE);
         container.addBond(18, 31, SINGLE);
 
-        String[] expected = {"NC=C", "CB", "CB", "CB", "CB", "CB", "CB", "SO2N", "O2S", "O2S", "NM", "CB", "NPYD",
-                "CB", "CB", "CB", "NPYD", "CR", "CR", "HNCC", "HNCC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC"};
+        String[] expected = {
+            "NC=C", "CB", "CB", "CB", "CB", "CB", "CB", "SO2N", "O2S", "O2S", "NM", "CB", "NPYD",
+            "CB", "CB", "CB", "NPYD", "CR", "CR", "HNCC", "HNCC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -26200,8 +27215,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 15, DOUBLE);
         container.addBond(15, 16, SINGLE);
 
-        String[] expected = {"C5A", "C5B", "C5B", "C=N", "N=C", "CB", "CB", "NPYD", "CB", "CB", "CB", "NPYL", "C5A",
-                "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "C5A", "C5B", "C5B", "C=N", "N=C", "CB", "CB", "NPYD", "CB", "CB", "CB", "NPYL", "C5A",
+            "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -26271,8 +27288,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 26, SINGLE);
         container.addBond(13, 27, SINGLE);
 
-        String[] expected = {"STHI", "S", "S", "S", "C5A", "C5B", "C5B", "C5A", "CR", "CR", "CR", "CR", "CR", "CR",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "STHI", "S", "S", "S", "C5A", "C5B", "C5B", "C5A", "CR", "CR", "CR", "CR", "CR", "CR",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -26331,8 +27350,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 20, SINGLE);
         container.addBond(13, 21, SINGLE);
 
-        String[] expected = {"O=CR", "O=CO", "OC=O", "O=CO", "OC=O", "CR3R", "CR3R", "CR3R", "CR3R", "C=OR", "COO",
-                "CR", "COO", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "O=CR", "O=CO", "OC=O", "O=CO", "OC=O", "CR3R", "CR3R", "CR3R", "CR3R", "C=OR", "COO",
+            "CR", "COO", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -26380,8 +27401,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 16, SINGLE);
         container.addBond(10, 11, DOUBLE);
 
-        String[] expected = {"SO2N", "O2S", "NM", "C=ON", "O=CN", "CB", "CB", "OC=C", "CB", "CB", "CB", "CB", "O2S",
-                "HOCC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2N", "O2S", "NM", "C=ON", "O=CN", "CB", "CB", "OC=C", "CB", "CB", "CB", "CB", "O2S",
+            "HOCC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -26423,15 +27446,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 9, DOUBLE);
         container.addBond(8, 13, SINGLE);
 
-        String[] expected = {"C=C", "C=C", "C=ON", "O=CN", "NPYL", "C5A", "C5B", "BR", "C5B", "C5A", "HC", "HC", "HC",
-                "HC"};
+        String[] expected = {
+            "C=C", "C=C", "C=ON", "O=CN", "NPYL", "C5A", "C5B", "BR", "C5B", "C5A", "HC", "HC",
+            "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for GIKNOD
      *
-     * @cdk.inchi InChI=1S/C10H13NO2S/c1-7(11)9(10(12)13)14-8-5-3-2-4-6-8/h2-7,9H,11H2,1H3,(H,12,13)/t7-,9+/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H13NO2S/c1-7(11)9(10(12)13)14-8-5-3-2-4-6-8/h2-7,9H,11H2,1H3,(H,12,13)/t7-,9+/m1/s1
      */
     @Test
     public void testGIKNOD() {
@@ -26491,8 +27517,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 25, SINGLE);
         container.addBond(13, 26, SINGLE);
 
-        String[] expected = {"S", "CR", "CR", "NR+", "CR", "CO2M", "O2CM", "O2CM", "CB", "CB", "CB", "CB", "CB", "CB",
-                "HC", "HC", "HNR+", "HNR+", "HNR+", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "CR", "CR", "NR+", "CR", "CO2M", "O2CM", "O2CM", "CB", "CB", "CB", "CB", "CB",
+            "CB", "HC", "HC", "HNR+", "HNR+", "HNR+", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -26544,15 +27572,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(7, 12, DOUBLE);
         container.addBond(7, 18, SINGLE);
 
-        String[] expected = {"CR", "C=C", "C=C", "CR", "C=C", "C=C", "C=OR", "C=OR", "OC=C", "OC=C", "OR", "O=CR",
-                "O=CR", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR", "C=C", "C=C", "CR", "C=C", "C=C", "C=OR", "C=OR", "OC=C", "OC=C", "OR", "O=CR",
+            "O=CR", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for GIMJIV
      *
-     * @cdk.inchi InChI=1S/C11H11Cl4N/c12-8-10(14)6-4-1-2-5(3-4)7(6)11(8,15)16-9(10)13/h4-8H,1-3H2/t4-,5+,6+,7-,8+,10-,11-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C11H11Cl4N/c12-8-10(14)6-4-1-2-5(3-4)7(6)11(8,15)16-9(10)13/h4-8H,1-3H2/t4-,5+,6+,7-,8+,10-,11-/m0/s1
      */
     @Test
     public void testGIMJIV() {
@@ -26615,8 +27646,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 25, SINGLE);
         container.addBond(15, 26, SINGLE);
 
-        String[] expected = {"CL", "CL", "CL", "CL", "N=C", "CR", "C=N", "CR", "CR", "CR", "CR", "CR", "CR", "CR",
-                "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "CL", "CL", "CL", "N=C", "CR", "C=N", "CR", "CR", "CR", "CR", "CR", "CR", "CR",
+            "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -26676,15 +27709,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 21, SINGLE);
         container.addBond(14, 22, SINGLE);
 
-        String[] expected = {"S", "O=CN", "O=CO", "OC=O", "N=C", "NC=N", "C=C", "C=C", "C=ON", "C=N", "C=C", "C=C",
-                "CR", "COO", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "O=CN", "O=CO", "OC=O", "N=C", "NC=N", "C=C", "C=C", "C=ON", "C=N", "C=C", "C=C",
+            "CR", "COO", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for GIPHES
      *
-     * @cdk.inchi InChI=1S/C10H10O4/c11-9(12)8(10(13)14)6-7-4-2-1-3-5-7/h1-5,8H,6H2,(H,11,12)(H,13,14)/p-1
+     * @cdk.inchi
+     *     InChI=1S/C10H10O4/c11-9(12)8(10(13)14)6-7-4-2-1-3-5-7/h1-5,8H,6H2,(H,11,12)(H,13,14)/p-1
      */
     @Test
     public void testGIPHES() {
@@ -26736,15 +27772,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 20, SINGLE);
         container.addBond(13, 21, SINGLE);
 
-        String[] expected = {"O2CM", "O2CM", "O=CO", "OC=O", "CO2M", "CR", "COO", "CR", "CB", "CB", "CB", "CB", "CB",
-                "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOCO"};
+        String[] expected = {
+            "O2CM", "O2CM", "O=CO", "OC=O", "CO2M", "CR", "COO", "CR", "CB", "CB", "CB", "CB", "CB",
+            "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOCO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for GIRDOA01
      *
-     * @cdk.inchi InChI=1S/C10H20N2P2/c1-9-11(3)5-7-13(9)10(2)12(4)6-8-14(9)10/h5-8H2,1-4H3/t9-,10-,13+,14+
+     * @cdk.inchi
+     *     InChI=1S/C10H20N2P2/c1-9-11(3)5-7-13(9)10(2)12(4)6-8-14(9)10/h5-8H2,1-4H3/t9-,10-,13+,14+
      */
     @Test
     public void testGIRDOA01() {
@@ -26820,9 +27859,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(23, 32, SINGLE);
         container.addBond(23, 33, SINGLE);
 
-        String[] expected = {"P", "NR", "CR4R", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "CR4R", "P", "NR", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC"};
+        String[] expected = {
+            "P", "NR", "CR4R", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "CR4R", "P", "NR", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -26864,15 +27905,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(6, 13, SINGLE);
         container.addBond(7, 11, DOUBLE);
 
-        String[] expected = {"NC=O", "CONN", "NC=O", "CONN", "NC=O", "CONN", "NC=O", "CONN", "O=CN", "O=CN", "O=CN",
-                "O=CN", "HNCO", "HNCO"};
+        String[] expected = {
+            "NC=O", "CONN", "NC=O", "CONN", "NC=O", "CONN", "NC=O", "CONN", "O=CN", "O=CN", "O=CN",
+            "O=CN", "HNCO", "HNCO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for GOJCIR
      *
-     * @cdk.inchi InChI=1S/C6H2Cl10OS2/c7-3(8,9)1-17-2(4(10,11)12)19-6(16,18-1)5(13,14)15/h1-2H/t1-,2-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C6H2Cl10OS2/c7-3(8,9)1-17-2(4(10,11)12)19-6(16,18-1)5(13,14)15/h1-2H/t1-,2-/m1/s1
      */
     @Test
     public void testGOJCIR() {
@@ -26920,8 +27964,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(17, 19, SINGLE);
         container.addBond(17, 20, SINGLE);
 
-        String[] expected = {"OR", "CR", "HC", "S", "CR", "S", "CR", "HC", "CR", "CL", "CL", "CL", "CL", "CR", "CL",
-                "CL", "CL", "CR", "CL", "CL", "CL"};
+        String[] expected = {
+            "OR", "CR", "HC", "S", "CR", "S", "CR", "HC", "CR", "CL", "CL", "CL", "CL", "CR", "CL",
+            "CL", "CL", "CR", "CL", "CL", "CL"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -26975,8 +28021,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 13, SINGLE);
         container.addBond(12, 14, DOUBLE);
 
-        String[] expected = {"CB", "NPYD", "CB", "CB", "CB", "CB", "S", "C5B", "N5A", "NPYL", "C5A", "N5B", "NO2",
-                "O2N", "O2N", "HC", "HC", "HC", "HPYL", "HC"};
+        String[] expected = {
+            "CB", "NPYD", "CB", "CB", "CB", "CB", "S", "C5B", "N5A", "NPYL", "C5A", "N5B", "NO2",
+            "O2N", "O2N", "HC", "HC", "HC", "HPYL", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -27024,15 +28072,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 9, SINGLE);
         container.addBond(10, 13, SINGLE);
 
-        String[] expected = {"O=CN", "NC=O", "N=C", "NIM+", "NIM+", "NC=N", "CGD", "C5", "C5", "C=ON", "CIM+", "HNCO",
-                "HIM+", "HC", "HIM+", "HNCN", "HNCN"};
+        String[] expected = {
+            "O=CN", "NC=O", "N=C", "NIM+", "NIM+", "NC=N", "CGD", "C5", "C5", "C=ON", "CIM+",
+            "HNCO", "HIM+", "HC", "HIM+", "HNCN", "HNCN"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for HYTPRD01
      *
-     * @cdk.inchi InChI=1S/C12H15NOS/c14-11-7-3-2-6-10(11)12(15)13-8-4-1-5-9-13/h2-3,6-7,14H,1,4-5,8-9H2
+     * @cdk.inchi
+     *     InChI=1S/C12H15NOS/c14-11-7-3-2-6-10(11)12(15)13-8-4-1-5-9-13/h2-3,6-7,14H,1,4-5,8-9H2
      */
     @Test
     public void testHYTPRD01() {
@@ -27099,8 +28150,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 28, SINGLE);
         container.addBond(14, 29, SINGLE);
 
-        String[] expected = {"S=C", "C=SN", "CB", "CB", "OC=C", "CB", "CB", "CB", "CB", "NC=S", "CR", "CR", "CR", "CR",
-                "CR", "HOCC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S=C", "C=SN", "CB", "CB", "OC=C", "CB", "CB", "CB", "CB", "NC=S", "CR", "CR", "CR",
+            "CR", "CR", "HOCC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -27138,7 +28192,9 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 10, DOUBLE);
         container.addBond(10, 11, SINGLE);
 
-        String[] expected = {"S", "S", "S", "S", "S", "STHI", "N5A", "NSP", "C5B", "C5B", "C5A", "CSP"};
+        String[] expected = {
+            "S", "S", "S", "S", "S", "STHI", "N5A", "NSP", "C5B", "C5B", "C5A", "CSP"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -27208,8 +28264,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 23, SINGLE);
         container.addBond(14, 24, SINGLE);
 
-        String[] expected = {"S", "S=C", "C=SN", "NC=S", "C=C", "C=C", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "CR",
-                "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "S=C", "C=SN", "NC=S", "C=C", "C=C", "CB", "CB", "CB", "CB", "CB", "CB", "CR",
+            "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -27251,14 +28309,17 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 13, SINGLE);
         container.addBond(9, 10, SINGLE);
 
-        String[] expected = {"CL", "S", "S", "S=C", "CSS", "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "S", "S", "S=C", "CSS", "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for JADXER
      *
-     * @cdk.inchi InChI=1S/C12H19NO7/c1-11(2)16-5-6(18-11)7-8(20-12(3,4)19-7)9-10(17-9)13(14)15/h6-10H,5H2,1-4H3/t6-,7-,8+,9+,10-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C12H19NO7/c1-11(2)16-5-6(18-11)7-8(20-12(3,4)19-7)9-10(17-9)13(14)15/h6-10H,5H2,1-4H3/t6-,7-,8+,9+,10-/m1/s1
      */
     @Test
     public void testJADXER() {
@@ -27344,16 +28405,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(19, 34, SINGLE);
         container.addBond(19, 33, SINGLE);
 
-        String[] expected = {"OR", "O2N", "O2N", "OR", "OR", "OR", "OR", "NO2", "CR3R", "CR3R", "CR", "CR", "CR", "CR",
-                "CR", "CR", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OR", "O2N", "O2N", "OR", "OR", "OR", "OR", "NO2", "CR3R", "CR3R", "CR", "CR", "CR",
+            "CR", "CR", "CR", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for JAHKOS
      *
-     * @cdk.inchi InChI=1S/C10H12O3S/c1-10(14(2,11)12)9(13-10)8-6-4-3-5-7-8/h3-7,9H,1-2H3/t9-,10-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H12O3S/c1-10(14(2,11)12)9(13-10)8-6-4-3-5-7-8/h3-7,9H,1-2H3/t9-,10-/m0/s1
      */
     @Test
     public void testJAHKOS() {
@@ -27412,8 +28476,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 24, SINGLE);
         container.addBond(13, 25, SINGLE);
 
-        String[] expected = {"SO2", "O2S", "O2S", "OR", "CR3R", "CR3R", "CR", "CR", "CB", "CB", "CB", "CB", "CB", "CB",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2", "O2S", "O2S", "OR", "CR3R", "CR3R", "CR", "CR", "CB", "CB", "CB", "CB", "CB",
+            "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -27481,8 +28547,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 25, SINGLE);
         container.addBond(11, 26, SINGLE);
 
-        String[] expected = {"C=C", "C=C", "CR3R", "CR", "CR", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "OC=C", "CL",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "C=C", "C=C", "CR3R", "CR", "CR", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "OC=C",
+            "CL", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -27544,8 +28612,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 22, SINGLE);
         container.addBond(10, 23, SINGLE);
 
-        String[] expected = {"CL", "CL", "CL", "NR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "CL", "CL", "NR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -27608,8 +28678,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 22, SINGLE);
         container.addBond(11, 23, SINGLE);
 
-        String[] expected = {"P", "P", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "CR", "CR", "CR", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "P", "P", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "CR", "CR", "CR", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -27664,15 +28736,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 15, SINGLE);
         container.addBond(10, 14, SINGLE);
 
-        String[] expected = {"CB", "CB", "CB", "CB", "CB", "CB", "NC=C", "CR", "N=O", "O=N", "CR", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HNCC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CB", "CB", "CB", "CB", "CB", "CB", "NC=C", "CR", "N=O", "O=N", "CR", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HNCC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for JALSOE
      *
-     * @cdk.inchi InChI=1S/C10H15OS2/c11-13(12)10-4-7-1-8(5-10)3-9(2-7)6-10/h7-9H,1-6H2/t7-,8+,9-,10-
+     * @cdk.inchi
+     *     InChI=1S/C10H15OS2/c11-13(12)10-4-7-1-8(5-10)3-9(2-7)6-10/h7-9H,1-6H2/t7-,8+,9-,10-
      */
     @Test
     public void testJALSOE() {
@@ -27736,15 +28811,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 27, SINGLE);
         container.addBond(12, 26, SINGLE);
 
-        String[] expected = {"SSOM", "SSMO", "OSMS", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SSOM", "SSMO", "OSMS", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for JAMREU
      *
-     * @cdk.inchi InChI=1S/C20H22N4O5/c1-24(2)17(25)12-28-18(26)11-13-3-9-16(10-4-13)29-19(27)14-5-7-15(8-6-14)23-20(21)22/h3-10H,11-12H2,1-2H3,(H4,21,22,23)/p+1
+     * @cdk.inchi
+     *     InChI=1S/C20H22N4O5/c1-24(2)17(25)12-28-18(26)11-13-3-9-16(10-4-13)29-19(27)14-5-7-15(8-6-14)23-20(21)22/h3-10H,11-12H2,1-2H3,(H4,21,22,23)/p+1
      */
     @Test
     public void testJAMREU() {
@@ -27855,17 +28933,20 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(28, 50, SINGLE);
         container.addBond(28, 49, SINGLE);
 
-        String[] expected = {"NGD+", "NGD+", "CGD+", "NGD+", "CB", "CB", "CB", "CB", "CB", "CB", "COO", "O=CO", "OC=O",
-                "CB", "CB", "CB", "CB", "CB", "CB", "CR", "COO", "O=CO", "OC=O", "CR", "C=ON", "O=CN", "NC=O", "CR",
-                "CR", "HGD+", "HGD+", "HGD+", "HGD+", "HGD+", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NGD+", "NGD+", "CGD+", "NGD+", "CB", "CB", "CB", "CB", "CB", "CB", "COO", "O=CO",
+            "OC=O", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "COO", "O=CO", "OC=O", "CR", "C=ON",
+            "O=CN", "NC=O", "CR", "CR", "HGD+", "HGD+", "HGD+", "HGD+", "HGD+", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for JANDOR
      *
-     * @cdk.inchi InChI=1S/C21H20N4O7S/c1-11(26)14-15-17(31-2)18(33-21-22-8-3-9-23-21)16(24(15)19(14)27)20(28)32-10-12-4-6-13(7-5-12)25(29)30/h3-9,11,14-15,17,26H,10H2,1-2H3/t11-,14-,15+,17-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C21H20N4O7S/c1-11(26)14-15-17(31-2)18(33-21-22-8-3-9-23-21)16(24(15)19(14)27)20(28)32-10-12-4-6-13(7-5-12)25(29)30/h3-9,11,14-15,17,26H,10H2,1-2H3/t11-,14-,15+,17-/m1/s1
      */
     @Test
     public void testJANDOR() {
@@ -27980,17 +29061,20 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(29, 30, SINGLE);
         container.addBond(29, 31, DOUBLE);
 
-        String[] expected = {"CR", "C=C", "C=C", "NC=O", "CR4R", "CR4R", "C=ON", "CR", "CR", "OR", "OR", "CR", "S",
-                "CB", "NPYD", "CB", "CB", "CB", "NPYD", "COO", "O=CO", "OC=O", "CR", "CB", "CB", "CB", "CB", "CB",
-                "CB", "NO2", "O2N", "O2N", "O=CN", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HOR", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR", "C=C", "C=C", "NC=O", "CR4R", "CR4R", "C=ON", "CR", "CR", "OR", "OR", "CR", "S",
+            "CB", "NPYD", "CB", "CB", "CB", "NPYD", "COO", "O=CO", "OC=O", "CR", "CB", "CB", "CB",
+            "CB", "CB", "CB", "NO2", "O2N", "O2N", "O=CN", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOR", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for JANMAM
      *
-     * @cdk.inchi InChI=1S/C8H10NO4P/c1-13-14(11,12)8(9-10)7-5-3-2-4-6-7/h2-6,10H,1H3,(H,11,12)/p-1/b9-8+
+     * @cdk.inchi
+     *     InChI=1S/C8H10NO4P/c1-13-14(11,12)8(9-10)7-5-3-2-4-6-7/h2-6,10H,1H3,(H,11,12)/p-1/b9-8+
      */
     @Test
     public void testJANMAM() {
@@ -28042,15 +29126,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 17, SINGLE);
         container.addBond(13, 18, SINGLE);
 
-        String[] expected = {"PO3", "OPO2", "O2P", "O2P", "-O-", "N=C", "CR", "C=N", "CB", "CB", "CB", "CB", "CB",
-                "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HO"};
+        String[] expected = {
+            "PO3", "OPO2", "O2P", "O2P", "-O-", "N=C", "CR", "C=N", "CB", "CB", "CB", "CB", "CB",
+            "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for JAPFAH
      *
-     * @cdk.inchi InChI=1S/C12H9N3O3S/c16-11-10(13-12-14(11)4-5-19-12)7-8-2-1-3-9(6-8)15(17)18/h1-3,6-7H,4-5H2/b10-7-
+     * @cdk.inchi
+     *     InChI=1S/C12H9N3O3S/c16-11-10(13-12-14(11)4-5-19-12)7-8-2-1-3-9(6-8)15(17)18/h1-3,6-7H,4-5H2/b10-7-
      */
     @Test
     public void testJAPFAH() {
@@ -28114,8 +29201,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(17, 26, SINGLE);
         container.addBond(18, 27, SINGLE);
 
-        String[] expected = {"S", "CR", "CR", "C=N", "N=C", "NC=O", "C=ON", "O=CN", "C=C", "C=C", "CB", "CB", "CB",
-                "NO2", "O2N", "O2N", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "CR", "CR", "C=N", "N=C", "NC=O", "C=ON", "O=CN", "C=C", "C=C", "CB", "CB", "CB",
+            "NO2", "O2N", "O2N", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -28175,8 +29265,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(17, 22, SINGLE);
         container.addBond(17, 23, SINGLE);
 
-        String[] expected = {"N=C", "C=N", "OC=N", "CR", "OC=N", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "N=C",
-                "C=N", "OC=N", "OC=N", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "N=C", "C=N", "OC=N", "CR", "OC=N", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "N=C",
+            "C=N", "OC=N", "OC=N", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -28218,15 +29310,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 13, SINGLE);
         container.addBond(10, 12, SINGLE);
 
-        String[] expected = {"STHI", "C5A", "N5B", "NPYD", "CB", "NPYD", "CB", "C5A", "C5B", "CL", "NC=N", "HC",
-                "HNCN", "HNCN"};
+        String[] expected = {
+            "STHI", "C5A", "N5B", "NPYD", "CB", "NPYD", "CB", "C5A", "C5B", "CL", "NC=N", "HC",
+            "HNCN", "HNCN"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for JATLOF
      *
-     * @cdk.inchi InChI=1S/C8H15N7O2S3/c9-6(15-20(12,16)17)1-2-18-3-5-4-19-8(13-5)14-7(10)11/h4H,1-3H2,(H2,9,15)(H2,12,16,17)(H4,10,11,13,14)/p+1
+     * @cdk.inchi
+     *     InChI=1S/C8H15N7O2S3/c9-6(15-20(12,16)17)1-2-18-3-5-4-19-8(13-5)14-7(10)11/h4H,1-3H2,(H2,9,15)(H2,12,16,17)(H4,10,11,13,14)/p+1
      */
     @Test
     public void testJATLOF() {
@@ -28304,16 +29399,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(17, 35, SINGLE);
         container.addBond(17, 34, SINGLE);
 
-        String[] expected = {"STHI", "C5A", "N5B", "C5B", "C5A", "NGD+", "CGD+", "NGD+", "NGD+", "CR", "S", "CR", "CR",
-                "C=N", "NC=N", "N=C", "SO2N", "NSO2", "O2S", "O2S", "HC", "HGD+", "HGD+", "HGD+", "HGD+", "HGD+", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HNCN", "HNCN", "HNSO", "HNSO"};
+        String[] expected = {
+            "STHI", "C5A", "N5B", "C5B", "C5A", "NGD+", "CGD+", "NGD+", "NGD+", "CR", "S", "CR",
+            "CR", "C=N", "NC=N", "N=C", "SO2N", "NSO2", "O2S", "O2S", "HC", "HGD+", "HGD+", "HGD+",
+            "HGD+", "HGD+", "HC", "HC", "HC", "HC", "HC", "HC", "HNCN", "HNCN", "HNSO", "HNSO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for JATMEW
      *
-     * @cdk.inchi InChI=1S/C9H18N6O2S3/c1-15(2)13-9-12-7(6-19-9)5-18-4-3-8(10)14-20(11,16)17/h6H,3-5H2,1-2H3,(H2,10,14)(H,12,13)(H2,11,16,17)
+     * @cdk.inchi
+     *     InChI=1S/C9H18N6O2S3/c1-15(2)13-9-12-7(6-19-9)5-18-4-3-8(10)14-20(11,16)17/h6H,3-5H2,1-2H3,(H2,10,14)(H,12,13)(H2,11,16,17)
      */
     @Test
     public void testJATMEW() {
@@ -28395,9 +29493,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(17, 36, SINGLE);
         container.addBond(17, 37, SINGLE);
 
-        String[] expected = {"STHI", "C5A", "N5B", "C5B", "C5A", "NC=N", "NR", "CR", "CR", "CR", "S", "CR", "CR",
-                "C=N", "NC=N", "N=C", "SO2N", "NSO2", "O2S", "O2S", "HC", "HNCN", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HNCN", "HNCN", "HNSO", "HNSO"};
+        String[] expected = {
+            "STHI", "C5A", "N5B", "C5B", "C5A", "NC=N", "NR", "CR", "CR", "CR", "S", "CR", "CR",
+            "C=N", "NC=N", "N=C", "SO2N", "NSO2", "O2S", "O2S", "HC", "HNCN", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNCN", "HNCN", "HNSO", "HNSO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -28456,15 +29556,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(19, 21, SINGLE);
         container.addBond(19, 22, SINGLE);
 
-        String[] expected = {"S", "O2N", "O2N", "NR", "NO2", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "CR", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "O2N", "O2N", "NR", "NO2", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "CR", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for JAWJIA
      *
-     * @cdk.inchi InChI=1S/C11H15N5O6/c1-15-4-7(13-10(12)14-8(4)20)16(11(15)21)9-6(19)5(18)3(2-17)22-9/h3,5-6,9,17-19H,2H2,1H3,(H3,12,13,14,20)/t3-,5-,6-,9-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C11H15N5O6/c1-15-4-7(13-10(12)14-8(4)20)16(11(15)21)9-6(19)5(18)3(2-17)22-9/h3,5-6,9,17-19H,2H2,1H3,(H3,12,13,14,20)/t3-,5-,6-,9-/m1/s1
      */
     @Test
     public void testJAWJIA() {
@@ -28546,9 +29649,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(19, 35, SINGLE);
         container.addBond(21, 36, SINGLE);
 
-        String[] expected = {"NC=O", "CGD", "N=C", "C=C", "C=C", "C=ON", "NC=O", "CONN", "NC=O", "NC=N", "O=CN", "CR",
-                "O=CN", "CR", "CR", "CR", "CR", "CR", "OR", "OR", "OR", "OR", "HNCO", "HNCN", "HNCN", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HOR", "HOR", "HOR"};
+        String[] expected = {
+            "NC=O", "CGD", "N=C", "C=C", "C=C", "C=ON", "NC=O", "CONN", "NC=O", "NC=N", "O=CN",
+            "CR", "O=CN", "CR", "CR", "CR", "CR", "CR", "OR", "OR", "OR", "OR", "HNCO", "HNCN",
+            "HNCN", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOR", "HOR", "HOR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -28585,14 +29690,17 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 10, SINGLE);
         container.addBond(9, 11, SINGLE);
 
-        String[] expected = {"OR", "NR", "CR4R", "CR4R", "HC", "HC", "HC", "HNR", "HOR", "CR4R", "HC", "HC"};
+        String[] expected = {
+            "OR", "NR", "CR4R", "CR4R", "HC", "HC", "HC", "HNR", "HOR", "CR4R", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for JAWVEI
      *
-     * @cdk.inchi InChI=1S/C11H14O3/c1-6(2)3-4-7-5-8(12)10-11(14-10)9(7)13/h3,8-13H,1,5H2,2H3/t4-,8+,9-,10-,11+/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C11H14O3/c1-6(2)3-4-7-5-8(12)10-11(14-10)9(7)13/h3,8-13H,1,5H2,2H3/t4-,8+,9-,10-,11+/m0/s1
      */
     @Test
     public void testJAWVEI() {
@@ -28655,15 +29763,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 26, SINGLE);
         container.addBond(13, 27, SINGLE);
 
-        String[] expected = {"OR", "OR", "OR", "C=C", "CR", "CR3R", "CR3R", "CR", "CR", "=C=", "C=C", "C=C", "C=C",
-                "CR", "HOR", "HOR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OR", "OR", "OR", "C=C", "CR", "CR3R", "CR3R", "CR", "CR", "=C=", "C=C", "C=C", "C=C",
+            "CR", "HOR", "HOR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for JAWZEM
      *
-     * @cdk.inchi InChI=1S/C6H7N4O2P/c11-13(12,5-7-1-2-8-5)6-9-3-4-10-6/h1-4H,(H,7,8)(H,9,10)(H,11,12)/p-1
+     * @cdk.inchi
+     *     InChI=1S/C6H7N4O2P/c11-13(12,5-7-1-2-8-5)6-9-3-4-10-6/h1-4H,(H,7,8)(H,9,10)(H,11,12)/p-1
      */
     @Test
     public void testJAWZEM() {
@@ -28708,15 +29820,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 12, DOUBLE);
         container.addBond(12, 17, SINGLE);
 
-        String[] expected = {"PO2", "O2P", "O2P", "NPYL", "N5B", "NPYL", "N5B", "C5A", "C5A", "C5B", "C5A", "C5B",
-                "C5A", "HC", "HC", "HPYL", "HC", "HC", "HPYL"};
+        String[] expected = {
+            "PO2", "O2P", "O2P", "NPYL", "N5B", "NPYL", "N5B", "C5A", "C5A", "C5B", "C5A", "C5B",
+            "C5A", "HC", "HC", "HPYL", "HC", "HC", "HPYL"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for JAZGOG
      *
-     * @cdk.inchi InChI=1S/C10H13NO5S/c1-8(2)6-3-4-9(8)5-17(13,14)11-10(9,16-11)7(12)15-6/h6H,3-5H2,1-2H3/t6-,9-,10-,11+/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H13NO5S/c1-8(2)6-3-4-9(8)5-17(13,14)11-10(9,16-11)7(12)15-6/h6H,3-5H2,1-2H3/t6-,9-,10-,11+/m0/s1
      */
     @Test
     public void testJAZGOG() {
@@ -28785,15 +29900,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 28, SINGLE);
         container.addBond(16, 29, SINGLE);
 
-        String[] expected = {"SO2N", "O2S", "O2S", "OR", "O=CO", "OC=O", "NSO2", "COO", "CR3R", "CR", "CR", "CR", "CR",
-                "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2N", "O2S", "O2S", "OR", "O=CO", "OC=O", "NSO2", "COO", "CR3R", "CR", "CR", "CR",
+            "CR", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for JAZVIP10
      *
-     * @cdk.inchi InChI=1S/C8H13N5O6S2/c9-6(20)7-11-2-13(12-7)8-5(15)4(14)3(19-8)1-18-21(10,16)17/h2-5,8,14-15H,1H2,(H2,9,20)(H2,10,16,17)/t3-,4-,5-,8-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C8H13N5O6S2/c9-6(20)7-11-2-13(12-7)8-5(15)4(14)3(19-8)1-18-21(10,16)17/h2-5,8,14-15H,1H2,(H2,9,20)(H2,10,16,17)/t3-,4-,5-,8-/m1/s1
      */
     @Test
     public void testJAZVIP10() {
@@ -28868,16 +29987,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(20, 32, SINGLE);
         container.addBond(20, 33, SINGLE);
 
-        String[] expected = {"NPYL", "N5A", "C5B", "N5B", "C5A", "C=SN", "S=C", "NC=S", "CR", "CR", "CR", "CR", "CR",
-                "OR", "OR", "OR", "OSO2", "SO3", "O2S", "O2S", "NSO3", "HC", "HNCS", "HNCS", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HOR", "HOR", "HNSO", "HNSO"};
+        String[] expected = {
+            "NPYL", "N5A", "C5B", "N5B", "C5A", "C=SN", "S=C", "NC=S", "CR", "CR", "CR", "CR", "CR",
+            "OR", "OR", "OR", "OSO2", "SO3", "O2S", "O2S", "NSO3", "HC", "HNCS", "HNCS", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HOR", "HOR", "HNSO", "HNSO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for JAZZOZ10
      *
-     * @cdk.inchi InChI=1S/C10H14N6O6S/c11-10-14-7-4(8(15-10)23(12,20)21)13-2-16(7)9-6(19)5(18)3(1-17)22-9/h2-3,5-6,9,17-19H,1H2,(H2,11,14,15)(H2,12,20,21)/t3-,5-,6-,9-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H14N6O6S/c11-10-14-7-4(8(15-10)23(12,20)21)13-2-16(7)9-6(19)5(18)3(1-17)22-9/h2-3,5-6,9,17-19H,1H2,(H2,11,14,15)(H2,12,20,21)/t3-,5-,6-,9-/m1/s1
      */
     @Test
     public void testJAZZOZ10() {
@@ -28959,16 +30081,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(20, 35, SINGLE);
         container.addBond(22, 36, SINGLE);
 
-        String[] expected = {"NPYD", "CB", "NPYD", "C5A", "C5B", "CB", "N5B", "C5A", "NPYL", "NC=N", "SO2N", "O2S",
-                "O2S", "NSO2", "CR", "CR", "CR", "CR", "CR", "OR", "OR", "OR", "OR", "HC", "HNCN", "HNCN", "HNSO",
-                "HNSO", "HC", "HC", "HC", "HC", "HC", "HC", "HOR", "HOR", "HOR"};
+        String[] expected = {
+            "NPYD", "CB", "NPYD", "C5A", "C5B", "CB", "N5B", "C5A", "NPYL", "NC=N", "SO2N", "O2S",
+            "O2S", "NSO2", "CR", "CR", "CR", "CR", "CR", "OR", "OR", "OR", "OR", "HC", "HNCN",
+            "HNCN", "HNSO", "HNSO", "HC", "HC", "HC", "HC", "HC", "HC", "HOR", "HOR", "HOR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for JEBFEB01
      *
-     * @cdk.inchi InChI=1S/C12H11N2OP/c15-16(10-6-2-1-3-7-10)13-11-8-4-5-9-12(11)14-16/h1-9H,(H2,13,14,15)
+     * @cdk.inchi
+     *     InChI=1S/C12H11N2OP/c15-16(10-6-2-1-3-7-10)13-11-8-4-5-9-12(11)14-16/h1-9H,(H2,13,14,15)
      */
     @Test
     public void testJEBFEB01() {
@@ -29030,15 +30155,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(22, 25, SINGLE);
         container.addBond(24, 26, SINGLE);
 
-        String[] expected = {"PO", "OP", "NC=C", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "HNCC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "NC=C", "CB", "CB", "HNCC", "CB", "HC", "HC"};
+        String[] expected = {
+            "PO", "OP", "NC=C", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "HNCC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "NC=C", "CB", "CB", "HNCC", "CB", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for JECVES
      *
-     * @cdk.inchi InChI=1S/C9H14N4O3/c1-7-4-12(7)6-8(14)5-11-3-2-10-9(11)13(15)16/h2-3,7-8,14H,4-6H2,1H3/t7-,8-,12+/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C9H14N4O3/c1-7-4-12(7)6-8(14)5-11-3-2-10-9(11)13(15)16/h2-3,7-8,14H,4-6H2,1H3/t7-,8-,12+/m0/s1
      */
     @Test
     public void testJECVES() {
@@ -29105,9 +30233,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 28, SINGLE);
         container.addBond(15, 29, SINGLE);
 
-        String[] expected = {"NPYL", "C5A", "N5B", "C5B", "C5A", "NO2", "O2N", "O2N", "CR", "CR", "OR", "CR", "NR",
-                "CR3R", "CR3R", "CR", "HC", "HC", "HC", "HC", "HC", "HOR", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC"};
+        String[] expected = {
+            "NPYL", "C5A", "N5B", "C5B", "C5A", "NO2", "O2N", "O2N", "CR", "CR", "OR", "CR", "NR",
+            "CR3R", "CR3R", "CR", "HC", "HC", "HC", "HC", "HC", "HOR", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -29167,15 +30297,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 22, SINGLE);
         container.addBond(12, 23, SINGLE);
 
-        String[] expected = {"CR", "C=ON", "O=CN", "NC=O", "OC=O", "C=ON", "O=CN", "NC=O", "CR", "CONN", "O=CN",
-                "NC=O", "CR", "HC", "HC", "HC", "HNCO", "HC", "HC", "HC", "HNCO", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR", "C=ON", "O=CN", "NC=O", "OC=O", "C=ON", "O=CN", "NC=O", "CR", "CONN", "O=CN",
+            "NC=O", "CR", "HC", "HC", "HC", "HNCO", "HC", "HC", "HC", "HNCO", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for JECYIZ
      *
-     * @cdk.inchi InChI=1S/C11H22N5OP/c1-4-11(13-14-12)18(17)15(2)9-7-5-6-8-10(9)16(18)3/h9-11H,4-8H2,1-3H3/t9-,10-,11-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C11H22N5OP/c1-4-11(13-14-12)18(17)15(2)9-7-5-6-8-10(9)16(18)3/h9-11H,4-8H2,1-3H3/t9-,10-,11-/m1/s1
      */
     @Test
     public void testJECYIZ() {
@@ -29262,9 +30395,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(17, 38, SINGLE);
         container.addBond(17, 37, SINGLE);
 
-        String[] expected = {"PO", "OP", "NR", "NR", "N=N", "=N=", "NAZT", "CR", "CR", "CR", "CR", "CR", "CR", "CR",
-                "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "PO", "OP", "NR", "NR", "N=N", "=N=", "NAZT", "CR", "CR", "CR", "CR", "CR", "CR", "CR",
+            "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -29349,9 +30484,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(17, 34, SINGLE);
         container.addBond(17, 35, SINGLE);
 
-        String[] expected = {"S", "S=C", "N=C", "N=C", "N=C", "NC=S", "NC=N", "NC=N", "C=N", "C=N", "C=N", "C=SN",
-                "CR", "CR", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "S=C", "N=C", "N=C", "N=C", "NC=S", "NC=N", "NC=N", "C=N", "C=N", "C=N", "C=SN",
+            "CR", "CR", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -29409,8 +30546,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 19, SINGLE);
         container.addBond(12, 18, SINGLE);
 
-        String[] expected = {"NPYD", "CB", "NPYD", "C5A", "C5B", "CB", "N5B", "C5A", "NPYL", "NC=N", "OC=N", "CR",
-                "CR", "HNCN", "HNCN", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NPYD", "CB", "NPYD", "C5A", "C5B", "CB", "N5B", "C5A", "NPYL", "NC=N", "OC=N", "CR",
+            "CR", "HNCN", "HNCN", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -29463,8 +30602,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 18, SINGLE);
         container.addBond(10, 19, SINGLE);
 
-        String[] expected = {"SO2N", "O2S", "O2S", "NSO2", "NR+", "CB", "CB", "CB", "CB", "CB", "CB", "HNSO", "HNR+",
-                "HNR+", "HNR+", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2N", "O2S", "O2S", "NSO2", "NR+", "CB", "CB", "CB", "CB", "CB", "CB", "HNSO", "HNR+",
+            "HNR+", "HNR+", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -29521,8 +30662,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 20, SINGLE);
         container.addBond(10, 21, SINGLE);
 
-        String[] expected = {"CL", "CL", "PO", "OP", "OR", "CR", "CR", "CR", "CR", "CR", "CR", "HOR", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "CL", "PO", "OP", "OR", "CR", "CR", "CR", "CR", "CR", "CR", "HOR", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -29585,8 +30728,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 16, DOUBLE);
         container.addBond(16, 23, SINGLE);
 
-        String[] expected = {"OXN", "N2OX", "C=N", "C=OR", "O=CR", "CB", "CB", "CB", "CB", "CB", "CB", "NPYD", "CB",
-                "NPYD", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OXN", "N2OX", "C=N", "C=OR", "O=CR", "CB", "CB", "CB", "CB", "CB", "CB", "NPYD", "CB",
+            "NPYD", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -29644,8 +30789,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 20, SINGLE);
         container.addBond(14, 19, SINGLE);
 
-        String[] expected = {"N2OX", "OXN", "C=N", "C=OR", "O=CR", "CB", "CB", "CB", "CB", "CB", "CB", "COO", "O=CO",
-                "OC=O", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "N2OX", "OXN", "C=N", "C=OR", "O=CR", "CB", "CB", "CB", "CB", "CB", "CB", "COO", "O=CO",
+            "OC=O", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -29687,8 +30834,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 13, SINGLE);
         container.addBond(8, 14, SINGLE);
 
-        String[] expected = {"PO3", "OPO2", "O2P", "O2P", "F", "CR", "F", "NR+", "CR", "HOP", "HNR+", "HNR+", "HNR+",
-                "HC", "HC"};
+        String[] expected = {
+            "PO3", "OPO2", "O2P", "O2P", "F", "CR", "F", "NR+", "CR", "HOP", "HNR+", "HNR+", "HNR+",
+            "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -29749,8 +30898,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 16, SINGLE);
         container.addBond(9, 15, SINGLE);
 
-        String[] expected = {"OR", "CR", "CR", "OC=C", "C=C", "C=C", "CR", "CR", "CR", "CR", "F", "F", "F", "F", "F",
-                "F", "F", "F", "F", "F", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OR", "CR", "CR", "OC=C", "C=C", "C=C", "CR", "CR", "CR", "CR", "F", "F", "F", "F", "F",
+            "F", "F", "F", "F", "F", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -29812,8 +30963,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 23, SINGLE);
         container.addBond(15, 24, SINGLE);
 
-        String[] expected = {"SI", "NR", "HNR", "CR", "HC", "HC", "HC", "NR", "NR", "NR", "HNR", "CR", "HNR", "CR",
-                "HNR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SI", "NR", "HNR", "CR", "HC", "HC", "HC", "NR", "NR", "NR", "HNR", "CR", "HNR", "CR",
+            "HNR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -29861,8 +31014,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(7, 14, SINGLE);
         container.addBond(9, 16, SINGLE);
 
-        String[] expected = {"PO3", "PO3", "CR", "CR", "OR", "OPO2", "OP", "OPO2", "O2P", "OPO2", "O2P", "HC", "HC",
-                "HC", "HOP", "HOP", "HOP", "HOR"};
+        String[] expected = {
+            "PO3", "PO3", "CR", "CR", "OR", "OPO2", "OP", "OPO2", "O2P", "OPO2", "O2P", "HC", "HC",
+            "HC", "HOP", "HOP", "HOP", "HOR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -29927,15 +31082,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 18, SINGLE);
         container.addBond(12, 17, SINGLE);
 
-        String[] expected = {"-O-", "O=CR", "O=CR", "NC=C", "C=C", "C=OR", "CR", "CR", "CR", "C=OR", "C=C", "CR", "CR",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HO", "HC", "HC", "HC", "HC", "HC", "HNCC"};
+        String[] expected = {
+            "-O-", "O=CR", "O=CR", "NC=C", "C=C", "C=OR", "CR", "CR", "CR", "C=OR", "C=C", "CR",
+            "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HO", "HC", "HC", "HC", "HC", "HC", "HNCC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for JEWFAS
      *
-     * @cdk.inchi InChI=1S/C12H18Cl2N3O2P/c13-4-7-17(8-5-14)20(18)16-12(3-9-19-20)11-2-1-6-15-10-11/h1-2,6,10,12H,3-5,7-9H2,(H,16,18)/t12-,20-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C12H18Cl2N3O2P/c13-4-7-17(8-5-14)20(18)16-12(3-9-19-20)11-2-1-6-15-10-11/h1-2,6,10,12H,3-5,7-9H2,(H,16,18)/t12-,20-/m1/s1
      */
     @Test
     public void testJEWFAS() {
@@ -30018,9 +31176,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(18, 36, SINGLE);
         container.addBond(19, 37, SINGLE);
 
-        String[] expected = {"PO2", "CL", "CL", "OPO", "OP", "NR", "NR", "NPYD", "CR", "CR", "CR", "CR", "CR", "CR",
-                "CR", "CB", "CB", "CB", "CB", "CB", "HNR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "PO2", "CL", "CL", "OPO", "OP", "NR", "NR", "NPYD", "CR", "CR", "CR", "CR", "CR", "CR",
+            "CR", "CB", "CB", "CB", "CB", "CB", "HNR", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -30073,8 +31233,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 17, SINGLE);
         container.addBond(13, 14, SINGLE);
 
-        String[] expected = {"NC=O", "C=ON", "C=C", "C=C", "NC=C", "C=C", "C=C", "C=ON", "O=CN", "O=CN", "CL", "CL",
-                "CR", "CR", "S", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NC=O", "C=ON", "C=C", "C=C", "NC=C", "C=C", "C=C", "C=ON", "O=CN", "O=CN", "CL", "CL",
+            "CR", "CR", "S", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -30155,16 +31317,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(17, 32, SINGLE);
         container.addBond(17, 33, SINGLE);
 
-        String[] expected = {"SO2N", "SO2N", "O2S", "O2S", "O2S", "O2S", "NC=C", "NSO2", "CB", "CB", "CB", "CB", "CB",
-                "CB", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2N", "SO2N", "O2S", "O2S", "O2S", "O2S", "NC=C", "NSO2", "CB", "CB", "CB", "CB",
+            "CB", "CB", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for JEYBUK
      *
-     * @cdk.inchi InChI=1S/C10H9NO3/c12-7-1-2-9-8(4-7)6(5-11-9)3-10(13)14/h1-2,4-5,11-12H,3H2,(H,13,14)
+     * @cdk.inchi
+     *     InChI=1S/C10H9NO3/c12-7-1-2-9-8(4-7)6(5-11-9)3-10(13)14/h1-2,4-5,11-12H,3H2,(H,13,14)
      */
     @Test
     public void testJEYBUK() {
@@ -30217,15 +31382,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 12, DOUBLE);
         container.addBond(13, 22, SINGLE);
 
-        String[] expected = {"NPYL", "C5A", "C5B", "CB", "CB", "OC=C", "CB", "CB", "C5A", "C5B", "CR", "COO", "O=CO",
-                "OC=O", "HPYL", "HC", "HC", "HOCC", "HC", "HC", "HC", "HC", "HOCO"};
+        String[] expected = {
+            "NPYL", "C5A", "C5B", "CB", "CB", "OC=C", "CB", "CB", "C5A", "C5B", "CR", "COO", "O=CO",
+            "OC=O", "HPYL", "HC", "HC", "HOCC", "HC", "HC", "HC", "HC", "HOCO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for JIDHIN
      *
-     * @cdk.inchi InChI=1S/C11H15NO4S/c1-8-2-4-9(5-3-8)17(15,16)12-10(6-13)11(12)7-14/h2-5,10-11,13-14H,6-7H2,1H3/t10-,11+,12+
+     * @cdk.inchi
+     *     InChI=1S/C11H15NO4S/c1-8-2-4-9(5-3-8)17(15,16)12-10(6-13)11(12)7-14/h2-5,10-11,13-14H,6-7H2,1H3/t10-,11+,12+
      */
     @Test
     public void testJIDHIN() {
@@ -30296,9 +31464,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 30, SINGLE);
         container.addBond(16, 31, SINGLE);
 
-        String[] expected = {"SO2N", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "CR3R", "CR3R", "CR", "CR", "NSO2",
-                "O2S", "O2S", "OR", "OR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HOR", "HOR"};
+        String[] expected = {
+            "SO2N", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "CR3R", "CR3R", "CR", "CR", "NSO2",
+            "O2S", "O2S", "OR", "OR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HOR", "HOR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -30360,8 +31530,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 22, SINGLE);
         container.addBond(12, 17, SINGLE);
 
-        String[] expected = {"SO2N", "O2S", "NCN+", "NR", "NCN+", "CNN+", "CB", "CB", "CB", "CB", "CB", "CB", "CR",
-                "HC", "HC", "HC", "HC", "HC", "HNN+", "HNR", "HNN+", "O2S", "HC", "HNR"};
+        String[] expected = {
+            "SO2N", "O2S", "NCN+", "NR", "NCN+", "CNN+", "CB", "CB", "CB", "CB", "CB", "CB", "CR",
+            "HC", "HC", "HC", "HC", "HC", "HNN+", "HNR", "HNN+", "O2S", "HC", "HNR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -30405,8 +31577,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 13, SINGLE);
         container.addBond(9, 14, SINGLE);
 
-        String[] expected = {"STHI", "OFUR", "N5A", "N5A", "NC=C", "C5A", "C5", "C5B", "C5B", "CR", "HNCC", "HNCC",
-                "HC", "HC", "HC"};
+        String[] expected = {
+            "STHI", "OFUR", "N5A", "N5A", "NC=C", "C5A", "C5", "C5B", "C5B", "CR", "HNCC", "HNCC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -30463,8 +31637,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 20, SINGLE);
         container.addBond(16, 21, SINGLE);
 
-        String[] expected = {"CL", "CL", "CL", "O=CR", "OC=C", "O=CR", "C=C", "C=OR", "C=C", "C=C", "C=OR", "C=C",
-                "CSP", "CSP", "C=C", "C=C", "CR", "HOCC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "CL", "CL", "O=CR", "OC=C", "O=CR", "C=C", "C=OR", "C=C", "C=C", "C=OR", "C=C",
+            "CSP", "CSP", "C=C", "C=C", "CR", "HOCC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -30498,14 +31674,17 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(5, 9, SINGLE);
         container.addBond(6, 10, SINGLE);
 
-        String[] expected = {"O2N", "NO2", "O2N", "C=N", "N=C", "CR", "-O-", "HC", "HC", "HC", "HO"};
+        String[] expected = {
+            "O2N", "NO2", "O2N", "C=N", "N=C", "CR", "-O-", "HC", "HC", "HC", "HO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for JIKHUG
      *
-     * @cdk.inchi InChI=1S/C9H11IN2O5/c10-4-2-12(9(16)11-8(4)15)7-1-5(13)6(14)3-17-7/h2,5-7,13-14H,1,3H2,(H,11,15,16)/t5-,6+,7+/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C9H11IN2O5/c10-4-2-12(9(16)11-8(4)15)7-1-5(13)6(14)3-17-7/h2,5-7,13-14H,1,3H2,(H,11,15,16)/t5-,6+,7+/m0/s1
      */
     @Test
     public void testJIKHUG() {
@@ -30568,8 +31747,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 26, SINGLE);
         container.addBond(15, 27, SINGLE);
 
-        String[] expected = {"NC=O", "CONN", "O=CN", "NC=O", "C=ON", "O=CN", "C=C", "I", "C=C", "CR", "CR", "CR", "OR",
-                "CR", "OR", "CR", "OR", "HNCO", "HC", "HC", "HC", "HC", "HC", "HOR", "HC", "HOR", "HC", "HC"};
+        String[] expected = {
+            "NC=O", "CONN", "O=CN", "NC=O", "C=ON", "O=CN", "C=C", "I", "C=C", "CR", "CR", "CR",
+            "OR", "CR", "OR", "CR", "OR", "HNCO", "HC", "HC", "HC", "HC", "HC", "HOR", "HC", "HOR",
+            "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -30619,8 +31801,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 14, DOUBLE);
         container.addBond(12, 13, SINGLE);
 
-        String[] expected = {"N5M", "N5M", "C5", "CB", "CB", "CB", "CB", "C5", "C5", "NO2", "O2N", "O2N", "NO2", "O2N",
-                "O2N", "HC", "HC", "HC"};
+        String[] expected = {
+            "N5M", "N5M", "C5", "CB", "CB", "CB", "CB", "C5", "C5", "NO2", "O2N", "O2N", "NO2",
+            "O2N", "O2N", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -30675,15 +31859,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 19, SINGLE);
         container.addBond(11, 20, SINGLE);
 
-        String[] expected = {"SO2N", "-O-", "O2S", "O2S", "NSO2", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "HC", "HC",
-                "HC", "HC", "HC", "HO", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2N", "-O-", "O2S", "O2S", "NSO2", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "HC",
+            "HC", "HC", "HC", "HC", "HO", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for JINDOZ
      *
-     * @cdk.inchi InChI=1S/C12H14N2O4S/c1-14(2)6-5-8-7-13-9-3-4-10(12(14)11(8)9)18-19(15,16)17/h3-4,7,13H,5-6H2,1-2H3
+     * @cdk.inchi
+     *     InChI=1S/C12H14N2O4S/c1-14(2)6-5-8-7-13-9-3-4-10(12(14)11(8)9)18-19(15,16)17/h3-4,7,13H,5-6H2,1-2H3
      */
     @Test
     public void testJINDOZ() {
@@ -30757,9 +31944,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(18, 31, SINGLE);
         container.addBond(18, 30, SINGLE);
 
-        String[] expected = {"SO4", "OSO3", "O3S", "O3S", "O3S", "NPYL", "NR+", "C5A", "C5B", "C5B", "CB", "CB", "CB",
-                "CB", "C5A", "CR", "CR", "CR", "CR", "HPYL", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO4", "OSO3", "O3S", "O3S", "O3S", "NPYL", "NR+", "C5A", "C5B", "C5B", "CB", "CB",
+            "CB", "CB", "C5A", "CR", "CR", "CR", "CR", "HPYL", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -30797,14 +31986,17 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(5, 12, SINGLE);
         container.addBond(6, 7, TRIPLE);
 
-        String[] expected = {"SO2", "O2S", "O2S", "CR", "C=C", "C=C", "CSP", "NSP", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2", "O2S", "O2S", "CR", "C=C", "C=C", "CSP", "NSP", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for JISZAM
      *
-     * @cdk.inchi InChI=1S/C12H18NO2/c1-8-9-6-5-7-10(15-4)11(9)12(14)13(8,2)3/h5-8,12,14H,1-4H3/q+1/t8-,12-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C12H18NO2/c1-8-9-6-5-7-10(15-4)11(9)12(14)13(8,2)3/h5-8,12,14H,1-4H3/q+1/t8-,12-/m1/s1
      */
     @Test
     public void testJISZAM() {
@@ -30877,16 +32069,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 31, SINGLE);
         container.addBond(14, 32, SINGLE);
 
-        String[] expected = {"OC=C", "OR", "NR+", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "CR", "CR", "CR", "CR",
-                "CR", "HOR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC"};
+        String[] expected = {
+            "OC=C", "OR", "NR+", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "CR", "CR", "CR", "CR",
+            "CR", "HOR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for JITMII
      *
-     * @cdk.inchi InChI=1S/C10H14F3NO3S/c1-9(10(11,12)13)8(7-18(15,16)17-9)14-5-3-2-4-6-14/h7H,2-6H2,1H3/t9-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H14F3NO3S/c1-9(10(11,12)13)8(7-18(15,16)17-9)14-5-3-2-4-6-14/h7H,2-6H2,1H3/t9-/m1/s1
      */
     @Test
     public void testJITMII() {
@@ -30957,9 +32152,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(17, 31, SINGLE);
         container.addBond(17, 30, SINGLE);
 
-        String[] expected = {"SO3", "OSO2", "CR", "C=C", "C=C", "O2S", "O2S", "CR", "F", "F", "F", "CR", "NC=C", "CR",
-                "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC"};
+        String[] expected = {
+            "SO3", "OSO2", "CR", "C=C", "C=C", "O2S", "O2S", "CR", "F", "F", "F", "CR", "NC=C",
+            "CR", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -31025,15 +32222,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(20, 24, SINGLE);
         container.addBond(23, 25, SINGLE);
 
-        String[] expected = {"NPOX", "OXN", "CB", "CB", "OC=C", "CB", "OC=C", "CB", "CB", "HOCC", "HOCC", "HC", "HC",
-                "CB", "NPOX", "CB", "OXN", "CB", "OC=C", "CB", "CB", "HC", "HOCC", "OC=C", "HC", "HOCC"};
+        String[] expected = {
+            "NPOX", "OXN", "CB", "CB", "OC=C", "CB", "OC=C", "CB", "CB", "HOCC", "HOCC", "HC", "HC",
+            "CB", "NPOX", "CB", "OXN", "CB", "OC=C", "CB", "CB", "HC", "HOCC", "OC=C", "HC", "HOCC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for JIXBAT
      *
-     * @cdk.inchi InChI=1S/C11H11N3O2/c1-16-11(13)10(6-12)14-7-8-2-4-9(15)5-3-8/h2-5,7,15H,13H2,1H3/b11-10+,14-7+
+     * @cdk.inchi
+     *     InChI=1S/C11H11N3O2/c1-16-11(13)10(6-12)14-7-8-2-4-9(15)5-3-8/h2-5,7,15H,13H2,1H3/b11-10+,14-7+
      */
     @Test
     public void testJIXBAT() {
@@ -31093,8 +32293,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 26, SINGLE);
         container.addBond(15, 24, SINGLE);
 
-        String[] expected = {"C=C", "C=N", "CB", "CB", "CB", "CB", "CB", "CB", "C=C", "CSP", "CR", "N=C", "NC=C",
-                "NSP", "OC=C", "OC=C", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOCC", "HNCC", "HNCC"};
+        String[] expected = {
+            "C=C", "C=N", "CB", "CB", "CB", "CB", "CB", "CB", "C=C", "CSP", "CR", "N=C", "NC=C",
+            "NSP", "OC=C", "OC=C", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOCC", "HNCC",
+            "HNCC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -31150,8 +32353,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 18, SINGLE);
         container.addBond(16, 19, SINGLE);
 
-        String[] expected = {"OC=O", "O=CO", "OC=C", "F", "F", "F", "F", "C=C", "C=C", "C=C", "C=C", "C=C", "C=C",
-                "C=C", "C=C", "COO", "CR", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OC=O", "O=CO", "OC=C", "F", "F", "F", "F", "C=C", "C=C", "C=C", "C=C", "C=C", "C=C",
+            "C=C", "C=C", "COO", "CR", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -31200,8 +32405,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(7, 9, DOUBLE);
         container.addBond(7, 8, SINGLE);
 
-        String[] expected = {"NIM+", "CIM+", "NIM+", "C5", "C5", "CR", "CR", "NO2", "O2N", "O2N", "HC", "HIM+", "HC",
-                "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NIM+", "CIM+", "NIM+", "C5", "C5", "CR", "CR", "NO2", "O2N", "O2N", "HC", "HIM+", "HC",
+            "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -31322,9 +32529,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(27, 35, SINGLE);
         container.addBond(27, 36, SINGLE);
 
-        String[] expected = {"HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "S", "NR", "SI", "CL", "CL", "CL",
-                "CR", "CR", "CR", "CR", "NR", "SI", "CR", "CL", "CL", "CL", "CR", "CR", "CR", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "S", "NR", "SI", "CL", "CL", "CL",
+            "CR", "CR", "CR", "CR", "NR", "SI", "CR", "CL", "CL", "CL", "CR", "CR", "CR", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -31368,8 +32577,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(5, 6, DOUBLE);
         container.addBond(6, 7, DOUBLE);
 
-        String[] expected = {"SI", "CL", "CR", "CR", "CR", "N=C", "=C=", "O=C", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC"};
+        String[] expected = {
+            "SI", "CL", "CR", "CR", "CR", "N=C", "=C=", "O=C", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -31434,15 +32645,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 23, SINGLE);
         container.addBond(12, 24, SINGLE);
 
-        String[] expected = {"CL", "CL", "O=CR", "CR3R", "CR3R", "CR3R", "C=OR", "CR4R", "CR4R", "CR3R", "CR3R",
-                "CR3R", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "CL", "O=CR", "CR3R", "CR3R", "CR3R", "C=OR", "CR4R", "CR4R", "CR3R", "CR3R",
+            "CR3R", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for KAGBOJ
      *
-     * @cdk.inchi InChI=1S/C17H14O4/c1-19-14-8-5-9-15(20-2)17(14)16-10-12(18)11-6-3-4-7-13(11)21-16/h3-10H,1-2H3
+     * @cdk.inchi
+     *     InChI=1S/C17H14O4/c1-19-14-8-5-9-15(20-2)17(14)16-10-12(18)11-6-3-4-7-13(11)21-16/h3-10H,1-2H3
      */
     @Test
     public void testKAGBOJ() {
@@ -31520,16 +32734,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(20, 27, SINGLE);
         container.addBond(20, 26, SINGLE);
 
-        String[] expected = {"OC=C", "C=C", "C=C", "C=OR", "CB", "CB", "CB", "CB", "CB", "CB", "O=CR", "CB", "CB",
-                "CB", "CB", "CB", "CB", "OC=C", "CR", "OC=C", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OC=C", "C=C", "C=C", "C=OR", "CB", "CB", "CB", "CB", "CB", "CB", "O=CR", "CB", "CB",
+            "CB", "CB", "CB", "CB", "OC=C", "CR", "OC=C", "CR", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for KAKGOS
      *
-     * @cdk.inchi InChI=1S/C12H13NOS/c1-11(2)10(14)13-8-6-4-5-7-9(8)15-12(11,13)3/h4-7H,1-3H3/t12-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C12H13NOS/c1-11(2)10(14)13-8-6-4-5-7-9(8)15-12(11,13)3/h4-7H,1-3H3/t12-/m1/s1
      */
     @Test
     public void testKAKGOS() {
@@ -31593,15 +32810,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 26, SINGLE);
         container.addBond(14, 27, SINGLE);
 
-        String[] expected = {"S", "NC=O", "O=CN", "CB", "CB", "CB", "CB", "CB", "CB", "C=ON", "CR4R", "CR4R", "CR",
-                "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "NC=O", "O=CN", "CB", "CB", "CB", "CB", "CB", "CB", "C=ON", "CR4R", "CR4R", "CR",
+            "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for KAMCUW
      *
-     * @cdk.inchi InChI=1S/C12H14Br2N2O5/c13-12(14)2-6(12)5-3-16(11(20)15-10(5)19)9-1-7(18)8(4-17)21-9/h3,6-9,17-18H,1-2,4H2,(H,15,19,20)/t6-,7-,8+,9+/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C12H14Br2N2O5/c13-12(14)2-6(12)5-3-16(11(20)15-10(5)19)9-1-7(18)8(4-17)21-9/h3,6-9,17-18H,1-2,4H2,(H,15,19,20)/t6-,7-,8+,9+/m0/s1
      */
     @Test
     public void testKAMCUW() {
@@ -31679,16 +32899,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(19, 31, SINGLE);
         container.addBond(20, 25, SINGLE);
 
-        String[] expected = {"BR", "BR", "CR3R", "CR3R", "CR3R", "C=C", "C=C", "C=ON", "O=CN", "NC=O", "CONN", "O=CN",
-                "NC=O", "CR", "OR", "CR", "OR", "CR", "OR", "CR", "CR", "HC", "HC", "HC", "HNCO", "HC", "HC", "HC",
-                "HC", "HOR", "HC", "HC", "HC", "HC", "HOR"};
+        String[] expected = {
+            "BR", "BR", "CR3R", "CR3R", "CR3R", "C=C", "C=C", "C=ON", "O=CN", "NC=O", "CONN",
+            "O=CN", "NC=O", "CR", "OR", "CR", "OR", "CR", "OR", "CR", "CR", "HC", "HC", "HC",
+            "HNCO", "HC", "HC", "HC", "HC", "HOR", "HC", "HC", "HC", "HC", "HOR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for KAMJAJ
      *
-     * @cdk.inchi InChI=1S/C11H11ClN4O/c1-15(17)11(6-16-8-13-7-14-16)9-2-4-10(12)5-3-9/h2-5,7-8H,6H2,1H3/b15-11+
+     * @cdk.inchi
+     *     InChI=1S/C11H11ClN4O/c1-15(17)11(6-16-8-13-7-14-16)9-2-4-10(12)5-3-9/h2-5,7-8H,6H2,1H3/b15-11+
      */
     @Test
     public void testKAMJAJ() {
@@ -31751,8 +32974,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 16, SINGLE);
         container.addBond(13, 15, SINGLE);
 
-        String[] expected = {"CL", "CB", "CB", "CB", "CB", "CB", "CB", "C=N", "CR", "C5A", "C5B", "CR", "N2OX", "NPYL",
-                "N5B", "N5A", "OXN", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "CB", "CB", "CB", "CB", "CB", "CB", "C=N", "CR", "C5A", "C5B", "CR", "N2OX",
+            "NPYL", "N5B", "N5A", "OXN", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -31808,15 +33034,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 16, SINGLE);
         container.addBond(14, 18, SINGLE);
 
-        String[] expected = {"STHI", "N5A", "N5A", "NSP", "NSP", "NSP", "NSP", "C5B", "C5B", "C=C", "C=C", "C=C",
-                "C=C", "C=C", "C=C", "CSP", "CSP", "CSP", "CSP", "HC", "HC"};
+        String[] expected = {
+            "STHI", "N5A", "N5A", "NSP", "NSP", "NSP", "NSP", "C5B", "C5B", "C=C", "C=C", "C=C",
+            "C=C", "C=C", "C=C", "CSP", "CSP", "CSP", "CSP", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for KANZOO
      *
-     * @cdk.inchi InChI=1S/C14H14Cl3N5O4/c1-14(2)25-7-4(3-23)24-11(8(7)26-14)21-10-6-5(18-13(17)22-10)9(15)20-12(16)19-6/h4,7-8,11,23H,3H2,1-2H3,(H,18,21,22)/t4-,7-,8-,11-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C14H14Cl3N5O4/c1-14(2)25-7-4(3-23)24-11(8(7)26-14)21-10-6-5(18-13(17)22-10)9(15)20-12(16)19-6/h4,7-8,11,23H,3H2,1-2H3,(H,18,21,22)/t4-,7-,8-,11-/m1/s1
      */
     @Test
     public void testKANZOO() {
@@ -31905,9 +33134,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(21, 38, SINGLE);
         container.addBond(25, 39, SINGLE);
 
-        String[] expected = {"CL", "CL", "CL", "NPYD", "CB", "NPYD", "CB", "NPYD", "CB", "NPYD", "CB", "CB", "CB",
-                "NC=N", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "OR", "OR", "OR", "OR", "HNCN", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOR"};
+        String[] expected = {
+            "CL", "CL", "CL", "NPYD", "CB", "NPYD", "CB", "NPYD", "CB", "NPYD", "CB", "CB", "CB",
+            "NC=N", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "OR", "OR", "OR", "OR", "HNCN",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -31956,15 +33187,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 16, SINGLE);
         container.addBond(9, 15, SINGLE);
 
-        String[] expected = {"S2CM", "S2CM", "NIM+", "NIM+", "CS2M", "C5", "C5", "CIM+", "CR", "CR", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S2CM", "S2CM", "NIM+", "NIM+", "CS2M", "C5", "C5", "CIM+", "CR", "CR", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for KARYAD
      *
-     * @cdk.inchi InChI=1S/C11H15NO2S/c1-10(2)8-3-7-4-9(8)11(5-7,6-12)15(10,13)14/h7-9H,3-5H2,1-2H3/t7-,8+,9-,11+/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C11H15NO2S/c1-10(2)8-3-7-4-9(8)11(5-7,6-12)15(10,13)14/h7-9H,3-5H2,1-2H3/t7-,8+,9-,11+/m1/s1
      */
     @Test
     public void testKARYAD() {
@@ -32032,8 +33266,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 28, SINGLE);
         container.addBond(14, 29, SINGLE);
 
-        String[] expected = {"SO2", "O2S", "O2S", "NSP", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CSP", "CR",
-                "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2", "O2S", "O2S", "NSP", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CSP", "CR",
+            "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -32086,8 +33323,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 12, DOUBLE);
         container.addBond(9, 10, TRIPLE);
 
-        String[] expected = {"CB", "CB", "CB", "CB", "CB", "CB", "CR", "NC%N", "NO2", "CSP", "NSP", "O2N", "O2N", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CB", "CB", "CB", "CB", "CB", "CB", "CR", "NC%N", "NO2", "CSP", "NSP", "O2N", "O2N",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -32150,15 +33389,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 14, SINGLE);
         container.addBond(11, 18, SINGLE);
 
-        String[] expected = {"CB", "CB", "CB", "CB", "CB", "CB", "CSP", "CSP", "COO", "CR", "CR", "OC=O", "O=CO",
-                "OC=C", "OC=C", "HC", "HC", "HC", "HOCO", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CB", "CB", "CB", "CB", "CB", "CB", "CSP", "CSP", "COO", "CR", "CR", "OC=O", "O=CO",
+            "OC=C", "OC=C", "HC", "HC", "HC", "HOCO", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for KATNAU
      *
-     * @cdk.inchi InChI=1S/C12H12N4O2S/c1-8-10-11(16(2)14-8)15-19(17,18)12(13-10)9-6-4-3-5-7-9/h3-7,14H,1-2H3
+     * @cdk.inchi
+     *     InChI=1S/C12H12N4O2S/c1-8-10-11(16(2)14-8)15-19(17,18)12(13-10)9-6-4-3-5-7-9/h3-7,14H,1-2H3
      */
     @Test
     public void testKATNAU() {
@@ -32228,9 +33470,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(17, 29, SINGLE);
         container.addBond(18, 30, SINGLE);
 
-        String[] expected = {"SO2N", "O2S", "O2S", "N=C", "N=C", "NC=C", "NC=N", "C=N", "C=C", "C=N", "C=C", "CR",
-                "CR", "CB", "CB", "CB", "CB", "CB", "CB", "HNCC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC"};
+        String[] expected = {
+            "SO2N", "O2S", "O2S", "N=C", "N=C", "NC=C", "NC=N", "C=N", "C=C", "C=N", "C=C", "CR",
+            "CR", "CB", "CB", "CB", "CB", "CB", "CB", "HNCC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -32269,14 +33513,17 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 10, DOUBLE);
         container.addBond(11, 12, SINGLE);
 
-        String[] expected = {"NPYL", "NO2", "O2N", "O2N", "C5A", "HC", "N5B", "C5B", "NO2", "O2N", "O2N", "C5A", "HC"};
+        String[] expected = {
+            "NPYL", "NO2", "O2N", "O2N", "C5A", "HC", "N5B", "C5B", "NO2", "O2N", "O2N", "C5A", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for KAVTEG
      *
-     * @cdk.inchi InChI=1S/C9H13NO5/c1-6(11)13-4-8-2-7-3-9(12)15-10(7)5-14-8/h7-8H,2-5H2,1H3/t7-,8+/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C9H13NO5/c1-6(11)13-4-8-2-7-3-9(12)15-10(7)5-14-8/h7-8H,2-5H2,1H3/t7-,8+/m1/s1
      */
     @Test
     public void testKAVTEG() {
@@ -32339,15 +33586,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 26, SINGLE);
         container.addBond(14, 27, SINGLE);
 
-        String[] expected = {"NR", "CR", "OR", "CR", "CR", "CR", "CR", "COO", "O=CO", "OC=O", "CR", "OC=O", "COO",
-                "O=CO", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NR", "CR", "OR", "CR", "CR", "CR", "CR", "COO", "O=CO", "OC=O", "CR", "OC=O", "COO",
+            "O=CO", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for KECSIU
      *
-     * @cdk.inchi InChI=1S/C12H8F8S2/c1-5-2-6(4-7(21)11(17,18)9(13)14)22-8(3-5)12(19,20)10(15)16/h2-4,9-10H,1H3/b6-4-
+     * @cdk.inchi
+     *     InChI=1S/C12H8F8S2/c1-5-2-6(4-7(21)11(17,18)9(13)14)22-8(3-5)12(19,20)10(15)16/h2-4,9-10H,1H3/b6-4-
      */
     @Test
     public void testKECSIU() {
@@ -32413,8 +33664,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(20, 21, SINGLE);
         container.addBond(21, 29, SINGLE);
 
-        String[] expected = {"S", "S=C", "F", "F", "F", "F", "F", "F", "F", "F", "C=C", "C=C", "C=C", "C=C", "C=C",
-                "CR", "C=C", "C=S", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "S=C", "F", "F", "F", "F", "F", "F", "F", "F", "C=C", "C=C", "C=C", "C=C", "C=C",
+            "CR", "C=C", "C=S", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -32461,8 +33715,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(7, 14, SINGLE);
         container.addBond(7, 15, SINGLE);
 
-        String[] expected = {"NPYL", "N5A", "C5B", "N5B", "C5A", "CR", "CR", "CR", "CL", "CL", "CL", "CL", "CL", "CL",
-                "CL", "CL", "CL"};
+        String[] expected = {
+            "NPYL", "N5A", "C5B", "N5B", "C5A", "CR", "CR", "CR", "CL", "CL", "CL", "CL", "CL",
+            "CL", "CL", "CL", "CL"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -32524,15 +33780,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(20, 22, SINGLE);
         container.addBond(20, 23, SINGLE);
 
-        String[] expected = {"STHI", "C5A", "C5B", "C5B", "C5A", "OC=C", "CR", "HC", "HC", "HC", "HC", "HC", "C5A",
-                "STHI", "C5B", "C5A", "C5B", "HC", "HC", "OC=C", "CR", "HC", "HC", "HC"};
+        String[] expected = {
+            "STHI", "C5A", "C5B", "C5B", "C5A", "OC=C", "CR", "HC", "HC", "HC", "HC", "HC", "C5A",
+            "STHI", "C5B", "C5A", "C5B", "HC", "HC", "OC=C", "CR", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for KEFJEK
      *
-     * @cdk.inchi InChI=1S/C11H9N3O2/c1-15-10-9(7-12)14-11(16-10)13-8-5-3-2-4-6-8/h2-6H,1H3,(H,13,14)
+     * @cdk.inchi
+     *     InChI=1S/C11H9N3O2/c1-15-10-9(7-12)14-11(16-10)13-8-5-3-2-4-6-8/h2-6H,1H3,(H,13,14)
      */
     @Test
     public void testKEFJEK() {
@@ -32589,8 +33848,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 24, SINGLE);
         container.addBond(14, 15, SINGLE);
 
-        String[] expected = {"OC=C", "OFUR", "NC=N", "N5B", "NSP", "CR", "C5A", "C5A", "CB", "CB", "CB", "CB", "CB",
-                "CB", "C5B", "CSP", "HC", "HC", "HC", "HNCN", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OC=C", "OFUR", "NC=N", "N5B", "NSP", "CR", "C5A", "C5A", "CB", "CB", "CB", "CB", "CB",
+            "CB", "C5B", "CSP", "HC", "HC", "HC", "HNCN", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -32645,15 +33906,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 16, SINGLE);
         container.addBond(11, 15, SINGLE);
 
-        String[] expected = {"PO3", "O2P", "O2P", "OPO2", "O=CN", "NC=O", "C=C", "C=C", "CR", "C=ON", "CR", "CR", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HNCO", "HNCO", "HC"};
+        String[] expected = {
+            "PO3", "O2P", "O2P", "OPO2", "O=CN", "NC=O", "C=C", "C=C", "CR", "C=ON", "CR", "CR",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HNCO", "HNCO", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for KEMFAJ
      *
-     * @cdk.inchi InChI=1S/C10H11N4O2S2/c1-2-9-12-13-10(17-9)14-18(15,16)8-5-3-7(11)4-6-8/h3-6H,2,11H2,1H3/q-1
+     * @cdk.inchi
+     *     InChI=1S/C10H11N4O2S2/c1-2-9-12-13-10(17-9)14-18(15,16)8-5-3-7(11)4-6-8/h3-6H,2,11H2,1H3/q-1
      */
     @Test
     public void testKEMFAJ() {
@@ -32718,15 +33982,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(17, 27, SINGLE);
         container.addBond(17, 26, SINGLE);
 
-        String[] expected = {"STHI", "SO2N", "O2S", "O2S", "N5B", "N5B", "NM", "NC=C", "C5A", "C5A", "CB", "CB", "CB",
-                "CB", "CB", "CB", "CR", "CR", "HC", "HC", "HC", "HC", "HNCC", "HNCC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "STHI", "SO2N", "O2S", "O2S", "N5B", "N5B", "NM", "NC=C", "C5A", "C5A", "CB", "CB",
+            "CB", "CB", "CB", "CB", "CR", "CR", "HC", "HC", "HC", "HC", "HNCC", "HNCC", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for KENHOA
      *
-     * @cdk.inchi InChI=1S/C8H8ClNO3S/c9-14(11,12)10-8-7-5-2-1-4(13-8)3-6(5)7/h1-2,4-7H,3H2/b10-8-/t4-,5+,6-,7+/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C8H8ClNO3S/c9-14(11,12)10-8-7-5-2-1-4(13-8)3-6(5)7/h1-2,4-7H,3H2/b10-8-/t4-,5+,6-,7+/m0/s1
      */
     @Test
     public void testKENHOA() {
@@ -32778,8 +34046,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 20, SINGLE);
         container.addBond(13, 21, SINGLE);
 
-        String[] expected = {"SO2N", "CL", "N=C", "O2S", "CR3R", "O2S", "CR3R", "C=N", "OC=N", "CR", "C=C", "C=C",
-                "CR3R", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2N", "CL", "N=C", "O2S", "CR3R", "O2S", "CR3R", "C=N", "OC=N", "CR", "C=C", "C=C",
+            "CR3R", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -32824,15 +34094,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 9, DOUBLE);
         container.addBond(9, 10, SINGLE);
 
-        String[] expected = {"C5B", "C5B", "C=C", "C=C", "C5A", "N5A", "N5AX", "NPYL", "N5A", "N5B", "N5B", "OFUR",
-                "OXN", "HC", "HC"};
+        String[] expected = {
+            "C5B", "C5B", "C=C", "C=C", "C5A", "N5A", "N5AX", "NPYL", "N5A", "N5B", "N5B", "OFUR",
+            "OXN", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for KESNEB
      *
-     * @cdk.inchi InChI=1S/C11H13N3O5/c1-11(2,3)12(15)7-8-4-5-9(13(16)17)6-10(8)14(18)19/h4-7H,1-3H3/b12-7-
+     * @cdk.inchi
+     *     InChI=1S/C11H13N3O5/c1-11(2,3)12(15)7-8-4-5-9(13(16)17)6-10(8)14(18)19/h4-7H,1-3H3/b12-7-
      */
     @Test
     public void testKESNEB() {
@@ -32902,9 +34175,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(18, 30, SINGLE);
         container.addBond(18, 29, SINGLE);
 
-        String[] expected = {"O2N", "O2N", "O2N", "O2N", "OXN", "NO2", "NO2", "N2OX", "CB", "CB", "CB", "CB", "CB",
-                "CB", "C=N", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC"};
+        String[] expected = {
+            "O2N", "O2N", "O2N", "O2N", "OXN", "NO2", "NO2", "N2OX", "CB", "CB", "CB", "CB", "CB",
+            "CB", "C=N", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -32939,7 +34214,9 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(6, 7, DOUBLE);
         container.addBond(7, 8, DOUBLE);
 
-        String[] expected = {"STHI", "N5A", "C5B", "C5B", "N5A", "NC=N", "N=N", "=N=", "NAZT", "HNCN", "HNCN"};
+        String[] expected = {
+            "STHI", "N5A", "C5B", "C5B", "N5A", "NC=N", "N=N", "=N=", "NAZT", "HNCN", "HNCN"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -32968,7 +34245,8 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
     /**
      * Generated test for KIBDII
      *
-     * @cdk.inchi InChI=1S/C7H13N5O2S/c1-15-7(11-4-2-3-5-11)9-6(8)10-12(13)14/h2-5H2,1H3,(H2,8,10)/b9-7-
+     * @cdk.inchi
+     *     InChI=1S/C7H13N5O2S/c1-15-7(11-4-2-3-5-11)9-6(8)10-12(13)14/h2-5H2,1H3,(H2,8,10)/b9-7-
      */
     @Test
     public void testKIBDII() {
@@ -33030,8 +34308,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 14, DOUBLE);
         container.addBond(12, 13, SINGLE);
 
-        String[] expected = {"N=C", "C=N", "N=C", "C=N", "S", "CR", "NC=N", "NC=N", "CR", "CR", "CR", "CR", "NO2",
-                "O2N", "O2N", "HC", "HC", "HC", "HNCN", "HNCN", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "N=C", "C=N", "N=C", "C=N", "S", "CR", "NC=N", "NC=N", "CR", "CR", "CR", "CR", "NO2",
+            "O2N", "O2N", "HC", "HC", "HC", "HNCN", "HNCN", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -33091,8 +34372,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 12, DOUBLE);
         container.addBond(12, 22, SINGLE);
 
-        String[] expected = {"NPYD", "NPOX", "NPYD", "CB", "CB", "CB", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "OXN",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NPYD", "NPOX", "NPYD", "CB", "CB", "CB", "CR", "CB", "CB", "CB", "CB", "CB", "CB",
+            "OXN", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -33128,14 +34411,17 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(7, 10, SINGLE);
         container.addBond(10, 11, TRIPLE);
 
-        String[] expected = {"P", "F", "F", "-OP", "CR", "HC", "HC", "CR", "HC", "HC", "CSP", "NSP"};
+        String[] expected = {
+            "P", "F", "F", "-OP", "CR", "HC", "HC", "CR", "HC", "HC", "CSP", "NSP"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for KICGAE
      *
-     * @cdk.inchi InChI=1S/C10H6Cl6/c11-5-3-1-2-4(5)9(15)7(13)6(12)8(3,14)10(2,9)16/h2-5H,1H2/t2-,3+,4-,5-,8-,9+,10-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H6Cl6/c11-5-3-1-2-4(5)9(15)7(13)6(12)8(3,14)10(2,9)16/h2-5H,1H2/t2-,3+,4-,5-,8-,9+,10-/m0/s1
      */
     @Test
     public void testKICGAE() {
@@ -33188,15 +34474,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 15, SINGLE);
         container.addBond(9, 21, SINGLE);
 
-        String[] expected = {"CR4R", "CR4R", "CR", "CR", "CR", "C=C", "C=C", "CR4R", "CR4R", "CR", "CL", "CL", "CL",
-                "CL", "CL", "CL", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR4R", "CR4R", "CR", "CR", "CR", "C=C", "C=C", "CR4R", "CR4R", "CR", "CL", "CL", "CL",
+            "CL", "CL", "CL", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for KICLAJ
      *
-     * @cdk.inchi InChI=1S/C6H11O6P/c1-9-6-5-4(7)3(2-10-6)11-13(8)12-5/h3-7,13H,2H2,1H3/t3-,4-,5-,6-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C6H11O6P/c1-9-6-5-4(7)3(2-10-6)11-13(8)12-5/h3-7,13H,2H2,1H3/t3-,4-,5-,6-/m0/s1
      */
     @Test
     public void testKICLAJ() {
@@ -33251,8 +34540,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 22, SINGLE);
         container.addBond(12, 23, SINGLE);
 
-        String[] expected = {"PO3", "OP", "OPO2", "OR", "OPO2", "OR", "OR", "CR", "CR", "CR", "CR", "CR", "CR", "HC",
-                "HC", "HC", "HOR", "HP", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "PO3", "OP", "OPO2", "OR", "OPO2", "OR", "OR", "CR", "CR", "CR", "CR", "CR", "CR", "HC",
+            "HC", "HC", "HOR", "HP", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -33296,14 +34587,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 9, DOUBLE);
         container.addBond(8, 14, SINGLE);
 
-        String[] expected = {"S", "P", "CL", "NC=C", "CB", "CB", "CB", "CB", "CB", "CB", "HNCC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "P", "CL", "NC=C", "CB", "CB", "CB", "CB", "CB", "CB", "HNCC", "HC", "HC", "HC",
+            "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for KIKVUV
      *
-     * @cdk.inchi InChI=1S/C10F8N4O2/c11-1-5(2(12)8(16)19-7(1)15)21(23)22(24)6-3(13)9(17)20-10(18)4(6)14/b22-21+
+     * @cdk.inchi
+     *     InChI=1S/C10F8N4O2/c11-1-5(2(12)8(16)19-7(1)15)21(23)22(24)6-3(13)9(17)20-10(18)4(6)14/b22-21+
      */
     @Test
     public void testKIKVUV() {
@@ -33358,8 +34653,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(19, 23, SINGLE);
         container.addBond(19, 21, SINGLE);
 
-        String[] expected = {"CB", "CB", "CB", "NPYD", "CB", "CB", "N2OX", "OXN", "F", "F", "F", "F", "N2OX", "CB",
-                "OXN", "CB", "CB", "CB", "F", "CB", "F", "NPYD", "F", "F"};
+        String[] expected = {
+            "CB", "CB", "CB", "NPYD", "CB", "CB", "N2OX", "OXN", "F", "F", "F", "F", "N2OX", "CB",
+            "OXN", "CB", "CB", "CB", "F", "CB", "F", "NPYD", "F", "F"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -33388,7 +34685,8 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
     /**
      * Generated test for KINKUN
      *
-     * @cdk.inchi InChI=1S/C11H16N2OS/c1-11(2,3)15-10(8-12)9-13-6-4-5-7-14-13/h4-5,9H,6-7H2,1-3H3/b10-9-
+     * @cdk.inchi
+     *     InChI=1S/C11H16N2OS/c1-11(2,3)15-10(8-12)9-13-6-4-5-7-14-13/h4-5,9H,6-7H2,1-3H3/b10-9-
      */
     @Test
     public void testKINKUN() {
@@ -33456,8 +34754,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 29, SINGLE);
         container.addBond(14, 30, SINGLE);
 
-        String[] expected = {"OR", "NC=C", "CR", "C=C", "C=C", "CR", "C=C", "C=C", "CSP", "NSP", "S", "CR", "CR", "CR",
-                "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OR", "NC=C", "CR", "C=C", "C=C", "CR", "C=C", "C=C", "CSP", "NSP", "S", "CR", "CR",
+            "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -33537,16 +34838,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(26, 32, TRIPLE);
         container.addBond(29, 33, TRIPLE);
 
-        String[] expected = {"NR", "NR%", "CR", "CR", "CR", "C%", "HC", "HC", "HC", "HC", "HC", "HC", "CR", "CR", "CR",
-                "HC", "HC", "CR", "HC", "HC", "CR", "HC", "HC", "CR", "HC", "HC", "NR%", "HC", "HC", "NR%", "HC", "HC",
-                "C%", "C%"};
+        String[] expected = {
+            "NR", "NR%", "CR", "CR", "CR", "C%", "HC", "HC", "HC", "HC", "HC", "HC", "CR", "CR",
+            "CR", "HC", "HC", "CR", "HC", "HC", "CR", "HC", "HC", "CR", "HC", "HC", "NR%", "HC",
+            "HC", "NR%", "HC", "HC", "C%", "C%"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for KINWEJ
      *
-     * @cdk.inchi InChI=1S/C17H18N2O2/c1-2-21-17-15-11-7-10(14(15)16(20)18-19-17)12-8-5-3-4-6-9(8)13(11)12/h3-6,10-15H,2,7H2,1H3,(H,18,20)/t10-,11+,12-,13+,14+,15-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C17H18N2O2/c1-2-21-17-15-11-7-10(14(15)16(20)18-19-17)12-8-5-3-4-6-9(8)13(11)12/h3-6,10-15H,2,7H2,1H3,(H,18,20)/t10-,11+,12-,13+,14+,15-/m0/s1
      */
     @Test
     public void testKINWEJ() {
@@ -33634,16 +34938,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(20, 37, SINGLE);
         container.addBond(20, 36, SINGLE);
 
-        String[] expected = {"CR", "CR4R", "CB", "CB", "CB", "CB", "CB", "CB", "CR4R", "CR", "CR", "C=ON", "O=CN",
-                "NC=O", "N=C", "C=N", "CR", "CR", "OC=N", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR", "CR4R", "CB", "CB", "CB", "CB", "CB", "CB", "CR4R", "CR", "CR", "C=ON", "O=CN",
+            "NC=O", "N=C", "C=N", "CR", "CR", "OC=N", "CR", "CR", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for KINWIN
      *
-     * @cdk.inchi InChI=1S/C5H8FNO4/c6-2(4(8)9)1-3(7)5(10)11/h2-3H,1,7H2,(H,8,9)(H,10,11)/t2-,3+/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C5H8FNO4/c6-2(4(8)9)1-3(7)5(10)11/h2-3H,1,7H2,(H,8,9)(H,10,11)/t2-,3+/m0/s1
      */
     @Test
     public void testKINWIN() {
@@ -33686,15 +34993,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 9, DOUBLE);
         container.addBond(8, 10, SINGLE);
 
-        String[] expected = {"COO", "O=CO", "OC=O", "CR", "NR+", "CR", "CR", "F", "CO2M", "O2CM", "O2CM", "HOCO", "HC",
-                "HNR+", "HNR+", "HNR+", "HC", "HC", "HC"};
+        String[] expected = {
+            "COO", "O=CO", "OC=O", "CR", "NR+", "CR", "CR", "F", "CO2M", "O2CM", "O2CM", "HOCO",
+            "HC", "HNR+", "HNR+", "HNR+", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for KIRCAP
      *
-     * @cdk.inchi InChI=1S/C11H7N5O12/c1-26-10(17)9-8-5-2-4(12(18)19)3-6(13(20)21)7(5)11(14(22)23,15(24)25)16(27-8)28-9/h2-3,8-9H,1H3/t8-,9-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C11H7N5O12/c1-26-10(17)9-8-5-2-4(12(18)19)3-6(13(20)21)7(5)11(14(22)23,15(24)25)16(27-8)28-9/h2-3,8-9H,1H3/t8-,9-/m0/s1
      */
     @Test
     public void testKIRCAP() {
@@ -33772,9 +35082,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(27, 33, SINGLE);
         container.addBond(27, 34, SINGLE);
 
-        String[] expected = {"O2N", "O2N", "O2N", "O2N", "O2N", "O2N", "O2N", "O2N", "O=CO", "OC=O", "OR", "OR", "NO2",
-                "NO2", "NO2", "NO2", "NR", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "CR", "COO", "CR", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "O2N", "O2N", "O2N", "O2N", "O2N", "O2N", "O2N", "O2N", "O=CO", "OC=O", "OR", "OR",
+            "NO2", "NO2", "NO2", "NO2", "NR", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "CR",
+            "COO", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -33829,15 +35141,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 19, SINGLE);
         container.addBond(11, 20, SINGLE);
 
-        String[] expected = {"CL", "NR", "CR3R", "CR3R", "COO", "O=CO", "OC=O", "CR", "C=ON", "O=CN", "NC=O", "CR",
-                "HC", "HC", "HC", "HC", "HC", "HNCO", "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "NR", "CR3R", "CR3R", "COO", "O=CO", "OC=O", "CR", "C=ON", "O=CN", "NC=O", "CR",
+            "HC", "HC", "HC", "HC", "HC", "HNCO", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for KITREK
      *
-     * @cdk.inchi InChI=1S/C8H12N5O4P/c9-7-6-8(11-3-10-7)13(4-12-6)1-2-17-5-18(14,15)16/h3-4H,1-2,5H2,(H2,9,10,11)(H2,14,15,16)
+     * @cdk.inchi
+     *     InChI=1S/C8H12N5O4P/c9-7-6-8(11-3-10-7)13(4-12-6)1-2-17-5-18(14,15)16/h3-4H,1-2,5H2,(H2,9,10,11)(H2,14,15,16)
      */
     @Test
     public void testKITREK() {
@@ -33904,16 +35219,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 15, SINGLE);
         container.addBond(17, 29, SINGLE);
 
-        String[] expected = {"NPD+", "CB", "NPYD", "C5A", "C5B", "CB", "NC=N", "N5B", "C5A", "NPYL", "CR", "CR", "OR",
-                "CR", "PO3", "O2P", "O2P", "OPO2", "HPD+", "HC", "HNCN", "HNCN", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HOP"};
+        String[] expected = {
+            "NPD+", "CB", "NPYD", "C5A", "C5B", "CB", "NC=N", "N5B", "C5A", "NPYL", "CR", "CR",
+            "OR", "CR", "PO3", "O2P", "O2P", "OPO2", "HPD+", "HC", "HNCN", "HNCN", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HOP"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for KIYGAA
      *
-     * @cdk.inchi InChI=1S/C5H4F6N2S3/c6-4(7,8)3(5(9,10)11)16-15-2(13)1(12)14/h3,13H,(H2,12,14)/b13-2-
+     * @cdk.inchi
+     *     InChI=1S/C5H4F6N2S3/c6-4(7,8)3(5(9,10)11)16-15-2(13)1(12)14/h3,13H,(H2,12,14)/b13-2-
      */
     @Test
     public void testKIYGAA() {
@@ -33958,8 +35276,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 18, SINGLE);
         container.addBond(14, 19, SINGLE);
 
-        String[] expected = {"CR", "CR", "F", "F", "F", "CR", "F", "F", "F", "S", "S", "C=N", "N=C", "C=SN", "NC=S",
-                "S=C", "HC", "HN=C", "HNCS", "HNCS"};
+        String[] expected = {
+            "CR", "CR", "F", "F", "F", "CR", "F", "F", "F", "S", "S", "C=N", "N=C", "C=SN", "NC=S",
+            "S=C", "HC", "HN=C", "HNCS", "HNCS"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -34000,8 +35320,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(7, 8, DOUBLE);
         container.addBond(8, 9, SINGLE);
 
-        String[] expected = {"O=CN", "O2N", "O2N", "NC=O", "NC=C", "NC=C", "NO2", "C=C", "C=C", "C=ON", "HNCO", "HNCC",
-                "HNCC", "HNCC"};
+        String[] expected = {
+            "O=CN", "O2N", "O2N", "NC=O", "NC=C", "NC=C", "NO2", "C=C", "C=C", "C=ON", "HNCO",
+            "HNCC", "HNCC", "HNCC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -34043,15 +35365,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 9, SINGLE);
         container.addBond(9, 13, SINGLE);
 
-        String[] expected = {"NPYL", "N5A", "C5B", "N5B", "C5A", "N5B", "N5B", "C5A", "NPYL", "C5A", "HPYL", "HC",
-                "HC", "HC"};
+        String[] expected = {
+            "NPYL", "N5A", "C5B", "N5B", "C5A", "N5B", "N5B", "C5A", "NPYL", "C5A", "HPYL", "HC",
+            "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for KOBZEG
      *
-     * @cdk.inchi InChI=1S/C19H9Cl2N7O2/c20-13-14(21)17(30)15(10(9-22)16(13)29)27-28-18(11-5-1-3-7-23-11)25-26-19(28)12-6-2-4-8-24-12/h1-8,27H
+     * @cdk.inchi
+     *     InChI=1S/C19H9Cl2N7O2/c20-13-14(21)17(30)15(10(9-22)16(13)29)27-28-18(11-5-1-3-7-23-11)25-26-19(28)12-6-2-4-8-24-12/h1-8,27H
      */
     @Test
     public void testKOBZEG() {
@@ -34138,9 +35463,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(28, 36, SINGLE);
         container.addBond(29, 37, SINGLE);
 
-        String[] expected = {"CL", "CL", "C=C", "C=C", "C=OR", "O=CR", "C=C", "C=C", "C=OR", "O=CR", "NC=C", "CSP",
-                "NSP", "NPYL", "N5B", "N5B", "C5A", "CB", "NPYD", "CB", "CB", "CB", "CB", "C5A", "CB", "NPYD", "CB",
-                "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNCC"};
+        String[] expected = {
+            "CL", "CL", "C=C", "C=C", "C=OR", "O=CR", "C=C", "C=C", "C=OR", "O=CR", "NC=C", "CSP",
+            "NSP", "NPYL", "N5B", "N5B", "C5A", "CB", "NPYD", "CB", "CB", "CB", "CB", "C5A", "CB",
+            "NPYD", "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNCC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -34194,15 +35521,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 13, DOUBLE);
         container.addBond(13, 16, SINGLE);
 
-        String[] expected = {"STHI", "C5A", "C5B", "C5B", "C5A", "NPYL", "C5A", "C5B", "C5B", "C5A", "CSP", "NSP",
-                "O=CR", "C=OR", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "STHI", "C5A", "C5B", "C5B", "C5A", "NPYL", "C5A", "C5B", "C5B", "C5A", "CSP", "NSP",
+            "O=CR", "C=OR", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for KODFUE
      *
-     * @cdk.inchi InChI=1S/C10H18INO/c1-4-9(11)10(13)12-7(2)5-6-8(12)3/h7-9H,4-6H2,1-3H3/t7-,8-,9+/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H18INO/c1-4-9(11)10(13)12-7(2)5-6-8(12)3/h7-9H,4-6H2,1-3H3/t7-,8-,9+/m0/s1
      */
     @Test
     public void testKODFUE() {
@@ -34270,8 +35600,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 29, SINGLE);
         container.addBond(11, 30, SINGLE);
 
-        String[] expected = {"NC=O", "CR", "CR", "CR", "CR", "CR", "CR", "C=ON", "O=CN", "CR", "CR", "CR", "I", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NC=O", "CR", "CR", "CR", "CR", "CR", "CR", "C=ON", "O=CN", "CR", "CR", "CR", "I", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -34330,15 +35663,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 14, DOUBLE);
         container.addBond(12, 13, SINGLE);
 
-        String[] expected = {"CR", "CR", "CR", "CR", "NR", "NR", "NR", "NO2", "O2N", "O2N", "N=O", "O=N", "NO2", "O2N",
-                "O2N", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR", "CR", "CR", "CR", "NR", "NR", "NR", "NO2", "O2N", "O2N", "N=O", "O=N", "NO2",
+            "O2N", "O2N", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for KOFMEX
      *
-     * @cdk.inchi InChI=1S/C12H12N2O3/c1-2-16-12(15)14-11-13-8-10(17-11)9-6-4-3-5-7-9/h3-8H,2H2,1H3,(H,13,14,15)
+     * @cdk.inchi
+     *     InChI=1S/C12H12N2O3/c1-2-16-12(15)14-11-13-8-10(17-11)9-6-4-3-5-7-9/h3-8H,2H2,1H3,(H,13,14,15)
      */
     @Test
     public void testKOFMEX() {
@@ -34403,15 +35739,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 27, SINGLE);
         container.addBond(16, 28, SINGLE);
 
-        String[] expected = {"OFUR", "C5A", "N5B", "C5B", "C5A", "NC=O", "C=ON", "O=CN", "OC=O", "CR", "CR", "CB",
-                "CB", "CB", "CB", "CB", "CB", "HC", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OFUR", "C5A", "N5B", "C5B", "C5A", "NC=O", "C=ON", "O=CN", "OC=O", "CR", "CR", "CB",
+            "CB", "CB", "CB", "CB", "CB", "HC", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for KOFNIC
      *
-     * @cdk.inchi InChI=1S/C10H12N4O5S/c1-10(5-13-3-2-11-12-13)8(9(16)17)14-6(15)4-7(14)20(10,18)19/h2-3,7-8H,4-5H2,1H3,(H,16,17)/t7-,8+,10+/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H12N4O5S/c1-10(5-13-3-2-11-12-13)8(9(16)17)14-6(15)4-7(14)20(10,18)19/h2-3,7-8H,4-5H2,1H3,(H,16,17)/t7-,8+,10+/m1/s1
      */
     @Test
     public void testKOFNIC() {
@@ -34483,9 +35823,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(24, 25, DOUBLE);
         container.addBond(30, 31, SINGLE);
 
-        String[] expected = {"SO2", "CR", "CR", "HC", "CR4R", "HC", "CR4R", "HC", "HC", "C=ON", "COO", "CR", "HC",
-                "HC", "HC", "CR", "HC", "HC", "C5B", "HC", "C5A", "HC", "NC=O", "NPYL", "N5A", "N5B", "O2S", "O2S",
-                "O=CN", "O=CO", "OC=O", "HOCO"};
+        String[] expected = {
+            "SO2", "CR", "CR", "HC", "CR4R", "HC", "CR4R", "HC", "HC", "C=ON", "COO", "CR", "HC",
+            "HC", "HC", "CR", "HC", "HC", "C5B", "HC", "C5A", "HC", "NC=O", "NPYL", "N5A", "N5B",
+            "O2S", "O2S", "O=CN", "O=CO", "OC=O", "HOCO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -34546,8 +35888,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 19, SINGLE);
         container.addBond(13, 20, SINGLE);
 
-        String[] expected = {"SO3", "OSO2", "O2S", "O2S", "CR", "CSP", "CSP", "CR", "CB", "CB", "CB", "CB", "CB", "CB",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO3", "OSO2", "O2S", "O2S", "CR", "CSP", "CSP", "CR", "CB", "CB", "CB", "CB", "CB",
+            "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -34594,8 +35938,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 15, SINGLE);
         container.addBond(10, 16, SINGLE);
 
-        String[] expected = {"OC=O", "O=CO", "CSP", "CSP", "COO", "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC", "HC",
-                "HC", "HC", "HC"};
+        String[] expected = {
+            "OC=O", "O=CO", "CSP", "CSP", "COO", "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC",
+            "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -34669,9 +36015,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(22, 28, SINGLE);
         container.addBond(22, 27, SINGLE);
 
-        String[] expected = {"S=C", "NPYL", "N5A", "C=SN", "C5B", "C5B", "C5A", "CR", "CR", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "NPYL", "N5A", "C5A", "C5B", "C5B", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC"};
+        String[] expected = {
+            "S=C", "NPYL", "N5A", "C=SN", "C5B", "C5B", "C5A", "CR", "CR", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "NPYL", "N5A", "C5A", "C5B", "C5B", "CR", "CR", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -34736,8 +36084,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(20, 24, SINGLE);
         container.addBond(20, 25, SINGLE);
 
-        String[] expected = {"NR", "CR", "CSP", "CSP", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "CR",
-                "CSP", "NR", "HC", "HC", "CSP", "CR", "CR", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NR", "CR", "CSP", "CSP", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "CR",
+            "CSP", "NR", "HC", "HC", "CSP", "CR", "CR", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -34792,15 +36142,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 18, SINGLE);
         container.addBond(12, 17, SINGLE);
 
-        String[] expected = {"NC=O", "CR", "CONN", "O=CN", "NC=O", "CR", "C=ON", "O=CN", "C=C", "N=O", "O=N", "C=C",
-                "NC=C", "HC", "HC", "HC", "HC", "HNCC", "HNCC", "HC", "HC"};
+        String[] expected = {
+            "NC=O", "CR", "CONN", "O=CN", "NC=O", "CR", "C=ON", "O=CN", "C=C", "N=O", "O=N", "C=C",
+            "NC=C", "HC", "HC", "HC", "HC", "HNCC", "HNCC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for KOKMIG
      *
-     * @cdk.inchi InChI=1S/C8H15N4O2P/c1-5-14-15(13)8(2,3)12(4)7(11-15)10-6-9/h5H2,1-4H3,(H,10,11,13)/t15-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C8H15N4O2P/c1-5-14-15(13)8(2,3)12(4)7(11-15)10-6-9/h5H2,1-4H3,(H,10,11,13)/t15-/m1/s1
      */
     @Test
     public void testKOKMIG() {
@@ -34866,15 +36219,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 28, SINGLE);
         container.addBond(14, 29, SINGLE);
 
-        String[] expected = {"PO2", "OP", "OPO", "NC=N", "N=C", "NSP", "NC=N", "CR", "CR", "CR", "CR", "CGD", "CSP",
-                "CR", "CR", "HNCN", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "PO2", "OP", "OPO", "NC=N", "N=C", "NSP", "NC=N", "CR", "CR", "CR", "CR", "CGD", "CSP",
+            "CR", "CR", "HNCN", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for KOLCUJ
      *
-     * @cdk.inchi InChI=1S/C10H5Cl9N2S3/c11-8(12,13)22-20-7(6-4-2-1-3-5-6)21(23-9(14,15)16)24-10(17,18)19/h1-5H/b20-7-
+     * @cdk.inchi
+     *     InChI=1S/C10H5Cl9N2S3/c11-8(12,13)22-20-7(6-4-2-1-3-5-6)21(23-9(14,15)16)24-10(17,18)19/h1-5H/b20-7-
      */
     @Test
     public void testKOLCUJ() {
@@ -34938,8 +36295,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(22, 27, SINGLE);
         container.addBond(23, 28, SINGLE);
 
-        String[] expected = {"S", "S", "S", "CL", "CL", "CL", "CL", "CL", "CL", "CL", "CL", "CL", "N=C", "NC=N", "C=N",
-                "CR", "CR", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "S", "S", "CL", "CL", "CL", "CL", "CL", "CL", "CL", "CL", "CL", "N=C", "NC=N",
+            "C=N", "CR", "CR", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC",
+            "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -35007,8 +36367,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 26, SINGLE);
         container.addBond(10, 25, SINGLE);
 
-        String[] expected = {"NC=C", "N+=C", "C=C", "C=C", "C=C", "C=C", "C=N", "CR", "CR", "CR", "CR", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NC=C", "N+=C", "C=C", "C=C", "C=C", "C=C", "C=N", "CR", "CR", "CR", "CR", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -35059,8 +36421,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 17, SINGLE);
         container.addBond(11, 18, SINGLE);
 
-        String[] expected = {"S", "O2N", "O2N", "-OS", "NO2", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "O2N", "O2N", "-OS", "NO2", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -35119,8 +36483,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 21, SINGLE);
         container.addBond(12, 22, SINGLE);
 
-        String[] expected = {"S=O", "O=S", "O=CO", "OC=O", "CB", "CB", "CB", "CB", "CB", "CB", "COO", "CR", "CR", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S=O", "O=S", "O=CO", "OC=O", "CB", "CB", "CB", "CB", "CB", "CB", "COO", "CR", "CR",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -35168,8 +36534,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(7, 16, SINGLE);
         container.addBond(7, 15, SINGLE);
 
-        String[] expected = {"S2CM", "S2CM", "CS2M", "NC=S", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S2CM", "S2CM", "CS2M", "NC=S", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -35251,8 +36619,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(17, 19, SINGLE);
         container.addBond(17, 20, SINGLE);
 
-        String[] expected = {"PO3", "OPO2", "OP", "NPYL", "N5A", "N5B", "C=C", "CR", "C5B", "C5A", "HC", "HC", "HC",
-                "HC", "HC", "OPO2", "C=C", "CR", "HC", "HC", "HC"};
+        String[] expected = {
+            "PO3", "OPO2", "OP", "NPYL", "N5A", "N5B", "C=C", "CR", "C5B", "C5A", "HC", "HC", "HC",
+            "HC", "HC", "OPO2", "C=C", "CR", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -35333,16 +36703,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 31, SINGLE);
         container.addBond(15, 30, SINGLE);
 
-        String[] expected = {"PO3", "OPO2", "OPO2", "OP", "N=C", "NC=N", "NC=N", "C=C", "C=C", "CR", "CR", "CGD", "CR",
-                "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "PO3", "OPO2", "OPO2", "OP", "N=C", "NC=N", "NC=N", "C=C", "C=C", "CR", "CR", "CGD",
+            "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for PIMTAZ01
      *
-     * @cdk.inchi InChI=1S/C11H12N2S/c1-2-4-9(5-3-1)10-8-13-6-7-14-11(13)12-10/h1-5,10H,6-8H2/t10-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C11H12N2S/c1-2-4-9(5-3-1)10-8-13-6-7-14-11(13)12-10/h1-5,10H,6-8H2/t10-/m1/s1
      */
     @Test
     public void testPIMTAZ01() {
@@ -35402,8 +36775,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 24, SINGLE);
         container.addBond(13, 25, SINGLE);
 
-        String[] expected = {"S", "NC=N", "N=C", "CR", "CR", "CR", "CR", "C=N", "CB", "CB", "CB", "CB", "CB", "CB",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "NC=N", "N=C", "CR", "CR", "CR", "CR", "C=N", "CB", "CB", "CB", "CB", "CB", "CB",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -35448,15 +36823,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(6, 14, DOUBLE);
         container.addBond(10, 11, SINGLE);
 
-        String[] expected = {"CB", "CB", "CB", "CB", "CB", "CO2M", "CO2M", "HC", "HC", "HC", "HPD+", "NPD+", "O2CM",
-                "O2CM", "O2CM", "O2CM"};
+        String[] expected = {
+            "CB", "CB", "CB", "CB", "CB", "CO2M", "CO2M", "HC", "HC", "HC", "HPD+", "NPD+", "O2CM",
+            "O2CM", "O2CM", "O2CM"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for SABNOY
      *
-     * @cdk.inchi InChI=1S/C9H12N4O5/c1-3-18-8(13-9(16)17-2)11-5-4-10-7(15)12-6(5)14/h4H,3H2,1-2H3,(H,11,13,16)(H2,10,12,14,15)
+     * @cdk.inchi
+     *     InChI=1S/C9H12N4O5/c1-3-18-8(13-9(16)17-2)11-5-4-10-7(15)12-6(5)14/h4H,3H2,1-2H3,(H,11,13,16)(H2,10,12,14,15)
      */
     @Test
     public void testSABNOY() {
@@ -35522,16 +36900,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 28, SINGLE);
         container.addBond(14, 29, SINGLE);
 
-        String[] expected = {"NC=O", "CONN", "NC=O", "C=ON", "C=C", "C=C", "NC=N", "C=N", "N=C", "C=ON", "OC=O", "CR",
-                "O=CN", "CR", "CR", "O=CN", "O=CN", "OC=N", "HNCO", "HNCO", "HC", "HNCN", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC"};
+        String[] expected = {
+            "NC=O", "CONN", "NC=O", "C=ON", "C=C", "C=C", "NC=N", "C=N", "N=C", "C=ON", "OC=O",
+            "CR", "O=CN", "CR", "CR", "O=CN", "O=CN", "OC=N", "HNCO", "HNCO", "HC", "HNCN", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for SACXAV
      *
-     * @cdk.inchi InChI=1S/C12H18N4S/c1-2-3-4-5-6-7-17-12-10-11(14-8-13-10)15-9-16-12/h8-9H,2-7H2,1H3,(H,13,14,15,16)
+     * @cdk.inchi
+     *     InChI=1S/C12H18N4S/c1-2-3-4-5-6-7-17-12-10-11(14-8-13-10)15-9-16-12/h8-9H,2-7H2,1H3,(H,13,14,15,16)
      */
     @Test
     public void testSACXAV() {
@@ -35608,9 +36989,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 33, SINGLE);
         container.addBond(16, 34, SINGLE);
 
-        String[] expected = {"S", "NPYD", "NPYD", "N5B", "NPYL", "CB", "C5A", "C5B", "CB", "C5A", "CR", "CR", "CR",
-                "CR", "CR", "CR", "CR", "HC", "HC", "HPYL", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "NPYD", "NPYD", "N5B", "NPYL", "CB", "C5A", "C5B", "CB", "C5A", "CR", "CR", "CR",
+            "CR", "CR", "CR", "CR", "HC", "HC", "HPYL", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -35670,8 +37053,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 21, SINGLE);
         container.addBond(14, 22, SINGLE);
 
-        String[] expected = {"O=CN", "O=CN", "O=CN", "NC=O", "N=C", "NC=O", "NC=O", "CGD", "C=C", "CONN", "C=ON", "CR",
-                "CONN", "C=C", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "O=CN", "O=CN", "O=CN", "NC=O", "N=C", "NC=O", "NC=O", "CGD", "C=C", "CONN", "C=ON",
+            "CR", "CONN", "C=C", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -35713,8 +37098,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 13, SINGLE);
         container.addBond(8, 9, SINGLE);
 
-        String[] expected = {"STHI", "N5B", "C5B", "C5A", "C5A", "C5B", "N5B", "C5A", "C5A", "STHI", "HC", "HC", "HC",
-                "HC"};
+        String[] expected = {
+            "STHI", "N5B", "C5B", "C5A", "C5A", "C5B", "N5B", "C5A", "C5A", "STHI", "HC", "HC",
+            "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -35756,8 +37143,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 12, SINGLE);
         container.addBond(9, 13, SINGLE);
 
-        String[] expected = {"STHI", "STHI", "N5B", "N5B", "C5A", "C5A", "C5B", "C5A", "C5A", "C5B", "HC", "HC", "HC",
-                "HC"};
+        String[] expected = {
+            "STHI", "STHI", "N5B", "N5B", "C5A", "C5A", "C5B", "C5A", "C5A", "C5B", "HC", "HC",
+            "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -35789,14 +37178,17 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(3, 4, DOUBLE);
         container.addBond(8, 9, SINGLE);
 
-        String[] expected = {"C=N", "COO", "NO2", "=N=", "NAZT", "O2N", "O2N", "O=CO", "OC=O", "HOCO"};
+        String[] expected = {
+            "C=N", "COO", "NO2", "=N=", "NAZT", "O2N", "O2N", "O=CO", "OC=O", "HOCO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for SAHSOJ
      *
-     * @cdk.inchi InChI=1S/C12H17N3O4S/c1-6(16)9-7-4-8(20-3-2-14-5-13)10(12(18)19)15(7)11(9)17/h5-7,9,16H,2-4H2,1H3,(H2,13,14)(H,18,19)/p-1/t6-,7-,9-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C12H17N3O4S/c1-6(16)9-7-4-8(20-3-2-14-5-13)10(12(18)19)15(7)11(9)17/h5-7,9,16H,2-4H2,1H3,(H2,13,14)(H,18,19)/p-1/t6-,7-,9-/m1/s1
      */
     @Test
     public void testSAHSOJ() {
@@ -35875,16 +37267,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(18, 34, SINGLE);
         container.addBond(19, 35, SINGLE);
 
-        String[] expected = {"NC=O", "C=C", "C=C", "CR", "CR4R", "CR4R", "C=ON", "CR", "CR", "CO2M", "CR", "CR", "C=N",
-                "O=CN", "OR", "S", "O2CM", "O2CM", "NC=N", "N=C", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HOR", "HNCN", "HN=C"};
+        String[] expected = {
+            "NC=O", "C=C", "C=C", "CR", "CR4R", "CR4R", "C=ON", "CR", "CR", "CO2M", "CR", "CR",
+            "C=N", "O=CN", "OR", "S", "O2CM", "O2CM", "NC=N", "N=C", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOR", "HNCN", "HN=C"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for SAHSUP
      *
-     * @cdk.inchi InChI=1S/C10H12N2O2S/c11-7-12-5-6-15-9-4-2-1-3-8(9)10(13)14/h1-4,7H,5-6H2,(H2,11,12)(H,13,14)
+     * @cdk.inchi
+     *     InChI=1S/C10H12N2O2S/c11-7-12-5-6-15-9-4-2-1-3-8(9)10(13)14/h1-4,7H,5-6H2,(H2,11,12)(H,13,14)
      */
     @Test
     public void testSAHSUP() {
@@ -35944,15 +37339,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 26, SINGLE);
         container.addBond(14, 25, SINGLE);
 
-        String[] expected = {"CB", "CB", "CB", "CB", "CB", "CB", "CO2M", "O2CM", "O2CM", "S", "CR", "CR", "CNN+",
-                "NCN+", "NCN+", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNN+", "HNN+", "HNN+"};
+        String[] expected = {
+            "CB", "CB", "CB", "CB", "CB", "CB", "CO2M", "O2CM", "O2CM", "S", "CR", "CR", "CNN+",
+            "NCN+", "NCN+", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNN+", "HNN+",
+            "HNN+"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for SAKGUG
      *
-     * @cdk.inchi InChI=1S/C21H8Cl2N2O2/c22-15-16(23)18(27)20(10-25)19(9-24,17(15)26)21(20)13-7-3-1-5-11(13)12-6-2-4-8-14(12)21/h1-8H/t19-,20+
+     * @cdk.inchi
+     *     InChI=1S/C21H8Cl2N2O2/c22-15-16(23)18(27)20(10-25)19(9-24,17(15)26)21(20)13-7-3-1-5-11(13)12-6-2-4-8-14(12)21/h1-8H/t19-,20+
      */
     @Test
     public void testSAKGUG() {
@@ -36032,16 +37431,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(23, 24, SINGLE);
         container.addBond(24, 26, SINGLE);
 
-        String[] expected = {"CL", "CL", "O=CR", "O=CR", "NSP", "NSP", "CR3R", "CB", "CB", "CB", "CB", "CB", "CB",
-                "CB", "CB", "CB", "CB", "CB", "CB", "CR3R", "C=OR", "C=C", "C=C", "C=OR", "CR3R", "CSP", "CSP", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "CL", "O=CR", "O=CR", "NSP", "NSP", "CR3R", "CB", "CB", "CB", "CB", "CB", "CB",
+            "CB", "CB", "CB", "CB", "CB", "CB", "CR3R", "C=OR", "C=C", "C=C", "C=OR", "CR3R", "CSP",
+            "CSP", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for SALVEG
      *
-     * @cdk.inchi InChI=1S/C9H14N2O3S/c1-4(2)6-5-7(15(14)10-6)9(13)11(3)8(5)12/h4-7,10H,1-3H3/t5-,6+,7+,15+/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C9H14N2O3S/c1-4(2)6-5-7(15(14)10-6)9(13)11(3)8(5)12/h4-7,10H,1-3H3/t5-,6+,7+,15+/m0/s1
      */
     @Test
     public void testSALVEG() {
@@ -36106,8 +37508,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 27, SINGLE);
         container.addBond(14, 28, SINGLE);
 
-        String[] expected = {"S=O", "O=S", "O=CN", "O=CN", "NR", "NC=O", "C=ON", "CR", "CR", "CR", "C=ON", "CR", "CR",
-                "CR", "CR", "HNR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S=O", "O=S", "O=CN", "O=CN", "NR", "NC=O", "C=ON", "CR", "CR", "CR", "C=ON", "CR",
+            "CR", "CR", "CR", "HNR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -36156,15 +37561,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 12, DOUBLE);
         container.addBond(12, 17, SINGLE);
 
-        String[] expected = {"S2CM", "S2CM", "SO2N", "CS2M", "NM", "O2S", "O2S", "CB", "CB", "CB", "CB", "CB", "CB",
-                "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S2CM", "S2CM", "SO2N", "CS2M", "NM", "O2S", "O2S", "CB", "CB", "CB", "CB", "CB", "CB",
+            "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for SAMXUZ
      *
-     * @cdk.inchi InChI=1S/C9H18N3PS2/c1-6-12(7-2)13(15)8(3)10(4)9(14)11(13)5/h3,6-7H2,1-2,4-5H3/t13-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C9H18N3PS2/c1-6-12(7-2)13(15)8(3)10(4)9(14)11(13)5/h3,6-7H2,1-2,4-5H3/t13-/m0/s1
      */
     @Test
     public void testSAMXUZ() {
@@ -36236,16 +37644,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 31, SINGLE);
         container.addBond(14, 30, SINGLE);
 
-        String[] expected = {"PTET", "S-P", "S=C", "NC=S", "NC=S", "NR", "C=SN", "C=C", "CR", "CR", "C=C", "CR", "CR",
-                "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC"};
+        String[] expected = {
+            "PTET", "S-P", "S=C", "NC=S", "NC=S", "NR", "C=SN", "C=C", "CR", "CR", "C=C", "CR",
+            "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for SANKEX10
      *
-     * @cdk.inchi InChI=1S/C11H13N3O4/c15-5-9-8(17)3-10(18-9)14-11-6(4-13-14)7(16)1-2-12-11/h1-2,4,8-10,15,17H,3,5H2,(H,12,16)/t8-,9+,10+/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C11H13N3O4/c15-5-9-8(17)3-10(18-9)14-11-6(4-13-14)7(16)1-2-12-11/h1-2,4,8-10,15,17H,3,5H2,(H,12,16)/t8-,9+,10+/m0/s1
      */
     @Test
     public void testSANKEX10() {
@@ -36315,16 +37726,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 29, SINGLE);
         container.addBond(17, 30, SINGLE);
 
-        String[] expected = {"NPYL", "N5A", "C5B", "C=OR", "C=C", "C=C", "NC=C", "C5A", "C5B", "O=CR", "CR", "CR",
-                "CR", "CR", "CR", "OR", "OR", "OR", "HC", "HC", "HC", "HNCC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HOR", "HOR"};
+        String[] expected = {
+            "NPYL", "N5A", "C5B", "C=OR", "C=C", "C=C", "NC=C", "C5A", "C5B", "O=CR", "CR", "CR",
+            "CR", "CR", "CR", "OR", "OR", "OR", "HC", "HC", "HC", "HNCC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HOR", "HOR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for SAVDOI
      *
-     * @cdk.inchi InChI=1S/C12H24O3S/c1-8-9(11(2,3)4)14-16(13)15-10(8)12(5,6)7/h8-10H,1-7H3/t8-,9-,10+,16-
+     * @cdk.inchi
+     *     InChI=1S/C12H24O3S/c1-8-9(11(2,3)4)14-16(13)15-10(8)12(5,6)7/h8-10H,1-7H3/t8-,9-,10+,16-
      */
     @Test
     public void testSAVDOI() {
@@ -36410,9 +37824,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(30, 38, SINGLE);
         container.addBond(30, 37, SINGLE);
 
-        String[] expected = {"S=O", "O=S", "CR", "OS=O", "CR", "CR", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "OS=O", "CR", "HC", "CR", "HC", "CR", "CR", "CR",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S=O", "O=S", "CR", "OS=O", "CR", "CR", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "OS=O", "CR", "HC", "CR", "HC",
+            "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -36468,8 +37884,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 19, SINGLE);
         container.addBond(11, 20, SINGLE);
 
-        String[] expected = {"NPYL", "N5A", "C5B", "C5B", "C5A", "NR", "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC",
-                "HNR", "HNR", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NPYL", "N5A", "C5B", "C5B", "C5A", "NR", "CB", "CB", "CB", "CB", "CB", "CB", "HC",
+            "HC", "HNR", "HNR", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -36533,15 +37951,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 11, DOUBLE);
         container.addBond(11, 24, SINGLE);
 
-        String[] expected = {"NCN+", "CNN+", "NCN+", "CR", "CR", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "HNN+",
-                "HNN+", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NCN+", "CNN+", "NCN+", "CR", "CR", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "HNN+",
+            "HNN+", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for SECDAF
      *
-     * @cdk.inchi InChI=1S/C15H13N3O4S/c1-18-13(15(20)17-12-8-4-5-9-16-12)14(19)10-6-2-3-7-11(10)23(18,21)22/h2-9,19H,1H3,(H,16,17,20)/p-1
+     * @cdk.inchi
+     *     InChI=1S/C15H13N3O4S/c1-18-13(15(20)17-12-8-4-5-9-16-12)14(19)10-6-2-3-7-11(10)23(18,21)22/h2-9,19H,1H3,(H,16,17,20)/p-1
      */
     @Test
     public void testSECDAF() {
@@ -36619,9 +38040,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(21, 33, SINGLE);
         container.addBond(22, 34, SINGLE);
 
-        String[] expected = {"SO2N", "O2S", "O2S", "NSO2", "CR", "C=C", "C=C", "CB", "OM2", "CB", "CB", "CB", "CB",
-                "CB", "C=ON", "O=CN", "NC=O", "CB", "NPYD", "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HNCO", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2N", "O2S", "O2S", "NSO2", "CR", "C=C", "C=C", "CB", "OM2", "CB", "CB", "CB", "CB",
+            "CB", "C=ON", "O=CN", "NC=O", "CB", "NPYD", "CB", "CB", "CB", "CB", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HNCO", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -36684,8 +38107,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 18, SINGLE);
         container.addBond(11, 12, SINGLE);
 
-        String[] expected = {"STHI", "C5A", "N=C", "C=N", "NC=O", "C=ON", "C5B", "C5B", "CR", "CR", "CR", "CR", "C5A",
-                "O=CN", "HC", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "STHI", "C5A", "N=C", "C=N", "NC=O", "C=ON", "C5B", "C5B", "CR", "CR", "CR", "CR",
+            "C5A", "O=CN", "HC", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -36761,16 +38186,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 30, SINGLE);
         container.addBond(13, 29, SINGLE);
 
-        String[] expected = {"S-P", "S=C", "PO2", "OPO", "OPO", "NC=S", "C=SN", "CR", "CR", "CR", "CR", "CR", "CR",
-                "CR", "HNCS", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC"};
+        String[] expected = {
+            "S-P", "S=C", "PO2", "OPO", "OPO", "NC=S", "C=SN", "CR", "CR", "CR", "CR", "CR", "CR",
+            "CR", "HNCS", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for SEGFIT
      *
-     * @cdk.inchi InChI=1S/C9H9N3O2S/c10-9(15)12-11-7(8(13)14)6-4-2-1-3-5-6/h1-5H,(H,13,14)(H3,10,12,15)/p-1/b11-7+
+     * @cdk.inchi
+     *     InChI=1S/C9H9N3O2S/c10-9(15)12-11-7(8(13)14)6-4-2-1-3-5-6/h1-5H,(H,13,14)(H3,10,12,15)/p-1/b11-7+
      */
     @Test
     public void testSEGFIT() {
@@ -36822,15 +38250,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 21, SINGLE);
         container.addBond(14, 22, SINGLE);
 
-        String[] expected = {"S=C", "O2CM", "O2CM", "N=C", "NC=S", "NC=S", "C=SN", "C=N", "CO2M", "CB", "CB", "CB",
-                "CB", "CB", "CB", "HNCS", "HNCS", "HNCS", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S=C", "O2CM", "O2CM", "N=C", "NC=S", "NC=S", "C=SN", "C=N", "CO2M", "CB", "CB", "CB",
+            "CB", "CB", "CB", "HNCS", "HNCS", "HNCS", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for SEGJAP
      *
-     * @cdk.inchi InChI=1S/C12H8Cl4O4Si2/c13-21(14)17-9-5-1-2-6-10(9)18-22(15,16)20-12-8-4-3-7-11(12)19-21/h1-8H
+     * @cdk.inchi
+     *     InChI=1S/C12H8Cl4O4Si2/c13-21(14)17-9-5-1-2-6-10(9)18-22(15,16)20-12-8-4-3-7-11(12)19-21/h1-8H
      */
     @Test
     public void testSEGJAP() {
@@ -36898,8 +38329,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(23, 28, SINGLE);
         container.addBond(24, 29, SINGLE);
 
-        String[] expected = {"SI", "CL", "CL", "OC=C", "OC=C", "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC", "HC",
-                "HC", "CB", "CB", "CB", "OC=C", "OC=C", "CB", "CB", "HC", "SI", "CB", "HC", "HC", "CL", "CL", "HC"};
+        String[] expected = {
+            "SI", "CL", "CL", "OC=C", "OC=C", "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC", "HC",
+            "HC", "CB", "CB", "CB", "OC=C", "OC=C", "CB", "CB", "HC", "SI", "CB", "HC", "HC", "CL",
+            "CL", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -36950,8 +38384,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 10, DOUBLE);
         container.addBond(10, 17, SINGLE);
 
-        String[] expected = {"SO2N", "O2S", "O2S", "NSO2", "NR", "CB", "CB", "CB", "CB", "CB", "CB", "HNSO", "HNR",
-                "HC", "HC", "HC", "HC", "HC", "HNR"};
+        String[] expected = {
+            "SO2N", "O2S", "O2S", "NSO2", "NR", "CB", "CB", "CB", "CB", "CB", "CB", "HNSO", "HNR",
+            "HC", "HC", "HC", "HC", "HC", "HNR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -36995,8 +38431,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 10, SINGLE);
         container.addBond(9, 11, SINGLE);
 
-        String[] expected = {"S=C", "O2CM", "O2CM", "OC=O", "O=CO", "NC=S", "N=C", "NC=S", "C=SN", "C=N", "CO2M",
-                "COO", "HNCS", "HNCS", "HNCS", "HOCO"};
+        String[] expected = {
+            "S=C", "O2CM", "O2CM", "OC=O", "O=CO", "NC=S", "N=C", "NC=S", "C=SN", "C=N", "CO2M",
+            "COO", "HNCS", "HNCS", "HNCS", "HOCO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -37042,8 +38480,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 14, SINGLE);
         container.addBond(11, 15, SINGLE);
 
-        String[] expected = {"I", "CL", "CL", "CR4R", "CR4R", "CR4R", "CR4R", "CR", "HC", "HC", "HC", "CR4R", "HC",
-                "CL", "HC", "HC"};
+        String[] expected = {
+            "I", "CL", "CL", "CR4R", "CR4R", "CR4R", "CR4R", "CR", "HC", "HC", "HC", "CR4R", "HC",
+            "CL", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -37118,8 +38558,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 29, SINGLE);
         container.addBond(13, 30, SINGLE);
 
-        String[] expected = {"OC=C", "OXN", "N3OX", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "CR", "CR", "CR", "CR",
-                "HOCC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OC=C", "OXN", "N3OX", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "CR", "CR", "CR", "CR",
+            "HOCC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -37189,15 +38632,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 23, SINGLE);
         container.addBond(11, 14, SINGLE);
 
-        String[] expected = {"CE4R", "CR3R", "C=OR", "CR3R", "CR3R", "CR3R", "CR3R", "CR3R", "C=C", "COO", "CR", "CR",
-                "O=CR", "O=CO", "OC=O", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CE4R", "CR3R", "C=OR", "CR3R", "CR3R", "CR3R", "CR3R", "CR3R", "C=C", "COO", "CR",
+            "CR", "O=CR", "O=CO", "OC=O", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for SEKKIC
      *
-     * @cdk.inchi InChI=1S/C11H17NO/c1-3-4-8-11(2)9-6-5-7-10(11)12-13/h3,8,13H,5-7,9H2,1-2H3/b12-10+/t4-,11+/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C11H17NO/c1-3-4-8-11(2)9-6-5-7-10(11)12-13/h3,8,13H,5-7,9H2,1-2H3/b12-10+/t4-,11+/m1/s1
      */
     @Test
     public void testSEKKIC() {
@@ -37263,8 +38710,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 28, SINGLE);
         container.addBond(12, 29, SINGLE);
 
-        String[] expected = {"-O-", "N=C", "C=N", "CR", "CR", "CR", "CR", "CR", "CR", "C=C", "=C=", "C=C", "CR", "HO",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "-O-", "N=C", "C=N", "CR", "CR", "CR", "CR", "CR", "CR", "C=C", "=C=", "C=C", "CR",
+            "HO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -37310,8 +38760,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 15, SINGLE);
         container.addBond(9, 14, SINGLE);
 
-        String[] expected = {"N5A", "NPYL", "N5A", "C5B", "CB", "CB", "CB", "CB", "C5B", "NR", "HC", "HC", "HC", "HC",
-                "HNR", "HNR"};
+        String[] expected = {
+            "N5A", "NPYL", "N5A", "C5B", "CB", "CB", "CB", "CB", "C5B", "NR", "HC", "HC", "HC",
+            "HC", "HNR", "HNR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -37359,15 +38811,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 15, SINGLE);
         container.addBond(9, 16, SINGLE);
 
-        String[] expected = {"NPYL", "C5A", "N5B", "C5B", "CB", "CB", "CB", "CB", "C5A", "NR", "HC", "HC", "HC", "HC",
-                "HC", "HNR", "HNR"};
+        String[] expected = {
+            "NPYL", "C5A", "N5B", "C5B", "CB", "CB", "CB", "CB", "C5A", "NR", "HC", "HC", "HC",
+            "HC", "HC", "HNR", "HNR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for SELFIY
      *
-     * @cdk.inchi InChI=1S/C18H16OSi/c19-20(16-10-4-1-5-11-16,17-12-6-2-7-13-17)18-14-8-3-9-15-18/h1-15,19H
+     * @cdk.inchi
+     *     InChI=1S/C18H16OSi/c19-20(16-10-4-1-5-11-16,17-12-6-2-7-13-17)18-14-8-3-9-15-18/h1-15,19H
      */
     @Test
     public void testSELFIY() {
@@ -37447,9 +38902,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(18, 33, SINGLE);
         container.addBond(19, 34, SINGLE);
 
-        String[] expected = {"SI", "-O-", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB",
-                "CB", "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HO"};
+        String[] expected = {
+            "SI", "-O-", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB",
+            "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -37517,15 +38974,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 26, SINGLE);
         container.addBond(11, 25, SINGLE);
 
-        String[] expected = {"SO2M", "F", "O2S", "O2S", "NR+", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2M", "F", "O2S", "O2S", "NR+", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for SEMXOX
      *
-     * @cdk.inchi InChI=1S/C11H9N5O2/c1-18-11(17)9(7-12)10-13-14-15-16(10)8-5-3-2-4-6-8/h2-6H,1H3,(H,13,15)/b10-9+
+     * @cdk.inchi
+     *     InChI=1S/C11H9N5O2/c1-18-11(17)9(7-12)10-13-14-15-16(10)8-5-3-2-4-6-8/h2-6H,1H3,(H,13,15)/b10-9+
      */
     @Test
     public void testSEMXOX() {
@@ -37586,8 +39046,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 25, SINGLE);
         container.addBond(16, 26, SINGLE);
 
-        String[] expected = {"OC=O", "O=CO", "NC=C", "N=N", "N=N", "NC=C", "NSP", "CB", "CB", "CB", "CB", "CB", "CB",
-                "C=C", "C=C", "COO", "CR", "CSP", "HC", "HC", "HC", "HC", "HC", "HNCC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OC=O", "O=CO", "NC=C", "N=N", "N=N", "NC=C", "NSP", "CB", "CB", "CB", "CB", "CB", "CB",
+            "C=C", "C=C", "COO", "CR", "CSP", "HC", "HC", "HC", "HC", "HC", "HNCC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -37653,15 +39115,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 15, DOUBLE);
         container.addBond(15, 25, SINGLE);
 
-        String[] expected = {"SO2", "SO2", "O2S", "O2S", "O2S", "O2S", "CR", "CR", "C=C", "C=C", "CB", "CB", "CB",
-                "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2", "SO2", "O2S", "O2S", "O2S", "O2S", "CR", "CR", "C=C", "C=C", "CB", "CB", "CB",
+            "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for SETLIM
      *
-     * @cdk.inchi InChI=1S/C10H6F6N2S2/c11-9(12,13)8(10(14,15)16)18-7(19-20-8)17-6-4-2-1-3-5-6/h1-5H,(H,17,18)
+     * @cdk.inchi
+     *     InChI=1S/C10H6F6N2S2/c11-9(12,13)8(10(14,15)16)18-7(19-20-8)17-6-4-2-1-3-5-6/h1-5H,(H,17,18)
      */
     @Test
     public void testSETLIM() {
@@ -37720,8 +39185,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(18, 24, SINGLE);
         container.addBond(19, 25, SINGLE);
 
-        String[] expected = {"S", "S", "C=N", "NC=N", "N=C", "CR", "CR", "F", "F", "F", "CR", "F", "F", "F", "CB",
-                "CB", "CB", "CB", "CB", "CB", "HNCN", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "S", "C=N", "NC=N", "N=C", "CR", "CR", "F", "F", "F", "CR", "F", "F", "F", "CB",
+            "CB", "CB", "CB", "CB", "CB", "HNCN", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -37765,8 +39232,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(7, 14, SINGLE);
         container.addBond(7, 8, DOUBLE);
 
-        String[] expected = {"NPYL", "N5A", "C5B", "C5B", "CB", "CB", "NPD+", "CB", "C5A", "HPYL", "HC", "HC", "HC",
-                "HPD+", "HC"};
+        String[] expected = {
+            "NPYL", "N5A", "C5B", "C5B", "CB", "CB", "NPD+", "CB", "C5A", "HPYL", "HC", "HC", "HC",
+            "HPD+", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -37843,16 +39312,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 30, SINGLE);
         container.addBond(15, 29, SINGLE);
 
-        String[] expected = {"S=C", "NM", "NCN+", "NC=O", "NCN+", "O=CN", "OC=S", "CR", "C=S", "CONN", "CR", "CNN+",
-                "CR", "CR", "CR", "CR", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC"};
+        String[] expected = {
+            "S=C", "NM", "NCN+", "NC=O", "NCN+", "O=CN", "OC=S", "CR", "C=S", "CONN", "CR", "CNN+",
+            "CR", "CR", "CR", "CR", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for SEZMEP
      *
-     * @cdk.inchi InChI=1S/C7H3Cl7O2/c8-2(9)1-5(4(10)16-5)7(13,14)3(15)6(1,11)12/h3-4,15H/t3-,4-,5+/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C7H3Cl7O2/c8-2(9)1-5(4(10)16-5)7(13,14)3(15)6(1,11)12/h3-4,15H/t3-,4-,5+/m0/s1
      */
     @Test
     public void testSEZMEP() {
@@ -37897,15 +39369,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 14, SINGLE);
         container.addBond(14, 15, DOUBLE);
 
-        String[] expected = {"CL", "CL", "CL", "CL", "CL", "CL", "CL", "OR", "OR", "CR3R", "CR", "CR", "CR3R", "CR",
-                "C=C", "C=C", "HOR", "HC", "HC"};
+        String[] expected = {
+            "CL", "CL", "CL", "CL", "CL", "CL", "CL", "OR", "OR", "CR3R", "CR", "CR", "CR3R", "CR",
+            "C=C", "C=C", "HOR", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for SICNUN
      *
-     * @cdk.inchi InChI=1S/C8H6N4O8/c13-8(14)4-9(12(19)20)6-2-1-5(10(15)16)3-7(6)11(17)18/h1-3H,4H2,(H,13,14)
+     * @cdk.inchi
+     *     InChI=1S/C8H6N4O8/c13-8(14)4-9(12(19)20)6-2-1-5(10(15)16)3-7(6)11(17)18/h1-3H,4H2,(H,13,14)
      */
     @Test
     public void testSICNUN() {
@@ -37963,8 +39438,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(17, 19, DOUBLE);
         container.addBond(18, 25, SINGLE);
 
-        String[] expected = {"CB", "CB", "CB", "CB", "CB", "CB", "NC=C", "NO2", "O2N", "O2N", "NO2", "O2N", "O2N",
-                "NO2", "O2N", "O2N", "CR", "COO", "OC=O", "O=CO", "HC", "HC", "HC", "HC", "HC", "HOCO"};
+        String[] expected = {
+            "CB", "CB", "CB", "CB", "CB", "CB", "NC=C", "NO2", "O2N", "O2N", "NO2", "O2N", "O2N",
+            "NO2", "O2N", "O2N", "CR", "COO", "OC=O", "O=CO", "HC", "HC", "HC", "HC", "HC", "HOCO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -38030,8 +39507,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 14, SINGLE);
         container.addBond(13, 25, SINGLE);
 
-        String[] expected = {"STHI", "OC=C", "N=C", "C5A", "C5B", "C5B", "C5A", "C=N", "CR", "CB", "CB", "CB", "CB",
-                "CB", "CB", "HOCC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "STHI", "OC=C", "N=C", "C5A", "C5B", "C5B", "C5A", "C=N", "CR", "CB", "CB", "CB", "CB",
+            "CB", "CB", "HOCC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -38090,8 +39569,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 14, DOUBLE);
         container.addBond(14, 21, SINGLE);
 
-        String[] expected = {"N5A", "NPYL", "N5A", "C5B", "C5B", "NPYD", "CB", "CB", "NPYD", "CB", "CB", "CB", "CB",
-                "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "N5A", "NPYL", "N5A", "C5B", "C5B", "NPYD", "CB", "CB", "NPYD", "CB", "CB", "CB", "CB",
+            "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -38144,15 +39625,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 18, TRIPLE);
         container.addBond(17, 19, TRIPLE);
 
-        String[] expected = {"I", "NSP", "NSP", "C=C", "C=C", "C=C", "C=C", "CSP", "CSP", "HC", "C=C", "C=C", "C=C",
-                "HC", "C=C", "I", "CSP", "CSP", "NSP", "NSP"};
+        String[] expected = {
+            "I", "NSP", "NSP", "C=C", "C=C", "C=C", "C=C", "CSP", "CSP", "HC", "C=C", "C=C", "C=C",
+            "HC", "C=C", "I", "CSP", "CSP", "NSP", "NSP"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for SIDRUS
      *
-     * @cdk.inchi InChI=1S/C9H19N7O2S/c1-9(2,3)7(10-11-14-19(6,17)18)8-15(4)12-13-16(8)5/h7H,1-6H3/t7-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C9H19N7O2S/c1-9(2,3)7(10-11-14-19(6,17)18)8-15(4)12-13-16(8)5/h7H,1-6H3/t7-/m1/s1
      */
     @Test
     public void testSIDRUS() {
@@ -38234,16 +39718,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(18, 36, SINGLE);
         container.addBond(18, 35, SINGLE);
 
-        String[] expected = {"SO2N", "O2S", "NIM+", "O2S", "N5", "N5", "NIM+", "CIM+", "CR", "CR", "N=N", "N=N", "NM",
-                "CR", "CR", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2N", "O2S", "NIM+", "O2S", "N5", "N5", "NIM+", "CIM+", "CR", "CR", "N=N", "N=N",
+            "NM", "CR", "CR", "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for SINMIL
      *
-     * @cdk.inchi InChI=1S/C10H24N2P2/c1-7-13-9(11(3)4)14(8-2)10(13)12(5)6/h9-10H,7-8H2,1-6H3/p+2/t9-,10+,13-,14+
+     * @cdk.inchi
+     *     InChI=1S/C10H24N2P2/c1-7-13-9(11(3)4)14(8-2)10(13)12(5)6/h9-10H,7-8H2,1-6H3/p+2/t9-,10+,13-,14+
      */
     @Test
     public void testSINMIL() {
@@ -38329,16 +39816,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(34, 38, SINGLE);
         container.addBond(34, 39, SINGLE);
 
-        String[] expected = {"P", "NR+", "NR+", "CR4R", "CR4R", "CR", "CR", "CR", "CR", "HNR+", "HNR+", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "P", "CR", "CR", "CR", "HC", "HC",
-                "HC", "HC", "HC", "HC", "CR", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "P", "NR+", "NR+", "CR4R", "CR4R", "CR", "CR", "CR", "CR", "HNR+", "HNR+", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "P", "CR", "CR", "CR",
+            "HC", "HC", "HC", "HC", "HC", "HC", "CR", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for SIYLOB
      *
-     * @cdk.inchi InChI=1S/C10H22NO3PS/c1-7(2)8-11-9(10(3,4)16-8)15(12,13-5)14-6/h7-9,11H,1-6H3/t8-,9-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H22NO3PS/c1-7(2)8-11-9(10(3,4)16-8)15(12,13-5)14-6/h7-9,11H,1-6H3/t8-,9-/m0/s1
      */
     @Test
     public void testSIYLOB() {
@@ -38420,16 +39910,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 36, SINGLE);
         container.addBond(15, 37, SINGLE);
 
-        String[] expected = {"S", "PO3", "OP", "OPO2", "OPO2", "NR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR",
-                "CR", "CR", "HNR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "PO3", "OP", "OPO2", "OPO2", "NR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR",
+            "CR", "CR", "HNR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for SIZJIU
      *
-     * @cdk.inchi InChI=1S/C12H17NO8/c13-3-12(1-4(15)9-10(12)20-9)21-11-8(18)7(17)6(16)5(2-14)19-11/h4-11,14-18H,1-2H2/t4-,5-,6-,7+,8-,9-,10-,11+,12-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C12H17NO8/c13-3-12(1-4(15)9-10(12)20-9)21-11-8(18)7(17)6(16)5(2-14)19-11/h4-11,14-18H,1-2H2/t4-,5-,6-,7+,8-,9-,10-,11+,12-/m1/s1
      */
     @Test
     public void testSIZJIU() {
@@ -38513,16 +40006,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(20, 36, SINGLE);
         container.addBond(20, 37, SINGLE);
 
-        String[] expected = {"OR", "OR", "OR", "OR", "OR", "OR", "OR", "OR", "NSP", "CR", "CR3R", "CR3R", "CR", "CR",
-                "CSP", "CR", "CR", "CR", "CR", "CR", "CR", "HOR", "HOR", "HOR", "HOR", "HOR", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OR", "OR", "OR", "OR", "OR", "OR", "OR", "OR", "NSP", "CR", "CR3R", "CR3R", "CR", "CR",
+            "CSP", "CR", "CR", "CR", "CR", "CR", "CR", "HOR", "HOR", "HOR", "HOR", "HOR", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for SIZWUT
      *
-     * @cdk.inchi InChI=1S/C9H10N2O3S/c10-8(13)6-4-15-9(11-6)7-2-1-5(3-12)14-7/h1-2,4-5,7,12H,3H2,(H2,10,13)/t5-,7+/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C9H10N2O3S/c10-8(13)6-4-15-9(11-6)7-2-1-5(3-12)14-7/h1-2,4-5,7,12H,3H2,(H2,10,13)/t5-,7+/m0/s1
      */
     @Test
     public void testSIZWUT() {
@@ -38579,15 +40075,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 23, SINGLE);
         container.addBond(14, 24, SINGLE);
 
-        String[] expected = {"STHI", "C5A", "N5B", "C5B", "C5A", "C=ON", "NC=O", "O=CN", "CR", "C=C", "C=C", "CR",
-                "CR", "OR", "OR", "HC", "HNCO", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HOR"};
+        String[] expected = {
+            "STHI", "C5A", "N5B", "C5B", "C5A", "C=ON", "NC=O", "O=CN", "CR", "C=C", "C=C", "CR",
+            "CR", "OR", "OR", "HC", "HNCO", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HOR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for SLFNMB04
      *
-     * @cdk.inchi InChI=1S/C10H11N3O3S/c1-7-6-10(12-16-7)13-17(14,15)9-4-2-8(11)3-5-9/h2-6H,11H2,1H3,(H,12,13)
+     * @cdk.inchi
+     *     InChI=1S/C10H11N3O3S/c1-7-6-10(12-16-7)13-17(14,15)9-4-2-8(11)3-5-9/h2-6H,11H2,1H3,(H,12,13)
      */
     @Test
     public void testSLFNMB04() {
@@ -38650,8 +40149,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 26, SINGLE);
         container.addBond(16, 27, SINGLE);
 
-        String[] expected = {"CB", "CB", "CB", "CB", "CB", "CB", "NC=C", "SO2N", "O2S", "O2S", "NSO2", "C5B", "C5B",
-                "C5A", "OFUR", "N5A", "CR", "HC", "HC", "HC", "HC", "HNCC", "HNCC", "HNSO", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CB", "CB", "CB", "CB", "CB", "CB", "NC=C", "SO2N", "O2S", "O2S", "NSO2", "C5B", "C5B",
+            "C5A", "OFUR", "N5A", "CR", "HC", "HC", "HC", "HC", "HNCC", "HNCC", "HNSO", "HC", "HC",
+            "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -38719,15 +40221,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 25, SINGLE);
         container.addBond(15, 26, SINGLE);
 
-        String[] expected = {"O=CN", "O2N", "O2N", "NO2", "N5B", "NPYL", "NR", "NC=O", "C=ON", "C5A", "C5B", "C5A",
-                "CR", "CR", "CR", "CR", "HNR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "O=CN", "O2N", "O2N", "NO2", "N5B", "NPYL", "NR", "NC=O", "C=ON", "C5A", "C5B", "C5A",
+            "CR", "CR", "CR", "CR", "HNR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for SOHXOC
      *
-     * @cdk.inchi InChI=1S/C8H14N8/c1-4(14-15-7(9)10)6-3-13-16(5(6)2)8(11)12/h3H,1-2H3,(H7,9,10,11,12,15)/p+2/b14-4+
+     * @cdk.inchi
+     *     InChI=1S/C8H14N8/c1-4(14-15-7(9)10)6-3-13-16(5(6)2)8(11)12/h3H,1-2H3,(H7,9,10,11,12,15)/p+2/b14-4+
      */
     @Test
     public void testSOHXOC() {
@@ -38797,9 +40303,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 31, SINGLE);
         container.addBond(15, 30, SINGLE);
 
-        String[] expected = {"CGD+", "C=N", "CR", "C=C", "C=C", "CR", "C=N", "CGD+", "NGD+", "NGD+", "NGD+", "N=C",
-                "N=C", "NGD+", "NGD+", "NGD+", "HGD+", "HC", "HGD+", "HGD+", "HGD+", "HGD+", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HGD+", "HGD+", "HGD+", "HGD+"};
+        String[] expected = {
+            "CGD+", "C=N", "CR", "C=C", "C=C", "CR", "C=N", "CGD+", "NGD+", "NGD+", "NGD+", "N=C",
+            "N=C", "NGD+", "NGD+", "NGD+", "HGD+", "HC", "HGD+", "HGD+", "HGD+", "HGD+", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HGD+", "HGD+", "HGD+", "HGD+"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -38856,15 +40364,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 17, SINGLE);
         container.addBond(13, 18, SINGLE);
 
-        String[] expected = {"S", "C=N", "N=C", "NC=N", "C=N", "SO2N", "O2S", "NSO2", "O2S", "CR", "N=C", "C=ON",
-                "O=CN", "CR", "HNSO", "HNSO", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "C=N", "N=C", "NC=N", "C=N", "SO2N", "O2S", "NSO2", "O2S", "CR", "N=C", "C=ON",
+            "O=CN", "CR", "HNSO", "HNSO", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for SOMKIO
      *
-     * @cdk.inchi InChI=1S/C8H8Br2N2O2S/c1-7(2)4(3-11)12-5(13)8(9,10)6(12)15(7)14/h4,6H,1-2H3/t4-,6+,15-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C8H8Br2N2O2S/c1-7(2)4(3-11)12-5(13)8(9,10)6(12)15(7)14/h4,6H,1-2H3/t4-,6+,15-/m0/s1
      */
     @Test
     public void testSOMKIO() {
@@ -38917,15 +40428,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 21, SINGLE);
         container.addBond(14, 20, SINGLE);
 
-        String[] expected = {"S=O", "BR", "BR", "NC=O", "NSP", "O=S", "O=CN", "CR", "CR", "CR4R", "CR4R", "C=ON",
-                "CSP", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S=O", "BR", "BR", "NC=O", "NSP", "O=S", "O=CN", "CR", "CR", "CR4R", "CR4R", "C=ON",
+            "CSP", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for SONZIE
      *
-     * @cdk.inchi InChI=1S/C13H19N3S/c1-2-7-16-8-3-4-9-10(16)5-6-11-12(9)15-13(14)17-11/h4,10H,2-3,5-8H2,1H3,(H2,14,15)/t10-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C13H19N3S/c1-2-7-16-8-3-4-9-10(16)5-6-11-12(9)15-13(14)17-11/h4,10H,2-3,5-8H2,1H3,(H2,14,15)/t10-/m1/s1
      */
     @Test
     public void testSONZIE() {
@@ -39005,9 +40519,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 34, SINGLE);
         container.addBond(16, 35, SINGLE);
 
-        String[] expected = {"STHI", "N5B", "NC=N", "NR", "C5A", "C5B", "C5A", "CR", "CR", "CR", "C=C", "C=C", "CR",
-                "CR", "CR", "CR", "CR", "HC", "HC", "HNCN", "HNCN", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "STHI", "N5B", "NC=N", "NR", "C5A", "C5B", "C5A", "CR", "CR", "CR", "C=C", "C=C", "CR",
+            "CR", "CR", "CR", "CR", "HC", "HC", "HNCN", "HNCN", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -39054,8 +40570,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 15, SINGLE);
         container.addBond(12, 16, SINGLE);
 
-        String[] expected = {"S", "S", "O=CR", "NSP", "NSP", "CE4R", "CE4R", "C=C", "CSP", "CSP", "C=C", "C=OR", "CR",
-                "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "S", "O=CR", "NSP", "NSP", "CE4R", "CE4R", "C=C", "CSP", "CSP", "C=C", "C=OR",
+            "CR", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -39109,8 +40627,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 18, SINGLE);
         container.addBond(13, 19, SINGLE);
 
-        String[] expected = {"CL", "CL", "O2N", "O2N", "NO2", "NPYL", "N5A", "N5B", "CB", "CB", "CB", "CB", "CB", "CB",
-                "C5A", "C5B", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "CL", "O2N", "O2N", "NO2", "NPYL", "N5A", "N5B", "CB", "CB", "CB", "CB", "CB",
+            "CB", "C5A", "C5B", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -39142,7 +40662,9 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(7, 9, SINGLE);
         container.addBond(7, 8, SINGLE);
 
-        String[] expected = {"=SO2", "CSO2", "NC=S", "O2S", "HNCS", "HNCS", "O2S", "NC=S", "HNCS", "HNCS"};
+        String[] expected = {
+            "=SO2", "CSO2", "NC=S", "O2S", "HNCS", "HNCS", "O2S", "NC=S", "HNCS", "HNCS"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -39202,15 +40724,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 21, SINGLE);
         container.addBond(16, 22, SINGLE);
 
-        String[] expected = {"NPYL", "N5A", "C5B", "C5B", "C5A", "NO2", "O2N", "O2N", "NPYL", "N5A", "C5B", "C5B",
-                "C5A", "NO2", "O2N", "O2N", "CR", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NPYL", "N5A", "C5B", "C5B", "C5A", "NO2", "O2N", "O2N", "NPYL", "N5A", "C5B", "C5B",
+            "C5A", "NO2", "O2N", "O2N", "CR", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for TACLEO
      *
-     * @cdk.inchi InChI=1S/C10H12N2O3/c13-8(7-1-4-11-5-2-7)10(9(14)15)3-6-12-10/h1-2,4-5,8,12-13H,3,6H2,(H,14,15)/t8-,10-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H12N2O3/c13-8(7-1-4-11-5-2-7)10(9(14)15)3-6-12-10/h1-2,4-5,8,12-13H,3,6H2,(H,14,15)/t8-,10-/m1/s1
      */
     @Test
     public void testTACLEO() {
@@ -39271,8 +40796,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 18, SINGLE);
         container.addBond(14, 15, SINGLE);
 
-        String[] expected = {"CR4R", "CB", "CR4R", "CR4R", "CO2M", "CR", "CB", "CB", "CB", "CB", "NR+", "NPYD", "O2CM",
-                "O2CM", "OR", "HOR", "HC", "HNR+", "HNR+", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR4R", "CB", "CR4R", "CR4R", "CO2M", "CR", "CB", "CB", "CB", "CB", "NR+", "NPYD",
+            "O2CM", "O2CM", "OR", "HOR", "HC", "HNR+", "HNR+", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -39320,15 +40848,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 11, DOUBLE);
         container.addBond(9, 12, DOUBLE);
 
-        String[] expected = {"C5B", "C5B", "CR", "CR", "NC=N", "NC=N", "N5A", "N5A", "N=O", "N=O", "OFUR", "O=N",
-                "O=N", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "C5B", "C5B", "CR", "CR", "NC=N", "NC=N", "N5A", "N5A", "N=O", "N=O", "OFUR", "O=N",
+            "O=N", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for TAFXIH
      *
-     * @cdk.inchi InChI=1S/C12H9Br5/c13-9-7-5-3-1-2-4-6(5)8(10(9)14)12(16,17)11(7)15/h1-4,7-11H/t7-,8+,9+,10-,11+/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C12H9Br5/c13-9-7-5-3-1-2-4-6(5)8(10(9)14)12(16,17)11(7)15/h1-4,7-11H/t7-,8+,9+,10-,11+/m1/s1
      */
     @Test
     public void testTAFXIH() {
@@ -39388,8 +40919,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 24, SINGLE);
         container.addBond(11, 25, SINGLE);
 
-        String[] expected = {"CR", "CR", "CR", "CR", "CR", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "BR", "BR", "BR",
-                "BR", "BR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR", "CR", "CR", "CR", "CR", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "BR", "BR",
+            "BR", "BR", "BR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -39432,7 +40965,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 13, SINGLE);
         container.addBond(10, 14, SINGLE);
 
-        String[] expected = {"CL", "S", "O2N", "O2N", "NO2", "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "S", "O2N", "O2N", "NO2", "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC", "HC",
+            "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -39473,8 +41009,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(6, 9, DOUBLE);
         container.addBond(6, 10, SINGLE);
 
-        String[] expected = {"NC=O", "CONN", "NC=O", "C=ON", "C=C", "C=C", "CO2M", "O=CN", "O=CN", "O2CM", "O2CM",
-                "HNCO", "HNCO", "HC"};
+        String[] expected = {
+            "NC=O", "CONN", "NC=O", "C=ON", "C=C", "C=C", "CO2M", "O=CN", "O=CN", "O2CM", "O2CM",
+            "HNCO", "HNCO", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -39522,8 +41060,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 10, SINGLE);
         container.addBond(8, 11, SINGLE);
 
-        String[] expected = {"CONN", "CR", "CSP", "CR", "CR", "N=N", "N=N", "NSP", "NC=O", "O=CN", "HNCO", "HNCO",
-                "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CONN", "CR", "CSP", "CR", "CR", "N=N", "N=N", "NSP", "NC=O", "O=CN", "HNCO", "HNCO",
+            "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -39589,15 +41129,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 16, DOUBLE);
         container.addBond(16, 23, SINGLE);
 
-        String[] expected = {"OC=N", "O2N", "O2N", "NPD+", "NPYD", "NC=C", "NO2", "CB", "CB", "CB", "CB", "CB", "CB",
-                "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNCC", "HNCC"};
+        String[] expected = {
+            "OC=N", "O2N", "O2N", "NPD+", "NPYD", "NC=C", "NO2", "CB", "CB", "CB", "CB", "CB", "CB",
+            "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNCC", "HNCC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for TAJSUS
      *
-     * @cdk.inchi InChI=1S/C12H12N4O3/c17-11(6-10-4-2-1-3-5-10)14-16-8-13-15(9-16)7-12(18)19/h1-5,8-9H,6-7H2,(H-,14,17,18,19)/p-1
+     * @cdk.inchi
+     *     InChI=1S/C12H12N4O3/c17-11(6-10-4-2-1-3-5-10)14-16-8-13-15(9-16)7-12(18)19/h1-5,8-9H,6-7H2,(H-,14,17,18,19)/p-1
      */
     @Test
     public void testTAJSUS() {
@@ -39664,8 +41207,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 13, SINGLE);
         container.addBond(14, 15, SINGLE);
 
-        String[] expected = {"CO2M", "CR", "C5", "CIM+", "C=N", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "NIM+", "N5",
-                "NIM+", "N=C", "O2CM", "O2CM", "OM2", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CO2M", "CR", "C5", "CIM+", "C=N", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "NIM+",
+            "N5", "NIM+", "N=C", "O2CM", "O2CM", "OM2", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -39742,8 +41288,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 17, SINGLE);
         container.addBond(13, 18, SINGLE);
 
-        String[] expected = {"STHI", "S", "O=C", "N5A", "N5B", "N5B", "C5A", "C=OS", "CB", "CB", "CB", "CB", "CB",
-                "CB", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "STHI", "S", "O=C", "N5A", "N5B", "N5B", "C5A", "C=OS", "CB", "CB", "CB", "CB", "CB",
+            "CB", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -39784,8 +41332,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 12, SINGLE);
         container.addBond(9, 13, SINGLE);
 
-        String[] expected = {"CL", "CL", "CL", "CL", "C=C", "CE4R", "CR4R", "CE4R", "CR4R", "C=C", "CL", "CL", "CL",
-                "CL"};
+        String[] expected = {
+            "CL", "CL", "CL", "CL", "C=C", "CE4R", "CR4R", "CE4R", "CR4R", "C=C", "CL", "CL", "CL",
+            "CL"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -39831,8 +41381,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 10, DOUBLE);
         container.addBond(10, 11, SINGLE);
 
-        String[] expected = {"SO2N", "S=C", "O2S", "O2S", "NM", "CB", "CB", "CB", "CB", "CB", "CB", "C=S", "HC", "HC",
-                "HC", "HC"};
+        String[] expected = {
+            "SO2N", "S=C", "O2S", "O2S", "NM", "CB", "CB", "CB", "CB", "CB", "CB", "C=S", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -39886,15 +41438,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 12, SINGLE);
         container.addBond(11, 13, DOUBLE);
 
-        String[] expected = {"CR3R", "C=C", "C=C", "CSP", "CB", "CB", "CB", "CB", "CB", "CB", "NSP", "NO2", "O2N",
-                "O2N", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR3R", "C=C", "C=C", "CSP", "CB", "CB", "CB", "CB", "CB", "CB", "NSP", "NO2", "O2N",
+            "O2N", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for TAPJUP
      *
-     * @cdk.inchi InChI=1S/C10H8N2O3/c1-10(14)6-4-2-3-5-7(6)12-8(10)9(13)15-11-12/h2-5,14H,1H3/t10-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H8N2O3/c1-10(14)6-4-2-3-5-7(6)12-8(10)9(13)15-11-12/h2-5,14H,1H3/t10-/m1/s1
      */
     @Test
     public void testTAPJUP() {
@@ -39948,8 +41503,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 20, SINGLE);
         container.addBond(14, 19, SINGLE);
 
-        String[] expected = {"CB", "CB", "CB", "CB", "CB", "CR", "C5B", "C5A", "OM2", "OFUR", "N5A", "N5B+", "CB",
-                "OR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOR"};
+        String[] expected = {
+            "CB", "CB", "CB", "CB", "CB", "CR", "C5B", "C5A", "OM2", "OFUR", "N5A", "N5B+", "CB",
+            "OR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -40000,8 +41557,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 15, SINGLE);
         container.addBond(11, 16, SINGLE);
 
-        String[] expected = {"NSP", "NSP", "NC=C", "CSP", "CR", "CSP", "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC",
-                "HC", "HC", "HC", "HNCC", "HNCC"};
+        String[] expected = {
+            "NSP", "NSP", "NC=C", "CSP", "CR", "CSP", "CB", "CB", "CB", "CB", "CB", "CB", "HC",
+            "HC", "HC", "HC", "HC", "HNCC", "HNCC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -40045,8 +41604,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 14, TRIPLE);
         container.addBond(11, 15, TRIPLE);
 
-        String[] expected = {"P", "CR", "CSP", "NSP", "HC", "HC", "CR", "CR", "CSP", "HC", "HC", "CSP", "HC", "HC",
-                "NSP", "NSP"};
+        String[] expected = {
+            "P", "CR", "CSP", "NSP", "HC", "HC", "CR", "CR", "CSP", "HC", "HC", "CSP", "HC", "HC",
+            "NSP", "NSP"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -40109,8 +41670,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(17, 22, SINGLE);
         container.addBond(17, 23, SINGLE);
 
-        String[] expected = {"O=CR", "C=OR", "CR3R", "CR3R", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "C=OR",
-                "CR3R", "CR3R", "O=CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "O=CR", "C=OR", "CR3R", "CR3R", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "C=OR",
+            "CR3R", "CR3R", "O=CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -40168,15 +41731,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 20, SINGLE);
         container.addBond(12, 19, SINGLE);
 
-        String[] expected = {"NPYD", "CB", "CB", "CB", "CB", "CB", "NPYD", "CB", "NPYD", "CB", "NC=N", "NR", "CR",
-                "HC", "HC", "HC", "HC", "HNCN", "HNR", "HC", "HC", "HC"};
+        String[] expected = {
+            "NPYD", "CB", "CB", "CB", "CB", "CB", "NPYD", "CB", "NPYD", "CB", "NC=N", "NR", "CR",
+            "HC", "HC", "HC", "HC", "HNCN", "HNR", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for VABROF
      *
-     * @cdk.inchi InChI=1S/C9H14O5/c1-9(2)13-6-5(4-10)12-8(11-3)7(6)14-9/h4-8H,1-3H3/t5-,6-,7-,8-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C9H14O5/c1-9(2)13-6-5(4-10)12-8(11-3)7(6)14-9/h4-8H,1-3H3/t5-,6-,7-,8-/m1/s1
      */
     @Test
     public void testVABROF() {
@@ -40239,8 +41805,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 26, SINGLE);
         container.addBond(8, 27, SINGLE);
 
-        String[] expected = {"CR", "CR", "CR", "CR", "C=OR", "CR", "CR", "CR", "CR", "OR", "OR", "OR", "OR", "O=CR",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR", "CR", "CR", "CR", "C=OR", "CR", "CR", "CR", "CR", "OR", "OR", "OR", "OR", "O=CR",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -40308,15 +41876,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 24, SINGLE);
         container.addBond(15, 23, SINGLE);
 
-        String[] expected = {"NPYL", "N5A", "C5B", "N5B", "C5A", "NO2", "O2N", "O2N", "NC=N", "CR3R", "CR3R", "CR",
-                "CR", "C=OR", "O=CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NPYL", "N5A", "C5B", "N5B", "C5A", "NO2", "O2N", "O2N", "NC=N", "CR3R", "CR3R", "CR",
+            "CR", "C=OR", "O=CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for VAJFAN
      *
-     * @cdk.inchi InChI=1S/C11H7N3O2S3/c1-8-2-4-9(5-3-8)19(15,16)14-17-10(6-12)11(7-13)18-14/h2-5H,1H3
+     * @cdk.inchi
+     *     InChI=1S/C11H7N3O2S3/c1-8-2-4-9(5-3-8)19(15,16)14-17-10(6-12)11(7-13)18-14/h2-5H,1H3
      */
     @Test
     public void testVAJFAN() {
@@ -40375,8 +41947,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 17, DOUBLE);
         container.addBond(16, 18, DOUBLE);
 
-        String[] expected = {"CSP", "C=C", "C=C", "CSP", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "NSO2", "NSP",
-                "NSP", "S", "S", "SO2N", "O2S", "O2S", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CSP", "C=C", "C=C", "CSP", "CB", "CB", "CB", "CB", "CB", "CB", "CR", "NSO2", "NSP",
+            "NSP", "S", "S", "SO2N", "O2S", "O2S", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -40411,7 +41985,8 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
     /**
      * Generated test for VALWOU
      *
-     * @cdk.inchi InChI=1S/C9H13F4NO2S2/c10-8(11,17-9(12,13)18(15)16)14-4-1-7(2-5-14)3-6-14/h7H,1-6H2/q+1/t7-,14-
+     * @cdk.inchi
+     *     InChI=1S/C9H13F4NO2S2/c10-8(11,17-9(12,13)18(15)16)14-4-1-7(2-5-14)3-6-14/h7H,1-6H2/q+1/t7-,14-
      */
     @Test
     public void testVALWOU() {
@@ -40480,15 +42055,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 17, SINGLE);
         container.addBond(17, 30, SINGLE);
 
-        String[] expected = {"S", "SO2M", "O2S", "O2S", "CR", "F", "F", "CR", "F", "F", "NR+", "CR", "CR", "CR", "CR",
-                "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "SO2M", "O2S", "O2S", "CR", "F", "F", "CR", "F", "F", "NR+", "CR", "CR", "CR",
+            "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for VAPZOB10
      *
-     * @cdk.inchi InChI=1S/C10H13N5O4/c11-4-1-2-12-15-9(4)13-14-10(15)8-7(18)6(17)5(3-16)19-8/h1-2,5-8,16-18H,3,11H2/t5-,6-,7-,8-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H13N5O4/c11-4-1-2-12-15-9(4)13-14-10(15)8-7(18)6(17)5(3-16)19-8/h1-2,5-8,16-18H,3,11H2/t5-,6-,7-,8-/m1/s1
      */
     @Test
     public void testVAPZOB10() {
@@ -40560,9 +42139,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 30, SINGLE);
         container.addBond(18, 31, SINGLE);
 
-        String[] expected = {"N5B", "N5B", "C5A", "NPYL", "N=C", "C=N", "C=C", "C=C", "C5A", "NC=C", "CR", "CR", "CR",
-                "CR", "CR", "OR", "OR", "OR", "OR", "HC", "HC", "HNCC", "HNCC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HOR", "HOR", "HOR"};
+        String[] expected = {
+            "N5B", "N5B", "C5A", "NPYL", "N=C", "C=N", "C=C", "C=C", "C5A", "NC=C", "CR", "CR",
+            "CR", "CR", "CR", "OR", "OR", "OR", "OR", "HC", "HC", "HNCC", "HNCC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HOR", "HOR", "HOR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -40616,15 +42197,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 18, SINGLE);
         container.addBond(11, 19, SINGLE);
 
-        String[] expected = {"C=C", "C=C", "COO", "OC=O", "C5B", "C5B", "C5A", "OFUR", "C5A", "CR", "O=CO", "CR", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "C=C", "C=C", "COO", "OC=O", "C5B", "C5B", "C5A", "OFUR", "C5A", "CR", "O=CO", "CR",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for VATKAC
      *
-     * @cdk.inchi InChI=1S/C12H11ClN2O2S/c1-15-9-6-5(12(15)18-2)3-4-14-8(6)7(13)10(16)11(9)17/h14H,3-4H2,1-2H3
+     * @cdk.inchi
+     *     InChI=1S/C12H11ClN2O2S/c1-15-9-6-5(12(15)18-2)3-4-14-8(6)7(13)10(16)11(9)17/h14H,3-4H2,1-2H3
      */
     @Test
     public void testVATKAC() {
@@ -40690,16 +42274,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(17, 27, SINGLE);
         container.addBond(17, 28, SINGLE);
 
-        String[] expected = {"CL", "S", "O=CR", "O=CR", "NPYL", "NC=C", "C5B", "C=C", "C=C", "C=OR", "C=OR", "C5A",
-                "C5A", "C5B", "CR", "CR", "CR", "CR", "HNCC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC"};
+        String[] expected = {
+            "CL", "S", "O=CR", "O=CR", "NPYL", "NC=C", "C5B", "C=C", "C=C", "C=OR", "C=OR", "C5A",
+            "C5A", "C5B", "CR", "CR", "CR", "CR", "HNCC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for VAWDUS
      *
-     * @cdk.inchi InChI=1S/C6H9N2O5P/c1-4-5(8(10)11)3-14(12,13-2)6(4)7-9/h7H,3H2,1-2H3/b7-6-/t14-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C6H9N2O5P/c1-4-5(8(10)11)3-14(12,13-2)6(4)7-9/h7H,3H2,1-2H3/b7-6-/t14-/m0/s1
      */
     @Test
     public void testVAWDUS() {
@@ -40751,15 +42338,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 20, SINGLE);
         container.addBond(13, 19, SINGLE);
 
-        String[] expected = {"PO2", "OPO", "OP", "OXN", "O2N", "O2N", "N2OX", "NO2", "C=N", "C=C", "C=C", "CR", "CR",
-                "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNOX"};
+        String[] expected = {
+            "PO2", "OPO", "OP", "OXN", "O2N", "O2N", "N2OX", "NO2", "C=N", "C=C", "C=C", "CR", "CR",
+            "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNOX"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for VAWMOV
      *
-     * @cdk.inchi InChI=1S/C7H12N4O6S/c8-18(15,16)7-9-2-11(10-7)6-5(14)4(13)3(1-12)17-6/h2-6,12-14H,1H2,(H2,8,15,16)/t3-,4-,5-,6-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C7H12N4O6S/c8-18(15,16)7-9-2-11(10-7)6-5(14)4(13)3(1-12)17-6/h2-6,12-14H,1H2,(H2,8,15,16)/t3-,4-,5-,6-/m1/s1
      */
     @Test
     public void testVAWMOV() {
@@ -40826,9 +42416,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 27, SINGLE);
         container.addBond(17, 29, SINGLE);
 
-        String[] expected = {"NPYL", "C5B", "C5A", "O2S", "NSO2", "CR", "CR", "OR", "OR", "N5A", "N5B", "SO2N", "O2S",
-                "CR", "CR", "CR", "OR", "OR", "HC", "HNSO", "HNSO", "HC", "HC", "HC", "HC", "HC", "HC", "HOR", "HOR",
-                "HOR"};
+        String[] expected = {
+            "NPYL", "C5B", "C5A", "O2S", "NSO2", "CR", "CR", "OR", "OR", "N5A", "N5B", "SO2N",
+            "O2S", "CR", "CR", "CR", "OR", "OR", "HC", "HNSO", "HNSO", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HOR", "HOR", "HOR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -40906,9 +42498,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 30, SINGLE);
         container.addBond(16, 29, SINGLE);
 
-        String[] expected = {"BR", "O2N", "O2N", "O2N", "O2N", "NO2", "NO2", "NC=C", "C=C", "C=C", "CR", "CR", "CR",
-                "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HNCC"};
+        String[] expected = {
+            "BR", "O2N", "O2N", "O2N", "O2N", "NO2", "NO2", "NC=C", "C=C", "C=C", "CR", "CR", "CR",
+            "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HNCC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -40973,15 +42567,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 24, SINGLE);
         container.addBond(11, 23, SINGLE);
 
-        String[] expected = {"NPD+", "CB", "NPYD", "CB", "CB", "CB", "CR", "NC=C", "CR", "OR", "CR", "CR", "HPD+",
-                "HNCC", "HNCC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NPD+", "CB", "NPYD", "CB", "CB", "CB", "CR", "NC=C", "CR", "OR", "CR", "CR", "HPD+",
+            "HNCC", "HNCC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for VAZHUZ
      *
-     * @cdk.inchi InChI=1S/C11H10N2O3/c1-16-9-6-7(2-3-8(9)14)10(15)11-12-4-5-13-11/h2-6,14H,1H3,(H,12,13)
+     * @cdk.inchi
+     *     InChI=1S/C11H10N2O3/c1-16-9-6-7(2-3-8(9)14)10(15)11-12-4-5-13-11/h2-6,14H,1H3,(H,12,13)
      */
     @Test
     public void testVAZHUZ() {
@@ -41040,8 +42637,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 24, SINGLE);
         container.addBond(14, 25, SINGLE);
 
-        String[] expected = {"CB", "CB", "CB", "CB", "CB", "CB", "C=OR", "CR", "O=CR", "OC=C", "OC=C", "C5A", "C5A",
-                "C5B", "NPYL", "N5B", "HC", "HC", "HC", "HC", "HC", "HC", "HOCC", "HC", "HC", "HPYL"};
+        String[] expected = {
+            "CB", "CB", "CB", "CB", "CB", "CB", "C=OR", "CR", "O=CR", "OC=C", "OC=C", "C5A", "C5A",
+            "C5B", "NPYL", "N5B", "HC", "HC", "HC", "HC", "HC", "HC", "HOCC", "HC", "HC", "HPYL"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -41106,8 +42705,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(22, 24, SINGLE);
         container.addBond(22, 25, SINGLE);
 
-        String[] expected = {"S", "S", "S=C", "S", "S", "S", "CE4R", "CE4R", "CR4R", "CR", "HC", "HC", "HC", "CSS",
-                "CR", "HC", "HC", "HC", "CR", "HC", "HC", "HC", "CR", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "S", "S=C", "S", "S", "S", "CE4R", "CE4R", "CR4R", "CR", "HC", "HC", "HC", "CSS",
+            "CR", "HC", "HC", "HC", "CR", "HC", "HC", "HC", "CR", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -41167,8 +42768,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 21, SINGLE);
         container.addBond(13, 22, SINGLE);
 
-        String[] expected = {"SO2N", "N=C", "C=N", "NPYL", "C5A", "N5B", "NSO2", "C5B", "C5A", "O2S", "O2S", "NC=N",
-                "CR", "CR", "HC", "HNCN", "HNCN", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2N", "N=C", "C=N", "NPYL", "C5A", "N5B", "NSO2", "C5B", "C5A", "O2S", "O2S", "NC=N",
+            "CR", "CR", "HC", "HNCN", "HNCN", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -41227,8 +42830,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 21, SINGLE);
         container.addBond(11, 22, SINGLE);
 
-        String[] expected = {"NPYL", "N5A", "C5B", "C5B", "NO2", "O2N", "O2N", "C5A", "SI", "CR", "CR", "CR", "HPYL",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NPYL", "N5A", "C5B", "C5B", "NO2", "O2N", "O2N", "C5A", "SI", "CR", "CR", "CR", "HPYL",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -41296,8 +42901,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 25, SINGLE);
         container.addBond(15, 26, SINGLE);
 
-        String[] expected = {"CL", "SO2N", "OC=C", "OR", "O2S", "O2S", "N=C", "NC=N", "C=N", "C=C", "C=C", "CR", "CR",
-                "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "SO2N", "OC=C", "OR", "O2S", "O2S", "N=C", "NC=N", "C=N", "C=C", "C=C", "CR",
+            "CR", "CR", "CR", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -41358,8 +42965,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 22, SINGLE);
         container.addBond(12, 23, SINGLE);
 
-        String[] expected = {"STHI", "C5A", "C5B", "C5B", "C5A", "CR", "COO", "OC=O", "CR", "O=CO", "COO", "OC=O",
-                "CR", "O=CO", "CL", "CL", "CL", "CL", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "STHI", "C5A", "C5B", "C5B", "C5A", "CR", "COO", "OC=O", "CR", "O=CO", "COO", "OC=O",
+            "CR", "O=CO", "CL", "CL", "CL", "CL", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -41422,15 +43031,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 22, SINGLE);
         container.addBond(8, 10, SINGLE);
 
-        String[] expected = {"CB", "CB", "CB", "CB", "CB", "C=ON", "CR", "CR", "CR", "NPD+", "NC=C", "O=CN", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CB", "CB", "CB", "CB", "CB", "C=ON", "CR", "CR", "CR", "NPD+", "NC=C", "O=CN", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for VENYUI
      *
-     * @cdk.inchi InChI=1S/C12H12/c1-4-7-9-5(2)10-8(4)12(10)6(3)11(7)9/h7-12H,1-3H2/t7-,8+,9+,10-,11-,12+
+     * @cdk.inchi
+     *     InChI=1S/C12H12/c1-4-7-9-5(2)10-8(4)12(10)6(3)11(7)9/h7-12H,1-3H2/t7-,8+,9+,10-,11-,12+
      */
     @Test
     public void testVENYUI() {
@@ -41487,15 +43099,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(18, 22, SINGLE);
         container.addBond(18, 23, SINGLE);
 
-        String[] expected = {"CR3R", "CR3R", "CR3R", "C=C", "C=C", "C=C", "C=C", "HC", "HC", "HC", "HC", "HC", "HC",
-                "C=C", "CR3R", "HC", "CR3R", "CR3R", "C=C", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR3R", "CR3R", "CR3R", "C=C", "C=C", "C=C", "C=C", "HC", "HC", "HC", "HC", "HC", "HC",
+            "C=C", "CR3R", "HC", "CR3R", "CR3R", "C=C", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for VETWAS
      *
-     * @cdk.inchi InChI=1S/C6H2N8O8/c15-11(16)3-4(12(17)18)8-1(7-3)2-9-5(13(19)20)6(10-2)14(21)22/h(H,7,8)(H,9,10)
+     * @cdk.inchi
+     *     InChI=1S/C6H2N8O8/c15-11(16)3-4(12(17)18)8-1(7-3)2-9-5(13(19)20)6(10-2)14(21)22/h(H,7,8)(H,9,10)
      */
     @Test
     public void testVETWAS() {
@@ -41550,15 +43165,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(19, 22, SINGLE);
         container.addBond(19, 23, DOUBLE);
 
-        String[] expected = {"C5A", "C5A", "C5B", "NPYL", "N5B", "NO2", "NO2", "O2N", "O2N", "O2N", "O2N", "HPYL",
-                "C5A", "NPYL", "N5B", "C5A", "HPYL", "C5B", "NO2", "NO2", "O2N", "O2N", "O2N", "O2N"};
+        String[] expected = {
+            "C5A", "C5A", "C5B", "NPYL", "N5B", "NO2", "NO2", "O2N", "O2N", "O2N", "O2N", "HPYL",
+            "C5A", "NPYL", "N5B", "C5A", "HPYL", "C5B", "NO2", "NO2", "O2N", "O2N", "O2N", "O2N"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for VEVDIJ
      *
-     * @cdk.inchi InChI=1S/C12H13Cl2OP/c1-11-8-16(15,7-10(11)12(11,13)14)9-5-3-2-4-6-9/h2-6,10H,7-8H2,1H3/t10-,11+,16-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C12H13Cl2OP/c1-11-8-16(15,7-10(11)12(11,13)14)9-5-3-2-4-6-9/h2-6,10H,7-8H2,1H3/t10-,11+,16-/m1/s1
      */
     @Test
     public void testVEVDIJ() {
@@ -41624,15 +43242,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 27, SINGLE);
         container.addBond(15, 28, SINGLE);
 
-        String[] expected = {"CL", "CL", "OP", "CR3R", "CR", "PO", "CR", "CR3R", "CR3R", "CR", "CB", "CB", "CB", "CB",
-                "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "CL", "OP", "CR3R", "CR", "PO", "CR", "CR3R", "CR3R", "CR", "CB", "CB", "CB",
+            "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for VEWZOM
      *
-     * @cdk.inchi InChI=1S/C12H12FN5/c1-7(2)15-11-12-17-14-6-18(12)10-5-8(13)3-4-9(10)16-11/h3-7H,1-2H3,(H,15,16)/p+1
+     * @cdk.inchi
+     *     InChI=1S/C12H12FN5/c1-7(2)15-11-12-17-14-6-18(12)10-5-8(13)3-4-9(10)16-11/h3-7H,1-2H3,(H,15,16)/p+1
      */
     @Test
     public void testVEWZOM() {
@@ -41702,9 +43324,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(15, 16, DOUBLE);
         container.addBond(16, 17, SINGLE);
 
-        String[] expected = {"C5A", "N5B", "N5B", "C5A", "CNN+", "NCN+", "CR", "CR", "CR", "NCN+", "CB", "CB", "CB",
-                "CB", "F", "CB", "CB", "NPYL", "HC", "HNN+", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNN+", "HC",
-                "HC", "HC"};
+        String[] expected = {
+            "C5A", "N5B", "N5B", "C5A", "CNN+", "NCN+", "CR", "CR", "CR", "NCN+", "CB", "CB", "CB",
+            "CB", "F", "CB", "CB", "NPYL", "HC", "HNN+", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HNN+", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -41761,8 +43385,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 20, SINGLE);
         container.addBond(13, 14, DOUBLE);
 
-        String[] expected = {"NPYD", "C5B", "C5A", "CB", "CB", "CB", "CSP", "NSP", "OFUR", "C5B", "CB", "CB", "CB",
-                "CB", "C5A", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NPYD", "C5B", "C5A", "CB", "CB", "CB", "CSP", "NSP", "OFUR", "C5B", "CB", "CB", "CB",
+            "CB", "C5A", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -41826,8 +43452,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 23, SINGLE);
         container.addBond(14, 24, SINGLE);
 
-        String[] expected = {"N=C", "C=N", "CB", "CB", "CB", "CB", "CB", "NPYD", "CB", "CB", "CB", "CB", "CB", "CB",
-                "-O-", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HO"};
+        String[] expected = {
+            "N=C", "C=N", "CB", "CB", "CB", "CB", "CB", "NPYD", "CB", "CB", "CB", "CB", "CB", "CB",
+            "-O-", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -41888,8 +43516,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 22, SINGLE);
         container.addBond(9, 23, SINGLE);
 
-        String[] expected = {"SI", "SI", "-O-", "-O-", "-O-", "CR", "CR", "CR", "CR", "CR", "HO", "HO", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SI", "SI", "-O-", "-O-", "-O-", "CR", "CR", "CR", "CR", "CR", "HO", "HO", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -41975,15 +43605,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 18, SINGLE);
         container.addBond(11, 19, SINGLE);
 
-        String[] expected = {"CL", "PO", "OC=C", "OP", "CR", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "PO", "OC=C", "OP", "CR", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for VICGAP
      *
-     * @cdk.inchi InChI=1S/C8H14N4O5/c1-11-8(16)10-7(9)12(11)6-5(15)4(14)3(2-13)17-6/h3-6,13-15H,2H2,1H3,(H2,9,10,16)/t3-,4-,5-,6-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C8H14N4O5/c1-11-8(16)10-7(9)12(11)6-5(15)4(14)3(2-13)17-6/h3-6,13-15H,2H2,1H3,(H2,9,10,16)/t3-,4-,5-,6-/m1/s1
      */
     @Test
     public void testVICGAP() {
@@ -42052,16 +43685,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(21, 23, SINGLE);
         container.addBond(21, 28, SINGLE);
 
-        String[] expected = {"NC=N", "CONN", "CGD", "O=CN", "CR", "CR", "CR", "OR", "OR", "HC", "HNCN", "HC", "HC",
-                "HC", "HOR", "HOR", "NC=O", "N=C", "CR", "NC=N", "CR", "CR", "OR", "OR", "HC", "HC", "HNCN", "HC",
-                "HC", "HC", "HOR"};
+        String[] expected = {
+            "NC=N", "CONN", "CGD", "O=CN", "CR", "CR", "CR", "OR", "OR", "HC", "HNCN", "HC", "HC",
+            "HC", "HOR", "HOR", "NC=O", "N=C", "CR", "NC=N", "CR", "CR", "OR", "OR", "HC", "HC",
+            "HNCN", "HC", "HC", "HC", "HOR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for VICGET
      *
-     * @cdk.inchi InChI=1S/C10H14N6O4S/c11-10-14-8-7(9(15-10)21(12)19)13-3-16(8)6-1-4(18)5(2-17)20-6/h3-6,17-18H,1-2,12H2,(H2,11,14,15)/t4-,5+,6-,21-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H14N6O4S/c11-10-14-8-7(9(15-10)21(12)19)13-3-16(8)6-1-4(18)5(2-17)20-6/h3-6,17-18H,1-2,12H2,(H2,11,14,15)/t4-,5+,6-,21-/m0/s1
      */
     @Test
     public void testVICGET() {
@@ -42139,16 +43775,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(18, 32, SINGLE);
         container.addBond(20, 33, SINGLE);
 
-        String[] expected = {"NPYD", "CB", "NPYD", "C5A", "C5B", "CB", "N5B", "C5A", "NPYL", "NC=N", "S=O", "O=S",
-                "NR", "CR", "CR", "CR", "CR", "CR", "OR", "OR", "OR", "HC", "HNCN", "HNCN", "HNR", "HNR", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HOR", "HOR", "HC"};
+        String[] expected = {
+            "NPYD", "CB", "NPYD", "C5A", "C5B", "CB", "N5B", "C5A", "NPYL", "NC=N", "S=O", "O=S",
+            "NR", "CR", "CR", "CR", "CR", "CR", "OR", "OR", "OR", "HC", "HNCN", "HNCN", "HNR",
+            "HNR", "HC", "HC", "HC", "HC", "HC", "HC", "HOR", "HOR", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for VICKIB
      *
-     * @cdk.inchi InChI=1S/C10H13ClO2S/c1-9(2)6-3-4-10(9,7(12)5-6)8(11)14-13/h6H,3-5H2,1-2H3/t6-,10+/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H13ClO2S/c1-9(2)6-3-4-10(9,7(12)5-6)8(11)14-13/h6H,3-5H2,1-2H3/t6-,10+/m1/s1
      */
     @Test
     public void testVICKIB() {
@@ -42209,15 +43848,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 25, SINGLE);
         container.addBond(13, 26, SINGLE);
 
-        String[] expected = {"CL", "=S=O", "O=S=", "O=CR", "CS=O", "CR", "C=OR", "CR", "CR", "CR", "CR", "CR", "CR",
-                "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "=S=O", "O=S=", "O=CR", "CS=O", "CR", "C=OR", "CR", "CR", "CR", "CR", "CR", "CR",
+            "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for VICPOM
      *
-     * @cdk.inchi InChI=1S/C10H9N5O/c1-2-7(16-3-1)4-11-9-8-10(13-5-12-8)15-6-14-9/h1-3,5-6H,4H2,(H2,11,12,13,14,15)/p+1
+     * @cdk.inchi
+     *     InChI=1S/C10H9N5O/c1-2-7(16-3-1)4-11-9-8-10(13-5-12-8)15-6-14-9/h1-3,5-6H,4H2,(H2,11,12,13,14,15)/p+1
      */
     @Test
     public void testVICPOM() {
@@ -42277,8 +43919,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 15, DOUBLE);
         container.addBond(15, 25, SINGLE);
 
-        String[] expected = {"OFUR", "NPYD", "NPD+", "NC=N", "NPYL", "N5B", "CB", "C5B", "C5A", "CB", "C5A", "CR",
-                "C5A", "C5B", "C5B", "C5A", "HPD+", "HNCN", "HPYL", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OFUR", "NPYD", "NPD+", "NC=N", "NPYL", "N5B", "CB", "C5B", "C5A", "CB", "C5A", "CR",
+            "C5A", "C5B", "C5B", "C5A", "HPD+", "HNCN", "HPYL", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -42333,8 +43978,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(7, 19, SINGLE);
         container.addBond(7, 20, SINGLE);
 
-        String[] expected = {"NR+", "N=C", "C=N", "CR", "CR", "CR", "CR", "CR", "HNR+", "HNR+", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NR+", "N=C", "C=N", "CR", "CR", "CR", "CR", "CR", "HNR+", "HNR+", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -42400,15 +44047,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 24, SINGLE);
         container.addBond(14, 15, DOUBLE);
 
-        String[] expected = {"STHI", "NPYL", "C5", "C5B", "CB", "CB", "CB", "CB", "C5A", "C5", "C5B", "CB", "CB", "CB",
-                "CB", "C5A", "HPYL", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "STHI", "NPYL", "C5", "C5B", "CB", "CB", "CB", "CB", "C5A", "C5", "C5B", "CB", "CB",
+            "CB", "CB", "C5A", "HPYL", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for VIGPEG
      *
-     * @cdk.inchi InChI=1S/C11H16N4O2/c1-10(2,11(3,4)17)15-5-7-8(14-15)12-6-13-9(7)16/h5-6,17H,1-4H3,(H,12,13,14,16)
+     * @cdk.inchi
+     *     InChI=1S/C11H16N4O2/c1-10(2,11(3,4)17)15-5-7-8(14-15)12-6-13-9(7)16/h5-6,17H,1-4H3,(H,12,13,14,16)
      */
     @Test
     public void testVIGPEG() {
@@ -42481,16 +44131,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(14, 31, SINGLE);
         container.addBond(16, 32, SINGLE);
 
-        String[] expected = {"N5A", "NPYL", "C5A", "C=ON", "NC=O", "C=N", "N=C", "C5B", "C5B", "CR", "CR", "CR", "CR",
-                "CR", "CR", "O=CN", "OR", "HC", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HOR"};
+        String[] expected = {
+            "N5A", "NPYL", "C5A", "C=ON", "NC=O", "C=N", "N=C", "C5B", "C5B", "CR", "CR", "CR",
+            "CR", "CR", "CR", "O=CN", "OR", "HC", "HNCO", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HOR"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for VIGTUA
      *
-     * @cdk.inchi InChI=1S/C12H8N2/c1-2-4-6-5(3-1)13-11-9-7-8(9)10(7)12(11)14-6/h1-4,7-10H/t7-,8+,9-,10+
+     * @cdk.inchi
+     *     InChI=1S/C12H8N2/c1-2-4-6-5(3-1)13-11-9-7-8(9)10(7)12(11)14-6/h1-4,7-10H/t7-,8+,9-,10+
      */
     @Test
     public void testVIGTUA() {
@@ -42544,8 +44197,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 11, SINGLE);
         container.addBond(13, 21, SINGLE);
 
-        String[] expected = {"NPYD", "NPYD", "CR3R", "CR3R", "CR3R", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB",
-                "CR3R", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NPYD", "NPYD", "CR3R", "CR3R", "CR3R", "CB", "CB", "CB", "CB", "CB", "CB", "CB", "CB",
+            "CR3R", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -42611,8 +44266,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(22, 24, SINGLE);
         container.addBond(22, 25, SINGLE);
 
-        String[] expected = {"S", "=S=O", "O=S=", "N=C", "CS=O", "CR", "C=N", "CB", "CB", "CB", "CB", "CB", "CB", "CR",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "CR", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "=S=O", "O=S=", "N=C", "CS=O", "CR", "C=N", "CB", "CB", "CB", "CB", "CB", "CB",
+            "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "CR", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -42665,15 +44322,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(6, 10, DOUBLE);
         container.addBond(8, 19, SINGLE);
 
-        String[] expected = {"CR3R", "CR3R", "CR3R", "CR", "CR", "COO", "NO2", "O=CO", "OC=O", "O2N", "O2N", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOCO"};
+        String[] expected = {
+            "CR3R", "CR3R", "CR3R", "CR", "CR", "COO", "NO2", "O=CO", "OC=O", "O2N", "O2N", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOCO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for VIKYAP
      *
-     * @cdk.inchi InChI=1S/C11H10BrNO3/c12-11(13(15)16)8-3-1-2-4-5(3)9(11)7(4)10(14)6(2)8/h2-9H,1H2/t2-,3+,4-,5+,6+,7-,8-,9+,11+/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C11H10BrNO3/c12-11(13(15)16)8-3-1-2-4-5(3)9(11)7(4)10(14)6(2)8/h2-9H,1H2/t2-,3+,4-,5+,6+,7-,8-,9+,11+/m1/s1
      */
     @Test
     public void testVIKYAP() {
@@ -42735,8 +44395,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 13, SINGLE);
         container.addBond(12, 14, DOUBLE);
 
-        String[] expected = {"CR", "CR4R", "CR4R", "C=OR", "CR", "CR", "CR", "CR4R", "CR4R", "CR", "CR", "BR", "NO2",
-                "O2N", "O2N", "O=CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR", "CR4R", "CR4R", "C=OR", "CR", "CR", "CR", "CR4R", "CR4R", "CR", "CR", "BR", "NO2",
+            "O2N", "O2N", "O=CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -42765,7 +44427,8 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
     /**
      * Generated test for VIPXAT
      *
-     * @cdk.inchi InChI=1S/C9H9N3O2/c1-5-3-10-9-11-7(13)6(2)4-12(9)8(5)14/h3-4H,1-2H3,(H,10,11,13)/p+1
+     * @cdk.inchi
+     *     InChI=1S/C9H9N3O2/c1-5-3-10-9-11-7(13)6(2)4-12(9)8(5)14/h3-4H,1-2H3,(H,10,11,13)/p+1
      */
     @Test
     public void testVIPXAT() {
@@ -42820,15 +44483,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 23, SINGLE);
         container.addBond(12, 13, DOUBLE);
 
-        String[] expected = {"N=C", "C=N", "OC=N", "C=C", "CR", "C=C", "NCN+", "C=ON", "O=CN", "C=C", "CR", "C=C",
-                "NCN+", "CNN+", "HOCN", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNN+"};
+        String[] expected = {
+            "N=C", "C=N", "OC=N", "C=C", "CR", "C=C", "NCN+", "C=ON", "O=CN", "C=C", "CR", "C=C",
+            "NCN+", "CNN+", "HOCN", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNN+"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for VIRBON
      *
-     * @cdk.inchi InChI=1S/C11H14N2O2/c1-11(9(14)6-13-12)8-5-3-2-4-7(8)10(11)15/h6-8H,2-5H2,1H3/t7-,8+,11+/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C11H14N2O2/c1-11(9(14)6-13-12)8-5-3-2-4-7(8)10(11)15/h6-8H,2-5H2,1H3/t7-,8+,11+/m1/s1
      */
     @Test
     public void testVIRBON() {
@@ -42893,8 +44559,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 14, SINGLE);
         container.addBond(14, 28, SINGLE);
 
-        String[] expected = {"O=CR", "O=CR", "=N=", "NAZT", "C=OR", "CR4R", "CR", "CR", "CR", "CR", "CR4R", "CR4R",
-                "CR", "C=OR", "C=N", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "O=CR", "O=CR", "=N=", "NAZT", "C=OR", "CR4R", "CR", "CR", "CR", "CR", "CR4R", "CR4R",
+            "CR", "C=OR", "C=N", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -42948,8 +44617,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 18, SINGLE);
         container.addBond(9, 19, SINGLE);
 
-        String[] expected = {"COO", "CE4R", "CR4R", "C=C", "CB", "CB", "CB", "CB", "CB", "CB", "OC=O", "O=CO", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "COO", "CE4R", "CR4R", "C=C", "CB", "CB", "CB", "CB", "CB", "CB", "OC=O", "O=CO", "HC",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -42995,8 +44666,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 14, SINGLE);
         container.addBond(10, 13, SINGLE);
 
-        String[] expected = {"NPYL", "N5B", "N=C", "S", "O=CR", "C5A", "C=N", "C=OR", "C5B", "C5A", "CR", "HC", "HC",
-                "HC", "HC", "HC"};
+        String[] expected = {
+            "NPYL", "N5B", "N=C", "S", "O=CR", "C5A", "C=N", "C=OR", "C5B", "C5A", "CR", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -43033,14 +44706,17 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(8, 10, SINGLE);
         container.addBond(8, 11, SINGLE);
 
-        String[] expected = {"S=O", "S=O", "F", "F", "CR4R", "NR", "O=S", "O=S", "CR", "HC", "HC", "HC"};
+        String[] expected = {
+            "S=O", "S=O", "F", "F", "CR4R", "NR", "O=S", "O=S", "CR", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for VIYPAU
      *
-     * @cdk.inchi InChI=1S/C10H13BrO6/c1-9(2)15-5-4-6(14-7(5)17-9)10(11,16-4)8(12)13-3/h4-7H,1-3H3/t4-,5-,6+,7-,10+/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H13BrO6/c1-9(2)15-5-4-6(14-7(5)17-9)10(11,16-4)8(12)13-3/h4-7H,1-3H3/t4-,5-,6+,7-,10+/m1/s1
      */
     @Test
     public void testVIYPAU() {
@@ -43108,16 +44784,19 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(16, 26, SINGLE);
         container.addBond(16, 25, SINGLE);
 
-        String[] expected = {"BR", "OR", "OR", "OR", "OR", "O=CO", "OC=O", "CR", "CR", "CR", "CR", "CR", "CR4R",
-                "CR4R", "CR4R", "COO", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC"};
+        String[] expected = {
+            "BR", "OR", "OR", "OR", "OR", "O=CO", "OC=O", "CR", "CR", "CR", "CR", "CR", "CR4R",
+            "CR4R", "CR4R", "COO", "CR", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for VOBLAZ
      *
-     * @cdk.inchi InChI=1S/C12H13N3O/c1-12(2)7-10(16)15-9-6-4-3-5-8(9)13-11(15)14-12/h3-6H,7H2,1-2H3,(H,13,14)
+     * @cdk.inchi
+     *     InChI=1S/C12H13N3O/c1-12(2)7-10(16)15-9-6-4-3-5-8(9)13-11(15)14-12/h3-6H,7H2,1-2H3,(H,13,14)
      */
     @Test
     public void testVOBLAZ() {
@@ -43183,8 +44862,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 28, SINGLE);
         container.addBond(12, 16, SINGLE);
 
-        String[] expected = {"C5A", "CR", "CR", "C=ON", "C5A", "CB", "CB", "CB", "CB", "C5B", "CR", "CR", "NC=N",
-                "NPYL", "N5B", "O=CN", "HNCN", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "C5A", "CR", "CR", "C=ON", "C5A", "CB", "CB", "CB", "CB", "C5B", "CR", "CR", "NC=N",
+            "NPYL", "N5B", "O=CN", "HNCN", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -43240,15 +44922,18 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 20, SINGLE);
         container.addBond(10, 11, DOUBLE);
 
-        String[] expected = {"CR", "SO2N", "O2S", "O2S", "NSO2", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC",
-                "HNSO", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR", "SO2N", "O2S", "O2S", "NSO2", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "HC",
+            "HC", "HNSO", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for VOFBOH
      *
-     * @cdk.inchi InChI=1S/C11H10Br2O2/c12-11(13)7-10(11,6-9(14)15)8-4-2-1-3-5-8/h1-5H,6-7H2,(H,14,15)/t10-/m0/s1
+     * @cdk.inchi
+     *     InChI=1S/C11H10Br2O2/c12-11(13)7-10(11,6-9(14)15)8-4-2-1-3-5-8/h1-5H,6-7H2,(H,14,15)/t10-/m0/s1
      */
     @Test
     public void testVOFBOH() {
@@ -43305,8 +44990,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(13, 22, SINGLE);
         container.addBond(14, 23, SINGLE);
 
-        String[] expected = {"BR", "BR", "OC=O", "O=CO", "CR3R", "CR3R", "CR3R", "CR", "COO", "CB", "CB", "CB", "CB",
-                "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOCO"};
+        String[] expected = {
+            "BR", "BR", "OC=O", "O=CO", "CR3R", "CR3R", "CR3R", "CR", "COO", "CB", "CB", "CB", "CB",
+            "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HOCO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -43364,8 +45051,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 20, SINGLE);
         container.addBond(12, 21, SINGLE);
 
-        String[] expected = {"BR", "CL", "CL", "CR3R", "CR3R", "CR3R", "CR", "CB", "CB", "CB", "CB", "CB", "CB", "HC",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "BR", "CL", "CL", "CR3R", "CR3R", "CR3R", "CR", "CB", "CB", "CB", "CB", "CB", "CB",
+            "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -43448,8 +45137,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(10, 18, SINGLE);
         container.addBond(10, 19, SINGLE);
 
-        String[] expected = {"PO2", "O2P", "NPD+", "O2P", "NC=N", "CB", "CB", "CB", "CB", "CB", "CR", "HP", "HC", "HC",
-                "HC", "HC", "HNCN", "HNCN", "HC", "HC"};
+        String[] expected = {
+            "PO2", "O2P", "NPD+", "O2P", "NC=N", "CB", "CB", "CB", "CB", "CB", "CR", "HP", "HC",
+            "HC", "HC", "HC", "HNCN", "HNCN", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -43481,7 +45172,9 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(6, 9, SINGLE);
         container.addBond(6, 8, SINGLE);
 
-        String[] expected = {"OM", "C=ON", "NC=O", "O=CN", "HNCO", "C=ON", "NC=O", "O=CN", "OM", "HNCO"};
+        String[] expected = {
+            "OM", "C=ON", "NC=O", "O=CN", "HNCO", "C=ON", "NC=O", "O=CN", "OM", "HNCO"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -43539,8 +45232,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 21, SINGLE);
         container.addBond(12, 20, SINGLE);
 
-        String[] expected = {"OFUR", "O=CR", "C5A", "C5B", "C5B", "C5A", "CB", "CB", "CB", "CB", "C=OR", "CR", "NC=C",
-                "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNCC", "HNCC"};
+        String[] expected = {
+            "OFUR", "O=CR", "C5A", "C5B", "C5B", "C5A", "CB", "CB", "CB", "CB", "C=OR", "CR",
+            "NC=C", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HNCC", "HNCC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -43598,8 +45293,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 20, SINGLE);
         container.addBond(13, 21, SINGLE);
 
-        String[] expected = {"SO2N", "O2S", "O2S", "OFUR", "NSO2", "N5A", "CR", "C5B", "C5B", "C5A", "CB", "CB", "CB",
-                "CB", "HNSO", "HNSO", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2N", "O2S", "O2S", "OFUR", "NSO2", "N5A", "CR", "C5B", "C5B", "C5A", "CB", "CB",
+            "CB", "CB", "HNSO", "HNSO", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -43657,8 +45354,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(12, 20, SINGLE);
         container.addBond(12, 21, SINGLE);
 
-        String[] expected = {"OFUR", "C5A", "C5B", "C5", "C5", "C5B", "C5A", "NPYL", "COO", "O=CO", "OC=O", "CR", "CR",
-                "HC", "HC", "HC", "HPYL", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "OFUR", "C5A", "C5B", "C5", "C5", "C5B", "C5A", "NPYL", "COO", "O=CO", "OC=O", "CR",
+            "CR", "HC", "HC", "HC", "HPYL", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -43699,14 +45398,17 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(9, 12, SINGLE);
         container.addBond(12, 13, TRIPLE);
 
-        String[] expected = {"CB", "CB", "NR%", "C%", "HC", "CB", "CB", "CB", "HC", "CB", "HC", "HC", "NR%", "C%"};
+        String[] expected = {
+            "CB", "CB", "NR%", "C%", "HC", "CB", "CB", "CB", "HC", "CB", "HC", "HC", "NR%", "C%"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
     /**
      * Generated test for ZZZMVU10
      *
-     * @cdk.inchi InChI=1S/C12H10O4S4/c13-19(14,11-7-3-1-4-8-11)17-18-20(15,16)12-9-5-2-6-10-12/h1-10H
+     * @cdk.inchi
+     *     InChI=1S/C12H10O4S4/c13-19(14,11-7-3-1-4-8-11)17-18-20(15,16)12-9-5-2-6-10-12/h1-10H
      */
     @Test
     public void testZZZMVU10() {
@@ -43773,8 +45475,11 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(18, 28, SINGLE);
         container.addBond(19, 29, SINGLE);
 
-        String[] expected = {"SO2", "S", "S", "SO2", "O2S", "O2S", "O2S", "O2S", "CB", "CB", "CB", "CB", "CB", "CB",
-                "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "SO2", "S", "S", "SO2", "O2S", "O2S", "O2S", "O2S", "CB", "CB", "CB", "CB", "CB", "CB",
+            "CB", "CB", "CB", "CB", "CB", "CB", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -43811,7 +45516,9 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(6, 10, SINGLE);
         container.addBond(6, 11, SINGLE);
 
-        String[] expected = {"I", "O=CN", "O=CN", "NC=O", "C=ON", "CR", "CR", "C=ON", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "I", "O=CN", "O=CN", "NC=O", "C=ON", "CR", "CR", "C=ON", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -43950,7 +45657,9 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(5, 10, SINGLE);
         container.addBond(5, 9, SINGLE);
 
-        String[] expected = {"C=C", "CR", "C=OR", "O=CR", "HC", "C=C", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "C=C", "CR", "C=OR", "O=CR", "HC", "C=C", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -43987,7 +45696,9 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(4, 10, SINGLE);
         container.addBond(4, 11, SINGLE);
 
-        String[] expected = {"CL", "CR4R", "CR4R", "CR4R", "CR4R", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CL", "CR4R", "CR4R", "CR4R", "CR4R", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -44129,7 +45840,9 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(3, 12, SINGLE);
         container.addBond(3, 13, SINGLE);
 
-        String[] expected = {"CR", "N3OX", "CR", "CR", "OXN", "HNOX", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR", "N3OX", "CR", "CR", "OXN", "HNOX", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -44163,7 +45876,9 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(3, 9, SINGLE);
         container.addBond(3, 8, SINGLE);
 
-        String[] expected = {"HNOX", "N3OX", "CR", "CR", "OXN", "HNOX", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "HNOX", "N3OX", "CR", "CR", "OXN", "HNOX", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -44306,7 +46021,9 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(6, 11, SINGLE);
         container.addBond(9, 12, SINGLE);
 
-        String[] expected = {"CB", "CB", "CB", "S", "CB", "HC", "CB", "HC", "HS", "CB", "HC", "HC", "HC"};
+        String[] expected = {
+            "CB", "CB", "CB", "S", "CB", "HC", "CB", "HC", "HS", "CB", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -44632,7 +46349,9 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(5, 11, SINGLE);
         container.addBond(5, 10, SINGLE);
 
-        String[] expected = {"CR", "NPO2", "PO2", "O2P", "O2P", "CR", "HNPO", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR", "NPO2", "PO2", "O2P", "O2P", "CR", "HNPO", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -44853,8 +46572,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(11, 20, SINGLE);
         container.addBond(11, 21, SINGLE);
 
-        String[] expected = {"CB", "CB", "CB", "CB", "CB", "CB", "C=ON", "NSO2", "SO2N", "O2S", "O2S", "CR", "HNSO",
-                "O=CN", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CB", "CB", "CB", "CB", "CB", "CB", "C=ON", "NSO2", "SO2N", "O2S", "O2S", "CR", "HNSO",
+            "O=CN", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -44916,7 +46637,9 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(5, 10, SINGLE);
         container.addBond(5, 9, SINGLE);
 
-        String[] expected = {"CR", "SO2N", "O2S", "O2S", "NM", "CR", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR", "SO2N", "O2S", "O2S", "NM", "CR", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -44950,7 +46673,9 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(4, 9, SINGLE);
         container.addBond(4, 8, SINGLE);
 
-        String[] expected = {"CR", "CS=O", "=S=O", "O=S=", "CR", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "CR", "CS=O", "=S=O", "O=S=", "CR", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -45370,7 +47095,9 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(5, 12, SINGLE);
         container.addBond(3, 13, SINGLE);
 
-        String[] expected = {"S", "NR", "NR", "CR", "CR", "CR", "HC", "HC", "HNR", "HNR", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "S", "NR", "NR", "CR", "CR", "CR", "HC", "HC", "HNR", "HNR", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -45455,8 +47182,10 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(5, 17, SINGLE);
         container.addBond(5, 18, SINGLE);
 
-        String[] expected = {"P", "SI", "CR", "CR", "CR", "CR", "HP", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
-                "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "P", "SI", "CR", "CR", "CR", "CR", "HP", "HC", "HC", "HC", "HC", "HC", "HC", "HC", "HC",
+            "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -45588,7 +47317,9 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(2, 12, SINGLE);
         container.addBond(3, 13, SINGLE);
 
-        String[] expected = {"NR", "NR", "CR", "CR", "CR3R", "CR3R", "HC", "HC", "HC", "HC", "HC", "HNR", "HC", "HC"};
+        String[] expected = {
+            "NR", "NR", "CR", "CR", "CR3R", "CR3R", "HC", "HC", "HC", "HC", "HC", "HNR", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 
@@ -45627,7 +47358,9 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         container.addBond(3, 11, SINGLE);
         container.addBond(3, 12, SINGLE);
 
-        String[] expected = {"NR", "NR", "CR4R", "CR4R", "CR", "HNR", "HC", "HC", "HC", "HC", "HC", "HC", "HC"};
+        String[] expected = {
+            "NR", "NR", "CR4R", "CR4R", "CR", "HNR", "HC", "HC", "HC", "HC", "HC", "HC", "HC"
+        };
         assertMatchingTypes(container, assign(container), expected);
     }
 

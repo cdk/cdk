@@ -1,5 +1,12 @@
 package org.openscience.cdk.smsd.labelling;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Mapping;
@@ -12,27 +19,18 @@ import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
-
 /**
  * @cdk.module smsd
  * @cdk.githash
- * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public
- *             access to internal implementation details. SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK
+ *     or provides public access to internal implementation details. SMSD has been deprecated from
+ *     the CDK with a newer, more recent version of SMSD is available at <a
+ *     href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public class AbstractReactionLabeller {
 
-    /**
-     * A nasty hack necessary to get around a bug in the CDK
-     */
+    /** A nasty hack necessary to get around a bug in the CDK */
     private boolean fixAtomMappingCastType = false;
 
     private void fixAtomMapping(IAtomContainer canonicalForm) {
@@ -44,7 +42,8 @@ public class AbstractReactionLabeller {
         }
     }
 
-    private Map<IAtom, IAtom> atomAtomMap(IReaction reaction, IReaction clone, Map<IAtomContainer, int[]> permutationMap) {
+    private Map<IAtom, IAtom> atomAtomMap(
+            IReaction reaction, IReaction clone, Map<IAtomContainer, int[]> permutationMap) {
         // create a Map of corresponding atoms for molecules
         // (key: original Atom, value: clone Atom)
         Map<IAtom, IAtom> atomAtom = new Hashtable<IAtom, IAtom>();
@@ -75,7 +74,13 @@ public class AbstractReactionLabeller {
             IAtom value = atomAtom.get(key);
             IAtomContainer valueAC = ReactionManipulator.getRelevantAtomContainer(clone, value);
             int valueIndex = valueAC.indexOf(value);
-            System.out.println("key " + keyIndex + key.getSymbol() + " mapped to " + valueIndex + value.getSymbol());
+            System.out.println(
+                    "key "
+                            + keyIndex
+                            + key.getSymbol()
+                            + " mapped to "
+                            + valueIndex
+                            + value.getSymbol());
         }
 
         return atomAtom;
@@ -97,12 +102,14 @@ public class AbstractReactionLabeller {
     }
 
     /**
-     * Clone and Sort the mappings based on the order of the first object
-     * in the mapping (which is assumed to be the reactant).
+     * Clone and Sort the mappings based on the order of the first object in the mapping (which is
+     * assumed to be the reactant).
      *
      * @param reaction
      */
-    private void cloneAndSortMappings(IReaction reaction, IReaction copyOfReaction,
+    private void cloneAndSortMappings(
+            IReaction reaction,
+            IReaction copyOfReaction,
             Map<IAtomContainer, int[]> permutationMap) {
 
         // make a lookup for the indices of the atoms in the copy
@@ -119,19 +126,17 @@ public class AbstractReactionLabeller {
         Map<IAtom, IAtom> atomAtomMap = atomAtomMap(reaction, copyOfReaction, permutationMap);
         List<IMapping> map = cloneMappings(reaction, atomAtomMap);
 
-        Comparator<IMapping> mappingSorter = new Comparator<IMapping>() {
+        Comparator<IMapping> mappingSorter =
+                new Comparator<IMapping>() {
 
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public int compare(IMapping o1, IMapping o2) {
-                IChemObject o10 = o1.getChemObject(0);
-                IChemObject o20 = o2.getChemObject(0);
-                return indexMap.get(o10).compareTo(indexMap.get(o20));
-            }
-
-        };
+                    /** {@inheritDoc} */
+                    @Override
+                    public int compare(IMapping o1, IMapping o2) {
+                        IChemObject o10 = o1.getChemObject(0);
+                        IChemObject o20 = o2.getChemObject(0);
+                        return indexMap.get(o10).compareTo(indexMap.get(o20));
+                    }
+                };
         Collections.sort(map, mappingSorter);
         int mappingIndex = 0;
         for (IMapping mapping : map) {
@@ -140,7 +145,6 @@ public class AbstractReactionLabeller {
             copyOfReaction.addMapping(mapping);
             mappingIndex++;
         }
-
     }
 
     public IReaction labelReaction(IReaction reaction, ICanonicalMoleculeLabeller labeller) {
@@ -149,27 +153,27 @@ public class AbstractReactionLabeller {
 
         Map<IAtomContainer, int[]> permutationMap = new HashMap<IAtomContainer, int[]>();
 
-        IAtomContainerSet canonicalProducts = DefaultChemObjectBuilder.getInstance().newInstance(
-                IAtomContainerSet.class);
+        IAtomContainerSet canonicalProducts =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         for (IAtomContainer product : reaction.getProducts().atomContainers()) {
             IAtomContainer canonicalForm = labeller.getCanonicalMolecule(product);
             if (fixAtomMappingCastType) {
                 fixAtomMapping(canonicalForm);
             }
-            IAtomContainer canonicalMolecule = canonicalForm.getBuilder().newInstance(IAtomContainer.class,
-                    canonicalForm);
+            IAtomContainer canonicalMolecule =
+                    canonicalForm.getBuilder().newInstance(IAtomContainer.class, canonicalForm);
             permutationMap.put(canonicalMolecule, labeller.getCanonicalPermutation(product));
             canonicalProducts.addAtomContainer(canonicalMolecule);
         }
-        IAtomContainerSet canonicalReactants = DefaultChemObjectBuilder.getInstance().newInstance(
-                IAtomContainerSet.class);
+        IAtomContainerSet canonicalReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         for (IAtomContainer reactant : reaction.getReactants().atomContainers()) {
             IAtomContainer canonicalForm = labeller.getCanonicalMolecule(reactant);
             if (fixAtomMappingCastType) {
                 fixAtomMapping(canonicalForm);
             }
-            IAtomContainer canonicalMolecule = canonicalForm.getBuilder().newInstance(IAtomContainer.class,
-                    canonicalForm);
+            IAtomContainer canonicalMolecule =
+                    canonicalForm.getBuilder().newInstance(IAtomContainer.class, canonicalForm);
             permutationMap.put(canonicalMolecule, labeller.getCanonicalPermutation(reactant));
             canonicalReactants.addAtomContainer(canonicalMolecule);
         }
@@ -178,5 +182,4 @@ public class AbstractReactionLabeller {
         cloneAndSortMappings(reaction, canonReaction, permutationMap);
         return canonReaction;
     }
-
 }

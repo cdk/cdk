@@ -22,19 +22,18 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import static org.mockito.Mockito.mock;
+
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
-import static org.mockito.Mockito.mock;
-
-/**
- * @cdk.module test
- */
+/** @cdk.module test */
 public abstract class AbstractFingerprinterTest extends CDKTestCase {
 
     public IFingerprinter getBitFingerprinter() {
-        throw new IllegalAccessError("This method should be overwritten " + "by subclasses unit tests");
+        throw new IllegalAccessError(
+                "This method should be overwritten " + "by subclasses unit tests");
     };
 
     /* override if method is implemented */

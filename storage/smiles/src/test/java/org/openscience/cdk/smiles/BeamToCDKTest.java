@@ -24,7 +24,22 @@
 
 package org.openscience.cdk.smiles;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.openscience.cdk.CDKConstants.ATOM_ATOM_MAPPING;
+import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.ANTI_CLOCKWISE;
+import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKWISE;
+
 import com.google.common.collect.FluentIterable;
+import java.io.IOException;
+import java.util.Iterator;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
@@ -38,27 +53,8 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import uk.ac.ebi.beam.AtomBuilder;
-import uk.ac.ebi.beam.Bond;
-import uk.ac.ebi.beam.Graph;
 import uk.ac.ebi.beam.Element;
-import uk.ac.ebi.beam.Functions;
-
-import java.io.IOException;
-import java.util.Iterator;
-
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.openscience.cdk.CDKConstants.ATOM_ATOM_MAPPING;
-import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.ANTI_CLOCKWISE;
-import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKWISE;
+import uk.ac.ebi.beam.Graph;
 
 /**
  * @author John May
@@ -67,7 +63,7 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKW
 public class BeamToCDKTest {
 
     private final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-    private final BeamToCDK          g2c     = new BeamToCDK(builder);
+    private final BeamToCDK g2c = new BeamToCDK(builder);
 
     @Test
     public void newUnknownAtom() {
@@ -108,7 +104,9 @@ public class BeamToCDKTest {
 
     @Test
     public void oxidanide() {
-        IAtom a = g2c.toCDKAtom(AtomBuilder.aliphatic(Element.Oxygen).hydrogens(1).anion().build(), 1);
+        IAtom a =
+                g2c.toCDKAtom(
+                        AtomBuilder.aliphatic(Element.Oxygen).hydrogens(1).anion().build(), 1);
         assertThat(a.getSymbol(), is("O"));
         assertThat(a.getImplicitHydrogenCount(), is(1));
         assertThat(a.getFormalCharge(), is(-1));
@@ -116,7 +114,9 @@ public class BeamToCDKTest {
 
     @Test
     public void azaniumAtom() {
-        IAtom a = g2c.toCDKAtom(AtomBuilder.aliphatic(Element.Nitrogen).hydrogens(4).cation().build(), 4);
+        IAtom a =
+                g2c.toCDKAtom(
+                        AtomBuilder.aliphatic(Element.Nitrogen).hydrogens(4).cation().build(), 4);
         assertThat(a.getSymbol(), is("N"));
         assertThat(a.getImplicitHydrogenCount(), is(4));
         assertThat(a.getFormalCharge(), is(+1));
@@ -130,19 +130,25 @@ public class BeamToCDKTest {
 
     @Test
     public void carbon_12() {
-        IAtom a = g2c.toCDKAtom(AtomBuilder.aliphatic(Element.Carbon).hydrogens(4).isotope(12).build(), 4);
+        IAtom a =
+                g2c.toCDKAtom(
+                        AtomBuilder.aliphatic(Element.Carbon).hydrogens(4).isotope(12).build(), 4);
         assertThat(a.getMassNumber(), is(12));
     }
 
     @Test
     public void carbon_13() {
-        IAtom a = g2c.toCDKAtom(AtomBuilder.aliphatic(Element.Carbon).hydrogens(4).isotope(13).build(), 4);
+        IAtom a =
+                g2c.toCDKAtom(
+                        AtomBuilder.aliphatic(Element.Carbon).hydrogens(4).isotope(13).build(), 4);
         assertThat(a.getMassNumber(), is(13));
     }
 
     @Test
     public void carbon_14() {
-        IAtom a = g2c.toCDKAtom(AtomBuilder.aliphatic(Element.Carbon).hydrogens(4).isotope(14).build(), 4);
+        IAtom a =
+                g2c.toCDKAtom(
+                        AtomBuilder.aliphatic(Element.Carbon).hydrogens(4).isotope(14).build(), 4);
         assertThat(a.getMassNumber(), is(14));
     }
 
@@ -200,8 +206,7 @@ public class BeamToCDKTest {
         assertThat(ac.getAtomCount(), is(5));
         assertThat(ac.getBondCount(), is(5));
 
-        for (IAtom a : ac.atoms())
-            assertTrue(a.getFlag(CDKConstants.ISAROMATIC));
+        for (IAtom a : ac.atoms()) assertTrue(a.getFlag(CDKConstants.ISAROMATIC));
 
         assertThat(ac.getAtom(0).getSymbol(), is("C"));
         assertThat(ac.getAtom(1).getSymbol(), is("N"));
@@ -232,8 +237,7 @@ public class BeamToCDKTest {
         assertThat(ac.getAtomCount(), is(5));
         assertThat(ac.getBondCount(), is(5));
 
-        for (IAtom a : ac.atoms())
-            assertFalse(a.getFlag(CDKConstants.ISAROMATIC));
+        for (IAtom a : ac.atoms()) assertFalse(a.getFlag(CDKConstants.ISAROMATIC));
 
         assertThat(ac.getAtom(0).getSymbol(), is("N"));
         assertThat(ac.getAtom(1).getSymbol(), is("C"));
@@ -278,7 +282,9 @@ public class BeamToCDKTest {
         ITetrahedralChirality tc = (ITetrahedralChirality) se;
 
         assertThat(tc.getChiralAtom(), is(ac.getAtom(2)));
-        assertThat(tc.getLigands(), is(new IAtom[]{ac.getAtom(1), ac.getAtom(3), ac.getAtom(4), ac.getAtom(5)}));
+        assertThat(
+                tc.getLigands(),
+                is(new IAtom[] {ac.getAtom(1), ac.getAtom(3), ac.getAtom(4), ac.getAtom(5)}));
 
         assertThat(tc.getStereo(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
     }
@@ -299,7 +305,9 @@ public class BeamToCDKTest {
         ITetrahedralChirality tc = (ITetrahedralChirality) se;
 
         assertThat(tc.getChiralAtom(), is(ac.getAtom(2)));
-        assertThat(tc.getLigands(), is(new IAtom[]{ac.getAtom(1), ac.getAtom(3), ac.getAtom(4), ac.getAtom(5)}));
+        assertThat(
+                tc.getLigands(),
+                is(new IAtom[] {ac.getAtom(1), ac.getAtom(3), ac.getAtom(4), ac.getAtom(5)}));
         assertThat(tc.getStereo(), is(ANTI_CLOCKWISE));
     }
 
@@ -312,7 +320,8 @@ public class BeamToCDKTest {
     public void tetrahedralRingClosure() throws Exception {
         IAtomContainer ac = convert("O[C@]12CCCC[C@@]1(O)CCCC2");
 
-        IStereoElement[] ses = FluentIterable.from(ac.stereoElements()).toArray(IStereoElement.class);
+        IStereoElement[] ses =
+                FluentIterable.from(ac.stereoElements()).toArray(IStereoElement.class);
 
         assertThat(ses.length, is(2));
         assertThat(ses[0], is(instanceOf(ITetrahedralChirality.class)));
@@ -329,7 +338,9 @@ public class BeamToCDKTest {
         }
 
         assertThat(tc1.getChiralAtom(), is(ac.getAtom(1)));
-        assertThat(tc1.getLigands(), is(new IAtom[]{ac.getAtom(0), ac.getAtom(2), ac.getAtom(6), ac.getAtom(11)}));
+        assertThat(
+                tc1.getLigands(),
+                is(new IAtom[] {ac.getAtom(0), ac.getAtom(2), ac.getAtom(6), ac.getAtom(11)}));
         assertThat(tc1.getStereo(), is(ANTI_CLOCKWISE));
 
         // the configuration around atom 6 flips as the ring closure '[C@@]1'
@@ -339,7 +350,9 @@ public class BeamToCDKTest {
         // SMILES again one can see it will flip back clockwise ('@@').
 
         assertThat(tc2.getChiralAtom(), is(ac.getAtom(6)));
-        assertThat(tc2.getLigands(), is(new IAtom[]{ac.getAtom(1), ac.getAtom(5), ac.getAtom(7), ac.getAtom(8)}));
+        assertThat(
+                tc2.getLigands(),
+                is(new IAtom[] {ac.getAtom(1), ac.getAtom(5), ac.getAtom(7), ac.getAtom(8)}));
         assertThat(tc2.getStereo(), is(ANTI_CLOCKWISE));
     }
 
@@ -359,8 +372,13 @@ public class BeamToCDKTest {
 
         IDoubleBondStereochemistry dbs = (IDoubleBondStereochemistry) se;
         assertThat(dbs.getStereoBond(), is(ac.getBond(ac.getAtom(1), ac.getAtom(2))));
-        assertThat(dbs.getBonds(),
-                is(new IBond[]{ac.getBond(ac.getAtom(0), ac.getAtom(1)), ac.getBond(ac.getAtom(2), ac.getAtom(3))}));
+        assertThat(
+                dbs.getBonds(),
+                is(
+                        new IBond[] {
+                            ac.getBond(ac.getAtom(0), ac.getAtom(1)),
+                            ac.getBond(ac.getAtom(2), ac.getAtom(3))
+                        }));
         assertThat(dbs.getStereo(), is(IDoubleBondStereochemistry.Conformation.OPPOSITE));
     }
 
@@ -380,8 +398,13 @@ public class BeamToCDKTest {
 
         IDoubleBondStereochemistry dbs = (IDoubleBondStereochemistry) se;
         assertThat(dbs.getStereoBond(), is(ac.getBond(ac.getAtom(1), ac.getAtom(2))));
-        assertThat(dbs.getBonds(),
-                is(new IBond[]{ac.getBond(ac.getAtom(0), ac.getAtom(1)), ac.getBond(ac.getAtom(2), ac.getAtom(3))}));
+        assertThat(
+                dbs.getBonds(),
+                is(
+                        new IBond[] {
+                            ac.getBond(ac.getAtom(0), ac.getAtom(1)),
+                            ac.getBond(ac.getAtom(2), ac.getAtom(3))
+                        }));
         assertThat(dbs.getStereo(), is(IDoubleBondStereochemistry.Conformation.TOGETHER));
     }
 
@@ -401,8 +424,13 @@ public class BeamToCDKTest {
 
         IDoubleBondStereochemistry dbs = (IDoubleBondStereochemistry) se;
         assertThat(dbs.getStereoBond(), is(ac.getBond(ac.getAtom(1), ac.getAtom(3))));
-        assertThat(dbs.getBonds(),
-                is(new IBond[]{ac.getBond(ac.getAtom(0), ac.getAtom(1)), ac.getBond(ac.getAtom(3), ac.getAtom(4))}));
+        assertThat(
+                dbs.getBonds(),
+                is(
+                        new IBond[] {
+                            ac.getBond(ac.getAtom(0), ac.getAtom(1)),
+                            ac.getBond(ac.getAtom(3), ac.getAtom(4))
+                        }));
         // the two 'F' are opposite but we use a H so they are 'together'
         assertThat(dbs.getStereo(), is(IDoubleBondStereochemistry.Conformation.TOGETHER));
     }
@@ -423,8 +451,13 @@ public class BeamToCDKTest {
 
         IDoubleBondStereochemistry dbs = (IDoubleBondStereochemistry) se;
         assertThat(dbs.getStereoBond(), is(ac.getBond(ac.getAtom(1), ac.getAtom(3))));
-        assertThat(dbs.getBonds(),
-                is(new IBond[]{ac.getBond(ac.getAtom(1), ac.getAtom(2)), ac.getBond(ac.getAtom(3), ac.getAtom(5))}));
+        assertThat(
+                dbs.getBonds(),
+                is(
+                        new IBond[] {
+                            ac.getBond(ac.getAtom(1), ac.getAtom(2)),
+                            ac.getBond(ac.getAtom(3), ac.getAtom(5))
+                        }));
         // the two 'F' are together but we use a H so they are 'opposite'
         assertThat(dbs.getStereo(), is(IDoubleBondStereochemistry.Conformation.OPPOSITE));
     }
@@ -479,8 +512,9 @@ public class BeamToCDKTest {
         ExtendedTetrahedral extendedTetrahedral = (ExtendedTetrahedral) element;
         assertThat(extendedTetrahedral.winding(), is(ANTI_CLOCKWISE));
         assertThat(extendedTetrahedral.focus(), is(ac.getAtom(2)));
-        assertThat(extendedTetrahedral.peripherals(),
-                is(new IAtom[]{ac.getAtom(0), ac.getAtom(1), ac.getAtom(3), ac.getAtom(4)}));
+        assertThat(
+                extendedTetrahedral.peripherals(),
+                is(new IAtom[] {ac.getAtom(0), ac.getAtom(1), ac.getAtom(3), ac.getAtom(4)}));
     }
 
     @Test
@@ -493,29 +527,36 @@ public class BeamToCDKTest {
         ExtendedTetrahedral extendedTetrahedral = (ExtendedTetrahedral) element;
         assertThat(extendedTetrahedral.winding(), is(CLOCKWISE));
         assertThat(extendedTetrahedral.focus(), is(ac.getAtom(2)));
-        assertThat(extendedTetrahedral.peripherals(),
-                is(new IAtom[]{ac.getAtom(0), ac.getAtom(1), ac.getAtom(3), ac.getAtom(4)}));
+        assertThat(
+                extendedTetrahedral.peripherals(),
+                is(new IAtom[] {ac.getAtom(0), ac.getAtom(1), ac.getAtom(3), ac.getAtom(4)}));
     }
 
-    @Test public void titleWithTab() throws Exception {
-        assertEquals(convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C\tcaffeine").getTitle(),
-                     "caffeine");
+    @Test
+    public void titleWithTab() throws Exception {
+        assertEquals(convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C\tcaffeine").getTitle(), "caffeine");
     }
 
-    @Test public void titleWithSpace() throws Exception {
-        assertEquals(convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine").getTitle(),
-                     "caffeine");
+    @Test
+    public void titleWithSpace() throws Exception {
+        assertEquals(convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine").getTitle(), "caffeine");
     }
 
-    @Test public void titleWithMultipleSpace() throws Exception {
-        assertEquals(convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine compound").getTitle(),
-                     "caffeine compound");
+    @Test
+    public void titleWithMultipleSpace() throws Exception {
+        assertEquals(
+                convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine compound").getTitle(),
+                "caffeine compound");
     }
 
     /** GitHub Issue #723 */
-    @Test public void cumulatedCycle() throws Exception {
-        assertEquals(convert("C=1(=N(=C=1)(CC)CC)/N=C(/N1CCC(C2=CC=CC#C2)(CN2C(=NC3=C2C=CC=C3)C)CC1)\\NCC").getBondCount(),
-                     39);
+    @Test
+    public void cumulatedCycle() throws Exception {
+        assertEquals(
+                convert(
+                                "C=1(=N(=C=1)(CC)CC)/N=C(/N1CCC(C2=CC=CC#C2)(CN2C(=NC3=C2C=CC=C3)C)CC1)\\NCC")
+                        .getBondCount(),
+                39);
     }
 
     IAtomContainer convert(String smi) throws IOException {
@@ -523,5 +564,4 @@ public class BeamToCDKTest {
         Graph g = Graph.fromSmiles(smi);
         return g2c.toAtomContainer(g, false);
     }
-
 }

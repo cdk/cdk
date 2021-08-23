@@ -23,13 +23,11 @@
  */
 package org.openscience.cdk.hash;
 
+import java.util.Set;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
-import java.util.Set;
-
 /**
- * A hash function which generates a single 64-bit hash code for a set of
- * molecules (ensemble).
+ * A hash function which generates a single 64-bit hash code for a set of molecules (ensemble).
  *
  * @author John May
  * @cdk.module interfaces
@@ -44,5 +42,4 @@ public interface EnsembleHashGenerator {
      * @return hash code for the ensemble
      */
     public long generate(Set<IAtomContainer> ensemble);
-
 }

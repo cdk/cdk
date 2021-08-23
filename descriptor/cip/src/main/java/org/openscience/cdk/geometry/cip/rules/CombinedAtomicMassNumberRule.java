@@ -26,9 +26,10 @@ import org.openscience.cdk.geometry.cip.ILigand;
 
 /**
  * Compares to {@link ILigand}s based on CIP sequences sub rules. The used CIP sub rules are:
+ *
  * <ol>
- *   <li>{@link MassNumberRule}</li>
- *   <li>{@link AtomicNumberRule}</li>
+ *   <li>{@link MassNumberRule}
+ *   <li>{@link AtomicNumberRule}
  * </ol>
  *
  * @cdk.module cip
@@ -36,7 +37,7 @@ import org.openscience.cdk.geometry.cip.ILigand;
  */
 class CombinedAtomicMassNumberRule implements ISequenceSubRule<ILigand> {
 
-    MassNumberRule   massNumberRule   = new MassNumberRule();
+    MassNumberRule massNumberRule = new MassNumberRule();
     AtomicNumberRule atomicNumberRule = new AtomicNumberRule();
 
     /** {@inheritDoc} */
@@ -55,5 +56,4 @@ class CombinedAtomicMassNumberRule implements ISequenceSubRule<ILigand> {
 
         return massNumberComp;
     }
-
 }

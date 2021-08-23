@@ -23,13 +23,10 @@ package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
 import java.util.ArrayList;
-
 import org.junit.BeforeClass;
 import org.openscience.cdk.renderer.elements.path.PathElement;
 
-/**
- * @cdk.module test-renderbasic
- */
+/** @cdk.module test-renderbasic */
 public class GeneralPathTest extends AbstractElementTest {
 
     @BeforeClass
@@ -37,5 +34,4 @@ public class GeneralPathTest extends AbstractElementTest {
         IRenderingElement element = new GeneralPath(new ArrayList<PathElement>(), Color.black);
         setRenderingElement(element);
     }
-
 }

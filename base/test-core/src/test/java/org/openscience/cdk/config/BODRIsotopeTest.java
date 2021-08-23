@@ -22,9 +22,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IIsotope;
 
-/**
- * @cdk.module test-core
- */
+/** @cdk.module test-core */
 public class BODRIsotopeTest {
 
     @Test

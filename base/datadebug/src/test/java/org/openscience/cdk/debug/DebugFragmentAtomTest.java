@@ -36,13 +36,14 @@ public class DebugFragmentAtomTest extends AbstractFragmentAtomTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new DebugFragmentAtom();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new DebugFragmentAtom();
+                    }
+                });
     }
 
     @Test

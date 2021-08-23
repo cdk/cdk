@@ -19,6 +19,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.io.InputStream;
+import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,15 +33,11 @@ import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
-import java.io.InputStream;
-import java.util.List;
-
 /**
  * TestSuite that runs all QSAR tests.
  *
  * @cdk.module test-qsarmolecular
  */
-
 public class CPSADescriptorTest extends MolecularDescriptorTest {
 
     public CPSADescriptorTest() {}
@@ -68,7 +66,6 @@ public class CPSADescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(1, retval.get(27), 0.0001); // RHSA
         Assert.assertEquals(0, retval.get(26), 0.0001); // TPSA
         Assert.assertEquals(231.66182, retval.get(25), 0.0001); // THSA
-
     }
 
     @Test
@@ -82,8 +79,7 @@ public class CPSADescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(ac).getValue();
         int ndesc = retval.length();
-        for (int i = 0; i < ndesc; i++)
-            Assert.assertTrue(retval.get(i) != Double.NaN);
+        for (int i = 0; i < ndesc; i++) Assert.assertTrue(retval.get(i) != Double.NaN);
     }
 
     @Test
@@ -97,7 +93,6 @@ public class CPSADescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(ac).getValue();
         int ndesc = retval.length();
-        for (int i = 0; i < ndesc; i++)
-            Assert.assertTrue(retval.get(i) != Double.NaN);
+        for (int i = 0; i < ndesc; i++) Assert.assertTrue(retval.get(i) != Double.NaN);
     }
 }

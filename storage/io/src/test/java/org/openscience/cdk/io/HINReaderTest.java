@@ -24,7 +24,6 @@ package org.openscience.cdk.io;
 
 import java.io.InputStream;
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -43,7 +42,6 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * TestCase for the reading HIN mol files using one test file.
  *
  * @cdk.module test-io
- *
  * @see org.openscience.cdk.io.HINReader
  */
 public class HINReaderTest extends SimpleChemObjectReaderTest {
@@ -194,9 +192,12 @@ public class HINReaderTest extends SimpleChemObjectReaderTest {
         // make sure that only the phenyl C's were marked as aromatic
         for (IAtom atom : mol.atoms()) {
             if (atom.getSymbol().equals("C"))
-                Assert.assertTrue(atom.getSymbol() + " (index " + mol.indexOf(atom)
-                        + ") was wrongly marked as aromatic", atom.getFlag(CDKConstants.ISAROMATIC));
+                Assert.assertTrue(
+                        atom.getSymbol()
+                                + " (index "
+                                + mol.indexOf(atom)
+                                + ") was wrongly marked as aromatic",
+                        atom.getFlag(CDKConstants.ISAROMATIC));
         }
-
     }
 }

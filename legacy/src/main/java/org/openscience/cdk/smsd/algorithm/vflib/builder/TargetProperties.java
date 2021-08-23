@@ -31,22 +31,22 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
- * Class for building/storing nodes (atoms) in the graph with atom
- * query capabilities.
+ * Class for building/storing nodes (atoms) in the graph with atom query capabilities.
+ *
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is
+ *     available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public class TargetProperties implements java.io.Serializable {
 
-    private Map<IAtom, Integer>     connectedTargetAtomCountMap = null;
-    private Map<IAtom, List<IAtom>> connectedTargetAtomListMap  = null;
-    private IBond[][]               map                         = null;
-    private Map<IAtom, Integer>     atoms                       = null;
-    private Map<Integer, IAtom>     atomsIndex                  = null;
+    private Map<IAtom, Integer> connectedTargetAtomCountMap = null;
+    private Map<IAtom, List<IAtom>> connectedTargetAtomListMap = null;
+    private IBond[][] map = null;
+    private Map<IAtom, Integer> atoms = null;
+    private Map<Integer, IAtom> atomsIndex = null;
 
     /**
      * @param atom
@@ -77,17 +77,12 @@ public class TargetProperties implements java.io.Serializable {
         return map[atoms.get(atom2)][atoms.get(atom1)];
     }
 
-    /**
-     * @return atom count
-     */
+    /** @return atom count */
     public int getAtomCount() {
         return atoms.size();
     }
 
-    /**
-     *
-     * @param container
-     */
+    /** @param container */
     public TargetProperties(IAtomContainer container) {
         int i = 0;
         atoms = new HashMap<IAtom, Integer>();

@@ -22,6 +22,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import java.util.List;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -31,8 +32,6 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
-
-import java.util.List;
 
 /**
  * This class returns the number of not-Hs substituents of an atom, also defined as "atom degree".
@@ -50,9 +49,9 @@ import java.util.List;
  *   </tr>
  * </table>
  *
- * @author      mfe4
+ * @author mfe4
  * @cdk.created 2004-11-13
- * @cdk.module  qsaratomic
+ * @cdk.module qsaratomic
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:atomDegree
  */
@@ -61,23 +60,22 @@ public class AtomDegreeDescriptor extends AbstractAtomicDescriptor implements IA
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomDegree", this.getClass()
-                        .getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomDegree",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
-    /**
-     * This descriptor does not have any parameter to be set.
-     */
+    /** This descriptor does not have any parameter to be set. */
     @Override
     public void setParameters(Object[] params) throws CDKException {
         // no parameters
     }
 
     /**
-     *  Gets the parameters attribute of the AtomDegreeDescriptor object.
+     * Gets the parameters attribute of the AtomDegreeDescriptor object.
      *
-     *@return    The parameters value
-     *@see #setParameters
+     * @return The parameters value
+     * @see #setParameters
      */
     @Override
     public Object[] getParameters() {
@@ -86,15 +84,15 @@ public class AtomDegreeDescriptor extends AbstractAtomicDescriptor implements IA
 
     @Override
     public String[] getDescriptorNames() {
-        return new String[]{"aNeg"};
+        return new String[] {"aNeg"};
     }
 
     /**
      * This method calculates the number of not-H substituents of an atom.
      *
-     * @param  atom              The IAtom for which the DescriptorValue is requested
-     * @param  container         The {@link IAtomContainer} for which this descriptor is to be calculated for
-     * @return   The number of bonds on the shortest path between two atoms
+     * @param atom The IAtom for which the DescriptorValue is requested
+     * @param container The {@link IAtomContainer} for which this descriptor is to be calculated for
+     * @return The number of bonds on the shortest path between two atoms
      */
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
@@ -103,14 +101,18 @@ public class AtomDegreeDescriptor extends AbstractAtomicDescriptor implements IA
         for (IAtom neighboor : neighboors) {
             if (neighboor.getAtomicNumber() != IElement.H) atomDegree += 1;
         }
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
-                atomDegree), getDescriptorNames());
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new IntegerResult(atomDegree),
+                getDescriptorNames());
     }
 
     /**
      * Gets the parameterNames attribute of the AtomDegreeDescriptor object.
      *
-     * @return    The parameterNames value
+     * @return The parameterNames value
      */
     @Override
     public String[] getParameterNames() {
@@ -120,8 +122,8 @@ public class AtomDegreeDescriptor extends AbstractAtomicDescriptor implements IA
     /**
      * Gets the parameterType attribute of the AtomDegreeDescriptor object.
      *
-     * @param  name  Description of the Parameter
-     * @return       An Object of class equal to that of the parameter being requested
+     * @param name Description of the Parameter
+     * @return An Object of class equal to that of the parameter being requested
      */
     @Override
     public Object getParameterType(String name) {

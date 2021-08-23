@@ -25,10 +25,9 @@
 package org.openscience.cdk.exception;
 
 /**
- * Indicates a computation did not complete within some predefined bound. The
- * bound could be a limit on time, iterations or another quantity. Exceeding the
- * bound means the problem is hard and it was not feasible to continue until
- * completion.
+ * Indicates a computation did not complete within some predefined bound. The bound could be a limit
+ * on time, iterations or another quantity. Exceeding the bound means the problem is hard and it was
+ * not feasible to continue until completion.
  *
  * @author John May
  * @cdk.module core
@@ -46,9 +45,9 @@ public final class Intractable extends CDKException {
     }
 
     /**
-     * Utility for creating a message which indicates an operation timed out
-     * after a given time in milliseconds, {@code t}. The message is of the
-     * format - "Operation did not finish after {t} ms".
+     * Utility for creating a message which indicates an operation timed out after a given time in
+     * milliseconds, {@code t}. The message is of the format - "Operation did not finish after {t}
+     * ms".
      *
      * @param t time in milliseconds
      * @return a throwable exception
@@ -58,13 +57,12 @@ public final class Intractable extends CDKException {
     }
 
     /**
-     * Utility for creating a message which indicates an operation timed out
-     * after a given time in milliseconds, {@code t}. A description of the
-     * operation can be provided. The message is of the format - "{desc} did not
-     * finish after {t} ms".
+     * Utility for creating a message which indicates an operation timed out after a given time in
+     * milliseconds, {@code t}. A description of the operation can be provided. The message is of
+     * the format - "{desc} did not finish after {t} ms".
      *
      * @param desc description of the operation
-     * @param t    time in milliseconds
+     * @param t time in milliseconds
      * @return a throwable exception
      */
     public static Intractable timeout(String desc, long t) {

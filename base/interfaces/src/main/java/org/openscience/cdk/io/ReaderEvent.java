@@ -21,13 +21,11 @@ package org.openscience.cdk.io;
 import java.util.EventObject;
 
 /**
- * Signals that something has happened in a file reader. This class is
- * primarily in place for future development when additional information
- * may be passed to <code>ReaderListener</code>s.
+ * Signals that something has happened in a file reader. This class is primarily in place for future
+ * development when additional information may be passed to <code>ReaderListener</code>s.
  *
  * @cdk.module io
  * @cdk.githash
- *
  * @author Bradley A. Smith &lt;bradley@baysmith.com&gt;
  */
 public class ReaderEvent extends EventObject {
@@ -42,5 +40,4 @@ public class ReaderEvent extends EventObject {
     public ReaderEvent(Object source) {
         super(source);
     }
-
 }

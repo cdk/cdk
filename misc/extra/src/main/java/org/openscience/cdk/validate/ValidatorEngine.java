@@ -18,6 +18,9 @@
  */
 package org.openscience.cdk.validate;
 
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -36,13 +39,10 @@ import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map;
-
 /**
- * Engine that performs the validation by traversing the IChemObject
- * hierarchy. Basic use of the ValidatorEngine is:
+ * Engine that performs the validation by traversing the IChemObject hierarchy. Basic use of the
+ * ValidatorEngine is:
+ *
  * <pre>
  * ValidatorEngine engine = new ValidatorEngine();
  * engine.addValidator(new BasicValidator());
@@ -51,12 +51,13 @@ import java.util.Map;
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  * @cdk.githash
- * @cdk.created  2003-08-22
+ * @cdk.created 2003-08-22
  */
 public class ValidatorEngine implements IValidator {
 
     private Map<String, IValidator> validators;
-    private static ILoggingTool     logger = LoggingToolFactory.createLoggingTool(ValidatorEngine.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(ValidatorEngine.class);
 
     public ValidatorEngine() {
         validators = new Hashtable<String, IValidator>();
@@ -346,10 +347,9 @@ public class ValidatorEngine implements IValidator {
         // traverse into super class
         report.addReport(validateChemObject(subject));
         // traverse into hierarchy
-        for (Iterator<IReaction> iter = subject.reactions().iterator(); iter.hasNext();) {
+        for (Iterator<IReaction> iter = subject.reactions().iterator(); iter.hasNext(); ) {
             report.addReport(validateReaction((IReaction) iter.next()));
         }
         return report;
     }
-
 }

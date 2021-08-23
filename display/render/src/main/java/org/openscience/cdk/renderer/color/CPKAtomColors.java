@@ -21,13 +21,12 @@ package org.openscience.cdk.renderer.color;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * Colors atoms using CPK color scheme {@cdk.cite BER2001}.
  *
- * @cdk.module  render
+ * @cdk.module render
  * @cdk.githash
  * @cdk.keyword atom coloring, CPK
  * @deprecated {@link JmolColors} provides more comprehensive CPK color pallet
@@ -35,33 +34,33 @@ import org.openscience.cdk.interfaces.IAtom;
 @Deprecated
 public class CPKAtomColors implements IAtomColorer, java.io.Serializable {
 
-    private static final long                serialVersionUID    = -3205785984391537452L;
+    private static final long serialVersionUID = -3205785984391537452L;
 
     ////////////
     // CONSTANTS
     ////////////
 
     // CPK colours.
-    private static final Color               LIGHT_GREY          = new Color(0xC8C8C8);
-    private static final Color               SKY_BLUE            = new Color(0x8F8FFF);
-    private static final Color               RED                 = new Color(0xF00000);
-    private static final Color               YELLOW              = new Color(0xFFC832);
-    private static final Color               WHITE               = new Color(0xFFFFFF);
-    private static final Color               PINK                = new Color(0xFFC0CB);
-    private static final Color               GOLDEN_ROD          = new Color(0xDAA520);
-    private static final Color               BLUE                = new Color(0x0000FF);
-    private static final Color               ORANGE              = new Color(0xFFA500);
-    private static final Color               DARK_GREY           = new Color(0x808090);
-    private static final Color               BROWN               = new Color(0xA52A2A);
-    private static final Color               PURPLE              = new Color(0xA020F0);
-    private static final Color               DEEP_PINK           = new Color(0xFF1493);
-    private static final Color               GREEN               = new Color(0x00FF00);
-    private static final Color               FIRE_BRICK          = new Color(0xB22222);
-    private static final Color               FOREST_GREEN        = new Color(0x228B22);
+    private static final Color LIGHT_GREY = new Color(0xC8C8C8);
+    private static final Color SKY_BLUE = new Color(0x8F8FFF);
+    private static final Color RED = new Color(0xF00000);
+    private static final Color YELLOW = new Color(0xFFC832);
+    private static final Color WHITE = new Color(0xFFFFFF);
+    private static final Color PINK = new Color(0xFFC0CB);
+    private static final Color GOLDEN_ROD = new Color(0xDAA520);
+    private static final Color BLUE = new Color(0x0000FF);
+    private static final Color ORANGE = new Color(0xFFA500);
+    private static final Color DARK_GREY = new Color(0x808090);
+    private static final Color BROWN = new Color(0xA52A2A);
+    private static final Color PURPLE = new Color(0xA020F0);
+    private static final Color DEEP_PINK = new Color(0xFF1493);
+    private static final Color GREEN = new Color(0x00FF00);
+    private static final Color FIRE_BRICK = new Color(0xB22222);
+    private static final Color FOREST_GREEN = new Color(0x228B22);
 
     // The atom color look-up table.
     private static final Map<Integer, Color> ATOM_COLORS_MASSNUM = new HashMap<Integer, Color>();
-    private static final Map<String, Color>  ATOM_COLORS_SYMBOL  = new HashMap<String, Color>();
+    private static final Map<String, Color> ATOM_COLORS_SYMBOL = new HashMap<String, Color>();
 
     // Build table.
     static {
@@ -144,16 +143,16 @@ public class CPKAtomColors implements IAtomColorer, java.io.Serializable {
     /**
      * Returns the font color for atom given atom.
      *
-     * @param atom            the atom.
+     * @param atom the atom.
      * @param defaultColor atom default color.
-     * @return A color for the atom.  The default colour is used if none is
-     *         found for the atom.
+     * @return A color for the atom. The default colour is used if none is found for the atom.
      */
     @Override
     public Color getAtomColor(IAtom atom, Color defaultColor) {
         Color color = defaultColor;
         String symbol = atom.getSymbol().toUpperCase();
-        if (atom.getAtomicNumber() != null && ATOM_COLORS_MASSNUM.containsKey(atom.getAtomicNumber())) {
+        if (atom.getAtomicNumber() != null
+                && ATOM_COLORS_MASSNUM.containsKey(atom.getAtomicNumber())) {
             color = ATOM_COLORS_MASSNUM.get(atom.getAtomicNumber()); // lookup by atomic number.
         } else if (ATOM_COLORS_SYMBOL.containsKey(symbol)) {
             color = ATOM_COLORS_SYMBOL.get(symbol); // lookup by atomic symbol.

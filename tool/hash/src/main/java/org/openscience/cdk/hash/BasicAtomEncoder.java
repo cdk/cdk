@@ -29,19 +29,16 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 
 /**
- * Enumeration of atom encoders for seeding atomic hash codes. Generally these
- * encoders return the direct value or a prime number if that value is null.
- * These encoders are considered <i>basic</i> as the values generated are all in
- * the same range. Better encoding can be achieved by assigning discrete values
- * a section of the prime number table. However, In practice using a
- * pseudorandom number generator to distribute the encoded values provides a
- * good distribution.
+ * Enumeration of atom encoders for seeding atomic hash codes. Generally these encoders return the
+ * direct value or a prime number if that value is null. These encoders are considered <i>basic</i>
+ * as the values generated are all in the same range. Better encoding can be achieved by assigning
+ * discrete values a section of the prime number table. However, In practice using a pseudorandom
+ * number generator to distribute the encoded values provides a good distribution.
  *
  * @author John May
  * @cdk.module hash
  * @see ConjugatedAtomEncoder
- * @see <a href="http://www.bigprimes.net/archive/prime/">Prime numbers
- *      archive</a>
+ * @see <a href="http://www.bigprimes.net/archive/prime/">Prime numbers archive</a>
  * @cdk.githash
  */
 public enum BasicAtomEncoder implements AtomEncoder {
@@ -53,9 +50,7 @@ public enum BasicAtomEncoder implements AtomEncoder {
      */
     ATOMIC_NUMBER {
 
-        /**
-         *{@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
         public int encode(IAtom atom, IAtomContainer container) {
             Integer atomicNumber = atom.getAtomicNumber();
@@ -69,9 +64,7 @@ public enum BasicAtomEncoder implements AtomEncoder {
      */
     MASS_NUMBER {
 
-        /**
-         *{@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
         public int encode(IAtom atom, IAtomContainer container) {
             Integer massNumber = atom.getMassNumber();
@@ -79,16 +72,13 @@ public enum BasicAtomEncoder implements AtomEncoder {
         }
     },
     /**
-     * Encode the formal charge of an atom, allowing distinction of different
-     * protonation states.
+     * Encode the formal charge of an atom, allowing distinction of different protonation states.
      *
      * @see IAtom#getFormalCharge()
      */
     FORMAL_CHARGE {
 
-        /**
-         *{@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
         public int encode(IAtom atom, IAtomContainer container) {
             Integer formalCharge = atom.getFormalCharge();
@@ -102,9 +92,7 @@ public enum BasicAtomEncoder implements AtomEncoder {
      */
     N_CONNECTED_ATOMS {
 
-        /**
-         *{@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
         public int encode(IAtom atom, IAtomContainer container) {
             return container.getConnectedBondsCount(atom);
@@ -117,9 +105,7 @@ public enum BasicAtomEncoder implements AtomEncoder {
      */
     BOND_ORDER_SUM {
 
-        /**
-         *{@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
         public int encode(IAtom atom, IAtomContainer container) {
             return ((Double) container.getBondOrderSum(atom)).hashCode();
@@ -132,9 +118,7 @@ public enum BasicAtomEncoder implements AtomEncoder {
      */
     ORBITAL_HYBRIDIZATION {
 
-        /**
-         *{@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
         public int encode(IAtom atom, IAtomContainer container) {
             IAtomType.Hybridization hybridization = atom.getHybridization();
@@ -148,9 +132,7 @@ public enum BasicAtomEncoder implements AtomEncoder {
      */
     FREE_RADICALS {
 
-        /**
-         *{@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
         public int encode(IAtom atom, IAtomContainer container) {
             return container.getConnectedSingleElectronsCount(atom);

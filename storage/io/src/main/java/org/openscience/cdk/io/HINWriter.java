@@ -18,6 +18,14 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.Iterator;
+import javax.vecmath.Point3d;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -28,15 +36,6 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.formats.HINFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.tools.LoggingToolFactory;
-
-import javax.vecmath.Point3d;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.util.Iterator;
 
 /**
  * Writer that outputs in the HIN format.
@@ -95,9 +94,7 @@ public class HINWriter extends DefaultChemObjectWriter {
         setWriter(new OutputStreamWriter(output));
     }
 
-    /**
-     * Flushes the output and closes this object.
-     */
+    /** Flushes the output and closes this object. */
     @Override
     public void close() throws IOException {
         writer.close();
@@ -130,25 +127,25 @@ public class HINWriter extends DefaultChemObjectWriter {
                 //
             }
         } else {
-            throw new CDKException("HINWriter only supports output of Molecule or SetOfMolecule classes.");
+            throw new CDKException(
+                    "HINWriter only supports output of Molecule or SetOfMolecule classes.");
         }
     }
 
     /**
-     * writes all the molecules supplied in a MoleculeSet class to
-     * a single HIN file. You can also supply a single Molecule object
-     * as well
+     * writes all the molecules supplied in a MoleculeSet class to a single HIN file. You can also
+     * supply a single Molecule object as well
      *
      * @param som the set of molecules to write
      * @throws java.io.IOException if there is a problem writing the molecule
      */
     private void writeAtomContainer(IAtomContainerSet som) throws IOException {
 
-        //int na = 0;
-        //String info = "";
+        // int na = 0;
+        // String info = "";
         String sym;
         double chrg;
-        //boolean writecharge = true;
+        // boolean writecharge = true;
 
         for (int molnum = 0; molnum < som.getAtomContainerCount(); molnum++) {
 
@@ -172,9 +169,20 @@ public class HINWriter extends DefaultChemObjectWriter {
                     chrg = atom.getCharge();
                     Point3d point = atom.getPoint3d();
 
-                    line = line + Integer.toString(i + 1) + " - " + sym + " ** - " + Double.toString(chrg) + " "
-                            + Double.toString(point.x) + " " + Double.toString(point.y) + " "
-                            + Double.toString(point.z) + " ";
+                    line =
+                            line
+                                    + Integer.toString(i + 1)
+                                    + " - "
+                                    + sym
+                                    + " ** - "
+                                    + Double.toString(chrg)
+                                    + " "
+                                    + Double.toString(point.x)
+                                    + " "
+                                    + Double.toString(point.y)
+                                    + " "
+                                    + Double.toString(point.z)
+                                    + " ";
 
                     String buf = "";
                     int ncon = 0;
@@ -191,12 +199,9 @@ public class HINWriter extends DefaultChemObjectWriter {
                             // get the serial no for this atom
                             serial = mol.indexOf(connectedAtom);
 
-                            if (bondOrder == IBond.Order.SINGLE)
-                                bondType = "s";
-                            else if (bondOrder == IBond.Order.DOUBLE)
-                                bondType = "d";
-                            else if (bondOrder == IBond.Order.TRIPLE)
-                                bondType = "t";
+                            if (bondOrder == IBond.Order.SINGLE) bondType = "s";
+                            else if (bondOrder == IBond.Order.DOUBLE) bondType = "d";
+                            else if (bondOrder == IBond.Order.TRIPLE) bondType = "t";
                             else if (bond.getFlag(CDKConstants.ISAROMATIC)) bondType = "a";
                             buf = buf + Integer.toString(serial + 1) + " " + bondType + " ";
                             ncon++;

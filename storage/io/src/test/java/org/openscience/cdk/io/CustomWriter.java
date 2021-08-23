@@ -25,7 +25,6 @@ package org.openscience.cdk.io;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.formats.IResourceFormat;
@@ -71,5 +70,4 @@ public class CustomWriter extends ChemObjectIO implements IChemObjectWriter {
 
     @Override
     public void removeChemObjectIOListener(IChemObjectIOListener listener) {}
-
 }

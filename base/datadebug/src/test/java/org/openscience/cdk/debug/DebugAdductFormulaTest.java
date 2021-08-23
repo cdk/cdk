@@ -46,7 +46,8 @@ public class DebugAdductFormulaTest extends AbstractAdductFormulaTest {
 
     @Test
     public void testDebugAdductFormula_IMolecularFormula() {
-        IAdductFormula mfS = new DebugAdductFormula(getBuilder().newInstance(IMolecularFormula.class));
+        IAdductFormula mfS =
+                new DebugAdductFormula(getBuilder().newInstance(IMolecularFormula.class));
         Assert.assertEquals(1, mfS.size());
     }
 }

@@ -22,13 +22,10 @@
  */
 package org.openscience.cdk.io.formats;
 
-/**
- * @cdk.module test-ioformats
- */
+/** @cdk.module test-ioformats */
 public class ADFFormatTest extends ChemFormatMatcherTest {
 
     public ADFFormatTest() {
         super.setChemFormatMatcher((IChemFormatMatcher) ADFFormat.getInstance());
     }
-
 }

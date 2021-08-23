@@ -24,6 +24,13 @@
 
 package org.openscience.cdk.hash;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+
+import java.util.Set;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -31,14 +38,6 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-
-import java.util.Set;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
 
 /**
  * @author John May
@@ -49,10 +48,10 @@ public class AllEquivalentCyclicSetTest {
     @Test
     public void testFind() throws Exception {
         IAtomContainer dummy = mock(IAtomContainer.class);
-        int[][] g = new int[][]{{1, 5, 6}, {0, 2}, {1, 3}, {2, 4, 7}, {3, 5}, {0, 4}, {0}, {3}};
+        int[][] g = new int[][] {{1, 5, 6}, {0, 2}, {1, 3}, {2, 4, 7}, {3, 5}, {0, 4}, {0}, {3}};
 
         // this mock the invariants
-        long[] values = new long[]{1, 0, 0, 1, 0, 0, 2, 2};
+        long[] values = new long[] {1, 0, 0, 1, 0, 0, 2, 2};
 
         EquivalentSetFinder finder = new AllEquivalentCyclicSet();
         Set<Integer> set = finder.find(values, dummy, g);
@@ -65,16 +64,15 @@ public class AllEquivalentCyclicSetTest {
         assertTrue(set.contains(3));
         assertTrue(set.contains(4));
         assertTrue(set.contains(5));
-
     }
 
     @Test
     public void testFind_Distinct() throws Exception {
         IAtomContainer dummy = mock(IAtomContainer.class);
-        int[][] g = new int[][]{{1, 5, 6}, {0, 2}, {1, 3}, {2, 4, 7}, {3, 5}, {0, 4}, {0}, {3}};
+        int[][] g = new int[][] {{1, 5, 6}, {0, 2}, {1, 3}, {2, 4, 7}, {3, 5}, {0, 4}, {0}, {3}};
 
         // all values distinct
-        long[] values = new long[]{10, 11, 12, 13, 14, 15, 16, 17};
+        long[] values = new long[] {10, 11, 12, 13, 14, 15, 16, 17};
 
         EquivalentSetFinder finder = new AllEquivalentCyclicSet();
         Set<Integer> set = finder.find(values, dummy, g);
@@ -83,11 +81,11 @@ public class AllEquivalentCyclicSetTest {
     }
 
     /**
-     * Test the method at perturbing the 2D representations of CID 138898 and
-     * CID 241107. These molecules are very similar but distinct. To tell these
-     * apart we must use {@link AllEquivalentCyclicSet} opposed to the faster
-     * methods. This test also serves to demonstrates the basic equivalent set
-     * finder does not tell them apart but that this more complex finder does.
+     * Test the method at perturbing the 2D representations of CID 138898 and CID 241107. These
+     * molecules are very similar but distinct. To tell these apart we must use {@link
+     * AllEquivalentCyclicSet} opposed to the faster methods. This test also serves to demonstrates
+     * the basic equivalent set finder does not tell them apart but that this more complex finder
+     * does.
      */
     @Test
     public void testScenario() throws Exception {
@@ -95,16 +93,20 @@ public class AllEquivalentCyclicSetTest {
         IAtomContainer cid138898 = cid138898();
         IAtomContainer cid241107 = cid241107();
 
-        MoleculeHashGenerator basic = new HashGeneratorMaker().depth(12).elemental().perturbed().molecular();
+        MoleculeHashGenerator basic =
+                new HashGeneratorMaker().depth(12).elemental().perturbed().molecular();
         // basic equivalence method can't tell these apart
         assertThat(basic.generate(cid138898), is(basic.generate(cid241107)));
 
-        MoleculeHashGenerator cmplx = new HashGeneratorMaker().depth(12).elemental()
-                .perturbWith(new AllEquivalentCyclicSet()).molecular();
+        MoleculeHashGenerator cmplx =
+                new HashGeneratorMaker()
+                        .depth(12)
+                        .elemental()
+                        .perturbWith(new AllEquivalentCyclicSet())
+                        .molecular();
 
         // complex equivalence method can tell these apart
         assertThat(cmplx.generate(cid138898), is(not(cmplx.generate(cid241107))));
-
     }
 
     /**
@@ -114,14 +116,42 @@ public class AllEquivalentCyclicSetTest {
      */
     private IAtomContainer cid241107() {
         IAtomContainer m = new AtomContainer(14, 16, 0, 0);
-        IAtom[] as = new IAtom[]{new Atom("C"), new Atom("C"), new Atom("C"), new Atom("C"), new Atom("S"),
-                new Atom("C"), new Atom("S"), new Atom("C"), new Atom("C"), new Atom("S"), new Atom("S"),
-                new Atom("C"), new Atom("C"), new Atom("C"),};
-        IBond[] bs = new IBond[]{new Bond(as[1], as[0]), new Bond(as[2], as[1]), new Bond(as[3], as[2]),
-                new Bond(as[4], as[3]), new Bond(as[5], as[4]), new Bond(as[6], as[5]), new Bond(as[6], as[3]),
-                new Bond(as[7], as[5]), new Bond(as[8], as[7]), new Bond(as[9], as[8]), new Bond(as[9], as[1]),
-                new Bond(as[10], as[8]), new Bond(as[10], as[1]), new Bond(as[11], as[8]), new Bond(as[12], as[5]),
-                new Bond(as[13], as[3]),};
+        IAtom[] as =
+                new IAtom[] {
+                    new Atom("C"),
+                    new Atom("C"),
+                    new Atom("C"),
+                    new Atom("C"),
+                    new Atom("S"),
+                    new Atom("C"),
+                    new Atom("S"),
+                    new Atom("C"),
+                    new Atom("C"),
+                    new Atom("S"),
+                    new Atom("S"),
+                    new Atom("C"),
+                    new Atom("C"),
+                    new Atom("C"),
+                };
+        IBond[] bs =
+                new IBond[] {
+                    new Bond(as[1], as[0]),
+                    new Bond(as[2], as[1]),
+                    new Bond(as[3], as[2]),
+                    new Bond(as[4], as[3]),
+                    new Bond(as[5], as[4]),
+                    new Bond(as[6], as[5]),
+                    new Bond(as[6], as[3]),
+                    new Bond(as[7], as[5]),
+                    new Bond(as[8], as[7]),
+                    new Bond(as[9], as[8]),
+                    new Bond(as[9], as[1]),
+                    new Bond(as[10], as[8]),
+                    new Bond(as[10], as[1]),
+                    new Bond(as[11], as[8]),
+                    new Bond(as[12], as[5]),
+                    new Bond(as[13], as[3]),
+                };
         m.setAtoms(as);
         m.setBonds(bs);
         return m;
@@ -134,17 +164,44 @@ public class AllEquivalentCyclicSetTest {
      */
     private IAtomContainer cid138898() {
         IAtomContainer m = new AtomContainer(14, 16, 0, 0);
-        IAtom[] as = new IAtom[]{new Atom("C"), new Atom("C"), new Atom("C"), new Atom("C"), new Atom("S"),
-                new Atom("C"), new Atom("S"), new Atom("C"), new Atom("C"), new Atom("S"), new Atom("S"),
-                new Atom("C"), new Atom("C"), new Atom("C"),};
-        IBond[] bs = new IBond[]{new Bond(as[1], as[0]), new Bond(as[2], as[1]), new Bond(as[3], as[2]),
-                new Bond(as[4], as[3]), new Bond(as[5], as[4]), new Bond(as[6], as[5]), new Bond(as[6], as[1]),
-                new Bond(as[7], as[5]), new Bond(as[8], as[7]), new Bond(as[9], as[8]), new Bond(as[9], as[1]),
-                new Bond(as[10], as[8]), new Bond(as[10], as[3]), new Bond(as[11], as[8]), new Bond(as[12], as[5]),
-                new Bond(as[13], as[3]),};
+        IAtom[] as =
+                new IAtom[] {
+                    new Atom("C"),
+                    new Atom("C"),
+                    new Atom("C"),
+                    new Atom("C"),
+                    new Atom("S"),
+                    new Atom("C"),
+                    new Atom("S"),
+                    new Atom("C"),
+                    new Atom("C"),
+                    new Atom("S"),
+                    new Atom("S"),
+                    new Atom("C"),
+                    new Atom("C"),
+                    new Atom("C"),
+                };
+        IBond[] bs =
+                new IBond[] {
+                    new Bond(as[1], as[0]),
+                    new Bond(as[2], as[1]),
+                    new Bond(as[3], as[2]),
+                    new Bond(as[4], as[3]),
+                    new Bond(as[5], as[4]),
+                    new Bond(as[6], as[5]),
+                    new Bond(as[6], as[1]),
+                    new Bond(as[7], as[5]),
+                    new Bond(as[8], as[7]),
+                    new Bond(as[9], as[8]),
+                    new Bond(as[9], as[1]),
+                    new Bond(as[10], as[8]),
+                    new Bond(as[10], as[3]),
+                    new Bond(as[11], as[8]),
+                    new Bond(as[12], as[5]),
+                    new Bond(as[13], as[3]),
+                };
         m.setAtoms(as);
         m.setBonds(bs);
         return m;
     }
-
 }

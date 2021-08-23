@@ -27,7 +27,6 @@ import org.openscience.cdk.interfaces.IAtom;
  * Checks the functionality of the Association class.
  *
  * @cdk.module test-extra
- *
  * @see org.openscience.cdk.Association
  */
 public class AssociationTest extends CDKTestCase {
@@ -103,7 +102,7 @@ public class AssociationTest extends CDKTestCase {
         Atom c = new Atom("C");
         Atom o = new Atom("O");
         Association association = new Association();
-        association.setAtoms(new IAtom[]{c, o});
+        association.setAtoms(new IAtom[] {c, o});
 
         Assert.assertTrue(association.contains(c));
         Assert.assertTrue(association.contains(o));

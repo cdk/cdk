@@ -56,7 +56,7 @@ public class MOPAC7Format extends SimpleChemFormatMatcher implements IChemFormat
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"mop", "mopcrt", "mopout"};
+        return new String[] {"mop", "mopcrt", "mopout"};
     }
 
     /** {@inheritDoc} */

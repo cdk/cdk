@@ -24,13 +24,6 @@
 
 package org.openscience.cdk.stereo;
 
-import org.junit.Test;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.silent.Atom;
-import org.openscience.cdk.silent.AtomContainer;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertFalse;
@@ -39,15 +32,23 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKWISE;
 
-/**
- * @author John May
- */
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.silent.Atom;
+import org.openscience.cdk.silent.AtomContainer;
+
+/** @author John May */
 public final class ExtendedTetrahedralTest {
 
     @Test
     public void peripheralsAreCopied() {
         IAtom focus = mock(IAtom.class);
-        IAtom[] peripherals = new IAtom[]{mock(IAtom.class), mock(IAtom.class), mock(IAtom.class), mock(IAtom.class)};
+        IAtom[] peripherals =
+                new IAtom[] {
+                    mock(IAtom.class), mock(IAtom.class), mock(IAtom.class), mock(IAtom.class)
+                };
         ExtendedTetrahedral element = new ExtendedTetrahedral(focus, peripherals, CLOCKWISE);
 
         // modifying this array does not change the one in the structure
@@ -61,7 +62,10 @@ public final class ExtendedTetrahedralTest {
     @Test
     public void peripheralsAreNotModifable() {
         IAtom focus = mock(IAtom.class);
-        IAtom[] peripherals = new IAtom[]{mock(IAtom.class), mock(IAtom.class), mock(IAtom.class), mock(IAtom.class)};
+        IAtom[] peripherals =
+                new IAtom[] {
+                    mock(IAtom.class), mock(IAtom.class), mock(IAtom.class), mock(IAtom.class)
+                };
         ExtendedTetrahedral element = new ExtendedTetrahedral(focus, peripherals, CLOCKWISE);
 
         // modifying this array does not change the one in the structure
@@ -111,8 +115,11 @@ public final class ExtendedTetrahedralTest {
         ac.addBond(2, 3, IBond.Order.DOUBLE);
         ac.addBond(3, 4, IBond.Order.SINGLE);
 
-        ExtendedTetrahedral element = new ExtendedTetrahedral(ac.getAtom(2), new IAtom[]{ac.getAtom(4), ac.getAtom(3),
-                ac.getAtom(1), ac.getAtom(0)}, CLOCKWISE);
+        ExtendedTetrahedral element =
+                new ExtendedTetrahedral(
+                        ac.getAtom(2),
+                        new IAtom[] {ac.getAtom(4), ac.getAtom(3), ac.getAtom(1), ac.getAtom(0)},
+                        CLOCKWISE);
 
         IAtom[] terminals = element.findTerminalAtoms(ac);
         assertThat(terminals[0], is(ac.getAtom(3)));
@@ -122,7 +129,10 @@ public final class ExtendedTetrahedralTest {
     @Test(expected = UnsupportedOperationException.class)
     public void noBuilder() {
         IAtom focus = mock(IAtom.class);
-        IAtom[] peripherals = new IAtom[]{mock(IAtom.class), mock(IAtom.class), mock(IAtom.class), mock(IAtom.class)};
+        IAtom[] peripherals =
+                new IAtom[] {
+                    mock(IAtom.class), mock(IAtom.class), mock(IAtom.class), mock(IAtom.class)
+                };
         ExtendedTetrahedral element = new ExtendedTetrahedral(focus, peripherals, CLOCKWISE);
         element.getBuilder();
     }
@@ -130,7 +140,10 @@ public final class ExtendedTetrahedralTest {
     @Test
     public void containsAnAtom() {
         IAtom focus = mock(IAtom.class);
-        IAtom[] peripherals = new IAtom[]{mock(IAtom.class), mock(IAtom.class), mock(IAtom.class), mock(IAtom.class)};
+        IAtom[] peripherals =
+                new IAtom[] {
+                    mock(IAtom.class), mock(IAtom.class), mock(IAtom.class), mock(IAtom.class)
+                };
         ExtendedTetrahedral element = new ExtendedTetrahedral(focus, peripherals, CLOCKWISE);
         assertTrue(element.contains(focus));
         assertTrue(element.contains(peripherals[0]));
@@ -144,5 +157,4 @@ public final class ExtendedTetrahedralTest {
     // trival access
     @Test
     public void noOperation() {}
-
 }

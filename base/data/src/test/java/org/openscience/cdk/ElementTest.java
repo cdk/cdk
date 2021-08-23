@@ -18,34 +18,34 @@
  */
 package org.openscience.cdk;
 
+import static org.hamcrest.CoreMatchers.is;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractElementTest;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.AbstractElementTest;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
-
-import static org.hamcrest.CoreMatchers.is;
 
 /**
  * Checks the functionality of the Element class.
  *
  * @cdk.module test-data
- *
  * @see org.openscience.cdk.Element
  */
 public class ElementTest extends AbstractElementTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new Element();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new Element();
+                    }
+                });
     }
 
     // test constructors

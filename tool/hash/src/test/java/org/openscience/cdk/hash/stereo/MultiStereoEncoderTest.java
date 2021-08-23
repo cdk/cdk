@@ -24,17 +24,16 @@
 
 package org.openscience.cdk.hash.stereo;
 
-import org.junit.Test;
-
-import java.util.Arrays;
-import java.util.Collections;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.util.Arrays;
+import java.util.Collections;
+import org.junit.Test;
 
 /**
  * @author John May
@@ -44,7 +43,7 @@ public class MultiStereoEncoderTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstruction_Empty() {
-        new MultiStereoEncoder(Collections.<StereoEncoder> emptyList());
+        new MultiStereoEncoder(Collections.<StereoEncoder>emptyList());
     }
 
     @Test
@@ -69,7 +68,6 @@ public class MultiStereoEncoderTest {
 
         verify(a, times(1)).encode(current, next);
         verify(b, times(1)).encode(current, next);
-
     }
 
     @Test
@@ -101,5 +99,4 @@ public class MultiStereoEncoderTest {
         verify(a, times(2)).encode(current, next);
         verify(b, times(2)).encode(current, next);
     }
-
 }

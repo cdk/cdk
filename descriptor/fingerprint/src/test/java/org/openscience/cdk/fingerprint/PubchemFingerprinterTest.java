@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import static org.hamcrest.CoreMatchers.is;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
@@ -32,7 +34,6 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -46,11 +47,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import static org.hamcrest.CoreMatchers.is;
-
-/**
- * @cdk.module test-fingerprint
- */
+/** @cdk.module test-fingerprint */
 public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
     SmilesParser parser;
@@ -74,7 +71,8 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
     @Test
     public void testFingerprint() throws Exception {
         IFingerprinter printer = new PubchemFingerprinter(DefaultChemObjectBuilder.getInstance());
-        CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance());
+        CDKHydrogenAdder adder =
+                CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance());
 
         IAtomContainer mol1 = parser.parseSmiles("c1ccccc1CCc1ccccc1");
         IAtomContainer mol2 = parser.parseSmiles("c1ccccc1CC");
@@ -96,7 +94,8 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
 
         Assert.assertEquals(881, printer.getSize());
 
-        Assert.assertFalse("c1ccccc1CC was detected as a subset of c1ccccc1CCc1ccccc1",
+        Assert.assertFalse(
+                "c1ccccc1CC was detected as a subset of c1ccccc1CCc1ccccc1",
                 FingerprinterTool.isSubset(bs1, bs2));
     }
 
@@ -128,7 +127,8 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
      * Test case for Pubchem CID 25181308.
      *
      * @throws InvalidSmilesException
-     * @cdk.inchi InChI=1S/C13H24O10S/c1-20-12-8(18)6(16)10(4(2-14)21-12)23-13-9(19)7(17)11(24)5(3-15)22-13/h4-19,24H,2-3H2,1H3/t4-,5-,6-,7-,8-,9-,10-,11-,12-,13+/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C13H24O10S/c1-20-12-8(18)6(16)10(4(2-14)21-12)23-13-9(19)7(17)11(24)5(3-15)22-13/h4-19,24H,2-3H2,1H3/t4-,5-,6-,7-,8-,9-,10-,11-,12-,13+/m1/s1
      */
     @Test
     public void testCID2518130() throws CDKException {
@@ -141,8 +141,9 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
 
         IFingerprinter printer = new PubchemFingerprinter(DefaultChemObjectBuilder.getInstance());
         BitSet fp = printer.getBitFingerprint(mol).asBitSet();
-        BitSet ref = PubchemFingerprinter
-                .decode("AAADceBwPABAAAAAAAAAAAAAAAAAAAAAAAAkSAAAAAAAAAAAAAAAGgQACAAACBS0wAOCCAAABgQAAAAAAAAAAAAAAAAAAAAAAAAREAIAAAAiQAAFAAAHAAHAYAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
+        BitSet ref =
+                PubchemFingerprinter.decode(
+                        "AAADceBwPABAAAAAAAAAAAAAAAAAAAAAAAAkSAAAAAAAAAAAAAAAGgQACAAACBS0wAOCCAAABgQAAAAAAAAAAAAAAAAAAAAAAAAREAIAAAAiQAAFAAAHAAHAYAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
 
         Assert.assertEquals(ref, fp);
     }
@@ -151,11 +152,14 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
      * Test case for Pubchem CID 5934166.
      *
      * @throws InvalidSmilesException
-     * @cdk.inchi InChI=1S/C32H26N/c1-5-13-26(14-6-1)21-22-31-23-30(28-17-9-3-10-18-28)24-32(29-19-11-4-12-20-29)33(31)25-27-15-7-2-8-16-27/h1-24H,25H2/q+1/b22-21+
+     * @cdk.inchi
+     *     InChI=1S/C32H26N/c1-5-13-26(14-6-1)21-22-31-23-30(28-17-9-3-10-18-28)24-32(29-19-11-4-12-20-29)33(31)25-27-15-7-2-8-16-27/h1-24H,25H2/q+1/b22-21+
      */
     @Test
     public void testCID5934166() throws CDKException {
-        IAtomContainer mol = parser.parseSmiles("C1=CC=C(C=C1)C[N+]2=C(C=C(C=C2C=CC3=CC=CC=C3)C4=CC=CC=C4)C5=CC=CC=C5");
+        IAtomContainer mol =
+                parser.parseSmiles(
+                        "C1=CC=C(C=C1)C[N+]2=C(C=C(C=C2C=CC3=CC=CC=C3)C4=CC=CC=C4)C5=CC=CC=C5");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
         adder.addImplicitHydrogens(mol);
@@ -164,21 +168,24 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
 
         IFingerprinter printer = new PubchemFingerprinter(DefaultChemObjectBuilder.getInstance());
         BitSet fp = printer.getBitFingerprint(mol).asBitSet();
-        BitSet ref = PubchemFingerprinter
-                .decode("AAADceB+AAAAAAAAAAAAAAAAAAAAAAAAAAA8YMGCAAAAAAAB1AAAHAAAAAAADAjBHgQwgJMMEACgAyRiRACCgCAhAiAI2CA4ZJgIIOLAkZGEIAhggADIyAcQgMAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
+        BitSet ref =
+                PubchemFingerprinter.decode(
+                        "AAADceB+AAAAAAAAAAAAAAAAAAAAAAAAAAA8YMGCAAAAAAAB1AAAHAAAAAAADAjBHgQwgJMMEACgAyRiRACCgCAhAiAI2CA4ZJgIIOLAkZGEIAhggADIyAcQgMAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
 
         Assert.assertEquals(ref, fp);
     }
 
     /**
-       * Test case for Pubchem CID 25181289.
-       *
-       * @throws InvalidSmilesException
-       * @cdk.inchi  InChI=1S/C14H10Cl3N3O3/c1-6(7-2-4-8(21)5-3-7)19-20-11-9(15)12(14(22)23)18-13(17)10(11)16/h2-5,19,21H,1H2,(H,18,20)(H,22,23)
-       */
+     * Test case for Pubchem CID 25181289.
+     *
+     * @throws InvalidSmilesException
+     * @cdk.inchi
+     *     InChI=1S/C14H10Cl3N3O3/c1-6(7-2-4-8(21)5-3-7)19-20-11-9(15)12(14(22)23)18-13(17)10(11)16/h2-5,19,21H,1H2,(H,18,20)(H,22,23)
+     */
     @Test
     public void testCID25181289() throws CDKException {
-        IAtomContainer mol = parser.parseSmiles("C=C(C1=CC=C(C=C1)O)NNC2=C(C(=NC(=C2Cl)Cl)C(=O)O)Cl");
+        IAtomContainer mol =
+                parser.parseSmiles("C=C(C1=CC=C(C=C1)O)NNC2=C(C(=NC(=C2Cl)Cl)C(=O)O)Cl");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
         adder.addImplicitHydrogens(mol);
@@ -187,8 +194,9 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
 
         IFingerprinter printer = new PubchemFingerprinter(DefaultChemObjectBuilder.getInstance());
         BitSet fp = printer.getBitFingerprint(mol).asBitSet();
-        BitSet ref = PubchemFingerprinter
-                .decode("AAADccBzMAAGAAAAAAAAAAAAAAAAAAAAAAA8QAAAAAAAAAABwAAAHgIYCAAADA6BniAwzpJqEgCoAyTyTASChCAnJiIYumGmTtgKJnLD1/PEdQhkwBHY3Qe82AAOIAAAAAAAAABAAAAAAAAAAAAAAAAAAA==");
+        BitSet ref =
+                PubchemFingerprinter.decode(
+                        "AAADccBzMAAGAAAAAAAAAAAAAAAAAAAAAAA8QAAAAAAAAAABwAAAHgIYCAAADA6BniAwzpJqEgCoAyTyTASChCAnJiIYumGmTtgKJnLD1/PEdQhkwBHY3Qe82AAOIAAAAAAAAABAAAAAAAAAAAAAAAAAAA==");
 
         Assert.assertEquals(ref, fp);
     }
@@ -196,7 +204,8 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
     @Test
     public void testGetFingerprintAsBytes() throws CDKException {
 
-        IAtomContainer mol = parser.parseSmiles("C=C(C1=CC=C(C=C1)O)NNC2=C(C(=NC(=C2Cl)Cl)C(=O)O)Cl");
+        IAtomContainer mol =
+                parser.parseSmiles("C=C(C1=CC=C(C=C1)O)NNC2=C(C(=NC(=C2Cl)Cl)C(=O)O)Cl");
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
@@ -211,7 +220,6 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
         byte[] expected = Arrays.copyOf(toByteArray(fp), actual.length);
 
         Assert.assertArrayEquals(expected, actual);
-
     }
 
     // adapted from: http://stackoverflow.com/questions/6197411/converting-from-bitset-to-byte-array
@@ -232,11 +240,15 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
 
     @Test
     public void testDecode() {
-        BitSet bitSet = PubchemFingerprinter
-                .decode("AAADcYBgAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAABAAAAGAAAAAAACACAEAAwAIAAAACAACBCAAACAAAgAAAIiAAAAIgIICKAERCAIAAggAAIiAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
-        int[] setBits = new int[]{0, 9, 10, 178, 179, 255, 283, 284, 332, 344, 355, 370, 371, 384, 416, 434, 441, 446,
-                470, 490, 516, 520, 524, 552, 556, 564, 570, 578, 582, 584, 595, 599, 603, 608, 618, 634, 640, 660,
-                664, 668, 677, 678, 679};
+        BitSet bitSet =
+                PubchemFingerprinter.decode(
+                        "AAADcYBgAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAABAAAAGAAAAAAACACAEAAwAIAAAACAACBCAAACAAAgAAAIiAAAAIgIICKAERCAIAAggAAIiAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
+        int[] setBits =
+                new int[] {
+                    0, 9, 10, 178, 179, 255, 283, 284, 332, 344, 355, 370, 371, 384, 416, 434, 441,
+                    446, 470, 490, 516, 520, 524, 552, 556, 564, 570, 578, 582, 584, 595, 599, 603,
+                    608, 618, 634, 640, 660, 664, 668, 677, 678, 679
+                };
         for (int set : setBits) {
             Assert.assertTrue("bit " + set + " was not set", bitSet.get(set));
         }
@@ -253,11 +265,11 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
         Aromaticity.cdkLegacy().apply(mol);
         IFingerprinter printer = new PubchemFingerprinter(DefaultChemObjectBuilder.getInstance());
         BitSet fp = printer.getBitFingerprint(mol).asBitSet();
-        BitSet ref = PubchemFingerprinter
-                .decode("AAADcYBgAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAABAAAAGAAAAAAACACAEAAwAIAAAACAACBCAAACAAAgAAAIiAAAAIgIICKAERCAIAAggAAIiAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
+        BitSet ref =
+                PubchemFingerprinter.decode(
+                        "AAADcYBgAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAABAAAAGAAAAAAACACAEAAwAIAAAACAACBCAAACAAAgAAAIiAAAAIgIICKAERCAIAAggAAIiAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
 
         Assert.assertEquals(ref, fp);
-
     }
 
     /**
@@ -266,9 +278,11 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
      */
     @Test
     public void testMultithreadedUsage() throws Exception {
-        IAtomContainer mol1 = parser.parseSmiles("C=C(C1=CC=C(C=C1)O)NNC2=C(C(=NC(=C2Cl)Cl)C(=O)O)Cl");
-        IAtomContainer mol2 = parser
-                .parseSmiles("C1=CC=C(C=C1)C[N+]2=C(C=C(C=C2C=CC3=CC=CC=C3)C4=CC=CC=C4)C5=CC=CC=C5");
+        IAtomContainer mol1 =
+                parser.parseSmiles("C=C(C1=CC=C(C=C1)O)NNC2=C(C(=NC(=C2Cl)Cl)C(=O)O)Cl");
+        IAtomContainer mol2 =
+                parser.parseSmiles(
+                        "C1=CC=C(C=C1)C[N+]2=C(C=C(C=C2C=CC3=CC=CC=C3)C4=CC=CC=C4)C5=CC=CC=C5");
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
@@ -297,11 +311,14 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
             @Override
             public BitSet call() throws Exception {
                 BitSet fp = null;
-                IFingerprinter fpr = new PubchemFingerprinter(DefaultChemObjectBuilder.getInstance());
+                IFingerprinter fpr =
+                        new PubchemFingerprinter(DefaultChemObjectBuilder.getInstance());
                 try {
                     fp = fpr.getBitFingerprint(mol).asBitSet();
                 } catch (CDKException e) {
-                    e.printStackTrace(); //To change body of catch statement use File | Settings | File Templates.
+                    e
+                            .printStackTrace(); // To change body of catch statement use File |
+                                                // Settings | File Templates.
                 }
                 return fp;
             }
@@ -325,11 +342,10 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
     }
 
     /**
-     * Using PubChem/CACTVS Substr keys, these molecules are not considered
-     * substructures and should only be used for similarity. This is because the
-     * PubChem fragments match hydrogen counts. In this case the {@code 599}
-     * bit ({@code [#1]-C-C=C-[#1]}) is found in the substructure but not the
-     * superstructure.
+     * Using PubChem/CACTVS Substr keys, these molecules are not considered substructures and should
+     * only be used for similarity. This is because the PubChem fragments match hydrogen counts. In
+     * this case the {@code 599} bit ({@code [#1]-C-C=C-[#1]}) is found in the substructure but not
+     * the superstructure.
      */
     @Test
     @Override
@@ -349,17 +365,25 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
 
         org.hamcrest.MatcherAssert.assertThat(
                 subBits.asBitSet(),
-                is(asBitSet(9, 10, 14, 18, 19, 33, 143, 146, 255, 256, 283, 284, 285, 293, 301, 332, 344, 349, 351,
-                        353, 355, 368, 370, 371, 376, 383, 384, 395, 401, 412, 416, 421, 423, 434, 441, 446, 449, 454,
-                        455, 464, 470, 471, 480, 489, 490, 500, 502, 507, 513, 514, 516, 520, 524, 531, 532, 545, 546,
-                        549, 552, 556, 558, 564, 570, 586, 592, 599, 600, 607, 633, 658, 665)));
+                is(
+                        asBitSet(
+                                9, 10, 14, 18, 19, 33, 143, 146, 255, 256, 283, 284, 285, 293, 301,
+                                332, 344, 349, 351, 353, 355, 368, 370, 371, 376, 383, 384, 395,
+                                401, 412, 416, 421, 423, 434, 441, 446, 449, 454, 455, 464, 470,
+                                471, 480, 489, 490, 500, 502, 507, 513, 514, 516, 520, 524, 531,
+                                532, 545, 546, 549, 552, 556, 558, 564, 570, 586, 592, 599, 600,
+                                607, 633, 658, 665)));
         org.hamcrest.MatcherAssert.assertThat(
                 superBits.asBitSet(),
-                is(asBitSet(9, 10, 11, 14, 18, 19, 33, 34, 143, 146, 150, 153, 255, 256, 257, 258, 283, 284, 285, 293,
-                        301, 332, 344, 349, 351, 353, 355, 368, 370, 371, 374, 376, 383, 384, 395, 401, 412, 416, 417,
-                        421, 423, 427, 434, 441, 446, 449, 454, 455, 460, 464, 470, 471, 479, 480, 489, 490, 500, 502,
-                        507, 513, 514, 516, 520, 524, 531, 532, 545, 546, 549, 552, 556, 558, 564, 570, 578, 582, 584,
-                        586, 592, 595, 600, 603, 607, 608, 633, 634, 640, 658, 660, 664, 665, 668, 677, 678, 683)));
+                is(
+                        asBitSet(
+                                9, 10, 11, 14, 18, 19, 33, 34, 143, 146, 150, 153, 255, 256, 257,
+                                258, 283, 284, 285, 293, 301, 332, 344, 349, 351, 353, 355, 368,
+                                370, 371, 374, 376, 383, 384, 395, 401, 412, 416, 417, 421, 423,
+                                427, 434, 441, 446, 449, 454, 455, 460, 464, 470, 471, 479, 480,
+                                489, 490, 500, 502, 507, 513, 514, 516, 520, 524, 531, 532, 545,
+                                546, 549, 552, 556, 558, 564, 570, 578, 582, 584, 586, 592, 595,
+                                600, 603, 607, 608, 633, 634, 640, 658, 660, 664, 665, 668, 677,
+                                678, 683)));
     }
-
 }

@@ -40,9 +40,9 @@ import org.apache.commons.math3.random.RandomGenerator;
  */
 public class RandomNumber implements Serializable {
 
-    private static final long               serialVersionUID = 23345464573453571L;
+    private static final long serialVersionUID = 23345464573453571L;
 
-    private transient final RandomGenerator rg               = new RandomAdaptor(new MersenneTwister());
+    private final transient RandomGenerator rg = new RandomAdaptor(new MersenneTwister());
 
     /**
      * Mersenne Twister Random Number for a hashcode within a range between 0 to n.

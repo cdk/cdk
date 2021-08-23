@@ -20,7 +20,6 @@
 package org.openscience.cdk.silent;
 
 import javax.vecmath.Point3d;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -40,13 +39,14 @@ public class PDBAtomTest extends AbstractPDBAtomTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new PDBAtom(new Element());
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new PDBAtom(new Element());
+                    }
+                });
     }
 
     @Test

@@ -30,9 +30,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.StringTokenizer;
-
 import javax.vecmath.Point3d;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -55,12 +53,11 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.module io
  * @cdk.githash
  * @cdk.iooptions
- *
  * @cdk.keyword file format, XYZ
  */
 public class XYZReader extends DefaultChemObjectReader {
 
-    private BufferedReader      input;
+    private BufferedReader input;
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(XYZReader.class);
 
     /**
@@ -112,11 +109,9 @@ public class XYZReader extends DefaultChemObjectReader {
     }
 
     /**
-     * reads the content from a XYZ input. It can only return a
-     * IChemObject of type ChemFile
+     * reads the content from a XYZ input. It can only return a IChemObject of type ChemFile
      *
      * @param object class must be of type ChemFile
-     *
      * @see IChemFile
      */
     @Override
@@ -131,8 +126,7 @@ public class XYZReader extends DefaultChemObjectReader {
     // private procedures
 
     /**
-     *  Private method that actually parses the input to read a ChemFile
-     *  object.
+     * Private method that actually parses the input to read a ChemFile object.
      *
      * @return A ChemFile containing the data parsed from input.
      */
@@ -153,7 +147,8 @@ public class XYZReader extends DefaultChemObjectReader {
                 String info = input.readLine();
 
                 IChemModel chemModel = file.getBuilder().newInstance(IChemModel.class);
-                IAtomContainerSet setOfMolecules = file.getBuilder().newInstance(IAtomContainerSet.class);
+                IAtomContainerSet setOfMolecules =
+                        file.getBuilder().newInstance(IAtomContainerSet.class);
 
                 IAtomContainer m = file.getBuilder().newInstance(IAtomContainer.class);
                 m.setTitle(info);
@@ -184,9 +179,13 @@ public class XYZReader extends DefaultChemObjectReader {
                             y = (new Double(tokenizer.nextToken())).doubleValue();
                             z = (new Double(tokenizer.nextToken())).doubleValue();
 
-                            if (fields == 8) charge = (new Double(tokenizer.nextToken())).doubleValue();
+                            if (fields == 8)
+                                charge = (new Double(tokenizer.nextToken())).doubleValue();
 
-                            IAtom atom = file.getBuilder().newInstance(IAtom.class, atomtype, new Point3d(x, y, z));
+                            IAtom atom =
+                                    file.getBuilder()
+                                            .newInstance(
+                                                    IAtom.class, atomtype, new Point3d(x, y, z));
                             atom.setCharge(charge);
                             m.addAtom(atom);
                         }

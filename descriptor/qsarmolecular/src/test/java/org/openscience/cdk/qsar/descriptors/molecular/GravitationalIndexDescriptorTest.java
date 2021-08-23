@@ -19,6 +19,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.io.InputStream;
+import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,15 +33,11 @@ import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
-import java.io.InputStream;
-import java.util.List;
-
 /**
  * TestSuite that runs all QSAR tests.
  *
  * @cdk.module test-qsarmolecular
  */
-
 public class GravitationalIndexDescriptorTest extends MolecularDescriptorTest {
 
     public GravitationalIndexDescriptorTest() {}
@@ -50,7 +48,8 @@ public class GravitationalIndexDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testGravitationalIndex() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testGravitationalIndex()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
         String filename = "data/hin/gravindex.hin";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);

@@ -23,11 +23,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ConformerContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -36,9 +34,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.io.iterator.IteratingMDLConformerReader;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 
-/**
- * @cdk.module test-pcore
- */
+/** @cdk.module test-pcore */
 public class PharmacophoreUtilityTest {
 
     public static ConformerContainer conformers = null;
@@ -46,16 +42,19 @@ public class PharmacophoreUtilityTest {
     @BeforeClass
     public static void loadConformerData() {
         String filename = "data/mdl/pcoretest1.sdf";
-        InputStream ins = PharmacophoreUtilityTest.class.getClassLoader().getResourceAsStream(filename);
-        IteratingMDLConformerReader reader = new IteratingMDLConformerReader(ins,
-                DefaultChemObjectBuilder.getInstance());
-        if (reader.hasNext()) PharmacophoreUtilityTest.conformers = (ConformerContainer) reader.next();
+        InputStream ins =
+                PharmacophoreUtilityTest.class.getClassLoader().getResourceAsStream(filename);
+        IteratingMDLConformerReader reader =
+                new IteratingMDLConformerReader(ins, DefaultChemObjectBuilder.getInstance());
+        if (reader.hasNext())
+            PharmacophoreUtilityTest.conformers = (ConformerContainer) reader.next();
     }
 
     @Test
     public void testReadPcoreDef() throws Exception {
         String filename = "data/pcore/pcore.xml";
-        InputStream ins = PharmacophoreUtilityTest.class.getClassLoader().getResourceAsStream(filename);
+        InputStream ins =
+                PharmacophoreUtilityTest.class.getClassLoader().getResourceAsStream(filename);
         List<PharmacophoreQuery> defs = PharmacophoreUtils.readPharmacophoreDefinitions(ins);
 
         Assert.assertEquals(2, defs.size());
@@ -63,7 +62,8 @@ public class PharmacophoreUtilityTest {
         IQueryAtomContainer def1 = defs.get(0);
         Assert.assertEquals(4, def1.getAtomCount());
         Assert.assertEquals(2, def1.getBondCount());
-        Assert.assertEquals("An imaginary pharmacophore definition", def1.getProperty("description"));
+        Assert.assertEquals(
+                "An imaginary pharmacophore definition", def1.getProperty("description"));
         Assert.assertEquals("Imaginary", def1.getTitle());
 
         IQueryAtomContainer def2 = defs.get(1);
@@ -88,7 +88,8 @@ public class PharmacophoreUtilityTest {
     @Test
     public void testReadPcoreAngleDef() throws Exception {
         String filename = "data/pcore/pcoreangle.xml";
-        InputStream ins = PharmacophoreUtilityTest.class.getClassLoader().getResourceAsStream(filename);
+        InputStream ins =
+                PharmacophoreUtilityTest.class.getClassLoader().getResourceAsStream(filename);
         List<PharmacophoreQuery> defs = PharmacophoreUtils.readPharmacophoreDefinitions(ins);
 
         Assert.assertEquals(1, defs.size());
@@ -96,7 +97,8 @@ public class PharmacophoreUtilityTest {
         IQueryAtomContainer def1 = defs.get(0);
         Assert.assertEquals(3, def1.getAtomCount());
         Assert.assertEquals(2, def1.getBondCount());
-        Assert.assertEquals("A modified definition for the D1 receptor", def1.getProperty("description"));
+        Assert.assertEquals(
+                "A modified definition for the D1 receptor", def1.getProperty("description"));
 
         String[] ids = {"Aromatic", "Hydroxyl", "BasicAmine"};
         for (IAtom atom : def1.atoms()) {
@@ -127,17 +129,19 @@ public class PharmacophoreUtilityTest {
     @Test(expected = CDKException.class)
     public void testInvalidPcoreXML() throws IOException, CDKException {
         String filename = "data/pcore/invalid1.xml";
-        InputStream ins = PharmacophoreUtilityTest.class.getClassLoader().getResourceAsStream(filename);
+        InputStream ins =
+                PharmacophoreUtilityTest.class.getClassLoader().getResourceAsStream(filename);
         PharmacophoreUtils.readPharmacophoreDefinitions(ins);
     }
 
     @Test
     public void testPCoreWrite() throws Exception {
         String filename = "data/pcore/pcore.xml";
-        InputStream ins = PharmacophoreUtilityTest.class.getClassLoader().getResourceAsStream(filename);
+        InputStream ins =
+                PharmacophoreUtilityTest.class.getClassLoader().getResourceAsStream(filename);
         List<PharmacophoreQuery> defs = PharmacophoreUtils.readPharmacophoreDefinitions(ins);
 
-        PharmacophoreQuery[] defarray = defs.toArray(new PharmacophoreQuery[]{});
+        PharmacophoreQuery[] defarray = defs.toArray(new PharmacophoreQuery[] {});
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PharmacophoreUtils.writePharmacophoreDefinition(defarray, baos);
         String s = baos.toString();
@@ -163,6 +167,6 @@ public class PharmacophoreUtilityTest {
         for (IAtom iAtom : bond.atoms()) {
             alist.add(iAtom);
         }
-        return alist.toArray(new IAtom[]{});
+        return alist.toArray(new IAtom[] {});
     }
 }

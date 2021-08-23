@@ -24,7 +24,6 @@ import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.renderer.RendererModel;
@@ -32,7 +31,7 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.font.IFontManager;
 
 /**
- * @cdk.module  test-renderawt
+ * @cdk.module test-renderawt
  * @cdk.githash
  */
 public class AbstractAWTDrawVisitorTest {

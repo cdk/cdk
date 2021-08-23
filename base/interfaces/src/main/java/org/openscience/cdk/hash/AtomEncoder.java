@@ -28,8 +28,8 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
- * An encoder for invariant atom properties. The encoders are used to seed the
- * the generation of atomic hash codes.
+ * An encoder for invariant atom properties. The encoders are used to seed the the generation of
+ * atomic hash codes.
  *
  * @author John May
  * @cdk.module interfaces
@@ -39,13 +39,12 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 public interface AtomEncoder {
 
     /**
-     * Encode an invariant attribute of the given atom. The atom and container
-     * should not to be null.
+     * Encode an invariant attribute of the given atom. The atom and container should not to be
+     * null.
      *
-     * @param atom      non-null atom belonging to the <i>container</i>
+     * @param atom non-null atom belonging to the <i>container</i>
      * @param container non-null container
      * @return encoding of an invariant atom attribute
      */
     public int encode(IAtom atom, IAtomContainer container);
-
 }

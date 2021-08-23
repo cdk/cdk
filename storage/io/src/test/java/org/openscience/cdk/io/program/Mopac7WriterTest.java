@@ -24,7 +24,6 @@ package org.openscience.cdk.io.program;
 
 import java.io.StringWriter;
 import java.util.Properties;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -35,9 +34,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.ChemObjectWriterTest;
 import org.openscience.cdk.io.listener.PropertiesListener;
 
-/**
- * @cdk.module test-io
- */
+/** @cdk.module test-io */
 public class Mopac7WriterTest extends ChemObjectWriterTest {
 
     @BeforeClass
@@ -124,5 +121,4 @@ public class Mopac7WriterTest extends ChemObjectWriterTest {
         writer.close();
         Assert.assertTrue(strWriter.toString().contains("CHARGE=3"));
     }
-
 }

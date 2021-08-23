@@ -25,9 +25,7 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 
-/**
- * @cdk.module     test-standard
- */
+/** @cdk.module test-standard */
 public class InvPairTest extends CDKTestCase {
 
     public InvPairTest() {
@@ -83,9 +81,7 @@ public class InvPairTest extends CDKTestCase {
         Assert.assertNotNull(pair.getAtom());
     }
 
-    /**
-     * @cdk.bug 2045574
-     */
+    /** @cdk.bug 2045574 */
     @Test
     public void testGetPrime() {
         IAtom atom = new Atom(Elements.CARBON);
@@ -93,7 +89,8 @@ public class InvPairTest extends CDKTestCase {
         pair.setPrime();
         int prime = pair.getPrime();
         pair.setPrime();
-        Assert.assertEquals("The prime should not change when curr is not changed", prime, pair.getPrime());
+        Assert.assertEquals(
+                "The prime should not change when curr is not changed", prime, pair.getPrime());
         pair.setCurr(6l);
         pair.setPrime();
         Assert.assertNotSame(prime, pair.getPrime());

@@ -19,6 +19,15 @@
  */
 package org.openscience.cdk.fragment;
 
+import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -34,16 +43,6 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import static org.hamcrest.CoreMatchers.hasItems;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * Test fragment utils
@@ -94,9 +93,13 @@ public class FragmentUtilsTest extends CDKTestCase {
         IAtom a1 = builder.newInstance(IAtom.class, "C");
         IAtom a2 = builder.newInstance(IAtom.class, "C");
 
-        IBond[] bonds = new IBond[]{builder.newInstance(IBond.class, atom, exclude),
-                builder.newInstance(IBond.class, a1, a2), builder.newInstance(IBond.class, a1, atom),
-                builder.newInstance(IBond.class, a2, exclude)};
+        IBond[] bonds =
+                new IBond[] {
+                    builder.newInstance(IBond.class, atom, exclude),
+                    builder.newInstance(IBond.class, a1, a2),
+                    builder.newInstance(IBond.class, a1, atom),
+                    builder.newInstance(IBond.class, a2, exclude)
+                };
 
         IAtomContainer part = FragmentUtils.makeAtomContainer(atom, Arrays.asList(bonds), exclude);
 
@@ -117,14 +120,23 @@ public class FragmentUtilsTest extends CDKTestCase {
 
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
-        IAtom[] atoms = new IAtom[]{builder.newInstance(IAtom.class, "C"), builder.newInstance(IAtom.class, "C"),
-                builder.newInstance(IAtom.class, "C"), builder.newInstance(IAtom.class, "C"),
-                builder.newInstance(IAtom.class, "C"), builder.newInstance(IAtom.class, "C")};
-        IBond[] bonds = new IBond[]{builder.newInstance(IBond.class, atoms[0], atoms[1]),
-                builder.newInstance(IBond.class, atoms[1], atoms[2]),
-                builder.newInstance(IBond.class, atoms[2], atoms[3]),
-                builder.newInstance(IBond.class, atoms[3], atoms[4]),
-                builder.newInstance(IBond.class, atoms[4], atoms[5])};
+        IAtom[] atoms =
+                new IAtom[] {
+                    builder.newInstance(IAtom.class, "C"),
+                    builder.newInstance(IAtom.class, "C"),
+                    builder.newInstance(IAtom.class, "C"),
+                    builder.newInstance(IAtom.class, "C"),
+                    builder.newInstance(IAtom.class, "C"),
+                    builder.newInstance(IAtom.class, "C")
+                };
+        IBond[] bonds =
+                new IBond[] {
+                    builder.newInstance(IBond.class, atoms[0], atoms[1]),
+                    builder.newInstance(IBond.class, atoms[1], atoms[2]),
+                    builder.newInstance(IBond.class, atoms[2], atoms[3]),
+                    builder.newInstance(IBond.class, atoms[3], atoms[4]),
+                    builder.newInstance(IBond.class, atoms[4], atoms[5])
+                };
 
         IAtomContainer m = builder.newInstance(IAtomContainer.class, 0, 0, 0, 0);
         m.setAtoms(atoms);

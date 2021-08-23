@@ -24,17 +24,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
-import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.Source;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.Validator;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -59,9 +50,10 @@ public class XMLIsotopeFactoryTest extends CDKTestCase {
 
     boolean standAlone = false;
 
-    final static AtomTypeFactory atf = AtomTypeFactory.getInstance(new ChemObject().getBuilder());
+    static final AtomTypeFactory atf = AtomTypeFactory.getInstance(new ChemObject().getBuilder());
 
-    private static final String JAXP_SCHEMA_LANGUAGE = "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
+    private static final String JAXP_SCHEMA_LANGUAGE =
+            "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
 
     private static final String W3C_XML_SCHEMA = "http://www.w3.org/2001/XMLSchema";
 
@@ -69,8 +61,10 @@ public class XMLIsotopeFactoryTest extends CDKTestCase {
 
     static {
         try {
-            InputStream in = AtomTypeFactoryTest.class.getClassLoader().getResourceAsStream(
-                    "org/openscience/cdk/io/cml/data/cml25b1.xsd");
+            InputStream in =
+                    AtomTypeFactoryTest.class
+                            .getClassLoader()
+                            .getResourceAsStream("org/openscience/cdk/io/cml/data/cml25b1.xsd");
             tmpCMLSchema = copyFileToTmp("cml2.5.b1", ".xsd", in, null, null);
         } catch (IOException e) {
             e.printStackTrace();
@@ -219,8 +213,13 @@ public class XMLIsotopeFactoryTest extends CDKTestCase {
 
     private void assertValidCML(String atomTypeList, String shortcut) throws Exception {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(atomTypeList);
-        File tmpInput = copyFileToTmp(shortcut, ".cmlinput", ins, "../../io/cml/data/cml25b1.xsd", "file://"
-                                                                                                   + tmpCMLSchema.getAbsolutePath());
+        File tmpInput =
+                copyFileToTmp(
+                        shortcut,
+                        ".cmlinput",
+                        ins,
+                        "../../io/cml/data/cml25b1.xsd",
+                        "file://" + tmpCMLSchema.getAbsolutePath());
         Assert.assertNotNull("Could not find the atom type list CML source", ins);
 
         InputStream cmlSchema = new FileInputStream(tmpCMLSchema);
@@ -251,27 +250,29 @@ public class XMLIsotopeFactoryTest extends CDKTestCase {
     }
 
     /**
-     * Copies a file to TMP (whatever that is on your platform), and optionally
-     * replaces a String on the fly. The temporary file will be named prefix+suffix
+     * Copies a file to TMP (whatever that is on your platform), and optionally replaces a String on
+     * the fly. The temporary file will be named prefix+suffix
      *
-     * @param prefix      Prefix of the temporary file name
-     * @param suffix      Suffix of the temporary file name
-     * @param in          InputStream to copy from
-     * @param toReplace   String to replace. Null, if nothing needs to be replaced.
+     * @param prefix Prefix of the temporary file name
+     * @param suffix Suffix of the temporary file name
+     * @param in InputStream to copy from
+     * @param toReplace String to replace. Null, if nothing needs to be replaced.
      * @param replaceWith String that replaces the toReplace. Null, if nothing needs to be replaced.
      * @return The temporary file/
      * @throws IOException
      */
-    private static File copyFileToTmp(String prefix, String suffix, InputStream in, String toReplace,
-                                      String replaceWith)
+    private static File copyFileToTmp(
+            String prefix, String suffix, InputStream in, String toReplace, String replaceWith)
             throws IOException {
         File tmpFile = File.createTempFile(prefix, suffix);
         FileOutputStream out = new FileOutputStream(tmpFile);
         byte[] buf = new byte[4096];
         int i = 0;
         while ((i = in.read(buf)) != -1) {
-            if (toReplace != null && replaceWith != null && i >= toReplace.length()
-                && new String(buf).contains(toReplace)) {
+            if (toReplace != null
+                    && replaceWith != null
+                    && i >= toReplace.length()
+                    && new String(buf).contains(toReplace)) {
                 // a replacement has been defined
                 String newString = new String(buf).replaceAll(toReplace, replaceWith);
                 out.write(newString.getBytes());
@@ -296,19 +297,28 @@ public class XMLIsotopeFactoryTest extends CDKTestCase {
 
         @Override
         public void error(SAXParseException arg0) throws SAXException {
-            Assert.fail(atomTypeList + " is not valid on line " + arg0.getLineNumber() + ": " + arg0.getMessage());
+            Assert.fail(
+                    atomTypeList
+                            + " is not valid on line "
+                            + arg0.getLineNumber()
+                            + ": "
+                            + arg0.getMessage());
         }
 
         @Override
         public void fatalError(SAXParseException arg0) throws SAXException {
-            Assert.fail(atomTypeList + " is not valid on line " + arg0.getLineNumber() + ": " + arg0.getMessage());
+            Assert.fail(
+                    atomTypeList
+                            + " is not valid on line "
+                            + arg0.getLineNumber()
+                            + ": "
+                            + arg0.getMessage());
         }
 
         @Override
         public void warning(SAXParseException arg0) throws SAXException {
             // warnings are fine
         }
-
     }
 
     @Test
@@ -348,14 +358,11 @@ public class XMLIsotopeFactoryTest extends CDKTestCase {
         Assert.assertEquals(13, match.getMassNumber().intValue());
     }
 
-    /**
-     * @cdk.bug 3534288
-     */
+    /** @cdk.bug 3534288 */
     @Test(expected = IllegalArgumentException.class)
     public void testNonexistingElement() throws Exception {
         XMLIsotopeFactory isofac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         IAtom xxAtom = new Atom("Xx");
         isofac.configure(xxAtom);
     }
-
 }

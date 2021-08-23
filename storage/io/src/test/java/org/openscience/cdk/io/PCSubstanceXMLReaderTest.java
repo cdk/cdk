@@ -23,7 +23,6 @@
 package org.openscience.cdk.io;
 
 import java.io.InputStream;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -33,12 +32,11 @@ import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-/**
- * @cdk.module test-io
- */
+/** @cdk.module test-io */
 public class PCSubstanceXMLReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(PCSubstanceXMLReaderTest.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(PCSubstanceXMLReaderTest.class);
 
     @BeforeClass
     public static void setup() throws Exception {

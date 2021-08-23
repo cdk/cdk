@@ -23,7 +23,6 @@
 package org.openscience.cdk.config;
 
 import java.util.Map;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
@@ -31,22 +30,26 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IIsotope;
 
 /**
- * A read-only class used by {@link Isotopes} for the natural elements. This class is not to
- * be used than by only {@link Isotopes}.
+ * A read-only class used by {@link Isotopes} for the natural elements. This class is not to be used
+ * than by only {@link Isotopes}.
  *
- * @author      egonw
- * @cdk.module  core
+ * @author egonw
+ * @cdk.module core
  * @cdk.githash
  */
 final class BODRIsotope implements IIsotope {
 
-    private String  element;
+    private String element;
     private Integer atomicNumber;
-    private Double  naturalAbundance;
-    private Double  exactMass;
+    private Double naturalAbundance;
+    private Double exactMass;
     private Integer massNumber;
 
-    protected BODRIsotope(String element, Integer atomicNumber, Integer massNumber, Double exactMass,
+    protected BODRIsotope(
+            String element,
+            Integer atomicNumber,
+            Integer massNumber,
+            Double exactMass,
             Double naturalAbundance) {
         this.element = element;
         this.atomicNumber = atomicNumber;
@@ -191,5 +194,4 @@ final class BODRIsotope implements IIsotope {
     public Object clone() {
         return this;
     }
-
 }

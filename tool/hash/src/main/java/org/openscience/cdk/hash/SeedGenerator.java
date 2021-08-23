@@ -27,14 +27,15 @@ package org.openscience.cdk.hash;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
- * Generate a seed value for each atom of a molecule. The provided {@link
- * AtomEncoder} is used to encode invariant attributes of the atoms. This value
- * is then modified by the size of the molecule and pseudorandomly distributed.
- * The seed values should be used with another {@link AtomHashGenerator} which
- * will differentiate atoms experiencing different environments, such as, {@link
- * BasicAtomHashGenerator}.
+ * Generate a seed value for each atom of a molecule. The provided {@link AtomEncoder} is used to
+ * encode invariant attributes of the atoms. This value is then modified by the size of the molecule
+ * and pseudorandomly distributed. The seed values should be used with another {@link
+ * AtomHashGenerator} which will differentiate atoms experiencing different environments, such as,
+ * {@link BasicAtomHashGenerator}.
  *
- * <blockquote><pre>
+ * <blockquote>
+ *
+ * <pre>
  *
  * // create a new seed generator
  * AtomEncoder       encoder   = ConjugatedAtomEncoder.create(ATOMIC_NUMBER,
@@ -44,7 +45,9 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * // generate six hash codes for each atom of benzene
  * IAtomContainer benzene   = MoleculeFactory.makeBenzene();
  * long[]         hashCodes = generator.generate(benzene);
- * </pre></blockquote>
+ * </pre>
+ *
+ * </blockquote>
  *
  * @author John May
  * @cdk.module hash
@@ -55,7 +58,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 final class SeedGenerator extends AbstractHashGenerator implements AtomHashGenerator {
 
     /* used to encode atom attributes */
-    private final AtomEncoder     encoder;
+    private final AtomEncoder encoder;
 
     /** Optional suppression of atoms. */
     private final AtomSuppression suppression;
@@ -83,27 +86,25 @@ final class SeedGenerator extends AbstractHashGenerator implements AtomHashGener
     }
 
     /**
-     * Create a new seed generator using the provided {@link AtomEncoder} and
-     * pseudorandom number generator.
+     * Create a new seed generator using the provided {@link AtomEncoder} and pseudorandom number
+     * generator.
      *
-     * @param encoder      a method for encoding atom invariant properties
+     * @param encoder a method for encoding atom invariant properties
      * @param pseudorandom number generator to randomise initial invariants
-     * @param suppression  indicates which vertices should be suppressed
-     * @throws NullPointerException encoder or pseudorandom number generator was
-     *                              null
+     * @param suppression indicates which vertices should be suppressed
+     * @throws NullPointerException encoder or pseudorandom number generator was null
      */
     SeedGenerator(AtomEncoder encoder, Pseudorandom pseudorandom, AtomSuppression suppression) {
         super(pseudorandom);
         if (encoder == null) throw new NullPointerException("encoder cannot be null");
         if (suppression == null)
-            throw new NullPointerException("suppression cannot be null, use AtomSuppression.unsuppressed()");
+            throw new NullPointerException(
+                    "suppression cannot be null, use AtomSuppression.unsuppressed()");
         this.encoder = encoder;
         this.suppression = suppression;
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public long[] generate(IAtomContainer container) {
 

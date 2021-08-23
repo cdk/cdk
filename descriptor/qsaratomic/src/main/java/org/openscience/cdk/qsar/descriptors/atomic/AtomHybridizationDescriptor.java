@@ -32,7 +32,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
- *  This class returns the hybridization of an atom.
+ * This class returns the hybridization of an atom.
  *
  * <table border="1">
  *   <caption>Parameters for this descriptor:</caption>
@@ -48,40 +48,40 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  *   </tr>
  * </table>
  *
- * @author         mfe4
- * @cdk.created    2004-11-13
- * @cdk.module     qsaratomic
+ * @author mfe4
+ * @cdk.created 2004-11-13
+ * @cdk.module qsaratomic
  * @cdk.githash
- * @cdk.dictref    qsar-descriptors:atomHybridization
+ * @cdk.dictref qsar-descriptors:atomHybridization
  */
-public class AtomHybridizationDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
+public class AtomHybridizationDescriptor extends AbstractAtomicDescriptor
+        implements IAtomicDescriptor {
 
-    AtomTypeManipulator atman   = null;
-    IAtom               atom    = null;
-    IAtomType           matched = null;
+    AtomTypeManipulator atman = null;
+    IAtom atom = null;
+    IAtomType matched = null;
 
     /**
-     *  Gets the specification attribute of the AtomHybridizationDescriptor object
+     * Gets the specification attribute of the AtomHybridizationDescriptor object
      *
-     *@return    The specification value
+     * @return The specification value
      */
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomHybridization", this.getClass()
-                        .getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomHybridization",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
-    /**
-     * This descriptor does have any parameter.
-     */
+    /** This descriptor does have any parameter. */
     @Override
     public void setParameters(Object[] params) throws CDKException {}
 
     /**
-     *  Gets the parameters attribute of the VdWRadiusDescriptor object.
+     * Gets the parameters attribute of the VdWRadiusDescriptor object.
      *
-     *@return    The parameters value
+     * @return The parameters value
      * @see #setParameters
      */
     @Override
@@ -91,44 +91,59 @@ public class AtomHybridizationDescriptor extends AbstractAtomicDescriptor implem
 
     @Override
     public String[] getDescriptorNames() {
-        return new String[]{"aHyb"};
+        return new String[] {"aHyb"};
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
-                (int) Double.NaN), getDescriptorNames(), e);
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new IntegerResult((int) Double.NaN),
+                getDescriptorNames(),
+                e);
     }
 
     /**
-     *  This method calculates the hybridization of an atom.
+     * This method calculates the hybridization of an atom.
      *
-     *@param  atom              The IAtom for which the DescriptorValue is requested
-     *@param  container         Parameter is the atom container.
-     *@return                   The hybridization
+     * @param atom The IAtom for which the DescriptorValue is requested
+     * @param container Parameter is the atom container.
+     * @return The hybridization
      */
-
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
         try {
-            matched = CDKAtomTypeMatcher.getInstance(atom.getBuilder()).findMatchingAtomType(container, atom);
+            matched =
+                    CDKAtomTypeMatcher.getInstance(atom.getBuilder())
+                            .findMatchingAtomType(container, atom);
         } catch (CDKException e) {
             return getDummyDescriptorValue(e);
         }
         if (matched == null) {
             int atnum = container.indexOf(atom);
-            return getDummyDescriptorValue(new CDKException("The matched atom type was null (atom number " + atnum
-                    + ") " + atom.getSymbol()));
+            return getDummyDescriptorValue(
+                    new CDKException(
+                            "The matched atom type was null (atom number "
+                                    + atnum
+                                    + ") "
+                                    + atom.getSymbol()));
         }
         Hybridization atomHybridization = matched.getHybridization();
-        IntegerResult result = new IntegerResult(atomHybridization == null ? 0 : atomHybridization.ordinal());
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result,
+        IntegerResult result =
+                new IntegerResult(atomHybridization == null ? 0 : atomHybridization.ordinal());
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                result,
                 getDescriptorNames());
     }
 
     /**
-     *  Gets the parameterNames attribute of the VdWRadiusDescriptor object.
+     * Gets the parameterNames attribute of the VdWRadiusDescriptor object.
      *
-     *@return    The parameterNames value
+     * @return The parameterNames value
      */
     @Override
     public String[] getParameterNames() {
@@ -138,8 +153,8 @@ public class AtomHybridizationDescriptor extends AbstractAtomicDescriptor implem
     /**
      * Gets the parameterType attribute of the VdWRadiusDescriptor object.
      *
-     * @param  name  Description of the Parameter
-     * @return       An Object of class equal to that of the parameter being requested
+     * @param name Description of the Parameter
+     * @return An Object of class equal to that of the parameter being requested
      */
     @Override
     public Object getParameterType(String name) {

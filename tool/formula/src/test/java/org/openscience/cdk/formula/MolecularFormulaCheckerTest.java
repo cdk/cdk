@@ -21,12 +21,11 @@ package org.openscience.cdk.formula;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.formula.rules.ChargeRule;
 import org.openscience.cdk.formula.rules.IRule;
 import org.openscience.cdk.formula.rules.MMElementRule;
@@ -41,13 +40,10 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  */
 public class MolecularFormulaCheckerTest extends CDKTestCase {
 
-    private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-    private IsotopeFactory                  ifac;
+    private static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    private IsotopeFactory ifac;
 
-    /**
-     *  Constructor for the MolecularFormulaCheckerTest object.
-     *
-     */
+    /** Constructor for the MolecularFormulaCheckerTest object. */
     public MolecularFormulaCheckerTest() {
 
         super();
@@ -61,7 +57,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testMolecularFormulaChecker_List() {
@@ -72,7 +68,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testGetRules() {
@@ -85,7 +81,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testIsValidSum_IMolecularFormula() {
@@ -100,13 +96,12 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
         MolecularFormulaChecker MFChecker = new MolecularFormulaChecker(rules);
 
         Assert.assertEquals(0.0, MFChecker.isValidSum(formula), 0.001);
-
     }
 
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testIsValid_NOT() {
@@ -122,16 +117,14 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
 
         IMolecularFormula formulaWith = MFChecker.isValid(formula);
 
-        Assert.assertEquals(0.0d,
-                            (double)formulaWith.getProperty((new MMElementRule()).getClass()),
-                            0.01);
-
+        Assert.assertEquals(
+                0.0d, (double) formulaWith.getProperty((new MMElementRule()).getClass()), 0.01);
     }
 
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testIsValid_IMolecularFormula() {
@@ -148,13 +141,12 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
         MolecularFormulaChecker MFChecker = new MolecularFormulaChecker(rules);
 
         Assert.assertEquals(0.0, MFChecker.isValidSum(formula), 0.001);
-
     }
 
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testIsValid_NOT_2Rules() {
@@ -174,13 +166,12 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
 
         Assert.assertEquals(0.0, formulaWith.getProperty((new MMElementRule()).getClass()), 0.01);
         Assert.assertEquals(1.0, formulaWith.getProperty((new ChargeRule()).getClass()), 0.01);
-
     }
 
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testIsValidSum_True_2Rules() {
@@ -197,13 +188,12 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
         MolecularFormulaChecker MFChecker = new MolecularFormulaChecker(rules);
 
         Assert.assertEquals(1.0, MFChecker.isValidSum(formula), 0.001);
-
     }
 
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testIsValid_True_2Rules() {
@@ -223,6 +213,5 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
 
         Assert.assertEquals(1.0, formulaWith.getProperty((new MMElementRule()).getClass()), 0.01);
         Assert.assertEquals(1.0, formulaWith.getProperty((new ChargeRule()).getClass()), 0.01);
-
     }
 }

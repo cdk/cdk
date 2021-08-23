@@ -18,6 +18,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import java.util.Hashtable;
+import java.util.Map;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -27,11 +29,8 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 
-import java.util.Hashtable;
-import java.util.Map;
-
 /**
- *  This class returns the period in the periodic table of an atom belonging to an atom container
+ * This class returns the period in the periodic table of an atom belonging to an atom container
  *
  * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
@@ -46,20 +45,19 @@ import java.util.Map;
  *   </tr>
  * </table>
  *
- *@author         mfe4
- *@cdk.created    2004-11-13
- *@cdk.module     qsaratomic
+ * @author mfe4
+ * @cdk.created 2004-11-13
+ * @cdk.module qsaratomic
  * @cdk.githash
- *@cdk.dictref qsar-descriptors:period
+ * @cdk.dictref qsar-descriptors:period
  */
-public class PeriodicTablePositionDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
+public class PeriodicTablePositionDescriptor extends AbstractAtomicDescriptor
+        implements IAtomicDescriptor {
 
     private static final String[] NAMES = {"periodicTablePosition"};
-    public Map<String, Integer>   periodicTable;
+    public Map<String, Integer> periodicTable;
 
-    /**
-     *  Constructor for the PeriodicTablePositionDescriptor object
-     */
+    /** Constructor for the PeriodicTablePositionDescriptor object */
     public PeriodicTablePositionDescriptor() {
         if (periodicTable == null) {
             periodicTable = new Hashtable<String, Integer>();
@@ -105,29 +103,29 @@ public class PeriodicTablePositionDescriptor extends AbstractAtomicDescriptor im
     }
 
     /**
-     *  Gets the specification attribute of the PeriodicTablePositionDescriptor object
+     * Gets the specification attribute of the PeriodicTablePositionDescriptor object
      *
-     *@return    The specification value
+     * @return The specification value
      */
     @Override
     public DescriptorSpecification getSpecification() {
-        return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#period",
-                this.getClass().getName(), "The Chemistry Development Kit");
+        return new DescriptorSpecification(
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#period",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
-    /**
-     * This descriptor does not have any parameter to be set.
-     */
+    /** This descriptor does not have any parameter to be set. */
     @Override
     public void setParameters(Object[] params) throws CDKException {
         // no parameters
     }
 
     /**
-     *  Gets the parameters attribute of the PeriodicTablePositionDescriptor object
+     * Gets the parameters attribute of the PeriodicTablePositionDescriptor object
      *
-     *@return    The parameters value
-     *@see #setParameters
+     * @return The parameters value
+     * @see #setParameters
      */
     @Override
     public Object[] getParameters() {
@@ -140,26 +138,29 @@ public class PeriodicTablePositionDescriptor extends AbstractAtomicDescriptor im
     }
 
     /**
-     *  This method calculates the period of an atom.
+     * This method calculates the period of an atom.
      *
-     * @param  atom              The IAtom for which the DescriptorValue is requested
-     * @param  container         Parameter is the atom container.
-     * @return                   The period
+     * @param atom The IAtom for which the DescriptorValue is requested
+     * @param container Parameter is the atom container.
+     * @return The period
      */
-
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
         int period;
         String symbol = atom.getSymbol();
         period = periodicTable.get(symbol);
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(period),
-                                   NAMES);
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new IntegerResult(period),
+                NAMES);
     }
 
     /**
-     *  Gets the parameterNames attribute of the PeriodicTablePositionDescriptor object
+     * Gets the parameterNames attribute of the PeriodicTablePositionDescriptor object
      *
-     *@return    The parameterNames value
+     * @return The parameterNames value
      */
     @Override
     public String[] getParameterNames() {
@@ -167,10 +168,10 @@ public class PeriodicTablePositionDescriptor extends AbstractAtomicDescriptor im
     }
 
     /**
-     *  Gets the parameterType attribute of the PeriodicTablePositionDescriptor object
+     * Gets the parameterType attribute of the PeriodicTablePositionDescriptor object
      *
-     *@param  name  Description of the Parameter
-     *@return       The parameterType value
+     * @param name Description of the Parameter
+     * @return The parameterType value
      */
     @Override
     public Object getParameterType(String name) {

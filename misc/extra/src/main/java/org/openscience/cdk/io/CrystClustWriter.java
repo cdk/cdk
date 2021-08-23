@@ -24,9 +24,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
-
 import javax.vecmath.Vector3d;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.UnsupportedChemObjectException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -43,19 +41,19 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @author Egon Willighagen
  * @cdk.created 2004-01-01
- *
  * @cdk.module extra
  * @cdk.githash
  * @cdk.iooptions
  */
 public class CrystClustWriter extends DefaultChemObjectWriter {
 
-    private BufferedWriter      writer;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CrystClustWriter.class);
+    private BufferedWriter writer;
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(CrystClustWriter.class);
 
     /**
-     * Constructs a new CrystClustWriter class. Output will be stored in the Writer
-     * class given as parameter.
+     * Constructs a new CrystClustWriter class. Output will be stored in the Writer class given as
+     * parameter.
      *
      * @param out Writer to redirect the output to.
      */
@@ -124,9 +122,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
         }
     }
 
-    /**
-     * Flushes the output and closes this object.
-     */
+    /** Flushes the output and closes this object. */
     @Override
     public void close() throws IOException {
         writer.close();
@@ -146,6 +142,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
      * Writes a single frame to the Writer.
      *
      * <p>Format:
+     *
      * <pre>
      *            line      data
      *           -------    --------------------------
@@ -202,14 +199,14 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
             writeln(Double.toString(atom.getPoint3d().y));
             writeln(Double.toString(atom.getPoint3d().z));
         }
-
     }
 
     private void write(String s) {
         try {
             writer.write(s);
         } catch (IOException e) {
-            System.err.println("CMLWriter IOException while printing \"" + s + "\":" + e.toString());
+            System.err.println(
+                    "CMLWriter IOException while printing \"" + s + "\":" + e.toString());
         }
     }
 
@@ -218,7 +215,8 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
             writer.write(s);
             writer.write('\n');
         } catch (IOException e) {
-            System.err.println("CMLWriter IOException while printing \"" + s + "\":" + e.toString());
+            System.err.println(
+                    "CMLWriter IOException while printing \"" + s + "\":" + e.toString());
         }
     }
 
@@ -230,5 +228,4 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
         write(Double.toString(vector.z));
         writeln("");
     }
-
 }

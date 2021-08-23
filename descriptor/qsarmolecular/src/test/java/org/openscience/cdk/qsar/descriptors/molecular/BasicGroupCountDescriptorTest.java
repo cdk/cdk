@@ -31,9 +31,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-/**
- * @cdk.module test-qsarmolecular
- */
+/** @cdk.module test-qsarmolecular */
 public class BasicGroupCountDescriptorTest extends MolecularDescriptorTest {
 
     @Before
@@ -59,9 +57,7 @@ public class BasicGroupCountDescriptorTest extends MolecularDescriptorTest {
         new BasicGroupCountDescriptor().calculate(new AtomContainer());
     }
 
-    /**
-     * @cdk.inchi InChI=1S/C2H4N2/c1-4-2-3/h2-3H,1H2
-     */
+    /** @cdk.inchi InChI=1S/C2H4N2/c1-4-2-3/h2-3H,1H2 */
     @Test
     public void test() throws Exception {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();

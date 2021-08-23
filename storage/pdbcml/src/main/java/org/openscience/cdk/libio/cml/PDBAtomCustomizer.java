@@ -26,31 +26,30 @@ package org.openscience.cdk.libio.cml;
 
 import nu.xom.Attribute;
 import nu.xom.Element;
-
-import org.openscience.cdk.interfaces.IPDBAtom;
-import org.xmlcml.cml.element.CMLScalar;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IPDBAtom;
+import org.xmlcml.cml.element.CMLScalar;
 
 /**
  * {@link ICMLCustomizer} for the libio-cml {@link Convertor} to be able to export details for
  * {@link IPDBAtom}'s.
  *
- * @author        egonw
- * @cdk.created   2005-05-04
- * @cdk.module    pdbcml
+ * @author egonw
+ * @cdk.created 2005-05-04
+ * @cdk.module pdbcml
  * @cdk.githash
- * @cdk.set       libio-cml-customizers
- * @cdk.require   java1.5+
+ * @cdk.set libio-cml-customizers
+ * @cdk.require java1.5+
  */
 public class PDBAtomCustomizer implements ICMLCustomizer {
 
     @Override
     public void customize(IAtom atom, Object nodeToAdd) throws Exception {
-        if (!(nodeToAdd instanceof Element)) throw new CDKException("NodeToAdd must be of type nu.xom.Element!");
+        if (!(nodeToAdd instanceof Element))
+            throw new CDKException("NodeToAdd must be of type nu.xom.Element!");
 
         Element element = (Element) nodeToAdd;
         if (atom instanceof IPDBAtom) {

@@ -21,17 +21,17 @@ package org.openscience.cdk.tools.diff.tree;
 /**
  * {@link IDifference} between two {@link Double}.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module diff
  * @cdk.githash
  */
 public class DoubleDifference implements IDifference {
 
-    private final static double ERROR = 0.000000001;
+    private static final double ERROR = 0.000000001;
 
-    private String              name;
-    private Double              first;
-    private Double              second;
+    private String name;
+    private Double first;
+    private Double second;
 
     private DoubleDifference(String name, Double first, Double second) {
         this.name = name;
@@ -42,10 +42,10 @@ public class DoubleDifference implements IDifference {
     /**
      * Constructs a new {@link IDifference} object.
      *
-     * @param name   a name reflecting the nature of the created {@link IDifference}
-     * @param first  the first object to compare
+     * @param name a name reflecting the nature of the created {@link IDifference}
+     * @param first the first object to compare
      * @param second the second object to compare
-     * @return       an {@link IDifference} reflecting the differences between the first and second object
+     * @return an {@link IDifference} reflecting the differences between the first and second object
      */
     public static IDifference construct(String name, Double first, Double second) {
         if (first == null && second == null) {

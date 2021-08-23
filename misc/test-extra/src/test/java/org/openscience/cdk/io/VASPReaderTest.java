@@ -23,7 +23,6 @@
 package org.openscience.cdk.io;
 
 import java.io.InputStream;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -31,9 +30,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-/**
- * @cdk.module test-extra
- */
+/** @cdk.module test-extra */
 public class VASPReaderTest extends SimpleChemObjectReaderTest {
 
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(VASPReaderTest.class);

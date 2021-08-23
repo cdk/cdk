@@ -32,16 +32,14 @@ package org.openscience.cdk.math;
  */
 public interface IFunction {
 
-    /**
-     * Return the function value at (x,y,z)
-     */
+    /** Return the function value at (x,y,z) */
     public double getValue(double x, double y, double z);
 
     /**
      * Return the function value
      *
-     * The rows of the matrix x are the Parameters like x,y,z
-     * and the columns are the values which must calculated.
+     * <p>The rows of the matrix x are the Parameters like x,y,z and the columns are the values
+     * which must calculated.
      */
     public Vector getValues(Matrix x);
 }

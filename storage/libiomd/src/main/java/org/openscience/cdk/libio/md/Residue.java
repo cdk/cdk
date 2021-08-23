@@ -28,7 +28,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 /**
  * A residue is a named, numbered collection of atoms in an MDMolecule.
  *
- * Residues are used to partition molecules in distinct pieces.
+ * <p>Residues are used to partition molecules in distinct pieces.
  *
  * @author ola
  * @cdk.module libiomd
@@ -38,18 +38,14 @@ public class Residue extends AtomContainer {
 
     private static final long serialVersionUID = 6548353601272976798L;
 
-    private int               number;
-    private String            name;
-    private MDMolecule        parentMolecule;
+    private int number;
+    private String name;
+    private MDMolecule parentMolecule;
 
-    /**
-     * Empty constructor
-     */
+    /** Empty constructor */
     public Residue() {}
 
-    /**
-     * Constructor to create a Residue based on an AC, a number, and a MDMolecule.
-     */
+    /** Constructor to create a Residue based on an AC, a number, and a MDMolecule. */
     public Residue(IAtomContainer container, int number, MDMolecule parentMolecule) {
         super(container);
         this.number = number;
@@ -79,5 +75,4 @@ public class Residue extends AtomContainer {
     public void setParentMolecule(MDMolecule parentMolecule) {
         this.parentMolecule = parentMolecule;
     }
-
 }

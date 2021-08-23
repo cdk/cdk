@@ -27,11 +27,8 @@ import java.awt.Rectangle;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.vecmath.Point2d;
-
 import org.junit.Assert;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
@@ -54,9 +51,7 @@ import org.openscience.cdk.renderer.generators.BasicAtomGenerator.ShowEndCarbons
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator.ShowExplicitHydrogens;
 import org.openscience.cdk.validate.ProblemMarker;
 
-/**
- * @cdk.module test-renderextra
- */
+/** @cdk.module test-renderextra */
 public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
 
     private ExtendedAtomGenerator generator;
@@ -259,28 +254,29 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
         colorMap.put("N", Color.BLUE);
         colorMap.put("O", Color.RED);
         colorMap.put("P", Color.MAGENTA);
-        IAtomColorer atomColorer = new IAtomColorer() {
+        IAtomColorer atomColorer =
+                new IAtomColorer() {
 
-            @Override
-            public Color getAtomColor(IAtom atom) {
-                String symbol = atom.getSymbol();
-                if (colorMap.containsKey(symbol)) {
-                    return colorMap.get(symbol);
-                } else {
-                    return null;
-                }
-            }
+                    @Override
+                    public Color getAtomColor(IAtom atom) {
+                        String symbol = atom.getSymbol();
+                        if (colorMap.containsKey(symbol)) {
+                            return colorMap.get(symbol);
+                        } else {
+                            return null;
+                        }
+                    }
 
-            @Override
-            public Color getAtomColor(IAtom atom, Color defaultColor) {
-                Color color = getAtomColor(atom);
-                if (color == null) {
-                    return defaultColor;
-                } else {
-                    return color;
-                }
-            }
-        };
+                    @Override
+                    public Color getAtomColor(IAtom atom, Color defaultColor) {
+                        Color color = getAtomColor(atom);
+                        if (color == null) {
+                            return defaultColor;
+                        } else {
+                            return color;
+                        }
+                    }
+                };
         model.set(AtomColorer.class, atomColorer);
         List<IRenderingElement> elements = getAllSimpleElements(generator, cnop);
         Assert.assertEquals(4, elements.size());

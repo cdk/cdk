@@ -22,12 +22,9 @@
 package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
-
 import org.junit.BeforeClass;
 
-/**
- * @cdk.module test-renderbasic
- */
+/** @cdk.module test-renderbasic */
 public class TextGroupElementTest extends AbstractElementTest {
 
     @BeforeClass
@@ -35,5 +32,4 @@ public class TextGroupElementTest extends AbstractElementTest {
         IRenderingElement element = new TextGroupElement(0, 0, "Red text", Color.RED);
         setRenderingElement(element);
     }
-
 }

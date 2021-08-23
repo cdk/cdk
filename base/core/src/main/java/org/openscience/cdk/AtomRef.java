@@ -23,17 +23,15 @@
 
 package org.openscience.cdk;
 
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
 /**
- * An atom ref, references a CDK {@link IAtom} indirectly. All
- * methods are passed through to the referenced atom. The reference can
- * be used to override the behaviour of the base atom.
+ * An atom ref, references a CDK {@link IAtom} indirectly. All methods are passed through to the
+ * referenced atom. The reference can be used to override the behaviour of the base atom.
  *
  * @author John Mayfield
  */
@@ -52,21 +50,19 @@ public class AtomRef extends ChemObjectRef implements IAtom {
     }
 
     /**
-     * Utility method to dereference an atom. If the atom is not
-     * an {@link AtomRef} it simply returns the input.
+     * Utility method to dereference an atom. If the atom is not an {@link AtomRef} it simply
+     * returns the input.
      *
      * @param atom the atom
      * @return non-pointer atom
      */
     public static IAtom deref(IAtom atom) {
-        while (atom instanceof AtomRef)
-            atom = ((AtomRef) atom).deref();
+        while (atom instanceof AtomRef) atom = ((AtomRef) atom).deref();
         return atom;
     }
 
     /**
-     * Dereference the atom pointer once providing access to the base
-     * atom.
+     * Dereference the atom pointer once providing access to the base atom.
      *
      * @return the atom pointed to
      */
@@ -74,321 +70,241 @@ public class AtomRef extends ChemObjectRef implements IAtom {
         return atom;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Double getCharge() {
         return atom.getCharge();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setCharge(Double charge) {
         atom.setCharge(charge);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Integer getAtomicNumber() {
         return atom.getAtomicNumber();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setAtomicNumber(Integer atomicNumber) {
         atom.setAtomicNumber(atomicNumber);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Double getNaturalAbundance() {
         return atom.getNaturalAbundance();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setNaturalAbundance(Double naturalAbundance) {
         atom.setNaturalAbundance(naturalAbundance);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Integer getImplicitHydrogenCount() {
         return atom.getImplicitHydrogenCount();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setImplicitHydrogenCount(Integer hydrogenCount) {
         atom.setImplicitHydrogenCount(hydrogenCount);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Double getExactMass() {
         return atom.getExactMass();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setExactMass(Double exactMass) {
         atom.setExactMass(exactMass);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public String getSymbol() {
         return atom.getSymbol();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setSymbol(String symbol) {
         atom.setSymbol(symbol);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Integer getMassNumber() {
         return atom.getMassNumber();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setMassNumber(Integer massNumber) {
         atom.setMassNumber(massNumber);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public String getAtomTypeName() {
         return atom.getAtomTypeName();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setAtomTypeName(String identifier) {
         atom.setAtomTypeName(identifier);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IBond.Order getMaxBondOrder() {
         return atom.getMaxBondOrder();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setMaxBondOrder(IBond.Order maxBondOrder) {
         atom.setMaxBondOrder(maxBondOrder);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Double getBondOrderSum() {
         return atom.getBondOrderSum();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setBondOrderSum(Double bondOrderSum) {
         atom.setBondOrderSum(bondOrderSum);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Point2d getPoint2d() {
         return atom.getPoint2d();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setPoint2d(Point2d point2d) {
         atom.setPoint2d(point2d);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Point3d getPoint3d() {
         return atom.getPoint3d();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setPoint3d(Point3d point3d) {
         atom.setPoint3d(point3d);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Integer getFormalCharge() {
         return atom.getFormalCharge();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setFormalCharge(Integer charge) {
         atom.setFormalCharge(charge);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Point3d getFractionalPoint3d() {
         return atom.getFractionalPoint3d();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setFractionalPoint3d(Point3d point3d) {
         atom.setFractionalPoint3d(point3d);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Integer getFormalNeighbourCount() {
         return atom.getFormalNeighbourCount();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setFormalNeighbourCount(Integer count) {
         atom.setFormalNeighbourCount(count);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Integer getStereoParity() {
         return atom.getStereoParity();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setStereoParity(Integer stereoParity) {
         atom.setStereoParity(stereoParity);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Hybridization getHybridization() {
         return atom.getHybridization();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setHybridization(Hybridization hybridization) {
         atom.setHybridization(hybridization);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Double getCovalentRadius() {
         return atom.getCovalentRadius();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setCovalentRadius(Double radius) {
         atom.setCovalentRadius(radius);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtomContainer getContainer() {
         return atom.getContainer();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getIndex() {
         return atom.getIndex();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Integer getValency() {
         return atom.getValency();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setValency(Integer valency) {
         atom.setValency(valency);
@@ -402,55 +318,44 @@ public class AtomRef extends ChemObjectRef implements IAtom {
         return atom.getBondCount();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IBond getBond(IAtom atom) {
         return this.atom.getBond(atom);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean isAromatic() {
         return atom.isAromatic();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setIsAromatic(boolean arom) {
         atom.setIsAromatic(arom);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean isInRing() {
         return atom.isInRing();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setIsInRing(boolean ring) {
         atom.setIsInRing(ring);
     }
 
-
     @Override
     public int getMapIdx() {
-      return atom.getMapIdx();
+        return atom.getMapIdx();
     }
 
     @Override
     public void setMapIdx(int mapidx) {
-      atom.setMapIdx(mapidx);
+        atom.setMapIdx(mapidx);
     }
 
     @Override
@@ -463,9 +368,7 @@ public class AtomRef extends ChemObjectRef implements IAtom {
         return atom.equals(obj);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtom clone() throws CloneNotSupportedException {
         return atom.clone();

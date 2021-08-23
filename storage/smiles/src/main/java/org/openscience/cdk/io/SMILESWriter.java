@@ -23,6 +23,7 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.*;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -36,8 +37,6 @@ import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
-
-import java.io.*;
 
 /**
  * Writes the SMILES strings to a plain text file.
@@ -86,7 +85,7 @@ public class SMILESWriter extends DefaultChemObjectWriter {
 
     public void setFlavor(int flav) {
         try {
-            flavorSetting.setSetting(Integer.toString(flav)); 
+            flavorSetting.setSetting(Integer.toString(flav));
         } catch (CDKException e) {
             // ignored
         }
@@ -130,9 +129,7 @@ public class SMILESWriter extends DefaultChemObjectWriter {
         this(new OutputStreamWriter(out));
     }
 
-    /**
-     * Flushes the output and closes this object.
-     */
+    /** Flushes the output and closes this object. */
     @Override
     public void close() throws IOException {
         writer.flush();
@@ -204,14 +201,28 @@ public class SMILESWriter extends DefaultChemObjectWriter {
         }
     }
 
-
     private void initIOSettings() {
-        flavorSetting = addSetting(new IntegerIOSetting("SmilesFlavor", IOSetting.Importance.HIGH,
-                "Output SMILES flavor, binary option", Integer.toString(SmiFlavor.Default)));
-        titleSetting = addSetting(new BooleanIOSetting("WriteTitle", IOSetting.Importance.HIGH,
-                "Write the molecule title after the SMILES", "true"));
-        aromSetting = addSetting(new BooleanIOSetting("UseAromaticity", IOSetting.Importance.LOW,
-                "Should aromaticity information be stored in the SMILES?", "false"));
+        flavorSetting =
+                addSetting(
+                        new IntegerIOSetting(
+                                "SmilesFlavor",
+                                IOSetting.Importance.HIGH,
+                                "Output SMILES flavor, binary option",
+                                Integer.toString(SmiFlavor.Default)));
+        titleSetting =
+                addSetting(
+                        new BooleanIOSetting(
+                                "WriteTitle",
+                                IOSetting.Importance.HIGH,
+                                "Write the molecule title after the SMILES",
+                                "true"));
+        aromSetting =
+                addSetting(
+                        new BooleanIOSetting(
+                                "UseAromaticity",
+                                IOSetting.Importance.LOW,
+                                "Should aromaticity information be stored in the SMILES?",
+                                "false"));
     }
 
     public void customizeJob() {
@@ -219,9 +230,7 @@ public class SMILESWriter extends DefaultChemObjectWriter {
         fireIOSettingQuestion(titleSetting);
         fireIOSettingQuestion(aromSetting);
         int flav = flavorSetting.getSettingValue();
-        if (aromSetting.isSet())
-            flav |= SmiFlavor.UseAromaticSymbols;
+        if (aromSetting.isSet()) flav |= SmiFlavor.UseAromaticSymbols;
         smigen = new SmilesGenerator(flav);
     }
-
 }

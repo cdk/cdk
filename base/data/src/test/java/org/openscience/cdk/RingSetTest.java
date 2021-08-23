@@ -22,29 +22,29 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractRingSetTest;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.interfaces.AbstractRingSetTest;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the RingSet class.
  *
  * @cdk.module test-data
- *
  * @see org.openscience.cdk.RingSet
  */
 public class RingSetTest extends AbstractRingSetTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new RingSet();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new RingSet();
+                    }
+                });
     }
 
     @Test
@@ -52,5 +52,4 @@ public class RingSetTest extends AbstractRingSetTest {
         IRingSet rs = new RingSet();
         Assert.assertNotNull(rs);
     }
-
 }

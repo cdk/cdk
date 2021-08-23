@@ -19,23 +19,21 @@
 package org.openscience.cdk.debug;
 
 import java.util.Map;
-
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module datadebug
  * @cdk.githash
  */
@@ -43,7 +41,7 @@ public class DebugBond extends Bond implements IBond {
 
     private static final long serialVersionUID = -2330398179697796261L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugBond.class);
+    ILoggingTool logger = LoggingToolFactory.createLoggingTool(DebugBond.class);
 
     public DebugBond() {
         super();
@@ -242,17 +240,13 @@ public class DebugBond extends Bond implements IBond {
         return super.getAtom(position);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public IAtom getBegin() {
         logger.debug("Getting begin atom");
         return super.getBegin();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public IAtom getEnd() {
         logger.debug("Getting end atom");
         return super.getEnd();
@@ -334,5 +328,4 @@ public class DebugBond extends Bond implements IBond {
         logger.debug("Is connected to bond: ", bond);
         return super.isConnectedTo(bond);
     }
-
 }

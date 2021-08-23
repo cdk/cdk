@@ -22,30 +22,26 @@
  *  */
 package org.openscience.cdk.graph.invariant;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.InvPair;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-
 /**
- * Canonically labels an atom container implementing
- * the algorithm published in David Weininger et al. {@cdk.cite WEI89}.
- * The Collections.sort() method uses a merge sort which is
- * stable and runs in n log(n).
+ * Canonically labels an atom container implementing the algorithm published in David Weininger et
+ * al. {@cdk.cite WEI89}. The Collections.sort() method uses a merge sort which is stable and runs
+ * in n log(n).
  *
  * @cdk.module standard
  * @cdk.githash
- *
  * @author Oliver Horlacher &lt;oliver.horlacher@therastrat.com&gt;
- * @cdk.created  2002-02-26
- *
+ * @cdk.created 2002-02-26
  * @cdk.keyword canonicalization
  * @deprecated this labeller uses slow data structures and has been replaced - {@link Canon}
  */
@@ -55,17 +51,16 @@ public class CanonicalLabeler {
     public CanonicalLabeler() {}
 
     /**
-     * Canonically label the fragment.  The labels are set as atom property InvPair.CANONICAL_LABEL of type Integer, indicating the canonical order.
-     * This is an implementation of the algorithm published in
-     * David Weininger et.al. {@cdk.cite WEI89}.
+     * Canonically label the fragment. The labels are set as atom property InvPair.CANONICAL_LABEL
+     * of type Integer, indicating the canonical order. This is an implementation of the algorithm
+     * published in David Weininger et.al. {@cdk.cite WEI89}.
      *
-     * <p>The Collections.sort() method uses a merge sort which is
-     * stable and runs in n log(n).
+     * <p>The Collections.sort() method uses a merge sort which is stable and runs in n log(n).
      *
-     * <p>It is assumed that a chemically valid AtomContainer is provided:
-     * this method does not check
-     * the correctness of the AtomContainer. Negative H counts will
-     * cause a NumberFormatException to be thrown.
+     * <p>It is assumed that a chemically valid AtomContainer is provided: this method does not
+     * check the correctness of the AtomContainer. Negative H counts will cause a
+     * NumberFormatException to be thrown.
+     *
      * @param atomContainer The molecule to label
      */
     public synchronized void canonLabel(IAtomContainer atomContainer) {
@@ -78,24 +73,20 @@ public class CanonicalLabeler {
         step3(vect, atomContainer);
     }
 
-    /**
-     * @param v the invariance pair vector
-     */
+    /** @param v the invariance pair vector */
     private void step2(List<InvPair> v, IAtomContainer atoms) {
         primeProduct(v, atoms);
         step3(v, atoms);
     }
 
-    /**
-     * @param v the invariance pair vector
-     */
+    /** @param v the invariance pair vector */
     private void step3(List<InvPair> v, IAtomContainer atoms) {
         sortArrayList(v);
         rankArrayList(v);
         if (!isInvPart(v)) {
             step2(v, atoms);
         } else {
-            //On first pass save, partitioning as symmetry classes.
+            // On first pass save, partitioning as symmetry classes.
             if (((InvPair) v.get(v.size() - 1)).getCurr() < v.size()) {
                 breakTies(v);
                 step2(v, atoms);
@@ -120,19 +111,29 @@ public class CanonicalLabeler {
         while (atoms.hasNext()) {
             a = (IAtom) atoms.next();
             inv = new StringBuffer();
-            inv.append(atomContainer.getConnectedAtomsList(a).size()
-                    + (a.getImplicitHydrogenCount() == CDKConstants.UNSET ? 0 : a.getImplicitHydrogenCount())); //Num connections
-            inv.append(atomContainer.getConnectedAtomsList(a).size()); //Num of non H bonds
+            inv.append(
+                    atomContainer.getConnectedAtomsList(a).size()
+                            + (a.getImplicitHydrogenCount() == CDKConstants.UNSET
+                                    ? 0
+                                    : a.getImplicitHydrogenCount())); // Num connections
+            inv.append(atomContainer.getConnectedAtomsList(a).size()); // Num of non H bonds
             inv.append(PeriodicTable.getAtomicNumber(a.getSymbol()));
 
             Double charge = a.getCharge();
             if (charge == CDKConstants.UNSET) charge = 0.0;
-            if (charge < 0) //Sign of charge
-                inv.append(1);
-            else
-                inv.append(0); //Absolute charge
-            inv.append((int) Math.abs((a.getFormalCharge() == CDKConstants.UNSET ? 0.0 : a.getFormalCharge()))); //Hydrogen count
-            inv.append((a.getImplicitHydrogenCount() == CDKConstants.UNSET ? 0 : a.getImplicitHydrogenCount()));
+            if (charge < 0) // Sign of charge
+            inv.append(1);
+            else inv.append(0); // Absolute charge
+            inv.append(
+                    (int)
+                            Math.abs(
+                                    (a.getFormalCharge() == CDKConstants.UNSET
+                                            ? 0.0
+                                            : a.getFormalCharge()))); // Hydrogen count
+            inv.append(
+                    (a.getImplicitHydrogenCount() == CDKConstants.UNSET
+                            ? 0
+                            : a.getImplicitHydrogenCount()));
             vect.add(new InvPair(Long.parseLong(inv.toString()), a));
         }
         return vect;
@@ -168,33 +169,37 @@ public class CanonicalLabeler {
      * Sorts the vector according to the current invariance, corresponds to step 3
      *
      * @param v the invariance pair vector
-     * @cdk.todo    can this be done in one loop?
+     * @cdk.todo can this be done in one loop?
      */
     private void sortArrayList(List<InvPair> v) {
-        Collections.sort(v, new Comparator<InvPair>() {
+        Collections.sort(
+                v,
+                new Comparator<InvPair>() {
 
-            @Override
-            public int compare(InvPair o1, InvPair o2) {
-                if (o1.getCurr() > o2.getCurr()) return +1;
-                if (o1.getCurr() < o2.getCurr()) return -1;
-                return 0;
-            }
-        });
-        Collections.sort(v, new Comparator<InvPair>() {
+                    @Override
+                    public int compare(InvPair o1, InvPair o2) {
+                        if (o1.getCurr() > o2.getCurr()) return +1;
+                        if (o1.getCurr() < o2.getCurr()) return -1;
+                        return 0;
+                    }
+                });
+        Collections.sort(
+                v,
+                new Comparator<InvPair>() {
 
-            @Override
-            public int compare(InvPair o1, InvPair o2) {
-                if (o1.getLast() > o2.getLast()) return +1;
-                if (o1.getLast() < o2.getLast()) return -1;
-                return 0;
-            }
-        });
+                    @Override
+                    public int compare(InvPair o1, InvPair o2) {
+                        if (o1.getLast() > o2.getLast()) return +1;
+                        if (o1.getLast() < o2.getLast()) return -1;
+                        return 0;
+                    }
+                });
     }
 
     /**
      * Rank atomic vector, corresponds to step 4.
      *
-     *  @param v the invariance pair vector
+     * @param v the invariance pair vector
      */
     private void rankArrayList(List<InvPair> v) {
         int num = 1;

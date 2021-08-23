@@ -18,18 +18,16 @@
  */
 package org.openscience.cdk.tools.diff;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.tools.diff.tree.IDifference;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-/**
- * @cdk.module test-diff
- */
+/** @cdk.module test-diff */
 public class ChemObjectDiffTest extends CDKTestCase {
 
     @Test
@@ -43,8 +41,8 @@ public class ChemObjectDiffTest extends CDKTestCase {
     public void testDiff() {
         IChemObject atom1 = mock(IChemObject.class);
         IChemObject atom2 = mock(IChemObject.class);
-        when(atom1.getFlags()).thenReturn(new boolean[]{false, false, false});
-        when(atom2.getFlags()).thenReturn(new boolean[]{false, true, false});
+        when(atom1.getFlags()).thenReturn(new boolean[] {false, false, false});
+        when(atom2.getFlags()).thenReturn(new boolean[] {false, true, false});
 
         String result = ChemObjectDiff.diff(atom1, atom2);
         Assert.assertNotNull(result);
@@ -57,8 +55,8 @@ public class ChemObjectDiffTest extends CDKTestCase {
     public void testDifference() {
         IChemObject atom1 = mock(IChemObject.class);
         IChemObject atom2 = mock(IChemObject.class);
-        when(atom1.getFlags()).thenReturn(new boolean[]{false, false, false});
-        when(atom2.getFlags()).thenReturn(new boolean[]{false, true, false});
+        when(atom1.getFlags()).thenReturn(new boolean[] {false, false, false});
+        when(atom2.getFlags()).thenReturn(new boolean[] {false, true, false});
 
         IDifference difference = ChemObjectDiff.difference(atom1, atom2);
         Assert.assertNotNull(difference);

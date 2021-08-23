@@ -22,13 +22,10 @@
  */
 package org.openscience.cdk.io.formats;
 
-/**
- * @cdk.module test-ioformats
- */
+/** @cdk.module test-ioformats */
 public class CrystClustFormatTest extends ChemFormatMatcherTest {
 
     public CrystClustFormatTest() {
         super.setChemFormatMatcher((IChemFormatMatcher) CrystClustFormat.getInstance());
     }
-
 }

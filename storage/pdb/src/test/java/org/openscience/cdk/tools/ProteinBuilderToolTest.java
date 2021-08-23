@@ -23,16 +23,14 @@ import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IBioPolymer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.tools.ProteinBuilderTool;
 
-/**
- * @cdk.module test-pdb
- */
+/** @cdk.module test-pdb */
 public class ProteinBuilderToolTest extends CDKTestCase {
 
     @Test
     public void testCreateProtein() throws Exception {
-        IBioPolymer protein = ProteinBuilderTool.createProtein("GAGA", SilentChemObjectBuilder.getInstance());
+        IBioPolymer protein =
+                ProteinBuilderTool.createProtein("GAGA", SilentChemObjectBuilder.getInstance());
         Assert.assertNotNull(protein);
         Assert.assertEquals(4, protein.getMonomerCount());
         Assert.assertEquals(1, protein.getStrandCount());
@@ -41,5 +39,4 @@ public class ProteinBuilderToolTest extends CDKTestCase {
         Assert.assertEquals(14 + 3 + 1, protein.getBondCount());
         // 3 = extra back bone bonds, 1=bond to terminal oxygen
     }
-
 }

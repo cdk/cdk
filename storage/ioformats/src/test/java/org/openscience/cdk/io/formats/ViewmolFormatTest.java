@@ -22,13 +22,10 @@
  */
 package org.openscience.cdk.io.formats;
 
-/**
- * @cdk.module test-ioformats
- */
+/** @cdk.module test-ioformats */
 public class ViewmolFormatTest extends ChemFormatTest {
 
     public ViewmolFormatTest() {
         super.setChemFormat((IChemFormat) ViewmolFormat.getInstance());
     }
-
 }

@@ -22,14 +22,14 @@
  */
 package org.openscience.cdk.ringsearch;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.templates.TestMoleculeFactory;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertFalse;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 /**
  * ring search unit tests for a branched aliphatic compounds
@@ -79,5 +79,4 @@ public final class RingSearchTest_NonCyclic {
     public void testFusedRingFragments() {
         assertTrue(new RingSearch(nonCyclic).fusedRingFragments().isEmpty());
     }
-
 }

@@ -22,29 +22,29 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractReactionSetTest;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.interfaces.AbstractReactionSetTest;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the ReactionSet class.
  *
  * @cdk.module test-data
- *
  * @see org.openscience.cdk.ReactionSet
  */
 public class ReactionSetTest extends AbstractReactionSetTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new ReactionSet();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new ReactionSet();
+                    }
+                });
     }
 
     @Test
@@ -52,5 +52,4 @@ public class ReactionSetTest extends AbstractReactionSetTest {
         IReactionSet reactionSet = new ReactionSet();
         Assert.assertNotNull(reactionSet);
     }
-
 }

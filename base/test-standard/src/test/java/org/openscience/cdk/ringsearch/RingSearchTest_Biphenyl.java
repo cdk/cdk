@@ -22,15 +22,14 @@
  */
 package org.openscience.cdk.ringsearch;
 
-import org.junit.Test;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.templates.TestMoleculeFactory;
-
-import java.util.List;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
+
+import java.util.List;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 
 /**
  * biphenyl ring search unit tests
@@ -94,5 +93,4 @@ public final class RingSearchTest_Biphenyl {
         List<IAtomContainer> fused = search.fusedRingFragments();
         assertThat(fused.size(), is(0));
     }
-
 }

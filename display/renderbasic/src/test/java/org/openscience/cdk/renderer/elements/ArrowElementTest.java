@@ -22,12 +22,9 @@
 package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
-
 import org.junit.BeforeClass;
 
-/**
- * @cdk.module test-renderbasic
- */
+/** @cdk.module test-renderbasic */
 public class ArrowElementTest extends AbstractElementTest {
 
     @BeforeClass
@@ -35,5 +32,4 @@ public class ArrowElementTest extends AbstractElementTest {
         IRenderingElement element = new ArrowElement(0, 0, 1, 1, 1.0, true, Color.orange);
         setRenderingElement(element);
     }
-
 }

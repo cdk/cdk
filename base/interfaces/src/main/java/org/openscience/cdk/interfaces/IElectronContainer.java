@@ -23,7 +23,6 @@ package org.openscience.cdk.interfaces;
  *
  * @cdk.module interfaces
  * @cdk.githash
- *
  * @cdk.keyword electron
  */
 public interface IElectronContainer extends IChemObject {
@@ -32,16 +31,15 @@ public interface IElectronContainer extends IChemObject {
      * Returns the number of electrons in this electron container.
      *
      * @return The number of electrons in this electron container.
-     * @see     #setElectronCount
+     * @see #setElectronCount
      */
     public Integer getElectronCount();
 
     /**
      * Sets the number of electrons in this electron container.
      *
-     * @param   electronCount The number of electrons in this electron container.
-     * @see     #getElectronCount
+     * @param electronCount The number of electrons in this electron container.
+     * @see #getElectronCount
      */
     public void setElectronCount(Integer electronCount);
-
 }

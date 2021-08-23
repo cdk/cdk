@@ -20,12 +20,12 @@ package org.openscience.cdk.debug;
 
 import java.util.List;
 import java.util.Map;
-
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
@@ -34,14 +34,13 @@ import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStereoElement;
-import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module datadebug
  * @cdk.githash
  */
@@ -49,7 +48,7 @@ public class DebugRing extends Ring implements IRing {
 
     private static final long serialVersionUID = -6420813246421544803L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugRing.class);
+    ILoggingTool logger = LoggingToolFactory.createLoggingTool(DebugRing.class);
 
     public DebugRing() {
         super();
@@ -137,7 +136,8 @@ public class DebugRing extends Ring implements IRing {
     }
 
     //	public void setElectronContainer(int number, IElectronContainer electronContainer) {
-    //		logger.debug("Setting electron container at: pos=" + number, " electron container=" +electronContainer);
+    //		logger.debug("Setting electron container at: pos=" + number, " electron container="
+    // +electronContainer);
     //		super.setElectronContainer(number, electronContainer);
     //	}
 
@@ -311,7 +311,8 @@ public class DebugRing extends Ring implements IRing {
     /** {@inheritDoc} */
     @Override
     public List<ILonePair> getConnectedLonePairsList(IAtom atom) {
-        logger.debug("Getting lone pairs at atom: atom=" + atom,
+        logger.debug(
+                "Getting lone pairs at atom: atom=" + atom,
                 " lone pairs=" + super.getConnectedLonePairsCount(atom));
         return super.getConnectedLonePairsList(atom);
     }
@@ -319,7 +320,8 @@ public class DebugRing extends Ring implements IRing {
     /** {@inheritDoc} */
     @Override
     public List<ISingleElectron> getConnectedSingleElectronsList(IAtom atom) {
-        logger.debug("Getting single electrons at atom: atom=" + atom,
+        logger.debug(
+                "Getting single electrons at atom: atom=" + atom,
                 " single electrons=" + super.getConnectedSingleElectronsCount(atom));
         return super.getConnectedSingleElectronsList(atom);
     }
@@ -542,7 +544,9 @@ public class DebugRing extends Ring implements IRing {
     /** {@inheritDoc} */
     @Override
     public void addBond(int atom1, int atom2, IBond.Order order, IBond.Stereo stereo) {
-        logger.debug("Adding bond: atom1=" + atom1 + " atom2=" + atom2, " order=" + order + " stereo=" + stereo);
+        logger.debug(
+                "Adding bond: atom1=" + atom1 + " atom2=" + atom2,
+                " order=" + order + " stereo=" + stereo);
         super.addBond(atom1, atom2, order, stereo);
     }
 
@@ -760,5 +764,4 @@ public class DebugRing extends Ring implements IRing {
         logger.debug("State changed: ", event);
         super.stateChanged(event);
     }
-
 }

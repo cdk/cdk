@@ -24,23 +24,19 @@
 package org.openscience.cdk.io.cml;
 
 import java.util.StringTokenizer;
-
 import javax.vecmath.Vector3d;
-
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.xml.sax.Attributes;
 
 /**
- *  Implementation of the PMPMol Covention for CML.
+ * Implementation of the PMPMol Covention for CML.
  *
- *  <p>PMP stands for PolyMorph Predictor and is a module
- *  of Cerius2 (tm).
+ * <p>PMP stands for PolyMorph Predictor and is a module of Cerius2 (tm).
  *
  * @cdk.module io
  * @cdk.githash
- *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */
 public class PMPConvention extends CMLCoreModule {
@@ -62,7 +58,8 @@ public class PMPConvention extends CMLCoreModule {
     }
 
     @Override
-    public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
+    public void startElement(
+            CMLStack xpath, String uri, String local, String raw, Attributes atts) {
         logger.debug("PMP element: name");
         super.startElement(xpath, uri, local, raw, atts);
     }
@@ -81,18 +78,32 @@ public class PMPConvention extends CMLCoreModule {
             //            cdo.setObjectProperty("Crystal", "spacegroup", sg);
             ((ICrystal) currentMolecule).setSpaceGroup(sg);
         } else if (xpath.toString().endsWith("floatArray/")
-                && (elementTitle.equals("a") || elementTitle.equals("b") || elementTitle.equals("c"))) {
+                && (elementTitle.equals("a")
+                        || elementTitle.equals("b")
+                        || elementTitle.equals("c"))) {
             StringTokenizer st = new StringTokenizer(s);
             if (st.countTokens() > 2) {
                 if (elementTitle.equals("a")) {
-                    ((ICrystal) currentMolecule).setA(new Vector3d(Double.parseDouble(st.nextToken()), Double
-                            .parseDouble(st.nextToken()), Double.parseDouble(st.nextToken())));
+                    ((ICrystal) currentMolecule)
+                            .setA(
+                                    new Vector3d(
+                                            Double.parseDouble(st.nextToken()),
+                                            Double.parseDouble(st.nextToken()),
+                                            Double.parseDouble(st.nextToken())));
                 } else if (elementTitle.equals("b")) {
-                    ((ICrystal) currentMolecule).setB(new Vector3d(Double.parseDouble(st.nextToken()), Double
-                            .parseDouble(st.nextToken()), Double.parseDouble(st.nextToken())));
+                    ((ICrystal) currentMolecule)
+                            .setB(
+                                    new Vector3d(
+                                            Double.parseDouble(st.nextToken()),
+                                            Double.parseDouble(st.nextToken()),
+                                            Double.parseDouble(st.nextToken())));
                 } else if (elementTitle.equals("c")) {
-                    ((ICrystal) currentMolecule).setC(new Vector3d(Double.parseDouble(st.nextToken()), Double
-                            .parseDouble(st.nextToken()), Double.parseDouble(st.nextToken())));
+                    ((ICrystal) currentMolecule)
+                            .setC(
+                                    new Vector3d(
+                                            Double.parseDouble(st.nextToken()),
+                                            Double.parseDouble(st.nextToken()),
+                                            Double.parseDouble(st.nextToken())));
                 }
             } else {
                 logger.debug("PMP Convention error: incorrect number of cell axis fractions!");

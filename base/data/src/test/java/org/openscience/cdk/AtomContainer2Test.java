@@ -22,6 +22,10 @@
  */
 package org.openscience.cdk;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertNull;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -33,10 +37,6 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertNull;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 /**
  * Checks the functionality of the AtomContainer.
  *
@@ -46,13 +46,14 @@ public class AtomContainer2Test extends AbstractAtomContainerTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new AtomContainer2();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new AtomContainer2();
+                    }
+                });
     }
 
     @Test
@@ -70,7 +71,10 @@ public class AtomContainer2Test extends AbstractAtomContainerTest {
         ac.addAtom(a1);
         ac.addAtom(a2);
         ac.addBond(ac.getBuilder().newInstance(IBond.class, a1, a2, IBond.Order.DOUBLE));
-        ac.addLonePair(ac.getBuilder().newInstance(ILonePair.class, ac.getBuilder().newInstance(IAtom.class, "N")));
+        ac.addLonePair(
+                ac.getBuilder()
+                        .newInstance(
+                                ILonePair.class, ac.getBuilder().newInstance(IAtom.class, "N")));
     }
 
     @Test
@@ -86,11 +90,14 @@ public class AtomContainer2Test extends AbstractAtomContainerTest {
         IAtom a2 = container.getBuilder().newInstance(IAtom.class, "C");
         container.addAtom(a1);
         container.addAtom(a2);
-        container.addBond(container.getBuilder().newInstance(IBond.class,
-                                                             a1, a2,
-                                                             IBond.Order.DOUBLE));
-        container.addLonePair(container.getBuilder().newInstance(ILonePair.class,
-                container.getBuilder().newInstance(IAtom.class, "N")));
+        container.addBond(
+                container.getBuilder().newInstance(IBond.class, a1, a2, IBond.Order.DOUBLE));
+        container.addLonePair(
+                container
+                        .getBuilder()
+                        .newInstance(
+                                ILonePair.class,
+                                container.getBuilder().newInstance(IAtom.class, "N")));
     }
 
     @Test
@@ -119,9 +126,9 @@ public class AtomContainer2Test extends AbstractAtomContainerTest {
     @Test
     public void testAtomGetBond() {
         IAtomContainer mol = (IAtomContainer) newChemObject();
-        IAtom          a1 = mol.getBuilder().newAtom();
-        IAtom          a2 = mol.getBuilder().newAtom();
-        IAtom          a3 = mol.getBuilder().newAtom();
+        IAtom a1 = mol.getBuilder().newAtom();
+        IAtom a2 = mol.getBuilder().newAtom();
+        IAtom a3 = mol.getBuilder().newAtom();
         a1.setSymbol("CH3");
         a2.setSymbol("CH2");
         a3.setSymbol("OH");
@@ -130,10 +137,8 @@ public class AtomContainer2Test extends AbstractAtomContainerTest {
         mol.addAtom(a3);
         mol.addBond(0, 1, IBond.Order.SINGLE);
         mol.addBond(1, 2, IBond.Order.SINGLE);
-        assertThat(mol.getBond(0),
-                   is(mol.getAtom(0).getBond(mol.getAtom(1))));
-        assertThat(mol.getBond(1),
-                   is(mol.getAtom(1).getBond(mol.getAtom(2))));
+        assertThat(mol.getBond(0), is(mol.getAtom(0).getBond(mol.getAtom(1))));
+        assertThat(mol.getBond(1), is(mol.getAtom(1).getBond(mol.getAtom(2))));
         assertNull(mol.getAtom(0).getBond(mol.getAtom(2)));
     }
 }

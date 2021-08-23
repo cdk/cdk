@@ -19,17 +19,16 @@
  */
 package org.openscience.cdk.qsar;
 
-import org.openscience.cdk.interfaces.IAtom;
-
 import java.util.HashMap;
 import java.util.Map;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * This class returns the valence of an atom.
  *
- * @author      mfe4
+ * @author mfe4
  * @cdk.created 2004-11-13
- * @cdk.module  standard
+ * @cdk.module standard
  * @cdk.githash
  * @cdk.dictref valence, atom
  */
@@ -92,5 +91,4 @@ public class AtomValenceTool {
 
         return valencesTable.get(atom.getSymbol());
     }
-
 }

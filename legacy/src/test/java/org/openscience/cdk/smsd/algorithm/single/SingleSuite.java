@@ -31,13 +31,14 @@ import org.junit.runners.Suite;
 
 /**
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- *
  * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({org.openscience.cdk.smsd.algorithm.single.SingleMappingHandlerTest.class,
-        org.openscience.cdk.smsd.algorithm.single.SingleMappingTest.class})
+@Suite.SuiteClasses({
+    org.openscience.cdk.smsd.algorithm.single.SingleMappingHandlerTest.class,
+    org.openscience.cdk.smsd.algorithm.single.SingleMappingTest.class
+})
 public class SingleSuite {
 
     @BeforeClass

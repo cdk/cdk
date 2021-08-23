@@ -22,13 +22,10 @@
  */
 package org.openscience.cdk.io.formats;
 
-/**
- * @cdk.module test-ioformats
- */
+/** @cdk.module test-ioformats */
 public class YasaraFormatTest extends ChemFormatTest {
 
     public YasaraFormatTest() {
         super.setChemFormat((IChemFormat) YasaraFormat.getInstance());
     }
-
 }

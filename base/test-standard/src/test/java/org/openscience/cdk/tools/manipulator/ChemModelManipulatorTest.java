@@ -22,7 +22,6 @@ import java.io.InputStream;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -50,23 +49,21 @@ import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-/**
- * @cdk.module test-standard
- */
+/** @cdk.module test-standard */
 public class ChemModelManipulatorTest extends CDKTestCase {
 
-    private final static ILoggingTool logger      = LoggingToolFactory
-                                                          .createLoggingTool(ChemModelManipulatorTest.class);
+    private static final ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(ChemModelManipulatorTest.class);
 
-    IAtomContainer                    molecule1   = null;
-    IAtomContainer                    molecule2   = null;
-    IAtom                             atomInMol1  = null;
-    IBond                             bondInMol1  = null;
-    IAtom                             atomInMol2  = null;
-    IAtomContainerSet                 moleculeSet = null;
-    IReaction                         reaction    = null;
-    IReactionSet                      reactionSet = null;
-    IChemModel                        chemModel   = null;
+    IAtomContainer molecule1 = null;
+    IAtomContainer molecule2 = null;
+    IAtom atomInMol1 = null;
+    IBond bondInMol1 = null;
+    IAtom atomInMol2 = null;
+    IAtomContainerSet moleculeSet = null;
+    IReaction reaction = null;
+    IReactionSet reactionSet = null;
+    IChemModel chemModel = null;
 
     public ChemModelManipulatorTest() {
         super();
@@ -161,7 +158,8 @@ public class ChemModelManipulatorTest extends CDKTestCase {
         mol2.addAtom(new Atom("I"));
         IBond bond2 = new Bond(mol2.getAtom(0), mol2.getAtom(1));
         mol2.addBond(bond2);
-        IAtomContainerSet molSet = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet molSet =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         molSet.addAtomContainer(mol1);
         IReaction r = new Reaction();
         r.addProduct(mol2);
@@ -194,7 +192,8 @@ public class ChemModelManipulatorTest extends CDKTestCase {
         mol2.addAtom(new Atom("I"));
         IBond bond2 = new Bond(mol2.getAtom(0), mol2.getAtom(1));
         mol2.addBond(bond2);
-        IAtomContainerSet molSet = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet molSet =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         molSet.addAtomContainer(mol1);
         IReaction r = new Reaction();
         r.addProduct(mol2);
@@ -244,28 +243,23 @@ public class ChemModelManipulatorTest extends CDKTestCase {
     public void testGetAllChemObjects_IChemModel() {
         List<IChemObject> list = ChemModelManipulator.getAllChemObjects(chemModel);
         Assert.assertEquals(5, list.size());
-        //int atomCount = 0; // not traversed
-        //int bondCount = 0; // not traversed
+        // int atomCount = 0; // not traversed
+        // int bondCount = 0; // not traversed
         int molCount = 0;
         int molSetCount = 0;
         int reactionCount = 0;
         int reactionSetCount = 0;
         for (Object o : list) {
-            //if (o instanceof IAtom) ++atomCount;
-            //if (o instanceof IBond) ++bondCount;
-            if (o instanceof IAtomContainer)
-                ++molCount;
-            else if (o instanceof IAtomContainerSet)
-                ++molSetCount;
-            else if (o instanceof IReaction)
-                ++reactionCount;
-            else if (o instanceof IReactionSet)
-                ++reactionSetCount;
-            else
-                Assert.fail("Unexpected Object of type " + o.getClass());
+            // if (o instanceof IAtom) ++atomCount;
+            // if (o instanceof IBond) ++bondCount;
+            if (o instanceof IAtomContainer) ++molCount;
+            else if (o instanceof IAtomContainerSet) ++molSetCount;
+            else if (o instanceof IReaction) ++reactionCount;
+            else if (o instanceof IReactionSet) ++reactionSetCount;
+            else Assert.fail("Unexpected Object of type " + o.getClass());
         }
-        //Assert.assertEquals(3, atomCount);
-        //Assert.assertEquals(1, bondCount);
+        // Assert.assertEquals(3, atomCount);
+        // Assert.assertEquals(1, bondCount);
         Assert.assertEquals(2, molCount);
         Assert.assertEquals(1, molSetCount);
         Assert.assertEquals(1, reactionCount);
@@ -297,13 +291,10 @@ public class ChemModelManipulatorTest extends CDKTestCase {
         Assert.assertEquals(10, uniq.size());
     }
 
-    /**
-     * @cdk.bug 3530861
-     */
+    /** @cdk.bug 3530861 */
     @Test(expected = IllegalArgumentException.class)
     public void testGetRelevantAtomContainer_NonExistentAtom() {
         IChemModel model = new org.openscience.cdk.silent.ChemModel();
         ChemModelManipulator.getRelevantAtomContainer(model, new org.openscience.cdk.silent.Atom());
     }
-
 }

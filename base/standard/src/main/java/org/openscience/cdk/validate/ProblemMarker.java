@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
  *                    2014  Mark B Vine (orcid:0000-0002-7794-0426)
  *
@@ -24,18 +24,17 @@ package org.openscience.cdk.validate;
 import org.openscience.cdk.interfaces.IChemObject;
 
 /**
- * Tool to mark IChemObject's as having a problem. There are two levels:
- * a problem, and a warning, to allow for different coloring by renderer's.
+ * Tool to mark IChemObject's as having a problem. There are two levels: a problem, and a warning,
+ * to allow for different coloring by renderer's.
  *
  * @cdk.module standard
  * @cdk.githash
- *
- * @author   Egon Willighagen
- * @cdk.created  2003-08-11
+ * @author Egon Willighagen
+ * @cdk.created 2003-08-11
  */
 public class ProblemMarker {
 
-    public static final String ERROR_MARKER   = "org.openscience.cdk.validate.error";
+    public static final String ERROR_MARKER = "org.openscience.cdk.validate.error";
     public static final String WARNING_MARKER = "org.openscience.cdk.validate.warning";
 
     public static void markWithError(IChemObject object) {

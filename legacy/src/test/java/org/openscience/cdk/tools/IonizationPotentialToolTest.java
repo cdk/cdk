@@ -18,6 +18,9 @@
  */
 package org.openscience.cdk.tools;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -28,10 +31,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 /**
  * TestSuite that runs all tests.
  *
@@ -41,9 +40,7 @@ public class IonizationPotentialToolTest extends CDKTestCase {
 
     LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
-    /**
-     * Constructor of the IonizationPotentialToolTest.
-     */
+    /** Constructor of the IonizationPotentialToolTest. */
     public IonizationPotentialToolTest() {
         super();
     }
@@ -82,5 +79,4 @@ public class IonizationPotentialToolTest extends CDKTestCase {
             Assert.assertEquals(firstIP, ip, 0.0001);
         }
     }
-
 }

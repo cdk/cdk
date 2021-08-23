@@ -25,7 +25,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 /**
  * This class matches a logical operator that connects two query bonds.
  *
- * @cdk.module  smarts
+ * @cdk.module smarts
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
@@ -34,20 +34,14 @@ public class LogicalOperatorBond extends SMARTSBond {
 
     private static final long serialVersionUID = 7508020488830371461L;
 
-    /**
-     * Left child
-     */
-    private IQueryBond        left;
+    /** Left child */
+    private IQueryBond left;
 
-    /**
-     * Name of the operator
-     */
-    private String            operator;
+    /** Name of the operator */
+    private String operator;
 
-    /**
-     * Right child
-     */
-    private IQueryBond        right;
+    /** Right child */
+    private IQueryBond right;
 
     public LogicalOperatorBond(IChemObjectBuilder builder) {
         super(builder);

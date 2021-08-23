@@ -22,19 +22,17 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionScheme;
 import org.openscience.cdk.interfaces.IReactionSet;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @cdk.module standard
  * @cdk.githash
- *
  * @see ChemModelManipulator
  */
 public class ReactionSchemeManipulator {
@@ -42,26 +40,29 @@ public class ReactionSchemeManipulator {
     /**
      * Get all molecule objects from a set of Reactions given a {@link IAtomContainerSet} to add.
      *
-     * @param  scheme The set of reaction to inspect
-     * @param  molSet The set of molecules to be added
-     * @return        The IAtomContainerSet
+     * @param scheme The set of reaction to inspect
+     * @param molSet The set of molecules to be added
+     * @return The IAtomContainerSet
      */
-    public static IAtomContainerSet getAllAtomContainers(IReactionScheme scheme, IAtomContainerSet molSet) {
+    public static IAtomContainerSet getAllAtomContainers(
+            IReactionScheme scheme, IAtomContainerSet molSet) {
         // A ReactionScheme can contain other IRreactionSet objects
-        if (scheme.getReactionSchemeCount() != 0) for (IReactionScheme rm : scheme.reactionSchemes()) {
-            for (IAtomContainer ac : getAllAtomContainers(rm, molSet).atomContainers()) {
-                boolean contain = false;
-                for (IAtomContainer atomContainer : molSet.atomContainers()) {
-                    if (atomContainer.equals(ac)) {
-                        contain = true;
-                        break;
+        if (scheme.getReactionSchemeCount() != 0)
+            for (IReactionScheme rm : scheme.reactionSchemes()) {
+                for (IAtomContainer ac : getAllAtomContainers(rm, molSet).atomContainers()) {
+                    boolean contain = false;
+                    for (IAtomContainer atomContainer : molSet.atomContainers()) {
+                        if (atomContainer.equals(ac)) {
+                            contain = true;
+                            break;
+                        }
                     }
+                    if (!contain) molSet.addAtomContainer((IAtomContainer) (ac));
                 }
-                if (!contain) molSet.addAtomContainer((IAtomContainer) (ac));
             }
-        }
         for (IReaction reaction : scheme.reactions()) {
-            List<IAtomContainer> newAtomContainerSet = ReactionManipulator.getAllAtomContainers(reaction);
+            List<IAtomContainer> newAtomContainerSet =
+                    ReactionManipulator.getAllAtomContainers(reaction);
             for (IAtomContainer ac : newAtomContainerSet) {
                 boolean contain = false;
                 for (IAtomContainer atomContainer : molSet.atomContainers()) {
@@ -71,7 +72,6 @@ public class ReactionSchemeManipulator {
                     }
                 }
                 if (!contain) molSet.addAtomContainer(ac);
-
             }
         }
 
@@ -82,17 +82,18 @@ public class ReactionSchemeManipulator {
      * get all AtomContainers object from a set of Reactions.
      *
      * @param scheme The scheme of reaction to inspect
-     * @return       The IAtomContainerSet
+     * @return The IAtomContainerSet
      */
     public static IAtomContainerSet getAllAtomContainers(IReactionScheme scheme) {
-        return getAllAtomContainers(scheme, scheme.getBuilder().newInstance(IAtomContainerSet.class));
+        return getAllAtomContainers(
+                scheme, scheme.getBuilder().newInstance(IAtomContainerSet.class));
     }
 
     /**
      * Get all ID of this IReactionSet.
      *
-     * @param scheme  The IReactionScheme to analyze
-     * @return        A List with all ID
+     * @param scheme The IReactionScheme to analyze
+     * @return A List with all ID
      */
     public static List<String> getAllIDs(IReactionScheme scheme) {
         List<String> IDlist = new ArrayList<String>();
@@ -100,28 +101,29 @@ public class ReactionSchemeManipulator {
         for (IReaction reaction : scheme.reactions()) {
             IDlist.addAll(ReactionManipulator.getAllIDs(reaction));
         }
-        if (scheme.getReactionSchemeCount() != 0) for (IReactionScheme rs : scheme.reactionSchemes()) {
-            IDlist.addAll(getAllIDs(rs));
-        }
+        if (scheme.getReactionSchemeCount() != 0)
+            for (IReactionScheme rs : scheme.reactionSchemes()) {
+                IDlist.addAll(getAllIDs(rs));
+            }
         return IDlist;
     }
 
     /**
      * Get all IReaction's object from a given IReactionScheme.
      *
-     * @param  scheme The IReactionScheme to extract
-     * @return        The IReactionSet
+     * @param scheme The IReactionScheme to extract
+     * @return The IReactionSet
      */
     public static IReactionSet getAllReactions(IReactionScheme scheme) {
         IReactionSet reactionSet = scheme.getBuilder().newInstance(IReactionSet.class);
 
         // A ReactionScheme can contain other IRreactionSet objects
-        if (scheme.getReactionSchemeCount() != 0) for (IReactionScheme schemeInt : scheme.reactionSchemes()) {
-            for (IReaction reaction : getAllReactions(schemeInt).reactions())
-                reactionSet.addReaction(reaction);
-        }
-        for (IReaction reaction : scheme.reactions())
-            reactionSet.addReaction(reaction);
+        if (scheme.getReactionSchemeCount() != 0)
+            for (IReactionScheme schemeInt : scheme.reactionSchemes()) {
+                for (IReaction reaction : getAllReactions(schemeInt).reactions())
+                    reactionSet.addReaction(reaction);
+            }
+        for (IReaction reaction : scheme.reactions()) reactionSet.addReaction(reaction);
 
         return reactionSet;
     }
@@ -129,22 +131,25 @@ public class ReactionSchemeManipulator {
     /**
      * Create a IReactionScheme give a IReactionSet object.
      *
-     * @param  reactionSet The IReactionSet
-     * @return             The IReactionScheme
+     * @param reactionSet The IReactionSet
+     * @return The IReactionScheme
      */
     public static IReactionScheme createReactionScheme(IReactionSet reactionSet) {
-        IReactionScheme reactionScheme = reactionSet.getBuilder().newInstance(IReactionScheme.class);
+        IReactionScheme reactionScheme =
+                reactionSet.getBuilder().newInstance(IReactionScheme.class);
 
         // Looking for those reactants which doesn't have any precursor. They are the top.
         ArrayList<IReaction> listTopR = new ArrayList<IReaction>();
         for (IReaction reaction : reactionSet.reactions()) {
-            if (extractPrecursorReaction(reaction, reactionSet).getReactionCount() == 0) listTopR.add(reaction);
+            if (extractPrecursorReaction(reaction, reactionSet).getReactionCount() == 0)
+                listTopR.add(reaction);
         }
 
         for (IReaction reaction : listTopR) {
             reactionScheme.addReaction(reaction);
             IReactionScheme newReactionScheme = setScheme(reaction, reactionSet);
-            if (newReactionScheme.getReactionCount() != 0 || newReactionScheme.getReactionSchemeCount() != 0)
+            if (newReactionScheme.getReactionCount() != 0
+                    || newReactionScheme.getReactionSchemeCount() != 0)
                 reactionScheme.add(newReactionScheme);
         }
         return reactionScheme;
@@ -154,8 +159,8 @@ public class ReactionSchemeManipulator {
      * Extract a set of Reactions which are in top of a IReactionScheme. The top reactions are those
      * which any of their reactants are participating in other reactions as a products.
      *
-     * @param reactionScheme  The IReactionScheme
-     * @return                The set of top reactions
+     * @param reactionScheme The IReactionScheme
+     * @return The set of top reactions
      */
     public static IReactionSet extractTopReactions(IReactionScheme reactionScheme) {
         IReactionSet reactionSet = reactionScheme.getBuilder().newInstance(IReactionSet.class);
@@ -170,18 +175,17 @@ public class ReactionSchemeManipulator {
                 }
                 if (!found) reactionSet.addReaction(reaction);
             }
-
         }
         return reactionSet;
     }
 
     /**
-     * Create a IReactionScheme given as a top a IReaction. If it doesn't exist any subsequent reaction
-     * return null;
+     * Create a IReactionScheme given as a top a IReaction. If it doesn't exist any subsequent
+     * reaction return null;
      *
-     * @param reaction       The IReaction as a top
-     * @param reactionSet    The IReactionSet to extract a IReactionScheme
-     * @return               The IReactionScheme
+     * @param reaction The IReaction as a top
+     * @param reactionSet The IReactionSet to extract a IReactionScheme
+     * @return The IReactionScheme
      */
     private static IReactionScheme setScheme(IReaction reaction, IReactionSet reactionSet) {
         IReactionScheme reactionScheme = reaction.getBuilder().newInstance(IReactionScheme.class);
@@ -191,7 +195,8 @@ public class ReactionSchemeManipulator {
             for (IReaction reactionInt : reactConSet.reactions()) {
                 reactionScheme.addReaction(reactionInt);
                 IReactionScheme newRScheme = setScheme(reactionInt, reactionSet);
-                if (newRScheme.getReactionCount() != 0 || newRScheme.getReactionSchemeCount() != 0) {
+                if (newRScheme.getReactionCount() != 0
+                        || newRScheme.getReactionSchemeCount() != 0) {
                     reactionScheme.add(newRScheme);
                 }
             }
@@ -200,14 +205,15 @@ public class ReactionSchemeManipulator {
     }
 
     /**
-     * Extract reactions from a IReactionSet which at least one product is existing
-     * as reactant given a IReaction
+     * Extract reactions from a IReactionSet which at least one product is existing as reactant
+     * given a IReaction
      *
-     * @param reaction    The IReaction to analyze
+     * @param reaction The IReaction to analyze
      * @param reactionSet The IReactionSet to inspect
-     * @return            A IReactionSet containing the reactions
+     * @return A IReactionSet containing the reactions
      */
-    private static IReactionSet extractPrecursorReaction(IReaction reaction, IReactionSet reactionSet) {
+    private static IReactionSet extractPrecursorReaction(
+            IReaction reaction, IReactionSet reactionSet) {
         IReactionSet reactConSet = reaction.getBuilder().newInstance(IReactionSet.class);
         for (IAtomContainer reactant : reaction.getReactants().atomContainers()) {
             for (IReaction reactionInt : reactionSet.reactions()) {
@@ -222,14 +228,15 @@ public class ReactionSchemeManipulator {
     }
 
     /**
-     * Extract reactions from a IReactionSet which at least one reactant is existing
-     * as precursor given a IReaction
+     * Extract reactions from a IReactionSet which at least one reactant is existing as precursor
+     * given a IReaction
      *
-     * @param reaction    The IReaction to analyze
+     * @param reaction The IReaction to analyze
      * @param reactionSet The IReactionSet to inspect
-     * @return            A IReactionSet containing the reactions
+     * @return A IReactionSet containing the reactions
      */
-    private static IReactionSet extractSubsequentReaction(IReaction reaction, IReactionSet reactionSet) {
+    private static IReactionSet extractSubsequentReaction(
+            IReaction reaction, IReactionSet reactionSet) {
         IReactionSet reactConSet = reaction.getBuilder().newInstance(IReactionSet.class);
         for (IAtomContainer reactant : reaction.getProducts().atomContainers()) {
             for (IReaction reactionInt : reactionSet.reactions()) {
@@ -244,16 +251,16 @@ public class ReactionSchemeManipulator {
     }
 
     /**
-     * Extract the list of AtomContainers taking part in the IReactionScheme to originate a
-     * product given a reactant.
+     * Extract the list of AtomContainers taking part in the IReactionScheme to originate a product
+     * given a reactant.
      *
-     * @param origenMol           The start IAtomContainer
-     * @param finalMol            The end IAtomContainer
-     * @param reactionScheme      The IReactionScheme containing the AtomContainers
-     * @return                    A List of IAtomContainerSet given the path
+     * @param origenMol The start IAtomContainer
+     * @param finalMol The end IAtomContainer
+     * @param reactionScheme The IReactionScheme containing the AtomContainers
+     * @return A List of IAtomContainerSet given the path
      */
-    public static ArrayList<IAtomContainerSet> getAtomContainerSet(IAtomContainer origenMol, IAtomContainer finalMol,
-            IReactionScheme reactionScheme) {
+    public static ArrayList<IAtomContainerSet> getAtomContainerSet(
+            IAtomContainer origenMol, IAtomContainer finalMol, IReactionScheme reactionScheme) {
         ArrayList<IAtomContainerSet> listPath = new ArrayList<IAtomContainerSet>();
         IReactionSet reactionSet = getAllReactions(reactionScheme);
 
@@ -265,12 +272,14 @@ public class ReactionSchemeManipulator {
             for (IAtomContainer reactant : reaction.getReactants().atomContainers()) {
                 if (found) break;
                 if (reactant.equals(origenMol)) {
-                    IAtomContainerSet allSet = reactionSet.getBuilder().newInstance(IAtomContainerSet.class);
+                    IAtomContainerSet allSet =
+                            reactionSet.getBuilder().newInstance(IAtomContainerSet.class);
                     // START
                     for (IAtomContainer product : reaction.getProducts().atomContainers()) {
                         if (found) break;
                         if (!product.equals(finalMol)) {
-                            IAtomContainerSet allSet2 = getReactionPath(product, finalMol, reactionSet);
+                            IAtomContainerSet allSet2 =
+                                    getReactionPath(product, finalMol, reactionSet);
                             if (allSet2.getAtomContainerCount() != 0) {
                                 allSet.addAtomContainer(origenMol);
                                 allSet.addAtomContainer(product);
@@ -297,15 +306,16 @@ public class ReactionSchemeManipulator {
         return listPath;
     }
 
-    private static IAtomContainerSet getReactionPath(IAtomContainer reactant, IAtomContainer finalMol,
-            IReactionSet reactionSet) {
+    private static IAtomContainerSet getReactionPath(
+            IAtomContainer reactant, IAtomContainer finalMol, IReactionSet reactionSet) {
         IAtomContainerSet allSet = reactionSet.getBuilder().newInstance(IAtomContainerSet.class);
         for (IReaction reaction : reactionSet.reactions()) {
             for (IAtomContainer reactant2 : reaction.getReactants().atomContainers()) {
                 if (reactant2.equals(reactant)) {
                     for (IAtomContainer product : reaction.getProducts().atomContainers()) {
                         if (!product.equals(finalMol)) {
-                            IAtomContainerSet allSet2 = getReactionPath(product, finalMol, reactionSet);
+                            IAtomContainerSet allSet2 =
+                                    getReactionPath(product, finalMol, reactionSet);
                             if (allSet2.getAtomContainerCount() != 0) {
                                 allSet.addAtomContainer(reactant);
                                 allSet.add(allSet2);
@@ -315,7 +325,6 @@ public class ReactionSchemeManipulator {
                             return allSet;
                         }
                     }
-
                 }
             }
         }

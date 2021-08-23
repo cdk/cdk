@@ -24,8 +24,8 @@
 package org.openscience.cdk.exception;
 
 /**
- * Exception that is thrown when an Atom is requested or required that
- * does not exist in the relevant environment.
+ * Exception that is thrown when an Atom is requested or required that does not exist in the
+ * relevant environment.
  *
  * @cdk.module core
  * @cdk.githash

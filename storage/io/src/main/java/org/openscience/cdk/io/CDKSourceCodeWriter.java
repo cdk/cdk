@@ -29,10 +29,8 @@ import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Iterator;
-
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -50,8 +48,8 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * Converts a Molecule into CDK source code that would build the same
- * molecule. It's typical use is:
+ * Converts a Molecule into CDK source code that would build the same molecule. It's typical use is:
+ *
  * <pre>
  * StringWriter stringWriter = new StringWriter();
  * ChemObjectWriter writer = new CDKSourceCodeWriter(stringWriter);
@@ -62,26 +60,25 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @cdk.module io
  * @cdk.githash
- *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  * @cdk.created 2003-10-01
- *
  * @cdk.keyword file format, CDK source code
  * @cdk.iooptions
  */
 public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
 
-    private BufferedWriter      writer;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CDKSourceCodeWriter.class);
+    private BufferedWriter writer;
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(CDKSourceCodeWriter.class);
 
-    private BooleanIOSetting    write2DCoordinates;
-    private BooleanIOSetting    write3DCoordinates;
-    private StringIOSetting     builder;
+    private BooleanIOSetting write2DCoordinates;
+    private BooleanIOSetting write3DCoordinates;
+    private StringIOSetting builder;
 
     /**
      * Constructs a new CDKSourceCodeWriter.
      *
-     * @param   out  The Writer to write to
+     * @param out The Writer to write to
      */
     public CDKSourceCodeWriter(Writer out) {
         initIOSettings();
@@ -118,9 +115,7 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
         setWriter(new OutputStreamWriter(output));
     }
 
-    /**
-     * Flushes the output and closes this object.
-     */
+    /** Flushes the output and closes this object. */
     @Override
     public void close() throws IOException {
         writer.flush();
@@ -149,7 +144,8 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
             } catch (Exception ex) {
                 logger.error(ex.getMessage());
                 logger.debug(ex);
-                throw new CDKException("Exception while writing to CDK source code: " + ex.getMessage(), ex);
+                throw new CDKException(
+                        "Exception while writing to CDK source code: " + ex.getMessage(), ex);
             }
         } else {
             throw new CDKException("Only supported is writing of IAtomContainer objects.");
@@ -194,13 +190,18 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
 
     private void writeAtom(IAtom atom) throws Exception {
         if (atom instanceof IPseudoAtom) {
-            writer.write("  IPseudoAtom " + atom.getID() + " = builder.newInstance(IPseudoAtom.class);");
+            writer.write(
+                    "  IPseudoAtom " + atom.getID() + " = builder.newInstance(IPseudoAtom.class);");
             writer.write('\n');
             writer.write("  atom.setLabel(\"" + ((IPseudoAtom) atom).getLabel() + "\");");
             writer.write('\n');
         } else {
-            writer.write("  IAtom " + atom.getID() + " = builder.newInstance(IAtom.class,\"" + atom.getSymbol()
-                    + "\");");
+            writer.write(
+                    "  IAtom "
+                            + atom.getID()
+                            + " = builder.newInstance(IAtom.class,\""
+                            + atom.getSymbol()
+                            + "\");");
             writer.write('\n');
         }
         if (atom.getFormalCharge() != null) {
@@ -209,25 +210,51 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
         }
         if (write2DCoordinates.isSet() && atom.getPoint2d() != null) {
             Point2d p2d = atom.getPoint2d();
-            writer.write("  " + atom.getID() + ".setPoint2d(new Point2d(" + p2d.x + ", " + p2d.y + "));");
+            writer.write(
+                    "  "
+                            + atom.getID()
+                            + ".setPoint2d(new Point2d("
+                            + p2d.x
+                            + ", "
+                            + p2d.y
+                            + "));");
             writer.write('\n');
         }
         if (write3DCoordinates.isSet() && atom.getPoint3d() != null) {
             Point3d p3d = atom.getPoint3d();
-            writer.write("  " + atom.getID() + ".setPoint3d(new Point3d(" + p3d.x + ", " + p3d.y + ", " + p3d.z + "));");
+            writer.write(
+                    "  "
+                            + atom.getID()
+                            + ".setPoint3d(new Point3d("
+                            + p3d.x
+                            + ", "
+                            + p3d.y
+                            + ", "
+                            + p3d.z
+                            + "));");
             writer.write('\n');
         }
     }
 
     private void writeBond(IBond bond) throws Exception {
-        writer.write("  IBond " + bond.getID() + " = builder.newInstance(IBond.class," + bond.getBegin().getID() + ", "
-                     + bond.getEnd().getID() + ", IBond.Order." + bond.getOrder() + ");");
+        writer.write(
+                "  IBond "
+                        + bond.getID()
+                        + " = builder.newInstance(IBond.class,"
+                        + bond.getBegin().getID()
+                        + ", "
+                        + bond.getEnd().getID()
+                        + ", IBond.Order."
+                        + bond.getOrder()
+                        + ");");
         writer.write('\n');
     }
 
     public int getSupportedDataFeatures() {
-        return DataFeatures.HAS_2D_COORDINATES | DataFeatures.HAS_3D_COORDINATES
-                | DataFeatures.HAS_GRAPH_REPRESENTATION | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
+        return DataFeatures.HAS_2D_COORDINATES
+                | DataFeatures.HAS_3D_COORDINATES
+                | DataFeatures.HAS_GRAPH_REPRESENTATION
+                | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
     }
 
     public int getRequiredDataFeatures() {
@@ -235,14 +262,29 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
     }
 
     private void initIOSettings() {
-        write2DCoordinates = addSetting(new BooleanIOSetting("write2DCoordinates", IOSetting.Importance.LOW,
-                "Should 2D coordinates be added?", "true"));
+        write2DCoordinates =
+                addSetting(
+                        new BooleanIOSetting(
+                                "write2DCoordinates",
+                                IOSetting.Importance.LOW,
+                                "Should 2D coordinates be added?",
+                                "true"));
 
-        write3DCoordinates = addSetting(new BooleanIOSetting("write3DCoordinates", IOSetting.Importance.LOW,
-                "Should 3D coordinates be added?", "true"));
+        write3DCoordinates =
+                addSetting(
+                        new BooleanIOSetting(
+                                "write3DCoordinates",
+                                IOSetting.Importance.LOW,
+                                "Should 3D coordinates be added?",
+                                "true"));
 
-        builder = addSetting(new StringIOSetting("builder", IOSetting.Importance.LOW,
-                "Which IChemObjectBuilder should be used?", "DefaultChemObjectBuilder"));
+        builder =
+                addSetting(
+                        new StringIOSetting(
+                                "builder",
+                                IOSetting.Importance.LOW,
+                                "Which IChemObjectBuilder should be used?",
+                                "DefaultChemObjectBuilder"));
     }
 
     private void customizeJob() {
@@ -250,5 +292,4 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
         fireIOSettingQuestion(write3DCoordinates);
         fireIOSettingQuestion(builder);
     }
-
 }

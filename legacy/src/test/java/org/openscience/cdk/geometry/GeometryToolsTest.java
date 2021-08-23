@@ -18,14 +18,15 @@
  */
 package org.openscience.cdk.geometry;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import java.awt.geom.Rectangle2D;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -48,18 +49,13 @@ import org.openscience.cdk.isomorphism.AtomMappingTools;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.diff.AtomContainerDiff;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 /**
- * This class defines regression tests that should ensure that the source code
- * of the {@link GeometryTools} is not broken.
+ * This class defines regression tests that should ensure that the source code of the {@link
+ * GeometryTools} is not broken.
  *
  * @cdk.module test-standard
- *
- * @author     Egon Willighagen
- * @cdk.created    2004-01-30
- *
+ * @author Egon Willighagen
+ * @cdk.created 2004-01-30
  * @see org.openscience.cdk.geometry.GeometryTools
  */
 public class GeometryToolsTest extends CDKTestCase {
@@ -104,9 +100,7 @@ public class GeometryToolsTest extends CDKTestCase {
         Assert.assertFalse(GeometryTools.has2DCoordinates(container));
     }
 
-    /**
-     * @cdk.bug 2936440
-     */
+    /** @cdk.bug 2936440 */
     @Test
     public void testHas2DCoordinates_With000() throws CDKException {
         String filenameMol = "data/mdl/with000coordinate.mol";
@@ -120,8 +114,11 @@ public class GeometryToolsTest extends CDKTestCase {
     @Test
     public void get2DCoordinateCoverage_EmptyAtomContainer() {
         IAtomContainer container = new AtomContainer();
-        Assert.assertEquals(GeometryTools.CoordinateCoverage.NONE, GeometryTools.get2DCoordinateCoverage(container));
-        Assert.assertEquals(GeometryTools.CoordinateCoverage.NONE,
+        Assert.assertEquals(
+                GeometryTools.CoordinateCoverage.NONE,
+                GeometryTools.get2DCoordinateCoverage(container));
+        Assert.assertEquals(
+                GeometryTools.CoordinateCoverage.NONE,
                 GeometryTools.get2DCoordinateCoverage((IAtomContainer) null));
     }
 
@@ -141,8 +138,9 @@ public class GeometryToolsTest extends CDKTestCase {
         container.addAtom(atom2);
         container.addAtom(atom3);
 
-        Assert.assertEquals(GeometryTools.CoordinateCoverage.PARTIAL, GeometryTools.get2DCoordinateCoverage(container));
-
+        Assert.assertEquals(
+                GeometryTools.CoordinateCoverage.PARTIAL,
+                GeometryTools.get2DCoordinateCoverage(container));
     }
 
     @Test
@@ -162,8 +160,9 @@ public class GeometryToolsTest extends CDKTestCase {
         container.addAtom(atom2);
         container.addAtom(atom3);
 
-        Assert.assertEquals(GeometryTools.CoordinateCoverage.FULL, GeometryTools.get2DCoordinateCoverage(container));
-
+        Assert.assertEquals(
+                GeometryTools.CoordinateCoverage.FULL,
+                GeometryTools.get2DCoordinateCoverage(container));
     }
 
     @Test
@@ -183,8 +182,9 @@ public class GeometryToolsTest extends CDKTestCase {
         container.addAtom(atom2);
         container.addAtom(atom3);
 
-        Assert.assertEquals(GeometryTools.CoordinateCoverage.NONE, GeometryTools.get2DCoordinateCoverage(container));
-
+        Assert.assertEquals(
+                GeometryTools.CoordinateCoverage.NONE,
+                GeometryTools.get2DCoordinateCoverage(container));
     }
 
     @Test
@@ -211,7 +211,7 @@ public class GeometryToolsTest extends CDKTestCase {
     public void testMapAtomsOfAlignedStructures() throws Exception {
         String filenameMolOne = "data/mdl/murckoTest6_3d_2.mol";
         String filenameMolTwo = "data/mdl/murckoTest6_3d.mol";
-        //String filenameMolTwo = "data/mdl/murckoTest6_3d_2.mol";
+        // String filenameMolTwo = "data/mdl/murckoTest6_3d_2.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filenameMolOne);
         IAtomContainer molOne;
         IAtomContainer molTwo;
@@ -224,18 +224,19 @@ public class GeometryToolsTest extends CDKTestCase {
         molTwo = reader.read(new AtomContainer());
 
         mappedAtoms = AtomMappingTools.mapAtomsOfAlignedStructures(molOne, molTwo, mappedAtoms);
-        //logger.debug("mappedAtoms:"+mappedAtoms.toString());
-        //logger.debug("***** ANGLE VARIATIONS *****");
+        // logger.debug("mappedAtoms:"+mappedAtoms.toString());
+        // logger.debug("***** ANGLE VARIATIONS *****");
         double AngleRMSD = GeometryTools.getAngleRMSD(molOne, molTwo, mappedAtoms);
-        //logger.debug("The Angle RMSD between the first and the second structure is :"+AngleRMSD);
-        //logger.debug("***** ALL ATOMS RMSD *****");
+        // logger.debug("The Angle RMSD between the first and the second structure is :"+AngleRMSD);
+        // logger.debug("***** ALL ATOMS RMSD *****");
         Assert.assertEquals(0.2, AngleRMSD, 0.1);
         double AllRMSD = GeometryTools.getAllAtomRMSD(molOne, molTwo, mappedAtoms, true);
-        //logger.debug("The RMSD between the first and the second structure is :"+AllRMSD);
+        // logger.debug("The RMSD between the first and the second structure is :"+AllRMSD);
         Assert.assertEquals(0.242, AllRMSD, 0.001);
-        //logger.debug("***** BOND LENGTH RMSD *****");
+        // logger.debug("***** BOND LENGTH RMSD *****");
         double BondLengthRMSD = GeometryTools.getBondLengthRMSD(molOne, molTwo, mappedAtoms, true);
-        //logger.debug("The Bond length RMSD between the first and the second structure is :"+BondLengthRMSD);
+        // logger.debug("The Bond length RMSD between the first and the second structure is
+        // :"+BondLengthRMSD);
         Assert.assertEquals(0.2, BondLengthRMSD, 0.1);
     }
 
@@ -248,7 +249,8 @@ public class GeometryToolsTest extends CDKTestCase {
         atom1.setPoint2d(new Point2d(1, 1));
         Atom atom2 = new Atom("C");
         atom2.setPoint2d(new Point2d(1, 0));
-        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer ac =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         ac.addAtom(atom1);
         ac.addAtom(atom2);
         GeometryTools.rotate(ac, new Point2d(0, 0), Math.PI / 2);
@@ -268,7 +270,8 @@ public class GeometryToolsTest extends CDKTestCase {
         atom1.setPoint2d(new Point2d(1, 1));
         Atom atom2 = new Atom("C");
         atom2.setPoint2d(new Point2d(1, 0));
-        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer ac =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         ac.addAtom(atom1);
         ac.addAtom(atom2);
         double[] minmax = GeometryTools.getMinMax(ac);
@@ -285,7 +288,8 @@ public class GeometryToolsTest extends CDKTestCase {
         atom1.setPoint2d(new Point2d(-2, -1));
         Atom atom2 = new Atom("C");
         atom2.setPoint2d(new Point2d(-5, -1));
-        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer ac =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         ac.addAtom(atom1);
         ac.addAtom(atom2);
         double[] minmax = GeometryTools.getMinMax(ac);
@@ -334,7 +338,8 @@ public class GeometryToolsTest extends CDKTestCase {
         atom1.setPoint2d(new Point2d(1, 1));
         Atom atom2 = new Atom("C");
         atom2.setPoint2d(new Point2d(1, 0));
-        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer ac =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         ac.addAtom(atom1);
         ac.addAtom(atom2);
         Point2d p = GeometryTools.get2DCenter(ac);
@@ -350,7 +355,8 @@ public class GeometryToolsTest extends CDKTestCase {
         Atom atom2 = new Atom("C");
         atom2.setPoint2d(new Point2d(1, 0));
         atom2.setExactMass(12.0);
-        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer ac =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         ac.addAtom(atom1);
         ac.addAtom(atom2);
         Point2d p = GeometryTools.get2DCentreOfMass(ac);
@@ -395,7 +401,8 @@ public class GeometryToolsTest extends CDKTestCase {
         atom1.setPoint2d(new Point2d(1, 1));
         Atom atom2 = new Atom("C");
         atom2.setPoint2d(new Point2d(1, 0));
-        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer ac =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         ac.addAtom(atom1);
         ac.addAtom(atom2);
         Point2d p = GeometryTools.get2DCenter(ac.atoms());
@@ -492,8 +499,11 @@ public class GeometryToolsTest extends CDKTestCase {
     @Test
     public void get3DCoordinateCoverage_EmptyAtomContainer() {
         IAtomContainer container = new AtomContainer();
-        Assert.assertEquals(GeometryTools.CoordinateCoverage.NONE, GeometryTools.get3DCoordinateCoverage(container));
-        Assert.assertEquals(GeometryTools.CoordinateCoverage.NONE,
+        Assert.assertEquals(
+                GeometryTools.CoordinateCoverage.NONE,
+                GeometryTools.get3DCoordinateCoverage(container));
+        Assert.assertEquals(
+                GeometryTools.CoordinateCoverage.NONE,
                 GeometryTools.get3DCoordinateCoverage((IAtomContainer) null));
     }
 
@@ -513,8 +523,9 @@ public class GeometryToolsTest extends CDKTestCase {
         container.addAtom(atom2);
         container.addAtom(atom3);
 
-        Assert.assertEquals(GeometryTools.CoordinateCoverage.PARTIAL, GeometryTools.get3DCoordinateCoverage(container));
-
+        Assert.assertEquals(
+                GeometryTools.CoordinateCoverage.PARTIAL,
+                GeometryTools.get3DCoordinateCoverage(container));
     }
 
     @Test
@@ -534,8 +545,9 @@ public class GeometryToolsTest extends CDKTestCase {
         container.addAtom(atom2);
         container.addAtom(atom3);
 
-        Assert.assertEquals(GeometryTools.CoordinateCoverage.FULL, GeometryTools.get3DCoordinateCoverage(container));
-
+        Assert.assertEquals(
+                GeometryTools.CoordinateCoverage.FULL,
+                GeometryTools.get3DCoordinateCoverage(container));
     }
 
     @Test
@@ -555,8 +567,9 @@ public class GeometryToolsTest extends CDKTestCase {
         container.addAtom(atom2);
         container.addAtom(atom3);
 
-        Assert.assertEquals(GeometryTools.CoordinateCoverage.NONE, GeometryTools.get3DCoordinateCoverage(container));
-
+        Assert.assertEquals(
+                GeometryTools.CoordinateCoverage.NONE,
+                GeometryTools.get3DCoordinateCoverage(container));
     }
 
     @Test
@@ -565,7 +578,8 @@ public class GeometryToolsTest extends CDKTestCase {
         atom1.setPoint2d(new Point2d(-1, -1));
         Atom atom2 = new Atom("C");
         atom2.setPoint2d(new Point2d(1, 0));
-        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer ac =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         ac.addAtom(atom1);
         ac.addAtom(atom2);
         GeometryTools.translateAllPositive(ac);
@@ -582,7 +596,8 @@ public class GeometryToolsTest extends CDKTestCase {
         Atom atom2 = new Atom("C");
         atom2.setPoint2d(new Point2d(1, 0));
         IBond bond = new Bond(atom1, atom2);
-        IAtomContainer ac = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer ac =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         ac.addAtom(atom1);
         ac.addAtom(atom2);
         Assert.assertEquals(GeometryTools.getLength2D(bond), 2.23, 0.01);
@@ -618,9 +633,7 @@ public class GeometryToolsTest extends CDKTestCase {
         Assert.assertEquals(atom1, GeometryTools.getClosestAtom(1.0, 0.0, acont, null));
     }
 
-    /**
-     * Tests if not the central atom is returned as closest atom.
-     */
+    /** Tests if not the central atom is returned as closest atom. */
     @Test
     public void testGetClosestAtom_IAtomContainer_IAtom() {
         IAtom atom1 = new Atom("C");
@@ -635,7 +648,8 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testShiftContainerHorizontal_IAtomContainer_Rectangle2D_Rectangle2D_double() throws Exception {
+    public void testShiftContainerHorizontal_IAtomContainer_Rectangle2D_Rectangle2D_double()
+            throws Exception {
         IAtom atom1 = new Atom("C");
         atom1.setPoint2d(new Point2d(0, 1));
         IAtom atom2 = new Atom("C");
@@ -646,8 +660,11 @@ public class GeometryToolsTest extends CDKTestCase {
         IAtomContainer react2 = (IAtomContainer) react1.clone();
 
         // shift the second molecule right
-        GeometryTools.shiftContainer(react2, GeometryTools.getRectangle2D(react2),
-                GeometryTools.getRectangle2D(react1), 1.0);
+        GeometryTools.shiftContainer(
+                react2,
+                GeometryTools.getRectangle2D(react2),
+                GeometryTools.getRectangle2D(react1),
+                1.0);
         // assert all coordinates of the second molecule moved right
         AtomContainerDiff.diff(react1, react2);
         for (int i = 0; i < 2; i++) {
@@ -661,8 +678,8 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     /**
-     * Unit tests that tests the situation where two vertical two-atom
-     * molecules are with the same x coordinates.
+     * Unit tests that tests the situation where two vertical two-atom molecules are with the same x
+     * coordinates.
      *
      * @throws Exception Thrown when the cloning failed.
      */
@@ -678,8 +695,11 @@ public class GeometryToolsTest extends CDKTestCase {
         IAtomContainer react2 = (IAtomContainer) react1.clone();
 
         // shift the second molecule right
-        GeometryTools.shiftContainer(react2, GeometryTools.getRectangle2D(react2),
-                GeometryTools.getRectangle2D(react1), 1.0);
+        GeometryTools.shiftContainer(
+                react2,
+                GeometryTools.getRectangle2D(react2),
+                GeometryTools.getRectangle2D(react1),
+                1.0);
         // assert all coordinates of the second molecule moved right
         AtomContainerDiff.diff(react1, react2);
         for (int i = 0; i < 2; i++) {
@@ -708,8 +728,8 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     /**
-     * Tests if the bond length average is calculated based on all
-     * {@link IAtomContainer}s in the IReaction.
+     * Tests if the bond length average is calculated based on all {@link IAtomContainer}s in the
+     * IReaction.
      */
     @Test
     public void testGetBondLengthAverage_MultiReaction() {
@@ -741,7 +761,8 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     @Test
-    public void testShiftReactionVertical_IAtomContainer_Rectangle2D_Rectangle2D_double() throws Exception {
+    public void testShiftReactionVertical_IAtomContainer_Rectangle2D_Rectangle2D_double()
+            throws Exception {
         IAtom atom1 = new Atom("C");
         atom1.setPoint2d(new Point2d(0, 1));
         IAtom atom2 = new Atom("C");
@@ -756,12 +777,17 @@ public class GeometryToolsTest extends CDKTestCase {
         IAtomContainer react2 = reaction2.getReactants().getAtomContainer(0);
 
         // shift the second reaction up
-        GeometryTools.shiftReactionVertical(reaction2, GeometryTools.getRectangle2D(react2),
-                GeometryTools.getRectangle2D(react1), 1.0);
+        GeometryTools.shiftReactionVertical(
+                reaction2,
+                GeometryTools.getRectangle2D(react2),
+                GeometryTools.getRectangle2D(react1),
+                1.0);
         // assert all coordinates of the second reaction moved up
         AtomContainerDiff.diff(react1, react2);
-        LoggingToolFactory.createLoggingTool(getClass()).info("R1: " + GeometryTools.getRectangle2D(react1));
-        LoggingToolFactory.createLoggingTool(getClass()).info("R2: " + GeometryTools.getRectangle2D(react2));
+        LoggingToolFactory.createLoggingTool(getClass())
+                .info("R1: " + GeometryTools.getRectangle2D(react1));
+        LoggingToolFactory.createLoggingTool(getClass())
+                .info("R2: " + GeometryTools.getRectangle2D(react2));
         for (int i = 0; i < 2; i++) {
             atom1 = react1.getAtom(0);
             atom2 = react2.getAtom(0);
@@ -773,8 +799,8 @@ public class GeometryToolsTest extends CDKTestCase {
     }
 
     /**
-     * Unit tests that tests the situation where two horizontal two-atom
-     * molecules are with the same y coordinates.
+     * Unit tests that tests the situation where two horizontal two-atom molecules are with the same
+     * y coordinates.
      *
      * @throws Exception Thrown when the cloning failed.
      */
@@ -794,12 +820,17 @@ public class GeometryToolsTest extends CDKTestCase {
         IAtomContainer react2 = reaction2.getReactants().getAtomContainer(0);
 
         // shift the second reaction up
-        GeometryTools.shiftReactionVertical(reaction2, GeometryTools.getRectangle2D(react2),
-                GeometryTools.getRectangle2D(react1), 1.0);
+        GeometryTools.shiftReactionVertical(
+                reaction2,
+                GeometryTools.getRectangle2D(react2),
+                GeometryTools.getRectangle2D(react1),
+                1.0);
         // assert all coordinates of the second reaction moved up
         AtomContainerDiff.diff(react1, react2);
-        LoggingToolFactory.createLoggingTool(getClass()).info("R1: " + GeometryTools.getRectangle2D(react1));
-        LoggingToolFactory.createLoggingTool(getClass()).info("R2: " + GeometryTools.getRectangle2D(react2));
+        LoggingToolFactory.createLoggingTool(getClass())
+                .info("R1: " + GeometryTools.getRectangle2D(react1));
+        LoggingToolFactory.createLoggingTool(getClass())
+                .info("R2: " + GeometryTools.getRectangle2D(react2));
         for (int i = 0; i < 2; i++) {
             atom1 = react1.getAtom(0);
             atom2 = react2.getAtom(0);

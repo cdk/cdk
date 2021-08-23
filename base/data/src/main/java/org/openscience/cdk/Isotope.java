@@ -26,27 +26,28 @@
  */
 package org.openscience.cdk;
 
+import java.io.Serializable;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 
-import java.io.Serializable;
-
 /**
- * Used to store and retrieve data of a particular isotope.
- * For example, an carbon 13 isotope can be created with:
+ * Used to store and retrieve data of a particular isotope. For example, an carbon 13 isotope can be
+ * created with:
+ *
  * <pre>
  *   Isotope carbon = new Isotope("C", 13);
  * </pre>
  *
  * <p>A full specification can be constructed with:
+ *
  * <pre>
  *   // make deuterium
  *   Isotope carbon = new Isotope(1, "H", 2, 2.01410179, 100.0);
  * </pre>
  *
- * <p>Once instantiated all field not filled by passing parameters
- * to the constructor are null. Isotopes can be configured by using
- * the IsotopeFactory.configure() method:
+ * <p>Once instantiated all field not filled by passing parameters to the constructor are null.
+ * Isotopes can be configured by using the IsotopeFactory.configure() method:
+ *
  * <pre>
  *   Isotope isotope = new Isotope("C", 13);
  *   IsotopeFactory if = IsotopeFactory.getInstance(isotope.getNewBuilder());
@@ -55,61 +56,64 @@ import java.io.Serializable;
  *
  * @cdk.module data
  * @cdk.githash
- *
- * @author     steinbeck
- * @cdk.created    2001-08-21
- *
- * @cdk.keyword     isotope
+ * @author steinbeck
+ * @cdk.created 2001-08-21
+ * @cdk.keyword isotope
  */
 public class Isotope extends Element implements Serializable, IIsotope, Cloneable {
 
     /**
      * Determines if a de-serialized object is compatible with this class.
      *
-     * This value must only be changed if and only if the new version
-     * of this class is incompatible with the old version. See Sun docs
-     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
+     * <p>This value must only be changed if and only if the new version of this class is
+     * incompatible with the old version. See Sun docs for <a
+     * href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
      */
     private static final long serialVersionUID = 6389365978927575858L;
 
     /** Exact mass of this isotope. */
-    public Double             exactMass;
+    public Double exactMass;
     /** Natural abundance of this isotope. */
-    public Double             naturalAbundance;
+    public Double naturalAbundance;
     /** The mass number for this isotope. */
-    private Integer           massNumber;
+    private Integer massNumber;
 
     /**
-     *  Constructor for the Isotope object.
+     * Constructor for the Isotope object.
      *
-     * @param  elementSymbol  The element symbol, "O" for Oxygen, etc.
+     * @param elementSymbol The element symbol, "O" for Oxygen, etc.
      */
     public Isotope(String elementSymbol) {
         super(elementSymbol);
     }
 
     /**
-     *  Constructor for the Isotope object.
+     * Constructor for the Isotope object.
      *
-     * @param  atomicNumber   The atomic number of the isotope
-     * @param  elementSymbol  The element symbol, "O" for Oxygen, etc.
-     * @param  massNumber     The atomic mass of the isotope, 16 for Oxygen, e.g.
-     * @param  exactMass      The exact mass of the isotope, be a little more explicit here :-)
-     * @param  abundance      The natural abundance of the isotope
+     * @param atomicNumber The atomic number of the isotope
+     * @param elementSymbol The element symbol, "O" for Oxygen, etc.
+     * @param massNumber The atomic mass of the isotope, 16 for Oxygen, e.g.
+     * @param exactMass The exact mass of the isotope, be a little more explicit here :-)
+     * @param abundance The natural abundance of the isotope
      */
-    public Isotope(int atomicNumber, String elementSymbol, int massNumber, double exactMass, double abundance) {
+    public Isotope(
+            int atomicNumber,
+            String elementSymbol,
+            int massNumber,
+            double exactMass,
+            double abundance) {
         this(atomicNumber, elementSymbol, exactMass, abundance);
         this.massNumber = massNumber;
     }
 
     /**
-     *  Constructor for the Isotope object.
+     * Constructor for the Isotope object.
      *
-     * @param  atomicNumber   The atomic number of the isotope, 8 for Oxygen
-     * @param  elementSymbol  The element symbol, "O" for Oxygen, etc.
-     * @param  exactMass      The exact mass of the isotope, be a little more explicit here :-)
-     * @param  abundance      The natural abundance of the isotope
+     * @param atomicNumber The atomic number of the isotope, 8 for Oxygen
+     * @param elementSymbol The element symbol, "O" for Oxygen, etc.
+     * @param exactMass The exact mass of the isotope, be a little more explicit here :-)
+     * @param abundance The natural abundance of the isotope
      */
     public Isotope(int atomicNumber, String elementSymbol, double exactMass, double abundance) {
         super(elementSymbol, atomicNumber);
@@ -120,8 +124,8 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
     /**
      * Constructor for the Isotope object.
      *
-     * @param  elementSymbol  The element symbol, "O" for Oxygen, etc.
-     * @param  massNumber     The atomic mass of the isotope, 16 for Oxygen, e.g.
+     * @param elementSymbol The element symbol, "O" for Oxygen, etc.
+     * @param massNumber The atomic mass of the isotope, 16 for Oxygen, e.g.
      */
     public Isotope(String elementSymbol, int massNumber) {
         super(elementSymbol);
@@ -129,11 +133,9 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
     }
 
     /**
-     * Constructs an empty by copying the symbol, atomic number,
-     * flags, and identifier from the given IElement. It does
-     * not copy the listeners and properties. If the element is
-     * an instance of IIsotope, then the exact mass, natural
-     * abundance and mass number are copied too.
+     * Constructs an empty by copying the symbol, atomic number, flags, and identifier from the
+     * given IElement. It does not copy the listeners and properties. If the element is an instance
+     * of IIsotope, then the exact mass, natural abundance and mass number are copied too.
      *
      * @param element IElement to copy information from
      */
@@ -147,11 +149,10 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
     }
 
     /**
-     *  Sets the NaturalAbundance attribute of the Isotope object.
+     * Sets the NaturalAbundance attribute of the Isotope object.
      *
-     * @param  naturalAbundance  The new NaturalAbundance value
-     *
-     * @see       #getNaturalAbundance
+     * @param naturalAbundance The new NaturalAbundance value
+     * @see #getNaturalAbundance
      */
     @Override
     public void setNaturalAbundance(Double naturalAbundance) {
@@ -160,11 +161,10 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
     }
 
     /**
-     *  Sets the ExactMass attribute of the Isotope object.
+     * Sets the ExactMass attribute of the Isotope object.
      *
-     * @param  exactMass  The new ExactMass value
-     *
-     * @see       #getExactMass
+     * @param exactMass The new ExactMass value
+     * @see #getExactMass
      */
     @Override
     public void setExactMass(Double exactMass) {
@@ -173,21 +173,19 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
     }
 
     /**
-     *  Gets the NaturalAbundance attribute of the Isotope object.
+     * Gets the NaturalAbundance attribute of the Isotope object.
      *
-     * <p>Once instantiated all field not filled by passing parameters
-     * to the constructor are null. Isotopes can be configured by using
-     * the IsotopeFactory.configure() method:
-     * </p>
+     * <p>Once instantiated all field not filled by passing parameters to the constructor are null.
+     * Isotopes can be configured by using the IsotopeFactory.configure() method:
+     *
      * <pre>
      *   Isotope isotope = new Isotope("C", 13);
      *   IsotopeFactory if = IsotopeFactory.getInstance(isotope.getNewBuilder());
      *   if.configure(isotope);
      * </pre>
      *
-     * @return    The NaturalAbundance value
-     *
-     * @see       #setNaturalAbundance
+     * @return The NaturalAbundance value
+     * @see #setNaturalAbundance
      */
     @Override
     public Double getNaturalAbundance() {
@@ -195,20 +193,19 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
     }
 
     /**
-     *  Gets the ExactMass attribute of the Isotope object.
-     *  <p>Once instantiated all field not filled by passing parameters
-     * to the constructor are null. Isotopes can be configured by using
-     * the IsotopeFactory.configure() method:
-     * </p>
+     * Gets the ExactMass attribute of the Isotope object.
+     *
+     * <p>Once instantiated all field not filled by passing parameters to the constructor are null.
+     * Isotopes can be configured by using the IsotopeFactory.configure() method:
+     *
      * <pre>
      *   Isotope isotope = new Isotope("C", 13);
      *   IsotopeFactory if = IsotopeFactory.getInstance(isotope.getNewBuilder());
      *   if.configure(isotope);
      * </pre>
      *
-     * @return    The ExactMass value
-     *
-     * @see       #setExactMass
+     * @return The ExactMass value
+     * @see #setExactMass
      */
     @Override
     public Double getExactMass() {
@@ -218,10 +215,9 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
     /**
      * Returns the atomic mass of this element.
      *
-     * <p>Once instantiated all field not filled by passing parameters
-     * to the constructor are null. Isotopes can be configured by using
-     * the IsotopeFactory.configure() method:
-     * </p>
+     * <p>Once instantiated all field not filled by passing parameters to the constructor are null.
+     * Isotopes can be configured by using the IsotopeFactory.configure() method:
+     *
      * <pre>
      *   Isotope isotope = new Isotope("C", 13);
      *   IsotopeFactory if = IsotopeFactory.getInstance(isotope.getNewBuilder());
@@ -229,8 +225,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
      * </pre>
      *
      * @return The atomic mass of this element
-     *
-     * @see    #setMassNumber(Integer)
+     * @see #setMassNumber(Integer)
      */
     @Override
     public Integer getMassNumber() {
@@ -240,9 +235,8 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
     /**
      * Sets the atomic mass of this element.
      *
-     * @param   massNumber The atomic mass to be assigned to this element
-     *
-     * @see    #getMassNumber
+     * @param massNumber The atomic mass to be assigned to this element
+     * @see #getMassNumber
      */
     @Override
     public void setMassNumber(Integer massNumber) {
@@ -251,9 +245,9 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
     }
 
     /**
-     *  A string representation of this isotope.
+     * A string representation of this isotope.
      *
-     * @return    A string representation of this isotope
+     * @return A string representation of this isotope
      */
     @Override
     public String toString() {
@@ -278,8 +272,8 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
     /**
      * Compares a atom type with this atom type.
      *
-     * @param  object Object of type AtomType
-     * @return        true if the atom types are equal
+     * @param object Object of type AtomType
+     * @return true if the atom types are equal
      */
     @Override
     public boolean compare(Object object) {
@@ -290,17 +284,24 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
             return false;
         }
         Isotope isotope = (Isotope) object;
-        if (isotope.getMassNumber() != null && massNumber != null
-                && isotope.getMassNumber().intValue() != this.getMassNumber().intValue()) return false;
+        if (isotope.getMassNumber() != null
+                && massNumber != null
+                && isotope.getMassNumber().intValue() != this.getMassNumber().intValue())
+            return false;
         if (isotope.getMassNumber() == null && massNumber != null) return false;
         if (isotope.getExactMass() != null && exactMass != null) {
-            double diff = Math.abs(isotope.getExactMass().doubleValue() - this.getExactMass().doubleValue());
+            double diff =
+                    Math.abs(
+                            isotope.getExactMass().doubleValue()
+                                    - this.getExactMass().doubleValue());
             if (diff > 0.0000001) return false;
         }
         if (isotope.getExactMass() == null && exactMass != null) return false;
         if (isotope.getNaturalAbundance() != null && naturalAbundance != null) {
-            double diff = Math.abs(isotope.getNaturalAbundance().doubleValue()
-                    - this.getNaturalAbundance().doubleValue());
+            double diff =
+                    Math.abs(
+                            isotope.getNaturalAbundance().doubleValue()
+                                    - this.getNaturalAbundance().doubleValue());
             if (diff > 0.0000001) return false;
         }
         if (isotope.getNaturalAbundance() == null && naturalAbundance != null) return false;
@@ -312,5 +313,4 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
-
 }

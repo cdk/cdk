@@ -54,7 +54,7 @@ public class SVGFormat extends AbstractResourceFormat implements IResourceFormat
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"svg"};
+        return new String[] {"svg"};
     }
 
     /** {@inheritDoc} */

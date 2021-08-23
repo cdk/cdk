@@ -32,20 +32,17 @@ import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IReaction;
 
 /**
- * This class transforms implicit references to dictionary of CDK
- * objects into explicit references.
+ * This class transforms implicit references to dictionary of CDK objects into explicit references.
  *
- * <p>The syntax of the property names used is as follows:
- * org.openscience.cdk.dict:self or
- * org.openscience.cdk.dict:field:'fieldname', where fieldname
- * indicates a field for this object. The name may be appended
- * by :'number' to allow for more than one reference.
+ * <p>The syntax of the property names used is as follows: org.openscience.cdk.dict:self or
+ * org.openscience.cdk.dict:field:'fieldname', where fieldname indicates a field for this object.
+ * The name may be appended by :'number' to allow for more than one reference.
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  * @cdk.githash
- * @cdk.created    2003-08-06
- * @cdk.keyword    dictionary, implicit CDK references
- * @cdk.module     dict
+ * @cdk.created 2003-08-06
+ * @cdk.keyword dictionary, implicit CDK references
+ * @cdk.module dict
  */
 public class CDKDictionaryReferences {
 
@@ -92,7 +89,7 @@ public class CDKDictionaryReferences {
         element.setProperty(prefix + ":field:atomicNumber", "chemical:atomicNumber");
 
         String symbol = element.getSymbol();
-        if(symbol !=null) {
+        if (symbol != null) {
             if (symbol.equals("C")) {
                 element.setProperty(prefix + ":self:" + selfCounter++, "element:carbon");
             } else if (symbol.equals("N")) {
@@ -127,5 +124,4 @@ public class CDKDictionaryReferences {
         int selfCounter = 0;
         reaction.setProperty(prefix + ":self:" + selfCounter++, "reaction:reactionStep");
     }
-
 }

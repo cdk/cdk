@@ -20,22 +20,19 @@ package org.openscience.cdk.tools.manipulator;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionScheme;
 import org.openscience.cdk.interfaces.IReactionSet;
 
-/**
- * @cdk.module test-standard
- */
+/** @cdk.module test-standard */
 public class ReactionSchemeManipulatorTest extends CDKTestCase {
 
     private IChemObjectBuilder builder;
@@ -47,7 +44,6 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
     @Before
     public void setUp() throws Exception {
         builder = DefaultChemObjectBuilder.getInstance();
-
     }
 
     @Test
@@ -60,8 +56,10 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
         reactionScheme.addReaction(reaction1); // 1
         reactionScheme.addReaction(reaction2); // 2
 
-        Assert.assertEquals(2, ReactionSchemeManipulator.getAllAtomContainers(reactionScheme).getAtomContainerCount());
-
+        Assert.assertEquals(
+                2,
+                ReactionSchemeManipulator.getAllAtomContainers(reactionScheme)
+                        .getAtomContainerCount());
     }
 
     @Test
@@ -76,9 +74,9 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
 
         Assert.assertEquals(
                 2,
-                ReactionSchemeManipulator.getAllAtomContainers(reactionScheme,
-                        builder.newInstance(IAtomContainerSet.class)).getAtomContainerCount());
-
+                ReactionSchemeManipulator.getAllAtomContainers(
+                                reactionScheme, builder.newInstance(IAtomContainerSet.class))
+                        .getAtomContainerCount());
     }
 
     @Test
@@ -94,8 +92,10 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
         reaction2.addReactant(molecule);
         reactionScheme.addReaction(reaction2);
 
-        Assert.assertEquals(3, ReactionSchemeManipulator.getAllAtomContainers(reactionScheme).getAtomContainerCount());
-
+        Assert.assertEquals(
+                3,
+                ReactionSchemeManipulator.getAllAtomContainers(reactionScheme)
+                        .getAtomContainerCount());
     }
 
     @Test
@@ -125,8 +125,8 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
         reaction11.addProduct(builder.newInstance(IAtomContainer.class));
         scheme1.addReaction(reaction11);
 
-        Assert.assertEquals(5, ReactionSchemeManipulator.getAllAtomContainers(scheme1).getAtomContainerCount());
-
+        Assert.assertEquals(
+                5, ReactionSchemeManipulator.getAllAtomContainers(scheme1).getAtomContainerCount());
     }
 
     @Test
@@ -165,7 +165,6 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
         scheme1.addReaction(reaction11);
 
         Assert.assertEquals(6, ReactionSchemeManipulator.getAllIDs(scheme1).size());
-
     }
 
     @Test
@@ -223,7 +222,6 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
         Assert.assertEquals(1, scheme3.getReactionCount());
         Assert.assertEquals("r4", scheme3.getReaction(0).getID());
         Assert.assertEquals(0, scheme3.getReactionSchemeCount());
-
     }
 
     @Test
@@ -262,8 +260,8 @@ public class ReactionSchemeManipulatorTest extends CDKTestCase {
         reaction11.setID("reaction11");
         scheme1.addReaction(reaction11);
 
-        ArrayList<IAtomContainerSet> listSet = ReactionSchemeManipulator.getAtomContainerSet(startMol, finalMol,
-                scheme1);
+        ArrayList<IAtomContainerSet> listSet =
+                ReactionSchemeManipulator.getAtomContainerSet(startMol, finalMol, scheme1);
         Assert.assertEquals(1, listSet.size());
         IAtomContainerSet moleculeSet = listSet.get(0);
         Assert.assertEquals("startMol", moleculeSet.getAtomContainer(0).getID());

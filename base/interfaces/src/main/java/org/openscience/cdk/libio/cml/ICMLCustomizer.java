@@ -28,14 +28,13 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
- * Interface for classes that allow the Convertor to be customized for certain
- * features. The idea here is that the CDK build and runtime dependencies for
- * the Convertor are lowered. For example, QSAR descriptor support and PDBAtom
- * support can be written as <code>Customizer</code>s.
+ * Interface for classes that allow the Convertor to be customized for certain features. The idea
+ * here is that the CDK build and runtime dependencies for the Convertor are lowered. For example,
+ * QSAR descriptor support and PDBAtom support can be written as <code>Customizer</code>s.
  *
- * @author        egonw
- * @cdk.created   2005-05-04
- * @cdk.module    interfaces
+ * @author egonw
+ * @cdk.created 2005-05-04
+ * @cdk.module interfaces
  * @cdk.githash
  */
 public interface ICMLCustomizer {
@@ -43,8 +42,8 @@ public interface ICMLCustomizer {
     /**
      * Customized the nodeToAdd for the given Atom.
      *
-     * @param atom       Atom to base the customization on
-     * @param nodeToAdd  XOM Element to customize
+     * @param atom Atom to base the customization on
+     * @param nodeToAdd XOM Element to customize
      * @throws Exception thrown if nodeToAdd is not an instance of nu.xom.Element
      */
     public void customize(IAtom atom, Object nodeToAdd) throws Exception;
@@ -52,8 +51,8 @@ public interface ICMLCustomizer {
     /**
      * Customized the nodeToAdd for the given IBond.
      *
-     * @param bond       Bond to base the customization on
-     * @param nodeToAdd  XOM Element to customize
+     * @param bond Bond to base the customization on
+     * @param nodeToAdd XOM Element to customize
      * @throws Exception thrown if nodeToAdd is not an instance of nu.xom.Element
      */
     public void customize(IBond bond, Object nodeToAdd) throws Exception;
@@ -61,8 +60,8 @@ public interface ICMLCustomizer {
     /**
      * Customized the nodeToAdd for the given Molecule.
      *
-     * @param molecule   Molecule to base the customization on
-     * @param nodeToAdd  XOM Element to customize
+     * @param molecule Molecule to base the customization on
+     * @param nodeToAdd XOM Element to customize
      * @throws Exception thrown if nodeToAdd is not an instance of nu.xom.Element
      */
     public void customize(IAtomContainer molecule, Object nodeToAdd) throws Exception;

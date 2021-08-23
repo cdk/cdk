@@ -24,8 +24,10 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import java.util.BitSet;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
+import java.util.BitSet;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.aromaticity.Aromaticity;
@@ -36,15 +38,11 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-/**
- * @cdk.module test-fingerprint
- */
+/** @cdk.module test-fingerprint */
 public class MACCSFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MACCSFingerprinterTest.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(MACCSFingerprinterTest.class);
 
     @Override
     public IFingerprinter getBitFingerprinter() {
@@ -119,9 +117,8 @@ public class MACCSFingerprinterTest extends AbstractFixedLengthFingerprinterTest
     }
 
     /**
-     * Using MACCS keys, these molecules are not considered substructures
-     * and should only be used for similarity. This is because the MACCS
-     * fragments match hydrogen counts.
+     * Using MACCS keys, these molecules are not considered substructures and should only be used
+     * for similarity. This is because the MACCS fragments match hydrogen counts.
      */
     @Test
     @Override
@@ -141,11 +138,16 @@ public class MACCSFingerprinterTest extends AbstractFixedLengthFingerprinterTest
 
         assertThat(
                 superBits.asBitSet(),
-                is(asBitSet(53, 56, 65, 71, 73, 88, 97, 104, 111, 112, 126, 130, 136, 138, 139, 140, 142, 143,
-                        144, 145, 148, 149, 151, 153, 156, 158, 159, 161, 162, 163, 164)));
+                is(
+                        asBitSet(
+                                53, 56, 65, 71, 73, 88, 97, 104, 111, 112, 126, 130, 136, 138, 139,
+                                140, 142, 143, 144, 145, 148, 149, 151, 153, 156, 158, 159, 161,
+                                162, 163, 164)));
         assertThat(
                 subBits.asBitSet(),
-                is(asBitSet(56, 97, 104, 108, 112, 117, 131, 136, 143, 144, 146, 151, 152, 156, 161, 162, 163, 164)));
+                is(
+                        asBitSet(
+                                56, 97, 104, 108, 112, 117, 131, 136, 143, 144, 146, 151, 152, 156,
+                                161, 162, 163, 164)));
     }
-
 }

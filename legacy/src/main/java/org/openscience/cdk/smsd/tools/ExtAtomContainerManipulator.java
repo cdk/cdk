@@ -1,26 +1,22 @@
 /**
+ * Copyright (C) 2006-2010 Syed Asad Rahman {asad@ebi.ac.uk}
  *
- * Copyright (C) 2006-2010  Syed Asad Rahman {asad@ebi.ac.uk}
+ * <p>Contact: cdk-devel@lists.sourceforge.net
  *
- * Contact: cdk-devel@lists.sourceforge.net
+ * <p>This program is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation; either version
+ * 2.1 of the License, or (at your option) any later version. All we ask is that proper credit is
+ * given for our work, which includes - but is not limited to - adding the above copyright notice to
+ * the beginning of your source code files, and to any copyright notice that you may distribute with
+ * programs based on this work.
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1
- * of the License, or (at your option) any later version.
- * All we ask is that proper credit is given for our work, which includes
- * - but is not limited to - adding the above copyright notice to the beginning
- * of your source code files, and to any copyright notice that you may distribute
- * with programs based on this work.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * <p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
- * You should have received atom copy of the GNU Lesser General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ * <p>You should have received atom copy of the GNU Lesser General Public License along with this
+ * program; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+ * Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.smsd.tools;
 
@@ -28,10 +24,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
@@ -54,14 +48,15 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
  * Class that handles some customised features for SMSD atom containers.
- * <p>This is an extension of CDK AtomContainer.
- * Some part of this code was taken from CDK source code and modified.</p>
+ *
+ * <p>This is an extension of CDK AtomContainer. Some part of this code was taken from CDK source
+ * code and modified.
  *
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is
+ *     available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public class ExtAtomContainerManipulator extends AtomContainerManipulator {
@@ -75,7 +70,6 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
             if (a.getID() != null) {
                 System.out.print("[" + a.getID() + "]");
             }
-
         }
         System.out.println();
         System.out.println();
@@ -83,6 +77,7 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
 
     /**
      * Retrurns deep copy of the molecule
+     *
      * @param container
      * @return deep copy of the mol
      */
@@ -99,8 +94,10 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
         for (int index = 0; index < container.getLonePairCount(); index++) {
             if (container.getAtom(index).getSymbol().equalsIgnoreCase("R")
                     || container.getAtom(index).getSymbol().equalsIgnoreCase("A")) {
-                newAtomContainer.addLonePair(container.getBuilder().newInstance(ILonePair.class,
-                        container.getAtom(index)));
+                newAtomContainer.addLonePair(
+                        container
+                                .getBuilder()
+                                .newInstance(ILonePair.class, container.getAtom(index)));
             } else {
                 newAtomContainer.addLonePair(index);
             }
@@ -118,8 +115,8 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
     }
 
     /**
-     * This function finds rings and uses aromaticity detection code to
-     * aromatize the molecule.
+     * This function finds rings and uses aromaticity detection code to aromatize the molecule.
+     *
      * @param mol input molecule
      */
     public static void aromatizeMolecule(IAtomContainer mol) {
@@ -161,8 +158,9 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
 
             mol.getAtom(i).setFlag(CDKConstants.ISAROMATIC, false);
 
-            jloop: for (int j = 0; j <= ringSet.getAtomContainerCount() - 1; j++) {
-                //logger.debug(i+"\t"+j);
+            jloop:
+            for (int j = 0; j <= ringSet.getAtomContainerCount() - 1; j++) {
+                // logger.debug(i+"\t"+j);
                 IRing ring = (IRing) ringSet.getAtomContainer(j);
                 if (!ring.getFlag(CDKConstants.ISAROMATIC)) {
                     continue jloop;
@@ -170,7 +168,7 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
 
                 boolean haveatom = ring.contains(mol.getAtom(i));
 
-                //logger.debug("haveatom="+haveatom);
+                // logger.debug("haveatom="+haveatom);
 
                 if (haveatom && ring.getAtomCount() == 6) {
                     mol.getAtom(i).setFlag(CDKConstants.ISAROMATIC, true);
@@ -181,6 +179,7 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
 
     /**
      * Returns The number of explicit hydrogens for a given IAtom.
+     *
      * @param atomContainer
      * @param atom
      * @return The number of explicit hydrogens on the given IAtom.
@@ -198,15 +197,19 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
 
     /**
      * Returns The number of Implicit Hydrogen Count for a given IAtom.
+     *
      * @param atom
      * @return Implicit Hydrogen Count
      */
     public static int getImplicitHydrogenCount(IAtom atom) {
-        return atom.getImplicitHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getImplicitHydrogenCount();
+        return atom.getImplicitHydrogenCount() == CDKConstants.UNSET
+                ? 0
+                : atom.getImplicitHydrogenCount();
     }
 
     /**
      * The summed implicit + explicit hydrogens of the given IAtom.
+     *
      * @param atomContainer
      * @param atom
      * @return The summed implicit + explicit hydrogens of the given IAtom.
@@ -216,13 +219,15 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
     }
 
     /**
-     * Returns IAtomContainer without Hydrogen. If an AtomContainer has atom single atom which
-     * is atom Hydrogen then its not removed.
+     * Returns IAtomContainer without Hydrogen. If an AtomContainer has atom single atom which is
+     * atom Hydrogen then its not removed.
+     *
      * @param atomContainer
-     * @return IAtomContainer without Hydrogen. If an AtomContainer has atom single atom which
-     * is atom Hydrogen then its not removed.
+     * @return IAtomContainer without Hydrogen. If an AtomContainer has atom single atom which is
+     *     atom Hydrogen then its not removed.
      */
-    public static IAtomContainer removeHydrogensExceptSingleAndPreserveAtomID(IAtomContainer atomContainer) {
+    public static IAtomContainer removeHydrogensExceptSingleAndPreserveAtomID(
+            IAtomContainer atomContainer) {
         Map<IAtom, IAtom> map = new HashMap<IAtom, IAtom>(); // maps original atoms to clones.
         List<IAtom> remove = new ArrayList<IAtom>(); // lists removed Hs.
         IAtomContainer mol = null;
@@ -241,7 +246,7 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
-                    //added by Asad to preserve the Atom ID for atom mapping without Hydrogen
+                    // added by Asad to preserve the Atom ID for atom mapping without Hydrogen
                     clonedAtom.setID(atom.getID());
                     clonedAtom.setFlags(atom.getFlags());
                     int countH = 0;
@@ -277,14 +282,16 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
     }
 
     /**
-     * Returns IAtomContainer without Hydrogen. If an AtomContainer has atom single atom which
-     * is atom Hydrogen then its not removed.
+     * Returns IAtomContainer without Hydrogen. If an AtomContainer has atom single atom which is
+     * atom Hydrogen then its not removed.
+     *
      * @param atomContainer
-     * @return IAtomContainer without Hydrogen. If an AtomContainer has atom single atom which
-     * is atom Hydrogen then its not removed.
+     * @return IAtomContainer without Hydrogen. If an AtomContainer has atom single atom which is
+     *     atom Hydrogen then its not removed.
      */
     public static IAtomContainer convertExplicitToImplicitHydrogens(IAtomContainer atomContainer) {
-        IAtomContainer mol = atomContainer.getBuilder().newInstance(IAtomContainer.class, atomContainer);
+        IAtomContainer mol =
+                atomContainer.getBuilder().newInstance(IAtomContainer.class, atomContainer);
         convertImplicitToExplicitHydrogens(mol);
         if (mol.getAtomCount() > 1) {
             mol = removeHydrogens(mol);
@@ -300,15 +307,16 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
     }
 
     /**
-     * Convenience method to perceive atom types for all <code>IAtom</code>s in the
-     * <code>IAtomContainer</code>, using the <code>CDKAtomTypeMatcher</code>. If the
-     * matcher finds atom matching atom type, the <code>IAtom</code> will be configured
-     * to have the same properties as the <code>IAtomType</code>. If no matching atom
-     * type is found, no configuration is performed.
+     * Convenience method to perceive atom types for all <code>IAtom</code>s in the <code>
+     * IAtomContainer</code>, using the <code>CDKAtomTypeMatcher</code>. If the matcher finds atom
+     * matching atom type, the <code>IAtom</code> will be configured to have the same properties as
+     * the <code>IAtomType</code>. If no matching atom type is found, no configuration is performed.
+     *
      * @param container
      * @throws CDKException
      */
-    public static void percieveAtomTypesAndConfigureAtoms(IAtomContainer container) throws CDKException {
+    public static void percieveAtomTypesAndConfigureAtoms(IAtomContainer container)
+            throws CDKException {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
         for (IAtom atom : container.atoms()) {
             if (!(atom instanceof IPseudoAtom)) {
@@ -317,7 +325,6 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
                 if (matched != null) {
                     AtomTypeManipulator.configure(atom, matched);
                 }
-
             }
         }
     }
@@ -328,9 +335,13 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
         for (int index = 0; index < container.getAtomCount(); index++) {
 
             if (container.getAtom(index) instanceof IPseudoAtom) {
-                atoms[index] = container.getBuilder().newInstance(IPseudoAtom.class, container.getAtom(index));
+                atoms[index] =
+                        container
+                                .getBuilder()
+                                .newInstance(IPseudoAtom.class, container.getAtom(index));
             } else {
-                atoms[index] = container.getBuilder().newInstance(IAtom.class, container.getAtom(index));
+                atoms[index] =
+                        container.getBuilder().newInstance(IAtom.class, container.getAtom(index));
             }
 
             set2D(container, index, atoms);
@@ -349,7 +360,8 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
         return atoms;
     }
 
-    private static void copyBonds(IAtom[] atoms, IAtomContainer container, IAtomContainer newAtomContainer) {
+    private static void copyBonds(
+            IAtom[] atoms, IAtomContainer container, IAtomContainer newAtomContainer) {
         int bondCount = container.getBondCount();
         IBond[] bonds = new IBond[bondCount];
         for (int index = 0; index < container.getBondCount(); index++) {
@@ -379,12 +391,14 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
                 bonds[index].setID(new String(container.getBond(index).getID()));
             }
             newAtomContainer.addBond(bonds[index]);
-
         }
     }
 
-    private static IAtomContainer reComputeHydrogens(IAtomContainer mol, IAtomContainer atomContainer,
-            List<IAtom> remove, Map<IAtom, IAtom> map) {
+    private static IAtomContainer reComputeHydrogens(
+            IAtomContainer mol,
+            IAtomContainer atomContainer,
+            List<IAtom> remove,
+            Map<IAtom, IAtom> map) {
 
         // Recompute hydrogen counts of neighbours of removed Hydrogens.
         for (IAtom aRemove : remove) {
@@ -394,10 +408,13 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
                 if (neighb == null) {
                     continue; // since for the case of H2, neight H has atom heavy atom neighbor
                 }
-                //Added by Asad
+                // Added by Asad
                 if (!(neighb instanceof IPseudoAtom)) {
-                    neighb.setImplicitHydrogenCount((neighb.getImplicitHydrogenCount() == null ? 0 : neighb
-                            .getImplicitHydrogenCount()) + 1);
+                    neighb.setImplicitHydrogenCount(
+                            (neighb.getImplicitHydrogenCount() == null
+                                            ? 0
+                                            : neighb.getImplicitHydrogenCount())
+                                    + 1);
                 } else {
                     neighb.setImplicitHydrogenCount(0);
                 }
@@ -411,8 +428,11 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
         return mol;
     }
 
-    private static IAtomContainer cloneAndMarkNonHBonds(IAtomContainer mol, IAtomContainer atomContainer,
-            List<IAtom> remove, Map<IAtom, IAtom> map) {
+    private static IAtomContainer cloneAndMarkNonHBonds(
+            IAtomContainer mol,
+            IAtomContainer atomContainer,
+            List<IAtom> remove,
+            Map<IAtom, IAtom> map) {
         // Clone bonds except those involving removed atoms.
         int count = atomContainer.getBondCount();
         for (int i = 0; i < count; i++) {
@@ -438,7 +458,7 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
                     e.printStackTrace();
                 }
                 assert clone != null;
-                clone.setAtoms(new IAtom[]{map.get(bond.getBegin()), map.get(bond.getEnd())});
+                clone.setAtoms(new IAtom[] {map.get(bond.getBegin()), map.get(bond.getEnd())});
                 clone.setOrder(atomContainer.getBond(i).getOrder());
                 clone.setStereo(atomContainer.getBond(i).getStereo());
                 mol.addBond(clone);
@@ -462,7 +482,8 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
 
     private static void setFractionalPoint3d(IAtomContainer container, int index, IAtom[] atoms) {
         if ((container.getAtom(index)).getFractionalPoint3d() != null) {
-            atoms[index].setFractionalPoint3d(new Point3d(container.getAtom(index).getFractionalPoint3d()));
+            atoms[index].setFractionalPoint3d(
+                    new Point3d(container.getAtom(index).getFractionalPoint3d()));
         }
     }
 
@@ -475,7 +496,8 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
 
     private static void setHydrogenCount(IAtomContainer container, int index, IAtom[] atoms) {
         if (container.getAtom(index).getImplicitHydrogenCount() != null) {
-            atoms[index].setImplicitHydrogenCount(Integer.valueOf(container.getAtom(index).getImplicitHydrogenCount()));
+            atoms[index].setImplicitHydrogenCount(
+                    Integer.valueOf(container.getAtom(index).getImplicitHydrogenCount()));
         }
     }
 

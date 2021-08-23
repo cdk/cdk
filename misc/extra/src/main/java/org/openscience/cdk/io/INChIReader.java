@@ -27,9 +27,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
-
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -42,7 +40,6 @@ import org.openscience.cdk.io.formats.INChIFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -50,28 +47,25 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * Reads the content of a IUPAC/NIST Chemical Identifier (INChI) document. See
- * {@cdk.cite HEL01}. Recently a new INChI format was introduced an files generated
- * with the latest INChI generator cannot be parsed with this class. This class
- * needs to be updated.
+ * Reads the content of a IUPAC/NIST Chemical Identifier (INChI) document. See {@cdk.cite HEL01}.
+ * Recently a new INChI format was introduced an files generated with the latest INChI generator
+ * cannot be parsed with this class. This class needs to be updated.
  *
- * <P>The elements that are read are given in the INChIHandler class.
+ * <p>The elements that are read are given in the INChIHandler class.
  *
  * @cdk.module extra
  * @cdk.githash
  * @cdk.iooptions
- *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  * @cdk.created 2004-05-17
- *
  * @cdk.keyword file format, INChI
  * @cdk.keyword chemical identifier
  * @cdk.require java1.4+
  */
 public class INChIReader extends DefaultChemObjectReader {
 
-    private XMLReader           parser;
-    private InputStream         input;
+    private XMLReader parser;
+    private InputStream input;
 
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(INChIReader.class);
 
@@ -95,8 +89,8 @@ public class INChIReader extends DefaultChemObjectReader {
     }
 
     /**
-     * This method must not be used; XML reading requires the use of an InputStream.
-     * Use setReader(InputStream) instead.
+     * This method must not be used; XML reading requires the use of an InputStream. Use
+     * setReader(InputStream) instead.
      */
     @Override
     public void setReader(Reader reader) throws CDKException {
@@ -108,15 +102,14 @@ public class INChIReader extends DefaultChemObjectReader {
         this.input = input;
     }
 
-    /**
-     * Initializes this reader.
-     */
+    /** Initializes this reader. */
     private void init() {
         boolean success = false;
         // If JAXP is prefered (comes with Sun JVM 1.4.0 and higher)
         if (!success) {
             try {
-                javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
+                javax.xml.parsers.SAXParserFactory spf =
+                        javax.xml.parsers.SAXParserFactory.newInstance();
                 spf.setNamespaceAware(true);
                 javax.xml.parsers.SAXParser saxParser = spf.newSAXParser();
                 parser = saxParser.getXMLReader();
@@ -130,8 +123,12 @@ public class INChIReader extends DefaultChemObjectReader {
         // Aelfred is first alternative.
         if (!success) {
             try {
-                parser = (XMLReader) this.getClass().getClassLoader().loadClass("gnu.xml.aelfred2.XmlReader")
-                        .newInstance();
+                parser =
+                        (XMLReader)
+                                this.getClass()
+                                        .getClassLoader()
+                                        .loadClass("gnu.xml.aelfred2.XmlReader")
+                                        .newInstance();
                 logger.info("Using Aelfred2 XML parser.");
                 success = true;
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
@@ -142,8 +139,12 @@ public class INChIReader extends DefaultChemObjectReader {
         // Xerces is second alternative
         if (!success) {
             try {
-                parser = (XMLReader) this.getClass().getClassLoader().loadClass("org.apache.xerces.parsers.SAXParser")
-                        .newInstance();
+                parser =
+                        (XMLReader)
+                                this.getClass()
+                                        .getClassLoader()
+                                        .loadClass("org.apache.xerces.parsers.SAXParser")
+                                        .newInstance();
                 logger.info("Using Xerces XML parser.");
                 success = true;
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
@@ -169,10 +170,9 @@ public class INChIReader extends DefaultChemObjectReader {
     }
 
     /**
-     * Reads a IChemObject of type object from input.
-     * Supported types are: ChemFile.
+     * Reads a IChemObject of type object from input. Supported types are: ChemFile.
      *
-     * @param  object type of requested IChemObject
+     * @param object type of requested IChemObject
      * @return the content in a ChemFile object
      */
     @Override
@@ -221,22 +221,21 @@ public class INChIReader extends DefaultChemObjectReader {
 
     private static final class INChIHandler extends DefaultHandler {
 
-        private static ILoggingTool       logger = LoggingToolFactory.createLoggingTool(INChIHandler.class);
+        private static ILoggingTool logger =
+                LoggingToolFactory.createLoggingTool(INChIHandler.class);
         private INChIContentProcessorTool inchiTool;
 
-        private IChemFile         chemFile;
-        private IChemSequence     chemSequence;
-        private IChemModel        chemModel;
+        private IChemFile chemFile;
+        private IChemSequence chemSequence;
+        private IChemModel chemModel;
         private IAtomContainerSet setOfMolecules;
-        private IAtomContainer    tautomer;
+        private IAtomContainer tautomer;
         private IChemObjectBuilder builder;
 
         /** Used to store all chars between two tags */
-        private String                    currentChars;
+        private String currentChars;
 
-        /**
-         * Constructor for the IChIHandler.
-         **/
+        /** Constructor for the IChIHandler. */
         public INChIHandler(IChemObjectBuilder bldr) {
             this.builder = bldr;
             this.inchiTool = new INChIContentProcessorTool();
@@ -252,8 +251,10 @@ public class INChIReader extends DefaultChemObjectReader {
         public void startDocument() {
             chemFile = builder.newInstance(IChemFile.class);
             chemSequence = builder.newInstance(IChemSequence.class);
-            chemModel = builder.newInstance(IChemModel.class);;
-            setOfMolecules = builder.newInstance(IAtomContainerSet.class);;
+            chemModel = builder.newInstance(IChemModel.class);
+            ;
+            setOfMolecules = builder.newInstance(IAtomContainerSet.class);
+            ;
         }
 
         @Override
@@ -274,7 +275,10 @@ public class INChIReader extends DefaultChemObjectReader {
             } else if ("formula".equals(local)) {
                 if (tautomer != null) {
                     logger.info("Parsing <formula> chars: ", currentChars);
-                    tautomer = inchiTool.processFormula(setOfMolecules.getBuilder().newInstance(IAtomContainer.class), currentChars);
+                    tautomer =
+                            inchiTool.processFormula(
+                                    setOfMolecules.getBuilder().newInstance(IAtomContainer.class),
+                                    currentChars);
                 } else {
                     logger.warn("Cannot set atom info for empty tautomer");
                 }
@@ -291,13 +295,12 @@ public class INChIReader extends DefaultChemObjectReader {
         }
 
         /**
-         * Implementation of the startElement() procedure overwriting the
-         * DefaultHandler interface.
+         * Implementation of the startElement() procedure overwriting the DefaultHandler interface.
          *
-         * @param uri       the Universal Resource Identifier
-         * @param local     the local name (without namespace part)
-         * @param raw       the complete element name (with namespace part)
-         * @param atts      the attributes of this element
+         * @param uri the Universal Resource Identifier
+         * @param local the local name (without namespace part)
+         * @param raw the complete element name (with namespace part)
+         * @param atts the attributes of this element
          */
         @Override
         public void startElement(String uri, String local, String raw, Attributes atts) {
@@ -309,7 +312,8 @@ public class INChIReader extends DefaultChemObjectReader {
             if ("INChI".equals(local)) {
                 // check version
                 for (int i = 0; i < atts.getLength(); i++) {
-                    if (atts.getQName(i).equals("version")) logger.info("INChI version: ", atts.getValue(i));
+                    if (atts.getQName(i).equals("version"))
+                        logger.info("INChI version: ", atts.getValue(i));
                 }
             } else if ("structure".equals(local)) {
                 tautomer = builder.newAtomContainer();
@@ -319,10 +323,9 @@ public class INChIReader extends DefaultChemObjectReader {
         }
 
         /**
-         * Implementation of the characters() procedure overwriting the
-         * DefaultHandler interface.
+         * Implementation of the characters() procedure overwriting the DefaultHandler interface.
          *
-         * @param ch        characters to handle
+         * @param ch characters to handle
          */
         @Override
         public void characters(char ch[], int start, int length) {
@@ -333,6 +336,5 @@ public class INChIReader extends DefaultChemObjectReader {
         public IChemFile getChemFile() {
             return chemFile;
         }
-
     }
 }

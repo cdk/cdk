@@ -23,9 +23,7 @@
 package org.openscience.cdk.io.cml;
 
 import java.io.ByteArrayInputStream;
-
 import nu.xom.Element;
-
 import org.junit.Assert;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -43,22 +41,23 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * Helper tool for round tripping CDK classes via CML.
  *
- * @cdk.module  test-libiocml
+ * @cdk.module test-libiocml
  * @cdk.require xom-1.0.jar
  * @cdk.require java1.5+
  */
 public class CMLRoundTripTool extends CDKTestCase {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CMLRoundTripTool.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(CMLRoundTripTool.class);
 
     /**
-     * Convert a Molecule to CML and back to a Molecule again.
-     * Given that CML reading is working, the problem is with the
-     * CMLWriter.
+     * Convert a Molecule to CML and back to a Molecule again. Given that CML reading is working,
+     * the problem is with the CMLWriter.
      *
      * @see org.openscience.cdk.CMLFragmentsTest
      */
-    public static IAtomContainer roundTripMolecule(Convertor convertor, IAtomContainer mol) throws Exception {
+    public static IAtomContainer roundTripMolecule(Convertor convertor, IAtomContainer mol)
+            throws Exception {
         String cmlString = "<!-- failed -->";
         Element cmlDOM = convertor.cdkAtomContainerToCMLMolecule(mol);
         cmlString = cmlDOM.toXML();
@@ -85,7 +84,8 @@ public class CMLRoundTripTool extends CDKTestCase {
         return roundTrippedMol;
     }
 
-    public static IChemModel roundTripChemModel(Convertor convertor, IChemModel model) throws Exception {
+    public static IChemModel roundTripChemModel(Convertor convertor, IChemModel model)
+            throws Exception {
         String cmlString = "<!-- failed -->";
         Element cmlDOM = convertor.cdkChemModelToCMLList(model);
         cmlString = cmlDOM.toXML();
@@ -106,7 +106,8 @@ public class CMLRoundTripTool extends CDKTestCase {
         return chemModel;
     }
 
-    public static IReaction roundTripReaction(Convertor convertor, IReaction reaction) throws Exception {
+    public static IReaction roundTripReaction(Convertor convertor, IReaction reaction)
+            throws Exception {
         String cmlString = "<!-- failed -->";
         Element cmlDOM = convertor.cdkReactionToCMLReaction(reaction);
         cmlString = cmlDOM.toXML();
@@ -132,5 +133,4 @@ public class CMLRoundTripTool extends CDKTestCase {
 
         return roundTrippedReaction;
     }
-
 }

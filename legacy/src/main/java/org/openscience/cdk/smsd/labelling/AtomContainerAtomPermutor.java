@@ -1,7 +1,6 @@
 package org.openscience.cdk.smsd.labelling;
 
 import java.util.Iterator;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -9,9 +8,10 @@ import org.openscience.cdk.interfaces.IBond;
 /**
  * @cdk.module smsd
  * @cdk.githash
- * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public
- *             access to internal implementation details. SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK
+ *     or provides public access to internal implementation details. SMSD has been deprecated from
+ *     the CDK with a newer, more recent version of SMSD is available at <a
+ *     href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public class AtomContainerAtomPermutor extends Permutor implements Iterator<IAtomContainer> {
@@ -23,9 +23,7 @@ public class AtomContainerAtomPermutor extends Permutor implements Iterator<IAto
         original = atomContainer;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtomContainer next() {
         int[] p = super.getNextPermutation();
@@ -62,7 +60,7 @@ public class AtomContainerAtomPermutor extends Permutor implements Iterator<IAto
             }
 
         } catch (CloneNotSupportedException cne) {
-            //?
+            // ?
             System.out.println(cne);
         }
 
@@ -87,15 +85,13 @@ public class AtomContainerAtomPermutor extends Permutor implements Iterator<IAto
             }
             permutedContainer.setAtoms(permutedAtoms);
         } catch (CloneNotSupportedException cne) {
-            //?
+            // ?
             System.out.println(cne);
         }
         return permutedContainer;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void remove() {
         // can just increase rank....

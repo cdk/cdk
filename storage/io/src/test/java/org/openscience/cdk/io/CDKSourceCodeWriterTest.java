@@ -23,17 +23,16 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.StringWriter;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
+import java.io.StringWriter;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainer;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * TestCase for the writer CDK source code files using one test file.
@@ -66,12 +65,22 @@ public class CDKSourceCodeWriterTest extends ChemObjectIOTest {
         sourceWriter.close();
         String output = writer.toString();
         String newline = "\n";
-        assertThat(output, is("{" + newline +
-                                      "  IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();" + newline +
-                                      "  IAtomContainer mol = builder.newInstance(IAtomContainer.class);" + newline +
-                                      "  IAtom a1 = builder.newInstance(IAtom.class,\"C\");" + newline +
-                                      "  a1.setFormalCharge(0);" + newline +
-                                      "  mol.addAtom(a1);" + newline +
-                                      "}" + newline));
+        assertThat(
+                output,
+                is(
+                        "{"
+                                + newline
+                                + "  IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();"
+                                + newline
+                                + "  IAtomContainer mol = builder.newInstance(IAtomContainer.class);"
+                                + newline
+                                + "  IAtom a1 = builder.newInstance(IAtom.class,\"C\");"
+                                + newline
+                                + "  a1.setFormalCharge(0);"
+                                + newline
+                                + "  mol.addAtom(a1);"
+                                + newline
+                                + "}"
+                                + newline));
     }
 }

@@ -23,31 +23,24 @@
 package org.openscience.cdk.io.formats;
 
 /**
- * This class is the interface that all ResourceFormat's should implement.
- * An implementation is supposed to be a singleton class, so it should have
- * only private constructors, and implement the getInstance() method.
+ * This class is the interface that all ResourceFormat's should implement. An implementation is
+ * supposed to be a singleton class, so it should have only private constructors, and implement the
+ * getInstance() method.
  *
  * @cdk.module ioformats
  * @cdk.githash
- *
  * @author Egon Willighagen &lt;egonw@users.sf.net&gt;
  * @cdk.created 2006-03-04
  */
 public interface IResourceFormat {
 
-    /**
-     * Returns a one-lined format name of the format.
-     */
+    /** Returns a one-lined format name of the format. */
     public String getFormatName();
 
-    /**
-     * Returns the preferred resource name extension.
-     */
+    /** Returns the preferred resource name extension. */
     public String getPreferredNameExtension();
 
-    /**
-     * Returns an array of common resource name extensions.
-     */
+    /** Returns an array of common resource name extensions. */
     public String[] getNameExtensions();
 
     /**

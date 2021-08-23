@@ -25,17 +25,15 @@
 package org.openscience.cdk;
 
 import com.google.common.base.Objects;
+import java.io.Serializable;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.tools.periodictable.PeriodicTable;
-
-import java.io.Serializable;
 
 /**
  * Implements the idea of an element in the periodic table.
  *
- * <p>Use the IsotopeFactory to get a ready-to-use elements
- * by symbol or atomic number:
+ * <p>Use the IsotopeFactory to get a ready-to-use elements by symbol or atomic number:
+ *
  * <pre>
  *   IsotopeFactory if = IsotopeFactory.getInstance(new Element().getNewBuilder());
  *   Element e1 = if.getElement("C");
@@ -44,9 +42,7 @@ import java.io.Serializable;
  *
  * @cdk.module data
  * @cdk.githash
- *
  * @cdk.keyword element
- *
  * @see org.openscience.cdk.config.XMLIsotopeFactory
  */
 public class Element extends ChemObject implements Serializable, IElement, Cloneable {
@@ -54,9 +50,9 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
     /**
      * Determines if a de-serialized object is compatible with this class.
      *
-     * This value must only be changed if and only if the new version
-     * of this class is incompatible with the old version. See Sun docs
-     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
+     * <p>This value must only be changed if and only if the new version of this class is
+     * incompatible with the old version. See Sun docs for <a
+     * href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
      */
     private static final long serialVersionUID = 3062529834691231436L;
@@ -64,17 +60,14 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
     /** The atomic number for this element giving their position in the periodic table. */
     protected Integer atomicNumber = null;
 
-    /**
-     * Constructs an empty Element.
-     */
+    /** Constructs an empty Element. */
     public Element() {
         super();
     }
 
     /**
-     * Constructs an empty by copying the symbol, atomic number,
-     * flags, and identifier from the given IElement. It does
-     * not copy the listeners and properties.
+     * Constructs an empty by copying the symbol, atomic number, flags, and identifier from the
+     * given IElement. It does not copy the listeners and properties.
      *
      * @param element IElement to copy information from
      */
@@ -84,10 +77,9 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
     }
 
     /**
-     * Constructs an Element with a given
-     * element symbol.
+     * Constructs an Element with a given element symbol.
      *
-     * @param   symbol The element symbol that this element should have.
+     * @param symbol The element symbol that this element should have.
      */
     public Element(String symbol) {
         super();
@@ -95,11 +87,10 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
     }
 
     /**
-     * Constructs an Element with a given element symbol,
-     * atomic number and atomic mass.
+     * Constructs an Element with a given element symbol, atomic number and atomic mass.
      *
-     * @param   symbol  The element symbol of this element.
-     * @param   atomicNumber  The atomicNumber of this element.
+     * @param symbol The element symbol of this element.
+     * @param atomicNumber The atomicNumber of this element.
      */
     public Element(String symbol, Integer atomicNumber) {
         this.atomicNumber = atomicNumber;
@@ -108,10 +99,9 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
     /**
      * Returns the atomic number of this element.
      *
-     *  <p>Once instantiated all field not filled by passing parameters
-     * to the constructor are null. Elements can be configured by using
-     * the IsotopeFactory.configure() method:
-     * </p>
+     * <p>Once instantiated all field not filled by passing parameters to the constructor are null.
+     * Elements can be configured by using the IsotopeFactory.configure() method:
+     *
      * <pre>
      *   Element element = new Element("C");
      *   IsotopeFactory if = IsotopeFactory.getInstance(element.getNewBuilder());
@@ -119,8 +109,7 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
      * </pre>
      *
      * @return The atomic number of this element
-     *
-     * @see    #setAtomicNumber
+     * @see #setAtomicNumber
      */
     @Override
     public Integer getAtomicNumber() {
@@ -130,9 +119,8 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
     /**
      * Sets the atomic number of this element.
      *
-     * @param   atomicNumber The atomic mass to be assigned to this element
-     *
-     * @see    #getAtomicNumber
+     * @param atomicNumber The atomic mass to be assigned to this element
+     * @see #getAtomicNumber
      */
     @Override
     public void setAtomicNumber(Integer atomicNumber) {
@@ -144,15 +132,12 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
      * Returns the element symbol of this element.
      *
      * @return The element symbol of this element. Null if unset.
-     *
-     * @see    #setSymbol
+     * @see #setSymbol
      */
     @Override
     public String getSymbol() {
-        if (atomicNumber == null)
-            return null;
-        if (atomicNumber == 0)
-            return "R";
+        if (atomicNumber == null) return null;
+        if (atomicNumber == 0) return "R";
         return Elements.ofNumber(atomicNumber).symbol();
     }
 
@@ -160,8 +145,7 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
      * Sets the element symbol of this element.
      *
      * @param symbol The element symbol to be assigned to this atom
-     *
-     * @see    #getSymbol
+     * @see #getSymbol
      */
     @Override
     public void setSymbol(String symbol) {
@@ -170,10 +154,8 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
     }
 
     private void setSymbolInternal(String symbol) {
-        if (symbol == null)
-            this.atomicNumber = null;
-        else
-            this.atomicNumber = Elements.ofString(symbol).number();
+        if (symbol == null) this.atomicNumber = null;
+        else this.atomicNumber = Elements.ofString(symbol).number();
     }
 
     @Override
@@ -201,8 +183,8 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
     /**
      * Compares an Element with this Element.
      *
-     * @param  object Object of type AtomType
-     * @return        true if the atom types are equal
+     * @param object Object of type AtomType
+     * @return true if the atom types are equal
      */
     @Override
     public boolean compare(Object object) {

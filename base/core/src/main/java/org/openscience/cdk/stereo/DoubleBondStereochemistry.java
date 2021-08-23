@@ -22,14 +22,13 @@
  */
 package org.openscience.cdk.stereo;
 
+import java.util.List;
+import java.util.Map;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IStereoElement;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * Stereochemistry specification for double bonds. See {@link IDoubleBondStereochemistry} for
@@ -37,16 +36,14 @@ import java.util.Map;
  *
  * @cdk.module core
  * @cdk.githash
- *
  * @see org.openscience.cdk.interfaces.IDoubleBondStereochemistry
  */
-public class DoubleBondStereochemistry
-    extends AbstractStereo<IBond,IBond>
-    implements IDoubleBondStereochemistry {
+public class DoubleBondStereochemistry extends AbstractStereo<IBond, IBond>
+        implements IDoubleBondStereochemistry {
 
     /**
-     * Creates a new double bond stereo chemistry. The path of length three is defined by
-     * <code>ligandBonds[0]</code>, <code>stereoBonds</code>, and <code>ligandBonds[1]</code>.
+     * Creates a new double bond stereo chemistry. The path of length three is defined by <code>
+     * ligandBonds[0]</code>, <code>stereoBonds</code>, and <code>ligandBonds[1]</code>.
      */
     public DoubleBondStereochemistry(IBond stereoBond, IBond[] ligandBonds, Conformation stereo) {
         this(stereoBond, ligandBonds, Conformation.toConfig(stereo));
@@ -79,14 +76,12 @@ public class DoubleBondStereochemistry
     }
 
     @Override
-    public IDoubleBondStereochemistry map(Map<IAtom, IAtom> atoms,
-                                            Map<IBond, IBond> bonds) {
+    public IDoubleBondStereochemistry map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds) {
         return (IDoubleBondStereochemistry) super.map(atoms, bonds);
     }
 
     @Override
-    protected IStereoElement<IBond, IBond> create(IBond focus, List<IBond> carriers,
-                                                  int cfg) {
+    protected IStereoElement<IBond, IBond> create(IBond focus, List<IBond> carriers, int cfg) {
         return new DoubleBondStereochemistry(focus, carriers.toArray(new IBond[2]), cfg);
     }
 }

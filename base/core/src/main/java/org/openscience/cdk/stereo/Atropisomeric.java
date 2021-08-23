@@ -23,19 +23,17 @@
 
 package org.openscience.cdk.stereo;
 
+import java.util.List;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IStereoElement;
 
-import java.util.List;
-
 /**
- * Restricted axial rotation around Aryl-Aryl bonds. The atropisomer is
- * stored in a similar manner to {@link ExtendedTetrahedral} (and
- * {@link TetrahedralChirality}) except instead of storing the central atom
- * we store the sigma bond around which the rotation is restricted and the
- * four carriers are connect to either end atom of the 'focus' bond.
- * <br>
+ * Restricted axial rotation around Aryl-Aryl bonds. The atropisomer is stored in a similar manner
+ * to {@link ExtendedTetrahedral} (and {@link TetrahedralChirality}) except instead of storing the
+ * central atom we store the sigma bond around which the rotation is restricted and the four
+ * carriers are connect to either end atom of the 'focus' bond. <br>
+ *
  * <pre>
  *      a     b'
  *     /       \
@@ -46,13 +44,14 @@ import java.util.List;
  * Ar: Aryl (carriers connected to either end of 'f')
  * a,a',b,b': ortho substituted on the Aryl
  * </pre>
+ *
  * <br>
- * Typical examples include <a href="https://en.wikipedia.org/wiki/BINOL">
- * BiNOL</a>, and <a href="https://en.wikipedia.org/wiki/BINAP">BiNAP</a>.
+ * Typical examples include <a href="https://en.wikipedia.org/wiki/BINOL">BiNOL</a>, and <a
+ * href="https://en.wikipedia.org/wiki/BINAP">BiNAP</a>.
  *
  * @see <a href="https://en.wikipedia.org/wiki/Atropisomer">Atropisomer (Wikipedia)</a>
  */
-public class Atropisomeric extends AbstractStereo<IBond,IAtom> {
+public class Atropisomeric extends AbstractStereo<IBond, IAtom> {
 
     /**
      * Define a new atropisomer using the focus bond and the carrier atoms.
@@ -65,13 +64,9 @@ public class Atropisomeric extends AbstractStereo<IBond,IAtom> {
         super(focus, carriers, IStereoElement.AT | value);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
-    protected IStereoElement<IBond, IAtom> create(IBond focus,
-                                                  List<IAtom> carriers,
-                                                  int cfg) {
+    protected IStereoElement<IBond, IAtom> create(IBond focus, List<IAtom> carriers, int cfg) {
         return new Atropisomeric(focus, carriers.toArray(new IAtom[4]), cfg);
     }
 }

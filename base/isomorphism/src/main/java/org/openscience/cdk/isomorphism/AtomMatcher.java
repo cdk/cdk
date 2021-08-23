@@ -64,8 +64,8 @@ public abstract class AtomMatcher {
     }
 
     /**
-     * Atoms are compatible if the second atom ({@code atom2}) is accepted by
-     * the {@link IQueryAtom}, {@code atom1}.
+     * Atoms are compatible if the second atom ({@code atom2}) is accepted by the {@link
+     * IQueryAtom}, {@code atom1}.
      *
      * @return a matcher which checks query atom compatibility
      */
@@ -76,7 +76,7 @@ public abstract class AtomMatcher {
     /** A matcher defines all atoms as compatible. */
     private static final class AnyMatcher extends AtomMatcher {
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         public boolean matches(IAtom atom1, IAtom atom2) {
             return true;
@@ -84,12 +84,12 @@ public abstract class AtomMatcher {
     }
 
     /**
-     * A matcher to use when all atoms are {@link IQueryAtom}s. {@code atom1} is
-     * cast to a query atom and matched against {@code atom2}.
+     * A matcher to use when all atoms are {@link IQueryAtom}s. {@code atom1} is cast to a query
+     * atom and matched against {@code atom2}.
      */
     private static final class QueryMatcher extends AtomMatcher {
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         public boolean matches(IAtom atom1, IAtom atom2) {
             return ((IQueryAtom) atom1).matches(atom2);
@@ -97,12 +97,12 @@ public abstract class AtomMatcher {
     }
 
     /**
-     * A matcher to use when all atoms are {@link IQueryAtom}s. {@code atom1} is
-     * cast to a query atom and matched against {@code atom2}.
+     * A matcher to use when all atoms are {@link IQueryAtom}s. {@code atom1} is cast to a query
+     * atom and matched against {@code atom2}.
      */
     private static final class ElementMatcher extends AtomMatcher {
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         public boolean matches(IAtom atom1, IAtom atom2) {
             return atomicNumber(atom1) == atomicNumber(atom2);

@@ -56,7 +56,7 @@ public class CIFFormat extends SimpleChemFormatMatcher implements IChemFormatMat
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"cif"};
+        return new String[] {"cif"};
     }
 
     /** {@inheritDoc} */
@@ -74,7 +74,9 @@ public class CIFFormat extends SimpleChemFormatMatcher implements IChemFormatMat
     /** {@inheritDoc} */
     @Override
     public boolean matches(int lineNumber, String line) {
-        if (line.startsWith("_cell_length_a") || line.startsWith("_audit_creation_date") || line.startsWith("loop_")) {
+        if (line.startsWith("_cell_length_a")
+                || line.startsWith("_audit_creation_date")
+                || line.startsWith("loop_")) {
             return true;
         }
         return false;

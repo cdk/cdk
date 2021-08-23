@@ -20,7 +20,6 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import java.io.InputStream;
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,7 +40,6 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *
  * @cdk.module test-qsarmolecular
  */
-
 public class PetitjeanShapeIndexDescriptorTest extends MolecularDescriptorTest {
 
     public PetitjeanShapeIndexDescriptorTest() {}
@@ -52,7 +50,8 @@ public class PetitjeanShapeIndexDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testPetitjeanShapeIndexDescriptor() throws ClassNotFoundException, CDKException, Exception {
+    public void testPetitjeanShapeIndexDescriptor()
+            throws ClassNotFoundException, CDKException, Exception {
         // first molecule is nbutane, second is naphthalene
         String filename = "data/mdl/petitejean.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -71,7 +70,6 @@ public class PetitjeanShapeIndexDescriptorTest extends MolecularDescriptorTest {
         dar = (DoubleArrayResult) result.getValue();
         Assert.assertEquals(0.666666, dar.get(0), 0.000001);
         Assert.assertEquals(0.845452, dar.get(1), 0.000001);
-
     }
 
     @Test
@@ -81,6 +79,5 @@ public class PetitjeanShapeIndexDescriptorTest extends MolecularDescriptorTest {
         DescriptorValue result = descriptor.calculate(atomContainer);
         DoubleArrayResult dar = (DoubleArrayResult) result.getValue();
         Assert.assertTrue(Double.isNaN(dar.get(1)));
-
     }
 }

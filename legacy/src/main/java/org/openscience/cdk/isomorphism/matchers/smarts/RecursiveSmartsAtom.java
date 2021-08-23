@@ -21,13 +21,12 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import java.util.BitSet;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.Pattern;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
-
-import java.util.BitSet;
 
 /**
  * This matches recursive smarts atoms.
@@ -40,7 +39,7 @@ import java.util.BitSet;
 public final class RecursiveSmartsAtom extends SMARTSAtom {
 
     /** The IQueryAtomContainer created by parsing the recursive smarts */
-    private final IQueryAtomContainer                  query;
+    private final IQueryAtomContainer query;
 
     /** Query cache. */
     private final LoadingCache<IAtomContainer, BitSet> cache;
@@ -53,19 +52,23 @@ public final class RecursiveSmartsAtom extends SMARTSAtom {
     public RecursiveSmartsAtom(final IQueryAtomContainer query) {
         super(query.getBuilder());
         this.query = query;
-        this.cache = CacheBuilder.newBuilder().maximumSize(42).weakKeys()
-                .build(new CacheLoader<IAtomContainer, BitSet>() {
+        this.cache =
+                CacheBuilder.newBuilder()
+                        .maximumSize(42)
+                        .weakKeys()
+                        .build(
+                                new CacheLoader<IAtomContainer, BitSet>() {
 
-                    @Override
-                    public BitSet load(IAtomContainer target) throws Exception {
-                        BitSet hits = new BitSet();
-                        for (int[] mapping : Pattern.findSubstructure(query)
-                                                    .matchAll(target)) {
-                            hits.set(mapping[0]);
-                        }
-                        return hits;
-                    }
-                });
+                                    @Override
+                                    public BitSet load(IAtomContainer target) throws Exception {
+                                        BitSet hits = new BitSet();
+                                        for (int[] mapping :
+                                                Pattern.findSubstructure(query).matchAll(target)) {
+                                            hits.set(mapping[0]);
+                                        }
+                                        return hits;
+                                    }
+                                });
     }
 
     /*

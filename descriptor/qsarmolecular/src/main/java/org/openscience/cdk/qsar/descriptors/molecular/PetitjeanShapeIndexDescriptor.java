@@ -19,6 +19,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import javax.vecmath.Point3d;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.graph.PathTools;
@@ -32,19 +33,18 @@ import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import javax.vecmath.Point3d;
-
 /**
  * Evaluates the Petitjean shape indices,
- * 
- * These original Petitjean number was described by Petitjean ({@cdk.cite PET92})
- * and considered the molecular graph. This class also implements the geometric analog
- * of the topological shape index described by Bath et al ({@cdk.cite BAT95}).
- * 
- * The descriptor returns a <code>DoubleArrayResult</code> which contains
+ *
+ * <p>These original Petitjean number was described by Petitjean ({@cdk.cite PET92}) and considered
+ * the molecular graph. This class also implements the geometric analog of the topological shape
+ * index described by Bath et al ({@cdk.cite BAT95}).
+ *
+ * <p>The descriptor returns a <code>DoubleArrayResult</code> which contains
+ *
  * <ol>
- * <li>topoShape - topological shape index
- * <li>geomShape - geometric shape index
+ *   <li>topoShape - topological shape index
+ *   <li>geomShape - geometric shape index
  * </ol>
  *
  * <table border="1"><caption>Parameters for this descriptor:</caption>
@@ -60,15 +60,15 @@ import javax.vecmath.Point3d;
  *   </tr>
  * </table>
  *
- *
- * @author      Rajarshi Guha
+ * @author Rajarshi Guha
  * @cdk.created 2006-01-14
- * @cdk.module  qsarmolecular
+ * @cdk.module qsarmolecular
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:petitjeanShapeIndex
  * @cdk.keyword Petit-Jean, shape index
  */
-public class PetitjeanShapeIndexDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
+public class PetitjeanShapeIndexDescriptor extends AbstractMolecularDescriptor
+        implements IMolecularDescriptor {
 
     private static final String[] NAMES = {"topoShape", "geomShape"};
 
@@ -77,16 +77,16 @@ public class PetitjeanShapeIndexDescriptor extends AbstractMolecularDescriptor i
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#petitjeanShapeIndex", this
-                        .getClass().getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#petitjeanShapeIndex",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     /**
      * Sets the parameters attribute of the PetitjeanShapeIndexDescriptor object.
      *
      * @param params The new parameters value
-     * @throws org.openscience.cdk.exception.CDKException
-     *          Description of the Exception
+     * @throws org.openscience.cdk.exception.CDKException Description of the Exception
      */
     @Override
     public void setParameters(Object[] params) throws CDKException {
@@ -137,7 +137,6 @@ public class PetitjeanShapeIndexDescriptor extends AbstractMolecularDescriptor i
      * @param container Parameter is the atom container.
      * @return A DoubleArrayResult value representing the Petitjean shape indices
      */
-
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
         IAtomContainer local = AtomContainerManipulator.removeHydrogens(container);
@@ -161,8 +160,11 @@ public class PetitjeanShapeIndexDescriptor extends AbstractMolecularDescriptor i
 
                     Point3d a = container.getAtom(i).getPoint3d();
                     Point3d b = container.getAtom(j).getPoint3d();
-                    distanceMatrix[i][j] = Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y)
-                            + (a.z - b.z) * (a.z - b.z));
+                    distanceMatrix[i][j] =
+                            Math.sqrt(
+                                    (a.x - b.x) * (a.x - b.x)
+                                            + (a.y - b.y) * (a.y - b.y)
+                                            + (a.z - b.z) * (a.z - b.z));
                 }
             }
             double gradius = 999999;
@@ -184,20 +186,26 @@ public class PetitjeanShapeIndexDescriptor extends AbstractMolecularDescriptor i
             retval.add(Double.NaN);
         }
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval,
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                retval,
                 getDescriptorNames());
     }
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * 
-     * The return value from this method really indicates what type of result will
-     * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
-     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
-     * allows you to do the same thing, without actually calculating the descriptor.
      *
-     * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
-     *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
+     * <p>The return value from this method really indicates what type of result will be obtained
+     * from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
+     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object;
+     * this method allows you to do the same thing, without actually calculating the descriptor.
+     *
+     * @return an object that implements the {@link
+     *     org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating the actual type
+     *     of values returned by the descriptor in the {@link
+     *     org.openscience.cdk.qsar.DescriptorValue} object
      */
     @Override
     public IDescriptorResult getDescriptorResultType() {

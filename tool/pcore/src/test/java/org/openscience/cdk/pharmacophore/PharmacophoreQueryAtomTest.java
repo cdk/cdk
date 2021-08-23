@@ -18,14 +18,11 @@
  */
 package org.openscience.cdk.pharmacophore;
 
+import javax.vecmath.Point3d;
 import org.junit.Assert;
 import org.junit.Test;
 
-import javax.vecmath.Point3d;
-
-/**
- * @cdk.module test-pcore
- */
+/** @cdk.module test-pcore */
 public class PharmacophoreQueryAtomTest {
 
     @Test
@@ -38,9 +35,12 @@ public class PharmacophoreQueryAtomTest {
     public void testMatches() {
         PharmacophoreQueryAtom qatom = new PharmacophoreQueryAtom("aromatic", "c1ccccc1");
 
-        PharmacophoreAtom patom1 = new PharmacophoreAtom("c1ccccc1", "aromatic", new Point3d(0, 0, 0));
-        PharmacophoreAtom patom2 = new PharmacophoreAtom("c1ccccc1", "hydrophobic", new Point3d(0, 0, 0));
-        PharmacophoreAtom patom3 = new PharmacophoreAtom("Cc1ccccc1", "aromatic", new Point3d(0, 0, 0));
+        PharmacophoreAtom patom1 =
+                new PharmacophoreAtom("c1ccccc1", "aromatic", new Point3d(0, 0, 0));
+        PharmacophoreAtom patom2 =
+                new PharmacophoreAtom("c1ccccc1", "hydrophobic", new Point3d(0, 0, 0));
+        PharmacophoreAtom patom3 =
+                new PharmacophoreAtom("Cc1ccccc1", "aromatic", new Point3d(0, 0, 0));
         PharmacophoreAtom patom4 = new PharmacophoreAtom("[CX2]N", "amine", new Point3d(0, 0, 0));
 
         Assert.assertTrue(qatom.matches(patom1));

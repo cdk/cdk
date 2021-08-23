@@ -24,12 +24,6 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
-
 import nu.xom.Attribute;
 import nu.xom.Builder;
 import nu.xom.Document;
@@ -37,6 +31,9 @@ import nu.xom.Element;
 import nu.xom.Elements;
 import nu.xom.ParsingException;
 import nu.xom.Serializer;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
 
 /**
  * Provides some utility methods for pharmacophore handling.
@@ -51,23 +48,24 @@ public class PharmacophoreUtils {
 
     /**
      * Read in a set of pharmacophore definitions to create pharmacophore queries.
-     * 
-     * Pharmacophore queries can be saved in an XML format which is described XXX. The
-     * file can contain multiple definitions. This method will process all the definitions
-     * and return a list fo {@link org.openscience.cdk.pharmacophore.PharmacophoreQuery} objects which can be used with
-     * the {@link PharmacophoreMatcher} class.
-     * 
-     * The current schema for the document allows one to specify angle and distance
-     * constraints. Currently the CDK does not support angle constraints, so they are
-     * ignored.
-     * 
-     * The schema also specifies a <i>units</i> attribute for a given constraint. The
-     * current reader ignores this and assumes that all distances are in Angstroms.
-     * 
-     * Finally, if there is a description associated with a pharmacophore definition, it is
-     * available as the <i>"description"</i> property of the {@link org.openscience.cdk.pharmacophore.PharmacophoreQuery} object.
-     * 
-     * Example usage is
+     *
+     * <p>Pharmacophore queries can be saved in an XML format which is described XXX. The file can
+     * contain multiple definitions. This method will process all the definitions and return a list
+     * fo {@link org.openscience.cdk.pharmacophore.PharmacophoreQuery} objects which can be used
+     * with the {@link PharmacophoreMatcher} class.
+     *
+     * <p>The current schema for the document allows one to specify angle and distance constraints.
+     * Currently the CDK does not support angle constraints, so they are ignored.
+     *
+     * <p>The schema also specifies a <i>units</i> attribute for a given constraint. The current
+     * reader ignores this and assumes that all distances are in Angstroms.
+     *
+     * <p>Finally, if there is a description associated with a pharmacophore definition, it is
+     * available as the <i>"description"</i> property of the {@link
+     * org.openscience.cdk.pharmacophore.PharmacophoreQuery} object.
+     *
+     * <p>Example usage is
+     *
      * <pre>{@code
      * List<PharmacophoreQuery> defs = readPharmacophoreDefinitions("mydefs.xml");
      * System.out.println("Number of definitions = "+defs.size());
@@ -79,14 +77,14 @@ public class PharmacophoreUtils {
      * @param filename The file to read the definitions from
      * @return A list of {@link org.openscience.cdk.pharmacophore.PharmacophoreQuery} objects
      * @throws CDKException if there is an error in the format
-     * @throws IOException  if there is an error in opening the file
+     * @throws IOException if there is an error in opening the file
      * @see org.openscience.cdk.pharmacophore.PharmacophoreQueryAtom
      * @see org.openscience.cdk.pharmacophore.PharmacophoreQueryBond
      * @see org.openscience.cdk.pharmacophore.PharmacophoreQuery
      * @see org.openscience.cdk.pharmacophore.PharmacophoreMatcher
      */
-    public static List<PharmacophoreQuery> readPharmacophoreDefinitions(String filename) throws CDKException,
-            IOException {
+    public static List<PharmacophoreQuery> readPharmacophoreDefinitions(String filename)
+            throws CDKException, IOException {
         Builder parser = new Builder();
         Document doc;
         try {
@@ -99,23 +97,24 @@ public class PharmacophoreUtils {
 
     /**
      * Read in a set of pharmacophore definitions to create pharmacophore queries.
-     * 
-     * Pharmacophore queries can be saved in an XML format which is described XXX. The
-     * file can contain multiple definitions. This method will process all the definitions
-     * and return a list of {@link org.openscience.cdk.pharmacophore.PharmacophoreQuery} objects which can be used with
-     * the {@link PharmacophoreMatcher} class.
-     * 
-     * The current schema for the document allows one to specify angle and distance
-     * constraints.
-     * 
-     * The schema also specifies a <i>units</i> attribute for a given constraint. The
-     * current reader ignores this and assumes that all distances are in Angstroms and
-     * angles are in degrees.
-     * 
-     * Finally, if there is a description associated with a pharmacophore definition, it is
-     * available as the <i>"description"</i> property of the {@link org.openscience.cdk.pharmacophore.PharmacophoreQuery} object.
-     * 
-     * Example usage is
+     *
+     * <p>Pharmacophore queries can be saved in an XML format which is described XXX. The file can
+     * contain multiple definitions. This method will process all the definitions and return a list
+     * of {@link org.openscience.cdk.pharmacophore.PharmacophoreQuery} objects which can be used
+     * with the {@link PharmacophoreMatcher} class.
+     *
+     * <p>The current schema for the document allows one to specify angle and distance constraints.
+     *
+     * <p>The schema also specifies a <i>units</i> attribute for a given constraint. The current
+     * reader ignores this and assumes that all distances are in Angstroms and angles are in
+     * degrees.
+     *
+     * <p>Finally, if there is a description associated with a pharmacophore definition, it is
+     * available as the <i>"description"</i> property of the {@link
+     * org.openscience.cdk.pharmacophore.PharmacophoreQuery} object.
+     *
+     * <p>Example usage is
+     *
      * <pre>{@code
      * List<PharmacophoreQuery> defs = readPharmacophoreDefinitions"mydefs.xml");
      * System.out.println("Number of definitions = "+defs.size());
@@ -127,14 +126,14 @@ public class PharmacophoreUtils {
      * @param ins The stream to read the definitions from
      * @return A list of {@link org.openscience.cdk.pharmacophore.PharmacophoreQuery} objects
      * @throws CDKException if there is an error in the format
-     * @throws IOException  if there is an error in opening the file
+     * @throws IOException if there is an error in opening the file
      * @see org.openscience.cdk.pharmacophore.PharmacophoreQueryAtom
      * @see org.openscience.cdk.pharmacophore.PharmacophoreQueryBond
      * @see org.openscience.cdk.pharmacophore.PharmacophoreMatcher
      * @see org.openscience.cdk.pharmacophore.PharmacophoreQuery
      */
-    public static List<PharmacophoreQuery> readPharmacophoreDefinitions(InputStream ins) throws IOException,
-            CDKException {
+    public static List<PharmacophoreQuery> readPharmacophoreDefinitions(InputStream ins)
+            throws IOException, CDKException {
         Builder parser = new Builder();
         Document doc;
         try {
@@ -149,40 +148,43 @@ public class PharmacophoreUtils {
      * Write out one or more pharmacophore queries in the CDK XML format.
      *
      * @param query The pharmacophore queries
-     * @param out   The OutputStream to write to
+     * @param out The OutputStream to write to
      * @throws IOException if there is a problem writing the XML document
      */
-    public static void writePharmacophoreDefinition(PharmacophoreQuery query, OutputStream out) throws IOException {
-        writePharmacophoreDefinition(new PharmacophoreQuery[]{query}, out);
-    }
-
-    /**
-     * Write out one or more pharmacophore queries in the CDK XML format.
-     *
-     * @param queries The pharmacophore queries
-     * @param out     The OutputStream to write to
-     * @throws IOException if there is a problem writing the XML document
-     */
-    public static void writePharmacophoreDefinition(List<PharmacophoreQuery> queries, OutputStream out)
+    public static void writePharmacophoreDefinition(PharmacophoreQuery query, OutputStream out)
             throws IOException {
-        writePharmacophoreDefinition(queries.toArray(new PharmacophoreQuery[]{}), out);
+        writePharmacophoreDefinition(new PharmacophoreQuery[] {query}, out);
     }
 
     /**
      * Write out one or more pharmacophore queries in the CDK XML format.
      *
      * @param queries The pharmacophore queries
-     * @param out     The OutputStream to write to
+     * @param out The OutputStream to write to
      * @throws IOException if there is a problem writing the XML document
      */
-    public static void writePharmacophoreDefinition(PharmacophoreQuery[] queries, OutputStream out) throws IOException {
+    public static void writePharmacophoreDefinition(
+            List<PharmacophoreQuery> queries, OutputStream out) throws IOException {
+        writePharmacophoreDefinition(queries.toArray(new PharmacophoreQuery[] {}), out);
+    }
+
+    /**
+     * Write out one or more pharmacophore queries in the CDK XML format.
+     *
+     * @param queries The pharmacophore queries
+     * @param out The OutputStream to write to
+     * @throws IOException if there is a problem writing the XML document
+     */
+    public static void writePharmacophoreDefinition(PharmacophoreQuery[] queries, OutputStream out)
+            throws IOException {
         Element root = new Element("pharmacophoreContainer");
         root.addAttribute(new Attribute("version", "1.0"));
         for (PharmacophoreQuery query : queries) {
             Element pcore = new Element("pharmacophore");
 
             Object description = query.getProperty("description");
-            if (description != null) pcore.addAttribute(new Attribute("description", (String) description));
+            if (description != null)
+                pcore.addAttribute(new Attribute("description", (String) description));
 
             Object name = query.getTitle();
             if (name != null) pcore.addAttribute(new Attribute("name", (String) name));
@@ -242,11 +244,12 @@ public class PharmacophoreUtils {
         // get global group defs
         HashMap<String, String> groups = getGroupDefinitions(root);
 
-        //now get the pcore defs
+        // now get the pcore defs
         Elements children = root.getChildElements();
         for (int i = 0; i < children.size(); i++) {
             Element e = children.get(i);
-            if (e.getQualifiedName().equals("pharmacophore")) ret.add(processPharmacophoreElement(e, groups));
+            if (e.getQualifiedName().equals("pharmacophore"))
+                ret.add(processPharmacophoreElement(e, groups));
         }
         return ret;
     }
@@ -270,8 +273,8 @@ public class PharmacophoreUtils {
     }
 
     /* process a single pcore definition */
-    private static PharmacophoreQuery processPharmacophoreElement(Element e, HashMap<String, String> global)
-            throws CDKException {
+    private static PharmacophoreQuery processPharmacophoreElement(
+            Element e, HashMap<String, String> global) throws CDKException {
         PharmacophoreQuery ret = new PharmacophoreQuery();
         ret.setProperty("description", e.getAttributeValue("description"));
         ret.setTitle(e.getAttributeValue("name"));
@@ -292,44 +295,39 @@ public class PharmacophoreUtils {
         return ret;
     }
 
-    private static void processDistanceConstraint(Element child, HashMap<String, String> local,
-            HashMap<String, String> global, PharmacophoreQuery ret) throws CDKException {
+    private static void processDistanceConstraint(
+            Element child,
+            HashMap<String, String> local,
+            HashMap<String, String> global,
+            PharmacophoreQuery ret)
+            throws CDKException {
         double lower;
         String tmp = child.getAttributeValue("lower");
-        if (tmp == null)
-            throw new CDKException("Must have a 'lower' attribute");
-        else
-            lower = Double.parseDouble(tmp);
+        if (tmp == null) throw new CDKException("Must have a 'lower' attribute");
+        else lower = Double.parseDouble(tmp);
 
         // we may not have an upper bound specified
         double upper;
         tmp = child.getAttributeValue("upper");
-        if (tmp != null)
-            upper = Double.parseDouble(tmp);
-        else
-            upper = lower;
+        if (tmp != null) upper = Double.parseDouble(tmp);
+        else upper = lower;
 
         // now get the two groups for this distance
         Elements grouprefs = child.getChildElements();
-        if (grouprefs.size() != 2) throw new CDKException("A distance constraint can only refer to 2 groups.");
+        if (grouprefs.size() != 2)
+            throw new CDKException("A distance constraint can only refer to 2 groups.");
         String id1 = grouprefs.get(0).getAttributeValue("id");
         String id2 = grouprefs.get(1).getAttributeValue("id");
 
         // see if it's a local def, else get it from the global list
         String smarts1, smarts2;
-        if (local.containsKey(id1))
-            smarts1 = local.get(id1);
-        else if (global.containsKey(id1))
-            smarts1 = global.get(id1);
-        else
-            throw new CDKException("Referring to a non-existant group definition");
+        if (local.containsKey(id1)) smarts1 = local.get(id1);
+        else if (global.containsKey(id1)) smarts1 = global.get(id1);
+        else throw new CDKException("Referring to a non-existant group definition");
 
-        if (local.containsKey(id2))
-            smarts2 = local.get(id2);
-        else if (global.containsKey(id2))
-            smarts2 = global.get(id2);
-        else
-            throw new CDKException("Referring to a non-existant group definition");
+        if (local.containsKey(id2)) smarts2 = local.get(id2);
+        else if (global.containsKey(id2)) smarts2 = global.get(id2);
+        else throw new CDKException("Referring to a non-existant group definition");
 
         // now see if we already have a correpsondiong pcore atom
         // else create a new atom
@@ -348,55 +346,49 @@ public class PharmacophoreUtils {
             if (queryAtom.getSymbol().equals(id1)) a1 = queryAtom;
             if (queryAtom.getSymbol().equals(id2)) a2 = queryAtom;
         }
-        ret.addBond(new PharmacophoreQueryBond((PharmacophoreQueryAtom) a1, (PharmacophoreQueryAtom) a2, lower, upper));
+        ret.addBond(
+                new PharmacophoreQueryBond(
+                        (PharmacophoreQueryAtom) a1, (PharmacophoreQueryAtom) a2, lower, upper));
     }
 
-    private static void processAngleConstraint(Element child, HashMap<String, String> local,
-            HashMap<String, String> global, PharmacophoreQuery ret) throws CDKException {
+    private static void processAngleConstraint(
+            Element child,
+            HashMap<String, String> local,
+            HashMap<String, String> global,
+            PharmacophoreQuery ret)
+            throws CDKException {
         double lower;
         String tmp = child.getAttributeValue("lower");
-        if (tmp == null)
-            throw new CDKException("Must have a 'lower' attribute");
-        else
-            lower = Double.parseDouble(tmp);
+        if (tmp == null) throw new CDKException("Must have a 'lower' attribute");
+        else lower = Double.parseDouble(tmp);
 
         // we may not have an upper bound specified
         double upper;
         tmp = child.getAttributeValue("upper");
-        if (tmp != null)
-            upper = Double.parseDouble(tmp);
-        else
-            upper = lower;
+        if (tmp != null) upper = Double.parseDouble(tmp);
+        else upper = lower;
 
         // now get the three groups for this distance
         Elements grouprefs = child.getChildElements();
-        if (grouprefs.size() != 3) throw new CDKException("An angle constraint can only refer to 3 groups.");
+        if (grouprefs.size() != 3)
+            throw new CDKException("An angle constraint can only refer to 3 groups.");
         String id1 = grouprefs.get(0).getAttributeValue("id");
         String id2 = grouprefs.get(1).getAttributeValue("id");
         String id3 = grouprefs.get(2).getAttributeValue("id");
 
         // see if it's a local def, else get it from the global list
         String smarts1, smarts2, smarts3;
-        if (local.containsKey(id1))
-            smarts1 = local.get(id1);
-        else if (global.containsKey(id1))
-            smarts1 = global.get(id1);
-        else
-            throw new CDKException("Referring to a non-existant group definition");
+        if (local.containsKey(id1)) smarts1 = local.get(id1);
+        else if (global.containsKey(id1)) smarts1 = global.get(id1);
+        else throw new CDKException("Referring to a non-existant group definition");
 
-        if (local.containsKey(id2))
-            smarts2 = local.get(id2);
-        else if (global.containsKey(id2))
-            smarts2 = global.get(id2);
-        else
-            throw new CDKException("Referring to a non-existant group definition");
+        if (local.containsKey(id2)) smarts2 = local.get(id2);
+        else if (global.containsKey(id2)) smarts2 = global.get(id2);
+        else throw new CDKException("Referring to a non-existant group definition");
 
-        if (local.containsKey(id3))
-            smarts3 = local.get(id3);
-        else if (global.containsKey(id3))
-            smarts3 = global.get(id3);
-        else
-            throw new CDKException("Referring to a non-existant group definition");
+        if (local.containsKey(id3)) smarts3 = local.get(id3);
+        else if (global.containsKey(id3)) smarts3 = global.get(id3);
+        else throw new CDKException("Referring to a non-existant group definition");
 
         // now see if we already have a correpsondiong pcore atom
         // else create a new atom
@@ -421,8 +413,13 @@ public class PharmacophoreUtils {
             if (queryAtom.getSymbol().equals(id2)) a2 = queryAtom;
             if (queryAtom.getSymbol().equals(id3)) a3 = queryAtom;
         }
-        ret.addBond(new PharmacophoreQueryAngleBond((PharmacophoreQueryAtom) a1, (PharmacophoreQueryAtom) a2,
-                (PharmacophoreQueryAtom) a3, lower, upper));
+        ret.addBond(
+                new PharmacophoreQueryAngleBond(
+                        (PharmacophoreQueryAtom) a1,
+                        (PharmacophoreQueryAtom) a2,
+                        (PharmacophoreQueryAtom) a3,
+                        lower,
+                        upper));
     }
 
     private static boolean containsPatom(PharmacophoreQuery q, String id) {
@@ -431,5 +428,4 @@ public class PharmacophoreUtils {
         }
         return false;
     }
-
 }

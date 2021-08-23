@@ -24,19 +24,19 @@ import org.xml.sax.helpers.DefaultHandler;
 /**
  * Class for unmarshalling a dictionary schema file.
  *
- * @cdk.module     dict
+ * @cdk.module dict
  * @cdk.githash
  */
 public class DictionaryHandler extends DefaultHandler {
 
-    private boolean inEntry        = false;
+    private boolean inEntry = false;
     private boolean inMetadataList = false;
-    Entry           entry;
+    Entry entry;
 
     /** Used to store all chars between two tags */
-    private String  currentChars;
+    private String currentChars;
 
-    Dictionary      dict;
+    Dictionary dict;
 
     public DictionaryHandler() {}
 
@@ -108,5 +108,4 @@ public class DictionaryHandler extends DefaultHandler {
     public Dictionary getDictionary() {
         return dict;
     }
-
 }

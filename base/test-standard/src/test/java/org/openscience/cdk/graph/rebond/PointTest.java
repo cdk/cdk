@@ -20,12 +20,9 @@ package org.openscience.cdk.graph.rebond;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.graph.rebond.Point;
 import org.openscience.cdk.CDKTestCase;
 
-/**
- * @cdk.module test-standard
- */
+/** @cdk.module test-standard */
 public class PointTest extends CDKTestCase {
 
     public PointTest() {
@@ -51,5 +48,4 @@ public class PointTest extends CDKTestCase {
         Point point = new Point(0.1, 0.2, 0.3);
         Assert.assertEquals("<0.1,0.2,0.3>", point.toString());
     }
-
 }

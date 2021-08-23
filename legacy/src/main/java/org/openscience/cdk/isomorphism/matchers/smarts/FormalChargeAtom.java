@@ -18,15 +18,14 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
+import java.util.Objects;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-
-import java.util.Objects;
 
 /**
  * This matcher checks the formal charge of the Atom.
  *
- * @cdk.module  smarts
+ * @cdk.module smarts
  * @cdk.githash
  * @cdk.keyword SMARTS
  */

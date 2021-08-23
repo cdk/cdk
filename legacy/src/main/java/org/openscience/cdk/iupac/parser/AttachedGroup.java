@@ -26,18 +26,18 @@ import java.util.List;
 /**
  * Holds data on a specific functional group or substituent.
  *
- * @author  Stephen Tomkinson
+ * @author Stephen Tomkinson
  * @cdk.githash
  * @cdk.require ant1.6
  */
 public class AttachedGroup {
 
     /** The name of the group */
-    private String      name      = "";
+    private String name = "";
     /** The collection of locations the group is attached to */
     private List<Token> locations = new ArrayList<Token>();
     /** The length of the substituent chain */
-    private int         length    = 0;
+    private int length = 0;
 
     /** Creates a new instance of FunctionalGroup */
     public AttachedGroup() {}
@@ -48,47 +48,52 @@ public class AttachedGroup {
         setName(name);
     }
 
-    /** Creates a new instance of AttachedGroup with an int denoting the length of the substituent chain */
+    /**
+     * Creates a new instance of AttachedGroup with an int denoting the length of the substituent
+     * chain
+     */
     public AttachedGroup(List<Token> locations, int length) {
         setLocations(locations);
         setLength(length);
     }
 
-    /** Getter for property name.
-     * @return Value of property name.
+    /**
+     * Getter for property name.
      *
+     * @return Value of property name.
      */
     public java.lang.String getName() {
         return name;
     }
 
-    /** Setter for property name.
-     * @param name New value of property name.
+    /**
+     * Setter for property name.
      *
+     * @param name New value of property name.
      */
     public void setName(java.lang.String name) {
         this.name = name;
     }
 
-    /** Getter for property locations.
-     * @return Value of property locations.
+    /**
+     * Getter for property locations.
      *
+     * @return Value of property locations.
      */
     public List<Token> getLocations() {
         return locations;
     }
 
-    /** Setter for property locations.
-     * @param locations New value of property locations.
+    /**
+     * Setter for property locations.
      *
+     * @param locations New value of property locations.
      */
     public void setLocations(List<Token> locations) {
         this.locations = locations;
     }
 
-    /**
-     * A debug string which represents the contents of the class.
-     */
+    /** A debug string which represents the contents of the class. */
     @Override
     public String toString() {
         String returnString = name + ": ";
@@ -102,17 +107,19 @@ public class AttachedGroup {
         return returnString;
     }
 
-    /** Getter for property length.
-     * @return Value of property length.
+    /**
+     * Getter for property length.
      *
+     * @return Value of property length.
      */
     public int getLength() {
         return length;
     }
 
-    /** Setter for property length.
-     * @param length New value of property length.
+    /**
+     * Setter for property length.
      *
+     * @param length New value of property length.
      */
     public void setLength(int length) {
         this.length = length;

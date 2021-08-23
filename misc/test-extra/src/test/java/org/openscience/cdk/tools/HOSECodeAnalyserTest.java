@@ -19,14 +19,11 @@
 package org.openscience.cdk.tools;
 
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 
-/**
- * @cdk.module test-extra
- */
+/** @cdk.module test-extra */
 public class HOSECodeAnalyserTest extends CDKTestCase {
 
     @Test
@@ -40,11 +37,11 @@ public class HOSECodeAnalyserTest extends CDKTestCase {
 
     @Test
     public void testCode1() {
-        List<String> elements = HOSECodeAnalyser.getElements("*C*CC(*C,*C,=C/*C,*&,CC/*&O,=OO,%N),C,,C,/");
+        List<String> elements =
+                HOSECodeAnalyser.getElements("*C*CC(*C,*C,=C/*C,*&,CC/*&O,=OO,%N),C,,C,/");
         Assert.assertEquals(3, elements.size());
         Assert.assertTrue(elements.contains("C"));
         Assert.assertTrue(elements.contains("O"));
         Assert.assertTrue(elements.contains("N"));
     }
-
 }

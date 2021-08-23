@@ -95,9 +95,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         testSetFormalCharge_Integer();
     }
 
-    /**
-     * Method to test the get/setValency() methods.
-     */
+    /** Method to test the get/setValency() methods. */
     @Test
     public void testSetValency_Integer() {
         int valency = 4;
@@ -182,7 +180,8 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         int benzol = 6;
         IAtomType a = (IAtomType) newChemObject();
         a.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, benzol);
-        Assert.assertEquals(benzol, ((Integer) a.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT)).intValue());
+        Assert.assertEquals(
+                benzol, ((Integer) a.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT)).intValue());
     }
 
     @Test
@@ -195,7 +194,8 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         int five = 5;
         IAtomType a = (IAtomType) newChemObject();
         a.setProperty(CDKConstants.PART_OF_RING_OF_SIZE, five);
-        Assert.assertEquals(five, ((Integer) a.getProperty(CDKConstants.PART_OF_RING_OF_SIZE)).intValue());
+        Assert.assertEquals(
+                five, ((Integer) a.getProperty(CDKConstants.PART_OF_RING_OF_SIZE)).intValue());
     }
 
     @Test
@@ -228,9 +228,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         testSetSphericalMatcher_String();
     }
 
-    /**
-     * Test for bug #1309731.
-     */
+    /** Test for bug #1309731. */
     @Test
     public void testAtomTypeNameAndIDBug() {
         IAtomType a = (IAtomType) newChemObject();
@@ -239,9 +237,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         Assert.assertEquals("carbon1", a.getID());
     }
 
-    /**
-     * Method to test the clone() method
-     */
+    /** Method to test the clone() method */
     @Test
     @Override
     public void testClone() throws Exception {
@@ -255,9 +251,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         Assert.assertEquals(0, diff.length());
     }
 
-    /**
-     * Method to test the clone() method
-     */
+    /** Method to test the clone() method */
     @Test
     public void testClone_MaxBondOrder() throws Exception {
         IAtomType at = (IAtomType) newChemObject();
@@ -268,9 +262,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         Assert.assertEquals(IBond.Order.SINGLE, clone.getMaxBondOrder());
     }
 
-    /**
-     * Method to test the clone() method
-     */
+    /** Method to test the clone() method */
     @Test
     public void testClone_IBondOrderSum() throws Exception {
         IAtomType at = (IAtomType) newChemObject();
@@ -281,9 +273,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         Assert.assertEquals(1.0, clone.getBondOrderSum(), 0.001);
     }
 
-    /**
-     * Method to test the clone() method
-     */
+    /** Method to test the clone() method */
     @Test
     public void testClone_CovalentRadius() throws Exception {
         IAtomType at = (IAtomType) newChemObject();
@@ -294,9 +284,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         Assert.assertEquals(1.0, clone.getCovalentRadius(), 0.001);
     }
 
-    /**
-     * Method to test the clone() method
-     */
+    /** Method to test the clone() method */
     @Test
     public void testClone_FormalCharge() throws Exception {
         IAtomType at = (IAtomType) newChemObject();
@@ -307,9 +295,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         Assert.assertEquals(1, clone.getFormalCharge().intValue());
     }
 
-    /**
-     * Method to test the clone() method
-     */
+    /** Method to test the clone() method */
     @Test
     public void testClone_FormalNeighbourCount() throws Exception {
         IAtomType at = (IAtomType) newChemObject();
@@ -320,9 +306,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         Assert.assertEquals(1, (int) clone.getFormalNeighbourCount());
     }
 
-    /**
-     * Method to test the clone() method
-     */
+    /** Method to test the clone() method */
     @Test
     public void testClone_Hybridization() throws Exception {
         IAtomType at = (IAtomType) newChemObject();
@@ -333,9 +317,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         Assert.assertEquals(Hybridization.PLANAR3, clone.getHybridization());
     }
 
-    /**
-     * Method to test whether the class complies with RFC #9.
-     */
+    /** Method to test whether the class complies with RFC #9. */
     @Test
     @Override
     public void testToString() {

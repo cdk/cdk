@@ -37,19 +37,22 @@ public class MappingTest extends AbstractMappingTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new Mapping(new Atom(), new Atom());
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new Mapping(new Atom(), new Atom());
+                    }
+                });
     }
 
     @Test
     public void testMapping_IChemObject_IChemObject() {
-        IMapping mapping = new Mapping(newChemObject().getBuilder().newInstance(IAtom.class), newChemObject()
-                .getBuilder().newInstance(IAtom.class));
+        IMapping mapping =
+                new Mapping(
+                        newChemObject().getBuilder().newInstance(IAtom.class),
+                        newChemObject().getBuilder().newInstance(IAtom.class));
         Assert.assertNotNull(mapping);
     }
 
@@ -61,9 +64,7 @@ public class MappingTest extends AbstractMappingTest {
         ChemObjectTestHelper.testNotifyChanged_SetFlag(newChemObject());
     }
 
-    /**
-     * @cdk.bug 2992921
-     */
+    /** @cdk.bug 2992921 */
     @Test
     @Override
     public void testNotifyChanged_SetFlags() {

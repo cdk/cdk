@@ -19,7 +19,6 @@
 package org.openscience.cdk.tools;
 
 import java.util.Iterator;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -38,8 +37,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 /**
  * Tests CDK's valency checker capabilities in terms of example molecules.
  *
- * @cdk.module  test-valencycheck
- *
+ * @cdk.module test-valencycheck
  * @author Egon Willighagen &lt;egonw@users.sf.net&gt;
  * @cdk.created 2007-07-28
  */
@@ -47,7 +45,8 @@ public class CDKValencyCheckerTest extends CDKTestCase {
 
     @Test
     public void testInstance() {
-        CDKValencyChecker checker = CDKValencyChecker.getInstance(DefaultChemObjectBuilder.getInstance());
+        CDKValencyChecker checker =
+                CDKValencyChecker.getInstance(DefaultChemObjectBuilder.getInstance());
         Assert.assertNotNull(checker);
     }
 
@@ -127,9 +126,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
         Assert.assertFalse(checker.isSaturated(mol));
     }
 
-    /**
-     * Tests if the saturation checker considers negative charges.
-     */
+    /** Tests if the saturation checker considers negative charges. */
     @Test
     public void testIsSaturated_NegativelyChargedOxygen() throws Exception {
         // test methane with explicit hydrogen
@@ -154,10 +151,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
         Assert.assertTrue(checker.isSaturated(mol));
     }
 
-    /**
-     * Tests if the saturation checker considers positive
-     * charges.
-     */
+    /** Tests if the saturation checker considers positive charges. */
     @Test
     public void testIsSaturated_PositivelyChargedNitrogen() throws Exception {
         // test methane with explicit hydrogen
@@ -182,9 +176,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
         Assert.assertTrue(checker.isSaturated(mol));
     }
 
-    /**
-     * Test sulfuric acid.
-     */
+    /** Test sulfuric acid. */
     @Test
     public void testBug772316() throws Exception {
         // test methane with explicit hydrogen
@@ -214,9 +206,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
         Assert.assertTrue(checker.isSaturated(mol));
     }
 
-    /**
-     * Tests if the saturation checker gets a proton right.
-     */
+    /** Tests if the saturation checker gets a proton right. */
     @Test
     public void testIsSaturated_Proton() throws Exception {
         // test H+
@@ -229,9 +219,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
         Assert.assertTrue(checker.isSaturated(mol));
     }
 
-    /** TODO: check who added this test. I think Miguel; it seems to be a
-     *  resonance structure.
-     */
+    /** TODO: check who added this test. I think Miguel; it seems to be a resonance structure. */
     @Test
     public void test1() throws Exception {
         IAtomContainer mol = new AtomContainer();
@@ -283,5 +271,4 @@ public class CDKValencyCheckerTest extends CDKTestCase {
             if (type != null) AtomTypeManipulator.configure(atom, type);
         }
     }
-
 }

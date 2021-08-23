@@ -23,8 +23,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -42,8 +40,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
- * Reader that extracts information from the IDENT, NAME, ATOMS and BONDS
- * blocks in CTX files.
+ * Reader that extracts information from the IDENT, NAME, ATOMS and BONDS blocks in CTX files.
  *
  * @cdk.module io
  * @cdk.githash
@@ -51,10 +48,10 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  */
 public class CTXReader extends DefaultChemObjectReader {
 
-    private BufferedReader      input;
+    private BufferedReader input;
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CTXReader.class);
 
-    private IChemFile           file;
+    private IChemFile file;
 
     public CTXReader() {
         file = null;
@@ -141,8 +138,7 @@ public class CTXReader extends DefaultChemObjectReader {
                     } else {
                         // skip lines
                         logger.warn("Dropping block: ", command);
-                        for (int i = 0; i < lineCount; i++)
-                            input.readLine();
+                        for (int i = 0; i < lineCount; i++) input.readLine();
                     }
                 } else {
                     logger.warn("Unexpected content at line: ", lineNumber);
@@ -195,8 +191,13 @@ public class CTXReader extends DefaultChemObjectReader {
             int atom1 = Integer.parseInt(line.substring(10, 13).trim()) - 1;
             int atom2 = Integer.parseInt(line.substring(16, 19).trim()) - 1;
             if (container.getBond(container.getAtom(atom1), container.getAtom(atom2)) == null) {
-                IBond bond = container.getBuilder().newInstance(IBond.class, container.getAtom(atom1),
-                        container.getAtom(atom2));
+                IBond bond =
+                        container
+                                .getBuilder()
+                                .newInstance(
+                                        IBond.class,
+                                        container.getAtom(atom1),
+                                        container.getAtom(atom2));
                 int order = Integer.parseInt(line.substring(23).trim());
                 bond.setOrder(BondManipulator.createBondOrder((double) order));
                 container.addBond(bond);

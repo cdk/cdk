@@ -23,7 +23,6 @@
 package org.openscience.cdk.io;
 
 import java.io.InputStream;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -37,7 +36,6 @@ import org.openscience.cdk.interfaces.ICrystal;
  * TestCase for the reading Cerius<sup>2</sup> Polymorph Predictor files using a test file.
  *
  * @cdk.module test-io
- *
  * @see org.openscience.cdk.io.PMPReader
  */
 public class PMPReaderTest extends SimpleChemObjectReaderTest {

@@ -30,7 +30,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * Captures query bond types defined in the CTFile.
  *
- * @cdk.module  isomorphism
+ * @cdk.module isomorphism
  * @cdk.githash
  * @deprecated Use {@link Expr.Type#SINGLE_OR_AROMATIC} etc.
  */
@@ -43,20 +43,26 @@ public class CTFileQueryBond extends QueryBond implements IQueryBond {
      * Double or Aromatic, 8 = Any
      */
     public enum Type {
-        SINGLE, DOUBLE, TRIPLE, AROMATIC, SINGLE_OR_DOUBLE, SINGLE_OR_AROMATIC, DOUBLE_OR_AROMATIC, ANY
+        SINGLE,
+        DOUBLE,
+        TRIPLE,
+        AROMATIC,
+        SINGLE_OR_DOUBLE,
+        SINGLE_OR_AROMATIC,
+        DOUBLE_OR_AROMATIC,
+        ANY
     }
 
     public CTFileQueryBond(IChemObjectBuilder builder) {
         super(builder);
     }
 
-    /**
-     * The type of this bond.
-     */
+    /** The type of this bond. */
     protected Type type = (Type) CDKConstants.UNSET;
 
     /**
      * Getter for bond type
+     *
      * @param type
      */
     public void setType(CTFileQueryBond.Type type) {
@@ -65,6 +71,7 @@ public class CTFileQueryBond extends QueryBond implements IQueryBond {
 
     /**
      * Getter for type
+     *
      * @return the type of this bond
      */
     public CTFileQueryBond.Type getType() {
@@ -77,9 +84,8 @@ public class CTFileQueryBond extends QueryBond implements IQueryBond {
     }
 
     /**
-     * Create a CTFileQueryBond of the specified type (from the MDL spec). The
-     * bond copies the atoms and sets the type using the value 'type', 5 = single
-     * or double, 8 = any, etc.
+     * Create a CTFileQueryBond of the specified type (from the MDL spec). The bond copies the atoms
+     * and sets the type using the value 'type', 5 = single or double, 8 = any, etc.
      *
      * @param bond an existing bond
      * @param type the specified type
@@ -88,7 +94,7 @@ public class CTFileQueryBond extends QueryBond implements IQueryBond {
     public static CTFileQueryBond ofType(IBond bond, int type) {
         CTFileQueryBond queryBond = new CTFileQueryBond(bond.getBuilder());
         queryBond.setOrder(Order.UNSET);
-        queryBond.setAtoms(new IAtom[]{bond.getBegin(), bond.getEnd()});
+        queryBond.setAtoms(new IAtom[] {bond.getBegin(), bond.getEnd()});
         switch (type) {
             case 1:
                 queryBond.setType(Type.SINGLE);

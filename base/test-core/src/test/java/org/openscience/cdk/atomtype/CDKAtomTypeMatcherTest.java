@@ -22,10 +22,11 @@
  */
 package org.openscience.cdk.atomtype;
 
+import static org.hamcrest.CoreMatchers.is;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Test;
@@ -52,13 +53,10 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
-import static org.hamcrest.CoreMatchers.is;
-
 /**
- * This class tests the matching of atom types defined in the
- * CDK atom type list. All tests in this class <b>must</b> use
- * explicit {@link IAtomContainer}s; test using data files
- * must be placed in {@link CDKAtomTypeMatcherFilesTest}.
+ * This class tests the matching of atom types defined in the CDK atom type list. All tests in this
+ * class <b>must</b> use explicit {@link IAtomContainer}s; test using data files must be placed in
+ * {@link CDKAtomTypeMatcherFilesTest}.
  *
  * @cdk.module test-core
  */
@@ -68,14 +66,17 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
 
     @Test
     public void testGetInstance_IChemObjectBuilder() throws Exception {
-        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
+        CDKAtomTypeMatcher matcher =
+                CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
         Assert.assertNotNull(matcher);
     }
 
     @Test
     public void testGetInstance_IChemObjectBuilder_int() throws Exception {
-        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance(),
-                CDKAtomTypeMatcher.REQUIRE_EXPLICIT_HYDROGENS);
+        CDKAtomTypeMatcher matcher =
+                CDKAtomTypeMatcher.getInstance(
+                        DefaultChemObjectBuilder.getInstance(),
+                        CDKAtomTypeMatcher.REQUIRE_EXPLICIT_HYDROGENS);
         Assert.assertNotNull(matcher);
     }
 
@@ -100,7 +101,8 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom);
 
         // just check consistency; other methods do perception testing
-        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
+        CDKAtomTypeMatcher matcher =
+                CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
         IAtomType[] types = matcher.findMatchingAtomTypes(mol);
         for (int i = 0; i < types.length; i++) {
             IAtomType type = matcher.findMatchingAtomType(mol, mol.getAtom(i));
@@ -118,15 +120,14 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * @cdk.bug 2445178
-     */
+    /** @cdk.bug 2445178 */
     @Test
     public void testNonExistingType() throws Exception {
         IAtomContainer mol = new AtomContainer();
         IAtom atom = new Atom();
         mol.addAtom(atom);
-        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
+        CDKAtomTypeMatcher matcher =
+                CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
         IAtomType type = matcher.findMatchingAtomType(mol, atom);
         Assert.assertNotNull(type);
         org.hamcrest.MatcherAssert.assertThat(type.getAtomTypeName(), is("X"));
@@ -255,8 +256,20 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addBond(8, 11, Order.SINGLE);
         mol.addBond(8, 9, Order.SINGLE);
 
-        String[] expectedTypes = {"C.sp2", "N.planar3", "C.sp2", "N.sp2", "C.sp3", "C.sp2", "N.sp2", "C.sp2", "C.sp2",
-                "N.amide", "O.sp2", "N.sp3"};
+        String[] expectedTypes = {
+            "C.sp2",
+            "N.planar3",
+            "C.sp2",
+            "N.sp2",
+            "C.sp3",
+            "C.sp2",
+            "N.sp2",
+            "C.sp2",
+            "C.sp2",
+            "N.amide",
+            "O.sp2",
+            "N.sp3"
+        };
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -325,8 +338,8 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     }
 
     /**
-     * Aim of this test is to see if the atom type matcher is OK with
-     * partial filled implicit hydrogen counts.
+     * Aim of this test is to see if the atom type matcher is OK with partial filled implicit
+     * hydrogen counts.
      */
     @Test
     public void testPartialMethane() throws Exception {
@@ -505,13 +518,18 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
 
     @Test
     public void testS3() throws Exception {
-        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer mol =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         IAtom s = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "S");
         IAtom o1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "O");
         IAtom o2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "O");
 
-        IBond b1 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class, s, o1, IBond.Order.DOUBLE);
-        IBond b2 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class, s, o2, IBond.Order.DOUBLE);
+        IBond b1 =
+                DefaultChemObjectBuilder.getInstance()
+                        .newInstance(IBond.class, s, o1, IBond.Order.DOUBLE);
+        IBond b2 =
+                DefaultChemObjectBuilder.getInstance()
+                        .newInstance(IBond.class, s, o2, IBond.Order.DOUBLE);
 
         mol.addAtom(s);
         mol.addAtom(o1);
@@ -526,13 +544,18 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
 
     @Test
     public void testH2S() throws Exception {
-        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer mol =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         IAtom s = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "S");
         IAtom h1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "H");
         IAtom h2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "H");
 
-        IBond b1 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class, s, h1, IBond.Order.SINGLE);
-        IBond b2 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class, s, h2, IBond.Order.SINGLE);
+        IBond b1 =
+                DefaultChemObjectBuilder.getInstance()
+                        .newInstance(IBond.class, s, h1, IBond.Order.SINGLE);
+        IBond b2 =
+                DefaultChemObjectBuilder.getInstance()
+                        .newInstance(IBond.class, s, h2, IBond.Order.SINGLE);
 
         mol.addAtom(s);
         mol.addAtom(h1);
@@ -545,18 +568,21 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * @cdk.inchi InChI=1/H2Se/h1H2
-     */
+    /** @cdk.inchi InChI=1/H2Se/h1H2 */
     @Test
     public void testH2Se() throws Exception {
-        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer mol =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         IAtom se = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "Se");
         IAtom h1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "H");
         IAtom h2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "H");
 
-        IBond b1 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class, se, h1, IBond.Order.SINGLE);
-        IBond b2 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class, se, h2, IBond.Order.SINGLE);
+        IBond b1 =
+                DefaultChemObjectBuilder.getInstance()
+                        .newInstance(IBond.class, se, h1, IBond.Order.SINGLE);
+        IBond b2 =
+                DefaultChemObjectBuilder.getInstance()
+                        .newInstance(IBond.class, se, h2, IBond.Order.SINGLE);
 
         mol.addAtom(se);
         mol.addAtom(h1);
@@ -569,17 +595,18 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * @cdk.inchi InChI=1/H2Se/h1H2
-     */
+    /** @cdk.inchi InChI=1/H2Se/h1H2 */
     @Test
     public void testH2Se_oneImplH() throws Exception {
-        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer mol =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         IAtom se = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "Se");
         se.setImplicitHydrogenCount(1);
         IAtom h1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "H");
 
-        IBond b1 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class, se, h1, IBond.Order.SINGLE);
+        IBond b1 =
+                DefaultChemObjectBuilder.getInstance()
+                        .newInstance(IBond.class, se, h1, IBond.Order.SINGLE);
 
         mol.addAtom(se);
         mol.addAtom(h1);
@@ -589,12 +616,11 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * @cdk.inchi InChI=1/H2Se/h1H2
-     */
+    /** @cdk.inchi InChI=1/H2Se/h1H2 */
     @Test
     public void testH2Se_twoImplH() throws Exception {
-        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer mol =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         IAtom se = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "Se");
         se.setImplicitHydrogenCount(2);
         mol.addAtom(se);
@@ -605,7 +631,8 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
 
     @Test
     public void testSelenide() throws Exception {
-        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer mol =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         IAtom se = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "Se");
         se.setImplicitHydrogenCount(0);
         se.setFormalCharge(-2);
@@ -617,7 +644,8 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
 
     @Test
     public void testH2S_Hybridization() throws Exception {
-        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer mol =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         IAtom s = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "S");
         s.setHybridization(Hybridization.SP3);
         mol.addAtom(s);
@@ -627,12 +655,15 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
 
     @Test
     public void testHS() throws Exception {
-        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer mol =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         IAtom s = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "S");
         s.setFormalCharge(-1);
         IAtom h1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "H");
 
-        IBond b1 = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class, s, h1, IBond.Order.SINGLE);
+        IBond b1 =
+                DefaultChemObjectBuilder.getInstance()
+                        .newInstance(IBond.class, s, h1, IBond.Order.SINGLE);
 
         mol.addAtom(s);
         mol.addAtom(h1);
@@ -780,8 +811,18 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     @Test
     public void testAdenine() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makeAdenine();
-        String[] expectedTypes = {"C.sp2", "C.sp2", "C.sp2", "N.sp2", "N.sp2", "N.planar3", "N.sp2", "N.sp3", "C.sp2",
-                "C.sp2"};
+        String[] expectedTypes = {
+            "C.sp2",
+            "C.sp2",
+            "C.sp2",
+            "N.sp2",
+            "N.sp2",
+            "N.planar3",
+            "N.sp2",
+            "N.sp3",
+            "C.sp2",
+            "C.sp2"
+        };
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -893,9 +934,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * @cdk.inchi InChI=1S/CH4O2S2/c1-5(2,3)4/h1H3,(H,2,3,4)
-     */
+    /** @cdk.inchi InChI=1S/CH4O2S2/c1-5(2,3)4/h1H3,(H,2,3,4) */
     @Test
     public void testThioSulphonate() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
@@ -1071,9 +1110,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * @cdk.inchi InChI=1/C3H10OP/c1-5(2,3)4/h4H,1-3H3/q+1
-     */
+    /** @cdk.inchi InChI=1/C3H10OP/c1-5(2,3)4/h4H,1-3H3/q+1 */
     @Test
     public void testHydroxyTriMethylPhophanium() throws Exception {
         IAtomContainer mol = new AtomContainer();
@@ -1260,9 +1297,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * @cdk.inchi InChI=1S/HO3P/c1-4(2)3/h(H-,1,2,3)/p+1
-     */
+    /** @cdk.inchi InChI=1S/HO3P/c1-4(2)3/h(H-,1,2,3)/p+1 */
     @Test
     public void testPhosphorousAcid() throws Exception {
         IAtomContainer mol = new AtomContainer();
@@ -1311,9 +1346,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * @cdk.inchi InChI=1/C2H5P/c1-3-2/h1H2,2H3
-     */
+    /** @cdk.inchi InChI=1/C2H5P/c1-3-2/h1H2,2H3 */
     @Test
     public void testPhosphorCompound() throws Exception {
         IAtomContainer mol = new AtomContainer();
@@ -1326,7 +1359,9 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addBond(0, 1, Order.DOUBLE);
         mol.addBond(1, 2, Order.SINGLE);
 
-        String[] expectedTypes = {"C.sp2", "P.irane", "C.sp3"}; // FIXME: compare with previous test... can't both be P.ine...
+        String[] expectedTypes = {
+            "C.sp2", "P.irane", "C.sp3"
+        }; // FIXME: compare with previous test... can't both be P.ine...
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -1357,7 +1392,9 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         atom2.setFormalCharge(+1);
         mol.addAtom(atom2);
 
-        String[] expectedTypes = {"C.plus.sp2"}; // FIXME: compare with previous test... same compound!
+        String[] expectedTypes = {
+            "C.plus.sp2"
+        }; // FIXME: compare with previous test... same compound!
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -1464,21 +1501,21 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         atom = new Atom("F");
         atom.setFormalCharge(-1);
         mol.addAtom(atom);
-        expectedTypes = new String[]{"F.minus"};
+        expectedTypes = new String[] {"F.minus"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
         mol = new AtomContainer();
         atom = new Atom("Br");
         atom.setFormalCharge(-1);
         mol.addAtom(atom);
-        expectedTypes = new String[]{"Br.minus"};
+        expectedTypes = new String[] {"Br.minus"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
         mol = new AtomContainer();
         atom = new Atom("I");
         atom.setFormalCharge(-1);
         mol.addAtom(atom);
-        expectedTypes = new String[]{"I.minus"};
+        expectedTypes = new String[] {"I.minus"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -1491,7 +1528,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom);
         mol.addAtom(hydrogen);
         mol.addBond(0, 1, Order.SINGLE);
-        String[] expectedTypes = new String[]{"Cl", "H"};
+        String[] expectedTypes = new String[] {"Cl", "H"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
         mol = new AtomContainer();
@@ -1499,7 +1536,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom);
         mol.addAtom(hydrogen);
         mol.addBond(0, 1, Order.SINGLE);
-        expectedTypes = new String[]{"I", "H"};
+        expectedTypes = new String[] {"I", "H"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
         mol = new AtomContainer();
@@ -1507,7 +1544,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom);
         mol.addAtom(hydrogen);
         mol.addBond(0, 1, Order.SINGLE);
-        expectedTypes = new String[]{"Br", "H"};
+        expectedTypes = new String[] {"Br", "H"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
         mol = new AtomContainer();
@@ -1515,7 +1552,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom);
         mol.addAtom(hydrogen);
         mol.addBond(0, 1, Order.SINGLE);
-        expectedTypes = new String[]{"F", "H"};
+        expectedTypes = new String[] {"F", "H"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -1587,7 +1624,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         atom.setFormalCharge(-1);
         mol.addAtom(atom);
 
-        String[] expectedTypes = new String[]{"H.minus"};
+        String[] expectedTypes = new String[] {"H.minus"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -1598,7 +1635,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom);
         mol.addSingleElectron(0);
 
-        String[] expectedTypes = new String[]{"H.radical"};
+        String[] expectedTypes = new String[] {"H.radical"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -1619,7 +1656,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addBond(1, 2, Order.SINGLE);
         mol.addBond(2, 3, Order.TRIPLE);
 
-        String[] expectedTypes = new String[]{"C.sp3", "N.minus.sp3", "N.plus.sp1", "N.sp1"};
+        String[] expectedTypes = new String[] {"C.sp3", "N.minus.sp3", "N.plus.sp1", "N.sp1"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -1635,7 +1672,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addBond(0, 1, Order.DOUBLE);
         mol.addBond(1, 2, Order.DOUBLE);
 
-        String[] expectedTypes = new String[]{"C.sp2", "C.allene", "C.sp2"};
+        String[] expectedTypes = new String[] {"C.sp2", "C.allene", "C.sp2"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -1656,7 +1693,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addBond(1, 2, Order.DOUBLE);
         mol.addBond(2, 3, Order.DOUBLE);
 
-        String[] expectedTypes = new String[]{"C.sp3", "N.sp2", "N.plus.sp1", "N.minus.sp2"};
+        String[] expectedTypes = new String[] {"C.sp3", "N.sp2", "N.plus.sp1", "N.minus.sp2"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -1681,7 +1718,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addBond(2, 3, Order.SINGLE);
         mol.addBond(3, 4, Order.DOUBLE);
         mol.addBond(4, 0, Order.SINGLE);
-        String[] expectedTypes = new String[]{"Hg.minus", "O.plus.sp2", "C.sp2", "C.sp2", "N.sp2"};
+        String[] expectedTypes = new String[] {"Hg.minus", "O.plus.sp2", "C.sp2", "C.sp2", "N.sp2"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -1780,7 +1817,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addBond(0, 1, Order.SINGLE);
         mol.addBond(1, 2, Order.SINGLE);
         mol.addBond(2, 3, Order.SINGLE);
-        String[] expectedTypes = new String[]{"O.sp3", "Po", "C.sp3", "C.sp3"};
+        String[] expectedTypes = new String[] {"O.sp3", "Po", "C.sp3", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -1795,7 +1832,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom);
         mol.addBond(1, 2, IBond.Order.SINGLE);
 
-        String[] expectedTypes = new String[]{"C.sp2", "O.plus.sp2", "Na"};
+        String[] expectedTypes = new String[] {"C.sp2", "O.plus.sp2", "Na"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -1805,19 +1842,19 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
 
         IAtom atom = new Atom("W");
         mol.addAtom(atom);
-        String[] expectedTypes = new String[]{"W.metallic"};
+        String[] expectedTypes = new String[] {"W.metallic"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
         mol = new AtomContainer();
         atom = new Atom("K");
         mol.addAtom(atom);
-        expectedTypes = new String[]{"K.metallic"};
+        expectedTypes = new String[] {"K.metallic"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
         mol = new AtomContainer();
         atom = new Atom("Co");
         mol.addAtom(atom);
-        expectedTypes = new String[]{"Co.metallic"};
+        expectedTypes = new String[] {"Co.metallic"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -1828,70 +1865,70 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         IAtom atom = new Atom("Na");
         atom.setFormalCharge(+1);
         mol.addAtom(atom);
-        String[] expectedTypes = new String[]{"Na.plus"};
+        String[] expectedTypes = new String[] {"Na.plus"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
         mol = new AtomContainer();
         atom = new Atom("K");
         atom.setFormalCharge(+1);
         mol.addAtom(atom);
-        expectedTypes = new String[]{"K.plus"};
+        expectedTypes = new String[] {"K.plus"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
         mol = new AtomContainer();
         atom = new Atom("Ca");
         atom.setFormalCharge(+2);
         mol.addAtom(atom);
-        expectedTypes = new String[]{"Ca.2plus"};
+        expectedTypes = new String[] {"Ca.2plus"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
         mol = new AtomContainer();
         atom = new Atom("Mg");
         atom.setFormalCharge(+2);
         mol.addAtom(atom);
-        expectedTypes = new String[]{"Mg.2plus"};
+        expectedTypes = new String[] {"Mg.2plus"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
         mol = new AtomContainer();
         atom = new Atom("Ni");
         atom.setFormalCharge(+2);
         mol.addAtom(atom);
-        expectedTypes = new String[]{"Ni.2plus"};
+        expectedTypes = new String[] {"Ni.2plus"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
         mol = new AtomContainer();
         atom = new Atom("Pt");
         atom.setFormalCharge(+2);
         mol.addAtom(atom);
-        expectedTypes = new String[]{"Pt.2plus"};
+        expectedTypes = new String[] {"Pt.2plus"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
         mol = new AtomContainer();
         atom = new Atom("Co");
         atom.setFormalCharge(+2);
         mol.addAtom(atom);
-        expectedTypes = new String[]{"Co.2plus"};
+        expectedTypes = new String[] {"Co.2plus"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
         mol = new AtomContainer();
         atom = new Atom("Co");
         atom.setFormalCharge(+3);
         mol.addAtom(atom);
-        expectedTypes = new String[]{"Co.3plus"};
+        expectedTypes = new String[] {"Co.3plus"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
         mol = new AtomContainer();
         atom = new Atom("Cu");
         atom.setFormalCharge(+2);
         mol.addAtom(atom);
-        expectedTypes = new String[]{"Cu.2plus"};
+        expectedTypes = new String[] {"Cu.2plus"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
         mol = new AtomContainer();
         atom = new Atom("Al");
         atom.setFormalCharge(+3);
         mol.addAtom(atom);
-        expectedTypes = new String[]{"Al.3plus"};
+        expectedTypes = new String[] {"Al.3plus"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -1962,7 +1999,8 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         cp.addBond(4, 0, Order.SINGLE);
         cp.addBond(4, 5, Order.SINGLE);
 
-        String[] expectedTypes = new String[]{"C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.minus.planar", "H"};
+        String[] expectedTypes =
+                new String[] {"C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.minus.planar", "H"};
         assertAtomTypes(testedAtomTypes, expectedTypes, cp);
     }
 
@@ -1994,8 +2032,20 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         ferrocene.addBond(8, 9, Order.SINGLE);
         ferrocene.addBond(9, 5, Order.SINGLE);
 
-        String[] expectedTypes = new String[]{"C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.minus.planar", "C.sp2", "C.sp2",
-                "C.sp2", "C.sp2", "C.minus.planar", "Fe.2plus"};
+        String[] expectedTypes =
+                new String[] {
+                    "C.sp2",
+                    "C.sp2",
+                    "C.sp2",
+                    "C.sp2",
+                    "C.minus.planar",
+                    "C.sp2",
+                    "C.sp2",
+                    "C.sp2",
+                    "C.sp2",
+                    "C.minus.planar",
+                    "Fe.2plus"
+                };
         assertAtomTypes(testedAtomTypes, expectedTypes, ferrocene);
     }
 
@@ -2012,7 +2062,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         furan.addBond(2, 3, Order.DOUBLE);
         furan.addBond(3, 4, Order.SINGLE);
         furan.addBond(4, 0, Order.SINGLE);
-        String[] expectedTypes = new String[]{"C.sp2", "C.sp2", "C.sp2", "C.sp2", "O.planar3"};
+        String[] expectedTypes = new String[] {"C.sp2", "C.sp2", "C.sp2", "C.sp2", "O.planar3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, furan);
     }
 
@@ -2034,13 +2084,12 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addBond(1, 3, Order.DOUBLE);
         mol.addBond(1, 4, Order.DOUBLE);
 
-        String[] expectedTypes = new String[]{"O.sp3", "Cl.perchlorate", "O.sp2", "O.sp2", "O.sp2"};
+        String[] expectedTypes =
+                new String[] {"O.sp3", "Cl.perchlorate", "O.sp2", "O.sp2", "O.sp2"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * Gallium tetrahydroxide.
-     */
+    /** Gallium tetrahydroxide. */
     @Test
     public void testGallate() throws Exception {
         IAtomContainer mol = new AtomContainer();
@@ -2060,13 +2109,12 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom4);
         mol.addAtom(atom5);
 
-        String[] expectedTypes = new String[]{"O.minus", "Ga.3plus", "O.minus", "O.minus", "O.minus"};
+        String[] expectedTypes =
+                new String[] {"O.minus", "Ga.3plus", "O.minus", "O.minus", "O.minus"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * Gallium trihydroxide.
-     */
+    /** Gallium trihydroxide. */
     @Test
     public void testGallateCovalent() throws Exception {
         IAtomContainer mol = new AtomContainer();
@@ -2078,11 +2126,11 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(atom2);
         mol.addAtom(atom3);
         mol.addAtom(atom4);
-        mol.addBond(1,0,Order.SINGLE);
-        mol.addBond(1,2,Order.SINGLE);
-        mol.addBond(1,3,Order.SINGLE);
+        mol.addBond(1, 0, Order.SINGLE);
+        mol.addBond(1, 2, Order.SINGLE);
+        mol.addBond(1, 3, Order.SINGLE);
 
-        String[] expectedTypes = new String[]{"O.sp3", "Ga", "O.sp3", "O.sp3"};
+        String[] expectedTypes = new String[] {"O.sp3", "Ga", "O.sp3", "O.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -2108,7 +2156,8 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addBond(1, 3, Order.SINGLE);
         mol.addBond(1, 4, Order.SINGLE);
 
-        String[] expectedTypes = new String[]{"O.sp3", "Cl.perchlorate.charged", "O.minus", "O.minus", "O.minus"};
+        String[] expectedTypes =
+                new String[] {"O.sp3", "Cl.perchlorate.charged", "O.minus", "O.minus", "O.minus"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -2127,7 +2176,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addBond(1, 2, Order.DOUBLE);
         mol.addBond(1, 3, Order.DOUBLE);
 
-        String[] expectedTypes = new String[]{"O.sp3", "Cl.chlorate", "O.sp2", "O.sp2"};
+        String[] expectedTypes = new String[] {"O.sp3", "Cl.chlorate", "O.sp2", "O.sp2"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -2138,28 +2187,31 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         atom.setFormalCharge(-2);
         mol.addAtom(atom);
 
-        String[] expectedTypes = new String[]{"O.minus2"};
+        String[] expectedTypes = new String[] {"O.minus2"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
     @Test
     public void testAzulene() throws Exception {
         IAtomContainer molecule = TestMoleculeFactory.makeAzulene();
-        String[] expectedTypes = new String[]{"C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2",
-                "C.sp2", "C.sp2"};
+        String[] expectedTypes =
+                new String[] {
+                    "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2",
+                    "C.sp2"
+                };
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
     }
 
     @Test
     public void testIndole() throws Exception {
-        String[] expectedTypes = {"C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "N.planar3"};
+        String[] expectedTypes = {
+            "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "N.planar3"
+        };
         IAtomContainer molecule = TestMoleculeFactory.makeIndole();
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
     }
 
-    /**
-     * Test for the structure in XLogPDescriptorTest.testno937().
-     */
+    /** Test for the structure in XLogPDescriptorTest.testno937(). */
     @Test
     public void testno937() throws Exception {
         String[] expectedTypes = {"C.sp2", "N.planar3", "C.sp2", "N.sp2", "C.sp2", "C.sp3"};
@@ -2336,9 +2388,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * @cdk.bug 1957958
-     */
+    /** @cdk.bug 1957958 */
     @Test
     public void testPyridineWithSP2() throws Exception {
         String[] expectedTypes = {"N.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2"};
@@ -2373,9 +2423,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * @cdk.bug 1879589
-     */
+    /** @cdk.bug 1879589 */
     @Test
     public void testChargedSulphurSpecies() throws Exception {
         String[] expectedTypes = {"C.sp2", "N.sp2", "C.sp2", "C.sp2", "S.plus", "C.sp2"};
@@ -2387,7 +2435,9 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
 
     @Test
     public void testPyridineOxide_Charged() throws Exception {
-        String[] expectedTypes = {"C.sp2", "N.plus.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "O.minus"};
+        String[] expectedTypes = {
+            "C.sp2", "N.plus.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "O.minus"
+        };
         IAtomContainer molecule = TestMoleculeFactory.makePyridineOxide();
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
     }
@@ -2447,11 +2497,12 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
 
     @Test
     public void testPyridineOxideCharged_SP2() throws Exception {
-        String[] expectedTypes = {"C.sp2", "N.plus.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "O.minus"};
+        String[] expectedTypes = {
+            "C.sp2", "N.plus.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "O.minus"
+        };
         IAtomContainer molecule = TestMoleculeFactory.makePyridineOxide();
         Iterator<IBond> bonds = molecule.bonds().iterator();
-        while (bonds.hasNext())
-            bonds.next().setOrder(Order.SINGLE);
+        while (bonds.hasNext()) bonds.next().setOrder(Order.SINGLE);
         for (int i = 0; i < 6; i++) {
             molecule.getAtom(i).setHybridization(IAtomType.Hybridization.SP2);
         }
@@ -2791,8 +2842,10 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         IBond b16 = mol.getBuilder().newInstance(IBond.class, a1, a17, IBond.Order.SINGLE);
         mol.addBond(b16);
 
-        String[] expectedTypes = {"Si.sp3", "O.sp3", "O.sp3", "O.sp3", "C.sp3", "C.sp3", "C.sp3", "H", "H", "H", "H",
-                "H", "H", "H", "H", "H", "H"};
+        String[] expectedTypes = {
+            "Si.sp3", "O.sp3", "O.sp3", "O.sp3", "C.sp3", "C.sp3", "C.sp3", "H", "H", "H", "H", "H",
+            "H", "H", "H", "H", "H"
+        };
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -2826,8 +2879,21 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(new Atom("H"));
         mol.addBond(11, 12, IBond.Order.SINGLE);
 
-        String[] expectedTypes = {"Sc.3minus", "O.sp3", "H", "O.sp3", "H", "O.sp3", "H", "O.sp3", "H", "O.sp3", "H",
-                "O.sp3", "H"};
+        String[] expectedTypes = {
+            "Sc.3minus",
+            "O.sp3",
+            "H",
+            "O.sp3",
+            "H",
+            "O.sp3",
+            "H",
+            "O.sp3",
+            "H",
+            "O.sp3",
+            "H",
+            "O.sp3",
+            "H"
+        };
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -2861,8 +2927,21 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(new Atom("N"));
         mol.addBond(11, 12, IBond.Order.TRIPLE);
 
-        String[] expectedTypes = {"V.3minus", "C.sp", "N.sp1", "C.sp", "N.sp1", "C.sp", "N.sp1", "C.sp", "N.sp1",
-                "C.sp", "N.sp1", "C.sp", "N.sp1"};
+        String[] expectedTypes = {
+            "V.3minus",
+            "C.sp",
+            "N.sp1",
+            "C.sp",
+            "N.sp1",
+            "C.sp",
+            "N.sp1",
+            "C.sp",
+            "N.sp1",
+            "C.sp",
+            "N.sp1",
+            "C.sp",
+            "N.sp1"
+        };
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -2896,8 +2975,21 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(new Atom("N"));
         mol.addBond(11, 12, IBond.Order.TRIPLE);
 
-        String[] expectedTypes = {"Ti.3minus", "C.sp", "N.sp1", "C.sp", "N.sp1", "C.sp", "N.sp1", "C.sp", "N.sp1",
-                "C.sp", "N.sp1", "C.sp", "N.sp1"};
+        String[] expectedTypes = {
+            "Ti.3minus",
+            "C.sp",
+            "N.sp1",
+            "C.sp",
+            "N.sp1",
+            "C.sp",
+            "N.sp1",
+            "C.sp",
+            "N.sp1",
+            "C.sp",
+            "N.sp1",
+            "C.sp",
+            "N.sp1"
+        };
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -2997,9 +3089,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * @cdk.bug 1872969
-     */
+    /** @cdk.bug 1872969 */
     @Test
     public void bug1872969() throws Exception {
         IAtomContainer mol = new AtomContainer();
@@ -3027,8 +3117,10 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
      */
     @Test
     public void testAllElementsRepresented() throws Exception {
-        AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/dict/data/cdk-atom-types.owl",
-                SilentChemObjectBuilder.getInstance());
+        AtomTypeFactory factory =
+                AtomTypeFactory.getInstance(
+                        "org/openscience/cdk/dict/data/cdk-atom-types.owl",
+                        SilentChemObjectBuilder.getInstance());
         Assert.assertTrue("Could not read the atom types", factory.getSize() != 0);
         String errorMessage = "Elements without atom type(s) defined in the XML:";
         final int testUptoAtomicNumber = 36; // TODO: 92 ?
@@ -3047,8 +3139,9 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     @Test
     public void testAssumeExplicitHydrogens() throws Exception {
         IAtomContainer mol = new AtomContainer();
-        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder(),
-                CDKAtomTypeMatcher.REQUIRE_EXPLICIT_HYDROGENS);
+        CDKAtomTypeMatcher atm =
+                CDKAtomTypeMatcher.getInstance(
+                        mol.getBuilder(), CDKAtomTypeMatcher.REQUIRE_EXPLICIT_HYDROGENS);
 
         mol.addAtom(new Atom("O"));
         mol.getAtom(0).setFormalCharge(+1);
@@ -3065,7 +3158,8 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
 
     @Test
     public void testStructGenMatcher() throws Exception {
-        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
+        CDKAtomTypeMatcher matcher =
+                CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
         Assert.assertNotNull(matcher);
     }
 
@@ -3089,9 +3183,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * @cdk.bug 1382
-     */
+    /** @cdk.bug 1382 */
     @Test
     public void testCarbonDiradical() throws Exception {
         IAtomContainer mol = new AtomContainer();
@@ -3289,9 +3381,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * @cdk.inchi InChI=1/C2H7NS/c1-4(2)3/h3H,1-2H3
-     */
+    /** @cdk.inchi InChI=1/C2H7NS/c1-4(2)3/h3H,1-2H3 */
     @Test
     public void testSulphurCompound() throws Exception {
         IAtomContainer mol = new AtomContainer();
@@ -3336,9 +3426,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * @cdk.inchi InChI=1/C3H9NO/c1-4(2,3)5/h1-3H3
-     */
+    /** @cdk.inchi InChI=1/C3H9NO/c1-4(2,3)5/h1-3H3 */
     @Test
     public void cid1145() throws Exception {
         IAtomContainer mol = new AtomContainer();
@@ -3399,8 +3487,10 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         IBond b13 = mol.getBuilder().newInstance(IBond.class, a5, a14, IBond.Order.SINGLE);
         mol.addBond(b13);
 
-        String[] expectedTypes = {"O.minus", "N.plus", "C.sp3", "C.sp3", "C.sp3", "H", "H", "H", "H", "H", "H", "H",
-                "H", "H"};
+        String[] expectedTypes = {
+            "O.minus", "N.plus", "C.sp3", "C.sp3", "C.sp3", "H", "H", "H", "H", "H", "H", "H", "H",
+            "H"
+        };
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -3428,9 +3518,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * @cdk.inchi InChI=1S/C6H5IO/c8-7-6-4-2-1-3-5-6/h1-5H
-     */
+    /** @cdk.inchi InChI=1S/C6H5IO/c8-7-6-4-2-1-3-5-6/h1-5H */
     @Test
     public void testIodosobenzene() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makeBenzene();
@@ -3441,13 +3529,13 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addBond(0, 6, Order.SINGLE);
         mol.addBond(6, 7, Order.DOUBLE);
 
-        String[] expectedTypes = {"C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "I.3", "O.sp2"};
+        String[] expectedTypes = {
+            "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "I.3", "O.sp2"
+        };
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * @cdk.inchi InChI=1S/C6H5IO2/c8-7(9)6-4-2-1-3-5-6/h1-5H
-     */
+    /** @cdk.inchi InChI=1S/C6H5IO2/c8-7(9)6-4-2-1-3-5-6/h1-5H */
     @Test
     public void testIodoxybenzene() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makeBenzene();
@@ -3461,13 +3549,13 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addBond(6, 7, Order.DOUBLE);
         mol.addBond(6, 8, Order.DOUBLE);
 
-        String[] expectedTypes = {"C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "I.5", "O.sp2", "O.sp2"};
+        String[] expectedTypes = {
+            "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "I.5", "O.sp2", "O.sp2"
+        };
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * @cdk.inchi InChI=1S/C7H7NOS/c8-7(10-9)6-4-2-1-3-5-6/h1-5H,8H2
-     */
+    /** @cdk.inchi InChI=1S/C7H7NOS/c8-7(10-9)6-4-2-1-3-5-6/h1-5H,8H2 */
     @Test
     public void testThiobenzamideSOxide() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makeBenzene();
@@ -3484,14 +3572,22 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addBond(7, 8, Order.DOUBLE);
         mol.addBond(6, 9, Order.SINGLE);
 
-        String[] expectedTypes = {"C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "S.inyl.2", "O.sp2",
-                "N.thioamide"};
+        String[] expectedTypes = {
+            "C.sp2",
+            "C.sp2",
+            "C.sp2",
+            "C.sp2",
+            "C.sp2",
+            "C.sp2",
+            "C.sp2",
+            "S.inyl.2",
+            "O.sp2",
+            "N.thioamide"
+        };
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * @cdk.inchi InChI=1S/C4H10S/c1-5(2)3-4-5/h3-4H2,1-2H3
-     */
+    /** @cdk.inchi InChI=1S/C4H10S/c1-5(2)3-4-5/h3-4H2,1-2H3 */
     @Test
     public void testDimethylThiirane() throws Exception {
         IAtomContainer mol = new AtomContainer();
@@ -3510,9 +3606,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * @cdk.inchi     InChI=1/C3H8S/c1-4(2)3/h1H2,2-3H3
-     */
+    /** @cdk.inchi InChI=1/C3H8S/c1-4(2)3/h1H2,2-3H3 */
     @Test
     public void testSulphonylLookalike() throws Exception {
         IAtomContainer mol = new AtomContainer();
@@ -3607,9 +3701,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * @cdk.bug 2424511
-     */
+    /** @cdk.bug 2424511 */
     @Test
     public void testWeirdNitrogen() throws Exception {
         IAtomContainer mol = new AtomContainer();
@@ -3626,9 +3718,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * Testing a nitrogen as found in this SMILES input: c1c2cc[nH]cc2nc1.
-     */
+    /** Testing a nitrogen as found in this SMILES input: c1c2cc[nH]cc2nc1. */
     @Test
     public void testAnotherNitrogen() throws Exception {
         IAtomContainer mol = new AtomContainer();
@@ -3663,13 +3753,13 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addBond(6, 7, IBond.Order.SINGLE);
         mol.addBond(7, 8, IBond.Order.SINGLE);
 
-        String[] expectedTypes = {"C.sp2", "C.sp2", "C.sp2", "C.sp2", "N.planar3", "C.sp2", "C.sp2", "N.sp2", "C.sp2"};
+        String[] expectedTypes = {
+            "C.sp2", "C.sp2", "C.sp2", "C.sp2", "N.planar3", "C.sp2", "C.sp2", "N.sp2", "C.sp2"
+        };
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * @cdk.bug 3061263
-     */
+    /** @cdk.bug 3061263 */
     @Test
     public void testFormalChargeRepresentation() throws Exception {
         IAtomContainer mol = new AtomContainer();
@@ -3692,9 +3782,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * @cdk.bug 3190151
-     */
+    /** @cdk.bug 3190151 */
     @Test
     public void testP() throws Exception {
         IAtom atomP = new Atom("P");
@@ -3705,9 +3793,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * @cdk.bug 3190151
-     */
+    /** @cdk.bug 3190151 */
     @Test
     public void testPine() throws Exception {
         IAtom atomP = new Atom(Elements.PHOSPHORUS);
@@ -3910,7 +3996,9 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         IBond b6 = builder.newInstance(IBond.class, a1, a7, IBond.Order.SINGLE);
         mol.addBond(b6);
 
-        String[] expectedTypes = {"Co.plus.6", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3"};
+        String[] expectedTypes = {
+            "Co.plus.6", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3"
+        };
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -4113,9 +4201,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * @cdk.bug 3529082
-     */
+    /** @cdk.bug 3529082 */
     @Test
     public void test_Co_plus() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
@@ -4262,6 +4348,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
 
     /**
      * Hexafluoroaluminate
+     *
      * @cdk.inchi InChI=1S/Al.6FH.3Na/h;6*1H;;;/q+3;;;;;;;3*+1/p-6
      */
     @Test
@@ -4302,7 +4389,9 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         IBond b6 = builder.newInstance(IBond.class, a1, a7, IBond.Order.SINGLE);
         mol.addBond(b6);
 
-        String[] expectedTypes = {"Al.3minus", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3"};
+        String[] expectedTypes = {
+            "Al.3minus", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3"
+        };
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -4547,9 +4636,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * @cdk.inchi InChI=1S/H2Te/h1H2
-     */
+    /** @cdk.inchi InChI=1S/H2Te/h1H2 */
     @Test
     public void testTellane() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
@@ -4572,9 +4659,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * @cdk.inchi InChI=1S/C3H6P/c1-3-4-2/h3H,2H2,1H3/q+1
-     */
+    /** @cdk.inchi InChI=1S/C3H6P/c1-3-4-2/h3H,2H2,1H3/q+1 */
     @Test
     public void testPhosphanium() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
@@ -4602,9 +4687,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * @cdk.inchi InChI=1S/CHP/c1-2/h1H
-     */
+    /** @cdk.inchi InChI=1S/CHP/c1-2/h1H */
     @Test
     public void testPhosphide() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
@@ -4887,9 +4970,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         super.testForDuplicateDefinitions();
     }
 
-    /**
-     * @cdk.inchi InChI=1S/CH2N2/c1-3-2/h1H2
-     */
+    /** @cdk.inchi InChI=1S/CH2N2/c1-3-2/h1H2 */
     @Test
     public void testAzoCompound() throws Exception {
         IAtomContainer mol = new AtomContainer();
@@ -4922,7 +5003,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     }
 
     /**
-     * @cdk.bug   3141611
+     * @cdk.bug 3141611
      * @cdk.inchi InChI=1S/CH5O2P/c1-4(2)3/h4H,1H3,(H,2,3)
      */
     @Test
@@ -5328,7 +5409,9 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         IBond b1 = builder.newInstance(IBond.class, a1, a2, IBond.Order.SINGLE);
         mol.addBond(b1);
 
-        String[] expectedTypes = {"Cu.1", "C.sp3",};
+        String[] expectedTypes = {
+            "Cu.1", "C.sp3",
+        };
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -5477,9 +5560,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * For example PubChem CID 3808730.
-     */
+    /** For example PubChem CID 3808730. */
     @Test
     public void test_Ag_plus() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
@@ -5492,9 +5573,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * For example PubChem CID 139654.
-     */
+    /** For example PubChem CID 139654. */
     @Test
     public void test_Ag_covalent() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
@@ -5770,7 +5849,9 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         IBond b6 = builder.newInstance(IBond.class, a1, a7, IBond.Order.SINGLE);
         mol.addBond(b6);
 
-        String[] expectedTypes = {"Si.2minus.6", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3"};
+        String[] expectedTypes = {
+            "Si.2minus.6", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3"
+        };
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -6036,7 +6117,9 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addBond(b5);
         IBond b6 = builder.newInstance(IBond.class, a1, a2, IBond.Order.SINGLE);
         mol.addBond(b6);
-        String[] expectedTypes3 = {"Fe.3minus", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3"};
+        String[] expectedTypes3 = {
+            "Fe.3minus", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3"
+        };
         assertAtomTypes(testedAtomTypes, expectedTypes3, mol);
     }
 
@@ -6091,7 +6174,9 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         IBond b6 = builder.newInstance(IBond.class, a1, a2, IBond.Order.SINGLE);
         mol.addBond(b6);
 
-        String[] expectedTypes5 = {"Fe.4minus", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3"};
+        String[] expectedTypes5 = {
+            "Fe.4minus", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3"
+        };
         assertAtomTypes(testedAtomTypes, expectedTypes5, mol);
     }
 
@@ -6212,7 +6297,9 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addBond(b5);
         IBond b6 = builder.newInstance(IBond.class, a1, a7, IBond.Order.SINGLE);
         mol.addBond(b6);
-        String[] expectedTypes8 = {"Fe.2minus", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3"};
+        String[] expectedTypes8 = {
+            "Fe.2minus", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3"
+        };
         assertAtomTypes(testedAtomTypes, expectedTypes8, mol);
     }
 
@@ -6277,9 +6364,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypesB, mol);
     }
 
-    /**
-     * @cdk.inchi InChI=1S/C8H16S/c1-6-3-8-4-7(6)5-9(8)2/h6-9H,3-5H2,1-2H3/t6-,7-,8+/m0/s1
-     */
+    /** @cdk.inchi InChI=1S/C8H16S/c1-6-3-8-4-7(6)5-9(8)2/h6-9H,3-5H2,1-2H3/t6-,7-,8+/m0/s1 */
     @Test
     public void testSulphur4() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
@@ -6323,13 +6408,13 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         IBond b15 = builder.newInstance(IBond.class, a5, a9, IBond.Order.SINGLE);
         mol.addBond(b15);
 
-        String[] expectedTypes = {"S.anyl", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3"};
+        String[] expectedTypes = {
+            "S.anyl", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3"
+        };
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * One of the ruthenium atom types in ruthenium red (CHEBI:34956).
-     */
+    /** One of the ruthenium atom types in ruthenium red (CHEBI:34956). */
     @Test
     public void test_Ru_3minus_6() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
@@ -6368,13 +6453,13 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         IBond b6 = builder.newInstance(IBond.class, a1, a3, IBond.Order.SINGLE);
         mol.addBond(b6);
 
-        String[] expectedTypes = {"Ru.3minus.6", "N.plus", "N.plus", "N.plus", "N.plus", "N.plus", "O.sp3"};
+        String[] expectedTypes = {
+            "Ru.3minus.6", "N.plus", "N.plus", "N.plus", "N.plus", "N.plus", "O.sp3"
+        };
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    /**
-     * One of the ruthenium atom types in ruthenium red (CHEBI:34956).
-     */
+    /** One of the ruthenium atom types in ruthenium red (CHEBI:34956). */
     @Test
     public void test_Ru_2minus_6() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
@@ -6413,7 +6498,9 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         IBond b6 = builder.newInstance(IBond.class, a1, a3, IBond.Order.SINGLE);
         mol.addBond(b6);
 
-        String[] expectedTypes = {"Ru.2minus.6", "N.plus", "N.plus", "N.plus", "N.plus", "O.sp3", "O.sp3"};
+        String[] expectedTypes = {
+            "Ru.2minus.6", "N.plus", "N.plus", "N.plus", "N.plus", "O.sp3", "O.sp3"
+        };
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -6510,7 +6597,8 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
 
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
-        // simulate an IAtomContainer returned from a SDFile with bond order 4 to indicate aromaticity
+        // simulate an IAtomContainer returned from a SDFile with bond order 4 to indicate
+        // aromaticity
         IAtomContainer pyrrole = builder.newInstance(IAtomContainer.class);
 
         IAtom n1 = builder.newInstance(IAtom.class, "N");
@@ -6555,7 +6643,8 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
 
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
-        // simulate an IAtomContainer returned from a SDFile with bond order 4 to indicate aromaticity
+        // simulate an IAtomContainer returned from a SDFile with bond order 4 to indicate
+        // aromaticity
         IAtomContainer pyrrole = builder.newInstance(IAtomContainer.class);
 
         IAtom n1 = builder.newInstance(IAtom.class, "N");
@@ -6612,5 +6701,4 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     public static void testTestedAtomTypes() throws Exception {
         countTestedAtomTypes(testedAtomTypes, factory);
     }
-
 }

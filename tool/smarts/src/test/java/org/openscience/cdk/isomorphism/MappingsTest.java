@@ -24,17 +24,6 @@
 
 package org.openscience.cdk.isomorphism;
 
-import com.google.common.base.Function;
-import com.google.common.base.Predicate;
-import org.junit.Test;
-import org.mockito.Matchers;
-import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.smiles.SmilesParser;
-
-import java.util.Iterator;
-import java.util.Map;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.sameInstance;
@@ -45,6 +34,16 @@ import static org.mockito.Mockito.atMost;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import com.google.common.base.Function;
+import com.google.common.base.Predicate;
+import java.util.Iterator;
+import java.util.Map;
+import org.junit.Test;
+import org.mockito.Matchers;
+import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.smiles.SmilesParser;
 
 /**
  * @author John May
@@ -67,7 +66,8 @@ public class MappingsTest {
         when(iterator.hasNext()).thenReturn(true, true, true, true, false);
         when(iterator.next()).thenReturn(p1, p2, p3, p4);
 
-        Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
+        Mappings ms =
+                new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
 
         Predicate<int[]> f = mock(Predicate.class);
         when(f.apply(p1)).thenReturn(false);
@@ -75,7 +75,7 @@ public class MappingsTest {
         when(f.apply(p3)).thenReturn(false);
         when(f.apply(p4)).thenReturn(true);
 
-        assertThat(ms.filter(f).toArray(), is(new int[][]{p2, p4}));
+        assertThat(ms.filter(f).toArray(), is(new int[][] {p2, p4}));
     }
 
     @Test
@@ -93,7 +93,8 @@ public class MappingsTest {
         when(iterator.hasNext()).thenReturn(true, true, true, true, false);
         when(iterator.next()).thenReturn(p1, p2, p3, p4);
 
-        Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
+        Mappings ms =
+                new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
 
         Function<int[], String> f = mock(Function.class);
         when(f.apply(p1)).thenReturn("p1");
@@ -104,7 +105,7 @@ public class MappingsTest {
         Iterable<String> strings = ms.map(f);
         Iterator<String> stringIt = strings.iterator();
 
-        verify(f, atMost(0)).apply(Matchers.<int[]> any());
+        verify(f, atMost(0)).apply(Matchers.<int[]>any());
 
         assertTrue(stringIt.hasNext());
         assertThat(stringIt.next(), is("p1"));
@@ -116,7 +117,7 @@ public class MappingsTest {
         assertThat(stringIt.next(), is("p4"));
         assertFalse(stringIt.hasNext());
 
-        verify(f, atMost(4)).apply(Matchers.<int[]> any());
+        verify(f, atMost(4)).apply(Matchers.<int[]>any());
     }
 
     @Test
@@ -128,7 +129,8 @@ public class MappingsTest {
         when(iterator.hasNext()).thenReturn(true, true, true, true, true, false);
         when(iterator.next()).thenReturn(new int[0]);
 
-        Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
+        Mappings ms =
+                new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
         assertThat(ms.limit(2).count(), is(2));
         verify(iterator, atMost(2)).next(); // was only called twice
     }
@@ -163,8 +165,9 @@ public class MappingsTest {
 
         when(iterator.next()).thenReturn(p1, p2, p3, p4);
 
-        Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
-        assertThat(ms.toArray(), is(new int[][]{p1, p2, p3, p4}));
+        Mappings ms =
+                new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
+        assertThat(ms.toArray(), is(new int[][] {p1, p2, p3, p4}));
     }
 
     @Test
@@ -173,7 +176,8 @@ public class MappingsTest {
         IAtomContainer query = smi("CC");
         IAtomContainer target = smi("CC");
 
-        Iterable<Map<IAtom, IAtom>> iterable = Pattern.findIdentical(query).matchAll(target).toAtomMap();
+        Iterable<Map<IAtom, IAtom>> iterable =
+                Pattern.findIdentical(query).matchAll(target).toAtomMap();
         Iterator<Map<IAtom, IAtom>> iterator = iterable.iterator();
 
         assertTrue(iterator.hasNext());
@@ -192,7 +196,8 @@ public class MappingsTest {
         IAtomContainer query = smi("CCC");
         IAtomContainer target = smi("CCC");
 
-        Iterable<Map<IBond, IBond>> iterable = Pattern.findIdentical(query).matchAll(target).toBondMap();
+        Iterable<Map<IBond, IBond>> iterable =
+                Pattern.findIdentical(query).matchAll(target).toBondMap();
         Iterator<Map<IBond, IBond>> iterator = iterable.iterator();
 
         assertTrue(iterator.hasNext());
@@ -211,35 +216,34 @@ public class MappingsTest {
         IAtomContainer query = smi("CCC");
         IAtomContainer target = smi("CCC");
 
-        Iterable<Map<IChemObject, IChemObject>> iterable = Pattern.findIdentical(query).matchAll(target).toAtomBondMap();
+        Iterable<Map<IChemObject, IChemObject>> iterable =
+                Pattern.findIdentical(query).matchAll(target).toAtomBondMap();
         Iterator<Map<IChemObject, IChemObject>> iterator = iterable.iterator();
 
         assertTrue(iterator.hasNext());
         Map<IChemObject, IChemObject> m1 = iterator.next();
-        assertThat(m1.get(query.getAtom(0)), is((IChemObject)target.getAtom(0)));
-        assertThat(m1.get(query.getAtom(1)), is((IChemObject)target.getAtom(1)));
-        assertThat(m1.get(query.getAtom(2)), is((IChemObject)target.getAtom(2)));
-        assertThat(m1.get(query.getBond(0)), is((IChemObject)target.getBond(0)));
-        assertThat(m1.get(query.getBond(1)), is((IChemObject)target.getBond(1)));
+        assertThat(m1.get(query.getAtom(0)), is((IChemObject) target.getAtom(0)));
+        assertThat(m1.get(query.getAtom(1)), is((IChemObject) target.getAtom(1)));
+        assertThat(m1.get(query.getAtom(2)), is((IChemObject) target.getAtom(2)));
+        assertThat(m1.get(query.getBond(0)), is((IChemObject) target.getBond(0)));
+        assertThat(m1.get(query.getBond(1)), is((IChemObject) target.getBond(1)));
         assertTrue(iterator.hasNext());
         Map<IChemObject, IChemObject> m2 = iterator.next();
-        assertThat(m2.get(query.getAtom(0)), is((IChemObject)target.getAtom(2)));
-        assertThat(m2.get(query.getAtom(1)), is((IChemObject)target.getAtom(1)));
-        assertThat(m2.get(query.getAtom(2)), is((IChemObject)target.getAtom(0)));
-        assertThat(m2.get(query.getBond(0)), is((IChemObject)target.getBond(1)));
-        assertThat(m2.get(query.getBond(1)), is((IChemObject)target.getBond(0)));
+        assertThat(m2.get(query.getAtom(0)), is((IChemObject) target.getAtom(2)));
+        assertThat(m2.get(query.getAtom(1)), is((IChemObject) target.getAtom(1)));
+        assertThat(m2.get(query.getAtom(2)), is((IChemObject) target.getAtom(0)));
+        assertThat(m2.get(query.getBond(0)), is((IChemObject) target.getBond(1)));
+        assertThat(m2.get(query.getBond(1)), is((IChemObject) target.getBond(0)));
         assertFalse(iterator.hasNext());
     }
 
     @Test
     public void toSubstructures() throws Exception {
-        IAtomContainer query  = smi("O1CC1");
+        IAtomContainer query = smi("O1CC1");
         IAtomContainer target = smi("C1OC1CCC");
 
-        Iterable<IAtomContainer> iterable = Pattern.findSubstructure(query)
-                                                   .matchAll(target)
-                                                   .uniqueAtoms()
-                                                   .toSubstructures();
+        Iterable<IAtomContainer> iterable =
+                Pattern.findSubstructure(query).matchAll(target).uniqueAtoms().toSubstructures();
         Iterator<IAtomContainer> iterator = iterable.iterator();
 
         assertTrue(iterator.hasNext());
@@ -264,7 +268,8 @@ public class MappingsTest {
         when(iterator.hasNext()).thenReturn(true, true, true, true, true, false);
         when(iterator.next()).thenReturn(new int[0]);
 
-        Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
+        Mappings ms =
+                new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
         assertTrue(ms.atLeast(2));
         verify(iterator, atMost(2)).next(); // was only called twice
     }
@@ -280,9 +285,10 @@ public class MappingsTest {
         int[] p1 = new int[0];
         int[] p2 = new int[0];
 
-        when(iterator.next()).thenReturn(p1, new int[][]{p2});
+        when(iterator.next()).thenReturn(p1, new int[][] {p2});
 
-        Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
+        Mappings ms =
+                new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
         assertThat(ms.first(), is(sameInstance(p1)));
     }
 
@@ -295,7 +301,8 @@ public class MappingsTest {
         when(iterator.hasNext()).thenReturn(true, true, true, true, true, false);
         when(iterator.next()).thenReturn(new int[0]);
 
-        Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
+        Mappings ms =
+                new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
         assertThat(ms.count(), is(5));
     }
 
@@ -314,7 +321,8 @@ public class MappingsTest {
 
         when(iterator.next()).thenReturn(p1, p2, p3, p4);
 
-        Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
+        Mappings ms =
+                new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
         assertThat(ms.countUnique(), is(2));
     }
 
@@ -324,12 +332,13 @@ public class MappingsTest {
         Iterable<int[]> iterable = mock(Iterable.class);
         Iterator<int[]> iterator = mock(Iterator.class);
         when(iterable.iterator()).thenReturn(iterator);
-        Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
+        Mappings ms =
+                new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
         assertThat(ms.iterator(), is(sameInstance(iterator)));
     }
 
-    IChemObjectBuilder bldr   = SilentChemObjectBuilder.getInstance();
-    SmilesParser       smipar = new SmilesParser(bldr);
+    IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+    SmilesParser smipar = new SmilesParser(bldr);
 
     IAtomContainer smi(String smi) throws Exception {
         return smipar.parseSmiles(smi);

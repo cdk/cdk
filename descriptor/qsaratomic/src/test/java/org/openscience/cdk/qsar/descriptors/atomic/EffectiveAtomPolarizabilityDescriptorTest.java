@@ -42,12 +42,10 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorT
         setDescriptor(EffectiveAtomPolarizabilityDescriptor.class);
     }
 
-    /**
-     *  A unit test for JUnit with 2-(dimethylamino)ethyl)amino
-     */
+    /** A unit test for JUnit with 2-(dimethylamino)ethyl)amino */
     @Test
-    public void testEffectivePolarizabilityDescriptor() throws ClassNotFoundException, CDKException,
-            java.lang.Exception {
+    public void testEffectivePolarizabilityDescriptor()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
         double[] testResult = {4.7253, 6.1345, 6.763, 6.925, 5.41, 5.41};
         IAtomicDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
 
@@ -56,17 +54,17 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorT
         addExplicitHydrogens(mol);
 
         for (int i = 0; i < 6; i++) {
-            double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+            double result =
+                    ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue())
+                            .doubleValue();
             Assert.assertEquals(testResult[i], result, 0.01);
         }
     }
 
-    /**
-     *  A unit test for JUnit with Ethyl chloride
-     */
+    /** A unit test for JUnit with Ethyl chloride */
     @Test
     public void testPolarizabilityDescriptor_Ethyl_chloride() throws Exception {
-        double[] testResult = {4.8445, 5.824, 4.6165};/*
+        double[] testResult = {4.8445, 5.824, 4.6165}; /*
                                                        * from Petra online:
                                                        * http:
                                                        * //www2.chemie.uni-erlangen
@@ -74,20 +72,21 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorT
                                                        * de/services/petra/smiles
                                                        * .phtml
                                                        */
-        EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
+        EffectiveAtomPolarizabilityDescriptor descriptor =
+                new EffectiveAtomPolarizabilityDescriptor();
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCCl");
         addExplicitHydrogens(mol);
         for (int i = 0; i < 3; i++) {
-            double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+            double result =
+                    ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue())
+                            .doubleValue();
             Assert.assertEquals(testResult[i], result, 0.01);
         }
     }
 
-    /**
-     *  A unit test for JUnit with Allyl bromide
-     */
+    /** A unit test for JUnit with Allyl bromide */
     @Test
     public void testPolarizabilityDescriptor_Allyl_bromide() throws Exception {
         double testResult = 6.1745; /*
@@ -95,19 +94,19 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorT
                                      * http://www2.chemie.uni-
                                      * erlangen.de/services/petra/smiles.phtml
                                      */
-        EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
+        EffectiveAtomPolarizabilityDescriptor descriptor =
+                new EffectiveAtomPolarizabilityDescriptor();
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C=CCBr");
         addExplicitHydrogens(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getAtom(3), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getAtom(3), mol).getValue()).doubleValue();
         Assert.assertEquals(testResult, result, 0.01);
     }
 
-    /**
-     *  A unit test for JUnit with Isopentyl iodide
-     */
+    /** A unit test for JUnit with Isopentyl iodide */
     @Test
     public void testPolarizabilityDescriptor_Isopentyl_iodide() throws Exception {
         double[] testResult = {8.3585, 6.1118, 6.1118, 9.081, 10.526, 8.69}; /*
@@ -137,21 +136,22 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorT
                                                                               * .
                                                                               * phtml
                                                                               */
-        EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
+        EffectiveAtomPolarizabilityDescriptor descriptor =
+                new EffectiveAtomPolarizabilityDescriptor();
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C(C)(C)CCI");
         addExplicitHydrogens(mol);
 
         for (int i = 0; i < 6; i++) {
-            double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+            double result =
+                    ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue())
+                            .doubleValue();
             Assert.assertEquals(testResult[i], result, 0.01);
         }
     }
 
-    /**
-     *  A unit test for JUnit with Ethoxy ethane
-     */
+    /** A unit test for JUnit with Ethoxy ethane */
     @Test
     public void testPolarizabilityDescriptor_Ethoxy_ethane() throws Exception {
         double testResult = 5.207; /*
@@ -159,19 +159,19 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorT
                                     * http://www2.chemie.uni-erlangen
                                     * .de/services/petra/smiles.phtml
                                     */
-        EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
+        EffectiveAtomPolarizabilityDescriptor descriptor =
+                new EffectiveAtomPolarizabilityDescriptor();
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCOCC");
         addExplicitHydrogens(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
         Assert.assertEquals(testResult, result, 0.01);
     }
 
-    /**
-     *  A unit test for JUnit with Ethanolamine
-     */
+    /** A unit test for JUnit with Ethanolamine */
     @Test
     public void testPolarizabilityDescriptor_Ethanolamine() throws Exception {
         double[] testResult = {4.2552, 5.1945, 4.883, 3.595}; /*
@@ -184,20 +184,21 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorT
                                                                * /services/petra
                                                                * /smiles.phtml
                                                                */
-        EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
+        EffectiveAtomPolarizabilityDescriptor descriptor =
+                new EffectiveAtomPolarizabilityDescriptor();
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("NCCO");
         addExplicitHydrogens(mol);
         for (int i = 0; i < 4; i++) {
-            double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+            double result =
+                    ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue())
+                            .doubleValue();
             Assert.assertEquals(testResult[i], result, 0.01);
         }
     }
 
-    /**
-     *  A unit test for JUnit with Allyl mercaptan
-     */
+    /** A unit test for JUnit with Allyl mercaptan */
     @Test
     public void testPolarizabilityDescriptor_Allyl_mercaptan() throws Exception {
         double[] testResult = {5.2995, 6.677, 7.677, 6.2545}; /*
@@ -210,13 +211,16 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorT
                                                                * /services/petra
                                                                * /smiles.phtml
                                                                */
-        EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
+        EffectiveAtomPolarizabilityDescriptor descriptor =
+                new EffectiveAtomPolarizabilityDescriptor();
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C=CCS");
         addExplicitHydrogens(mol);
         for (int i = 0; i < 4; i++) {
-            double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+            double result =
+                    ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue())
+                            .doubleValue();
             Assert.assertEquals(testResult[i], result, 0.02);
         }
     }

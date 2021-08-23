@@ -25,9 +25,7 @@ package org.openscience.cdk.sgroup;
 
 import javax.vecmath.Point2d;
 
-/**
- * Representation of an Sgroup bracket.
- */
+/** Representation of an Sgroup bracket. */
 public class SgroupBracket {
 
     private final Point2d p1, p2;
@@ -47,11 +45,13 @@ public class SgroupBracket {
 
     /**
      * Copy constructor.
+     *
      * @param org original sgroup bracket
      */
     public SgroupBracket(SgroupBracket org) {
-        this(org.p1.x, org.p1.y,
-             org.p2.x, org.p2.y);
+        this(
+                org.p1.x, org.p1.y,
+                org.p2.x, org.p2.y);
     }
 
     /**
@@ -74,11 +74,15 @@ public class SgroupBracket {
 
     @Override
     public String toString() {
-        return "SgroupBracket{" +
-               "x1=" + p1.x +
-               ", y1=" + p1.y +
-               ", x2=" + p2.x +
-               ", y2=" + p2.y +
-               '}';
+        return "SgroupBracket{"
+                + "x1="
+                + p1.x
+                + ", y1="
+                + p1.y
+                + ", x2="
+                + p2.x
+                + ", y2="
+                + p2.y
+                + '}';
     }
 }

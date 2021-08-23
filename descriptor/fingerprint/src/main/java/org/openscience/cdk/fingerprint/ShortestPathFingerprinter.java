@@ -30,7 +30,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
@@ -45,11 +44,12 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
- * Generates a fingerprint for a given {@link IAtomContainer}. Fingerprints are one-dimensional bit arrays, where bits
- * are set according to a the occurrence of a particular structural feature (See for example the Daylight inc. theory
- * manual for more information). Fingerprints are a means for determining the similarity of chemical structures,
- * some fingerprints (not this one) allow database pre-screening for substructure searches.
-
+ * Generates a fingerprint for a given {@link IAtomContainer}. Fingerprints are one-dimensional bit
+ * arrays, where bits are set according to a the occurrence of a particular structural feature (See
+ * for example the Daylight inc. theory manual for more information). Fingerprints are a means for
+ * determining the similarity of chemical structures, some fingerprints (not this one) allow
+ * database pre-screening for substructure searches.
+ *
  * <pre>
  *
  * A fingerprint is generated for an AtomContainer with this code:
@@ -65,52 +65,43 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  *   fingerprint.length(); // returns the highest set bit
  * </pre>
  *
- * <P>The FingerPrinter calculates fingerprint based on the Shortest Paths between two atoms. It also takes into account
- * ring system, charges etc while generating a fingerprint. </P>
+ * <p>The FingerPrinter calculates fingerprint based on the Shortest Paths between two atoms. It
+ * also takes into account ring system, charges etc while generating a fingerprint.
  *
- * <p>The FingerPrinter assumes that hydrogens are explicitly given! Furthermore, if pseudo atoms or atoms with
- * malformed symbols are present, their atomic number is taken as one more than the last element currently supported in {@link PeriodicTable}.
- * </P>
- *
- * <br/>
- * <b>
- * Important! this fingerprint can not be used for substructure screening.
- * </b>
+ * <p>The FingerPrinter assumes that hydrogens are explicitly given! Furthermore, if pseudo atoms or
+ * atoms with malformed symbols are present, their atomic number is taken as one more than the last
+ * element currently supported in {@link PeriodicTable}. <br>
+ * <b> Important! this fingerprint can not be used for substructure screening. </b>
  *
  * @author Syed Asad Rahman (2012)
  * @cdk.keyword fingerprint
  * @cdk.keyword similarity
  * @cdk.module fingerprint
  * @cdk.githash
- *
  */
-public class ShortestPathFingerprinter extends AbstractFingerprinter implements IFingerprinter, Serializable {
+public class ShortestPathFingerprinter extends AbstractFingerprinter
+        implements IFingerprinter, Serializable {
 
-    /**
-     * The default length of created fingerprints.
-     */
-    public final static int     DEFAULT_SIZE     = 1024;
-    private static final long   serialVersionUID = 7867864332244557861L;
-    /**
-     * The default length of created fingerprints.
-     */
-    private int                 fingerprintLength;
-    private static ILoggingTool logger           = LoggingToolFactory
-                                                         .createLoggingTool(ShortestPathFingerprinter.class);
+    /** The default length of created fingerprints. */
+    public static final int DEFAULT_SIZE = 1024;
+
+    private static final long serialVersionUID = 7867864332244557861L;
+    /** The default length of created fingerprints. */
+    private int fingerprintLength;
+
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(ShortestPathFingerprinter.class);
 
     private final RandomNumber rand = new RandomNumber();
 
-    /**
-     * Creates a fingerprint generator of length
-     * <code>DEFAULT_SIZE</code>
-     */
+    /** Creates a fingerprint generator of length <code>DEFAULT_SIZE</code> */
     public ShortestPathFingerprinter() {
         this(DEFAULT_SIZE);
     }
 
     /**
-     * Constructs a fingerprint generator that creates fingerprints of the given fingerprintLength, using a generation
-     * algorithm with shortest paths.
+     * Constructs a fingerprint generator that creates fingerprints of the given fingerprintLength,
+     * using a generation algorithm with shortest paths.
      *
      * @param fingerprintLength The desired fingerprintLength of the fingerprint
      */
@@ -137,7 +128,8 @@ public class ShortestPathFingerprinter extends AbstractFingerprinter implements 
         Aromaticity.cdkLegacy().apply(atomContainer);
         BitSet bitSet = new BitSet(fingerprintLength);
         if (!ConnectivityChecker.isConnected(atomContainer)) {
-            IAtomContainerSet partitionedMolecules = ConnectivityChecker.partitionIntoMolecules(atomContainer);
+            IAtomContainerSet partitionedMolecules =
+                    ConnectivityChecker.partitionIntoMolecules(atomContainer);
             for (IAtomContainer container : partitionedMolecules.atomContainers()) {
                 addUniquePath(container, bitSet);
             }
@@ -179,8 +171,8 @@ public class ShortestPathFingerprinter extends AbstractFingerprinter implements 
     /**
      * Get all paths of lengths 0 to the specified length.
      *
-     * This method will find all paths upto length N starting from each atom in the molecule and return the unique set
-     * of such paths.
+     * <p>This method will find all paths upto length N starting from each atom in the molecule and
+     * return the unique set of such paths.
      *
      * @param container The molecule to search
      * @return A map of path strings, keyed on themselves
@@ -203,7 +195,7 @@ public class ShortestPathFingerprinter extends AbstractFingerprinter implements 
          */
         IRingSet sssr = Cycles.essential(container).toRingSet();
         RingSetManipulator.sort(sssr);
-        for (Iterator<IAtomContainer> it = sssr.atomContainers().iterator(); it.hasNext();) {
+        for (Iterator<IAtomContainer> it = sssr.atomContainers().iterator(); it.hasNext(); ) {
             IAtomContainer ring = it.next();
             int toHashCode = String.valueOf(ring.getAtomCount()).hashCode();
             paths.add(patternIndex, toHashCode);
@@ -213,7 +205,7 @@ public class ShortestPathFingerprinter extends AbstractFingerprinter implements 
          * Check for the charges
          */
         List<String> l = new ArrayList<String>();
-        for (Iterator<IAtom> it = container.atoms().iterator(); it.hasNext();) {
+        for (Iterator<IAtom> it = container.atoms().iterator(); it.hasNext(); ) {
             IAtom atom = it.next();
             int charge = atom.getFormalCharge() == null ? 0 : atom.getFormalCharge();
             if (charge != 0) {
@@ -229,7 +221,7 @@ public class ShortestPathFingerprinter extends AbstractFingerprinter implements 
         /*
          * atom stereo parity
          */
-        for (Iterator<IAtom> it = container.atoms().iterator(); it.hasNext();) {
+        for (Iterator<IAtom> it = container.atoms().iterator(); it.hasNext(); ) {
             IAtom atom = it.next();
             int st = atom.getStereoParity() == null ? 0 : atom.getStereoParity();
             if (st != 0) {
@@ -243,7 +235,9 @@ public class ShortestPathFingerprinter extends AbstractFingerprinter implements 
 
         if (container.getSingleElectronCount() > 0) {
             StringBuilder radicalInformation = new StringBuilder();
-            radicalInformation.append("RAD: ").append(String.valueOf(container.getSingleElectronCount()));
+            radicalInformation
+                    .append("RAD: ")
+                    .append(String.valueOf(container.getSingleElectronCount()));
             paths.add(patternIndex, radicalInformation.toString().hashCode());
             patternIndex++;
         }

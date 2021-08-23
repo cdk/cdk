@@ -23,7 +23,6 @@ package org.openscience.cdk.renderer;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -33,9 +32,7 @@ import org.openscience.cdk.renderer.generators.BasicBondGenerator;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.renderer.generators.IGenerator;
 
-/**
- * @cdk.module test-renderextra
- */
+/** @cdk.module test-renderextra */
 public class ChemModelRendererTest {
 
     @Test
@@ -48,5 +45,4 @@ public class ChemModelRendererTest {
         ChemModelRenderer renderer = new ChemModelRenderer(generators, new AWTFontManager());
         Assert.assertNotNull(renderer);
     }
-
 }

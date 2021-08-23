@@ -18,6 +18,16 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
+import javax.vecmath.Point3d;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -31,26 +41,13 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.io.formats.HINFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 
-import javax.vecmath.Point3d;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
-
 /**
  * Reads an object from HIN formated input.
  *
  * @cdk.module io
  * @cdk.githash
- *
  * @author Rajarshi Guha &lt;rajarshi.guha@gmail.com&gt;
  * @cdk.created 2004-01-27
- *
  * @cdk.keyword file format, HIN
  * @cdk.iooptions
  */
@@ -112,11 +109,9 @@ public class HINReader extends DefaultChemObjectReader {
     }
 
     /**
-     * Reads the content from a HIN input. It can only return a
-     * IChemObject of type ChemFile
+     * Reads the content from a HIN input. It can only return a IChemObject of type ChemFile
      *
      * @param object class must be of type ChemFile
-     *
      * @see org.openscience.cdk.ChemFile
      */
     @Override
@@ -136,19 +131,16 @@ public class HINReader extends DefaultChemObjectReader {
         for (int j = 0; j < ntok; j++) {
             toks[j] = st.nextToken();
         }
-        if (toks.length == 3)
-            return (toks[2]);
-        else
-            return ("");
+        if (toks.length == 3) return (toks[2]);
+        else return ("");
     }
 
     /**
-     *  Private method that actually parses the input to read a ChemFile
-     *  object. In its current state it is able to read all the molecules
-     *  (if more than one is present) in the specified HIN file. These are
-     *  placed in a MoleculeSet object which in turn is placed in a ChemModel
-     *  which in turn is placed in a ChemSequence object and which is finally
-     *  placed in a ChemFile object and returned to the user.
+     * Private method that actually parses the input to read a ChemFile object. In its current state
+     * it is able to read all the molecules (if more than one is present) in the specified HIN file.
+     * These are placed in a MoleculeSet object which in turn is placed in a ChemModel which in turn
+     * is placed in a ChemSequence object and which is finally placed in a ChemFile object and
+     * returned to the user.
      *
      * @return A ChemFile containing the data parsed from input.
      */
@@ -205,8 +197,7 @@ public class HINReader extends DefaultChemObjectReader {
 
                     int ntoken = tokenizer.countTokens();
                     String[] toks = new String[ntoken];
-                    for (int i = 0; i < ntoken; i++)
-                        toks[i] = tokenizer.nextToken();
+                    for (int i = 0; i < ntoken; i++) toks[i] = tokenizer.nextToken();
 
                     String sym = toks[3];
                     double charge = Double.parseDouble(toks[6]);
@@ -215,13 +206,16 @@ public class HINReader extends DefaultChemObjectReader {
                     double z = Double.parseDouble(toks[9]);
                     int nbond = Integer.parseInt(toks[10]);
 
-                    IAtom atom = file.getBuilder().newInstance(IAtom.class, sym, new Point3d(x, y, z));
+                    IAtom atom =
+                            file.getBuilder().newInstance(IAtom.class, sym, new Point3d(x, y, z));
                     atom.setCharge(charge);
 
                     IBond.Order bo = IBond.Order.SINGLE;
 
                     for (int j = 11; j < (11 + nbond * 2); j += 2) {
-                        int s = Integer.parseInt(toks[j]) - 1; // since atoms start from 1 in the file
+                        int s =
+                                Integer.parseInt(toks[j])
+                                        - 1; // since atoms start from 1 in the file
                         char bt = toks[j + 1].charAt(0);
                         switch (bt) {
                             case 's':
@@ -253,7 +247,8 @@ public class HINReader extends DefaultChemObjectReader {
                     IAtom s = m.getAtom((Integer) ar.get(0));
                     IAtom e = m.getAtom((Integer) ar.get(1));
                     IBond.Order bo = (IBond.Order) ar.get(2);
-                    if (!isConnected(m, s, e)) m.addBond(file.getBuilder().newInstance(IBond.class, s, e, bo));
+                    if (!isConnected(m, s, e))
+                        m.addBond(file.getBuilder().newInstance(IBond.class, s, e, bo));
                 }
                 mols.add(m);
 
@@ -294,8 +289,7 @@ public class HINReader extends DefaultChemObjectReader {
             }
         }
 
-        for (IAtomContainer mol : mols)
-            setOfMolecules.addAtomContainer(mol);
+        for (IAtomContainer mol : mols) setOfMolecules.addAtomContainer(mol);
         chemModel.setMoleculeSet(setOfMolecules);
         chemSequence.addChemModel(chemModel);
         file.addChemSequence(chemSequence);

@@ -23,9 +23,7 @@ package org.openscience.cdk.renderer.elements;
 
 import org.junit.BeforeClass;
 
-/**
- * @cdk.module test-renderbasic
- */
+/** @cdk.module test-renderbasic */
 public class ElementGroupTest extends AbstractElementTest {
 
     @BeforeClass
@@ -33,5 +31,4 @@ public class ElementGroupTest extends AbstractElementTest {
         IRenderingElement element = new ElementGroup();
         setRenderingElement(element);
     }
-
 }

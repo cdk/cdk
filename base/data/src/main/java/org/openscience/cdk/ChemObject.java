@@ -24,12 +24,6 @@
 package org.openscience.cdk;
 
 import com.google.common.base.Objects;
-import org.openscience.cdk.event.ChemObjectChangeEvent;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
-import org.openscience.cdk.interfaces.IChemObjectListener;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,54 +31,50 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import org.openscience.cdk.event.ChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectListener;
 
 /**
- *  The base class for all chemical objects in this cdk. It provides methods for
- *  adding listeners and for their notification of events, as well a a hash
- *  table for administration of physical or chemical properties
+ * The base class for all chemical objects in this cdk. It provides methods for adding listeners and
+ * for their notification of events, as well a a hash table for administration of physical or
+ * chemical properties
  *
- *@author        steinbeck
+ * @author steinbeck
  * @cdk.githash
- *@cdk.module    data
+ * @cdk.module data
  */
 public class ChemObject implements Serializable, IChemObject, Cloneable {
 
     /**
      * Determines if a de-serialized object is compatible with this class.
      *
-     * This value must only be changed if and only if the new version
-     * of this class is incompatible with the old version. See Sun docs
-     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
+     * <p>This value must only be changed if and only if the new version of this class is
+     * incompatible with the old version. See Sun docs for <a
+     * href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
      */
-    private static final long         serialVersionUID = 2798134548764323328L;
+    private static final long serialVersionUID = 2798134548764323328L;
 
-    /**
-     * List for listener administration.
-     */
+    /** List for listener administration. */
     private List<IChemObjectListener> chemObjectListeners;
+    /** A hashtable for the storage of any kind of properties of this IChemObject. */
+    private Map<Object, Object> properties;
     /**
-     *  A hashtable for the storage of any kind of properties of this IChemObject.
+     * You will frequently have to use some flags on a IChemObject. For example, if you want to draw
+     * a molecule and see if you've already drawn an atom, or in a ring search to check whether a
+     * vertex has been visited in a graph traversal. Use these flags while addressing particular
+     * positions in the flag array with self-defined constants (flags[VISITED] = true). 100 flags
+     * per object should be more than enough.
      */
-    private Map<Object, Object>       properties;
-    /**
-     *  You will frequently have to use some flags on a IChemObject. For example, if
-     *  you want to draw a molecule and see if you've already drawn an atom, or in
-     *  a ring search to check whether a vertex has been visited in a graph
-     *  traversal. Use these flags while addressing particular positions in the
-     *  flag array with self-defined constants (flags[VISITED] = true). 100 flags
-     *  per object should be more than enough.
-     */
-    private short                     flags;                                  // flags are currently stored as a single short value MAX_FLAG_INDEX < 16
+    private short flags; // flags are currently stored as a single short value MAX_FLAG_INDEX < 16
 
-    /**
-     *  The ID is null by default.
-     */
-    private String                    identifier;
+    /** The ID is null by default. */
+    private String identifier;
 
-    /**
-     *  Constructs a new IChemObject.
-     */
+    /** Constructs a new IChemObject. */
     public ChemObject() {
         chemObjectListeners = null;
         properties = null;
@@ -92,8 +82,8 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
     }
 
     /**
-     * Constructs a new IChemObject by copying the flags, and the
-     * identifier. It does not copy the listeners and properties.
+     * Constructs a new IChemObject by copying the flags, and the identifier. It does not copy the
+     * listeners and properties.
      *
      * @param chemObject the object to copy
      */
@@ -105,9 +95,9 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
     }
 
     /**
-     *  Lazy creation of chemObjectListeners List.
+     * Lazy creation of chemObjectListeners List.
      *
-     *@return    List with the ChemObjects associated.
+     * @return List with the ChemObjects associated.
      */
     private List<IChemObjectListener> lazyChemObjectListeners() {
         if (chemObjectListeners == null) {
@@ -117,11 +107,11 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
     }
 
     /**
-     *  Use this to add yourself to this IChemObject as a listener. In order to do
-     *  so, you must implement the ChemObjectListener Interface.
+     * Use this to add yourself to this IChemObject as a listener. In order to do so, you must
+     * implement the ChemObjectListener Interface.
      *
-     *@param  col  the ChemObjectListener
-     *@see         #removeListener
+     * @param col the ChemObjectListener
+     * @see #removeListener
      */
     @Override
     public void addListener(IChemObjectListener col) {
@@ -135,9 +125,9 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
     }
 
     /**
-     *  Returns the number of ChemObjectListeners registered with this object.
+     * Returns the number of ChemObjectListeners registered with this object.
      *
-     *@return    the number of registered listeners.
+     * @return the number of registered listeners.
      */
     @Override
     public int getListenerCount() {
@@ -148,11 +138,11 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
     }
 
     /**
-     *  Use this to remove a ChemObjectListener from the ListenerList of this
-     *  IChemObject. It will then not be notified of change in this object anymore.
+     * Use this to remove a ChemObjectListener from the ListenerList of this IChemObject. It will
+     * then not be notified of change in this object anymore.
      *
-     *@param  col  The ChemObjectListener to be removed
-     *@see         #addListener
+     * @param col The ChemObjectListener to be removed
+     * @see #addListener
      */
     @Override
     public void removeListener(IChemObjectListener col) {
@@ -167,8 +157,8 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
     }
 
     /**
-     *  This should be triggered by an method that changes the content of an object
-     *  to that the registered listeners can react to it.
+     * This should be triggered by an method that changes the content of an object to that the
+     * registered listeners can react to it.
      */
     @Override
     public void notifyChanged() {
@@ -181,13 +171,11 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
     }
 
     /**
-     *  This should be triggered by an method that changes the content of an object
-     *  to that the registered listeners can react to it. This is a version of
-     *  notifyChanged() which allows to propagate a change event while preserving
-     *  the original origin.
+     * This should be triggered by an method that changes the content of an object to that the
+     * registered listeners can react to it. This is a version of notifyChanged() which allows to
+     * propagate a change event while preserving the original origin.
      *
-     *@param  evt  A ChemObjectChangeEvent pointing to the source of where
-     *		the change happened
+     * @param evt A ChemObjectChangeEvent pointing to the source of where the change happened
      */
     @Override
     public void notifyChanged(IChemObjectChangeEvent evt) {
@@ -202,7 +190,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
     /**
      * Lazy creation of properties hash.
      *
-     * @return    Returns in instance of the properties
+     * @return Returns in instance of the properties
      */
     private Map<Object, Object> lazyProperties() {
         if (properties == null) {
@@ -212,13 +200,12 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
     }
 
     /**
-     *  Sets a property for a IChemObject.
+     * Sets a property for a IChemObject.
      *
-     *@param  description  An object description of the property (most likely a
-     *      unique string)
-     *@param  property     An object with the property itself
-     *@see                 #getProperty
-     *@see                 #removeProperty
+     * @param description An object description of the property (most likely a unique string)
+     * @param property An object with the property itself
+     * @see #getProperty
+     * @see #removeProperty
      */
     @Override
     public void setProperty(Object description, Object property) {
@@ -227,33 +214,28 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
     }
 
     /**
-     *  Removes a property for a IChemObject.
+     * Removes a property for a IChemObject.
      *
-     *@param  description  The object description of the property (most likely a
-     *      unique string)
-     *@see                 #setProperty
-     *@see                 #getProperty
+     * @param description The object description of the property (most likely a unique string)
+     * @see #setProperty
+     * @see #getProperty
      */
     @Override
     public void removeProperty(Object description) {
         if (properties != null) {
             boolean changed = properties.remove(description) != null;
-            if (properties.isEmpty())
-                properties = null;
-            if (changed)
-                notifyChanged();
+            if (properties.isEmpty()) properties = null;
+            if (changed) notifyChanged();
         }
     }
 
     /**
-     *  Returns a property for the IChemObject.
+     * Returns a property for the IChemObject.
      *
-     *@param  description  An object description of the property (most likely a
-     *      unique string)
-     *@return              The object containing the property. Returns null if
-     *      propert is not set.
-     *@see                 #setProperty
-     *@see                 #removeProperty
+     * @param description An object description of the property (most likely a unique string)
+     * @return The object containing the property. Returns null if propert is not set.
+     * @see #setProperty
+     * @see #removeProperty
      */
     @Override
     public <T> T getProperty(Object description) {
@@ -264,9 +246,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
         return value;
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public <T> T getProperty(Object description, Class<T> c) {
         Object value = lazyProperties().get(description);
@@ -278,32 +258,35 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
             return typed;
 
         } else if (value != null) {
-            throw new IllegalArgumentException("attempted to access a property of incorrect type, expected "
-                    + c.getSimpleName() + " got " + value.getClass().getSimpleName());
+            throw new IllegalArgumentException(
+                    "attempted to access a property of incorrect type, expected "
+                            + c.getSimpleName()
+                            + " got "
+                            + value.getClass().getSimpleName());
         }
 
         return null;
-
     }
 
     /**
-     *  Returns a Map with the IChemObject's properties.
+     * Returns a Map with the IChemObject's properties.
      *
-     *@return    The object's properties as an Hashtable
-     *@see       #addProperties
+     * @return The object's properties as an Hashtable
+     * @see #addProperties
      */
     @Override
     public Map<Object, Object> getProperties() {
-        return properties == null ? Collections.emptyMap()
-                                  : Collections.unmodifiableMap(properties);
+        return properties == null
+                ? Collections.emptyMap()
+                : Collections.unmodifiableMap(properties);
     }
 
     /**
-     *  Clones this <code>IChemObject</code>. It clones the identifier, flags,
-     *  properties and pointer vectors. The ChemObjectListeners are not cloned, and
-     *  neither is the content of the pointer vectors.
+     * Clones this <code>IChemObject</code>. It clones the identifier, flags, properties and pointer
+     * vectors. The ChemObjectListeners are not cloned, and neither is the content of the pointer
+     * vectors.
      *
-     *@return    The cloned object
+     * @return The cloned object
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
@@ -323,10 +306,10 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
     }
 
     /**
-     *  Compares a IChemObject with this IChemObject.
+     * Compares a IChemObject with this IChemObject.
      *
-     *@param  object  Object of type AtomType
-     *@return         true if the atom types are equal
+     * @param object Object of type AtomType
+     * @return true if the atom types are equal
      */
     public boolean compare(Object object) {
         if (!(object instanceof IChemObject)) {
@@ -337,10 +320,10 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
     }
 
     /**
-     *  Returns the identifier (ID) of this object.
+     * Returns the identifier (ID) of this object.
      *
-     *@return    a String representing the ID value
-     *@see       #setID
+     * @return a String representing the ID value
+     * @see #setID
      */
     @Override
     public String getID() {
@@ -348,10 +331,10 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
     }
 
     /**
-     *  Sets the identifier (ID) of this object.
+     * Sets the identifier (ID) of this object.
      *
-     *@param  identifier  a String representing the ID value
-     *@see                #getID
+     * @param identifier a String representing the ID value
+     * @see #getID
      */
     @Override
     public void setID(String identifier) {
@@ -360,41 +343,34 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
     }
 
     private boolean isPowerOfTwo(int num) {
-        return (num == 1) || (num & (num-1)) == 0;
+        return (num == 1) || (num & (num - 1)) == 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setFlag(int mask, boolean value) {
         if (mask > Short.MAX_VALUE || !isPowerOfTwo(mask))
-            throw new IllegalArgumentException("setFlag() must be provided a valid CDKConstant and not used for custom properties");
+            throw new IllegalArgumentException(
+                    "setFlag() must be provided a valid CDKConstant and not used for custom properties");
         // set/unset a bit in the flags value
-        if (value)
-            flags |= mask;
-        else
-            flags &= ~(mask);
+        if (value) flags |= mask;
+        else flags &= ~(mask);
         notifyChanged();
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean getFlag(int mask) {
         return (flags & mask) != 0;
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Short getFlagValue() {
         return flags;
     }
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     public void setProperties(Map<Object, Object> properties) {
         this.properties = null;
@@ -402,10 +378,10 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
     }
 
     /**
-     *  Sets the properties of this object.
+     * Sets the properties of this object.
      *
-     *@param  properties  a Hashtable specifying the property values
-     *@see                #getProperties
+     * @param properties a Hashtable specifying the property values
+     * @see #getProperties
      */
     @Override
     public void addProperties(Map<Object, Object> properties) {
@@ -417,21 +393,20 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
     /**
      * Sets the whole set of flags.
      *
-     * @param  flagsNew    the new flags.
-     * @see                #getFlags
+     * @param flagsNew the new flags.
+     * @see #getFlags
      */
     @Override
     public void setFlags(boolean[] flagsNew) {
-        for (int i = 0; i < flagsNew.length; i++)
-            setFlag(CDKConstants.FLAG_MASKS[i], flagsNew[i]);
+        for (int i = 0; i < flagsNew.length; i++) setFlag(CDKConstants.FLAG_MASKS[i], flagsNew[i]);
         notifyChanged();
     }
 
     /**
      * Returns the whole set of flags.
      *
-     *@return    the flags.
-     *@see       #setFlags
+     * @return the flags.
+     * @see #setFlags
      */
     @Override
     public boolean[] getFlags() {
@@ -447,8 +422,8 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
     /**
      * Clones this <code>IChemObject</code>, but preserves references to <code>Object</code>s.
      *
-     * @return    Shallow copy of this IChemObject
-     * @see       #clone
+     * @return Shallow copy of this IChemObject
+     * @see #clone
      */
     public Object shallowCopy() {
         Object copy = null;
@@ -476,5 +451,4 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
     public boolean getNotification() {
         return this.doNotification;
     }
-
 }

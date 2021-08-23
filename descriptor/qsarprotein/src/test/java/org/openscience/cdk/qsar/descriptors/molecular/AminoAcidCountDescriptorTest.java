@@ -45,8 +45,9 @@ public class AminoAcidCountDescriptorTest extends MolecularDescriptorTest {
 
     @Test
     public void testAACount() throws Exception {
-        IBioPolymer protein = ProteinBuilderTool.createProtein("ARNDCFQEGHIPLKMSTYVW",
-                SilentChemObjectBuilder.getInstance());
+        IBioPolymer protein =
+                ProteinBuilderTool.createProtein(
+                        "ARNDCFQEGHIPLKMSTYVW", SilentChemObjectBuilder.getInstance());
         IDescriptorResult result = descriptor.calculate(protein).getValue();
         Assert.assertTrue(result instanceof IntegerArrayResult);
         IntegerArrayResult iaResult = (IntegerArrayResult) result;
@@ -58,22 +59,26 @@ public class AminoAcidCountDescriptorTest extends MolecularDescriptorTest {
 
     @Test
     public void testFCount() throws Exception {
-        IBioPolymer protein = ProteinBuilderTool.createProtein("FF", SilentChemObjectBuilder.getInstance());
+        IBioPolymer protein =
+                ProteinBuilderTool.createProtein("FF", SilentChemObjectBuilder.getInstance());
         IDescriptorResult result = descriptor.calculate(protein).getValue();
         Assert.assertTrue(result instanceof IntegerArrayResult);
         IntegerArrayResult iaResult = (IntegerArrayResult) result;
         Assert.assertEquals(2, iaResult.get(8));
-        Assert.assertEquals(4, iaResult.get(5)); // thingy is symmetrical, so two mappings at each AA position possible
+        Assert.assertEquals(
+                4,
+                iaResult.get(
+                        5)); // thingy is symmetrical, so two mappings at each AA position possible
     }
 
     @Test
     public void testTCount() throws Exception {
-        IBioPolymer protein = ProteinBuilderTool.createProtein("TT", SilentChemObjectBuilder.getInstance());
+        IBioPolymer protein =
+                ProteinBuilderTool.createProtein("TT", SilentChemObjectBuilder.getInstance());
         IDescriptorResult result = descriptor.calculate(protein).getValue();
         Assert.assertTrue(result instanceof IntegerArrayResult);
         IntegerArrayResult iaResult = (IntegerArrayResult) result;
         Assert.assertEquals(2, iaResult.get(8));
         Assert.assertEquals(2, iaResult.get(16));
     }
-
 }

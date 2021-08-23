@@ -23,36 +23,39 @@
 
 package org.openscience.cdk;
 
-import org.junit.Test;
-import org.openscience.cdk.AtomRef;
-import org.openscience.cdk.interfaces.IAtom;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertNull;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.mock;
+
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtom;
 
 public class AtomRefTest {
 
-    @Test public void dereferenceNullPointer() {
+    @Test
+    public void dereferenceNullPointer() {
         assertNull(AtomRef.deref(null));
     }
 
-    @Test public void dereferenceNonPointer() {
+    @Test
+    public void dereferenceNonPointer() {
         IAtom mock = mock(IAtom.class);
         assertThat(AtomRef.deref(mock), is(sameInstance(mock)));
     }
 
-    @Test public void dereferencePointer() {
+    @Test
+    public void dereferencePointer() {
         IAtom mock = mock(IAtom.class);
-        IAtom ptr  = new AtomRef(mock);
+        IAtom ptr = new AtomRef(mock);
         assertThat(AtomRef.deref(ptr), is(sameInstance(mock)));
     }
 
-    @Test public void dereferencePointerPointer() {
+    @Test
+    public void dereferencePointerPointer() {
         IAtom mock = mock(IAtom.class);
-        IAtom ptr  = new AtomRef(new AtomRef(mock));
+        IAtom ptr = new AtomRef(new AtomRef(mock));
         assertThat(AtomRef.deref(ptr), is(sameInstance(mock)));
     }
 }

@@ -21,28 +21,22 @@ package org.openscience.cdk.interfaces;
 /**
  * The base class for atom types.
  *
- * Atom types are typically used to describe the
- * behaviour of an atom of a particular element in different environment like
- * sp<sup>3</sup> hybridized carbon C3, etc., in some molecular modelling
+ * <p>Atom types are typically used to describe the behaviour of an atom of a particular element in
+ * different environment like sp<sup>3</sup> hybridized carbon C3, etc., in some molecular modelling
  * applications.
  *
- * @cdk.module  interfaces
+ * @cdk.module interfaces
  * @cdk.githash
- *
- * @author      egonw
+ * @author egonw
  * @cdk.created 2005-08-24
- *
  * @cdk.keyword atom, type
  */
 public interface IAtomType extends IIsotope {
 
-    /**
-     *
-     * An enum for the different hybridization states.
-     *
-     */
+    /** An enum for the different hybridization states. */
     public enum Hybridization {
-        S, SP1, // linear
+        S,
+        SP1, // linear
         SP2, // trigonal planar (single pi-electron in pz)
         SP3, // tetrahedral
         PLANAR3, // trigonal planar (lone pair in pz)
@@ -56,56 +50,56 @@ public interface IAtomType extends IIsotope {
     /**
      * Sets the if attribute of the AtomType object.
      *
-     * @param  identifier  The new AtomTypeID value. Null if unset.
-     * @see    #getAtomTypeName
+     * @param identifier The new AtomTypeID value. Null if unset.
+     * @see #getAtomTypeName
      */
     public void setAtomTypeName(String identifier);
 
     /**
      * Sets the MaxBondOrder attribute of the AtomType object.
      *
-     * @param  maxBondOrder  The new MaxBondOrder value
-     * @see    #getMaxBondOrder
+     * @param maxBondOrder The new MaxBondOrder value
+     * @see #getMaxBondOrder
      */
     public void setMaxBondOrder(IBond.Order maxBondOrder);
 
     /**
      * Sets the the exact bond order sum attribute of the AtomType object.
      *
-     * @param  bondOrderSum  The new bondOrderSum value
-     * @see    #getBondOrderSum
+     * @param bondOrderSum The new bondOrderSum value
+     * @see #getBondOrderSum
      */
     public void setBondOrderSum(Double bondOrderSum);
 
     /**
      * Gets the id attribute of the AtomType object.
      *
-     * @return    The id value
-     * @see       #setAtomTypeName
+     * @return The id value
+     * @see #setAtomTypeName
      */
     public String getAtomTypeName();
 
     /**
      * Gets the MaxBondOrder attribute of the AtomType object.
      *
-     * @return    The MaxBondOrder value
-     * @see       #setMaxBondOrder
+     * @return The MaxBondOrder value
+     * @see #setMaxBondOrder
      */
     public IBond.Order getMaxBondOrder();
 
     /**
      * Gets the bondOrderSum attribute of the AtomType object.
      *
-     * @return    The bondOrderSum value
-     * @see       #setBondOrderSum
+     * @return The bondOrderSum value
+     * @see #setBondOrderSum
      */
     public Double getBondOrderSum();
 
     /**
      * Sets the formal charge of this atom.
      *
-     * @param  charge  The formal charge
-     * @see    #getFormalCharge
+     * @param charge The formal charge
+     * @see #getFormalCharge
      */
     public void setFormalCharge(Integer charge);
 
@@ -113,15 +107,15 @@ public interface IAtomType extends IIsotope {
      * Returns the formal charge of this atom.
      *
      * @return the formal charge of this atom
-     * @see    #setFormalCharge
+     * @see #setFormalCharge
      */
     public Integer getFormalCharge();
 
     /**
      * Sets the formal neighbour count of this atom.
      *
-     * @param  count  The neighbour count
-     * @see    #getFormalNeighbourCount
+     * @param count The neighbour count
+     * @see #getFormalNeighbourCount
      */
     public void setFormalNeighbourCount(Integer count);
 
@@ -129,15 +123,15 @@ public interface IAtomType extends IIsotope {
      * Returns the formal neighbour count of this atom.
      *
      * @return the formal neighbour count of this atom
-     * @see    #setFormalNeighbourCount
+     * @see #setFormalNeighbourCount
      */
     public Integer getFormalNeighbourCount();
 
     /**
      * Sets the hybridization of this atom.
      *
-     * @param  hybridization  The hybridization
-     * @see    #getHybridization
+     * @param hybridization The hybridization
+     * @see #getHybridization
      */
     public void setHybridization(Hybridization hybridization);
 
@@ -145,7 +139,7 @@ public interface IAtomType extends IIsotope {
      * Returns the hybridization of this atom.
      *
      * @return the hybridization of this atom
-     * @see    #setHybridization
+     * @see #setHybridization
      */
     public Hybridization getHybridization();
 
@@ -153,7 +147,7 @@ public interface IAtomType extends IIsotope {
      * Sets the covalent radius for this AtomType.
      *
      * @param radius The covalent radius for this AtomType
-     * @see    #getCovalentRadius
+     * @see #getCovalentRadius
      */
     public void setCovalentRadius(Double radius);
 
@@ -161,15 +155,15 @@ public interface IAtomType extends IIsotope {
      * Returns the covalent radius for this AtomType.
      *
      * @return The covalent radius for this AtomType
-     * @see    #setCovalentRadius
+     * @see #setCovalentRadius
      */
     public Double getCovalentRadius();
 
     /**
      * Sets the the exact electron valency of the AtomType object.
      *
-     * @param  valency  The new valency value
-     * @see    #getValency()
+     * @param valency The new valency value
+     * @see #getValency()
      */
     public void setValency(Integer valency);
 
@@ -177,8 +171,7 @@ public interface IAtomType extends IIsotope {
      * Gets the the exact electron valency of the AtomType object.
      *
      * @return The valency value
-     * @see    #setValency(Integer)
+     * @see #setValency(Integer)
      */
     public Integer getValency();
-
 }

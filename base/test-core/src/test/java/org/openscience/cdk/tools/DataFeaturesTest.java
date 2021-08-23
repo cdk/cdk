@@ -22,14 +22,12 @@ package org.openscience.cdk.tools;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.tools.DataFeatures;
 
 /**
- * Included so that CoreCoverageTest won't complain. The class does not have
- * methods, only constants, so there is nothing to test.
+ * Included so that CoreCoverageTest won't complain. The class does not have methods, only
+ * constants, so there is nothing to test.
  *
  * @cdk.module test-core
- *
  * @see org.openscience.cdk.CDKConstants
  */
 public class DataFeaturesTest extends CDKTestCase {

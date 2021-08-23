@@ -30,11 +30,11 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- *  The stabilization of the positive charge
- *  (e.g.) obtained in the polar breaking of a bond is calculated from the sigma- and
- *  lone pair-electronegativity values of the atoms that are in conjugation to the atoms
- *  obtaining the charges. The method is based following {@cdk.cite Saller85}.
- *  The value is calculated looking for resonance structures which can stabilize the charge.
+ * The stabilization of the positive charge (e.g.) obtained in the polar breaking of a bond is
+ * calculated from the sigma- and lone pair-electronegativity values of the atoms that are in
+ * conjugation to the atoms obtaining the charges. The method is based following {@cdk.cite
+ * Saller85}. The value is calculated looking for resonance structures which can stabilize the
+ * charge.
  *
  * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
@@ -49,55 +49,50 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *   </tr>
  * </table>
  *
- * @author         Miguel Rojas Cherto
- * @cdk.created    2008-104-31
- * @cdk.module     qsaratomic
+ * @author Miguel Rojas Cherto
+ * @cdk.created 2008-104-31
+ * @cdk.module qsaratomic
  * @cdk.githash
  * @see StabilizationCharges
  */
-public class StabilizationPlusChargeDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
+public class StabilizationPlusChargeDescriptor extends AbstractAtomicDescriptor
+        implements IAtomicDescriptor {
 
     private static final String[] NAMES = {"stabilPlusC"};
 
     private StabilizationCharges stabil;
 
-    /**
-     *  Constructor for the StabilizationPlusChargeDescriptor object
-     */
+    /** Constructor for the StabilizationPlusChargeDescriptor object */
     public StabilizationPlusChargeDescriptor() {
         stabil = new StabilizationCharges();
     }
 
     /**
-     *  Gets the specification attribute of the StabilizationPlusChargeDescriptor
-     *  object
+     * Gets the specification attribute of the StabilizationPlusChargeDescriptor object
      *
-     *@return The specification value
+     * @return The specification value
      */
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#stabilizationPlusCharge", this
-                .getClass().getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#stabilizationPlusCharge",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     /**
-     *  Sets the parameters attribute of the StabilizationPlusChargeDescriptor
-     *  object
+     * Sets the parameters attribute of the StabilizationPlusChargeDescriptor object
      *
-     *@param  params            1: max iterations (optional, defaults to 20)
-     *@exception CDKException  Description of the Exception
+     * @param params 1: max iterations (optional, defaults to 20)
+     * @exception CDKException Description of the Exception
      */
     @Override
-    public void setParameters(Object[] params) throws CDKException {
-
-    }
+    public void setParameters(Object[] params) throws CDKException {}
 
     /**
-     *  Gets the parameters attribute of the StabilizationPlusChargeDescriptor
-     *  object
+     * Gets the parameters attribute of the StabilizationPlusChargeDescriptor object
      *
-     *@return The parameters value
+     * @return The parameters value
      */
     @Override
     public Object[] getParameters() {
@@ -110,12 +105,12 @@ public class StabilizationPlusChargeDescriptor extends AbstractAtomicDescriptor 
     }
 
     /**
-     *  The method calculates the stabilization of charge of a given atom
-     *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
+     * The method calculates the stabilization of charge of a given atom It is needed to call the
+     * addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
      *
-     *@param  atom              The IAtom for which the DescriptorValue is requested
-     *@param  container         AtomContainer
-     *@return return the stabilization value
+     * @param atom The IAtom for which the DescriptorValue is requested
+     * @param container AtomContainer
+     * @return return the stabilization value
      */
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
@@ -127,24 +122,37 @@ public class StabilizationPlusChargeDescriptor extends AbstractAtomicDescriptor 
             localAtom = clone.getAtom(container.indexOf(atom));
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(clone);
         } catch (CDKException e) {
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                    Double.NaN), NAMES, e);
+            return new DescriptorValue(
+                    getSpecification(),
+                    getParameterNames(),
+                    getParameters(),
+                    new DoubleResult(Double.NaN),
+                    NAMES,
+                    e);
         } catch (CloneNotSupportedException e) {
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                    Double.NaN), NAMES, e);
+            return new DescriptorValue(
+                    getSpecification(),
+                    getParameterNames(),
+                    getParameters(),
+                    new DoubleResult(Double.NaN),
+                    NAMES,
+                    e);
         }
 
         double result = stabil.calculatePositive(clone, localAtom);
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(result),
-                                   NAMES);
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new DoubleResult(result),
+                NAMES);
     }
 
     /**
-     *  Gets the parameterNames attribute of the StabilizationPlusChargeDescriptor
-     *  object
+     * Gets the parameterNames attribute of the StabilizationPlusChargeDescriptor object
      *
-     *@return    The parameterNames value
+     * @return The parameterNames value
      */
     @Override
     public String[] getParameterNames() {
@@ -152,11 +160,10 @@ public class StabilizationPlusChargeDescriptor extends AbstractAtomicDescriptor 
     }
 
     /**
-     *  Gets the parameterType attribute of the StabilizationPlusChargeDescriptor
-     *  object
+     * Gets the parameterType attribute of the StabilizationPlusChargeDescriptor object
      *
-     * @param  name  Description of the Parameter
-     * @return       An Object of class equal to that of the parameter being requested
+     * @param name Description of the Parameter
+     * @return An Object of class equal to that of the parameter being requested
      */
     @Override
     public Object getParameterType(String name) {

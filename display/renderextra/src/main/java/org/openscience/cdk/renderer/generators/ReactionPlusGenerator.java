@@ -23,7 +23,6 @@ import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 import java.util.Arrays;
 import java.util.List;
-
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.renderer.BoundsCalculator;
@@ -55,7 +54,8 @@ public class ReactionPlusGenerator implements IGenerator<IReaction> {
             Rectangle2D bounds1 = BoundsCalculator.calculateBounds(reactants.getAtomContainer(0));
             double axis = totalBoundsReactants.getCenterY();
             for (int i = 1; i < reaction.getReactantCount(); i++) {
-                Rectangle2D bounds2 = BoundsCalculator.calculateBounds(reactants.getAtomContainer(i));
+                Rectangle2D bounds2 =
+                        BoundsCalculator.calculateBounds(reactants.getAtomContainer(i));
                 diagram.add(makePlus(bounds1, bounds2, axis, color));
                 bounds1 = bounds2;
             }
@@ -68,7 +68,8 @@ public class ReactionPlusGenerator implements IGenerator<IReaction> {
             double axis = totalBoundsProducts.getCenterY();
             Rectangle2D bounds1 = BoundsCalculator.calculateBounds(reactants.getAtomContainer(0));
             for (int i = 1; i < reaction.getProductCount(); i++) {
-                Rectangle2D bounds2 = BoundsCalculator.calculateBounds(products.getAtomContainer(i));
+                Rectangle2D bounds2 =
+                        BoundsCalculator.calculateBounds(products.getAtomContainer(i));
 
                 diagram.add(makePlus(bounds1, bounds2, axis, color));
                 bounds1 = bounds2;
@@ -78,7 +79,8 @@ public class ReactionPlusGenerator implements IGenerator<IReaction> {
     }
 
     /** Place a '+' sign between two molecules. */
-    private TextElement makePlus(Rectangle2D moleculeBox1, Rectangle2D moleculeBox2, double axis, Color color) {
+    private TextElement makePlus(
+            Rectangle2D moleculeBox1, Rectangle2D moleculeBox2, double axis, Color color) {
         double arrowCenter = (moleculeBox1.getCenterX() + moleculeBox2.getCenterX()) / 2;
         return new TextElement(arrowCenter, axis, "+", color);
     }
@@ -86,6 +88,6 @@ public class ReactionPlusGenerator implements IGenerator<IReaction> {
     /** {@inheritDoc} */
     @Override
     public List<IGeneratorParameter<?>> getParameters() {
-        return Arrays.asList(new IGeneratorParameter<?>[]{});
+        return Arrays.asList(new IGeneratorParameter<?>[] {});
     }
 }

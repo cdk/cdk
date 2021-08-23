@@ -24,8 +24,21 @@
 
 package org.openscience.cdk.hash;
 
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertNotNull;
+import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.OPPOSITE;
+import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.TOGETHER;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import org.hamcrest.CoreMatchers;
-import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -44,24 +57,8 @@ import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.assertNotNull;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.OPPOSITE;
-import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.TOGETHER;
-
 /**
- * This test class provides several scenario tests for the {@literal cdk-hash}
- * module.
+ * This test class provides several scenario tests for the {@literal cdk-hash} module.
  *
  * @author John May
  * @cdk.module test-hash
@@ -69,8 +66,8 @@ import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conforma
 public class HashCodeScenariosTest {
 
     /**
-     * Two molecules with identical Racid identification numbers, these hash
-     * codes should be different.
+     * Two molecules with identical Racid identification numbers, these hash codes should be
+     * different.
      */
     @Test
     public void figure2a() {
@@ -89,8 +86,8 @@ public class HashCodeScenariosTest {
     }
 
     /**
-     * Two molecules with identical Racid identification numbers, these hash
-     * codes should be different.
+     * Two molecules with identical Racid identification numbers, these hash codes should be
+     * different.
      */
     @Test
     public void figure2b() {
@@ -109,8 +106,8 @@ public class HashCodeScenariosTest {
     }
 
     /**
-     * Two molecules with identical Racid identification numbers, these hash
-     * codes should be different.
+     * Two molecules with identical Racid identification numbers, these hash codes should be
+     * different.
      */
     @Test
     public void figure2c() {
@@ -128,9 +125,8 @@ public class HashCodeScenariosTest {
     }
 
     /**
-     * These two molecules from the original publication collide when using a
-     * previous hash coding method (Bawden, 81). The hash codes should be
-     * different using this method.
+     * These two molecules from the original publication collide when using a previous hash coding
+     * method (Bawden, 81). The hash codes should be different using this method.
      */
     @Test
     public void figure3() {
@@ -149,9 +145,9 @@ public class HashCodeScenariosTest {
     }
 
     /**
-     * These two molecules have atoms experiencing uniform environments but
-     * where the number of atoms between the molecules is different. This
-     * demonstrates the size the molecule is considered when hashing.
+     * These two molecules have atoms experiencing uniform environments but where the number of
+     * atoms between the molecules is different. This demonstrates the size the molecule is
+     * considered when hashing.
      */
     @Test
     public void figure7() {
@@ -170,9 +166,9 @@ public class HashCodeScenariosTest {
     }
 
     /**
-     * These molecules are erroneous structures from a catalogue file, the
-     * German names are the original names as they appear in the catalogue. The
-     * hash code identifies that the two molecules are the same.
+     * These molecules are erroneous structures from a catalogue file, the German names are the
+     * original names as they appear in the catalogue. The hash code identifies that the two
+     * molecules are the same.
      */
     @Test
     public void figure10() {
@@ -190,10 +186,10 @@ public class HashCodeScenariosTest {
     }
 
     /**
-     * This structure is an example where the Cahn-Ingold-Prelog (CIP) rules can
-     * not discriminate two neighbours of chiral atom. Due to this, the CIP
-     * rules are not used as an atom seed and instead a bootstrap method is
-     * used. Please refer to the original article for the exact method.
+     * This structure is an example where the Cahn-Ingold-Prelog (CIP) rules can not discriminate
+     * two neighbours of chiral atom. Due to this, the CIP rules are not used as an atom seed and
+     * instead a bootstrap method is used. Please refer to the original article for the exact
+     * method.
      */
     @Test
     public void figure11() {
@@ -203,27 +199,29 @@ public class HashCodeScenariosTest {
         IAtomContainer molecule = mols.get(0);
 
         MoleculeHashGenerator basic = new HashGeneratorMaker().elemental().depth(8).molecular();
-        MoleculeHashGenerator stereo = new HashGeneratorMaker().elemental().depth(8).chiral().molecular();
+        MoleculeHashGenerator stereo =
+                new HashGeneratorMaker().elemental().depth(8).chiral().molecular();
 
         long basicHash = basic.generate(molecule);
         long stereoHash = stereo.generate(molecule);
 
         assertThat(
                 "If the stereo-centre was perceived then the basic hash should be different from the chiral hash code",
-                basicHash, is(not(stereoHash)));
+                basicHash,
+                is(not(stereoHash)));
     }
 
     /**
-     * This scenario demonstrates how stereo-chemistry encoding is invariant
-     * under permutation. A simple molecule 'bromo(chloro)fluoromethane' is
-     * permuted to all 120 possible atom orderings. It is checked that the (R)-
-     * configuration  and (S)- configuration values are invariant
+     * This scenario demonstrates how stereo-chemistry encoding is invariant under permutation. A
+     * simple molecule 'bromo(chloro)fluoromethane' is permuted to all 120 possible atom orderings.
+     * It is checked that the (R)- configuration and (S)- configuration values are invariant
      */
     @Test
     public void figure12() {
         List<IAtomContainer> mols = sdf("ihlenfeldt93-figure-12.sdf", 2);
 
-        MoleculeHashGenerator stereo = new HashGeneratorMaker().elemental().depth(1).chiral().molecular();
+        MoleculeHashGenerator stereo =
+                new HashGeneratorMaker().elemental().depth(1).chiral().molecular();
 
         Set<Long> sHashes = new HashSet<Long>();
         Set<Long> rHashes = new HashSet<Long>();
@@ -237,19 +235,22 @@ public class HashCodeScenariosTest {
             sHashes.add(stereo.generate(s));
             rHashes.add(stereo.generate(r));
         }
-        org.hamcrest.MatcherAssert.assertThat("all (S)-bromo(chloro)fluoromethane permutation produce a single hash code", sHashes.size(),
+        org.hamcrest.MatcherAssert.assertThat(
+                "all (S)-bromo(chloro)fluoromethane permutation produce a single hash code",
+                sHashes.size(),
                 CoreMatchers.is(1));
-        org.hamcrest.MatcherAssert.assertThat("all (R)-bromo(chloro)fluoromethane permutation produce a single hash code", rHashes.size(),
+        org.hamcrest.MatcherAssert.assertThat(
+                "all (R)-bromo(chloro)fluoromethane permutation produce a single hash code",
+                rHashes.size(),
                 CoreMatchers.is(1));
         sHashes.addAll(rHashes);
         org.hamcrest.MatcherAssert.assertThat(sHashes.size(), CoreMatchers.is(2));
     }
 
     /**
-     * This molecule has a tetrahedral stereo-centre depends on the
-     * configuration of two double bonds. Swapping the double bond configuration
-     * inverts the tetrahedral stereo-centre (R/S) and produces different hash
-     * codes.
+     * This molecule has a tetrahedral stereo-centre depends on the configuration of two double
+     * bonds. Swapping the double bond configuration inverts the tetrahedral stereo-centre (R/S) and
+     * produces different hash codes.
      */
     @Test
     public void figure13a() {
@@ -259,7 +260,8 @@ public class HashCodeScenariosTest {
         IAtomContainer a = mols.get(0);
         IAtomContainer b = mols.get(1);
 
-        MoleculeHashGenerator stereo = new HashGeneratorMaker().elemental().depth(8).chiral().molecular();
+        MoleculeHashGenerator stereo =
+                new HashGeneratorMaker().elemental().depth(8).chiral().molecular();
         long aHash = stereo.generate(a);
         long bHash = stereo.generate(b);
 
@@ -267,10 +269,9 @@ public class HashCodeScenariosTest {
     }
 
     /**
-     * This molecule has double bond stereo chemistry defined only by
-     * differences in the configurations of it's substituents. The two
-     * configurations the bond can take (Z/E) and should produce different hash
-     * codes.
+     * This molecule has double bond stereo chemistry defined only by differences in the
+     * configurations of it's substituents. The two configurations the bond can take (Z/E) and
+     * should produce different hash codes.
      */
     @Test
     public void figure13b() {
@@ -279,16 +280,17 @@ public class HashCodeScenariosTest {
         IAtomContainer a = mols.get(0);
         IAtomContainer b = mols.get(1);
 
-        MoleculeHashGenerator stereo = new HashGeneratorMaker().elemental().depth(8).chiral().molecular();
+        MoleculeHashGenerator stereo =
+                new HashGeneratorMaker().elemental().depth(8).chiral().molecular();
 
         assertThat(nonEqMesg(a, b), stereo.generate(a), is(not(stereo.generate(b))));
     }
 
     /**
-     * These two structures were found in the original publication as duplicates
-     * in the catalogue of the CHIRON program. The article notes the second name
-     * is likely incorrect but that this is how it appears in the catalogue. The
-     * two molecules are in fact the same and generate the same hash code.
+     * These two structures were found in the original publication as duplicates in the catalogue of
+     * the CHIRON program. The article notes the second name is likely incorrect but that this is
+     * how it appears in the catalogue. The two molecules are in fact the same and generate the same
+     * hash code.
      */
     @Test
     public void figure14() {
@@ -307,9 +309,8 @@ public class HashCodeScenariosTest {
     }
 
     /**
-     * These two compounds are connected differently but produce the same basic
-     * hash code. In order to discriminate them we must use the perturbed hash
-     * code.
+     * These two compounds are connected differently but produce the same basic hash code. In order
+     * to discriminate them we must use the perturbed hash code.
      */
     @Test
     public void figure15() {
@@ -325,17 +326,17 @@ public class HashCodeScenariosTest {
 
         org.hamcrest.MatcherAssert.assertThat(eqMesg(a, b), aHash, is(bHash));
 
-        MoleculeHashGenerator perturbed = new HashGeneratorMaker().elemental().depth(6).perturbed().molecular();
+        MoleculeHashGenerator perturbed =
+                new HashGeneratorMaker().elemental().depth(6).perturbed().molecular();
         aHash = perturbed.generate(a);
         bHash = perturbed.generate(b);
         org.hamcrest.MatcherAssert.assertThat(nonEqMesg(a, b), aHash, is(not(bHash)));
     }
 
     /**
-     * The molecules cubane and cuneane have the same number of atoms all of
-     * which experience the same environment in the first sphere. Using a
-     * non-perturbed hash code, these will hash to the same value. The perturbed
-     * hash code, allows us to discriminate them.
+     * The molecules cubane and cuneane have the same number of atoms all of which experience the
+     * same environment in the first sphere. Using a non-perturbed hash code, these will hash to the
+     * same value. The perturbed hash code, allows us to discriminate them.
      */
     @Test
     public void figure16a() {
@@ -345,8 +346,10 @@ public class HashCodeScenariosTest {
         IAtomContainer a = mols.get(0);
         IAtomContainer b = mols.get(1);
 
-        MoleculeHashGenerator nonperturbed = new HashGeneratorMaker().elemental().depth(6).molecular();
-        MoleculeHashGenerator perturbed = new HashGeneratorMaker().elemental().depth(6).perturbed().molecular();
+        MoleculeHashGenerator nonperturbed =
+                new HashGeneratorMaker().elemental().depth(6).molecular();
+        MoleculeHashGenerator perturbed =
+                new HashGeneratorMaker().elemental().depth(6).perturbed().molecular();
 
         long aHash = nonperturbed.generate(a);
         long bHash = nonperturbed.generate(b);
@@ -356,7 +359,8 @@ public class HashCodeScenariosTest {
         bHash = perturbed.generate(b);
         org.hamcrest.MatcherAssert.assertThat(nonEqMesg(a, b), aHash, is(not(bHash)));
 
-        AtomHashGenerator perturbedAtomic = new HashGeneratorMaker().elemental().depth(3).perturbed().atomic();
+        AtomHashGenerator perturbedAtomic =
+                new HashGeneratorMaker().elemental().depth(3).perturbed().atomic();
         long[] aHashes = perturbedAtomic.generate(a);
         long[] bHashes = perturbedAtomic.generate(b);
 
@@ -373,9 +377,9 @@ public class HashCodeScenariosTest {
     }
 
     /**
-     * A chlorinated cubane and cuneane can not be told apart by the basic hash
-     * code. However using perturbed hash codes is is possible to tell them
-     * apart as well as the 3 different chlorination locations on the cuneane
+     * A chlorinated cubane and cuneane can not be told apart by the basic hash code. However using
+     * perturbed hash codes is is possible to tell them apart as well as the 3 different
+     * chlorination locations on the cuneane
      */
     @Test
     public void figure16b() {
@@ -387,7 +391,8 @@ public class HashCodeScenariosTest {
         IAtomContainer c = mols.get(2);
         IAtomContainer d = mols.get(3);
 
-        MoleculeHashGenerator generator = new HashGeneratorMaker().elemental().depth(6).perturbed().molecular();
+        MoleculeHashGenerator generator =
+                new HashGeneratorMaker().elemental().depth(6).perturbed().molecular();
 
         long aHash = generator.generate(a);
         long bHash = generator.generate(b);
@@ -400,15 +405,13 @@ public class HashCodeScenariosTest {
         org.hamcrest.MatcherAssert.assertThat(nonEqMesg(a, c), bHash, is(not(cHash)));
         org.hamcrest.MatcherAssert.assertThat(nonEqMesg(b, d), bHash, is(not(dHash)));
         org.hamcrest.MatcherAssert.assertThat(nonEqMesg(c, d), cHash, is(not(dHash)));
-
     }
 
     /**
-     * This scenario demonstrates how the depth influences the hash code. These
-     * two molecules differ only by length of their aliphatic chains. One  has
-     * chains of length 10 and 11 and other of length 11 and 10 (connected the
-     * other way). To tell these apart the depth must be large enough to
-     * propagate  the environments from the ends of both chains.
+     * This scenario demonstrates how the depth influences the hash code. These two molecules differ
+     * only by length of their aliphatic chains. One has chains of length 10 and 11 and other of
+     * length 11 and 10 (connected the other way). To tell these apart the depth must be large
+     * enough to propagate the environments from the ends of both chains.
      */
     @Test
     public void aminotetracosanone() {
@@ -419,7 +422,8 @@ public class HashCodeScenariosTest {
         IAtomContainer b = aminotetracosanones.get(1);
 
         for (int depth = 0; depth < 12; depth++) {
-            MoleculeHashGenerator basic = new HashGeneratorMaker().elemental().depth(depth).molecular();
+            MoleculeHashGenerator basic =
+                    new HashGeneratorMaker().elemental().depth(depth).molecular();
             long aHash = basic.generate(a);
             long bHash = basic.generate(b);
 
@@ -429,15 +433,14 @@ public class HashCodeScenariosTest {
                 assertThat(nonEqMesg(a, b) + " at depth " + depth, aHash, is(not(bHash)));
             }
         }
-
     }
 
     /**
-     * This test demonstrates that the nine stereo isomers of inositol can be
-     * hashed to the same value or to different values (perturbed).
+     * This test demonstrates that the nine stereo isomers of inositol can be hashed to the same
+     * value or to different values (perturbed).
      *
      * @see <a href="http://en.wikipedia.org/wiki/Inositol#Isomers_and_structure">Inositol
-     *      Isomers</a>
+     *     Isomers</a>
      */
     @Test
     public void inositols() {
@@ -457,7 +460,8 @@ public class HashCodeScenariosTest {
         assertThat("all inositol isomers should hash to the same value", hashes.size(), is(1));
 
         // stereo non-perturbed hash generator
-        MoleculeHashGenerator stereo = new HashGeneratorMaker().elemental().depth(6).chiral().molecular();
+        MoleculeHashGenerator stereo =
+                new HashGeneratorMaker().elemental().depth(6).chiral().molecular();
         hashes.clear();
 
         for (IAtomContainer inositol : inositols) {
@@ -468,8 +472,8 @@ public class HashCodeScenariosTest {
         assertThat("all inositol isomers should hash to the same value", hashes.size(), is(1));
 
         // stereo non-perturbed hash generator
-        MoleculeHashGenerator perturbed = new HashGeneratorMaker().elemental().depth(6).chiral().perturbed()
-                .molecular();
+        MoleculeHashGenerator perturbed =
+                new HashGeneratorMaker().elemental().depth(6).chiral().perturbed().molecular();
         hashes.clear();
 
         for (IAtomContainer inositol : inositols) {
@@ -478,7 +482,6 @@ public class HashCodeScenariosTest {
         }
 
         assertThat("all inositol isomers should hash to different values", hashes.size(), is(9));
-
     }
 
     @Test
@@ -491,12 +494,17 @@ public class HashCodeScenariosTest {
 
         // non-stereo hash code
         MoleculeHashGenerator basic = new HashGeneratorMaker().elemental().depth(2).molecular();
-        assertThat("(M) and (P) allene should hash the same when non-stereo", basic.generate(mAllene),
+        assertThat(
+                "(M) and (P) allene should hash the same when non-stereo",
+                basic.generate(mAllene),
                 is(basic.generate(pAllene)));
 
-        MoleculeHashGenerator stereo = new HashGeneratorMaker().elemental().depth(2).chiral().molecular();
+        MoleculeHashGenerator stereo =
+                new HashGeneratorMaker().elemental().depth(2).chiral().molecular();
 
-        assertThat("(M) and (P) allene should not hash the same when stereo", stereo.generate(mAllene),
+        assertThat(
+                "(M) and (P) allene should not hash the same when stereo",
+                stereo.generate(mAllene),
                 is(not(stereo.generate(pAllene))));
 
         // check the hashes are invariant under permutation
@@ -505,13 +513,17 @@ public class HashCodeScenariosTest {
 
         AtomContainerPermutor mAllenePermutor = new AtomContainerAtomPermutor(mAllene);
         while (mAllenePermutor.hasNext()) {
-            assertThat("(M)-allene was not invariant under permutation", stereo.generate(mAllenePermutor.next()),
+            assertThat(
+                    "(M)-allene was not invariant under permutation",
+                    stereo.generate(mAllenePermutor.next()),
                     is(mAlleneReference));
         }
 
         AtomContainerPermutor pAllenePermutor = new AtomContainerAtomPermutor(pAllene);
         while (pAllenePermutor.hasNext()) {
-            assertThat("(P)-allene was not invariant under permutation", stereo.generate(pAllenePermutor.next()),
+            assertThat(
+                    "(P)-allene was not invariant under permutation",
+                    stereo.generate(pAllenePermutor.next()),
                     is(pAlleneReference));
         }
     }
@@ -526,12 +538,17 @@ public class HashCodeScenariosTest {
 
         // non-stereo hash code
         MoleculeHashGenerator basic = new HashGeneratorMaker().elemental().depth(2).molecular();
-        assertThat("(M) and (P) allene should hash the same when non-stereo", basic.generate(mAllene),
+        assertThat(
+                "(M) and (P) allene should hash the same when non-stereo",
+                basic.generate(mAllene),
                 is(basic.generate(pAllene)));
 
-        MoleculeHashGenerator stereo = new HashGeneratorMaker().elemental().depth(2).chiral().molecular();
+        MoleculeHashGenerator stereo =
+                new HashGeneratorMaker().elemental().depth(2).chiral().molecular();
 
-        assertThat("(M) and (P) allene should not hash the same when stereo", stereo.generate(mAllene),
+        assertThat(
+                "(M) and (P) allene should not hash the same when stereo",
+                stereo.generate(mAllene),
                 is(not(stereo.generate(pAllene))));
 
         // check the hashes are invariant under permutation
@@ -540,13 +557,17 @@ public class HashCodeScenariosTest {
 
         AtomContainerPermutor mAllenePermutor = new AtomContainerAtomPermutor(mAllene);
         while (mAllenePermutor.hasNext()) {
-            assertThat("(M)-allene was not invariant under permutation", stereo.generate(mAllenePermutor.next()),
+            assertThat(
+                    "(M)-allene was not invariant under permutation",
+                    stereo.generate(mAllenePermutor.next()),
                     is(mAlleneReference));
         }
 
         AtomContainerPermutor pAllenePermutor = new AtomContainerAtomPermutor(pAllene);
         while (pAllenePermutor.hasNext()) {
-            assertThat("(P)-allene was not invariant under permutation", stereo.generate(pAllenePermutor.next()),
+            assertThat(
+                    "(P)-allene was not invariant under permutation",
+                    stereo.generate(pAllenePermutor.next()),
                     is(pAlleneReference));
         }
     }
@@ -564,25 +585,42 @@ public class HashCodeScenariosTest {
 
         // non-stereo hash code
         MoleculeHashGenerator basic = new HashGeneratorMaker().elemental().depth(2).molecular();
-        assertThat("(M) and (P) allene (2D) should hash the same when non-stereo", basic.generate(mAllene2D),
+        assertThat(
+                "(M) and (P) allene (2D) should hash the same when non-stereo",
+                basic.generate(mAllene2D),
                 is(basic.generate(pAllene2D)));
-        assertThat("(M) and (P) allene (3D) should hash the same when non-stereo", basic.generate(mAllene3D),
+        assertThat(
+                "(M) and (P) allene (3D) should hash the same when non-stereo",
+                basic.generate(mAllene3D),
                 is(basic.generate(pAllene3D)));
-        assertThat("(M) allene should hash the same in 2D and 3D", basic.generate(mAllene2D),
+        assertThat(
+                "(M) allene should hash the same in 2D and 3D",
+                basic.generate(mAllene2D),
                 is(basic.generate(mAllene3D)));
-        assertThat("(P) allene should hash the same in 2D and 3D", basic.generate(mAllene2D),
+        assertThat(
+                "(P) allene should hash the same in 2D and 3D",
+                basic.generate(mAllene2D),
                 is(basic.generate(mAllene3D)));
 
-        MoleculeHashGenerator stereo = new HashGeneratorMaker().elemental().depth(2).chiral().molecular();
+        MoleculeHashGenerator stereo =
+                new HashGeneratorMaker().elemental().depth(2).chiral().molecular();
 
-        assertThat("(M) and (P) allene should not hash the same when stereo", stereo.generate(mAllene2D),
+        assertThat(
+                "(M) and (P) allene should not hash the same when stereo",
+                stereo.generate(mAllene2D),
                 is(not(stereo.generate(pAllene2D))));
-        assertThat("(M) and (P) allene (3D) should not hash the same when stereo", stereo.generate(mAllene3D),
+        assertThat(
+                "(M) and (P) allene (3D) should not hash the same when stereo",
+                stereo.generate(mAllene3D),
                 is(not(stereo.generate(pAllene3D))));
 
-        assertThat("(M) allene should hash the same in 2D and 3D (stereo)", basic.generate(mAllene2D),
+        assertThat(
+                "(M) allene should hash the same in 2D and 3D (stereo)",
+                basic.generate(mAllene2D),
                 is(basic.generate(mAllene3D)));
-        assertThat("(P) allene should hash the same in 2D and 3D (stereo)", basic.generate(pAllene2D),
+        assertThat(
+                "(P) allene should hash the same in 2D and 3D (stereo)",
+                basic.generate(pAllene2D),
                 is(basic.generate(pAllene3D)));
     }
 
@@ -599,19 +637,36 @@ public class HashCodeScenariosTest {
         // non-stereo hash code
         MoleculeHashGenerator basic = new HashGeneratorMaker().elemental().depth(2).molecular();
 
-        assertThat("(M) and (P) allene should hash the same when non-stereo", basic.generate(mAllene),
+        assertThat(
+                "(M) and (P) allene should hash the same when non-stereo",
+                basic.generate(mAllene),
                 is(basic.generate(pAllene)));
-        assertThat("Unspecifed allene should be the same", basic.generate(mAllene), is(basic.generate(unspecAllene1)));
-        assertThat("Unspecifed allene should be the same", basic.generate(mAllene), is(basic.generate(unspecAllene2)));
+        assertThat(
+                "Unspecifed allene should be the same",
+                basic.generate(mAllene),
+                is(basic.generate(unspecAllene1)));
+        assertThat(
+                "Unspecifed allene should be the same",
+                basic.generate(mAllene),
+                is(basic.generate(unspecAllene2)));
 
-        MoleculeHashGenerator stereo = new HashGeneratorMaker().elemental().depth(2).chiral().molecular();
-        assertThat("(M) and (P) allene should not hash the same when using stereo", stereo.generate(mAllene),
+        MoleculeHashGenerator stereo =
+                new HashGeneratorMaker().elemental().depth(2).chiral().molecular();
+        assertThat(
+                "(M) and (P) allene should not hash the same when using stereo",
+                stereo.generate(mAllene),
                 is(not(stereo.generate(pAllene))));
-        assertThat("Unspecifed allene should be the different", stereo.generate(mAllene),
+        assertThat(
+                "Unspecifed allene should be the different",
+                stereo.generate(mAllene),
                 is(not(stereo.generate(unspecAllene1))));
-        assertThat("Unspecifed allene should be the different", stereo.generate(mAllene),
+        assertThat(
+                "Unspecifed allene should be the different",
+                stereo.generate(mAllene),
                 is(not(stereo.generate(unspecAllene2))));
-        assertThat("Unspecifed allenes should be the same", stereo.generate(unspecAllene1),
+        assertThat(
+                "Unspecifed allenes should be the same",
+                stereo.generate(unspecAllene1),
                 is(stereo.generate(unspecAllene2)));
     }
 
@@ -625,12 +680,17 @@ public class HashCodeScenariosTest {
 
         // non-stereo hash code
         MoleculeHashGenerator basic = new HashGeneratorMaker().elemental().depth(2).molecular();
-        assertThat("(E) and (Z) cumulene should hash the same when non-stereo", basic.generate(eCumulene),
+        assertThat(
+                "(E) and (Z) cumulene should hash the same when non-stereo",
+                basic.generate(eCumulene),
                 is(basic.generate(zCumulene)));
 
-        MoleculeHashGenerator stereo = new HashGeneratorMaker().elemental().depth(2).chiral().molecular();
+        MoleculeHashGenerator stereo =
+                new HashGeneratorMaker().elemental().depth(2).chiral().molecular();
 
-        assertThat("(E) and (Z) cumulene should not hash the same when stereo", stereo.generate(eCumulene),
+        assertThat(
+                "(E) and (Z) cumulene should not hash the same when stereo",
+                stereo.generate(eCumulene),
                 is(not(stereo.generate(zCumulene))));
     }
 
@@ -643,14 +703,19 @@ public class HashCodeScenariosTest {
         IAtomContainer implicit = implicits.get(0);
         IAtomContainer explicit = explicits.get(0);
 
-        MoleculeHashGenerator unsuppressed = new HashGeneratorMaker().elemental().depth(4).molecular();
-        assertThat(nonEqMesg(implicit, explicit), unsuppressed.generate(implicit),
+        MoleculeHashGenerator unsuppressed =
+                new HashGeneratorMaker().elemental().depth(4).molecular();
+        assertThat(
+                nonEqMesg(implicit, explicit),
+                unsuppressed.generate(implicit),
                 is(not(unsuppressed.generate(explicit))));
 
-        MoleculeHashGenerator suppressed = new HashGeneratorMaker().elemental().depth(4).suppressHydrogens()
-                .molecular();
-        assertThat(eqMesg(implicit, explicit), suppressed.generate(implicit), is(suppressed.generate(explicit)));
-
+        MoleculeHashGenerator suppressed =
+                new HashGeneratorMaker().elemental().depth(4).suppressHydrogens().molecular();
+        assertThat(
+                eqMesg(implicit, explicit),
+                suppressed.generate(implicit),
+                is(suppressed.generate(explicit)));
     }
 
     @Test
@@ -662,13 +727,24 @@ public class HashCodeScenariosTest {
         IAtomContainer implicit = implicits.get(0);
         IAtomContainer explicit = explicits.get(0);
 
-        MoleculeHashGenerator unsuppressed = new HashGeneratorMaker().elemental().depth(4).chiral().molecular();
-        assertThat(nonEqMesg(implicit, explicit), unsuppressed.generate(implicit),
+        MoleculeHashGenerator unsuppressed =
+                new HashGeneratorMaker().elemental().depth(4).chiral().molecular();
+        assertThat(
+                nonEqMesg(implicit, explicit),
+                unsuppressed.generate(implicit),
                 is(not(unsuppressed.generate(explicit))));
 
-        MoleculeHashGenerator suppressed = new HashGeneratorMaker().elemental().depth(4).chiral().suppressHydrogens()
-                .molecular();
-        assertThat(eqMesg(implicit, explicit), suppressed.generate(implicit), is(suppressed.generate(explicit)));
+        MoleculeHashGenerator suppressed =
+                new HashGeneratorMaker()
+                        .elemental()
+                        .depth(4)
+                        .chiral()
+                        .suppressHydrogens()
+                        .molecular();
+        assertThat(
+                eqMesg(implicit, explicit),
+                suppressed.generate(implicit),
+                is(suppressed.generate(explicit)));
 
         // okay now let's do some permutations can check the hash codes are always the same
         AtomContainerPermutor implicitPermutor = new AtomContainerAtomPermutor(implicit);
@@ -677,9 +753,11 @@ public class HashCodeScenariosTest {
         while (implicitPermutor.hasNext() && explicitPermutor.hasNext()) {
             implicit = implicitPermutor.next();
             explicit = explicitPermutor.next();
-            assertThat(eqMesg(implicit, explicit), suppressed.generate(implicit), is(suppressed.generate(explicit)));
+            assertThat(
+                    eqMesg(implicit, explicit),
+                    suppressed.generate(implicit),
+                    is(suppressed.generate(explicit)));
         }
-
     }
 
     @Test
@@ -688,12 +766,21 @@ public class HashCodeScenariosTest {
         List<IAtomContainer> implicits = sdf("inositols.sdf", 9);
         List<IAtomContainer> explicits = sdf("inositols-explicit-hydrogens.sdf", 9);
 
-        assertThat("different number of implicit and explicit structures", implicits.size(), is(explicits.size()));
+        assertThat(
+                "different number of implicit and explicit structures",
+                implicits.size(),
+                is(explicits.size()));
 
-        MoleculeHashGenerator unsuppressed = new HashGeneratorMaker().elemental().depth(4).perturbed().molecular();
+        MoleculeHashGenerator unsuppressed =
+                new HashGeneratorMaker().elemental().depth(4).perturbed().molecular();
 
-        MoleculeHashGenerator suppressed = new HashGeneratorMaker().elemental().depth(4).suppressHydrogens()
-                .perturbed().molecular();
+        MoleculeHashGenerator suppressed =
+                new HashGeneratorMaker()
+                        .elemental()
+                        .depth(4)
+                        .suppressHydrogens()
+                        .perturbed()
+                        .molecular();
 
         // check that for each inesitol the values are equal if we suppress the hydrogens
         for (int i = 0; i < implicits.size(); i++) {
@@ -701,13 +788,16 @@ public class HashCodeScenariosTest {
             IAtomContainer implicit = implicits.get(i);
             IAtomContainer explicit = explicits.get(i);
 
-            assertThat(nonEqMesg(implicit, explicit), unsuppressed.generate(implicit),
+            assertThat(
+                    nonEqMesg(implicit, explicit),
+                    unsuppressed.generate(implicit),
                     is(not(unsuppressed.generate(explicit))));
 
-            assertThat(eqMesg(implicit, explicit), suppressed.generate(implicit), is(suppressed.generate(explicit)));
-
+            assertThat(
+                    eqMesg(implicit, explicit),
+                    suppressed.generate(implicit),
+                    is(suppressed.generate(explicit)));
         }
-
     }
 
     @Test
@@ -716,28 +806,41 @@ public class HashCodeScenariosTest {
         List<IAtomContainer> implicits = sdf("inositols.sdf", 9);
         List<IAtomContainer> explicits = sdf("inositols-explicit-hydrogens.sdf", 9);
 
-        assertThat("different number of implicit and explicit structures", implicits.size(), is(explicits.size()));
+        assertThat(
+                "different number of implicit and explicit structures",
+                implicits.size(),
+                is(explicits.size()));
 
         // check that for different depth values - all the inositols will hash
         // differently or the same depending on whether or not we suppress the
         // explicit hydrogens
         for (int d = 0; d < 10; d++) {
 
-            MoleculeHashGenerator unsuppressed = new HashGeneratorMaker().elemental().depth(d).chiral().perturbed()
-                    .molecular();
+            MoleculeHashGenerator unsuppressed =
+                    new HashGeneratorMaker().elemental().depth(d).chiral().perturbed().molecular();
 
-            MoleculeHashGenerator suppressed = new HashGeneratorMaker().elemental().depth(d).chiral()
-                    .suppressHydrogens().perturbed().molecular();
+            MoleculeHashGenerator suppressed =
+                    new HashGeneratorMaker()
+                            .elemental()
+                            .depth(d)
+                            .chiral()
+                            .suppressHydrogens()
+                            .perturbed()
+                            .molecular();
             for (int i = 0; i < implicits.size(); i++) {
 
                 IAtomContainer implicit = implicits.get(i);
                 IAtomContainer explicit = explicits.get(i);
 
-                assertThat(nonEqMesg(implicit, explicit), unsuppressed.generate(implicit),
+                assertThat(
+                        nonEqMesg(implicit, explicit),
+                        unsuppressed.generate(implicit),
                         is(not(unsuppressed.generate(explicit))));
 
-                assertThat(eqMesg(implicit, explicit), suppressed.generate(implicit), is(suppressed.generate(explicit)));
-
+                assertThat(
+                        eqMesg(implicit, explicit),
+                        suppressed.generate(implicit),
+                        is(suppressed.generate(explicit)));
             }
         }
     }
@@ -748,28 +851,41 @@ public class HashCodeScenariosTest {
         List<IAtomContainer> implicits = sdf("dichloroethenes.sdf", 2);
         List<IAtomContainer> explicits = sdf("dichloroethenes-explicit-hydrogens.sdf", 2);
 
-        assertThat("different number of implicit and explicit structures", implicits.size(), is(explicits.size()));
+        assertThat(
+                "different number of implicit and explicit structures",
+                implicits.size(),
+                is(explicits.size()));
 
         // check that for different depth values - all the dicholorethenes will hash
         // differently or the same depending on whether or not we suppress the
         // explicit hydrogens
         for (int d = 0; d < 4; d++) {
 
-            MoleculeHashGenerator unsuppressed = new HashGeneratorMaker().elemental().depth(d).chiral().perturbed()
-                    .molecular();
+            MoleculeHashGenerator unsuppressed =
+                    new HashGeneratorMaker().elemental().depth(d).chiral().perturbed().molecular();
 
-            MoleculeHashGenerator suppressed = new HashGeneratorMaker().elemental().depth(d).chiral()
-                    .suppressHydrogens().perturbed().molecular();
+            MoleculeHashGenerator suppressed =
+                    new HashGeneratorMaker()
+                            .elemental()
+                            .depth(d)
+                            .chiral()
+                            .suppressHydrogens()
+                            .perturbed()
+                            .molecular();
             for (int i = 0; i < implicits.size(); i++) {
 
                 IAtomContainer implicit = implicits.get(i);
                 IAtomContainer explicit = explicits.get(i);
 
-                assertThat(nonEqMesg(implicit, explicit), unsuppressed.generate(implicit),
+                assertThat(
+                        nonEqMesg(implicit, explicit),
+                        unsuppressed.generate(implicit),
                         is(not(unsuppressed.generate(explicit))));
 
-                assertThat(eqMesg(implicit, explicit), suppressed.generate(implicit), is(suppressed.generate(explicit)));
-
+                assertThat(
+                        eqMesg(implicit, explicit),
+                        suppressed.generate(implicit),
+                        is(suppressed.generate(explicit)));
             }
         }
     }
@@ -780,28 +896,41 @@ public class HashCodeScenariosTest {
         List<IAtomContainer> implicits = sdf("allene-implicit-h.sdf", 2);
         List<IAtomContainer> explicits = sdf("allene-explicit-h.sdf", 2);
 
-        assertThat("different number of implicit and explicit structures", implicits.size(), is(explicits.size()));
+        assertThat(
+                "different number of implicit and explicit structures",
+                implicits.size(),
+                is(explicits.size()));
 
         // check that for different depth values - all the dicholorethenes will hash
         // differently or the same depending on whether or not we suppress the
         // explicit hydrogens
         for (int d = 0; d < 4; d++) {
 
-            MoleculeHashGenerator unsuppressed = new HashGeneratorMaker().elemental().depth(d).chiral().perturbed()
-                    .molecular();
+            MoleculeHashGenerator unsuppressed =
+                    new HashGeneratorMaker().elemental().depth(d).chiral().perturbed().molecular();
 
-            MoleculeHashGenerator suppressed = new HashGeneratorMaker().elemental().depth(d).chiral()
-                    .suppressHydrogens().perturbed().molecular();
+            MoleculeHashGenerator suppressed =
+                    new HashGeneratorMaker()
+                            .elemental()
+                            .depth(d)
+                            .chiral()
+                            .suppressHydrogens()
+                            .perturbed()
+                            .molecular();
             for (int i = 0; i < implicits.size(); i++) {
 
                 IAtomContainer implicit = implicits.get(i);
                 IAtomContainer explicit = explicits.get(i);
 
-                assertThat(nonEqMesg(implicit, explicit), unsuppressed.generate(implicit),
+                assertThat(
+                        nonEqMesg(implicit, explicit),
+                        unsuppressed.generate(implicit),
                         is(not(unsuppressed.generate(explicit))));
 
-                assertThat(eqMesg(implicit, explicit), suppressed.generate(implicit), is(suppressed.generate(explicit)));
-
+                assertThat(
+                        eqMesg(implicit, explicit),
+                        suppressed.generate(implicit),
+                        is(suppressed.generate(explicit)));
             }
         }
     }
@@ -821,22 +950,37 @@ public class HashCodeScenariosTest {
         butan2ol.addBond(1, 3, IBond.Order.SINGLE);
         butan2ol.addBond(3, 4, IBond.Order.SINGLE);
 
-        MoleculeHashGenerator generator = new HashGeneratorMaker().elemental().depth(4).chiral().molecular();
+        MoleculeHashGenerator generator =
+                new HashGeneratorMaker().elemental().depth(4).chiral().molecular();
 
         long achiral = generator.generate(butan2ol);
 
         // C[C@@H](O)CC (2R)-butan-2-ol
-        butan2ol.addStereoElement(new TetrahedralChirality(butan2ol.getAtom(1), new IAtom[]{butan2ol.getAtom(0),
-                butan2ol.getAtom(1), // represents implicit H
-                butan2ol.getAtom(2), butan2ol.getAtom(3),}, ITetrahedralChirality.Stereo.CLOCKWISE));
+        butan2ol.addStereoElement(
+                new TetrahedralChirality(
+                        butan2ol.getAtom(1),
+                        new IAtom[] {
+                            butan2ol.getAtom(0),
+                            butan2ol.getAtom(1), // represents implicit H
+                            butan2ol.getAtom(2),
+                            butan2ol.getAtom(3),
+                        },
+                        ITetrahedralChirality.Stereo.CLOCKWISE));
 
         long rConfiguration = generator.generate(butan2ol);
 
         // C[C@H](O)CC  (2S)-butan-2-ol
         butan2ol.setStereoElements(new ArrayList<IStereoElement>(1));
-        butan2ol.addStereoElement(new TetrahedralChirality(butan2ol.getAtom(1), new IAtom[]{butan2ol.getAtom(0),
-                butan2ol.getAtom(1), // represents implicit H
-                butan2ol.getAtom(2), butan2ol.getAtom(3),}, ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
+        butan2ol.addStereoElement(
+                new TetrahedralChirality(
+                        butan2ol.getAtom(1),
+                        new IAtom[] {
+                            butan2ol.getAtom(0),
+                            butan2ol.getAtom(1), // represents implicit H
+                            butan2ol.getAtom(2),
+                            butan2ol.getAtom(3),
+                        },
+                        ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
 
         long sConfiguration = generator.generate(butan2ol);
 
@@ -857,21 +1001,35 @@ public class HashCodeScenariosTest {
 
         // [C@H](C)(O)CC (2R)-butan-2-ol
         butan2ol.setStereoElements(new ArrayList<IStereoElement>(1));
-        butan2ol.addStereoElement(new TetrahedralChirality(butan2ol.getAtom(1), new IAtom[]{butan2ol.getAtom(1), // represents implicit H
-                butan2ol.getAtom(0), butan2ol.getAtom(2), butan2ol.getAtom(3),},
-                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
+        butan2ol.addStereoElement(
+                new TetrahedralChirality(
+                        butan2ol.getAtom(1),
+                        new IAtom[] {
+                            butan2ol.getAtom(1), // represents implicit H
+                            butan2ol.getAtom(0),
+                            butan2ol.getAtom(2),
+                            butan2ol.getAtom(3),
+                        },
+                        ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
 
         // check 'R' configuration was encoded
         assertThat(generator.generate(butan2ol), is(generator.generate(butan2ols.get(0))));
 
         // [C@@H](C)(O)CC (2S)-butan-2-ol
         butan2ol.setStereoElements(new ArrayList<IStereoElement>(1));
-        butan2ol.addStereoElement(new TetrahedralChirality(butan2ol.getAtom(1), new IAtom[]{butan2ol.getAtom(1), // represents implicit H
-                butan2ol.getAtom(0), butan2ol.getAtom(2), butan2ol.getAtom(3),}, ITetrahedralChirality.Stereo.CLOCKWISE));
+        butan2ol.addStereoElement(
+                new TetrahedralChirality(
+                        butan2ol.getAtom(1),
+                        new IAtom[] {
+                            butan2ol.getAtom(1), // represents implicit H
+                            butan2ol.getAtom(0),
+                            butan2ol.getAtom(2),
+                            butan2ol.getAtom(3),
+                        },
+                        ITetrahedralChirality.Stereo.CLOCKWISE));
 
         // check 'S' configuration was encoded
         assertThat(generator.generate(butan2ol), is(generator.generate(butan2ols.get(1))));
-
     }
 
     @Test
@@ -887,19 +1045,26 @@ public class HashCodeScenariosTest {
         dichloroethene.addBond(1, 2, IBond.Order.DOUBLE);
         dichloroethene.addBond(2, 3, IBond.Order.SINGLE);
 
-        MoleculeHashGenerator generator = new HashGeneratorMaker().elemental().depth(4).chiral().molecular();
+        MoleculeHashGenerator generator =
+                new HashGeneratorMaker().elemental().depth(4).chiral().molecular();
 
         // set E configuration
         dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
-        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1), new IBond[]{
-                dichloroethene.getBond(0), dichloroethene.getBond(2)}, OPPOSITE));
+        dichloroethene.addStereoElement(
+                new DoubleBondStereochemistry(
+                        dichloroethene.getBond(1),
+                        new IBond[] {dichloroethene.getBond(0), dichloroethene.getBond(2)},
+                        OPPOSITE));
 
         long eConfiguration = generator.generate(dichloroethene);
 
         // set Z configuration
         dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
-        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1), new IBond[]{
-                dichloroethene.getBond(0), dichloroethene.getBond(2)}, TOGETHER));
+        dichloroethene.addStereoElement(
+                new DoubleBondStereochemistry(
+                        dichloroethene.getBond(1),
+                        new IBond[] {dichloroethene.getBond(0), dichloroethene.getBond(2)},
+                        TOGETHER));
         long zConfiguration = generator.generate(dichloroethene);
 
         // (E) and (Z) 2D geometry
@@ -910,10 +1075,9 @@ public class HashCodeScenariosTest {
     }
 
     /**
-     * Tests demonstrates encoding of stereo specific hash codes (double bond)
-     * using stereo-elements. The hash codes of the molecule with stereo
-     * elements should match those we perceive using 2D coordinates (explicit
-     * hydrogens)
+     * Tests demonstrates encoding of stereo specific hash codes (double bond) using
+     * stereo-elements. The hash codes of the molecule with stereo elements should match those we
+     * perceive using 2D coordinates (explicit hydrogens)
      */
     @Test
     public void dichloroethenes_stereoElements_explicitH() {
@@ -932,7 +1096,8 @@ public class HashCodeScenariosTest {
         dichloroethene.addBond(1, 4, IBond.Order.SINGLE); // C2-H5    3
         dichloroethene.addBond(2, 5, IBond.Order.SINGLE); // C3-H6    4
 
-        MoleculeHashGenerator generator = new HashGeneratorMaker().elemental().depth(4).chiral().molecular();
+        MoleculeHashGenerator generator =
+                new HashGeneratorMaker().elemental().depth(4).chiral().molecular();
 
         Set<Long> eConfigurations = new HashSet<Long>();
         Set<Long> zConfigurations = new HashSet<Long>();
@@ -949,52 +1114,81 @@ public class HashCodeScenariosTest {
         // ClC(/[H])=C(\[H])Cl
         // Cl/C([H])=C(\[H])Cl
         dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
-        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1), new IBond[]{
-                dichloroethene.getBond(0), // CL1-C2
-                dichloroethene.getBond(2)}, // CL4-C3
-                OPPOSITE));
+        dichloroethene.addStereoElement(
+                new DoubleBondStereochemistry(
+                        dichloroethene.getBond(1),
+                        new IBond[] {
+                            dichloroethene.getBond(0), // CL1-C2
+                            dichloroethene.getBond(2)
+                        }, // CL4-C3
+                        OPPOSITE));
         eConfigurations.add(generator.generate(dichloroethene));
 
         dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
-        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1), new IBond[]{
-                dichloroethene.getBond(3), // C2-H5
-                dichloroethene.getBond(2)}, TOGETHER));
+        dichloroethene.addStereoElement(
+                new DoubleBondStereochemistry(
+                        dichloroethene.getBond(1),
+                        new IBond[] {
+                            dichloroethene.getBond(3), // C2-H5
+                            dichloroethene.getBond(2)
+                        },
+                        TOGETHER));
         eConfigurations.add(generator.generate(dichloroethene));
 
         dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
-        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1), new IBond[]{
-                dichloroethene.getBond(3), // C2-H5
-                dichloroethene.getBond(4)}, // C3-H6
-                OPPOSITE));
+        dichloroethene.addStereoElement(
+                new DoubleBondStereochemistry(
+                        dichloroethene.getBond(1),
+                        new IBond[] {
+                            dichloroethene.getBond(3), // C2-H5
+                            dichloroethene.getBond(4)
+                        }, // C3-H6
+                        OPPOSITE));
         eConfigurations.add(generator.generate(dichloroethene));
 
         dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
-        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1), new IBond[]{
-                dichloroethene.getBond(0), // CL1-C2
-                dichloroethene.getBond(4)}, // C3-H6
-                TOGETHER));
+        dichloroethene.addStereoElement(
+                new DoubleBondStereochemistry(
+                        dichloroethene.getBond(1),
+                        new IBond[] {
+                            dichloroethene.getBond(0), // CL1-C2
+                            dichloroethene.getBond(4)
+                        }, // C3-H6
+                        TOGETHER));
         eConfigurations.add(generator.generate(dichloroethene));
 
         // set Z configurations - we can specify using the C-CL bonds or the
         // C-H bonds so there are four possible combinations
         dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
-        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1), new IBond[]{
-                dichloroethene.getBond(0), dichloroethene.getBond(2)}, TOGETHER));
+        dichloroethene.addStereoElement(
+                new DoubleBondStereochemistry(
+                        dichloroethene.getBond(1),
+                        new IBond[] {dichloroethene.getBond(0), dichloroethene.getBond(2)},
+                        TOGETHER));
         zConfigurations.add(generator.generate(dichloroethene));
 
         dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
-        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1), new IBond[]{
-                dichloroethene.getBond(3), dichloroethene.getBond(2)}, OPPOSITE));
+        dichloroethene.addStereoElement(
+                new DoubleBondStereochemistry(
+                        dichloroethene.getBond(1),
+                        new IBond[] {dichloroethene.getBond(3), dichloroethene.getBond(2)},
+                        OPPOSITE));
         zConfigurations.add(generator.generate(dichloroethene));
 
         dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
-        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1), new IBond[]{
-                dichloroethene.getBond(3), dichloroethene.getBond(4)}, TOGETHER));
+        dichloroethene.addStereoElement(
+                new DoubleBondStereochemistry(
+                        dichloroethene.getBond(1),
+                        new IBond[] {dichloroethene.getBond(3), dichloroethene.getBond(4)},
+                        TOGETHER));
         zConfigurations.add(generator.generate(dichloroethene));
 
         dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
-        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1), new IBond[]{
-                dichloroethene.getBond(0), dichloroethene.getBond(4)}, OPPOSITE));
+        dichloroethene.addStereoElement(
+                new DoubleBondStereochemistry(
+                        dichloroethene.getBond(1),
+                        new IBond[] {dichloroethene.getBond(0), dichloroethene.getBond(4)},
+                        OPPOSITE));
         zConfigurations.add(generator.generate(dichloroethene));
 
         // (E) and (Z) using 2D geometry (explicit hydrogens)
@@ -1008,10 +1202,9 @@ public class HashCodeScenariosTest {
     }
 
     /**
-     * Tests demonstrates encoding of stereo specific hash codes (double bond)
-     * using stereo-elements and suppressing the hydrogens. The hash codes
-     * of the molecule with stereo elements should match those we perceive
-     * using 2D coordinates (implicit hydrogens)
+     * Tests demonstrates encoding of stereo specific hash codes (double bond) using stereo-elements
+     * and suppressing the hydrogens. The hash codes of the molecule with stereo elements should
+     * match those we perceive using 2D coordinates (implicit hydrogens)
      */
     @Test
     public void dichloroethenes_stereoElements_explicitH_suppressed() {
@@ -1030,8 +1223,13 @@ public class HashCodeScenariosTest {
         dichloroethene.addBond(1, 4, IBond.Order.SINGLE); // C2-H5    3
         dichloroethene.addBond(2, 5, IBond.Order.SINGLE); // C3-H6    4
 
-        MoleculeHashGenerator generator = new HashGeneratorMaker().elemental().depth(4).chiral().suppressHydrogens()
-                .molecular();
+        MoleculeHashGenerator generator =
+                new HashGeneratorMaker()
+                        .elemental()
+                        .depth(4)
+                        .chiral()
+                        .suppressHydrogens()
+                        .molecular();
 
         Set<Long> eConfigurations = new HashSet<Long>();
         Set<Long> zConfigurations = new HashSet<Long>();
@@ -1048,52 +1246,81 @@ public class HashCodeScenariosTest {
         // ClC(/[H])=C(\[H])Cl
         // Cl/C([H])=C(\[H])Cl
         dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
-        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1), new IBond[]{
-                dichloroethene.getBond(0), // CL1-C2
-                dichloroethene.getBond(2)}, // CL4-C3
-                OPPOSITE));
+        dichloroethene.addStereoElement(
+                new DoubleBondStereochemistry(
+                        dichloroethene.getBond(1),
+                        new IBond[] {
+                            dichloroethene.getBond(0), // CL1-C2
+                            dichloroethene.getBond(2)
+                        }, // CL4-C3
+                        OPPOSITE));
         eConfigurations.add(generator.generate(dichloroethene));
 
         dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
-        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1), new IBond[]{
-                dichloroethene.getBond(3), // C2-H5
-                dichloroethene.getBond(2)}, TOGETHER));
+        dichloroethene.addStereoElement(
+                new DoubleBondStereochemistry(
+                        dichloroethene.getBond(1),
+                        new IBond[] {
+                            dichloroethene.getBond(3), // C2-H5
+                            dichloroethene.getBond(2)
+                        },
+                        TOGETHER));
         eConfigurations.add(generator.generate(dichloroethene));
 
         dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
-        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1), new IBond[]{
-                dichloroethene.getBond(3), // C2-H5
-                dichloroethene.getBond(4)}, // C3-H6
-                OPPOSITE));
+        dichloroethene.addStereoElement(
+                new DoubleBondStereochemistry(
+                        dichloroethene.getBond(1),
+                        new IBond[] {
+                            dichloroethene.getBond(3), // C2-H5
+                            dichloroethene.getBond(4)
+                        }, // C3-H6
+                        OPPOSITE));
         eConfigurations.add(generator.generate(dichloroethene));
 
         dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
-        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1), new IBond[]{
-                dichloroethene.getBond(0), // CL1-C2
-                dichloroethene.getBond(4)}, // C3-H6
-                TOGETHER));
+        dichloroethene.addStereoElement(
+                new DoubleBondStereochemistry(
+                        dichloroethene.getBond(1),
+                        new IBond[] {
+                            dichloroethene.getBond(0), // CL1-C2
+                            dichloroethene.getBond(4)
+                        }, // C3-H6
+                        TOGETHER));
         eConfigurations.add(generator.generate(dichloroethene));
 
         // set Z configurations - we can specify using the C-CL bonds or the
         // C-H bonds so there are four possible combinations
         dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
-        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1), new IBond[]{
-                dichloroethene.getBond(0), dichloroethene.getBond(2)}, TOGETHER));
+        dichloroethene.addStereoElement(
+                new DoubleBondStereochemistry(
+                        dichloroethene.getBond(1),
+                        new IBond[] {dichloroethene.getBond(0), dichloroethene.getBond(2)},
+                        TOGETHER));
         zConfigurations.add(generator.generate(dichloroethene));
 
         dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
-        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1), new IBond[]{
-                dichloroethene.getBond(3), dichloroethene.getBond(2)}, OPPOSITE));
+        dichloroethene.addStereoElement(
+                new DoubleBondStereochemistry(
+                        dichloroethene.getBond(1),
+                        new IBond[] {dichloroethene.getBond(3), dichloroethene.getBond(2)},
+                        OPPOSITE));
         zConfigurations.add(generator.generate(dichloroethene));
 
         dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
-        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1), new IBond[]{
-                dichloroethene.getBond(3), dichloroethene.getBond(4)}, TOGETHER));
+        dichloroethene.addStereoElement(
+                new DoubleBondStereochemistry(
+                        dichloroethene.getBond(1),
+                        new IBond[] {dichloroethene.getBond(3), dichloroethene.getBond(4)},
+                        TOGETHER));
         zConfigurations.add(generator.generate(dichloroethene));
 
         dichloroethene.setStereoElements(new ArrayList<IStereoElement>());
-        dichloroethene.addStereoElement(new DoubleBondStereochemistry(dichloroethene.getBond(1), new IBond[]{
-                dichloroethene.getBond(0), dichloroethene.getBond(4)}, OPPOSITE));
+        dichloroethene.addStereoElement(
+                new DoubleBondStereochemistry(
+                        dichloroethene.getBond(1),
+                        new IBond[] {dichloroethene.getBond(0), dichloroethene.getBond(4)},
+                        OPPOSITE));
         zConfigurations.add(generator.generate(dichloroethene));
 
         // (E) and (Z) using 2D geometry (implicit hydrogens)
@@ -1122,7 +1349,7 @@ public class HashCodeScenariosTest {
      * Utility for loading SDFs into a List.
      *
      * @param path absolute path to SDF (classpath)
-     * @param exp  expected number of structures
+     * @param exp expected number of structures
      * @return list of structures
      */
     private List<IAtomContainer> sdf(String path, int exp) {
@@ -1153,5 +1380,4 @@ public class HashCodeScenariosTest {
 
         return structures;
     }
-
 }

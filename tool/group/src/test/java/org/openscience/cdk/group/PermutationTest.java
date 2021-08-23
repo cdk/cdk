@@ -23,7 +23,6 @@
 package org.openscience.cdk.group;
 
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -31,7 +30,6 @@ import org.openscience.cdk.CDKTestCase;
 /**
  * @author maclean
  * @cdk.module test-group
- *
  */
 public class PermutationTest extends CDKTestCase {
 
@@ -46,7 +44,7 @@ public class PermutationTest extends CDKTestCase {
 
     @Test
     public void valuesConstructor() {
-        int[] values = new int[]{1, 0, 3, 2};
+        int[] values = new int[] {1, 0, 3, 2};
         Permutation p = new Permutation(values);
         for (int index = 0; index < p.size(); index++) {
             Assert.assertEquals(values[index], p.get(index));
@@ -55,7 +53,7 @@ public class PermutationTest extends CDKTestCase {
 
     @Test
     public void cloneConstructor() {
-        int[] values = new int[]{1, 0, 3, 2};
+        int[] values = new int[] {1, 0, 3, 2};
         Permutation a = new Permutation(values);
         Permutation b = new Permutation(a);
         Assert.assertEquals(a, b);
@@ -103,15 +101,15 @@ public class PermutationTest extends CDKTestCase {
 
     @Test
     public void getValuesTest() {
-        int[] values = new int[]{1, 0, 3, 2};
+        int[] values = new int[] {1, 0, 3, 2};
         Permutation p = new Permutation(values);
         Assert.assertArrayEquals(values, p.getValues());
     }
 
     @Test
     public void firstIndexDiffTest() {
-        int[] valuesA = new int[]{1, 0, 3, 2};
-        int[] valuesB = new int[]{1, 0, 2, 3};
+        int[] valuesA = new int[] {1, 0, 3, 2};
+        int[] valuesB = new int[] {1, 0, 2, 3};
         Permutation a = new Permutation(valuesA);
         Permutation b = new Permutation(valuesB);
         Assert.assertEquals(2, a.firstIndexOfDifference(b));
@@ -136,7 +134,7 @@ public class PermutationTest extends CDKTestCase {
 
     @Test
     public void setToTest() {
-        int[] values = new int[]{1, 0, 3, 2};
+        int[] values = new int[] {1, 0, 3, 2};
         Permutation a = new Permutation(values);
         Permutation b = new Permutation(values.length);
         a.setTo(b);
@@ -152,9 +150,9 @@ public class PermutationTest extends CDKTestCase {
 
     @Test
     public void multiplyTest() {
-        int[] valuesA = new int[]{1, 0, 2, 3};
-        int[] valuesB = new int[]{0, 1, 3, 2};
-        int[] expectC = new int[]{1, 0, 3, 2};
+        int[] valuesA = new int[] {1, 0, 2, 3};
+        int[] valuesB = new int[] {0, 1, 3, 2};
+        int[] expectC = new int[] {1, 0, 3, 2};
         Permutation a = new Permutation(valuesA);
         Permutation b = new Permutation(valuesB);
         Permutation c = new Permutation(expectC);
@@ -163,8 +161,8 @@ public class PermutationTest extends CDKTestCase {
 
     @Test
     public void invertTest() {
-        int[] values = new int[]{3, 1, 0, 2};
-        int[] invert = new int[]{2, 1, 3, 0};
+        int[] values = new int[] {3, 1, 0, 2};
+        int[] invert = new int[] {2, 1, 3, 0};
         Permutation p = new Permutation(values);
         Permutation invP = new Permutation(invert);
         Assert.assertEquals(invP, p.invert());
@@ -172,10 +170,9 @@ public class PermutationTest extends CDKTestCase {
 
     @Test
     public void toCycleStringTest() {
-        int[] values = new int[]{0, 2, 1, 4, 5, 3, 7, 8, 9, 6};
+        int[] values = new int[] {0, 2, 1, 4, 5, 3, 7, 8, 9, 6};
         String expected = "(0)(1, 2)(3, 4, 5)(6, 7, 8, 9)";
         Permutation p = new Permutation(values);
         Assert.assertEquals(expected, p.toCycleString());
     }
-
 }

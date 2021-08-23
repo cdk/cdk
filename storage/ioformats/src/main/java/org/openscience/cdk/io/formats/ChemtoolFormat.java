@@ -24,7 +24,6 @@ import org.openscience.cdk.tools.DataFeatures;
  * See <a href="http://ruby.chemie.uni-freiburg.de/~martin/chemtool/chemtool.html">here</a>.
  *
  * @author Miguel Rojas
- *
  * @cdk.module ioformats
  * @cdk.githash
  */
@@ -60,7 +59,7 @@ public class ChemtoolFormat extends AbstractResourceFormat implements IChemForma
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"cht"};
+        return new String[] {"cht"};
     }
 
     /** {@inheritDoc} */

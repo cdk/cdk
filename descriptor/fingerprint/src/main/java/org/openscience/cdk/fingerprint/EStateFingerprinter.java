@@ -22,45 +22,35 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import java.util.BitSet;
+import java.util.Map;
 import org.openscience.cdk.config.fragments.EStateFragments;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smarts.SmartsPattern;
 
-import java.util.BitSet;
-import java.util.Map;
-
 /**
- * This fingerprinter generates 79 bit fingerprints using the E-State
- * fragments.
+ * This fingerprinter generates 79 bit fingerprints using the E-State fragments.
  *
- * <p>The E-State fragments are those described in {@cdk.cite HALL1995} and
- * the SMARTS patterns were taken from
- * <a href="http://www.rdkit.org">RDKit</a>. Note that this fingerprint simply
- * indicates the presence or occurrence of the fragments. If you need counts
- * of the fragments take a look at {@link
- * org.openscience.cdk.qsar.descriptors.molecular.KierHallSmartsDescriptor},
- * which also lists the substructures corresponding to each bit position.
+ * <p>The E-State fragments are those described in {@cdk.cite HALL1995} and the SMARTS patterns were
+ * taken from <a href="http://www.rdkit.org">RDKit</a>. Note that this fingerprint simply indicates
+ * the presence or occurrence of the fragments. If you need counts of the fragments take a look at
+ * {@link org.openscience.cdk.qsar.descriptors.molecular.KierHallSmartsDescriptor}, which also lists
+ * the substructures corresponding to each bit position.
  *
- * <p>This class assumes that aromaticity perception and atom typing have
- * been performed prior to generating the fingerprint.
+ * <p>This class assumes that aromaticity perception and atom typing have been performed prior to
+ * generating the fingerprint.
  *
- * <b>Warning - ESTATE substructure keys cannot be used for substructure
- * filtering. It is possible for some keys to match substructures and not match
- * the superstructures. Some keys check for hydrogen counts which may not be
- * preserved in a superstructure.</b>
- * <br/>
- * <b>
- * Important! this fingerprint can not be used for substructure screening.
- * </b>
+ * <p><b>Warning - ESTATE substructure keys cannot be used for substructure filtering. It is
+ * possible for some keys to match substructures and not match the superstructures. Some keys check
+ * for hydrogen counts which may not be preserved in a superstructure.</b> <br>
+ * <b> Important! this fingerprint can not be used for substructure screening. </b>
  *
  * @author Rajarhi Guha
  * @cdk.created 2008-07-23
- *
  * @cdk.keyword fingerprint
  * @cdk.keyword similarity
  * @cdk.keyword estate
- *
  * @cdk.module fingerprint
  * @cdk.githash
  */
@@ -79,15 +69,15 @@ public class EStateFingerprinter extends AbstractFingerprinter implements IFinge
 
         SmartsPattern.prepare(atomContainer);
         for (int i = 0; i < PATTERNS.length; i++) {
-            if (PATTERNS[i].matches(atomContainer))
-                fingerPrint.set(i, true);
+            if (PATTERNS[i].matches(atomContainer)) fingerPrint.set(i, true);
         }
         return new BitSetFingerprint(fingerPrint);
     }
 
     /** {@inheritDoc} */
     @Override
-    public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
+    public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer)
+            throws CDKException {
         throw new UnsupportedOperationException();
     }
 
@@ -102,5 +92,4 @@ public class EStateFingerprinter extends AbstractFingerprinter implements IFinge
     public ICountFingerprint getCountFingerprint(IAtomContainer container) throws CDKException {
         throw new UnsupportedOperationException();
     }
-
 }

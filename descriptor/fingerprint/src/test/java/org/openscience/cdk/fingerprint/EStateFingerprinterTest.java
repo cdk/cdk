@@ -24,26 +24,23 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.smarts.SmartsPattern;
-import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-/**
- * @cdk.module test-fingerprint
- */
+/** @cdk.module test-fingerprint */
 public class EStateFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(EStateFingerprinterTest.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(EStateFingerprinterTest.class);
 
     @Override
     public IFingerprinter getBitFingerprinter() {
@@ -72,9 +69,8 @@ public class EStateFingerprinterTest extends AbstractFixedLengthFingerprinterTes
     }
 
     /**
-     * Using EState keys, these molecules are not considered substructures
-     * and should only be used for similarity. This is because the EState
-     * fragments match hydrogen counts.
+     * Using EState keys, these molecules are not considered substructures and should only be used
+     * for similarity. This is because the EState fragments match hydrogen counts.
      */
     @Test
     @Override

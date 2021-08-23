@@ -18,33 +18,23 @@
  */
 package org.openscience.cdk.depict;
 
+import java.awt.Dimension;
+import java.util.List;
 import org.openscience.cdk.renderer.elements.Bounds;
 
-import java.awt.Dimension;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-
 /**
- * Internal: Immutable value class to help with store diagram dimensions
- * (a tuple width and height). Given some dimensions we can add/subtract,
- * grow/shrink as needed. Utility methods are provided for laying out rendering
- * elements in grids and rows.
+ * Internal: Immutable value class to help with store diagram dimensions (a tuple width and height).
+ * Given some dimensions we can add/subtract, grow/shrink as needed. Utility methods are provided
+ * for laying out rendering elements in grids and rows.
  */
 @SuppressWarnings("PMD.ShortVariable")
 final class Dimensions {
 
-    /**
-     * Magic value for automated sizing.
-     */
-    final static Dimensions AUTOMATIC = new Dimensions(DepictionGenerator.AUTOMATIC,
-                                                       DepictionGenerator.AUTOMATIC);
+    /** Magic value for automated sizing. */
+    static final Dimensions AUTOMATIC =
+            new Dimensions(DepictionGenerator.AUTOMATIC, DepictionGenerator.AUTOMATIC);
 
-    /**
-     * The values.
-     */
+    /** The values. */
     final double w, h;
 
     public Dimensions(double w, double h) {
@@ -73,13 +63,13 @@ final class Dimensions {
     }
 
     /**
-     * Determine how much space is needed to depiction the bound {@link IRenderingElements} if
-     * they were aligned in a grid without padding or margins. The method takes arrays
-     * for for the offset which are one item bigger than the size of the gird
-     * (e.g. 3x2 would need arrays of length 4 and 2). The arrays are filled with the
-     * cumulative width/heights for each grid point allowing easy alignment.
+     * Determine how much space is needed to depiction the bound {@link IRenderingElements} if they
+     * were aligned in a grid without padding or margins. The method takes arrays for for the offset
+     * which are one item bigger than the size of the gird (e.g. 3x2 would need arrays of length 4
+     * and 2). The arrays are filled with the cumulative width/heights for each grid point allowing
+     * easy alignment.
      *
-     * @param bounds  bound rendering elements
+     * @param bounds bound rendering elements
      * @param yOffset array for col offsets
      * @param xOffset array for row offset
      * @return the dimensions required
@@ -94,27 +84,22 @@ final class Dimensions {
             int col = 1 + i % nCol;
             int row = 1 + i / nCol;
             final Bounds bound = bounds.get(i);
-            if (bound.isEmpty())
-                continue;
-            double width  = bound.width();
+            if (bound.isEmpty()) continue;
+            double width = bound.width();
             double height = bound.height();
-            if (width > xOffset[col])
-                xOffset[col] = width;
-            if (height > yOffset[row])
-                yOffset[row] = height;
+            if (width > xOffset[col]) xOffset[col] = width;
+            if (height > yOffset[row]) yOffset[row] = height;
         }
 
-        for (int i = 1; i < yOffset.length; i++)
-            yOffset[i] += yOffset[i - 1];
-        for (int i = 1; i < xOffset.length; i++)
-            xOffset[i] += xOffset[i - 1];
+        for (int i = 1; i < yOffset.length; i++) yOffset[i] += yOffset[i - 1];
+        for (int i = 1; i < xOffset.length; i++) xOffset[i] += xOffset[i - 1];
 
         return new Dimensions(xOffset[nCol], yOffset[nRow]);
     }
 
     /**
-     * Determine grid size (nrow, ncol) that could be used
-     * for displaying a given number of elements.
+     * Determine grid size (nrow, ncol) that could be used for displaying a given number of
+     * elements.
      *
      * @param nElem number of elements
      * @return grid dimensions (integers)

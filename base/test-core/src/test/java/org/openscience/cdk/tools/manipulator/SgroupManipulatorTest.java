@@ -22,6 +22,17 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.openscience.cdk.interfaces.IAtom;
@@ -29,18 +40,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupType;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 public class SgroupManipulatorTest {
 
@@ -56,7 +55,7 @@ public class SgroupManipulatorTest {
         IAtom a2 = Mockito.mock(IAtom.class);
         IBond b1 = Mockito.mock(IBond.class);
         IBond b2 = Mockito.mock(IBond.class);
-        Sgroup       sgroup       = new Sgroup();
+        Sgroup sgroup = new Sgroup();
         sgroup.setType(SgroupType.CtabStructureRepeatUnit);
         sgroup.setSubscript("n");
         sgroup.addAtom(a1);
@@ -73,28 +72,27 @@ public class SgroupManipulatorTest {
         assertThat(copiedSgroup.getBonds(), is(sgroup.getBonds()));
     }
 
-
     @Test
     public void copySgroups2() throws Exception {
-        List<Sgroup>                 sgroups = new ArrayList<>();
-        Map<IChemObject,IChemObject> replace = new HashMap<>();
+        List<Sgroup> sgroups = new ArrayList<>();
+        Map<IChemObject, IChemObject> replace = new HashMap<>();
 
-        IAtom                        a1      = Mockito.mock(IAtom.class);
-        IAtom                        a2      = Mockito.mock(IAtom.class);
-        IBond                        b1      = Mockito.mock(IBond.class);
-        IBond                        b2      = Mockito.mock(IBond.class);
+        IAtom a1 = Mockito.mock(IAtom.class);
+        IAtom a2 = Mockito.mock(IAtom.class);
+        IBond b1 = Mockito.mock(IBond.class);
+        IBond b2 = Mockito.mock(IBond.class);
 
-        IAtom                        a1copy      = Mockito.mock(IAtom.class);
-        IAtom                        a2copy      = Mockito.mock(IAtom.class);
-        IBond                        b1copy      = Mockito.mock(IBond.class);
-        IBond                        b2copy      = Mockito.mock(IBond.class);
+        IAtom a1copy = Mockito.mock(IAtom.class);
+        IAtom a2copy = Mockito.mock(IAtom.class);
+        IBond b1copy = Mockito.mock(IBond.class);
+        IBond b2copy = Mockito.mock(IBond.class);
 
         replace.put(a1, a1copy);
         replace.put(a2, a2copy);
         replace.put(b1, b1copy);
         replace.put(b2, b2copy);
 
-        Sgroup                       sgroup  = new Sgroup();
+        Sgroup sgroup = new Sgroup();
         sgroup.setType(SgroupType.CtabStructureRepeatUnit);
         sgroup.setSubscript("n");
         sgroup.addAtom(a1);

@@ -24,17 +24,15 @@ package org.openscience.cdk.signature;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-
 import signature.AbstractQuotientGraph;
 
 /**
- * A signature quotient graph has a vertex for every signature symmetry class
- * and an edge for each bond in the molecule between atoms in their class.
+ * A signature quotient graph has a vertex for every signature symmetry class and an edge for each
+ * bond in the molecule between atoms in their class.
  *
- * So a structure where all the atoms are in the same symmetry class will have a
- * quotient graph with one vertex and one loop edge. At the other extreme, a
- * structure where every atom is in a different class will have a quotient
- * graph the same as the molecule.
+ * <p>So a structure where all the atoms are in the same symmetry class will have a quotient graph
+ * with one vertex and one loop edge. At the other extreme, a structure where every atom is in a
+ * different class will have a quotient graph the same as the molecule.
  *
  * @cdk.module signature
  * @author maclean
@@ -42,14 +40,11 @@ import signature.AbstractQuotientGraph;
  */
 public class SignatureQuotientGraph extends AbstractQuotientGraph {
 
-    /**
-     * The atom container to work on
-     */
+    /** The atom container to work on */
     private IAtomContainer atomContainer;
 
     /**
-     * Construct a quotient graph from the symmetry classes generated from the
-     * atom container.
+     * Construct a quotient graph from the symmetry classes generated from the atom container.
      *
      * @param atomContainer the structure to use
      */
@@ -58,8 +53,8 @@ public class SignatureQuotientGraph extends AbstractQuotientGraph {
     }
 
     /**
-     * Construct a quotient graph using symmetry classes defined by signatures
-     * of height <code>height</code>.
+     * Construct a quotient graph using symmetry classes defined by signatures of height <code>
+     * height</code>.
      *
      * @param atomContainer the structure to use
      * @param height the height of the signatures
@@ -77,5 +72,4 @@ public class SignatureQuotientGraph extends AbstractQuotientGraph {
         IAtom atom2 = atomContainer.getAtom(index2);
         return atomContainer.getBond(atom1, atom2) != null;
     }
-
 }

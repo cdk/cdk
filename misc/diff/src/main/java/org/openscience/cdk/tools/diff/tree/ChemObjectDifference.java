@@ -18,14 +18,13 @@
  */
 package org.openscience.cdk.tools.diff.tree;
 
-import org.openscience.cdk.interfaces.IChemObject;
-
 import java.util.Iterator;
+import org.openscience.cdk.interfaces.IChemObject;
 
 /**
  * {@link IDifference} between two {@link IChemObject}s.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module diff
  * @cdk.githash
  */
@@ -59,5 +58,4 @@ public class ChemObjectDifference extends AbstractDifferenceList implements IDif
 
         return diffBuffer.toString();
     }
-
 }

@@ -25,30 +25,27 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Unit test class to be extended by test classes for classes that
- * implement the {@link AbstractMCSAlgorithm} interface.
+ * Unit test class to be extended by test classes for classes that implement the {@link
+ * AbstractMCSAlgorithm} interface.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module test-smsd
  */
 public abstract class AbstractMCSAlgorithmTest {
 
     private static AbstractMCSAlgorithm algorithm = null;
 
-    /**
-     *
-     * @param algorithm
-     */
+    /** @param algorithm */
     public static void setMCSAlgorithm(AbstractMCSAlgorithm algorithm) {
         AbstractMCSAlgorithmTest.algorithm = algorithm;
     }
 
-    /**
-     * Meta test that tests if #setMCSAlgorithm has been called.
-     */
+    /** Meta test that tests if #setMCSAlgorithm has been called. */
     @Test
     public void testIsMCSAlgorithmSet() {
-        Assert.assertNotNull("The extending class has not set an IMCSAlgorithm with the" + "setMCSAlgorithm() method.",
+        Assert.assertNotNull(
+                "The extending class has not set an IMCSAlgorithm with the"
+                        + "setMCSAlgorithm() method.",
                 AbstractMCSAlgorithmTest.algorithm);
     }
 
@@ -63,6 +60,5 @@ public abstract class AbstractMCSAlgorithmTest {
         public void searchMCS(boolean shouldMatchBonds) {
             return;
         }
-
     }
 }

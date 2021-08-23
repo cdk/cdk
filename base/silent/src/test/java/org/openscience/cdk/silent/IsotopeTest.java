@@ -38,13 +38,14 @@ public class IsotopeTest extends AbstractIsotopeTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new Isotope(new Element());
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new Isotope(new Element());
+                    }
+                });
     }
 
     @Test

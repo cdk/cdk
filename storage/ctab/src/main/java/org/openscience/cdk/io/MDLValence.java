@@ -33,19 +33,19 @@
 package org.openscience.cdk.io;
 
 import com.google.common.collect.Maps;
+import java.util.Map;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-
-import java.util.Map;
 
 /**
  * Adds implicit hydrogens and specifies valency using the MDL valence model.
  *
  * @author John May
  * @cdk.module io
- * @see <a href="http://nextmovesoftware.com/blog/2013/02/27/explicit-and-implicit-hydrogens-taking-liberties-with-valence/">Explicit
- *      and Implicit Hydrogens: taking liberties with valence</a>
+ * @see <a
+ *     href="http://nextmovesoftware.com/blog/2013/02/27/explicit-and-implicit-hydrogens-taking-liberties-with-valence/">Explicit
+ *     and Implicit Hydrogens: taking liberties with valence</a>
  */
 final class MDLValence {
 
@@ -64,8 +64,7 @@ final class MDLValence {
         int[] valences = new int[n];
 
         Map<IAtom, Integer> atomToIndex = Maps.newHashMapWithExpectedSize(n);
-        for (IAtom atom : container.atoms())
-            atomToIndex.put(atom, atomToIndex.size());
+        for (IAtom atom : container.atoms()) atomToIndex.put(atom, atomToIndex.size());
 
         // compute the bond order sums
         for (IBond bond : container.bonds()) {
@@ -107,20 +106,23 @@ final class MDLValence {
     }
 
     /**
-     * Given an element (atomic number) its charge and the explicit valence
-     * (bond order sum) return the implicit valence for that atom. This valence
-     * is from the MDL valence model which was decoded by NextMove Software and
-     * licenced as below.
+     * Given an element (atomic number) its charge and the explicit valence (bond order sum) return
+     * the implicit valence for that atom. This valence is from the MDL valence model which was
+     * decoded by NextMove Software and licenced as below.
      *
-     * <blockquote> $Id: MDLValence.h 2288 2012-11-26 03:39:27Z glandrum $
+     * <blockquote>
      *
-     * Copyright (C) 2012 NextMove Software
+     * $Id: MDLValence.h 2288 2012-11-26 03:39:27Z glandrum $
      *
-     * @@ All Rights Reserved @@ This file is part of the RDKit. The contents
-     * are covered by the terms of the BSD license which is included in the file
-     * license.txt, found at the root of the RDKit source tree. </blockquote>
-     * @see <a href="http://nextmovesoftware.com/blog/2013/02/27/explicit-and-implicit-hydrogens-taking-liberties-with-valence/">Explicit
-     *      and Implicit Hydrogens taking liberties with valence</a>
+     * <p>Copyright (C) 2012 NextMove Software @@ All Rights Reserved @@ This file is part of the
+     * RDKit. The contents are covered by the terms of the BSD license which is included in the file
+     * license.txt, found at the root of the RDKit source tree.
+     *
+     * </blockquote>
+     *
+     * @see <a
+     *     href="http://nextmovesoftware.com/blog/2013/02/27/explicit-and-implicit-hydrogens-taking-liberties-with-valence/">Explicit
+     *     and Implicit Hydrogens taking liberties with valence</a>
      */
     static int implicitValence(int elem, int q, int val) {
         switch (elem) {
@@ -771,7 +773,6 @@ final class MDLValence {
                         break;
                 }
                 break;
-
         }
         return val;
     }

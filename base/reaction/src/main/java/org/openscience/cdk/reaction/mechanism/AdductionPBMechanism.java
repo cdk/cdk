@@ -18,6 +18,7 @@
  */
 package org.openscience.cdk.reaction.mechanism;
 
+import java.util.ArrayList;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -31,38 +32,37 @@ import org.openscience.cdk.reaction.IReactionMechanism;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
-import java.util.ArrayList;
-
 /**
- * <p>This mechanism adduct together two fragments due to a double bond.
- * The second fragment will be deficient in charge.
- * It returns the reaction mechanism which has been cloned the {@link IAtomContainer}.</p>
- * <p>This reaction could be represented as A=B + [C+] =&gt; [A+]-B-C</p>
+ * This mechanism adduct together two fragments due to a double bond. The second fragment will be
+ * deficient in charge. It returns the reaction mechanism which has been cloned the {@link
+ * IAtomContainer}.
  *
+ * <p>This reaction could be represented as A=B + [C+] =&gt; [A+]-B-C
  *
- * @author         miguelrojasch
- * @cdk.created    2008-02-10
- * @cdk.module     reaction
+ * @author miguelrojasch
+ * @cdk.created 2008-02-10
+ * @cdk.module reaction
  * @cdk.githash
  */
 public class AdductionPBMechanism implements IReactionMechanism {
 
     /**
-     * Initiates the process for the given mechanism. The atoms and bonds to apply are mapped between
-     * reactants and products.
-     *
+     * Initiates the process for the given mechanism. The atoms and bonds to apply are mapped
+     * between reactants and products.
      *
      * @param atomContainerSet
-     * @param atomList    The list of atoms taking part in the mechanism. Only allowed three atoms
-     * @param bondList    The list of bonds taking part in the mechanism. Only allowed one bond
-     *
-     * @return            The Reaction mechanism
-     *
+     * @param atomList The list of atoms taking part in the mechanism. Only allowed three atoms
+     * @param bondList The list of bonds taking part in the mechanism. Only allowed one bond
+     * @return The Reaction mechanism
      */
     @Override
-    public IReaction initiate(IAtomContainerSet atomContainerSet, ArrayList<IAtom> atomList, ArrayList<IBond> bondList)
+    public IReaction initiate(
+            IAtomContainerSet atomContainerSet,
+            ArrayList<IAtom> atomList,
+            ArrayList<IBond> bondList)
             throws CDKException {
-        CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(atomContainerSet.getBuilder());
+        CDKAtomTypeMatcher atMatcher =
+                CDKAtomTypeMatcher.getInstance(atomContainerSet.getBuilder());
         if (atomContainerSet.getAtomContainerCount() != 2) {
             throw new CDKException("AdductionPBMechanism expects two IAtomContainer's");
         }
@@ -82,17 +82,18 @@ public class AdductionPBMechanism implements IReactionMechanism {
         } catch (CloneNotSupportedException e) {
             throw new CDKException("Could not clone IAtomContainer!", e);
         }
-        IAtom atom1 = atomList.get(0);// Atom 1: to be deficient in charge
+        IAtom atom1 = atomList.get(0); // Atom 1: to be deficient in charge
         IAtom atom1C = reactantCloned.getAtom(molecule1.indexOf(atom1));
-        IAtom atom2 = atomList.get(1);// Atom 2: receive the adduct
+        IAtom atom2 = atomList.get(1); // Atom 2: receive the adduct
         IAtom atom2C = reactantCloned.getAtom(molecule1.indexOf(atom2));
-        IAtom atom3 = atomList.get(2);// Atom 2: deficient in charge
+        IAtom atom3 = atomList.get(2); // Atom 2: deficient in charge
         IAtom atom3C = reactantCloned.getAtom(molecule1.getAtomCount() + molecule2.indexOf(atom3));
         IBond bond1 = bondList.get(0);
         int posBond1 = atomContainerSet.getAtomContainer(0).indexOf(bond1);
 
         BondManipulator.decreaseBondOrder(reactantCloned.getBond(posBond1));
-        IBond newBond = molecule1.getBuilder().newInstance(IBond.class, atom2C, atom3C, IBond.Order.SINGLE);
+        IBond newBond =
+                molecule1.getBuilder().newInstance(IBond.class, atom2C, atom3C, IBond.Order.SINGLE);
         reactantCloned.addBond(newBond);
 
         int charge = atom1C.getFormalCharge();
@@ -119,13 +120,21 @@ public class AdductionPBMechanism implements IReactionMechanism {
 
         /* mapping */
         for (IAtom atom : molecule1.atoms()) {
-            IMapping mapping = atom1C.getBuilder().newInstance(IMapping.class, atom,
-                    reactantCloned.getAtom(molecule1.indexOf(atom)));
+            IMapping mapping =
+                    atom1C.getBuilder()
+                            .newInstance(
+                                    IMapping.class,
+                                    atom,
+                                    reactantCloned.getAtom(molecule1.indexOf(atom)));
             reaction.addMapping(mapping);
         }
         for (IAtom atom : molecule2.atoms()) {
-            IMapping mapping = atom1C.getBuilder().newInstance(IMapping.class, atom,
-                    reactantCloned.getAtom(molecule2.indexOf(atom)));
+            IMapping mapping =
+                    atom1C.getBuilder()
+                            .newInstance(
+                                    IMapping.class,
+                                    atom,
+                                    reactantCloned.getAtom(molecule2.indexOf(atom)));
             reaction.addMapping(mapping);
         }
 
@@ -133,5 +142,4 @@ public class AdductionPBMechanism implements IReactionMechanism {
 
         return reaction;
     }
-
 }

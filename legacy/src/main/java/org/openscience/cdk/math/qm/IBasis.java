@@ -32,53 +32,41 @@ import org.openscience.cdk.math.Vector;
  * @author Stephan Michels &lt;stephan@vern.chem.tu-berlin.de&gt;
  * @cdk.githash
  * @cdk.created 2001-07-02
- * @cdk.module  qm
+ * @cdk.module qm
  */
 public interface IBasis {
 
-    /**
-     * Gets the number of base vectors
-     */
+    /** Gets the number of base vectors */
     public int getSize();
 
-    /**
-     * Gets the dimension of the volume, which describes the base.
-     */
+    /** Gets the dimension of the volume, which describes the base. */
     public double getMinX();
 
-    /**
-     * Gets the dimension of the volume, which describes the base.
-     */
+    /** Gets the dimension of the volume, which describes the base. */
     public double getMaxX();
 
-    /**
-     * Gets the dimension of the volume, which describes the base.
-     */
+    /** Gets the dimension of the volume, which describes the base. */
     public double getMinY();
 
-    /**
-     * Gets the dimension of the volume, which describes the base.
-     */
+    /** Gets the dimension of the volume, which describes the base. */
     public double getMaxY();
 
-    /**
-     * Gets the dimension of the volume, which describes the base.
-     */
+    /** Gets the dimension of the volume, which describes the base. */
     public double getMinZ();
 
-    /**
-     * Gets the dimension of the volume, which describes the base.
-     */
+    /** Gets the dimension of the volume, which describes the base. */
     public double getMaxZ();
 
     /**
      * Calculates the function value an (x,y,z).
+     *
      * @param index The number of the base
      */
     public double getValue(int index, double x, double y, double z);
 
     /**
      * Calculates the function values.
+     *
      * @param index The number of the base
      */
     public Vector getValues(int index, Matrix x);
@@ -108,8 +96,7 @@ public interface IBasis {
     public double calcV(int i, int j);
 
     /**
-     * Calculates a two eletron fout center integral
-     * I = &lt;chi_i chi_j | 1/r12 | chi_k chi_l &gt;.
+     * Calculates a two eletron fout center integral I = &lt;chi_i chi_j | 1/r12 | chi_k chi_l &gt;.
      *
      * @param i Index of the first base
      * @param j Index of the second base

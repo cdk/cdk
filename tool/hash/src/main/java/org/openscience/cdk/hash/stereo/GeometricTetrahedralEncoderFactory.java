@@ -24,26 +24,24 @@
 
 package org.openscience.cdk.hash.stereo;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
- * A stereo encoder factory for tetrahedral centres. This factory generates
- * {@link StereoEncoder}s for centres with specified by 2D and 3D coordinates.
- * The required preconditions are the central atom must have 3/4 neighboring
- * atoms, Sp3 hybridization and no query bonds (e.g. wiggly). If there is at
- * least one up/down bond and all required atoms have coordinates a new 2D
- * encoder is created. If the there are no stereo bonds (up/down) and all
- * required atoms have 3D coordinates then a new 3D encoder is created.
+ * A stereo encoder factory for tetrahedral centres. This factory generates {@link StereoEncoder}s
+ * for centres with specified by 2D and 3D coordinates. The required preconditions are the central
+ * atom must have 3/4 neighboring atoms, Sp3 hybridization and no query bonds (e.g. wiggly). If
+ * there is at least one up/down bond and all required atoms have coordinates a new 2D encoder is
+ * created. If the there are no stereo bonds (up/down) and all required atoms have 3D coordinates
+ * then a new 3D encoder is created.
  *
  * @author John May
  * @cdk.module hash
@@ -52,11 +50,10 @@ import java.util.Map;
 public class GeometricTetrahedralEncoderFactory implements StereoEncoderFactory {
 
     /**
-     * Create a stereo encoder for all potential 2D and 3D tetrahedral
-     * elements.
+     * Create a stereo encoder for all potential 2D and 3D tetrahedral elements.
      *
      * @param container an atom container
-     * @param graph     adjacency list representation of the container
+     * @param graph adjacency list representation of the container
      * @return a new encoder for tetrahedral elements
      */
     @Override
@@ -73,7 +70,8 @@ public class GeometricTetrahedralEncoderFactory implements StereoEncoderFactory 
         List<StereoEncoder> encoders = new ArrayList<StereoEncoder>();
         Map<IAtom, Integer> elevation = new HashMap<IAtom, Integer>(10);
 
-        ATOMS: for (int i = 0; i < n; i++) {
+        ATOMS:
+        for (int i = 0; i < n; i++) {
 
             int degree = graph[i].length;
 
@@ -104,7 +102,8 @@ public class GeometricTetrahedralEncoderFactory implements StereoEncoderFactory 
 
             if (geometric != null) {
                 // add a new encoder if a geometric parity
-                encoders.add(new GeometryEncoder(i, new BasicPermutationParity(graph[i]), geometric));
+                encoders.add(
+                        new GeometryEncoder(i, new BasicPermutationParity(graph[i]), geometric));
             }
         }
 
@@ -116,17 +115,20 @@ public class GeometricTetrahedralEncoderFactory implements StereoEncoderFactory 
      * Create the geometric part of an encoder
      *
      * @param elevationMap temporary map to store the bond elevations (2D)
-     * @param bonds        list of bonds connected to the atom at i
-     * @param i            the central atom (index)
-     * @param adjacent     adjacent atoms (indices)
-     * @param container    container
+     * @param bonds list of bonds connected to the atom at i
+     * @param i the central atom (index)
+     * @param adjacent adjacent atoms (indices)
+     * @param container container
      * @return geometric parity encoder (or null)
      */
-    private static GeometricParity geometric(Map<IAtom, Integer> elevationMap, List<IBond> bonds, int i,
-            int[] adjacent, IAtomContainer container) {
+    private static GeometricParity geometric(
+            Map<IAtom, Integer> elevationMap,
+            List<IBond> bonds,
+            int i,
+            int[] adjacent,
+            IAtomContainer container) {
         int nStereoBonds = nStereoBonds(bonds);
-        if (nStereoBonds > 0)
-            return geometric2D(elevationMap, bonds, i, adjacent, container);
+        if (nStereoBonds > 0) return geometric2D(elevationMap, bonds, i, adjacent, container);
         else if (nStereoBonds == 0) return geometric3D(i, adjacent, container);
         return null;
     }
@@ -135,14 +137,18 @@ public class GeometricTetrahedralEncoderFactory implements StereoEncoderFactory 
      * Create the geometric part of an encoder of 2D configurations
      *
      * @param elevationMap temporary map to store the bond elevations (2D)
-     * @param bonds        list of bonds connected to the atom at i
-     * @param i            the central atom (index)
-     * @param adjacent     adjacent atoms (indices)
-     * @param container    container
+     * @param bonds list of bonds connected to the atom at i
+     * @param i the central atom (index)
+     * @param adjacent adjacent atoms (indices)
+     * @param container container
      * @return geometric parity encoder (or null)
      */
-    private static GeometricParity geometric2D(Map<IAtom, Integer> elevationMap, List<IBond> bonds, int i,
-            int[] adjacent, IAtomContainer container) {
+    private static GeometricParity geometric2D(
+            Map<IAtom, Integer> elevationMap,
+            List<IBond> bonds,
+            int i,
+            int[] adjacent,
+            IAtomContainer container) {
 
         IAtom atom = container.getAtom(i);
 
@@ -154,31 +160,25 @@ public class GeometricTetrahedralEncoderFactory implements StereoEncoderFactory 
 
         // set the forth ligand to centre as default (overwritten if
         // we have 4 neighbors)
-        if (atom.getPoint2d() != null)
-            coordinates[3] = atom.getPoint2d();
-        else
-            return null;
+        if (atom.getPoint2d() != null) coordinates[3] = atom.getPoint2d();
+        else return null;
 
         for (int j = 0; j < adjacent.length; j++) {
             IAtom neighbor = container.getAtom(adjacent[j]);
             elevations[j] = elevationMap.get(neighbor);
 
-            if (neighbor.getPoint2d() != null)
-                coordinates[j] = neighbor.getPoint2d();
-            else
-                return null; // skip to next atom
-
+            if (neighbor.getPoint2d() != null) coordinates[j] = neighbor.getPoint2d();
+            else return null; // skip to next atom
         }
 
         return new Tetrahedral2DParity(coordinates, elevations);
-
     }
 
     /**
      * Create the geometric part of an encoder of 3D configurations
      *
-     * @param i         the central atom (index)
-     * @param adjacent  adjacent atoms (indices)
+     * @param i the central atom (index)
+     * @param adjacent adjacent atoms (indices)
      * @param container container
      * @return geometric parity encoder (or null)
      */
@@ -189,24 +189,19 @@ public class GeometricTetrahedralEncoderFactory implements StereoEncoderFactory 
 
         // set the forth ligand to centre as default (overwritten if
         // we have 4 neighbors)
-        if (atom.getPoint3d() != null)
-            coordinates[3] = atom.getPoint3d();
-        else
-            return null;
+        if (atom.getPoint3d() != null) coordinates[3] = atom.getPoint3d();
+        else return null;
 
         // for each neighboring atom check if we have 3D coordinates
         for (int j = 0; j < adjacent.length; j++) {
             IAtom neighbor = container.getAtom(adjacent[j]);
 
-            if (neighbor.getPoint3d() != null)
-                coordinates[j] = neighbor.getPoint3d();
-            else
-                return null; // skip to next atom
+            if (neighbor.getPoint3d() != null) coordinates[j] = neighbor.getPoint3d();
+            else return null; // skip to next atom
         }
 
         // add new 3D stereo encoder
         return new Tetrahedral3DParity(coordinates);
-
     }
 
     /**
@@ -223,15 +218,14 @@ public class GeometricTetrahedralEncoderFactory implements StereoEncoderFactory 
      * access the number of stereo bonds in the provided bond list.
      *
      * @param bonds input list
-     * @return number of UP/DOWN bonds in the list, -1 if a query bond was
-     *         found
+     * @return number of UP/DOWN bonds in the list, -1 if a query bond was found
      */
     private static int nStereoBonds(List<IBond> bonds) {
         int count = 0;
         for (IBond bond : bonds) {
             IBond.Stereo stereo = bond.getStereo();
             switch (stereo) {
-            // query bonds... no configuration possible
+                    // query bonds... no configuration possible
                 case E_OR_Z:
                 case UP_OR_DOWN:
                 case UP_OR_DOWN_INVERTED:
@@ -248,12 +242,12 @@ public class GeometricTetrahedralEncoderFactory implements StereoEncoderFactory 
     }
 
     /**
-     * Maps the input bonds to a map of Atom->Elevation where the elevation is
-     * whether the bond is off the plane with respect to the central atom.
+     * Maps the input bonds to a map of Atom->Elevation where the elevation is whether the bond is
+     * off the plane with respect to the central atom.
      *
-     * @param atom  central atom
+     * @param atom central atom
      * @param bonds bonds connected to the central atom
-     * @param map   map to load with elevation values (can be reused)
+     * @param map map to load with elevation values (can be reused)
      */
     private static void makeElevationMap(IAtom atom, List<IBond> bonds, Map<IAtom, Integer> map) {
         map.clear();
@@ -280,5 +274,4 @@ public class GeometricTetrahedralEncoderFactory implements StereoEncoderFactory 
             }
         }
     }
-
 }

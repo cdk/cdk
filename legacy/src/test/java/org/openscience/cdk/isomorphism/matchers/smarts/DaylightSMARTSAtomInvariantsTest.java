@@ -1,20 +1,19 @@
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import org.junit.Test;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.smiles.SmilesParser;
-
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.smiles.SmilesParser;
+
 /**
- * Sets the computation of SMARTSAtomInvariants using the Daylight ring
- * values.
+ * Sets the computation of SMARTSAtomInvariants using the Daylight ring values.
  *
  * @author John May
  * @cdk.module test-smarts
@@ -26,7 +25,9 @@ public class DaylightSMARTSAtomInvariantsTest {
         IAtomContainer container = sp.parseSmiles("CCC");
         SMARTSAtomInvariants.configureDaylightWithRingInfo(container);
         for (IAtom atom : container.atoms()) {
-            assertThat(((SMARTSAtomInvariants) atom.getProperty(SMARTSAtomInvariants.KEY)).target(), is(container));
+            assertThat(
+                    ((SMARTSAtomInvariants) atom.getProperty(SMARTSAtomInvariants.KEY)).target(),
+                    is(container));
         }
     }
 
@@ -100,10 +101,9 @@ public class DaylightSMARTSAtomInvariantsTest {
     }
 
     /**
-     * Demonstates a problems with the SSSR but we match what Daylight depict
-     * match says. We always have 4 atoms atoms in 3 rings but the other atoms
-     * are either in 1 ring or 2 rings. Which atoms depends on the order of
-     * atoms in the input.
+     * Demonstates a problems with the SSSR but we match what Daylight depict match says. We always
+     * have 4 atoms atoms in 3 rings but the other atoms are either in 1 ring or 2 rings. Which
+     * atoms depends on the order of atoms in the input.
      */
     @Test
     public void ringNumber_cyclophane() throws Exception {
@@ -138,10 +138,10 @@ public class DaylightSMARTSAtomInvariantsTest {
     }
 
     /**
-     * Shows that the store ring sizes are only the smallest. There is one ring
-     * of size six and one ring of size 5. When we count the ring sizes (can be
-     * verities on depict match) there are only 4 atoms in a 6 member ring. This
-     * is because 2 atoms are shared with the smalled 5 member ring.
+     * Shows that the store ring sizes are only the smallest. There is one ring of size six and one
+     * ring of size 5. When we count the ring sizes (can be verities on depict match) there are only
+     * 4 atoms in a 6 member ring. This is because 2 atoms are shared with the smalled 5 member
+     * ring.
      *
      * @throws Exception
      */
@@ -163,6 +163,7 @@ public class DaylightSMARTSAtomInvariantsTest {
 
     /**
      * Shows that the exterior ring of the SSSR (size 12) is not
+     *
      * @throws Exception
      */
     @Test
@@ -197,5 +198,4 @@ public class DaylightSMARTSAtomInvariantsTest {
         SMARTSAtomInvariants.configureDaylightWithRingInfo(container);
         return container.getAtom(0).getProperty(SMARTSAtomInvariants.KEY);
     }
-
 }

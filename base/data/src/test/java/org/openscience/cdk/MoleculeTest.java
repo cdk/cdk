@@ -23,31 +23,31 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractMoleculeTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.AbstractMoleculeTest;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the Molecule class.
  *
  * @cdk.module test-data
- *
  * @see org.openscience.cdk.Molecule
  */
 public class MoleculeTest extends AbstractMoleculeTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new AtomContainer();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new AtomContainer();
+                    }
+                });
     }
 
     // test constructors
@@ -91,5 +91,4 @@ public class MoleculeTest extends AbstractMoleculeTest {
         Assert.assertEquals(4, m.getAtomCount());
         Assert.assertEquals(3, m.getBondCount());
     }
-
 }

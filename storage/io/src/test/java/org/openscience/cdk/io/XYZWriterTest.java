@@ -25,10 +25,8 @@ package org.openscience.cdk.io;
 import java.io.BufferedReader;
 import java.io.StringReader;
 import java.io.StringWriter;
-
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -41,7 +39,6 @@ import org.openscience.cdk.silent.AtomContainer;
  * TestCase for the writer XYZ files using one test file.
  *
  * @cdk.module test-io
- *
  * @see org.openscience.cdk.io.XYZWriter
  */
 public class XYZWriterTest extends ChemObjectIOTest {
@@ -78,14 +75,11 @@ public class XYZWriterTest extends ChemObjectIOTest {
         // count lines
         int lineCount = 0;
         BufferedReader reader = new BufferedReader(new StringReader(output));
-        while (reader.readLine() != null)
-            lineCount++;
+        while (reader.readLine() != null) lineCount++;
         Assert.assertEquals(4, lineCount);
     }
 
-    /**
-     * @cdk.bug 2215774
-     */
+    /** @cdk.bug 2215774 */
     @Test
     public void testWriting_Point2d() throws Exception {
         StringWriter writer = new StringWriter();
@@ -103,9 +97,7 @@ public class XYZWriterTest extends ChemObjectIOTest {
         Assert.assertTrue(output.contains("0.000000\t 0.000000\t 0.000000"));
     }
 
-    /**
-     * @cdk.bug 2215775
-     */
+    /** @cdk.bug 2215775 */
     @Test
     public void testSixDecimalOuput() throws Exception {
         StringWriter writer = new StringWriter();
@@ -127,5 +119,4 @@ public class XYZWriterTest extends ChemObjectIOTest {
         Assert.assertTrue(output.contains("2.000000"));
         Assert.assertTrue(output.contains("3.000000"));
     }
-
 }

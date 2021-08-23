@@ -23,7 +23,6 @@
  */
 package org.openscience.cdk.ringsearch;
 
-
 import java.util.Vector;
 
 /**
@@ -38,18 +37,15 @@ public class Queue extends Vector {
 
     private static final long serialVersionUID = 1008167867733841614L;
 
-    /**
-     * Constructs an empty Queue
-     *
-     */
+    /** Constructs an empty Queue */
     public Queue() {
         super();
     }
 
     /**
-     *  Places an Object into the queue
+     * Places an Object into the queue
      *
-     * @param   o  The object to be pushed into the queue
+     * @param o The object to be pushed into the queue
      */
     public void push(Object o) {
         addElement(o);

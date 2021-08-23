@@ -25,25 +25,24 @@ import java.io.InputStreamReader;
 import java.util.Hashtable;
 import java.util.Map;
 
-
 /**
  * Provides atomic property values for descriptor calculations.
  *
- * This class currently provides values for mass, van der Waals volume, electronegativity and
+ * <p>This class currently provides values for mass, van der Waals volume, electronegativity and
  * polarizability.
  *
- * @author     Todd Martin
+ * @author Todd Martin
  * @cdk.module qsar
  * @cdk.githash
  */
 public class AtomicProperties {
 
-    private static AtomicProperties ap                  = null;
+    private static AtomicProperties ap = null;
 
-    private Map<String, Double>     htMass              = new Hashtable<String, Double>();
-    private Map<String, Double>     htVdWVolume         = new Hashtable<String, Double>();
-    private Map<String, Double>     htElectronegativity = new Hashtable<String, Double>();
-    private Map<String, Double>     htPolarizability    = new Hashtable<String, Double>();
+    private Map<String, Double> htMass = new Hashtable<String, Double>();
+    private Map<String, Double> htVdWVolume = new Hashtable<String, Double>();
+    private Map<String, Double> htElectronegativity = new Hashtable<String, Double>();
+    private Map<String, Double> htPolarizability = new Hashtable<String, Double>();
 
     private AtomicProperties() throws IOException {
 
@@ -108,5 +107,4 @@ public class AtomicProperties {
         }
         return ap;
     }
-
 }

@@ -28,24 +28,25 @@ import org.openscience.cdk.tools.diff.tree.IntegerDifference;
 /**
  * Compares two {@link IIsotope} classes.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module diff
  * @cdk.githash
  */
 public class IsotopeDiff {
 
     /**
-     * Overwrite the default public constructor because this class is not
-     * supposed to be instantiated.
+     * Overwrite the default public constructor because this class is not supposed to be
+     * instantiated.
      */
     private IsotopeDiff() {}
 
     /**
      * Compare two {@link IChemObject} classes and return the difference as a {@link String}.
      *
-     * @param first  the first of the two classes to compare
+     * @param first the first of the two classes to compare
      * @param second the second of the two classes to compare
-     * @return a {@link String} representation of the difference between the first and second {@link IChemObject}.
+     * @return a {@link String} representation of the difference between the first and second {@link
+     *     IChemObject}.
      */
     public static String diff(IChemObject first, IChemObject second) {
         IDifference diff = difference(first, second);
@@ -59,9 +60,10 @@ public class IsotopeDiff {
     /**
      * Compare two {@link IChemObject} classes and return the difference as an {@link IDifference}.
      *
-     * @param first  the first of the two classes to compare
+     * @param first the first of the two classes to compare
      * @param second the second of the two classes to compare
-     * @return an {@link IDifference} representation of the difference between the first and second {@link IChemObject}.
+     * @return an {@link IDifference} representation of the difference between the first and second
+     *     {@link IChemObject}.
      */
     public static IDifference difference(IChemObject first, IChemObject second) {
         if (!(first instanceof IIsotope && second instanceof IIsotope)) {
@@ -70,10 +72,15 @@ public class IsotopeDiff {
         IIsotope firstElem = (IIsotope) first;
         IIsotope secondElem = (IIsotope) second;
         ChemObjectDifference totalDiff = new ChemObjectDifference("IsotopeDiff");
-        totalDiff.addChild(IntegerDifference.construct("MN", firstElem.getMassNumber(), secondElem.getMassNumber()));
-        totalDiff.addChild(DoubleDifference.construct("EM", firstElem.getExactMass(), secondElem.getExactMass()));
-        totalDiff.addChild(DoubleDifference.construct("AB", firstElem.getNaturalAbundance(),
-                secondElem.getNaturalAbundance()));
+        totalDiff.addChild(
+                IntegerDifference.construct(
+                        "MN", firstElem.getMassNumber(), secondElem.getMassNumber()));
+        totalDiff.addChild(
+                DoubleDifference.construct(
+                        "EM", firstElem.getExactMass(), secondElem.getExactMass()));
+        totalDiff.addChild(
+                DoubleDifference.construct(
+                        "AB", firstElem.getNaturalAbundance(), secondElem.getNaturalAbundance()));
         totalDiff.addChild(ElementDiff.difference(first, second));
         if (totalDiff.childCount() > 0) {
             return totalDiff;
@@ -81,5 +88,4 @@ public class IsotopeDiff {
             return null;
         }
     }
-
 }

@@ -20,22 +20,18 @@
 package org.openscience.cdk.structgen;
 
 import java.awt.event.ActionEvent;
-
 import javax.swing.AbstractAction;
 import javax.vecmath.Vector2d;
-
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
-/**
- * @cdk.module test-structgen
- */
+/** @cdk.module test-structgen */
 public class SingleStructureRandomGeneratorTest {
 
-    String                         mf;
+    String mf;
     SingleStructureRandomGenerator ssrg;
 
     public SingleStructureRandomGeneratorTest() throws Exception {
@@ -44,7 +40,9 @@ public class SingleStructureRandomGeneratorTest {
         ssrg = new SingleStructureRandomGenerator();
         System.out.println("Assining unbonded set of atoms");
         AtomContainer ac = getBunchOfUnbondedAtoms();
-        mf = MolecularFormulaManipulator.getString(MolecularFormulaManipulator.getMolecularFormula(ac));
+        mf =
+                MolecularFormulaManipulator.getString(
+                        MolecularFormulaManipulator.getMolecularFormula(ac));
         System.out.println("Molecular Formula is: " + mf);
         ssrg.setAtomContainer(ac);
     }
@@ -75,8 +73,10 @@ public class SingleStructureRandomGeneratorTest {
             atom = mol.getAtom(f);
             bondCount = mol.getBondOrderSum(atom);
             if (bondCount > 4) System.out.println("bondCount: " + bondCount);
-            atom.setImplicitHydrogenCount(4 - (int) bondCount
-                    - (atom.getCharge() == null ? 0 : atom.getCharge().intValue()));
+            atom.setImplicitHydrogenCount(
+                    4
+                            - (int) bondCount
+                            - (atom.getCharge() == null ? 0 : atom.getCharge().intValue()));
         }
     }
 

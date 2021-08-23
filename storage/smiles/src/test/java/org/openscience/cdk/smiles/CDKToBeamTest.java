@@ -24,6 +24,22 @@
 
 package org.openscience.cdk.smiles;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.openscience.cdk.interfaces.IBond.Order.DOUBLE;
+import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
+import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.OPPOSITE;
+import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.TOGETHER;
+import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
+import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.ANTI_CLOCKWISE;
+import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKWISE;
+
+import java.util.Collections;
+import java.util.Map;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
@@ -43,30 +59,13 @@ import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import uk.ac.ebi.beam.Graph;
 import uk.ac.ebi.beam.Element;
-
-import java.util.Collections;
-import java.util.Map;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertFalse;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.openscience.cdk.interfaces.IBond.Order.DOUBLE;
-import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
-import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.OPPOSITE;
-import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.TOGETHER;
-import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
-import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.ANTI_CLOCKWISE;
-import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKWISE;
+import uk.ac.ebi.beam.Graph;
 
 /**
- * Unit tests for converting CDK IAtomContainer's to the grins object module.
- * For clarity often the SMILES output is verified if a test fails it could be
- * the Grins output changed and there was not a problem with the conversion.
+ * Unit tests for converting CDK IAtomContainer's to the grins object module. For clarity often the
+ * SMILES output is verified if a test fails it could be the Grins output changed and there was not
+ * a problem with the conversion.
  *
  * @author John May
  * @cdk.module test-smiles
@@ -197,14 +196,14 @@ public class CDKToBeamTest {
     @SuppressWarnings("unchecked")
     @Test(expected = IllegalArgumentException.class)
     public void tooFewAtoms() throws Exception {
-        IBond b = new Bond(new IAtom[]{mock(IAtom.class)});
+        IBond b = new Bond(new IAtom[] {mock(IAtom.class)});
         new CDKToBeam().toBeamEdge(b, mock(Map.class));
     }
 
     @SuppressWarnings("unchecked")
     @Test(expected = IllegalArgumentException.class)
     public void tooManyAtoms() throws Exception {
-        IBond b = new Bond(new IAtom[]{mock(IAtom.class), mock(IAtom.class), mock(IAtom.class)});
+        IBond b = new Bond(new IAtom[] {mock(IAtom.class), mock(IAtom.class), mock(IAtom.class)});
         new CDKToBeam().toBeamEdge(b, mock(Map.class));
     }
 
@@ -385,8 +384,9 @@ public class CDKToBeamTest {
         ac.addBond(1, 2, DOUBLE);
         ac.addBond(2, 3, SINGLE);
 
-        ac.addStereoElement(new DoubleBondStereochemistry(ac.getBond(1), new IBond[]{ac.getBond(0), ac.getBond(2)},
-                OPPOSITE));
+        ac.addStereoElement(
+                new DoubleBondStereochemistry(
+                        ac.getBond(1), new IBond[] {ac.getBond(0), ac.getBond(2)}, OPPOSITE));
         Graph g = convert(ac, SmiFlavor.StereoCisTrans);
         assertThat(g.toSmiles(), is("F/C=C/F"));
     }
@@ -408,8 +408,9 @@ public class CDKToBeamTest {
         ac.addBond(1, 2, DOUBLE);
         ac.addBond(2, 3, SINGLE);
 
-        ac.addStereoElement(new DoubleBondStereochemistry(ac.getBond(1), new IBond[]{ac.getBond(0), ac.getBond(2)},
-                TOGETHER));
+        ac.addStereoElement(
+                new DoubleBondStereochemistry(
+                        ac.getBond(1), new IBond[] {ac.getBond(0), ac.getBond(2)}, TOGETHER));
         Graph g = convert(ac, SmiFlavor.StereoCisTrans);
         assertThat(g.toSmiles(), is("F/C=C\\F"));
     }
@@ -435,11 +436,16 @@ public class CDKToBeamTest {
         ac.addBond(2, 4, SINGLE);
         ac.addBond(2, 5, SINGLE);
 
-        ac.addStereoElement(new TetrahedralChirality(ac.getAtom(2), new IAtom[]{ac.getAtom(1), // C-C
-                ac.getAtom(3), // C
-                ac.getAtom(4), // O
-                ac.getAtom(5), // H
-        }, CLOCKWISE));
+        ac.addStereoElement(
+                new TetrahedralChirality(
+                        ac.getAtom(2),
+                        new IAtom[] {
+                            ac.getAtom(1), // C-C
+                            ac.getAtom(3), // C
+                            ac.getAtom(4), // O
+                            ac.getAtom(5), // H
+                        },
+                        CLOCKWISE));
 
         Graph g = convert(ac, SmiFlavor.StereoTetrahedral);
         assertThat(g.toSmiles(), is("CC[C@@](C)(O)[H]"));
@@ -466,20 +472,24 @@ public class CDKToBeamTest {
         ac.addBond(2, 4, SINGLE);
         ac.addBond(2, 5, SINGLE);
 
-        ac.addStereoElement(new TetrahedralChirality(ac.getAtom(2), new IAtom[]{ac.getAtom(1), // C-C
-                ac.getAtom(3), // C
-                ac.getAtom(4), // O
-                ac.getAtom(5), // H
-        }, ANTI_CLOCKWISE));
+        ac.addStereoElement(
+                new TetrahedralChirality(
+                        ac.getAtom(2),
+                        new IAtom[] {
+                            ac.getAtom(1), // C-C
+                            ac.getAtom(3), // C
+                            ac.getAtom(4), // O
+                            ac.getAtom(5), // H
+                        },
+                        ANTI_CLOCKWISE));
 
         Graph g = convert(ac, SmiFlavor.StereoTetrahedral);
         assertThat(g.toSmiles(), is("CC[C@](C)(O)[H]"));
     }
 
     /**
-     * This is a mock test where we don't want aromatic bonds to have a
-     * configuration. (Z)-1,2-difluoroethene is not aromatic but a 'real'
-     * example would be porphyrins.
+     * This is a mock test where we don't want aromatic bonds to have a configuration.
+     * (Z)-1,2-difluoroethene is not aromatic but a 'real' example would be porphyrins.
      *
      * @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1-
      */
@@ -499,16 +509,15 @@ public class CDKToBeamTest {
 
         ac.getBond(1).setFlag(CDKConstants.ISAROMATIC, true);
 
-        ac.addStereoElement(new DoubleBondStereochemistry(ac.getBond(1), new IBond[]{ac.getBond(0), ac.getBond(2)},
-                TOGETHER));
+        ac.addStereoElement(
+                new DoubleBondStereochemistry(
+                        ac.getBond(1), new IBond[] {ac.getBond(0), ac.getBond(2)}, TOGETHER));
         Graph g = convert(ac, SmiFlavor.UseAromaticSymbols);
         assertThat(g.toSmiles(), is("FccF"));
     }
 
     @Test
-    public void propadiene() throws Exception {
-
-    }
+    public void propadiene() throws Exception {}
 
     @Test
     public void writeAtomClass() throws Exception {
@@ -537,8 +546,11 @@ public class CDKToBeamTest {
         m.addBond(2, 3, IBond.Order.DOUBLE);
         m.addBond(3, 4, IBond.Order.SINGLE);
 
-        IStereoElement element = new ExtendedTetrahedral(m.getAtom(2), new IAtom[]{m.getAtom(0), m.getAtom(1),
-                m.getAtom(3), m.getAtom(4)}, ANTI_CLOCKWISE);
+        IStereoElement element =
+                new ExtendedTetrahedral(
+                        m.getAtom(2),
+                        new IAtom[] {m.getAtom(0), m.getAtom(1), m.getAtom(3), m.getAtom(4)},
+                        ANTI_CLOCKWISE);
         m.setStereoElements(Collections.singletonList(element));
 
         assertThat(convert(m, SmiFlavor.Stereo).toSmiles(), is("CC=[C@]=CC"));
@@ -557,8 +569,11 @@ public class CDKToBeamTest {
         m.addBond(2, 3, IBond.Order.DOUBLE);
         m.addBond(3, 4, IBond.Order.SINGLE);
 
-        IStereoElement element = new ExtendedTetrahedral(m.getAtom(2), new IAtom[]{m.getAtom(0), m.getAtom(1),
-                m.getAtom(3), m.getAtom(4)}, CLOCKWISE);
+        IStereoElement element =
+                new ExtendedTetrahedral(
+                        m.getAtom(2),
+                        new IAtom[] {m.getAtom(0), m.getAtom(1), m.getAtom(3), m.getAtom(4)},
+                        CLOCKWISE);
         m.setStereoElements(Collections.singletonList(element));
 
         assertThat(convert(m, SmiFlavor.Stereo).toSmiles(), is("CC=[C@@]=CC"));
@@ -581,19 +596,44 @@ public class CDKToBeamTest {
         m.addBond(1, 5, IBond.Order.SINGLE);
         m.addBond(3, 6, IBond.Order.SINGLE);
 
-        int[][] atoms = new int[][]{{0, 5, 6, 4}, {5, 0, 6, 4}, {5, 0, 4, 6}, {0, 5, 4, 6}, {4, 6, 5, 0}, {4, 6, 0, 5},
-                {6, 4, 0, 5}, {6, 4, 5, 0},};
-        Stereo[] stereos = new Stereo[]{Stereo.ANTI_CLOCKWISE, Stereo.CLOCKWISE, Stereo.ANTI_CLOCKWISE,
-                Stereo.CLOCKWISE, Stereo.ANTI_CLOCKWISE, Stereo.CLOCKWISE, Stereo.ANTI_CLOCKWISE, Stereo.CLOCKWISE};
+        int[][] atoms =
+                new int[][] {
+                    {0, 5, 6, 4},
+                    {5, 0, 6, 4},
+                    {5, 0, 4, 6},
+                    {0, 5, 4, 6},
+                    {4, 6, 5, 0},
+                    {4, 6, 0, 5},
+                    {6, 4, 0, 5},
+                    {6, 4, 5, 0},
+                };
+        Stereo[] stereos =
+                new Stereo[] {
+                    Stereo.ANTI_CLOCKWISE,
+                    Stereo.CLOCKWISE,
+                    Stereo.ANTI_CLOCKWISE,
+                    Stereo.CLOCKWISE,
+                    Stereo.ANTI_CLOCKWISE,
+                    Stereo.CLOCKWISE,
+                    Stereo.ANTI_CLOCKWISE,
+                    Stereo.CLOCKWISE
+                };
 
         for (int i = 0; i < atoms.length; i++) {
 
-            IStereoElement element = new ExtendedTetrahedral(m.getAtom(2), new IAtom[]{m.getAtom(atoms[i][0]),
-                    m.getAtom(atoms[i][1]), m.getAtom(atoms[i][2]), m.getAtom(atoms[i][3])}, stereos[i]);
+            IStereoElement element =
+                    new ExtendedTetrahedral(
+                            m.getAtom(2),
+                            new IAtom[] {
+                                m.getAtom(atoms[i][0]),
+                                m.getAtom(atoms[i][1]),
+                                m.getAtom(atoms[i][2]),
+                                m.getAtom(atoms[i][3])
+                            },
+                            stereos[i]);
             m.setStereoElements(Collections.singletonList(element));
 
             assertThat(convert(m, SmiFlavor.Stereo).toSmiles(), is("CC(=[C@@]=C(C)[H])[H]"));
-
         }
     }
 
@@ -614,19 +654,44 @@ public class CDKToBeamTest {
         m.addBond(1, 5, IBond.Order.SINGLE);
         m.addBond(3, 6, IBond.Order.SINGLE);
 
-        int[][] atoms = new int[][]{{0, 5, 6, 4}, {5, 0, 6, 4}, {5, 0, 4, 6}, {0, 5, 4, 6}, {4, 6, 5, 0}, {4, 6, 0, 5},
-                {6, 4, 0, 5}, {6, 4, 5, 0},};
-        Stereo[] stereos = new Stereo[]{Stereo.CLOCKWISE, Stereo.ANTI_CLOCKWISE, Stereo.CLOCKWISE,
-                Stereo.ANTI_CLOCKWISE, Stereo.CLOCKWISE, Stereo.ANTI_CLOCKWISE, Stereo.CLOCKWISE, Stereo.ANTI_CLOCKWISE};
+        int[][] atoms =
+                new int[][] {
+                    {0, 5, 6, 4},
+                    {5, 0, 6, 4},
+                    {5, 0, 4, 6},
+                    {0, 5, 4, 6},
+                    {4, 6, 5, 0},
+                    {4, 6, 0, 5},
+                    {6, 4, 0, 5},
+                    {6, 4, 5, 0},
+                };
+        Stereo[] stereos =
+                new Stereo[] {
+                    Stereo.CLOCKWISE,
+                    Stereo.ANTI_CLOCKWISE,
+                    Stereo.CLOCKWISE,
+                    Stereo.ANTI_CLOCKWISE,
+                    Stereo.CLOCKWISE,
+                    Stereo.ANTI_CLOCKWISE,
+                    Stereo.CLOCKWISE,
+                    Stereo.ANTI_CLOCKWISE
+                };
 
         for (int i = 0; i < atoms.length; i++) {
 
-            IStereoElement element = new ExtendedTetrahedral(m.getAtom(2), new IAtom[]{m.getAtom(atoms[i][0]),
-                    m.getAtom(atoms[i][1]), m.getAtom(atoms[i][2]), m.getAtom(atoms[i][3])}, stereos[i]);
+            IStereoElement element =
+                    new ExtendedTetrahedral(
+                            m.getAtom(2),
+                            new IAtom[] {
+                                m.getAtom(atoms[i][0]),
+                                m.getAtom(atoms[i][1]),
+                                m.getAtom(atoms[i][2]),
+                                m.getAtom(atoms[i][3])
+                            },
+                            stereos[i]);
             m.setStereoElements(Collections.singletonList(element));
 
             assertThat(convert(m, SmiFlavor.Stereo).toSmiles(), is("CC(=[C@]=C(C)[H])[H]"));
-
         }
     }
 
@@ -634,9 +699,11 @@ public class CDKToBeamTest {
         return convert(ac, false, options);
     }
 
-    static Graph convert(IAtomContainer ac, boolean perceiveAromaticity, int options) throws Exception {
+    static Graph convert(IAtomContainer ac, boolean perceiveAromaticity, int options)
+            throws Exception {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
-        CDKHydrogenAdder.getInstance(SilentChemObjectBuilder.getInstance()).addImplicitHydrogens(ac);
+        CDKHydrogenAdder.getInstance(SilentChemObjectBuilder.getInstance())
+                .addImplicitHydrogens(ac);
         if (perceiveAromaticity) Aromaticity.cdkLegacy().apply(ac);
         return new CDKToBeam(options).toBeamGraph(ac);
     }

@@ -56,7 +56,7 @@ public class CACheFormat extends SimpleChemFormatMatcher implements IChemFormatM
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"cache"};
+        return new String[] {"cache"};
     }
 
     /** {@inheritDoc} */

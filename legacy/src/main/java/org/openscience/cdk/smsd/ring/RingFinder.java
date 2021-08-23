@@ -56,19 +56,20 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRingSet;
 
 /**
- *
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt; 2009-2010
- * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public
- *             access to internal implementation details. SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK
+ *     or provides public access to internal implementation details. SMSD has been deprecated from
+ *     the CDK with a newer, more recent version of SMSD is available at <a
+ *     href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public interface RingFinder {
 
     /**
      * Returns Collection of atoms in Rings based on Hanser Ring Finding method
+     *
      * @param molecule
      * @return report collected the rings
      */
@@ -76,6 +77,7 @@ public interface RingFinder {
 
     /**
      * Returns CDK object Ring set based on Hanser Ring Finding method
+     *
      * @param molecule
      * @return report collected the rings
      * @throws CDKException

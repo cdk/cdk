@@ -21,12 +21,10 @@ package org.openscience.cdk.interfaces;
 /**
  * Represents the idea of an protein monomer as found in PDB files.
  *
- * @cdk.module  interfaces
+ * @cdk.module interfaces
  * @cdk.githash
- *
  * @author Miguel Rojas &lt;miguel.rojas@uni-koeln.de&gt;
  * @cdk.created 2006-11-20
- *
  * @cdk.keyword pdbpolymer
  */
 public interface IPDBMonomer extends IMonomer {
@@ -34,7 +32,7 @@ public interface IPDBMonomer extends IMonomer {
     /**
      * Sets the ICode of this monomer.
      *
-     * @param newICode  the I code of this monomer
+     * @param newICode the I code of this monomer
      */
     public void setICode(String newICode);
 
@@ -48,7 +46,7 @@ public interface IPDBMonomer extends IMonomer {
     /**
      * Sets the Chain ID of this monomer.
      *
-     * @param newChainID  the Chain ID of this monomer
+     * @param newChainID the Chain ID of this monomer
      */
     public void setChainID(String newChainID);
 
@@ -62,20 +60,18 @@ public interface IPDBMonomer extends IMonomer {
     /**
      * Gets the sequence identifier of this monomer.
      *
-     * @return  the sequence identifier of this monomer
+     * @return the sequence identifier of this monomer
      */
     public String getResSeq();
 
     /**
      * Sets the sequence identifier of this monomer.
      *
-     * @param newResSeq  the new sequence identifier of this monomer
+     * @param newResSeq the new sequence identifier of this monomer
      */
     public void setResSeq(String newResSeq);
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IPDBMonomer clone() throws CloneNotSupportedException;
 }

@@ -23,17 +23,13 @@
  */
 package org.openscience.cdk.config;
 
+import com.google.common.collect.FluentIterable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import com.google.common.collect.FluentIterable;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IIsotope;
@@ -43,23 +39,22 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
- * List of isotopes. Data is taken from the <a href="https://github.com/egonw/bodr">Blue Obelisk Data Repository</a>,
- * <a href="https://github.com/egonw/bodr/releases/tag/BODR-10">version 10</a> {@cdk.cite BODR10}.
- * The data set is described in the first Blue Obelisk paper {@cdk.cite Guha2006}.
+ * List of isotopes. Data is taken from the <a href="https://github.com/egonw/bodr">Blue Obelisk
+ * Data Repository</a>, <a href="https://github.com/egonw/bodr/releases/tag/BODR-10">version 10</a>
+ * {@cdk.cite BODR10}. The data set is described in the first Blue Obelisk paper {@cdk.cite
+ * Guha2006}.
  *
- * <p>The <code>isotopes.dat</code> file that is used by this class is a binary class
- * of this data, improving loading times over the BODR XML representation. It is created
- * from the original BODR files using tools from the <code>cdk-build-util</code>
- * repository.
+ * <p>The <code>isotopes.dat</code> file that is used by this class is a binary class of this data,
+ * improving loading times over the BODR XML representation. It is created from the original BODR
+ * files using tools from the <code>cdk-build-util</code> repository.
  *
- * @author      egonw
- * @cdk.module  core
+ * @author egonw
+ * @cdk.module core
  * @cdk.githash
  */
 public class Isotopes extends IsotopeFactory {
 
-    private static final ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(Isotopes.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(Isotopes.class);
 
     private static Isotopes myself = null;
 
@@ -90,21 +85,24 @@ public class Isotopes extends IsotopeFactory {
             int massNum = (int) bin.getShort();
             double exactMass = bin.getDouble();
             double natAbund = bin.get() == 1 ? bin.getDouble() : 0.0;
-            IIsotope isotope = new BODRIsotope(PeriodicTable.getSymbol(atomicNum), atomicNum, massNum, exactMass,
-                    natAbund);
+            IIsotope isotope =
+                    new BODRIsotope(
+                            PeriodicTable.getSymbol(atomicNum),
+                            atomicNum,
+                            massNum,
+                            exactMass,
+                            natAbund);
             add(isotope);
         }
     }
 
     private static boolean isMajor(IIsotope atom) {
         Integer mass = atom.getMassNumber();
-        if (mass == null)
-            return false;
+        if (mass == null) return false;
         try {
             Isotopes instance = Isotopes.getInstance();
             IIsotope major = instance.getMajorIsotope(atom.getAtomicNumber());
-            if (major == null)
-                return false; // no major isotope
+            if (major == null) return false; // no major isotope
             return major.getMassNumber().equals(mass);
         } catch (IOException e) {
             logger.error("Could not load Isotope data: ", e.getMessage());
@@ -113,8 +111,9 @@ public class Isotopes extends IsotopeFactory {
     }
 
     /**
-     * Clear the isotope information from atoms that are major isotopes (e.g.
-     * <sup>12</sup>C, <sup>1</sup>H, etc).
+     * Clear the isotope information from atoms that are major isotopes (e.g. <sup>12</sup>C,
+     * <sup>1</sup>H, etc).
+     *
      * @param mol the molecule
      */
     public static void clearMajorIsotopes(IAtomContainer mol) {
@@ -127,8 +126,9 @@ public class Isotopes extends IsotopeFactory {
     }
 
     /**
-     * Clear the isotope information from istopes that are major (e.g.
-     * <sup>12</sup>C, <sup>1</sup>H, etc).
+     * Clear the isotope information from istopes that are major (e.g. <sup>12</sup>C,
+     * <sup>1</sup>H, etc).
+     *
      * @param formula the formula
      */
     public static void clearMajorIsotopes(IMolecularFormula formula) {

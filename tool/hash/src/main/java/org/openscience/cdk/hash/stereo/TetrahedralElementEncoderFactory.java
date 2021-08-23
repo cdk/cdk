@@ -24,32 +24,28 @@
 
 package org.openscience.cdk.hash.stereo;
 
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IStereoElement;
-import org.openscience.cdk.interfaces.ITetrahedralChirality;
+import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKWISE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKWISE;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IStereoElement;
+import org.openscience.cdk.interfaces.ITetrahedralChirality;
 
 /**
- * Defines a stereo encoder factory for the hash code. The factory allows the
- * generation of stereo hash codes for molecules with predefined
- * {@link ITetrahedralChirality} stereo elements.
+ * Defines a stereo encoder factory for the hash code. The factory allows the generation of stereo
+ * hash codes for molecules with predefined {@link ITetrahedralChirality} stereo elements.
  *
  * @author John May
  * @cdk.module hash
  */
 public final class TetrahedralElementEncoderFactory implements StereoEncoderFactory {
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public StereoEncoder create(IAtomContainer container, int[][] graph) {
 
@@ -63,7 +59,10 @@ public final class TetrahedralElementEncoderFactory implements StereoEncoderFact
         // for each tetrahedral element - create a new encoder
         for (IStereoElement se : container.stereoElements()) {
             if (se instanceof ITetrahedralChirality) {
-                encoders.add(encoder((ITetrahedralChirality) se, atomToIndex = indexMap(atomToIndex, container)));
+                encoders.add(
+                        encoder(
+                                (ITetrahedralChirality) se,
+                                atomToIndex = indexMap(atomToIndex, container)));
             }
         }
 
@@ -73,11 +72,12 @@ public final class TetrahedralElementEncoderFactory implements StereoEncoderFact
     /**
      * Create an encoder for the {@link ITetrahedralChirality} element.
      *
-     * @param tc          stereo element from an atom container
+     * @param tc stereo element from an atom container
      * @param atomToIndex map of atoms to indices
      * @return a new geometry encoder
      */
-    private static GeometryEncoder encoder(ITetrahedralChirality tc, Map<IAtom, Integer> atomToIndex) {
+    private static GeometryEncoder encoder(
+            ITetrahedralChirality tc, Map<IAtom, Integer> atomToIndex) {
 
         IAtom[] ligands = tc.getLigands();
 
@@ -114,13 +114,14 @@ public final class TetrahedralElementEncoderFactory implements StereoEncoderFact
             indices = Arrays.copyOf(indices, indices.length - 1);
         }
 
-        return new GeometryEncoder(centre, new BasicPermutationParity(indices), GeometricParity.valueOf(parity));
+        return new GeometryEncoder(
+                centre, new BasicPermutationParity(indices), GeometricParity.valueOf(parity));
     }
 
     /**
      * Lazy creation of an atom index map.
      *
-     * @param map       existing map (possibly null)
+     * @param map existing map (possibly null)
      * @param container the container we want the map for
      * @return a usable atom to index map for the given container
      */

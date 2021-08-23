@@ -1,31 +1,27 @@
 package org.openscience.cdk.formula;
 
 /**
- * This class gives a score hit of similarity between two different
- * isotope abundance pattern.
+ * This class gives a score hit of similarity between two different isotope abundance pattern.
  *
  * @author Miguel Rojas Cherto
- *
- * @cdk.module  formula
+ * @cdk.module formula
  * @cdk.githash
  */
 public class IsotopePatternSimilarity {
 
-    private double        chargeToAdd;
+    private double chargeToAdd;
 
-    private double        tolerance_ppm = 1;
+    private double tolerance_ppm = 1;
 
-    private static double massE         = 0.0005485;
+    private static double massE = 0.0005485;
 
-    /**
-     *  Constructor for the IsotopePatternSimilarity object.
-     */
+    /** Constructor for the IsotopePatternSimilarity object. */
     public IsotopePatternSimilarity() {}
 
     /**
      * Set the tolerance of the mass accuracy.
      *
-     * @param tolerance  The tolerance value
+     * @param tolerance The tolerance value
      */
     public void seTolerance(double tolerance) {
         tolerance_ppm = tolerance;
@@ -41,13 +37,11 @@ public class IsotopePatternSimilarity {
     }
 
     /**
-     * Compare the IMolecularFormula with a isotope
-     * abundance pattern.
+     * Compare the IMolecularFormula with a isotope abundance pattern.
      *
-     *
-     * @param  isoto1  The Isotope pattern reference (predicted)
-     * @param  isoto2  The Isotope pattern reference (detected)
-     * @return         The hit score of similarity
+     * @param isoto1 The Isotope pattern reference (predicted)
+     * @param isoto2 The Isotope pattern reference (detected)
+     * @return The hit score of similarity
      */
     public double compare(IsotopePattern isoto1, IsotopePattern isoto2) {
 
@@ -55,12 +49,9 @@ public class IsotopePatternSimilarity {
         IsotopePattern iso2 = IsotopePatternManipulator.sortAndNormalizedByIntensity(isoto2);
 
         /* charge to add */
-        if (isoto1.getCharge() == 1)
-            chargeToAdd = massE;
-        else if (isoto1.getCharge() == -1)
-            chargeToAdd = -massE;
-        else
-            chargeToAdd = 0;
+        if (isoto1.getCharge() == 1) chargeToAdd = massE;
+        else if (isoto1.getCharge() == -1) chargeToAdd = -massE;
+        else chargeToAdd = 0;
 
         for (IsotopeContainer isoC : iso1.getIsotopes()) {
             double mass = isoC.getMass();
@@ -86,7 +77,10 @@ public class IsotopePatternSimilarity {
             diffMass = isoContainer.getMass() - iso2.getIsotopes().get(closestDp).getMass();
             diffMass = Math.abs(diffMass);
 
-            diffAbun = 1.0d - (isoContainer.getIntensity() / iso2.getIsotopes().get(closestDp).getIntensity());
+            diffAbun =
+                    1.0d
+                            - (isoContainer.getIntensity()
+                                    / iso2.getIsotopes().get(closestDp).getIntensity());
             diffAbun = Math.abs(diffAbun);
 
             tempScore = 1 - (diffMass + diffAbun);
@@ -94,25 +88,25 @@ public class IsotopePatternSimilarity {
             if (tempScore < 0) tempScore = 0;
 
             score += (tempScore * factor);
-
         }
 
         return score / totalFactor;
     }
 
     /**
-     * Search and find the closest difference in an array in terms of mass and
-     * intensity. Always return the position in this List.
+     * Search and find the closest difference in an array in terms of mass and intensity. Always
+     * return the position in this List.
      *
-     * @param diffValue  The difference to look for
-     * @param normMass   A List of normalized masses
-     * @return           The position in the List
+     * @param diffValue The difference to look for
+     * @param normMass A List of normalized masses
+     * @return The position in the List
      */
     private int getClosestDataDiff(IsotopeContainer isoContainer, IsotopePattern pattern) {
         double diff = 100;
         int posi = -1;
         for (int i = 0; i < pattern.getNumberOfIsotopes(); i++) {
-            double tempDiff = Math.abs((isoContainer.getMass()) - pattern.getIsotopes().get(i).getMass());
+            double tempDiff =
+                    Math.abs((isoContainer.getMass()) - pattern.getIsotopes().get(i).getMass());
             if (tempDiff <= (tolerance_ppm / isoContainer.getMass()) && tempDiff < diff) {
                 diff = tempDiff;
                 posi = i;

@@ -30,9 +30,8 @@ import org.junit.Test;
 /**
  * Unit testing for the {@link TimeOut} class.
  *
- * @author     egonw
+ * @author egonw
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- *
  * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
@@ -52,9 +51,7 @@ public class TimeOutTest {
         Assert.assertEquals(0.2, timeOut.getTimeOut(), 0.0001);
     }
 
-    /**
-     * Test of getTimeOut method, of class TimeOut.
-     */
+    /** Test of getTimeOut method, of class TimeOut. */
     @Test
     public void testGetTimeOut() {
         TimeOut instance = new TimeOut();
@@ -64,9 +61,7 @@ public class TimeOutTest {
         Assert.assertEquals(expResult, result, 10.0);
     }
 
-    /**
-     * Test of isTimeOutFlag method, of class TimeOut.
-     */
+    /** Test of isTimeOutFlag method, of class TimeOut. */
     @Test
     public void testIsTimeOutFlag() {
         TimeOut instance = new TimeOut();
@@ -77,9 +72,7 @@ public class TimeOutTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of setTimeOutFlag method, of class TimeOut.
-     */
+    /** Test of setTimeOutFlag method, of class TimeOut. */
     @Test
     public void testSetTimeOutFlag() {
         boolean timeOut = true;

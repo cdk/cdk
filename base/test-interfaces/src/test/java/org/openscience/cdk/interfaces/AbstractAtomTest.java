@@ -20,7 +20,6 @@ package org.openscience.cdk.interfaces;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
@@ -33,9 +32,7 @@ import org.openscience.cdk.tools.diff.AtomDiff;
  */
 public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
 
-    /**
-     * Method to test the get/setCharge() methods.
-     */
+    /** Method to test the get/setCharge() methods. */
     @Test
     public void testSetCharge_Double() {
         double charge = 0.15;
@@ -50,9 +47,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
         testSetCharge_Double();
     }
 
-    /**
-     * Method to test the get/setHydrogenCount() methods.
-     */
+    /** Method to test the get/setHydrogenCount() methods. */
     @Test
     public void testSetImplicitHydrogenCount_Integer() {
         Integer count = 1;
@@ -69,9 +64,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
         Assert.assertNull(a.getImplicitHydrogenCount());
     }
 
-    /**
-     * Method to test the setFractional3D() methods.
-     */
+    /** Method to test the setFractional3D() methods. */
     @Test
     public void testSetFractionalPoint3d_Point3d() {
         IAtom a = (IAtom) newChemObject();
@@ -127,9 +120,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
         Assert.assertEquals(point2d, a.getPoint2d());
     }
 
-    /**
-     * Method to test the get/setHydrogenCount() methods.
-     */
+    /** Method to test the get/setHydrogenCount() methods. */
     @Test
     public void testSetStereoParity_Integer() {
         int parity = CDKConstants.STEREO_ATOM_PARITY_PLUS;
@@ -144,9 +135,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
         testSetStereoParity_Integer();
     }
 
-    /**
-     * Method to test the clone() method
-     */
+    /** Method to test the clone() method */
     @Test
     @Override
     public void testClone() throws Exception {
@@ -160,9 +149,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
         Assert.assertEquals(0, diff.length());
     }
 
-    /**
-     * Method to test the clone() method
-     */
+    /** Method to test the clone() method */
     @Test
     public void testClone_Point2d() throws Exception {
         IAtom atom = (IAtom) newChemObject();
@@ -171,9 +158,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
         Assert.assertEquals(clone.getPoint2d().x, 2.0, 0.001);
     }
 
-    /**
-     * Method to test the clone() method
-     */
+    /** Method to test the clone() method */
     @Test
     public void testClone_Point3d() throws Exception {
         IAtom atom = (IAtom) newChemObject();
@@ -182,9 +167,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
         Assert.assertEquals(clone.getPoint3d().x, 2.0, 0.001);
     }
 
-    /**
-     * Method to test the clone() method
-     */
+    /** Method to test the clone() method */
     @Test
     public void testClone_FractionalPoint3d() throws Exception {
         IAtom atom = (IAtom) newChemObject();
@@ -193,9 +176,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
         Assert.assertEquals(clone.getFractionalPoint3d().x, 2.0, 0.001);
     }
 
-    /**
-     * Method to test the clone() method
-     */
+    /** Method to test the clone() method */
     @Test
     public void testClone_HydrogenCount() throws Exception {
         IAtom atom = (IAtom) newChemObject();
@@ -207,9 +188,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
         Assert.assertEquals(3, clone.getImplicitHydrogenCount().intValue());
     }
 
-    /**
-     * Method to test the clone() method
-     */
+    /** Method to test the clone() method */
     @Test
     public void testClone_StereoParity() throws Exception {
         IAtom atom = (IAtom) newChemObject();
@@ -221,9 +200,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
         Assert.assertEquals(3, clone.getStereoParity().intValue());
     }
 
-    /**
-     * Method to test the clone() method
-     */
+    /** Method to test the clone() method */
     @Test
     public void testClone_Charge() throws Exception {
         IAtom atom = (IAtom) newChemObject();
@@ -235,9 +212,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
         Assert.assertEquals(1.0, clone.getCharge(), 0.001);
     }
 
-    /**
-     * Method to test whether the class complies with RFC #9.
-     */
+    /** Method to test whether the class complies with RFC #9. */
     @Test
     @Override
     public void testToString() {
@@ -257,9 +232,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
         Assert.assertTrue(description.contains("F3D"));
     }
 
-    /**
-     * Checks that the default charge is set to NaN
-     */
+    /** Checks that the default charge is set to NaN */
     @Test
     public void testDefaultChargeValue() {
         IAtom atom = (IAtom) newChemObject();

@@ -19,16 +19,14 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import java.util.ArrayList;
-
 import javax.vecmath.Point3d;
-
-import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -40,25 +38,25 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * IDescriptor characterizing the mass distribution of the molecule.
- * Described by Katritzky et al. {@cdk.cite KAT96}.
- * For modelling purposes the value of the descriptor is calculated
- * both with and without H atoms. Furthermore the square and cube roots
- * of the descriptor are also generated as described by Wessel et al. {@cdk.cite WES98}.
- * 
- * The descriptor routine generates 9 descriptors:
+ * IDescriptor characterizing the mass distribution of the molecule. Described by Katritzky et al.
+ * {@cdk.cite KAT96}. For modelling purposes the value of the descriptor is calculated both with and
+ * without H atoms. Furthermore the square and cube roots of the descriptor are also generated as
+ * described by Wessel et al. {@cdk.cite WES98}.
+ *
+ * <p>The descriptor routine generates 9 descriptors:
+ *
  * <ul>
- * <li>GRAV-1 -  gravitational index of heavy atoms
- * <li>GRAV-2 -  square root of gravitational index of heavy atoms
- * <li>GRAV-3 -  cube root of gravitational index of heavy atoms
- * <li>GRAVH-1 -  gravitational index - hydrogens included
- * <li>GRAVH-2 -  square root of hydrogen-included gravitational index
- * <li>GRAVH-3 -  cube root of hydrogen-included gravitational index
- * <li>GRAV-4 -  grav1 for all pairs of atoms (not just bonded pairs)
- * <li>GRAV-5 -  grav2 for all pairs of atoms (not just bonded pairs)
- * <li>GRAV-6 -  grav3 for all pairs of atoms (not just bonded pairs)
+ *   <li>GRAV-1 - gravitational index of heavy atoms
+ *   <li>GRAV-2 - square root of gravitational index of heavy atoms
+ *   <li>GRAV-3 - cube root of gravitational index of heavy atoms
+ *   <li>GRAVH-1 - gravitational index - hydrogens included
+ *   <li>GRAVH-2 - square root of hydrogen-included gravitational index
+ *   <li>GRAVH-3 - cube root of hydrogen-included gravitational index
+ *   <li>GRAV-4 - grav1 for all pairs of atoms (not just bonded pairs)
+ *   <li>GRAV-5 - grav2 for all pairs of atoms (not just bonded pairs)
+ *   <li>GRAV-6 - grav3 for all pairs of atoms (not just bonded pairs)
  * </ul>
- * 
+ *
  * <table border="1"><caption>Parameters for this descriptor:</caption>
  * <tr>
  * <td>Name</td>
@@ -80,9 +78,11 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.keyword gravitational index
  * @cdk.keyword descriptor
  */
-public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
+public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor
+        implements IMolecularDescriptor {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(GravitationalIndexDescriptor.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(GravitationalIndexDescriptor.class);
 
     private class pair {
 
@@ -94,16 +94,18 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
         }
     }
 
-    private static final String[] NAMES = {"GRAV-1", "GRAV-2", "GRAV-3", "GRAVH-1", "GRAVH-2", "GRAVH-3", "GRAV-4",
-            "GRAV-5", "GRAV-6"          };
+    private static final String[] NAMES = {
+        "GRAV-1", "GRAV-2", "GRAV-3", "GRAVH-1", "GRAVH-2", "GRAVH-3", "GRAV-4", "GRAV-5", "GRAV-6"
+    };
 
     public GravitationalIndexDescriptor() {}
 
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#gravitationalIndex", this
-                        .getClass().getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#gravitationalIndex",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     /**
@@ -160,10 +162,14 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
     private DescriptorValue getDummyDescriptorValue(Exception e) {
         int ndesc = getDescriptorNames().length;
         DoubleArrayResult results = new DoubleArrayResult(ndesc);
-        for (int i = 0; i < ndesc; i++)
-            results.add(Double.NaN);
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), results,
-                getDescriptorNames(), e);
+        for (int i = 0; i < ndesc; i++) results.add(Double.NaN);
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                results,
+                getDescriptorNames(),
+                e);
     }
 
     /**
@@ -172,7 +178,6 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
      * @param container Parameter is the atom container.
      * @return An ArrayList containing 9 elements in the order described above
      */
-
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
         if (!GeometryUtil.has3DCoordinates(container))
@@ -192,7 +197,8 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
             IBond bond = container.getBond(i);
 
             if (bond.getAtomCount() != 2) {
-                return getDummyDescriptorValue(new CDKException("GravitationalIndex: Only handles 2 center bonds"));
+                return getDummyDescriptorValue(
+                        new CDKException("GravitationalIndex: Only handles 2 center bonds"));
             }
 
             mass1 = factory.getMajorIsotope(bond.getBegin().getSymbol()).getMassNumber();
@@ -218,10 +224,12 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
             IBond b = container.getBond(i);
 
             if (b.getAtomCount() != 2) {
-                return getDummyDescriptorValue(new CDKException("GravitationalIndex: Only handles 2 center bonds"));
+                return getDummyDescriptorValue(
+                        new CDKException("GravitationalIndex: Only handles 2 center bonds"));
             }
 
-            if (b.getBegin().getAtomicNumber() == IElement.H || b.getEnd().getAtomicNumber() == IElement.H) continue;
+            if (b.getBegin().getAtomicNumber() == IElement.H
+                    || b.getEnd().getAtomicNumber() == IElement.H) continue;
 
             mass1 = factory.getMajorIsotope(b.getBegin().getSymbol()).getMassNumber();
             mass2 = factory.getMajorIsotope(b.getEnd().getSymbol()).getMassNumber();
@@ -247,8 +255,7 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
         }
         int npair = x.size() * (x.size() - 1) / 2;
         pair[] p = new pair[npair];
-        for (int i = 0; i < npair; i++)
-            p[i] = new pair();
+        for (int i = 0; i < npair; i++) p[i] = new pair();
         int pcount = 0;
         for (int i = 0; i < x.size() - 1; i++) {
             for (int j = i + 1; j < x.size(); j++) {
@@ -269,8 +276,12 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
             int atomNumber1 = aP.x;
             int atomNumber2 = aP.y;
 
-            mass1 = factory.getMajorIsotope(container.getAtom(atomNumber1).getSymbol()).getMassNumber();
-            mass2 = factory.getMajorIsotope(container.getAtom(atomNumber2).getSymbol()).getMassNumber();
+            mass1 =
+                    factory.getMajorIsotope(container.getAtom(atomNumber1).getSymbol())
+                            .getMassNumber();
+            mass2 =
+                    factory.getMajorIsotope(container.getAtom(atomNumber2).getSymbol())
+                            .getMassNumber();
 
             double x1 = container.getAtom(atomNumber1).getPoint3d().x;
             double y1 = container.getAtom(atomNumber1).getPoint3d().y;
@@ -296,24 +307,29 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
         retval.add(Math.sqrt(allheavysum));
         retval.add(Math.pow(allheavysum, 1.0 / 3.0));
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval,
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                retval,
                 getDescriptorNames());
     }
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * 
-     * The return value from this method really indicates what type of result will
-     * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
-     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
-     * allows you to do the same thing, without actually calculating the descriptor.
      *
-     * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
-     *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
+     * <p>The return value from this method really indicates what type of result will be obtained
+     * from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
+     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object;
+     * this method allows you to do the same thing, without actually calculating the descriptor.
+     *
+     * @return an object that implements the {@link
+     *     org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating the actual type
+     *     of values returned by the descriptor in the {@link
+     *     org.openscience.cdk.qsar.DescriptorValue} object
      */
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(9);
     }
-
 }

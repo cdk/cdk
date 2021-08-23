@@ -23,15 +23,14 @@
 
 package org.openscience.cdk;
 
-import org.junit.Test;
-import org.openscience.cdk.BondRef;
-import org.openscience.cdk.interfaces.IBond;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.mock;
+
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IBond;
 
 public class BondRefTest {
 
@@ -49,14 +48,14 @@ public class BondRefTest {
     @Test
     public void dereferencePointer() {
         IBond mock = mock(IBond.class);
-        IBond ptr  = new BondRef(mock);
+        IBond ptr = new BondRef(mock);
         assertThat(BondRef.deref(ptr), is(sameInstance(mock)));
     }
 
     @Test
     public void dereferencePointerPointer() {
         IBond mock = mock(IBond.class);
-        IBond ptr  = new BondRef(new BondRef(mock));
+        IBond ptr = new BondRef(new BondRef(mock));
         assertThat(BondRef.deref(ptr), is(sameInstance(mock)));
     }
 }

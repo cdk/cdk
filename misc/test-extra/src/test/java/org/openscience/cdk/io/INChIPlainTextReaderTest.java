@@ -25,7 +25,6 @@ package org.openscience.cdk.io;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -40,13 +39,13 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * TestCase for the reading INChI plain text files.
  *
  * @cdk.module test-extra
- *
  * @see org.openscience.cdk.io.INChIReader
  * @cdk.require java1.4+
  */
 public class INChIPlainTextReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(INChIPlainTextReaderTest.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(INChIPlainTextReaderTest.class);
 
     @BeforeClass
     public static void setup() {
@@ -60,10 +59,7 @@ public class INChIPlainTextReaderTest extends SimpleChemObjectReaderTest {
         reader.close();
     }
 
-    /**
-     * Test a INChI 1.12Beta file containing the two tautomers
-     * of guanine.
-     */
+    /** Test a INChI 1.12Beta file containing the two tautomers of guanine. */
     @Test
     public void testGuanine() throws Exception {
         String filename = "data/inchi/guanine.inchi";
@@ -91,8 +87,9 @@ public class INChIPlainTextReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testChebi26120() throws Exception {
-        StringReader ins = new StringReader(
-                "InChI=1/C40H62/c1-33(2)19-13-23-37(7)27-17-31-39(9)29-15-25-35(5)21-11-12-22-36(6)26-16-30-40(10)32-18-28-38(8)24-14-20-34(3)4/h11-12,15,19-22,25,27-30H,13-14,16-18,23-24,26,31-32H2,1-10H3");
+        StringReader ins =
+                new StringReader(
+                        "InChI=1/C40H62/c1-33(2)19-13-23-37(7)27-17-31-39(9)29-15-25-35(5)21-11-12-22-36(6)26-16-30-40(10)32-18-28-38(8)24-14-20-34(3)4/h11-12,15,19-22,25,27-30H,13-14,16-18,23-24,26,31-32H2,1-10H3");
         INChIPlainTextReader reader = new INChIPlainTextReader(ins);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
@@ -115,8 +112,7 @@ public class INChIPlainTextReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testPlatinum() throws Exception {
-        StringReader ins = new StringReader(
-                "InChI=1S/Pt");
+        StringReader ins = new StringReader("InChI=1S/Pt");
         INChIPlainTextReader reader = new INChIPlainTextReader(ins);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();

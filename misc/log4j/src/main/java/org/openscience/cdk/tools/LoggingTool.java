@@ -22,56 +22,61 @@ package org.openscience.cdk.tools;
 import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.io.StringReader;
-
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 /**
  * Useful for logging messages. Often used as a class static variable instantiated like:
+ *
  * <pre>
  * public class SomeClass {
  *     private static ILoggingTool logger =
  *         LoggingToolFactory.createLoggingTool(SomeClass.class);
  * }
  * </pre>
- * There is no special reason not to make the logger private and static, as the logging
- * information is closely bound to one specific Class, not subclasses and not instances.
+ *
+ * There is no special reason not to make the logger private and static, as the logging information
+ * is closely bound to one specific Class, not subclasses and not instances.
  *
  * <p>The logger has five logging levels:
+ *
  * <dl>
- *  <dt>DEBUG
- *  <dd>Default mode. Used for information you might need to track down the cause of a
- *      bug in the source code, or to understand how an algorithm works.
- *  <dt>WARNING
- *  <dd>This indicates a special situation which is unlike to happen, but for which no
- *      special actions need to be taken. E.g. missing information in files, or an
- *      unknown atom type. The action is normally something user friendly.
- *  <dt>INFO
- *  <dd>For reporting informative information to the user that he might easily disregard.
- *      Real important information should be given to the user using a GUI element.
- *  <dt>FATAL
- *  <dd>This level is used for situations that should not have happened *and* that
- *      lead to a situation where this program can no longer function (rare in Java).
- *  <dt>ERROR
- *  <dd>This level is used for situations that should not have happened *and* thus
- *      indicate a bug.
+ *   <dt>DEBUG
+ *   <dd>Default mode. Used for information you might need to track down the cause of a bug in the
+ *       source code, or to understand how an algorithm works.
+ *   <dt>WARNING
+ *   <dd>This indicates a special situation which is unlike to happen, but for which no special
+ *       actions need to be taken. E.g. missing information in files, or an unknown atom type. The
+ *       action is normally something user friendly.
+ *   <dt>INFO
+ *   <dd>For reporting informative information to the user that he might easily disregard. Real
+ *       important information should be given to the user using a GUI element.
+ *   <dt>FATAL
+ *   <dd>This level is used for situations that should not have happened *and* that lead to a
+ *       situation where this program can no longer function (rare in Java).
+ *   <dt>ERROR
+ *   <dd>This level is used for situations that should not have happened *and* thus indicate a bug.
  * </dl>
  *
- * <p>Consider that the debugging will not always be turned on. Therefore, it is better
- * not to concatenate string in the logger.debug() call, but have the LoggingTool do
- * this when appropriate. In other words, use:
+ * <p>Consider that the debugging will not always be turned on. Therefore, it is better not to
+ * concatenate string in the logger.debug() call, but have the LoggingTool do this when appropriate.
+ * In other words, use:
+ *
  * <pre>
  * logger.debug("The String X has this value: ", someString);
  * logger.debug("The int Y has this value: ", y);
  * </pre>
+ *
  * instead of:
+ *
  * <pre>
  * logger.debug("The String X has this value: " + someString);
  * logger.debug("The int Y has this value: " + y);
  * </pre>
  *
- * <p>For logging calls that require even more computation you can use the
- * <code>isDebugEnabled()</code> method:
+ * <p>For logging calls that require even more computation you can use the <code>isDebugEnabled()
+ * </code> method:
+ *
  * <pre>
  * if (logger.isDebugEnabled()) {
  *   logger.info("The 1056389822th prime that is used is: ",
@@ -86,28 +91,28 @@ import org.apache.log4j.Logger;
  */
 public class LoggingTool implements ILoggingTool {
 
-    private boolean             toSTDOUT             = false;
+    private boolean toSTDOUT = false;
 
-    private Logger              log4jLogger;
+    private Logger log4jLogger;
     private static ILoggingTool logger;
-    private String              classname;
+    private String classname;
 
-    private int                 stackLength;                 // NOPMD
+    private int stackLength; // NOPMD
 
     /** Default number of StackTraceElements to be printed by debug(Exception). */
-    public final int            DEFAULT_STACK_LENGTH = 5;
+    public final int DEFAULT_STACK_LENGTH = 5;
 
     /**
-     * Constructs a LoggingTool which produces log lines without any special
-     * indication which class the message originates from.
+     * Constructs a LoggingTool which produces log lines without any special indication which class
+     * the message originates from.
      */
     public LoggingTool() {
         this(LoggingTool.class);
     }
 
     /**
-     * Constructs a LoggingTool which produces log lines indicating them to be
-     * for the Class of the <code>Object</code>.
+     * Constructs a LoggingTool which produces log lines indicating them to be for the Class of the
+     * <code>Object</code>.
      *
      * @param object Object from which the log messages originate
      */
@@ -116,8 +121,7 @@ public class LoggingTool implements ILoggingTool {
     }
 
     /**
-     * Constructs a LoggingTool which produces log lines indicating them to be
-     * for the given Class.
+     * Constructs a LoggingTool which produces log lines indicating them to be for the given Class.
      *
      * @param classInst Class from which the log messages originate
      */
@@ -157,22 +161,23 @@ public class LoggingTool implements ILoggingTool {
                     toSTDOUT = true;
                 }
             } catch (Exception e) {
-                System.err.println("Could not read the System property used to determine "
-                        + "if logging should be turned on. So continuing without logging.");
+                System.err.println(
+                        "Could not read the System property used to determine "
+                                + "if logging should be turned on. So continuing without logging.");
             }
         }
     }
 
     /**
-     * Forces the <code>LoggingTool</code> to configure the Log4J toolkit.
-     * Normally this should be done by the application that uses the CDK library,
-     * but is available for convenience.
+     * Forces the <code>LoggingTool</code> to configure the Log4J toolkit. Normally this should be
+     * done by the application that uses the CDK library, but is available for convenience.
      */
     public static void configureLog4j() {
         LoggingTool localLogger = new LoggingTool(LoggingTool.class);
         try { // NOPMD
-            org.apache.log4j.PropertyConfigurator.configure(LoggingTool.class
-                    .getResource("/org/openscience/cdk/config/data/log4j.properties"));
+            org.apache.log4j.PropertyConfigurator.configure(
+                    LoggingTool.class.getResource(
+                            "/org/openscience/cdk/config/data/log4j.properties"));
         } catch (NullPointerException e) { // NOPMD
             localLogger.error("Properties file not found: ", e.getMessage());
             localLogger.debug(e);
@@ -183,9 +188,8 @@ public class LoggingTool implements ILoggingTool {
     }
 
     /**
-     * Outputs system properties for the operating system and the java
-     * version. More specifically: os.name, os.version, os.arch, java.version
-     * and java.vendor.
+     * Outputs system properties for the operating system and the java version. More specifically:
+     * os.name, os.version, os.arch, java.version and java.vendor.
      */
     @Override
     public void dumpSystemProperties() {
@@ -197,12 +201,10 @@ public class LoggingTool implements ILoggingTool {
     }
 
     /**
-     * Sets the number of StackTraceElements to be printed in DEBUG mode when
-     * calling <code>debug(Throwable)</code>.
-     * The default value is DEFAULT_STACK_LENGTH.
+     * Sets the number of StackTraceElements to be printed in DEBUG mode when calling <code>
+     * debug(Throwable)</code>. The default value is DEFAULT_STACK_LENGTH.
      *
      * @param length the new stack length
-     *
      * @see #DEFAULT_STACK_LENGTH
      */
     @Override
@@ -210,18 +212,15 @@ public class LoggingTool implements ILoggingTool {
         this.stackLength = length;
     }
 
-    /**
-     * Outputs the system property for java.class.path.
-     */
+    /** Outputs the system property for java.class.path. */
     @Override
     public void dumpClasspath() {
         debug("java.class.path: " + System.getProperty("java.class.path"));
     }
 
     /**
-     * Shows DEBUG output for the Object. If the object is an instanceof
-     * Throwable it will output the trace. Otherwise it will use the
-     * toString() method.
+     * Shows DEBUG output for the Object. If the object is an instanceof Throwable it will output
+     * the trace. Otherwise it will use the toString() method.
      *
      * @param object Object to apply toString() too and output
      */
@@ -245,10 +244,10 @@ public class LoggingTool implements ILoggingTool {
     }
 
     /**
-     * Shows DEBUG output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
+     * Shows DEBUG output for the given Object's. It uses the toString() method to concatenate the
+     * objects.
      *
-     * @param object  Object to apply toString() too and output
+     * @param object Object to apply toString() too and output
      * @param objects Object[] to apply toString() too and output
      */
     @Override
@@ -289,7 +288,9 @@ public class LoggingTool implements ILoggingTool {
                     }
                 }
             } catch (Exception ioException) {
-                error("Serious error in LoggingTool while printing exception stack trace: " + ioException.getMessage());
+                error(
+                        "Serious error in LoggingTool while printing exception stack trace: "
+                                + ioException.getMessage());
                 logger.debug(ioException);
             }
             Throwable cause = problem.getCause();
@@ -311,8 +312,8 @@ public class LoggingTool implements ILoggingTool {
     }
 
     /**
-     * Shows ERROR output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
+     * Shows ERROR output for the given Object's. It uses the toString() method to concatenate the
+     * objects.
      *
      * @param object Object to apply toString() too and output
      * @param objects Object[] to apply toString() too and output
@@ -362,8 +363,8 @@ public class LoggingTool implements ILoggingTool {
     }
 
     /**
-     * Shows INFO output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
+     * Shows INFO output for the given Object's. It uses the toString() method to concatenate the
+     * objects.
      *
      * @param object Object to apply toString() too and output
      * @param objects Object[] to apply toString() too and output
@@ -407,8 +408,8 @@ public class LoggingTool implements ILoggingTool {
     }
 
     /**
-     * Shows WARN output for the given Object's. It uses the
-     * toString() method to concatenate the objects.
+     * Shows WARN output for the given Object's. It uses the toString() method to concatenate the
+     * objects.
      *
      * @param object Object to apply toString() too and output
      * @param objects Object[] to apply toString() too and output
@@ -426,8 +427,8 @@ public class LoggingTool implements ILoggingTool {
     }
 
     /**
-     * Use this method for computational demanding debug info.
-     * For example:
+     * Use this method for computational demanding debug info. For example:
+     *
      * <pre>
      * if (logger.isDebugEnabled()) {
      *   logger.info("The 1056389822th prime that is used is: ",
@@ -454,15 +455,13 @@ public class LoggingTool implements ILoggingTool {
      * Creates a new {@link LoggingTool} for the given class.
      *
      * @param sourceClass Class for which logging messages are recorded.
-     * @return            A {@link LoggingTool}.
+     * @return A {@link LoggingTool}.
      */
     public static ILoggingTool create(Class<?> sourceClass) {
         return new LoggingTool(sourceClass);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setLevel(int level) {
         switch (level) {
@@ -489,14 +488,11 @@ public class LoggingTool implements ILoggingTool {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getLevel() {
         Level level = log4jLogger.getLevel();
-        if (level == null)
-            level = Logger.getRootLogger().getLevel();
+        if (level == null) level = Logger.getRootLogger().getLevel();
         switch (level.toInt()) {
             case Level.TRACE_INT:
                 return TRACE;

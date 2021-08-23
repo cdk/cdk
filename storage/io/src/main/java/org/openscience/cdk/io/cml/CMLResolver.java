@@ -22,40 +22,34 @@ package org.openscience.cdk.io.cml;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 
 /**
- * This class resolves DOCTYPE declaration for Chemical Markup Language (CML)
- * files and uses a local version for validation. More information about
- * CML can be found at <a href="http://www.xml-cml.org/">http://www.xml-cml.org/</a>.
+ * This class resolves DOCTYPE declaration for Chemical Markup Language (CML) files and uses a local
+ * version for validation. More information about CML can be found at <a
+ * href="http://www.xml-cml.org/">http://www.xml-cml.org/</a>.
  *
  * @cdk.module io
  * @cdk.githash
- *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
- **/
+ */
 public class CMLResolver implements EntityResolver {
 
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CMLResolver.class);
 
     public CMLResolver() {}
 
-    /**
-     * Not implemented: always returns null.
-     **/
+    /** Not implemented: always returns null. */
     public InputSource getExternalSubset(String name, String baseURI) {
         return null;
     }
 
-    /**
-     * Not implemented, but uses resolveEntity(String publicId, String systemId)
-     * instead.
-     **/
-    public InputSource resolveEntity(String name, String publicId, String baseURI, String systemId) {
+    /** Not implemented, but uses resolveEntity(String publicId, String systemId) instead. */
+    public InputSource resolveEntity(
+            String name, String publicId, String baseURI, String systemId) {
         return resolveEntity(publicId, systemId);
     }
 
@@ -70,11 +64,13 @@ public class CMLResolver implements EntityResolver {
     public InputSource resolveEntity(String publicId, String systemId) {
         logger.debug("CMLResolver: resolving ", publicId, ", ", systemId);
         systemId = systemId.toLowerCase();
-        if ((systemId.indexOf("cml-1999-05-15.dtd") != -1) || (systemId.indexOf("cml.dtd") != -1)
+        if ((systemId.indexOf("cml-1999-05-15.dtd") != -1)
+                || (systemId.indexOf("cml.dtd") != -1)
                 || (systemId.indexOf("cml1_0.dtd") != -1)) {
             logger.info("File has CML 1.0 DTD");
             return getCMLType("cml1_0.dtd");
-        } else if ((systemId.indexOf("cml-2001-04-06.dtd") != -1) || (systemId.indexOf("cml1_0_1.dtd") != -1)
+        } else if ((systemId.indexOf("cml-2001-04-06.dtd") != -1)
+                || (systemId.indexOf("cml1_0_1.dtd") != -1)
                 || (systemId.indexOf("cml_1_0_1.dtd") != -1)) {
             logger.info("File has CML 1.0.1 DTD");
             return getCMLType("cml1_0_1.dtd");
@@ -85,17 +81,18 @@ public class CMLResolver implements EntityResolver {
     }
 
     /**
-     * Returns an InputSource of the appropriate CML DTD. It accepts
-     * two CML DTD names: cml1_0.dtd and cml1_0_1.dtd. Returns null
-     * for any other name.
+     * Returns an InputSource of the appropriate CML DTD. It accepts two CML DTD names: cml1_0.dtd
+     * and cml1_0_1.dtd. Returns null for any other name.
      *
      * @param type the name of the CML DTD version
      * @return the InputSource to the CML DTD
      */
     private InputSource getCMLType(String type) {
         try {
-            InputStream ins = this.getClass().getClassLoader()
-                    .getResourceAsStream("org/openscience/cdk/io/cml/data/" + type);
+            InputStream ins =
+                    this.getClass()
+                            .getClassLoader()
+                            .getResourceAsStream("org/openscience/cdk/io/cml/data/" + type);
             return new InputSource(new BufferedReader(new InputStreamReader(ins)));
         } catch (Exception e) {
             logger.error("Error while trying to read CML DTD (" + type + "): ", e.getMessage());

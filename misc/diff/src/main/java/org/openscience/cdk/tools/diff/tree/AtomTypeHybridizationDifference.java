@@ -21,19 +21,21 @@ package org.openscience.cdk.tools.diff.tree;
 import org.openscience.cdk.interfaces.IAtomType;
 
 /**
- * {@link org.openscience.cdk.tools.diff.tree.IDifference} between two {@link org.openscience.cdk.interfaces.IAtomType.Hybridization}s.
+ * {@link org.openscience.cdk.tools.diff.tree.IDifference} between two {@link
+ * org.openscience.cdk.interfaces.IAtomType.Hybridization}s.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module diff
  * @cdk.githash
  */
 public class AtomTypeHybridizationDifference implements IDifference {
 
-    private String                  name;
+    private String name;
     private IAtomType.Hybridization first;
     private IAtomType.Hybridization second;
 
-    private AtomTypeHybridizationDifference(String name, IAtomType.Hybridization first, IAtomType.Hybridization second) {
+    private AtomTypeHybridizationDifference(
+            String name, IAtomType.Hybridization first, IAtomType.Hybridization second) {
         this.name = name;
         this.first = first;
         this.second = second;
@@ -42,12 +44,13 @@ public class AtomTypeHybridizationDifference implements IDifference {
     /**
      * Constructs a new {@link IDifference} object.
      *
-     * @param name   a name reflecting the nature of the created {@link IDifference}
-     * @param first  the first object to compare
+     * @param name a name reflecting the nature of the created {@link IDifference}
+     * @param first the first object to compare
      * @param second the second object to compare
-     * @return       an {@link IDifference} reflecting the differences between the first and second object
+     * @return an {@link IDifference} reflecting the differences between the first and second object
      */
-    public static IDifference construct(String name, IAtomType.Hybridization first, IAtomType.Hybridization second) {
+    public static IDifference construct(
+            String name, IAtomType.Hybridization first, IAtomType.Hybridization second) {
         if (first == second) {
             return null;
         }

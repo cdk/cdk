@@ -19,7 +19,6 @@
 package org.openscience.cdk.io.formats;
 
 import java.util.StringTokenizer;
-
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
@@ -60,7 +59,7 @@ public class HINFormat extends SimpleChemFormatMatcher implements IChemFormatMat
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"hin"};
+        return new String[] {"hin"};
     }
 
     /** {@inheritDoc} */
@@ -79,7 +78,10 @@ public class HINFormat extends SimpleChemFormatMatcher implements IChemFormatMat
     @Override
     public boolean matches(int lineNumber, String line) {
         if (line.startsWith("atom ")
-                && (line.endsWith(" s") || line.endsWith(" d") || line.endsWith(" t") || line.endsWith(" a"))) {
+                && (line.endsWith(" s")
+                        || line.endsWith(" d")
+                        || line.endsWith(" t")
+                        || line.endsWith(" a"))) {
             StringTokenizer tokenizer = new StringTokenizer(line, " ");
             if ((tokenizer.countTokens() % 2) == 0) {
                 // odd number of values found, typical for HIN
@@ -104,7 +106,8 @@ public class HINFormat extends SimpleChemFormatMatcher implements IChemFormatMat
     /** {@inheritDoc} */
     @Override
     public int getRequiredDataFeatures() {
-        return DataFeatures.HAS_3D_COORDINATES | DataFeatures.HAS_ATOM_PARTIAL_CHARGES
+        return DataFeatures.HAS_3D_COORDINATES
+                | DataFeatures.HAS_ATOM_PARTIAL_CHARGES
                 | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
     }
 }

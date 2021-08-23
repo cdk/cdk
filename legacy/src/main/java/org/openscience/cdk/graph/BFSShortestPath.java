@@ -23,21 +23,18 @@
  */
 package org.openscience.cdk.graph;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.traverse.BreadthFirstIterator;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 /**
- * Utility class that finds the shortest bond path between two atoms using
- * a breadth first search.
+ * Utility class that finds the shortest bond path between two atoms using a breadth first search.
  *
  * @author Ulrich Bauer &lt;ulrich.bauer@alumni.tum.de&gt;
- *
- * @cdk.module  standard
+ * @cdk.module standard
  * @cdk.githash
  * @cdk.created 2004-10-19
  * @deprecated Use {@link ShortestPaths}
@@ -95,6 +92,5 @@ public final class BFSShortestPath {
         public Edge getSpanningTreeEdge(Object vertex) {
             return (Edge) getSeenData(vertex);
         }
-
     }
 }

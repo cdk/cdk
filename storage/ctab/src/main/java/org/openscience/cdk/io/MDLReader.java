@@ -31,13 +31,11 @@ import java.io.StringReader;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -57,15 +55,15 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * Reads a molecule from the original MDL MOL or SDF file {@cdk.cite DAL92}. An SD files
- * is read into a {@link IChemSequence} of {@link IChemModel}'s. Each ChemModel will contain one
- * Molecule. If the MDL molfile contains a property block, the {@link MDLV2000Reader} should be
- * used.
+ * Reads a molecule from the original MDL MOL or SDF file {@cdk.cite DAL92}. An SD files is read
+ * into a {@link IChemSequence} of {@link IChemModel}'s. Each ChemModel will contain one Molecule.
+ * If the MDL molfile contains a property block, the {@link MDLV2000Reader} should be used.
  *
- * <p>If all z coordinates are 0.0, then the xy coordinates are taken as
- * 2D, otherwise the coordinates are read as 3D.
+ * <p>If all z coordinates are 0.0, then the xy coordinates are taken as 2D, otherwise the
+ * coordinates are read as 3D.
  *
  * <p>The title of the MOL file is read and can be retrieved with:
+ *
  * <pre>
  *   molecule.getProperty(CDKConstants.TITLE);
  * </pre>
@@ -73,26 +71,23 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.module io
  * @cdk.githash
  * @cdk.iooptions
- *
- * @author     steinbeck
- * @author     Egon Willighagen
- * @cdk.created    2000-10-02
- * @cdk.keyword    file format, MDL molfile
- * @cdk.keyword    file format, SDF
- *
- * @see        org.openscience.cdk.io.MDLV2000Reader
- * @deprecated This reader is only for molfiles without a version tag, typically the most
- *             common molfile now encountered is V2000 and the {@link MDLV2000Reader} should be used
- *             instead. The V2000 reader can actually read files missing the version tag when
- *             in relaxed mode.
+ * @author steinbeck
+ * @author Egon Willighagen
+ * @cdk.created 2000-10-02
+ * @cdk.keyword file format, MDL molfile
+ * @cdk.keyword file format, SDF
+ * @see org.openscience.cdk.io.MDLV2000Reader
+ * @deprecated This reader is only for molfiles without a version tag, typically the most common
+ *     molfile now encountered is V2000 and the {@link MDLV2000Reader} should be used instead. The
+ *     V2000 reader can actually read files missing the version tag when in relaxed mode.
  */
 @Deprecated
 public class MDLReader extends DefaultChemObjectReader {
 
-    BufferedReader               input          = null;
-    private static ILoggingTool  logger         = LoggingToolFactory.createLoggingTool(MDLReader.class);
+    BufferedReader input = null;
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLReader.class);
 
-    private BooleanIOSetting     forceReadAs3DCoords;
+    private BooleanIOSetting forceReadAs3DCoords;
     private static final Pattern TRAILING_SPACE = Pattern.compile("\\s+$");
 
     public MDLReader() {
@@ -100,9 +95,9 @@ public class MDLReader extends DefaultChemObjectReader {
     }
 
     /**
-     *  Constructs a new MDLReader that can read Molecule from a given InputStream.
+     * Constructs a new MDLReader that can read Molecule from a given InputStream.
      *
-     *@param  in  The InputStream to read from
+     * @param in The InputStream to read from
      */
     public MDLReader(InputStream in) {
         this(in, Mode.RELAXED);
@@ -116,7 +111,7 @@ public class MDLReader extends DefaultChemObjectReader {
     /**
      * Constructs a new MDLReader that can read Molecule from a given Reader.
      *
-     * @param  in  The Reader to read from
+     * @param in The Reader to read from
      */
     public MDLReader(Reader in) {
         this(in, Mode.RELAXED);
@@ -164,14 +159,13 @@ public class MDLReader extends DefaultChemObjectReader {
     }
 
     /**
-     *  Takes an object which subclasses IChemObject, e.g. Molecule, and will read
-     *  this (from file, database, internet etc). If the specific implementation
-     *  does not support a specific IChemObject it will throw an Exception.
+     * Takes an object which subclasses IChemObject, e.g. Molecule, and will read this (from file,
+     * database, internet etc). If the specific implementation does not support a specific
+     * IChemObject it will throw an Exception.
      *
-     *@param  object                              The object that subclasses
-     *      IChemObject
-     *@return                                     The IChemObject read
-     *@exception  CDKException
+     * @param object The object that subclasses IChemObject
+     * @return The IChemObject read
+     * @exception CDKException
      */
     @Override
     public <T extends IChemObject> T read(T object) throws CDKException {
@@ -202,13 +196,14 @@ public class MDLReader extends DefaultChemObjectReader {
     /**
      * Read a ChemFile from a file in MDL SDF format.
      *
-     * @return    The ChemFile that was read from the MDL file.
+     * @return The ChemFile that was read from the MDL file.
      */
     private IChemFile readChemFile(IChemFile chemFile) throws CDKException {
         IChemSequence chemSequence = chemFile.getBuilder().newInstance(IChemSequence.class);
 
         IChemModel chemModel = chemFile.getBuilder().newInstance(IChemModel.class);
-        IAtomContainerSet setOfMolecules = chemFile.getBuilder().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfMolecules =
+                chemFile.getBuilder().newInstance(IAtomContainerSet.class);
         IAtomContainer m = readMolecule(chemFile.getBuilder().newInstance(IAtomContainer.class));
         if (m != null) {
             setOfMolecules.addAtomContainer(m);
@@ -226,8 +221,7 @@ public class MDLReader extends DefaultChemObjectReader {
                 // apparently, this is a SDF file, continue with
                 // reading mol files
                 str = line;
-                if (line.equals("M  END"))
-                    continue;
+                if (line.equals("M  END")) continue;
                 if (str.equals("$$$$")) {
                     m = readMolecule(chemFile.getBuilder().newInstance(IAtomContainer.class));
 
@@ -239,7 +233,6 @@ public class MDLReader extends DefaultChemObjectReader {
 
                         setOfMolecules = chemFile.getBuilder().newInstance(IAtomContainerSet.class);
                         chemModel = chemFile.getBuilder().newInstance(IChemModel.class);
-
                     }
                 } else {
                     // here the stuff between 'M  END' and '$$$$'
@@ -267,12 +260,15 @@ public class MDLReader extends DefaultChemObjectReader {
                         String data = line;
                         while ((line = input.readLine()) != null && line.trim().length() > 0) {
                             if (line.equals("$$$$")) {
-                                logger.error("Expecting data line here, but found end of molecule: ", line);
+                                logger.error(
+                                        "Expecting data line here, but found end of molecule: ",
+                                        line);
                                 break;
                             }
                             logger.debug("data line: ", line);
                             data += line;
-                            // preserve newlines, unless the line is exactly 80 chars; in that case it
+                            // preserve newlines, unless the line is exactly 80 chars; in that case
+                            // it
                             // is assumed to continue on the next line. See MDL documentation.
                             if (line.length() < 80) data += "\n";
                         }
@@ -304,9 +300,9 @@ public class MDLReader extends DefaultChemObjectReader {
     }
 
     /**
-     *  Read a Molecule from a file in MDL sd format
+     * Read a Molecule from a file in MDL sd format
      *
-     *@return    The Molecule that was read from the MDL file.
+     * @return The Molecule that was read from the MDL file.
      */
     private IAtomContainer readMolecule(IAtomContainer molecule) throws CDKException {
         logger.debug("Reading new molecule");
@@ -326,8 +322,8 @@ public class MDLReader extends DefaultChemObjectReader {
         double totalX = 0.0;
         double totalY = 0.0;
         double totalZ = 0.0;
-        //int[][] conMat = new int[0][0];
-        //String help;
+        // int[][] conMat = new int[0][0];
+        // String help;
         IAtom atom;
         String line = "";
 
@@ -383,7 +379,10 @@ public class MDLReader extends DefaultChemObjectReader {
                 linecount++;
                 Matcher trailingSpaceMatcher = TRAILING_SPACE.matcher(line);
                 if (trailingSpaceMatcher.find()) {
-                    handleError("Trailing space found", linecount, trailingSpaceMatcher.start(),
+                    handleError(
+                            "Trailing space found",
+                            linecount,
+                            trailingSpaceMatcher.start(),
                             trailingSpaceMatcher.end());
                     line = trailingSpaceMatcher.replaceAll("");
                 }
@@ -397,13 +396,19 @@ public class MDLReader extends DefaultChemObjectReader {
                 logger.debug("Coordinates: " + x + "; " + y + "; " + z);
                 String element = line.substring(31, Math.min(34, line.length())).trim();
                 if (line.length() < 34) {
-                    handleError("Element atom type does not follow V2000 format type should of length three"
-                            + " and padded with space if required", linecount, 31, 34);
+                    handleError(
+                            "Element atom type does not follow V2000 format type should of length three"
+                                    + " and padded with space if required",
+                            linecount,
+                            31,
+                            34);
                 }
 
                 logger.debug("Atom type: ", element);
                 if (isotopeFactory.isElement(element)) {
-                    atom = isotopeFactory.configure(molecule.getBuilder().newInstance(IAtom.class, element));
+                    atom =
+                            isotopeFactory.configure(
+                                    molecule.getBuilder().newInstance(IAtom.class, element));
                 } else if ("A".equals(element)) {
                     atom = molecule.getBuilder().newInstance(IPseudoAtom.class, element);
                 } else if ("Q".equals(element)) {
@@ -415,8 +420,9 @@ public class MDLReader extends DefaultChemObjectReader {
                 } else if ("L".equals(element)) {
                     atom = molecule.getBuilder().newInstance(IPseudoAtom.class, element);
                 } else if (element.length() > 0 && element.charAt(0) == 'R') {
-                    logger.debug("Atom ", element, " is not an regular element. Creating a PseudoAtom.");
-                    //check if the element is R
+                    logger.debug(
+                            "Atom ", element, " is not an regular element. Creating a PseudoAtom.");
+                    // check if the element is R
                     rGroup = element.split("^R");
                     if (rGroup.length > 1) {
                         try {
@@ -495,12 +501,14 @@ public class MDLReader extends DefaultChemObjectReader {
                             atom.setProperty(CDKConstants.ATOM_ATOM_MAPPING, reactionAtomID);
                         }
                     } catch (Exception exception) {
-                        logger.error("Mapping number ", reactionAtomIDString, " is not an integer.");
+                        logger.error(
+                                "Mapping number ", reactionAtomIDString, " is not an integer.");
                         logger.debug(exception);
                     }
                 }
 
-                //shk3: This reads shifts from after the molecule. I don't think this is an official format, but I saw it frequently 80=>78 for alk
+                // shk3: This reads shifts from after the molecule. I don't think this is an
+                // official format, but I saw it frequently 80=>78 for alk
                 if (line.length() >= 78) {
                     double shift = Double.parseDouble(line.substring(69, 80).trim());
                     atom.setProperty("first shift", new Double(shift));
@@ -550,10 +558,10 @@ public class MDLReader extends DefaultChemObjectReader {
                         // bond has no stereochemistry
                         stereo = IBond.Stereo.NONE;
                     } else if (mdlStereo == 4) {
-                        //MDL up or down bond
+                        // MDL up or down bond
                         stereo = IBond.Stereo.UP_OR_DOWN;
                     } else if (mdlStereo == 3) {
-                        //MDL e or z undefined
+                        // MDL e or z undefined
                         stereo = IBond.Stereo.E_OR_Z;
                     }
                 } else {
@@ -571,16 +579,23 @@ public class MDLReader extends DefaultChemObjectReader {
                     if (order == 2) cdkOrder = IBond.Order.DOUBLE;
                     if (order == 3) cdkOrder = IBond.Order.TRIPLE;
                     if (stereo != null) {
-                        newBond = molecule.getBuilder().newInstance(IBond.class, a1, a2, cdkOrder, stereo);
+                        newBond =
+                                molecule.getBuilder()
+                                        .newInstance(IBond.class, a1, a2, cdkOrder, stereo);
                     } else {
                         newBond = molecule.getBuilder().newInstance(IBond.class, a1, a2, cdkOrder);
                     }
                 } else if (order == 4) {
                     // aromatic bond
                     if (stereo != null) {
-                        newBond = molecule.getBuilder().newInstance(IBond.class, a1, a2, IBond.Order.SINGLE, stereo);
+                        newBond =
+                                molecule.getBuilder()
+                                        .newInstance(
+                                                IBond.class, a1, a2, IBond.Order.SINGLE, stereo);
                     } else {
-                        newBond = molecule.getBuilder().newInstance(IBond.class, a1, a2, IBond.Order.SINGLE);
+                        newBond =
+                                molecule.getBuilder()
+                                        .newInstance(IBond.class, a1, a2, IBond.Order.SINGLE);
                     }
                     // mark both atoms and the bond as aromatic
                     newBond.setFlag(CDKConstants.ISAROMATIC, true);
@@ -591,7 +606,13 @@ public class MDLReader extends DefaultChemObjectReader {
             }
 
         } catch (IOException | CDKException | IllegalArgumentException exception) {
-            String error = "Error while parsing line " + linecount + ": " + line + " -> " + exception.getMessage();
+            String error =
+                    "Error while parsing line "
+                            + linecount
+                            + ": "
+                            + line
+                            + " -> "
+                            + exception.getMessage();
             logger.error(error);
             logger.debug(exception);
             throw new CDKException(error, exception);
@@ -605,12 +626,16 @@ public class MDLReader extends DefaultChemObjectReader {
     }
 
     private void initIOSettings() {
-        forceReadAs3DCoords = addSetting(new BooleanIOSetting("ForceReadAs3DCoordinates", IOSetting.Importance.LOW,
-                "Should coordinates always be read as 3D?", "false"));
+        forceReadAs3DCoords =
+                addSetting(
+                        new BooleanIOSetting(
+                                "ForceReadAs3DCoordinates",
+                                IOSetting.Importance.LOW,
+                                "Should coordinates always be read as 3D?",
+                                "false"));
     }
 
     public void customizeJob() {
         fireIOSettingQuestion(forceReadAs3DCoords);
     }
-
 }

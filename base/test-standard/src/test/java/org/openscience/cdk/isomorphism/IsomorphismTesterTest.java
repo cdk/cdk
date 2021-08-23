@@ -150,16 +150,17 @@ public class IsomorphismTesterTest extends CDKTestCase {
     @Test
     public void testBiphenyl() throws Exception {
 
-        //get the biphenyl as aromatic smiles
+        // get the biphenyl as aromatic smiles
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer biphenyl_aromaticsmiles = parser.parseSmiles("c1ccccc1-c2ccccc2");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(biphenyl_aromaticsmiles);
-        CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(biphenyl_aromaticsmiles.getBuilder());
+        CDKHydrogenAdder hAdder =
+                CDKHydrogenAdder.getInstance(biphenyl_aromaticsmiles.getBuilder());
         hAdder.addImplicitHydrogens(biphenyl_aromaticsmiles);
         Aromaticity.cdkLegacy().apply(biphenyl_aromaticsmiles);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(biphenyl_aromaticsmiles);
 
-        //get the biphenyl as Kekule smiles
+        // get the biphenyl as Kekule smiles
         IAtomContainer biphenyl_kekulesmiles = parser.parseSmiles("C1=C(C=CC=C1)C2=CC=CC=C2");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(biphenyl_kekulesmiles);
         hAdder = CDKHydrogenAdder.getInstance(biphenyl_kekulesmiles.getBuilder());
@@ -167,6 +168,8 @@ public class IsomorphismTesterTest extends CDKTestCase {
         Aromaticity.cdkLegacy().apply(biphenyl_kekulesmiles);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(biphenyl_kekulesmiles);
 
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(biphenyl_aromaticsmiles, biphenyl_kekulesmiles));
+        Assert.assertTrue(
+                new UniversalIsomorphismTester()
+                        .isIsomorph(biphenyl_aromaticsmiles, biphenyl_kekulesmiles));
     }
 }

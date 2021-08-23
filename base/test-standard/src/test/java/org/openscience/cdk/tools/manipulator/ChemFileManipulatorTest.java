@@ -23,7 +23,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -54,26 +53,24 @@ import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-/**
- * @cdk.module test-standard
- */
+/** @cdk.module test-standard */
 public class ChemFileManipulatorTest extends CDKTestCase {
 
-    private final static ILoggingTool logger        = LoggingToolFactory
-                                                            .createLoggingTool(ChemFileManipulatorTest.class);
+    private static final ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(ChemFileManipulatorTest.class);
 
-    IAtomContainer                    molecule1     = null;
-    IAtomContainer                    molecule2     = null;
-    IAtom                             atomInMol1    = null;
-    IBond                             bondInMol1    = null;
-    IAtom                             atomInMol2    = null;
-    IAtomContainerSet                 moleculeSet   = null;
-    IReaction                         reaction      = null;
-    IReactionSet                      reactionSet   = null;
-    IChemModel                        chemModel     = null;
-    IChemSequence                     chemSequence1 = null;
-    IChemSequence                     chemSequence2 = null;
-    IChemFile                         chemFile      = null;
+    IAtomContainer molecule1 = null;
+    IAtomContainer molecule2 = null;
+    IAtom atomInMol1 = null;
+    IBond bondInMol1 = null;
+    IAtom atomInMol2 = null;
+    IAtomContainerSet moleculeSet = null;
+    IReaction reaction = null;
+    IReactionSet reactionSet = null;
+    IChemModel chemModel = null;
+    IChemSequence chemSequence1 = null;
+    IChemSequence chemSequence2 = null;
+    IChemFile chemFile = null;
 
     public ChemFileManipulatorTest() {
         super();
@@ -157,26 +154,19 @@ public class ChemFileManipulatorTest extends CDKTestCase {
         int reactionSetCount = 0;
         int chemModelCount = 0;
         int chemSequenceCount = 0;
-        for (Iterator<IChemObject> iter = list.iterator(); iter.hasNext();) {
+        for (Iterator<IChemObject> iter = list.iterator(); iter.hasNext(); ) {
             Object o = iter.next();
             if (o instanceof IAtom) ++atomCount;
             if (o instanceof IBond) ++bondCount;
-            if (o instanceof IAtomContainer)
-                ++molCount;
-            else if (o instanceof IAtomContainerSet)
-                ++molSetCount;
-            else if (o instanceof IReaction)
-                ++reactionCount;
-            else if (o instanceof IReactionSet)
-                ++reactionSetCount;
-            else if (o instanceof IChemModel)
-                ++chemModelCount;
-            else if (o instanceof IChemSequence)
-                ++chemSequenceCount;
-            else
-                Assert.fail("Unexpected Object of type " + o.getClass());
+            if (o instanceof IAtomContainer) ++molCount;
+            else if (o instanceof IAtomContainerSet) ++molSetCount;
+            else if (o instanceof IReaction) ++reactionCount;
+            else if (o instanceof IReactionSet) ++reactionSetCount;
+            else if (o instanceof IChemModel) ++chemModelCount;
+            else if (o instanceof IChemSequence) ++chemSequenceCount;
+            else Assert.fail("Unexpected Object of type " + o.getClass());
         }
-        Assert.assertEquals(0, atomCount); /// it does not recurse into IAtomContainer
+        Assert.assertEquals(0, atomCount); // / it does not recurse into IAtomContainer
         Assert.assertEquals(0, bondCount);
         Assert.assertEquals(2, molCount);
         Assert.assertEquals(1, molSetCount);
@@ -197,5 +187,4 @@ public class ChemFileManipulatorTest extends CDKTestCase {
         List<IReaction> list = ChemFileManipulator.getAllReactions(chemFile);
         Assert.assertEquals(1, list.size());
     }
-
 }

@@ -43,9 +43,11 @@ import java.util.BitSet;
 import java.util.HashMap;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
 import org.hamcrest.CoreMatchers;
-import org.junit.Assert;
+import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDK;
 import org.openscience.cdk.CDKTestCase;
@@ -64,20 +66,14 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
-/**
- * @cdk.module test-standard
- */
+/** @cdk.module test-standard */
 public class CircularFingerprinterTest extends CDKTestCase {
 
-    private static ILoggingTool   logger     = LoggingToolFactory.createLoggingTool(CircularFingerprinterTest.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(CircularFingerprinterTest.class);
 
     private static IAtomContainer trivialMol = null;
+
     static {
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
         try {
@@ -100,23 +96,25 @@ public class CircularFingerprinterTest extends CDKTestCase {
         logger.info("CircularFingerprinter test: completed without any problems");
     }
 
-    @Test public void testUseStereoElements() throws CDKException {
-        final String smiles1  = "CC[C@@H](C)O";
-        final String smiles2  = "CC[C@H](O)C";
-        final String molfile = "\n"
-                             + "  CDK     10121722462D          \n"
-                             + "\n"
-                             + "  5  4  0  0  0  0            999 V2000\n"
-                             + "   -4.1837    2.6984    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
-                             + "   -3.4692    3.1109    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
-                             + "   -2.7547    2.6984    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0\n"
-                             + "   -2.0403    3.1109    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
-                             + "   -2.7547    1.8734    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n"
-                             + "  1  2  1  0  0  0  0\n"
-                             + "  2  3  1  0  0  0  0\n"
-                             + "  3  4  1  0  0  0  0\n"
-                             + "  3  5  1  1  0  0  0\n"
-                             + "M  END\n";
+    @Test
+    public void testUseStereoElements() throws CDKException {
+        final String smiles1 = "CC[C@@H](C)O";
+        final String smiles2 = "CC[C@H](O)C";
+        final String molfile =
+                "\n"
+                        + "  CDK     10121722462D          \n"
+                        + "\n"
+                        + "  5  4  0  0  0  0            999 V2000\n"
+                        + "   -4.1837    2.6984    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                        + "   -3.4692    3.1109    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                        + "   -2.7547    2.6984    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0\n"
+                        + "   -2.0403    3.1109    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                        + "   -2.7547    1.8734    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                        + "  1  2  1  0  0  0  0\n"
+                        + "  2  3  1  0  0  0  0\n"
+                        + "  3  4  1  0  0  0  0\n"
+                        + "  3  5  1  1  0  0  0\n"
+                        + "M  END\n";
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         MDLV2000Reader mdlr = new MDLV2000Reader(new StringReader(molfile));
         SmilesParser smipar = new SmilesParser(bldr);
@@ -130,12 +128,16 @@ public class CircularFingerprinterTest extends CDKTestCase {
         // when stereo-chemistry is perceived we don't have coordinates from the
         // SMILES and so get a different fingerprint
         fpr.setPerceiveStereo(true);
-        org.hamcrest.MatcherAssert.assertThat(fpr.getFingerprint(mol1), is(fpr.getFingerprint(mol2)));
-        org.hamcrest.MatcherAssert.assertThat(fpr.getFingerprint(mol2), is(not(fpr.getFingerprint(mol3))));
+        org.hamcrest.MatcherAssert.assertThat(
+                fpr.getFingerprint(mol1), is(fpr.getFingerprint(mol2)));
+        org.hamcrest.MatcherAssert.assertThat(
+                fpr.getFingerprint(mol2), is(not(fpr.getFingerprint(mol3))));
 
         fpr.setPerceiveStereo(false);
-        org.hamcrest.MatcherAssert.assertThat(fpr.getFingerprint(mol1), is(fpr.getFingerprint(mol2)));
-        org.hamcrest.MatcherAssert.assertThat(fpr.getFingerprint(mol2), is(fpr.getFingerprint(mol3)));
+        org.hamcrest.MatcherAssert.assertThat(
+                fpr.getFingerprint(mol1), is(fpr.getFingerprint(mol2)));
+        org.hamcrest.MatcherAssert.assertThat(
+                fpr.getFingerprint(mol2), is(fpr.getFingerprint(mol3)));
     }
 
     @Test
@@ -146,9 +148,9 @@ public class CircularFingerprinterTest extends CDKTestCase {
 
         BitSet wantBits = new BitSet(), gotBits = result.asBitSet();
         final int[] REQUIRE_BITS = {19, 152, 293, 340, 439, 480, 507, 726, 762, 947, 993};
-        for (int b : REQUIRE_BITS)
-            wantBits.set(b);
-        if (!wantBits.equals(gotBits)) throw new CDKException("Got " + gotBits + ", wanted " + wantBits);
+        for (int b : REQUIRE_BITS) wantBits.set(b);
+        if (!wantBits.equals(gotBits))
+            throw new CDKException("Got " + gotBits + ", wanted " + wantBits);
     }
 
     @Test
@@ -157,8 +159,30 @@ public class CircularFingerprinterTest extends CDKTestCase {
         CircularFingerprinter circ = new CircularFingerprinter();
         ICountFingerprint result = circ.getCountFingerprint(trivialMol);
 
-        final int[] ANSWER_KEY = {-414937772, 1, -1027418143, 1, 1627608083, 1, -868007456, 1, -1006701866, 1,
-                -1059145289, 1, -801752141, 1, 790592664, 1, -289109509, 1, -1650154758, 1, 1286833445, 1};
+        final int[] ANSWER_KEY = {
+            -414937772,
+            1,
+            -1027418143,
+            1,
+            1627608083,
+            1,
+            -868007456,
+            1,
+            -1006701866,
+            1,
+            -1059145289,
+            1,
+            -801752141,
+            1,
+            790592664,
+            1,
+            -289109509,
+            1,
+            -1650154758,
+            1,
+            1286833445,
+            1
+        };
 
         int wantBits = ANSWER_KEY.length >> 1;
         boolean fail = result.numOfPopulatedbins() != wantBits;
@@ -170,8 +194,13 @@ public class CircularFingerprinterTest extends CDKTestCase {
                 if (gotHash == wantHash) {
                     found = true;
                     if (gotCount != wantCount)
-                        throw new CDKException("For hash " + gotHash + " got count " + gotCount + " but wanted "
-                                + wantCount);
+                        throw new CDKException(
+                                "For hash "
+                                        + gotHash
+                                        + " got count "
+                                        + gotCount
+                                        + " but wanted "
+                                        + wantCount);
                 }
             }
             if (!found) {
@@ -207,10 +236,9 @@ public class CircularFingerprinterTest extends CDKTestCase {
 
         zip.close();
 
-        for (int idx = 1;; idx++) {
+        for (int idx = 1; ; idx++) {
             String basefn = String.valueOf(idx);
-            while (basefn.length() < 6)
-                basefn = "0" + basefn;
+            while (basefn.length() < 6) basefn = "0" + basefn;
             byte[] molBytes = content.get(basefn + ".mol");
             if (molBytes == null) break;
 
@@ -219,11 +247,22 @@ public class CircularFingerprinterTest extends CDKTestCase {
             mdl.read(mol);
             mdl.close();
 
-            CircularFingerprinter.FP[] validateECFP = parseValidation(content.get(basefn + ".ecfp"));
-            CircularFingerprinter.FP[] validateFCFP = parseValidation(content.get(basefn + ".fcfp"));
+            CircularFingerprinter.FP[] validateECFP =
+                    parseValidation(content.get(basefn + ".ecfp"));
+            CircularFingerprinter.FP[] validateFCFP =
+                    parseValidation(content.get(basefn + ".fcfp"));
 
-            logger.info("FN=" + basefn + " MOL=" + mol.getAtomCount() + "," + mol.getBondCount() + " Requires ECFP="
-                    + validateECFP.length + " FCFP=" + validateFCFP.length);
+            logger.info(
+                    "FN="
+                            + basefn
+                            + " MOL="
+                            + mol.getAtomCount()
+                            + ","
+                            + mol.getBondCount()
+                            + " Requires ECFP="
+                            + validateECFP.length
+                            + " FCFP="
+                            + validateFCFP.length);
 
             validateFingerprints("ECFP6", mol, CircularFingerprinter.CLASS_ECFP6, validateECFP);
             validateFingerprints("FCFP6", mol, CircularFingerprinter.CLASS_FCFP6, validateFCFP);
@@ -243,7 +282,9 @@ public class CircularFingerprinterTest extends CDKTestCase {
             int iteration = Integer.parseInt(bits[1]);
             int[] atoms = new int[bits.length - 2];
             for (int n = 0; n < atoms.length; n++)
-                atoms[n] = Integer.parseInt(bits[n + 2]) - 1; // note: atom#'s are 1-based in reference file
+                atoms[n] =
+                        Integer.parseInt(bits[n + 2])
+                                - 1; // note: atom#'s are 1-based in reference file
             list.add(new CircularFingerprinter.FP(hashCode, iteration, atoms));
         }
 
@@ -251,8 +292,9 @@ public class CircularFingerprinterTest extends CDKTestCase {
         return list.toArray(new CircularFingerprinter.FP[list.size()]);
     }
 
-    private void validateFingerprints(String label, AtomContainer mol, int classType,
-            CircularFingerprinter.FP[] validate) throws Exception {
+    private void validateFingerprints(
+            String label, AtomContainer mol, int classType, CircularFingerprinter.FP[] validate)
+            throws Exception {
         CircularFingerprinter circ = new CircularFingerprinter(classType);
         try {
             circ.calculate(mol);
@@ -265,8 +307,7 @@ public class CircularFingerprinterTest extends CDKTestCase {
         }
 
         CircularFingerprinter.FP[] obtained = new CircularFingerprinter.FP[circ.getFPCount()];
-        for (int n = 0; n < circ.getFPCount(); n++)
-            obtained[n] = circ.getFP(n);
+        for (int n = 0; n < circ.getFPCount(); n++) obtained[n] = circ.getFP(n);
 
         boolean same = obtained.length == validate.length;
         for (int i = 0; i < obtained.length && same; i++) {
@@ -305,17 +346,16 @@ public class CircularFingerprinterTest extends CDKTestCase {
     }
 
     private boolean equalFingerprints(CircularFingerprinter.FP fp1, CircularFingerprinter.FP fp2) {
-        if (fp1.hashCode != fp2.hashCode || fp1.iteration != fp2.iteration || fp1.atoms.length != fp2.atoms.length)
-            return false;
-        for (int n = 0; n < fp1.atoms.length; n++)
-            if (fp1.atoms[n] != fp2.atoms[n]) return false;
+        if (fp1.hashCode != fp2.hashCode
+                || fp1.iteration != fp2.iteration
+                || fp1.atoms.length != fp2.atoms.length) return false;
+        for (int n = 0; n < fp1.atoms.length; n++) if (fp1.atoms[n] != fp2.atoms[n]) return false;
         return true;
     }
 
     private String formatFP(CircularFingerprinter.FP fp) {
         String str = "[" + fp.hashCode + "] iter=" + fp.iteration + " atoms={";
-        for (int n = 0; n < fp.atoms.length; n++)
-            str += (n > 0 ? "," : "") + fp.atoms[n];
+        for (int n = 0; n < fp.atoms.length; n++) str += (n > 0 ? "," : "") + fp.atoms[n];
         return str + "}";
     }
 
@@ -346,9 +386,7 @@ public class CircularFingerprinterTest extends CDKTestCase {
         assertNotNull(circ.getBitFingerprint(pyrazole));
     }
 
-    /**
-     * @cdk.bug 1357
-     */
+    /** @cdk.bug 1357 */
     @Test
     public void partialCoordinatesDontCauseNPE() throws Exception {
         IAtomContainer m = new AtomContainer();
@@ -367,39 +405,37 @@ public class CircularFingerprinterTest extends CDKTestCase {
         assertNotNull(circ.getBitFingerprint(m));
     }
 
-	@Test
-	public void testNonZZeroPlaner() throws Exception {
-	    IAtomContainer mol = new AtomContainer();
-	    Atom[] atoms = new Atom[] {
-	        new Atom("C"),
-	        new Atom("F"),
-	        new Atom("N"),
-	        new Atom("O"),
-	    };
-	    atoms[0].setPoint3d(new Point3d(0, 0, -10));
-	    atoms[1].setPoint3d(new Point3d(0, 1, -10));
-	    atoms[2].setPoint3d(new Point3d(-1, -1, -10));
-	    atoms[3].setPoint3d(new Point3d(1, -1, -10));
-	    mol.setAtoms(atoms);
-	    mol.addBond(0, 1, IBond.Order.SINGLE);
-	    mol.addBond(0, 2, IBond.Order.SINGLE);
-	    mol.addBond(0, 3, IBond.Order.SINGLE);
-	    mol.getBond(0).setStereo(IBond.Stereo.UP);
-	    
-	    CircularFingerprinter circ = new CircularFingerprinter(CircularFingerprinter.CLASS_ECFP6);
-	    circ.setPerceiveStereo(true);
-	    IBitFingerprint fp0 = circ.getBitFingerprint(mol);
-	    
-	    for (int i = 0; i < atoms.length; i++) {
-	        Point3d p = atoms[i].getPoint3d();
-	        atoms[i].setPoint3d(new Point3d(p.x, p.y, p.z + 20));
-	    }
-	
-	    IBitFingerprint fp1 = circ.getBitFingerprint(mol);
-	    
-	    org.hamcrest.MatcherAssert.assertThat(fp0, is(fp1));
-	}
-    
+    @Test
+    public void testNonZZeroPlaner() throws Exception {
+        IAtomContainer mol = new AtomContainer();
+        Atom[] atoms =
+                new Atom[] {
+                    new Atom("C"), new Atom("F"), new Atom("N"), new Atom("O"),
+                };
+        atoms[0].setPoint3d(new Point3d(0, 0, -10));
+        atoms[1].setPoint3d(new Point3d(0, 1, -10));
+        atoms[2].setPoint3d(new Point3d(-1, -1, -10));
+        atoms[3].setPoint3d(new Point3d(1, -1, -10));
+        mol.setAtoms(atoms);
+        mol.addBond(0, 1, IBond.Order.SINGLE);
+        mol.addBond(0, 2, IBond.Order.SINGLE);
+        mol.addBond(0, 3, IBond.Order.SINGLE);
+        mol.getBond(0).setStereo(IBond.Stereo.UP);
+
+        CircularFingerprinter circ = new CircularFingerprinter(CircularFingerprinter.CLASS_ECFP6);
+        circ.setPerceiveStereo(true);
+        IBitFingerprint fp0 = circ.getBitFingerprint(mol);
+
+        for (int i = 0; i < atoms.length; i++) {
+            Point3d p = atoms[i].getPoint3d();
+            atoms[i].setPoint3d(new Point3d(p.x, p.y, p.z + 20));
+        }
+
+        IBitFingerprint fp1 = circ.getBitFingerprint(mol);
+
+        org.hamcrest.MatcherAssert.assertThat(fp0, is(fp1));
+    }
+
     static IAtom atom(String symbol, int q, int h) {
         IAtom a = new Atom(symbol);
         a.setFormalCharge(q);
@@ -409,17 +445,19 @@ public class CircularFingerprinterTest extends CDKTestCase {
 
     static IAtom atom(String symbol, int h, double x, double y) {
         IAtom a = new Atom(symbol);
-        a.setPoint2d(new Point2d(x,y));
+        a.setPoint2d(new Point2d(x, y));
         a.setImplicitHydrogenCount(h);
         return a;
     }
 
-    @Test public void testVersion() {
+    @Test
+    public void testVersion() {
         CircularFingerprinter fpr = new CircularFingerprinter(CircularFingerprinter.CLASS_ECFP4);
-        String expected = "CDK-CircularFingerprinter/" + CDK.getVersion() +
-                          " classType=ECFP4 perceiveStereochemistry=false";
-        org.hamcrest.MatcherAssert.assertThat(fpr.getVersionDescription(),
-                          CoreMatchers.is(expected));
+        String expected =
+                "CDK-CircularFingerprinter/"
+                        + CDK.getVersion()
+                        + " classType=ECFP4 perceiveStereochemistry=false";
+        org.hamcrest.MatcherAssert.assertThat(
+                fpr.getVersionDescription(), CoreMatchers.is(expected));
     }
-
 }

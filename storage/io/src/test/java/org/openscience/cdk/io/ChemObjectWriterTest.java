@@ -21,6 +21,8 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.ByteArrayOutputStream;
+import java.io.StringWriter;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.exception.CDKException;
@@ -30,9 +32,6 @@ import org.openscience.cdk.silent.AtomContainerSet;
 import org.openscience.cdk.silent.ChemFile;
 import org.openscience.cdk.silent.ChemModel;
 import org.openscience.cdk.silent.Reaction;
-
-import java.io.ByteArrayOutputStream;
-import java.io.StringWriter;
 
 /**
  * TestCase for {@link IChemObjectWriter} implementations.
@@ -48,13 +47,13 @@ public abstract class ChemObjectWriterTest extends ChemObjectIOTest {
         ChemObjectWriterTest.chemObjectIO = aChemObjectWriter;
     }
 
-    private static IChemObject[] allChemObjectsTypes = {new ChemFile(), new ChemModel(), new Reaction(),
-            new AtomContainerSet(), new AtomContainer()};
+    private static IChemObject[] allChemObjectsTypes = {
+        new ChemFile(), new ChemModel(), new Reaction(), new AtomContainerSet(), new AtomContainer()
+    };
 
     /**
-     * Unit tests that iterates over all common objects that can be
-     * serialized and tests that if it is marked as accepted with
-     * <code>accepts</code>, that it can actually be written too.
+     * Unit tests that iterates over all common objects that can be serialized and tests that if it
+     * is marked as accepted with <code>accepts</code>, that it can actually be written too.
      */
     @Test
     public void testAcceptsWriteConsistency() throws CDKException {
@@ -67,8 +66,11 @@ public abstract class ChemObjectWriterTest extends ChemObjectIOTest {
                     chemObjectIO.write(object);
                 } catch (CDKException exception) {
                     if (exception.getMessage().contains("Only supported")) {
-                        Assert.fail("IChemObject of type " + object.getClass().getName() + " is marked as "
-                                + "accepted, but failed to be written.");
+                        Assert.fail(
+                                "IChemObject of type "
+                                        + object.getClass().getName()
+                                        + " is marked as "
+                                        + "accepted, but failed to be written.");
                     } else {
                         throw exception;
                     }

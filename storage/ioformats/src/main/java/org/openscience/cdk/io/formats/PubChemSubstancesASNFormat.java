@@ -24,7 +24,8 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.module ioformats
  * @cdk.githash
  */
-public class PubChemSubstancesASNFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
+public class PubChemSubstancesASNFormat extends SimpleChemFormatMatcher
+        implements IChemFormatMatcher {
 
     private static IResourceFormat myself = null;
 
@@ -56,7 +57,7 @@ public class PubChemSubstancesASNFormat extends SimpleChemFormatMatcher implemen
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"asn"};
+        return new String[] {"asn"};
     }
 
     /** {@inheritDoc} */

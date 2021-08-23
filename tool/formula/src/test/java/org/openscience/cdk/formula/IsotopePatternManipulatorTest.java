@@ -1,7 +1,6 @@
 package org.openscience.cdk.formula;
 
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -46,7 +45,6 @@ public class IsotopePatternManipulatorTest extends CDKTestCase {
         Assert.assertEquals(158.08135, listISO.get(3).getMass(), 0.00001);
 
         Assert.assertEquals(1, isoNorma.getCharge(), 0.00001);
-
     }
 
     /**

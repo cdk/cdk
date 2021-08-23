@@ -19,11 +19,8 @@
  */
 package org.openscience.cdk.graph.invariant.exception;
 
-/**
- * @cdk.githash
- */
+/** @cdk.githash */
 public class MatrixNotInvertibleException extends Exception {
 
     private static final long serialVersionUID = 8597172558566661068L;
-
 }

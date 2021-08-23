@@ -19,7 +19,6 @@
 package org.openscience.cdk.debug;
 
 import java.util.Iterator;
-
 import org.openscience.cdk.formula.AdductFormula;
 import org.openscience.cdk.interfaces.IAdductFormula;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -165,5 +164,4 @@ public class DebugAdductFormula extends AdductFormula implements IAdductFormula 
     public IChemObjectBuilder getBuilder() {
         return DebugChemObjectBuilder.getInstance();
     }
-
 }

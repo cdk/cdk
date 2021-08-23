@@ -24,20 +24,18 @@
 
 package org.openscience.cdk.isomorphism;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
-
-import java.util.Arrays;
-
 import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 
+import java.util.Arrays;
+import org.openscience.cdk.interfaces.IAtomContainer;
+
 /**
- * A mutable state for matching graphs using the Ullmann algorithm {@cdk.cite
- * Ullmann76}. There are a couple of modifications in this implementation.
- * Firstly the mappings are stored in two vectors m1 and m2 and simply allows us
- * to return {@link #mapping()} without searching the compatibility matrix.
- * Secondly the compatibility matrix is non-binary and instead of removing
- * entries they are <i>marked</i>. The backtracking then resets these entries
- * rather and avoids storing/copying the matrix between states.
+ * A mutable state for matching graphs using the Ullmann algorithm {@cdk.cite Ullmann76}. There are
+ * a couple of modifications in this implementation. Firstly the mappings are stored in two vectors
+ * m1 and m2 and simply allows us to return {@link #mapping()} without searching the compatibility
+ * matrix. Secondly the compatibility matrix is non-binary and instead of removing entries they are
+ * <i>marked</i>. The backtracking then resets these entries rather and avoids storing/copying the
+ * matrix between states.
  *
  * @author John May
  * @cdk.module isomorphism
@@ -45,41 +43,47 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 final class UllmannState extends State {
 
     /** Adjacency list representations. */
-    final int[][]               g1, g2;
+    final int[][] g1, g2;
 
     /** Query and target bond maps. */
     private final EdgeToBondMap bond1, bonds2;
 
     /** The compatibility matrix. */
-    final CompatibilityMatrix   matrix;
+    final CompatibilityMatrix matrix;
 
     /** Current mapped values. */
-    final int[]                 m1, m2;
+    final int[] m1, m2;
 
     /** Size of the current mapping. */
-    int                         size     = 0;
+    int size = 0;
 
     /** How bond semantics are matched. */
-    private final BondMatcher   bondMatcher;
+    private final BondMatcher bondMatcher;
 
     /** Indicates a vertex is unmapped. */
-    private static int          UNMAPPED = -1;
+    private static int UNMAPPED = -1;
 
     /**
-     * Create a state for matching subgraphs using the Ullmann refinement
-     * procedure.
+     * Create a state for matching subgraphs using the Ullmann refinement procedure.
      *
-     * @param container1  query container
-     * @param container2  target container
-     * @param g1          query container adjacency list
-     * @param g2          target container adjacency list
-     * @param bonds1      query container bond map
-     * @param bonds2      target container bond map
+     * @param container1 query container
+     * @param container2 target container
+     * @param g1 query container adjacency list
+     * @param g2 target container adjacency list
+     * @param bonds1 query container bond map
+     * @param bonds2 target container bond map
      * @param atomMatcher method of matching atom semantics
      * @param bondMatcher method of matching bond semantics
      */
-    public UllmannState(IAtomContainer container1, IAtomContainer container2, int[][] g1, int[][] g2,
-            EdgeToBondMap bonds1, EdgeToBondMap bonds2, AtomMatcher atomMatcher, BondMatcher bondMatcher) {
+    public UllmannState(
+            IAtomContainer container1,
+            IAtomContainer container2,
+            int[][] g1,
+            int[][] g2,
+            EdgeToBondMap bonds1,
+            EdgeToBondMap bonds2,
+            AtomMatcher atomMatcher,
+            BondMatcher bondMatcher) {
         this.bondMatcher = bondMatcher;
         this.g1 = g1;
         this.g2 = g2;
@@ -94,40 +98,40 @@ final class UllmannState extends State {
         matrix = new CompatibilityMatrix(g1.length, g2.length);
         for (int i = 0; i < g1.length; i++) {
             for (int j = 0; j < g2.length; j++) {
-                if (g1[i].length <= g2[j].length && atomMatcher.matches(container1.getAtom(i), container2.getAtom(j))) {
+                if (g1[i].length <= g2[j].length
+                        && atomMatcher.matches(container1.getAtom(i), container2.getAtom(j))) {
                     matrix.set(i, j);
                 }
             }
         }
     }
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     int nextN(int n) {
         return size; // we progress down the rows of the matrix
     }
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     int nextM(int n, int m) {
-        for (int i = m + 1; i < g2.length; i++)
-            if (m2[i] == UNMAPPED) return i;
+        for (int i = m + 1; i < g2.length; i++) if (m2[i] == UNMAPPED) return i;
         return g2.length;
     }
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     int nMax() {
         return g1.length;
     }
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     int mMax() {
         return g2.length;
     }
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     boolean add(int n, int m) {
 
@@ -150,7 +154,7 @@ final class UllmannState extends State {
         }
     }
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     void remove(int n, int m) {
         size--;
@@ -159,12 +163,10 @@ final class UllmannState extends State {
     }
 
     /**
-     * Refines the compatibility removing any mappings which have now become
-     * invalid (since the last mapping). The matrix is refined from the row
-     * after the current {@code row} - all previous rows are fixed. If when
-     * refined we find a query vertex has no more candidates left in the target
-     * we can never reach a feasible matching and refinement is aborted (false
-     * is returned).
+     * Refines the compatibility removing any mappings which have now become invalid (since the last
+     * mapping). The matrix is refined from the row after the current {@code row} - all previous
+     * rows are fixed. If when refined we find a query vertex has no more candidates left in the
+     * target we can never reach a feasible matching and refinement is aborted (false is returned).
      *
      * @param row refine from here
      * @return match is still feasible
@@ -194,9 +196,9 @@ final class UllmannState extends State {
     }
 
     /**
-     * Verify that for every vertex adjacent to n, there should be at least one
-     * feasible candidate adjacent which can be mapped. If no such candidate
-     * exists the mapping of n -> m is not longer valid.
+     * Verify that for every vertex adjacent to n, there should be at least one feasible candidate
+     * adjacent which can be mapped. If no such candidate exists the mapping of n -> m is not longer
+     * valid.
      *
      * @param n query vertex
      * @param m target vertex
@@ -206,7 +208,8 @@ final class UllmannState extends State {
         for (int n_prime : g1[n]) {
             boolean found = false;
             for (int m_prime : g2[m]) {
-                if (matrix.get(n_prime, m_prime) && bondMatcher.matches(bond1.get(n, n_prime), bonds2.get(m, m_prime))) {
+                if (matrix.get(n_prime, m_prime)
+                        && bondMatcher.matches(bond1.get(n, n_prime), bonds2.get(m, m_prime))) {
                     found = true;
                     break;
                 }
@@ -217,8 +220,8 @@ final class UllmannState extends State {
     }
 
     /**
-     * Check if there are any feasible mappings left for the query vertex n. We
-     * scan the compatibility matrix to see if any value is > 0.
+     * Check if there are any feasible mappings left for the query vertex n. We scan the
+     * compatibility matrix to see if any value is > 0.
      *
      * @param n query vertex
      * @return a candidate is present
@@ -229,13 +232,13 @@ final class UllmannState extends State {
         return false;
     }
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     int[] mapping() {
         return Arrays.copyOf(m1, m1.length);
     }
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     int size() {
         return size;

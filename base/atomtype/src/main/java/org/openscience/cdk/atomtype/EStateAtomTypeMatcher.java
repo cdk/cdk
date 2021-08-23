@@ -19,7 +19,6 @@
 package org.openscience.cdk.atomtype;
 
 import java.util.List;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -63,8 +62,8 @@ public class EStateAtomTypeMatcher implements IAtomTypeMatcher {
         IAtomType atomType = null;
         try {
             String fragment = "";
-            int NumHAtoms = atom.getImplicitHydrogenCount() != null ?
-                            atom.getImplicitHydrogenCount() : 0;
+            int NumHAtoms =
+                    atom.getImplicitHydrogenCount() != null ? atom.getImplicitHydrogenCount() : 0;
             int NumSingleBonds2 = NumHAtoms;
             int NumDoubleBonds2 = 0;
             int NumTripleBonds2 = 0;
@@ -80,7 +79,8 @@ public class EStateAtomTypeMatcher implements IAtomTypeMatcher {
                 IBond b = atomContainer.getBond(atom, attached);
                 if ("H".equals(attached.getSymbol())) NumHAtoms++;
 
-                if (atom.getFlag(CDKConstants.ISAROMATIC) && attached.getFlag(CDKConstants.ISAROMATIC)) {
+                if (atom.getFlag(CDKConstants.ISAROMATIC)
+                        && attached.getFlag(CDKConstants.ISAROMATIC)) {
 
                     boolean SameRing = inSameAromaticRing(atomContainer, atom, attached, ringSet);
 
@@ -133,13 +133,13 @@ public class EStateAtomTypeMatcher implements IAtomTypeMatcher {
                 fragment += "m";
             }
 
-            if (NumHAtoms == 1)
-                fragment += "H";
+            if (NumHAtoms == 1) fragment += "H";
             else if (NumHAtoms > 1) fragment += ("H" + NumHAtoms);
 
             atomType = atom.getBuilder().newInstance(IAtomType.class, fragment, atom.getSymbol());
             atomType.setFormalCharge(atom.getFormalCharge());
-            if (atom.getFlag(CDKConstants.ISAROMATIC)) atomType.setFlag(CDKConstants.ISAROMATIC, true);
+            if (atom.getFlag(CDKConstants.ISAROMATIC))
+                atomType.setFlag(CDKConstants.ISAROMATIC, true);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -148,7 +148,8 @@ public class EStateAtomTypeMatcher implements IAtomTypeMatcher {
         return atomType;
     }
 
-    public static boolean inSameAromaticRing(IAtomContainer m, IAtom atom1, IAtom atom2, IRingSet rs) {
+    public static boolean inSameAromaticRing(
+            IAtomContainer m, IAtom atom1, IAtom atom2, IRingSet rs) {
         if (rs == null) return false;
         for (int i = 0; i <= rs.getAtomContainerCount() - 1; i++) {
             IRing r = (IRing) rs.getAtomContainer(i);
@@ -165,5 +166,4 @@ public class EStateAtomTypeMatcher implements IAtomTypeMatcher {
 
         return (true);
     }
-
 }

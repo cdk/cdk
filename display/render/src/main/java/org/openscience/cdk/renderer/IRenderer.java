@@ -25,9 +25,7 @@ package org.openscience.cdk.renderer;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
-
 import javax.vecmath.Point2d;
-
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.generators.IGenerator;
@@ -35,9 +33,8 @@ import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 
 /**
- * Interface that all 2D renderers implement. The constructor is responsible
- * for registering the {@link IGenerator}s' {@link IGeneratorParameter}s with
- * with the associated {@link RendererModel}.
+ * Interface that all 2D renderers implement. The constructor is responsible for registering the
+ * {@link IGenerator}s' {@link IGeneratorParameter}s with with the associated {@link RendererModel}.
  *
  * @author egonw
  * @cdk.module render
@@ -65,8 +62,7 @@ public interface IRenderer<T extends IChemObject> {
      *
      * @param screenXTo the screen's x coordinate
      * @param screenYTo the screen's y coordinate
-     * @return          the matching model coordinates
-     *
+     * @return the matching model coordinates
      * @see #toScreenCoordinates(double, double)
      */
     public Point2d toModelCoordinates(double screenXTo, double screenYTo);
@@ -76,8 +72,7 @@ public interface IRenderer<T extends IChemObject> {
      *
      * @param screenXTo the model's x coordinate
      * @param screenYTo the model's y coordinate
-     * @return          the matching screen coordinates
-     *
+     * @return the matching screen coordinates
      * @see #toModelCoordinates(double, double)
      */
     public Point2d toScreenCoordinates(double screenXTo, double screenYTo);
@@ -109,16 +104,16 @@ public interface IRenderer<T extends IChemObject> {
     /**
      * Paint the chem object within the specified bounds.
      *
-     * @param object       Object to draw
-     * @param drawVisitor  the visitor to draw to
-     * @param bounds       the screen bounds between which to draw
-     * @param resetCenter  a boolean indicating the the drawing center needs to be reset
+     * @param object Object to draw
+     * @param drawVisitor the visitor to draw to
+     * @param bounds the screen bounds between which to draw
+     * @param resetCenter a boolean indicating the the drawing center needs to be reset
      */
     public void paint(T object, IDrawVisitor drawVisitor, Rectangle2D bounds, boolean resetCenter);
 
     /**
-     * Setup the transformations necessary to draw the {@link IChemObject}
-     * matching this {@link IRenderer} implementation.
+     * Setup the transformations necessary to draw the {@link IChemObject} matching this {@link
+     * IRenderer} implementation.
      *
      * @param object {@link IChemObject} to be drawn
      * @param screen {@link Rectangle} to draw the object to
@@ -126,20 +121,19 @@ public interface IRenderer<T extends IChemObject> {
     public void setup(T object, Rectangle screen);
 
     /**
-     * Set the scale for an {@link IChemObject}. It calculates the average bond
-     * length of the model and calculates the multiplication factor to transform
-     * this to the bond length that is set in the {@link RendererModel}.
+     * Set the scale for an {@link IChemObject}. It calculates the average bond length of the model
+     * and calculates the multiplication factor to transform this to the bond length that is set in
+     * the {@link RendererModel}.
      *
-     * @param  object the {@link IChemObject} to draw.
+     * @param object the {@link IChemObject} to draw.
      */
     public void setScale(T object);
 
     /**
-     * Given a {@link IChemObject}, calculates the bounding rectangle in screen
-     * space.
+     * Given a {@link IChemObject}, calculates the bounding rectangle in screen space.
      *
-     * @param  object the {@link IChemObject} to draw.
-     * @return        a rectangle in screen space.
+     * @param object the {@link IChemObject} to draw.
+     * @return a rectangle in screen space.
      */
     public Rectangle calculateDiagramBounds(T object);
 

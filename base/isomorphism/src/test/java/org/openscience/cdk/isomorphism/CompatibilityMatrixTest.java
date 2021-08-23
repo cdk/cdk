@@ -24,12 +24,12 @@
 
 package org.openscience.cdk.isomorphism;
 
-import org.junit.Test;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
 
 /**
  * @author John May
@@ -90,9 +90,9 @@ public class CompatibilityMatrixTest {
         m.set(0, 1);
         m.set(0, 2);
         m.set(0, 4);
-        assertThat(m.fix()[0], is(new int[]{0, 1, 1, 0, 1}));
+        assertThat(m.fix()[0], is(new int[] {0, 1, 1, 0, 1}));
         m.markRow(0, -1);
-        assertThat(m.fix()[0], is(new int[]{0, -1, -1, 0, -1}));
+        assertThat(m.fix()[0], is(new int[] {0, -1, -1, 0, -1}));
     }
 
     @Test
@@ -104,7 +104,15 @@ public class CompatibilityMatrixTest {
         m.set(1, 0);
         m.set(1, 3);
         m.set(2, 4);
-        assertThat(m.fix(), is(new int[][]{{0, 1, 1, 0, 1}, {1, 0, 0, 1, 0}, {0, 0, 0, 0, 1}, {0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0},}));
+        assertThat(
+                m.fix(),
+                is(
+                        new int[][] {
+                            {0, 1, 1, 0, 1},
+                            {1, 0, 0, 1, 0},
+                            {0, 0, 0, 0, 1},
+                            {0, 0, 0, 0, 0},
+                            {0, 0, 0, 0, 0},
+                        }));
     }
 }

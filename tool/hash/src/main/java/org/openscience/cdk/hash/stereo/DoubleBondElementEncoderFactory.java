@@ -24,32 +24,28 @@
 
 package org.openscience.cdk.hash.stereo;
 
+import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.OPPOSITE;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IStereoElement;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.OPPOSITE;
-
 /**
- * Defines a stereo encoder factory for the hash code. The factory allows the
- * generation of stereo hash codes for molecules with predefined {@link
- * IDoubleBondStereochemistry} stereo elements.
+ * Defines a stereo encoder factory for the hash code. The factory allows the generation of stereo
+ * hash codes for molecules with predefined {@link IDoubleBondStereochemistry} stereo elements.
  *
  * @author John May
  * @cdk.module hash
  */
 public final class DoubleBondElementEncoderFactory implements StereoEncoderFactory {
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public StereoEncoder create(IAtomContainer container, int[][] graph) {
 
@@ -63,8 +59,11 @@ public final class DoubleBondElementEncoderFactory implements StereoEncoderFacto
         // for each double-bond element - create a new encoder
         for (IStereoElement se : container.stereoElements()) {
             if (se instanceof IDoubleBondStereochemistry) {
-                encoders.add(encoder((IDoubleBondStereochemistry) se, atomToIndex = indexMap(atomToIndex, container),
-                        graph));
+                encoders.add(
+                        encoder(
+                                (IDoubleBondStereochemistry) se,
+                                atomToIndex = indexMap(atomToIndex, container),
+                                graph));
             }
         }
 
@@ -74,13 +73,13 @@ public final class DoubleBondElementEncoderFactory implements StereoEncoderFacto
     /**
      * Create an encoder for the {@link IDoubleBondStereochemistry} element.
      *
-     * @param dbs          stereo element from an atom container
-     * @param atomToIndex  map of atoms to indices
-     * @param graph        adjacency list of connected vertices
+     * @param dbs stereo element from an atom container
+     * @param atomToIndex map of atoms to indices
+     * @param graph adjacency list of connected vertices
      * @return a new geometry encoder
      */
-    private static GeometryEncoder encoder(IDoubleBondStereochemistry dbs, Map<IAtom, Integer> atomToIndex,
-            int[][] graph) {
+    private static GeometryEncoder encoder(
+            IDoubleBondStereochemistry dbs, Map<IAtom, Integer> atomToIndex, int[][] graph) {
 
         IBond db = dbs.getStereoBond();
         int u = atomToIndex.get(db.getBegin());
@@ -110,18 +109,23 @@ public final class DoubleBondElementEncoderFactory implements StereoEncoderFacto
         // the permutation parity is combined - but note we only use this if we
         // haven't used 'u' or 'v' as place holders (i.e. implicit hydrogens)
         // otherwise there is only '1' and the parity is just '1' (identity)
-        PermutationParity permParity = new CombinedPermutationParity(us[1] == u ? BasicPermutationParity.IDENTITY
-                : new BasicPermutationParity(us), vs[1] == v ? BasicPermutationParity.IDENTITY
-                : new BasicPermutationParity(vs));
-        return new GeometryEncoder(new int[]{u, v}, permParity, geomParity);
+        PermutationParity permParity =
+                new CombinedPermutationParity(
+                        us[1] == u
+                                ? BasicPermutationParity.IDENTITY
+                                : new BasicPermutationParity(us),
+                        vs[1] == v
+                                ? BasicPermutationParity.IDENTITY
+                                : new BasicPermutationParity(vs));
+        return new GeometryEncoder(new int[] {u, v}, permParity, geomParity);
     }
 
     /**
-     * Finds a vertex in 'vs' which is not 'u' or 'x'.
-     * .
+     * Finds a vertex in 'vs' which is not 'u' or 'x'. .
+     *
      * @param vs fixed size array of 3 elements
-     * @param u  a vertex in 'vs'
-     * @param x  another vertex in 'vs'
+     * @param u a vertex in 'vs'
+     * @param x another vertex in 'vs'
      * @return the other vertex
      */
     private static int findOther(int[] vs, int u, int x) {
@@ -134,7 +138,7 @@ public final class DoubleBondElementEncoderFactory implements StereoEncoderFacto
     /**
      * Lazy creation of an atom index map.
      *
-     * @param map       existing map (possibly null)
+     * @param map existing map (possibly null)
      * @param container the container we want the map for
      * @return a usable atom to index map for the given container
      */

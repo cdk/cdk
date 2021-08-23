@@ -84,8 +84,7 @@ final class ConvexHull {
      */
     public static ConvexHull ofShapes(final List<Shape> shapes) {
         final Path2D combined = new Path2D.Double();
-        for (Shape shape : shapes)
-            combined.append(shape, false);
+        for (Shape shape : shapes) combined.append(shape, false);
         return new ConvexHull(shapeOf(grahamScan(pointsOf(combined))));
     }
 
@@ -118,8 +117,7 @@ final class ConvexHull {
         Path2D path = new Path2D.Double();
         if (!points.isEmpty()) {
             path.moveTo(points.get(0).getX(), points.get(0).getY());
-            for (Point2D point : points)
-                path.lineTo(point.getX(), point.getY());
+            for (Point2D point : points) path.lineTo(point.getX(), point.getY());
             path.closePath();
         }
         return path;
@@ -197,7 +195,7 @@ final class ConvexHull {
      * of points).
      *
      * @param outline the outline of a shape
-     * @param line    the line
+     * @param line the line
      * @return the intersection
      */
     private Point2D intersect(List<Point2D> outline, Line2D line) {
@@ -205,8 +203,9 @@ final class ConvexHull {
         Point2D previousPoint = outline.get(outline.size() - 1);
         for (Point2D point : outline) {
 
-            Line2D currentLine = new Line2D.Double(point.getX(), point.getY(), previousPoint.getX(),
-                    previousPoint.getY());
+            Line2D currentLine =
+                    new Line2D.Double(
+                            point.getX(), point.getY(), previousPoint.getX(), previousPoint.getY());
             if (line.intersectsLine(currentLine)) {
                 return lineLineIntersect(currentLine, line);
             }
@@ -234,9 +233,15 @@ final class ConvexHull {
      * @return the point where the two lines intersect (or null)
      */
     public static Point2D lineLineIntersect(final Line2D lineA, final Line2D lineB) {
-        return lineLineIntersect(lineA.getX1(), lineA.getY1(), lineA.getX2(), lineA.getY2(), lineB.getX1(),
-                lineB.getY1(), lineB.getX2(), lineB.getY2());
-
+        return lineLineIntersect(
+                lineA.getX1(),
+                lineA.getY1(),
+                lineA.getX2(),
+                lineA.getY2(),
+                lineB.getX1(),
+                lineB.getY1(),
+                lineB.getX2(),
+                lineB.getY2());
     }
 
     /**
@@ -253,22 +258,29 @@ final class ConvexHull {
      * @param y4 first y coordinate of line 2
      * @return the point where the two lines intersect (or null)
      * @see <a href="http://en.wikipedia.org/wiki/Line–line_intersection">Line-line intersection,
-     * Wikipedia</a>
+     *     Wikipedia</a>
      */
-    static Point2D lineLineIntersect(final double x1, final double y1, final double x2, final double y2,
-            final double x3, final double y3, final double x4, final double y4) {
+    static Point2D lineLineIntersect(
+            final double x1,
+            final double y1,
+            final double x2,
+            final double y2,
+            final double x3,
+            final double y3,
+            final double x4,
+            final double y4) {
 
-        final double x = ((x2 - x1) * (x3 * y4 - x4 * y3) - (x4 - x3) * (x1 * y2 - x2 * y1))
-                / ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
-        final double y = ((y3 - y4) * (x1 * y2 - x2 * y1) - (y1 - y2) * (x3 * y4 - x4 * y3))
-                / ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
+        final double x =
+                ((x2 - x1) * (x3 * y4 - x4 * y3) - (x4 - x3) * (x1 * y2 - x2 * y1))
+                        / ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
+        final double y =
+                ((y3 - y4) * (x1 * y2 - x2 * y1) - (y1 - y2) * (x3 * y4 - x4 * y3))
+                        / ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
 
         return new Point2D.Double(x, y);
     }
 
-    /**
-     * Sort points counter clockwise (polar order) around a reference point.
-     */
+    /** Sort points counter clockwise (polar order) around a reference point. */
     static final class PolarComparator implements Comparator<Point2D> {
 
         private Point2D reference;
@@ -277,7 +289,7 @@ final class ConvexHull {
             this.reference = reference;
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         public int compare(Point2D a, Point2D b) {
             final double deltaX1 = a.getX() - reference.getX();
@@ -285,28 +297,20 @@ final class ConvexHull {
             final double deltaX2 = b.getX() - reference.getX();
             final double deltaY2 = b.getY() - reference.getY();
 
-            if (deltaY1 >= 0 && deltaY2 < 0)
-                return -1;
-            else if (deltaY2 >= 0 && deltaY1 < 0)
-                return +1;
+            if (deltaY1 >= 0 && deltaY2 < 0) return -1;
+            else if (deltaY2 >= 0 && deltaY1 < 0) return +1;
             else if (deltaY1 == 0 && deltaY2 == 0) { // corner case
-                if (deltaX1 >= 0 && deltaX2 < 0)
-                    return -1;
-                else if (deltaX2 >= 0 && deltaX1 < 0)
-                    return +1;
-                else
-                    return 0;
-            } else
-                return -winding(reference, a, b); // both above or below
+                if (deltaX1 >= 0 && deltaX2 < 0) return -1;
+                else if (deltaX2 >= 0 && deltaX1 < 0) return +1;
+                else return 0;
+            } else return -winding(reference, a, b); // both above or below
         }
     }
 
-    /**
-     * Compares points by the y coordinate and then the x if the y's are equal.
-     */
+    /** Compares points by the y coordinate and then the x if the y's are equal. */
     static final class CompareYThenX implements Comparator<Point2D> {
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         public int compare(Point2D a, Point2D b) {
             if (a.getY() < b.getY()) return -1;
@@ -338,7 +342,9 @@ final class ConvexHull {
      * @return winding, -1=cw, 0=straight, +1=ccw
      */
     private static int winding(Point2D a, Point2D b, Point2D c) {
-        return (int) Math.signum((b.getX() - a.getX()) * (c.getY() - a.getY()) - (b.getY() - a.getY())
-                * (c.getX() - a.getX()));
+        return (int)
+                Math.signum(
+                        (b.getX() - a.getX()) * (c.getY() - a.getY())
+                                - (b.getY() - a.getY()) * (c.getX() - a.getX()));
     }
 }

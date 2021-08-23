@@ -18,8 +18,8 @@
 package org.openscience.cdk.smiles.smarts.parser;
 
 /**
- * An AST node. It represents the explicit high precedence and logical operator
- * (&) used between bonds in smarts.
+ * An AST node. It represents the explicit high precedence and logical operator (&) used between
+ * bonds in smarts.
  *
  * @author Dazhi Jiao
  * @cdk.created 2007-04-24
@@ -30,16 +30,12 @@ package org.openscience.cdk.smiles.smarts.parser;
 @Deprecated
 class ASTExplicitHighAndBond extends SimpleNode {
 
-    /**
-     * Creates a new instance.
-     */
+    /** Creates a new instance. */
     public ASTExplicitHighAndBond(int id) {
         super(id);
     }
 
-    /**
-     * Creates a new instance.
-     */
+    /** Creates a new instance. */
     public ASTExplicitHighAndBond(SMARTSParser p, int id) {
         super(p, id);
     }

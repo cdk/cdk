@@ -24,7 +24,6 @@ package org.openscience.cdk.tools.manipulator;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -35,7 +34,6 @@ import org.openscience.cdk.interfaces.IElectronContainer;
 /**
  * @cdk.module standard
  * @cdk.githash
- *
  * @see ChemModelManipulator
  */
 public class MoleculeSetManipulator {
@@ -52,12 +50,14 @@ public class MoleculeSetManipulator {
         AtomContainerSetManipulator.removeAtomAndConnectedElectronContainers(set, atom);
     }
 
-    public static void removeElectronContainer(IAtomContainerSet set, IElectronContainer electrons) {
+    public static void removeElectronContainer(
+            IAtomContainerSet set, IElectronContainer electrons) {
         AtomContainerSetManipulator.removeElectronContainer(set, electrons);
     }
 
     /**
      * Returns all the AtomContainer's of a MoleculeSet.
+     *
      * @param set The collection of IAtomContainer objects
      * @return a list containing individual IAtomContainer's
      */
@@ -103,16 +103,17 @@ public class MoleculeSetManipulator {
         AtomContainerSetManipulator.setAtomProperties(set, propKey, propVal);
     }
 
-    public static IAtomContainer getRelevantAtomContainer(IAtomContainerSet moleculeSet, IAtom atom) {
+    public static IAtomContainer getRelevantAtomContainer(
+            IAtomContainerSet moleculeSet, IAtom atom) {
         return AtomContainerSetManipulator.getRelevantAtomContainer(moleculeSet, atom);
     }
 
-    public static IAtomContainer getRelevantAtomContainer(IAtomContainerSet moleculeSet, IBond bond) {
+    public static IAtomContainer getRelevantAtomContainer(
+            IAtomContainerSet moleculeSet, IBond bond) {
         return AtomContainerSetManipulator.getRelevantAtomContainer(moleculeSet, bond);
     }
 
     public static List<IChemObject> getAllChemObjects(IAtomContainerSet set) {
         return AtomContainerSetManipulator.getAllChemObjects(set);
     }
-
 }

@@ -33,7 +33,6 @@ import org.openscience.cdk.smiles.SmilesParser;
  *
  * @cdk.module test-qsarmolecular
  */
-
 public class AtomCountDescriptorTest extends MolecularDescriptorTest {
 
     public AtomCountDescriptorTest() {}

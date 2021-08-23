@@ -23,10 +23,9 @@
 package org.openscience.cdk.ringsearch;
 
 /**
- * Describes a search to identify vertices which belong to elementary cycles and
- * if those cycles are isolated or are part of a fused system. We define a cycle
- * as isolated if it edge disjoint with all other cycles. This corresponds to
- * the isolated and spiro rings of a chemical structures.
+ * Describes a search to identify vertices which belong to elementary cycles and if those cycles are
+ * isolated or are part of a fused system. We define a cycle as isolated if it edge disjoint with
+ * all other cycles. This corresponds to the isolated and spiro rings of a chemical structures.
  *
  * @author John May
  * @cdk.module core
@@ -66,28 +65,26 @@ public interface CyclicVertexSearch {
     int[] cyclic();
 
     /**
-     * Construct the sets of vertices which belong to isolated cycles. Each row
-     * in the array describes a set of cyclic vertices which is edge disjoint
-     * with all other elementary cycles.
+     * Construct the sets of vertices which belong to isolated cycles. Each row in the array
+     * describes a set of cyclic vertices which is edge disjoint with all other elementary cycles.
      *
      * @return vertices belonging to the isolated rings
      */
     int[][] isolated();
 
     /**
-     * Construct the sets of vertices which belong to fused cycle systems (share
-     * at least one edge). Each row in the array describes a set of vertices in
-     * a separate fused system. Each fused system is edge disjoint with every
-     * other fused system.
+     * Construct the sets of vertices which belong to fused cycle systems (share at least one edge).
+     * Each row in the array describes a set of vertices in a separate fused system. Each fused
+     * system is edge disjoint with every other fused system.
      *
      * @return vertices belonging to the fused cycles
      */
     int[][] fused();
 
     /**
-     * Build an indexed lookup of vertex color. The vertex color indicates which
-     * cycle a given vertex belongs. If a vertex belongs to more then one cycle
-     * it is colored '0'. If a vertex belongs to no cycle it is colored '-1'.
+     * Build an indexed lookup of vertex color. The vertex color indicates which cycle a given
+     * vertex belongs. If a vertex belongs to more then one cycle it is colored '0'. If a vertex
+     * belongs to no cycle it is colored '-1'.
      *
      * @return vertex colors
      */

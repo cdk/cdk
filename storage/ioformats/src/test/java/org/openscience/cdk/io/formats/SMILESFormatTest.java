@@ -22,13 +22,10 @@
  */
 package org.openscience.cdk.io.formats;
 
-/**
- * @cdk.module test-ioformats
- */
+/** @cdk.module test-ioformats */
 public class SMILESFormatTest extends ChemFormatTest {
 
     public SMILESFormatTest() {
         super.setChemFormat((IChemFormat) SMILESFormat.getInstance());
     }
-
 }

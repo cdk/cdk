@@ -23,9 +23,7 @@
 package org.openscience.cdk.group;
 
 import java.util.Arrays;
-
 import org.junit.Assert;
-
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.aromaticity.Aromaticity;
@@ -172,8 +170,9 @@ public class BondDiscretePartitionRefinerTest extends CDKTestCase {
 
     @Test
     public void getAutomorphismPartitionTest() {
-        String acpString = "C0C1C2C3C4C5C6C7C8C9 0:1(2),1:2(1),2:3(2),3:4(1),"
-                + "4:5(2),5:6(1),6:7(2),7:8(1),8:9(2),5:9(1),0:9(1)";
+        String acpString =
+                "C0C1C2C3C4C5C6C7C8C9 0:1(2),1:2(1),2:3(2),3:4(1),"
+                        + "4:5(2),5:6(1),6:7(2),7:8(1),8:9(2),5:9(1),0:9(1)";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
         Partition autP = refiner.getAutomorphismPartition(ac);
@@ -203,9 +202,8 @@ public class BondDiscretePartitionRefinerTest extends CDKTestCase {
     }
 
     /**
-     * Test the equivalent classes method in pyrimidine
-     * Tests if the position of the single and double bonds in an aromatic ring matter
-     * to assign a class.
+     * Test the equivalent classes method in pyrimidine Tests if the position of the single and
+     * double bonds in an aromatic ring matter to assign a class.
      *
      * @throws Exception
      */
@@ -226,8 +224,8 @@ public class BondDiscretePartitionRefinerTest extends CDKTestCase {
     }
 
     /**
-     * Test the equivalent classes method in biphenyl,
-     * a molecule with two aromatic systems. It has 2 symmetry axis.
+     * Test the equivalent classes method in biphenyl, a molecule with two aromatic systems. It has
+     * 2 symmetry axis.
      *
      * @throws Exception
      */
@@ -246,5 +244,4 @@ public class BondDiscretePartitionRefinerTest extends CDKTestCase {
         Partition expected = Partition.fromString("0,5,7,12|1,4,8,11|2,3,9,10|6");
         Assert.assertEquals("Wrong class assignment", expected, autP);
     }
-
 }

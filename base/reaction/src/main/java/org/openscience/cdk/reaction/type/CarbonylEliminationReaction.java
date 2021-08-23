@@ -18,6 +18,8 @@
  */
 package org.openscience.cdk.reaction.type;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -35,74 +37,74 @@ import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 /**
- * <p>IReactionProcess which participate mass spectrum process.
- * This reaction could be represented as RC-C#[O+] =&gt; R[C] + |C#[O+]</p>
- * <p>Make sure that the molecule has the correspond lone pair electrons
- * for each atom. You can use the method: <pre> LonePairElectronChecker </pre>
- * <p>It is processed by the HeterolyticCleavageMechanism class</p>
+ * IReactionProcess which participate mass spectrum process. This reaction could be represented as
+ * RC-C#[O+] =&gt; R[C] + |C#[O+]
+ *
+ * <p>Make sure that the molecule has the correspond lone pair electrons for each atom. You can use
+ * the method:
+ *
+ * <pre> LonePairElectronChecker </pre>
+ *
+ * <p>It is processed by the HeterolyticCleavageMechanism class
  *
  * <pre>
  *  IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newAtomContainerSet();
  *  setOfReactants.addAtomContainer(new AtomContainer());
  *  IReactionProcess type = new CarbonylEliminationReaction();
  *  Object[] params = {Boolean.FALSE};
-    type.setParameters(params);
+ * type.setParameters(params);
  *  IReactionSet setOfReactions = type.initiate(setOfReactants, null);
  *  </pre>
  *
- * <p>We have the possibility to localize the reactive center. Good method if you
- * want to localize the reaction in a fixed point</p>
+ * <p>We have the possibility to localize the reactive center. Good method if you want to localize
+ * the reaction in a fixed point
+ *
  * <pre>atoms[0].setFlag(CDKConstants.REACTIVE_CENTER,true);</pre>
- * <p>Moreover you must put the parameter Boolean.TRUE</p>
- * <p>If the reactive center is not localized then the reaction process will
- * try to find automatically the possible reactive center.</p>
  *
+ * <p>Moreover you must put the parameter Boolean.TRUE
  *
- * @author         Miguel Rojas
+ * <p>If the reactive center is not localized then the reaction process will try to find
+ * automatically the possible reactive center.
  *
- * @cdk.created    2006-10-16
- * @cdk.module     reaction
+ * @author Miguel Rojas
+ * @cdk.created 2006-10-16
+ * @cdk.module reaction
  * @cdk.githash
- *
  * @see HeterolyticCleavageMechanism
- **/
+ */
 public class CarbonylEliminationReaction extends ReactionEngine implements IReactionProcess {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CarbonylEliminationReaction.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(CarbonylEliminationReaction.class);
 
-    /**
-     * Constructor of the CarbonylEliminationReaction object.
-     *
-     */
+    /** Constructor of the CarbonylEliminationReaction object. */
     public CarbonylEliminationReaction() {}
 
     /**
-     *  Gets the specification attribute of the CarbonylEliminationReaction object.
+     * Gets the specification attribute of the CarbonylEliminationReaction object.
      *
-     *@return    The specification value
+     * @return The specification value
      */
     @Override
     public ReactionSpecification getSpecification() {
         return new ReactionSpecification(
-                "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#CarbonylElimination", this
-                        .getClass().getName(), "$Id$", "The Chemistry Development Kit");
+                "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#CarbonylElimination",
+                this.getClass().getName(),
+                "$Id$",
+                "The Chemistry Development Kit");
     }
 
     /**
-     *  Initiate process.
+     * Initiate process.
      *
-     *
-     *@exception  CDKException  Description of the Exception
-
-     * @param  reactants         reactants of the reaction
-    * @param  agents            agents of the reaction (Must be in this case null)
+     * @exception CDKException Description of the Exception
+     * @param reactants reactants of the reaction
+     * @param agents agents of the reaction (Must be in this case null)
      */
     @Override
-    public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents) throws CDKException {
+    public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents)
+            throws CDKException {
         logger.debug("initiate reaction: CarbonylEliminationReaction");
 
         if (reactants.getAtomContainerCount() != 1) {
@@ -125,17 +127,20 @@ public class CarbonylEliminationReaction extends ReactionEngine implements IReac
         Iterator<IAtom> atomis = reactant.atoms().iterator();
         while (atomis.hasNext()) {
             IAtom atomi = atomis.next();
-            if (atomi.getFlag(CDKConstants.REACTIVE_CENTER) && atomi.getSymbol().equals("O")
+            if (atomi.getFlag(CDKConstants.REACTIVE_CENTER)
+                    && atomi.getSymbol().equals("O")
                     && atomi.getFormalCharge() == 1) {
 
                 Iterator<IBond> bondis = reactant.getConnectedBondsList(atomi).iterator();
                 while (bondis.hasNext()) {
                     IBond bondi = bondis.next();
 
-                    if (bondi.getFlag(CDKConstants.REACTIVE_CENTER) && bondi.getOrder() == IBond.Order.TRIPLE) {
+                    if (bondi.getFlag(CDKConstants.REACTIVE_CENTER)
+                            && bondi.getOrder() == IBond.Order.TRIPLE) {
                         IAtom atomj = bondi.getOther(atomi);
                         if (atomj.getFlag(CDKConstants.REACTIVE_CENTER)) {
-                            Iterator<IBond> bondjs = reactant.getConnectedBondsList(atomj).iterator();
+                            Iterator<IBond> bondjs =
+                                    reactant.getConnectedBondsList(atomj).iterator();
                             while (bondjs.hasNext()) {
                                 IBond bondj = bondjs.next();
 
@@ -145,7 +150,8 @@ public class CarbonylEliminationReaction extends ReactionEngine implements IReac
                                         && bondj.getOrder() == IBond.Order.SINGLE) {
 
                                     IAtom atomk = bondj.getOther(atomj);
-                                    if (atomk.getFlag(CDKConstants.REACTIVE_CENTER) && atomk.getFormalCharge() == 0) {
+                                    if (atomk.getFlag(CDKConstants.REACTIVE_CENTER)
+                                            && atomk.getFormalCharge() == 0) {
 
                                         ArrayList<IAtom> atomList = new ArrayList<IAtom>();
                                         atomList.add(atomk);
@@ -153,15 +159,14 @@ public class CarbonylEliminationReaction extends ReactionEngine implements IReac
                                         ArrayList<IBond> bondList = new ArrayList<IBond>();
                                         bondList.add(bondj);
 
-                                        IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(
-                                                IAtomContainerSet.class);
+                                        IAtomContainerSet moleculeSet =
+                                                reactant.getBuilder()
+                                                        .newInstance(IAtomContainerSet.class);
                                         moleculeSet.addAtomContainer(reactant);
-                                        IReaction reaction = mechanism.initiate(moleculeSet, atomList, bondList);
-                                        if (reaction == null)
-                                            continue;
-                                        else
-                                            setOfReactions.addReaction(reaction);
-
+                                        IReaction reaction =
+                                                mechanism.initiate(moleculeSet, atomList, bondList);
+                                        if (reaction == null) continue;
+                                        else setOfReactions.addReaction(reaction);
                                     }
                                 }
                             }
@@ -171,12 +176,12 @@ public class CarbonylEliminationReaction extends ReactionEngine implements IReac
             }
         }
         return setOfReactions;
-
     }
 
     /**
-     * set the active center for this molecule.
-     * The active center will be those which correspond with RC-C#[O+].
+     * set the active center for this molecule. The active center will be those which correspond
+     * with RC-C#[O+].
+     *
      * <pre>
      * C: Atom
      * -: single bond

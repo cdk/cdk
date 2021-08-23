@@ -22,44 +22,38 @@
  */
 package org.openscience.cdk.ringsearch;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- *  Partitions a RingSet into RingSets of connected rings. Rings which share an
- *  Atom, a Bond or three or more atoms with at least on other ring in the
- *  RingSet are considered connected.
- *
+ * Partitions a RingSet into RingSets of connected rings. Rings which share an Atom, a Bond or three
+ * or more atoms with at least on other ring in the RingSet are considered connected.
  *
  * @cdk.module standard
  * @cdk.githash
  */
 public class RingPartitioner {
 
-    /**
-     *  Debugging on/off
-     */
-    public final static boolean debug = false;
+    /** Debugging on/off */
+    public static final boolean debug = false;
 
     // minimum details
 
     /**
-     *  Partitions a RingSet into RingSets of connected rings. Rings which share
-     *  an Atom, a Bond or three or more atoms with at least on other ring in
-     *  the RingSet are considered connected. Thus molecules such as azulene and
-     * indole will return a List with 1 element.
+     * Partitions a RingSet into RingSets of connected rings. Rings which share an Atom, a Bond or
+     * three or more atoms with at least on other ring in the RingSet are considered connected. Thus
+     * molecules such as azulene and indole will return a List with 1 element.
      *
-     * <p>Note that an isolated ring is considered to be <i>self-connect</i>. As a result
-     * a molecule such as biphenyl will result in a 2-element List being returned (each
-     * element corresponding to a phenyl ring).
+     * <p>Note that an isolated ring is considered to be <i>self-connect</i>. As a result a molecule
+     * such as biphenyl will result in a 2-element List being returned (each element corresponding
+     * to a phenyl ring).
      *
-     *@param  ringSet  The RingSet to be partitioned
-     *@return          A {@link List} of connected RingSets
+     * @param ringSet The RingSet to be partitioned
+     * @return A {@link List} of connected RingSets
      */
     public static List<IRingSet> partitionRings(IRingSet ringSet) {
         List<IRingSet> ringSets = new ArrayList<IRingSet>();
@@ -82,10 +76,10 @@ public class RingPartitioner {
     }
 
     /**
-     *  Converts a RingSet to an AtomContainer.
+     * Converts a RingSet to an AtomContainer.
      *
-     *@param  ringSet  The RingSet to be converted.
-     *@return          The AtomContainer containing the bonds and atoms of the ringSet.
+     * @param ringSet The RingSet to be converted.
+     * @return The AtomContainer containing the bonds and atoms of the ringSet.
      */
     public static IAtomContainer convertToAtomContainer(IRingSet ringSet) {
         IRing ring = (IRing) ringSet.getAtomContainer(0);
@@ -107,15 +101,14 @@ public class RingPartitioner {
     }
 
     /**
-     *  Perform a walk in the given RingSet, starting at a given Ring and
-     *  recursively searching for other Rings connected to this ring. By doing
-     *  this it finds all rings in the RingSet connected to the start ring,
-     *  putting them in newRs, and removing them from rs.
+     * Perform a walk in the given RingSet, starting at a given Ring and recursively searching for
+     * other Rings connected to this ring. By doing this it finds all rings in the RingSet connected
+     * to the start ring, putting them in newRs, and removing them from rs.
      *
-     *@param  rs     The RingSet to be searched
-     *@param  ring   The ring to start with
-     *@param  newRs  The RingSet containing all Rings connected to ring
-     *@return        newRs The RingSet containing all Rings connected to ring
+     * @param rs The RingSet to be searched
+     * @param ring The ring to start with
+     * @param newRs The RingSet containing all Rings connected to ring
+     * @return newRs The RingSet containing all Rings connected to ring
      */
     private static IRingSet walkRingSystem(IRingSet rs, IRing ring, IRingSet newRs) {
         IRing tempRing;
@@ -131,5 +124,4 @@ public class RingPartitioner {
         }
         return newRs;
     }
-
 }

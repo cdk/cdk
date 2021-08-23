@@ -23,7 +23,6 @@
 package org.openscience.cdk.io.program;
 
 import java.io.StringWriter;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -32,11 +31,10 @@ import org.openscience.cdk.io.ChemObjectIOTest;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
 /**
- * TestCase for the reading MDL mol files using one test file.
- * A test case for SDF files is available as separate Class.
+ * TestCase for the reading MDL mol files using one test file. A test case for SDF files is
+ * available as separate Class.
  *
  * @cdk.module test-io
- *
  * @see org.openscience.cdk.io.GaussianInputWriter
  */
 public class GaussianInputWriterTest extends ChemObjectIOTest {
@@ -52,9 +50,7 @@ public class GaussianInputWriterTest extends ChemObjectIOTest {
         Assert.assertTrue(reader.accepts(IAtomContainer.class));
     }
 
-    /**
-     * @cdk.bug 2501715
-     */
+    /** @cdk.bug 2501715 */
     @Test
     public void testWrite() throws Exception {
         IAtomContainer molecule = TestMoleculeFactory.makeAlphaPinene();

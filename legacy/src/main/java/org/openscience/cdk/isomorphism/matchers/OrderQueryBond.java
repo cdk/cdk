@@ -36,7 +36,8 @@ public class OrderQueryBond extends QueryBond implements IQueryBond {
         super(builder);
     }
 
-    public OrderQueryBond(IQueryAtom atom1, IQueryAtom atom2, IBond.Order order, IChemObjectBuilder builder) {
+    public OrderQueryBond(
+            IQueryAtom atom1, IQueryAtom atom2, IBond.Order order, IChemObjectBuilder builder) {
         super(atom1, atom2, order, builder);
     }
 

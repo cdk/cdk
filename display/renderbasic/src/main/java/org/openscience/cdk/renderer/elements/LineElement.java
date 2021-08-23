@@ -15,7 +15,6 @@ package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
 
-
 /**
  * A line between two points.
  *
@@ -24,23 +23,23 @@ import java.awt.Color;
  */
 public class LineElement implements IRenderingElement {
 
-    /** The x-coordinate of the first point. **/
+    /** The x-coordinate of the first point. * */
     public final double firstPointX;
 
-    /** The y-coordinate of the first point. **/
+    /** The y-coordinate of the first point. * */
     public final double firstPointY;
 
-    /** The x-coordinate of the second point. **/
+    /** The x-coordinate of the second point. * */
     public final double secondPointX;
 
-    /** The y-coordinate of the second point. **/
+    /** The y-coordinate of the second point. * */
     public final double secondPointY;
 
-    /** The width of the line. **/
+    /** The width of the line. * */
     public final double width;
 
-    /** The color of the line. **/
-    public final Color  color;
+    /** The color of the line. * */
+    public final Color color;
 
     /**
      * Make a line element.
@@ -52,7 +51,12 @@ public class LineElement implements IRenderingElement {
      * @param width the width of the line
      * @param color the color of the line
      */
-    public LineElement(double firstPointX, double firstPointY, double secondPointX, double secondPointY, double width,
+    public LineElement(
+            double firstPointX,
+            double firstPointY,
+            double secondPointX,
+            double secondPointY,
+            double width,
             Color color) {
         this.firstPointX = firstPointX;
         this.firstPointY = firstPointY;
@@ -62,17 +66,18 @@ public class LineElement implements IRenderingElement {
         this.color = color;
     }
 
-    /** {@inheritDoc} **/
+    /** {@inheritDoc} * */
     @Override
     public void accept(IRenderingVisitor visitor) {
         visitor.visit(this);
     }
 
-    /**
-     * The type of the line.
-     */
+    /** The type of the line. */
     public enum LineType {
-        SINGLE(1), DOUBLE(2), TRIPLE(3), QUADRUPLE(4);
+        SINGLE(1),
+        DOUBLE(2),
+        TRIPLE(3),
+        QUADRUPLE(4);
 
         int n;
 

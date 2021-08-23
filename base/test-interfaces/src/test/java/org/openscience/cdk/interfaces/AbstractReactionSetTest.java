@@ -20,7 +20,6 @@
 package org.openscience.cdk.interfaces;
 
 import java.util.Iterator;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -47,7 +46,8 @@ public abstract class AbstractReactionSetTest extends AbstractChemObjectTest {
         reactionSet.addReaction(reactionSet.getBuilder().newInstance(IReaction.class)); // 3
         reactionSet.addReaction(reactionSet.getBuilder().newInstance(IReaction.class)); // 4
         reactionSet.addReaction(reactionSet.getBuilder().newInstance(IReaction.class)); // 5
-        reactionSet.addReaction(reactionSet.getBuilder().newInstance(IReaction.class)); // 6 (force growing)
+        reactionSet.addReaction(
+                reactionSet.getBuilder().newInstance(IReaction.class)); // 6 (force growing)
         Assert.assertEquals(6, reactionSet.getReactionCount());
     }
 
@@ -136,9 +136,7 @@ public abstract class AbstractReactionSetTest extends AbstractChemObjectTest {
         }
     }
 
-    /**
-     * Method to test whether the class complies with RFC #9.
-     */
+    /** Method to test whether the class complies with RFC #9. */
     @Test
     public void testToString() {
         IReactionSet reactionSet = (IReactionSet) newChemObject();
@@ -169,7 +167,6 @@ public abstract class AbstractReactionSetTest extends AbstractChemObjectTest {
 
         listener.reset();
         Assert.assertFalse(listener.changed);
-
     }
 
     @Test
@@ -220,12 +217,11 @@ public abstract class AbstractReactionSetTest extends AbstractChemObjectTest {
 
         set.addReaction(set.getBuilder().newInstance(IReaction.class));
 
-        Assert.assertFalse("reaction set with a single reaction should not be empty", set.isEmpty());
+        Assert.assertFalse(
+                "reaction set with a single reaction should not be empty", set.isEmpty());
 
         set.removeAllReactions();
 
         Assert.assertTrue("reaction set with all reactions removed should be empty", set.isEmpty());
-
     }
-
 }

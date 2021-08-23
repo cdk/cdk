@@ -26,7 +26,6 @@ import org.junit.Test;
  * Checks the functionality of {@link IElectronContainer} implementations.
  *
  * @cdk.module test-interfaces
- *
  * @see org.openscience.cdk.ElectronContainer
  */
 public abstract class AbstractElectronContainerTest extends AbstractChemObjectTest {
@@ -53,9 +52,7 @@ public abstract class AbstractElectronContainerTest extends AbstractChemObjectTe
         Assert.assertTrue(clone instanceof IElectronContainer);
     }
 
-    /**
-     * Method to test whether the class complies with RFC #9.
-     */
+    /** Method to test whether the class complies with RFC #9. */
     @Test
     public void testToString() {
         IElectronContainer at = (IElectronContainer) newChemObject();

@@ -23,14 +23,11 @@
 package org.openscience.cdk.tools;
 
 import java.io.IOException;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 
-/**
- * @cdk.module test-qsar
- */
+/** @cdk.module test-qsar */
 public class AtomicPropertiesTest extends CDKTestCase {
 
     @Test

@@ -30,10 +30,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.StringTokenizer;
-
 import javax.vecmath.Point3d;
-
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.ZMatrixTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -47,14 +44,12 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.ZMatrixFormat;
 
 /**
- * It reads Z matrices like in Gaussian input files. It seems that it cannot
- * handle Z matrices where values are given via a stringID for which the value
- * is given later.
+ * It reads Z matrices like in Gaussian input files. It seems that it cannot handle Z matrices where
+ * values are given via a stringID for which the value is given later.
  *
  * @cdk.module extra
  * @cdk.githash
  * @cdk.iooptions
- *
  * @cdk.keyword file format, Z-matrix
  */
 public class ZMatrixReader extends DefaultChemObjectReader {
@@ -62,10 +57,9 @@ public class ZMatrixReader extends DefaultChemObjectReader {
     private BufferedReader input;
 
     /**
-     * Constructs a ZMatrixReader from a Reader that contains the
-     * data to be parsed.
+     * Constructs a ZMatrixReader from a Reader that contains the data to be parsed.
      *
-     * @param     input   Reader containing the data to read
+     * @param input Reader containing the data to read
      */
     public ZMatrixReader(Reader input) {
         this.input = new BufferedReader(input);
@@ -104,27 +98,23 @@ public class ZMatrixReader extends DefaultChemObjectReader {
     }
 
     /**
-     *  Returns a IChemObject of type object bye reading from
-     *  the input.
+     * Returns a IChemObject of type object bye reading from the input.
      *
-     *  The function supports only reading of ChemFile's.
+     * <p>The function supports only reading of ChemFile's.
      *
-     * @param     object  IChemObject that types the class to return.
-     * @throws    CDKException when a IChemObject is requested that cannot be read.
+     * @param object IChemObject that types the class to return.
+     * @throws CDKException when a IChemObject is requested that cannot be read.
      */
     @Override
     public <T extends IChemObject> T read(T object) throws CDKException {
-        if (object instanceof IChemFile)
-            return (T) readChemFile((IChemFile) object);
-        else
-            throw new CDKException("Only ChemFile objects can be read.");
+        if (object instanceof IChemFile) return (T) readChemFile((IChemFile) object);
+        else throw new CDKException("Only ChemFile objects can be read.");
     }
 
     /**
-     *  Private method that actually parses the input to read a ChemFile
-     *  object.
+     * Private method that actually parses the input to read a ChemFile object.
      *
-     * @param file  the file to read from
+     * @param file the file to read from
      * @return A ChemFile containing the data parsed from input.
      */
     private IChemFile readChemFile(IChemFile file) {
@@ -135,8 +125,7 @@ public class ZMatrixReader extends DefaultChemObjectReader {
 
         try {
             String line = input.readLine();
-            while (line.startsWith("#"))
-                line = input.readLine();
+            while (line.startsWith("#")) line = input.readLine();
             /*
              * while (input.ready() && line != null) {
              */
@@ -149,7 +138,8 @@ public class ZMatrixReader extends DefaultChemObjectReader {
             String info = input.readLine();
 
             IChemModel chemModel = file.getBuilder().newInstance(IChemModel.class);
-            IAtomContainerSet setOfMolecules = file.getBuilder().newInstance(IAtomContainerSet.class);
+            IAtomContainerSet setOfMolecules =
+                    file.getBuilder().newInstance(IAtomContainerSet.class);
 
             IAtomContainer m = file.getBuilder().newInstance(IAtomContainer.class);
             m.setTitle(info);
@@ -161,7 +151,7 @@ public class ZMatrixReader extends DefaultChemObjectReader {
             int[] a_atom = new int[number_of_atoms]; // Angles
             double[] da = new double[number_of_atoms];
             int[] da_atom = new int[number_of_atoms]; // Diederangles
-            //Point3d[] pos = new Point3d[number_of_atoms]; // calculated positions
+            // Point3d[] pos = new Point3d[number_of_atoms]; // calculated positions
 
             int i = 0;
             while (i < number_of_atoms) {
@@ -212,7 +202,8 @@ public class ZMatrixReader extends DefaultChemObjectReader {
             }
 
             // calculate cartesian coordinates
-            Point3d[] cartCoords = ZMatrixTools.zmatrixToCartesian(d, d_atom, a, a_atom, da, da_atom);
+            Point3d[] cartCoords =
+                    ZMatrixTools.zmatrixToCartesian(d, d_atom, a, a_atom, da, da_atom);
 
             for (i = 0; i < number_of_atoms; i++) {
                 m.addAtom(file.getBuilder().newInstance(IAtom.class, types[i], cartCoords[i]));

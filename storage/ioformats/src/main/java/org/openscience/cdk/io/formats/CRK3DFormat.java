@@ -24,7 +24,6 @@ import org.openscience.cdk.tools.DataFeatures;
  * See <a href="http://crk.sourceforge.net/">here</a>.
  *
  * @author Miguel Rojas
- *
  * @cdk.module ioformats
  * @cdk.githash
  */
@@ -60,7 +59,7 @@ public class CRK3DFormat extends AbstractResourceFormat implements IChemFormat {
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"crk3d"};
+        return new String[] {"crk3d"};
     }
 
     /** {@inheritDoc} */

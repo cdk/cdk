@@ -31,17 +31,22 @@ import org.junit.runners.Suite;
 
 /**
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- *
  * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({org.openscience.cdk.smsd.SMSDTest.class, org.openscience.cdk.smsd.SMSDBondSensitiveTest.class,
-        org.openscience.cdk.smsd.SMSDBondInsensitiveTest.class, org.openscience.cdk.smsd.global.GlobalSuite.class,
-        org.openscience.cdk.smsd.helper.HelperSuite.class,
-        //        org.openscience.cdk.smsd.interfaces.InterfacesSuite.class,
-        org.openscience.cdk.smsd.filters.FiltersSuite.class, org.openscience.cdk.smsd.factory.FactorySuite.class,
-        org.openscience.cdk.smsd.algorithm.AlgorithmSuite.class, org.openscience.cdk.smsd.tools.ToolsSuite.class})
+@Suite.SuiteClasses({
+    org.openscience.cdk.smsd.SMSDTest.class,
+    org.openscience.cdk.smsd.SMSDBondSensitiveTest.class,
+    org.openscience.cdk.smsd.SMSDBondInsensitiveTest.class,
+    org.openscience.cdk.smsd.global.GlobalSuite.class,
+    org.openscience.cdk.smsd.helper.HelperSuite.class,
+    //        org.openscience.cdk.smsd.interfaces.InterfacesSuite.class,
+    org.openscience.cdk.smsd.filters.FiltersSuite.class,
+    org.openscience.cdk.smsd.factory.FactorySuite.class,
+    org.openscience.cdk.smsd.algorithm.AlgorithmSuite.class,
+    org.openscience.cdk.smsd.tools.ToolsSuite.class
+})
 public class SmsdSuite {
 
     @BeforeClass

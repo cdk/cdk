@@ -20,9 +20,8 @@ package org.openscience.cdk.formula.rules;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.Isotope;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.Isotope;
 import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 
@@ -40,14 +39,15 @@ public abstract class FormulaRuleTest extends CDKTestCase {
         FormulaRuleTest.ruleClass = ruleClass;
         FormulaRuleTest.rule = getRule();
     }
-    
+
     private static IRule getRule() throws Exception {
         return ruleClass.newInstance();
     }
 
     /**
-     * Makes sure that the extending class has set the super.rule.
-     * Each extending class should have this bit of code (JUnit4 formalism):
+     * Makes sure that the extending class has set the super.rule. Each extending class should have
+     * this bit of code (JUnit4 formalism):
+     *
      * <pre>
      * @Before public static void setUp() {
      *   // Pass a Class, not an Object!
@@ -61,13 +61,14 @@ public abstract class FormulaRuleTest extends CDKTestCase {
      */
     @Test
     public void testHasSetSuperDotRule() {
-        Assert.assertNotNull("The extending class must set the super.rule in its setUp() method.", rule);
+        Assert.assertNotNull(
+                "The extending class must set the super.rule in its setUp() method.", rule);
     }
 
     @Test
     public void testValidate_IMolecularFormula() throws Exception {
         IRule rule = getRule();
-    	
+
         IMolecularFormula mf = new MolecularFormula();
         mf.addIsotope(new Isotope("C", 13));
         mf.addIsotope(new Isotope("H", 2), 4);

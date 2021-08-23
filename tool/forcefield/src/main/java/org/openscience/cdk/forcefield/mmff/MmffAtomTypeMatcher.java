@@ -24,14 +24,7 @@
 
 package org.openscience.cdk.forcefield.mmff;
 
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.graph.Cycles;
-import org.openscience.cdk.graph.GraphUtil;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.isomorphism.Pattern;
-import org.openscience.cdk.smarts.SmartsPattern;
+import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -43,8 +36,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.graph.Cycles;
+import org.openscience.cdk.graph.GraphUtil;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.isomorphism.Pattern;
+import org.openscience.cdk.smarts.SmartsPattern;
 
 /**
  * Determine the MMFF symbolic atom types {@cdk.cite Halgren96a}. The matcher uses SMARTS patterns
@@ -68,14 +67,12 @@ final class MmffAtomTypeMatcher {
     private final MmffAromaticTypeMapping aromaticTypes = new MmffAromaticTypeMapping();
 
     /** Substructure patterns for atom types. */
-    private final AtomTypePattern[]       patterns;
+    private final AtomTypePattern[] patterns;
 
     /** Mapping of parent to hydrogen symbols. */
-    private final Map<String, String>     hydrogenMap;
+    private final Map<String, String> hydrogenMap;
 
-    /**
-     * Create a new MMFF atom type matcher, definitions are loaded at instantiation.
-     */
+    /** Create a new MMFF atom type matcher, definitions are loaded at instantiation. */
     MmffAtomTypeMatcher() {
 
         final InputStream smaIn = getClass().getResourceAsStream("MMFFSYMB.sma");
@@ -85,8 +82,9 @@ final class MmffAtomTypeMatcher {
             this.patterns = loadPatterns(smaIn);
             this.hydrogenMap = loadHydrogenDefinitions(hdefIn);
         } catch (IOException e) {
-            throw new InternalError("Atom type definitions for MMFF94 Atom Types could not be loaded: "
-                    + e.getMessage());
+            throw new InternalError(
+                    "Atom type definitions for MMFF94 Atom Types could not be loaded: "
+                            + e.getMessage());
         } finally {
             close(smaIn);
             close(hdefIn);
@@ -109,12 +107,16 @@ final class MmffAtomTypeMatcher {
      * Obtain the MMFF symbolic types to the atoms of the provided structure.
      *
      * @param container structure representation
-     * @param graph     adj list data structure
-     * @param bonds     bond lookup map
-     * @param mmffArom  flags which bonds are aromatic by MMFF model
+     * @param graph adj list data structure
+     * @param bonds bond lookup map
+     * @param mmffArom flags which bonds are aromatic by MMFF model
      * @return MMFF symbolic types for each atom index
      */
-    String[] symbolicTypes(final IAtomContainer container, final int[][] graph, final EdgeToBondMap bonds, final Set<IBond> mmffArom) {
+    String[] symbolicTypes(
+            final IAtomContainer container,
+            final int[][] graph,
+            final EdgeToBondMap bonds,
+            final Set<IBond> mmffArom) {
 
         // Array of symbolic types, MMFF refers to these as 'SYMB' and the numeric
         // value a s 'TYPE'.
@@ -181,8 +183,8 @@ final class MmffAtomTypeMatcher {
      * Hydrogen types, assigned based on the MMFFHDEF.PAR parent associations.
      *
      * @param container input structure representation
-     * @param symbs     symbolic atom types
-     * @param graph     adjacency list graph
+     * @param symbs symbolic atom types
+     * @param graph adjacency list graph
      */
     private void assignHydrogenTypes(IAtomContainer container, String[] symbs, int[][] graph) {
         for (int v = 0; v < graph.length; v++) {
@@ -197,7 +199,7 @@ final class MmffAtomTypeMatcher {
      * Preliminary atom types are assigned using SMARTS definitions.
      *
      * @param container input structure representation
-     * @param symbs     symbolic atom types
+     * @param symbs symbolic atom types
      */
     private void assignPreliminaryTypes(IAtomContainer container, String[] symbs) {
         // shallow copy
@@ -231,7 +233,8 @@ final class MmffAtomTypeMatcher {
             String sma = cols[0];
             String symb = cols[1];
             try {
-                matchers.add(new AtomTypePattern(SmartsPattern.create(sma).setPrepare(false), symb));
+                matchers.add(
+                        new AtomTypePattern(SmartsPattern.create(sma).setPrepare(false), symb));
             } catch (IllegalArgumentException ex) {
                 throw new IOException(ex);
             }
@@ -261,7 +264,8 @@ final class MmffAtomTypeMatcher {
             hdefs.put(cols[0].trim(), cols[3].trim());
         }
 
-        // these associations list hydrogens that are not listed in MMFFSYMB.PAR but present in MMFFHDEF.PAR
+        // these associations list hydrogens that are not listed in MMFFSYMB.PAR but present in
+        // MMFFHDEF.PAR
         // N=O HNO, NO2 HNO2, F HX, I HX, ONO2 HON, BR HX, ON=O HON, CL HX, SNO HSNO, and OC=S HOCS
 
         return hdefs;
@@ -299,13 +303,13 @@ final class MmffAtomTypeMatcher {
     private static final class AtomTypePattern {
 
         private final Pattern pattern;
-        private final String  symb;
+        private final String symb;
 
         /**
          * Create the atom type pattern.
          *
          * @param pattern substructure pattern
-         * @param symb    MMFF symbolic type
+         * @param symb MMFF symbolic type
          */
         private AtomTypePattern(Pattern pattern, String symb) {
             this.pattern = pattern;

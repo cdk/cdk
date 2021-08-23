@@ -24,9 +24,7 @@ package org.openscience.cdk.renderer.font;
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * @cdk.module test-renderbasic
- */
+/** @cdk.module test-renderbasic */
 public abstract class AbstractFontManagerTest {
 
     public static AbstractFontManager manager;
@@ -41,5 +39,4 @@ public abstract class AbstractFontManagerTest {
         manager.setFontName(fontName);
         Assert.assertEquals(fontName, manager.getFontName());
     }
-
 }

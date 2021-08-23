@@ -45,20 +45,25 @@ public class HybridizationRatioDescriptorTest extends MolecularDescriptorTest {
     public void testHybRatioDescriptor1() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCC");
-        Assert.assertEquals(1.0, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1);
+        Assert.assertEquals(
+                1.0, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1);
     }
 
     @Test
     public void testHybRatioDescriptor2() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("c1ccccc1");
-        Assert.assertEquals(0.0, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1);
+        Assert.assertEquals(
+                0.0, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1);
     }
 
     @Test
     public void testHybRatioDescriptor3() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("[H]C#N");
-        Assert.assertEquals(Double.NaN, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1);
+        Assert.assertEquals(
+                Double.NaN,
+                ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(),
+                0.1);
     }
 }

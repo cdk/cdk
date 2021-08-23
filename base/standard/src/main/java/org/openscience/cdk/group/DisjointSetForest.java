@@ -24,10 +24,8 @@ package org.openscience.cdk.group;
 
 import java.util.Arrays;
 
-
 /**
- * Implementation of a union-find data structure, largely copied from
- * code due to Derrick Stolee.
+ * Implementation of a union-find data structure, largely copied from code due to Derrick Stolee.
  *
  * @author maclean
  * @cdk.module standard
@@ -36,9 +34,8 @@ import java.util.Arrays;
 public class DisjointSetForest {
 
     /**
-     * The sets stored as pointers to their parents. The root of each
-     * set is stored as the negated size of the set - ie a set of size
-     * 5 with a root element 2 will mean forest[2] = -5.
+     * The sets stored as pointers to their parents. The root of each set is stored as the negated
+     * size of the set - ie a set of size 5 with a root element 2 will mean forest[2] = -5.
      */
     private int[] forest;
 
@@ -55,9 +52,8 @@ public class DisjointSetForest {
     }
 
     /**
-     * Get the value of the forest at this index - note that this will <i>not</i>
-     * necessarily give the set for that element : use {@link #getSets} after
-     * union-ing elements.
+     * Get the value of the forest at this index - note that this will <i>not</i> necessarily give
+     * the set for that element : use {@link #getSets} after union-ing elements.
      *
      * @param i the index in the forest
      * @return the value at this index
@@ -67,8 +63,8 @@ public class DisjointSetForest {
     }
 
     /**
-     * Travel up the tree that this element is in, until the root of the set
-     * is found, and return that root.
+     * Travel up the tree that this element is in, until the root of the set is found, and return
+     * that root.
      *
      * @param element the starting point
      * @return the root of the set containing element
@@ -139,5 +135,4 @@ public class DisjointSetForest {
     public String toString() {
         return Arrays.toString(forest);
     }
-
 }

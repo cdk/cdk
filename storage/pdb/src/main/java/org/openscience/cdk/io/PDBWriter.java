@@ -27,10 +27,8 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Iterator;
 import java.util.List;
-
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
@@ -49,8 +47,8 @@ import org.openscience.cdk.tools.FormatStringBuffer;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
- * Saves small molecules in a rudimentary PDB format. It does not allow
- * writing of PDBProtein data structures.
+ * Saves small molecules in a rudimentary PDB format. It does not allow writing of PDBProtein data
+ * structures.
  *
  * @author Gilleain Torrance &lt;gilleain.torrance@gmail.com&gt;
  * @cdk.module pdb
@@ -59,10 +57,10 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  */
 public class PDBWriter extends DefaultChemObjectWriter {
 
-    public final String      SERIAL_FORMAT    = "%5d";
-    public final String      ATOM_NAME_FORMAT = "%-5s";
-    public final String      POSITION_FORMAT  = "%8.3f";
-    public final String      RESIDUE_FORMAT   = "%s";
+    public final String SERIAL_FORMAT = "%5d";
+    public final String ATOM_NAME_FORMAT = "%-5s";
+    public final String POSITION_FORMAT = "%8.3f";
+    public final String RESIDUE_FORMAT = "%s";
 
     private BooleanIOSetting writeAsHET;
     private BooleanIOSetting useElementSymbolAsAtomName;
@@ -70,7 +68,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
     private BooleanIOSetting writeTERRecord;
     private BooleanIOSetting writeENDRecord;
 
-    private BufferedWriter   writer;
+    private BufferedWriter writer;
 
     public PDBWriter() {
         this(new StringWriter());
@@ -90,16 +88,41 @@ public class PDBWriter extends DefaultChemObjectWriter {
             }
         } catch (Exception exc) {
         }
-        writeAsHET = addSetting(new BooleanIOSetting("WriteAsHET", IOSetting.Importance.LOW,
-                "Should the output file use HETATM", "false"));
-        useElementSymbolAsAtomName = addSetting(new BooleanIOSetting("UseElementSymbolAsAtomName",
-                IOSetting.Importance.LOW, "Should the element symbol be written as the atom name", "false"));
-        writeCONECTRecords = addSetting(new BooleanIOSetting("WriteCONECT", IOSetting.Importance.LOW,
-                "Should the bonds be written as CONECT records?", "true"));
-        writeTERRecord = addSetting(new BooleanIOSetting("WriteTER", IOSetting.Importance.LOW,
-                "Should a TER record be put at the end of the atoms?", "false"));
-        writeENDRecord = addSetting(new BooleanIOSetting("WriteEND", IOSetting.Importance.LOW,
-                "Should an END record be put at the end of the file?", "true"));
+        writeAsHET =
+                addSetting(
+                        new BooleanIOSetting(
+                                "WriteAsHET",
+                                IOSetting.Importance.LOW,
+                                "Should the output file use HETATM",
+                                "false"));
+        useElementSymbolAsAtomName =
+                addSetting(
+                        new BooleanIOSetting(
+                                "UseElementSymbolAsAtomName",
+                                IOSetting.Importance.LOW,
+                                "Should the element symbol be written as the atom name",
+                                "false"));
+        writeCONECTRecords =
+                addSetting(
+                        new BooleanIOSetting(
+                                "WriteCONECT",
+                                IOSetting.Importance.LOW,
+                                "Should the bonds be written as CONECT records?",
+                                "true"));
+        writeTERRecord =
+                addSetting(
+                        new BooleanIOSetting(
+                                "WriteTER",
+                                IOSetting.Importance.LOW,
+                                "Should a TER record be put at the end of the atoms?",
+                                "false"));
+        writeENDRecord =
+                addSetting(
+                        new BooleanIOSetting(
+                                "WriteEND",
+                                IOSetting.Importance.LOW,
+                                "Should an END record be put at the end of the file?",
+                                "true"));
     }
 
     public PDBWriter(OutputStream output) {
@@ -157,16 +180,19 @@ public class PDBWriter extends DefaultChemObjectWriter {
                     if (crystal != null) {
                         write(crystal);
                     } else {
-                        Iterator<IAtomContainer> containers = ChemModelManipulator.getAllAtomContainers(model)
-                                .iterator();
+                        Iterator<IAtomContainer> containers =
+                                ChemModelManipulator.getAllAtomContainers(model).iterator();
                         while (containers.hasNext()) {
-                            writeMolecule(model.getBuilder().newInstance(IAtomContainer.class, containers.next()));
+                            writeMolecule(
+                                    model.getBuilder()
+                                            .newInstance(IAtomContainer.class, containers.next()));
                         }
                     }
                 }
             }
         } else {
-            throw new CDKException("Only supported is writing of Molecule, Crystal and ChemFile objects.");
+            throw new CDKException(
+                    "Only supported is writing of Molecule, Crystal and ChemFile objects.");
         }
     }
 
@@ -224,7 +250,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
                 buffer.append(fsb.toString());
 
                 buffer.append("  1.00  0.00           ") // occupancy + temperature factor
-                      .append(atom.getSymbol());
+                        .append(atom.getSymbol());
                 Integer formalCharge = atom.getFormalCharge();
                 if (formalCharge == CDKConstants.UNSET) {
                     buffer.append("+0");
@@ -276,7 +302,8 @@ public class PDBWriter extends DefaultChemObjectWriter {
             }
 
         } catch (IOException exception) {
-            throw new CDKException("Error while writing file: " + exception.getMessage(), exception);
+            throw new CDKException(
+                    "Error while writing file: " + exception.getMessage(), exception);
         }
     }
 
@@ -323,16 +350,14 @@ public class PDBWriter extends DefaultChemObjectWriter {
             }
             writeMolecule(crystal.getBuilder().newInstance(IAtomContainer.class, crystal));
         } catch (IOException exception) {
-            throw new CDKException("Error while writing file: " + exception.getMessage(), exception);
+            throw new CDKException(
+                    "Error while writing file: " + exception.getMessage(), exception);
         }
     }
 
-    /**
-      * Flushes the output and closes this object.
-      */
+    /** Flushes the output and closes this object. */
     @Override
     public void close() throws IOException {
         writer.close();
     }
-
 }

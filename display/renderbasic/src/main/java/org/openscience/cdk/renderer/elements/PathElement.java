@@ -20,9 +20,7 @@ package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
 import java.util.List;
-
 import javax.vecmath.Point2d;
-
 
 /**
  * A path composed of points.
@@ -32,27 +30,26 @@ import javax.vecmath.Point2d;
  */
 public class PathElement implements IRenderingElement {
 
-    /** The points that make up the path. **/
+    /** The points that make up the path. * */
     public final List<Point2d> points;
 
-    /** The color of the path. **/
-    public final Color         color;
+    /** The color of the path. * */
+    public final Color color;
 
     /**
      * Make a path from the list of points.
      *
      * @param points points defining the path
-     * @param color  color of the path
+     * @param color color of the path
      */
     public PathElement(List<Point2d> points, Color color) {
         this.points = points;
         this.color = color;
     }
 
-    /** {@inheritDoc} **/
+    /** {@inheritDoc} * */
     @Override
     public void accept(IRenderingVisitor v) {
         v.visit(this);
     }
-
 }

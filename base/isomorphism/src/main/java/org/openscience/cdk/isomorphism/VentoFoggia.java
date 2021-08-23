@@ -24,26 +24,22 @@
 
 package org.openscience.cdk.isomorphism;
 
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.graph.GraphUtil;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
+import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
-
-import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
+import org.openscience.cdk.graph.GraphUtil;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 
 /**
- * A structure pattern which utilises the Vento-Foggia (VF) algorithm {@cdk.cite
- * Cordella04}.
+ * A structure pattern which utilises the Vento-Foggia (VF) algorithm {@cdk.cite Cordella04}.
  *
- * 
+ * <p>Find and count the number molecules which contain the query substructure.
  *
- * Find and count the number molecules which contain the query substructure.
+ * <blockquote>
  *
- * <blockquote><pre>
+ * <pre>
  * IAtomContainer query   = ...;
  * Pattern        pattern = VentoFoggia.findSubstructure(query);
  *
@@ -51,15 +47,17 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * for (IAtomContainer m : ms)
  *     if (pattern.matches(m))
  *         hits++;
- * </pre></blockquote>
- * 
+ * </pre>
  *
- * Finding the matching to molecules which contain the query substructure. It is
- * more efficient to obtain the {@link #match} and check it's size rather than
- * test if it {@link #matches}. These methods automatically verify
- * stereochemistry.
+ * </blockquote>
  *
- * <blockquote><pre>{@code
+ * Finding the matching to molecules which contain the query substructure. It is more efficient to
+ * obtain the {@link #match} and check it's size rather than test if it {@link #matches}. These
+ * methods automatically verify stereochemistry.
+ *
+ * <blockquote>
+ *
+ * <pre>{@code
  * IAtomContainer query   = ...;
  * Pattern        pattern = VentoFoggia.findSubstructure(query);
  *
@@ -69,7 +67,9 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  *     if (match.length > 0)
  *         hits++;
  * }
- * }</pre></blockquote>
+ * }</pre>
+ *
+ * </blockquote>
  *
  * @author John May
  * @cdk.module isomorphism
@@ -80,29 +80,33 @@ public final class VentoFoggia extends Pattern {
     private final IAtomContainer query;
 
     /** The query structure adjacency list. */
-    private final int[][]        g1;
+    private final int[][] g1;
 
     /** The bonds of the query structure. */
-    private final EdgeToBondMap  bonds1;
+    private final EdgeToBondMap bonds1;
 
     /** The atom matcher to determine atom feasibility. */
-    private final AtomMatcher    atomMatcher;
+    private final AtomMatcher atomMatcher;
 
     /** The bond matcher to determine atom feasibility. */
-    private final BondMatcher    bondMatcher;
+    private final BondMatcher bondMatcher;
 
     /** Search for a subgraph. */
-    private final boolean        subgraph;
+    private final boolean subgraph;
 
     /**
      * Non-public constructor for-now the atom/bond semantics are fixed.
      *
-     * @param query        the query structure
-     * @param atomMatcher  how atoms should be matched
-     * @param bondMatcher  how bonds should be matched
+     * @param query the query structure
+     * @param atomMatcher how atoms should be matched
+     * @param bondMatcher how bonds should be matched
      * @param substructure substructure search
      */
-    private VentoFoggia(IAtomContainer query, AtomMatcher atomMatcher, BondMatcher bondMatcher, boolean substructure) {
+    private VentoFoggia(
+            IAtomContainer query,
+            AtomMatcher atomMatcher,
+            BondMatcher bondMatcher,
+            boolean substructure) {
         this.query = query;
         this.atomMatcher = atomMatcher;
         this.bondMatcher = bondMatcher;
@@ -112,18 +116,18 @@ public final class VentoFoggia extends Pattern {
         determineFilters(query);
     }
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     public int[] match(IAtomContainer target) {
         return matchAll(target).first();
     }
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     public Mappings matchAll(final IAtomContainer target) {
 
         final EdgeToBondMap bonds2;
-        final int[][]       g2;
+        final int[][] g2;
 
         AdjListCache cached = target.getProperty(AdjListCache.class.getName());
         if (cached == null || !cached.validate(target)) {
@@ -134,67 +138,69 @@ public final class VentoFoggia extends Pattern {
         bonds2 = cached.bmap;
         g2 = cached.g;
 
-        Iterable<int[]> iterable = new VFIterable(query, target,
-                                                  g1, g2,
-                                                  bonds1, bonds2,
-                                                  atomMatcher, bondMatcher,
-                                                  subgraph);
+        Iterable<int[]> iterable =
+                new VFIterable(
+                        query, target, g1, g2, bonds1, bonds2, atomMatcher, bondMatcher, subgraph);
 
         Mappings mappings = new Mappings(query, target, iterable);
         return filter(mappings, query, target);
     }
 
     /**
-     * Create a pattern which can be used to find molecules which contain the
-     * {@code query} structure.
+     * Create a pattern which can be used to find molecules which contain the {@code query}
+     * structure.
      *
      * @param query the substructure to find
      * @return a pattern for finding the {@code query}
      */
     public static Pattern findSubstructure(IAtomContainer query) {
         boolean isQuery = query instanceof IQueryAtomContainer;
-        return findSubstructure(query,
-                                isQuery ? AtomMatcher.forQuery() : AtomMatcher.forElement(),
-                                isQuery ? BondMatcher.forQuery() : BondMatcher.forOrder());
+        return findSubstructure(
+                query,
+                isQuery ? AtomMatcher.forQuery() : AtomMatcher.forElement(),
+                isQuery ? BondMatcher.forQuery() : BondMatcher.forOrder());
     }
 
     /**
-     * Create a pattern which can be used to find molecules which are the same
-     * as the {@code query} structure.
+     * Create a pattern which can be used to find molecules which are the same as the {@code query}
+     * structure.
      *
      * @param query the substructure to find
      * @return a pattern for finding the {@code query}
      */
     public static Pattern findIdentical(IAtomContainer query) {
         boolean isQuery = query instanceof IQueryAtomContainer;
-        return findIdentical(query,
-                             isQuery ? AtomMatcher.forQuery() : AtomMatcher.forElement(),
-                             isQuery ? BondMatcher.forQuery() : BondMatcher.forOrder());
+        return findIdentical(
+                query,
+                isQuery ? AtomMatcher.forQuery() : AtomMatcher.forElement(),
+                isQuery ? BondMatcher.forQuery() : BondMatcher.forOrder());
     }
 
     /**
-     * Create a pattern which can be used to find molecules which contain the
-     * {@code query} structure.
+     * Create a pattern which can be used to find molecules which contain the {@code query}
+     * structure.
      *
      * @param query the substructure to find
      * @param atomMatcher how atoms are matched
      * @param bondMatcher how bonds are matched
      * @return a pattern for finding the {@code query}
      */
-    public static Pattern findSubstructure(IAtomContainer query, AtomMatcher atomMatcher, BondMatcher bondMatcher) {
+    public static Pattern findSubstructure(
+            IAtomContainer query, AtomMatcher atomMatcher, BondMatcher bondMatcher) {
         return new VentoFoggia(query, atomMatcher, bondMatcher, true);
     }
 
     /**
-     * Create a pattern which can be used to find molecules which are the same
-     * as the {@code query} structure.
+     * Create a pattern which can be used to find molecules which are the same as the {@code query}
+     * structure.
      *
      * @param query the substructure to find
      * @param atomMatcher how atoms are matched
      * @param bondMatcher how bonds are matched
      * @return a pattern for finding the {@code query}
      */
-    public static Pattern findIdentical(IAtomContainer query, AtomMatcher atomMatcher, BondMatcher bondMatcher) {
+    public static Pattern findIdentical(
+            IAtomContainer query, AtomMatcher atomMatcher, BondMatcher bondMatcher) {
         return new VentoFoggia(query, atomMatcher, bondMatcher, false);
     }
 
@@ -204,35 +210,42 @@ public final class VentoFoggia extends Pattern {
         private final IAtomContainer container1, container2;
 
         /** Query and target adjacency lists. */
-        private final int[][]        g1, g2;
+        private final int[][] g1, g2;
 
         /** Query and target bond lookup. */
-        private final EdgeToBondMap  bonds1, bonds2;
+        private final EdgeToBondMap bonds1, bonds2;
 
         /** How are atoms are matched. */
-        private final AtomMatcher    atomMatcher;
+        private final AtomMatcher atomMatcher;
 
         /** How are bonds are match. */
-        private final BondMatcher    bondMatcher;
+        private final BondMatcher bondMatcher;
 
         /** The query is a subgraph. */
-        private final boolean        subgraph;
+        private final boolean subgraph;
 
         /**
          * Create a match for the following parameters.
          *
-         * @param container1  query structure
-         * @param container2  target structure
-         * @param g1          query adjacency list
-         * @param g2          target adjacency list
-         * @param bonds1      query bond map
-         * @param bonds2      target bond map
+         * @param container1 query structure
+         * @param container2 target structure
+         * @param g1 query adjacency list
+         * @param g2 target adjacency list
+         * @param bonds1 query bond map
+         * @param bonds2 target bond map
          * @param atomMatcher how atoms are matched
          * @param bondMatcher how bonds are matched
-         * @param subgraph    perform subgraph search
+         * @param subgraph perform subgraph search
          */
-        private VFIterable(IAtomContainer container1, IAtomContainer container2, int[][] g1, int[][] g2,
-                EdgeToBondMap bonds1, EdgeToBondMap bonds2, AtomMatcher atomMatcher, BondMatcher bondMatcher,
+        private VFIterable(
+                IAtomContainer container1,
+                IAtomContainer container2,
+                int[][] g1,
+                int[][] g2,
+                EdgeToBondMap bonds1,
+                EdgeToBondMap bonds2,
+                AtomMatcher atomMatcher,
+                BondMatcher bondMatcher,
                 boolean subgraph) {
             this.container1 = container1;
             this.container2 = container2;
@@ -245,15 +258,31 @@ public final class VentoFoggia extends Pattern {
             this.subgraph = subgraph;
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         public Iterator<int[]> iterator() {
             if (subgraph) {
-                return new StateStream(new VFSubState(container1, container2, g1, g2, bonds1, bonds2, atomMatcher,
-                        bondMatcher));
+                return new StateStream(
+                        new VFSubState(
+                                container1,
+                                container2,
+                                g1,
+                                g2,
+                                bonds1,
+                                bonds2,
+                                atomMatcher,
+                                bondMatcher));
             }
             return new StateStream(
-                    new VFState(container1, container2, g1, g2, bonds1, bonds2, atomMatcher, bondMatcher));
+                    new VFState(
+                            container1,
+                            container2,
+                            g1,
+                            g2,
+                            bonds1,
+                            bonds2,
+                            atomMatcher,
+                            bondMatcher));
         }
     }
 
@@ -276,9 +305,9 @@ public final class VentoFoggia extends Pattern {
         }
 
         private boolean validate(IAtomContainer mol) {
-            return mol.getAtomCount() == numAtoms &&
-                   mol.getBondCount() == numBonds &&
-                   (System.nanoTime() - tInit) < MAX_AGE;
+            return mol.getAtomCount() == numAtoms
+                    && mol.getBondCount() == numBonds
+                    && (System.nanoTime() - tInit) < MAX_AGE;
         }
     }
 }

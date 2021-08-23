@@ -24,7 +24,10 @@
 
 package org.openscience.cdk.renderer.generators.standard;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.number.IsCloseTo.closeTo;
 
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
@@ -35,11 +38,7 @@ import java.awt.geom.RoundRectangle2D;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.number.IsCloseTo.closeTo;
-import static org.hamcrest.MatcherAssert.assertThat;
+import org.junit.Test;
 
 public class ConvexHullTest {
 
@@ -74,7 +73,7 @@ public class ConvexHullTest {
         Rectangle2D rect1 = new Rectangle2D.Double(-10, -10, 5, 5);
         Rectangle2D rect2 = new Rectangle2D.Double(15, 16, 20, 25);
         Rectangle2D rect3 = new Rectangle2D.Double(-15, 6, 2, 5);
-        ConvexHull hull = ConvexHull.ofShapes(Arrays.<Shape> asList(rect1, rect2, rect3));
+        ConvexHull hull = ConvexHull.ofShapes(Arrays.<Shape>asList(rect1, rect2, rect3));
         Rectangle2D bounds = hull.outline().getBounds2D();
         assertThat(bounds.getMinX(), closeTo(-15, 0.01));
         assertThat(bounds.getMinY(), closeTo(-10, 0.01));
@@ -87,7 +86,7 @@ public class ConvexHullTest {
         Rectangle2D rect1 = new Rectangle2D.Double(-10, -10, 5, 5);
         Rectangle2D rect2 = new Rectangle2D.Double(15, 16, 20, 25);
         Rectangle2D rect3 = new Rectangle2D.Double(-15, 6, 2, 5);
-        ConvexHull hull = ConvexHull.ofShapes(Arrays.<Shape> asList(rect1, rect2, rect3));
+        ConvexHull hull = ConvexHull.ofShapes(Arrays.<Shape>asList(rect1, rect2, rect3));
 
         ConvexHull transformedHull = hull.transform(AffineTransform.getTranslateInstance(10, 15));
 
@@ -102,8 +101,12 @@ public class ConvexHullTest {
 
     @Test
     public void testShapeOf() throws Exception {
-        List<Point2D> points = Arrays.<Point2D> asList(new Point2D.Double(-5d, -5d), new Point2D.Double(-5d, 5d),
-                new Point2D.Double(5d, 5d), new Point2D.Double(5d, -5d));
+        List<Point2D> points =
+                Arrays.<Point2D>asList(
+                        new Point2D.Double(-5d, -5d),
+                        new Point2D.Double(-5d, 5d),
+                        new Point2D.Double(5d, 5d),
+                        new Point2D.Double(5d, -5d));
         Rectangle2D bounds = ConvexHull.shapeOf(points).getBounds2D();
         assertThat(bounds.getMinX(), closeTo(-5, 0.01));
         assertThat(bounds.getMinY(), closeTo(-5, 0.01));
@@ -113,7 +116,7 @@ public class ConvexHullTest {
 
     @Test
     public void emptyShapeDoesBreak() throws Exception {
-        Shape shape = ConvexHull.shapeOf(Collections.<Point2D> emptyList());
+        Shape shape = ConvexHull.shapeOf(Collections.<Point2D>emptyList());
     }
 
     @Test
@@ -139,5 +142,4 @@ public class ConvexHullTest {
         assertThat(intersect.getX(), closeTo(5, 0.01));
         assertThat(intersect.getY(), closeTo(0, 0.01));
     }
-
 }

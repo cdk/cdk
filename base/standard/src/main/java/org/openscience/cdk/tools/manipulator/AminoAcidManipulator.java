@@ -29,13 +29,11 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 
 /**
- * Class with convenience methods that provide methods to manipulate
- * AminoAcid's.
+ * Class with convenience methods that provide methods to manipulate AminoAcid's.
  *
- * @cdk.module  standard
+ * @cdk.module standard
  * @cdk.githash
- *
- * @author      Egon Willighagen
+ * @author Egon Willighagen
  * @cdk.created 2005-08-19
  */
 public class AminoAcidManipulator {
@@ -47,7 +45,8 @@ public class AminoAcidManipulator {
      * @throws CDKException when the C-terminus is not defined for the given AminoAcid
      */
     public static void removeAcidicOxygen(IAminoAcid acid) throws CDKException {
-        if (acid.getCTerminus() == null) throw new CDKException("Cannot remove oxygen: C-terminus is not defined!");
+        if (acid.getCTerminus() == null)
+            throw new CDKException("Cannot remove oxygen: C-terminus is not defined!");
 
         java.util.List<IBond> bonds = acid.getConnectedBondsList(acid.getCTerminus());
         // ok, look for the oxygen which is singly bonded
@@ -66,15 +65,17 @@ public class AminoAcidManipulator {
     /**
      * Adds the singly bonded oxygen from the acid group of the AminoAcid.
      *
-     * @param  acid         AminoAcid to which to add the oxygen
+     * @param acid AminoAcid to which to add the oxygen
      * @throws CDKException when the C-terminus is not defined for the given AminoAcid
      */
     public static void addAcidicOxygen(IAminoAcid acid) throws CDKException {
-        if (acid.getCTerminus() == null) throw new CDKException("Cannot add oxygen: C-terminus is not defined!");
+        if (acid.getCTerminus() == null)
+            throw new CDKException("Cannot add oxygen: C-terminus is not defined!");
 
         IAtom acidicOxygen = acid.getBuilder().newInstance(IAtom.class, "O");
         acid.addAtom(acidicOxygen);
-        acid.addBond(acid.getBuilder().newInstance(IBond.class, acid.getCTerminus(), acidicOxygen,
-                Order.SINGLE));
+        acid.addBond(
+                acid.getBuilder()
+                        .newInstance(IBond.class, acid.getCTerminus(), acidicOxygen, Order.SINGLE));
     }
 }

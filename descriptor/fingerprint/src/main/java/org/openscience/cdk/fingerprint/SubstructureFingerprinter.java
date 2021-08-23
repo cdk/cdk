@@ -22,24 +22,19 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import java.util.*;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.Pattern;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
-import org.openscience.cdk.smarts.Smarts;
 import org.openscience.cdk.smarts.SmartsPattern;
 
-import java.io.IOException;
-import java.util.*;
-
 /**
- * {@link IFingerprinter} that gives a bit set which has a size equal to the number
- * of substructures it was constructed from. A set bit indicates that that
- * substructure was found at least once in the molecule for which the
- * fingerprint was calculated. The fingerprint currently supports 307
+ * {@link IFingerprinter} that gives a bit set which has a size equal to the number of substructures
+ * it was constructed from. A set bit indicates that that substructure was found at least once in
+ * the molecule for which the fingerprint was calculated. The fingerprint currently supports 307
  * substructures, listed below:
  *
-
  * <table>
  * <caption>Table: 1: Default substructure patterns (SMARTS) for each bit position</caption>
  * <thead>
@@ -357,18 +352,13 @@ import java.util.*;
  * <tr><td>306</td><td>Chiral center specified</td><td>{@code [$([*@](~*)(~*)(*)*),$([*@H](*)(*)*),$([*@](~*)(*)*),$([*@H](~*)~*)]}</td></tr>
  * </tbody></table>
  *
- *
- * @author       egonw
- * @cdk.created  2005-12-30
- *
- * @cdk.keyword  fingerprint
- * @cdk.keyword  similarity
- *
- * @cdk.module   fingerprint
+ * @author egonw
+ * @cdk.created 2005-12-30
+ * @cdk.keyword fingerprint
+ * @cdk.keyword similarity
+ * @cdk.module fingerprint
  * @cdk.githash
  */
-
-
 public class SubstructureFingerprinter extends AbstractFingerprinter implements IFingerprinter {
 
     private static final class Key {
@@ -393,8 +383,8 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
     }
 
     /**
-     * Set up the fingerprinter to use the fragments from
-     * {@link org.openscience.cdk.fingerprint.StandardSubstructureSets}.
+     * Set up the fingerprinter to use the fragments from {@link
+     * org.openscience.cdk.fingerprint.StandardSubstructureSets}.
      */
     public SubstructureFingerprinter() {
         try {
@@ -406,6 +396,7 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
 
     /**
      * Set the SMARTS patterns.
+     *
      * @param smarts the SMARTS
      */
     private void setSmarts(String[] smarts) {
@@ -429,12 +420,10 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
         SmartsPattern.prepare(atomContainer);
         BitSet fingerPrint = new BitSet(keys.size());
         for (int i = 0; i < keys.size(); i++) {
-            if (keys.get(i).pattern.matches(atomContainer))
-                fingerPrint.set(i, true);
+            if (keys.get(i).pattern.matches(atomContainer)) fingerPrint.set(i, true);
         }
         return new BitSetFingerprint(fingerPrint);
     }
-
 
     /** {@inheritDoc} */
     @Override
@@ -449,9 +438,7 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
         final Map<Integer, Integer> map = new TreeMap<Integer, Integer>();
         for (int i = 0; i < keys.size(); i++) {
             Pattern ptrn = keys.get(i).pattern;
-            map.put(i,
-                    ptrn.matchAll(atomContainer)
-                        .countUnique());
+            map.put(i, ptrn.matchAll(atomContainer).countUnique());
         }
 
         final int length = keys.size();
@@ -466,16 +453,24 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
         return new ICountFingerprint() {
 
             @Override
-            public long size() { return length; }
+            public long size() {
+                return length;
+            }
 
             @Override
-            public int numOfPopulatedbins() { return size; }
+            public int numOfPopulatedbins() {
+                return size;
+            }
 
             @Override
-            public int getCount(int index) { return count[index]; }
+            public int getCount(int index) {
+                return count[index];
+            }
 
             @Override
-            public int getHash(int index) { return hash[index]; }
+            public int getHash(int index) {
+                return hash[index];
+            }
 
             @Override
             public void merge(ICountFingerprint fp) {}
@@ -484,16 +479,21 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
             public void setBehaveAsBitFingerprint(boolean behaveAsBitFingerprint) {}
 
             @Override
-            public boolean hasHash(int hash) { return map.containsKey(hash); }
+            public boolean hasHash(int hash) {
+                return map.containsKey(hash);
+            }
 
             @Override
-            public int getCountForHash(int hash) { return map.get(hash); }
+            public int getCountForHash(int hash) {
+                return map.get(hash);
+            }
         };
     }
 
     /** {@inheritDoc} */
     @Override
-    public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
+    public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer)
+            throws CDKException {
         throw new UnsupportedOperationException();
     }
 
@@ -504,12 +504,10 @@ public class SubstructureFingerprinter extends AbstractFingerprinter implements 
     }
 
     /**
-     * Retrieves the SMARTS representation of a substructure for a given
-     * bit in the fingerprint.
+     * Retrieves the SMARTS representation of a substructure for a given bit in the fingerprint.
      *
      * @param bitIndex
-     * @return SMARTS representation of substructure at
-     *         index <code>bitIndex</code>.
+     * @return SMARTS representation of substructure at index <code>bitIndex</code>.
      */
     public String getSubstructure(int bitIndex) {
         return keys.get(bitIndex).smarts;

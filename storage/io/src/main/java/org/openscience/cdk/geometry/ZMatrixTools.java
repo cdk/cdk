@@ -31,31 +31,35 @@ import javax.vecmath.Vector3f;
 /**
  * A set of static utility classes for dealing with Z matrices.
  *
- * @cdk.module  io
+ * @cdk.module io
  * @cdk.githash
  * @cdk.keyword Z-matrix
- *
  * @cdk.created 2004-02-09
  */
 public class ZMatrixTools {
 
     /**
-     * Takes the given Z Matrix coordinates and converts them to cartesian coordinates.
-     * The first Atom end up in the origin, the second on on the x axis, and the third
-     * one in the XY plane. The rest is added by applying the Zmatrix distances, angles
-     * and dihedrals. Angles are in degrees.
+     * Takes the given Z Matrix coordinates and converts them to cartesian coordinates. The first
+     * Atom end up in the origin, the second on on the x axis, and the third one in the XY plane.
+     * The rest is added by applying the Zmatrix distances, angles and dihedrals. Angles are in
+     * degrees.
      *
-     * @param distances     Array of distance variables of the Z matrix
-     * @param angles        Array of angle variables of the Z matrix
-     * @param dihedrals     Array of distance variables of the Z matrix
-     * @param first_atoms   Array of atom ids of the first invoked atom in distance, angle and dihedral
-     * @param second_atoms  Array of atom ids of the second invoked atom in angle and dihedral
-     * @param third_atoms   Array of atom ids of the third invoked atom in dihedral
-     *
+     * @param distances Array of distance variables of the Z matrix
+     * @param angles Array of angle variables of the Z matrix
+     * @param dihedrals Array of distance variables of the Z matrix
+     * @param first_atoms Array of atom ids of the first invoked atom in distance, angle and
+     *     dihedral
+     * @param second_atoms Array of atom ids of the second invoked atom in angle and dihedral
+     * @param third_atoms Array of atom ids of the third invoked atom in dihedral
      * @cdk.dictref blue-obelisk:zmatrixCoordinatesIntoCartesianCoordinates
      */
-    public static Point3d[] zmatrixToCartesian(double[] distances, int[] first_atoms, double[] angles,
-            int[] second_atoms, double[] dihedrals, int[] third_atoms) {
+    public static Point3d[] zmatrixToCartesian(
+            double[] distances,
+            int[] first_atoms,
+            double[] angles,
+            int[] second_atoms,
+            double[] dihedrals,
+            int[] third_atoms) {
         Point3d[] cartesianCoords = new Point3d[distances.length];
         for (int index = 0; index < distances.length; index++) {
             if (index == 0) {
@@ -63,9 +67,14 @@ public class ZMatrixTools {
             } else if (index == 1) {
                 cartesianCoords[index] = new Point3d(distances[1], 0d, 0d);
             } else if (index == 2) {
-                cartesianCoords[index] = new Point3d(-Math.cos((angles[2] / 180) * Math.PI) * distances[2]
-                        + distances[1], Math.sin((angles[2] / 180) * Math.PI) * distances[2], 0d);
-                if (first_atoms[index] == 0) cartesianCoords[index].x = (cartesianCoords[index].x - distances[1]) * -1;
+                cartesianCoords[index] =
+                        new Point3d(
+                                -Math.cos((angles[2] / 180) * Math.PI) * distances[2]
+                                        + distances[1],
+                                Math.sin((angles[2] / 180) * Math.PI) * distances[2],
+                                0d);
+                if (first_atoms[index] == 0)
+                    cartesianCoords[index].x = (cartesianCoords[index].x - distances[1]) * -1;
             } else {
                 Vector3d cd = new Vector3d();
                 cd.sub(cartesianCoords[third_atoms[index]], cartesianCoords[second_atoms[index]]);
@@ -93,10 +102,9 @@ public class ZMatrixTools {
     private static Vector3d rotate(Vector3d vector, Vector3d axis, double angle) {
         Matrix3f rotate = new Matrix3f();
         rotate.set(new AxisAngle4f(new Vector3f(axis), (float) Math.toRadians(angle)));
-        Vector3f result   = new Vector3f();
+        Vector3f result = new Vector3f();
         Vector3f vector3f = new Vector3f(vector);
         rotate.transform(vector3f, result);
         return new Vector3d(result);
     }
-
 }

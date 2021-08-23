@@ -22,44 +22,42 @@
  */
 package org.openscience.cdk;
 
+import java.io.Serializable;
+import java.util.Objects;
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElement;
 
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-import java.io.Serializable;
-import java.util.Objects;
-
 /**
  * Represents the idea of an chemical atom.
  *
  * <p>An Atom class is instantiated with at least the atom symbol:
+ *
  * <pre>
  *   Atom a = new Atom("C");
  * </pre>
  *
- * <p>Once instantiated all field not filled by passing parameters
- * to the constructor are null. Atoms can be configured by using
- * the IsotopeFactory.configure() method:
+ * <p>Once instantiated all field not filled by passing parameters to the constructor are null.
+ * Atoms can be configured by using the IsotopeFactory.configure() method:
+ *
  * <pre>
  *   IsotopeFactory if = IsotopeFactory.getInstance(a.getNewBuilder());
  *   if.configure(a);
  * </pre>
  *
- * <p>More examples about using this class can be found in the
- * Junit test for this class.
+ * <p>More examples about using this class can be found in the Junit test for this class.
  *
  * @cdk.module data
  * @cdk.githash
- *
- * @author     steinbeck
- * @cdk.created    2000-10-02
- * @cdk.keyword    atom
- *
- * @see  org.openscience.cdk.config.XMLIsotopeFactory#getInstance(org.openscience.cdk.interfaces.IChemObjectBuilder)
+ * @author steinbeck
+ * @cdk.created 2000-10-02
+ * @cdk.keyword atom
+ * @see
+ *     org.openscience.cdk.config.XMLIsotopeFactory#getInstance(org.openscience.cdk.interfaces.IChemObjectBuilder)
  */
 public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
 
@@ -71,46 +69,32 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
     /**
      * Determines if a de-serialized object is compatible with this class.
      *
-     * This value must only be changed if and only if the new version
-     * of this class is incompatible with the old version. See Sun docs
-     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
+     * <p>This value must only be changed if and only if the new version of this class is
+     * incompatible with the old version. See Sun docs for <a
+     * href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
      */
-    private static final long serialVersionUID  = -3137373012494608794L;
+    private static final long serialVersionUID = -3137373012494608794L;
 
+    /** A 2D point specifying the location of this atom in a 2D coordinate space. */
+    protected Point2d point2d = (Point2d) CDKConstants.UNSET;
+    /** A 3 point specifying the location of this atom in a 3D coordinate space. */
+    protected Point3d point3d = (Point3d) CDKConstants.UNSET;
+    /** A 3 point specifying the location of this atom in a crystal unit cell. */
+    protected Point3d fractionalPoint3d = (Point3d) CDKConstants.UNSET;
+    /** The number of implicitly bound hydrogen atoms for this atom. */
+    protected Integer hydrogenCount = (Integer) CDKConstants.UNSET;
+    /** A stereo parity descriptor for the stereochemistry of this atom. */
+    protected Integer stereoParity = (Integer) CDKConstants.UNSET;
     /**
-     *  A 2D point specifying the location of this atom in a 2D coordinate
-     *  space.
-     */
-    protected Point2d         point2d           = (Point2d) CDKConstants.UNSET;
-    /**
-     *  A 3 point specifying the location of this atom in a 3D coordinate
-     *  space.
-     */
-    protected Point3d         point3d           = (Point3d) CDKConstants.UNSET;
-    /**
-     *  A 3 point specifying the location of this atom in a crystal unit cell.
-     */
-    protected Point3d         fractionalPoint3d = (Point3d) CDKConstants.UNSET;
-    /**
-     *  The number of implicitly bound hydrogen atoms for this atom.
-     */
-    protected Integer         hydrogenCount     = (Integer) CDKConstants.UNSET;
-    /**
-     *  A stereo parity descriptor for the stereochemistry of this atom.
-     */
-    protected Integer         stereoParity      = (Integer) CDKConstants.UNSET;
-    /**
-     *  The partial charge of the atom.
+     * The partial charge of the atom.
      *
-     * The default value is {@link CDKConstants#UNSET} and serves to provide a check whether the charge has been
-     * set or not
+     * <p>The default value is {@link CDKConstants#UNSET} and serves to provide a check whether the
+     * charge has been set or not
      */
-    protected Double          charge            = (Double) CDKConstants.UNSET;
+    protected Double charge = (Double) CDKConstants.UNSET;
 
-    /**
-     * Constructs an completely unset Atom.
-     */
+    /** Constructs an completely unset Atom. */
     public Atom() {
         super((String) null);
     }
@@ -142,7 +126,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
      * @param fchg formal charge
      */
     public Atom(int elem, int hcnt, int fchg) {
-        super((String)null);
+        super((String) null);
         setAtomicNumber(elem);
         setSymbol(Elements.ofNumber(elem).symbol());
         setImplicitHydrogenCount(hcnt);
@@ -150,9 +134,9 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
     }
 
     /**
-     * Constructs an Atom from a string containing an element symbol and optionally
-     * the atomic mass, hydrogen count, and formal charge. The symbol grammar allows
-     * easy construction from common symbols, for example:
+     * Constructs an Atom from a string containing an element symbol and optionally the atomic mass,
+     * hydrogen count, and formal charge. The symbol grammar allows easy construction from common
+     * symbols, for example:
      *
      * <pre>
      *     new Atom("NH+");   // nitrogen cation with one hydrogen
@@ -171,7 +155,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
      * @param symbol string with the element symbol
      */
     public Atom(String symbol) {
-        super((String)null);
+        super((String) null);
         if (!parseAtomSymbol(this, symbol))
             throw new IllegalArgumentException("Cannot pass atom symbol: " + symbol);
     }
@@ -179,8 +163,8 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
     /**
      * Constructs an Atom from an Element and a Point3d.
      *
-     * @param   elementSymbol   The symbol of the atom
-     * @param   point3d         The 3D coordinates of the atom
+     * @param elementSymbol The symbol of the atom
+     * @param point3d The 3D coordinates of the atom
      */
     public Atom(String elementSymbol, Point3d point3d) {
         this(elementSymbol);
@@ -190,8 +174,8 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
     /**
      * Constructs an Atom from an Element and a Point2d.
      *
-     * @param   elementSymbol   The Element
-     * @param   point2d         The Point
+     * @param elementSymbol The Element
+     * @param point2d The Point
      */
     public Atom(String elementSymbol, Point2d point2d) {
         this(elementSymbol);
@@ -199,16 +183,12 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
     }
 
     /**
-     * Constructs an isotope by copying the symbol, atomic number,
-     * flags, identifier, exact mass, natural abundance, mass
-     * number, maximum bond order, bond order sum, van der Waals
-     * and covalent radii, formal charge, hybridization, electron
-     * valency, formal neighbour count and atom type name from the
-     * given IAtomType. It does not copy the listeners and
-     * properties. If the element is an instance of
-     * IAtom, then the 2D, 3D and fractional coordinates, partial
-     * atomic charge, hydrogen count and stereo parity are copied
-     * too.
+     * Constructs an isotope by copying the symbol, atomic number, flags, identifier, exact mass,
+     * natural abundance, mass number, maximum bond order, bond order sum, van der Waals and
+     * covalent radii, formal charge, hybridization, electron valency, formal neighbour count and
+     * atom type name from the given IAtomType. It does not copy the listeners and properties. If
+     * the element is an instance of IAtom, then the 2D, 3D and fractional coordinates, partial
+     * atomic charge, hydrogen count and stereo parity are copied too.
      *
      * @param element IAtomType to copy information from
      */
@@ -236,52 +216,41 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtomContainer getContainer() {
         return null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getIndex() {
         return -1;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Iterable<IBond> bonds() {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getBondCount() {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IBond getBond(IAtom atom) {
         throw new UnsupportedOperationException();
     }
 
     /**
-     *  Sets the partial charge of this atom.
+     * Sets the partial charge of this atom.
      *
-     * @param  charge  The partial charge
-     *
-     * @see    #getCharge
+     * @param charge The partial charge
+     * @see #getCharge
      */
     @Override
     public void setCharge(Double charge) {
@@ -290,13 +259,12 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
     }
 
     /**
-     *  Returns the partial charge of this atom.
+     * Returns the partial charge of this atom.
      *
-     * If the charge has not been set the return value is Double.NaN
+     * <p>If the charge has not been set the return value is Double.NaN
      *
      * @return the charge of this atom
-     *
-     * @see    #setCharge
+     * @see #setCharge
      */
     @Override
     public Double getCharge() {
@@ -304,11 +272,10 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
     }
 
     /**
-     *  Sets the number of implicit hydrogen count of this atom.
+     * Sets the number of implicit hydrogen count of this atom.
      *
-     * @param  hydrogenCount  The number of hydrogen atoms bonded to this atom.
-     *
-     * @see    #getImplicitHydrogenCount
+     * @param hydrogenCount The number of hydrogen atoms bonded to this atom.
+     * @see #getImplicitHydrogenCount
      */
     @Override
     public void setImplicitHydrogenCount(Integer hydrogenCount) {
@@ -317,11 +284,10 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
     }
 
     /**
-     *  Returns the hydrogen count of this atom.
+     * Returns the hydrogen count of this atom.
      *
-     * @return    The hydrogen count of this atom.
-     *
-     * @see       #setImplicitHydrogenCount
+     * @return The hydrogen count of this atom.
+     * @see #setImplicitHydrogenCount
      */
     @Override
     public Integer getImplicitHydrogenCount() {
@@ -329,13 +295,10 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
     }
 
     /**
+     * Sets a point specifying the location of this atom in a 2D space.
      *
-     * Sets a point specifying the location of this
-     * atom in a 2D space.
-     *
-     * @param  point2d  A point in a 2D plane
-     *
-     * @see    #getPoint2d
+     * @param point2d A point in a 2D plane
+     * @see #getPoint2d
      */
     @Override
     public void setPoint2d(Point2d point2d) {
@@ -344,13 +307,10 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
     }
 
     /**
+     * Sets a point specifying the location of this atom in 3D space.
      *
-     * Sets a point specifying the location of this
-     * atom in 3D space.
-     *
-     * @param  point3d  A point in a 3-dimensional space
-     *
-     * @see    #getPoint3d
+     * @param point3d A point in a 3-dimensional space
+     * @see #getPoint3d
      */
     @Override
     public void setPoint3d(Point3d point3d) {
@@ -359,13 +319,11 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
     }
 
     /**
-     * Sets a point specifying the location of this
-     * atom in a Crystal unit cell.
+     * Sets a point specifying the location of this atom in a Crystal unit cell.
      *
-     * @param  point3d  A point in a 3d fractional unit cell space
-     *
-     * @see    #getFractionalPoint3d
-     * @see    org.openscience.cdk.Crystal
+     * @param point3d A point in a 3d fractional unit cell space
+     * @see #getFractionalPoint3d
+     * @see org.openscience.cdk.Crystal
      */
     @Override
     public void setFractionalPoint3d(Point3d point3d) {
@@ -376,10 +334,9 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
     /**
      * Sets the stereo parity for this atom.
      *
-     * @param  stereoParity  The stereo parity for this atom
-     *
-     * @see    org.openscience.cdk.CDKConstants for predefined values.
-     * @see    #getStereoParity
+     * @param stereoParity The stereo parity for this atom
+     * @see org.openscience.cdk.CDKConstants for predefined values.
+     * @see #getStereoParity
      */
     @Override
     public void setStereoParity(Integer stereoParity) {
@@ -388,12 +345,10 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
     }
 
     /**
-     * Returns a point specifying the location of this
-     * atom in a 2D space.
+     * Returns a point specifying the location of this atom in a 2D space.
      *
-     * @return    A point in a 2D plane. Null if unset.
-     *
-     * @see       #setPoint2d
+     * @return A point in a 2D plane. Null if unset.
+     * @see #setPoint2d
      */
     @Override
     public Point2d getPoint2d() {
@@ -401,12 +356,10 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
     }
 
     /**
-     * Returns a point specifying the location of this
-     * atom in a 3D space.
+     * Returns a point specifying the location of this atom in a 3D space.
      *
-     * @return    A point in 3-dimensional space. Null if unset.
-     *
-     * @see       #setPoint3d
+     * @return A point in 3-dimensional space. Null if unset.
+     * @see #setPoint3d
      */
     @Override
     public Point3d getPoint3d() {
@@ -414,13 +367,11 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
     }
 
     /**
-     * Returns a point specifying the location of this
-     * atom in a Crystal unit cell.
+     * Returns a point specifying the location of this atom in a Crystal unit cell.
      *
-     * @return    A point in 3d fractional unit cell space. Null if unset.
-     *
-     * @see       #setFractionalPoint3d
-     * @see       org.openscience.cdk.CDKConstants for predefined values.
+     * @return A point in 3d fractional unit cell space. Null if unset.
+     * @see #setFractionalPoint3d
+     * @see org.openscience.cdk.CDKConstants for predefined values.
      */
     @Override
     public Point3d getFractionalPoint3d() {
@@ -428,13 +379,11 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
     }
 
     /**
-     *  Returns the stereo parity of this atom. It uses the predefined values
-     *  found in CDKConstants.
+     * Returns the stereo parity of this atom. It uses the predefined values found in CDKConstants.
      *
-     * @return    The stereo parity for this atom
-     *
-     * @see       org.openscience.cdk.CDKConstants
-     * @see       #setStereoParity
+     * @return The stereo parity for this atom
+     * @see org.openscience.cdk.CDKConstants
+     * @see #setStereoParity
      */
     @Override
     public Integer getStereoParity() {
@@ -444,8 +393,8 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
     /**
      * Compares a atom with this atom.
      *
-     * @param     object of type Atom
-     * @return    true, if the atoms are equal
+     * @param object of type Atom
+     * @return true, if the atoms are equal
      */
     @Override
     public boolean compare(Object object) {
@@ -458,9 +407,11 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
         Atom atom = (Atom) object;
         // XXX: floating point comparision!
         if (((point2d == atom.point2d) || ((point2d != null) && (point2d.equals(atom.point2d))))
-            && ((point3d == atom.point3d) || ((point3d != null) && (point3d.equals(atom.point3d))))
-            && (Objects.equals(hydrogenCount, atom.hydrogenCount)) && (Objects.equals(stereoParity, atom.stereoParity))
-            && (Objects.equals(charge, atom.charge))) {
+                && ((point3d == atom.point3d)
+                        || ((point3d != null) && (point3d.equals(atom.point3d))))
+                && (Objects.equals(hydrogenCount, atom.hydrogenCount))
+                && (Objects.equals(stereoParity, atom.stereoParity))
+                && (Objects.equals(charge, atom.charge))) {
             return true;
         }
         return false;
@@ -492,24 +443,21 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
 
     @Override
     public int getMapIdx() {
-      Integer mapidx = getProperty(CDKConstants.ATOM_ATOM_MAPPING);
-      if (mapidx == null)
-        return 0;
-      return mapidx;
+        Integer mapidx = getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+        if (mapidx == null) return 0;
+        return mapidx;
     }
 
     @Override
     public void setMapIdx(int mapidx) {
-      if (mapidx < 0)
-        throw new IllegalArgumentException("setMapIdx(val) value must be >= 0");
-      setProperty(CDKConstants.ATOM_ATOM_MAPPING, mapidx);
+        if (mapidx < 0) throw new IllegalArgumentException("setMapIdx(val) value must be >= 0");
+        setProperty(CDKConstants.ATOM_ATOM_MAPPING, mapidx);
     }
 
     /**
-     * Returns a one line string representation of this Atom.
-     * Methods is conform RFC #9.
+     * Returns a one line string representation of this Atom. Methods is conform RFC #9.
      *
-     * @return  The string representation of this Atom
+     * @return The string representation of this Atom
      */
     @Override
     public String toString() {
@@ -544,7 +492,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
     /**
      * Clones this atom object and its content.
      *
-     * @return  The cloned object
+     * @return The cloned object
      */
     @Override
     public IAtom clone() throws CloneNotSupportedException {
@@ -556,8 +504,10 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
             ((Atom) clone).setPoint3d(new Point3d(point3d.x, point3d.y, point3d.z));
         }
         if (fractionalPoint3d != null) {
-            ((Atom) clone).setFractionalPoint3d(new Point3d(fractionalPoint3d.x, fractionalPoint3d.y,
-                    fractionalPoint3d.z));
+            ((Atom) clone)
+                    .setFractionalPoint3d(
+                            new Point3d(
+                                    fractionalPoint3d.x, fractionalPoint3d.y, fractionalPoint3d.z));
         }
         return (IAtom) clone;
     }
@@ -615,20 +565,18 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
             if (pos < len && isUpper(str.charAt(pos))) {
                 int beg = pos;
                 pos++;
-                while (pos < len && isLower(str.charAt(pos)))
-                    pos++;
+                while (pos < len && isLower(str.charAt(pos))) pos++;
                 Elements elem = Elements.ofString(str.substring(beg, pos));
-                if (elem == Elements.Unknown)
-                    return false;
+                if (elem == Elements.Unknown) return false;
                 anum = elem.number();
-    
+
                 // optional fields after atom symbol
                 while (pos < len) {
                     switch (str.charAt(pos)) {
                         case 'H':
                             pos++;
                             if (pos < len && isDigit(str.charAt(pos))) {
-                            	hcnt = 0;
+                                hcnt = 0;
                                 while (pos < len && isDigit(str.charAt(pos)))
                                     hcnt = 10 * hcnt + (str.charAt(pos++) - '0');
                             } else {
@@ -666,38 +614,29 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
             flag = pos == len && len > 0;
             symbol = Elements.ofNumber(anum).symbol();
         }
-        
-        if (!flag)
-            return false;
 
-        if (mass < 0)
-            atom.setMassNumber(null);
-        else
-            atom.setMassNumber(mass);
+        if (!flag) return false;
+
+        if (mass < 0) atom.setMassNumber(null);
+        else atom.setMassNumber(mass);
         atom.setAtomicNumber(anum);
         atom.setSymbol(symbol);
-        if (hcnt >= 0)
-        	atom.setImplicitHydrogenCount(hcnt);
+        if (hcnt >= 0) atom.setImplicitHydrogenCount(hcnt);
         atom.setFormalCharge(chg);
 
         return true;
     }
-    
-    /**
-     * {@inheritDoc}
-     */
+
+    /** {@inheritDoc} */
     @Override
     public int hashCode() {
         return super.hashCode();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof AtomRef)
-            return super.equals(((AtomRef) obj).deref());
+        if (obj instanceof AtomRef) return super.equals(((AtomRef) obj).deref());
         return super.equals(obj);
     }
 }

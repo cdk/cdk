@@ -1,7 +1,6 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import java.io.InputStream;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,9 +20,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 
-/**
- * @cdk.module test-qsaratomic
- */
+/** @cdk.module test-qsaratomic */
 public class RDFProtonDescriptor_GDRTest extends AtomicDescriptorTest {
 
     public RDFProtonDescriptor_GDRTest() {}
@@ -35,7 +32,7 @@ public class RDFProtonDescriptor_GDRTest extends AtomicDescriptorTest {
 
     @Test
     public void testExample1() throws Exception {
-        //firstly read file to molecule
+        // firstly read file to molecule
         String filename = "data/mdl/hydroxyamino.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
@@ -48,7 +45,7 @@ public class RDFProtonDescriptor_GDRTest extends AtomicDescriptorTest {
         for (int i = 0; i < mol.getAtomCount(); i++) {
             //			System.out.println("Atom: " + mol.getAtom(i).getSymbol());
             if (mol.getAtom(i).getAtomicNumber() == IElement.H) {
-                //secondly perform calculation on it.
+                // secondly perform calculation on it.
                 RDFProtonDescriptor_GDR descriptor = new RDFProtonDescriptor_GDR();
                 DescriptorValue dv = descriptor.calculate(mol.getAtom(i), mol);
                 IDescriptorResult result = dv.getValue();
@@ -56,7 +53,6 @@ public class RDFProtonDescriptor_GDRTest extends AtomicDescriptorTest {
                 Assert.assertNotNull(result);
                 Assert.assertEquals(dv.getNames().length, result.length());
             }
-
         }
     }
 
@@ -74,5 +70,4 @@ public class RDFProtonDescriptor_GDRTest extends AtomicDescriptorTest {
             Assert.assertEquals(Double.NaN, dResult.get(i), 0.000001);
         }
     }
-
 }

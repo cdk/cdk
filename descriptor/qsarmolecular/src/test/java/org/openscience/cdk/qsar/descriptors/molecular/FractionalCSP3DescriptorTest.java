@@ -1,5 +1,5 @@
 /* Copyright (c) 2018 Kazuya Ujihara <ujihara.kazuya@gmail.com>
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -32,37 +32,39 @@ import org.openscience.cdk.smiles.SmilesParser;
 
 public class FractionalCSP3DescriptorTest extends MolecularDescriptorTest {
     public FractionalCSP3DescriptorTest() {}
-    
+
     @Before
     public void setUp() throws Exception {
         setDescriptor(FractionalCSP3Descriptor.class);
     }
-    
+
     static class SmilesValue {
         public SmilesValue(String smiles, double value) {
             this.smiles = smiles;
             this.value = value;
         }
+
         public String smiles;
         public double value;
     }
-    
-    private static final SmilesValue[] table = new SmilesValue[] {
-            new SmilesValue("[H][H]", 0),
-            new SmilesValue("O", 0),
-            new SmilesValue("C1=CC=CC=C1", 0),
-            new SmilesValue("C1=CN=CC=C1", 0),
-            new SmilesValue("CC1=CC=CC(C)=N1", 0.29),
-            new SmilesValue("CC1CCCC(C)N1", 1),
-            new SmilesValue("CC1=NC(NC(NC2CN(C3=CC=CC(F)=C3)C(C2)=O)=O)=CC=C1", 0.24),
-    };
-    
+
+    private static final SmilesValue[] table =
+            new SmilesValue[] {
+                new SmilesValue("[H][H]", 0),
+                new SmilesValue("O", 0),
+                new SmilesValue("C1=CC=CC=C1", 0),
+                new SmilesValue("C1=CN=CC=C1", 0),
+                new SmilesValue("CC1=CC=CC(C)=N1", 0.29),
+                new SmilesValue("CC1CCCC(C)N1", 1),
+                new SmilesValue("CC1=NC(NC(NC2CN(C3=CC=CC(F)=C3)C(C2)=O)=O)=CC=C1", 0.24),
+            };
+
     @Test
     public void testFractionalCSP3Descriptor() throws CDKException {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        for (SmilesValue e: table) {
+        for (SmilesValue e : table) {
             IAtomContainer mol = sp.parseSmiles(e.smiles);
-            DoubleResult result = (DoubleResult)descriptor.calculate(mol).getValue();
+            DoubleResult result = (DoubleResult) descriptor.calculate(mol).getValue();
             Assert.assertEquals(e.value, result.doubleValue(), 0.01);
         }
     }

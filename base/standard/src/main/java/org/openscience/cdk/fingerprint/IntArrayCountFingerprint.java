@@ -29,21 +29,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  * @author jonalv
- * @cdk.module     standard
+ * @cdk.module standard
  * @cdk.githash
  */
 public class IntArrayCountFingerprint implements ICountFingerprint {
 
-    /**
-     *
-     */
+    /** */
     private static final long serialVersionUID = 8656072054328822795L;
-    int[]                     hitHashes;
-    int[]                     numOfHits;
-    private boolean           behaveAsBitFingerprint;
+
+    int[] hitHashes;
+    int[] numOfHits;
+    private boolean behaveAsBitFingerprint;
 
     public IntArrayCountFingerprint() {
         hitHashes = new int[0];
@@ -74,14 +72,15 @@ public class IntArrayCountFingerprint implements ICountFingerprint {
     }
 
     /**
-     * Create an <code>IntArrayCountFingerprint</code> from a rawFingerprint
-     * and if <code>behaveAsBitFingerprint</code> make it only return 0 or 1
-     * as count thus behaving like a bit finger print.
+     * Create an <code>IntArrayCountFingerprint</code> from a rawFingerprint and if <code>
+     * behaveAsBitFingerprint</code> make it only return 0 or 1 as count thus behaving like a bit
+     * finger print.
      *
      * @param rawFingerprint the raw fp
      * @param behaveAsBitFingerprint whether to behave as binary fp or not
      */
-    public IntArrayCountFingerprint(Map<String, Integer> rawFingerprint, boolean behaveAsBitFingerprint) {
+    public IntArrayCountFingerprint(
+            Map<String, Integer> rawFingerprint, boolean behaveAsBitFingerprint) {
         this(rawFingerprint);
         this.behaveAsBitFingerprint = behaveAsBitFingerprint;
     }

@@ -39,22 +39,22 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
     private final int[][] g;
 
     /* set of known cyclic vertices */
-    private final BitSet  cyclic;
+    private final BitSet cyclic;
 
     /* cycle systems as they are discovered */
-    private List<BitSet>  cycles = new ArrayList<BitSet>(1);
+    private List<BitSet> cycles = new ArrayList<BitSet>(1);
 
     /* indicates if the 'cycle' at 'i' in 'cycles' is fused */
-    private List<Boolean> fused  = new ArrayList<Boolean>(1);
+    private List<Boolean> fused = new ArrayList<Boolean>(1);
 
     /* set of visited vertices */
-    private BitSet        visited;
+    private BitSet visited;
 
     /* the vertices in our path at a given vertex index */
-    private BitSet[]      state;
+    private BitSet[] state;
 
     /** vertex colored by each component. */
-    private int[]         colors;
+    private int[] colors;
 
     private int numCycles = 0;
 
@@ -94,13 +94,12 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
         // allow the states to be collected
         state = null;
         visited = null;
-
     }
 
     /**
      * Perform a depth first search from the vertex <i>v</i>.
      *
-     * @param v    vertex to search from
+     * @param v vertex to search from
      * @param prev the state before we vistaed our parent (previous state)
      * @param curr the current state (including our parent)
      */
@@ -132,7 +131,6 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
                 search(w, state[v], curr);
             }
         }
-
     }
 
     /** Synchronisation lock. */
@@ -144,10 +142,9 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
     }
 
     /**
-     * Lazily build an indexed lookup of vertex color. The vertex color
-     * indicates which cycle a given vertex belongs. If a vertex belongs to more
-     * then one cycle it is colored '0'. If a vertex belongs to no cycle it is
-     * colored '-1'.
+     * Lazily build an indexed lookup of vertex color. The vertex color indicates which cycle a
+     * given vertex belongs. If a vertex belongs to more then one cycle it is colored '0'. If a
+     * vertex belongs to no cycle it is colored '-1'.
      *
      * @return vertex colors
      */
@@ -166,9 +163,9 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
     }
 
     /**
-     * Build an indexed lookup of vertex color. The vertex color indicates which
-     * cycle a given vertex belongs. If a vertex belongs to more then one cycle
-     * it is colored '0'. If a vertex belongs to no cycle it is colored '-1'.
+     * Build an indexed lookup of vertex color. The vertex color indicates which cycle a given
+     * vertex belongs. If a vertex belongs to more then one cycle it is colored '0'. If a vertex
+     * belongs to no cycle it is colored '-1'.
      *
      * @return vertex colors
      */
@@ -187,17 +184,13 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
         return color;
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean cyclic(int v) {
         return cyclic.get(v);
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean cyclic(int u, int v) {
 
@@ -222,17 +215,13 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
         return colors[u] == colors[v];
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int[] cyclic() {
         return toArray(cyclic);
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int[][] isolated() {
         List<int[]> isolated = new ArrayList<int[]>(cycles.size());
@@ -242,9 +231,7 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
         return isolated.toArray(new int[isolated.size()][]);
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int[][] fused() {
         List<int[]> fused = new ArrayList<int[]>(cycles.size());
@@ -255,9 +242,8 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
     }
 
     /**
-     * Add the cycle vertices to our discovered cycles. The cycle is first
-     * checked to see if it is isolated (shares at most one vertex) or
-     * <i>potentially</i> fused.
+     * Add the cycle vertices to our discovered cycles. The cycle is first checked to see if it is
+     * isolated (shares at most one vertex) or <i>potentially</i> fused.
      *
      * @param cycle newly discovered cyclic vertex set
      */
@@ -272,12 +258,10 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
         }
 
         cyclic.or(cycle);
-
     }
 
     /**
-     * Add an a new isolated cycle which is currently edge disjoint with all
-     * other cycles.
+     * Add an a new isolated cycle which is currently edge disjoint with all other cycles.
      *
      * @param cycle newly discovered cyclic vertices
      */
@@ -287,11 +271,10 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
     }
 
     /**
-     * Adds a <i>potentially</i> fused cycle. If the cycle is discovered not be
-     * fused it will still be added as isolated.
+     * Adds a <i>potentially</i> fused cycle. If the cycle is discovered not be fused it will still
+     * be added as isolated.
      *
-     * @param cycle vertex set of a potentially fused cycle, indicated by the
-     *              set bits
+     * @param cycle vertex set of a potentially fused cycle, indicated by the set bits
      */
     private void addFused(BitSet cycle) {
 
@@ -312,13 +295,12 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
         } else {
             addIsolated(cycle);
         }
-
     }
 
     /**
-     * Find the next index that the <i>cycle</i> intersects with by at least two
-     * vertices. If the intersect of a vertex set with another contains more
-     * then two vertices it cannot be edge disjoint.
+     * Find the next index that the <i>cycle</i> intersects with by at least two vertices. If the
+     * intersect of a vertex set with another contains more then two vertices it cannot be edge
+     * disjoint.
      *
      * @param start start searching from here
      * @param cycle test whether any current cycles are fused with this one
@@ -354,8 +336,7 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
     }
 
     /**
-     * XOR the to bit sets together and return the result. Neither input is
-     * modified.
+     * XOR the to bit sets together and return the result. Neither input is modified.
      *
      * @param x first bit set
      * @param y second bit set
@@ -368,8 +349,7 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
     }
 
     /**
-     * AND the to bit sets together and return the result. Neither input is
-     * modified.
+     * AND the to bit sets together and return the result. Neither input is modified.
      *
      * @param x first bit set
      * @param y second bit set
@@ -391,5 +371,4 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
         BitSet cpy = (BitSet) org.clone();
         return cpy;
     }
-
 }

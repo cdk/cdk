@@ -27,29 +27,24 @@ import org.openscience.cdk.Monomer;
 import org.openscience.cdk.interfaces.IPDBMonomer;
 
 /**
- * Represents the idea of an monomer as used in PDB files. It contains extra fields
- * normally associated with atoms in such files.
+ * Represents the idea of an monomer as used in PDB files. It contains extra fields normally
+ * associated with atoms in such files.
  *
  * @cdk.module data
  * @cdk.githash
- *
- * @see  PDBAtom
+ * @see PDBAtom
  */
 public class PDBMonomer extends Monomer implements Cloneable, IPDBMonomer {
 
     private static final long serialVersionUID = -7236625816763776733L;
 
-    private String            iCode;
+    private String iCode;
 
-    /**
-     * Denotes which chain in the PDB file this monomer is in.
-     */
-    private String            chainID;
+    /** Denotes which chain in the PDB file this monomer is in. */
+    private String chainID;
 
-    /**
-     * Denotes which residue sequence in the current chain that this monomer is in.
-     */
-    private String            resSeq;
+    /** Denotes which residue sequence in the current chain that this monomer is in. */
+    private String resSeq;
 
     public PDBMonomer() {
         super();
@@ -82,10 +77,9 @@ public class PDBMonomer extends Monomer implements Cloneable, IPDBMonomer {
     }
 
     /**
-     * Returns a one line string representation of this Atom.
-     * Methods is conform RFC #9.
+     * Returns a one line string representation of this Atom. Methods is conform RFC #9.
      *
-     * @return  The string representation of this Atom
+     * @return The string representation of this Atom
      */
     @Override
     public String toString() {
@@ -104,9 +98,7 @@ public class PDBMonomer extends Monomer implements Cloneable, IPDBMonomer {
         return resSeq;
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IPDBMonomer clone() throws CloneNotSupportedException {
         return (IPDBMonomer) super.clone();
@@ -116,5 +108,4 @@ public class PDBMonomer extends Monomer implements Cloneable, IPDBMonomer {
     public void setResSeq(String resSeq) {
         this.resSeq = resSeq;
     }
-
 }

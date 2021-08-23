@@ -24,7 +24,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -35,9 +36,6 @@ import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-
-import org.junit.Assert;
-import org.junit.Test;
 
 /**
  * TestSuite that runs all tests for the DescriptorEngine.
@@ -50,8 +48,9 @@ public class DescriptorNamesTest extends CDKTestCase {
 
     @Test
     public void checkUniqueMolecularDescriptorNames() throws Exception {
-        DescriptorEngine engine = new DescriptorEngine(IMolecularDescriptor.class,
-                DefaultChemObjectBuilder.getInstance());
+        DescriptorEngine engine =
+                new DescriptorEngine(
+                        IMolecularDescriptor.class, DefaultChemObjectBuilder.getInstance());
         List<IImplementationSpecification> specs = engine.getDescriptorSpecifications();
 
         // we work with a simple molecule with 3D coordinates
@@ -88,6 +87,5 @@ public class DescriptorNamesTest extends CDKTestCase {
                 System.out.println("dup = " + dup);
             }
         }
-
     }
 }

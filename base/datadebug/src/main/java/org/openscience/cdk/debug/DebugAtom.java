@@ -19,26 +19,24 @@
 package org.openscience.cdk.debug;
 
 import java.util.Map;
-
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module datadebug
  * @cdk.githash
  */
@@ -46,7 +44,8 @@ public class DebugAtom extends Atom implements IAtom {
 
     private static final long serialVersionUID = 188945429187084868L;
 
-    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(DebugAtom.class);
+    private static final ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(DebugAtom.class);
 
     public DebugAtom() {
         super();
@@ -72,26 +71,20 @@ public class DebugAtom extends Atom implements IAtom {
         logger.debug("Instantiated a DebugAtom: element= ", element);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtomContainer getContainer() {
         return null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getIndex() {
         logger.debug("Getting index on base Atom class");
         return -1;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Iterable<IBond> bonds() {
         logger.debug("Getting connected bonds on base Atom class");
@@ -143,7 +136,9 @@ public class DebugAtom extends Atom implements IAtom {
     /** {@inheritDoc} */
     @Override
     public void setFractionalPoint3d(Point3d point3d) {
-        logger.debug("Setting fractional point3d: x=" + point3d.x + ", y=" + point3d.y, ", z=" + point3d.z);
+        logger.debug(
+                "Setting fractional point3d: x=" + point3d.x + ", y=" + point3d.y,
+                ", z=" + point3d.z);
         super.setFractionalPoint3d(point3d);
     }
 
@@ -173,7 +168,8 @@ public class DebugAtom extends Atom implements IAtom {
         if (point3d == null) {
             logger.debug("Getting point3d: null");
         } else {
-            logger.debug("Getting point3d: x=" + point3d.x + ", y=" + point3d.y, ", z=" + point3d.z);
+            logger.debug(
+                    "Getting point3d: x=" + point3d.x + ", y=" + point3d.y, ", z=" + point3d.z);
         }
         return point3d;
     }
@@ -185,7 +181,9 @@ public class DebugAtom extends Atom implements IAtom {
         if (point3d == null) {
             logger.debug("Getting fractional point3d: null");
         } else {
-            logger.debug("Getting fractional point3d: x=" + point3d.x + ", y=" + point3d.y, ", z=" + point3d.z);
+            logger.debug(
+                    "Getting fractional point3d: x=" + point3d.x + ", y=" + point3d.y,
+                    ", z=" + point3d.z);
         }
         return point3d;
     }
@@ -321,7 +319,6 @@ public class DebugAtom extends Atom implements IAtom {
     public void setExactMass(Double exactMass) {
         logger.debug("Setting exact mass: ", exactMass);
         super.setExactMass(exactMass);
-
     }
 
     /** {@inheritDoc} */
@@ -510,5 +507,4 @@ public class DebugAtom extends Atom implements IAtom {
     public IChemObjectBuilder getBuilder() {
         return DebugChemObjectBuilder.getInstance();
     }
-
 }

@@ -58,7 +58,7 @@ public class RawCopyFormat extends AbstractResourceFormat implements IChemFormat
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"copy"};
+        return new String[] {"copy"};
     }
 
     /** {@inheritDoc} */

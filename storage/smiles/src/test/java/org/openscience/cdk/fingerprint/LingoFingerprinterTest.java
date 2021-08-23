@@ -23,21 +23,17 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import java.util.Map;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 
-import java.util.Map;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-/**
- * @cdk.module test-smiles
- */
+/** @cdk.module test-smiles */
 public class LingoFingerprinterTest extends AbstractFingerprinterTest {
 
     boolean standAlone = false;
@@ -54,7 +50,6 @@ public class LingoFingerprinterTest extends AbstractFingerprinterTest {
         Assert.assertEquals(-1, fingerprinter.getSize());
     }
 
-    
     @Test
     @Override
     public void testGetCountFingerprint() throws Exception {
@@ -79,7 +74,6 @@ public class LingoFingerprinterTest extends AbstractFingerprinterTest {
         Assert.assertEquals(3, map.size());
         // depend on canonical ordering of the SMILES since lingos uses Unique SMILES
         String[] subs = {"PON", "ONC", "SPO"};
-        for (String s : subs)
-            Assert.assertTrue(map.containsKey(s));
+        for (String s : subs) Assert.assertTrue(map.containsKey(s));
     }
 }

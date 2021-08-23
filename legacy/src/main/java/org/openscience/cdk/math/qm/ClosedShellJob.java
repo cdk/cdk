@@ -29,22 +29,21 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * Calculates the orbitals and orbital energies of electron systems
- * with closed shells
+ * Calculates the orbitals and orbital energies of electron systems with closed shells
  *
  * @author Stephan Michels &lt;stephan@vern.chem.tu-berlin.de&gt;
  * @cdk.githash
  * @cdk.created 2001-06-14
- * @cdk.module  qm
+ * @cdk.module qm
  */
 public class ClosedShellJob {
 
-    private Orbitals            orbitals;
-    private Vector              E;
+    private Orbitals orbitals;
+    private Vector E;
 
-    private static ILoggingTool log        = LoggingToolFactory.createLoggingTool(ClosedShellJob.class);
+    private static ILoggingTool log = LoggingToolFactory.createLoggingTool(ClosedShellJob.class);
 
-    private int                 iterations = 0;
+    private int iterations = 0;
 
     public ClosedShellJob(Orbitals orbitals) {
         this.orbitals = orbitals;
@@ -54,9 +53,7 @@ public class ClosedShellJob {
         return E.duplicate();
     }
 
-    /**
-     * Sorts the orbitals by their energies
-     */
+    /** Sorts the orbitals by their energies */
     private void sort(Matrix matrixC, Vector E) {
         int i, j;
         double value;
@@ -84,8 +81,7 @@ public class ClosedShellJob {
         Matrix matrixS = new Matrix(size, size);
         int i, j;
         for (i = 0; i < size; i++)
-            for (j = 0; j < size; j++)
-                matrixS.matrix[i][j] = basis.calcS(i, j);
+            for (j = 0; j < size; j++) matrixS.matrix[i][j] = basis.calcS(i, j);
 
         return matrixS;
     }
@@ -93,7 +89,7 @@ public class ClosedShellJob {
     /**
      * Calculates the matrix for the kinetic energy
      *
-     * T_i,j = (1/2) * -<d^2/dx^2 chi_i | chi_j>
+     * <p>T_i,j = (1/2) * -<d^2/dx^2 chi_i | chi_j>
      */
     private Matrix calculateT(IBasis basis) {
         int size = basis.getSize();
@@ -110,22 +106,19 @@ public class ClosedShellJob {
     /**
      * Calculates the matrix for the potential matrix
      *
-     * V_i,j = <chi_i | 1/r | chi_j>
+     * <p>V_i,j = <chi_i | 1/r | chi_j>
      */
     private Matrix calculateV(IBasis basis) {
         int size = basis.getSize();
         Matrix matrixV = new Matrix(size, size);
         int i, j;
         for (i = 0; i < size; i++)
-            for (j = 0; j < size; j++)
-                matrixV.matrix[i][j] = basis.calcV(i, j);
+            for (j = 0; j < size; j++) matrixV.matrix[i][j] = basis.calcV(i, j);
 
         return matrixV;
     }
 
-    /**
-     * Calculates thes values for the 2 electron interactions
-     */
+    /** Calculates thes values for the 2 electron interactions */
     private double[][][][] calculateI(IBasis basis) {
         int i, j, k, l;
         int size = basis.getSize();
@@ -139,7 +132,8 @@ public class ClosedShellJob {
                     result[i][j][k] = new double[k + 1];
                     for (l = 0; l <= k; l++) {
                         result[i][j][k][l] = basis.calcI(i, j, k, l);
-                        //log.println("("+(i+1)+" "+(j+1)+"|"+(k+1)+" "+(l+1)+")="+result[i][j][k][l]);
+                        // log.println("("+(i+1)+" "+(j+1)+"|"+(k+1)+"
+                        // "+(l+1)+")="+result[i][j][k][l]);
                     }
                 }
             }
@@ -147,9 +141,7 @@ public class ClosedShellJob {
         return result;
     }
 
-    /**
-     * Calculates the density matrix
-     */
+    /** Calculates the density matrix */
     private Matrix calculateD(IBasis basis, Matrix matrixC, int count_electrons) {
         int i, j, k;
         int size = basis.getSize();
@@ -168,7 +160,8 @@ public class ClosedShellJob {
                 for (k = 0; (k < orbitals) && (k < occ); k++)
                     matrixD.matrix[i][j] += 2d * matrixC.matrix[i][k] * matrixC.matrix[j][k];
 
-                if ((locc == 1) && (k + 1 < orbitals)) matrixD.matrix[i][j] += matrixC.matrix[i][k + 1] * matrixC.matrix[j][k + 1];
+                if ((locc == 1) && (k + 1 < orbitals))
+                    matrixD.matrix[i][j] += matrixC.matrix[i][k + 1] * matrixC.matrix[j][k + 1];
             }
         return matrixD;
     }
@@ -185,13 +178,11 @@ public class ClosedShellJob {
                         if (i >= j) {
                             if (k >= l)
                                 matrixJ.matrix[i][j] += matrixD.matrix[k][l] * I[i][j][k][l];
-                            else
-                                matrixJ.matrix[i][j] += matrixD.matrix[k][l] * I[i][j][l][k];
+                            else matrixJ.matrix[i][j] += matrixD.matrix[k][l] * I[i][j][l][k];
                         } else {
                             if (k >= l)
                                 matrixJ.matrix[i][j] += matrixD.matrix[k][l] * I[j][i][k][l];
-                            else
-                                matrixJ.matrix[i][j] += matrixD.matrix[k][l] * I[j][i][l][k];
+                            else matrixJ.matrix[i][j] += matrixD.matrix[k][l] * I[j][i][l][k];
                         }
                     }
                 matrixJ.matrix[i][j] *= 2d;
@@ -211,13 +202,11 @@ public class ClosedShellJob {
                         if (i >= j) {
                             if (k >= l)
                                 matrixK.matrix[i][j] += matrixD.matrix[k][l] * I[i][j][k][l];
-                            else
-                                matrixK.matrix[i][j] += matrixD.matrix[k][l] * I[i][j][l][k];
+                            else matrixK.matrix[i][j] += matrixD.matrix[k][l] * I[i][j][l][k];
                         } else {
                             if (k >= l)
                                 matrixK.matrix[i][j] += matrixD.matrix[k][l] * I[j][i][k][l];
-                            else
-                                matrixK.matrix[i][j] += matrixD.matrix[k][l] * I[j][i][l][k];
+                            else matrixK.matrix[i][j] += matrixD.matrix[k][l] * I[j][i][l][k];
                         }
                     }
             }
@@ -236,7 +225,17 @@ public class ClosedShellJob {
     public Orbitals calculate() {
         long time = System.currentTimeMillis();
 
-        Matrix matrixC, matricS, matrixT, matrixV, HAO, matrixH, matrixD, matrixJ, matrixK, matrixF, matrixU;
+        Matrix matrixC,
+                matricS,
+                matrixT,
+                matrixV,
+                HAO,
+                matrixH,
+                matrixD,
+                matrixJ,
+                matrixK,
+                matrixF,
+                matrixU;
         double[][][][] matrixI;
         double energy;
         IBasis basis = orbitals.getBasis();
@@ -281,10 +280,8 @@ public class ClosedShellJob {
         log.debug("Time = " + time + " ms");
         time = System.currentTimeMillis();
 
-        if (iterations > 0)
-            matrixI = calculateI(basis);
-        else
-            matrixI = null;
+        if (iterations > 0) matrixI = calculateI(basis);
+        else matrixI = null;
 
         for (int i = 0; i < iterations; i++) {
             log.debug((i + 1) + ".Durchlauf\n");
@@ -298,14 +295,14 @@ public class ClosedShellJob {
             matrixD = calculateD(basis, matrixC, countElectrons);
             log.debug("D = \n" + matrixD + "\n");
 
-            //log.println("2*contraction(D*S) = "+(D.mul(S)).contraction()*2+"\n");
+            // log.println("2*contraction(D*S) = "+(D.mul(S)).contraction()*2+"\n");
             log.debug("2*contraction(D*S) = " + contraction(matrixD, matricS) * 2 + "\n");
 
-            //J = calculateJ(basis, D);
+            // J = calculateJ(basis, D);
             matrixJ = calculateJ(basis, matrixI, matrixD);
             log.debug("J = \n" + matrixJ + "\n");
 
-            //K = calculateK(basis, D);
+            // K = calculateK(basis, D);
             matrixK = calculateK(basis, matrixI, matrixD);
             log.debug("K = \n" + matrixK + "\n");
 

@@ -19,12 +19,11 @@
 package org.openscience.cdk.renderer.generators;
 
 /**
- * Parameter from some rendering of the 2D diagram. Such parameters
- * may be bond width, (relative) font sizes, coloring scheme, display or
- * not of atomic properties, rendering a circles for aromatic rings,
- * etc.
+ * Parameter from some rendering of the 2D diagram. Such parameters may be bond width, (relative)
+ * font sizes, coloring scheme, display or not of atomic properties, rendering a circles for
+ * aromatic rings, etc.
  *
- * @cdk.module  render
+ * @cdk.module render
  * @cdk.githash
  */
 public interface IGeneratorParameter<T> {
@@ -37,19 +36,18 @@ public interface IGeneratorParameter<T> {
     public void setValue(T value);
 
     /**
-     * Gets the value for this parameter. It must provide a reasonable
-     * default when no other value has been set.
+     * Gets the value for this parameter. It must provide a reasonable default when no other value
+     * has been set.
      *
      * @return the current parameter value
      */
     public T getValue();
 
     /**
-     * Gets the default value for this parameter. This value is set by the
-     * parameter class and cannot be changed.
+     * Gets the default value for this parameter. This value is set by the parameter class and
+     * cannot be changed.
      *
      * @return the default value for this parameter
      */
     public T getDefault();
-
 }

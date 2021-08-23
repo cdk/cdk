@@ -24,18 +24,17 @@ package org.openscience.cdk.smsd.tools;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.smiles.SmilesParser;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 /**
  * @cdk.module test-smsd
@@ -59,6 +58,7 @@ public class MoleculeSanityCheckTest {
 
     /**
      * Test of checkAndCleanMolecule method, of class MoleculeSanityCheck.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -73,6 +73,7 @@ public class MoleculeSanityCheckTest {
 
     /**
      * Test of fixAromaticity method, of class MoleculeSanityCheck.
+     *
      * @throws InvalidSmilesException
      */
     @Test

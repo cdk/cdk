@@ -29,19 +29,17 @@ import java.util.Map;
  * atoms and two ligands attached to those two atoms, linearly connected with the double bond in the
  * middle. The {@link IBond}s that define the stereo element are defined as an array where the bonds
  * are sorted according to the linear connectivity. Thus, the first and third bonds are the two
- * bonds attached on either side of the double bond, and the second bond is the double bond.
- * The stereo annotation then indicates if the ligand atoms are in the cis position
- * ({@link Conformation#TOGETHER}) or in the trans position ({@link Conformation#OPPOSITE}), matching the
+ * bonds attached on either side of the double bond, and the second bond is the double bond. The
+ * stereo annotation then indicates if the ligand atoms are in the cis position ({@link
+ * Conformation#TOGETHER}) or in the trans position ({@link Conformation#OPPOSITE}), matching the
  * orientation of the methyls in but-2-ene respectively as <i>Z</i> and <i>E</i>.
  *
  * @cdk.module interfaces
  * @cdk.githash
  */
-public interface IDoubleBondStereochemistry extends IStereoElement<IBond,IBond> {
+public interface IDoubleBondStereochemistry extends IStereoElement<IBond, IBond> {
 
-    /**
-     * Enumeration that defines the two possible values for this stereochemistry type.
-     */
+    /** Enumeration that defines the two possible values for this stereochemistry type. */
     public enum Conformation {
         TOGETHER, //  as in Z-but-2-ene
         OPPOSITE; //  as in E-but-2-ene
@@ -64,13 +62,13 @@ public interface IDoubleBondStereochemistry extends IStereoElement<IBond,IBond> 
                 case OPPOSITE:
                     return IStereoElement.OPPOSITE;
                 default:
-                    throw new IllegalArgumentException("Cannot map enum to config: " + conformation);
+                    throw new IllegalArgumentException(
+                            "Cannot map enum to config: " + conformation);
             }
         }
 
         /**
-         * Invert this conformation, inv(together) = opposite, inv(opposite)
-         * = together.
+         * Invert this conformation, inv(together) = opposite, inv(opposite) = together.
          *
          * @return the inverse conformation
          */
@@ -106,9 +104,7 @@ public interface IDoubleBondStereochemistry extends IStereoElement<IBond,IBond> 
      */
     public Conformation getStereo();
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IDoubleBondStereochemistry map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds);
 }

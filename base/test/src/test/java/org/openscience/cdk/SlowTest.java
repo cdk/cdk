@@ -25,11 +25,8 @@
 package org.openscience.cdk;
 
 /**
- * Mark slow (integration) tests that should be run pre-release but not on every
- * build.
+ * Mark slow (integration) tests that should be run pre-release but not on every build.
  *
  * @author John May
  */
-public interface SlowTest {
-
-}
+public interface SlowTest {}

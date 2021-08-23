@@ -29,7 +29,7 @@ import org.openscience.cdk.CDKTestCase;
 /**
  * Tests the functionality of {@link ICDKObject} implementations.
  *
- * @cdk.module  test-interfaces
+ * @cdk.module test-interfaces
  * @cdk.created 2010-10-22
  */
 public abstract class AbstractCDKObjectTest extends CDKTestCase {
@@ -37,8 +37,8 @@ public abstract class AbstractCDKObjectTest extends CDKTestCase {
     private static ITestObjectBuilder builder;
 
     /**
-     * Sets the {@link ITestObjectBuilder} that constructs new test objects with
-     * {@link #newChemObject()}.
+     * Sets the {@link ITestObjectBuilder} that constructs new test objects with {@link
+     * #newChemObject()}.
      *
      * @param builder ITestChemObject that instantiates new test objects
      */

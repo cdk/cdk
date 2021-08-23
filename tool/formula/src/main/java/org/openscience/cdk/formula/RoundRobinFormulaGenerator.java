@@ -1,90 +1,83 @@
 package org.openscience.cdk.formula;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 /**
- * This class generates molecular formulas within given mass range and elemental
- * composition. It should not be used directly but via the {@link MolecularFormulaGenerator} as it cannot deal with
+ * This class generates molecular formulas within given mass range and elemental composition. It
+ * should not be used directly but via the {@link MolecularFormulaGenerator} as it cannot deal with
  * all kind of inputs.
  *
- * This class is using the Round Robin algorithm {@cdk.cite Boecker2008} on mass ranges
- * {@cdk.cite Duehrkop2013}. It uses dynamic programming to compute an extended residue table which allows a constant
- * time lookup if some integer mass is decomposable over a certain alphabet. For each alphabet this table has to be
- * computed only once and is then cached in memory. Using this table the algorithm can decide directly which masses
- * are decomposable and, therefore, is only enumerating formulas which masses are in the given integer mass range. The
- * mass range decomposer is using a logarithmic number of tables, one for each alphabet and an allowed mass deviation.
- * It, therefore, allows to decompose a whole range of integer numbers instead of a single one.
+ * <p>This class is using the Round Robin algorithm {@cdk.cite Boecker2008} on mass ranges
+ * {@cdk.cite Duehrkop2013}. It uses dynamic programming to compute an extended residue table which
+ * allows a constant time lookup if some integer mass is decomposable over a certain alphabet. For
+ * each alphabet this table has to be computed only once and is then cached in memory. Using this
+ * table the algorithm can decide directly which masses are decomposable and, therefore, is only
+ * enumerating formulas which masses are in the given integer mass range. The mass range decomposer
+ * is using a logarithmic number of tables, one for each alphabet and an allowed mass deviation. It,
+ * therefore, allows to decompose a whole range of integer numbers instead of a single one.
  *
- * As masses are real values, the decomposer has to translate values from real space to integer space and vice versa.
- * This translation is done via multiplying with a blow-up factor (which is by default 5963.337687) and rounding the
- * results. The blow-up factor is optimized for organic molecules. For other alphabets (e.g. amino acids or molecules
- * without hydrogens) another blow-up factor have to be chosen. Therefore, it is recommended to use this decomposer
- * only for organic molecular formulas.
+ * <p>As masses are real values, the decomposer has to translate values from real space to integer
+ * space and vice versa. This translation is done via multiplying with a blow-up factor (which is by
+ * default 5963.337687) and rounding the results. The blow-up factor is optimized for organic
+ * molecules. For other alphabets (e.g. amino acids or molecules without hydrogens) another blow-up
+ * factor have to be chosen. Therefore, it is recommended to use this decomposer only for organic
+ * molecular formulas.
  */
 class RoundRobinFormulaGenerator implements IFormulaGenerator {
 
-    /**
-     * generates the IMolecularFormula and IMolecularFormulaSet instances
-     */
+    /** generates the IMolecularFormula and IMolecularFormulaSet instances */
     protected final IChemObjectBuilder builder;
 
-    /**
-     * the decomposer algorithm with the cached extended residue table
-     */
+    /** the decomposer algorithm with the cached extended residue table */
     protected final RangeMassDecomposer.DecompIterator decomposer;
-    /**
-     * defines the alphabet as well as the lower- and upperbounds of the chemical alphabet
-     */
+    /** defines the alphabet as well as the lower- and upperbounds of the chemical alphabet */
     protected final MolecularFormulaRange mfRange;
-    /**
-     * is used to estimate which part of the search space is already traversed
-     */
+    /** is used to estimate which part of the search space is already traversed */
     protected volatile int[] lastDecomposition;
     /**
-     * a flag indicating if the algorithm is done or should be canceled.
-     * This flag have to be volatile to allow other threads to cancel the enumeration procedure.
+     * a flag indicating if the algorithm is done or should be canceled. This flag have to be
+     * volatile to allow other threads to cancel the enumeration procedure.
      */
     protected volatile boolean done;
 
     /**
      * Initiate the MolecularFormulaGenerator.
      *
-     * @param minMass
-     *            Lower boundary of the target mass range
-     * @param maxMass
-     *            Upper boundary of the target mass range
-     * @param mfRange
-     *            A range of elemental compositions defining the search space
-     * @throws IllegalArgumentException
-     *             In case some of the isotopes in mfRange has undefined exact
-     *             mass or in case illegal parameters are provided (e.g.,
-     *             negative mass values or empty MolecularFormulaRange)
+     * @param minMass Lower boundary of the target mass range
+     * @param maxMass Upper boundary of the target mass range
+     * @param mfRange A range of elemental compositions defining the search space
+     * @throws IllegalArgumentException In case some of the isotopes in mfRange has undefined exact
+     *     mass or in case illegal parameters are provided (e.g., negative mass values or empty
+     *     MolecularFormulaRange)
      * @see MolecularFormulaRange
      */
-    RoundRobinFormulaGenerator(final IChemObjectBuilder builder,
-                               final double minMass, final double maxMass,
-                               final MolecularFormulaRange mfRange) {
+    RoundRobinFormulaGenerator(
+            final IChemObjectBuilder builder,
+            final double minMass,
+            final double maxMass,
+            final MolecularFormulaRange mfRange) {
         this.builder = builder;
         final List<IIsotope> isotopes = new ArrayList<>(mfRange.getIsotopeCount());
         for (IIsotope iso : mfRange.isotopes()) {
-            if (mfRange.getIsotopeCountMin(iso) >= 0 && mfRange.getIsotopeCountMax(iso) > 0) isotopes.add(iso);
+            if (mfRange.getIsotopeCountMin(iso) >= 0 && mfRange.getIsotopeCountMax(iso) > 0)
+                isotopes.add(iso);
         }
-        this.decomposer = DecomposerFactory.getInstance().getDecomposerFor(isotopes.toArray(new IIsotope[isotopes.size()])).decomposeIterator(minMass, maxMass, mfRange);
+        this.decomposer =
+                DecomposerFactory.getInstance()
+                        .getDecomposerFor(isotopes.toArray(new IIsotope[isotopes.size()]))
+                        .decomposeIterator(minMass, maxMass, mfRange);
         this.done = false;
         this.mfRange = mfRange;
     }
 
-    /**
-     * @see MolecularFormulaGenerator#getNextFormula()
-     */
+    /** @see MolecularFormulaGenerator#getNextFormula() */
     @Override
     public synchronized IMolecularFormula getNextFormula() {
         if (!done && decomposer.next()) {
@@ -96,14 +89,14 @@ class RoundRobinFormulaGenerator implements IFormulaGenerator {
         }
     }
 
-    /**
-     * @see MolecularFormulaGenerator#getAllFormulas()
-     */
+    /** @see MolecularFormulaGenerator#getAllFormulas() */
     @Override
     public synchronized IMolecularFormulaSet getAllFormulas() {
         final IMolecularFormulaSet set = builder.newInstance(IMolecularFormulaSet.class);
         if (done) return set;
-        for (IMolecularFormula formula = getNextFormula(); formula != null; formula = getNextFormula()) {
+        for (IMolecularFormula formula = getNextFormula();
+                formula != null;
+                formula = getNextFormula()) {
             set.addMolecularFormula(formula);
             if (done) return set;
         }
@@ -112,10 +105,11 @@ class RoundRobinFormulaGenerator implements IFormulaGenerator {
     }
 
     /**
-     * This method does not work for Round Robin as the algorithm only enumerates formulas which really have the
-     * searched mass range (except for false positives due to rounding errors). As the exact number of molecular formulas
-     * with a given mass is unknown (calculating it is as expensive as enumerating them) there is no way to give a
-     * progress number. Therefore, the method returns just 0 if it's enumerating and 1 if it's done.
+     * This method does not work for Round Robin as the algorithm only enumerates formulas which
+     * really have the searched mass range (except for false positives due to rounding errors). As
+     * the exact number of molecular formulas with a given mass is unknown (calculating it is as
+     * expensive as enumerating them) there is no way to give a progress number. Therefore, the
+     * method returns just 0 if it's enumerating and 1 if it's done.
      */
     @Override
     public double getFinishedPercentage() {
@@ -127,35 +121,33 @@ class RoundRobinFormulaGenerator implements IFormulaGenerator {
 
         for (int i = lastDecomposition.length - 1; i >= 0; i--) {
             double max = mfRange.getIsotopeCountMax(decomposer.weights.get(i).getOwner());
-            if (i > 0)
-                max += 1.0;
+            if (i > 0) max += 1.0;
             result += remainingPerc * ((double) lastDecomposition[i] / max);
             remainingPerc /= max;
         }
         return result;
     }
 
-    /**
-     * Cancel the computation
-     */
+    /** Cancel the computation */
     @Override
     public void cancel() {
-        done=true;
+        done = true;
     }
 }
 
 /**
- * As every decomposer has to be initialized (i.e. an extended residue table has to be computed) it is important
- * to cache decomposer instances when decomposing a large set of numbers (initialization time is only dependent on
- * alphabet size. For decomposing large masses the decomposition time might exceed the initialization time. For very
- * small masses it is the other way around). This simple cache stores the last 10 used decomposers. It is very likely
- * that for a given mass spectrum only one alphabet is chosen to decompose all peaks. In this case this cache should
- * be sufficient.
+ * As every decomposer has to be initialized (i.e. an extended residue table has to be computed) it
+ * is important to cache decomposer instances when decomposing a large set of numbers
+ * (initialization time is only dependent on alphabet size. For decomposing large masses the
+ * decomposition time might exceed the initialization time. For very small masses it is the other
+ * way around). This simple cache stores the last 10 used decomposers. It is very likely that for a
+ * given mass spectrum only one alphabet is chosen to decompose all peaks. In this case this cache
+ * should be sufficient.
  */
 final class DecomposerFactory {
 
     private static final int maximalNumberOfCachedDecomposers = 10;
-    private final static DecomposerFactory instance = new DecomposerFactory();
+    private static final DecomposerFactory instance = new DecomposerFactory();
     private final List<RangeMassDecomposer> decomposerCache;
 
     private DecomposerFactory() {
@@ -177,13 +169,13 @@ final class DecomposerFactory {
         decomposerCache.add(decomposer);
         return decomposer;
     }
-
 }
 
 /**
- * Decomposes a given mass over an alphabet, returning all decompositions which masses equals the given mass
- * considering a given deviation.
- * MassDecomposerFast calculates the decompositions with the help of an ERT containing deviation information, not requiring to iterate over all different integer mass values {@cdk.cite Duehrkop2013}.
+ * Decomposes a given mass over an alphabet, returning all decompositions which masses equals the
+ * given mass considering a given deviation. MassDecomposerFast calculates the decompositions with
+ * the help of an ERT containing deviation information, not requiring to iterate over all different
+ * integer mass values {@cdk.cite Duehrkop2013}.
  *
  * @author Marcus Ludwig, Kai Dührkop
  */
@@ -196,15 +188,14 @@ class RangeMassDecomposer {
     private double maxError;
 
     /**
-     * Avoid locks by making ERTs volatile. This leads to the situation that several threads might accidentally compute
-     * the same ERT tables. However, as soon as an ERT table is written it is synchronized around all threads. After
-     * writing an ERT table it is never changed, so additional locking is not necessary.
+     * Avoid locks by making ERTs volatile. This leads to the situation that several threads might
+     * accidentally compute the same ERT tables. However, as soon as an ERT table is written it is
+     * synchronized around all threads. After writing an ERT table it is never changed, so
+     * additional locking is not necessary.
      */
     private volatile int[][][] ERTs;
 
-    /**
-     * @param allowedIsotopes array of the elements of the alphabet
-     */
+    /** @param allowedIsotopes array of the elements of the alphabet */
     RangeMassDecomposer(IIsotope[] allowedIsotopes) {
         this.ERTs = null;
         this.precision = findOptimalPrecision();
@@ -232,13 +223,13 @@ class RangeMassDecomposer {
     }
 
     /**
-     * checks if this decomposer can be used for the given alphabet. This is the case when the decomposer
-     * contains the same elements as the given alphabet.
-     * <p>
-     * It would be also the case when the given alphabet is a subset of this decomposers alphabet. However,
-     * if the alphabet size of the decomposer is much larger, the decomposer might be slower anyways due to
-     * larger memory footprint. As we expect that the alphabet does not change that often, it might be
-     * sufficient to just compare the arrays.
+     * checks if this decomposer can be used for the given alphabet. This is the case when the
+     * decomposer contains the same elements as the given alphabet.
+     *
+     * <p>It would be also the case when the given alphabet is a subset of this decomposers
+     * alphabet. However, if the alphabet size of the decomposer is much larger, the decomposer
+     * might be slower anyways due to larger memory footprint. As we expect that the alphabet does
+     * not change that often, it might be sufficient to just compare the arrays.
      */
     boolean isCompatible(IIsotope[] elements) {
         return Arrays.equals(elements, this.elements);
@@ -246,15 +237,18 @@ class RangeMassDecomposer {
 
     /*
 
-     */
+    */
     private double findOptimalPrecision() {
-        return 1d / 5963.337687d; // This blowup is optimized for organic compounds based on the CHNOPS alphabet
+        return 1d
+                / 5963.337687d; // This blowup is optimized for organic compounds based on the
+                                // CHNOPS alphabet
     }
 
     /**
-     * Initializes the decomposer. Computes the extended residue table. This have to be done only one time for
-     * a given alphabet, independently from the masses you want to decompose. This method is called automatically
-     * if you compute the decompositions, so call it only if you want to control the time of the initialisation.
+     * Initializes the decomposer. Computes the extended residue table. This have to be done only
+     * one time for a given alphabet, independently from the masses you want to decompose. This
+     * method is called automatically if you compute the decompositions, so call it only if you want
+     * to control the time of the initialisation.
      */
     private void init() {
         if (ERTs != null) return;
@@ -269,11 +263,11 @@ class RangeMassDecomposer {
     }
 
     /**
-     * Check if a mass is decomposable. This is done in constant time (especially: it is very very very fast!).
-     * But it doesn't check if there is a valid decomposition. Therefore, even if the method returns true,
-     * all decompositions may be invalid for the given validator or given bounds.
-     * #decompose(mass) uses this function before starting the decomposition, therefore this method should only
-     * be used if you don't want to start the decomposition algorithm.
+     * Check if a mass is decomposable. This is done in constant time (especially: it is very very
+     * very fast!). But it doesn't check if there is a valid decomposition. Therefore, even if the
+     * method returns true, all decompositions may be invalid for the given validator or given
+     * bounds. #decompose(mass) uses this function before starting the decomposition, therefore this
+     * method should only be used if you don't want to start the decomposition algorithm.
      *
      * @return true if the mass is decomposable, ignoring bounds or any additional filtering rule
      */
@@ -281,7 +275,7 @@ class RangeMassDecomposer {
         init();
         final int[][][] ERTs = this.ERTs;
         final int[] minmax = new int[2];
-        //normal version seems to be faster, because it returns after first hit
+        // normal version seems to be faster, because it returns after first hit
         integerBound(from, to, minmax);
         final int a = weights.get(0).getIntegerMass();
         for (int i = minmax[0]; i <= minmax[1]; ++i) {
@@ -294,15 +288,17 @@ class RangeMassDecomposer {
     /**
      * Returns an iterator over all decompositons of this mass range
      *
-     * @param from       lowest mass to decompose
-     * @param to         (inclusive) largest mass to decompose
+     * @param from lowest mass to decompose
+     * @param to (inclusive) largest mass to decompose
      * @param boundaries defines lowerbounds and upperbounds for the number of elements
      */
     DecompIterator decomposeIterator(double from, double to, MolecularFormulaRange boundaries) {
         init();
         if (to < 0d || from < 0d)
-            throw new IllegalArgumentException("Expect positive mass for decomposition: [" + from + ", " + to + "]");
-        if (to < from) throw new IllegalArgumentException("Negative range given: [" + from + ", " + to + "]");
+            throw new IllegalArgumentException(
+                    "Expect positive mass for decomposition: [" + from + ", " + to + "]");
+        if (to < from)
+            throw new IllegalArgumentException("Negative range given: [" + from + ", " + to + "]");
         final int[] minValues = new int[weights.size()];
         final int[] boundsarray = new int[weights.size()];
         double cfrom = from, cto = to;
@@ -326,23 +322,24 @@ class RangeMassDecomposer {
         final int[] minmax = new int[2];
         integerBound(cfrom, cto, minmax);
         final int deviation = minmax[1] - minmax[0];
-        //calculate the required ERTs
+        // calculate the required ERTs
         if ((1 << (ERTs.length - 1)) <= deviation) {
             calcERT(deviation);
         }
         final int[][][] ERTs = this.ERTs;
 
-        //take ERT with required deviation
+        // take ERT with required deviation
         int[][] currentERT;
         if (deviation == 0) currentERT = ERTs[0];
         else currentERT = ERTs[32 - Integer.numberOfLeadingZeros(deviation)];
 
-        return new DecompIterator(currentERT, minmax[0], minmax[1], from, to, minValues, boundsarray, weights);
+        return new DecompIterator(
+                currentERT, minmax[0], minmax[1], from, to, minValues, boundsarray, weights);
     }
 
     /**
-     * calculates ERTs to look up whether a mass or lower masses within a certain deviation are decomposable.
-     * only ERTs for deviation 2^x are calculated
+     * calculates ERTs to look up whether a mass or lower masses within a certain deviation are
+     * decomposable. only ERTs for deviation 2^x are calculated
      */
     private void calcERT(int deviation) {
         final int[][][] ERTs = this.ERTs;
@@ -353,7 +350,7 @@ class RangeMassDecomposer {
         int[][] lastERT = ERTs[ERTs.length - 1];
         int[][] nextERT = new int[lastERT.length][weights.size()];
         if (currentLength == 1) {
-            //first line compares biggest residue and 0
+            // first line compares biggest residue and 0
             for (int j = 0; j < weights.size(); j++) {
                 nextERT[0][j] = Math.min(lastERT[nextERT.length - 1][j], lastERT[0][j]);
             }
@@ -369,7 +366,8 @@ class RangeMassDecomposer {
                     nextERT[i][j] = Math.min(lastERT[i][j], lastERT[i - step][j]);
                 }
             }
-            //first lines compared with last lines (greatest residues) because of modulo's cyclic characteristic
+            // first lines compared with last lines (greatest residues) because of modulo's cyclic
+            // characteristic
             for (int i = 0; i < step; i++) {
                 for (int j = 0; j < weights.size(); j++) {
                     nextERT[i][j] = Math.min(lastERT[i][j], lastERT[i + nextERT.length - step][j]);
@@ -384,7 +382,8 @@ class RangeMassDecomposer {
                 this.ERTs = Arrays.copyOf(this.ERTs, this.ERTs.length + 1);
                 this.ERTs[this.ERTs.length - 1] = nextERT;
             } else {
-                // another background thread did already compute the ERT. So we don't have to do this again
+                // another background thread did already compute the ERT. So we don't have to do
+                // this again
             }
         }
         // recursively calculate ERTs for higher deviations
@@ -397,13 +396,13 @@ class RangeMassDecomposer {
         int[][] ERT = new int[firstLongVal][weights.size()];
         int d, r, n, argmin;
 
-        //Init
+        // Init
         ERT[0][0] = 0;
         for (int i = 1; i < ERT.length; ++i) {
             ERT[i][0] = Integer.MAX_VALUE; // should be infinity
         }
 
-        //Filling the Table, j loops over columns
+        // Filling the Table, j loops over columns
         for (int j = 1; j < ERT[0].length; ++j) {
             ERT[0][j] = 0; // Init again
             d = gcd(firstLongVal, weights.get(j).getIntegerMass());
@@ -413,7 +412,9 @@ class RangeMassDecomposer {
                 } else {
                     n = Integer.MAX_VALUE; // should be infinity
                     argmin = p;
-                    for (int i = p; i < ERT.length; i += d) { // Find Minimum in specific part of ERT
+                    for (int i = p;
+                            i < ERT.length;
+                            i += d) { // Find Minimum in specific part of ERT
                         if (ERT[i][j - 1] < n) {
                             n = ERT[i][j - 1];
                             argmin = i;
@@ -422,14 +423,17 @@ class RangeMassDecomposer {
                     ERT[argmin][j] = n;
                 }
                 if (n == Integer.MAX_VALUE) { // Minimum of the specific part of ERT was infinity
-                    for (int i = p; i < ERT.length; i += d) { // Fill specific part of ERT with infinity
+                    for (int i = p;
+                            i < ERT.length;
+                            i += d) { // Fill specific part of ERT with infinity
                         ERT[i][j] = Integer.MAX_VALUE;
                     }
                 } else { // Do normal loop
                     for (long i = 1; i < ERT.length / d; ++i) { // i is just a counter
                         n += weights.get(j).getIntegerMass();
                         if (n < 0) {
-                            throw new ArithmeticException("Integer overflow occurs. DECOMP cannot calculate decompositions for the given alphabet as it exceeds the 32 bit integer space. Please use a smaller precision value.");
+                            throw new ArithmeticException(
+                                    "Integer overflow occurs. DECOMP cannot calculate decompositions for the given alphabet as it exceeds the 32 bit integer space. Please use a smaller precision value.");
                         }
                         r = n % firstLongVal;
                         if (ERT[r][j - 1] < n) n = ERT[r][j - 1]; // get the min
@@ -440,11 +444,10 @@ class RangeMassDecomposer {
         } // end for j
         synchronized (this) {
             if (this.ERTs == null) {
-                this.ERTs = new int[][][]{ERT};
+                this.ERTs = new int[][][] {ERT};
             }
         }
     }
-
 
     private void discretizeMasses() {
         // compute integer masses
@@ -474,7 +477,8 @@ class RangeMassDecomposer {
 
         for (int i = 1; i < weights.size(); i++) {
             final ChemicalElement weight = weights.get(i);
-            int temp = first.getIntegerMass() / gcd(first.getIntegerMass(), weight.getIntegerMass());
+            int temp =
+                    first.getIntegerMass() / gcd(first.getIntegerMass(), weight.getIntegerMass());
             weight.setL(temp);
             weight.setLcm(temp * weight.getIntegerMass());
         }
@@ -484,7 +488,8 @@ class RangeMassDecomposer {
         this.minError = 0d;
         this.maxError = 0d;
         for (ChemicalElement weight : weights) {
-            final double error = (precision * weight.getIntegerMass() - weight.getMass()) / weight.getMass();
+            final double error =
+                    (precision * weight.getIntegerMass() - weight.getMass()) / weight.getMass();
             minError = Math.min(minError, error);
             maxError = Math.max(maxError, error);
         }
@@ -494,7 +499,8 @@ class RangeMassDecomposer {
         final double fromD = Math.ceil((1 + minError) * from / precision);
         final double toD = Math.floor((1 + maxError) * to / precision);
         if (fromD > Integer.MAX_VALUE || toD > Integer.MAX_VALUE) {
-            throw new ArithmeticException("Given mass is too large to decompose. Please use a smaller precision value, i.e. mass/precision have to be within 32 bit integer space");
+            throw new ArithmeticException(
+                    "Given mass is too large to decompose. Please use a smaller precision value, i.e. mass/precision have to be within 32 bit integer space");
         }
 
         bounds[0] = Math.max(0, (int) fromD);
@@ -502,9 +508,9 @@ class RangeMassDecomposer {
     }
 
     /**
-     * Iterator implementation of the loop
-     * We do not use static classes. This gives us the possibility to make some of the variables behave thread safe
-     * and resistant against changes from the user.
+     * Iterator implementation of the loop We do not use static classes. This gives us the
+     * possibility to make some of the variables behave thread safe and resistant against changes
+     * from the user.
      */
     static class DecompIterator {
         // final initialization values
@@ -530,8 +536,15 @@ class RangeMassDecomposer {
         boolean rewind;
         int i;
 
-
-        DecompIterator(int[][] ERT, int minIntegerMass, int maxIntegerMass, double minDoubleMass, double maxDoubleMass, int[] minValues, int[] maxValues, List<ChemicalElement> weights) {
+        DecompIterator(
+                int[][] ERT,
+                int minIntegerMass,
+                int maxIntegerMass,
+                double minDoubleMass,
+                double maxDoubleMass,
+                int[] minValues,
+                int[] maxValues,
+                List<ChemicalElement> weights) {
             this.ERT = ERT;
             this.minDoubleMass = minDoubleMass;
             this.maxDoubleMass = maxDoubleMass;
@@ -554,7 +567,10 @@ class RangeMassDecomposer {
             a = weights.get(0).getIntegerMass();
             // Init
             for (int i = 1; i < k; ++i) {
-                lbound[i] = Integer.MAX_VALUE; // this is just to ensure, that lbound < m in the first iteration
+                lbound[i] =
+                        Integer
+                                .MAX_VALUE; // this is just to ensure, that lbound < m in the first
+                                            // iteration
             }
 
             i = k - 1;
@@ -562,7 +578,6 @@ class RangeMassDecomposer {
             this.rewind = false;
             this.deviation = maxIntegerMass - minIntegerMass;
             this.ERTdev = Integer.highestOneBit(deviation);
-
         }
 
         boolean next() {
@@ -586,36 +601,44 @@ class RangeMassDecomposer {
                         return true;
                     }
                     ++i; // "return" from recursion
-                    flagWhile = true; // in this recursion-depth we are in the while-loop, cause the next recursion (the one we just exited) was called
+                    flagWhile =
+                            true; // in this recursion-depth we are in the while-loop, cause the
+                                  // next recursion (the one we just exited) was called
                     m[i - 1] -= weights.get(i).getLcm(); // execute the rest of the while
                     buffer[i] += weights.get(i).getL();
                 } else {
                     if (flagWhile) {
-                        if (m[i - 1] >= lbound[i] && buffer[i] <= maxValues[i]) { //currently in while loop
+                        if (m[i - 1] >= lbound[i]
+                                && buffer[i] <= maxValues[i]) { // currently in while loop
                             --i; // "do" recursive call
                         } else {
                             flagWhile = false; //
                         }
-                    } else { //we are in the for-loop
-                        if (j[i] < weights.get(i).getL() && m[i] - j[i] * weights.get(i).getIntegerMass() >= 0) {
+                    } else { // we are in the for-loop
+                        if (j[i] < weights.get(i).getL()
+                                && m[i] - j[i] * weights.get(i).getIntegerMass() >= 0) {
                             buffer[i] = j[i];
                             m[i - 1] = m[i] - j[i] * weights.get(i).getIntegerMass();
                             r[i] = m[i - 1] % a;
-                            //changed from normal algorithm: you have to look up the minimum at 2 position
+                            // changed from normal algorithm: you have to look up the minimum at 2
+                            // position
                             int pos = r[i] - deviation + ERTdev;
                             if (pos < 0) pos += ERT.length;
                             lbound[i] = Math.min(ERT[r[i]][i - 1], ERT[pos][i - 1]);
                             flagWhile = true; // call the while loop
                             ++j[i];
-                        } else { //exit for loop
+                        } else { // exit for loop
                             // reset "function variables"
                             lbound[i] = Integer.MAX_VALUE;
                             j[i] = 0;
                             buffer[i] = 0;
                             ++i; // "return" from recursion
                             if (i != k) { // only if we are not done
-                                flagWhile = true; // in this recursion-depth we are in the while-loop, cause the next recursion was called
-                                m[i - 1] -= weights.get(i).getLcm(); // execute the rest of the while
+                                flagWhile =
+                                        true; // in this recursion-depth we are in the while-loop,
+                                              // cause the next recursion was called
+                                m[i - 1] -=
+                                        weights.get(i).getLcm(); // execute the rest of the while
                                 buffer[i] += weights.get(i).getL();
                             }
                         }
@@ -649,7 +672,9 @@ class RangeMassDecomposer {
             }
 
             ++i; // "return" from recursion
-            flagWhile = true; // in this recursion-depth we are in the while-loop, cause the next recursion (the one we just exited) was called
+            flagWhile =
+                    true; // in this recursion-depth we are in the while-loop, cause the next
+                          // recursion (the one we just exited) was called
             m[i - 1] -= weights.get(i).getLcm(); // execute the rest of the while
             buffer[i] += weights.get(i).getL();
         }
@@ -670,28 +695,18 @@ class RangeMassDecomposer {
             return weights.get(index).getOwner();
         }
     }
-
 }
 
-
-/**
- * A POJO storing the weight information about a character in the alphabet
- */
+/** A POJO storing the weight information about a character in the alphabet */
 class ChemicalElement implements Comparable<ChemicalElement> {
 
-    /**
-     * corresponding character in the alphabet
-     */
+    /** corresponding character in the alphabet */
     private final IIsotope owner;
 
-    /**
-     * the exact mass of the character
-     */
+    /** the exact mass of the character */
     private final double mass;
 
-    /**
-     * the transformation of the mass in the integer space
-     */
+    /** the transformation of the mass in the integer space */
     private int integerMass;
 
     private int l;

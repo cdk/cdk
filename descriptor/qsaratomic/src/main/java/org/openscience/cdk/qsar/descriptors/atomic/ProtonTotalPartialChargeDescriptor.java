@@ -18,6 +18,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import java.util.List;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -29,15 +30,15 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 
-import java.util.List;
-
 /**
- * The calculation of partial charges of an heavy atom and its protons is based on Gasteiger Marsili (PEOE).
+ * The calculation of partial charges of an heavy atom and its protons is based on Gasteiger Marsili
+ * (PEOE).
  *
- * This descriptor has no parameters. The result of this descriptor is a vector of 5 values, corresponding
- * to a maximum of four protons for any given atom. If an atom has fewer than four protons, the remaining values
- * are set to Double.NaN. Also note that the values for the neighbors are not returned in a particular order
- * (though the order is fixed for multiple runs for the same atom).
+ * <p>This descriptor has no parameters. The result of this descriptor is a vector of 5 values,
+ * corresponding to a maximum of four protons for any given atom. If an atom has fewer than four
+ * protons, the remaining values are set to Double.NaN. Also note that the values for the neighbors
+ * are not returned in a particular order (though the order is fixed for multiple runs for the same
+ * atom).
  *
  * @author mfe4
  * @cdk.created 2004-11-03
@@ -45,44 +46,40 @@ import java.util.List;
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:protonPartialCharge
  */
-public class ProtonTotalPartialChargeDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
+public class ProtonTotalPartialChargeDescriptor extends AbstractAtomicDescriptor
+        implements IAtomicDescriptor {
 
-    private GasteigerMarsiliPartialCharges peoe             = null;
-    private List<IAtom>                    neighboors;
-    private final int                      MAX_PROTON_COUNT = 5;
+    private GasteigerMarsiliPartialCharges peoe = null;
+    private List<IAtom> neighboors;
+    private final int MAX_PROTON_COUNT = 5;
 
-    /**
-     *  Constructor for the ProtonTotalPartialChargeDescriptor object
-     */
+    /** Constructor for the ProtonTotalPartialChargeDescriptor object */
     public ProtonTotalPartialChargeDescriptor() {}
 
     /**
-     *  Gets the specification attribute of the ProtonTotalPartialChargeDescriptor
-     *  object
+     * Gets the specification attribute of the ProtonTotalPartialChargeDescriptor object
      *
-     *@return    The specification value
+     * @return The specification value
      */
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#protonPartialCharge", this
-                        .getClass().getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#protonPartialCharge",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
-    /**
-     * This descriptor does not have any parameter to be set.
-     */
+    /** This descriptor does not have any parameter to be set. */
     @Override
     public void setParameters(Object[] params) throws CDKException {
         // no parameters
     }
 
     /**
-     *  Gets the parameters attribute of the ProtonTotalPartialChargeDescriptor
-     *  object
+     * Gets the parameters attribute of the ProtonTotalPartialChargeDescriptor object
      *
-     *@return    The parameters value
-     *@see #setParameters
+     * @return The parameters value
+     * @see #setParameters
      */
     @Override
     public Object[] getParameters() {
@@ -100,19 +97,24 @@ public class ProtonTotalPartialChargeDescriptor extends AbstractAtomicDescriptor
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
         DoubleArrayResult result = new DoubleArrayResult(MAX_PROTON_COUNT);
-        for (int i = 0; i < neighboors.size() + 1; i++)
-            result.add(Double.NaN);
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result,
-                getDescriptorNames(), e);
+        for (int i = 0; i < neighboors.size() + 1; i++) result.add(Double.NaN);
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                result,
+                getDescriptorNames(),
+                e);
     }
 
     /**
-     *  The method returns partial charges assigned to an heavy atom and its protons through Gasteiger Marsili
-     *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
+     * The method returns partial charges assigned to an heavy atom and its protons through
+     * Gasteiger Marsili It is needed to call the addExplicitHydrogensToSatisfyValency method from
+     * the class tools.HydrogenAdder.
      *
-     *@param  atom              The IAtom for which the DescriptorValue is requested
-     *@param  ac                AtomContainer
-     *@return                   an array of doubles with partial charges of [heavy, proton_1 ... proton_n]
+     * @param atom The IAtom for which the DescriptorValue is requested
+     * @param ac AtomContainer
+     * @return an array of doubles with partial charges of [heavy, proton_1 ... proton_n]
      */
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
@@ -152,18 +154,20 @@ public class ProtonTotalPartialChargeDescriptor extends AbstractAtomicDescriptor
             }
         }
         int remainder = MAX_PROTON_COUNT - (hydrogenNeighbors + 1);
-        for (int i = 0; i < remainder; i++)
-            protonPartialCharge.add(Double.NaN);
+        for (int i = 0; i < remainder; i++) protonPartialCharge.add(Double.NaN);
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), protonPartialCharge,
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                protonPartialCharge,
                 getDescriptorNames());
     }
 
     /**
-     *  Gets the parameterNames attribute of the ProtonTotalPartialChargeDescriptor
-     *  object
+     * Gets the parameterNames attribute of the ProtonTotalPartialChargeDescriptor object
      *
-     * @return    The parameterNames value
+     * @return The parameterNames value
      */
     @Override
     public String[] getParameterNames() {
@@ -171,11 +175,10 @@ public class ProtonTotalPartialChargeDescriptor extends AbstractAtomicDescriptor
     }
 
     /**
-     *  Gets the parameterType attribute of the ProtonTotalPartialChargeDescriptor
-     *  object
+     * Gets the parameterType attribute of the ProtonTotalPartialChargeDescriptor object
      *
-     * @param  name  Description of the Parameter
-     * @return       An Object of class equal to that of the parameter being requested
+     * @param name Description of the Parameter
+     * @return An Object of class equal to that of the parameter being requested
      */
     @Override
     public Object getParameterType(String name) {

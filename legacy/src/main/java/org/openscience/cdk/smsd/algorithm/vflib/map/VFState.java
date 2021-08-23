@@ -54,7 +54,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.smsd.algorithm.vflib.builder.TargetProperties;
@@ -64,27 +63,27 @@ import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IQuery;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IState;
 
 /**
- * This class finds mapping states between query and target
- * molecules.
+ * This class finds mapping states between query and target molecules.
  *
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is
+ *     available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public class VFState implements IState {
 
-    private List<Match>       candidates;
-    private IQuery            query;
-    private TargetProperties  target;
-    private List<INode>       queryPath;
-    private List<IAtom>       targetPath;
+    private List<Match> candidates;
+    private IQuery query;
+    private TargetProperties target;
+    private List<INode> queryPath;
+    private List<IAtom> targetPath;
     private Map<INode, IAtom> map;
 
     /**
      * Initialise the VFState with query and target
+     *
      * @param query
      * @param target
      */
@@ -97,7 +96,6 @@ public class VFState implements IState {
         this.target = target;
         this.candidates = new ArrayList<Match>();
         loadRootCandidates();
-
     }
 
     private VFState(VFState state, Match match) {
@@ -191,7 +189,7 @@ public class VFState implements IState {
         }
     }
 
-    //@TODO Asad Check the Neighbour count
+    // @TODO Asad Check the Neighbour count
     private void loadCandidates(Match lastMatch) {
         IAtom atom = lastMatch.getTargetAtom();
         List<IAtom> targetNeighbors = target.getNeighbors(atom);
@@ -207,14 +205,15 @@ public class VFState implements IState {
 
     private boolean candidateFeasible(Match candidate) {
         for (INode queryAtom : map.keySet()) {
-            if (queryAtom.equals(candidate.getQueryNode()) || map.get(queryAtom).equals(candidate.getTargetAtom())) {
+            if (queryAtom.equals(candidate.getQueryNode())
+                    || map.get(queryAtom).equals(candidate.getTargetAtom())) {
                 return false;
             }
         }
         return true;
     }
 
-    //This function is updated by Asad to include more matches
+    // This function is updated by Asad to include more matches
 
     private boolean matchAtoms(Match match) {
         IAtom atom = match.getTargetAtom();

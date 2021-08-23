@@ -34,29 +34,23 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- * Tests CDK's Lone Pair Electron checking capabilities in terms of
- * example molecules.
+ * Tests CDK's Lone Pair Electron checking capabilities in terms of example molecules.
  *
- * @cdk.module     test-standard
- *
- * @author         Miguel Rojas
- * @cdk.created    2006-04-01
+ * @cdk.module test-standard
+ * @author Miguel Rojas
+ * @cdk.created 2006-04-01
  */
 public class LonePairElectronCheckerTest extends CDKTestCase {
 
     private static LonePairElectronChecker lpcheck = null;
 
-    /**
-    *  The JUnit setup method
-    */
+    /** The JUnit setup method */
     @BeforeClass
     public static void setUp() throws Exception {
         lpcheck = new LonePairElectronChecker();
     }
 
-    /**
-     *  A unit test for JUnit
-     */
+    /** A unit test for JUnit */
     @Test
     public void testAllSaturated_Formaldehyde() throws Exception {
         // test Formaldehyde, CH2=O with explicit hydrogen
@@ -81,9 +75,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
         Assert.assertTrue(lpcheck.allSaturated(m));
     }
 
-    /**
-     *  A unit test for JUnit
-     */
+    /** A unit test for JUnit */
     @Test
     public void testAllSaturated_Methanethiol() throws Exception {
         // test Methanethiol, CH4S
@@ -107,9 +99,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
         Assert.assertFalse(lpcheck.allSaturated(m));
     }
 
-    /**
-     *  A unit test for JUnit
-     */
+    /** A unit test for JUnit */
     @Test
     public void testNewSaturate_Methyl_chloride() throws Exception {
         // test Methyl chloride, CH3Cl
@@ -129,9 +119,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
         Assert.assertEquals(0, m.getConnectedLonePairsCount(c1));
     }
 
-    /**
-     *  A unit test for JUnit
-     */
+    /** A unit test for JUnit */
     @Test
     public void testNewSaturate_Methyl_alcohol() throws Exception {
         // test Methyl chloride, CH3OH
@@ -152,17 +140,14 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
         Assert.assertEquals(0, m.getConnectedLonePairsCount(c1));
     }
 
-    /**
-     *  A unit test for JUnit
-     */
+    /** A unit test for JUnit */
     @Test
     public void testNewSaturate_Methyl_alcohol_AddH() throws Exception {
         // test Methyl alcohol, CH3OH
         IAtomContainer m = new AtomContainer();
         m.addAtom(new Atom("C"));
         m.addAtom(new Atom("O"));
-        for (int i = 0; i < 4; i++)
-            m.addAtom(new Atom("H"));
+        for (int i = 0; i < 4; i++) m.addAtom(new Atom("H"));
 
         m.addBond(0, 1, IBond.Order.SINGLE);
         m.addBond(0, 2, IBond.Order.SINGLE);
@@ -176,9 +161,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
         Assert.assertEquals(0, m.getConnectedLonePairsCount(m.getAtom(0)));
     }
 
-    /**
-     *  A unit test for JUnit
-     */
+    /** A unit test for JUnit */
     @Test
     public void testNewSaturate_Methyl_alcohol_protonated() throws Exception {
         // test Methyl alcohol protonated, CH3OH2+
@@ -200,9 +183,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
         Assert.assertEquals(1, m.getConnectedLonePairsCount(o));
     }
 
-    /**
-     *  A unit test for JUnit
-     */
+    /** A unit test for JUnit */
     @Test
     public void testNewSaturate_methoxide_anion() throws Exception {
         // test methoxide anion, CH3O-
@@ -223,9 +204,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
         Assert.assertEquals(3, m.getConnectedLonePairsCount(o));
     }
 
-    /**
-     *  A unit test for JUnit
-     */
+    /** A unit test for JUnit */
     @Test
     public void testNewSaturate_Ammonia() throws Exception {
         // test Ammonia, H3N
@@ -241,9 +220,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
         Assert.assertEquals(1, m.getConnectedLonePairsCount(n));
     }
 
-    /**
-     *  A unit test for JUnit
-     */
+    /** A unit test for JUnit */
     @Test
     public void testNewSaturate_methylamine_radical_cation() throws Exception {
         // test Ammonia, CH3NH3+
@@ -265,9 +242,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
         Assert.assertEquals(0, m.getConnectedLonePairsCount(n));
     }
 
-    /**
-     *  A unit test for JUnit O=C([H])[C+]([H])[C-]([H])[H]
-     */
+    /** A unit test for JUnit O=C([H])[C+]([H])[C-]([H])[H] */
     @Test
     public void testNewSaturate_withHAdded() throws Exception {
         // O=C([H])[C+]([H])[C-]([H])[H]

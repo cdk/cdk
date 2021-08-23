@@ -24,7 +24,6 @@ import org.openscience.cdk.tools.DataFeatures;
  * See <a href="http://www.sinica.edu.tw/~scimath/msi/insight2K/zindo/C_Files.html">here</a>.
  *
  * @author Miguel Rojas
- *
  * @cdk.module ioformats
  * @cdk.githash
  */
@@ -60,7 +59,7 @@ public class ZindoFormat extends AbstractResourceFormat implements IChemFormat {
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"zin"};
+        return new String[] {"zin"};
     }
 
     /** {@inheritDoc} */

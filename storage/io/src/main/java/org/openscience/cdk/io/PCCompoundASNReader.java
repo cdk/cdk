@@ -30,7 +30,6 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -47,23 +46,23 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * Reads an object from ASN formated input for PubChem Compound entries. The following
- * bits are supported: atoms.aid, atoms.element, bonds.aid1, bonds.aid2. Additionally,
- * it extracts the InChI and canonical SMILES properties.
+ * Reads an object from ASN formated input for PubChem Compound entries. The following bits are
+ * supported: atoms.aid, atoms.element, bonds.aid1, bonds.aid2. Additionally, it extracts the InChI
+ * and canonical SMILES properties.
  *
  * @cdk.module io
  * @cdk.githash
  * @cdk.iooptions
- *
  * @cdk.keyword file format, PubChem Compound ASN
  */
 public class PCCompoundASNReader extends DefaultChemObjectReader {
 
-    private BufferedReader      input;
-    private static ILoggingTool logger   = LoggingToolFactory.createLoggingTool(PCCompoundASNReader.class);
+    private BufferedReader input;
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(PCCompoundASNReader.class);
 
-    IAtomContainer              molecule = null;
-    Map<String, IAtom>          atomIDs  = null;
+    IAtomContainer molecule = null;
+    Map<String, IAtom> atomIDs = null;
 
     /**
      * Construct a new reader from a Reader type object.
@@ -209,10 +208,12 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
                     logger.debug("Label: " + urn.label);
                     logger.debug("Name: " + urn.name);
                     if ("InChI".equals(urn.label)) {
-                        String value = getQuotedValue(line.substring(line.indexOf("value sval") + 10));
+                        String value =
+                                getQuotedValue(line.substring(line.indexOf("value sval") + 10));
                         molecule.setProperty(CDKConstants.INCHI, value);
                     } else if ("SMILES".equals(urn.label) && "Canonical".equals(urn.name)) {
-                        String value = getQuotedValue(line.substring(line.indexOf("value sval") + 10));
+                        String value =
+                                getQuotedValue(line.substring(line.indexOf("value sval") + 10));
                         molecule.setProperty(CDKConstants.SMILES, value);
                     }
                 }
@@ -464,7 +465,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
 
     class URN {
 
-        String name  = null;
+        String name = null;
         String label = null;
     }
 }

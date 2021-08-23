@@ -24,11 +24,10 @@ import org.openscience.cdk.interfaces.IChemObject;
 /**
  * Error found during sematical validation of a IChemObject.
  *
- * @author   Egon Willighagen
+ * @author Egon Willighagen
  * @cdk.githash
- * @cdk.created  2003-03-28
- *
- * @see      org.openscience.cdk.ChemObject
+ * @cdk.created 2003-03-28
+ * @see org.openscience.cdk.ChemObject
  * @cdk.keyword atom, chemical validation
  */
 public class ValidationTest {
@@ -36,9 +35,9 @@ public class ValidationTest {
     /** IChemObject which has the error. */
     private IChemObject object;
     /** String representation of the found error. */
-    private String      error;
+    private String error;
     /** Multiline String with details on the error. */
-    private String      details;
+    private String details;
 
     public ValidationTest(IChemObject object, String error) {
         this(object, error, "");

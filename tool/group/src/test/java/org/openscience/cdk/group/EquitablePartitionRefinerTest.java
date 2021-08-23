@@ -23,7 +23,6 @@
 package org.openscience.cdk.group;
 
 import java.util.Set;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -36,10 +35,10 @@ public class EquitablePartitionRefinerTest extends CDKTestCase {
 
     public MockRefinable makeExampleTable() {
         int[][] table = new int[4][];
-        table[0] = new int[]{1, 2};
-        table[1] = new int[]{0, 3};
-        table[2] = new int[]{0, 3};
-        table[3] = new int[]{1, 2};
+        table[0] = new int[] {1, 2};
+        table[1] = new int[] {0, 3};
+        table[2] = new int[] {0, 3};
+        table[3] = new int[] {1, 2};
         return new MockRefinable(table);
     }
 
@@ -85,7 +84,6 @@ public class EquitablePartitionRefinerTest extends CDKTestCase {
             }
             return new IntegerInvariant(neighbours);
         }
-
     }
 
     @Test
@@ -102,5 +100,4 @@ public class EquitablePartitionRefinerTest extends CDKTestCase {
         Partition expected = Partition.fromString("[0|1,2|3]");
         Assert.assertEquals(expected, finer);
     }
-
 }

@@ -1,7 +1,6 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import javax.vecmath.Point2d;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +17,6 @@ import org.openscience.cdk.smiles.SmilesParser;
  *
  * @cdk.module test-qsarmolecular
  */
-
 public class ChiChainDescriptorTest extends MolecularDescriptorTest {
 
     public ChiChainDescriptorTest() {}
@@ -103,7 +101,6 @@ public class ChiChainDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(0.0000, ret.get(6), 0.0001);
         Assert.assertEquals(0.04536, ret.get(7), 0.00001);
         Assert.assertEquals(0.0000, ret.get(8), 0.0001);
-
     }
 
     @Test
@@ -246,20 +243,18 @@ public class ChiChainDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(0.02778, ret.get(8), 0.00001);
     }
 
-    /**
-     * @cdk.bug 3023326
-     */
+    /** @cdk.bug 3023326 */
     @Test
     public void testCovalentMetal() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer mol = sp.parseSmiles("CCCC[Sn](CCCC)(CCCC)c1cc(Cl)c(Nc2nc(C)nc(N(CCC)CC3CC3)c2Cl)c(Cl)c1");
+        IAtomContainer mol =
+                sp.parseSmiles(
+                        "CCCC[Sn](CCCC)(CCCC)c1cc(Cl)c(Nc2nc(C)nc(N(CCC)CC3CC3)c2Cl)c(Cl)c1");
         DoubleArrayResult ret = (DoubleArrayResult) descriptor.calculate(mol).getValue();
         Assert.assertNotNull(ret);
     }
 
-    /**
-     * @cdk.bug 3023326
-     */
+    /** @cdk.bug 3023326 */
     @Test(expected = NullPointerException.class)
     public void testCovalentPlatinum() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

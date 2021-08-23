@@ -19,28 +19,27 @@
 package org.openscience.cdk.debug;
 
 import java.util.Map;
-
 import org.openscience.cdk.Mapping;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IMapping;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module datadebug
  * @cdk.githash
  */
 public class DebugMapping extends Mapping implements IMapping {
 
-    private static final long   serialVersionUID = -3785399530153469835L;
+    private static final long serialVersionUID = -3785399530153469835L;
 
-    private static ILoggingTool logger           = LoggingToolFactory.createLoggingTool(DebugMapping.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(DebugMapping.class);
 
     public DebugMapping(IChemObject objectOne, IChemObject objectTwo) {
         super(objectOne, objectTwo);

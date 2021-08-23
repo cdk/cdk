@@ -24,23 +24,25 @@
 
 package org.openscience.cdk.hash;
 
+import java.util.Arrays;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
-import java.util.Arrays;
-
 /**
- * A generator for basic molecule hash codes {@cdk.cite Ihlenfeldt93}. The
- * provided {@link AtomHashGenerator} is used to produce individual atom hash
- * codes. These are then combined together in an order independent manner to
- * generate a single hash code for the molecule.
+ * A generator for basic molecule hash codes {@cdk.cite Ihlenfeldt93}. The provided {@link
+ * AtomHashGenerator} is used to produce individual atom hash codes. These are then combined
+ * together in an order independent manner to generate a single hash code for the molecule.
  *
- * <blockquote><pre>
+ * <blockquote>
+ *
+ * <pre>
  * AtomHashGenerator     atomGenerator = ...;
  * MoleculeHashGenerator generator     = new BasicMoleculeHashGenerator(atomGenerator)
  *
  * IAtomContainer benzene  = MoleculeFactory.makeBenzene();
  * long           hashCode = generator.generate(benzene);
- * </pre></blockquote>
+ * </pre>
+ *
+ * </blockquote>
  *
  * @author John May
  * @cdk.module hash
@@ -54,7 +56,7 @@ final class BasicMoleculeHashGenerator implements MoleculeHashGenerator {
     private final AtomHashGenerator generator;
 
     /* pseudorandom number generator */
-    private final Pseudorandom      pseudorandom;
+    private final Pseudorandom pseudorandom;
 
     /**
      * Create a new molecule hash using the provided atom hash generator.
@@ -67,24 +69,22 @@ final class BasicMoleculeHashGenerator implements MoleculeHashGenerator {
     }
 
     /**
-     * Create a new molecule hash using the provided atom hash generator and
-     * pseudorandom number generator.
+     * Create a new molecule hash using the provided atom hash generator and pseudorandom number
+     * generator.
      *
-     * @param generator    a generator for atom hash codes
+     * @param generator a generator for atom hash codes
      * @param pseudorandom pseudorandom number generator
-     * @throws NullPointerException no atom hash generator or pseudorandom
-     *                              number generator provided
+     * @throws NullPointerException no atom hash generator or pseudorandom number generator provided
      */
     BasicMoleculeHashGenerator(AtomHashGenerator generator, Pseudorandom pseudorandom) {
         if (generator == null) throw new NullPointerException("no AtomHashGenerator provided");
-        if (pseudorandom == null) throw new NullPointerException("no Pseudorandom number generator provided");
+        if (pseudorandom == null)
+            throw new NullPointerException("no Pseudorandom number generator provided");
         this.generator = generator;
         this.pseudorandom = pseudorandom;
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public long generate(IAtomContainer container) {
 

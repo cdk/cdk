@@ -22,13 +22,10 @@
  */
 package org.openscience.cdk.io.formats;
 
-/**
- * @cdk.module test-ioformats
- */
+/** @cdk.module test-ioformats */
 public class SpartanFormatTest extends ChemFormatMatcherTest {
 
     public SpartanFormatTest() {
         super.setChemFormatMatcher((IChemFormatMatcher) SpartanFormat.getInstance());
     }
-
 }

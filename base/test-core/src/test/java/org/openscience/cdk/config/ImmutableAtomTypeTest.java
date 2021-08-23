@@ -32,17 +32,16 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  */
 public class ImmutableAtomTypeTest extends CDKTestCase {
 
-	@Test
-	public void testToString() throws NoSuchAtomTypeException {
-		AtomTypeFactory factory = AtomTypeFactory.getInstance(
-			"org/openscience/cdk/dict/data/cdk-atom-types.owl",
-			SilentChemObjectBuilder.getInstance()
-		);
-		IAtomType type = factory.getAtomType("C.sp3");
-		Assert.assertTrue(type instanceof ImmutableAtomType);
-		String output = type.toString();
-		Assert.assertTrue(output.contains("ImmutableAtomType("));
-		Assert.assertTrue(output.contains("MBO:"));
-	}
-
+    @Test
+    public void testToString() throws NoSuchAtomTypeException {
+        AtomTypeFactory factory =
+                AtomTypeFactory.getInstance(
+                        "org/openscience/cdk/dict/data/cdk-atom-types.owl",
+                        SilentChemObjectBuilder.getInstance());
+        IAtomType type = factory.getAtomType("C.sp3");
+        Assert.assertTrue(type instanceof ImmutableAtomType);
+        String output = type.toString();
+        Assert.assertTrue(output.contains("ImmutableAtomType("));
+        Assert.assertTrue(output.contains("MBO:"));
+    }
 }

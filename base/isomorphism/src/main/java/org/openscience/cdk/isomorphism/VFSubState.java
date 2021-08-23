@@ -24,22 +24,20 @@
 
 package org.openscience.cdk.isomorphism;
 
+import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
+
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
-import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
-
 /**
- * Vento-Foggia (VF) state for matching subgraph-monomorphisms. The original
- * algorithm {@cdk.cite Cordella04} is for matching vertex-induced
- * subgraph-isomorphisms. A matching is vertex-induced if adjacency relation of
- * mapped vertices is isomorphic. Under such a procedure propane ({@code CCC})
- * is not considered a substructure of cyclopropane ({@code C1CC1}). The term
- * subgraph-isomorphism is often conflated and it is really
- * subgraph-monomorphism that is required for substructure matching. 
+ * Vento-Foggia (VF) state for matching subgraph-monomorphisms. The original algorithm {@cdk.cite
+ * Cordella04} is for matching vertex-induced subgraph-isomorphisms. A matching is vertex-induced if
+ * adjacency relation of mapped vertices is isomorphic. Under such a procedure propane ({@code CCC})
+ * is not considered a substructure of cyclopropane ({@code C1CC1}). The term subgraph-isomorphism
+ * is often conflated and it is really subgraph-monomorphism that is required for substructure
+ * matching.
  *
- * Note: no heuristics or sorting are performed at all and should be checked
- * externally
+ * <p>Note: no heuristics or sorting are performed at all and should be checked externally
  *
  * @author John May
  * @cdk.module isomorphism
@@ -49,35 +47,39 @@ final class VFSubState extends AbstractVFState {
     /** The query (container1) and target (container2) of the subgraph matching. */
     private final IAtomContainer container1, container2;
 
-    /**
-     * Lookup for the query bonds (bonds1) and target bonds (bonds2) of the
-     * subgraph matching.
-     */
-    private final EdgeToBondMap  bonds1, bonds2;
+    /** Lookup for the query bonds (bonds1) and target bonds (bonds2) of the subgraph matching. */
+    private final EdgeToBondMap bonds1, bonds2;
 
     /** Defines how atoms are matched. */
-    private final AtomMatcher    atomMatcher;
+    private final AtomMatcher atomMatcher;
 
     /** Defines how bonds are matched. */
-    private final BondMatcher    bondMatcher;
+    private final BondMatcher bondMatcher;
 
     /**
-     * Create a VF state for matching subgraph-monomorphism. The query is passed
-     * first and should read as, find container1 in container2.
+     * Create a VF state for matching subgraph-monomorphism. The query is passed first and should
+     * read as, find container1 in container2.
      *
-     * @param container1  the molecule to search for (query)
-     * @param container2  the molecule to search in (target)
-     * @param g1          adjacency list of the query
-     * @param g2          adjacency list of the target
-     * @param bonds1      bond lookup of the query
-     * @param bonds2      bond lookup of the target
-     * @param atomMatcher what semantic attributes (symbol, charge, query)
-     *                    determines atoms to be compatible
-     * @param bondMatcher what semantic attributes (order/aromatic, query)
-     *                    determines bonds to be compatible
+     * @param container1 the molecule to search for (query)
+     * @param container2 the molecule to search in (target)
+     * @param g1 adjacency list of the query
+     * @param g2 adjacency list of the target
+     * @param bonds1 bond lookup of the query
+     * @param bonds2 bond lookup of the target
+     * @param atomMatcher what semantic attributes (symbol, charge, query) determines atoms to be
+     *     compatible
+     * @param bondMatcher what semantic attributes (order/aromatic, query) determines bonds to be
+     *     compatible
      */
-    VFSubState(IAtomContainer container1, IAtomContainer container2, int[][] g1, int[][] g2, EdgeToBondMap bonds1,
-            EdgeToBondMap bonds2, AtomMatcher atomMatcher, BondMatcher bondMatcher) {
+    VFSubState(
+            IAtomContainer container1,
+            IAtomContainer container2,
+            int[][] g1,
+            int[][] g2,
+            EdgeToBondMap bonds1,
+            EdgeToBondMap bonds2,
+            AtomMatcher atomMatcher,
+            BondMatcher bondMatcher) {
         super(g1, g2);
         this.container1 = container1;
         this.container2 = container2;
@@ -88,20 +90,17 @@ final class VFSubState extends AbstractVFState {
     }
 
     /**
-     * Check the feasibility of the candidate pair {n, m}. A candidate pair is
-     * syntactically feasible iff all k-look-ahead rules hold. These look ahead
-     * rules check adjacency relation of the mapping. If an edge is mapped in g1
-     * it should also be mapped in g2 and vise-versa (0-look-ahead). If an edge
-     * in g1 is unmapped but the edge is adjacent to an another mapped vertex
-     * (terminal) then the number of such edges should be less or equal in g1
-     * compared to g2 (1-look-ahead). If the edge is unmapped and non-terminal
-     * then the number of such edges should be less or equal in g1 compared to
-     * g2 (2-look-ahead).  The above feasibility rules are for
-     * subgraph-isomorphism and have been adapted for subgraph-monomorphism. For
-     * a monomorphism a mapped edge in g2 does not have to be present in g1. The
-     * 2-look-ahead also requires summing the terminal and remaining counts (or
-     * sorting the vertices).  The semantic feasibility verifies that the
-     * labels the label n, m are compatabile and that the label on each matched
+     * Check the feasibility of the candidate pair {n, m}. A candidate pair is syntactically
+     * feasible iff all k-look-ahead rules hold. These look ahead rules check adjacency relation of
+     * the mapping. If an edge is mapped in g1 it should also be mapped in g2 and vise-versa
+     * (0-look-ahead). If an edge in g1 is unmapped but the edge is adjacent to an another mapped
+     * vertex (terminal) then the number of such edges should be less or equal in g1 compared to g2
+     * (1-look-ahead). If the edge is unmapped and non-terminal then the number of such edges should
+     * be less or equal in g1 compared to g2 (2-look-ahead). The above feasibility rules are for
+     * subgraph-isomorphism and have been adapted for subgraph-monomorphism. For a monomorphism a
+     * mapped edge in g2 does not have to be present in g1. The 2-look-ahead also requires summing
+     * the terminal and remaining counts (or sorting the vertices). The semantic feasibility
+     * verifies that the labels the label n, m are compatabile and that the label on each matched
      * edge is compatabile.
      *
      * @param n a candidate vertex from g1
@@ -128,14 +127,12 @@ final class VFSubState extends AbstractVFState {
             if (m_prime != UNMAPPED) {
                 IBond bond2 = bonds2.get(m, m_prime);
                 if (bond2 == null) // the bond is not present in the target
-                    return false;
+                return false;
                 // verify bond semantic feasibility
                 if (!bondMatcher.matches(bonds1.get(n, n_prime), bond2)) return false;
             } else {
-                if (t1[n_prime] > 0)
-                    nTerminal1++;
-                else
-                    nRemain1++;
+                if (t1[n_prime] > 0) nTerminal1++;
+                else nRemain1++;
             }
         }
 
@@ -143,10 +140,8 @@ final class VFSubState extends AbstractVFState {
         // only the terminal and remaining edges are counted
         for (int m_prime : g2[m]) {
             if (m2[m_prime] == UNMAPPED) {
-                if (t2[m_prime] > 0)
-                    nTerminal2++;
-                else
-                    nRemain2++;
+                if (t2[m_prime] > 0) nTerminal2++;
+                else nRemain2++;
             }
         }
 

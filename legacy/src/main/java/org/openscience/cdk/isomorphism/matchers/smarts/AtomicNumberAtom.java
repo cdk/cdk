@@ -55,7 +55,7 @@ public class AtomicNumberAtom extends SMARTSAtom {
      */
     @Override
     public boolean matches(IAtom atom) {
-        return Preconditions.checkNotNull(atom.getAtomicNumber(), "Atomic number is not set.").equals(
-                this.getAtomicNumber());
+        return Preconditions.checkNotNull(atom.getAtomicNumber(), "Atomic number is not set.")
+                .equals(this.getAtomicNumber());
     }
 }

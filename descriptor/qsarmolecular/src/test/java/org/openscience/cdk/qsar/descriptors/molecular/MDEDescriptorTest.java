@@ -1,5 +1,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.io.InputStream;
+import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,15 +13,11 @@ import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
-import java.io.InputStream;
-import java.util.List;
-
 /**
  * TestSuite that runs a test for the MDEDescriptor.
  *
  * @cdk.module test-qsarmolecular
  */
-
 public class MDEDescriptorTest extends MolecularDescriptorTest {
 
     public MDEDescriptorTest() {}

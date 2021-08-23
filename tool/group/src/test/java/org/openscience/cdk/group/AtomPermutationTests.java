@@ -1,7 +1,6 @@
 package org.openscience.cdk.group;
 
 import org.junit.Assert;
-
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
@@ -18,8 +17,8 @@ public class AtomPermutationTests extends CDKTestCase {
     public static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
     /**
-     * This test is checking all permutations of an atom container to see
-     * if the refiner gives the canonical labelling map (effectively).
+     * This test is checking all permutations of an atom container to see if the refiner gives the
+     * canonical labelling map (effectively).
      */
     public void checkForCanonicalForm(IAtomContainer atomContainer) {
         AtomContainerAtomPermutor permutor = new AtomContainerAtomPermutor(atomContainer);
@@ -84,5 +83,4 @@ public class AtomPermutationTests extends CDKTestCase {
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         checkForCanonicalForm(ac);
     }
-
 }

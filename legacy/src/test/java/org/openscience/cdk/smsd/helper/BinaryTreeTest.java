@@ -32,7 +32,6 @@ import org.junit.Test;
 
 /**
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- *
  * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
@@ -52,9 +51,7 @@ public class BinaryTreeTest {
     @After
     public void tearDown() {}
 
-    /**
-     * Test of getValue method, of class BinaryTree.
-     */
+    /** Test of getValue method, of class BinaryTree. */
     @Test
     public void testGetValue() {
         BinaryTree instance = new BinaryTree(15);
@@ -63,9 +60,7 @@ public class BinaryTreeTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of getEqual method, of class BinaryTree.
-     */
+    /** Test of getEqual method, of class BinaryTree. */
     @Test
     public void testGetEqual() {
         BinaryTree instance = new BinaryTree(15);
@@ -77,9 +72,7 @@ public class BinaryTreeTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of setEqual method, of class BinaryTree.
-     */
+    /** Test of setEqual method, of class BinaryTree. */
     @Test
     public void testSetEqual() {
         BinaryTree instance = new BinaryTree(15);
@@ -91,9 +84,7 @@ public class BinaryTreeTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of getNotEqual method, of class BinaryTree.
-     */
+    /** Test of getNotEqual method, of class BinaryTree. */
     @Test
     public void testGetNotEqual() {
         BinaryTree instance = new BinaryTree(15);
@@ -106,9 +97,7 @@ public class BinaryTreeTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of setNotEqual method, of class BinaryTree.
-     */
+    /** Test of setNotEqual method, of class BinaryTree. */
     @Test
     public void testSetNotEqual() {
         BinaryTree instance = new BinaryTree(15);

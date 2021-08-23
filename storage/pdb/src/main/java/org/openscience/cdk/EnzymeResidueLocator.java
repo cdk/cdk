@@ -28,7 +28,7 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 /**
  * Atom that represents part of an residue in an enzyme, like Arg255.
  *
- * @see  PseudoAtom
+ * @see PseudoAtom
  * @cdk.module pdb
  * @cdk.githash
  */
@@ -37,9 +37,9 @@ public class EnzymeResidueLocator extends PseudoAtom {
     /**
      * Determines if a de-serialized object is compatible with this class.
      *
-     * This value must only be changed if and only if the new version
-     * of this class is incompatible with the old version. See Sun docs
-     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
+     * <p>This value must only be changed if and only if the new version of this class is
+     * incompatible with the old version. See Sun docs for <a
+     * href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
      */
     private static final long serialVersionUID = -4267555433142927412L;
@@ -47,7 +47,7 @@ public class EnzymeResidueLocator extends PseudoAtom {
     /**
      * Constructs an EnzymeResidueLocator from a String containing the locator.
      *
-     * @param   label  The String describing the residue and its location.
+     * @param label The String describing the residue and its location.
      */
     public EnzymeResidueLocator(String label) {
         super(label);
@@ -56,7 +56,7 @@ public class EnzymeResidueLocator extends PseudoAtom {
     /**
      * Constructs an EnzymeResidueLocator from an existing Atom.
      *
-     * @param   atom Atom that should be converted into a EnzymeResidueLocator.
+     * @param atom Atom that should be converted into a EnzymeResidueLocator.
      */
     public EnzymeResidueLocator(IAtom atom) {
         super(atom);

@@ -21,13 +21,13 @@ package org.openscience.cdk.tools.diff.tree;
 /**
  * {@link IDifference} between two {@link Integer}.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module diff
  * @cdk.githash
  */
 public class IntegerDifference implements IDifference {
 
-    private String  name;
+    private String name;
     private Integer first;
     private Integer second;
 
@@ -40,10 +40,10 @@ public class IntegerDifference implements IDifference {
     /**
      * Constructs a new {@link IDifference} object.
      *
-     * @param name   a name reflecting the nature of the created {@link IDifference}
-     * @param first  the first object to compare
+     * @param name a name reflecting the nature of the created {@link IDifference}
+     * @param first the first object to compare
      * @param second the second object to compare
-     * @return       an {@link IDifference} reflecting the differences between the first and second object
+     * @return an {@link IDifference} reflecting the differences between the first and second object
      */
     public static IDifference construct(String name, Integer first, Integer second) {
         if (first == null && second == null) {

@@ -28,24 +28,25 @@ import org.openscience.cdk.tools.diff.tree.IntegerDifference;
 /**
  * Compares two {@link IChemObject} classes.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module diff
  * @cdk.githash
  */
 public class ElectronContainerDiff {
 
     /**
-     * Overwrite the default public constructor because this class is not
-     * supposed to be instantiated.
+     * Overwrite the default public constructor because this class is not supposed to be
+     * instantiated.
      */
     private ElectronContainerDiff() {}
 
     /**
      * Compare two {@link IChemObject} classes and return the difference as a {@link String}.
      *
-     * @param first  the first of the two classes to compare
+     * @param first the first of the two classes to compare
      * @param second the second of the two classes to compare
-     * @return a {@link String} representation of the difference between the first and second {@link IChemObject}.
+     * @return a {@link String} representation of the difference between the first and second {@link
+     *     IChemObject}.
      */
     public static String diff(IChemObject first, IChemObject second) {
         IDifference diff = difference(first, second);
@@ -59,9 +60,10 @@ public class ElectronContainerDiff {
     /**
      * Compare two {@link IChemObject} classes and return the difference as an {@link IDifference}.
      *
-     * @param first  the first of the two classes to compare
+     * @param first the first of the two classes to compare
      * @param second the second of the two classes to compare
-     * @return an {@link IDifference} representation of the difference between the first and second {@link IChemObject}.
+     * @return an {@link IDifference} representation of the difference between the first and second
+     *     {@link IChemObject}.
      */
     public static IDifference difference(IChemObject first, IChemObject second) {
         if (!(first instanceof IElectronContainer && second instanceof IElectronContainer)) {
@@ -70,8 +72,9 @@ public class ElectronContainerDiff {
         IElectronContainer firstEC = (IElectronContainer) first;
         IElectronContainer secondEC = (IElectronContainer) second;
         IDifferenceList totalDiff = new ChemObjectDifference("ElectronContainerDiff");
-        totalDiff.addChild(IntegerDifference.construct("eCount", firstEC.getElectronCount(),
-                secondEC.getElectronCount()));
+        totalDiff.addChild(
+                IntegerDifference.construct(
+                        "eCount", firstEC.getElectronCount(), secondEC.getElectronCount()));
         totalDiff.addChild(ChemObjectDiff.difference(first, second));
         if (totalDiff.childCount() > 0) {
             return totalDiff;
@@ -79,5 +82,4 @@ public class ElectronContainerDiff {
             return null;
         }
     }
-
 }

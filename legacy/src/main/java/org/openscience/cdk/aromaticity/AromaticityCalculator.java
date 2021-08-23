@@ -32,10 +32,8 @@ import org.openscience.cdk.interfaces.IRing;
 /**
  * @cdk.module standard
  * @cdk.githash
- *
  * @author Oliver Horlacher &lt;oliver.horlacher@therastrat.com&gt;
- * @cdk.created    2002-03-14
- *
+ * @cdk.created 2002-03-14
  * @cdk.keyword aromaticity detector
  * @deprecated use {@link Aromaticity}
  */
@@ -43,17 +41,17 @@ import org.openscience.cdk.interfaces.IRing;
 public class AromaticityCalculator {
 
     /**
-     *  Tests the <code>ring</code> in the <code>molecule</code> for aromaticity. Uses the
-     *  H&uuml;ckel rule (4n + 2) pie electrons. sp<sup>2</sup> hybridized C contibute 1 electron non
-     *  sp<sup>2</sup> hybridized heteroatoms contribute 2 electrons (N and O should never be sp in
-     *  or anything else in a ring and d electron elements get to complicated)
-     *  sp<sup>2</sup> hybridized heteroatoms contribute 1 electron hybridization is worked out by
-     *  counting the number of bonds with order 2. Therefore sp<sup>2</sup> hybridization is assumed
-     *  if there is one bond of order 2. Otherwise sp<sup>3</sup> hybridization is assumed.
+     * Tests the <code>ring</code> in the <code>molecule</code> for aromaticity. Uses the
+     * H&uuml;ckel rule (4n + 2) pie electrons. sp<sup>2</sup> hybridized C contibute 1 electron non
+     * sp<sup>2</sup> hybridized heteroatoms contribute 2 electrons (N and O should never be sp in
+     * or anything else in a ring and d electron elements get to complicated) sp<sup>2</sup>
+     * hybridized heteroatoms contribute 1 electron hybridization is worked out by counting the
+     * number of bonds with order 2. Therefore sp<sup>2</sup> hybridization is assumed if there is
+     * one bond of order 2. Otherwise sp<sup>3</sup> hybridization is assumed.
      *
-     * @param  ring      the ring to test
-     * @param  atomContainer  the AtomContainer the ring is in
-     * @return           true if the ring is aromatic false otherwise.
+     * @param ring the ring to test
+     * @param atomContainer the AtomContainer the ring is in
+     * @return true if the ring is aromatic false otherwise.
      */
     public static boolean isAromatic(IRing ring, IAtomContainer atomContainer) {
 
@@ -74,7 +72,8 @@ public class AromaticityCalculator {
                 }
 
                 // Count the Electron if bond order = 1.5
-                else if (conectedBond.getFlag(CDKConstants.ISAROMATIC) && ring.contains(conectedBond)) {
+                else if (conectedBond.getFlag(CDKConstants.ISAROMATIC)
+                        && ring.contains(conectedBond)) {
                     numDoubleBond = 1;
                 }
 
@@ -83,14 +82,16 @@ public class AromaticityCalculator {
                 }
             }
             if (numDoubleBond == 1) {
-                //C or heteroatoms both contibute 1 electron in sp2 hybridized form
+                // C or heteroatoms both contibute 1 electron in sp2 hybridized form
                 eCount++;
             } else if (!atom.getSymbol().equals("C")) {
-                //Heteroatom probably in sp3 hybrid therefore 2 electrons contributed.
+                // Heteroatom probably in sp3 hybrid therefore 2 electrons contributed.
                 eCount = eCount + 2;
             } else if (atom.getFlag(CDKConstants.ISAROMATIC)) {
                 eCount++;
-            } else if (allConnectedBondsSingle && atom.getSymbol().equals("C") && atom.getFormalCharge() == 1.0) {
+            } else if (allConnectedBondsSingle
+                    && atom.getSymbol().equals("C")
+                    && atom.getFormalCharge() == 1.0) {
                 // This is for tropylium and kinds.
                 // Dependence on hybridisation would be better:
                 // empty p-orbital is needed

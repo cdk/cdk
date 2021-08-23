@@ -26,10 +26,8 @@ package org.openscience.cdk.layout;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.util.Vector;
-
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
-
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -40,31 +38,32 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * Helper class for Structure Diagram Generation. Resolves atom or bond
- * overlaps after the actual SDG was done
+ * Helper class for Structure Diagram Generation. Resolves atom or bond overlaps after the actual
+ * SDG was done
  *
- * @author      steinbeck
+ * @author steinbeck
  * @cdk.created 2003-09-4
  * @cdk.keyword layout
  * @cdk.keyword 2D-coordinates
- * @cdk.module  sdg
+ * @cdk.module sdg
  * @cdk.githash
  * @deprecated does not resolve overlaps correctly
  */
 @Deprecated
 public class OverlapResolver {
 
-    private static ILoggingTool logger   = LoggingToolFactory.createLoggingTool(OverlapResolver.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(OverlapResolver.class);
 
-    int                         maxSteps = 10000;
+    int maxSteps = 10000;
 
     public OverlapResolver() {}
 
     /**
      * Main method to be called to resolve overlap situations.
      *
-     * @param  ac    The atomcontainer in which the atom or bond overlap exists
-     * @param  sssr  A ring set for this atom container if one exists, otherwhise null
+     * @param ac The atomcontainer in which the atom or bond overlap exists
+     * @param sssr A ring set for this atom container if one exists, otherwhise null
      */
     public double resolveOverlap(IAtomContainer ac, IRingSet sssr) {
 
@@ -81,12 +80,11 @@ public class OverlapResolver {
     }
 
     /**
-     *  Makes a small displacement to some atoms or rings in the given
-     *  atomcontainer.
+     * Makes a small displacement to some atoms or rings in the given atomcontainer.
      *
-     *@param  ac                The AtomContainer to work on
-     *@param  overlappingAtoms  Description of the Parameter
-     *@param  overlappingBonds  Description of the Parameter
+     * @param ac The AtomContainer to work on
+     * @param overlappingAtoms Description of the Parameter
+     * @param overlappingBonds Description of the Parameter
      */
     public double displace(IAtomContainer ac, Vector overlappingAtoms, Vector overlappingBonds) {
         double bondLength = GeometryUtil.getBondLengthAverage(ac);
@@ -99,7 +97,7 @@ public class OverlapResolver {
         double overlapScore = 0;
         double choice = 0;
         logger.debug("We are here because of an overlap situation.");
-        //logger.debug("Overlap score: " + overlapScore);
+        // logger.debug("Overlap score: " + overlapScore);
 
         do {
             /*
@@ -150,30 +148,31 @@ public class OverlapResolver {
     }
 
     /**
-     *  Calculates a score based on the overlap of atoms and intersection of bonds.
-     *  The overlap is calculated by summing up the distances between all pairs of
-     *  atoms, if they are less than half the standard bondlength apart.
+     * Calculates a score based on the overlap of atoms and intersection of bonds. The overlap is
+     * calculated by summing up the distances between all pairs of atoms, if they are less than half
+     * the standard bondlength apart.
      *
-     *@param  ac                The Atomcontainer to work on
-     *@param  overlappingAtoms  Description of the Parameter
-     *@param  overlappingBonds  Description of the Parameter
-     *@return                   The overlapScore value
+     * @param ac The Atomcontainer to work on
+     * @param overlappingAtoms Description of the Parameter
+     * @param overlappingBonds Description of the Parameter
+     * @return The overlapScore value
      */
-    public double getOverlapScore(IAtomContainer ac, Vector overlappingAtoms, Vector overlappingBonds) {
+    public double getOverlapScore(
+            IAtomContainer ac, Vector overlappingAtoms, Vector overlappingBonds) {
         double overlapScore = 0;
         overlapScore = getAtomOverlapScore(ac, overlappingAtoms);
-        //overlapScore += getBondOverlapScore(ac, overlappingBonds);
+        // overlapScore += getBondOverlapScore(ac, overlappingBonds);
         return overlapScore;
     }
 
     /**
-     *  Calculates a score based on the overlap of atoms.
-     *  The overlap is calculated by summing up the distances between all pairs of
-     *  atoms, if they are less than half the standard bondlength apart.
+     * Calculates a score based on the overlap of atoms. The overlap is calculated by summing up the
+     * distances between all pairs of atoms, if they are less than half the standard bondlength
+     * apart.
      *
-     *@param  ac                The Atomcontainer to work on
-     *@param  overlappingAtoms  Description of the Parameter
-     *@return                   The overlapScore value
+     * @param ac The Atomcontainer to work on
+     * @param overlappingAtoms Description of the Parameter
+     * @return The overlapScore value
      */
     public double getAtomOverlapScore(IAtomContainer ac, Vector overlappingAtoms) {
         overlappingAtoms.removeAllElements();
@@ -195,8 +194,11 @@ public class OverlapResolver {
                 p2 = atom2.getPoint2d();
                 distance = p1.distance(p2);
                 if (distance < overlapCutoff) {
-                    logger.debug("Detected atom clash with distance: " + distance
-                            + ", which is smaller than overlapCutoff " + overlapCutoff);
+                    logger.debug(
+                            "Detected atom clash with distance: "
+                                    + distance
+                                    + ", which is smaller than overlapCutoff "
+                                    + overlapCutoff);
                     overlapScore += overlapCutoff;
                     overlappingAtoms.addElement(new OverlapPair(atom1, atom2));
                 }
@@ -206,18 +208,19 @@ public class OverlapResolver {
     }
 
     /**
-     *  Calculates a score based on the intersection of bonds.
+     * Calculates a score based on the intersection of bonds.
      *
-     *@param  ac                The Atomcontainer to work on
-     *@param  overlappingBonds  Description of the Parameter
-     *@return                   The overlapScore value
+     * @param ac The Atomcontainer to work on
+     * @param overlappingBonds Description of the Parameter
+     * @return The overlapScore value
      */
     public double getBondOverlapScore(IAtomContainer ac, Vector overlappingBonds) {
         overlappingBonds.removeAllElements();
         double overlapScore = 0;
         IBond bond1 = null;
         IBond bond2 = null;
-        double bondLength = GeometryUtil.getBondLengthAverage(ac);;
+        double bondLength = GeometryUtil.getBondLengthAverage(ac);
+        ;
         double overlapCutoff = bondLength / 2;
         for (int f = 0; f < ac.getBondCount(); f++) {
             bond1 = ac.getBond(f);
@@ -236,16 +239,16 @@ public class OverlapResolver {
     }
 
     /**
-     *  Checks if two bonds cross each other.
+     * Checks if two bonds cross each other.
      *
-     *@param  bond1  Description of the Parameter
-     *@param  bond2  Description of the Parameter
-     *@return        Description of the Return Value
+     * @param bond1 Description of the Parameter
+     * @param bond2 Description of the Parameter
+     * @return Description of the Return Value
      */
     public boolean areIntersected(IBond bond1, IBond bond2) {
         double x1 = 0, x2 = 0, x3 = 0, x4 = 0;
         double y1 = 0, y2 = 0, y3 = 0, y4 = 0;
-        //Point2D.Double p1 = null, p2 = null, p3 = null, p4 = null;
+        // Point2D.Double p1 = null, p2 = null, p3 = null, p4 = null;
 
         x1 = bond1.getBegin().getPoint2d().x;
         x2 = bond1.getEnd().getPoint2d().x;
@@ -257,8 +260,10 @@ public class OverlapResolver {
         y3 = bond2.getBegin().getPoint2d().y;
         y4 = bond2.getEnd().getPoint2d().y;
 
-        Line2D.Double line1 = new Line2D.Double(new Point2D.Double(x1, y1), new Point2D.Double(x2, y2));
-        Line2D.Double line2 = new Line2D.Double(new Point2D.Double(x3, y3), new Point2D.Double(x4, y4));
+        Line2D.Double line1 =
+                new Line2D.Double(new Point2D.Double(x1, y1), new Point2D.Double(x2, y2));
+        Line2D.Double line2 =
+                new Line2D.Double(new Point2D.Double(x3, y3), new Point2D.Double(x4, y4));
 
         if (line1.intersectsLine(line2)) {
             logger.debug("Two intersecting bonds detected.");
@@ -268,10 +273,10 @@ public class OverlapResolver {
     }
 
     /**
-     *  A little helper class to store pairs of overlapping atoms.
+     * A little helper class to store pairs of overlapping atoms.
      *
-     *@author     steinbeck
-     *@cdk.created    October 1, 2003
+     * @author steinbeck
+     * @cdk.created October 1, 2003
      */
     public class OverlapPair {
 
@@ -281,8 +286,8 @@ public class OverlapResolver {
         /**
          * Constructor for the OverlapPair object.
          *
-         * @param  co1  Description of the Parameter
-         * @param  co2  Description of the Parameter
+         * @param co1 Description of the Parameter
+         * @param co2 Description of the Parameter
          */
         public OverlapPair(IChemObject co1, IChemObject co2) {
             chemObject1 = co1;

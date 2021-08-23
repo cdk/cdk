@@ -22,29 +22,25 @@
  */
 package org.openscience.cdk.graph.rebond;
 
+import java.util.Iterator;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
-import java.util.Iterator;
-
 /**
- * Provides tools to rebond a molecule from 3D coordinates only.
- * The algorithm uses an efficient algorithm using a
- * Binary Space Partitioning Tree (Bspt). It requires that the
- * atom types are configured such that the covalent bond radii
- * for all atoms are set. The AtomTypeFactory can be used for this.
+ * Provides tools to rebond a molecule from 3D coordinates only. The algorithm uses an efficient
+ * algorithm using a Binary Space Partitioning Tree (Bspt). It requires that the atom types are
+ * configured such that the covalent bond radii for all atoms are set. The AtomTypeFactory can be
+ * used for this.
  *
  * @cdk.keyword rebonding
  * @cdk.keyword bond, recalculation
  * @cdk.dictref blue-obelisk:rebondFrom3DCoordinates
- *
- * @author      Miguel Howard
+ * @author Miguel Howard
  * @cdk.created 2003-05-23
- * @cdk.module  standard
+ * @cdk.module standard
  * @cdk.githash
- *
  * @see org.openscience.cdk.graph.rebond.Bspt
  */
 public class RebondTool {
@@ -53,7 +49,7 @@ public class RebondTool {
     private double minBondDistance;
     private double bondTolerance;
 
-    private Bspt   bspt;
+    private Bspt bspt;
 
     public RebondTool(double maxCovalentRadius, double minBondDistance, double bondTolerance) {
         this.maxCovalentRadius = maxCovalentRadius;
@@ -63,9 +59,8 @@ public class RebondTool {
     }
 
     /**
-     * Rebonding using a Binary Space Partition Tree. Note, that any bonds
-     * defined will be deleted first. It assumes the unit of 3D space to
-     * be 1 Å.
+     * Rebonding using a Binary Space Partition Tree. Note, that any bonds defined will be deleted
+     * first. It assumes the unit of 3D space to be 1 Å.
      */
     public void rebond(IAtomContainer container) throws CDKException {
         container.removeAllBonds();
@@ -90,19 +85,22 @@ public class RebondTool {
         }
     }
 
-    /**
-     * Rebonds one atom by looking up nearby atom using the binary space partition tree.
-     */
+    /** Rebonds one atom by looking up nearby atom using the binary space partition tree. */
     private void bondAtom(IAtomContainer container, IAtom atom) {
         double myCovalentRadius = atom.getCovalentRadius();
         double searchRadius = myCovalentRadius + maxCovalentRadius + bondTolerance;
         Point tupleAtom = new Point(atom.getPoint3d().x, atom.getPoint3d().y, atom.getPoint3d().z);
-        for (Bspt.EnumerateSphere e = bspt.enumHemiSphere(tupleAtom, searchRadius); e.hasMoreElements();) {
+        for (Bspt.EnumerateSphere e = bspt.enumHemiSphere(tupleAtom, searchRadius);
+                e.hasMoreElements(); ) {
             IAtom atomNear = ((TupleAtom) e.nextElement()).getAtom();
             if (!atomNear.equals(atom) && container.getBond(atom, atomNear) == null) {
-                boolean bonded = isBonded(myCovalentRadius, atomNear.getCovalentRadius(), e.foundDistance2());
+                boolean bonded =
+                        isBonded(
+                                myCovalentRadius, atomNear.getCovalentRadius(), e.foundDistance2());
                 if (bonded) {
-                    IBond bond = atom.getBuilder().newInstance(IBond.class, atom, atomNear, IBond.Order.SINGLE);
+                    IBond bond =
+                            atom.getBuilder()
+                                    .newInstance(IBond.class, atom, atomNear, IBond.Order.SINGLE);
                     container.addBond(bond);
                 }
             }
@@ -110,10 +108,9 @@ public class RebondTool {
     }
 
     /**
-     * Returns the bond order for the bond. At this moment, it only returns
-     * 0 or 1, but not 2 or 3, or aromatic bond order.
+     * Returns the bond order for the bond. At this moment, it only returns 0 or 1, but not 2 or 3,
+     * or aromatic bond order.
      */
-
     private boolean isBonded(double covalentRadiusA, double covalentRadiusB, double distance2) {
         double maxAcceptable = covalentRadiusA + covalentRadiusB + bondTolerance;
         double maxAcceptable2 = maxAcceptable * maxAcceptable;
@@ -143,8 +140,13 @@ public class RebondTool {
 
         @Override
         public String toString() {
-            return ("<" + atom.getPoint3d().x + "," + atom.getPoint3d().y + "," + atom.getPoint3d().z + ">");
+            return ("<"
+                    + atom.getPoint3d().x
+                    + ","
+                    + atom.getPoint3d().y
+                    + ","
+                    + atom.getPoint3d().z
+                    + ">");
         }
     }
-
 }

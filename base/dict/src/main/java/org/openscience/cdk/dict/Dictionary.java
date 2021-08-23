@@ -28,7 +28,6 @@ import java.io.Reader;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
-
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.xml.sax.InputSource;
@@ -39,19 +38,18 @@ import org.xml.sax.helpers.XMLReaderFactory;
 /**
  * Dictionary with entries.
  *
- * <p>FIXME: this should be replaced by an uptodate Dictionary Schema
- * DOM type thing.
+ * <p>FIXME: this should be replaced by an uptodate Dictionary Schema DOM type thing.
  *
- * @author     Egon Willighagen
+ * @author Egon Willighagen
  * @cdk.githash
- * @cdk.created    2003-08-23
- * @cdk.keyword    dictionary
- * @cdk.module     dict
+ * @cdk.created 2003-08-23
+ * @cdk.keyword dictionary
+ * @cdk.module dict
  */
 public class Dictionary {
 
     private Map<String, Entry> entries;
-    private String             ownNS = null;
+    private String ownNS = null;
 
     public Dictionary() {
         entries = new Hashtable<String, Entry>();

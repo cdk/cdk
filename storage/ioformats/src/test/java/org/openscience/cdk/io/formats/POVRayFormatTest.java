@@ -22,13 +22,10 @@
  */
 package org.openscience.cdk.io.formats;
 
-/**
- * @cdk.module test-ioformats
- */
+/** @cdk.module test-ioformats */
 public class POVRayFormatTest extends ResourceFormatTest {
 
     public POVRayFormatTest() {
         super.setResourceFormat((IResourceFormat) POVRayFormat.getInstance());
     }
-
 }

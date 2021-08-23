@@ -23,17 +23,13 @@ package org.openscience.cdk.renderer.generators;
 
 import java.awt.Rectangle;
 import java.util.List;
-
 import org.junit.Assert;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 
-/**
- * @cdk.module test-renderextra
- */
+/** @cdk.module test-renderextra */
 public class BoundsGeneratorTest extends AbstractGeneratorTest {
 
     private BoundsGenerator generator;
@@ -64,5 +60,4 @@ public class BoundsGeneratorTest extends AbstractGeneratorTest {
         List<IRenderingElement> elements = elementUtil.getAllSimpleElements(root);
         Assert.assertEquals(2, elements.size());
     }
-
 }

@@ -4,10 +4,9 @@ package org.openscience.cdk.smiles.smarts.parser;
 
 /**
  * An AST node. It represents the periodic group number of an element.
- * 
- * This is not specified in the original Daylight specification, but
- * is support by MOE. The IUPAC numbering is used, so that carbon is
- * in group 14. Valid values are 1 to 18.
+ *
+ * <p>This is not specified in the original Daylight specification, but is support by MOE. The IUPAC
+ * numbering is used, so that carbon is in group 14. Valid values are 1 to 18.
  *
  * @author Rajarshi Guha
  * @cdk.created 2008-10-13
@@ -18,9 +17,7 @@ package org.openscience.cdk.smiles.smarts.parser;
 @Deprecated
 class ASTPeriodicGroupNumber extends SimpleNode {
 
-    /**
-     * The periodic table group number.
-     */
+    /** The periodic table group number. */
     private int groupNumber;
 
     /**
@@ -49,9 +46,7 @@ class ASTPeriodicGroupNumber extends SimpleNode {
         super(p, id);
     }
 
-    /**
-     * Accept the visitor. *
-     */
+    /** Accept the visitor. * */
     @Override
     public Object jjtAccept(SMARTSParserVisitor visitor, Object data) {
         return visitor.visit(this, data);

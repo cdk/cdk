@@ -35,13 +35,14 @@ public class AtomContainerSetTest extends AbstractAtomContainerSetTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new AtomContainerSet();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new AtomContainerSet();
+                    }
+                });
     }
 
     @Test

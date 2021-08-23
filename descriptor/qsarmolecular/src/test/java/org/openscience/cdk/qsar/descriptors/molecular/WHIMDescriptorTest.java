@@ -26,7 +26,6 @@ import org.junit.Before;
  *
  * @cdk.module test-qsarmolecular
  */
-
 public class WHIMDescriptorTest extends MolecularDescriptorTest {
 
     public WHIMDescriptorTest() {}

@@ -24,24 +24,24 @@
 
 package org.openscience.cdk.hash.stereo;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 /**
  * See {@link org.openscience.cdk.hash.HashCodeScenariosTest} for examples.
+ *
  * @author John May
  * @cdk.module test-hash
  * @see org.openscience.cdk.hash.HashCodeScenariosTest
@@ -70,11 +70,13 @@ public class TetrahedralElementEncoderFactoryTest {
 
         ITetrahedralChirality tc = mock(ITetrahedralChirality.class);
         when(tc.getChiralAtom()).thenReturn(c1);
-        when(tc.getLigands()).thenReturn(new IAtom[]{o2, n3, c4, h5});
+        when(tc.getLigands()).thenReturn(new IAtom[] {o2, n3, c4, h5});
         when(tc.getStereo()).thenReturn(ITetrahedralChirality.Stereo.CLOCKWISE);
-        when(container.stereoElements()).thenReturn(Collections.<IStereoElement> singleton(tc));
+        when(container.stereoElements()).thenReturn(Collections.<IStereoElement>singleton(tc));
 
-        StereoEncoder encoder = new TetrahedralElementEncoderFactory().create(container, new int[0][0]); // graph not used
+        StereoEncoder encoder =
+                new TetrahedralElementEncoderFactory()
+                        .create(container, new int[0][0]); // graph not used
 
         assertThat(getGeometricParity(encoder).parity(), is(-1)); // clockwise
     }
@@ -98,14 +100,21 @@ public class TetrahedralElementEncoderFactoryTest {
 
         ITetrahedralChirality tc = mock(ITetrahedralChirality.class);
         when(tc.getChiralAtom()).thenReturn(c1);
-        when(tc.getLigands()).thenReturn(new IAtom[]{o2, n3, c4, c1 // <-- represents implicit H
-                });
+        when(tc.getLigands())
+                .thenReturn(
+                        new IAtom[] {
+                            o2, n3, c4, c1 // <-- represents implicit H
+                        });
         when(tc.getStereo()).thenReturn(ITetrahedralChirality.Stereo.CLOCKWISE);
-        when(container.stereoElements()).thenReturn(Collections.<IStereoElement> singleton(tc));
+        when(container.stereoElements()).thenReturn(Collections.<IStereoElement>singleton(tc));
 
-        StereoEncoder encoder = new TetrahedralElementEncoderFactory().create(container, new int[0][0]); // graph not used
+        StereoEncoder encoder =
+                new TetrahedralElementEncoderFactory()
+                        .create(container, new int[0][0]); // graph not used
 
-        assertThat(getGeometricParity(encoder).parity(), is(-1)); // clockwise (we didn't have to move the implied H)
+        assertThat(
+                getGeometricParity(encoder).parity(),
+                is(-1)); // clockwise (we didn't have to move the implied H)
     }
 
     @Test
@@ -127,12 +136,18 @@ public class TetrahedralElementEncoderFactoryTest {
 
         ITetrahedralChirality tc = mock(ITetrahedralChirality.class);
         when(tc.getChiralAtom()).thenReturn(c1);
-        when(tc.getLigands()).thenReturn(new IAtom[]{c1, // <-- represents implicit H
-                o2, n3, c4,});
+        when(tc.getLigands())
+                .thenReturn(
+                        new IAtom[] {
+                            c1, // <-- represents implicit H
+                            o2, n3, c4,
+                        });
         when(tc.getStereo()).thenReturn(ITetrahedralChirality.Stereo.CLOCKWISE);
-        when(container.stereoElements()).thenReturn(Collections.<IStereoElement> singleton(tc));
+        when(container.stereoElements()).thenReturn(Collections.<IStereoElement>singleton(tc));
 
-        StereoEncoder encoder = new TetrahedralElementEncoderFactory().create(container, new int[0][0]); // graph not used
+        StereoEncoder encoder =
+                new TetrahedralElementEncoderFactory()
+                        .create(container, new int[0][0]); // graph not used
 
         // anti-clockwise (inverted as we had to move the implicit H to the back
         // with an odd number of inversions)
@@ -158,12 +173,18 @@ public class TetrahedralElementEncoderFactoryTest {
 
         ITetrahedralChirality tc = mock(ITetrahedralChirality.class);
         when(tc.getChiralAtom()).thenReturn(c1);
-        when(tc.getLigands()).thenReturn(new IAtom[]{o2, c1, // <-- represents implicit H
-                n3, c4,});
+        when(tc.getLigands())
+                .thenReturn(
+                        new IAtom[] {
+                            o2, c1, // <-- represents implicit H
+                            n3, c4,
+                        });
         when(tc.getStereo()).thenReturn(ITetrahedralChirality.Stereo.CLOCKWISE);
-        when(container.stereoElements()).thenReturn(Collections.<IStereoElement> singleton(tc));
+        when(container.stereoElements()).thenReturn(Collections.<IStereoElement>singleton(tc));
 
-        StereoEncoder encoder = new TetrahedralElementEncoderFactory().create(container, new int[0][0]); // graph not used
+        StereoEncoder encoder =
+                new TetrahedralElementEncoderFactory()
+                        .create(container, new int[0][0]); // graph not used
 
         // clockwise - we had to move the implied H but we moved it an even
         // number of times

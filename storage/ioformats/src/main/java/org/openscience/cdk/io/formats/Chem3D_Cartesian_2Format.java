@@ -21,9 +21,7 @@ package org.openscience.cdk.io.formats;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
- *
  * @author Miguel Rojas
- *
  * @cdk.module ioformats
  * @cdk.githash
  */
@@ -55,7 +53,7 @@ public class Chem3D_Cartesian_2Format extends AbstractResourceFormat implements 
 
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"c3d2"};
+        return new String[] {"c3d2"};
     }
 
     @Override

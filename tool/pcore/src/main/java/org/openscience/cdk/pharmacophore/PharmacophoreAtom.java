@@ -18,22 +18,21 @@
  */
 package org.openscience.cdk.pharmacophore;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.AtomRef;
-
-import javax.vecmath.Point3d;
 import java.util.Arrays;
+import javax.vecmath.Point3d;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomRef;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * A representation of a pharmacophore group.
- * 
- * In general this class is used internally for pharmacophore matchin and does not be instantiated
- * by the user. However after a successful match the user will get access to objects of this class
- * which match parts of a query.
- * 
- * The main features of a pharmacophore group are the SMARTS pattern defining what the group
- * is meant to identify and the atoms of a molecule that correspond to the SMARTS pattern.
+ *
+ * <p>In general this class is used internally for pharmacophore matchin and does not be
+ * instantiated by the user. However after a successful match the user will get access to objects of
+ * this class which match parts of a query.
+ *
+ * <p>The main features of a pharmacophore group are the SMARTS pattern defining what the group is
+ * meant to identify and the atoms of a molecule that correspond to the SMARTS pattern.
  *
  * @author Rajarshi Guha
  * @cdk.module pcore
@@ -46,18 +45,19 @@ import java.util.Arrays;
 public class PharmacophoreAtom extends Atom {
 
     private String smarts;
-    private int[]  matchingAtoms;
+    private int[] matchingAtoms;
     private String symbol;
 
     /**
      * Create a pharmacophore group.
      *
-     * @param smarts      The SMARTS pattern for the group
-     * @param symbol      The label for this group.
-     * @param coordinates The coordinates for the group. Note that since a pharmacophore group may match
-     *                    multiple atoms (say a c1ccccc1 group), the coordinates for the group are the effective coordinates
-     *                    of all the atoms for the group. In effect this means that for multi-atom groups, the coordinate
-     *                    is simply the mean of the coordinates of the individual atoms for the group.
+     * @param smarts The SMARTS pattern for the group
+     * @param symbol The label for this group.
+     * @param coordinates The coordinates for the group. Note that since a pharmacophore group may
+     *     match multiple atoms (say a c1ccccc1 group), the coordinates for the group are the
+     *     effective coordinates of all the atoms for the group. In effect this means that for
+     *     multi-atom groups, the coordinate is simply the mean of the coordinates of the individual
+     *     atoms for the group.
      */
     public PharmacophoreAtom(String smarts, String symbol, Point3d coordinates) {
         this.smarts = smarts;
@@ -82,10 +82,8 @@ public class PharmacophoreAtom extends Atom {
     }
 
     public static PharmacophoreAtom get(IAtom atom) {
-        if (atom instanceof PharmacophoreAtom)
-            return (PharmacophoreAtom) atom;
-        if (atom instanceof AtomRef)
-            return get(((AtomRef) atom).deref());
+        if (atom instanceof PharmacophoreAtom) return (PharmacophoreAtom) atom;
+        if (atom instanceof AtomRef) return get(((AtomRef) atom).deref());
         return null;
     }
 
@@ -120,11 +118,11 @@ public class PharmacophoreAtom extends Atom {
 
     /**
      * Set the atoms of a target molecule that correspond to this group.
-     * 
-     * This method is generally only useful in the context of pharmacophore matching
      *
-     * @param atomIndices The indicies of the atoms in a molecule that match
-     *                    the pattern for this group.
+     * <p>This method is generally only useful in the context of pharmacophore matching
+     *
+     * @param atomIndices The indicies of the atoms in a molecule that match the pattern for this
+     *     group.
      * @see #getMatchingAtoms()
      * @see org.openscience.cdk.pharmacophore.PharmacophoreMatcher
      */
@@ -136,8 +134,8 @@ public class PharmacophoreAtom extends Atom {
 
     /**
      * Get the atoms of a target molecule that correspond to this group.
-     * 
-     * This method is generally only useful in the context of pharmacophore matching
+     *
+     * <p>This method is generally only useful in the context of pharmacophore matching
      *
      * @return The indices of the atoms, in a molecule, that match the pattern for this group.
      * @see #setMatchingAtoms(int[])
@@ -147,7 +145,8 @@ public class PharmacophoreAtom extends Atom {
         return matchingAtoms;
     }
 
-    @Override public int hashCode() {
+    @Override
+    public int hashCode() {
         int result = smarts != null ? smarts.hashCode() : 0;
         result = 31 * result + (matchingAtoms != null ? Arrays.hashCode(matchingAtoms) : 0);
         return result;
@@ -158,8 +157,9 @@ public class PharmacophoreAtom extends Atom {
         if (!(o instanceof PharmacophoreAtom)) return false;
 
         PharmacophoreAtom that = (PharmacophoreAtom) o;
-        return smarts.equals(that.getSmarts()) && symbol.equals(that.getSymbol())
-                && point3d.equals(that.getPoint3d()) && Arrays.equals(this.matchingAtoms, that.matchingAtoms);
+        return smarts.equals(that.getSmarts())
+                && symbol.equals(that.getSymbol())
+                && point3d.equals(that.getPoint3d())
+                && Arrays.equals(this.matchingAtoms, that.matchingAtoms);
     }
-
 }

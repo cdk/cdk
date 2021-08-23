@@ -39,8 +39,9 @@ public class PharmacophoreAngleBond extends Bond {
      * @param patom2 The second pharmacophore group
      * @param patom3 The third pharmacophore group
      */
-    public PharmacophoreAngleBond(PharmacophoreAtom patom1, PharmacophoreAtom patom2, PharmacophoreAtom patom3) {
-        super(new PharmacophoreAtom[]{patom1, patom2, patom3});
+    public PharmacophoreAngleBond(
+            PharmacophoreAtom patom1, PharmacophoreAtom patom2, PharmacophoreAtom patom3) {
+        super(new PharmacophoreAtom[] {patom1, patom2, patom3});
     }
 
     /**
@@ -64,5 +65,4 @@ public class PharmacophoreAngleBond extends Bond {
 
         return Math.acos(cosangle) * 180.0 / Math.PI;
     }
-
 }

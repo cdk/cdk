@@ -23,23 +23,22 @@
  */
 package org.openscience.cdk.graph;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsNot.not;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.openscience.cdk.graph.InitialCycles.Cycle;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
 import java.util.List;
 import java.util.Random;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.hamcrest.core.IsNot.not;
-import static org.junit.Assert.assertFalse;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.openscience.cdk.graph.InitialCycles.Cycle;
+import org.junit.Test;
 
 /**
  * @author John May
@@ -280,5 +279,4 @@ public class BitMatrixTest {
         assertThat(m.row(1), is(sameInstance(s2)));
         assertThat(m.row(2), is(sameInstance(s3)));
     }
-
 }

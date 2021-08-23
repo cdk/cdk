@@ -58,7 +58,7 @@ public class SMILESFormat extends AbstractResourceFormat implements IChemFormat 
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"smi"};
+        return new String[] {"smi"};
     }
 
     /** {@inheritDoc} */

@@ -24,30 +24,25 @@ package org.openscience.cdk.graph;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
- * The base class for permutors of atom containers, with a single abstract
- * method <code>containerFromPermutation</code> that should be implemented in
- * concrete derived classes.
+ * The base class for permutors of atom containers, with a single abstract method <code>
+ * containerFromPermutation</code> that should be implemented in concrete derived classes.
  *
  * @author maclean
  * @cdk.githash
- * @cdk.created    2009-09-09
- * @cdk.keyword    permutation
- * @cdk.module     standard
+ * @cdk.created 2009-09-09
+ * @cdk.keyword permutation
+ * @cdk.module standard
  */
 public abstract class AtomContainerPermutor extends Permutor implements Iterator<IAtomContainer> {
 
-    /**
-     * The atom container that is permuted at each step.
-     */
+    /** The atom container that is permuted at each step. */
     protected IAtomContainer atomContainer;
 
     /**
-     * Start the permutor off with an initial atom container, and the size of
-     * the permutation.
+     * Start the permutor off with an initial atom container, and the size of the permutation.
      *
      * @param atomContainer
      */
@@ -57,17 +52,16 @@ public abstract class AtomContainerPermutor extends Permutor implements Iterator
     }
 
     /**
-     * Convert a permutation (expressed as a list of numbers) into a permuted
-     * atom container. This will differ depending on the desired effect of the
-     * permutation (atoms or bonds, for example).
+     * Convert a permutation (expressed as a list of numbers) into a permuted atom container. This
+     * will differ depending on the desired effect of the permutation (atoms or bonds, for example).
      *
      * @return the atom container corresponding to this permutation
      */
     public abstract IAtomContainer containerFromPermutation(int[] permutation);
 
     /**
-     * Get a new container, but randomly skip forwards in the list of possible
-     * permutations to generate it.
+     * Get a new container, but randomly skip forwards in the list of possible permutations to
+     * generate it.
      *
      * @return a random next permuted atom container
      */
@@ -96,5 +90,4 @@ public abstract class AtomContainerPermutor extends Permutor implements Iterator
     public void remove() {
         // stupid method. not implemented.
     }
-
 }

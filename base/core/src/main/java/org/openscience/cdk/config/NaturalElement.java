@@ -23,7 +23,6 @@
 package org.openscience.cdk.config;
 
 import java.util.Map;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
@@ -31,16 +30,16 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IElement;
 
 /**
- * A read-only class used by {@link Elements} for the natural elements. This class is not to
- * be used than by only {@link Elements}.
+ * A read-only class used by {@link Elements} for the natural elements. This class is not to be used
+ * than by only {@link Elements}.
  *
- * @author      egonw
- * @cdk.module  core
+ * @author egonw
+ * @cdk.module core
  * @cdk.githash
  */
 final class NaturalElement implements IElement {
 
-    private final String  element;
+    private final String element;
     private final Integer atomicNumber;
 
     protected NaturalElement(String element, Integer atomicNumber) {

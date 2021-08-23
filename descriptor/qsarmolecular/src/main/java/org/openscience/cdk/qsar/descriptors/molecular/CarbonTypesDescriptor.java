@@ -19,7 +19,6 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import java.util.List;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -36,19 +35,21 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
  * Topological descriptor characterizing the carbon connectivity.
- * 
- * The class calculates 9 descriptors in the following order
+ *
+ * <p>The class calculates 9 descriptors in the following order
+ *
  * <ul>
- * <li>C1SP1 triply hound carbon bound to one other carbon
- * <li>C2SP1	triply bound carbon bound to two other carbons
- * <li>C1SP2	doubly hound carbon bound to one other carbon
- * <li>C2SP2	doubly bound carbon bound to two other carbons
- * <li>C3SP2	doubly bound carbon bound to three other carbons
- * <li>C1SP3	singly bound carbon bound to one other carbon
- * <li>C2SP3	singly bound carbon bound to two other carbons
- * <li>C3SP3	singly bound carbon bound to three other carbons
- * <li>C4SP3	singly bound carbon bound to four other carbons
+ *   <li>C1SP1 triply hound carbon bound to one other carbon
+ *   <li>C2SP1 triply bound carbon bound to two other carbons
+ *   <li>C1SP2 doubly hound carbon bound to one other carbon
+ *   <li>C2SP2 doubly bound carbon bound to two other carbons
+ *   <li>C3SP2 doubly bound carbon bound to three other carbons
+ *   <li>C1SP3 singly bound carbon bound to one other carbon
+ *   <li>C2SP3 singly bound carbon bound to two other carbons
+ *   <li>C3SP3 singly bound carbon bound to three other carbons
+ *   <li>C4SP3 singly bound carbon bound to four other carbons
  * </ul>
+ *
  * <table border="1"><caption>Parameters for this descriptor:</caption>
  * <tr>
  * <td>Name</td>
@@ -70,26 +71,28 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.keyword topological bond order ctypes
  * @cdk.keyword descriptor
  */
-public class CarbonTypesDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
+public class CarbonTypesDescriptor extends AbstractMolecularDescriptor
+        implements IMolecularDescriptor {
 
-    private final static String[] NAMES = {"C1SP1", "C2SP1", "C1SP2", "C2SP2", "C3SP2", "C1SP3", "C2SP3", "C3SP3",
-            "C4SP3"                     };
+    private static final String[] NAMES = {
+        "C1SP1", "C2SP1", "C1SP2", "C2SP2", "C3SP2", "C1SP3", "C2SP3", "C3SP3", "C4SP3"
+    };
 
     public CarbonTypesDescriptor() {}
 
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#carbonTypes", this.getClass()
-                        .getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#carbonTypes",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     /**
      * Sets the parameters attribute of the GravitationalIndexDescriptor object.
      *
      * @param params The new parameters value
-     * @throws org.openscience.cdk.exception.CDKException
-     *          Description of the Exception
+     * @throws org.openscience.cdk.exception.CDKException Description of the Exception
      * @see #getParameters
      */
     @Override
@@ -165,22 +168,14 @@ public class CarbonTypesDescriptor extends AbstractMolecularDescriptor implement
 
             IBond.Order maxBondOrder = getHighestBondOrder(container, atom);
 
-            if (maxBondOrder == IBond.Order.TRIPLE && cc == 1)
-                c1sp1++;
-            else if (maxBondOrder == IBond.Order.TRIPLE && cc == 2)
-                c2sp1++;
-            else if (maxBondOrder == IBond.Order.DOUBLE && cc == 1)
-                c1sp2++;
-            else if (maxBondOrder == IBond.Order.DOUBLE && cc == 2)
-                c2sp2++;
-            else if (maxBondOrder == IBond.Order.DOUBLE && cc == 3)
-                c3sp2++;
-            else if (maxBondOrder == IBond.Order.SINGLE && cc == 1)
-                c1sp3++;
-            else if (maxBondOrder == IBond.Order.SINGLE && cc == 2)
-                c2sp3++;
-            else if (maxBondOrder == IBond.Order.SINGLE && cc == 3)
-                c3sp3++;
+            if (maxBondOrder == IBond.Order.TRIPLE && cc == 1) c1sp1++;
+            else if (maxBondOrder == IBond.Order.TRIPLE && cc == 2) c2sp1++;
+            else if (maxBondOrder == IBond.Order.DOUBLE && cc == 1) c1sp2++;
+            else if (maxBondOrder == IBond.Order.DOUBLE && cc == 2) c2sp2++;
+            else if (maxBondOrder == IBond.Order.DOUBLE && cc == 3) c3sp2++;
+            else if (maxBondOrder == IBond.Order.SINGLE && cc == 1) c1sp3++;
+            else if (maxBondOrder == IBond.Order.SINGLE && cc == 2) c2sp3++;
+            else if (maxBondOrder == IBond.Order.SINGLE && cc == 3) c3sp3++;
             else if (maxBondOrder == IBond.Order.SINGLE && cc == 4) c4sp3++;
         }
 
@@ -195,7 +190,11 @@ public class CarbonTypesDescriptor extends AbstractMolecularDescriptor implement
         retval.add(c3sp3);
         retval.add(c4sp3);
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval,
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                retval,
                 getDescriptorNames());
     }
 
@@ -203,25 +202,27 @@ public class CarbonTypesDescriptor extends AbstractMolecularDescriptor implement
         List<IBond> bonds = container.getConnectedBondsList(atom);
         IBond.Order maxOrder = IBond.Order.SINGLE;
         for (IBond bond : bonds) {
-            if (BondManipulator.isHigherOrder(bond.getOrder(), maxOrder)) maxOrder = bond.getOrder();
+            if (BondManipulator.isHigherOrder(bond.getOrder(), maxOrder))
+                maxOrder = bond.getOrder();
         }
         return maxOrder;
     }
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * 
-     * The return value from this method really indicates what type of result will
-     * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
-     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
-     * allows you to do the same thing, without actually calculating the descriptor.
      *
-     * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
-     *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
+     * <p>The return value from this method really indicates what type of result will be obtained
+     * from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
+     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object;
+     * this method allows you to do the same thing, without actually calculating the descriptor.
+     *
+     * @return an object that implements the {@link
+     *     org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating the actual type
+     *     of values returned by the descriptor in the {@link
+     *     org.openscience.cdk.qsar.DescriptorValue} object
      */
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new IntegerArrayResultType(9);
     }
-
 }

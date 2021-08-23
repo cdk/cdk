@@ -30,9 +30,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.StringTokenizer;
-
 import javax.vecmath.Point3d;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -42,29 +40,39 @@ import org.openscience.cdk.io.formats.MOPAC7Format;
 
 /**
  * Reads MOPAC output, extracts several electronic parameters and assigns them as a molecule
- * properties.<p>
+ * properties.
  *
- * Parameters: "NO. OF FILLED LEVELS",	"TOTAL ENERGY","FINAL HEAT OF FORMATION",
- * "IONIZATION POTENTIAL", "ELECTRONIC ENERGY","CORE-CORE REPULSION","MOLECULAR WEIGHT".<p>
- * Doesn't update structure coordinates ! (TODO fix)
+ * <p>Parameters: "NO. OF FILLED LEVELS", "TOTAL ENERGY","FINAL HEAT OF FORMATION", "IONIZATION
+ * POTENTIAL", "ELECTRONIC ENERGY","CORE-CORE REPULSION","MOLECULAR WEIGHT".
+ *
+ * <p>Doesn't update structure coordinates ! (TODO fix)
  *
  * @author Nina Jeliazkova &lt;nina@acad.bg&gt;
  * @cdk.githash
- * @cdk.module  io
+ * @cdk.module io
  */
 public class Mopac7Reader extends DefaultChemObjectReader {
 
-    BufferedReader          input        = null;
-    private static String[] parameters   = {"NO. OF FILLED LEVELS", "TOTAL ENERGY", "FINAL HEAT OF FORMATION",
-            "IONIZATION POTENTIAL", "ELECTRONIC ENERGY", "CORE-CORE REPULSION", "MOLECULAR WEIGHT", "EHOMO", "ELUMO"};
-    private static String[] units        = {"", "EV", "KJ", "", "EV", "EV", "", "EV", "EV"};
-    private static String   eigenvalues  = "EIGENVALUES";
-    private static String   filledLevels = "NO. OF FILLED LEVELS";
+    BufferedReader input = null;
+    private static String[] parameters = {
+        "NO. OF FILLED LEVELS",
+        "TOTAL ENERGY",
+        "FINAL HEAT OF FORMATION",
+        "IONIZATION POTENTIAL",
+        "ELECTRONIC ENERGY",
+        "CORE-CORE REPULSION",
+        "MOLECULAR WEIGHT",
+        "EHOMO",
+        "ELUMO"
+    };
+    private static String[] units = {"", "EV", "KJ", "", "EV", "EV", "", "EV", "EV"};
+    private static String eigenvalues = "EIGENVALUES";
+    private static String filledLevels = "NO. OF FILLED LEVELS";
 
     /**
      * Constructs a new Mopac7reader that can read a molecule from a given {@link Reader}.
      *
-     * @param  input  The {@link Reader} to read from
+     * @param input The {@link Reader} to read from
      */
     public Mopac7Reader(Reader input) {
         if (input instanceof BufferedReader) {
@@ -77,15 +85,15 @@ public class Mopac7Reader extends DefaultChemObjectReader {
     /**
      * Constructs a new Mopac7reader that can read a molecule from a given {@link InputStream}.
      *
-     * @param  input  The {@link InputStream} to read from
+     * @param input The {@link InputStream} to read from
      */
     public Mopac7Reader(InputStream input) {
         this(new InputStreamReader(input));
     }
 
     /**
-     * Constructs a new Mopac7reader that can read a molecule. The reader to read from has
-     * yet to be set.
+     * Constructs a new Mopac7reader that can read a molecule. The reader to read from has yet to be
+     * set.
      */
     public Mopac7Reader() {
         this(new StringReader(""));
@@ -108,12 +116,14 @@ public class Mopac7Reader extends DefaultChemObjectReader {
             try {
                 String line = input.readLine();
                 while (line != null) {
-                    if (line.indexOf("****  MAX. NUMBER OF ATOMS ALLOWED") > -1) throw new CDKException(line);
-                    if (line.indexOf("TO CONTINUE CALCULATION SPECIFY \"GEO-OK\"") > -1) throw new CDKException(line);
+                    if (line.indexOf("****  MAX. NUMBER OF ATOMS ALLOWED") > -1)
+                        throw new CDKException(line);
+                    if (line.indexOf("TO CONTINUE CALCULATION SPECIFY \"GEO-OK\"") > -1)
+                        throw new CDKException(line);
                     if ("CARTESIAN COORDINATES".equals(line.trim())) {
 
                         IAtomContainer atomcontainer = ((IAtomContainer) object);
-                        input.readLine(); //reads blank line
+                        input.readLine(); // reads blank line
                         line = input.readLine();
 
                         String[] columns = line.trim().split(" +");
@@ -123,9 +133,10 @@ public class Mopac7Reader extends DefaultChemObjectReader {
                                 okCols += (columns[i].equals(expected_columns[i])) ? 1 : 0;
 
                         if (okCols < expected_columns.length) continue;
-                        //if (!"    NO.       ATOM         X         Y         Z".equals(line)) continue;
+                        // if (!"    NO.       ATOM         X         Y         Z".equals(line))
+                        // continue;
 
-                        input.readLine(); //reads blank line
+                        input.readLine(); // reads blank line
                         int atomIndex = 0;
                         while (!line.trim().isEmpty()) {
                             line = input.readLine();
@@ -137,38 +148,43 @@ public class Mopac7Reader extends DefaultChemObjectReader {
                             while (tokenizer.hasMoreTokens()) {
                                 String tokenStr = tokenizer.nextToken();
                                 switch (token) {
-                                    case 0: {
-                                        atomIndex = Integer.parseInt(tokenStr) - 1;
-                                        if (atomIndex < atomcontainer.getAtomCount()) {
-                                            atom = atomcontainer.getAtom(atomIndex);
-                                        } else
-                                            atom = null;
-                                        break;
-                                    }
-                                    case 1: {
-                                        if ((atom != null) && (!tokenStr.equals(atom.getSymbol()))) atom = null;
-                                        break;
-                                    }
-                                    case 2: {
-                                        point3d[0] = Double.parseDouble(tokenStr);
-                                        break;
-                                    }
-                                    case 3: {
-                                        point3d[1] = Double.parseDouble(tokenStr);
-                                        break;
-                                    }
-                                    case 4: {
-                                        point3d[2] = Double.parseDouble(tokenStr);
-                                        if (atom != null) atom.setPoint3d(new Point3d(point3d));
-                                        break;
-                                    }
-
+                                    case 0:
+                                        {
+                                            atomIndex = Integer.parseInt(tokenStr) - 1;
+                                            if (atomIndex < atomcontainer.getAtomCount()) {
+                                                atom = atomcontainer.getAtom(atomIndex);
+                                            } else atom = null;
+                                            break;
+                                        }
+                                    case 1:
+                                        {
+                                            if ((atom != null)
+                                                    && (!tokenStr.equals(atom.getSymbol())))
+                                                atom = null;
+                                            break;
+                                        }
+                                    case 2:
+                                        {
+                                            point3d[0] = Double.parseDouble(tokenStr);
+                                            break;
+                                        }
+                                    case 3:
+                                        {
+                                            point3d[1] = Double.parseDouble(tokenStr);
+                                            break;
+                                        }
+                                    case 4:
+                                        {
+                                            point3d[2] = Double.parseDouble(tokenStr);
+                                            if (atom != null) atom.setPoint3d(new Point3d(point3d));
+                                            break;
+                                        }
                                 }
                                 token++;
                                 if (atom == null) break;
                             }
-                            if ((atom == null) || ((atomIndex + 1) >= atomcontainer.getAtomCount())) break;
-
+                            if ((atom == null) || ((atomIndex + 1) >= atomcontainer.getAtomCount()))
+                                break;
                         }
 
                     } else if (line.indexOf(Mopac7Reader.eigenvalues) >= 0) {
@@ -202,16 +218,15 @@ public class Mopac7Reader extends DefaultChemObjectReader {
             } catch (IOException exception) {
                 throw new CDKException(exception.getMessage());
             }
-        } else
-            return null;
+        } else return null;
     }
 
     private void calcHomoLumo(IAtomContainer mol) {
         Object eigenProp = mol.getProperty(eigenvalues);
         if (eigenProp == null) return;
-        //mol.getProperties().remove(eigenvalues);
+        // mol.getProperties().remove(eigenvalues);
         Object filledLevelsProp = mol.getProperty(filledLevels);
-        //mol.getProperties().remove(filledLevels);
+        // mol.getProperties().remove(filledLevels);
         if (filledLevelsProp == null) return;
         int nFilledLevels = 0;
         try {
@@ -222,8 +237,7 @@ public class Mopac7Reader extends DefaultChemObjectReader {
         String[] eigenVals = eigenProp.toString().split("\\s");
         int levelCounter = 0;
         for (int i = 0; i < eigenVals.length; i++) {
-            if (eigenVals[i].trim().isEmpty())
-                continue;
+            if (eigenVals[i].trim().isEmpty()) continue;
             else
                 try {
                     // check if the value is an proper double:
@@ -260,7 +274,6 @@ public class Mopac7Reader extends DefaultChemObjectReader {
     /** {@inheritDoc} */
     public void close() throws IOException {
         input.close();
-
     }
 
     @Override

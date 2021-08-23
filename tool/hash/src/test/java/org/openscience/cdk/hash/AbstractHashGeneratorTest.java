@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.hash;
 
-import org.junit.Test;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.sameInstance;
@@ -34,6 +32,8 @@ import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+
+import org.junit.Test;
 
 /**
  * @author John May
@@ -48,7 +48,7 @@ public class AbstractHashGeneratorTest {
 
     @Test
     public void testCopy() throws Exception {
-        long[] x = new long[]{2, 1, 3, 2};
+        long[] x = new long[] {2, 1, 3, 2};
         long[] y = AbstractHashGenerator.copy(x);
         assertThat(x, is(y));
         assertThat(x, not(sameInstance(y)));
@@ -56,7 +56,7 @@ public class AbstractHashGeneratorTest {
 
     @Test
     public void testCopy_SrcDest() throws Exception {
-        long[] x = new long[]{42, 23, 1, 72};
+        long[] x = new long[] {42, 23, 1, 72};
         long[] y = new long[4];
         AbstractHashGenerator.copy(x, y);
         assertThat(x, is(y));

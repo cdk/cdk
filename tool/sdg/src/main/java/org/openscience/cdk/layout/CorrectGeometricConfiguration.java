@@ -26,6 +26,9 @@ package org.openscience.cdk.layout;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
+import java.util.Arrays;
+import java.util.Map;
+import javax.vecmath.Point2d;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -35,18 +38,13 @@ import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.ringsearch.RingSearch;
 import org.openscience.cdk.stereo.ExtendedCisTrans;
 
-import javax.vecmath.Point2d;
-import java.util.Arrays;
-import java.util.Map;
-
 /**
- * Correct double-bond configuration depiction in 2D to be correct for it's
- * specified {@link org.openscience.cdk.interfaces.IDoubleBondStereochemistry}. Ideally double-bond adjustment
- * should be done in when generating a structure diagram (and consider
- * overlaps). This method finds double bonds with incorrect depicted
- * configuration and reflects one side to correct the configuration.
- * <b>IMPORTANT: should be invoked before labelling up/down bonds. Cyclic
- * double-bonds with a configuration can not be corrected (error logged).</b>
+ * Correct double-bond configuration depiction in 2D to be correct for it's specified {@link
+ * org.openscience.cdk.interfaces.IDoubleBondStereochemistry}. Ideally double-bond adjustment should
+ * be done in when generating a structure diagram (and consider overlaps). This method finds double
+ * bonds with incorrect depicted configuration and reflects one side to correct the configuration.
+ * <b>IMPORTANT: should be invoked before labelling up/down bonds. Cyclic double-bonds with a
+ * configuration can not be corrected (error logged).</b>
  *
  * @author John May
  * @cdk.module sdg
@@ -54,31 +52,31 @@ import java.util.Map;
 final class CorrectGeometricConfiguration {
 
     /** The structure we are assigning labels to. */
-    private final IAtomContainer      container;
+    private final IAtomContainer container;
 
     /** Adjacency list graph representation of the structure. */
-    private final int[][]             graph;
+    private final int[][] graph;
 
     /** Lookup atom index (avoid IAtomContainer). */
     private final Map<IAtom, Integer> atomToIndex;
 
     /** Test if a bond is cyclic. */
-    private final RingSearch          ringSearch;
+    private final RingSearch ringSearch;
 
     /** Visited flags when atoms are being reflected. */
-    private final boolean[]           visited;
+    private final boolean[] visited;
 
     /**
-     * Adjust all double bond elements in the provided structure. <b>IMPORTANT:
-     * up/down labels should be adjusted before adjust double-bond
-     * configurations. coordinates are reflected by this method which can lead
-     * to incorrect tetrahedral specification.</b>
+     * Adjust all double bond elements in the provided structure. <b>IMPORTANT: up/down labels
+     * should be adjusted before adjust double-bond configurations. coordinates are reflected by
+     * this method which can lead to incorrect tetrahedral specification.</b>
      *
      * @param container the structure to adjust
      * @throws IllegalArgumentException an atom had unset coordinates
      */
     public static IAtomContainer correct(IAtomContainer container) {
-        if (!Iterables.isEmpty(container.stereoElements())) new CorrectGeometricConfiguration(container);
+        if (!Iterables.isEmpty(container.stereoElements()))
+            new CorrectGeometricConfiguration(container);
         return container;
     }
 
@@ -96,7 +94,7 @@ final class CorrectGeometricConfiguration {
      * Adjust all double bond elements in the provided structure.
      *
      * @param container the structure to adjust
-     * @param graph     the adjacency list representation of the structure
+     * @param graph the adjacency list representation of the structure
      * @throws IllegalArgumentException an atom had unset coordinates
      */
     CorrectGeometricConfiguration(IAtomContainer container, int[][] graph) {
@@ -109,7 +107,8 @@ final class CorrectGeometricConfiguration {
         for (int i = 0; i < container.getAtomCount(); i++) {
             IAtom atom = container.getAtom(i);
             atomToIndex.put(atom, i);
-            if (atom.getPoint2d() == null) throw new IllegalArgumentException("atom " + i + " had unset coordinates");
+            if (atom.getPoint2d() == null)
+                throw new IllegalArgumentException("atom " + i + " had unset coordinates");
         }
 
         for (IStereoElement element : container.stereoElements()) {
@@ -135,8 +134,9 @@ final class CorrectGeometricConfiguration {
         IAtom right = db.getEnd();
 
         int p = parity(dbs);
-        int q = parity(getAtoms(left, bonds[0].getOther(left), right))
-                * parity(getAtoms(right, bonds[1].getOther(right), left));
+        int q =
+                parity(getAtoms(left, bonds[0].getOther(left), right))
+                        * parity(getAtoms(right, bonds[1].getOther(right), left));
 
         // configuration is unspecified? then we add an unspecified bond.
         // note: IDoubleBondStereochemistry doesn't indicate this yet
@@ -166,23 +166,23 @@ final class CorrectGeometricConfiguration {
     }
 
     /**
-     * Adjust the configuration of the cumulated double bonds to be
-     * either Cis or Trans.
+     * Adjust the configuration of the cumulated double bonds to be either Cis or Trans.
      *
      * @param elem the stereo element to adjust
      */
     private void adjust(ExtendedCisTrans elem) {
 
-        IBond   middle = elem.getFocus();
-        IAtom[] ends   = ExtendedCisTrans.findTerminalAtoms(container, middle);
-        IBond[] bonds  = elem.getCarriers().toArray(new IBond[2]);
+        IBond middle = elem.getFocus();
+        IAtom[] ends = ExtendedCisTrans.findTerminalAtoms(container, middle);
+        IBond[] bonds = elem.getCarriers().toArray(new IBond[2]);
 
-        IAtom left  = ends[0];
+        IAtom left = ends[0];
         IAtom right = ends[1];
 
         int p = parity(elem);
-        int q = parity(getAtoms(left, bonds[0].getOther(left), right))
-                * parity(getAtoms(right, bonds[1].getOther(right), left));
+        int q =
+                parity(getAtoms(left, bonds[0].getOther(left), right))
+                        * parity(getAtoms(right, bonds[1].getOther(right), left));
 
         // configuration is unspecified? then we add an unspecified bond.
         // note: IDoubleBondStereochemistry doesn't indicate this yet
@@ -201,8 +201,8 @@ final class CorrectGeometricConfiguration {
         Arrays.fill(visited, false);
         visited[atomToIndex.get(left)] = true;
 
-        if (ringSearch.cyclic(atomToIndex.get(middle.getBegin()),
-                              atomToIndex.get(middle.getEnd()))) {
+        if (ringSearch.cyclic(
+                atomToIndex.get(middle.getBegin()), atomToIndex.get(middle.getEnd()))) {
             return;
         }
 
@@ -212,16 +212,14 @@ final class CorrectGeometricConfiguration {
     }
 
     /**
-     * Create an array of three atoms for a side of the double bond. This is
-     * used to determine the 'winding' of one side of the double bond.
+     * Create an array of three atoms for a side of the double bond. This is used to determine the
+     * 'winding' of one side of the double bond.
      *
-     * @param focus       a double bonded atom
+     * @param focus a double bonded atom
      * @param substituent the substituent we know the configuration of
-     * @param otherFocus  the other focus (i.e. the atom focus is double bonded
-     *                    to)
-     * @return 3 atoms arranged as, substituent, other substituent and other
-     *         focus. if the focus atom has an implicit hydrogen the other
-     *         substituent is the focus.
+     * @param otherFocus the other focus (i.e. the atom focus is double bonded to)
+     * @return 3 atoms arranged as, substituent, other substituent and other focus. if the focus
+     *     atom has an implicit hydrogen the other substituent is the focus.
      */
     private IAtom[] getAtoms(IAtom focus, IAtom substituent, IAtom otherFocus) {
         IAtom otherSubstituent = focus;
@@ -229,12 +227,11 @@ final class CorrectGeometricConfiguration {
             IAtom atom = container.getAtom(w);
             if (!atom.equals(substituent) && !atom.equals(otherFocus)) otherSubstituent = atom;
         }
-        return new IAtom[]{substituent, otherSubstituent, otherFocus};
+        return new IAtom[] {substituent, otherSubstituent, otherFocus};
     }
 
     /**
-     * Access the parity (odd/even) parity of the double bond configuration (
-     * together/opposite).
+     * Access the parity (odd/even) parity of the double bond configuration ( together/opposite).
      *
      * @param element double bond element
      * @return together = -1, opposite = +1
@@ -254,16 +251,14 @@ final class CorrectGeometricConfiguration {
      * Determine the parity (odd/even) of the triangle formed by the 3 atoms.
      *
      * @param atoms array of 3 atoms
-     * @return the parity of the triangle formed by 3 points, odd = -1, even =
-     *         +1
+     * @return the parity of the triangle formed by 3 points, odd = -1, even = +1
      */
     private static int parity(IAtom[] atoms) {
         return parity(atoms[0].getPoint2d(), atoms[1].getPoint2d(), atoms[2].getPoint2d());
     }
 
     /**
-     * Determine the parity of the triangle formed by the 3 coordinates a, b and
-     * c.
+     * Determine the parity of the triangle formed by the 3 coordinates a, b and c.
      *
      * @param a point 1
      * @param b point 2
@@ -276,10 +271,9 @@ final class CorrectGeometricConfiguration {
     }
 
     /**
-     * Reflect the atom at index {@code v} and any then reflect any unvisited
-     * neighbors.
+     * Reflect the atom at index {@code v} and any then reflect any unvisited neighbors.
      *
-     * @param v    index of the atom to reflect
+     * @param v index of the atom to reflect
      * @param bond bond
      */
     private void reflect(int v, IBond bond) {
@@ -294,7 +288,7 @@ final class CorrectGeometricConfiguration {
     /**
      * Reflect the point {@code p} over the {@code bond}.
      *
-     * @param p    the point to reflect
+     * @param p the point to reflect
      * @param bond bond
      * @return the reflected point
      */
@@ -307,7 +301,7 @@ final class CorrectGeometricConfiguration {
     /**
      * Reflect the point {@code p} in the line (x0,y0 - x1,y1).
      *
-     * @param p  the point to reflect
+     * @param p the point to reflect
      * @param x0 plane x start
      * @param y0 plane y end
      * @param x1 plane x start
@@ -324,6 +318,7 @@ final class CorrectGeometricConfiguration {
         a = (dx * dx - dy * dy) / (dx * dx + dy * dy);
         b = 2 * dx * dy / (dx * dx + dy * dy);
 
-        return new Point2d(a * (p.x - x0) + b * (p.y - y0) + x0, b * (p.x - x0) - a * (p.y - y0) + y0);
+        return new Point2d(
+                a * (p.x - x0) + b * (p.y - y0) + x0, b * (p.x - x0) - a * (p.y - y0) + y0);
     }
 }

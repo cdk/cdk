@@ -25,7 +25,6 @@ package org.openscience.cdk.silent;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.interfaces.IPDBPolymer;
@@ -33,14 +32,12 @@ import org.openscience.cdk.interfaces.IPDBStructure;
 import org.openscience.cdk.interfaces.IStrand;
 
 /**
- * An entry in the PDB database. It is not just a regular protein, but the
- * regular PDB mix of protein or protein complexes, ligands, water molecules
- * and other species.
+ * An entry in the PDB database. It is not just a regular protein, but the regular PDB mix of
+ * protein or protein complexes, ligands, water molecules and other species.
  *
- * @cdk.module  silent
+ * @cdk.module silent
  * @cdk.githash
- *
- * @author      Egon Willighagen
+ * @author Egon Willighagen
  * @cdk.created 2006-04-19
  * @cdk.keyword polymer
  */
@@ -48,12 +45,10 @@ public class PDBPolymer extends BioPolymer implements Cloneable, IPDBPolymer {
 
     private static final long serialVersionUID = 4173552834313952358L;
 
-    List<String>              sequentialListOfMonomers;
-    List<IPDBStructure>       secondaryStructures;
+    List<String> sequentialListOfMonomers;
+    List<IPDBStructure> secondaryStructures;
 
-    /**
-     * Constructs a new Polymer to store the {@link IMonomer}s.
-     */
+    /** Constructs a new Polymer to store the {@link IMonomer}s. */
     public PDBPolymer() {
         super();
         sequentialListOfMonomers = new ArrayList<String>();
@@ -72,11 +67,11 @@ public class PDBPolymer extends BioPolymer implements Cloneable, IPDBPolymer {
     }
 
     /**
-     * Adds the atom oAtom without specifying a {@link IMonomer} or a Strand. Therefore the
-     * atom to this AtomContainer, but not to a certain Strand or {@link IMonomer} (intended
-     * e.g. for HETATMs).
+     * Adds the atom oAtom without specifying a {@link IMonomer} or a Strand. Therefore the atom to
+     * this AtomContainer, but not to a certain Strand or {@link IMonomer} (intended e.g. for
+     * HETATMs).
      *
-     * @param oAtom  The {@link IPDBAtom} to add
+     * @param oAtom The {@link IPDBAtom} to add
      */
     @Override
     public void addAtom(IPDBAtom oAtom) {
@@ -84,11 +79,10 @@ public class PDBPolymer extends BioPolymer implements Cloneable, IPDBPolymer {
     }
 
     /**
-     * Adds the atom oAtom to a specified Monomer. Additionally, it keeps
-     * record of the iCode.
+     * Adds the atom oAtom to a specified Monomer. Additionally, it keeps record of the iCode.
      *
-     * @param oAtom  The IPDBAtom to add
-     * @param oMonomer  The monomer the atom belongs to
+     * @param oAtom The IPDBAtom to add
+     * @param oMonomer The monomer the atom belongs to
      */
     public void addAtom(IPDBAtom oAtom, IMonomer oMonomer) {
         super.addAtom(oAtom, oMonomer);
@@ -97,11 +91,11 @@ public class PDBPolymer extends BioPolymer implements Cloneable, IPDBPolymer {
     }
 
     /**
-     * Adds the IPDBAtom oAtom to a specified Monomer of a specified Strand.
-     * Additionally, it keeps record of the iCode.
+     * Adds the IPDBAtom oAtom to a specified Monomer of a specified Strand. Additionally, it keeps
+     * record of the iCode.
      *
-     * @param oAtom  The IPDBAtom to add
-     * @param oMonomer  The monomer the atom belongs to
+     * @param oAtom The IPDBAtom to add
+     * @param oMonomer The monomer the atom belongs to
      */
     @Override
     public void addAtom(IPDBAtom oAtom, IMonomer oMonomer, IStrand oStrand) {
@@ -120,9 +114,7 @@ public class PDBPolymer extends BioPolymer implements Cloneable, IPDBPolymer {
         return new ArrayList<String>(sequentialListOfMonomers);
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IPDBPolymer clone() throws CloneNotSupportedException {
         return (IPDBPolymer) super.clone();
@@ -137,5 +129,4 @@ public class PDBPolymer extends BioPolymer implements Cloneable, IPDBPolymer {
         stringContent.append(')');
         return stringContent.toString();
     }
-
 }

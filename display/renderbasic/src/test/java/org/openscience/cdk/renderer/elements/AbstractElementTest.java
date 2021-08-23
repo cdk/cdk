@@ -22,13 +22,10 @@
 package org.openscience.cdk.renderer.elements;
 
 import java.awt.geom.AffineTransform;
-
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * @cdk.module test-renderbasic
- */
+/** @cdk.module test-renderbasic */
 public abstract class AbstractElementTest {
 
     private static IRenderingElement element;
@@ -64,5 +61,4 @@ public abstract class AbstractElementTest {
         element.accept(visitor);
         Assert.assertTrue(visitor.isVisited);
     }
-
 }

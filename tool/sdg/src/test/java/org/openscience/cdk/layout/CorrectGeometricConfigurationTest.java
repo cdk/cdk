@@ -24,6 +24,11 @@
 
 package org.openscience.cdk.layout;
 
+import static org.junit.Assert.assertEquals;
+import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.OPPOSITE;
+import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.TOGETHER;
+
+import javax.vecmath.Point2d;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -31,12 +36,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
-
-import javax.vecmath.Point2d;
-
-import static org.junit.Assert.assertEquals;
-import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.OPPOSITE;
-import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.TOGETHER;
 
 /**
  * @author John May
@@ -57,8 +56,9 @@ public class CorrectGeometricConfigurationTest {
         m.addBond(1, 2, IBond.Order.DOUBLE);
         m.addBond(2, 3, IBond.Order.SINGLE);
         m.addBond(3, 4, IBond.Order.SINGLE);
-        m.addStereoElement(new DoubleBondStereochemistry(m.getBond(1), new IBond[]{m.getBond(0), m.getBond(2)},
-                TOGETHER));
+        m.addStereoElement(
+                new DoubleBondStereochemistry(
+                        m.getBond(1), new IBond[] {m.getBond(0), m.getBond(2)}, TOGETHER));
         CorrectGeometricConfiguration.correct(m);
         assertPoint(m.getAtom(0), -0.74, 5.0, 0.1);
         assertPoint(m.getAtom(1), -1.49, 3.7, 0.1);
@@ -80,8 +80,9 @@ public class CorrectGeometricConfigurationTest {
         m.addBond(1, 2, IBond.Order.DOUBLE);
         m.addBond(2, 3, IBond.Order.SINGLE);
         m.addBond(3, 4, IBond.Order.SINGLE);
-        m.addStereoElement(new DoubleBondStereochemistry(m.getBond(1), new IBond[]{m.getBond(0), m.getBond(2)},
-                OPPOSITE));
+        m.addStereoElement(
+                new DoubleBondStereochemistry(
+                        m.getBond(1), new IBond[] {m.getBond(0), m.getBond(2)}, OPPOSITE));
         CorrectGeometricConfiguration.correct(m);
         assertPoint(m.getAtom(0), -0.74, 5.0, 0.1);
         assertPoint(m.getAtom(1), -1.49, 3.7, 0.1);

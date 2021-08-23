@@ -26,6 +26,8 @@
  */
 package org.openscience.cdk.ringsearch;
 
+import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.AllCycles;
@@ -36,20 +38,18 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 
-import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
-
 /**
- * Compute the set of all rings in a molecule. This set includes <i>every</i>
- * cyclic path of atoms. As the set is exponential it can be very large and is
- * often impractical (e.g. fullerenes). 
+ * Compute the set of all rings in a molecule. This set includes <i>every</i> cyclic path of atoms.
+ * As the set is exponential it can be very large and is often impractical (e.g. fullerenes).
  *
- * To avoid combinatorial explosion there is a configurable threshold, at which
- * the computation aborts. The {@link Threshold} values have been precomputed on
- * PubChem-Compound and can be used with the {@link AllRingsFinder#usingThreshold(Threshold)}.
- * Alternatively, other ring sets which are a subset of this set offer a
- * tractable alternative. 
+ * <p>To avoid combinatorial explosion there is a configurable threshold, at which the computation
+ * aborts. The {@link Threshold} values have been precomputed on PubChem-Compound and can be used
+ * with the {@link AllRingsFinder#usingThreshold(Threshold)}. Alternatively, other ring sets which
+ * are a subset of this set offer a tractable alternative.
  *
- * <blockquote><pre>
+ * <blockquote>
+ *
+ * <pre>
  * AllRingsFinder arf = new AllRingsFinder();
  * for (IAtomContainer m : ms) {
  *     try {
@@ -58,7 +58,9 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  *         // molecule was too complex, handle error
  *     }
  * }
- * </pre></blockquote>
+ * </pre>
+ *
+ * </blockquote>
  *
  * @author steinbeck
  * @author johnmay
@@ -77,8 +79,7 @@ public final class AllRingsFinder {
      * Constructor for the AllRingsFinder.
      *
      * @param logging true=logging will be done (slower), false = no logging.
-     * @deprecated turn logging off by setting the level in the logger
-     *             implementation
+     * @deprecated turn logging off by setting the level in the logger implementation
      */
     @Deprecated
     public AllRingsFinder(boolean logging) {
@@ -96,10 +97,9 @@ public final class AllRingsFinder {
     }
 
     /**
-     * Compute all rings in the given {@link IAtomContainer}. The container is
-     * first partitioned into ring systems which are then processed separately.
-     * If the molecule has already be partitioned, consider using {@link
-     * #findAllRingsInIsolatedRingSystem(IAtomContainer)}.
+     * Compute all rings in the given {@link IAtomContainer}. The container is first partitioned
+     * into ring systems which are then processed separately. If the molecule has already be
+     * partitioned, consider using {@link #findAllRingsInIsolatedRingSystem(IAtomContainer)}.
      *
      * @param container The AtomContainer to be searched for rings
      * @return A RingSet with all rings in the AtomContainer
@@ -112,14 +112,14 @@ public final class AllRingsFinder {
     }
 
     /**
-     * Compute all rings up to and including the {@literal maxRingSize}. The
-     * container is first partitioned into ring systems which are then processed
-     * separately. If the molecule has already be partitioned, consider using
-     * {@link #findAllRingsInIsolatedRingSystem(IAtomContainer, int)}.
+     * Compute all rings up to and including the {@literal maxRingSize}. The container is first
+     * partitioned into ring systems which are then processed separately. If the molecule has
+     * already be partitioned, consider using {@link
+     * #findAllRingsInIsolatedRingSystem(IAtomContainer, int)}.
      *
-     * @param container   The AtomContainer to be searched for rings
-     * @param maxRingSize Maximum ring size to consider. Provides a possible
-     *                    breakout from recursion for complex compounds.
+     * @param container The AtomContainer to be searched for rings
+     * @param maxRingSize Maximum ring size to consider. Provides a possible breakout from recursion
+     *     for complex compounds.
      * @return A RingSet with all rings in the AtomContainer
      * @throws CDKException An exception thrown if the threshold was exceeded
      */
@@ -144,8 +144,11 @@ public final class AllRingsFinder {
         // for each set of fused cyclic vertices run the separate search
         for (int[] fused : rs.fused()) {
 
-            AllCycles ac = new AllCycles(GraphUtil.subgraph(graph, fused), Math.min(maxRingSize, fused.length),
-                    threshold.value);
+            AllCycles ac =
+                    new AllCycles(
+                            GraphUtil.subgraph(graph, fused),
+                            Math.min(maxRingSize, fused.length),
+                            threshold.value);
 
             if (!ac.completed()) throw new CDKException("Threshold exceeded for AllRingsFinder");
 
@@ -159,8 +162,8 @@ public final class AllRingsFinder {
     }
 
     /**
-     * Compute all rings in the given {@link IAtomContainer}. No pre-processing
-     * is done on the container.
+     * Compute all rings in the given {@link IAtomContainer}. No pre-processing is done on the
+     * container.
      *
      * @param container The Atom Container to find the ring systems of
      * @return RingSet for the container
@@ -171,16 +174,17 @@ public final class AllRingsFinder {
     }
 
     /**
-     * Compute all rings up to an including the {@literal maxRingSize}. No
-     * pre-processing is done on the container.
+     * Compute all rings up to an including the {@literal maxRingSize}. No pre-processing is done on
+     * the container.
      *
      * @param atomContainer the molecule to be searched for rings
-     * @param maxRingSize   Maximum ring size to consider. Provides a possible
-     *                      breakout from recursion for complex compounds.
+     * @param maxRingSize Maximum ring size to consider. Provides a possible breakout from recursion
+     *     for complex compounds.
      * @return a RingSet containing the rings in molecule
      * @throws CDKException An exception thrown if the threshold was exceeded
      */
-    public IRingSet findAllRingsInIsolatedRingSystem(IAtomContainer atomContainer, int maxRingSize) throws CDKException {
+    public IRingSet findAllRingsInIsolatedRingSystem(IAtomContainer atomContainer, int maxRingSize)
+            throws CDKException {
 
         final EdgeToBondMap edges = EdgeToBondMap.withSpaceFor(atomContainer);
         final int[][] graph = GraphUtil.toAdjList(atomContainer, edges);
@@ -199,9 +203,9 @@ public final class AllRingsFinder {
     }
 
     /**
-     * Checks if the timeout has been reached and throws an exception if so.
-     * This is used to prevent this AllRingsFinder to run for ages in certain
-     * rare cases with ring systems of large size or special topology.
+     * Checks if the timeout has been reached and throws an exception if so. This is used to prevent
+     * this AllRingsFinder to run for ages in certain rare cases with ring systems of large size or
+     * special topology.
      *
      * @throws CDKException The exception thrown in case of hitting the timeout
      * @deprecated timeout not used
@@ -212,9 +216,9 @@ public final class AllRingsFinder {
     }
 
     /**
-     * Sets the timeout value in milliseconds of the AllRingsFinder object This
-     * is used to prevent this AllRingsFinder to run for ages in certain rare
-     * cases with ring systems of large size or special topology
+     * Sets the timeout value in milliseconds of the AllRingsFinder object This is used to prevent
+     * this AllRingsFinder to run for ages in certain rare cases with ring systems of large size or
+     * special topology
      *
      * @param timeout The new timeout value
      * @return a reference to the instance this method was called for
@@ -222,7 +226,9 @@ public final class AllRingsFinder {
      */
     @Deprecated
     public AllRingsFinder setTimeout(long timeout) {
-        System.err.println("AllRingsFinder.setTimeout() is not used, please " + "use the new threshold values");
+        System.err.println(
+                "AllRingsFinder.setTimeout() is not used, please "
+                        + "use the new threshold values");
         return this;
     }
 
@@ -241,9 +247,8 @@ public final class AllRingsFinder {
      * Convert a cycle in {@literal int[]} representation to an {@link IRing}.
      *
      * @param container atom container
-     * @param edges     edge map
-     * @param cycle     vertex walk forming the cycle, first and last vertex the
-     *                  same
+     * @param edges edge map
+     * @param cycle vertex walk forming the cycle, first and last vertex the same
      * @return a new ring
      */
     private IRing toRing(IAtomContainer container, EdgeToBondMap edges, int[] cycle) {
@@ -267,16 +272,16 @@ public final class AllRingsFinder {
     }
 
     /**
-     * Convert a cycle in {@literal int[]} representation to an {@link IRing}
-     * but first map back using the given {@literal mapping}.
+     * Convert a cycle in {@literal int[]} representation to an {@link IRing} but first map back
+     * using the given {@literal mapping}.
      *
      * @param container atom container
-     * @param edges     edge map
-     * @param cycle     vertex walk forming the cycle, first and last vertex the
-     *                  same
+     * @param edges edge map
+     * @param cycle vertex walk forming the cycle, first and last vertex the same
      * @return a new ring
      */
-    private IRing toRing(IAtomContainer container, EdgeToBondMap edges, int[] cycle, int[] mapping) {
+    private IRing toRing(
+            IAtomContainer container, EdgeToBondMap edges, int[] cycle, int[] mapping) {
         IRing ring = container.getBuilder().newInstance(IRing.class, 0);
 
         int len = cycle.length - 1;
@@ -297,18 +302,16 @@ public final class AllRingsFinder {
     }
 
     /**
-     * The threshold values provide a limit at which the computation stops.
-     * There will always be some ring systems in which we cannot compute every
-     * possible ring (e.g. Fullerenes). This limit replaces the previous timeout
-     * and provides a more meaningful measure of what to expect based on
-     * precomputed percentiles. It is important to consider that, higher is not
-     * always better - generally the large values generate many more rings then
-     * can be reasonably be handled.<br>
+     * The threshold values provide a limit at which the computation stops. There will always be
+     * some ring systems in which we cannot compute every possible ring (e.g. Fullerenes). This
+     * limit replaces the previous timeout and provides a more meaningful measure of what to expect
+     * based on precomputed percentiles. It is important to consider that, higher is not always
+     * better - generally the large values generate many more rings then can be reasonably be
+     * handled.<br>
+     * The latest results were calculated on PubChem Compound (Dec' 12) and summarised below.
      *
-     * The latest results were calculated on PubChem Compound (Dec' 12) and
-     * summarised below.
-     *
-     * <table style="width: 100%;"><caption>Table 1. Num of structures processable in PubChem Compound (Dec 2012) as a result of
+     * <table style="width: 100%;">
+     * <caption>Table 1. Num of structures processable in PubChem Compound (Dec 2012) as a result of
      * setting the max degree</caption><tr><th>Maximum Degree</th><th>Percent
      * (%)</th><th>Completed<br> (ring systems)</th><th>Uncompleted<br>
      * (ring systems)</th></tr> <tr><td>&nbsp;</td></tr>
@@ -323,54 +326,50 @@ public final class AllRingsFinder {
      * <tr><td>3072</td><td>99.994</td><td>17841789</td><td>1059</td></tr>
      * </table>
      *
-     * @see <a href="http://efficientbits.blogspot.co.uk/2013/06/allringsfinder-sport-edition.html">AllRingsFinder,
-     *      Sport Edition</a>
+     * @see <a
+     *     href="http://efficientbits.blogspot.co.uk/2013/06/allringsfinder-sport-edition.html">AllRingsFinder,
+     *     Sport Edition</a>
      */
     public enum Threshold {
 
         /**
-         * Based on PubChem Compound (Dec '12), perception will complete for
-         * 99.95% of ring systems.
+         * Based on PubChem Compound (Dec '12), perception will complete for 99.95% of ring systems.
          */
         PubChem_95(72),
         /**
-         * Based on PubChem Compound (Dec '12), perception will complete for
-         * 99.96% of ring systems.
+         * Based on PubChem Compound (Dec '12), perception will complete for 99.96% of ring systems.
          */
         PubChem_96(84),
         /**
-         * Based on PubChem Compound (Dec '12), perception will complete for
-         * 99.97% of ring systems.
+         * Based on PubChem Compound (Dec '12), perception will complete for 99.97% of ring systems.
          */
         PubChem_97(126),
         /**
-         * Based on PubChem Compound (Dec '12), perception will complete for
-         * 99.98% of ring systems.
+         * Based on PubChem Compound (Dec '12), perception will complete for 99.98% of ring systems.
          */
         PubChem_98(216),
         /**
-         * Based on PubChem Compound (Dec '12), perception will complete for
-         * 99.99% of ring systems.
+         * Based on PubChem Compound (Dec '12), perception will complete for 99.99% of ring systems.
          */
         PubChem_99(684),
         /**
-         * Based on PubChem Compound (Dec '12), perception will complete for
-         * 99.991% of ring systems.
+         * Based on PubChem Compound (Dec '12), perception will complete for 99.991% of ring
+         * systems.
          */
         PubChem_991(882),
         /**
-         * Based on PubChem Compound (Dec '12), perception will complete for
-         * 99.992% of ring systems.
+         * Based on PubChem Compound (Dec '12), perception will complete for 99.992% of ring
+         * systems.
          */
         PubChem_992(1062),
         /**
-         * Based on PubChem Compound (Dec '12), perception will complete for
-         * 99.993% of ring systems.
+         * Based on PubChem Compound (Dec '12), perception will complete for 99.993% of ring
+         * systems.
          */
         PubChem_993(1440),
         /**
-         * Based on PubChem Compound (Dec '12), perception will complete for
-         * 99.994% of ring systems.
+         * Based on PubChem Compound (Dec '12), perception will complete for 99.994% of ring
+         * systems.
          */
         PubChem_994(3072),
         /** Run without any threshold, possibly until the end of time itself. */
@@ -386,10 +385,14 @@ public final class AllRingsFinder {
     /**
      * Create an {@link AllRingsFinder} instance using the given threshold.
      *
-     * <blockquote><pre>
+     * <blockquote>
+     *
+     * <pre>
      * // import static AllRingsFinder.Threshold.PubChem_99;
      * AllRingsFinder arf = AllRingsFinder.usingThreshold(PubChem_99);
-     * </pre></blockquote>
+     * </pre>
+     *
+     * </blockquote>
      *
      * @param threshold the threshold value
      * @return instance with the set threshold

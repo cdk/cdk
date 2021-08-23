@@ -25,10 +25,9 @@ package org.openscience.cdk.renderer.elements.path;
 
 import javax.vecmath.Point2d;
 
-
 /**
- * A MoveTo path element moves the drawing 'pen' without making any lines or
- * curves and is commonly used to start a path or make gaps in the path.
+ * A MoveTo path element moves the drawing 'pen' without making any lines or curves and is commonly
+ * used to start a path or make gaps in the path.
  *
  * @author Arvid
  * @cdk.module renderbasic
@@ -36,7 +35,7 @@ import javax.vecmath.Point2d;
  */
 public class MoveTo extends PathElement {
 
-    /** The point to move to.*/
+    /** The point to move to. */
     public final double[] coords;
 
     /**
@@ -67,16 +66,16 @@ public class MoveTo extends PathElement {
      * @param y y coord
      */
     public MoveTo(double x, double y) {
-        this(new double[]{x, y});
+        this(new double[] {x, y});
     }
 
-    /** {@inheritDoc} **/
+    /** {@inheritDoc} * */
     @Override
     public float[] points() {
-        return new float[]{(float) coords[0], (float) coords[1]};
+        return new float[] {(float) coords[0], (float) coords[1]};
     }
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     public void points(double[] coords) {
         coords[0] = this.coords[0];

@@ -23,10 +23,8 @@
 package org.openscience.cdk.geometry;
 
 import java.util.List;
-
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -41,17 +39,15 @@ import org.openscience.cdk.interfaces.IBond.Order;
  */
 public class AtomTools {
 
-    public final static double TETRAHEDRAL_ANGLE = 2.0 * Math.acos(1.0 / Math.sqrt(3.0));
+    public static final double TETRAHEDRAL_ANGLE = 2.0 * Math.acos(1.0 / Math.sqrt(3.0));
 
     /**
-     * Generate coordinates for all atoms which are singly bonded and have
-     * no coordinates. This is useful when hydrogens are present but have
-     * no coordinates. It knows about C, O, N, S only and will give tetrahedral or
-     * trigonal geometry elsewhere. Bond lengths are computed from covalent radii
-     * if available. Angles are tetrahedral or trigonal
+     * Generate coordinates for all atoms which are singly bonded and have no coordinates. This is
+     * useful when hydrogens are present but have no coordinates. It knows about C, O, N, S only and
+     * will give tetrahedral or trigonal geometry elsewhere. Bond lengths are computed from covalent
+     * radii if available. Angles are tetrahedral or trigonal
      *
      * @param atomContainer the set of atoms involved
-     *
      * @cdk.keyword coordinate calculation
      * @cdk.keyword 3D model
      */
@@ -66,7 +62,8 @@ public class AtomTools {
             if (atom.getPoint3d() == null) {
                 List<IAtom> connectedAtoms = atomContainer.getConnectedAtomsList(atom);
                 if (connectedAtoms.size() == 1) {
-                    IAtom refAtom = (IAtom) connectedAtoms.get(0);;
+                    IAtom refAtom = (IAtom) connectedAtoms.get(0);
+                    ;
                     if (refAtom.getPoint3d() != null) {
                         refAtoms.addAtom(refAtom);
                         // store atoms with no coords and ref atoms in a
@@ -74,8 +71,10 @@ public class AtomTools {
                         noCoords.addAtom(atom);
                         noCoords.addAtom(refAtom);
                         // bond is required to extract ligands
-                        noCoords.addBond(atomContainer.getBuilder().newInstance(IBond.class, atom, refAtom,
-                                Order.SINGLE));
+                        noCoords.addBond(
+                                atomContainer
+                                        .getBuilder()
+                                        .newInstance(IBond.class, atom, refAtom, Order.SINGLE));
                     }
                 }
             }
@@ -94,7 +93,9 @@ public class AtomTools {
             if (elementType.equals("N") || elementType.equals("O") || elementType.equals("S")) {
                 nwanted = 3;
             }
-            Point3d[] newPoints = calculate3DCoordinatesForLigands(atomContainer, refAtom, nwanted, length, angle);
+            Point3d[] newPoints =
+                    calculate3DCoordinatesForLigands(
+                            atomContainer, refAtom, nwanted, length, angle);
             for (int j = 0; j < nLigands; j++) {
                 IAtom ligand = (IAtom) noCoordLigands.get(j);
                 Point3d newPoint = rescaleBondLength(refAtom, ligand, newPoints[j]);
@@ -104,20 +105,23 @@ public class AtomTools {
     }
 
     /**
-     * Rescales Point2 so that length 1-2 is sum of covalent radii.
-     * if covalent radii cannot be found, use bond length of 1.0
+     * Rescales Point2 so that length 1-2 is sum of covalent radii. if covalent radii cannot be
+     * found, use bond length of 1.0
      *
-     * @param  atom1  stationary atom
-     * @param  atom2  movable atom
-     * @param  point2 coordinates for atom 2
-     * @return        new coords for atom 2
+     * @param atom1 stationary atom
+     * @param atom2 movable atom
+     * @param point2 coordinates for atom 2
+     * @return new coords for atom 2
      */
     public static Point3d rescaleBondLength(IAtom atom1, IAtom atom2, Point3d point2) {
         Point3d point1 = atom1.getPoint3d();
         double d1 = atom1.getCovalentRadius();
         double d2 = atom2.getCovalentRadius();
         // in case we have no covalent radii, set to 1.0
-        double distance = (d1 < 0.1 || d2 < 0.1) ? 1.0 : atom1.getCovalentRadius() + atom2.getCovalentRadius();
+        double distance =
+                (d1 < 0.1 || d2 < 0.1)
+                        ? 1.0
+                        : atom1.getCovalentRadius() + atom2.getCovalentRadius();
         Vector3d vect = new Vector3d(point2);
         vect.sub(point1);
         vect.normalize();
@@ -128,53 +132,38 @@ public class AtomTools {
     }
 
     /**
-     * Adds 3D coordinates for singly-bonded ligands of a reference atom (A).
-     * Initially designed for hydrogens. The ligands of refAtom are identified
-     * and those with 3D coordinates used to generate the new points. (This
-     * allows structures with partially known 3D coordinates to be used, as when
-     * groups are added.)
-     * "Bent" and "non-planar" groups can be formed by taking a subset of the
-     * calculated points. Thus R-NH2 could use 2 of the 3 points calculated
-     * from (1,iii)
-     * nomenclature: A is point to which new ones are "attached".
-     *     A may have ligands B, C...
-     *     B may have ligands J, K..
-     *     points X1, X2... are returned
-     * The cases (see individual routines, which use idealised geometry by default):
-     * (0) zero ligands of refAtom. The resultant points are randomly oriented:
-     *    (i) 1 points  required; +x,0,0
-     *    (ii) 2 points: use +x,0,0 and -x,0,0
-     *    (iii) 3 points: equilateral triangle in xy plane
-     *    (iv) 4 points x,x,x, x,-x,-x, -x,x,-x, -x,-x,x
-     * (1a) 1 ligand(B) of refAtom which itself has a ligand (J)
-     *    (i) 1 points  required; vector along AB vector
-     *    (ii) 2 points: 2 vectors in ABJ plane, staggered and eclipsed wrt J
-     *    (iii) 3 points: 1 staggered wrt J, the others +- gauche wrt J
-     * (1b) 1 ligand(B) of refAtom which has no other ligands. A random J is
-     * generated and (1a) applied
-     * (2) 2 ligands(B, C) of refAtom A
-     *    (i) 1 points  required; vector in ABC plane bisecting AB, AC. If ABC is
-     *        linear, no points
-     *    (ii) 2 points: 2 vectors at angle ang, whose resultant is 2i
-     * (3) 3 ligands(B, C, D) of refAtom A
-     *    (i) 1 points  required; if A, B, C, D coplanar, no points.
-     *       else vector is resultant of BA, CA, DA
-
-     * fails if atom itself has no coordinates or &gt;4 ligands
+     * Adds 3D coordinates for singly-bonded ligands of a reference atom (A). Initially designed for
+     * hydrogens. The ligands of refAtom are identified and those with 3D coordinates used to
+     * generate the new points. (This allows structures with partially known 3D coordinates to be
+     * used, as when groups are added.) "Bent" and "non-planar" groups can be formed by taking a
+     * subset of the calculated points. Thus R-NH2 could use 2 of the 3 points calculated from
+     * (1,iii) nomenclature: A is point to which new ones are "attached". A may have ligands B, C...
+     * B may have ligands J, K.. points X1, X2... are returned The cases (see individual routines,
+     * which use idealised geometry by default): (0) zero ligands of refAtom. The resultant points
+     * are randomly oriented: (i) 1 points required; +x,0,0 (ii) 2 points: use +x,0,0 and -x,0,0
+     * (iii) 3 points: equilateral triangle in xy plane (iv) 4 points x,x,x, x,-x,-x, -x,x,-x,
+     * -x,-x,x (1a) 1 ligand(B) of refAtom which itself has a ligand (J) (i) 1 points required;
+     * vector along AB vector (ii) 2 points: 2 vectors in ABJ plane, staggered and eclipsed wrt J
+     * (iii) 3 points: 1 staggered wrt J, the others +- gauche wrt J (1b) 1 ligand(B) of refAtom
+     * which has no other ligands. A random J is generated and (1a) applied (2) 2 ligands(B, C) of
+     * refAtom A (i) 1 points required; vector in ABC plane bisecting AB, AC. If ABC is linear, no
+     * points (ii) 2 points: 2 vectors at angle ang, whose resultant is 2i (3) 3 ligands(B, C, D) of
+     * refAtom A (i) 1 points required; if A, B, C, D coplanar, no points. else vector is resultant
+     * of BA, CA, DA
      *
-     * @param atomContainer describing the ligands of refAtom. It could be the
-     * whole molecule, or could be a selected subset of ligands
+     * <p>fails if atom itself has no coordinates or &gt;4 ligands
+     *
+     * @param atomContainer describing the ligands of refAtom. It could be the whole molecule, or
+     *     could be a selected subset of ligands
      * @param refAtom (A) to which new ligands coordinates could be added
      * @param length A-X length
      * @param angle B-A-X angle (used in certain cases)
-     * @return Point3D[] points calculated. If request could not be fulfilled (e.g.
-     * too many atoms, or strange geometry, returns empty array (zero length,
-     * not null)
-     *
+     * @return Point3D[] points calculated. If request could not be fulfilled (e.g. too many atoms,
+     *     or strange geometry, returns empty array (zero length, not null)
      * @cdk.keyword coordinate generation
      */
-    public static Point3d[] calculate3DCoordinatesForLigands(IAtomContainer atomContainer, IAtom refAtom, int nwanted,
-            double length, double angle) {
+    public static Point3d[] calculate3DCoordinatesForLigands(
+            IAtomContainer atomContainer, IAtom refAtom, int nwanted, double length, double angle) {
         Point3d newPoints[] = new Point3d[0];
         Point3d aPoint = refAtom.getPoint3d();
         // get ligands
@@ -183,7 +172,8 @@ public class AtomTools {
             return newPoints;
         }
         int nligands = connectedAtoms.size();
-        IAtomContainer ligandsWithCoords = atomContainer.getBuilder().newInstance(IAtomContainer.class);
+        IAtomContainer ligandsWithCoords =
+                atomContainer.getBuilder().newInstance(IAtomContainer.class);
         for (int i = 0; i < nligands; i++) {
             IAtom ligand = connectedAtoms.get(i);
             if (ligand.getPoint3d() != null) {
@@ -210,8 +200,14 @@ public class AtomTools {
                     break;
                 }
             }
-            newPoints = calculate3DCoordinates1(aPoint, bAtom.getPoint3d(),
-                    (jAtom != null) ? jAtom.getPoint3d() : null, nwanted, length, angle);
+            newPoints =
+                    calculate3DCoordinates1(
+                            aPoint,
+                            bAtom.getPoint3d(),
+                            (jAtom != null) ? jAtom.getPoint3d() : null,
+                            nwanted,
+                            length,
+                            angle);
         } else if (nwithCoords == 2) {
             Point3d bPoint = ligandsWithCoords.getAtom(0).getPoint3d();
             Point3d cPoint = ligandsWithCoords.getAtom(1).getPoint3d();
@@ -227,18 +223,14 @@ public class AtomTools {
     }
 
     /**
-     * Calculates substituent points.
-     * Calculate substituent points for
-     * (0) zero ligands of aPoint. The resultant points are randomly oriented:
-     *    (i) 1 points  required; +x,0,0
-     *    (ii) 2 points: use +x,0,0 and -x,0,0
-     *    (iii) 3 points: equilateral triangle in xy plane
-     *    (iv) 4 points x,x,x, x,-x,-x, -x,x,-x, -x,-x,x where 3x**2 = bond length
+     * Calculates substituent points. Calculate substituent points for (0) zero ligands of aPoint.
+     * The resultant points are randomly oriented: (i) 1 points required; +x,0,0 (ii) 2 points: use
+     * +x,0,0 and -x,0,0 (iii) 3 points: equilateral triangle in xy plane (iv) 4 points x,x,x,
+     * x,-x,-x, -x,x,-x, -x,-x,x where 3x**2 = bond length
      *
      * @param aPoint to which substituents are added
      * @param nwanted number of points to calculate (1-4)
      * @param length from aPoint
-     *
      * @return Point3d[] nwanted points (or zero if failed)
      */
     public static Point3d[] calculate3DCoordinates0(Point3d aPoint, int nwanted, double length) {
@@ -272,30 +264,32 @@ public class AtomTools {
             points[2].add(new Vector3d(-dx, -dx, dx));
             points[3] = new Point3d(aPoint);
             points[3].add(new Vector3d(-dx, dx, -dx));
-        } else
-            points = new Point3d[0];
+        } else points = new Point3d[0];
         return points;
     }
 
     /**
-     * Calculate new point(s) X in a B-A system to form B-A-X.
-     * Use C as reference for * staggering about the B-A bond
+     * Calculate new point(s) X in a B-A system to form B-A-X. Use C as reference for * staggering
+     * about the B-A bond
      *
-     * (1a) 1 ligand(B) of refAtom (A) which itself has a ligand (C)
-     *    (i) 1 points  required; vector along AB vector
-     *    (ii) 2 points: 2 vectors in ABC plane, staggered and eclipsed wrt C
-     *    (iii) 3 points: 1 staggered wrt C, the others +- gauche wrt C
-     * If C is null, a random non-colinear C is generated
+     * <p>(1a) 1 ligand(B) of refAtom (A) which itself has a ligand (C) (i) 1 points required;
+     * vector along AB vector (ii) 2 points: 2 vectors in ABC plane, staggered and eclipsed wrt C
+     * (iii) 3 points: 1 staggered wrt C, the others +- gauche wrt C If C is null, a random
+     * non-colinear C is generated
      *
      * @param aPoint to which substituents are added
      * @param nwanted number of points to calculate (1-3)
      * @param length A-X length
      * @param angle B-A-X angle
-     *
      * @return Point3d[] nwanted points (or zero if failed)
      */
-    public static Point3d[] calculate3DCoordinates1(Point3d aPoint, Point3d bPoint, Point3d cPoint, int nwanted,
-            double length, double angle) {
+    public static Point3d[] calculate3DCoordinates1(
+            Point3d aPoint,
+            Point3d bPoint,
+            Point3d cPoint,
+            int nwanted,
+            double length,
+            double angle) {
         Point3d points[] = new Point3d[nwanted];
         // BA vector
         Vector3d ba = new Vector3d(aPoint);
@@ -346,10 +340,9 @@ public class AtomTools {
     /**
      * Calculate new point(s) X in a B-A-C system. It forms form a B-A(-C)-X system.
      *
-     * (2) 2 ligands(B, C) of refAtom A
-     *    (i) 1 points  required; vector in ABC plane bisecting AB, AC. If ABC is
-     *        linear, no points
-     *    (ii) 2 points: 2 points X1, X2, X1-A-X2 = angle about 2i vector
+     * <p>(2) 2 ligands(B, C) of refAtom A (i) 1 points required; vector in ABC plane bisecting AB,
+     * AC. If ABC is linear, no points (ii) 2 points: 2 points X1, X2, X1-A-X2 = angle about 2i
+     * vector
      *
      * @param aPoint to which substituents are added
      * @param bPoint first ligand of A
@@ -357,11 +350,15 @@ public class AtomTools {
      * @param nwanted number of points to calculate (1-2)
      * @param length A-X length
      * @param angle B-A-X angle
-     *
      * @return Point3d[] nwanted points (or zero if failed)
      */
-    public static Point3d[] calculate3DCoordinates2(Point3d aPoint, Point3d bPoint, Point3d cPoint, int nwanted,
-            double length, double angle) {
+    public static Point3d[] calculate3DCoordinates2(
+            Point3d aPoint,
+            Point3d bPoint,
+            Point3d cPoint,
+            int nwanted,
+            double length,
+            double angle) {
         Point3d newPoints[] = new Point3d[0];
         double ang2 = angle / 2.0;
 
@@ -371,8 +368,7 @@ public class AtomTools {
         ca.sub(cPoint);
         Vector3d baxca = new Vector3d();
         baxca.cross(ba, ca);
-        if (baxca.length() < 0.00000001) {
-            ; // linear
+        if (baxca.length() < 0.00000001) {; // linear
         } else if (nwanted == 1) {
             newPoints = new Point3d[1];
             Vector3d ax = new Vector3d(ba);
@@ -402,20 +398,18 @@ public class AtomTools {
     /**
      * Calculate new point X in a B-A(-D)-C system. It forms a B-A(-D)(-C)-X system.
      *
-     * (3) 3 ligands(B, C, D) of refAtom A
-     *    (i) 1 points  required; if A, B, C, D coplanar, no points.
-     *       else vector is resultant of BA, CA, DA
+     * <p>(3) 3 ligands(B, C, D) of refAtom A (i) 1 points required; if A, B, C, D coplanar, no
+     * points. else vector is resultant of BA, CA, DA
      *
      * @param focus to which substituents are added
      * @param aNbor first ligand of A
      * @param bNbor second ligand of A
      * @param cNbor third ligand of A
      * @param length A-X length
-     *
      * @return Point3d nwanted points (or null if failed (coplanar))
      */
-    public static Point3d calculate3DCoordinates3(Point3d focus, Point3d aNbor, Point3d bNbor, Point3d cNbor,
-            double length) {
+    public static Point3d calculate3DCoordinates3(
+            Point3d focus, Point3d aNbor, Point3d bNbor, Point3d cNbor, double length) {
         Vector3d v1 = new Vector3d(focus);
         v1.sub(aNbor);
         Vector3d v2 = new Vector3d(focus);
@@ -435,8 +429,8 @@ public class AtomTools {
         return point;
     }
 
-    final static Vector3d XV = new Vector3d(1.0, 0.0, 0.0);
-    final static Vector3d YV = new Vector3d(0.0, 1.0, 0.0);
+    static final Vector3d XV = new Vector3d(1.0, 0.0, 0.0);
+    static final Vector3d YV = new Vector3d(0.0, 1.0, 0.0);
 
     // gets a point not on vector a...b; this can be used to define a plan or cross products
     private static Vector3d getNonColinearVector(Vector3d ab) {

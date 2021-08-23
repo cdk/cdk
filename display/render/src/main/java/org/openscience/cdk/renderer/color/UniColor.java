@@ -24,9 +24,8 @@
 
 package org.openscience.cdk.renderer.color;
 
-import org.openscience.cdk.interfaces.IAtom;
-
 import java.awt.Color;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * Defines an atom color that draws as a single uniform color.
@@ -46,17 +45,13 @@ public class UniColor implements IAtomColorer {
         this.color = color;
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Color getAtomColor(IAtom atom) {
         return color;
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Color getAtomColor(IAtom atom, Color defaultColor) {
         return color;

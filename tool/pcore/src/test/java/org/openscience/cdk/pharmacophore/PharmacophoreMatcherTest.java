@@ -22,25 +22,22 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.AtomRef;
+import org.openscience.cdk.BondRef;
 import org.openscience.cdk.ConformerContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.io.iterator.IteratingMDLConformerReader;
 import org.openscience.cdk.io.iterator.IteratingSDFReader;
-import org.openscience.cdk.AtomRef;
-import org.openscience.cdk.BondRef;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
-/**
- * @cdk.module test-pcore
- */
+/** @cdk.module test-pcore */
 public class PharmacophoreMatcherTest {
 
     public static ConformerContainer conformers = null;
@@ -54,9 +51,10 @@ public class PharmacophoreMatcherTest {
     @BeforeClass
     public static void loadConformerData() {
         String filename = "data/mdl/pcoretest1.sdf";
-        InputStream ins = PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
-        IteratingMDLConformerReader reader = new IteratingMDLConformerReader(ins,
-                SilentChemObjectBuilder.getInstance());
+        InputStream ins =
+                PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
+        IteratingMDLConformerReader reader =
+                new IteratingMDLConformerReader(ins, SilentChemObjectBuilder.getInstance());
         if (reader.hasNext()) conformers = (ConformerContainer) reader.next();
     }
 
@@ -92,8 +90,7 @@ public class PharmacophoreMatcherTest {
             if (firstTime) {
                 statuses[i] = matcher.matches(conf, true);
                 firstTime = false;
-            } else
-                statuses[i] = matcher.matches(conf, false);
+            } else statuses[i] = matcher.matches(conf, false);
             i++;
         }
 
@@ -142,7 +139,6 @@ public class PharmacophoreMatcherTest {
 
         List<List<PharmacophoreAtom>> upmatches = matcher.getUniqueMatchingPharmacophoreAtoms();
         Assert.assertEquals(1, upmatches.size());
-
     }
 
     @Test
@@ -217,12 +213,15 @@ public class PharmacophoreMatcherTest {
     @Test
     public void testCNSPcore() throws CDKException, IOException {
         String filename = "data/mdl/cnssmarts.sdf";
-        InputStream ins = PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
-        IteratingSDFReader reader = new IteratingSDFReader(ins, SilentChemObjectBuilder.getInstance());
+        InputStream ins =
+                PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
+        IteratingSDFReader reader =
+                new IteratingSDFReader(ins, SilentChemObjectBuilder.getInstance());
 
         PharmacophoreQuery query = new PharmacophoreQuery();
         PharmacophoreQueryAtom arom = new PharmacophoreQueryAtom("A", "c1ccccc1");
-        PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
+        PharmacophoreQueryAtom n1 =
+                new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
         PharmacophoreQueryBond b1 = new PharmacophoreQueryBond(arom, n1, 5.0, 7.0);
         query.addAtom(arom);
         query.addAtom(n1);
@@ -246,12 +245,15 @@ public class PharmacophoreMatcherTest {
     @Test
     public void testMatchingBonds() throws CDKException, IOException {
         String filename = "data/mdl/cnssmarts.sdf";
-        InputStream ins = PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
-        IteratingSDFReader reader = new IteratingSDFReader(ins, SilentChemObjectBuilder.getInstance());
+        InputStream ins =
+                PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
+        IteratingSDFReader reader =
+                new IteratingSDFReader(ins, SilentChemObjectBuilder.getInstance());
 
         PharmacophoreQuery query = new PharmacophoreQuery();
         PharmacophoreQueryAtom arom = new PharmacophoreQueryAtom("A", "c1ccccc1");
-        PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
+        PharmacophoreQueryAtom n1 =
+                new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
         PharmacophoreQueryBond b1 = new PharmacophoreQueryBond(arom, n1, 5.0, 7.0);
         query.addAtom(arom);
         query.addAtom(n1);
@@ -282,13 +284,18 @@ public class PharmacophoreMatcherTest {
     @Test
     public void testAngleMatch1() throws Exception {
         String filename = "data/mdl/cnssmarts.sdf";
-        InputStream ins = PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
-        IteratingSDFReader reader = new IteratingSDFReader(ins, SilentChemObjectBuilder.getInstance());
+        InputStream ins =
+                PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
+        IteratingSDFReader reader =
+                new IteratingSDFReader(ins, SilentChemObjectBuilder.getInstance());
 
         PharmacophoreQuery query = new PharmacophoreQuery();
-        PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
-        PharmacophoreQueryAtom n2 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
-        PharmacophoreQueryAtom n3 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
+        PharmacophoreQueryAtom n1 =
+                new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
+        PharmacophoreQueryAtom n2 =
+                new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
+        PharmacophoreQueryAtom n3 =
+                new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
         PharmacophoreQueryAngleBond b1 = new PharmacophoreQueryAngleBond(n1, n2, n3, 85, 90);
         query.addAtom(n1);
         query.addAtom(n2);
@@ -307,13 +314,18 @@ public class PharmacophoreMatcherTest {
     @Test
     public void testAngleMatch2() throws Exception {
         String filename = "data/mdl/cnssmarts.sdf";
-        InputStream ins = PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
-        IteratingSDFReader reader = new IteratingSDFReader(ins, SilentChemObjectBuilder.getInstance());
+        InputStream ins =
+                PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
+        IteratingSDFReader reader =
+                new IteratingSDFReader(ins, SilentChemObjectBuilder.getInstance());
 
         PharmacophoreQuery query = new PharmacophoreQuery();
-        PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
-        PharmacophoreQueryAtom n2 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
-        PharmacophoreQueryAtom n3 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
+        PharmacophoreQueryAtom n1 =
+                new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
+        PharmacophoreQueryAtom n2 =
+                new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
+        PharmacophoreQueryAtom n3 =
+                new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
         PharmacophoreQueryAngleBond b1 = new PharmacophoreQueryAngleBond(n1, n2, n3, 89.14);
         query.addAtom(n1);
         query.addAtom(n2);
@@ -355,8 +367,7 @@ public class PharmacophoreMatcherTest {
             if (firstTime) {
                 statuses[i] = matcher.matches(conf, true);
                 firstTime = false;
-            } else
-                statuses[i] = matcher.matches(conf, false);
+            } else statuses[i] = matcher.matches(conf, false);
             i++;
         }
         Assert.assertEquals(100, statuses.length);
@@ -377,7 +388,8 @@ public class PharmacophoreMatcherTest {
     public void testGetterSetter() {
         PharmacophoreQuery query = new PharmacophoreQuery();
         PharmacophoreQueryAtom arom = new PharmacophoreQueryAtom("A", "c1ccccc1");
-        PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
+        PharmacophoreQueryAtom n1 =
+                new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
         PharmacophoreQueryBond b1 = new PharmacophoreQueryBond(arom, n1, 5.0, 7.0);
         query.addAtom(arom);
         query.addAtom(n1);
@@ -405,8 +417,10 @@ public class PharmacophoreMatcherTest {
         matcher.setPharmacophoreQuery(query);
 
         String filename = "data/pcore/multismartpcore.sdf";
-        InputStream ins = PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
-        IteratingSDFReader reader = new IteratingSDFReader(ins, SilentChemObjectBuilder.getInstance());
+        InputStream ins =
+                PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
+        IteratingSDFReader reader =
+                new IteratingSDFReader(ins, SilentChemObjectBuilder.getInstance());
 
         IAtomContainer mol = (IAtomContainer) reader.next();
         Assert.assertTrue(matcher.matches(mol));

@@ -28,9 +28,8 @@ import org.openscience.cdk.interfaces.ICDKObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * A simple mock ICDKObject so we can test private constructors. We can't test
- * with an inner class as synthetic public constructors are made to bridge the
- * inner class creation.
+ * A simple mock ICDKObject so we can test private constructors. We can't test with an inner class
+ * as synthetic public constructors are made to bridge the inner class creation.
  *
  * @author John May
  * @cdk.module test-core
@@ -38,17 +37,13 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  */
 public class DynamicFactoryTestMock implements ICDKObject {
 
-    public DynamicFactoryTestMock(String ignored) {
-
-    }
+    public DynamicFactoryTestMock(String ignored) {}
 
     public DynamicFactoryTestMock(IAtom[] atoms) {
         System.out.println("IAtom[] constructor invoked");
     }
 
-    private DynamicFactoryTestMock() {
-
-    }
+    private DynamicFactoryTestMock() {}
 
     @Override
     public IChemObjectBuilder getBuilder() {

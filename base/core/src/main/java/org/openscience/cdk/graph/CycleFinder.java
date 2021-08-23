@@ -28,10 +28,9 @@ import org.openscience.cdk.exception.Intractable;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
- * Defines a method to find the cycles of a molecule. The distinction between a
- * cycle and a ring is that cycles are stored as indices (int[]) while rings are
- * stored as atoms ({@link org.openscience.cdk.interfaces.IAtom}[]) in a {@link
- * org.openscience.cdk.interfaces.IRing}.
+ * Defines a method to find the cycles of a molecule. The distinction between a cycle and a ring is
+ * that cycles are stored as indices (int[]) while rings are stored as atoms ({@link
+ * org.openscience.cdk.interfaces.IAtom}[]) in a {@link org.openscience.cdk.interfaces.IRing}.
  *
  * @author John May
  * @cdk.module core
@@ -43,8 +42,7 @@ public interface CycleFinder {
      * Find the cycles of the provided molecule.
      *
      * @param molecule a molecule, can be disconnected.
-     * @throws Intractable thrown if problem could not be solved within some
-     *                     predefined bounds.
+     * @throws Intractable thrown if problem could not be solved within some predefined bounds.
      * @return an instance for querying the cycles (rings) in the molecule
      */
     Cycles find(IAtomContainer molecule) throws Intractable;
@@ -53,27 +51,22 @@ public interface CycleFinder {
      * Find the cycles of the provided molecule.
      *
      * @param molecule a molecule, can be disconnected.
-     * @param length maximum length cycle to find (set to
-     *               molecule.getAtomCount() for all)
-     * @throws Intractable thrown if problem could not be solved within some
-     *                     predefined bounds.
+     * @param length maximum length cycle to find (set to molecule.getAtomCount() for all)
+     * @throws Intractable thrown if problem could not be solved within some predefined bounds.
      * @return an instance for querying the cycles (rings) in the molecule
      */
     Cycles find(IAtomContainer molecule, int length) throws Intractable;
 
     /**
-     * Find the cycles of the provided molecule when an adjacent relation
-     * (graph) is already available. The graph can be obtained through {@link
-     * GraphUtil#toAdjList(IAtomContainer)}, for convenience {@link
-     * #find(IAtomContainer, int)} will automatically create the graph.
+     * Find the cycles of the provided molecule when an adjacent relation (graph) is already
+     * available. The graph can be obtained through {@link GraphUtil#toAdjList(IAtomContainer)}, for
+     * convenience {@link #find(IAtomContainer, int)} will automatically create the graph.
      *
      * @param molecule input structure
      * @param graph adjacency list representation for fast traversal
-     * @param length maximum length cycle to find (set to
-     *               molecule.getAtomCount() for all)
+     * @param length maximum length cycle to find (set to molecule.getAtomCount() for all)
      * @return an instance for querying the cycles (rings) in the molecule
-     * @throws Intractable thrown if problem could not be solved within some
-     *                     predefined bounds.
+     * @throws Intractable thrown if problem could not be solved within some predefined bounds.
      */
     Cycles find(IAtomContainer molecule, int[][] graph, int length) throws Intractable;
 }

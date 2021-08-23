@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
-
 import org.openscience.cdk.config.atomtypes.AtomTypeReader;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -30,19 +29,20 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * AtomType resource that reads the atom type configuration from an XML file.
- * The format is required to be in the STMML format {@cdk.cite PMR2002}; examples
- * can be found in CVS in the src/org/openscience/cdk/config/data directory.
+ * AtomType resource that reads the atom type configuration from an XML file. The format is required
+ * to be in the STMML format {@cdk.cite PMR2002}; examples can be found in CVS in the
+ * src/org/openscience/cdk/config/data directory.
  *
  * @cdk.module core
  * @cdk.githash
  */
 public class CDKBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
 
-    private String              configFile = "org.openscience.cdk.config.data.structgen_atomtypes.xml";
-    private InputStream         ins        = null;
+    private String configFile = "org.openscience.cdk.config.data.structgen_atomtypes.xml";
+    private InputStream ins = null;
 
-    private static ILoggingTool logger     = LoggingToolFactory.createLoggingTool(CDKBasedAtomTypeConfigurator.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(CDKBasedAtomTypeConfigurator.class);
 
     public CDKBasedAtomTypeConfigurator() {}
 
@@ -56,8 +56,8 @@ public class CDKBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
      * Reads the atom types from the CDK based atom type list.
      *
      * @param builder IChemObjectBuilder used to construct the IAtomType's.
-     * @throws        IOException when a problem occurred with reading from the InputStream
-     * @return        A List with read IAtomType's.
+     * @throws IOException when a problem occurred with reading from the InputStream
+     * @return A List with read IAtomType's.
      */
     @Override
     public List<IAtomType> readAtomTypes(IChemObjectBuilder builder) throws IOException {
@@ -68,8 +68,10 @@ public class CDKBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
             } catch (Exception exc) {
                 logger.error(exc.getMessage());
                 logger.debug(exc);
-                throw new IOException("There was a problem getting a stream for " + configFile
-                        + " with getClass.getClassLoader.getResourceAsStream");
+                throw new IOException(
+                        "There was a problem getting a stream for "
+                                + configFile
+                                + " with getClass.getClassLoader.getResourceAsStream");
             }
             if (ins == null) {
                 try {
@@ -77,8 +79,10 @@ public class CDKBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
                 } catch (Exception exc) {
                     logger.error(exc.getMessage());
                     logger.debug(exc);
-                    throw new IOException("There was a problem getting a stream for " + configFile
-                            + " with getClass.getResourceAsStream");
+                    throw new IOException(
+                            "There was a problem getting a stream for "
+                                    + configFile
+                                    + " with getClass.getResourceAsStream");
                 }
             }
         }
@@ -92,5 +96,4 @@ public class CDKBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
         }
         return atomTypes;
     }
-
 }

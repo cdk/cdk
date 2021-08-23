@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -66,8 +65,7 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
     }
 
     /**
-     * Ensure stereoBond content is read if the usual "dictRef" attribute is not
-     * supplied
+     * Ensure stereoBond content is read if the usual "dictRef" attribute is not supplied
      *
      * @cdk.bug 1248
      */
@@ -77,7 +75,9 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
         InputStream in = getClass().getResourceAsStream("/data/cml/(1R)-1-aminoethan-1-ol.cml");
         CMLReader reader = new CMLReader(in);
         try {
-            IChemFile cfile = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
+            IChemFile cfile =
+                    reader.read(
+                            DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
 
             Assert.assertNotNull("ChemFile was Null", cfile);
 
@@ -98,7 +98,6 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
         } finally {
             reader.close();
         }
-
     }
 
     /**
@@ -112,7 +111,9 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
         InputStream in = getClass().getResourceAsStream("/data/cml/(1R)-1-aminoethan-1-ol.cml");
         CMLReader reader = new CMLReader(in);
         try {
-            IChemFile cfile = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
+            IChemFile cfile =
+                    reader.read(
+                            DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
 
             Assert.assertNotNull("ChemFile was Null", cfile);
 
@@ -125,7 +126,9 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
             Assert.assertNotNull("Null atom container read", container);
 
             for (IAtom atom : container.atoms()) {
-                Assert.assertEquals("Incorrect atomic number", PeriodicTable.getAtomicNumber(atom.getSymbol()),
+                Assert.assertEquals(
+                        "Incorrect atomic number",
+                        PeriodicTable.getAtomicNumber(atom.getSymbol()),
                         atom.getAtomicNumber());
             }
 
@@ -135,9 +138,8 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
     }
 
     /**
-     * Ensures that when multiple stereo is set the dictRef is favoured
-     * and the charContent is not used. Here is an example of what we expect
-     * to read.
+     * Ensures that when multiple stereo is set the dictRef is favoured and the charContent is not
+     * used. Here is an example of what we expect to read.
      *
      * <pre>{@code
      * <bond atomRefs2="a1 a4" order="1">
@@ -163,10 +165,15 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
     @Test
     public void testBug1274() throws CDKException, IOException {
 
-        InputStream in = getClass().getResourceAsStream("/data/cml/(1R)-1-aminoethan-1-ol-multipleBondStereo.cml");
+        InputStream in =
+                getClass()
+                        .getResourceAsStream(
+                                "/data/cml/(1R)-1-aminoethan-1-ol-multipleBondStereo.cml");
         CMLReader reader = new CMLReader(in);
         try {
-            IChemFile cfile = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
+            IChemFile cfile =
+                    reader.read(
+                            DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
 
             Assert.assertNotNull("ChemFile was null", cfile);
 
@@ -180,9 +187,18 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
 
             // we check here that the charContent is not used and also that more then
             // one stereo isn't set
-            Assert.assertEquals("expected non-stereo bond", IBond.Stereo.NONE, container.getBond(0).getStereo());
-            Assert.assertEquals("expected Hatch (Down) Bond", IBond.Stereo.DOWN, container.getBond(1).getStereo());
-            Assert.assertEquals("expected non-stereo bond", IBond.Stereo.NONE, container.getBond(2).getStereo());
+            Assert.assertEquals(
+                    "expected non-stereo bond",
+                    IBond.Stereo.NONE,
+                    container.getBond(0).getStereo());
+            Assert.assertEquals(
+                    "expected Hatch (Down) Bond",
+                    IBond.Stereo.DOWN,
+                    container.getBond(1).getStereo());
+            Assert.assertEquals(
+                    "expected non-stereo bond",
+                    IBond.Stereo.NONE,
+                    container.getBond(2).getStereo());
 
         } finally {
             reader.close();
@@ -197,10 +213,15 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
     @Test
     public void testBug1275() throws CDKException, IOException {
 
-        InputStream in = getClass().getResourceAsStream("/data/cml/(1R)-1-aminoethan-1-ol-malformedDictRef.cml");
+        InputStream in =
+                getClass()
+                        .getResourceAsStream(
+                                "/data/cml/(1R)-1-aminoethan-1-ol-malformedDictRef.cml");
         CMLReader reader = new CMLReader(in);
         try {
-            IChemFile cfile = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
+            IChemFile cfile =
+                    reader.read(
+                            DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
 
             Assert.assertNotNull("ChemFile was null", cfile);
 
@@ -213,14 +234,20 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
             Assert.assertNotNull("null atom container read", container);
 
             // we check here that the malformed dictRef doesn't throw an exception
-            Assert.assertEquals("expected non-stereo bond", IBond.Stereo.NONE, container.getBond(0).getStereo());
-            Assert.assertEquals("expected Wedge (Up) Bond", IBond.Stereo.UP, container.getBond(1).getStereo());
-            Assert.assertEquals("expected non-stereo bond", IBond.Stereo.NONE, container.getBond(2).getStereo());
+            Assert.assertEquals(
+                    "expected non-stereo bond",
+                    IBond.Stereo.NONE,
+                    container.getBond(0).getStereo());
+            Assert.assertEquals(
+                    "expected Wedge (Up) Bond", IBond.Stereo.UP, container.getBond(1).getStereo());
+            Assert.assertEquals(
+                    "expected non-stereo bond",
+                    IBond.Stereo.NONE,
+                    container.getBond(2).getStereo());
 
         } finally {
             reader.close();
         }
-
     }
 
     @Test
@@ -228,7 +255,9 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
         InputStream in = getClass().getResourceAsStream("/data/cml/AZD5423.xml");
         CMLReader reader = new CMLReader(in);
         try {
-            IChemFile cfile = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
+            IChemFile cfile =
+                    reader.read(
+                            DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
             Assert.assertNotNull("ChemFile was null", cfile);
             List<IAtomContainer> containers = ChemFileManipulator.getAllAtomContainers(cfile);
             Assert.assertEquals("expected a single atom container", 1, containers.size());
@@ -238,20 +267,34 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
             // we check here that the malformed dictRef doesn't throw an exception
             for (int i = 0; i < 19; i++) {
                 Assert.assertEquals(
-                        "found an unexpected wedge bond for " + i + ": " + container.getBond(i).getStereo(),
-                        IBond.Stereo.NONE, container.getBond(i).getStereo());
+                        "found an unexpected wedge bond for "
+                                + i
+                                + ": "
+                                + container.getBond(i).getStereo(),
+                        IBond.Stereo.NONE,
+                        container.getBond(i).getStereo());
             }
-            Assert.assertEquals("expected a wedge bond", IBond.Stereo.DOWN, container.getBond(19).getStereo());
+            Assert.assertEquals(
+                    "expected a wedge bond", IBond.Stereo.DOWN, container.getBond(19).getStereo());
             for (int i = 20; i < 30; i++) {
                 Assert.assertEquals(
-                        "found an unexpected wedge bond for " + i + ": " + container.getBond(i).getStereo(),
-                        IBond.Stereo.NONE, container.getBond(i).getStereo());
+                        "found an unexpected wedge bond for "
+                                + i
+                                + ": "
+                                + container.getBond(i).getStereo(),
+                        IBond.Stereo.NONE,
+                        container.getBond(i).getStereo());
             }
-            Assert.assertEquals("expected a wedge bond", IBond.Stereo.UP, container.getBond(30).getStereo());
+            Assert.assertEquals(
+                    "expected a wedge bond", IBond.Stereo.UP, container.getBond(30).getStereo());
             for (int i = 31; i <= 37; i++) {
                 Assert.assertEquals(
-                        "found an unexpected wedge bond for " + i + ": " + container.getBond(i).getStereo(),
-                        IBond.Stereo.NONE, container.getBond(i).getStereo());
+                        "found an unexpected wedge bond for "
+                                + i
+                                + ": "
+                                + container.getBond(i).getStereo(),
+                        IBond.Stereo.NONE,
+                        container.getBond(i).getStereo());
             }
         } finally {
             reader.close();
@@ -260,43 +303,49 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testSFBug1085912_1() throws Exception {
-        String cmlContent = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>"
-                + "<molecule convention=\"PDB\" dictRef=\"pdb:model\" xmlns=\"http://www.xml-cml.org/schema\">"
-                + "  <molecule dictRef=\"pdb:sequence\" id=\"ALAA116\">"
-                + "    <atomArray>"
-                + "      <atom id=\"a9794931\" elementType=\"N\" x3=\"-10.311\" y3=\"2.77\" z3=\"-9.837\" formalCharge=\"0\">"
-                + "        <scalar dictRef=\"cdk:partialCharge\" dataType=\"xsd:double\">0.0</scalar>"
-                + "      </atom>"
-                + "      <atom id=\"a5369354\" elementType=\"C\" x3=\"-9.75\" y3=\"4.026\" z3=\"-9.35\" formalCharge=\"0\">"
-                + "        <scalar dictRef=\"cdk:partialCharge\" dataType=\"xsd:double\">0.0</scalar>"
-                + "      </atom>"
-                + "      <atom id=\"a14877152\" elementType=\"C\" x3=\"-10.818\" y3=\"5.095\" z3=\"-9.151\" formalCharge=\"0\">"
-                + "        <scalar dictRef=\"cdk:partialCharge\" dataType=\"xsd:double\">0.0</scalar>"
-                + "      </atom>"
-                + "      <atom id=\"a26221736\" elementType=\"O\" x3=\"-11.558\" y3=\"5.433\" z3=\"-10.074\" formalCharge=\"0\">"
-                + "        <scalar dictRef=\"cdk:partialCharge\" dataType=\"xsd:double\">0.0</scalar>"
-                + "      </atom>"
-                + "      <atom id=\"a4811470\" elementType=\"C\" x3=\"-8.678\" y3=\"4.536\" z3=\"-10.304\" formalCharge=\"0\">"
-                + "        <scalar dictRef=\"cdk:partialCharge\" dataType=\"xsd:double\">0.0</scalar>"
-                + "      </atom>"
-                + "      <atom id=\"a211489\" elementType=\"H\" x3=\"-10.574\" y3=\"2.695\" z3=\"-10.778\" formalCharge=\"0\">"
-                + "        <scalar dictRef=\"cdk:partialCharge\" dataType=\"xsd:double\">0.0</scalar>"
-                + "      </atom>"
-                + "      <atom id=\"a31287617\" elementType=\"H\" x3=\"-9.279\" y3=\"3.829\" z3=\"-8.398\" formalCharge=\"0\">"
-                + "        <scalar dictRef=\"cdk:partialCharge\" dataType=\"xsd:double\">0.0</scalar>"
-                + "      </atom>"
-                + "      <atom id=\"a19487109\" elementType=\"H\" x3=\"-8.523\" y3=\"3.813\" z3=\"-11.09\" formalCharge=\"0\">"
-                + "        <scalar dictRef=\"cdk:partialCharge\" dataType=\"xsd:double\">0.0</scalar>"
-                + "      </atom>"
-                + "      <atom id=\"a28589522\" elementType=\"H\" x3=\"-8.994\" y3=\"5.477\" z3=\"-10.737\" formalCharge=\"0\">"
-                + "        <scalar dictRef=\"cdk:partialCharge\" dataType=\"xsd:double\">0.0</scalar>"
-                + "      </atom>"
-                + "      <atom id=\"a4638116\" elementType=\"H\" x3=\"-7.754\" y3=\"4.682\" z3=\"-9.763\" formalCharge=\"0\">"
-                + "        <scalar dictRef=\"cdk:partialCharge\" dataType=\"xsd:double\">0.0</scalar>"
-                + "      </atom>" + "    </atomArray>" + "  </molecule>" + "</molecule>";
+        String cmlContent =
+                "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>"
+                        + "<molecule convention=\"PDB\" dictRef=\"pdb:model\" xmlns=\"http://www.xml-cml.org/schema\">"
+                        + "  <molecule dictRef=\"pdb:sequence\" id=\"ALAA116\">"
+                        + "    <atomArray>"
+                        + "      <atom id=\"a9794931\" elementType=\"N\" x3=\"-10.311\" y3=\"2.77\" z3=\"-9.837\" formalCharge=\"0\">"
+                        + "        <scalar dictRef=\"cdk:partialCharge\" dataType=\"xsd:double\">0.0</scalar>"
+                        + "      </atom>"
+                        + "      <atom id=\"a5369354\" elementType=\"C\" x3=\"-9.75\" y3=\"4.026\" z3=\"-9.35\" formalCharge=\"0\">"
+                        + "        <scalar dictRef=\"cdk:partialCharge\" dataType=\"xsd:double\">0.0</scalar>"
+                        + "      </atom>"
+                        + "      <atom id=\"a14877152\" elementType=\"C\" x3=\"-10.818\" y3=\"5.095\" z3=\"-9.151\" formalCharge=\"0\">"
+                        + "        <scalar dictRef=\"cdk:partialCharge\" dataType=\"xsd:double\">0.0</scalar>"
+                        + "      </atom>"
+                        + "      <atom id=\"a26221736\" elementType=\"O\" x3=\"-11.558\" y3=\"5.433\" z3=\"-10.074\" formalCharge=\"0\">"
+                        + "        <scalar dictRef=\"cdk:partialCharge\" dataType=\"xsd:double\">0.0</scalar>"
+                        + "      </atom>"
+                        + "      <atom id=\"a4811470\" elementType=\"C\" x3=\"-8.678\" y3=\"4.536\" z3=\"-10.304\" formalCharge=\"0\">"
+                        + "        <scalar dictRef=\"cdk:partialCharge\" dataType=\"xsd:double\">0.0</scalar>"
+                        + "      </atom>"
+                        + "      <atom id=\"a211489\" elementType=\"H\" x3=\"-10.574\" y3=\"2.695\" z3=\"-10.778\" formalCharge=\"0\">"
+                        + "        <scalar dictRef=\"cdk:partialCharge\" dataType=\"xsd:double\">0.0</scalar>"
+                        + "      </atom>"
+                        + "      <atom id=\"a31287617\" elementType=\"H\" x3=\"-9.279\" y3=\"3.829\" z3=\"-8.398\" formalCharge=\"0\">"
+                        + "        <scalar dictRef=\"cdk:partialCharge\" dataType=\"xsd:double\">0.0</scalar>"
+                        + "      </atom>"
+                        + "      <atom id=\"a19487109\" elementType=\"H\" x3=\"-8.523\" y3=\"3.813\" z3=\"-11.09\" formalCharge=\"0\">"
+                        + "        <scalar dictRef=\"cdk:partialCharge\" dataType=\"xsd:double\">0.0</scalar>"
+                        + "      </atom>"
+                        + "      <atom id=\"a28589522\" elementType=\"H\" x3=\"-8.994\" y3=\"5.477\" z3=\"-10.737\" formalCharge=\"0\">"
+                        + "        <scalar dictRef=\"cdk:partialCharge\" dataType=\"xsd:double\">0.0</scalar>"
+                        + "      </atom>"
+                        + "      <atom id=\"a4638116\" elementType=\"H\" x3=\"-7.754\" y3=\"4.682\" z3=\"-9.763\" formalCharge=\"0\">"
+                        + "        <scalar dictRef=\"cdk:partialCharge\" dataType=\"xsd:double\">0.0</scalar>"
+                        + "      </atom>"
+                        + "    </atomArray>"
+                        + "  </molecule>"
+                        + "</molecule>";
         CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlContent.getBytes()));
         try {
-            IChemFile cfile = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
+            IChemFile cfile =
+                    reader.read(
+                            DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
             Assert.assertNotNull("ChemFile was null", cfile);
             List<IAtomContainer> containers = ChemFileManipulator.getAllAtomContainers(cfile);
             Assert.assertEquals("expected a single atom container", 1, containers.size());
@@ -315,12 +364,13 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
         InputStream in = getClass().getResourceAsStream("US06358966-20020319-C00001-enr.cml");
         CMLReader reader = new CMLReader(in);
         try {
-            IChemFile cfile = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
+            IChemFile cfile =
+                    reader.read(
+                            DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
             Assert.assertEquals(34, ChemFileManipulator.getAtomCount(cfile));
             Assert.assertEquals(39, ChemFileManipulator.getBondCount(cfile));
         } finally {
             reader.close();
         }
-
     }
 }

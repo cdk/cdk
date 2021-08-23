@@ -56,7 +56,7 @@ public class PubChemASNFormat extends SimpleChemFormatMatcher implements IChemFo
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"asn"};
+        return new String[] {"asn"};
     }
 
     /** {@inheritDoc} */

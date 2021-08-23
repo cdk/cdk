@@ -22,9 +22,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 
-/**
- * @cdk.module test-dict
- */
+/** @cdk.module test-dict */
 public class OWLFileTest extends AbstractDictionaryTest {
 
     @Before
@@ -36,5 +34,4 @@ public class OWLFileTest extends AbstractDictionaryTest {
     public void testTestClass() {
         Assert.assertTrue(getTestClass().getClass().getName().endsWith(".OWLFile"));
     }
-
 }

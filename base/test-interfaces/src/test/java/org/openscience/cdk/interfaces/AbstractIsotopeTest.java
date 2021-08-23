@@ -26,7 +26,6 @@ import org.openscience.cdk.tools.diff.IsotopeDiff;
  * Checks the functionality of the Isotope class.
  *
  * @cdk.module test-interfaces
- *
  * @see org.openscience.cdk.Isotope
  */
 public abstract class AbstractIsotopeTest extends AbstractElementTest {
@@ -67,9 +66,7 @@ public abstract class AbstractIsotopeTest extends AbstractElementTest {
         testSetMassNumber_Integer();
     }
 
-    /**
-     * Method to test the clone() method
-     */
+    /** Method to test the clone() method */
     @Test
     @Override
     public void testClone() throws Exception {
@@ -83,9 +80,7 @@ public abstract class AbstractIsotopeTest extends AbstractElementTest {
         Assert.assertEquals(0, diff.length());
     }
 
-    /**
-     * Method to test the clone() method
-     */
+    /** Method to test the clone() method */
     @Test
     public void testClone_ExactMass() throws Exception {
         IIsotope iso = (IIsotope) newChemObject();
@@ -97,9 +92,7 @@ public abstract class AbstractIsotopeTest extends AbstractElementTest {
         Assert.assertEquals(1.0, clone.getExactMass(), 0.001);
     }
 
-    /**
-     * Method to test the clone() method
-     */
+    /** Method to test the clone() method */
     @Test
     public void testClone_NaturalAbundance() throws Exception {
         IIsotope iso = (IIsotope) newChemObject();
@@ -111,9 +104,7 @@ public abstract class AbstractIsotopeTest extends AbstractElementTest {
         Assert.assertEquals(1.0, clone.getNaturalAbundance(), 0.001);
     }
 
-    /**
-     * Method to test the clone() method
-     */
+    /** Method to test the clone() method */
     @Test
     public void testClone_MassNumber() throws Exception {
         IIsotope iso = (IIsotope) newChemObject();
@@ -125,9 +116,7 @@ public abstract class AbstractIsotopeTest extends AbstractElementTest {
         Assert.assertEquals(12, clone.getMassNumber().intValue());
     }
 
-    /**
-     * Method to test whether the class complies with RFC #9.
-     */
+    /** Method to test whether the class complies with RFC #9. */
     @Test
     @Override
     public void testToString() {
@@ -138,5 +127,4 @@ public abstract class AbstractIsotopeTest extends AbstractElementTest {
             Assert.assertTrue(description.charAt(i) != '\r');
         }
     }
-
 }

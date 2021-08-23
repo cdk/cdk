@@ -22,7 +22,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * @cdk.module  isomorphism
+ * @cdk.module isomorphism
  * @cdk.githash
  */
 @Deprecated

@@ -22,14 +22,13 @@ package org.openscience.cdk.protein.data;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.IPDBStructure;
 import org.openscience.cdk.interfaces.AbstractPDBStructureTest;
+import org.openscience.cdk.interfaces.IPDBStructure;
 
 /**
  * Checks the functionality of the PDBStructure class.
  *
  * @cdk.module test-data
- *
  * @see PDBStructure
  */
 public class PDBStructureTest extends AbstractPDBStructureTest {

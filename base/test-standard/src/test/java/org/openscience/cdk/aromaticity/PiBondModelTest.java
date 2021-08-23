@@ -24,6 +24,9 @@
 
 package org.openscience.cdk.aromaticity;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import org.junit.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -32,9 +35,6 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * Test the electron contribution using the pi bond only model.
@@ -78,7 +78,20 @@ public class PiBondModelTest {
 
     @Test
     public void hexamethylidenecyclohexane() throws Exception {
-        test(smiles("C=C1C(=C)C(=C)C(=C)C(=C)C1=C"), -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1);
+        test(
+                smiles("C=C1C(=C)C(=C)C(=C)C(=C)C1=C"),
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1);
     }
 
     @Test
@@ -128,8 +141,32 @@ public class PiBondModelTest {
 
     @Test
     public void porphyrine() throws Exception {
-        test(smiles("N1C2=CC=C1C=C1C=CC(C=C3NC(C=C3)=CC3=NC(C=C3)=C2)=N1"), -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, 1,
-                1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+        test(
+                smiles("N1C2=CC=C1C=C1C=CC(C=C3NC(C=C3)=CC3=NC(C=C3)=C2)=N1"),
+                -1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                -1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1);
     }
 
     @Test

@@ -26,12 +26,12 @@
 package org.openscience.cdk.isomorphism.mcss;
 
 /**
- *  An RMap implements the association between an edge (bond) in G1 and an edge
- *  (bond) in G2, G1 and G2 being the compared graphs in a RGraph context.
+ * An RMap implements the association between an edge (bond) in G1 and an edge (bond) in G2, G1 and
+ * G2 being the compared graphs in a RGraph context.
  *
  * @author Stephane Werner, IXELIS &lt;mail@ixelis.net&gt;
  * @cdk.created 2002-07-24
- * @cdk.module  standard
+ * @cdk.module standard
  * @cdk.githash
  */
 public class RMap {
@@ -40,10 +40,10 @@ public class RMap {
     int id2 = 0;
 
     /**
-     *  Constructor for the RMap.
+     * Constructor for the RMap.
      *
-     * @param  id1  number of the edge (bond) in the graph 1
-     * @param  id2  number of the edge (bond) in the graph 2
+     * @param id1 number of the edge (bond) in the graph 1
+     * @param id2 number of the edge (bond) in the graph 2
      */
     public RMap(int id1, int id2) {
         this.id1 = id1;
@@ -51,46 +51,46 @@ public class RMap {
     }
 
     /**
-     *  Sets the id1 attribute of the RMap object.
+     * Sets the id1 attribute of the RMap object.
      *
-     * @param  id1  The new id1 value
+     * @param id1 The new id1 value
      */
     public void setId1(int id1) {
         this.id1 = id1;
     }
 
     /**
-     *  Sets the id2 attribute of the RMap object.
+     * Sets the id2 attribute of the RMap object.
      *
-     * @param  id2  The new id2 value
+     * @param id2 The new id2 value
      */
     public void setId2(int id2) {
         this.id2 = id2;
     }
 
     /**
-     *  Gets the id1 attribute of the RMap object.
+     * Gets the id1 attribute of the RMap object.
      *
-     * @return    The id1 value
+     * @return The id1 value
      */
     public int getId1() {
         return id1;
     }
 
     /**
-     *  Gets the id2 attribute of the RMap object.
+     * Gets the id2 attribute of the RMap object.
      *
-     * @return    The id2 value
+     * @return The id2 value
      */
     public int getId2() {
         return id2;
     }
 
     /**
-     *  The equals method.
+     * The equals method.
      *
-     * @param  o  The object to compare.
-     * @return    true=if both ids equal, else false.
+     * @param o The object to compare.
+     * @return true=if both ids equal, else false.
      */
     @Override
     public boolean equals(Object o) {

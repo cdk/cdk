@@ -18,6 +18,12 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import java.io.InputStream;
+import java.util.Iterator;
+import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,22 +48,14 @@ import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 
-import java.io.InputStream;
-import java.util.Iterator;
-import java.util.List;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 /**
  * @cdk.module test-standard
- *
- * @author     Egon Willighagen
- * @cdk.created    2003-07-23
+ * @author Egon Willighagen
+ * @cdk.created 2003-07-23
  */
 public class ReactionManipulatorTest extends CDKTestCase {
 
-    private IReaction          reaction;
+    private IReaction reaction;
     private IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 
     public ReactionManipulatorTest() {
@@ -110,7 +108,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit. Test of mapped IAtoms
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testGetMappedChemObject_IReaction_IAtom() throws Exception {
@@ -118,7 +116,8 @@ public class ReactionManipulatorTest extends CDKTestCase {
         IAtomContainer reactant = (new SmilesParser(builder)).parseSmiles("[C+]-C=C");
         IAtomContainer product = (new SmilesParser(builder)).parseSmiles("C=C=C");
 
-        IMapping mapping = builder.newInstance(IMapping.class, reactant.getAtom(0), product.getAtom(0));
+        IMapping mapping =
+                builder.newInstance(IMapping.class, reactant.getAtom(0), product.getAtom(0));
         reaction.addMapping(mapping);
         mapping = builder.newInstance(IMapping.class, reactant.getAtom(1), product.getAtom(1));
         reaction.addMapping(mapping);
@@ -128,27 +127,28 @@ public class ReactionManipulatorTest extends CDKTestCase {
         reaction.addReactant(reactant);
         reaction.addProduct(product);
 
-        IAtom mappedAtom = (IAtom) ReactionManipulator.getMappedChemObject(reaction, reactant.getAtom(0));
+        IAtom mappedAtom =
+                (IAtom) ReactionManipulator.getMappedChemObject(reaction, reactant.getAtom(0));
         Assert.assertEquals(mappedAtom, product.getAtom(0));
 
         mappedAtom = (IAtom) ReactionManipulator.getMappedChemObject(reaction, product.getAtom(1));
         Assert.assertEquals(mappedAtom, reactant.getAtom(1));
-
     }
 
     /**
      * A unit test suite for JUnit. Test of mapped IBond
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
-    public void testGetMappedChemObject_IReaction_IBond() throws ClassNotFoundException, CDKException,
-            java.lang.Exception {
+    public void testGetMappedChemObject_IReaction_IBond()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
         IReaction reaction = builder.newInstance(IReaction.class);
         IAtomContainer reactant = (new SmilesParser(builder)).parseSmiles("[C+]-C=C");
         IAtomContainer product = (new SmilesParser(builder)).parseSmiles("C=C=C");
 
-        IMapping mapping = builder.newInstance(IMapping.class, reactant.getAtom(0), product.getAtom(0));
+        IMapping mapping =
+                builder.newInstance(IMapping.class, reactant.getAtom(0), product.getAtom(0));
         reaction.addMapping(mapping);
         mapping = builder.newInstance(IMapping.class, reactant.getBond(0), product.getBond(0));
         reaction.addMapping(mapping);
@@ -158,7 +158,8 @@ public class ReactionManipulatorTest extends CDKTestCase {
         reaction.addReactant(reactant);
         reaction.addProduct(product);
 
-        IBond mappedBond = (IBond) ReactionManipulator.getMappedChemObject(reaction, reactant.getBond(0));
+        IBond mappedBond =
+                (IBond) ReactionManipulator.getMappedChemObject(reaction, reactant.getBond(0));
         Assert.assertEquals(mappedBond, product.getBond(0));
 
         mappedBond = (IBond) ReactionManipulator.getMappedChemObject(reaction, product.getBond(1));
@@ -183,7 +184,8 @@ public class ReactionManipulatorTest extends CDKTestCase {
     @Test
     public void testSetAtomProperties_IReactionSet_Object_Object() throws Exception {
         ReactionManipulator.setAtomProperties(reaction, "test", "ok");
-        Iterator<IAtomContainer> atomContainers = ReactionManipulator.getAllAtomContainers(reaction).iterator();
+        Iterator<IAtomContainer> atomContainers =
+                ReactionManipulator.getAllAtomContainers(reaction).iterator();
         while (atomContainers.hasNext()) {
             IAtomContainer container = atomContainers.next();
             Iterator<IAtom> atoms = container.atoms().iterator();
@@ -205,21 +207,25 @@ public class ReactionManipulatorTest extends CDKTestCase {
 
     @Test
     public void testGetRelevantAtomContainer_IReaction_IAtom() {
-        Iterator<IAtomContainer> atomContainers = ReactionManipulator.getAllAtomContainers(reaction).iterator();
+        Iterator<IAtomContainer> atomContainers =
+                ReactionManipulator.getAllAtomContainers(reaction).iterator();
         while (atomContainers.hasNext()) {
             IAtomContainer container = atomContainers.next();
             IAtom anAtom = container.getAtom(0);
-            Assert.assertEquals(container, ReactionManipulator.getRelevantAtomContainer(reaction, anAtom));
+            Assert.assertEquals(
+                    container, ReactionManipulator.getRelevantAtomContainer(reaction, anAtom));
         }
     }
 
     @Test
     public void testGetRelevantAtomContainer_IReaction_IBond() {
-        Iterator<IAtomContainer> atomContainers = ReactionManipulator.getAllAtomContainers(reaction).iterator();
+        Iterator<IAtomContainer> atomContainers =
+                ReactionManipulator.getAllAtomContainers(reaction).iterator();
         while (atomContainers.hasNext()) {
             IAtomContainer container = atomContainers.next();
             IBond aBond = container.getBond(0);
-            Assert.assertEquals(container, ReactionManipulator.getRelevantAtomContainer(reaction, aBond));
+            Assert.assertEquals(
+                    container, ReactionManipulator.getRelevantAtomContainer(reaction, aBond));
         }
     }
 
@@ -241,7 +247,6 @@ public class ReactionManipulatorTest extends CDKTestCase {
 
         Assert.assertEquals(2, mol.getAtomCount());
         Assert.assertEquals(0, mol.getBondCount());
-
     }
 
     @Test
@@ -272,7 +277,8 @@ public class ReactionManipulatorTest extends CDKTestCase {
         reaction.addReactant(builder.newInstance(IAtomContainer.class));
         reaction.addProduct(builder.newInstance(IAtomContainer.class));
         reaction.addProduct(builder.newInstance(IAtomContainer.class));
-        Assert.assertEquals(5, ReactionManipulator.getAllMolecules(reaction).getAtomContainerCount());
+        Assert.assertEquals(
+                5, ReactionManipulator.getAllMolecules(reaction).getAtomContainerCount());
     }
 
     @Test
@@ -283,7 +289,8 @@ public class ReactionManipulatorTest extends CDKTestCase {
         reaction.addReactant(builder.newInstance(IAtomContainer.class));
         reaction.addProduct(builder.newInstance(IAtomContainer.class));
         reaction.addProduct(builder.newInstance(IAtomContainer.class));
-        Assert.assertEquals(3, ReactionManipulator.getAllReactants(reaction).getAtomContainerCount());
+        Assert.assertEquals(
+                3, ReactionManipulator.getAllReactants(reaction).getAtomContainerCount());
     }
 
     @Test
@@ -294,33 +301,38 @@ public class ReactionManipulatorTest extends CDKTestCase {
         reaction.addReactant(builder.newInstance(IAtomContainer.class));
         reaction.addProduct(builder.newInstance(IAtomContainer.class));
         reaction.addProduct(builder.newInstance(IAtomContainer.class));
-        Assert.assertEquals(2, ReactionManipulator.getAllProducts(reaction).getAtomContainerCount());
+        Assert.assertEquals(
+                2, ReactionManipulator.getAllProducts(reaction).getAtomContainerCount());
     }
 
-    @Test public void inliningReactions() throws CDKException {
+    @Test
+    public void inliningReactions() throws CDKException {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
-        IReaction reaction = smipar.parseReactionSmiles("CCO.CC(=O)O>[H+]>CCOC(=O)C.O ethyl esterification");
+        IReaction reaction =
+                smipar.parseReactionSmiles("CCO.CC(=O)O>[H+]>CCOC(=O)C.O ethyl esterification");
         SmilesGenerator smigen = SmilesGenerator.isomeric();
         // convert to molecule
         IAtomContainer mol = ReactionManipulator.toMolecule(reaction);
-        assertThat(smigen.create(mol),
-                   is("CCO.CC(=O)O.[H+].CCOC(=O)C.O"));
-        assertThat(smigen.createReactionSMILES(ReactionManipulator.toReaction(mol)),
-                   is("CCO.CC(=O)O>[H+]>CCOC(=O)C.O"));
+        assertThat(smigen.create(mol), is("CCO.CC(=O)O.[H+].CCOC(=O)C.O"));
+        assertThat(
+                smigen.createReactionSMILES(ReactionManipulator.toReaction(mol)),
+                is("CCO.CC(=O)O>[H+]>CCOC(=O)C.O"));
     }
 
-    @Test public void inliningReactionsWithRadicals() throws CDKException {
+    @Test
+    public void inliningReactionsWithRadicals() throws CDKException {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         SmilesParser smipar = new SmilesParser(bldr);
-        IReaction reaction = smipar.parseReactionSmiles("[CH2]CO.CC(=O)O>[H+]>CCOC(=O)C.O |^1:0| ethyl esterification");
+        IReaction reaction =
+                smipar.parseReactionSmiles(
+                        "[CH2]CO.CC(=O)O>[H+]>CCOC(=O)C.O |^1:0| ethyl esterification");
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxSmiles);
         // convert to molecule
         IAtomContainer mol = ReactionManipulator.toMolecule(reaction);
-        assertThat(smigen.create(mol),
-                   is("[CH2]CO.CC(=O)O.[H+].CCOC(=O)C.O |^1:0|"));
-        assertThat(smigen.createReactionSMILES(ReactionManipulator.toReaction(mol)),
-                   is("[CH2]CO.CC(=O)O>[H+]>CCOC(=O)C.O |^1:0|"));
+        assertThat(smigen.create(mol), is("[CH2]CO.CC(=O)O.[H+].CCOC(=O)C.O |^1:0|"));
+        assertThat(
+                smigen.createReactionSMILES(ReactionManipulator.toReaction(mol)),
+                is("[CH2]CO.CC(=O)O>[H+]>CCOC(=O)C.O |^1:0|"));
     }
-
 }

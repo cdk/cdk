@@ -36,7 +36,6 @@ import org.openscience.cdk.tools.ProteinBuilderTool;
  * TestSuite that runs test for the TAE descriptors
  *
  * @cdk.module test-qsarprotein
- *
  */
 public class TaeAminoAcidDescriptorTest extends MolecularDescriptorTest {
 
@@ -53,8 +52,10 @@ public class TaeAminoAcidDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testTaeAminoAcidDescriptor() throws ClassNotFoundException, CDKException, Exception {
-        IBioPolymer pepseq = ProteinBuilderTool.createProtein("ACDEFGH", SilentChemObjectBuilder.getInstance());
+    public void testTaeAminoAcidDescriptor()
+            throws ClassNotFoundException, CDKException, Exception {
+        IBioPolymer pepseq =
+                ProteinBuilderTool.createProtein("ACDEFGH", SilentChemObjectBuilder.getInstance());
         DescriptorValue result = descriptor.calculate(pepseq);
 
         DoubleArrayResult dar = (DoubleArrayResult) result.getValue();

@@ -28,8 +28,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
-
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.UndirectedGraph;
 import org._3pq.jgrapht.graph.UndirectedSubgraph;
@@ -38,10 +36,8 @@ import org._3pq.jgrapht.graph.UndirectedSubgraph;
  * A cycle in a graph G is a subgraph in which every vertex has even degree.
  *
  * @author Ulrich Bauer &lt;ulrich.bauer@alumni.tum.de&gt;
- *
  * @cdk.module standard
  * @cdk.githash
- *
  * @cdk.keyword smallest-set-of-rings
  * @cdk.keyword ring search
  * @deprecated internal implemenation detail from SSSRFinder, do not use
@@ -54,8 +50,8 @@ public class SimpleCycle extends UndirectedSubgraph {
     /**
      * Constructs a cycle in a graph consisting of the specified edges.
      *
-     * @param   g the graph in which the cycle is contained
-     * @param   edges the edges of the cycle
+     * @param g the graph in which the cycle is contained
+     * @param edges the edges of the cycle
      */
     public SimpleCycle(UndirectedGraph g, Collection edges) {
         this(g, new HashSet(edges));
@@ -64,8 +60,8 @@ public class SimpleCycle extends UndirectedSubgraph {
     /**
      * Constructs a cycle in a graph consisting of the specified edges.
      *
-     * @param   g the graph in which the cycle is contained
-     * @param   edges the edges of the cycle
+     * @param g the graph in which the cycle is contained
+     * @param edges the edges of the cycle
      */
     public SimpleCycle(UndirectedGraph g, Set edges) {
         super(g, inducedVertices(edges), edges);
@@ -73,9 +69,9 @@ public class SimpleCycle extends UndirectedSubgraph {
         // assert checkConsistency();
     }
 
-    static private Set inducedVertices(Set edges) {
+    private static Set inducedVertices(Set edges) {
         Set inducedVertices = new HashSet();
-        for (Iterator i = edges.iterator(); i.hasNext();) {
+        for (Iterator i = edges.iterator(); i.hasNext(); ) {
             Edge edge = (Edge) i.next();
             inducedVertices.add(edge.getSource());
             inducedVertices.add(edge.getTarget());
@@ -98,8 +94,8 @@ public class SimpleCycle extends UndirectedSubgraph {
     }
 
     /**
-     * Returns a list of the vertices contained in this cycle.
-     * The vertices are in the order of a traversal of the cycle.
+     * Returns a list of the vertices contained in this cycle. The vertices are in the order of a
+     * traversal of the cycle.
      *
      * @return a list of the vertices contained in this cycle
      */
@@ -128,7 +124,6 @@ public class SimpleCycle extends UndirectedSubgraph {
 
             previousVertex = vertex;
             vertex = nextVertex;
-
         }
 
         return vertices;
@@ -156,5 +151,4 @@ public class SimpleCycle extends UndirectedSubgraph {
         }
         return true;
     }
-
 }

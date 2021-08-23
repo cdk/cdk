@@ -23,26 +23,26 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
- *  A set of utilities which did not really fit into any other category.
+ * A set of utilities which did not really fit into any other category.
  *
- * @author     steinbeck
+ * @author steinbeck
  * @cdk.githash
- * @cdk.created    2001-06-19
+ * @cdk.created 2001-06-19
  */
 @Deprecated
 public class SwissArmyKnife {
 
-    public final static boolean debug = false;
+    public static final boolean debug = false;
 
     // minimum details
 
     /**
-     *  Returns a string reporting the time passed between startTime and endTime,
-     *  both given in milliseconds, in hours, minutes, seconds and milliseconds.
+     * Returns a string reporting the time passed between startTime and endTime, both given in
+     * milliseconds, in hours, minutes, seconds and milliseconds.
      *
-     * @param  startTime  The start time in milliseconds
-     * @param  endTime    The end time in milliseconds
-     * @return            A human readable representation of a timespan given in milliseconds
+     * @param startTime The start time in milliseconds
+     * @param endTime The end time in milliseconds
+     * @return A human readable representation of a timespan given in milliseconds
      */
     public static String getDuration(long startTime, long endTime) {
         long diff = endTime - startTime;
@@ -50,10 +50,10 @@ public class SwissArmyKnife {
     }
 
     /**
-     *  Returns a String reporting the time passed during a given number of milliseconds.
+     * Returns a String reporting the time passed during a given number of milliseconds.
      *
-     * @param  diff  A time span in milliseconds
-     * @return       A human readable representation of a timespan given in milliseconds
+     * @param diff A time span in milliseconds
+     * @return A human readable representation of a timespan given in milliseconds
      */
     public static String getDuration(long diff) {
         GregorianCalendar calendar = new GregorianCalendar();
@@ -76,9 +76,9 @@ public class SwissArmyKnife {
     }
 
     /**
-     *  Returns a string representation of a 2D int matrix for printing or listing to the console.
+     * Returns a string representation of a 2D int matrix for printing or listing to the console.
      *
-     * @param  contab  The 2D int matrix for which a string representation is to be generatred
+     * @param contab The 2D int matrix for which a string representation is to be generatred
      */
     public static String printInt2D(int[][] contab) {
         String line = "";
@@ -92,10 +92,10 @@ public class SwissArmyKnife {
     }
 
     /**
-     *  Calculates the faculty for a given integer.
+     * Calculates the faculty for a given integer.
      *
-     * @param  i  The int value for which the faculty is to be returned
-     * @return    The faculty of i
+     * @param i The int value for which the faculty is to be returned
+     * @return The faculty of i
      */
     public static int faculty(int i) {
         if (i > 1) {
@@ -103,5 +103,4 @@ public class SwissArmyKnife {
         }
         return 1;
     }
-
 }

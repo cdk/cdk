@@ -26,7 +26,6 @@ package org.openscience.cdk.io.cml;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.StringWriter;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -104,5 +103,4 @@ public class PDBAtomCustomizerTest extends CDKTestCase {
         String conte2 = cmlContent2.substring(0, 1000);
         Assert.assertEquals(conte1, conte2);
     }
-
 }

@@ -13,7 +13,6 @@ import org.openscience.cdk.smiles.SmilesParser;
  *
  * @cdk.module test-qsarmolecular
  */
-
 public class CarbonTypesDescriptorTest extends MolecularDescriptorTest {
 
     public CarbonTypesDescriptorTest() {}
@@ -76,5 +75,4 @@ public class CarbonTypesDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(0, ret.get(7));
         Assert.assertEquals(0, ret.get(8));
     }
-
 }

@@ -20,12 +20,10 @@ package org.openscience.cdk.charges;
 
 import java.io.IOException;
 import java.util.Iterator;
-
 import javax.vecmath.Point3d;
-
 import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -37,11 +35,11 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- * The calculation of the inductive partial atomic charges and equalization of
- * effective electronegativities is based on {@cdk.cite CHE03}.
+ * The calculation of the inductive partial atomic charges and equalization of effective
+ * electronegativities is based on {@cdk.cite CHE03}.
  *
- * @author      mfe4
- * @cdk.module  charges
+ * @author mfe4
+ * @cdk.module charges
  * @cdk.githash
  * @cdk.created 2004-11-03
  * @cdk.keyword partial atomic charges
@@ -50,39 +48,45 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class InductivePartialCharges implements IChargeCalculator {
 
-    private static double[]     pauling;
-    private IsotopeFactory      ifac    = null;
-    private AtomTypeFactory     factory = null;
-    private static ILoggingTool logger  = LoggingToolFactory.createLoggingTool(InductivePartialCharges.class);
+    private static double[] pauling;
+    private IsotopeFactory ifac = null;
+    private AtomTypeFactory factory = null;
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(InductivePartialCharges.class);
 
     /**
-     *  Constructor for the InductivePartialCharges object.
+     * Constructor for the InductivePartialCharges object.
      *
-     *@exception  IOException             Description of the Exception
-     *@exception  ClassNotFoundException  Description of the Exception
+     * @exception IOException Description of the Exception
+     * @exception ClassNotFoundException Description of the Exception
      */
     public InductivePartialCharges() throws IOException, ClassNotFoundException {
         if (pauling == null) {
             // pauling ElEn :
             // second position is H, last is Ac
-            pauling = new double[]{0, 2.1, 0, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 0, 0.9, 1.2, 1.5, 1.8, 2.1, 2.5, 3.0,
-                    0, 0.8, 1.0, 1.3, 1.5, 1.6, 1.6, 1.5, 1.8, 1.8, 1.8, 1.9, 1.6, 1.6, 1.8, 2.0, 2.4, 2.8, 0, 0.8,
-                    1.0, 1.3, 1.4, 1.6, 1.8, 1.9, 2.2, 2.2, 2.2, 1.9, 1.7, 1.7, 1.8, 1.9, 2.1, 2.5, 0.7, 0.9, 1.1, 1.3,
-                    1.5, 1.7, 1.9, 2.2, 2.2, 2.2, 2.4, 1.9, 1.8, 1.8, 1.9, 2.0, 2.2, 0, 0.7, 0.9, 1.1};
+            pauling =
+                    new double[] {
+                        0, 2.1, 0, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 0, 0.9, 1.2, 1.5, 1.8, 2.1,
+                        2.5, 3.0, 0, 0.8, 1.0, 1.3, 1.5, 1.6, 1.6, 1.5, 1.8, 1.8, 1.8, 1.9, 1.6,
+                        1.6, 1.8, 2.0, 2.4, 2.8, 0, 0.8, 1.0, 1.3, 1.4, 1.6, 1.8, 1.9, 2.2, 2.2,
+                        2.2, 1.9, 1.7, 1.7, 1.8, 1.9, 2.1, 2.5, 0.7, 0.9, 1.1, 1.3, 1.5, 1.7, 1.9,
+                        2.2, 2.2, 2.2, 2.4, 1.9, 1.8, 1.8, 1.9, 2.0, 2.2, 0, 0.7, 0.9, 1.1
+                    };
         }
     }
 
     /**
-     *  Main method, set charge as atom properties.
+     * Main method, set charge as atom properties.
      *
-     *@param  ac             AtomContainer
-     *@return                AtomContainer
-     *@exception  Exception  Description of the Exception
+     * @param ac AtomContainer
+     * @return AtomContainer
+     * @exception Exception Description of the Exception
      */
     public IAtomContainer assignInductivePartialCharges(IAtomContainer ac) throws Exception {
         if (factory == null) {
-            factory = AtomTypeFactory
-                    .getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt", ac.getBuilder());
+            factory =
+                    AtomTypeFactory.getInstance(
+                            "org/openscience/cdk/config/data/jmol_atomtypes.txt", ac.getBuilder());
         }
 
         int stepsLimit = 9;
@@ -93,23 +97,29 @@ public class InductivePartialCharges implements IChargeCalculator {
         double[] startEE = getPaulingElectronegativities(ac, true);
         for (int e = 0; e < atoms.length; e++) {
             ElEn[e] = startEE[e];
-            //logger.debug("INDU: initial EE "+startEE[e]);
+            // logger.debug("INDU: initial EE "+startEE[e]);
         }
-        //double tmp1 = 0;
-        //double tmp2 = 0;
+        // double tmp1 = 0;
+        // double tmp2 = 0;
         for (int s = 1; s < 10; s++) {
             for (int a = 0; a < atoms.length; a++) {
                 pChInch[a + (s * atoms.length)] = getAtomicChargeIncrement(ac, a, ElEn, s);
-                pCh[a + (s * atoms.length)] = pChInch[a + (s * atoms.length)] + pCh[a + ((s - 1) * atoms.length)];
-                ElEn[a + (s * atoms.length)] = ElEn[a + ((s - 1) * atoms.length)]
-                        + (pChInch[a + (s * atoms.length)] / getAtomicSoftnessCore(ac, a));
+                pCh[a + (s * atoms.length)] =
+                        pChInch[a + (s * atoms.length)] + pCh[a + ((s - 1) * atoms.length)];
+                ElEn[a + (s * atoms.length)] =
+                        ElEn[a + ((s - 1) * atoms.length)]
+                                + (pChInch[a + (s * atoms.length)] / getAtomicSoftnessCore(ac, a));
                 if (s == 9) {
-                    atoms[a].setProperty("InductivePartialCharge", new Double(pCh[a + (s * atoms.length)]));
-                    atoms[a].setProperty("EffectiveAtomicElectronegativity", new Double(ElEn[a + (s * atoms.length)]));
+                    atoms[a].setProperty(
+                            "InductivePartialCharge", new Double(pCh[a + (s * atoms.length)]));
+                    atoms[a].setProperty(
+                            "EffectiveAtomicElectronegativity",
+                            new Double(ElEn[a + (s * atoms.length)]));
                 }
-                //tmp1 = pCh[a + (s * atoms.length)];
-                //tmp2 = ElEn[a + (s * atoms.length)];
-                //logger.debug("DONE step " + s + ", atom " + atoms[a].getSymbol() + ", ch " + tmp1 + ", ee " + tmp2);
+                // tmp1 = pCh[a + (s * atoms.length)];
+                // tmp2 = ElEn[a + (s * atoms.length)];
+                // logger.debug("DONE step " + s + ", atom " + atoms[a].getSymbol() + ", ch " + tmp1
+                // + ", ee " + tmp2);
             }
         }
         return ac;
@@ -120,20 +130,21 @@ public class InductivePartialCharges implements IChargeCalculator {
         try {
             this.assignInductivePartialCharges(container);
         } catch (Exception exception) {
-            throw new CDKException("Could not calculate inductive partial charges: " + exception.getMessage(),
+            throw new CDKException(
+                    "Could not calculate inductive partial charges: " + exception.getMessage(),
                     exception);
         }
     }
 
     /**
-     *  Gets the paulingElectronegativities attribute of the
-     *  InductivePartialCharges object.
+     * Gets the paulingElectronegativities attribute of the InductivePartialCharges object.
      *
-     *@param  ac             AtomContainer
-     *@param  modified       if true, some values are modified by following the reference
-     *@return                The pauling electronegativities
+     * @param ac AtomContainer
+     * @param modified if true, some values are modified by following the reference
+     * @return The pauling electronegativities
      */
-    public double[] getPaulingElectronegativities(IAtomContainer ac, boolean modified) throws CDKException {
+    public double[] getPaulingElectronegativities(IAtomContainer ac, boolean modified)
+            throws CDKException {
         double[] paulingElectronegativities = new double[ac.getAtomCount()];
         IElement element = null;
         String symbol = null;
@@ -191,20 +202,21 @@ public class InductivePartialCharges implements IChargeCalculator {
     }
 
     /**
-     *  Gets the atomicSoftnessCore attribute of the InductivePartialCharges object.
+     * Gets the atomicSoftnessCore attribute of the InductivePartialCharges object.
      *
-     *@param  ac                AtomContainer
-     *@param  atomPosition      position of target atom
-     *@return                   The atomicSoftnessCore value
-     *@exception  CDKException  Description of the Exception
+     * @param ac AtomContainer
+     * @param atomPosition position of target atom
+     * @return The atomicSoftnessCore value
+     * @exception CDKException Description of the Exception
      */
     // this method returns the result of the core of the equation of atomic softness
     // that can be used for qsar descriptors and during the iterative calculation
     // of effective electronegativity
     public double getAtomicSoftnessCore(IAtomContainer ac, int atomPosition) throws CDKException {
         if (factory == null) {
-            factory = AtomTypeFactory
-                    .getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt", ac.getBuilder());
+            factory =
+                    AtomTypeFactory.getInstance(
+                            "org/openscience/cdk/config/data/jmol_atomtypes.txt", ac.getBuilder());
         }
         IAtom target = null;
         double core = 0;
@@ -238,7 +250,8 @@ public class InductivePartialCharges implements IChargeCalculator {
                     type = factory.getAtomType(symbol);
                 } catch (Exception ex1) {
                     logger.debug(ex1);
-                    throw new CDKException("Problems with AtomTypeFactory due to " + ex1.getMessage(), ex1);
+                    throw new CDKException(
+                            "Problems with AtomTypeFactory due to " + ex1.getMessage(), ex1);
                 }
                 if (getCovalentRadius(symbol, ac.getMaximumBondOrder(atom)) > 0) {
                     radius = getCovalentRadius(symbol, ac.getMaximumBondOrder(atom));
@@ -258,24 +271,23 @@ public class InductivePartialCharges implements IChargeCalculator {
 
     // this method returns the partial charge increment for a given atom
     /**
-     *  Gets the atomicChargeIncrement attribute of the InductivePartialCharges
-     *  object.
+     * Gets the atomicChargeIncrement attribute of the InductivePartialCharges object.
      *
-     *@param  ac                AtomContainer
-     *@param  atomPosition      position of target atom
-     *@param  ElEn              electronegativity of target atom
-     *@param  as        step in iteration
-     *@return                   The atomic charge increment for the target atom
-     *@exception  CDKException  Description of the Exception
+     * @param ac AtomContainer
+     * @param atomPosition position of target atom
+     * @param ElEn electronegativity of target atom
+     * @param as step in iteration
+     * @return The atomic charge increment for the target atom
+     * @exception CDKException Description of the Exception
      */
-    private double getAtomicChargeIncrement(IAtomContainer ac, int atomPosition, double[] ElEn, int as)
-            throws CDKException {
+    private double getAtomicChargeIncrement(
+            IAtomContainer ac, int atomPosition, double[] ElEn, int as) throws CDKException {
         IAtom[] allAtoms = null;
         IAtom target = null;
         double incrementedCharge = 0;
         double radiusTarget = 0;
         target = ac.getAtom(atomPosition);
-        //logger.debug("ATOM "+target.getSymbol()+" AT POSITION "+atomPosition);
+        // logger.debug("ATOM "+target.getSymbol()+" AT POSITION "+atomPosition);
         allAtoms = AtomContainerManipulator.getAtomArray(ac);
         double tmp = 0;
         double radius = 0;
@@ -302,32 +314,37 @@ public class InductivePartialCharges implements IChargeCalculator {
                     type = factory.getAtomType(symbol);
                 } catch (Exception ex1) {
                     logger.debug(ex1);
-                    throw new CDKException("Problems with AtomTypeFactory due to " + ex1.getMessage(), ex1);
+                    throw new CDKException(
+                            "Problems with AtomTypeFactory due to " + ex1.getMessage(), ex1);
                 }
                 if (getCovalentRadius(symbol, ac.getMaximumBondOrder(allAtoms[a])) > 0) {
                     radius = getCovalentRadius(symbol, ac.getMaximumBondOrder(allAtoms[a]));
                 } else {
                     radius = type.getCovalentRadius();
                 }
-                tmp = (ElEn[a + ((as - 1) * allAtoms.length)] - ElEn[atomPosition + ((as - 1) * allAtoms.length)]);
+                tmp =
+                        (ElEn[a + ((as - 1) * allAtoms.length)]
+                                - ElEn[atomPosition + ((as - 1) * allAtoms.length)]);
                 tmp = tmp * ((radius * radius) + (radiusTarget * radiusTarget));
                 tmp = tmp / (calculateSquaredDistanceBetweenTwoAtoms(target, allAtoms[a]));
                 incrementedCharge += tmp;
-                //if(actualStep==1)
-                //logger.debug("INDU: particular atom "+symbol+ ", radii: "+ radius+ " - " + radiusTarget+", dist: "+calculateSquaredDistanceBetweenTwoAtoms(target, allAtoms[a]));
+                // if(actualStep==1)
+                // logger.debug("INDU: particular atom "+symbol+ ", radii: "+ radius+ " - " +
+                // radiusTarget+", dist: "+calculateSquaredDistanceBetweenTwoAtoms(target,
+                // allAtoms[a]));
             }
         }
         incrementedCharge = 0.172 * incrementedCharge;
-        //logger.debug("Increment: " +incrementedCharge);
+        // logger.debug("Increment: " +incrementedCharge);
         return incrementedCharge;
     }
 
     /**
-     *  Gets the covalentRadius attribute of the InductivePartialCharges object.
+     * Gets the covalentRadius attribute of the InductivePartialCharges object.
      *
-     *@param  symbol        symbol of the atom
-     *@param  maxBondOrder  its max bond order
-     *@return               The covalentRadius value given by the reference
+     * @param symbol symbol of the atom
+     * @param maxBondOrder its max bond order
+     * @return The covalentRadius value given by the reference
      */
     private double getCovalentRadius(String symbol, IBond.Order maxBondOrder) {
         double radiusTarget = 0;
@@ -370,11 +387,11 @@ public class InductivePartialCharges implements IChargeCalculator {
     }
 
     /**
-     *  Evaluate the square of the Euclidean distance between two atoms.
+     * Evaluate the square of the Euclidean distance between two atoms.
      *
-     *@param  atom1  first atom
-     *@param  atom2  second atom
-     *@return        squared distance between the 2 atoms
+     * @param atom1 first atom
+     * @param atom2 second atom
+     * @return squared distance between the 2 atoms
      */
     private double calculateSquaredDistanceBetweenTwoAtoms(IAtom atom1, IAtom atom2) {
         double distance = 0;

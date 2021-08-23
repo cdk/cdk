@@ -28,6 +28,7 @@ import org.openscience.cdk.tools.DataFeatures;
 
 /**
  * Format for Symyx RGfiles (Rgroup query files).
+ *
  * @cdk.module ioformats
  * @cdk.githash
  */
@@ -63,7 +64,7 @@ public class RGroupQueryFormat extends SimpleChemFormatMatcher implements IChemF
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"mol", "rgp"};
+        return new String[] {"mol", "rgp"};
     }
 
     /** {@inheritDoc} */
@@ -81,10 +82,8 @@ public class RGroupQueryFormat extends SimpleChemFormatMatcher implements IChemF
     /** {@inheritDoc} */
     @Override
     public boolean matches(int lineNumber, String line) {
-        if (line.indexOf("$RGP") >= 0)
-            return true;
-        else
-            return false;
+        if (line.indexOf("$RGP") >= 0) return true;
+        else return false;
     }
 
     /** {@inheritDoc} */

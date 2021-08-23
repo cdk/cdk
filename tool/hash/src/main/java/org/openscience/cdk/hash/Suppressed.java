@@ -24,12 +24,11 @@
 
 package org.openscience.cdk.hash;
 
-
 import java.util.BitSet;
 
 /**
- * Defines a structure which indicates whether a vertex (int id) is suppressed
- * when computing an atomic/molecular hash code.
+ * Defines a structure which indicates whether a vertex (int id) is suppressed when computing an
+ * atomic/molecular hash code.
  *
  * @author John May
  * @cdk.module hash
@@ -61,37 +60,33 @@ abstract class Suppressed {
     /** Default 'empty' implementation always returns false. */
     private static final class Empty extends Suppressed {
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         boolean contains(int i) {
             return false;
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         int count() {
             return 0;
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         int[] toArray() {
             return new int[0];
         }
     }
 
-    /**
-     * Implementation where the suppressed vertices are indicated with a
-     * BitSet.
-     */
+    /** Implementation where the suppressed vertices are indicated with a BitSet. */
     private static final class SuppressedBitSet extends Suppressed {
 
         /** Bits indicate suppressed vertices. */
         private final BitSet set;
 
         /**
-         * Create a new suppressed instance with the specified vertices
-         * suppressed.
+         * Create a new suppressed instance with the specified vertices suppressed.
          *
          * @param set bits indicates suppressed
          */
@@ -99,19 +94,19 @@ abstract class Suppressed {
             this.set = set;
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         boolean contains(int i) {
             return set.get(i);
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         int count() {
             return set.cardinality();
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         int[] toArray() {
             int[] xs = new int[count()];

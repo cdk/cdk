@@ -27,7 +27,6 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -37,10 +36,9 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.isomorphism.matchers.RGroupQuery;
 
 /**
- * JUnit tests for {@link org.openscience.cdk.io.RGroupQueryWriter}.
- * Idea: read the test RGfiles into an object model, then writes the
- * same model out as an RGfile again without changing anything. Then
- * check that the original inputfile and the outputfile have the same content.
+ * JUnit tests for {@link org.openscience.cdk.io.RGroupQueryWriter}. Idea: read the test RGfiles
+ * into an object model, then writes the same model out as an RGfile again without changing
+ * anything. Then check that the original inputfile and the outputfile have the same content.
  *
  * @cdk.module test-io
  * @author Mark Rijnbeek
@@ -98,7 +96,8 @@ public class RGroupQueryWriterTest extends ChemObjectIOTest {
         String rgFile = recreate("data/mdl/rgfile.4.mol");
         Assert.assertEquals("AAL lines", 0, countSubstring("AAL", rgFile));
         Assert.assertEquals("\\$CTAB lines", 3, countSubstring("\\$CTAB", rgFile));
-        // the R-group is detached, we don't write APO lines (unlike the 0 value APO in the input file)
+        // the R-group is detached, we don't write APO lines (unlike the 0 value APO in the input
+        // file)
         Assert.assertEquals("APO lines", 0, countSubstring("APO", rgFile));
         Assert.assertEquals("Total #lines", 46, countSubstring("\n", rgFile));
         Assert.assertTrue(rgFile.contains("M  RGP  1   6   1"));
@@ -109,7 +108,7 @@ public class RGroupQueryWriterTest extends ChemObjectIOTest {
         String rgFile = recreate("data/mdl/rgfile.5.mol");
         Assert.assertEquals("LOG lines", 4, countSubstring("LOG", rgFile));
         Assert.assertEquals("APO lines", 0, countSubstring("APO", rgFile));
-        Assert.assertEquals("M  RGP lines", 2, countSubstring("M  RGP", rgFile)); //overflow
+        Assert.assertEquals("M  RGP lines", 2, countSubstring("M  RGP", rgFile)); // overflow
         Assert.assertEquals("Total #lines", 132, countSubstring("\n", rgFile));
     }
 
@@ -135,8 +134,7 @@ public class RGroupQueryWriterTest extends ChemObjectIOTest {
         Pattern p = Pattern.compile(regExp);
         Matcher m = p.matcher(text); // get a matcher object
         int count = 0;
-        while (m.find())
-            count++;
+        while (m.find()) count++;
         return count;
     }
 
@@ -151,11 +149,10 @@ public class RGroupQueryWriterTest extends ChemObjectIOTest {
         RGroupQueryWriter rgw = new RGroupQueryWriter(sw);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(file);
         RGroupQueryReader reader = new RGroupQueryReader(ins);
-        RGroupQuery rGroupQuery = (RGroupQuery) reader.read(new RGroupQuery(DefaultChemObjectBuilder.getInstance()));
+        RGroupQuery rGroupQuery =
+                (RGroupQuery) reader.read(new RGroupQuery(DefaultChemObjectBuilder.getInstance()));
         rgw.write(rGroupQuery);
         String out = sw.toString();
         return out;
-
     }
-
 }

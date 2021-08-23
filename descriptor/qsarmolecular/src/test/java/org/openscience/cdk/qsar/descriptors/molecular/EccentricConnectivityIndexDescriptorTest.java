@@ -19,6 +19,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.io.InputStream;
+import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,15 +33,11 @@ import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
-import java.io.InputStream;
-import java.util.List;
-
 /**
  * TestSuite that runs all QSAR tests.
  *
  * @cdk.module test-qsarmolecular
  */
-
 public class EccentricConnectivityIndexDescriptorTest extends MolecularDescriptorTest {
 
     public EccentricConnectivityIndexDescriptorTest() {}
@@ -50,7 +48,8 @@ public class EccentricConnectivityIndexDescriptorTest extends MolecularDescripto
     }
 
     @Test
-    public void testEccentricConnectivityIndex() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testEccentricConnectivityIndex()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
         String filename = "data/hin/gravindex.hin";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);
@@ -61,7 +60,7 @@ public class EccentricConnectivityIndexDescriptorTest extends MolecularDescripto
         addImplicitHydrogens(ac);
 
         IntegerResult retval = (IntegerResult) descriptor.calculate(ac).getValue();
-        //logger.debug(retval.intValue());
+        // logger.debug(retval.intValue());
 
         Assert.assertEquals(254, retval.intValue(), 0);
     }

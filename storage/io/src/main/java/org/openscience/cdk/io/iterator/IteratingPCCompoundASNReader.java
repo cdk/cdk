@@ -29,7 +29,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.NoSuchElementException;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
@@ -47,32 +46,30 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * @cdk.module io
  * @cdk.githash
  * @cdk.iooptions
- *
  * @see org.openscience.cdk.io.PCCompoundASNReader
- *
  * @author Egon Willighagen &lt;egonw@users.sf.net&gt;
- * @cdk.created  2008-05-05
- *
- * @cdk.keyword  file format, ASN
- * @cdk.keyword  PubChem
+ * @cdk.created 2008-05-05
+ * @cdk.keyword file format, ASN
+ * @cdk.keyword PubChem
  */
 public class IteratingPCCompoundASNReader extends DefaultIteratingChemObjectReader<IAtomContainer> {
 
-    private BufferedReader      input;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingPCCompoundASNReader.class);
-    private IChemObjectBuilder  builder;
+    private BufferedReader input;
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(IteratingPCCompoundASNReader.class);
+    private IChemObjectBuilder builder;
 
-    private boolean             nextAvailableIsKnown;
-    private boolean             hasNext;
-    private IAtomContainer      nextMolecule;
+    private boolean nextAvailableIsKnown;
+    private boolean hasNext;
+    private IAtomContainer nextMolecule;
 
-    private String              currentLine;
-    private int                 depth;
+    private String currentLine;
+    private int depth;
 
     /**
      * Constructs a new IteratingPCCompoundASNReader that can read Molecule from a given Reader.
      *
-     * @param  in  The Reader to read from
+     * @param in The Reader to read from
      */
     public IteratingPCCompoundASNReader(Reader in, IChemObjectBuilder builder) {
         this.builder = builder;
@@ -80,9 +77,10 @@ public class IteratingPCCompoundASNReader extends DefaultIteratingChemObjectRead
     }
 
     /**
-     * Constructs a new IteratingPCCompoundASNReader that can read Molecule from a given InputStream and IChemObjectBuilder.
+     * Constructs a new IteratingPCCompoundASNReader that can read Molecule from a given InputStream
+     * and IChemObjectBuilder.
      *
-     * @param in      The input stream
+     * @param in The input stream
      * @param builder The builder
      */
     public IteratingPCCompoundASNReader(InputStream in, IChemObjectBuilder builder) {
@@ -132,8 +130,10 @@ public class IteratingPCCompoundASNReader extends DefaultIteratingChemObjectRead
                 }
                 if (startMoleculeFound && endMoleculeFound) {
                     hasNext = true;
-                    PCCompoundASNReader asnReader = new PCCompoundASNReader(new StringReader(buffer.toString()));
-                    IChemFile cFile = (IChemFile) asnReader.read(builder.newInstance(IChemFile.class));
+                    PCCompoundASNReader asnReader =
+                            new PCCompoundASNReader(new StringReader(buffer.toString()));
+                    IChemFile cFile =
+                            (IChemFile) asnReader.read(builder.newInstance(IChemFile.class));
                     asnReader.close();
                     nextMolecule = ChemFileManipulator.getAllAtomContainers(cFile).get(0);
                 }
@@ -217,5 +217,4 @@ public class IteratingPCCompoundASNReader extends DefaultIteratingChemObjectRead
     public void setReader(InputStream reader) {
         setReader(new InputStreamReader(reader));
     }
-
 }

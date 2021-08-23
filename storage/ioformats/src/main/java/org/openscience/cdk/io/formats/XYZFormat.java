@@ -56,7 +56,7 @@ public class XYZFormat extends AbstractResourceFormat implements IChemFormat {
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"xyz"};
+        return new String[] {"xyz"};
     }
 
     /** {@inheritDoc} */

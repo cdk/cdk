@@ -24,20 +24,6 @@
 
 package org.openscience.cdk.hash.stereo;
 
-import org.hamcrest.CoreMatchers;
-import org.junit.Test;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -45,6 +31,19 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.openscience.cdk.interfaces.IBond.Stereo.DOWN;
 import static org.openscience.cdk.interfaces.IBond.Stereo.NONE;
+
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+import org.hamcrest.CoreMatchers;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
 
 /**
  * @author John May
@@ -87,7 +86,7 @@ public class GeometricTetrahedralEncoderFactoryTest {
         IBond c1n3 = mock(IBond.class);
         IBond c1h5 = mock(IBond.class);
 
-        int[][] graph = new int[][]{{1, 2, 3, 4}, {0}, {0}, {0}, {0}};
+        int[][] graph = new int[][] {{1, 2, 3, 4}, {0}, {0}, {0}, {0}};
 
         when(container.getConnectedBondsList(c1)).thenReturn(Arrays.asList(c1c4, c1o2, c1n3, c1h5));
 
@@ -115,8 +114,7 @@ public class GeometricTetrahedralEncoderFactoryTest {
 
         assertTrue(geometricParity instanceof Tetrahedral2DParity);
 
-        assertThat(coords2D(geometricParity), CoreMatchers.is(new Point2d[]{p2, p3, p4, p5}));
-
+        assertThat(coords2D(geometricParity), CoreMatchers.is(new Point2d[] {p2, p3, p4, p5}));
     }
 
     @Test
@@ -150,7 +148,10 @@ public class GeometricTetrahedralEncoderFactoryTest {
         IBond c1n3 = mock(IBond.class);
         IBond c1h5 = mock(IBond.class);
 
-        int[][] graph = new int[][]{{1, 2, 3}, {0}, {0}, {0},};
+        int[][] graph =
+                new int[][] {
+                    {1, 2, 3}, {0}, {0}, {0},
+                };
 
         when(container.getConnectedBondsList(c1)).thenReturn(Arrays.asList(c1c4, c1o2, c1n3));
 
@@ -175,9 +176,12 @@ public class GeometricTetrahedralEncoderFactoryTest {
 
         assertTrue(geometricParity instanceof Tetrahedral2DParity);
 
-        assertThat(coords2D(geometricParity), CoreMatchers.is(new Point2d[]{p2, p3, p4, p1 // p1 is from central atom
-                }));
-
+        assertThat(
+                coords2D(geometricParity),
+                CoreMatchers.is(
+                        new Point2d[] {
+                            p2, p3, p4, p1 // p1 is from central atom
+                        }));
     }
 
     @Test
@@ -215,7 +219,7 @@ public class GeometricTetrahedralEncoderFactoryTest {
         IBond c1n3 = mock(IBond.class);
         IBond c1h5 = mock(IBond.class);
 
-        int[][] graph = new int[][]{{1, 2, 3, 4}, {0}, {0}, {0}, {0}};
+        int[][] graph = new int[][] {{1, 2, 3, 4}, {0}, {0}, {0}, {0}};
 
         when(container.getConnectedBondsList(c1)).thenReturn(Arrays.asList(c1c4, c1o2, c1n3, c1h5));
 
@@ -243,8 +247,7 @@ public class GeometricTetrahedralEncoderFactoryTest {
 
         assertTrue(geometricParity instanceof Tetrahedral3DParity);
 
-        assertThat(coords3D(geometricParity), CoreMatchers.is(new Point3d[]{p2, p3, p4, p5}));
-
+        assertThat(coords3D(geometricParity), CoreMatchers.is(new Point3d[] {p2, p3, p4, p5}));
     }
 
     @Test
@@ -277,7 +280,7 @@ public class GeometricTetrahedralEncoderFactoryTest {
         IBond c1o2 = mock(IBond.class);
         IBond c1n3 = mock(IBond.class);
 
-        int[][] graph = new int[][]{{1, 2, 3}, {0}, {0}, {0}};
+        int[][] graph = new int[][] {{1, 2, 3}, {0}, {0}, {0}};
 
         when(container.getConnectedBondsList(c1)).thenReturn(Arrays.asList(c1c4, c1o2, c1n3));
 
@@ -302,9 +305,12 @@ public class GeometricTetrahedralEncoderFactoryTest {
 
         assertTrue(geometricParity instanceof Tetrahedral3DParity);
 
-        assertThat(coords3D(geometricParity), CoreMatchers.is(new Point3d[]{p2, p3, p4, p1 // p1 = central atom
-                }));
-
+        assertThat(
+                coords3D(geometricParity),
+                CoreMatchers.is(
+                        new Point3d[] {
+                            p2, p3, p4, p1 // p1 = central atom
+                        }));
     }
 
     @Test
@@ -336,7 +342,7 @@ public class GeometricTetrahedralEncoderFactoryTest {
         IBond c1n3 = mock(IBond.class);
         IBond c1h5 = mock(IBond.class);
 
-        int[][] graph = new int[][]{{1, 2, 3, 4}, {0}, {0}, {0}, {0}};
+        int[][] graph = new int[][] {{1, 2, 3, 4}, {0}, {0}, {0}, {0}};
 
         when(container.getConnectedBondsList(c1)).thenReturn(Arrays.asList(c1c4, c1o2, c1n3, c1h5));
 
@@ -359,7 +365,6 @@ public class GeometricTetrahedralEncoderFactoryTest {
         StereoEncoder encoder = new GeometricTetrahedralEncoderFactory().create(container, graph);
 
         assertThat(encoder, is(StereoEncoder.EMPTY));
-
     }
 
     @Test
@@ -391,14 +396,14 @@ public class GeometricTetrahedralEncoderFactoryTest {
         IBond c1n3 = mock(IBond.class);
         IBond c1h5 = mock(IBond.class);
 
-        int[][] graph = new int[][]{{1, 2, 3, 4}, {0}, {0}, {0}, {0}};
+        int[][] graph = new int[][] {{1, 2, 3, 4}, {0}, {0}, {0}, {0}};
 
         when(container.getConnectedBondsList(c1)).thenReturn(Arrays.asList(c1c4, c1o2, c1n3, c1h5));
 
         // ATOM is not SP3
         when(c1.getHybridization()).thenReturn(IAtomType.Hybridization.SP3);
         // with a hatch bond from c1 to n3
-        //when(c1n3.getStereo()).thenReturn(DOWN);
+        // when(c1n3.getStereo()).thenReturn(DOWN);
         when(c1n3.getStereo()).thenReturn(NONE);
         when(c1n3.getBegin()).thenReturn(c1);
         when(c1n3.getEnd()).thenReturn(n3);
@@ -415,7 +420,6 @@ public class GeometricTetrahedralEncoderFactoryTest {
         StereoEncoder encoder = new GeometricTetrahedralEncoderFactory().create(container, graph);
 
         assertThat(encoder, is(StereoEncoder.EMPTY));
-
     }
 
     @Test
@@ -447,8 +451,11 @@ public class GeometricTetrahedralEncoderFactoryTest {
         IBond c1n3 = mock(IBond.class);
         IBond c1h5 = mock(IBond.class);
 
-        int[][] graph = new int[][]{{1, 2}, // 3, 4}, ignore these
-                {0}, {0}, {0}, {0}};
+        int[][] graph =
+                new int[][] {
+                    {1, 2}, // 3, 4}, ignore these
+                    {0}, {0}, {0}, {0}
+                };
 
         when(container.getConnectedBondsList(c1)).thenReturn(Arrays.asList(c1c4, c1o2, c1n3, c1h5));
 
@@ -471,7 +478,6 @@ public class GeometricTetrahedralEncoderFactoryTest {
         StereoEncoder encoder = new GeometricTetrahedralEncoderFactory().create(container, graph);
 
         assertThat(encoder, is(StereoEncoder.EMPTY));
-
     }
 
     private static Point2d[] coords2D(GeometricParity parity) {
@@ -537,5 +543,4 @@ public class GeometricTetrahedralEncoderFactoryTest {
         }
         return Collections.emptyList();
     }
-
 }

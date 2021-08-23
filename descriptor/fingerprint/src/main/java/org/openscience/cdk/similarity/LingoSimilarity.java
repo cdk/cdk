@@ -22,15 +22,14 @@
  */
 package org.openscience.cdk.similarity;
 
-
 import java.util.Map;
 import java.util.TreeSet;
 
 /**
  * A class to evaluate the similarity between two LINGO's as described in {@cdk.cite Vidal2005}.
  *
- * The similarity calculation is a variant of the Tanimoto coefficient and hence its
- * value ranges from 0 to 1
+ * <p>The similarity calculation is a variant of the Tanimoto coefficient and hence its value ranges
+ * from 0 to 1
  *
  * @author Rajarshi Guha
  * @cdk.githash
@@ -45,7 +44,7 @@ public class LingoSimilarity {
     /**
      * Evaluate the LINGO similarity between two key,value sty;e fingerprints.
      *
-     * The value will range from 0.0 to 1.0.
+     * <p>The value will range from 0.0 to 1.0.
      *
      * @param features1
      * @param features2

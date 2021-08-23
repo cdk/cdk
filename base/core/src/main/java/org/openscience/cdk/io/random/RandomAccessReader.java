@@ -30,7 +30,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.io.StringReader;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -45,35 +44,35 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * Random access to text files of compounds.
- * Reads the file as a text and builds an index file, if the index file doesn't already exist.
- * The index stores offset, length and a third field reserved for future use.
- * Subsequent access for a record N uses this index to seek the record and return the molecule.
- * Useful for very big files.
+ * Random access to text files of compounds. Reads the file as a text and builds an index file, if
+ * the index file doesn't already exist. The index stores offset, length and a third field reserved
+ * for future use. Subsequent access for a record N uses this index to seek the record and return
+ * the molecule. Useful for very big files.
  *
  * @author Nina Jeliazkova &lt;nina@acad.bg&gt;
  * @cdk.module io
  * @cdk.githash
  */
-public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectReader implements
-        IRandomAccessChemObjectReader<IChemObject> {
+public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectReader
+        implements IRandomAccessChemObjectReader<IChemObject> {
 
-    protected static ILoggingTool     logger        = LoggingToolFactory.createLoggingTool(RandomAccessReader.class);
-    protected RandomAccessFile        raFile;
-    protected IOSetting[]             headerOptions = null;
-    private final String              filename;
+    protected static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(RandomAccessReader.class);
+    protected RandomAccessFile raFile;
+    protected IOSetting[] headerOptions = null;
+    private final String filename;
     protected ISimpleChemObjectReader chemObjectReader;
-    protected int                     indexVersion  = 1;
+    protected int indexVersion = 1;
     /*
      * index[record][0] - record offset in file index[record][1] - record length
      * index[record][2] - number of atoms (if available)
      */
-    protected long[][]                index         = null;
-    protected int                     records;
-    protected int                     currentRecord = 0;
-    protected byte[]                  b;
-    protected IChemObjectBuilder      builder;
-    protected boolean                 indexCreated  = false;
+    protected long[][] index = null;
+    protected int records;
+    protected int currentRecord = 0;
+    protected byte[] b;
+    protected IChemObjectBuilder builder;
+    protected boolean indexCreated = false;
 
     /**
      * Reads the file and builds an index file, if the index file doesn't already exist.
@@ -87,14 +86,15 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
     }
 
     /**
-    * Reads the file and builds an index file, if the index file doesn't already exist.
+     * Reads the file and builds an index file, if the index file doesn't already exist.
      *
      * @param file file the file object containg the molecules to be indexed
      * @param builder builder a chem object builder
      * @param listener listen for read event
      * @throws IOException if there is an error during reading
      */
-    public RandomAccessReader(File file, IChemObjectBuilder builder, IReaderListener listener) throws IOException {
+    public RandomAccessReader(File file, IChemObjectBuilder builder, IReaderListener listener)
+            throws IOException {
         super();
         this.filename = file.getAbsolutePath();
         this.builder = builder;
@@ -104,7 +104,6 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
         records = 0;
         setIndexCreated(false);
         indexTheFile();
-
     }
 
     @Override
@@ -120,13 +119,12 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
     /**
      * Returns the object at given record No.
      *
-     * Record numbers are zero-based!
+     * <p>Record numbers are zero-based!
      */
     @Override
     public synchronized IChemObject readRecord(int record) throws Exception {
         String buffer = readContent(record);
-        if (chemObjectReader == null)
-            throw new CDKException("No chemobject reader!");
+        if (chemObjectReader == null) throw new CDKException("No chemobject reader!");
         else {
             chemObjectReader.setReader(new StringReader(buffer));
             currentRecord = record;
@@ -138,7 +136,7 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
      * Reads the record text content into a String.
      *
      * @param record The record number
-     * @return  A String representation of the record
+     * @return A String representation of the record
      * @throws java.io.IOException if error occurs during reading
      * @throws org.openscience.cdk.exception.CDKException if the record number is invalid
      */
@@ -148,7 +146,7 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
         if ((record < 0) || (record >= records)) {
             throw new CDKException("No such record " + record);
         }
-        //fireFrameRead();
+        // fireFrameRead();
 
         raFile.seek(index[record][0]);
         int length = (int) index[record][1];
@@ -158,6 +156,7 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
 
     /**
      * The reader is already set to read the record buffer.
+     *
      * @return the read IChemObject
      * @throws CDKException an error occurred whilst reading the file
      */
@@ -173,7 +172,6 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
             newIndex[i][2] = index[i][2];
         }
         return newIndex;
-
     }
 
     protected abstract boolean isRecordEnd(String line);
@@ -213,7 +211,8 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
         try {
             if (Integer.parseInt(version) != indexVersion) {
                 in.close();
-                throw new Exception("Expected index version " + indexVersion + " instead of " + version);
+                throw new Exception(
+                        "Expected index version " + indexVersion + " instead of " + version);
             }
         } catch (Exception x) {
             in.close();
@@ -222,13 +221,22 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
         String fileIndexed = in.readLine();
         if (!filename.equals(fileIndexed)) {
             in.close();
-            throw new Exception("Index for " + fileIndexed + " found instead of " + filename + ". Creating new index.");
+            throw new Exception(
+                    "Index for "
+                            + fileIndexed
+                            + " found instead of "
+                            + filename
+                            + ". Creating new index.");
         }
         String line = in.readLine();
         int fileLength = Integer.parseInt(line);
         if (fileLength != raFile.length()) {
             in.close();
-            throw new Exception("Index for file of size " + fileLength + " found instead of " + raFile.length());
+            throw new Exception(
+                    "Index for file of size "
+                            + fileLength
+                            + " found instead of "
+                            + raFile.length());
         }
         line = in.readLine();
         int indexLength = Integer.parseInt(line);
@@ -273,22 +281,24 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
         in.close();
 
         b = new byte[maxRecordLength];
-        //fireFrameRead();
+        // fireFrameRead();
     }
 
     /**
      * The index file {@link #getIndexFile(String)} is loaded, if already exists, or created a new.
+     *
      * @throws Exception
      */
     protected synchronized void makeIndex() throws Exception {
         File indexFile = getIndexFile(filename);
-        if (indexFile.exists()) try {
-            loadIndex(indexFile);
-            setIndexCreated(true);
-            return;
-        } catch (Exception x) {
-            logger.warn(x.getMessage());
-        }
+        if (indexFile.exists())
+            try {
+                loadIndex(indexFile);
+                setIndexCreated(true);
+                return;
+            } catch (Exception x) {
+                logger.warn(x.getMessage());
+            }
         indexCreated = false;
         long now = System.currentTimeMillis();
         int recordLength = 1000;
@@ -307,12 +317,19 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
         while ((s = raFile.readLine()) != null) {
             if (start == -1) start = raFile.getFilePointer();
             if (isRecordEnd(s)) {
-                //fireFrameRead();
+                // fireFrameRead();
                 if (records >= maxRecords) {
-                    index = resize(index,
-                            records
-                                    + (int) (records + (raFile.length() - records * raFile.getFilePointer())
-                                            / recordLength));
+                    index =
+                            resize(
+                                    index,
+                                    records
+                                            + (int)
+                                                    (records
+                                                            + (raFile.length()
+                                                                            - records
+                                                                                    * raFile
+                                                                                            .getFilePointer())
+                                                                    / recordLength));
                 }
                 end += 4;
                 index[records][0] = start;
@@ -326,10 +343,9 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
             } else {
                 end = raFile.getFilePointer();
             }
-
         }
         b = new byte[maxRecordLength];
-        //fireFrameRead();
+        // fireFrameRead();
         logger.info("Index created in " + (System.currentTimeMillis() - now) + " ms.");
         try {
             saveIndex(indexFile);
@@ -339,7 +355,8 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
     }
 
     /**
-     * Opens the file index file <code>_cdk.index</code> in a temporary folder, as specified by "java.io.tmpdir" property.
+     * Opens the file index file <code>_cdk.index</code> in a temporary folder, as specified by
+     * "java.io.tmpdir" property.
      *
      * @param filename the name of the file for which the index was generated
      * @return a file object representing the index file
@@ -358,8 +375,8 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
      */
     public void close() throws IOException {
         raFile.close();
-        //TODO
-        //removeChemObjectIOListener(listener)
+        // TODO
+        // removeChemObjectIOListener(listener)
 
     }
 
@@ -435,14 +452,10 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
     }
 
     @Override
-    public void set(IChemObject arg0) {
-
-    }
+    public void set(IChemObject arg0) {}
 
     @Override
-    public void add(IChemObject arg0) {
-
-    }
+    public void add(IChemObject arg0) {}
 
     @Override
     public int previousIndex() {
@@ -500,16 +513,14 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
     public String toString() {
         return filename;
     }
-
 }
 
 class RecordReaderEvent extends ReaderEvent {
 
-    /**
-     *
-     */
+    /** */
     private static final long serialVersionUID = 572155905623474487L;
-    protected int             record           = 0;
+
+    protected int record = 0;
 
     public RecordReaderEvent(Object source, int record) {
         super(source);

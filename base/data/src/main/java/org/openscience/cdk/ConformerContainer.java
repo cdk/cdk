@@ -23,23 +23,22 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-
 import javax.vecmath.Point3d;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  * A memory-efficient data structure to store conformers for a single molecule.
- * 
- * Since all the conformers for a given molecule only differ in their 3D coordinates
- * this data structure stores a single {@link IAtomContainer} containing the atom and bond
- * details and a List of 3D coordinate sets, each element being the set of 3D coordinates
- * for a given conformer.
- * 
- * The class behaves in many ways as a {@code List<IAtomContainer>} object, though a few methods are not
- * implemented. Though it is possible to add conformers by hand, this data structure is
- * probably best used in combination with {@link org.openscience.cdk.io.iterator.IteratingMDLConformerReader} as
+ *
+ * <p>Since all the conformers for a given molecule only differ in their 3D coordinates this data
+ * structure stores a single {@link IAtomContainer} containing the atom and bond details and a List
+ * of 3D coordinate sets, each element being the set of 3D coordinates for a given conformer.
+ *
+ * <p>The class behaves in many ways as a {@code List<IAtomContainer>} object, though a few methods
+ * are not implemented. Though it is possible to add conformers by hand, this data structure is
+ * probably best used in combination with {@link
+ * org.openscience.cdk.io.iterator.IteratingMDLConformerReader} as
+ *
  * <pre>
  * IteratingMDLConformerReader reader = new IteratingMDLConformerReader(
  *          new FileReader(new File(filename)),
@@ -59,8 +58,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  */
 public class ConformerContainer implements List<IAtomContainer> {
 
-    private IAtomContainer  atomContainer = null;
-    private String          title         = null;
+    private IAtomContainer atomContainer = null;
+    private String title = null;
     private List<Point3d[]> coordinates;
 
     private Point3d[] getCoordinateList(IAtomContainer atomContainer) {
@@ -68,7 +67,8 @@ public class ConformerContainer implements List<IAtomContainer> {
         Point3d[] tmp = new Point3d[atomContainer.getAtomCount()];
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
             IAtom atom = atomContainer.getAtom(i);
-            if (atom.getPoint3d() == null) throw new IllegalArgumentException("Molecule must have 3D coordinates");
+            if (atom.getPoint3d() == null)
+                throw new IllegalArgumentException("Molecule must have 3D coordinates");
             tmp[i] = new Point3d(atom.getPoint3d());
         }
         return tmp;
@@ -80,14 +80,13 @@ public class ConformerContainer implements List<IAtomContainer> {
 
     /**
      * Create a ConformerContainer object from a single molecule object.
-     * 
-     * Using this constructor, the resultant conformer container will
-     * contain a single conformer. More conformers can be added using the
-     * {@link #add} method.
-     * 
-     * Note that the constructor will use the title of the input molecule
-     * when adding new molecules as conformers. That is, the title of any molecule
-     * to be added as a conformer should match the title of the input molecule.
+     *
+     * <p>Using this constructor, the resultant conformer container will contain a single conformer.
+     * More conformers can be added using the {@link #add} method.
+     *
+     * <p>Note that the constructor will use the title of the input molecule when adding new
+     * molecules as conformers. That is, the title of any molecule to be added as a conformer should
+     * match the title of the input molecule.
      *
      * @param atomContainer The base molecule (or first conformer).
      */
@@ -100,15 +99,16 @@ public class ConformerContainer implements List<IAtomContainer> {
 
     /**
      * Create a ConformerContainer from an array of molecules.
-     * 
-     * This constructor can be used when you have an array of conformers of a given
-     * molecule. Note that this constructor will assume that all molecules in the
-     * input array will have the same title.
+     *
+     * <p>This constructor can be used when you have an array of conformers of a given molecule.
+     * Note that this constructor will assume that all molecules in the input array will have the
+     * same title.
      *
      * @param atomContainers The array of conformers
      */
     public ConformerContainer(IAtomContainer[] atomContainers) {
-        if (atomContainers.length == 0) throw new IllegalArgumentException("Can't use a zero-length molecule array");
+        if (atomContainers.length == 0)
+            throw new IllegalArgumentException("Can't use a zero-length molecule array");
 
         // lets check that the titles match
         title = atomContainers[0].getTitle();
@@ -127,9 +127,8 @@ public class ConformerContainer implements List<IAtomContainer> {
 
     /**
      * Get the title of the conformers.
-     * 
-     * Note that all conformers for a given molecule will have the same
-     * title.
+     *
+     * <p>Note that all conformers for a given molecule will have the same title.
      *
      * @return The title for the conformers
      */
@@ -159,11 +158,10 @@ public class ConformerContainer implements List<IAtomContainer> {
 
     /**
      * Checks to see whether the specified conformer is currently stored.
-     * 
-     * This method first checks whether the title of the supplied molecule
-     * matches the stored title. If not, it returns false. If the title matches
-     * it then checks all the coordinates to see whether they match. If all
-     * coordinates match it returns true else false.
+     *
+     * <p>This method first checks whether the title of the supplied molecule matches the stored
+     * title. If not, it returns false. If the title matches it then checks all the coordinates to
+     * see whether they match. If all coordinates match it returns true else false.
      *
      * @param o The IAtomContainer to check for
      * @return true if it is present, false otherwise
@@ -177,7 +175,7 @@ public class ConformerContainer implements List<IAtomContainer> {
      * Gets an iterator over the conformers.
      *
      * @return an iterator over the conformers. Each iteration will return an IAtomContainer object
-     *         corresponding to the current conformer.
+     *     corresponding to the current conformer.
      */
     @Override
     public Iterator<IAtomContainer> iterator() {
@@ -186,10 +184,9 @@ public class ConformerContainer implements List<IAtomContainer> {
 
     /**
      * Returns the conformers in the form of an array of IAtomContainers.
-     * 
-     * Beware that if you have a large number of conformers you may run out
-     * memory during construction of the array since IAtomContainer's are not
-     * light weight objects!
+     *
+     * <p>Beware that if you have a large number of conformers you may run out memory during
+     * construction of the array since IAtomContainer's are not light weight objects!
      *
      * @return The conformers as an array of individual IAtomContainers.
      */
@@ -219,14 +216,13 @@ public class ConformerContainer implements List<IAtomContainer> {
 
     /**
      * Add a conformer to the end of the list.
-     * 
-     * This method allows you to add a IAtomContainer object as another conformer.
-     * Before adding it ensures that the title of specific object matches the
-     * stored title for these conformers. It will also check that the number of
-     * atoms in the specified molecule match the number of atoms in the current set
-     * of conformers.
-     * 
-     * This method will not check for duplicate conformers.
+     *
+     * <p>This method allows you to add a IAtomContainer object as another conformer. Before adding
+     * it ensures that the title of specific object matches the stored title for these conformers.
+     * It will also check that the number of atoms in the specified molecule match the number of
+     * atoms in the current set of conformers.
+     *
+     * <p>This method will not check for duplicate conformers.
      *
      * @param atomContainer The new conformer to add.
      * @return true
@@ -238,14 +234,20 @@ public class ConformerContainer implements List<IAtomContainer> {
             title = (String) atomContainer.getTitle();
         }
         if (title == null) {
-            throw new IllegalArgumentException("At least one of the input molecules does not have a title");
+            throw new IllegalArgumentException(
+                    "At least one of the input molecules does not have a title");
         }
         if (!title.equals(atomContainer.getTitle()))
-            throw new IllegalArgumentException("The input molecules does not have the same title ('" + title
-                    + "') as the other conformers ('" + atomContainer.getTitle() + "')");
+            throw new IllegalArgumentException(
+                    "The input molecules does not have the same title ('"
+                            + title
+                            + "') as the other conformers ('"
+                            + atomContainer.getTitle()
+                            + "')");
 
         if (atomContainer.getAtomCount() != this.atomContainer.getAtomCount())
-            throw new IllegalArgumentException("Doesn't have the same number of atoms as the rest of the conformers");
+            throw new IllegalArgumentException(
+                    "Doesn't have the same number of atoms as the rest of the conformers");
 
         coordinates.add(getCoordinateList(atomContainer));
         return true;
@@ -297,9 +299,7 @@ public class ConformerContainer implements List<IAtomContainer> {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * Get rid of all the conformers but keeps atom and bond information.
-     */
+    /** Get rid of all the conformers but keeps atom and bond information. */
     @Override
     public void clear() {
         coordinates.clear();
@@ -344,7 +344,8 @@ public class ConformerContainer implements List<IAtomContainer> {
                     "The input molecules does not have the same title as the other conformers");
 
         if (atomContainer.getAtomCount() != this.atomContainer.getAtomCount())
-            throw new IllegalArgumentException("Doesn't have the same number of atoms as the rest of the conformers");
+            throw new IllegalArgumentException(
+                    "Doesn't have the same number of atoms as the rest of the conformers");
 
         Point3d[] tmp = getCoordinateList(atomContainer);
         coordinates.add(i, tmp);
@@ -364,11 +365,12 @@ public class ConformerContainer implements List<IAtomContainer> {
     }
 
     /**
-     * Returns the lowest index at which the specific IAtomContainer appears in the list or -1 if is not found.
-     * 
-     * A given IAtomContainer will occur in the list if the title matches the stored title for
-     * the conformers in this container and if the coordinates for each atom in the specified molecule
-     * are equal to the coordinates of the corresponding atoms in a conformer.
+     * Returns the lowest index at which the specific IAtomContainer appears in the list or -1 if is
+     * not found.
+     *
+     * <p>A given IAtomContainer will occur in the list if the title matches the stored title for
+     * the conformers in this container and if the coordinates for each atom in the specified
+     * molecule are equal to the coordinates of the corresponding atoms in a conformer.
      *
      * @param o The IAtomContainer whose presence is being tested
      * @return The index where o was found
@@ -398,11 +400,12 @@ public class ConformerContainer implements List<IAtomContainer> {
     }
 
     /**
-     * Returns the highest index at which the specific IAtomContainer appears in the list or -1 if is not found.
-     * 
-     * A given IAtomContainer will occur in the list if the title matches the stored title for
-     * the conformers in this container and if the coordinates for each atom in the specified molecule
-     * are equal to the coordinates of the corresponding atoms in a conformer.
+     * Returns the highest index at which the specific IAtomContainer appears in the list or -1 if
+     * is not found.
+     *
+     * <p>A given IAtomContainer will occur in the list if the title matches the stored title for
+     * the conformers in this container and if the coordinates for each atom in the specified
+     * molecule are equal to the coordinates of the corresponding atoms in a conformer.
      *
      * @param o The IAtomContainer whose presence is being tested
      * @return The index where o was found
@@ -448,7 +451,7 @@ public class ConformerContainer implements List<IAtomContainer> {
     private class CCIterator implements Iterator<IAtomContainer> {
 
         int current = 0;
-        int last    = -1;
+        int last = -1;
 
         @Override
         public boolean hasNext() {

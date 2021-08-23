@@ -27,10 +27,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
-
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKTestCase;
@@ -47,19 +45,14 @@ import org.openscience.cdk.libio.cml.MDMoleculeCustomizer;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-
 import org.xmlcml.cml.element.CMLAtom;
 
-/**
- * @cdk.module test-libiomd
- */
+/** @cdk.module test-libiomd */
 public class MDMoleculeTest extends CDKTestCase {
 
     private ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDMoleculeTest.class);
 
-    /**
-     * @cdk.bug 1748257
-     */
+    /** @cdk.bug 1748257 */
     @Test
     public void testBug1748257() {
 
@@ -82,10 +75,7 @@ public class MDMoleculeTest extends CDKTestCase {
         Assert.assertEquals(cmlatom.getHydrogenCount(), 0);
     }
 
-    /**
-     * Test an MDMolecule with residues and charge groups
-     *
-     */
+    /** Test an MDMolecule with residues and charge groups */
     @Test
     public void testMDMolecule() {
 
@@ -104,7 +94,7 @@ public class MDMoleculeTest extends CDKTestCase {
         mol.addBond(4, 5, IBond.Order.SINGLE); // 5
         mol.addBond(5, 0, IBond.Order.DOUBLE); // 6
 
-        //Create 2 residues
+        // Create 2 residues
         AtomContainer ac = new AtomContainer();
         ac.addAtom(mol.getAtom(0));
         ac.addAtom(mol.getAtom(1));
@@ -121,7 +111,7 @@ public class MDMoleculeTest extends CDKTestCase {
         res2.setName("myResidue2");
         mol.addResidue(res2);
 
-        //Test residue creation
+        // Test residue creation
         Assert.assertEquals(res1.getParentMolecule(), mol);
         Assert.assertEquals(res2.getParentMolecule(), mol);
         Assert.assertEquals(res1.getAtomCount(), 3);
@@ -133,7 +123,7 @@ public class MDMoleculeTest extends CDKTestCase {
         Assert.assertEquals(mol.getResidues().get(0), res1);
         Assert.assertEquals(mol.getResidues().get(1), res2);
 
-        //Create 2 chargegroups
+        // Create 2 chargegroups
         AtomContainer ac3 = new AtomContainer();
         ac3.addAtom(mol.getAtom(0));
         ac3.addAtom(mol.getAtom(1));
@@ -148,7 +138,7 @@ public class MDMoleculeTest extends CDKTestCase {
         ChargeGroup chg2 = new ChargeGroup(ac4, 1, mol);
         mol.addChargeGroup(chg2);
 
-        //Test chargegroup creation
+        // Test chargegroup creation
         Assert.assertEquals(chg1.getParentMolecule(), mol);
         Assert.assertEquals(chg2.getParentMolecule(), mol);
         Assert.assertEquals(chg1.getAtomCount(), 2);
@@ -158,7 +148,6 @@ public class MDMoleculeTest extends CDKTestCase {
         Assert.assertEquals(mol.getChargeGroups().size(), 2);
         Assert.assertEquals(mol.getChargeGroups().get(0), chg1);
         Assert.assertEquals(mol.getChargeGroups().get(1), chg2);
-
     }
 
     @Test
@@ -230,7 +219,6 @@ public class MDMoleculeTest extends CDKTestCase {
         logger.debug("******************************");
 
         Assert.assertEquals(serializedMol, serializedMDMol);
-
     }
 
     @Test
@@ -253,7 +241,8 @@ public class MDMoleculeTest extends CDKTestCase {
         logger.debug("****************************** testMDMoleculeCustomization()");
         logger.debug(cmlContent);
         logger.debug("******************************");
-        //        System.out.println("****************************** testMDMoleculeCustomization()");
+        //        System.out.println("******************************
+        // testMDMoleculeCustomization()");
         //        System.out.println(cmlContent);
         //        System.out.println("******************************");
         Assert.assertTrue(cmlContent.indexOf("xmlns:md") != -1);
@@ -266,6 +255,7 @@ public class MDMoleculeTest extends CDKTestCase {
 
     /**
      * Create a benzene molecule with 2 residues and 2 charge groups
+     *
      * @return
      */
     public MDMolecule makeMDBenzene() {
@@ -285,7 +275,7 @@ public class MDMoleculeTest extends CDKTestCase {
         mol.addBond(4, 5, IBond.Order.SINGLE); // 5
         mol.addBond(5, 0, IBond.Order.DOUBLE); // 6
 
-        //Create 2 residues
+        // Create 2 residues
         AtomContainer ac = new AtomContainer();
         ac.addAtom(mol.getAtom(0));
         ac.addAtom(mol.getAtom(1));
@@ -302,7 +292,7 @@ public class MDMoleculeTest extends CDKTestCase {
         res2.setName("myResidue2");
         mol.addResidue(res2);
 
-        //Create 2 chargegroups
+        // Create 2 chargegroups
         AtomContainer ac3 = new AtomContainer();
         ac3.addAtom(mol.getAtom(0));
         ac3.addAtom(mol.getAtom(1));
@@ -320,7 +310,5 @@ public class MDMoleculeTest extends CDKTestCase {
         mol.addChargeGroup(chg2);
 
         return mol;
-
     }
-
 }

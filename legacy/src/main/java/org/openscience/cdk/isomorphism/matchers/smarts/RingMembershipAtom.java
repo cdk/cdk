@@ -21,11 +21,10 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * This query is found in a specified number of ring. The ring membership is
- * specified with the SMARTS {@code R<NUMBER>}. The membership depends on the
- * ring set used and as such is not a portable term. If the Smallest Set of
- * Smallest Rings (SSSR) is used then changing the order of atoms
- * <i>may</i> change which atoms match in a pattern.
+ * This query is found in a specified number of ring. The ring membership is specified with the
+ * SMARTS {@code R<NUMBER>}. The membership depends on the ring set used and as such is not a
+ * portable term. If the Smallest Set of Smallest Rings (SSSR) is used then changing the order of
+ * atoms <i>may</i> change which atoms match in a pattern.
  *
  * @cdk.module smarts
  * @cdk.keyword SMARTS
@@ -34,18 +33,14 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 @Deprecated
 public class RingMembershipAtom extends SMARTSAtom {
 
-    /**
-     * Number of rings to which this atom belongs, if < 0 check any ring
-     * membership.
-     */
+    /** Number of rings to which this atom belongs, if < 0 check any ring membership. */
     private int ringNumber;
 
     /**
-     * Ring membership query atom. Check if the an atom belongs to <i>num</i> of
-     * rings. To specify any ring membership, <i>num</i> should be specified as
-     * &lt; 0. Generally in SMARTS it's better negate ring membership with {@code
-     * [!R]} however for legacy reasons {@code [R0]} was accepted and checks
-     * this atoms belongs to 0 rings.
+     * Ring membership query atom. Check if the an atom belongs to <i>num</i> of rings. To specify
+     * any ring membership, <i>num</i> should be specified as &lt; 0. Generally in SMARTS it's
+     * better negate ring membership with {@code [!R]} however for legacy reasons {@code [R0]} was
+     * accepted and checks this atoms belongs to 0 rings.
      *
      * @param num number of rings which this atom belongs to, &lt; 0 any ring.
      */
@@ -54,14 +49,11 @@ public class RingMembershipAtom extends SMARTSAtom {
         this.ringNumber = num;
     }
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     public boolean matches(IAtom atom) {
-        if (ringNumber < 0)
-            return invariants(atom).ringConnectivity() > 0;
-        else if (ringNumber == 0)
-            return invariants(atom).ringConnectivity() == 0;
-        else
-            return ringNumber == invariants(atom).ringNumber();
+        if (ringNumber < 0) return invariants(atom).ringConnectivity() > 0;
+        else if (ringNumber == 0) return invariants(atom).ringConnectivity() == 0;
+        else return ringNumber == invariants(atom).ringNumber();
     }
 }

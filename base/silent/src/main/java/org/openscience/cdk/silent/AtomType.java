@@ -23,90 +23,74 @@
  */
 package org.openscience.cdk.silent;
 
-import java.io.Serializable;
-
 import com.google.common.base.Objects;
+import java.io.Serializable;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElement;
 
 /**
- * The base class for atom types. Atom types are typically used to describe the
- * behaviour of an atom of a particular element in different environment like
- * sp<sup>3</sup>
- * hybridized carbon C3, etc., in some molecular modelling applications.
+ * The base class for atom types. Atom types are typically used to describe the behaviour of an atom
+ * of a particular element in different environment like sp<sup>3</sup> hybridized carbon C3, etc.,
+ * in some molecular modelling applications.
  *
- * @author       steinbeck
- * @cdk.created  2001-08-08
- * @cdk.module   silent
+ * @author steinbeck
+ * @cdk.created 2001-08-08
+ * @cdk.module silent
  * @cdk.githash
- * @cdk.keyword  atom, type
+ * @cdk.keyword atom, type
  */
 public class AtomType extends Isotope implements IAtomType, Serializable, Cloneable {
 
     /**
      * Determines if a de-serialized object is compatible with this class.
      *
-     * This value must only be changed if and only if the new version
-     * of this class is incompatible with the old version. See Sun docs
-     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
+     * <p>This value must only be changed if and only if the new version of this class is
+     * incompatible with the old version. See Sun docs for <a
+     * href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
      */
-    private static final long         serialVersionUID     = -7950397716808229972L;
+    private static final long serialVersionUID = -7950397716808229972L;
+
+    /** The maximum bond order allowed for this atom type. */
+    IBond.Order maxBondOrder = null;
+    /** The maximum sum of all bond orders allowed for this atom type. */
+    Double bondOrderSum = (Double) CDKConstants.UNSET;
+
+    /** The covalent radius of this atom type. */
+    Double covalentRadius = (Double) CDKConstants.UNSET;
 
     /**
-     *  The maximum bond order allowed for this atom type.
-     */
-    IBond.Order                       maxBondOrder         = null;
-    /**
-     *  The maximum sum of all bond orders allowed for this atom type.
-     */
-    Double                            bondOrderSum         = (Double) CDKConstants.UNSET;
-
-    /**
-     * The covalent radius of this atom type.
-     */
-    Double                            covalentRadius       = (Double) CDKConstants.UNSET;
-
-    /**
-     *  The formal charge of the atom with CDKConstants.UNSET as default. Implements RFC #6.
+     * The formal charge of the atom with CDKConstants.UNSET as default. Implements RFC #6.
      *
-     *  Note that some constructors ({@link #AtomType(String)} and
-     * {@link #AtomType(String, String)} ) will explicitly set this field to 0
+     * <p>Note that some constructors ({@link #AtomType(String)} and {@link #AtomType(String,
+     * String)} ) will explicitly set this field to 0
      */
-    protected Integer                 formalCharge         = (Integer) CDKConstants.UNSET;
+    protected Integer formalCharge = (Integer) CDKConstants.UNSET;
+
+    /** The hybridization state of this atom with CDKConstants.HYBRIDIZATION_UNSET as default. */
+    protected IAtomType.Hybridization hybridization = (Hybridization) CDKConstants.UNSET;
+
+    /** The electron Valency of this atom with CDKConstants.UNSET as default. */
+    protected Integer electronValency = (Integer) CDKConstants.UNSET;
 
     /**
-     * The hybridization state of this atom with CDKConstants.HYBRIDIZATION_UNSET
-     * as default.
+     * The formal number of neighbours this atom type can have with CDKConstants_UNSET as default.
+     * This includes explicitely and implicitely connected atoms, including implicit hydrogens.
      */
-    protected IAtomType.Hybridization hybridization        = (Hybridization) CDKConstants.UNSET;
+    protected Integer formalNeighbourCount = (Integer) CDKConstants.UNSET;
 
-    /**
-     *  The electron Valency of this atom with CDKConstants.UNSET as default.
-     */
-    protected Integer                 electronValency      = (Integer) CDKConstants.UNSET;
-
-    /**
-     * The formal number of neighbours this atom type can have with CDKConstants_UNSET
-     * as default. This includes explicitely and implicitely connected atoms, including
-     * implicit hydrogens.
-     */
-    protected Integer                 formalNeighbourCount = (Integer) CDKConstants.UNSET;
-
-    /**
-     * String representing the identifier for this atom type with null as default.
-     */
-    private String                    identifier           = (String) CDKConstants.UNSET;
+    /** String representing the identifier for this atom type with null as default. */
+    private String identifier = (String) CDKConstants.UNSET;
 
     /**
      * Constructor for the AtomType object.
      *
-     * Defaults to a zero formal charge. All
-     * other fields are set to {@link org.openscience.cdk.CDKConstants#UNSET}.
+     * <p>Defaults to a zero formal charge. All other fields are set to {@link
+     * org.openscience.cdk.CDKConstants#UNSET}.
      *
-     * @param elementSymbol  Symbol of the atom
+     * @param elementSymbol Symbol of the atom
      */
     public AtomType(String elementSymbol) {
         super(elementSymbol);
@@ -116,8 +100,9 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
     /**
      * Constructor for the AtomType object. Defaults to a zero formal charge.
      *
-     * @param  identifier     An id for this atom type, like C3 for sp3 carbon
-     * @param  elementSymbol  The element symbol identifying the element to which this atom type applies
+     * @param identifier An id for this atom type, like C3 for sp3 carbon
+     * @param elementSymbol The element symbol identifying the element to which this atom type
+     *     applies
      */
     public AtomType(String identifier, String elementSymbol) {
         this(elementSymbol);
@@ -125,14 +110,11 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
     }
 
     /**
-     * Constructs an isotope by copying the symbol, atomic number,
-     * flags, identifier, exact mass, natural abundance and mass
-     * number from the given IIsotope. It does not copy the
-     * listeners and properties. If the element is an instanceof
-     * IAtomType, then the maximum bond order, bond order sum,
-     * van der Waals and covalent radii, formal charge, hybridization,
-     * electron valency, formal neighbour count and atom type name
-     * are copied too.
+     * Constructs an isotope by copying the symbol, atomic number, flags, identifier, exact mass,
+     * natural abundance and mass number from the given IIsotope. It does not copy the listeners and
+     * properties. If the element is an instanceof IAtomType, then the maximum bond order, bond
+     * order sum, van der Waals and covalent radii, formal charge, hybridization, electron valency,
+     * formal neighbour count and atom type name are copied too.
      *
      * @param element IIsotope to copy information from
      */
@@ -151,11 +133,10 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
     }
 
     /**
-     *  Sets the if attribute of the AtomType object.
+     * Sets the if attribute of the AtomType object.
      *
-     * @param  identifier  The new AtomTypeID value. Null if unset.
-     *
-     * @see    #getAtomTypeName
+     * @param identifier The new AtomTypeID value. Null if unset.
+     * @see #getAtomTypeName
      */
     @Override
     public void setAtomTypeName(String identifier) {
@@ -163,11 +144,10 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
     }
 
     /**
-     *  Sets the MaxBondOrder attribute of the AtomType object.
+     * Sets the MaxBondOrder attribute of the AtomType object.
      *
-     * @param  maxBondOrder  The new MaxBondOrder value
-     *
-     * @see       #getMaxBondOrder
+     * @param maxBondOrder The new MaxBondOrder value
+     * @see #getMaxBondOrder
      */
     @Override
     public void setMaxBondOrder(IBond.Order maxBondOrder) {
@@ -175,11 +155,10 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
     }
 
     /**
-     *  Sets the the exact bond order sum attribute of the AtomType object.
+     * Sets the the exact bond order sum attribute of the AtomType object.
      *
-     * @param  bondOrderSum  The new bondOrderSum value
-     *
-     * @see       #getBondOrderSum
+     * @param bondOrderSum The new bondOrderSum value
+     * @see #getBondOrderSum
      */
     @Override
     public void setBondOrderSum(Double bondOrderSum) {
@@ -187,11 +166,10 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
     }
 
     /**
-     *  Gets the id attribute of the AtomType object.
+     * Gets the id attribute of the AtomType object.
      *
-     * @return    The id value
-     *
-     * @see       #setAtomTypeName
+     * @return The id value
+     * @see #setAtomTypeName
      */
     @Override
     public String getAtomTypeName() {
@@ -199,11 +177,10 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
     }
 
     /**
-     *  Gets the MaxBondOrder attribute of the AtomType object.
+     * Gets the MaxBondOrder attribute of the AtomType object.
      *
-     * @return    The MaxBondOrder value
-     *
-     * @see       #setMaxBondOrder
+     * @return The MaxBondOrder value
+     * @see #setMaxBondOrder
      */
     @Override
     public IBond.Order getMaxBondOrder() {
@@ -211,11 +188,10 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
     }
 
     /**
-     *  Gets the bondOrderSum attribute of the AtomType object.
+     * Gets the bondOrderSum attribute of the AtomType object.
      *
-     * @return    The bondOrderSum value
-     *
-     * @see       #setBondOrderSum
+     * @return The bondOrderSum value
+     * @see #setBondOrderSum
      */
     @Override
     public Double getBondOrderSum() {
@@ -223,11 +199,10 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
     }
 
     /**
-     *  Sets the formal charge of this atom.
+     * Sets the formal charge of this atom.
      *
-     * @param  charge  The formal charge
-     *
-     * @see    #getFormalCharge
+     * @param charge The formal charge
+     * @see #getFormalCharge
      */
     @Override
     public void setFormalCharge(Integer charge) {
@@ -235,11 +210,10 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
     }
 
     /**
-     *  Returns the formal charge of this atom.
+     * Returns the formal charge of this atom.
      *
      * @return the formal charge of this atom
-     *
-     * @see    #setFormalCharge
+     * @see #setFormalCharge
      */
     @Override
     public Integer getFormalCharge() {
@@ -249,9 +223,8 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
     /**
      * Sets the formal neighbour count of this atom.
      *
-     * @param  count  The neighbour count
-     *
-     * @see    #getFormalNeighbourCount
+     * @param count The neighbour count
+     * @see #getFormalNeighbourCount
      */
     @Override
     public void setFormalNeighbourCount(Integer count) {
@@ -262,8 +235,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      * Returns the formal neighbour count of this atom.
      *
      * @return the formal neighbour count of this atom
-     *
-     * @see    #setFormalNeighbourCount
+     * @see #setFormalNeighbourCount
      */
     @Override
     public Integer getFormalNeighbourCount() {
@@ -271,11 +243,10 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
     }
 
     /**
-     *  Sets the hybridization of this atom.
+     * Sets the hybridization of this atom.
      *
-     * @param  hybridization  The hybridization
-     *
-     * @see    #getHybridization
+     * @param hybridization The hybridization
+     * @see #getHybridization
      */
     @Override
     public void setHybridization(IAtomType.Hybridization hybridization) {
@@ -283,11 +254,10 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
     }
 
     /**
-     *  Returns the hybridization of this atom.
+     * Returns the hybridization of this atom.
      *
      * @return the hybridization of this atom
-     *
-     * @see    #setHybridization
+     * @see #setHybridization
      */
     @Override
     public IAtomType.Hybridization getHybridization() {
@@ -297,8 +267,8 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
     /**
      * Compares a atom type with this atom type.
      *
-     * @param  object Object of type AtomType
-     * @return        true if the atom types are equal
+     * @param object Object of type AtomType
+     * @return true if the atom types are equal
      */
     @Override
     public boolean compare(Object object) {
@@ -310,14 +280,15 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
         }
         AtomType type = (AtomType) object;
         return Objects.equal(getAtomTypeName(), type.getAtomTypeName())
-                && Objects.equal(maxBondOrder, type.maxBondOrder) && Objects.equal(bondOrderSum, type.bondOrderSum);
+                && Objects.equal(maxBondOrder, type.maxBondOrder)
+                && Objects.equal(bondOrderSum, type.bondOrderSum);
     }
 
     /**
      * Sets the covalent radius for this AtomType.
      *
      * @param radius The covalent radius for this AtomType
-     * @see    #getCovalentRadius
+     * @see #getCovalentRadius
      */
     @Override
     public void setCovalentRadius(Double radius) {
@@ -328,7 +299,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      * Returns the covalent radius for this AtomType.
      *
      * @return The covalent radius for this AtomType
-     * @see    #setCovalentRadius
+     * @see #setCovalentRadius
      */
     @Override
     public Double getCovalentRadius() {
@@ -336,11 +307,10 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
     }
 
     /**
-     *  Sets the the exact electron valency of the AtomType object.
+     * Sets the the exact electron valency of the AtomType object.
      *
-     * @param  valency  The new valency value
+     * @param valency The new valency value
      * @see #getValency
-     *
      */
     @Override
     public void setValency(Integer valency) {
@@ -348,11 +318,10 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
     }
 
     /**
-     *  Gets the the exact electron valency of the AtomType object.
+     * Gets the the exact electron valency of the AtomType object.
      *
      * @return The valency value
      * @see #setValency
-     *
      */
     @Override
     public Integer getValency() {

@@ -38,15 +38,14 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * Unit testing for the {@link SubStructureSearchAlgorithms} class.
- * @author     Syed Asad Rahman
- * @author     egonw
+ *
+ * @author Syed Asad Rahman
+ * @author egonw
  * @cdk.module test-smsd
  */
 public class SubStructureSearchAlgorithmsTest {
 
-    /**
-     * Tests if the CDKMCS can be instantiated without throwing exceptions.
-     */
+    /** Tests if the CDKMCS can be instantiated without throwing exceptions. */
     @Test
     public void testSubStructureSearchAlgorithms() {
         Assert.assertNotNull(new Isomorphism(Algorithm.CDKMCS, true));
@@ -55,6 +54,7 @@ public class SubStructureSearchAlgorithmsTest {
 
     /**
      * Test of init method, of class SubStructureSearchAlgorithms.
+     *
      * @throws InvalidSmilesException
      * @throws CDKException
      */
@@ -73,6 +73,7 @@ public class SubStructureSearchAlgorithmsTest {
 
     /**
      * Test of init method, of class SubStructureSearchAlgorithms.
+     *
      * @throws InvalidSmilesException
      * @throws CDKException
      */
@@ -91,6 +92,7 @@ public class SubStructureSearchAlgorithmsTest {
 
     /**
      * Test of init method, of class SubStructureSearchAlgorithms.
+     *
      * @throws Exception
      */
     @Test
@@ -106,11 +108,11 @@ public class SubStructureSearchAlgorithmsTest {
         smsd1.setChemFilters(true, false, false);
         assertNotNull(smsd1.getReactantMolecule());
         assertNotNull(smsd1.getProductMolecule());
-
     }
 
     /**
      * Test of setChemFilters method, of class SubStructureSearchAlgorithms.
+     *
      * @throws InvalidSmilesException
      * @throws CDKException
      */
@@ -128,6 +130,7 @@ public class SubStructureSearchAlgorithmsTest {
 
     /**
      * Test of getFragmentSize method, of class SubStructureSearchAlgorithms.
+     *
      * @throws InvalidSmilesException
      * @throws CDKException
      */
@@ -146,6 +149,7 @@ public class SubStructureSearchAlgorithmsTest {
 
     /**
      * Test of getStereoScore method, of class SubStructureSearchAlgorithms.
+     *
      * @throws InvalidSmilesException
      * @throws CDKException
      */
@@ -164,6 +168,7 @@ public class SubStructureSearchAlgorithmsTest {
 
     /**
      * Test of getEnergyScore method, of class SubStructureSearchAlgorithms.
+     *
      * @throws InvalidSmilesException
      * @throws CDKException
      */
@@ -182,6 +187,7 @@ public class SubStructureSearchAlgorithmsTest {
 
     /**
      * Test of getFirstMapping method, of class SubStructureSearchAlgorithms.
+     *
      * @throws InvalidSmilesException
      * @throws CDKException
      */
@@ -200,6 +206,7 @@ public class SubStructureSearchAlgorithmsTest {
 
     /**
      * Test of getAllMapping method, of class SubStructureSearchAlgorithms.
+     *
      * @throws InvalidSmilesException
      * @throws CDKException
      */
@@ -223,6 +230,7 @@ public class SubStructureSearchAlgorithmsTest {
 
     /**
      * Test of getFirstAtomMapping method, of class SubStructureSearchAlgorithms.
+     *
      * @throws InvalidSmilesException
      * @throws CDKException
      */
@@ -241,6 +249,7 @@ public class SubStructureSearchAlgorithmsTest {
 
     /**
      * Test of getAllAtomMapping method, of class SubStructureSearchAlgorithms.
+     *
      * @throws InvalidSmilesException
      * @throws CDKException
      */
@@ -264,6 +273,7 @@ public class SubStructureSearchAlgorithmsTest {
 
     /**
      * Test of getReactantMolecule method, of class SubStructureSearchAlgorithms.
+     *
      * @throws InvalidSmilesException
      * @throws CDKException
      */
@@ -282,6 +292,7 @@ public class SubStructureSearchAlgorithmsTest {
 
     /**
      * Test of getProductMolecule method, of class SubStructureSearchAlgorithms.
+     *
      * @throws InvalidSmilesException
      * @throws CDKException
      */
@@ -300,6 +311,7 @@ public class SubStructureSearchAlgorithmsTest {
 
     /**
      * Test of getTanimotoSimilarity method, of class SubStructureSearchAlgorithms.
+     *
      * @throws Exception
      */
     @Test
@@ -318,6 +330,7 @@ public class SubStructureSearchAlgorithmsTest {
 
     /**
      * Test of isStereoMisMatch method, of class SubStructureSearchAlgorithms.
+     *
      * @throws InvalidSmilesException
      * @throws CDKException
      */
@@ -335,6 +348,7 @@ public class SubStructureSearchAlgorithmsTest {
 
     /**
      * Test of isSubgraph method, of class SubStructureSearchAlgorithms.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -351,6 +365,7 @@ public class SubStructureSearchAlgorithmsTest {
 
     /**
      * Test of getEuclideanDistance method, of class SubStructureSearchAlgorithms.
+     *
      * @throws Exception
      */
     @Test

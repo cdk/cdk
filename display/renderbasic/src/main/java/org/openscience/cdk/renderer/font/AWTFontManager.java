@@ -21,7 +21,6 @@ package org.openscience.cdk.renderer.font;
 import java.awt.Font;
 import java.util.HashMap;
 
-
 /**
  * AWT-specific font manager.
  *
@@ -32,13 +31,11 @@ public class AWTFontManager extends AbstractFontManager {
 
     private HashMap<Integer, Font> fontSizeToFontMap;
 
-    private int                    minFontSize;
+    private int minFontSize;
 
-    private Font                   currentFont;
+    private Font currentFont;
 
-    /**
-     * Make a manager for fonts in AWT, with a minimum font size of 9.
-     */
+    /** Make a manager for fonts in AWT, with a minimum font size of 9. */
     public AWTFontManager() {
         // apparently 9 pixels per em is the minimum
         // but I don't know if (size 9 == 9 px.em-1)...

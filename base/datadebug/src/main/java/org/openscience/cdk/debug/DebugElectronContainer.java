@@ -19,19 +19,18 @@
 package org.openscience.cdk.debug;
 
 import java.util.Map;
-
 import org.openscience.cdk.ElectronContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module datadebug
  * @cdk.githash
  */
@@ -39,7 +38,7 @@ public class DebugElectronContainer extends ElectronContainer implements IElectr
 
     private static final long serialVersionUID = 5309193617982266230L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugElectronContainer.class);
+    ILoggingTool logger = LoggingToolFactory.createLoggingTool(DebugElectronContainer.class);
 
     /** {@inheritDoc} */
     @Override
@@ -185,5 +184,4 @@ public class DebugElectronContainer extends ElectronContainer implements IElectr
     public IChemObjectBuilder getBuilder() {
         return DebugChemObjectBuilder.getInstance();
     }
-
 }

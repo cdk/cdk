@@ -24,17 +24,16 @@
 
 package org.openscience.cdk.renderer.generators.standard;
 
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Tuple2d;
-import javax.vecmath.Vector2d;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import javax.vecmath.Point2d;
+import javax.vecmath.Tuple2d;
+import javax.vecmath.Vector2d;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
 
 /**
  * A collection of static utilities for Java 3D javax.vecmath.* objects.
@@ -43,14 +42,11 @@ import java.util.List;
  */
 final class VecmathUtil {
 
-    /**
-     * Instantiation is disabled.
-     */
+    /** Instantiation is disabled. */
     private VecmathUtil() {}
 
     /**
-     * Convert a Vecmath (javax.vecmath.*) point to an AWT (java.awt.geom.*)
-     * point.
+     * Convert a Vecmath (javax.vecmath.*) point to an AWT (java.awt.geom.*) point.
      *
      * @param point a Vecmath point
      * @return an AWT point
@@ -60,8 +56,7 @@ final class VecmathUtil {
     }
 
     /**
-     * Convert a AWT (java.awt.geom.*) point to a Vecmath (javax.vecmath.*)
-     * point.
+     * Convert a AWT (java.awt.geom.*) point to a Vecmath (javax.vecmath.*) point.
      *
      * @param point an AWT point
      * @return a Vecmath point
@@ -110,9 +105,8 @@ final class VecmathUtil {
     }
 
     /**
-     * Create a new vector perpendicular (at a right angle) to the provided
-     * vector. In 2D, there are two perpendicular vectors, the other
-     * perpendicular vector can be obtained by negation.
+     * Create a new vector perpendicular (at a right angle) to the provided vector. In 2D, there are
+     * two perpendicular vectors, the other perpendicular vector can be obtained by negation.
      *
      * @param vector reference to which a perpendicular vector is returned
      * @return perpendicular vector
@@ -157,8 +151,7 @@ final class VecmathUtil {
     }
 
     /**
-     * Negate a vector, the input is not modified. Equivalent to
-     * {@code scale(vector, -1)}
+     * Negate a vector, the input is not modified. Equivalent to {@code scale(vector, -1)}
      *
      * @param vector a vector to negate
      * @return the negated vector
@@ -176,7 +169,8 @@ final class VecmathUtil {
      * @param d2 direction vector 2
      * @return the intersection
      */
-    static Point2d intersection(final Tuple2d p1, final Tuple2d d1, final Tuple2d p2, final Tuple2d d2) {
+    static Point2d intersection(
+            final Tuple2d p1, final Tuple2d d1, final Tuple2d p2, final Tuple2d d2) {
         final Vector2d p1End = sum(p1, d1);
         final Vector2d p2End = sum(p2, d2);
         return intersection(p1.x, p1.y, p1End.x, p1End.y, p2.x, p2.y, p2End.x, p2End.y);
@@ -196,21 +190,29 @@ final class VecmathUtil {
      * @param y4 first y coordinate of line 2
      * @return the point where the two lines intersect (or null)
      * @see <a href="http://en.wikipedia.org/wiki/Line–line_intersection">Line-line intersection,
-     * Wikipedia</a>
+     *     Wikipedia</a>
      */
-    static Point2d intersection(final double x1, final double y1, final double x2, final double y2, final double x3,
-            final double y3, final double x4, final double y4) {
-        final double x = ((x2 - x1) * (x3 * y4 - x4 * y3) - (x4 - x3) * (x1 * y2 - x2 * y1))
-                / ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
-        final double y = ((y3 - y4) * (x1 * y2 - x2 * y1) - (y1 - y2) * (x3 * y4 - x4 * y3))
-                / ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
+    static Point2d intersection(
+            final double x1,
+            final double y1,
+            final double x2,
+            final double y2,
+            final double x3,
+            final double y3,
+            final double x4,
+            final double y4) {
+        final double x =
+                ((x2 - x1) * (x3 * y4 - x4 * y3) - (x4 - x3) * (x1 * y2 - x2 * y1))
+                        / ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
+        final double y =
+                ((y3 - y4) * (x1 * y2 - x2 * y1) - (y1 - y2) * (x3 * y4 - x4 * y3))
+                        / ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
         return new Point2d(x, y);
     }
 
     /**
-     * Given vectors for the hypotenuse and adjacent side of a right angled
-     * triangle and the length of the opposite side, determine how long the
-     * adjacent side size.
+     * Given vectors for the hypotenuse and adjacent side of a right angled triangle and the length
+     * of the opposite side, determine how long the adjacent side size.
      *
      * @param hypotenuse vector for the hypotenuse
      * @param adjacent vector for the adjacent side
@@ -237,8 +239,7 @@ final class VecmathUtil {
     }
 
     /**
-     * Given a list of unit vectors, find the vector which is nearest to a
-     * provided reference.
+     * Given a list of unit vectors, find the vector which is nearest to a provided reference.
      *
      * @param reference a target vector
      * @param vectors list of vectors
@@ -267,8 +268,8 @@ final class VecmathUtil {
     }
 
     /**
-     * Given a list of bonds, find the bond which is nearest to a provided
-     * reference and return the vector for this bond.
+     * Given a list of bonds, find the bond which is nearest to a provided reference and return the
+     * vector for this bond.
      *
      * @param reference a target vector
      * @param fromAtom an atom (will be 0,0)
@@ -285,14 +286,11 @@ final class VecmathUtil {
         return getNearestVector(reference, newUnitVectors(fromAtom, toAtoms));
     }
 
-    /**
-     * Tau = (2π) ~ 6.283 radians ~ 360 degrees
-     */
-    private final static double TAU = 2 * Math.PI;
+    /** Tau = (2π) ~ 6.283 radians ~ 360 degrees */
+    private static final double TAU = 2 * Math.PI;
 
     /**
-     * Calculate the angular extent of a vector (0-2π radians) anti clockwise from
-     * east {1,0}.
+     * Calculate the angular extent of a vector (0-2π radians) anti clockwise from east {1,0}.
      *
      * @param vector a vector
      * @return the extent (radians)
@@ -312,8 +310,7 @@ final class VecmathUtil {
     static double[] extents(final List<Vector2d> vectors) {
         final int n = vectors.size();
         final double[] extents = new double[n];
-        for (int i = 0; i < n; i++)
-            extents[i] = VecmathUtil.extent(vectors.get(i));
+        for (int i = 0; i < n; i++) extents[i] = VecmathUtil.extent(vectors.get(i));
         return extents;
     }
 
@@ -345,8 +342,8 @@ final class VecmathUtil {
                 index = i;
             }
             // not significantly better -> put is left/right aligned
-            else if ((extents[i] < TAU && extents[i]+extent > TAU) ||
-                       (extents[i] < Math.PI && extents[i]+extent > Math.PI)) {
+            else if ((extents[i] < TAU && extents[i] + extent > TAU)
+                    || (extents[i] < Math.PI && extents[i] + extent > Math.PI)) {
                 max = extent;
                 index = i;
             }

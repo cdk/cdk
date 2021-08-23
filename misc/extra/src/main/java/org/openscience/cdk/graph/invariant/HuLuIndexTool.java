@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  *                    2014  Mark B Vine (orcid:0000-0002-7794-0426)
  *
@@ -22,7 +22,6 @@
 package org.openscience.cdk.graph.invariant;
 
 import java.util.Iterator;
-
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.invariant.exception.BadMatrixFormatException;
@@ -35,23 +34,23 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * Collection of methods for the calculation of topological indices of a
- * molecular graph.
+ * Collection of methods for the calculation of topological indices of a molecular graph.
  *
  * @cdk.githash
  */
 public class HuLuIndexTool {
 
-    private final static ILoggingTool logger = LoggingToolFactory.createLoggingTool(HuLuIndexTool.class);
+    private static final ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(HuLuIndexTool.class);
 
     /**
-    * Calculates the extended adjacency matrix index.
-    * An implementation of the algorithm published in {@cdk.cite HU96}.
-    *
-    * @cdk.keyword EAID number
-    */
-    public static double getEAIDNumber(IAtomContainer atomContainer) throws NoSuchAtomException,
-                                                                            BadMatrixFormatException, IndexOutOfBoundsException {
+     * Calculates the extended adjacency matrix index. An implementation of the algorithm published
+     * in {@cdk.cite HU96}.
+     *
+     * @cdk.keyword EAID number
+     */
+    public static double getEAIDNumber(IAtomContainer atomContainer)
+            throws NoSuchAtomException, BadMatrixFormatException, IndexOutOfBoundsException {
         GIMatrix matrix = new GIMatrix(getExtendedAdjacenyMatrix(atomContainer));
 
         GIMatrix tempMatrix = matrix;
@@ -73,7 +72,8 @@ public class HuLuIndexTool {
         return eaid;
     }
 
-    public static double[][] getExtendedAdjacenyMatrix(IAtomContainer atomContainer) throws NoSuchAtomException {
+    public static double[][] getExtendedAdjacenyMatrix(IAtomContainer atomContainer)
+            throws NoSuchAtomException {
         double[][] adjaMatrix = ConnectionMatrix.getMatrix(atomContainer);
 
         logger.debug("adjacency matrix: ");
@@ -90,9 +90,11 @@ public class HuLuIndexTool {
                         adjaMatrix[i][j] = Math.sqrt(0.74) / 6;
                     }
                 } else {
-                    adjaMatrix[i][j] = (Math.sqrt(atomWeights[i] / atomWeights[j]) + Math.sqrt(atomWeights[j]
-                            / atomWeights[i]))
-                            * Math.sqrt(adjaMatrix[i][j]) / 6;
+                    adjaMatrix[i][j] =
+                            (Math.sqrt(atomWeights[i] / atomWeights[j])
+                                            + Math.sqrt(atomWeights[j] / atomWeights[i]))
+                                    * Math.sqrt(adjaMatrix[i][j])
+                                    / 6;
                 }
             }
         }
@@ -107,7 +109,7 @@ public class HuLuIndexTool {
         IAtom atom, headAtom, endAtom;
         int headAtomPosition, endAtomPosition;
 
-        //int k = 0;
+        // int k = 0;
         double[] weightArray = new double[atomContainer.getAtomCount()];
         double[][] adjaMatrix = ConnectionMatrix.getMatrix(atomContainer);
 
@@ -137,17 +139,18 @@ public class HuLuIndexTool {
                 interLayerBondSum[v] = 0;
             }
 
-            //weightArray[k] = atom.getValenceElectronsCount() - atom.getHydrogenCount(); // method unfinished
-            if ("O".equals(atom.getSymbol()))
-                weightArray[i] = 6 - atom.getImplicitHydrogenCount();
-            else
-                weightArray[i] = 4 - atom.getImplicitHydrogenCount();
+            // weightArray[k] = atom.getValenceElectronsCount() - atom.getHydrogenCount(); // method
+            // unfinished
+            if ("O".equals(atom.getSymbol())) weightArray[i] = 6 - atom.getImplicitHydrogenCount();
+            else weightArray[i] = 4 - atom.getImplicitHydrogenCount();
 
             for (int j = 0; j < apspMatrix.length; j++) {
                 if ("O".equals(atomContainer.getAtom(j).getSymbol()))
-                    valenceSum[apspMatrix[j][i]] += 6 - atomContainer.getAtom(j).getImplicitHydrogenCount();
+                    valenceSum[apspMatrix[j][i]] +=
+                            6 - atomContainer.getAtom(j).getImplicitHydrogenCount();
                 else
-                    valenceSum[apspMatrix[j][i]] += 4 - atomContainer.getAtom(j).getImplicitHydrogenCount();
+                    valenceSum[apspMatrix[j][i]] +=
+                            4 - atomContainer.getAtom(j).getImplicitHydrogenCount();
             }
 
             Iterator<IBond> bonds = atomContainer.bonds().iterator();
@@ -160,8 +163,12 @@ public class HuLuIndexTool {
                 headAtomPosition = atomContainer.indexOf(headAtom);
                 endAtomPosition = atomContainer.indexOf(endAtom);
 
-                if (Math.abs(apspMatrix[i][headAtomPosition] - apspMatrix[i][endAtomPosition]) == 1) {
-                    int min = Math.min(apspMatrix[i][headAtomPosition], apspMatrix[i][endAtomPosition]);
+                if (Math.abs(apspMatrix[i][headAtomPosition] - apspMatrix[i][endAtomPosition])
+                        == 1) {
+                    int min =
+                            Math.min(
+                                    apspMatrix[i][headAtomPosition],
+                                    apspMatrix[i][endAtomPosition]);
                     IBond.Order order = bond.getOrder();
                     interLayerBondSum[min] += order == null ? 0 : order.numeric();
                 }
@@ -190,7 +197,6 @@ public class HuLuIndexTool {
             for (int j = 0; j < apspMatrix.length; j++) {
                 if (atomLayers[i] < 1 + apspMatrix[j][i]) atomLayers[i] = 1 + apspMatrix[j][i];
             }
-
         }
         return atomLayers;
     }
@@ -236,5 +242,4 @@ public class HuLuIndexTool {
         }
         logger.debug(line);
     }
-
 }

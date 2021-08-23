@@ -29,11 +29,10 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 
 /**
- * This Class contains a method that returns the number failures of the
- * Lipinski's Rule Of 5.
- * See <a href="http://en.wikipedia.org/wiki/Lipinski%27s_Rule_of_Five">http://en.wikipedia.org/wiki/Lipinski%27s_Rule_of_Five</a>.
+ * This Class contains a method that returns the number failures of the Lipinski's Rule Of 5. See <a
+ * href="http://en.wikipedia.org/wiki/Lipinski%27s_Rule_of_Five">http://en.wikipedia.org/wiki/Lipinski%27s_Rule_of_Five</a>.
  *
-  * <table border="1"><caption>Parameters for this descriptor:</caption>
+ * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>
@@ -48,38 +47,35 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  *
  * Returns a single value named <i>LipinskiFailures</i>.
  *
- * @author      mfe4
+ * @author mfe4
  * @cdk.created 2004-11-03
- * @cdk.module  qsarmolecular
+ * @cdk.module qsarmolecular
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:lipinskifailures
- *
  * @cdk.keyword Lipinski
  * @cdk.keyword rule-of-five
  * @cdk.keyword descriptor
  */
-public class RuleOfFiveDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
+public class RuleOfFiveDescriptor extends AbstractMolecularDescriptor
+        implements IMolecularDescriptor {
 
-    private boolean               checkAromaticity = false;
+    private boolean checkAromaticity = false;
 
-    private static final String[] NAMES            = {"LipinskiFailures"};
+    private static final String[] NAMES = {"LipinskiFailures"};
 
-    /**
-     *  Constructor for the RuleOfFiveDescriptor object.
-     */
+    /** Constructor for the RuleOfFiveDescriptor object. */
     public RuleOfFiveDescriptor() {}
 
     /**
-     * Returns a <code>Map</code> which specifies which descriptor
-     * is implemented by this class.
+     * Returns a <code>Map</code> which specifies which descriptor is implemented by this class.
      *
-     * These fields are used in the map:
+     * <p>These fields are used in the map:
+     *
      * <ul>
-     * <li>Specification-Reference: refers to an entry in a unique dictionary
-     * <li>Implementation-Title: anything
-     * <li>Implementation-Identifier: a unique identifier for this version of
-     *  this class
-     * <li>Implementation-Vendor: CDK, JOELib, or anything else
+     *   <li>Specification-Reference: refers to an entry in a unique dictionary
+     *   <li>Implementation-Title: anything
+     *   <li>Implementation-Identifier: a unique identifier for this version of this class
+     *   <li>Implementation-Vendor: CDK, JOELib, or anything else
      * </ul>
      *
      * @return An object containing the descriptor specification
@@ -87,20 +83,20 @@ public class RuleOfFiveDescriptor extends AbstractMolecularDescriptor implements
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#lipinskifailures", this.getClass()
-                        .getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#lipinskifailures",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     /**
-     *  Sets the parameters attribute of the RuleOfFiveDescriptor object.
-         *
-         *  There is only one parameter, which should be a Boolean indicating whether
-         *  aromaticity should be checked or has already been checked. The name of the paramete
-         *  is checkAromaticity.
+     * Sets the parameters attribute of the RuleOfFiveDescriptor object.
      *
-     *@param  params            Parameter is only one: a boolean.
-     *@throws  CDKException  if more than 1 parameter or a non-Boolean parameter is specified
-         *@see #getParameters
+     * <p>There is only one parameter, which should be a Boolean indicating whether aromaticity
+     * should be checked or has already been checked. The name of the paramete is checkAromaticity.
+     *
+     * @param params Parameter is only one: a boolean.
+     * @throws CDKException if more than 1 parameter or a non-Boolean parameter is specified
+     * @see #getParameters
      */
     @Override
     public void setParameters(Object[] params) throws CDKException {
@@ -115,10 +111,10 @@ public class RuleOfFiveDescriptor extends AbstractMolecularDescriptor implements
     }
 
     /**
-     *  Gets the parameters attribute of the RuleOfFiveDescriptor object.
+     * Gets the parameters attribute of the RuleOfFiveDescriptor object.
      *
-     *@return    The parameters value
-         *@see #setParameters
+     * @return The parameters value
+     * @see #setParameters
      */
     @Override
     public Object[] getParameters() {
@@ -134,11 +130,11 @@ public class RuleOfFiveDescriptor extends AbstractMolecularDescriptor implements
     }
 
     /**
-     *  the method take a boolean checkAromaticity: if the boolean is true, it means that
-     *  aromaticity has to be checked.
+     * the method take a boolean checkAromaticity: if the boolean is true, it means that aromaticity
+     * has to be checked.
      *
-     *@param  mol   AtomContainer for which this descriptor is to be calculated
-     *@return    The number of failures of the Lipinski rule
+     * @param mol AtomContainer for which this descriptor is to be calculated
+     * @return The number of failures of the Lipinski rule
      */
     @Override
     public DescriptorValue calculate(IAtomContainer mol) {
@@ -146,7 +142,9 @@ public class RuleOfFiveDescriptor extends AbstractMolecularDescriptor implements
         int lipinskifailures = 0;
 
         IMolecularDescriptor xlogP = new XLogPDescriptor();
-        Object[] xlogPparams = {checkAromaticity, Boolean.TRUE,};
+        Object[] xlogPparams = {
+            checkAromaticity, Boolean.TRUE,
+        };
 
         try {
             xlogP.setParameters(xlogPparams);
@@ -190,24 +188,35 @@ public class RuleOfFiveDescriptor extends AbstractMolecularDescriptor implements
                 lipinskifailures += 1;
             }
         } catch (CDKException e) {
-            new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
-                    (int) Double.NaN), getDescriptorNames(), e);
+            new DescriptorValue(
+                    getSpecification(),
+                    getParameterNames(),
+                    getParameters(),
+                    new IntegerResult((int) Double.NaN),
+                    getDescriptorNames(),
+                    e);
         }
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
-                lipinskifailures), getDescriptorNames());
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new IntegerResult(lipinskifailures),
+                getDescriptorNames());
     }
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * 
-     * The return value from this method really indicates what type of result will
-     * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
-     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
-     * allows you to do the same thing, without actually calculating the descriptor.
      *
-     * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
-     *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
+     * <p>The return value from this method really indicates what type of result will be obtained
+     * from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
+     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object;
+     * this method allows you to do the same thing, without actually calculating the descriptor.
+     *
+     * @return an object that implements the {@link
+     *     org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating the actual type
+     *     of values returned by the descriptor in the {@link
+     *     org.openscience.cdk.qsar.DescriptorValue} object
      */
     @Override
     public IDescriptorResult getDescriptorResultType() {
@@ -215,9 +224,9 @@ public class RuleOfFiveDescriptor extends AbstractMolecularDescriptor implements
     }
 
     /**
-     *  Gets the parameterNames attribute of the RuleOfFiveDescriptor object.
+     * Gets the parameterNames attribute of the RuleOfFiveDescriptor object.
      *
-     *@return    The parameterNames value
+     * @return The parameterNames value
      */
     @Override
     public String[] getParameterNames() {
@@ -227,10 +236,10 @@ public class RuleOfFiveDescriptor extends AbstractMolecularDescriptor implements
     }
 
     /**
-     *  Gets the parameterType attribute of the RuleOfFiveDescriptor object.
+     * Gets the parameterType attribute of the RuleOfFiveDescriptor object.
      *
-     *@param  name  The name of the parameter. In this case it is 'checkAromaticity'.
-     *@return       An Object of class equal to that of the parameter being requested
+     * @param name The name of the parameter. In this case it is 'checkAromaticity'.
+     * @return An Object of class equal to that of the parameter being requested
      */
     @Override
     public Object getParameterType(String name) {

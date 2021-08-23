@@ -22,9 +22,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
- * @cdk.module test-pcore
- */
+/** @cdk.module test-pcore */
 public class PharmacophoreQueryTest {
 
     private PharmacophoreQuery query;
@@ -53,7 +51,9 @@ public class PharmacophoreQueryTest {
     @Test
     public void testToString() {
         String repr = query.toString();
-        Assert.assertTrue(repr
-                .indexOf(" #A:3, #EC:3, D, A, A, DC::D [[OX1]]::A [[N]]::[4.0 - 4.5] , DC::D [[OX1]]::A [[N]]::[4.0 - 5.0] , DC::A [[N]]::A [[N]]::[5.4 - 5.8] , )") > 0);
+        Assert.assertTrue(
+                repr.indexOf(
+                                " #A:3, #EC:3, D, A, A, DC::D [[OX1]]::A [[N]]::[4.0 - 4.5] , DC::D [[OX1]]::A [[N]]::[4.0 - 5.0] , DC::A [[N]]::A [[N]]::[5.4 - 5.8] , )")
+                        > 0);
     }
 }

@@ -20,13 +20,13 @@
  */
 package org.openscience.cdk.graph.invariant;
 
+import java.io.InputStream;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -36,13 +36,11 @@ import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.io.InputStream;
-
 /**
  * Checks the functionality of the TopologicalEquivalentClass.
  *
- * @author      Junfeng Hao
- * @author      Luis F. de Figueiredo
+ * @author Junfeng Hao
+ * @author Luis F. de Figueiredo
  * @cdk.created 2003-09-26
  * @cdk.module test-extra
  */
@@ -50,7 +48,7 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
 
     AtomContainer C40C3V = null;
     AtomContainer C24D6D = null;
-    AtomContainer C28TD  = null;
+    AtomContainer C28TD = null;
 
     @Test
     public void testEquivalent() throws Exception {
@@ -163,7 +161,7 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
             arrEquivalent[i - 1] = Integer.toString(equivalentClass[i]).charAt(0);
         String strEquivalent = new String(arrEquivalent);
         Assert.assertNotNull(equivalentClass);
-        Assert.assertTrue(equivalentClass[0] == 10);//number of Class
+        Assert.assertTrue(equivalentClass[0] == 10); // number of Class
         Assert.assertTrue(equivalentClass[40] == 10);
         Assert.assertEquals("111112221333444556667878222879995555444", strEquivalent);
     }
@@ -240,7 +238,7 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
             arrEquivalent[i - 1] = Integer.toString(equivalentClass[i]).charAt(0);
         String strEquivalent = new String(arrEquivalent);
         Assert.assertNotNull(equivalentClass);
-        Assert.assertTrue(equivalentClass[0] == 2);//number of Class
+        Assert.assertTrue(equivalentClass[0] == 2); // number of Class
         Assert.assertEquals("111111222222222222111111", strEquivalent);
     }
 
@@ -254,7 +252,8 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
 
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer mol =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         mol = reader.read(mol);
         Assert.assertNotNull(mol);
 
@@ -272,10 +271,10 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
     }
 
     /**
-     * Test if aromatic bonds are being considered as such.
-     * Azulene has an aromatic outer ring and if bonds are considered only as a sequence of single and double bonds
-     * then the atoms closing the rings will be assigned to different classes (and all other atoms as well) because
-     * there will be a different number of single and double bonds on opposite sides of the symmetry axis.
+     * Test if aromatic bonds are being considered as such. Azulene has an aromatic outer ring and
+     * if bonds are considered only as a sequence of single and double bonds then the atoms closing
+     * the rings will be assigned to different classes (and all other atoms as well) because there
+     * will be a different number of single and double bonds on opposite sides of the symmetry axis.
      *
      * @throws Exception
      * @cdk.bug 3562476
@@ -296,8 +295,12 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
         String strEquivalent = new String(arrEquivalent);
 
         Assert.assertNotNull("Equivalent class was null", equivalentClass);
-        Assert.assertEquals("Unexpected equivalent class length", mol.getAtomCount() + 1, equivalentClass.length);
-        Assert.assertEquals("Wrong number of equivalent classes", 6, equivalentClass[0]);//number of Class
+        Assert.assertEquals(
+                "Unexpected equivalent class length",
+                mol.getAtomCount() + 1,
+                equivalentClass.length);
+        Assert.assertEquals(
+                "Wrong number of equivalent classes", 6, equivalentClass[0]); // number of Class
         Assert.assertEquals("Wrong class assignment", "1232145654", strEquivalent);
     }
 
@@ -324,9 +327,8 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
     }
 
     /**
-     * Test the equivalent classes method in pyrimidine
-     * Tests if the position of the single and double bonds in an aromatic ring matter
-     * to assign a class.
+     * Test the equivalent classes method in pyrimidine Tests if the position of the single and
+     * double bonds in an aromatic ring matter to assign a class.
      *
      * @throws Exception
      */
@@ -348,8 +350,8 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
     }
 
     /**
-     * Test the equivalent classes method in biphenyl,
-     * a molecule with two aromatic systems. It has 2 symmetry axis.
+     * Test the equivalent classes method in biphenyl, a molecule with two aromatic systems. It has
+     * 2 symmetry axis.
      *
      * @throws Exception
      */
@@ -371,10 +373,10 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
     }
 
     /**
-     * Test the equivalent classes method in imidazole,
-     * an aromatic molecule with a proton that can be exchanged between two aromatic nitrogens.
-     * The method should have failed because only one tautomer is considered,
-     * but there is no priority class for nodes of type ArNH to distinguish the nitrogens.
+     * Test the equivalent classes method in imidazole, an aromatic molecule with a proton that can
+     * be exchanged between two aromatic nitrogens. The method should have failed because only one
+     * tautomer is considered, but there is no priority class for nodes of type ArNH to distinguish
+     * the nitrogens.
      *
      * @throws Exception
      */
@@ -394,5 +396,4 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
         Assert.assertEquals("Wrong number of equivalent classes", 3, equivalentClass[0]);
         Assert.assertEquals("Wrong class assignment", "12321", strEquivalent);
     }
-
 }

@@ -29,16 +29,16 @@ import java.util.Arrays;
  * @cdk.module group
  */
 class IntegerListInvariant implements Invariant {
-    
+
     private int[] values;
-    
+
     public IntegerListInvariant(int[] values) {
         this.values = values;
     }
 
     @Override
     public int compareTo(Invariant o) {
-        int[] other = ((IntegerListInvariant)o).values;
+        int[] other = ((IntegerListInvariant) o).values;
         for (int index = 0; index < values.length; index++) {
             if (values[index] > other[index]) {
                 return -1;
@@ -50,18 +50,17 @@ class IntegerListInvariant implements Invariant {
         }
         return 0;
     }
-    
+
     public int hashCode() {
         return Arrays.hashCode(values);
     }
-    
+
     public boolean equals(Object other) {
         return other instanceof IntegerListInvariant
-                && Arrays.equals(values, ((IntegerListInvariant)other).values);
+                && Arrays.equals(values, ((IntegerListInvariant) other).values);
     }
-    
+
     public String toString() {
         return Arrays.toString(values);
     }
-    
 }

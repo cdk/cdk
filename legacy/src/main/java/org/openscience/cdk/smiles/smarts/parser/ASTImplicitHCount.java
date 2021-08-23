@@ -29,28 +29,20 @@ package org.openscience.cdk.smiles.smarts.parser;
 @Deprecated
 class ASTImplicitHCount extends SimpleNode {
 
-    /**
-     * Value of implicit H count.
-     */
+    /** Value of implicit H count. */
     private int count;
 
-    /**
-     * Creates a new instance.
-     */
+    /** Creates a new instance. */
     public ASTImplicitHCount(int id) {
         super(id);
     }
 
-    /**
-     * Creates a new instance.
-     */
+    /** Creates a new instance. */
     public ASTImplicitHCount(SMARTSParser p, int id) {
         super(p, id);
     }
 
-    /**
-     * Returns implicit H count.
-     */
+    /** Returns implicit H count. */
     public int getCount() {
         return count;
     }
@@ -66,9 +58,7 @@ class ASTImplicitHCount extends SimpleNode {
         return visitor.visit(this, data);
     }
 
-    /**
-     * Set the value of implicit H count.
-     */
+    /** Set the value of implicit H count. */
     public void setCount(int count) {
         this.count = count;
     }

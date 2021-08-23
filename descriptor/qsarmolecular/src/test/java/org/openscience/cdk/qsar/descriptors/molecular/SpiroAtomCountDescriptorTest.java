@@ -23,22 +23,17 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
-/**
- * TestSuite that runs a test for the SpiroAtomCountDescriptor.
- */
-
+/** TestSuite that runs a test for the SpiroAtomCountDescriptor. */
 public class SpiroAtomCountDescriptorTest extends MolecularDescriptorTest {
 
     static SmilesParser sp;
 
-    public SpiroAtomCountDescriptorTest() {
-    }
+    public SpiroAtomCountDescriptorTest() {}
 
     @BeforeClass
     public static void setupBeforeClass() throws Exception {
@@ -48,7 +43,6 @@ public class SpiroAtomCountDescriptorTest extends MolecularDescriptorTest {
     @Before
     public void setUp() throws Exception {
         setDescriptor(SpiroAtomCountDescriptor.class);
-
     }
 
     @Test
@@ -96,5 +90,4 @@ public class SpiroAtomCountDescriptorTest extends MolecularDescriptorTest {
         DescriptorValue value = descriptor.calculate(mol);
         Assert.assertEquals(1, ((IntegerResult) value.getValue()).intValue());
     }
-
 }

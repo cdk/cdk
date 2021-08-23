@@ -23,43 +23,46 @@
 
 package org.openscience.cdk.isomorphism;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.smarts.Smarts;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertTrue;
-
 public class HydrogenSuppressionTest {
 
-    private static void test(String smaexp,
-                             String smainp) {
+    private static void test(String smaexp, String smainp) {
         IAtomContainer qry = new QueryAtomContainer(null);
         assertTrue(Smarts.parse(qry, smainp));
-        IAtomContainer sup    = QueryAtomContainerCreator.suppressQueryHydrogens(qry);
-        String         smaact = Smarts.generate(sup);
+        IAtomContainer sup = QueryAtomContainerCreator.suppressQueryHydrogens(qry);
+        String smaact = Smarts.generate(sup);
         assertThat(smaact, is(smaexp));
     }
 
-    @Test public void oneHydrogen() {
+    @Test
+    public void oneHydrogen() {
         test("[c!H0]", "c[H]");
         test("[c!H0]", "c[#1]");
     }
 
-    @Test public void twoHydrogens() {
+    @Test
+    public void twoHydrogens() {
         test("[c!H0!H1]", "c([H])[H]");
         test("[c!H0!H1]", "c([#1])[#1]");
     }
 
-    @Test public void deuteriumIsKept() {
+    @Test
+    public void deuteriumIsKept() {
         test("[c!H0][2#1]", "c([2H])[H]");
         test("[c!H0][2#1]", "c([2#1])[#1]");
     }
 
-    @Test public void bridgingIsKept() {
+    @Test
+    public void bridgingIsKept() {
         test("B[#1]B", "B[H]B");
     }
 }

@@ -22,9 +22,12 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import static org.hamcrest.CoreMatchers.is;
+
+import java.io.InputStream;
+import java.util.BitSet;
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
@@ -40,14 +43,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.io.InputStream;
-import java.util.BitSet;
-
-import static org.hamcrest.CoreMatchers.is;
-
-/**
- * @cdk.module test-standard
- */
+/** @cdk.module test-standard */
 public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFingerprinterTest {
 
     // logical 'AND' or two bit sets (orginals are not modified)
@@ -57,9 +53,7 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
         return c;
     }
 
-    /**
-     * @cdk.bug 706786
-     */
+    /** @cdk.bug 706786 */
     @Test
     public void testBug706786() throws Exception {
         // inlined molecules - note this test fails if implicit hydrogens are
@@ -80,9 +74,7 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
         org.hamcrest.MatcherAssert.assertThat(and(superBS, subBS), is(subBS));
     }
 
-    /**
-     * @cdk.bug 853254
-     */
+    /** @cdk.bug 853254 */
     @Test
     public void testBug853254() throws Exception {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
@@ -215,9 +207,10 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
     }
 
     /**
-     * data/mdl/bug70786-1.mol
-     * CC(=O)C1=CC2=C(OC(C)(C)[C@@H](O)[C@@H]2O)C=C1
-     * @cdk.inchi InChI=1/C13H16O4/c1-7(14)8-4-5-10-9(6-8)11(15)12(16)13(2,3)17-10/h4-6,11-12,15-16H,1-3H3/t11-,12+/s2
+     * data/mdl/bug70786-1.mol CC(=O)C1=CC2=C(OC(C)(C)[C@@H](O)[C@@H]2O)C=C1
+     *
+     * @cdk.inchi
+     *     InChI=1/C13H16O4/c1-7(14)8-4-5-10-9(6-8)11(15)12(16)13(2,3)17-10/h4-6,11-12,15-16H,1-3H3/t11-,12+/s2
      */
     static IAtomContainer bug706786_1() throws CDKException {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
@@ -316,8 +309,8 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
     }
 
     /**
-     * data/mdl/bug706786-2.mol
-     * C1COC2=CC=CC=C2C1
+     * data/mdl/bug706786-2.mol C1COC2=CC=CC=C2C1
+     *
      * @cdk.inchi InChI=1/C9H10O/c1-2-6-9-8(4-1)5-3-7-10-9/h1-2,4,6H,3,5,7H2
      */
     static IAtomContainer bug706786_2() throws CDKException {
@@ -381,8 +374,8 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
     }
 
     /**
-     * /data/mdl/bug934819_1.mol
-     * [O-][N+](=O)C1=CC=CS1
+     * /data/mdl/bug934819_1.mol [O-][N+](=O)C1=CC=CS1
+     *
      * @cdk.inchi InChI=1/C4H3NO2S/c6-5(7)4-2-1-3-8-4/h1-3H
      */
     static IAtomContainer bug934819_1() {
@@ -436,9 +429,10 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
     }
 
     /**
-     * /data/mdl/bug934819-2.mol
-     * CCCCSC1=CC=C(S1)C#CC1=CC=C(S1)[N+]([O-])=O
-     * @cdk.inchi InChI=1/C14H13NO2S3/c1-2-3-10-18-14-9-7-12(20-14)5-4-11-6-8-13(19-11)15(16)17/h6-9H,2-3,10H2,1H3
+     * /data/mdl/bug934819-2.mol CCCCSC1=CC=C(S1)C#CC1=CC=C(S1)[N+]([O-])=O
+     *
+     * @cdk.inchi
+     *     InChI=1/C14H13NO2S3/c1-2-3-10-18-14-9-7-12(20-14)5-4-11-6-8-13(19-11)15(16)17/h6-9H,2-3,10H2,1H3
      */
     static IAtomContainer bug934819_2() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
@@ -552,8 +546,7 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
 
     static BitSet asBitSet(int... xs) {
         BitSet bs = new BitSet();
-        for (int x : xs)
-            bs.set(x);
+        for (int x : xs) bs.set(x);
         return bs;
     }
 }

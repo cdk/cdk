@@ -45,13 +45,10 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 
-    private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-    LonePairElectronChecker                 lpcheck = new LonePairElectronChecker();
+    private static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
-    /**
-     *  Constructor for the PartialPiChargeDescriptorTest object
-     *
-     */
+    /** Constructor for the PartialPiChargeDescriptorTest object */
     public PartialPiChargeDescriptorTest() {}
 
     @Before
@@ -60,15 +57,14 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
     }
 
     /**
-     *  A unit test for JUnit with Ethyl Fluoride
+     * A unit test for JUnit with Ethyl Fluoride
      *
-     *  @cdk.inchi InChI=1/CH3F/c1-2/h1H3
+     * @cdk.inchi InChI=1/CH3F/c1-2/h1H3
      */
     @Test
     @Category(SlowTest.class)
-    public void testPartialPiChargeDescriptor_Methyl_Fluoride() throws
-            Exception {
-        double[] testResult = {0.0, 0.0, 0.0, 0.0, 0.0};/*
+    public void testPartialPiChargeDescriptor_Methyl_Fluoride() throws Exception {
+        double[] testResult = {0.0, 0.0, 0.0, 0.0, 0.0}; /*
                                                          * from Petra online:
                                                          * http
                                                          * ://www2.chemie.uni
@@ -88,23 +84,23 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         lpcheck.saturate(molecule);
 
         for (int i = 0; i < molecule.getAtomCount(); i++) {
-            double result = ((DoubleResult) descriptor.calculate(molecule.getAtom(i), molecule).getValue())
-                    .doubleValue();
+            double result =
+                    ((DoubleResult) descriptor.calculate(molecule.getAtom(i), molecule).getValue())
+                            .doubleValue();
             Assert.assertEquals(testResult[i], result, 0.0001);
         }
     }
 
     /**
-     *  A unit test for JUnit with Fluoroethylene
+     * A unit test for JUnit with Fluoroethylene
      *
-     *  @cdk.inchi InChI=1/C2H3F/c1-2-3/h2H,1H2
-     *  @cdk.bug   1959099
+     * @cdk.inchi InChI=1/C2H3F/c1-2-3/h2H,1H2
+     * @cdk.bug 1959099
      */
     @Test
     @Category(SlowTest.class)
-    public void testPartialPiChargeDescriptor_Fluoroethylene() throws
-            Exception {
-        double[] testResult = {0.0299, 0.0, -0.0299, 0.0, 0.0, 0.0};/*
+    public void testPartialPiChargeDescriptor_Fluoroethylene() throws Exception {
+        double[] testResult = {0.0299, 0.0, -0.0299, 0.0, 0.0, 0.0}; /*
                                                                      * from
                                                                      * Petra
                                                                      * online:
@@ -133,22 +129,22 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         lpcheck.saturate(molecule);
 
         for (int i = 0; i < molecule.getAtomCount(); i++) {
-            double result = ((DoubleResult) descriptor.calculate(molecule.getAtom(i), molecule).getValue())
-                    .doubleValue();
+            double result =
+                    ((DoubleResult) descriptor.calculate(molecule.getAtom(i), molecule).getValue())
+                            .doubleValue();
             Assert.assertEquals(testResult[i], result, 0.05);
         }
     }
 
     /**
-     *  A unit test for JUnit with Formic Acid
+     * A unit test for JUnit with Formic Acid
      *
-     *  @cdk.inchi  InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)/f/h2H
+     * @cdk.inchi InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)/f/h2H
      */
     @Test
     @Category(SlowTest.class)
-    public void testPartialPiChargeDescriptor_FormicAcid() throws
-            Exception {
-        double[] testResult = {0.0221, -0.1193, 0.0972, 0.0, 0.0};/*
+    public void testPartialPiChargeDescriptor_FormicAcid() throws Exception {
+        double[] testResult = {0.0221, -0.1193, 0.0972, 0.0, 0.0}; /*
                                                                    * from Petra
                                                                    * online:
                                                                    * http
@@ -175,33 +171,34 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         lpcheck.saturate(molecule);
 
         for (int i = 0; i < molecule.getAtomCount(); i++) {
-            double result = ((DoubleResult) descriptor.calculate(molecule.getAtom(i), molecule).getValue())
-                    .doubleValue();
+            double result =
+                    ((DoubleResult) descriptor.calculate(molecule.getAtom(i), molecule).getValue())
+                            .doubleValue();
             Assert.assertEquals(testResult[i], result, 0.05);
-
         }
     }
 
     /**
-     *  A unit test for JUnit with Fluorobenzene
+     * A unit test for JUnit with Fluorobenzene
      *
-     *  @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
+     * @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
      */
     @Test
     @Category(SlowTest.class)
-    public void testPartialPiChargeDescriptor_Fluorobenzene() throws
-            Exception {
-        double[] testResult = {0.0262, 0.0, -0.0101, 0.0, -0.006, 0.0, -0.0101, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};/*
-                                                              * from Petra
-                                                              * online:
-                                                              * http://www2
-                                                              * .chemie
-                                                              * .uni-erlangen
-                                                              * .de/
-                                                              * services/petra
-                                                              * /smiles.phtml
-                                                              */
+    public void testPartialPiChargeDescriptor_Fluorobenzene() throws Exception {
+        double[] testResult = {
+            0.0262, 0.0, -0.0101, 0.0, -0.006, 0.0, -0.0101, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+            0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+        }; /*
+            * from Petra
+            * online:
+            * http://www2
+            * .chemie
+            * .uni-erlangen
+            * .de/
+            * services/petra
+            * /smiles.phtml
+            */
         IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         Integer[] params = new Integer[1];
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
@@ -227,23 +224,23 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         for (int i = 0; i < molecule.getAtomCount(); i++) {
             params[0] = 6;
             descriptor.setParameters(params);
-            double result = ((DoubleResult) descriptor.calculate(molecule.getAtom(i), molecule).getValue())
-                    .doubleValue();
+            double result =
+                    ((DoubleResult) descriptor.calculate(molecule.getAtom(i), molecule).getValue())
+                            .doubleValue();
             Assert.assertEquals(testResult[i], result, 0.05);
         }
     }
 
     /**
-     *  A unit test for JUnit with Methoxyethylene
+     * A unit test for JUnit with Methoxyethylene
      *
-     *  @cdk.inchi InChI=1/C3H6O/c1-3-4-2/h3H,1H2,2H3
-     *  @cdk.bug   1959099
+     * @cdk.inchi InChI=1/C3H6O/c1-3-4-2/h3H,1H2,2H3
+     * @cdk.bug 1959099
      */
     @Test
     @Category(SlowTest.class)
-    public void testPartialPiChargeDescriptor_Methoxyethylene() throws
-            Exception {
-        double[] testResult = {-0.044, 0.0, 0.044, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};/*
+    public void testPartialPiChargeDescriptor_Methoxyethylene() throws Exception {
+        double[] testResult = {-0.044, 0.0, 0.044, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}; /*
                                                                                        * from
                                                                                        * Petra
                                                                                        * online
@@ -286,51 +283,54 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         addExplicitHydrogens(molecule);
         lpcheck.saturate(molecule);
 
-        for (int i = 0; i < 4/* mol.getAtomCount() */; i++) {
+        for (int i = 0; i < 4 /* mol.getAtomCount() */; i++) {
             params[0] = 6;
             descriptor.setParameters(params);
-            double result = ((DoubleResult) descriptor.calculate(molecule.getAtom(i), molecule).getValue())
-                    .doubleValue();
+            double result =
+                    ((DoubleResult) descriptor.calculate(molecule.getAtom(i), molecule).getValue())
+                            .doubleValue();
             Assert.assertEquals(testResult[i], result, 0.05);
         }
     }
 
     /**
-     *  A unit test for JUnit with 1-Methoxybutadiene
+     * A unit test for JUnit with 1-Methoxybutadiene
      *
-     *  @cdk.inchi InChI=1/C5H8O/c1-3-4-5-6-2/h3-5H,1H2,2H3
-     *  @cdk.bug   1959099
+     * @cdk.inchi InChI=1/C5H8O/c1-3-4-5-6-2/h3-5H,1H2,2H3
+     * @cdk.bug 1959099
      */
     @Test
     @Category(SlowTest.class)
     public void testPartialPiChargeDescriptor_1_Methoxybutadiene() throws Exception {
-        double[] testResult = {-0.0333, 0.0, -0.0399, 0.0, 0.0733, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};/*
-                                                                                                                 * from
-                                                                                                                 * Petra
-                                                                                                                 * online
-                                                                                                                 * :
-                                                                                                                 * http
-                                                                                                                 * :
-                                                                                                                 * /
-                                                                                                                 * /
-                                                                                                                 * www2
-                                                                                                                 * .
-                                                                                                                 * chemie
-                                                                                                                 * .
-                                                                                                                 * uni
-                                                                                                                 * -
-                                                                                                                 * erlangen
-                                                                                                                 * .
-                                                                                                                 * de
-                                                                                                                 * /
-                                                                                                                 * services
-                                                                                                                 * /
-                                                                                                                 * petra
-                                                                                                                 * /
-                                                                                                                 * smiles
-                                                                                                                 * .
-                                                                                                                 * phtml
-                                                                                                                 */
+        double[] testResult = {
+            -0.0333, 0.0, -0.0399, 0.0, 0.0733, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+        }; /*
+            * from
+            * Petra
+            * online
+            * :
+            * http
+            * :
+            * /
+            * /
+            * www2
+            * .
+            * chemie
+            * .
+            * uni
+            * -
+            * erlangen
+            * .
+            * de
+            * /
+            * services
+            * /
+            * petra
+            * /
+            * smiles
+            * .
+            * phtml
+            */
         IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
 
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
@@ -351,57 +351,58 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         lpcheck.saturate(molecule);
 
         for (int i = 0; i < molecule.getAtomCount(); i++) {
-            double result = ((DoubleResult) descriptor.calculate(molecule.getAtom(i), molecule).getValue())
-                    .doubleValue();
+            double result =
+                    ((DoubleResult) descriptor.calculate(molecule.getAtom(i), molecule).getValue())
+                            .doubleValue();
             Assert.assertEquals(testResult[i], result, 0.3);
         }
     }
 
-    /**
-     * get the sign of a value
-     */
+    /** get the sign of a value */
     private double getSign(double d) {
         double sign = 0.0;
-        if (d > 0)
-            sign = 1;
+        if (d > 0) sign = 1;
         else if (d < 0) sign = -1;
         return sign;
     }
 
     /**
-     *  A unit test for JUnit
-     *  @cdk.bug   1959099
+     * A unit test for JUnit
+     *
+     * @cdk.bug 1959099
      */
     @Test
     @Category(SlowTest.class)
     public void testPartialPiChargeDescriptoCharge_1() throws Exception {
-        double[] testResult = {0.0613, -0.0554, 0.0, -0.0059, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};/*
-                                                                                                            * from
-                                                                                                            * Petra
-                                                                                                            * online
-                                                                                                            * :
-                                                                                                            * http
-                                                                                                            * :
-                                                                                                            * /
-                                                                                                            * /
-                                                                                                            * www2
-                                                                                                            * .
-                                                                                                            * chemie
-                                                                                                            * .
-                                                                                                            * uni
-                                                                                                            * -
-                                                                                                            * erlangen
-                                                                                                            * .
-                                                                                                            * de
-                                                                                                            * /
-                                                                                                            * services
-                                                                                                            * /
-                                                                                                            * petra
-                                                                                                            * /
-                                                                                                            * smiles
-                                                                                                            * .
-                                                                                                            * phtml
-                                                                                                            */
+        double[] testResult = {
+            0.0613, -0.0554, 0.0, -0.0059, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+        }; /*
+            * from
+            * Petra
+            * online
+            * :
+            * http
+            * :
+            * /
+            * /
+            * www2
+            * .
+            * chemie
+            * .
+            * uni
+            * -
+            * erlangen
+            * .
+            * de
+            * /
+            * services
+            * /
+            * petra
+            * /
+            * smiles
+            * .
+            * phtml
+            */
         IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("F[C+]([H])[C-]([H])[H]");
@@ -410,47 +411,51 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         lpcheck.saturate(mol);
 
         for (int i = 0; i < 6; i++) {
-            double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+            double result =
+                    ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue())
+                            .doubleValue();
             Assert.assertEquals(testResult[i], result, 0.2);
         }
     }
 
     /**
-     *  A unit test for JUnit : n1ccccc1
+     * A unit test for JUnit : n1ccccc1
      *
-     *  @cdk.inchi InChI: InChI=1/C5H5N/c1-2-4-6-5-3-1/h1-5H
-     *  @cdk.bug   1959099
+     * @cdk.inchi InChI: InChI=1/C5H5N/c1-2-4-6-5-3-1/h1-5H
+     * @cdk.bug 1959099
      */
     @Test
     @Category(SlowTest.class)
     public void testPartialPiChargeDescriptoCharge_2() throws Exception {
-        double[] testResult = {-0.0822, 0.02, 0.0, 0.0423, 0.0, 0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};/*
-                                                                                                               * from
-                                                                                                               * Petra
-                                                                                                               * online
-                                                                                                               * :
-                                                                                                               * http
-                                                                                                               * :
-                                                                                                               * /
-                                                                                                               * /
-                                                                                                               * www2
-                                                                                                               * .
-                                                                                                               * chemie
-                                                                                                               * .
-                                                                                                               * uni
-                                                                                                               * -
-                                                                                                               * erlangen
-                                                                                                               * .
-                                                                                                               * de
-                                                                                                               * /
-                                                                                                               * services
-                                                                                                               * /
-                                                                                                               * petra
-                                                                                                               * /
-                                                                                                               * smiles
-                                                                                                               * .
-                                                                                                               * phtml
-                                                                                                               */
+        double[] testResult = {
+            -0.0822, 0.02, 0.0, 0.0423, 0.0, 0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+        }; /*
+            * from
+            * Petra
+            * online
+            * :
+            * http
+            * :
+            * /
+            * /
+            * www2
+            * .
+            * chemie
+            * .
+            * uni
+            * -
+            * erlangen
+            * .
+            * de
+            * /
+            * services
+            * /
+            * petra
+            * /
+            * smiles
+            * .
+            * phtml
+            */
         IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
 
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
@@ -472,18 +477,22 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         lpcheck.saturate(mol);
 
         for (int i = 0; i < mol.getAtomCount(); i++) {
-            double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+            double result =
+                    ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue())
+                            .doubleValue();
             Assert.assertEquals(testResult[i], result, 0.05);
         }
     }
 
     /**
-     *  A unit test for JUnit. This molecule breaks with PETRA as well.
-     *  @cdk.bug   1959099
+     * A unit test for JUnit. This molecule breaks with PETRA as well.
+     *
+     * @cdk.bug 1959099
      */
-    @Ignore("Bug was always present - and is not a regression. The non-charge seperated form of molecule produces the correct result.")
+    @Ignore(
+            "Bug was always present - and is not a regression. The non-charge seperated form of molecule produces the correct result.")
     public void testPartialPiChargeDescriptoCharge_3() throws Exception {
-        double[] testResult = {-0.0379, -0.0032, 0.0, -0.0078, 0.0, 0.0488, 0.0, 0.0};/*
+        double[] testResult = {-0.0379, -0.0032, 0.0, -0.0078, 0.0, 0.0488, 0.0, 0.0}; /*
                                                                                        * from
                                                                                        * Petra
                                                                                        * online
@@ -517,20 +526,22 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         lpcheck.saturate(mol);
 
         for (int i = 0; i < mol.getAtomCount(); i++) {
-            double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+            double result =
+                    ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue())
+                            .doubleValue();
             Assert.assertEquals(testResult[i], result, 0.05);
         }
     }
 
     /**
-     *  A unit test for JUnit. This molecule breaks with PETRA as well.
+     * A unit test for JUnit. This molecule breaks with PETRA as well.
      *
-     *  @cdk.inchi InChI: InChI=1/C5H12O2/c1-2-7-5-3-4-6/h6H,2-5H2,1H3
+     * @cdk.inchi InChI: InChI=1/C5H12O2/c1-2-7-5-3-4-6/h6H,2-5H2,1H3
      */
     @Test
     @Category(SlowTest.class)
     public void testPartialPiChargeDescripto4() throws Exception {
-        double[] testResult = {0.0};/*
+        double[] testResult = {0.0}; /*
                                      * from Petra online:
                                      * http://www2.chemie.uni-
                                      * erlangen.de/services/petra/smiles.phtml
@@ -545,15 +556,17 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         lpcheck.saturate(mol);
 
         for (int i = 0; i < mol.getAtomCount(); i++) {
-            double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+            double result =
+                    ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue())
+                            .doubleValue();
             Assert.assertEquals(testResult[0], result, 0.0001);
         }
     }
 
     /**
-     *  A unit test for JUnit with
+     * A unit test for JUnit with
      *
-     *  @cdk.inchi InChI=1/C2H5NO/c1-2(3)4/h1H3,(H2,3,4)/f/h3H2
+     * @cdk.inchi InChI=1/C2H5NO/c1-2(3)4/h1H3,(H2,3,4)/f/h3H2
      */
     @Test
     @Category(SlowTest.class)
@@ -595,42 +608,47 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 
         lpcheck.saturate(mol);
         for (int i = 0; i < mol.getAtomCount(); i++) {
-            double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+            double result =
+                    ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue())
+                            .doubleValue();
             Assert.assertEquals(testResult[i], result, 0.05);
         }
     }
 
     /**
-     *  A unit test for JUnit with [H]C1=C([H])C([H])=C(C(=C1(F))C([H])([H])[H])C([H])([H])C([H])([H])C(F)=O
-     *  @cdk.bug   1959099
+     * A unit test for JUnit with
+     * [H]C1=C([H])C([H])=C(C(=C1(F))C([H])([H])[H])C([H])([H])C([H])([H])C(F)=O
      *
+     * @cdk.bug 1959099
      */
     @Test
     @Category(SlowTest.class)
     public void testSousa() throws Exception {
         IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
-        double[] testResult = {0.0914, 0.0193, -0.1107, 0.0, 0.0, 0.0, -0.0063, 0.0, -0.0101, 0.0, 0.0262, -0.0098,
-                0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}; /*
-                                                                         * from
-                                                                         * Petra
-                                                                         * online
-                                                                         * :
-                                                                         * http
-                                                                         * :/
-                                                                         * /www2
-                                                                         * .
-                                                                         * chemie
-                                                                         * .uni-
-                                                                         * erlangen
-                                                                         * .de/
-                                                                         * services
-                                                                         * /
-                                                                         * petra
-                                                                         * /
-                                                                         * smiles
-                                                                         * .
-                                                                         * phtml
-                                                                         */
+        double[] testResult = {
+            0.0914, 0.0193, -0.1107, 0.0, 0.0, 0.0, -0.0063, 0.0, -0.0101, 0.0, 0.0262, -0.0098,
+            0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+        }; /*
+            * from
+            * Petra
+            * online
+            * :
+            * http
+            * :/
+            * /www2
+            * .
+            * chemie
+            * .uni-
+            * erlangen
+            * .de/
+            * services
+            * /
+            * petra
+            * /
+            * smiles
+            * .
+            * phtml
+            */
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         mol.addAtom(builder.newInstance(IAtom.class, "F"));
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -641,21 +659,21 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         mol.addBond(1, 3, Order.SINGLE);
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
         mol.addBond(3, 4, Order.SINGLE);
-        mol.addAtom(builder.newInstance(IAtom.class, "C"));//ring
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // ring
         mol.addBond(4, 5, Order.SINGLE);
-        //aromatic
-        mol.addAtom(builder.newInstance(IAtom.class, "C"));//ring
+        // aromatic
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // ring
         mol.addBond(5, 6, Order.DOUBLE);
-        mol.addAtom(builder.newInstance(IAtom.class, "C"));//ring
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // ring
         mol.addBond(6, 7, Order.SINGLE);
-        mol.addAtom(builder.newInstance(IAtom.class, "C"));//ring
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // ring
         mol.addBond(7, 8, Order.DOUBLE);
-        mol.addAtom(builder.newInstance(IAtom.class, "C"));//ring
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // ring
         mol.addBond(8, 9, Order.SINGLE);
-        //Fluor
+        // Fluor
         mol.addAtom(builder.newInstance(IAtom.class, "F"));
         mol.addBond(9, 10, Order.SINGLE);
-        mol.addAtom(builder.newInstance(IAtom.class, "C"));//ring
+        mol.addAtom(builder.newInstance(IAtom.class, "C")); // ring
         mol.addBond(9, 11, Order.DOUBLE);
         mol.addBond(5, 11, Order.SINGLE);
 
@@ -670,48 +688,52 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         lpcheck.saturate(mol);
 
         for (int i = 0; i < mol.getAtomCount(); i++) {
-            double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+            double result =
+                    ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue())
+                            .doubleValue();
             Assert.assertEquals(testResult[i], result, 0.15);
         }
     }
 
     /**
-     *  A unit test for JUnit with [H]C([H])=C([H])C([H])([H])C([H])=O
+     * A unit test for JUnit with [H]C([H])=C([H])C([H])([H])C([H])=O
      *
-     *  @cdk.inchi  InChI=1/C4H6O/c1-2-3-4-5/h2,4H,1,3H2
-     *  @cdk.bug   1959099
+     * @cdk.inchi InChI=1/C4H6O/c1-2-3-4-5/h2,4H,1,3H2
+     * @cdk.bug 1959099
      */
     @Test
     @Category(SlowTest.class)
     public void testBondNotConjugated() throws Exception {
         IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
-        double[] testResult = {0.0, 0.0004, 0.0, -0.0004, 0.0, 0.0, 0.0, 0.0, 0.0277, 0.0, -0.0277}; /*
-                                                                                                      * from
-                                                                                                      * Petra
-                                                                                                      * online
-                                                                                                      * :
-                                                                                                      * http
-                                                                                                      * :
-                                                                                                      * /
-                                                                                                      * /
-                                                                                                      * www2
-                                                                                                      * .
-                                                                                                      * chemie
-                                                                                                      * .
-                                                                                                      * uni
-                                                                                                      * -
-                                                                                                      * erlangen
-                                                                                                      * .
-                                                                                                      * de
-                                                                                                      * /
-                                                                                                      * services
-                                                                                                      * /
-                                                                                                      * petra
-                                                                                                      * /
-                                                                                                      * smiles
-                                                                                                      * .
-                                                                                                      * phtml
-                                                                                                      */
+        double[] testResult = {
+            0.0, 0.0004, 0.0, -0.0004, 0.0, 0.0, 0.0, 0.0, 0.0277, 0.0, -0.0277
+        }; /*
+            * from
+            * Petra
+            * online
+            * :
+            * http
+            * :
+            * /
+            * /
+            * www2
+            * .
+            * chemie
+            * .
+            * uni
+            * -
+            * erlangen
+            * .
+            * de
+            * /
+            * services
+            * /
+            * petra
+            * /
+            * smiles
+            * .
+            * phtml
+            */
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("[H]C([H])=C([H])C([H])([H])C([H])=O");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -721,19 +743,21 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         lpcheck.saturate(mol);
 
         for (int i = 0; i < mol.getAtomCount(); i++) {
-            double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+            double result =
+                    ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue())
+                            .doubleValue();
             Assert.assertEquals(testResult[i], result, 0.05);
         }
     }
 
     /**
-     *  A unit test for JUnit with [H]C([H])=C([H])C([H])([H])C([H])=O
+     * A unit test for JUnit with [H]C([H])=C([H])C([H])([H])C([H])=O
      *
-     *  @cdk.inchi InChI=1/C4H6O/c1-2-3-4-5/h2,4H,1,3H2
+     * @cdk.inchi InChI=1/C4H6O/c1-2-3-4-5/h2,4H,1,3H2
      */
     @Test
     @Category(SlowTest.class)
-    public void testDifferentStarts() throws  Exception {
+    public void testDifferentStarts() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol1 = sp.parseSmiles("C=CCC=O");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
@@ -749,9 +773,12 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         IAtomicDescriptor descriptor2 = new PartialPiChargeDescriptor();
 
         for (int i = 0; i < 5; i++) {
-            double result1 = ((DoubleResult) descriptor1.calculate(mol1.getAtom(i), mol1).getValue()).doubleValue();
-            double result2 = ((DoubleResult) descriptor2.calculate(mol2.getAtom(5 - i - 1), mol2).getValue())
-                    .doubleValue();
+            double result1 =
+                    ((DoubleResult) descriptor1.calculate(mol1.getAtom(i), mol1).getValue())
+                            .doubleValue();
+            double result2 =
+                    ((DoubleResult) descriptor2.calculate(mol2.getAtom(5 - i - 1), mol2).getValue())
+                            .doubleValue();
             Assert.assertFalse(Double.isNaN(result1));
             Assert.assertFalse(Double.isNaN(result2));
             Assert.assertEquals(result1, result2, 0.0001);
@@ -759,41 +786,43 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
     }
 
     /**
-     *  A unit test for JUnit with [H]C([H])=C([H])C([H])([H])[H]
+     * A unit test for JUnit with [H]C([H])=C([H])C([H])([H])[H]
      *
-     *  @cdk.inchi  InChI=1/C3H6/c1-3-2/h3H,1H2,2H3
+     * @cdk.inchi InChI=1/C3H6/c1-3-2/h3H,1H2,2H3
      */
     @Test
     @Category(SlowTest.class)
     public void testBondNotConjugated1() throws Exception {
         IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
-        double[] testResult = {0.0, -0.0009, 0.0, 0.0009, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}; /*
-                                                                                                    * from
-                                                                                                    * Petra
-                                                                                                    * online
-                                                                                                    * :
-                                                                                                    * http
-                                                                                                    * :
-                                                                                                    * /
-                                                                                                    * /
-                                                                                                    * www2
-                                                                                                    * .
-                                                                                                    * chemie
-                                                                                                    * .
-                                                                                                    * uni
-                                                                                                    * -
-                                                                                                    * erlangen
-                                                                                                    * .
-                                                                                                    * de
-                                                                                                    * /
-                                                                                                    * services
-                                                                                                    * /
-                                                                                                    * petra
-                                                                                                    * /
-                                                                                                    * smiles
-                                                                                                    * .
-                                                                                                    * phtml
-                                                                                                    */
+        double[] testResult = {
+            0.0, -0.0009, 0.0, 0.0009, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+        }; /*
+            * from
+            * Petra
+            * online
+            * :
+            * http
+            * :
+            * /
+            * /
+            * www2
+            * .
+            * chemie
+            * .
+            * uni
+            * -
+            * erlangen
+            * .
+            * de
+            * /
+            * services
+            * /
+            * petra
+            * /
+            * smiles
+            * .
+            * phtml
+            */
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("[H]C([H])=C([H])C([H])([H])[H]");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -802,46 +831,51 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 
         lpcheck.saturate(mol);
         for (int i = 0; i < mol.getAtomCount(); i++) {
-            double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+            double result =
+                    ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue())
+                            .doubleValue();
             Assert.assertEquals(testResult[i], result, 0.02);
         }
     }
 
     /**
-     *  A unit test for JUnit with [H]C([H])=C([H])[C+]([H])[H]
-     *  @cdk.bug   1959099
+     * A unit test for JUnit with [H]C([H])=C([H])[C+]([H])[H]
+     *
+     * @cdk.bug 1959099
      */
     @Test
     @Category(SlowTest.class)
     public void testBondNotConjugated2() throws Exception {
         IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
-        double[] testResult = {0.0, 0.25, 0.0, 0.0, 0.0, 0.25, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,}; /*
-                                                                                                * from
-                                                                                                * Petra
-                                                                                                * online
-                                                                                                * :
-                                                                                                * http
-                                                                                                * :
-                                                                                                * /
-                                                                                                * /
-                                                                                                * www2
-                                                                                                * .
-                                                                                                * chemie
-                                                                                                * .
-                                                                                                * uni
-                                                                                                * -
-                                                                                                * erlangen
-                                                                                                * .
-                                                                                                * de
-                                                                                                * /
-                                                                                                * services
-                                                                                                * /
-                                                                                                * petra
-                                                                                                * /
-                                                                                                * smiles
-                                                                                                * .
-                                                                                                * phtml
-                                                                                                */
+        double[] testResult = {
+            0.0, 0.25, 0.0, 0.0, 0.0, 0.25, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+        }; /*
+            * from
+            * Petra
+            * online
+            * :
+            * http
+            * :
+            * /
+            * /
+            * www2
+            * .
+            * chemie
+            * .
+            * uni
+            * -
+            * erlangen
+            * .
+            * de
+            * /
+            * services
+            * /
+            * petra
+            * /
+            * smiles
+            * .
+            * phtml
+            */
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("[H]C([H])=C([H])[C+]([H])[H]");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -850,16 +884,18 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 
         lpcheck.saturate(mol);
         for (int i = 0; i < mol.getAtomCount(); i++) {
-            double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+            double result =
+                    ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue())
+                            .doubleValue();
             Assert.assertEquals(testResult[i], result, 0.29);
         }
     }
 
     /**
-     *  A unit test for JUnit with c1ccc(cc1)n3c4ccccc4(c2ccccc23)
-     *  @cdk.bug   1959099
+     * A unit test for JUnit with c1ccc(cc1)n3c4ccccc4(c2ccccc23)
      *
-     *  @cdk.inchi
+     * @cdk.bug 1959099
+     * @cdk.inchi
      */
     @Test
     @Category(SlowTest.class)
@@ -875,7 +911,9 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         descriptor.setParameters(object);
 
         for (int i = 0; i < mol.getAtomCount(); i++) {
-            double result = ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+            double result =
+                    ((DoubleResult) descriptor.calculate(mol.getAtom(i), mol).getValue())
+                            .doubleValue();
             Assert.assertFalse(Double.isNaN(result));
         }
     }

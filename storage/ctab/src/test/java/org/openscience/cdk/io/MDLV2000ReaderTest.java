@@ -24,6 +24,33 @@
  *  */
 package org.openscience.cdk.io;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.closeTo;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -63,46 +90,18 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.closeTo;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
 /**
- * TestCase for the reading MDL mol files using one test file.
- * A test case for SDF files is available as separate Class.
+ * TestCase for the reading MDL mol files using one test file. A test case for SDF files is
+ * available as separate Class.
  *
  * @cdk.module test-io
- *
  * @see org.openscience.cdk.io.MDLV2000Reader
  * @see org.openscience.cdk.io.SDFReaderTest
  */
 public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV2000ReaderTest.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(MDLV2000ReaderTest.class);
 
     @BeforeClass
     public static void setup() {
@@ -117,9 +116,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         assertTrue(reader.accepts(AtomContainer.class));
     }
 
-    /**
-     * @cdk.bug 3084064
-     */
+    /** @cdk.bug 3084064 */
     @Test
     public void testBug3084064() throws Exception {
         String filename = "data/mdl/weirdprops.sdf";
@@ -152,9 +149,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         }
     }
 
-    /**
-     * @cdk.bug 682233
-     */
+    /** @cdk.bug 682233 */
     @Test
     public void testBug682233() throws Exception {
         String filename = "data/mdl/bug682233.mol";
@@ -221,9 +216,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(210, containersList.get(0).getAtom(0).getMassNumber().intValue());
     }
 
-    /**
-     * @cdk.bug 2234820
-     */
+    /** @cdk.bug 2234820 */
     @Test
     public void testMassNumber() throws Exception {
         String filename = "data/mdl/massnumber.mol";
@@ -407,24 +400,33 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(superspiro.getID(), result.getID());
     }
 
-    /**
-     * @cdk.bug 835571
-     */
+    /** @cdk.bug 835571 */
     @Test
     public void testReadFromStringReader() throws Exception {
-        String mdl = "cyclopropane.mol\n" + "\n" + "\n" + "  9  9  0  0  0                 1 V2000\n"
-                + "   -0.0073   -0.5272    0.9655 C   0  0  0  0  0\n"
-                + "   -0.6776   -0.7930   -0.3498 C   0  0  0  0  0\n"
-                + "    0.2103    0.4053   -0.1891 C   0  0  0  0  0\n"
-                + "    0.8019   -1.1711    1.2970 H   0  0  0  0  0\n"
-                + "   -0.6000   -0.2021    1.8155 H   0  0  0  0  0\n"
-                + "   -1.7511   -0.6586   -0.4435 H   0  0  0  0  0\n"
-                + "   -0.3492   -1.6277   -0.9620 H   0  0  0  0  0\n"
-                + "    1.1755    0.4303   -0.6860 H   0  0  0  0  0\n"
-                + "   -0.2264    1.3994   -0.1675 H   0  0  0  0  0\n" + "  1  2  1  6  0  0\n"
-                + "  1  3  1  6  0  0\n" + "  1  4  1  0  0  0\n" + "  1  5  1  1  0  0\n" + "  2  3  1  0  0  0\n"
-                + "  2  6  1  0  0  0\n" + "  2  7  1  6  0  0\n" + "  3  8  1  6  0  0\n" + "  3  9  1  0  0  0\n"
-                + "M  END\n";
+        String mdl =
+                "cyclopropane.mol\n"
+                        + "\n"
+                        + "\n"
+                        + "  9  9  0  0  0                 1 V2000\n"
+                        + "   -0.0073   -0.5272    0.9655 C   0  0  0  0  0\n"
+                        + "   -0.6776   -0.7930   -0.3498 C   0  0  0  0  0\n"
+                        + "    0.2103    0.4053   -0.1891 C   0  0  0  0  0\n"
+                        + "    0.8019   -1.1711    1.2970 H   0  0  0  0  0\n"
+                        + "   -0.6000   -0.2021    1.8155 H   0  0  0  0  0\n"
+                        + "   -1.7511   -0.6586   -0.4435 H   0  0  0  0  0\n"
+                        + "   -0.3492   -1.6277   -0.9620 H   0  0  0  0  0\n"
+                        + "    1.1755    0.4303   -0.6860 H   0  0  0  0  0\n"
+                        + "   -0.2264    1.3994   -0.1675 H   0  0  0  0  0\n"
+                        + "  1  2  1  6  0  0\n"
+                        + "  1  3  1  6  0  0\n"
+                        + "  1  4  1  0  0  0\n"
+                        + "  1  5  1  1  0  0\n"
+                        + "  2  3  1  0  0  0\n"
+                        + "  2  6  1  0  0  0\n"
+                        + "  2  7  1  6  0  0\n"
+                        + "  3  8  1  6  0  0\n"
+                        + "  3  9  1  0  0  0\n"
+                        + "M  END\n";
         MDLV2000Reader reader = new MDLV2000Reader(new StringReader(mdl));
         ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
@@ -469,9 +471,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals("R\\1", ((IPseudoAtom) atom).getLabel());
     }
 
-    /**
-     * @cdk.bug 1587283
-     */
+    /** @cdk.bug 1587283 */
     @Test
     public void testBug1587283() throws Exception {
         String filename = "data/mdl/bug1587283.mol";
@@ -489,8 +489,14 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testReadProton() throws Exception {
-        String mdl = "proton.mol\n" + "\n" + "\n" + "  1  0  0  0  0                 1 V2000\n"
-                + "   -0.0073   -0.5272    0.9655 H   0  0  0  0  0\n" + "M  CHG  1   1   1\n" + "M  END\n";
+        String mdl =
+                "proton.mol\n"
+                        + "\n"
+                        + "\n"
+                        + "  1  0  0  0  0                 1 V2000\n"
+                        + "   -0.0073   -0.5272    0.9655 H   0  0  0  0  0\n"
+                        + "M  CHG  1   1   1\n"
+                        + "M  END\n";
         MDLV2000Reader reader = new MDLV2000Reader(new StringReader(mdl));
         IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
@@ -510,7 +516,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
-        IAtomContainer container = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
+        IAtomContainer container =
+                chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
         Assert.assertEquals(1, container.getAtom(6).getFormalCharge().intValue());
         Assert.assertEquals(-1, container.getAtom(8).getFormalCharge().intValue());
     }
@@ -549,9 +556,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         assertTrue(keys.contains("ChemCount"));
     }
 
-    /**
-     * @cdk.bug 1732307
-     */
+    /** @cdk.bug 1732307 */
     @Test
     public void testZeroZCoordinates() throws Exception {
         String filename = "data/mdl/nozcoord.sdf";
@@ -564,7 +569,9 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         reader.addChemObjectIOListener(listener);
         reader.customizeJob();
 
-        IAtomContainer mol = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
+        IAtomContainer mol =
+                reader.read(
+                        DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
         reader.close();
         Assert.assertNotNull(mol);
         Assert.assertEquals(5, mol.getAtomCount());
@@ -573,16 +580,16 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         assertTrue(has3d);
     }
 
-    /**
-     * @cdk.bug 1732307
-     */
+    /** @cdk.bug 1732307 */
     @Test
     public void testZeroZCoordinates3DMarked() throws Exception {
         String filename = "data/mdl/nozcoord.sdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        IAtomContainer mol = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
+        IAtomContainer mol =
+                reader.read(
+                        DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
         reader.close();
         Assert.assertNotNull(mol);
         Assert.assertEquals(5, mol.getAtomCount());
@@ -591,9 +598,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         assertTrue(has3d);
     }
 
-    /**
-     * @cdk.bug 1826577
-     */
+    /** @cdk.bug 1826577 */
     @Test
     public void testHisotopes_Strict() throws Exception {
         String filename = "data/mdl/hisotopes.mol";
@@ -609,9 +614,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         }
     }
 
-    /**
-     * @cdk.bug 1826577
-     */
+    /** @cdk.bug 1826577 */
     @Test
     public void testHisotopes_Relaxed() throws Exception {
         String filename = "data/mdl/hisotopes.mol";
@@ -627,10 +630,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         assertFalse((containersList.get(0)).getAtom(2) instanceof IPseudoAtom);
     }
 
-    /**
-     *
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
     public void testReadRadical() throws Exception {
         String filename = "data/mdl/332727182.radical.mol";
@@ -647,24 +647,33 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         assertTrue((containersList.get(0)).getSingleElectronCount() > 0);
     }
 
-    /**
-     * @cdk.bug 2604888
-     */
+    /** @cdk.bug 2604888 */
     @Test
     public void testNoCoordinates() throws Exception {
-        String mdl = "cyclopropane.mol\n" + "\n" + "\n" + "  9  9  0  0  0 0 0 0 0 0 0 0 0 1 V2000\n"
-                + "    0.0000    0.0000    0.0000 C   0  0  0  0  0\n"
-                + "    0.0000    0.0000    0.0000 C   0  0  0  0  0\n"
-                + "    0.0000    0.0000    0.0000 C   0  0  0  0  0\n"
-                + "    0.0000    0.0000    0.0000 H   0  0  0  0  0\n"
-                + "    0.0000    0.0000    0.0000 H   0  0  0  0  0\n"
-                + "    0.0000    0.0000    0.0000 H   0  0  0  0  0\n"
-                + "    0.0000    0.0000    0.0000 H   0  0  0  0  0\n"
-                + "    0.0000    0.0000    0.0000 H   0  0  0  0  0\n"
-                + "    0.0000    0.0000    0.0000 H   0  0  0  0  0\n" + "  1  2  1  6  0  0\n"
-                + "  1  3  1  6  0  0\n" + "  1  4  1  0  0  0\n" + "  1  5  1  1  0  0\n" + "  2  3  1  0  0  0\n"
-                + "  2  6  1  0  0  0\n" + "  2  7  1  6  0  0\n" + "  3  8  1  6  0  0\n" + "  3  9  1  0  0  0\n"
-                + "M  END\n";
+        String mdl =
+                "cyclopropane.mol\n"
+                        + "\n"
+                        + "\n"
+                        + "  9  9  0  0  0 0 0 0 0 0 0 0 0 1 V2000\n"
+                        + "    0.0000    0.0000    0.0000 C   0  0  0  0  0\n"
+                        + "    0.0000    0.0000    0.0000 C   0  0  0  0  0\n"
+                        + "    0.0000    0.0000    0.0000 C   0  0  0  0  0\n"
+                        + "    0.0000    0.0000    0.0000 H   0  0  0  0  0\n"
+                        + "    0.0000    0.0000    0.0000 H   0  0  0  0  0\n"
+                        + "    0.0000    0.0000    0.0000 H   0  0  0  0  0\n"
+                        + "    0.0000    0.0000    0.0000 H   0  0  0  0  0\n"
+                        + "    0.0000    0.0000    0.0000 H   0  0  0  0  0\n"
+                        + "    0.0000    0.0000    0.0000 H   0  0  0  0  0\n"
+                        + "  1  2  1  6  0  0\n"
+                        + "  1  3  1  6  0  0\n"
+                        + "  1  4  1  0  0  0\n"
+                        + "  1  5  1  1  0  0\n"
+                        + "  2  3  1  0  0  0\n"
+                        + "  2  6  1  0  0  0\n"
+                        + "  2  7  1  6  0  0\n"
+                        + "  3  8  1  6  0  0\n"
+                        + "  3  9  1  0  0  0\n"
+                        + "M  END\n";
         MDLV2000Reader reader = new MDLV2000Reader(new StringReader(mdl));
         IAtomContainer molecule = reader.read(new AtomContainer());
         reader.close();
@@ -702,8 +711,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     /**
-     * Tests that the '0' read from the bond block for bond stereo
-     * is read is 'no stereochemistry involved'.
+     * Tests that the '0' read from the bond block for bond stereo is read is 'no stereochemistry
+     * involved'.
      */
     @Test
     public void testStereoReadZeroDefault() throws Exception {
@@ -722,19 +731,30 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testReadStereoBonds() throws Exception {
-        String mdl = "cyclopropane.mol\n" + "\n" + "\n" + "  9  9  0  0  0                 1 V2000\n"
-                + "   -0.0073   -0.5272    0.9655 C   0  0  0  0  0\n"
-                + "   -0.6776   -0.7930   -0.3498 C   0  0  0  0  0\n"
-                + "    0.2103    0.4053   -0.1891 C   0  0  0  0  0\n"
-                + "    0.8019   -1.1711    1.2970 H   0  0  0  0  0\n"
-                + "   -0.6000   -0.2021    1.8155 H   0  0  0  0  0\n"
-                + "   -1.7511   -0.6586   -0.4435 H   0  0  0  0  0\n"
-                + "   -0.3492   -1.6277   -0.9620 H   0  0  0  0  0\n"
-                + "    1.1755    0.4303   -0.6860 H   0  0  0  0  0\n"
-                + "   -0.2264    1.3994   -0.1675 H   0  0  0  0  0\n" + "  1  2  1  6  0  0\n"
-                + "  1  3  1  6  0  0\n" + "  1  4  1  0  0  0\n" + "  1  5  1  1  0  0\n" + "  2  3  1  0  0  0\n"
-                + "  2  6  1  0  0  0\n" + "  2  7  1  6  0  0\n" + "  3  8  1  6  0  0\n" + "  3  9  1  0  0  0\n"
-                + "M  END\n";
+        String mdl =
+                "cyclopropane.mol\n"
+                        + "\n"
+                        + "\n"
+                        + "  9  9  0  0  0                 1 V2000\n"
+                        + "   -0.0073   -0.5272    0.9655 C   0  0  0  0  0\n"
+                        + "   -0.6776   -0.7930   -0.3498 C   0  0  0  0  0\n"
+                        + "    0.2103    0.4053   -0.1891 C   0  0  0  0  0\n"
+                        + "    0.8019   -1.1711    1.2970 H   0  0  0  0  0\n"
+                        + "   -0.6000   -0.2021    1.8155 H   0  0  0  0  0\n"
+                        + "   -1.7511   -0.6586   -0.4435 H   0  0  0  0  0\n"
+                        + "   -0.3492   -1.6277   -0.9620 H   0  0  0  0  0\n"
+                        + "    1.1755    0.4303   -0.6860 H   0  0  0  0  0\n"
+                        + "   -0.2264    1.3994   -0.1675 H   0  0  0  0  0\n"
+                        + "  1  2  1  6  0  0\n"
+                        + "  1  3  1  6  0  0\n"
+                        + "  1  4  1  0  0  0\n"
+                        + "  1  5  1  1  0  0\n"
+                        + "  2  3  1  0  0  0\n"
+                        + "  2  6  1  0  0  0\n"
+                        + "  2  7  1  6  0  0\n"
+                        + "  3  8  1  6  0  0\n"
+                        + "  3  9  1  0  0  0\n"
+                        + "M  END\n";
         MDLV2000Reader reader = new MDLV2000Reader(new StringReader(mdl));
         IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
@@ -763,6 +783,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
     /**
      * Tests numbering of R# elements according to RGP line.
+     *
      * @throws Exception
      */
     @Test
@@ -796,9 +817,9 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     /**
-     * Test for hard coded R-group numbers in the Atom block.
-     * Hard coding is accepted but should not be done really, instead use
-     * a hash (#) conform the CTFile spec.
+     * Test for hard coded R-group numbers in the Atom block. Hard coding is accepted but should not
+     * be done really, instead use a hash (#) conform the CTFile spec.
+     *
      * @throws Exception
      */
     @Test
@@ -807,14 +828,14 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        IAtomContainer mol = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
+        IAtomContainer mol =
+                reader.read(
+                        DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
         reader.close();
         for (IBond bond : mol.bonds()) {
             IPseudoAtom rGroup;
-            if (bond.getBegin() instanceof IPseudoAtom)
-                rGroup = (IPseudoAtom) bond.getBegin();
-            else
-                rGroup = (IPseudoAtom) bond.getEnd();
+            if (bond.getBegin() instanceof IPseudoAtom) rGroup = (IPseudoAtom) bond.getBegin();
+            else rGroup = (IPseudoAtom) bond.getEnd();
 
             if (bond.getOrder() == IBond.Order.DOUBLE) {
                 Assert.assertEquals(rGroup.getLabel(), "R32");
@@ -822,8 +843,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
                 Assert.assertEquals(rGroup.getLabel(), "R2");
             } else if (bond.getStereo() == IBond.Stereo.UP) {
                 Assert.assertEquals(rGroup.getLabel(), "R20");
-            } else
-                Assert.assertEquals(rGroup.getLabel(), "R5");
+            } else Assert.assertEquals(rGroup.getLabel(), "R5");
         }
     }
 
@@ -872,14 +892,16 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
         Assert.assertNotNull(mol);
-        Assert.assertEquals(1, ((Integer) mol.getAtom(0).getProperty(CDKConstants.ATOM_ATOM_MAPPING)).intValue());
-        Assert.assertEquals(15, ((Integer) mol.getAtom(1).getProperty(CDKConstants.ATOM_ATOM_MAPPING)).intValue());
+        Assert.assertEquals(
+                1,
+                ((Integer) mol.getAtom(0).getProperty(CDKConstants.ATOM_ATOM_MAPPING)).intValue());
+        Assert.assertEquals(
+                15,
+                ((Integer) mol.getAtom(1).getProperty(CDKConstants.ATOM_ATOM_MAPPING)).intValue());
         Assert.assertNull(mol.getAtom(2).getProperty(CDKConstants.ATOM_ATOM_MAPPING));
     }
 
-    /**
-     * @cdk.bug 2936440
-     */
+    /** @cdk.bug 2936440 */
     @Test
     public void testHas2DCoordinates_With000() throws Exception {
         String filenameMol = "data/mdl/with000coordinate.mol";
@@ -897,7 +919,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         String filename = "data/mdl/atomValueLines.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        IAtomContainer testMolecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer testMolecule =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         IAtomContainer result = reader.read(testMolecule);
         reader.close();
         IAtom oxygen = result.getAtom(0);
@@ -922,8 +945,9 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         reader.close();
         int deuteriumCount = 0;
         for (IAtom atom : molecule.atoms())
-            if (atom.getSymbol().equals("H") && atom.getMassNumber() != null && atom.getMassNumber() == 2)
-                deuteriumCount++;
+            if (atom.getSymbol().equals("H")
+                    && atom.getMassNumber() != null
+                    && atom.getMassNumber() == 2) deuteriumCount++;
         Assert.assertEquals(3, deuteriumCount);
     }
 
@@ -950,8 +974,9 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         reader.close();
         int tritiumCount = 0;
         for (IAtom atom : molecule.atoms())
-            if (atom.getSymbol().equals("H") && atom.getMassNumber() != null && atom.getMassNumber() == 3)
-                tritiumCount++;
+            if (atom.getSymbol().equals("H")
+                    && atom.getMassNumber() != null
+                    && atom.getMassNumber() == 3) tritiumCount++;
         Assert.assertEquals(1, tritiumCount);
     }
 
@@ -968,9 +993,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         assertTrue(3 == tritium.getMassNumber());
     }
 
-    /**
-     * Tests a molfile with 'query' bond types (in this case bond type == 8 (any)).
-     */
+    /** Tests a molfile with 'query' bond types (in this case bond type == 8 (any)). */
     @Test
     public void testQueryBondType8() throws Exception {
         String filename = "data/mdl/iridiumCoordination.chebi52748.mol";
@@ -984,9 +1007,9 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             if (atom.getSymbol().equals("Ir")) {
                 for (IBond bond : atc.getConnectedBondsList(atom)) {
                     if (bond instanceof QueryBond) {
-                      if (((QueryBond) bond).getExpression().type() == Expr.Type.TRUE) {
-                        queryBondCount++;
-                      }
+                        if (((QueryBond) bond).getExpression().type() == Expr.Type.TRUE) {
+                            queryBondCount++;
+                        }
                     }
                 }
             }
@@ -994,9 +1017,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals("Expecting three 'query' bond types to 'Ir'", 3, queryBondCount);
     }
 
-    /**
-     * Tests a molfile with 'query' bond types (in this case bond type == 6).
-     */
+    /** Tests a molfile with 'query' bond types (in this case bond type == 6). */
     @Test
     public void testQueryBondType6() throws Exception {
         String filename = "data/mdl/chebi.querybond.51736.mol";
@@ -1016,26 +1037,29 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals("Expecting six 'query' bond types", 6, queryBondCount);
     }
 
-    /**
-     * Test that R-groups at higher atom numbers (>9) are read correctly
-     */
+    /** Test that R-groups at higher atom numbers (>9) are read correctly */
     @Test
     public void testRGroupHighAtomNumber() throws Exception {
-        InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/brenda_molfile_rgroup.mol");
+        InputStream in =
+                ClassLoader.getSystemResourceAsStream("data/mdl/brenda_molfile_rgroup.mol");
         MDLV2000Reader reader = new MDLV2000Reader(in);
-        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer molecule =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         reader.read(molecule);
         reader.close();
         IAtom atom = molecule.getAtom(55);
-        org.hamcrest.MatcherAssert.assertThat(atom, CoreMatchers.<IAtom>instanceOf(IPseudoAtom.class));
-        Assert.assertEquals("R", ((IPseudoAtom)atom).getLabel());
+        org.hamcrest.MatcherAssert.assertThat(
+                atom, CoreMatchers.<IAtom>instanceOf(IPseudoAtom.class));
+        Assert.assertEquals("R", ((IPseudoAtom) atom).getLabel());
     }
 
     @Test
     public void testAliasAtomNaming() throws Exception {
-        InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/mol_testAliasAtomNaming.mol");
+        InputStream in =
+                ClassLoader.getSystemResourceAsStream("data/mdl/mol_testAliasAtomNaming.mol");
         MDLV2000Reader reader = new MDLV2000Reader(in);
-        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer molecule =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         reader.read(molecule);
         reader.close();
 
@@ -1055,7 +1079,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     public void testPseudoAtomLabels() throws Exception {
         InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/pseudoatoms.sdf");
         MDLV2000Reader reader = new MDLV2000Reader(in);
-        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer molecule =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
         reader.close();
         assertTrue(molecule.getAtom(4) instanceof IPseudoAtom);
@@ -1064,14 +1089,13 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals("Gln", pa.getLabel());
     }
 
-    /**
-     * @cdk.bug 3485634
-     */
+    /** @cdk.bug 3485634 */
     @Test
     public void testMissingAtomProperties() throws Exception {
         InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/bug3485634.mol");
         MDLV2000Reader reader = new MDLV2000Reader(in);
-        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer molecule =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
         reader.close();
         Assert.assertEquals(9, molecule.getAtomCount());
@@ -1081,7 +1105,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     public void testBondOrderFour() throws Exception {
         InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/mdlWithBond4.mol");
         MDLV2000Reader reader = new MDLV2000Reader(in);
-        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer molecule =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
         reader.close();
         Assert.assertEquals(9, molecule.getAtomCount());
@@ -1096,7 +1121,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
         InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/mol_testAtomParity.mol");
         MDLV2000Reader reader = new MDLV2000Reader(in);
-        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer molecule =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
         reader.close();
 
@@ -1111,7 +1137,6 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         }
 
         assertTrue(chiralCentre);
-
     }
 
     @Test
@@ -1119,7 +1144,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
         InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/singleSingletRadical.mol");
         MDLV2000Reader reader = new MDLV2000Reader(in);
-        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer molecule =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
         reader.close();
 
@@ -1131,7 +1157,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
         InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/singleDoubletRadical.mol");
         MDLV2000Reader reader = new MDLV2000Reader(in);
-        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer molecule =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
         reader.close();
 
@@ -1143,7 +1170,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
         InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/singleTripletRadical.mol");
         MDLV2000Reader reader = new MDLV2000Reader(in);
-        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer molecule =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
         reader.close();
 
@@ -1155,7 +1183,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
         InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/multipleRadicals.mol");
         MDLV2000Reader reader = new MDLV2000Reader(in);
-        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer molecule =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
         reader.close();
 
@@ -1174,7 +1203,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     public void fe_iii_valence() throws Exception {
         InputStream in = getClass().getResourceAsStream("/data/mdl/iron-iii.mol");
         MDLV2000Reader reader = new MDLV2000Reader(in);
-        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer molecule =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
         reader.close();
         assertThat(molecule.getAtom(0).getImplicitHydrogenCount(), is(1));
@@ -1186,7 +1216,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     public void bismuth_ion_valence() throws Exception {
         InputStream in = getClass().getResourceAsStream("/data/mdl/bismuth-ion.mol");
         MDLV2000Reader reader = new MDLV2000Reader(in);
-        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer molecule =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
         reader.close();
         assertThat(molecule.getAtom(0).getImplicitHydrogenCount(), is(3));
@@ -1196,7 +1227,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     public void e_butene_2D() throws Exception {
         InputStream in = getClass().getResourceAsStream("/data/mdl/e_butene_2d.mol");
         MDLV2000Reader reader = new MDLV2000Reader(in);
-        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer molecule =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
         reader.close();
         assertTrue(molecule.stereoElements().iterator().hasNext());
@@ -1207,7 +1239,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     public void e_butene_0D() throws Exception {
         InputStream in = getClass().getResourceAsStream("/data/mdl/e_butene_0d.mol");
         MDLV2000Reader reader = new MDLV2000Reader(in);
-        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer molecule =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
         reader.close();
         assertNotNull(molecule);
@@ -1228,7 +1261,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         reader.addChemObjectIOListener(listener);
         reader.customizeJob();
 
-        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer molecule =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
         reader.close();
         assertNotNull(molecule);
@@ -1246,7 +1280,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         reader.addChemObjectIOListener(listener);
         reader.customizeJob();
 
-        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer molecule =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
         reader.close();
         assertNotNull(molecule);
@@ -1265,7 +1300,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         reader.addChemObjectIOListener(listener);
         reader.customizeJob();
 
-        IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer molecule =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
         reader.close();
         assertNotNull(molecule);
@@ -1284,7 +1320,9 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void dataHeader_3() {
-        assertThat(MDLV2000Reader.dataHeader("> 55 (MD-08974) <BOILING.POINT> DT12"), is("BOILING.POINT"));
+        assertThat(
+                MDLV2000Reader.dataHeader("> 55 (MD-08974) <BOILING.POINT> DT12"),
+                is("BOILING.POINT"));
     }
 
     @Test
@@ -1346,7 +1384,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     public void readNonStructuralData_wrap() throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append("> <LONG_PROPERTY>").append('\n');
-        sb.append("This is a long property which should be wrapped when stored as field in an SDF D");
+        sb.append(
+                "This is a long property which should be wrapped when stored as field in an SDF D");
         sb.append('\n');
         sb.append("ata entry");
         sb.append('\n');
@@ -1356,14 +1395,15 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
         MDLV2000Reader.readNonStructuralData(input, mock);
 
-        verify(mock).setProperty("LONG_PROPERTY",
-                "This is a long property which should be wrapped when stored as field in an SDF Data entry");
-
+        verify(mock)
+                .setProperty(
+                        "LONG_PROPERTY",
+                        "This is a long property which should be wrapped when stored as field in an SDF Data entry");
     }
 
     /**
-     * Ensure having a property with 2 new line lines will still allow 2 entries
-     * to be read - a bug from the mailing list.
+     * Ensure having a property with 2 new line lines will still allow 2 entries to be read - a bug
+     * from the mailing list.
      */
     @Test
     public void testMultipleNewlinesInSDFProperty() throws Exception {
@@ -1399,40 +1439,45 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void v2000Version() throws Exception {
-        assertThat(MDLV2000Reader.CTabVersion.ofHeader("  5  5  0  0  0  0            999 V2000"),
+        assertThat(
+                MDLV2000Reader.CTabVersion.ofHeader("  5  5  0  0  0  0            999 V2000"),
                 is(MDLV2000Reader.CTabVersion.V2000));
-        assertThat(MDLV2000Reader.CTabVersion.ofHeader("  5  5  0  0  0  0            999 v2000"),
+        assertThat(
+                MDLV2000Reader.CTabVersion.ofHeader("  5  5  0  0  0  0            999 v2000"),
                 is(MDLV2000Reader.CTabVersion.V2000));
     }
 
     @Test
     public void v3000Version() throws Exception {
-        assertThat(MDLV2000Reader.CTabVersion.ofHeader("  0  0  0  0  0  0            999 V3000"),
+        assertThat(
+                MDLV2000Reader.CTabVersion.ofHeader("  0  0  0  0  0  0            999 V3000"),
                 is(MDLV2000Reader.CTabVersion.V3000));
-        assertThat(MDLV2000Reader.CTabVersion.ofHeader("  0  0  0  0  0  0            999 v3000"),
+        assertThat(
+                MDLV2000Reader.CTabVersion.ofHeader("  0  0  0  0  0  0            999 v3000"),
                 is(MDLV2000Reader.CTabVersion.V3000));
     }
 
     @Test
     public void unspecVersion() throws Exception {
-        assertThat(MDLV2000Reader.CTabVersion.ofHeader("  5  5  0  0  0  0            999"),
+        assertThat(
+                MDLV2000Reader.CTabVersion.ofHeader("  5  5  0  0  0  0            999"),
                 is(MDLV2000Reader.CTabVersion.UNSPECIFIED));
-        assertThat(MDLV2000Reader.CTabVersion.ofHeader("  5  5  0  0  0  0            999      "),
+        assertThat(
+                MDLV2000Reader.CTabVersion.ofHeader("  5  5  0  0  0  0            999      "),
                 is(MDLV2000Reader.CTabVersion.UNSPECIFIED));
     }
 
     @Test
     public void radicalsReflectedInHydrogenCount() throws Exception {
-        MDLV2000Reader r = new MDLV2000Reader(getClass().getResourceAsStream("structure-with-radical.mol"));
+        MDLV2000Reader r =
+                new MDLV2000Reader(getClass().getResourceAsStream("structure-with-radical.mol"));
         IAtomContainer m = r.read(new AtomContainer());
         r.close();
         assertThat(m.getAtom(0).getAtomicNumber(), is(8));
         assertThat(m.getAtom(0).getImplicitHydrogenCount(), is(0));
     }
 
-    /**
-     * @cdk.bug 1326
-     */
+    /** @cdk.bug 1326 */
     @Test
     public void nonNegativeHydrogenCount() throws Exception {
         InputStream in = getClass().getResourceAsStream("/data/mdl/ChEBI_30668.mol");
@@ -1445,9 +1490,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         }
     }
 
-    /**
-     * @cdk.bug 1343
-     */
+    /** @cdk.bug 1343 */
     @Test
     public void nonNegativeHydrogenCountOnHydrogenRadical() throws Exception {
         InputStream in = getClass().getResourceAsStream("/data/mdl/ChEBI_29293.mol");
@@ -1460,9 +1503,10 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
     /**
      * The non-standard ACDLabs atom label property should throw a CDKException in STRICT mode.
+     *
      * @throws Exception
      */
-    @Test(expected=CDKException.class)
+    @Test(expected = CDKException.class)
     public void testAcdChemSketchLabel_Strict() throws Exception {
 
         String filename = "data/mdl/chemsketch-all-labelled.mol";
@@ -1473,6 +1517,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
     /**
      * Test a simple ChemSketch label containing an integer.
+     *
      * @throws Exception
      */
     @Test
@@ -1488,6 +1533,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
     /**
      * Test ChemSketch labels containing all non-whitespace printable ASCII characters.
+     *
      * @throws Exception
      */
     @Test
@@ -1498,20 +1544,24 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
 
-        // Printable ASCII characters, excluding whitespace. Note each string contains an atom number
-        String[] expected =
-        {
+        // Printable ASCII characters, excluding whitespace. Note each string contains an atom
+        // number
+        String[] expected = {
             "!\"#$%&'()*+,-./0123456789:;<=>?@[\\]^_`{|}~",
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ1abcdefghijklmnopqrstuvwxyz",
             "012345678901234567890123456789012345678901234567890"
         };
-        assertThat((String) mol.getAtom(0).getProperty(CDKConstants.ACDLABS_LABEL), is(expected[0]));
-        assertThat((String) mol.getAtom(1).getProperty(CDKConstants.ACDLABS_LABEL), is(expected[1]));
-        assertThat((String) mol.getAtom(2).getProperty(CDKConstants.ACDLABS_LABEL), is(expected[2]));
+        assertThat(
+                (String) mol.getAtom(0).getProperty(CDKConstants.ACDLABS_LABEL), is(expected[0]));
+        assertThat(
+                (String) mol.getAtom(1).getProperty(CDKConstants.ACDLABS_LABEL), is(expected[1]));
+        assertThat(
+                (String) mol.getAtom(2).getProperty(CDKConstants.ACDLABS_LABEL), is(expected[2]));
     }
 
     /**
      * Check that multiple atom labels are all read.
+     *
      * @throws Exception
      */
     @Test
@@ -1523,13 +1573,14 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         reader.close();
 
         Iterable<IAtom> atoms = mol.atoms();
-        for (IAtom atom : atoms){
+        for (IAtom atom : atoms) {
             Assert.assertNotNull(atom.getProperty(CDKConstants.ACDLABS_LABEL));
         }
     }
 
     /**
      * Check that leading and trailing whitespace in atom labels is preserved on reading.
+     *
      * @throws Exception
      */
     @Test
@@ -1547,6 +1598,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
     /**
      * Check that embedded whitespace in atom labels is preserved on reading.
+     *
      * @throws Exception
      */
     @Test
@@ -1564,6 +1616,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
     /**
      * Check reading of largest permissible label (50 char prefix + 3 digits + 50 char suffix).
+     *
      * @throws Exception
      */
     @Test
@@ -1585,7 +1638,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testSgroupAbbreviation() throws Exception {
-        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/sgroup-abbrv.mol"))) {
+        try (MDLV2000Reader mdlr =
+                new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/sgroup-abbrv.mol"))) {
             final IAtomContainer container = mdlr.read(new AtomContainer());
             List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
             assertNotNull(sgroups);
@@ -1599,7 +1653,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testSgroupRepeatUnit() throws Exception {
-        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/sgroup-sru.mol"))) {
+        try (MDLV2000Reader mdlr =
+                new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/sgroup-sru.mol"))) {
             IAtomContainer container = mdlr.read(new AtomContainer());
             List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
             assertNotNull(sgroups);
@@ -1622,13 +1677,14 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             assertThat(brackets.get(1).getFirstPoint().y, closeTo(-1.7247, 0.001));
             assertThat(brackets.get(1).getSecondPoint().x, closeTo(-0.4960, 0.001));
             assertThat(brackets.get(1).getSecondPoint().y, closeTo(-0.8673, 0.001));
-
         }
     }
 
     @Test
     public void testSgroupUnorderedMixture() throws Exception {
-        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/sgroup-unord-mixture.mol"))) {
+        try (MDLV2000Reader mdlr =
+                new MDLV2000Reader(
+                        getClass().getResourceAsStream("/data/mdl/sgroup-unord-mixture.mol"))) {
             IAtomContainer container = mdlr.read(new AtomContainer());
             List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
             assertNotNull(sgroups);
@@ -1652,7 +1708,11 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testSgroupExpandedAbbreviation() throws Exception {
-        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/triphenyl-phosphate-expanded.mol"))) {
+        try (MDLV2000Reader mdlr =
+                new MDLV2000Reader(
+                        getClass()
+                                .getResourceAsStream(
+                                        "/data/mdl/triphenyl-phosphate-expanded.mol"))) {
             IAtomContainer container = mdlr.read(new AtomContainer());
             List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
             assertNotNull(sgroups);
@@ -1677,7 +1737,9 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
     @Test(expected = CDKException.class)
     public void testSgroupInvalidConnectInStrictMode() throws Exception {
-        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/sgroup-sru-bad-scn.mol"))) {
+        try (MDLV2000Reader mdlr =
+                new MDLV2000Reader(
+                        getClass().getResourceAsStream("/data/mdl/sgroup-sru-bad-scn.mol"))) {
             mdlr.setReaderMode(Mode.STRICT);
             IAtomContainer container = mdlr.read(new AtomContainer());
         }
@@ -1685,7 +1747,9 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
     @Test(expected = CDKException.class)
     public void testSgroupDefOrderInStrictMode() throws Exception {
-        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/sgroup-sru-bad-def.mol"))) {
+        try (MDLV2000Reader mdlr =
+                new MDLV2000Reader(
+                        getClass().getResourceAsStream("/data/mdl/sgroup-sru-bad-def.mol"))) {
             mdlr.setReaderMode(Mode.STRICT);
             IAtomContainer container = mdlr.read(new AtomContainer());
         }
@@ -1693,7 +1757,9 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testSgroupBracketStyle() throws Exception {
-        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/sgroup-sru-bracketstyles.mol"))) {
+        try (MDLV2000Reader mdlr =
+                new MDLV2000Reader(
+                        getClass().getResourceAsStream("/data/mdl/sgroup-sru-bracketstyles.mol"))) {
             IAtomContainer container = mdlr.read(new AtomContainer());
             List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
             assertNotNull(sgroups);
@@ -1707,44 +1773,75 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         }
     }
 
-    @Test public void testReading0DStereochemistry() throws Exception {
-        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/tetrahedral-parity-withImplH.mol"))) {
+    @Test
+    public void testReading0DStereochemistry() throws Exception {
+        try (MDLV2000Reader mdlr =
+                new MDLV2000Reader(
+                        getClass()
+                                .getResourceAsStream(
+                                        "/data/mdl/tetrahedral-parity-withImplH.mol"))) {
             IAtomContainer container = mdlr.read(new AtomContainer());
             Iterable<IStereoElement> selements = container.stereoElements();
             Iterator<IStereoElement> siter = selements.iterator();
             assertTrue(siter.hasNext());
             IStereoElement se = siter.next();
             assertThat(se, is(instanceOf(ITetrahedralChirality.class)));
-            assertThat(((ITetrahedralChirality) se).getStereo(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
-            assertThat(((ITetrahedralChirality) se).getLigands(), is(new IAtom[]{container.getAtom(1), container.getAtom(3), container.getAtom(4), container.getAtom(0)}));
+            assertThat(
+                    ((ITetrahedralChirality) se).getStereo(),
+                    is(ITetrahedralChirality.Stereo.CLOCKWISE));
+            assertThat(
+                    ((ITetrahedralChirality) se).getLigands(),
+                    is(
+                            new IAtom[] {
+                                container.getAtom(1),
+                                container.getAtom(3),
+                                container.getAtom(4),
+                                container.getAtom(0)
+                            }));
             assertFalse(siter.hasNext());
         }
     }
 
     // explicit Hydrogen can reverse winding
-    @Test public void testReading0DStereochemistryWithHydrogen() throws Exception {
-        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/tetrahedral-parity-withExpH.mol"))) {
+    @Test
+    public void testReading0DStereochemistryWithHydrogen() throws Exception {
+        try (MDLV2000Reader mdlr =
+                new MDLV2000Reader(
+                        getClass()
+                                .getResourceAsStream(
+                                        "/data/mdl/tetrahedral-parity-withExpH.mol"))) {
             IAtomContainer container = mdlr.read(new AtomContainer());
             Iterable<IStereoElement> selements = container.stereoElements();
             Iterator<IStereoElement> siter = selements.iterator();
             assertTrue(siter.hasNext());
             IStereoElement se = siter.next();
             assertThat(se, is(instanceOf(ITetrahedralChirality.class)));
-            assertThat(((ITetrahedralChirality) se).getStereo(), is(ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
-            assertThat(((ITetrahedralChirality) se).getLigands(), is(new IAtom[]{container.getAtom(0), container.getAtom(2), container.getAtom(3), container.getAtom(4)}));
+            assertThat(
+                    ((ITetrahedralChirality) se).getStereo(),
+                    is(ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
+            assertThat(
+                    ((ITetrahedralChirality) se).getLigands(),
+                    is(
+                            new IAtom[] {
+                                container.getAtom(0),
+                                container.getAtom(2),
+                                container.getAtom(3),
+                                container.getAtom(4)
+                            }));
             assertFalse(siter.hasNext());
         }
     }
 
     /**
-     * When atomic mass is defined as a delta some atoms don't have a reasonable
-     * default. Most tools will output an 'M  ISO' property, so can be specified
+     * When atomic mass is defined as a delta some atoms don't have a reasonable default. Most tools
+     * will output an 'M ISO' property, so can be specified
+     *
      * @throws Exception expected format error
      */
     @Test(expected = CDKException.class)
     public void seaborgiumMassDelta() throws Exception {
         try (InputStream in = getClass().getResourceAsStream("seaborgium.mol");
-             MDLV2000Reader mdlr = new MDLV2000Reader(in, Mode.STRICT)) {
+                MDLV2000Reader mdlr = new MDLV2000Reader(in, Mode.STRICT)) {
             IAtomContainer mol = mdlr.read(new AtomContainer());
         }
     }
@@ -1752,17 +1849,21 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     @Test
     public void seaborgiumAbsMass() throws Exception {
         try (InputStream in = getClass().getResourceAsStream("seaborgium_abs.mol");
-             MDLV2000Reader mdlr = new MDLV2000Reader(in, Mode.STRICT)) {
+                MDLV2000Reader mdlr = new MDLV2000Reader(in, Mode.STRICT)) {
             IAtomContainer mol = mdlr.read(new AtomContainer());
             assertThat(mol.getAtom(0).getMassNumber(), is(261));
         }
     }
 
-	@Test
+    @Test
     public void testMassDiff() throws Exception {
-        String mdl = "deuterium.mol\n" + "\n" + "\n" + "  1  0  0  0  0                 1 V2000\n"
-                + "    0.0000    0.0000    0.0000 H  +1  0  0  0  0\n"
-                + "M  END\n";
+        String mdl =
+                "deuterium.mol\n"
+                        + "\n"
+                        + "\n"
+                        + "  1  0  0  0  0                 1 V2000\n"
+                        + "    0.0000    0.0000    0.0000 H  +1  0  0  0  0\n"
+                        + "M  END\n";
         try (StringReader in = new StringReader(mdl)) {
             MDLV2000Reader reader = new MDLV2000Reader(new StringReader(mdl), Mode.STRICT);
             IAtomContainer mol = reader.read(new AtomContainer());
@@ -1775,138 +1876,155 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     @Test
     public void testBadAtomCoordinateFormat() throws Exception {
 
-        final String mol = "\n" +
-                "\n" +
-                "\n" +
-                " 17 18  0  0  0  0              1 V2000\n" +
-                "  -2.31474   0.50167  -3.30968 C   0  0  0  0  0  0\n" +
-                "  -2.43523  -0.19508  -2.16895 C   0  0  0  0  0  0\n" +
-                "  -1.14825   1.44681  -3.13364 C   0  0  0  0  0  0\n" +
-                "  -1.34937   0.28780  -1.23468 C   0  0  0  0  0  0\n" +
-                "  -1.31596   1.76332  -1.64443 C   0  0  0  0  0  0\n" +
-                "   0.00411  -0.20225  -1.79002 C   0  0  0  0  0  0\n" +
-                "   0.14340   0.60304  -3.11198 C   0  0  0  0  0  0\n" +
-                "  -1.14836   2.30981  -3.79997 H   0  0  0  0  0  0\n" +
-                "   0.23461  -0.05636  -3.98172 H   0  0  0  0  0  0\n" +
-                "   1.03045   1.24486  -3.06787 H   0  0  0  0  0  0\n" +
-                "   0.82300   0.05318  -1.10813 H   0  0  0  0  0  0\n" +
-                "   0.02443  -1.28271  -1.96799 H   0  0  0  0  0  0\n" +
-                "  -1.53255   0.09851  -0.17666 H   0  0  0  0  0  0\n" +
-                "  -0.46658   2.31096  -1.22026 H   0  0  0  0  0  0\n" +
-                "  -2.24286   2.30318  -1.41306 H   0  0  0  0  0  0\n" +
-                "  -3.13662  -0.99036  -1.96785 H   0  0  0  0  0  0\n" +
-                "  -2.90004   0.37818  -4.20802 H   0  0  0  0  0  0\n" +
-                "  1  2  2  0  0  0\n" +
-                "  1  3  1  0  0  0\n" +
-                "  2  4  1  0  0  0\n" +
-                "  4  5  1  0  0  0\n" +
-                "  3  5  1  0  0  0\n" +
-                "  4  6  1  0  0  0\n" +
-                "  6  7  1  0  0  0\n" +
-                "  7  3  1  0  0  0\n" +
-                "  3  8  1  0  0  0\n" +
-                "  7  9  1  0  0  0\n" +
-                "  7 10  1  0  0  0\n" +
-                "  6 11  1  0  0  0\n" +
-                "  6 12  1  0  0  0\n" +
-                "  4 13  1  0  0  0\n" +
-                "  5 14  1  0  0  0\n" +
-                "  5 15  1  0  0  0\n" +
-                "  2 16  1  0  0  0\n" +
-                "  1 17  1  0  0  0\n" +
-                "M  END\n" +
-                "\n";
-        final MDLV2000Reader mdlv2000Reader = new MDLV2000Reader(new ByteArrayInputStream(mol.getBytes(StandardCharsets.UTF_8)));
+        final String mol =
+                "\n"
+                        + "\n"
+                        + "\n"
+                        + " 17 18  0  0  0  0              1 V2000\n"
+                        + "  -2.31474   0.50167  -3.30968 C   0  0  0  0  0  0\n"
+                        + "  -2.43523  -0.19508  -2.16895 C   0  0  0  0  0  0\n"
+                        + "  -1.14825   1.44681  -3.13364 C   0  0  0  0  0  0\n"
+                        + "  -1.34937   0.28780  -1.23468 C   0  0  0  0  0  0\n"
+                        + "  -1.31596   1.76332  -1.64443 C   0  0  0  0  0  0\n"
+                        + "   0.00411  -0.20225  -1.79002 C   0  0  0  0  0  0\n"
+                        + "   0.14340   0.60304  -3.11198 C   0  0  0  0  0  0\n"
+                        + "  -1.14836   2.30981  -3.79997 H   0  0  0  0  0  0\n"
+                        + "   0.23461  -0.05636  -3.98172 H   0  0  0  0  0  0\n"
+                        + "   1.03045   1.24486  -3.06787 H   0  0  0  0  0  0\n"
+                        + "   0.82300   0.05318  -1.10813 H   0  0  0  0  0  0\n"
+                        + "   0.02443  -1.28271  -1.96799 H   0  0  0  0  0  0\n"
+                        + "  -1.53255   0.09851  -0.17666 H   0  0  0  0  0  0\n"
+                        + "  -0.46658   2.31096  -1.22026 H   0  0  0  0  0  0\n"
+                        + "  -2.24286   2.30318  -1.41306 H   0  0  0  0  0  0\n"
+                        + "  -3.13662  -0.99036  -1.96785 H   0  0  0  0  0  0\n"
+                        + "  -2.90004   0.37818  -4.20802 H   0  0  0  0  0  0\n"
+                        + "  1  2  2  0  0  0\n"
+                        + "  1  3  1  0  0  0\n"
+                        + "  2  4  1  0  0  0\n"
+                        + "  4  5  1  0  0  0\n"
+                        + "  3  5  1  0  0  0\n"
+                        + "  4  6  1  0  0  0\n"
+                        + "  6  7  1  0  0  0\n"
+                        + "  7  3  1  0  0  0\n"
+                        + "  3  8  1  0  0  0\n"
+                        + "  7  9  1  0  0  0\n"
+                        + "  7 10  1  0  0  0\n"
+                        + "  6 11  1  0  0  0\n"
+                        + "  6 12  1  0  0  0\n"
+                        + "  4 13  1  0  0  0\n"
+                        + "  5 14  1  0  0  0\n"
+                        + "  5 15  1  0  0  0\n"
+                        + "  2 16  1  0  0  0\n"
+                        + "  1 17  1  0  0  0\n"
+                        + "M  END\n"
+                        + "\n";
+        final MDLV2000Reader mdlv2000Reader =
+                new MDLV2000Reader(new ByteArrayInputStream(mol.getBytes(StandardCharsets.UTF_8)));
         mdlv2000Reader.setReaderMode(IChemObjectReader.Mode.RELAXED);
-        final org.openscience.cdk.silent.AtomContainer atomContainer = mdlv2000Reader.read(new org.openscience.cdk.silent.AtomContainer());
+        final org.openscience.cdk.silent.AtomContainer atomContainer =
+                mdlv2000Reader.read(new org.openscience.cdk.silent.AtomContainer());
         Assert.assertEquals(17, atomContainer.getAtomCount());
     }
 
-    @Test public void test() throws Exception {
-        String input = "\n" +
-                       "Structure query\n" +
-                       "\n" +
-                       "  1  0  0  0  0  0  0  0  0  0999 V2000\n" +
-                       " 2430.7100 2427.0000    0.0000 C   0  0  0  0  0  0\n" +
-                       "A   1\n" +
-                       "Blah\n" +
-                       "M  END";
+    @Test
+    public void test() throws Exception {
+        String input =
+                "\n"
+                        + "Structure query\n"
+                        + "\n"
+                        + "  1  0  0  0  0  0  0  0  0  0999 V2000\n"
+                        + " 2430.7100 2427.0000    0.0000 C   0  0  0  0  0  0\n"
+                        + "A   1\n"
+                        + "Blah\n"
+                        + "M  END";
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         try (MDLV2000Reader mdlr = new MDLV2000Reader(new StringReader(input))) {
             IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
-            assertThat(mol.getAtom(0),
-                       instanceOf(IPseudoAtom.class));
-            assertThat(((IPseudoAtom)mol.getAtom(0)).getLabel(),
-                       is("Blah"));
+            assertThat(mol.getAtom(0), instanceOf(IPseudoAtom.class));
+            assertThat(((IPseudoAtom) mol.getAtom(0)).getLabel(), is("Blah"));
         }
     }
 
-
-    @Test public void atomList() throws Exception {
+    @Test
+    public void atomList() throws Exception {
         try (InputStream in = getClass().getResourceAsStream("query_atomlist.mol");
-             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
-            IQueryAtomContainer mol       = mdlr.read(new QueryAtomContainer(SilentChemObjectBuilder.getInstance()));
-            IAtom               deref     = AtomRef.deref(mol.getAtom(0));
+                MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+            IQueryAtomContainer mol =
+                    mdlr.read(new QueryAtomContainer(SilentChemObjectBuilder.getInstance()));
+            IAtom deref = AtomRef.deref(mol.getAtom(0));
             assertThat(deref, CoreMatchers.<IAtom>instanceOf(QueryAtom.class));
-            QueryAtom           queryAtom = (QueryAtom) deref;
+            QueryAtom queryAtom = (QueryAtom) deref;
             Expr expr = queryAtom.getExpression();
-            Expr expected = new Expr(Expr.Type.ELEMENT, 9) // F
-                .or(new Expr(Expr.Type.ELEMENT, 7)) // N
-                .or(new Expr(Expr.Type.ELEMENT, 8)); // O
+            Expr expected =
+                    new Expr(Expr.Type.ELEMENT, 9) // F
+                            .or(new Expr(Expr.Type.ELEMENT, 7)) // N
+                            .or(new Expr(Expr.Type.ELEMENT, 8)); // O
             assertThat(expr, is(expected));
         }
     }
-    @Test public void legacyAtomList() throws Exception {
+
+    @Test
+    public void legacyAtomList() throws Exception {
         try (InputStream in = getClass().getResourceAsStream("query_legacyatomlist.mol");
-             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
-            IQueryAtomContainer mol       = mdlr.read(new QueryAtomContainer(SilentChemObjectBuilder.getInstance()));
-            IAtom               deref     = AtomRef.deref(mol.getAtom(0));
+                MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+            IQueryAtomContainer mol =
+                    mdlr.read(new QueryAtomContainer(SilentChemObjectBuilder.getInstance()));
+            IAtom deref = AtomRef.deref(mol.getAtom(0));
             assertThat(deref, CoreMatchers.<IAtom>instanceOf(QueryAtom.class));
-            QueryAtom           queryAtom = (QueryAtom) deref;
+            QueryAtom queryAtom = (QueryAtom) deref;
             Expr expr = queryAtom.getExpression();
-            Expr expected = new Expr(Expr.Type.ELEMENT, 9) // F
-                    .or(new Expr(Expr.Type.ELEMENT, 7)) // N
-                    .or(new Expr(Expr.Type.ELEMENT, 8)); // O
+            Expr expected =
+                    new Expr(Expr.Type.ELEMENT, 9) // F
+                            .or(new Expr(Expr.Type.ELEMENT, 7)) // N
+                            .or(new Expr(Expr.Type.ELEMENT, 8)); // O
             assertThat(expr, is(expected));
         }
     }
 
-    @Test public void notatomList() throws Exception {
+    @Test
+    public void notatomList() throws Exception {
         try (InputStream in = getClass().getResourceAsStream("query_notatomlist.mol");
-             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
-            IQueryAtomContainer mol       = mdlr.read(new QueryAtomContainer(SilentChemObjectBuilder.getInstance()));
-            IAtom               deref     = AtomRef.deref(mol.getAtom(0));
+                MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+            IQueryAtomContainer mol =
+                    mdlr.read(new QueryAtomContainer(SilentChemObjectBuilder.getInstance()));
+            IAtom deref = AtomRef.deref(mol.getAtom(0));
             assertThat(deref, CoreMatchers.<IAtom>instanceOf(QueryAtom.class));
-            QueryAtom           queryAtom = (QueryAtom) deref;
+            QueryAtom queryAtom = (QueryAtom) deref;
             Expr expr = queryAtom.getExpression();
-            Expr expected = new Expr(Expr.Type.ELEMENT, 9) // F
-                                   .or(new Expr(Expr.Type.ELEMENT, 7)) // N
-                                   .or(new Expr(Expr.Type.ELEMENT, 8)); // O
-            expected = expected.negate();
-            assertThat(expr, is(expected));
-        }
-    }
-    @Test public void legacynotatomList() throws Exception {
-        try (InputStream in = getClass().getResourceAsStream("query_legacynotatomlist.mol");
-             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
-            IQueryAtomContainer mol       = mdlr.read(new QueryAtomContainer(SilentChemObjectBuilder.getInstance()));
-            IAtom               deref     = AtomRef.deref(mol.getAtom(0));
-            assertThat(deref, CoreMatchers.<IAtom>instanceOf(QueryAtom.class));
-            QueryAtom           queryAtom = (QueryAtom) deref;
-            Expr expr = queryAtom.getExpression();
-            Expr expected = new Expr(Expr.Type.ELEMENT, 9) // F
-                    .or(new Expr(Expr.Type.ELEMENT, 7)) // N
-                    .or(new Expr(Expr.Type.ELEMENT, 8)); // O
+            Expr expected =
+                    new Expr(Expr.Type.ELEMENT, 9) // F
+                            .or(new Expr(Expr.Type.ELEMENT, 7)) // N
+                            .or(new Expr(Expr.Type.ELEMENT, 8)); // O
             expected = expected.negate();
             assertThat(expr, is(expected));
         }
     }
 
-    @Test public void sgroupsAbbrRoundTrip() throws IOException, CDKException {
+    @Test
+    public void legacynotatomList() throws Exception {
+        try (InputStream in = getClass().getResourceAsStream("query_legacynotatomlist.mol");
+                MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+            IQueryAtomContainer mol =
+                    mdlr.read(new QueryAtomContainer(SilentChemObjectBuilder.getInstance()));
+            IAtom deref = AtomRef.deref(mol.getAtom(0));
+            assertThat(deref, CoreMatchers.<IAtom>instanceOf(QueryAtom.class));
+            QueryAtom queryAtom = (QueryAtom) deref;
+            Expr expr = queryAtom.getExpression();
+            Expr expected =
+                    new Expr(Expr.Type.ELEMENT, 9) // F
+                            .or(new Expr(Expr.Type.ELEMENT, 7)) // N
+                            .or(new Expr(Expr.Type.ELEMENT, 8)); // O
+            expected = expected.negate();
+            assertThat(expr, is(expected));
+        }
+    }
+
+    @Test
+    public void sgroupsAbbrRoundTrip() throws IOException, CDKException {
         StringWriter sw = new StringWriter();
         try (InputStream in = getClass().getResourceAsStream("sgroup-sup.mol3");
-             MDLV3000Reader mdlr = new MDLV3000Reader(in);
-             MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
+                MDLV3000Reader mdlr = new MDLV3000Reader(in);
+                MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
             IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
             mol = mdlr.read(mol);
             mdlw.write(mol);
@@ -1917,8 +2035,9 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     @Test
     public void checkFuseBondWithFewerBondsThanAtoms() throws IOException, CDKException {
         try (InputStream in = getClass().getResourceAsStream("potentialLateFuse.mol");
-            MDLV2000Reader reader = new MDLV2000Reader(in)) {
-            IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+                MDLV2000Reader reader = new MDLV2000Reader(in)) {
+            IAtomContainer mol =
+                    reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
             assertThat(mol.getAtomCount(), is(108));
         }
     }
@@ -1926,10 +2045,11 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     @Test
     public void atomlistWithAtomContainer() throws Exception {
         try (InputStream in = getClass().getResourceAsStream("query_notatomlist.mol");
-             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+                MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
 
-            IAtomContainer mol   = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
-            IAtom          deref = AtomRef.deref(mol.getAtom(0));
+            IAtomContainer mol =
+                    mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
+            IAtom deref = AtomRef.deref(mol.getAtom(0));
             assertThat(deref, CoreMatchers.<IAtom>instanceOf(QueryAtom.class));
         }
     }
@@ -1938,7 +2058,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     public void dataSgroup() {
         String path = "/data/mdl/hbr_acoh_mix.mol";
         try (InputStream in = getClass().getResourceAsStream(path)) {
-            MDLV2000Reader     mdlr     = new MDLV2000Reader(in);
+            MDLV2000Reader mdlr = new MDLV2000Reader(in);
             IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
             IAtomContainer mol = mdlr.read(builder.newAtomContainer());
             List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
@@ -1950,16 +2070,15 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
                 }
             }
             assertNotNull(dataSgroup);
-            assertThat(dataSgroup.<String>getValue(SgroupKey.DataFieldName),
-                       CoreMatchers.is("WEIGHT_PERCENT"));
+            assertThat(
+                    dataSgroup.<String>getValue(SgroupKey.DataFieldName),
+                    CoreMatchers.is("WEIGHT_PERCENT"));
             // note it looks like MDL/Accelys/BIOVIA simply omit units/format
             // but check we pass it okay
-            assertThat(dataSgroup.<String>getValue(SgroupKey.DataFieldUnits),
-                       CoreMatchers.is("%"));
-            assertThat(dataSgroup.<String>getValue(SgroupKey.DataFieldFormat),
-                       CoreMatchers.is("N"));
-            assertThat(dataSgroup.<String>getValue(SgroupKey.Data),
-                       CoreMatchers.is("33%"));
+            assertThat(dataSgroup.<String>getValue(SgroupKey.DataFieldUnits), CoreMatchers.is("%"));
+            assertThat(
+                    dataSgroup.<String>getValue(SgroupKey.DataFieldFormat), CoreMatchers.is("N"));
+            assertThat(dataSgroup.<String>getValue(SgroupKey.Data), CoreMatchers.is("33%"));
         } catch (IOException | CDKException e) {
             e.printStackTrace();
         }
@@ -1967,31 +2086,32 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testNoChiralFlag() throws Exception {
-        final String input = "\n" +
-                "  Mrv1810 02052112282D          \n" +
-                "\n" +
-                "  7  7  0  0  0  0            999 V2000\n" +
-                "   -1.1468    6.5972    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0\n" +
-                "   -1.8613    6.1847    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "   -1.8613    5.3597    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "   -1.1468    4.9472    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "   -0.4323    5.3597    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "   -0.4323    6.1847    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "   -1.1468    7.4222    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "  1  2  1  0  0  0  0\n" +
-                "  2  3  1  0  0  0  0\n" +
-                "  3  4  1  0  0  0  0\n" +
-                "  4  5  1  0  0  0  0\n" +
-                "  5  6  1  0  0  0  0\n" +
-                "  1  6  1  0  0  0  0\n" +
-                "  1  7  1  1  0  0  0\n" +
-                "M  END\n";
+        final String input =
+                "\n"
+                        + "  Mrv1810 02052112282D          \n"
+                        + "\n"
+                        + "  7  7  0  0  0  0            999 V2000\n"
+                        + "   -1.1468    6.5972    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0\n"
+                        + "   -1.8613    6.1847    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                        + "   -1.8613    5.3597    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                        + "   -1.1468    4.9472    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                        + "   -0.4323    5.3597    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                        + "   -0.4323    6.1847    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                        + "   -1.1468    7.4222    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                        + "  1  2  1  0  0  0  0\n"
+                        + "  2  3  1  0  0  0  0\n"
+                        + "  3  4  1  0  0  0  0\n"
+                        + "  4  5  1  0  0  0  0\n"
+                        + "  5  6  1  0  0  0  0\n"
+                        + "  1  6  1  0  0  0  0\n"
+                        + "  1  7  1  1  0  0  0\n"
+                        + "M  END\n";
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         try (MDLV2000Reader mdlr = new MDLV2000Reader(new StringReader(input))) {
             IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
             Iterable<IStereoElement> iter = mol.stereoElements();
             assertTrue(iter.iterator().hasNext());
-            for (IStereoElement<?,?> se : iter) {
+            for (IStereoElement<?, ?> se : iter) {
                 assertThat(se.getGroupInfo(), is(IStereoElement.GRP_RAC1));
             }
         }
@@ -1999,31 +2119,32 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testChiralFlag() throws Exception {
-        final String input = "\n" +
-                "  Mrv1810 02052112282D          \n" +
-                "\n" +
-                "  7  7  0  0  1  0            999 V2000\n" +
-                "   -1.1468    6.5972    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0\n" +
-                "   -1.8613    6.1847    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "   -1.8613    5.3597    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "   -1.1468    4.9472    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "   -0.4323    5.3597    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "   -0.4323    6.1847    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "   -1.1468    7.4222    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "  1  2  1  0  0  0  0\n" +
-                "  2  3  1  0  0  0  0\n" +
-                "  3  4  1  0  0  0  0\n" +
-                "  4  5  1  0  0  0  0\n" +
-                "  5  6  1  0  0  0  0\n" +
-                "  1  6  1  0  0  0  0\n" +
-                "  1  7  1  1  0  0  0\n" +
-                "M  END\n";
+        final String input =
+                "\n"
+                        + "  Mrv1810 02052112282D          \n"
+                        + "\n"
+                        + "  7  7  0  0  1  0            999 V2000\n"
+                        + "   -1.1468    6.5972    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0\n"
+                        + "   -1.8613    6.1847    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                        + "   -1.8613    5.3597    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                        + "   -1.1468    4.9472    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                        + "   -0.4323    5.3597    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                        + "   -0.4323    6.1847    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                        + "   -1.1468    7.4222    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                        + "  1  2  1  0  0  0  0\n"
+                        + "  2  3  1  0  0  0  0\n"
+                        + "  3  4  1  0  0  0  0\n"
+                        + "  4  5  1  0  0  0  0\n"
+                        + "  5  6  1  0  0  0  0\n"
+                        + "  1  6  1  0  0  0  0\n"
+                        + "  1  7  1  1  0  0  0\n"
+                        + "M  END\n";
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         try (MDLV2000Reader mdlr = new MDLV2000Reader(new StringReader(input))) {
             IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
             Iterable<IStereoElement> iter = mol.stereoElements();
             assertTrue(iter.iterator().hasNext());
-            for (IStereoElement<?,?> se : iter) {
+            for (IStereoElement<?, ?> se : iter) {
                 // Grp Abs is actually just 0
                 assertThat(se.getGroupInfo(), is(IStereoElement.GRP_ABS));
             }

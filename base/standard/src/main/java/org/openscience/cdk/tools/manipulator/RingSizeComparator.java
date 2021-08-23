@@ -23,7 +23,6 @@
 package org.openscience.cdk.tools.manipulator;
 
 import java.util.Comparator;
-
 import org.openscience.cdk.interfaces.IRing;
 
 /**
@@ -33,18 +32,17 @@ import org.openscience.cdk.interfaces.IRing;
 public class RingSizeComparator implements Comparator<IRing> {
 
     /** Flag to denote that the set is order with the largest ring first */
-    public final static int LARGE_FIRST = 1;
+    public static final int LARGE_FIRST = 1;
     /** Flag to denote that the set is order with the smallest ring first */
-    public final static int SMALL_FIRST = 2;
+    public static final int SMALL_FIRST = 2;
 
-    int                     sortOrder   = SMALL_FIRST;
+    int sortOrder = SMALL_FIRST;
 
     /**
-    * Constructs a new comparator to sort rings by size.
-    *
-    * @param   order  Sort order: either RingSet.SMALL_FIRST or
-    *                                 RingSet.LARGE_FIRST.
-    */
+     * Constructs a new comparator to sort rings by size.
+     *
+     * @param order Sort order: either RingSet.SMALL_FIRST or RingSet.LARGE_FIRST.
+     */
     public RingSizeComparator(int order) {
         sortOrder = order;
     }

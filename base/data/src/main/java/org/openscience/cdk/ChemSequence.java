@@ -19,67 +19,58 @@
 
 package org.openscience.cdk;
 
+import java.io.Serializable;
+import java.util.Iterator;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IChemSequence;
 
-import java.io.Serializable;
-import java.util.Iterator;
-
 /**
- * A sequence of ChemModels, which can, for example, be used to
- * store the course of a reaction. Each state of the reaction would be
- * stored in one ChemModel.
+ * A sequence of ChemModels, which can, for example, be used to store the course of a reaction. Each
+ * state of the reaction would be stored in one ChemModel.
  *
  * @cdk.module data
  * @cdk.githash
- *
  * @cdk.keyword animation
  * @cdk.keyword reaction
  */
-public class ChemSequence extends ChemObject implements Serializable, IChemSequence, IChemObjectListener, Cloneable {
+public class ChemSequence extends ChemObject
+        implements Serializable, IChemSequence, IChemObjectListener, Cloneable {
 
     /**
      * Determines if a de-serialized object is compatible with this class.
      *
-     * This value must only be changed if and only if the new version
-     * of this class is incompatible with the old version. See Sun docs
-     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
+     * <p>This value must only be changed if and only if the new version of this class is
+     * incompatible with the old version. See Sun docs for <a
+     * href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
      */
     private static final long serialVersionUID = 2199218627455492000L;
 
-    /**
-     *  Array of ChemModels.
-     */
-    protected IChemModel[]    chemModels;
+    /** Array of ChemModels. */
+    protected IChemModel[] chemModels;
+
+    /** Number of ChemModels contained by this container. */
+    protected int chemModelCount;
 
     /**
-     *  Number of ChemModels contained by this container.
+     * Amount by which the chemModels array grows when elements are added and the array is not large
+     * enough for that.
      */
-    protected int             chemModelCount;
+    protected int growArraySize = 4;
 
-    /**
-     *  Amount by which the chemModels array grows when elements are added and
-     *  the array is not large enough for that.
-     */
-    protected int             growArraySize    = 4;
-
-    /**
-     *  Constructs an empty ChemSequence.
-     */
+    /** Constructs an empty ChemSequence. */
     public ChemSequence() {
         chemModelCount = 0;
         chemModels = new ChemModel[growArraySize];
     }
 
     /**
-     *  Adds an chemModel to this container.
+     * Adds an chemModel to this container.
      *
-     * @param  chemModel  The chemModel to be added to this container
-     *
-     * @see            #getChemModel
+     * @param chemModel The chemModel to be added to this container
+     * @see #getChemModel
      */
     @Override
     public void addChemModel(IChemModel chemModel) {
@@ -95,7 +86,7 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
     /**
      * Remove a ChemModel from this ChemSequence.
      *
-     * @param  pos  The position of the ChemModel to be removed.
+     * @param pos The position of the ChemModel to be removed.
      */
     @Override
     public void removeChemModel(int pos) {
@@ -111,8 +102,8 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
     /**
      * Returns an Iterable to ChemModels in this container.
      *
-     * @return    The Iterable to ChemModels in this container
-     * @see       #addChemModel
+     * @return The Iterable to ChemModels in this container
+     * @see #addChemModel
      */
     @Override
     public Iterable<IChemModel> chemModels() {
@@ -125,10 +116,7 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
         };
     }
 
-    /**
-     * The inner Iterator class.
-     *
-     */
+    /** The inner Iterator class. */
     private class ChemModelIterator implements Iterator<IChemModel> {
 
         private int pointer = 0;
@@ -147,18 +135,14 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
         public void remove() {
             removeChemModel(--pointer);
         }
-
     }
 
     /**
+     * Returns the ChemModel at position <code>number</code> in the container.
      *
-     * Returns the ChemModel at position <code>number</code> in the
-     * container.
-     *
-     * @param  number  The position of the ChemModel to be returned.
-     * @return         The ChemModel at position <code>number</code>.
-     *
-     * @see            #addChemModel
+     * @param number The position of the ChemModel to be returned.
+     * @return The ChemModel at position <code>number</code>.
+     * @see #addChemModel
      */
     @Override
     public IChemModel getChemModel(int number) {
@@ -166,9 +150,9 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
     }
 
     /**
-     *  Grows the chemModel array by a given size.
+     * Grows the chemModel array by a given size.
      *
-     * @see    growArraySize
+     * @see growArraySize
      */
     protected void growChemModelArray() {
         ChemModel[] newchemModels = new ChemModel[chemModels.length + growArraySize];
@@ -179,7 +163,7 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
     /**
      * Returns the number of ChemModels in this Container.
      *
-     * @return    The number of ChemModels in this Container
+     * @return The number of ChemModels in this Container
      */
     @Override
     public int getChemModelCount() {
@@ -214,10 +198,9 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
     }
 
     /**
-     *  Called by objects to which this object has
-     *  registered as a listener.
+     * Called by objects to which this object has registered as a listener.
      *
-     *@param  event  A change event pointing to the source of the change
+     * @param event A change event pointing to the source of the change
      */
     @Override
     public void stateChanged(IChemObjectChangeEvent event) {

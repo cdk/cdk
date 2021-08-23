@@ -24,44 +24,42 @@
 package org.openscience.cdk.protein.data;
 
 import javax.vecmath.Point3d;
-
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPDBAtom;
 
 /**
- * Represents the idea of an atom as used in PDB files. It contains extra fields
- * normally associated with atoms in such files.
+ * Represents the idea of an atom as used in PDB files. It contains extra fields normally associated
+ * with atoms in such files.
  *
  * @cdk.module data
  * @cdk.githash
- *
- * @see  Atom
+ * @see Atom
  */
 public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
 
     /**
      * Determines if a deserialized object is compatible with this class.
      *
-     * This value must only be changed if and only if the new version
-     * of this class is incompatible with the old version. See Sun docs
-     * for <a href="http://java.sun.com/products/jdk/1.1/docs/guide/serialization/spec/version.doc.html">details</a>.
+     * <p>This value must only be changed if and only if the new version of this class is
+     * incompatible with the old version. See Sun docs for <a
+     * href="http://java.sun.com/products/jdk/1.1/docs/guide/serialization/spec/version.doc.html">details</a>.
      */
     private static final long serialVersionUID = 7670650135045832543L;
 
-    private String            record;
-    private double            tempFactor;
-    private String            resName;
-    private String            iCode;
-    private double            occupancy;
-    private String            name;
-    private String            chainID;
-    private String            altLoc;
-    private String            segID;
-    private int               serial;
-    private String            resSeq;
-    private boolean           oxt;
-    private boolean           hetAtom;
+    private String record;
+    private double tempFactor;
+    private String resName;
+    private String iCode;
+    private double occupancy;
+    private String name;
+    private String chainID;
+    private String altLoc;
+    private String segID;
+    private int serial;
+    private String resSeq;
+    private boolean oxt;
+    private boolean hetAtom;
 
     /**
      * Constructs an IPDBAtom from a Element.
@@ -76,7 +74,7 @@ public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
     /**
      * Constructs an {@link IPDBAtom} from a String containing an element symbol.
      *
-     * @param symbol  The String describing the element for the PDBAtom
+     * @param symbol The String describing the element for the PDBAtom
      */
     public PDBAtom(String symbol) {
         super(symbol);
@@ -86,8 +84,8 @@ public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
     /**
      * Constructs an {@link IPDBAtom} from an Element and a Point3d.
      *
-     * @param  symbol     The symbol of the atom
-     * @param  coordinate The 3D coordinates of the atom
+     * @param symbol The symbol of the atom
+     * @param coordinate The 3D coordinates of the atom
      */
     public PDBAtom(String symbol, Point3d coordinate) {
         super(symbol, coordinate);
@@ -116,8 +114,8 @@ public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
     }
 
     /**
-     * get one entire line from the PDB entry file which describe the IPDBAtom.
-     * It consists of 80 columns.
+     * get one entire line from the PDB entry file which describe the IPDBAtom. It consists of 80
+     * columns.
      *
      * @return a String with all information
      */
@@ -127,8 +125,8 @@ public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
     }
 
     /**
-     * set one entire line from the PDB entry file which describe the IPDBAtom.
-     * It consists of 80 columns.
+     * set one entire line from the PDB entry file which describe the IPDBAtom. It consists of 80
+     * columns.
      *
      * @param newRecord A String with all information
      */
@@ -150,7 +148,7 @@ public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
     /**
      * set the Temperature factor of this atom.
      *
-     * @param newTempFactor  the Temperature factor of this atom
+     * @param newTempFactor the Temperature factor of this atom
      */
     @Override
     public void setTempFactor(Double newTempFactor) {
@@ -160,7 +158,7 @@ public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
     /**
      * set the Residue name of this atom.
      *
-     * @param newResName  the Residue name of this atom
+     * @param newResName the Residue name of this atom
      */
     @Override
     public void setResName(String newResName) {
@@ -180,7 +178,7 @@ public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
     /**
      * set the Code for insertion of residues of this atom.
      *
-     * @param newICode  the Code for insertion of residues of this atom
+     * @param newICode the Code for insertion of residues of this atom
      */
     @Override
     public void setICode(String newICode) {
@@ -200,7 +198,7 @@ public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
     /**
      * set the Atom name of this atom.
      *
-     * @param newName  the Atom name of this atom
+     * @param newName the Atom name of this atom
      */
     @Override
     public void setName(String newName) {
@@ -220,7 +218,7 @@ public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
     /**
      * set the Chain identifier of this atom.
      *
-     * @param newChainID  the Chain identifier of this atom
+     * @param newChainID the Chain identifier of this atom
      */
     @Override
     public void setChainID(String newChainID) {
@@ -240,7 +238,7 @@ public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
     /**
      * set the Alternate location indicator of this atom.
      *
-     * @param newAltLoc  the Alternate location indicator of this atom
+     * @param newAltLoc the Alternate location indicator of this atom
      */
     @Override
     public void setAltLoc(String newAltLoc) {
@@ -260,7 +258,7 @@ public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
     /**
      * set the Segment identifier, left-justified of this atom.
      *
-     * @param newSegID  the Segment identifier, left-justified of this atom
+     * @param newSegID the Segment identifier, left-justified of this atom
      */
     @Override
     public void setSegID(String newSegID) {
@@ -280,7 +278,7 @@ public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
     /**
      * set the Atom serial number of this atom.
      *
-     * @param newSerial  the Atom serial number of this atom
+     * @param newSerial the Atom serial number of this atom
      */
     @Override
     public void setSerial(Integer newSerial) {
@@ -300,7 +298,7 @@ public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
     /**
      * set the Residue sequence number of this atom.
      *
-     * @param newResSeq  the Residue sequence number of this atom
+     * @param newResSeq the Residue sequence number of this atom
      */
     @Override
     public void setResSeq(String newResSeq) {
@@ -340,7 +338,7 @@ public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
     /**
      * set the Occupancy of this atom.
      *
-     * @param newOccupancy  the Occupancy of this atom
+     * @param newOccupancy the Occupancy of this atom
      */
     @Override
     public void setOccupancy(Double newOccupancy) {
@@ -358,10 +356,9 @@ public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
     }
 
     /**
-     * Returns a one line string representation of this Atom.
-     * Methods is conform RFC #9.
+     * Returns a one line string representation of this Atom. Methods is conform RFC #9.
      *
-     * @return  The string representation of this Atom
+     * @return The string representation of this Atom
      */
     @Override
     public String toString() {
@@ -383,5 +380,4 @@ public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
         description.append(')');
         return description.toString();
     }
-
 }

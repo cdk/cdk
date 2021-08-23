@@ -28,74 +28,82 @@ import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.qsar.result.IntegerResultType;
 
 /**
- * Descriptor that returns the number of oxygens in the chemical
- * formula. Originally aimed at metal oxide nanoparticles {@cdk.cite Liu2011}.
+ * Descriptor that returns the number of oxygens in the chemical formula. Originally aimed at metal
+ * oxide nanoparticles {@cdk.cite Liu2011}.
  *
- * @author      egonw
+ * @author egonw
  * @cdk.githash
  */
 public class OxygenAtomCountDescriptor implements ISubstanceDescriptor {
 
-	/** {@inheritDoc} */ @Override
-	public String[] getDescriptorNames() {
-        return new String[]{"NoMe"};
-	}
+    /** {@inheritDoc} */
+    @Override
+    public String[] getDescriptorNames() {
+        return new String[] {"NoMe"};
+    }
 
-	/** {@inheritDoc} */ @Override
-	public String[] getParameterNames() {
+    /** {@inheritDoc} */
+    @Override
+    public String[] getParameterNames() {
         return new String[0];
-	}
+    }
 
-	/** {@inheritDoc} */ @Override
-	public Object getParameterType(String substance) {
-		return null;
-	}
+    /** {@inheritDoc} */
+    @Override
+    public Object getParameterType(String substance) {
+        return null;
+    }
 
-	/** {@inheritDoc} */ @Override
-	public Object[] getParameters() {
-		return new Object[0];
-	}
+    /** {@inheritDoc} */
+    @Override
+    public Object[] getParameters() {
+        return new Object[0];
+    }
 
-	/** {@inheritDoc} */ @Override
-	public DescriptorSpecification getSpecification() {
-	    return new DescriptorSpecification(
-	        "http://egonw.github.com/resource/NM_001002",
-	        this.getClass().getName(),
-	        "The Chemistry Development Kit"
-	    );
-	}
+    /** {@inheritDoc} */
+    @Override
+    public DescriptorSpecification getSpecification() {
+        return new DescriptorSpecification(
+                "http://egonw.github.com/resource/NM_001002",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
+    }
 
-	/** {@inheritDoc} */ @Override
-	public void setParameters(Object[] parameters) throws CDKException {
-		return; // no parameters
-	}
+    /** {@inheritDoc} */
+    @Override
+    public void setParameters(Object[] parameters) throws CDKException {
+        return; // no parameters
+    }
 
-	/** {@inheritDoc} */ @Override
-	public DescriptorValue calculate(ISubstance substance) {
+    /** {@inheritDoc} */
+    @Override
+    public DescriptorValue calculate(ISubstance substance) {
         int count = 0;
         if (substance != null) {
             for (IAtomContainer container : substance.atomContainers()) {
                 for (IAtom atom : container.atoms()) {
-                    if ("O".equals(atom.getSymbol()) || 8 == atom.getAtomicNumber())
-                        count++;
+                    if ("O".equals(atom.getSymbol()) || 8 == atom.getAtomicNumber()) count++;
                 }
             }
         }
 
-		return new DescriptorValue(
-		    getSpecification(), getParameterNames(), getParameters(),
-		    new IntegerResult(count), getDescriptorNames()
-		);
-	}
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new IntegerResult(count),
+                getDescriptorNames());
+    }
 
-	/** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public IDescriptorResult getDescriptorResultType() {
-		return new IntegerResultType();
-	}
+        return new IntegerResultType();
+    }
 
-	/** {@inheritDoc} */ @Override
-	public void initialise(IChemObjectBuilder builder) {
-		// nothing to be done
-	}
-
+    /** {@inheritDoc} */
+    @Override
+    public void initialise(IChemObjectBuilder builder) {
+        // nothing to be done
+    }
 }

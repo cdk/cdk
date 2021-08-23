@@ -22,6 +22,13 @@
  *  */
 package org.openscience.cdk.io;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import java.io.InputStream;
+import java.io.StringReader;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -36,24 +43,16 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import java.io.InputStream;
-import java.io.StringReader;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 /**
  * TestCase for the reading MDL mol files using one test file.
  *
  * @cdk.module test-smiles
- *
  * @see org.openscience.cdk.io.MDLReader
  */
 public class SMILESReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(SMILESReaderTest.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(SMILESReaderTest.class);
 
     @BeforeClass
     public static void setup() throws Exception {
@@ -110,8 +109,8 @@ public class SMILESReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainerSet som = reader.read(new AtomContainerSet());
         Assert.assertEquals(5, som.getAtomContainerCount());
     }
-    
-    @Test 
+
+    @Test
     public void badSmilesLine() throws CDKException {
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         String input = "C\nn1cccc1\nc1ccccc1\n";
@@ -119,14 +118,16 @@ public class SMILESReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainerSet mols = cor.read(bldr.newInstance(IAtomContainerSet.class));
         assertThat(mols.getAtomContainerCount(), is(3));
         assertThat(mols.getAtomContainer(0).getAtomCount(), is(1));
-        assertThat(mols.getAtomContainer(0).getProperty(IteratingSMILESReader.BAD_SMILES_INPUT),
-                   nullValue());
+        assertThat(
+                mols.getAtomContainer(0).getProperty(IteratingSMILESReader.BAD_SMILES_INPUT),
+                nullValue());
         assertThat(mols.getAtomContainer(1).getAtomCount(), is(0));
-        assertThat(mols.getAtomContainer(1).getProperty(IteratingSMILESReader.BAD_SMILES_INPUT),
-                   notNullValue());
+        assertThat(
+                mols.getAtomContainer(1).getProperty(IteratingSMILESReader.BAD_SMILES_INPUT),
+                notNullValue());
         assertThat(mols.getAtomContainer(2).getAtomCount(), is(6));
-        assertThat(mols.getAtomContainer(2).getProperty(IteratingSMILESReader.BAD_SMILES_INPUT),
-                   nullValue());
+        assertThat(
+                mols.getAtomContainer(2).getProperty(IteratingSMILESReader.BAD_SMILES_INPUT),
+                nullValue());
     }
-
 }

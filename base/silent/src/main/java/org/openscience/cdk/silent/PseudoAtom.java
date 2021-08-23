@@ -27,35 +27,31 @@ import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 
 /**
- * Represents the idea of a non-chemical atom-like entity, like Me,
- * R, X, Phe, His, etc.
+ * Represents the idea of a non-chemical atom-like entity, like Me, R, X, Phe, His, etc.
  *
  * <p>This should be replaced by the mechanism explained in RFC #8.
  *
- * @cdk.module  silent
+ * @cdk.module silent
  * @cdk.githash
- *
- * @see  Atom
+ * @see Atom
  */
 public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable, IPseudoAtom {
 
     /**
      * Determines if a de-serialized object is compatible with this class.
      *
-     * This value must only be changed if and only if the new version
-     * of this class is incompatible with the old version. See Sun docs
-     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
+     * <p>This value must only be changed if and only if the new version of this class is
+     * incompatible with the old version. See Sun docs for <a
+     * href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
      */
     private static final long serialVersionUID = 1L;
 
-    private String            label;
+    private String label;
 
-    private int               attachPoint;
+    private int attachPoint;
 
-    /**
-     * Constructs an empty PseudoAtom.
-     */
+    /** Constructs an empty PseudoAtom. */
     public PseudoAtom() {
         this("*");
     }
@@ -63,7 +59,7 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable,
     /**
      * Constructs an Atom from a String containing an element symbol.
      *
-     * @param   label  The String describing the PseudoAtom
+     * @param label The String describing the PseudoAtom
      */
     public PseudoAtom(String label) {
         super("R");
@@ -79,7 +75,7 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable,
     /**
      * Constructs an PseudoAtom from a IAtom.
      *
-     * @param   element  IAtom from which the PseudoAtom is constructed
+     * @param element IAtom from which the PseudoAtom is constructed
      */
     public PseudoAtom(IElement element) {
         super(element);
@@ -94,8 +90,8 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable,
     /**
      * Constructs an Atom from an Element and a Point3d.
      *
-     * @param   label  The String describing the PseudoAtom
-     * @param   point3d         The 3D coordinates of the atom
+     * @param label The String describing the PseudoAtom
+     * @param point3d The 3D coordinates of the atom
      */
     public PseudoAtom(String label, javax.vecmath.Point3d point3d) {
         this(label);
@@ -105,8 +101,8 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable,
     /**
      * Constructs an Atom from an Element and a Point2d.
      *
-     * @param   label  The String describing the PseudoAtom
-     * @param   point2d         The Point
+     * @param label The String describing the PseudoAtom
+     * @param point2d The Point
      */
     public PseudoAtom(String label, javax.vecmath.Point2d point2d) {
         this(label);
@@ -117,7 +113,7 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable,
      * Returns the label of this PseudoAtom.
      *
      * @return The label for this PseudoAtom
-     * @see    #setLabel
+     * @see #setLabel
      */
     @Override
     public String getLabel() {
@@ -128,42 +124,35 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable,
      * Sets the label of this PseudoAtom.
      *
      * @param label The new label for this PseudoAtom
-     * @see   #getLabel
+     * @see #getLabel
      */
     @Override
     public void setLabel(String label) {
         this.label = label;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getAttachPointNum() {
         return attachPoint;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setAttachPointNum(int attachPoint) {
         this.attachPoint = attachPoint;
     }
 
-    /**
-     * Dummy method: the stereo parity is undefined, final.
-     */
+    /** Dummy method: the stereo parity is undefined, final. */
     @Override
     public void setStereoParity(Integer stereoParity) {
         // this is undefined, always
     }
 
     /**
-     * Returns a one line string representation of this Atom.
-     * Methods is conform RFC #9.
+     * Returns a one line string representation of this Atom. Methods is conform RFC #9.
      *
-     * @return  The string representation of this Atom
+     * @return The string representation of this Atom
      */
     @Override
     public String toString() {

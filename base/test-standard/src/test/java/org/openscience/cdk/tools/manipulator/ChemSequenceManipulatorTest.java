@@ -21,7 +21,6 @@ package org.openscience.cdk.tools.manipulator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,22 +44,20 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.tools.IDCreator;
 
-/**
- * @cdk.module test-standard
- */
+/** @cdk.module test-standard */
 public class ChemSequenceManipulatorTest extends CDKTestCase {
 
-    IAtomContainer    molecule1    = null;
-    IAtomContainer    molecule2    = null;
-    IAtom             atomInMol1   = null;
-    IBond             bondInMol1   = null;
-    IAtom             atomInMol2   = null;
-    IAtomContainerSet moleculeSet  = null;
-    IReaction         reaction     = null;
-    IReactionSet      reactionSet  = null;
-    IChemModel        chemModel1   = null;
-    IChemModel        chemModel2   = null;
-    IChemSequence     chemSequence = null;
+    IAtomContainer molecule1 = null;
+    IAtomContainer molecule2 = null;
+    IAtom atomInMol1 = null;
+    IBond bondInMol1 = null;
+    IAtom atomInMol2 = null;
+    IAtomContainerSet moleculeSet = null;
+    IReaction reaction = null;
+    IReactionSet reactionSet = null;
+    IChemModel chemModel1 = null;
+    IChemModel chemModel2 = null;
+    IChemSequence chemSequence = null;
 
     public ChemSequenceManipulatorTest() {
         super();
@@ -122,23 +119,17 @@ public class ChemSequenceManipulatorTest extends CDKTestCase {
         int reactionSetCount = 0;
         int chemModelCount = 0;
         for (Object o : list) {
-            //if (o instanceof IAtom) ++atomCount;
-            //if (o instanceof IBond) ++bondCount;
-            if (o instanceof IAtomContainer)
-                ++molCount;
-            else if (o instanceof IAtomContainerSet)
-                ++molSetCount;
-            else if (o instanceof IReaction)
-                ++reactionCount;
-            else if (o instanceof IReactionSet)
-                ++reactionSetCount;
-            else if (o instanceof IChemModel)
-                ++chemModelCount;
-            else
-                Assert.fail("Unexpected Object of type " + o.getClass());
+            // if (o instanceof IAtom) ++atomCount;
+            // if (o instanceof IBond) ++bondCount;
+            if (o instanceof IAtomContainer) ++molCount;
+            else if (o instanceof IAtomContainerSet) ++molSetCount;
+            else if (o instanceof IReaction) ++reactionCount;
+            else if (o instanceof IReactionSet) ++reactionSetCount;
+            else if (o instanceof IChemModel) ++chemModelCount;
+            else Assert.fail("Unexpected Object of type " + o.getClass());
         }
-        //Assert.assertEquals(3, atomCount);
-        //Assert.assertEquals(1, bondCount);
+        // Assert.assertEquals(3, atomCount);
+        // Assert.assertEquals(1, bondCount);
         Assert.assertEquals(2, molCount);
         Assert.assertEquals(1, molSetCount);
         Assert.assertEquals(1, reactionCount);
@@ -155,5 +146,4 @@ public class ChemSequenceManipulatorTest extends CDKTestCase {
         Set<String> uniq = new HashSet<String>(allIDs);
         Assert.assertEquals(12, uniq.size());
     }
-
 }

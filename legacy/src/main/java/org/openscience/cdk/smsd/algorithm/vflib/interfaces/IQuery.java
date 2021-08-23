@@ -51,23 +51,26 @@ import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * Interface for the query molecule/graph.
+ *
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is
+ *     available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public interface IQuery {
 
     /**
      * Returns nodes of the query.
+     *
      * @return node Iterable.
      */
     public Iterable<INode> nodes();
 
     /**
      * Returns a node of the query mol at a given position.
+     *
      * @param index at position.
      * @return node.
      */
@@ -75,12 +78,14 @@ public interface IQuery {
 
     /**
      * Returns edges of the query.
+     *
      * @return edge Iterable.
      */
     public Iterable<IEdge> edges();
 
     /**
      * Returns an edge of the query mol at a given position.
+     *
      * @param index at position.
      * @return edge
      */
@@ -88,6 +93,7 @@ public interface IQuery {
 
     /**
      * Returns an atom associated with this node.
+     *
      * @param node get Atom of this node.
      * @return atom of this node
      */
@@ -104,12 +110,14 @@ public interface IQuery {
 
     /**
      * Returns edge count.
+     *
      * @return edge count.
      */
     public int countEdges();
 
     /**
      * Returns node count.
+     *
      * @return node count.
      */
     public int countNodes();

@@ -24,7 +24,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * This matcher any heavy atom that is not C or H.
  *
- * @cdk.module  smarts
+ * @cdk.module smarts
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
@@ -33,10 +33,7 @@ public class NonCHHeavyAtom extends SMARTSAtom {
 
     private static final long serialVersionUID = 5145049891214205622L;
 
-    /**
-     * Creates a new instance
-     *
-     */
+    /** Creates a new instance */
     public NonCHHeavyAtom(IChemObjectBuilder builder) {
         super(builder);
     }
@@ -51,7 +48,6 @@ public class NonCHHeavyAtom extends SMARTSAtom {
     public boolean matches(IAtom atom) {
         String symbol = atom.getSymbol();
         return !(symbol.equals("C") || symbol.equals("H"));
-
     }
 
     /*

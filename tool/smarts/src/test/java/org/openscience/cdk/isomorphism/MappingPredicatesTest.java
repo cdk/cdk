@@ -24,6 +24,11 @@
 
 package org.openscience.cdk.isomorphism;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import com.google.common.collect.Iterables;
 import org.junit.Test;
 import org.openscience.cdk.graph.GraphUtil;
@@ -31,11 +36,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 /**
  * @author John May
@@ -46,10 +46,10 @@ public class MappingPredicatesTest {
     @Test
     public void uniqueAtoms() throws Exception {
         UniqueAtomMatches uam = new UniqueAtomMatches();
-        assertTrue(uam.apply(new int[]{1, 2, 3, 4}));
-        assertTrue(uam.apply(new int[]{1, 2, 3, 5}));
-        assertFalse(uam.apply(new int[]{4, 3, 2, 1}));
-        assertFalse(uam.apply(new int[]{1, 5, 2, 3}));
+        assertTrue(uam.apply(new int[] {1, 2, 3, 4}));
+        assertTrue(uam.apply(new int[] {1, 2, 3, 5}));
+        assertFalse(uam.apply(new int[] {4, 3, 2, 1}));
+        assertFalse(uam.apply(new int[] {1, 5, 2, 3}));
     }
 
     @Test
@@ -64,7 +64,11 @@ public class MappingPredicatesTest {
         assertThat(Iterables.size(Iterables.filter(mappings, new UniqueAtomMatches())), is(1));
 
         // when in fact we found 4 different mappings
-        assertThat(Iterables.size(Iterables.filter(mappings, new UniqueBondMatches(GraphUtil.toAdjList(query)))), is(3));
+        assertThat(
+                Iterables.size(
+                        Iterables.filter(
+                                mappings, new UniqueBondMatches(GraphUtil.toAdjList(query)))),
+                is(3));
     }
 
     @Test
@@ -85,11 +89,10 @@ public class MappingPredicatesTest {
         assertThat(mappings.uniqueBonds().count(), is(1)); // re-iteration
     }
 
-    IChemObjectBuilder bldr   = SilentChemObjectBuilder.getInstance();
-    SmilesParser       smipar = new SmilesParser(bldr);
+    IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+    SmilesParser smipar = new SmilesParser(bldr);
 
     IAtomContainer smi(String smi) throws Exception {
         return smipar.parseSmiles(smi);
     }
-
 }

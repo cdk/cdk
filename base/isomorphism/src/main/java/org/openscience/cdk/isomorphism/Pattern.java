@@ -29,10 +29,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
-import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
-
-import java.util.Map;
 
 /**
  * A structural pattern for finding an exact matching in a target compound.
@@ -46,42 +43,39 @@ public abstract class Pattern {
     private boolean hasStereo, hasQueryStereo, hasCompGrp, hasRxnMap;
 
     void determineFilters(IAtomContainer query) {
-        hasStereo  = query.stereoElements().iterator().hasNext();
+        hasStereo = query.stereoElements().iterator().hasNext();
         hasCompGrp = query.getProperty(ComponentFilter.KEY) != null;
         for (IAtom atom : query.atoms()) {
             Integer compId = atom.getProperty(CDKConstants.REACTION_GROUP);
             Integer mapIdx = atom.getProperty(CDKConstants.ATOM_ATOM_MAPPING);
-            if (mapIdx != null && mapIdx != 0)
-                hasRxnMap = true;
-            if (compId != null && compId != 0)
-                hasCompGrp = true;
-            if (atom instanceof IQueryAtom)
-                hasQueryStereo = true;
-            if (hasRxnMap && hasCompGrp && hasQueryStereo)
-                break;
+            if (mapIdx != null && mapIdx != 0) hasRxnMap = true;
+            if (compId != null && compId != 0) hasCompGrp = true;
+            if (atom instanceof IQueryAtom) hasQueryStereo = true;
+            if (hasRxnMap && hasCompGrp && hasQueryStereo) break;
         }
     }
 
     Mappings filter(Mappings mappings, IAtomContainer query, IAtomContainer target) {
         // apply required post-match filters
         if (hasStereo) {
-            mappings = hasQueryStereo
-                    ? mappings.filter(new QueryStereoFilter(query, target))
-                    : mappings.filter(new StereoMatch(query, target));
+            mappings =
+                    hasQueryStereo
+                            ? mappings.filter(new QueryStereoFilter(query, target))
+                            : mappings.filter(new StereoMatch(query, target));
         }
-        if (hasCompGrp)
-            mappings = mappings.filter(new ComponentFilter(query, target));
-        if (hasRxnMap)
-            mappings = mappings.filter(new AtomMapFilter(query, target));
+        if (hasCompGrp) mappings = mappings.filter(new ComponentFilter(query, target));
+        if (hasRxnMap) mappings = mappings.filter(new AtomMapFilter(query, target));
         return mappings;
     }
 
     /**
-     * Find a matching of this pattern in the {@code target}. If no such order
-     * exist an empty mapping is returned. Depending on the implementation
-     * stereochemistry may be checked (recommended).
+     * Find a matching of this pattern in the {@code target}. If no such order exist an empty
+     * mapping is returned. Depending on the implementation stereochemistry may be checked
+     * (recommended).
      *
-     * <blockquote><pre>{@code
+     * <blockquote>
+     *
+     * <pre>{@code
      * Pattern        pattern = ...; // create pattern
      * for (IAtomContainer m : ms) {
      *     int[] mapping = pattern.match(m);
@@ -89,7 +83,9 @@ public abstract class Pattern {
      *         // found mapping!
      *     }
      * }
-     * }</pre></blockquote>
+     * }</pre>
+     *
+     * </blockquote>
      *
      * @param target the container to search for the pattern in
      * @return the mapping from the pattern to the target or an empty array
@@ -97,18 +93,21 @@ public abstract class Pattern {
     public abstract int[] match(IAtomContainer target);
 
     /**
-     * Determine if there is a mapping of this pattern in the {@code target}.
-     * Depending on the implementation stereochemistry may be checked
-     * (recommended).
+     * Determine if there is a mapping of this pattern in the {@code target}. Depending on the
+     * implementation stereochemistry may be checked (recommended).
      *
-     * <blockquote><pre>
+     * <blockquote>
+     *
+     * <pre>
      * Pattern        pattern = ...; // create pattern
      * for (IAtomContainer m : ms) {
      *     if (pattern.matches(m)) {
      *         // found mapping!
      *     }
      * }
-     * </pre></blockquote>
+     * </pre>
+     *
+     * </blockquote>
      *
      * @param target the container to search for the pattern in
      * @return the mapping from the pattern to the target
@@ -118,17 +117,20 @@ public abstract class Pattern {
     }
 
     /**
-     * Determine if there is a mapping of this pattern in the {@code target}
-     * reaction.
+     * Determine if there is a mapping of this pattern in the {@code target} reaction.
      *
-     * <blockquote><pre>
+     * <blockquote>
+     *
+     * <pre>
      * Pattern        pattern = ...; // create pattern
      * for (IReaction r : rs) {
      *     if (pattern.matches(r)) {
      *         // found mapping!
      *     }
      * }
-     * </pre></blockquote>
+     * </pre>
+     *
+     * </blockquote>
      *
      * @param target the reaction to search for the pattern in
      * @return the mapping from the pattern to the target
@@ -138,31 +140,37 @@ public abstract class Pattern {
     }
 
     /**
-     * Find all mappings of this pattern in the {@code target}. Stereochemistry
-     * should not be checked to allow filtering with {@link
-     * Mappings#stereochemistry()}.
+     * Find all mappings of this pattern in the {@code target}. Stereochemistry should not be
+     * checked to allow filtering with {@link Mappings#stereochemistry()}.
      *
-     * <blockquote><pre>
+     * <blockquote>
+     *
+     * <pre>
      * Pattern pattern = Pattern.findSubstructure(query);
      * for (IAtomContainer m : ms) {
      *     for (int[] mapping : pattern.matchAll(m)) {
      *         // found mapping
      *     }
      * }
-     * </pre></blockquote>
+     * </pre>
      *
-     * Using the fluent interface (see {@link Mappings}) we can search and
-     * manipulate the mappings. Here's an example of finding the first 5
-     * mappings and creating an array. If the mapper is lazy other states are
-     * simply not explored.
+     * </blockquote>
      *
-     * <blockquote><pre>
+     * Using the fluent interface (see {@link Mappings}) we can search and manipulate the mappings.
+     * Here's an example of finding the first 5 mappings and creating an array. If the mapper is
+     * lazy other states are simply not explored.
+     *
+     * <blockquote>
+     *
+     * <pre>
      * // find only the first 5 mappings and store them in an array
      * Pattern pattern  = Pattern.findSubstructure(query);
      * int[][] mappings = pattern.matchAll(target)
      *                           .limit(5)
      *                           .toArray();
-     * </pre></blockquote>
+     * </pre>
+     *
+     * </blockquote>
      *
      * @param target the container to search for the pattern in
      * @return the mapping from the pattern to the target
@@ -173,18 +181,22 @@ public abstract class Pattern {
     /**
      * Find all mappings of this pattern in the {@code target} reaction.
      *
-     * <blockquote><pre>
+     * <blockquote>
+     *
+     * <pre>
      * Pattern pattern = Pattern.findSubstructure(query);
      * for (IReaction r : rs) {
      *     for (int[] mapping : pattern.matchAll(r)) {
      *         // found mapping
      *     }
      * }
-     * </pre></blockquote>
+     * </pre>
      *
-     * The reaction is inlined into a molecule and vs mapped id's correspond
-     * to the absolute atom index in the reaction when considered as reactants, agents,
-     * products {@link ReactionManipulator#toMolecule}.
+     * </blockquote>
+     *
+     * The reaction is inlined into a molecule and vs mapped id's correspond to the absolute atom
+     * index in the reaction when considered as reactants, agents, products {@link
+     * ReactionManipulator#toMolecule}.
      *
      * @param target the reaction to search for the pattern in
      * @return the mapping from the pattern to the target
@@ -196,9 +208,8 @@ public abstract class Pattern {
     }
 
     /**
-     * Create a pattern which can be used to find molecules which contain the
-     * {@code query} structure. The default structure search implementation is
-     * {@link VentoFoggia}.
+     * Create a pattern which can be used to find molecules which contain the {@code query}
+     * structure. The default structure search implementation is {@link VentoFoggia}.
      *
      * @param query the substructure to find
      * @return a pattern for finding the {@code query}
@@ -209,9 +220,8 @@ public abstract class Pattern {
     }
 
     /**
-     * Create a pattern which can be used to find molecules which are the same
-     * as the {@code query} structure. The default structure search
-     * implementation is {@link VentoFoggia}.
+     * Create a pattern which can be used to find molecules which are the same as the {@code query}
+     * structure. The default structure search implementation is {@link VentoFoggia}.
      *
      * @param query the substructure to find
      * @return a pattern for finding the {@code query}

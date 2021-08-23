@@ -24,7 +24,6 @@
  */
 package org.openscience.cdk.exception;
 
-
 /**
  * Exception thrown when an error is occurred during SMILES parsing.
  *
@@ -47,7 +46,7 @@ public class InvalidSmilesException extends CDKException {
     /**
      * Constructs a new exception with a custom message and a stacktrace.
      *
-     * @param message   the custom message detailing what may be wrong with the SMILES.
+     * @param message the custom message detailing what may be wrong with the SMILES.
      * @param exception the underlying exception
      */
     public InvalidSmilesException(String message, Exception exception) {

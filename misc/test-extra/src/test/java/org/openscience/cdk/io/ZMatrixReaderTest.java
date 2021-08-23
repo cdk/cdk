@@ -29,9 +29,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 
-/**
- * @cdk.module test-extra
- */
+/** @cdk.module test-extra */
 public class ZMatrixReaderTest extends ChemObjectIOTest {
 
     @BeforeClass
@@ -44,5 +42,4 @@ public class ZMatrixReaderTest extends ChemObjectIOTest {
         ZMatrixReader reader = new ZMatrixReader();
         Assert.assertTrue(reader.accepts(ChemFile.class));
     }
-
 }

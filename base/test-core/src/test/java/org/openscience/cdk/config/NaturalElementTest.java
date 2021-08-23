@@ -27,9 +27,7 @@ import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 
-/**
- * @cdk.module test-core
- */
+/** @cdk.module test-core */
 public class NaturalElementTest {
 
     @Test
@@ -49,5 +47,4 @@ public class NaturalElementTest {
         IElement chemObject = new NaturalElement("C", 12);
         Assert.assertEquals(12, chemObject.getAtomicNumber().intValue());
     }
-
 }

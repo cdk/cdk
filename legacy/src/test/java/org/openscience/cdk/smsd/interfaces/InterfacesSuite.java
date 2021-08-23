@@ -31,13 +31,14 @@ import org.junit.runners.Suite;
 
 /**
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- *
  * @cdk.module test-smsd
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({org.openscience.cdk.smsd.interfaces.AbstractSubGraphTest.class,
-        org.openscience.cdk.smsd.interfaces.AbstractMCSTest.class,
-        org.openscience.cdk.smsd.interfaces.AbstractMCSAlgorithmTest.class})
+@Suite.SuiteClasses({
+    org.openscience.cdk.smsd.interfaces.AbstractSubGraphTest.class,
+    org.openscience.cdk.smsd.interfaces.AbstractMCSTest.class,
+    org.openscience.cdk.smsd.interfaces.AbstractMCSAlgorithmTest.class
+})
 public class InterfacesSuite {
 
     @BeforeClass

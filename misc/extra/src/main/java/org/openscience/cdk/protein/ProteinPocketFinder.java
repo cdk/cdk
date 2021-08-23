@@ -27,9 +27,7 @@ import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
-
 import javax.vecmath.Point3d;
-
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -50,43 +48,44 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
- * The detection of pocket and cavities in a bioPolymer is done similar to the program
- * LIGSITE {@cdk.cite MH1997}.
+ * The detection of pocket and cavities in a bioPolymer is done similar to the program LIGSITE
+ * {@cdk.cite MH1997}.
  *
  * <p>TODO: Optimisation of the cubic grid placement
  *
- * @author      cho
+ * @author cho
  * @cdk.created 2005-09-30
- * @cdk.module     extra
+ * @cdk.module extra
  * @cdk.githash
- * @cdk.keyword    protein
- * @cdk.keyword    pocket
+ * @cdk.keyword protein
+ * @cdk.keyword pocket
  */
 public class ProteinPocketFinder {
 
-    private final ILoggingTool logger          = LoggingToolFactory.createLoggingTool(ProteinPocketFinder.class);
+    private final ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(ProteinPocketFinder.class);
 
-    int                        solvantValue    = 0;
-    int                        proteinInterior = -1;
-    int                        pocketSize      = 100;                                                             // # datapoints needed to form a pocket
-    double                     rAtom           = 1.5;                                                             // default atom radius
-    double                     rSolvent        = 1.4;                                                             // default solvant radius
-    double                     latticeConstant = 0.5;
-    int                        minPSPocket     = 2;
-    int                        minPSCluster    = 2;
-    double                     linkageRadius   = 1;
-    double                     atomCheckRadius = 0;                                                               // variable to reduce the atom radius search
+    int solvantValue = 0;
+    int proteinInterior = -1;
+    int pocketSize = 100; // # datapoints needed to form a pocket
+    double rAtom = 1.5; // default atom radius
+    double rSolvent = 1.4; // default solvant radius
+    double latticeConstant = 0.5;
+    int minPSPocket = 2;
+    int minPSCluster = 2;
+    double linkageRadius = 1;
+    double atomCheckRadius = 0; // variable to reduce the atom radius search
     // points
-    IBioPolymer                protein         = null;
-    String                     vanDerWaalsFile = "org/openscience/cdk/config/data/pdb_atomtypes.xml";
-    double[][][]               grid            = null;
-    GridGenerator              gridGenerator   = new GridGenerator();
-    Map<String, Integer>       visited         = new Hashtable<String, Integer>();
-    List<List<Point3d>>        pockets         = new ArrayList<List<Point3d>>();
+    IBioPolymer protein = null;
+    String vanDerWaalsFile = "org/openscience/cdk/config/data/pdb_atomtypes.xml";
+    double[][][] grid = null;
+    GridGenerator gridGenerator = new GridGenerator();
+    Map<String, Integer> visited = new Hashtable<String, Integer>();
+    List<List<Point3d>> pockets = new ArrayList<List<Point3d>>();
 
     /**
      * @param biopolymerFile The file name containing the protein
-     * @param cubicGrid	     if true generate the grid
+     * @param cubicGrid if true generate the grid
      */
     public ProteinPocketFinder(String biopolymerFile, boolean cubicGrid) {
         readBioPolymer(biopolymerFile);
@@ -118,9 +117,7 @@ public class ProteinPocketFinder {
         gridGenerator.setGrid(grid);
     }
 
-    /**
-     * Creates from a PDB File a BioPolymer.
-     */
+    /** Creates from a PDB File a BioPolymer. */
     private void readBioPolymer(String biopolymerFile) {
         try {
             // Read PDB file
@@ -133,14 +130,17 @@ public class ProteinPocketFinder {
             IAtomContainerSet setOfMolecules = chemModel.getMoleculeSet();
             protein = (IBioPolymer) setOfMolecules.getAtomContainer(0);
         } catch (IOException | CDKException exc) {
-            logger.error("Could not read BioPolymer from file>" + biopolymerFile + " due to: " + exc.getMessage());
+            logger.error(
+                    "Could not read BioPolymer from file>"
+                            + biopolymerFile
+                            + " due to: "
+                            + exc.getMessage());
             logger.debug(exc);
         }
     }
 
     /**
-     * Method determines the minimum and maximum values of a coordinate space
-     * up to 3D space.
+     * Method determines the minimum and maximum values of a coordinate space up to 3D space.
      *
      * @return double[] stores min,max,min,max,min,max
      */
@@ -171,9 +171,7 @@ public class ProteinPocketFinder {
         return minMax;
     }
 
-    /**
-     * Method creates a cubic grid with the grid generator class.
-     */
+    /** Method creates a cubic grid with the grid generator class. */
     public void createCubicGrid() {
         //		logger.debug("	CREATE CUBIC GRID");
         gridGenerator.setDimension(findGridBoundaries(), true);
@@ -182,11 +180,9 @@ public class ProteinPocketFinder {
     }
 
     /**
-     * Method assigns the atoms of a biopolymer to the grid. For every atom
-     * the corresponding grid point is identified and set to the value
-     * of the proteinInterior variable.
-     * The atom radius and solvent radius is accounted for with the variables:
-     * double rAtom, and double rSolvent.
+     * Method assigns the atoms of a biopolymer to the grid. For every atom the corresponding grid
+     * point is identified and set to the value of the proteinInterior variable. The atom radius and
+     * solvent radius is accounted for with the variables: double rAtom, and double rSolvent.
      *
      * @throws Exception
      */
@@ -201,7 +197,7 @@ public class ProteinPocketFinder {
         int checkGridPoints = 0;
         double vdWRadius = 0;
         int[] dim = gridGenerator.getDim();
-        //int proteinAtomCount = 0;//Debugging
+        // int proteinAtomCount = 0;//Debugging
         int[] minMax = {0, 0, 0, 0, 0, 0};
 
         for (int i = 0; i < atoms.length; i++) {
@@ -214,7 +210,10 @@ public class ProteinPocketFinder {
             if (vdWRadius == 0) {
                 vdWRadius = rAtom;
             }
-            checkGridPoints = (int) (((vdWRadius + rSolvent) / gridGenerator.getLatticeConstant()) - atomCheckRadius);
+            checkGridPoints =
+                    (int)
+                            (((vdWRadius + rSolvent) / gridGenerator.getLatticeConstant())
+                                    - atomCheckRadius);
             if (checkGridPoints < 0) {
                 checkGridPoints = 0;
             }
@@ -229,12 +228,11 @@ public class ProteinPocketFinder {
                 for (int y = minMax[2]; y <= minMax[3]; y++) {
                     for (int z = minMax[4]; z <= minMax[5]; z++) {
                         this.grid[x][y][z] = this.grid[x][y][z] - 1;
-                        //proteinAtomCount++;//Debugging
+                        // proteinAtomCount++;//Debugging
                     }
                 }
-
             }
-        }// for atoms.length
+        } // for atoms.length
 
         //		logger.debug("- checkGridPoints>" + checkGridPoints
         //				+ " ProteinGridPoints>" + proteinAtomCount);
@@ -290,13 +288,9 @@ public class ProteinPocketFinder {
         // +" solventGridPoints:"+solventGrid);
     }
 
-    /**
-     * Main method which calls the methods: assignProteinToGrid,
-     * GridScan, and FindPockets.
-     *
-     */
+    /** Main method which calls the methods: assignProteinToGrid, GridScan, and FindPockets. */
     public void sitefinder() {
-        //logger.debug("SITEFINDER");
+        // logger.debug("SITEFINDER");
         try {
             assignProteinToGrid();
         } catch (Exception ex1) {
@@ -308,26 +302,23 @@ public class ProteinPocketFinder {
         //		logger.debug("	SITEFINDER-SCAN - dim:" + dim[0] + " grid:"
         //				+ this.grid[0].length + " grid point sum:" + this.grid.length
         //				* this.grid[0].length * this.grid[0][0].length);
-        axisScanX(dim[2], dim[1], dim[0]);// x-Axis
-        axisScanY(dim[2], dim[0], dim[1]);// y-Axis
-        axisScanZ(dim[0], dim[1], dim[2]);// z-Axis
+        axisScanX(dim[2], dim[1], dim[0]); // x-Axis
+        axisScanY(dim[2], dim[0], dim[1]); // y-Axis
+        axisScanZ(dim[0], dim[1], dim[2]); // z-Axis
 
-        diagonalAxisScanXZY(dim[0], dim[2], dim[1]);// diagonal1-Axis
-        diagonalAxisScanYZX(dim[1], dim[2], dim[0]);// diagonal2-Axis
-        diagonalAxisScanYXZ(dim[1], dim[0], dim[2]);// diagonal3-Axis
-        diagonalAxisScanXYZ(dim[0], dim[1], dim[2]);// diagonal4-Axis
+        diagonalAxisScanXZY(dim[0], dim[2], dim[1]); // diagonal1-Axis
+        diagonalAxisScanYZX(dim[1], dim[2], dim[0]); // diagonal2-Axis
+        diagonalAxisScanYXZ(dim[1], dim[0], dim[2]); // diagonal3-Axis
+        diagonalAxisScanXYZ(dim[0], dim[1], dim[2]); // diagonal4-Axis
 
-        //debuggCheckPSPEvent();
+        // debuggCheckPSPEvent();
 
         findPockets();
 
         sortPockets();
     }
 
-    /**
-     * Method sorts the pockets due to its size. The biggest pocket is the first.
-     *
-     */
+    /** Method sorts the pockets due to its size. The biggest pocket is the first. */
     private void sortPockets() {
         //		logger.debug("	SORT POCKETS Start#:" + pockets.size());
         Hashtable<Integer, List<Integer>> hashPockets = new Hashtable<Integer, List<Integer>>();
@@ -361,9 +352,9 @@ public class ProteinPocketFinder {
     }
 
     /**
-     * Method which finds the pocket, with a simple nearest neighbour clustering. The points
-     * which should be clustered or form a pocket can be determined with:
-     * 	minPSPocket, minPSCluster, linkageRadius, and pocketSize.
+     * Method which finds the pocket, with a simple nearest neighbour clustering. The points which
+     * should be clustered or form a pocket can be determined with: minPSPocket, minPSCluster,
+     * linkageRadius, and pocketSize.
      */
     private void findPockets() {
         int[] dim = gridGenerator.getDim();
@@ -372,18 +363,19 @@ public class ProteinPocketFinder {
         //				+ " latticeConstant>" + latticeConstant + " pocketSize:"
         //				+ pocketSize + " minPSPocket:" + minPSPocket + " minPSCluster:"
         //				+ minPSCluster);
-        //int pointsVisited = 0;//Debugging
-        //int significantPointsVisited = 0;//Debugging
+        // int pointsVisited = 0;//Debugging
+        // int significantPointsVisited = 0;//Debugging
         for (int x = 0; x < dim[0]; x++) {
             for (int y = 0; y < dim[1]; y++) {
                 for (int z = 0; z < dim[2]; z++) {
                     // logger.debug.print(" x:"+x+" y:"+y+" z:"+z);
                     Point3d start = new Point3d(x, y, z);
-                    //pointsVisited++;
-                    if (this.grid[x][y][z] >= minPSPocket & !visited.containsKey(x + "." + y + "." + z)) {
+                    // pointsVisited++;
+                    if (this.grid[x][y][z] >= minPSPocket
+                            & !visited.containsKey(x + "." + y + "." + z)) {
                         List<Point3d> subPocket = new ArrayList<Point3d>();
                         // logger.debug.print("new Point: "+grid[x][y][z]);
-                        //significantPointsVisited++;
+                        // significantPointsVisited++;
                         // logger.debug("visited:"+pointsVisited);
                         subPocket = this.clusterPSPPocket(start, subPocket, dim);
                         if (subPocket != null && subPocket.size() >= pocketSize) {
@@ -397,7 +389,6 @@ public class ProteinPocketFinder {
                     }
                 }
             }
-
         }
         //		try {
         //			logger.debug("	->>>> #pockets:" + pockets.size()
@@ -411,9 +402,7 @@ public class ProteinPocketFinder {
 
     }
 
-    /**
-     * Method performs the clustering, is called by findPockets().
-     */
+    /** Method performs the clustering, is called by findPockets(). */
     public List<Point3d> clusterPSPPocket(Point3d root, List<Point3d> subPocket, int[] dim) {
         // logger.debug(" ****** New Root ******:"+root.x+" "+root.y+"
         // "+root.z);
@@ -436,7 +425,8 @@ public class ProteinPocketFinder {
                     // "+root.y+" "+root.z+" ->"+k+" "+m+" "+l+"
                     // #>"+this.grid[k][m][l]+" key:"+visited.containsKey(new
                     // String(k+"."+m+"."+l)));
-                    if (this.grid[k][m][l] >= minPSCluster && !visited.containsKey(k + "." + m + "." + l)) {
+                    if (this.grid[k][m][l] >= minPSCluster
+                            && !visited.containsKey(k + "." + m + "." + l)) {
                         // logger.debug(" ---->FOUND");
                         subPocket.add(node);
                         this.clusterPSPPocket(node, subPocket, dim);
@@ -452,7 +442,7 @@ public class ProteinPocketFinder {
      * Method checks boundaries.
      *
      * @param minMax with minMax values
-     * @param dim    dimension
+     * @param dim dimension
      * @return new minMax values between 0 and dim
      */
     private int[] checkBoundaries(int[] minMax, int[] dim) {
@@ -477,15 +467,12 @@ public class ProteinPocketFinder {
         return minMax;
     }
 
-    /**
-     * Method which assigns upon a PSP event +1 to these grid points.
-     */
+    /** Method which assigns upon a PSP event +1 to these grid points. */
     private void firePSPEvent(List<Point3d> line) {
         for (int i = 0; i < line.size(); i++) {
-            this.grid[(int) line.get(i).x][(int) line.get(i).y][(int) line.get(i).z] = this.grid[(int) line.get(i).x][(int) line
-                    .get(i).y][(int) line.get(i).z] + 1;
+            this.grid[(int) line.get(i).x][(int) line.get(i).y][(int) line.get(i).z] =
+                    this.grid[(int) line.get(i).x][(int) line.get(i).y][(int) line.get(i).z] + 1;
         }
-
     }
 
     /**
@@ -497,23 +484,23 @@ public class ProteinPocketFinder {
      */
     public void diagonalAxisScanXZY(int dimK, int dimL, int dimM) {
         // x min ->x max;left upper corner z+y max->min//1
-        //logger.debug("	diagonalAxisScanXZY");
+        // logger.debug("	diagonalAxisScanXZY");
         if (dimM < dimL) {
             dimL = dimM;
         }
-        //int gridPoints = 0;//Debugging
+        // int gridPoints = 0;//Debugging
         List<Point3d> line = new ArrayList<Point3d>();
         int pspEvent = 0;
         int m = 0;
-        for (int j = dimM; j >= 1; j--) {// z
+        for (int j = dimM; j >= 1; j--) { // z
             line.clear();
             pspEvent = 0;
-            for (int k = 0; k <= dimK; k++) {// min -> max; x
-                m = dimM;// m==y
+            for (int k = 0; k <= dimK; k++) { // min -> max; x
+                m = dimM; // m==y
                 line.clear();
                 pspEvent = 0;
-                for (int l = dimL; l >= 0; l--) {// z
-                    //gridPoints++;
+                for (int l = dimL; l >= 0; l--) { // z
+                    // gridPoints++;
                     if (grid[k][m][l] < 0) {
                         if (pspEvent < 2) {
                             line.clear();
@@ -530,11 +517,11 @@ public class ProteinPocketFinder {
                         }
                     }
                     m--;
-                }// for l
+                } // for l
             }
             dimL = j;
         }
-        //logger.debug(" #gridPoints>" + gridPoints);
+        // logger.debug(" #gridPoints>" + gridPoints);
     }
 
     /**
@@ -547,22 +534,22 @@ public class ProteinPocketFinder {
     public void diagonalAxisScanYZX(int dimK, int dimL, int dimM) {
         // y min -> y max; right lower corner zmax->zmin, xmax ->min//4
         // logger.debug.print(" diagonalAxisScanYZX");
-        //int gridPoints = 0;//Debugging
+        // int gridPoints = 0;//Debugging
         if (dimM < dimL) {
             dimL = dimM;
         }
         List<Point3d> line = new ArrayList<Point3d>();
         int pspEvent = 0;
         int m = 0;
-        for (int j = dimM; j >= 1; j--) {// z
+        for (int j = dimM; j >= 1; j--) { // z
             line.clear();
             pspEvent = 0;
-            for (int k = 0; k <= dimK; k++) {// min -> max; y
-                m = dimM;// m==x
+            for (int k = 0; k <= dimK; k++) { // min -> max; y
+                m = dimM; // m==x
                 line.clear();
                 pspEvent = 0;
-                for (int l = dimL; l >= 0; l--) {// z
-                    //gridPoints++;
+                for (int l = dimL; l >= 0; l--) { // z
+                    // gridPoints++;
                     if (grid[m][k][l] < 0) {
                         if (pspEvent < 2) {
                             line.clear();
@@ -579,7 +566,7 @@ public class ProteinPocketFinder {
                         }
                     }
                     m--;
-                }// for l
+                } // for l
             }
             dimL = j;
         }
@@ -596,7 +583,7 @@ public class ProteinPocketFinder {
     public void diagonalAxisScanYXZ(int dimK, int dimL, int dimM) {
         // y min -> y max; left lower corner z max->min, x min->max//2
         // logger.debug.print(" diagonalAxisScanYXZ");
-        //int gridPoints = 0;//Debugging
+        // int gridPoints = 0;//Debugging
         if (dimM < dimL) {
             dimL = dimM;
         } else {
@@ -605,15 +592,15 @@ public class ProteinPocketFinder {
         List<Point3d> line = new ArrayList<Point3d>();
         int pspEvent = 0;
         int l = 0;
-        for (int j = dimL; j >= 1; j--) {// z
+        for (int j = dimL; j >= 1; j--) { // z
             line.clear();
             pspEvent = 0;
-            for (int k = 0; k <= dimK; k++) {// min -> max; y
+            for (int k = 0; k <= dimK; k++) { // min -> max; y
                 line.clear();
                 pspEvent = 0;
-                l = 0;// x
-                for (int m = dimM; m >= 0; m--) {// z
-                    //gridPoints++;
+                l = 0; // x
+                for (int m = dimM; m >= 0; m--) { // z
+                    // gridPoints++;
                     if (grid[l][k][m] < 0) {
                         if (pspEvent < 2) {
                             line.clear();
@@ -630,8 +617,8 @@ public class ProteinPocketFinder {
                         }
                     }
                     l++;
-                }// for m;z
-            }// for k;y
+                } // for m;z
+            } // for k;y
             dimM = j;
         }
         // logger.debug(" #gridPoints>"+gridPoints);
@@ -647,7 +634,7 @@ public class ProteinPocketFinder {
     public void diagonalAxisScanXYZ(int dimK, int dimL, int dimM) {
         // x min -> xmax;left lower corner z max->min, y min->max//3
         // logger.debug.print(" diagonalAxisScanXYZ");
-        //int gridPoints = 0;//Debugging
+        // int gridPoints = 0;//Debugging
         if (dimM < dimL) {
             dimL = dimM;
         } else {
@@ -656,15 +643,15 @@ public class ProteinPocketFinder {
         List<Point3d> line = new ArrayList<Point3d>();
         int pspEvent = 0;
         int l = 0;
-        for (int j = dimL; j >= 1; j--) {// z
+        for (int j = dimL; j >= 1; j--) { // z
             line.clear();
             pspEvent = 0;
-            for (int k = 0; k <= dimK; k++) {// min -> max;x
+            for (int k = 0; k <= dimK; k++) { // min -> max;x
                 line.clear();
                 pspEvent = 0;
-                l = 0;// y
-                for (int m = dimM; m >= 0; m--) {// z
-                    //gridPoints++;
+                l = 0; // y
+                for (int m = dimM; m >= 0; m--) { // z
+                    // gridPoints++;
                     if (grid[k][l][m] < 0) {
                         if (pspEvent < 2) {
                             line.clear();
@@ -681,8 +668,8 @@ public class ProteinPocketFinder {
                         }
                     }
                     l++;
-                }// for m;z
-            }// for k;x
+                } // for m;z
+            } // for k;x
             dimM = j;
         }
         // logger.debug(" #gridPoints>"+gridPoints);
@@ -698,7 +685,7 @@ public class ProteinPocketFinder {
     public void axisScanX(int dimK, int dimL, int dimM) {
         // z,y,x
         //		logger.debug.print("	diagonalAxisScanX");
-        //int gridPoints = 0;//Debugging
+        // int gridPoints = 0;//Debugging
         List<Point3d> line = new ArrayList<Point3d>();
         int pspEvent = 0;
         for (int k = 0; k <= dimK; k++) {
@@ -708,7 +695,7 @@ public class ProteinPocketFinder {
                 line.clear();
                 pspEvent = 0;
                 for (int m = 0; m <= dimM; m++) {
-                    //gridPoints++;
+                    // gridPoints++;
                     if (grid[m][l][k] < 0) {
                         if (pspEvent < 2) {
                             pspEvent = 1;
@@ -809,9 +796,9 @@ public class ProteinPocketFinder {
     }
 
     /**
-     * Method which assigns van der Waals radii to the biopolymer
-     * default org/openscience/cdk/config/data/pdb_atomtypes.xml
-     * stored in the variable String vanDerWaalsFile.
+     * Method which assigns van der Waals radii to the biopolymer default
+     * org/openscience/cdk/config/data/pdb_atomtypes.xml stored in the variable String
+     * vanDerWaalsFile.
      */
     public void assignVdWRadiiToProtein() {
         AtomTypeFactory atf = null;
@@ -828,12 +815,9 @@ public class ProteinPocketFinder {
                 logger.error("Problem with atf.configure due to:" + ex2.toString());
             }
         }
-
     }
 
-    /**
-     * Method writes the grid to pmesh format.
-     */
+    /** Method writes the grid to pmesh format. */
     public void gridToPmesh(String outPutFileName) {
         try {
             gridGenerator.writeGridInPmeshFormat(outPutFileName);
@@ -842,9 +826,7 @@ public class ProteinPocketFinder {
         }
     }
 
-    /**
-     * Method writes the PSP points (&ge;minPSPocket) to pmesh format.
-     */
+    /** Method writes the PSP points (&ge;minPSPocket) to pmesh format. */
     public void pspGridToPmesh(String outPutFileName) {
         try {
             gridGenerator.writeGridInPmeshFormat(outPutFileName, minPSPocket);
@@ -853,9 +835,7 @@ public class ProteinPocketFinder {
         }
     }
 
-    /**
-     * Method writes the protein grid points to pmesh format.
-     */
+    /** Method writes the protein grid points to pmesh format. */
     public void proteinGridToPmesh(String outPutFileName) {
         try {
             gridGenerator.writeGridInPmeshFormat(outPutFileName, -1);
@@ -864,18 +844,17 @@ public class ProteinPocketFinder {
         }
     }
 
-    /**
-     * Method writes the pockets to pmesh format.
-     */
+    /** Method writes the pockets to pmesh format. */
     public void writePocketsToPMesh(String outPutFileName) {
 
         try {
-            for (int i = 0; i < pockets.size(); i++) {// go through every
+            for (int i = 0; i < pockets.size(); i++) { // go through every
                 // pocket
-                BufferedWriter writer = new BufferedWriter(new FileWriter(outPutFileName + "-" + i + ".pmesh"));
+                BufferedWriter writer =
+                        new BufferedWriter(new FileWriter(outPutFileName + "-" + i + ".pmesh"));
                 List<Point3d> pocket = pockets.get(i);
                 writer.write(pocket.size() + "\n");
-                for (int j = 0; j < pocket.size(); j++) {// go through every
+                for (int j = 0; j < pocket.size(); j++) { // go through every
                     // grid point of the
                     // actual pocket
                     Point3d actualGridPoint = (Point3d) pocket.get(j);
@@ -889,186 +868,133 @@ public class ProteinPocketFinder {
         }
     }
 
-    /**
-     * @return 	Returns the grid.
-     */
+    /** @return Returns the grid. */
     public double[][][] getGrid() {
         return grid;
     }
 
-    /**
-     * @param  grid The grid to set.
-     */
+    /** @param grid The grid to set. */
     public void setGrid(double[][][] grid) {
         this.grid = grid;
     }
 
-    /**
-     * @return Returns the latticeConstant.
-     */
+    /** @return Returns the latticeConstant. */
     public double getLatticeConstant() {
         return latticeConstant;
     }
 
-    /**
-     * @param latticeConstant The latticeConstant to set.
-     */
+    /** @param latticeConstant The latticeConstant to set. */
     public void setLatticeConstant(double latticeConstant) {
         this.latticeConstant = latticeConstant;
     }
 
-    /**
-     * @return Returns the linkageRadius.
-     */
+    /** @return Returns the linkageRadius. */
     public double getLinkageRadius() {
         return linkageRadius;
     }
 
-    /**
-     * @param linkageRadius The linkageRadius to set.
-     */
+    /** @param linkageRadius The linkageRadius to set. */
     public void setLinkageRadius(double linkageRadius) {
         this.linkageRadius = linkageRadius;
     }
 
-    /**
-     * @return Returns the minPSCluster.
-     */
+    /** @return Returns the minPSCluster. */
     public int getMinPSCluster() {
         return minPSCluster;
     }
 
-    /**
-     * @param  minPSCluster The minPSCluster to set.
-     */
+    /** @param minPSCluster The minPSCluster to set. */
     public void setMinPSCluster(int minPSCluster) {
         this.minPSCluster = minPSCluster;
     }
 
-    /**
-     * @return Returns the minPSPocket.
-     */
+    /** @return Returns the minPSPocket. */
     public int getMinPSPocket() {
         return minPSPocket;
     }
 
-    /**
-     * @param minPSPocket The minPSPocket to set.
-     */
+    /** @param minPSPocket The minPSPocket to set. */
     public void setMinPSPocket(int minPSPocket) {
         this.minPSPocket = minPSPocket;
     }
 
-    /**
-     * @return Returns the pocketSize.
-     */
+    /** @return Returns the pocketSize. */
     public int getPocketSize() {
         return pocketSize;
     }
 
-    /**
-     * @param pocketSize The pocketSize to set.
-     */
+    /** @param pocketSize The pocketSize to set. */
     public void setPocketSize(int pocketSize) {
         this.pocketSize = pocketSize;
     }
 
-    /**
-     * @return Returns the protein.
-     */
+    /** @return Returns the protein. */
     public IBioPolymer getProtein() {
         return protein;
     }
 
-    /**
-     * @param protein The protein to set.
-     */
+    /** @param protein The protein to set. */
     public void setProtein(IBioPolymer protein) {
         this.protein = protein;
     }
 
-    /**
-     * @return Returns the proteinInterior.
-     */
+    /** @return Returns the proteinInterior. */
     public int getProteinInterior() {
         return proteinInterior;
     }
 
-    /**
-     * @param proteinInterior The proteinInterior to set.
-     */
+    /** @param proteinInterior The proteinInterior to set. */
     public void setProteinInterior(int proteinInterior) {
         this.proteinInterior = proteinInterior;
     }
 
-    /**
-     * @return Returns the rAtom.
-     */
+    /** @return Returns the rAtom. */
     public double getRAtom() {
         return rAtom;
     }
 
-    /**
-     * @param atom The rAtom to set.
-     */
+    /** @param atom The rAtom to set. */
     public void setRAtom(double atom) {
         rAtom = atom;
     }
 
-    /**
-     * @return Returns the rSolvent.
-     */
+    /** @return Returns the rSolvent. */
     public double getRSolvent() {
         return rSolvent;
     }
 
-    /**
-     * @param solvent The rSolvent to set.
-     */
+    /** @param solvent The rSolvent to set. */
     public void setRSolvent(double solvent) {
         rSolvent = solvent;
     }
 
-    /**
-     * @return Returns the solvantValue.
-     */
+    /** @return Returns the solvantValue. */
     public int getSolvantValue() {
         return solvantValue;
     }
 
-    /**
-     * @param solvantValue The solvantValue to set.
-     */
+    /** @param solvantValue The solvantValue to set. */
     public void setSolvantValue(int solvantValue) {
         this.solvantValue = solvantValue;
     }
 
-    /**
-     * @return Returns the vanDerWaalsFile.
-     */
+    /** @return Returns the vanDerWaalsFile. */
     public String getVanDerWaalsFile() {
         return vanDerWaalsFile;
     }
 
-    /**
-     * @param vanDerWaalsFile The vanDerWaalsFile to set.
-     */
+    /** @param vanDerWaalsFile The vanDerWaalsFile to set. */
     public void setVanDerWaalsFile(String vanDerWaalsFile) {
         this.vanDerWaalsFile = vanDerWaalsFile;
     }
 
-    /**
-     * @return 	Returns the pockets.
-     */
+    /** @return Returns the pockets. */
     public List<List<Point3d>> getPockets() {
         return pockets;
     }
 
-    /**
-     * @param atomCheckRadius The atomCheckRadius to set.
-     */
+    /** @param atomCheckRadius The atomCheckRadius to set. */
     public void setAtomCheckRadius(double atomCheckRadius) {
         this.atomCheckRadius = atomCheckRadius;
     }
-
 }

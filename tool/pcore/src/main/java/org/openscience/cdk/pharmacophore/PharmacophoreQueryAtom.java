@@ -21,17 +21,14 @@ package org.openscience.cdk.pharmacophore;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
-import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
-import org.openscience.cdk.smarts.Smarts;
 import org.openscience.cdk.smarts.SmartsPattern;
 
 /**
  * Represents a query pharmacophore group.
- * 
- * This class is meant to be used to construct pharmacophore queries in conjunction
- * with {@link org.openscience.cdk.pharmacophore.PharmacophoreQueryBond} and an
- * {@link org.openscience.cdk.isomorphism.matchers.QueryAtomContainer}.
+ *
+ * <p>This class is meant to be used to construct pharmacophore queries in conjunction with {@link
+ * org.openscience.cdk.pharmacophore.PharmacophoreQueryBond} and an {@link
+ * org.openscience.cdk.isomorphism.matchers.QueryAtomContainer}.
  *
  * @author Rajarshi Guha
  * @cdk.module pcore
@@ -63,22 +60,17 @@ public class PharmacophoreQueryAtom extends Atom implements IQueryAtom {
         String[] subSmarts = smarts.split("\\|");
         this.compiledSmarts = new SmartsPattern[subSmarts.length];
         for (int i = 0; i < compiledSmarts.length; i++) {
-            compiledSmarts[i] = SmartsPattern.create(subSmarts[i])
-                                             .setPrepare(false);
+            compiledSmarts[i] = SmartsPattern.create(subSmarts[i]).setPrepare(false);
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public String getSymbol() {
         return this.symbol;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setSymbol(String symbol) {
         this.symbol = symbol;
@@ -95,6 +87,7 @@ public class PharmacophoreQueryAtom extends Atom implements IQueryAtom {
 
     /**
      * Accessed the compiled SMARTS for this pcore query atom.
+     *
      * @return compiled SMARTS patterns
      */
     SmartsPattern[] getCompiledSmarts() {
@@ -103,11 +96,10 @@ public class PharmacophoreQueryAtom extends Atom implements IQueryAtom {
 
     /**
      * Checks whether this query atom matches a target atom.
-     * 
-     * Currently a query pharmacophore atom will match a target pharmacophore group if the
-     * symbols of the two groups match. This is based on the assumption that
-     * pharmacophore groups with the same symbol will have the same SMARTS
-     * pattern.
+     *
+     * <p>Currently a query pharmacophore atom will match a target pharmacophore group if the
+     * symbols of the two groups match. This is based on the assumption that pharmacophore groups
+     * with the same symbol will have the same SMARTS pattern.
      *
      * @param atom A target pharmacophore group
      * @return true if the current query group has the same symbol as the target group

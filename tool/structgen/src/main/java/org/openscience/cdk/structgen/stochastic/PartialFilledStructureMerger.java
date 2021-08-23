@@ -35,35 +35,33 @@ import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
- * Randomly generates a single, connected, correctly bonded structure from
- * a number of fragments.
- * <p>Assign hydrogen counts to each heavy atom. The hydrogens should not be
- * in the atom pool but should be assigned implicitly to the heavy atoms in
- * order to reduce computational cost.
+ * Randomly generates a single, connected, correctly bonded structure from a number of fragments.
  *
- * @author     steinbeck
- * @cdk.created    2001-09-04
- * @cdk.module     structgen
+ * <p>Assign hydrogen counts to each heavy atom. The hydrogens should not be in the atom pool but
+ * should be assigned implicitly to the heavy atoms in order to reduce computational cost.
+ *
+ * @author steinbeck
+ * @cdk.created 2001-09-04
+ * @cdk.module structgen
  * @cdk.githash
  */
 public class PartialFilledStructureMerger {
 
-    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(PartialFilledStructureMerger.class);
+    private ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(PartialFilledStructureMerger.class);
 
-    SaturationChecker    satCheck;
+    SaturationChecker satCheck;
 
-    /**
-     * Constructor for the PartialFilledStructureMerger object.
-     */
+    /** Constructor for the PartialFilledStructureMerger object. */
     public PartialFilledStructureMerger() {
         satCheck = new SaturationChecker();
     }
 
     /**
-     * Randomly generates a single, connected, correctly bonded structure from
-     * a number of fragments.  IMPORTANT: The AtomContainers in the set must be
-     * connected. If an AtomContainer is disconnected, no valid result will
-     * be formed
+     * Randomly generates a single, connected, correctly bonded structure from a number of
+     * fragments. IMPORTANT: The AtomContainers in the set must be connected. If an AtomContainer is
+     * disconnected, no valid result will be formed
+     *
      * @param atomContainers The fragments to generate for.
      * @return The newly formed structure.
      * @throws CDKException No valid result could be formed.
@@ -81,20 +79,36 @@ public class PartialFilledStructureMerger {
                         if (!satCheck.isSaturated(atom, ac)) {
                             IAtom partner = getAnotherUnsaturatedNode(atom, ac, atomContainers);
                             if (partner != null) {
-                                IAtomContainer toadd = AtomContainerSetManipulator.getRelevantAtomContainer(
-                                        atomContainers, partner);
+                                IAtomContainer toadd =
+                                        AtomContainerSetManipulator.getRelevantAtomContainer(
+                                                atomContainers, partner);
                                 double cmax1 = satCheck.getCurrentMaxBondOrder(atom, ac);
                                 double cmax2 = satCheck.getCurrentMaxBondOrder(partner, toadd);
                                 double max = Math.min(cmax1, cmax2);
-                                double order = Math.min(Math.max(1.0, max), 3.0);//(double)Math.round(Math.random() * max)
-                                logger.debug("cmax1, cmax2, max, order: " + cmax1 + ", " + cmax2 + ", " + max + ", "
-                                        + order);
+                                double order =
+                                        Math.min(
+                                                Math.max(1.0, max),
+                                                3.0); // (double)Math.round(Math.random() * max)
+                                logger.debug(
+                                        "cmax1, cmax2, max, order: "
+                                                + cmax1
+                                                + ", "
+                                                + cmax2
+                                                + ", "
+                                                + max
+                                                + ", "
+                                                + order);
                                 if (toadd != ac) {
                                     atomContainers.removeAtomContainer(toadd);
                                     ac.add(toadd);
                                 }
-                                ac.addBond(ac.getBuilder().newInstance(IBond.class, atom, partner,
-                                        BondManipulator.createBondOrder(order)));
+                                ac.addBond(
+                                        ac.getBuilder()
+                                                .newInstance(
+                                                        IBond.class,
+                                                        atom,
+                                                        partner,
+                                                        BondManipulator.createBondOrder(order)));
                                 bondFormed = true;
                             }
                         }
@@ -106,28 +120,32 @@ public class PartialFilledStructureMerger {
                 structureFound = true;
             }
         } while (!structureFound && iteration < 5);
-        if (atomContainers.getAtomContainerCount() == 1 && satCheck.allSaturated(atomContainers.getAtomContainer(0))) {
+        if (atomContainers.getAtomContainerCount() == 1
+                && satCheck.allSaturated(atomContainers.getAtomContainer(0))) {
             structureFound = true;
         }
         if (!structureFound)
-            throw new CDKException("Could not combine the fragments to combine a valid, satured structure");
+            throw new CDKException(
+                    "Could not combine the fragments to combine a valid, satured structure");
         return atomContainers.getAtomContainer(0);
     }
 
     /**
-     *  Gets a randomly selected unsaturated atom from the set. If there are any, it will be from another
-     *  container than exclusionAtom.
+     * Gets a randomly selected unsaturated atom from the set. If there are any, it will be from
+     * another container than exclusionAtom.
      *
-     * @return  The unsaturated atom.
+     * @return The unsaturated atom.
      */
-    private IAtom getAnotherUnsaturatedNode(IAtom exclusionAtom,
-                                            IAtomContainer exclusionAtomContainer,
-                                            IAtomContainerSet atomContainers) throws CDKException {
+    private IAtom getAnotherUnsaturatedNode(
+            IAtom exclusionAtom,
+            IAtomContainer exclusionAtomContainer,
+            IAtomContainerSet atomContainers)
+            throws CDKException {
         IAtom atom;
 
         for (IAtomContainer ac : atomContainers.atomContainers()) {
             if (ac != exclusionAtomContainer) {
-                int next = 0;//(int) (Math.random() * ac.getAtomCount());
+                int next = 0; // (int) (Math.random() * ac.getAtomCount());
                 for (int f = next; f < ac.getAtomCount(); f++) {
                     atom = ac.getAtom(f);
                     if (!satCheck.isSaturated(atom, ac) && exclusionAtom != atom) {
@@ -137,16 +155,19 @@ public class PartialFilledStructureMerger {
             }
         }
 
-        int next = exclusionAtomContainer.getAtomCount();//(int) (Math.random() * ac.getAtomCount());
+        int next =
+                exclusionAtomContainer.getAtomCount(); // (int) (Math.random() * ac.getAtomCount());
         for (int f = 0; f < next; f++) {
             atom = exclusionAtomContainer.getAtom(f);
-            if (!satCheck.isSaturated(atom, exclusionAtomContainer) && exclusionAtom != atom
-                && !exclusionAtomContainer.getConnectedAtomsList(exclusionAtom).contains(atom)) {
+            if (!satCheck.isSaturated(atom, exclusionAtomContainer)
+                    && exclusionAtom != atom
+                    && !exclusionAtomContainer
+                            .getConnectedAtomsList(exclusionAtom)
+                            .contains(atom)) {
                 return atom;
             }
         }
 
         return null;
     }
-
 }

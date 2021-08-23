@@ -25,7 +25,6 @@ package org.openscience.cdk.renderer.elements.path;
 
 import javax.vecmath.Point2d;
 
-
 /**
  * Make a quadratic curve in the path.
  *
@@ -51,8 +50,7 @@ public class QuadTo extends PathElement {
     /**
      * Make a quad curve path element.
      *
-     * @param coords [0,1] : control point 1, [2,3] : control point 2, [4,5] end
-     *               point
+     * @param coords [0,1] : control point 1, [2,3] : control point 2, [4,5] end point
      */
     public QuadTo(double[] coords) {
         super(Type.QuadTo);
@@ -72,16 +70,18 @@ public class QuadTo extends PathElement {
      * @param epy end point of the cubic y coord
      */
     public QuadTo(double cpx, double cpy, double epx, double epy) {
-        this(new double[]{cpx, cpy, epx, epy});
+        this(new double[] {cpx, cpy, epx, epy});
     }
 
-    /** {@inheritDoc} **/
+    /** {@inheritDoc} * */
     @Override
     public float[] points() {
-        return new float[]{(float) coords[0], (float) coords[1], (float) coords[2], (float) coords[3]};
+        return new float[] {
+            (float) coords[0], (float) coords[1], (float) coords[2], (float) coords[3]
+        };
     }
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     public void points(double[] coords) {
         coords[0] = this.coords[0];

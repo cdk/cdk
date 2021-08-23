@@ -29,7 +29,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.graph.AllPairsShortestPaths;
 import org.openscience.cdk.interfaces.IAtom;
@@ -37,14 +36,12 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
- *
  * @author Syed Asad Rahman (2012)
  * @author John May (2013)
  * @cdk.keyword fingerprint
  * @cdk.keyword similarity
  * @cdk.module fingerprint
  * @cdk.githash
- *
  */
 public final class ShortestPathWalker {
 
@@ -52,13 +49,14 @@ public final class ShortestPathWalker {
     private final IAtomContainer container;
 
     /* set of encoded atom paths */
-    private final Set<String>    paths;
+    private final Set<String> paths;
 
     /* maximum number of shortest paths, when there is more then one path */
-    private static final int     MAX_SHORTEST_PATHS = 5;
+    private static final int MAX_SHORTEST_PATHS = 5;
 
     /**
      * Create a new shortest path walker for a given container.
+     *
      * @param container the molecule to encode the shortest paths
      */
     public ShortestPathWalker(IAtomContainer container) {
@@ -68,15 +66,14 @@ public final class ShortestPathWalker {
 
     /**
      * Access a set of all shortest paths.
+     *
      * @return the paths
      */
     public Set<String> paths() {
         return Collections.unmodifiableSet(paths);
     }
 
-    /**
-     * Traverse all-pairs of shortest-paths within a chemical graph.
-     */
+    /** Traverse all-pairs of shortest-paths within a chemical graph. */
     private Set<String> traverse() {
 
         Set<String> paths = new TreeSet<>();
@@ -100,14 +97,11 @@ public final class ShortestPathWalker {
                         paths.add(encode(path));
                         paths.add(encode(reverse(path)));
                     }
-
                 }
-
             }
         }
 
         return paths;
-
     }
 
     /**
@@ -146,7 +140,9 @@ public final class ShortestPathWalker {
             sb.append(toAtomPattern(atom));
             // if we are not at the last index, add the connecting bond
             if (i < n) {
-                IBond bond = container.getBond(container.getAtom(path[i]), container.getAtom(path[i + 1]));
+                IBond bond =
+                        container.getBond(
+                                container.getAtom(path[i]), container.getAtom(path[i + 1]));
                 sb.append(getBondSymbol(bond));
             }
         }
@@ -154,9 +150,9 @@ public final class ShortestPathWalker {
     }
 
     /**
-     * Convert an atom to a string representation. Currently this method just
-     * returns the symbol but in future may include other properties, such as, stereo
-     * descriptor and charge.
+     * Convert an atom to a string representation. Currently this method just returns the symbol but
+     * in future may include other properties, such as, stereo descriptor and charge.
+     *
      * @param atom The atom to encode
      * @return encoded atom
      */
@@ -168,8 +164,8 @@ public final class ShortestPathWalker {
      * Gets the bondSymbol attribute of the HashedFingerprinter class
      *
      * @param bond Description of the Parameter
-     * @return The bondSymbol value
-     *]\     */
+     * @return The bondSymbol value ]\
+     */
     private char getBondSymbol(IBond bond) {
         if (isSP2Bond(bond)) {
             return '@';
@@ -189,16 +185,12 @@ public final class ShortestPathWalker {
         }
     }
 
-    /**
-     * Returns true if the bond binds two atoms, and both atoms are SP2 in a ring system.
-     */
+    /** Returns true if the bond binds two atoms, and both atoms are SP2 in a ring system. */
     private boolean isSP2Bond(IBond bond) {
         return bond.getFlag(CDKConstants.ISAROMATIC);
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         int n = this.paths.size();

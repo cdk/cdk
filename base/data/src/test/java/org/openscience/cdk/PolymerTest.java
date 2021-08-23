@@ -22,6 +22,9 @@
  *  */
 package org.openscience.cdk;
 
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.interfaces.AbstractPolymerTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -29,29 +32,26 @@ import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IPolymer;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 /**
  * TestCase for the Polymer class.
  *
  * @author Edgar Luttmann &lt;edgar@uni-paderborn.de&gt;
  * @author Martin Eklund &lt;martin.eklund@farmbio.uu.se&gt;
  * @cdk.created 2001-08-09
- * @cdk.module  test-data
+ * @cdk.module test-data
  */
 public class PolymerTest extends AbstractPolymerTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new Polymer();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new Polymer();
+                    }
+                });
     }
 
     @Test
@@ -62,8 +62,8 @@ public class PolymerTest extends AbstractPolymerTest {
     }
 
     /**
-     * A clone must deep clone everything, so that after the clone, operations
-     * on the original do not modify the clone.
+     * A clone must deep clone everything, so that after the clone, operations on the original do
+     * not modify the clone.
      *
      * @cdk.bug 2454890
      */
@@ -93,9 +93,7 @@ public class PolymerTest extends AbstractPolymerTest {
         Assert.assertEquals(2, clone.getAtomCount());
     }
 
-    /**
-     * @cdk.bug  2454890
-     */
+    /** @cdk.bug 2454890 */
     @Test
     public void testPolymerClone2() throws CloneNotSupportedException {
         IPolymer oPolymer = new Polymer();

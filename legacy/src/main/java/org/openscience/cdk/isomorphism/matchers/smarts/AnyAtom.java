@@ -24,7 +24,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * This matcher any Atom including explicit hydrogens.
  *
- * @cdk.module  smarts
+ * @cdk.module smarts
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
@@ -33,9 +33,7 @@ public class AnyAtom extends SMARTSAtom {
 
     private static final long serialVersionUID = -2061241755106011847L;
 
-    /**
-     * Creates a new instance
-     */
+    /** Creates a new instance */
     public AnyAtom(IChemObjectBuilder builder) {
         super(builder);
     }

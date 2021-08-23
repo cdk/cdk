@@ -25,22 +25,21 @@ package org.openscience.cdk.io.cml;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-
 import nu.xom.Serializer;
 
 /**
- * Custom {@link Serializer} with the sole purpose and functionality to not
- * output the XML declaration.
+ * Custom {@link Serializer} with the sole purpose and functionality to not output the XML
+ * declaration.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module libiocml
  * @cdk.githash
  */
 public class CustomSerializer extends Serializer {
 
     /**
-     * Instantiates a new {@link CustomSerializer} using the matching
-     * {@link Serializer#Serializer(OutputStream)}.
+     * Instantiates a new {@link CustomSerializer} using the matching {@link
+     * Serializer#Serializer(OutputStream)}.
      *
      * @param out the output stream to write the document on
      */
@@ -49,10 +48,10 @@ public class CustomSerializer extends Serializer {
     }
 
     /**
-     * Instantiates a new {@link CustomSerializer} using the matching
-     * {@link Serializer#Serializer(OutputStream, String)}.
+     * Instantiates a new {@link CustomSerializer} using the matching {@link
+     * Serializer#Serializer(OutputStream, String)}.
      *
-     * @param out      the output stream to write the document on
+     * @param out the output stream to write the document on
      * @param encoding the character encoding for the serialization
      */
     public CustomSerializer(OutputStream out, String encoding) throws UnsupportedEncodingException {
@@ -60,12 +59,11 @@ public class CustomSerializer extends Serializer {
     }
 
     /**
-     * Overwrite the {@link Serializer#writeXMLDeclaration()} method, and have
-     * it not output the XML declaration.
+     * Overwrite the {@link Serializer#writeXMLDeclaration()} method, and have it not output the XML
+     * declaration.
      */
     @Override
     protected void writeXMLDeclaration() throws IOException {
         // do nothing
     }
-
 }

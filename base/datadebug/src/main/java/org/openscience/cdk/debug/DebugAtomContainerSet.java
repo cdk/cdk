@@ -19,20 +19,19 @@
 package org.openscience.cdk.debug;
 
 import java.util.Map;
-
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module datadebug
  * @cdk.githash
  */
@@ -40,7 +39,7 @@ public class DebugAtomContainerSet extends AtomContainerSet implements IAtomCont
 
     private static final long serialVersionUID = -8358480615782437454L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugAtomContainerSet.class);
+    ILoggingTool logger = LoggingToolFactory.createLoggingTool(DebugAtomContainerSet.class);
 
     /** {@inheritDoc} */
     @Override
@@ -218,7 +217,8 @@ public class DebugAtomContainerSet extends AtomContainerSet implements IAtomCont
     /** {@inheritDoc} */
     @Override
     public void setMultiplier(int position, Double multiplier) {
-        logger.debug("Setting multiplier for atomcontainer at pos: ", "" + position, "" + multiplier);
+        logger.debug(
+                "Setting multiplier for atomcontainer at pos: ", "" + position, "" + multiplier);
         super.setMultiplier(position, multiplier);
     }
 
@@ -285,9 +285,7 @@ public class DebugAtomContainerSet extends AtomContainerSet implements IAtomCont
         return super.getAtomContainerCount();
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean isEmpty() {
         logger.debug("Checking if the atom container set empty: ", atomContainerCount == 0);

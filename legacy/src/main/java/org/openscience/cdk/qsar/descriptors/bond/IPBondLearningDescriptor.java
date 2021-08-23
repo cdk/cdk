@@ -32,10 +32,8 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- *
- *  This class returns the ionization potential of a Bond. It is
- *  based on a function which is extracted from Weka(J48) from
- *  experimental values (NIST data).
+ * This class returns the ionization potential of a Bond. It is based on a function which is
+ * extracted from Weka(J48) from experimental values (NIST data).
  *
  * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
@@ -50,9 +48,9 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *   </tr>
  * </table>
  *
- * @author      Miguel Rojas
+ * @author Miguel Rojas
  * @cdk.created 2006-05-26
- * @cdk.module  qsarionpot
+ * @cdk.module qsarionpot
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:ionizationPotential
  */
@@ -61,33 +59,30 @@ public class IPBondLearningDescriptor extends AbstractBondDescriptor {
 
     private static final String[] DESCRIPTOR_NAMES = {"ipBondLearning"};
 
-    /**
-     *  Constructor for the IPBondLearningDescriptor object
-     */
+    /** Constructor for the IPBondLearningDescriptor object */
     public IPBondLearningDescriptor() {}
 
     /**
-     *  Gets the specification attribute of the IPBondLearningDescriptor object
+     * Gets the specification attribute of the IPBondLearningDescriptor object
      *
-     *@return    The specification value
+     * @return The specification value
      */
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ionizationPotential", this
-                        .getClass().getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ionizationPotential",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
-    /**
-     * This descriptor does have any parameter.
-     */
+    /** This descriptor does have any parameter. */
     @Override
     public void setParameters(Object[] params) throws CDKException {}
 
     /**
-     *  Gets the parameters attribute of the IPBondLearningDescriptor object.
+     * Gets the parameters attribute of the IPBondLearningDescriptor object.
      *
-     *@return    The parameters value
+     * @return The parameters value
      * @see #setParameters
      */
     @Override
@@ -101,20 +96,26 @@ public class IPBondLearningDescriptor extends AbstractBondDescriptor {
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                Double.NaN), DESCRIPTOR_NAMES, e);
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new DoubleResult(Double.NaN),
+                DESCRIPTOR_NAMES,
+                e);
     }
 
     /**
-     *  This method calculates the ionization potential of a bond.
+     * This method calculates the ionization potential of a bond.
      *
-     *@param  atomContainer         Parameter is the IAtomContainer.
-     *@return                   The ionization potential
+     * @param atomContainer Parameter is the IAtomContainer.
+     * @return The ionization potential
      */
     @Override
     public DescriptorValue calculate(IBond bond, IAtomContainer atomContainer) {
         double value = 0;
-        // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
+        // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end
+        // of this method
         String originalAtomtypeName1 = bond.getBegin().getAtomTypeName();
         Integer originalNeighborCount1 = bond.getBegin().getFormalNeighbourCount();
         IAtomType.Hybridization originalHybridization1 = bond.getBegin().getHybridization();
@@ -136,7 +137,6 @@ public class IPBondLearningDescriptor extends AbstractBondDescriptor {
             } catch (CDKException e) {
                 return getDummyDescriptorValue(e);
             }
-
         }
         if (!bond.getOrder().equals(IBond.Order.SINGLE)) {
             try {
@@ -158,15 +158,19 @@ public class IPBondLearningDescriptor extends AbstractBondDescriptor {
         bond.getEnd().setMaxBondOrder(originalMaxBondOrder2);
         bond.getEnd().setBondOrderSum(originalBondOrderSum2);
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(value),
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new DoubleResult(value),
                 DESCRIPTOR_NAMES);
     }
 
     /**
-    * Gets the parameterNames attribute of the IPBondLearningDescriptor object.
-    *
-    * @return    The parameterNames value
-    */
+     * Gets the parameterNames attribute of the IPBondLearningDescriptor object.
+     *
+     * @return The parameterNames value
+     */
     @Override
     public String[] getParameterNames() {
         return new String[0];
@@ -175,8 +179,8 @@ public class IPBondLearningDescriptor extends AbstractBondDescriptor {
     /**
      * Gets the parameterType attribute of the IPBondLearningDescriptor object.
      *
-     * @param  name  Description of the Parameter
-     * @return       An Object of class equal to that of the parameter being requested
+     * @param name Description of the Parameter
+     * @return An Object of class equal to that of the parameter being requested
      */
     @Override
     public Object getParameterType(String name) {

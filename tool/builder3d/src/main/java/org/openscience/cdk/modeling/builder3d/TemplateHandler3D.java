@@ -35,9 +35,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.StringTokenizer;
 import java.util.zip.GZIPInputStream;
-
 import javax.vecmath.Point3d;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -58,8 +56,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
- * Helper class for ModelBuilder3D. Handles templates. This is
- * our layout solution for 3D ring systems
+ * Helper class for ModelBuilder3D. Handles templates. This is our layout solution for 3D ring
+ * systems
  *
  * @author cho
  * @author steinbeck
@@ -70,21 +68,22 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  */
 public class TemplateHandler3D {
 
-    private static final IChemObjectBuilder builder       = SilentChemObjectBuilder.getInstance();
-    public static final  String             TEMPLATE_PATH = "data/ringTemplateStructures.sdf.gz";
+    private static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    public static final String TEMPLATE_PATH = "data/ringTemplateStructures.sdf.gz";
 
-    private final List<IAtomContainer>      templates = new ArrayList<>();
-    private final List<IQueryAtomContainer> queries   = new ArrayList<>();
-    private final List<Pattern>             patterns  = new ArrayList<>();
+    private final List<IAtomContainer> templates = new ArrayList<>();
+    private final List<IQueryAtomContainer> queries = new ArrayList<>();
+    private final List<Pattern> patterns = new ArrayList<>();
 
     private static TemplateHandler3D self = null;
 
-    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(TemplateHandler3D.class);
+    private final ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(TemplateHandler3D.class);
 
-    private UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
+    private UniversalIsomorphismTester universalIsomorphismTester =
+            new UniversalIsomorphismTester();
 
-    private TemplateHandler3D() {
-    }
+    private TemplateHandler3D() {}
 
     public static TemplateHandler3D getInstance() throws CDKException {
         if (self == null) {
@@ -95,7 +94,8 @@ public class TemplateHandler3D {
 
     private void addTemplateMol(IAtomContainer mol) {
         templates.add(mol);
-        QueryAtomContainer query = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(mol, false);
+        QueryAtomContainer query =
+                QueryAtomContainerCreator.createAnyAtomAnyBondContainer(mol, false);
         queries.add(query);
         for (int i = 0; i < mol.getAtomCount(); i++) {
             query.getAtom(i).setPoint3d(new Point3d(mol.getAtom(i).getPoint3d()));
@@ -110,8 +110,8 @@ public class TemplateHandler3D {
      */
     private void loadTemplates() throws CDKException {
         try (InputStream gin = getClass().getResourceAsStream(TEMPLATE_PATH);
-             InputStream in = new GZIPInputStream(gin);
-             IteratingSDFReader sdfr = new IteratingSDFReader(in, builder)) {
+                InputStream in = new GZIPInputStream(gin);
+                IteratingSDFReader sdfr = new IteratingSDFReader(in, builder)) {
             while (sdfr.hasNext()) {
                 final IAtomContainer mol = sdfr.next();
                 addTemplateMol(mol);
@@ -121,9 +121,7 @@ public class TemplateHandler3D {
         }
     }
 
-
-    public static BitSet getBitSetFromFile(StringTokenizer st) throws
-                                                               Exception {
+    public static BitSet getBitSetFromFile(StringTokenizer st) throws Exception {
         BitSet bitSet = new BitSet(1024);
         while (st.hasMoreTokens()) {
             bitSet.set(Integer.parseInt(st.nextToken()));
@@ -138,9 +136,9 @@ public class TemplateHandler3D {
      * @return The largestRingSet
      */
     public IRingSet getLargestRingSet(List<IRingSet> ringSystems) {
-        IRingSet       largestRingSet = null;
-        int            atomNumber     = 0;
-        IAtomContainer container      = null;
+        IRingSet largestRingSet = null;
+        int atomNumber = 0;
+        IAtomContainer container = null;
         for (int i = 0; i < ringSystems.size(); i++) {
             container = getAllInOneContainer(ringSystems.get(i));
             if (atomNumber < container.getAtomCount()) {
@@ -152,63 +150,56 @@ public class TemplateHandler3D {
     }
 
     private IAtomContainer getAllInOneContainer(IRingSet ringSet) {
-        IAtomContainer           resultContainer = ringSet.getBuilder().newInstance(IAtomContainer.class);
-        Iterator<IAtomContainer> containers      = RingSetManipulator.getAllAtomContainers(ringSet).iterator();
+        IAtomContainer resultContainer = ringSet.getBuilder().newInstance(IAtomContainer.class);
+        Iterator<IAtomContainer> containers =
+                RingSetManipulator.getAllAtomContainers(ringSet).iterator();
         while (containers.hasNext()) {
             resultContainer.add((IAtomContainer) containers.next());
         }
         return resultContainer;
     }
 
-    /**
-     * @deprecated Use {@link #mapTemplates(org.openscience.cdk.interfaces.IAtomContainer, int)}
-     */
+    /** @deprecated Use {@link #mapTemplates(org.openscience.cdk.interfaces.IAtomContainer, int)} */
     @Deprecated
-    public void mapTemplates(IAtomContainer ringSystems,
-                             double numberOfRingAtoms) throws CDKException,
-                                                              CloneNotSupportedException {
+    public void mapTemplates(IAtomContainer ringSystems, double numberOfRingAtoms)
+            throws CDKException, CloneNotSupportedException {
         mapTemplates(ringSystems, (int) numberOfRingAtoms);
     }
 
-    private boolean isExactMatch(IAtomContainer query,
-                                 Map<IChemObject, IChemObject> mapping) {
+    private boolean isExactMatch(IAtomContainer query, Map<IChemObject, IChemObject> mapping) {
         for (IAtom src : query.atoms()) {
             IAtom dst = (IAtom) mapping.get(src);
-            if (!Objects.equals(src.getSymbol(), dst.getSymbol()))
-                return false;
+            if (!Objects.equals(src.getSymbol(), dst.getSymbol())) return false;
         }
         for (IBond src : query.bonds()) {
             IBond dst = (IBond) mapping.get(src);
-            if (!Objects.equals(src.getOrder(), dst.getOrder()))
-                return false;
+            if (!Objects.equals(src.getOrder(), dst.getOrder())) return false;
         }
         return true;
     }
 
     /**
-     * Checks if one of the loaded templates is a substructure in the given
-     * Molecule. If so, it assigns the coordinates from the template to the
-     * respective atoms in the Molecule.
+     * Checks if one of the loaded templates is a substructure in the given Molecule. If so, it
+     * assigns the coordinates from the template to the respective atoms in the Molecule.
      *
-     * @param mol               AtomContainer from the ring systems.
+     * @param mol AtomContainer from the ring systems.
      * @param numberOfRingAtoms Number of atoms in the specified ring
      * @throws CloneNotSupportedException The atomcontainer cannot be cloned.
      */
     public void mapTemplates(IAtomContainer mol, int numberOfRingAtoms)
-        throws CDKException, CloneNotSupportedException {
-        if (templates.isEmpty())
-            loadTemplates();
+            throws CDKException, CloneNotSupportedException {
+        if (templates.isEmpty()) loadTemplates();
 
-        IAtomContainer                best          = null;
-        Map<IChemObject, IChemObject> bestMap       = null;
-        IAtomContainer                secondBest    = null;
+        IAtomContainer best = null;
+        Map<IChemObject, IChemObject> bestMap = null;
+        IAtomContainer secondBest = null;
         Map<IChemObject, IChemObject> secondBestMap = null;
 
         for (int i = 0; i < templates.size(); i++) {
 
             IAtomContainer query = queries.get(i);
 
-            //if the atom count is different, it can't be right anyway
+            // if the atom count is different, it can't be right anyway
             if (query.getAtomCount() != mol.getAtomCount()) {
                 continue;
             }
@@ -237,8 +228,7 @@ public class TemplateHandler3D {
         }
     }
 
-    private void assignCoords(IAtomContainer template,
-                              Map<IChemObject, IChemObject> map) {
+    private void assignCoords(IAtomContainer template, Map<IChemObject, IChemObject> map) {
         for (IAtom src : template.atoms()) {
             IAtom dst = (IAtom) map.get(src);
             dst.setPoint3d(new Point3d(src.getPoint3d()));

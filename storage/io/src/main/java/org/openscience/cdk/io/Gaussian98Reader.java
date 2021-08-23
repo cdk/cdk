@@ -29,9 +29,7 @@ import java.io.StreamTokenizer;
 import java.io.StringReader;
 import java.util.List;
 import java.util.StringTokenizer;
-
 import javax.vecmath.Point3d;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -51,18 +49,16 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
- * A reader for Gaussian98 output. Gaussian 98 is a quantum chemistry program
- * by Gaussian, Inc. (<a href="http://www.gaussian.com/">http://www.gaussian.com/</a>).
- * 
- * <p>Molecular coordinates, energies, and normal coordinates of vibrations are
- * read. Each set of coordinates is added to the ChemFile in the order they are
- * found. Energies and vibrations are associated with the previously read set
- * of coordinates.
- * 
- * <p>This reader was developed from a small set of example output files, and
- * therefore, is not guaranteed to properly read all Gaussian98 output. If you
- * have problems, please contact the author of this code, not the developers of
- * Gaussian98.
+ * A reader for Gaussian98 output. Gaussian 98 is a quantum chemistry program by Gaussian, Inc. (<a
+ * href="http://www.gaussian.com/">http://www.gaussian.com/</a>).
+ *
+ * <p>Molecular coordinates, energies, and normal coordinates of vibrations are read. Each set of
+ * coordinates is added to the ChemFile in the order they are found. Energies and vibrations are
+ * associated with the previously read set of coordinates.
+ *
+ * <p>This reader was developed from a small set of example output files, and therefore, is not
+ * guaranteed to properly read all Gaussian98 output. If you have problems, please contact the
+ * author of this code, not the developers of Gaussian98.
  *
  * @author Bradley A. Smith &lt;yeldar@home.com&gt;
  * @author Egon Willighagen
@@ -73,19 +69,16 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  */
 public class Gaussian98Reader extends DefaultChemObjectReader {
 
-    private BufferedReader      input;
-    private static ILoggingTool logger    = LoggingToolFactory.createLoggingTool(Gaussian98Reader.class); ;
-    private int                 atomCount = 0;
-    private String              lastRoute = "";
+    private BufferedReader input;
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(Gaussian98Reader.class);;
+    private int atomCount = 0;
+    private String lastRoute = "";
 
-    /**
-     * Customizable setting
-     */
-    private BooleanIOSetting    readOptimizedStructureOnly;
+    /** Customizable setting */
+    private BooleanIOSetting readOptimizedStructureOnly;
 
-    /**
-     * Constructor for the Gaussian98Reader object
-     */
+    /** Constructor for the Gaussian98Reader object */
     public Gaussian98Reader() {
         this(new StringReader(""));
     }
@@ -154,11 +147,13 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
             try {
                 file = readChemFile(file);
             } catch (IOException exception) {
-                throw new CDKException("Error while reading file: " + exception.toString(), exception);
+                throw new CDKException(
+                        "Error while reading file: " + exception.toString(), exception);
             }
             return (T) file;
         } else {
-            throw new CDKException("Reading of a " + object.getClass().getName() + " is not supported.");
+            throw new CDKException(
+                    "Reading of a " + object.getClass().getName() + " is not supported.");
         }
     }
 
@@ -170,9 +165,8 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
     /**
      * Read the Gaussian98 output.
      *
-     * @return a ChemFile with the coordinates, energies, and
-     *         vibrations.
-     * @throws IOException  if an I/O error occurs
+     * @return a ChemFile with the coordinates, energies, and vibrations.
+     * @throws IOException if an I/O error occurs
      * @throws CDKException Description of the Exception
      */
     private IChemFile readChemFile(IChemFile chemFile) throws CDKException, IOException {
@@ -241,7 +235,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
                     description = lastRoute + ", model no. " + modelCounter;
                     model.setProperty(CDKConstants.DESCRIPTION, description);
                 } else {
-                    //logger.debug("Skipping line: " + line);
+                    // logger.debug("Skipping line: " + line);
                 }
                 line = input.readLine();
             }
@@ -259,7 +253,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
      * Reads a set of coordinates into ChemFrame.
      *
      * @param model Description of the Parameter
-     * @throws IOException  if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      * @throws CDKException Description of the Exception
      */
     private void readCoordinates(IChemModel model) throws CDKException, IOException {
@@ -334,7 +328,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
      *
      * @param model Description of the Parameter
      * @throws CDKException Description of the Exception
-     * @throws IOException  Description of the Exception
+     * @throws IOException Description of the Exception
      */
     private void readPartialCharges(IChemModel model) throws CDKException, IOException {
         logger.info("Reading partial atomic charges");
@@ -371,10 +365,10 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
     }
 
     /**
-     *  Reads a set of vibrations into ChemFrame.
+     * Reads a set of vibrations into ChemFrame.
      *
-     *@param  model            Description of the Parameter
-     *@exception IOException  if an I/O error occurs
+     * @param model Description of the Parameter
+     * @exception IOException if an I/O error occurs
      */
     //	private void readFrequencies(IChemModel model) throws IOException
     //	{
@@ -407,9 +401,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
      */
     //	}
 
-    /**
-     * Reads NMR nuclear shieldings.
-     */
+    /** Reads NMR nuclear shieldings. */
     private void readNMRData(IChemModel model, String labelLine) throws CDKException {
         List<IAtomContainer> containers = ChemModelManipulator.getAllAtomContainers(model);
         if (containers.size() == 0) {
@@ -452,7 +444,8 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
                 }
                 double shielding = Double.valueOf(st1.nextToken()).doubleValue();
                 logger.info("Type of shielding: " + label);
-                ac.getAtom(atomIndex).setProperty(CDKConstants.ISOTROPIC_SHIELDING, new Double(shielding));
+                ac.getAtom(atomIndex)
+                        .setProperty(CDKConstants.ISOTROPIC_SHIELDING, new Double(shielding));
                 ++atomIndex;
             } catch (IOException | NumberFormatException exc) {
                 logger.debug("failed to read line from gaussian98 file where I expected one.");
@@ -496,13 +489,16 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
     }
 
     private void initIOSettings() {
-        readOptimizedStructureOnly = addSetting(new BooleanIOSetting("ReadOptimizedStructureOnly",
-                IOSetting.Importance.LOW, "Should I only read the optimized structure from a geometry optimization?",
-                "false"));
+        readOptimizedStructureOnly =
+                addSetting(
+                        new BooleanIOSetting(
+                                "ReadOptimizedStructureOnly",
+                                IOSetting.Importance.LOW,
+                                "Should I only read the optimized structure from a geometry optimization?",
+                                "false"));
     }
 
     private void customizeJob() {
         fireIOSettingQuestion(readOptimizedStructureOnly);
     }
-
 }

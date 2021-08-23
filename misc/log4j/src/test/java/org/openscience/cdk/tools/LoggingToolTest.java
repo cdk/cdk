@@ -24,9 +24,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-/**
- * @cdk.module test-log4j
- */
+/** @cdk.module test-log4j */
 public class LoggingToolTest extends AbstractLoggingToolTest {
 
     @BeforeClass

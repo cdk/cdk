@@ -32,12 +32,10 @@ public interface IBondDescriptor extends IDescriptor {
     /**
      * Calculates the descriptor value for the given IBond.
      *
-     * @param bond          A {@link IBond} for which this descriptor
-     *                      should be calculated
+     * @param bond A {@link IBond} for which this descriptor should be calculated
      * @param atomContainer The molecule containing the bond
-     * @return An object of {@link DescriptorValue} that contain the
-     *         calculated value as well as specification details
+     * @return An object of {@link DescriptorValue} that contain the calculated value as well as
+     *     specification details
      */
     public DescriptorValue calculate(IBond bond, IAtomContainer atomContainer);
-
 }

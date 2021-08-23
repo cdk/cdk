@@ -18,20 +18,19 @@
  */
 package org.openscience.cdk.pharmacophore;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Represents a colleciton of pharmacophore groups and constraints.
- * 
- * This extends {@link org.openscience.cdk.isomorphism.matchers.QueryAtomContainer} since
- * we need to be able to support things such as exclusion volumes, which cannot (easily)
- * be represented as atom or bond analogs.
+ *
+ * <p>This extends {@link org.openscience.cdk.isomorphism.matchers.QueryAtomContainer} since we need
+ * to be able to support things such as exclusion volumes, which cannot (easily) be represented as
+ * atom or bond analogs.
  *
  * @author Rajarshi Guha
  * @cdk.module pcore
@@ -44,7 +43,8 @@ public class PharmacophoreQuery extends QueryAtomContainer {
     private List<Object> exclusionVolumes;
 
     public PharmacophoreQuery() {
-        // builder should be injected but this is difficult as this class is create in static methods
+        // builder should be injected but this is difficult as this class is create in static
+        // methods
         super(DefaultChemObjectBuilder.getInstance());
         exclusionVolumes = new ArrayList<Object>();
     }

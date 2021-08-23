@@ -23,6 +23,13 @@
 
 package org.openscience.cdk.renderer.generators.standard;
 
+import static org.openscience.cdk.interfaces.IBond.Order.UNSET;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.util.HashSet;
+import java.util.Set;
+import javax.vecmath.Point2d;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
@@ -38,18 +45,10 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.renderer.generators.standard.StandardGenerator.DelocalisedDonutsBondDisplay;
 import org.openscience.cdk.renderer.generators.standard.StandardGenerator.ForceDelocalisedBondDisplay;
 
-import javax.vecmath.Point2d;
-import java.awt.Color;
-import java.awt.Font;
-import java.util.HashSet;
-import java.util.Set;
-
-import static org.openscience.cdk.interfaces.IBond.Order.UNSET;
-
 /**
- * Generates aromatic donuts (or life buoys) as ovals in small (<8) aromatic
- * rings. If the ring is charged (and the charged is not shared with another
- * ring, e.g. rbonds > 2) it will be depicted in the middle of the ring.
+ * Generates aromatic donuts (or life buoys) as ovals in small (<8) aromatic rings. If the ring is
+ * charged (and the charged is not shared with another ring, e.g. rbonds > 2) it will be depicted in
+ * the middle of the ring.
  *
  * @see ForceDelocalisedBondDisplay
  * @see DelocalisedDonutsBondDisplay
@@ -63,23 +62,23 @@ final class StandardDonutGenerator {
     // smallest rings through each edge
     IRingSet smallest;
 
-    private final boolean    forceDelocalised;
-    private final boolean    delocalisedDonuts;
-    private final double     dbSpacing;
-    private final double     scale;
-    private final double     stroke;
-    private final Color      fgColor;
-    private final Font       font;
+    private final boolean forceDelocalised;
+    private final boolean delocalisedDonuts;
+    private final double dbSpacing;
+    private final double scale;
+    private final double stroke;
+    private final Color fgColor;
+    private final Font font;
     private final IAtomContainer mol;
 
     /**
      * Create a new generator for a molecule.
+     *
      * @param mol molecule
      * @param font the font
      * @param model the rendering parameters
      */
-    StandardDonutGenerator(IAtomContainer mol, Font font, RendererModel model,
-                           double stroke) {
+    StandardDonutGenerator(IAtomContainer mol, Font font, RendererModel model, double stroke) {
         this.mol = mol;
         this.font = font;
         this.forceDelocalised = model.get(ForceDelocalisedBondDisplay.class);
@@ -87,37 +86,32 @@ final class StandardDonutGenerator {
         this.dbSpacing = model.get(StandardGenerator.BondSeparation.class);
         this.scale = model.get(BasicSceneGenerator.Scale.class);
         this.stroke = stroke;
-        this.fgColor = model.get(StandardGenerator.AtomColor.class).getAtomColor(
-                             mol.getBuilder().newInstance(IAtom.class, "C"));
+        this.fgColor =
+                model.get(StandardGenerator.AtomColor.class)
+                        .getAtomColor(mol.getBuilder().newInstance(IAtom.class, "C"));
     }
 
     private boolean canDelocalise(final IAtomContainer ring) {
         boolean okay = ring.getBondCount() < 8;
-        if (!okay)
-            return false;
+        if (!okay) return false;
         for (IBond bond : ring.bonds()) {
-            if (!bond.isAromatic())
-                okay = false;
-            if ((bond.getOrder() != null &&
-                 bond.getOrder() != UNSET) &&
-                !forceDelocalised)
+            if (!bond.isAromatic()) okay = false;
+            if ((bond.getOrder() != null && bond.getOrder() != UNSET) && !forceDelocalised)
                 okay = false;
         }
         return okay;
     }
 
     IRenderingElement generate() {
-        if (!delocalisedDonuts)
-            return null;
+        if (!delocalisedDonuts) return null;
         ElementGroup group = new ElementGroup();
         smallest = Cycles.edgeShort(mol).toRingSet();
         for (IAtomContainer ring : smallest.atomContainers()) {
-            if (!canDelocalise(ring))
-                continue;
+            if (!canDelocalise(ring)) continue;
             for (IBond bond : ring.bonds()) {
                 bonds.add(bond);
             }
-            int charge   = 0;
+            int charge = 0;
             int unpaired = 0;
             for (IAtom atom : ring.atoms()) {
                 Integer q = atom.getFormalCharge();
@@ -125,11 +119,8 @@ final class StandardDonutGenerator {
                     continue;
                 }
                 int nCyclic = 0;
-                for (IBond bond : mol.getConnectedBondsList(atom))
-                    if (bond.isInRing())
-                        nCyclic++;
-                if (nCyclic > 2)
-                    continue;
+                for (IBond bond : mol.getConnectedBondsList(atom)) if (bond.isInRing()) nCyclic++;
+                if (nCyclic > 2) continue;
                 atoms.add(atom);
                 charge += atom.getFormalCharge();
             }
@@ -137,23 +128,21 @@ final class StandardDonutGenerator {
 
             if (charge != 0) {
                 String qText = charge < 0 ? "–" : "+";
-                if (charge < -1)
-                    qText = Math.abs(charge) + qText;
-                else if (charge > +1)
-                    qText = Math.abs(charge) + qText;
+                if (charge < -1) qText = Math.abs(charge) + qText;
+                else if (charge > +1) qText = Math.abs(charge) + qText;
 
                 TextOutline qSym = new TextOutline(qText, font);
                 qSym = qSym.resize(1 / scale, -1 / scale);
-                qSym = qSym.translate(p2.x - qSym.getCenter().getX(),
-                                      p2.y - qSym.getCenter().getY());
+                qSym =
+                        qSym.translate(
+                                p2.x - qSym.getCenter().getX(), p2.y - qSym.getCenter().getY());
                 group.add(GeneralPath.shapeOf(qSym.getOutline(), fgColor));
             }
 
-            double  s  = GeometryUtil.getBondLengthMedian(ring);
-            double  n  = ring.getBondCount();
-            double  r  = s / (2 * Math.tan(Math.PI / n));
-            group.add(new OvalElement(p2.x, p2.y, r - 1.5*dbSpacing,
-                                      stroke, false, fgColor));
+            double s = GeometryUtil.getBondLengthMedian(ring);
+            double n = ring.getBondCount();
+            double r = s / (2 * Math.tan(Math.PI / n));
+            group.add(new OvalElement(p2.x, p2.y, r - 1.5 * dbSpacing, stroke, false, fgColor));
         }
         return group;
     }

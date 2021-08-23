@@ -22,6 +22,10 @@
  */
 package org.openscience.cdk.fragment;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.SpanningTree;
@@ -35,37 +39,30 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
  * Generate fragments exhaustively.
- * 
- * This fragmentation scheme simply breaks single non-ring bonds. By default
- * fragments smaller than 6 atoms in size are not considered, but this can be
- * changed by the user. Side chains are retained.
+ *
+ * <p>This fragmentation scheme simply breaks single non-ring bonds. By default fragments smaller
+ * than 6 atoms in size are not considered, but this can be changed by the user. Side chains are
+ * retained.
  *
  * @author Rajarshi Guha
- * @cdk.module  fragment
+ * @cdk.module fragment
  * @cdk.githash
  * @cdk.keyword fragment
  */
 public class ExhaustiveFragmenter implements IFragmenter {
 
-    private static final int    DEFAULT_MIN_FRAG_SIZE = 6;
+    private static final int DEFAULT_MIN_FRAG_SIZE = 6;
 
     Map<String, IAtomContainer> fragMap;
-    SmilesGenerator             smilesGenerator;
-    String[]                    fragments             = null;
-    int                         minFragSize           = 6;
-    private static ILoggingTool logger                = LoggingToolFactory
-                                                              .createLoggingTool(ExhaustiveFragmenter.class);
+    SmilesGenerator smilesGenerator;
+    String[] fragments = null;
+    int minFragSize = 6;
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(ExhaustiveFragmenter.class);
 
-    /**
-     * Instantiate fragmenter with default minimum fragment size.
-     */
+    /** Instantiate fragmenter with default minimum fragment size. */
     public ExhaustiveFragmenter() {
         this(DEFAULT_MIN_FRAG_SIZE);
     }
@@ -116,13 +113,14 @@ public class ExhaustiveFragmenter implements IFragmenter {
             // make sure we don't add the same fragment twice
             for (IAtomContainer partContainer : parts) {
                 AtomContainerManipulator.clearAtomConfigurations(partContainer);
-                for (IAtom atom : partContainer.atoms())
-                    atom.setImplicitHydrogenCount(null);
+                for (IAtom atom : partContainer.atoms()) atom.setImplicitHydrogenCount(null);
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(partContainer);
-                CDKHydrogenAdder.getInstance(partContainer.getBuilder()).addImplicitHydrogens(partContainer);
+                CDKHydrogenAdder.getInstance(partContainer.getBuilder())
+                        .addImplicitHydrogens(partContainer);
                 Aromaticity.cdkLegacy().apply(partContainer);
                 tmpSmiles = smilesGenerator.create(partContainer);
-                if (partContainer.getAtomCount() >= minFragSize && !fragMap.containsKey(tmpSmiles)) {
+                if (partContainer.getAtomCount() >= minFragSize
+                        && !fragMap.containsKey(tmpSmiles)) {
                     fragments.add(partContainer);
                     fragMap.put(tmpSmiles, partContainer);
                 }
@@ -141,8 +139,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
             for (IAtomContainer frag : frags) {
                 if (frag.getBondCount() < 3) continue;
                 AtomContainerManipulator.clearAtomConfigurations(frag);
-                for (IAtom atom : frag.atoms())
-                    atom.setImplicitHydrogenCount(null);
+                for (IAtom atom : frag.atoms()) atom.setImplicitHydrogenCount(null);
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag);
                 CDKHydrogenAdder.getInstance(frag.getBuilder()).addImplicitHydrogens(frag);
                 Aromaticity.cdkLegacy().apply(frag);
@@ -205,5 +202,4 @@ public class ExhaustiveFragmenter implements IFragmenter {
     public IAtomContainer[] getFragmentsAsContainers() {
         return (new ArrayList<IAtomContainer>(fragMap.values())).toArray(new IAtomContainer[0]);
     }
-
 }

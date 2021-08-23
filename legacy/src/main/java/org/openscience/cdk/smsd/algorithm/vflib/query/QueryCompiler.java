@@ -62,21 +62,23 @@ import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IQueryCompiler;
 
 /**
  * This class creates an template for MCS/substructure query.
+ *
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is
+ *     available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public class QueryCompiler implements IQueryCompiler {
 
-    private IAtomContainer      molecule         = null;
-    private IQueryAtomContainer queryMolecule    = null;
-    private boolean             shouldMatchBonds = true;
+    private IAtomContainer molecule = null;
+    private IQueryAtomContainer queryMolecule = null;
+    private boolean shouldMatchBonds = true;
 
     /**
      * Construct query object from the molecule
+     *
      * @param molecule
      * @param shouldMatchBonds
      */
@@ -87,6 +89,7 @@ public class QueryCompiler implements IQueryCompiler {
 
     /**
      * Construct query object from the molecule
+     *
      * @param molecule
      */
     public QueryCompiler(IQueryAtomContainer molecule) {
@@ -95,6 +98,7 @@ public class QueryCompiler implements IQueryCompiler {
 
     /**
      * Set Molecule
+     *
      * @param molecule
      */
     private void setMolecule(IAtomContainer molecule) {
@@ -103,6 +107,7 @@ public class QueryCompiler implements IQueryCompiler {
 
     /**
      * Set Molecule
+     *
      * @param molecule
      */
     private void setQueryMolecule(IQueryAtomContainer molecule) {
@@ -111,6 +116,7 @@ public class QueryCompiler implements IQueryCompiler {
 
     /**
      * Return molecule
+     *
      * @return Atom Container
      */
     private IAtomContainer getMolecule() {
@@ -135,7 +141,10 @@ public class QueryCompiler implements IQueryCompiler {
             IBond bond = queryMolecule.getBond(i);
             IAtom atomI = bond.getBegin();
             IAtom atomJ = bond.getEnd();
-            result.connect(result.getNode(atomI), result.getNode(atomJ), createBondMatcher(queryMolecule, bond));
+            result.connect(
+                    result.getNode(atomI),
+                    result.getNode(atomJ),
+                    createBondMatcher(queryMolecule, bond));
         }
         return result;
     }
@@ -153,7 +162,10 @@ public class QueryCompiler implements IQueryCompiler {
             IBond bond = queryMolecule.getBond(i);
             IQueryAtom atomI = (IQueryAtom) bond.getBegin();
             IQueryAtom atomJ = (IQueryAtom) bond.getEnd();
-            result.connect(result.getNode(atomI), result.getNode(atomJ), createBondMatcher((IQueryBond) bond));
+            result.connect(
+                    result.getNode(atomI),
+                    result.getNode(atomJ),
+                    createBondMatcher((IQueryBond) bond));
         }
         return result;
     }
@@ -174,16 +186,12 @@ public class QueryCompiler implements IQueryCompiler {
         return new DefaultVFBondMatcher(bond);
     }
 
-    /**
-     * @return the shouldMatchBonds
-     */
+    /** @return the shouldMatchBonds */
     private boolean isBondMatchFlag() {
         return shouldMatchBonds;
     }
 
-    /**
-     * @param shouldMatchBonds the shouldMatchBonds to set
-     */
+    /** @param shouldMatchBonds the shouldMatchBonds to set */
     private void setBondMatchFlag(boolean shouldMatchBonds) {
         this.shouldMatchBonds = shouldMatchBonds;
     }

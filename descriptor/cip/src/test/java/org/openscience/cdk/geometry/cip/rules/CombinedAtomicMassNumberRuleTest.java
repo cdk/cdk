@@ -25,7 +25,6 @@ package org.openscience.cdk.geometry.cip.rules;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -37,12 +36,10 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
-/**
- * @cdk.module test-cip
- */
+/** @cdk.module test-cip */
 public class CombinedAtomicMassNumberRuleTest extends CDKTestCase {
 
-    static SmilesParser   smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
+    static SmilesParser smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
     static IAtomContainer molecule;
 
     @BeforeClass
@@ -52,15 +49,18 @@ public class CombinedAtomicMassNumberRuleTest extends CDKTestCase {
 
     @Test
     public void testCompare_Identity() {
-        ILigand ligand = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0));
+        ILigand ligand =
+                new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0));
         ISequenceSubRule<ILigand> rule = new CombinedAtomicMassNumberRule();
         Assert.assertEquals(0, rule.compare(ligand, ligand));
     }
 
     @Test
     public void testCompare() {
-        ILigand ligand1 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0));
-        ILigand ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(2));
+        ILigand ligand1 =
+                new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0));
+        ILigand ligand2 =
+                new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(2));
         ISequenceSubRule<ILigand> rule = new CombinedAtomicMassNumberRule();
         Assert.assertEquals(-1, rule.compare(ligand1, ligand2));
         Assert.assertEquals(1, rule.compare(ligand2, ligand1));
@@ -68,10 +68,14 @@ public class CombinedAtomicMassNumberRuleTest extends CDKTestCase {
 
     @Test
     public void testOrder() {
-        ILigand ligand1 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(4));
-        ILigand ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(3));
-        ILigand ligand3 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(2));
-        ILigand ligand4 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0));
+        ILigand ligand1 =
+                new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(4));
+        ILigand ligand2 =
+                new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(3));
+        ILigand ligand3 =
+                new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(2));
+        ILigand ligand4 =
+                new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0));
         List<ILigand> ligands = new ArrayList<ILigand>();
         ligands.add(ligand1);
         ligands.add(ligand2);
@@ -85,5 +89,4 @@ public class CombinedAtomicMassNumberRuleTest extends CDKTestCase {
         Assert.assertEquals(13, ligands.get(2).getLigandAtom().getMassNumber().intValue());
         Assert.assertEquals("Br", ligands.get(3).getLigandAtom().getSymbol());
     }
-
 }

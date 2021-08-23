@@ -24,26 +24,24 @@ package org.openscience.cdk.io;
 
 import java.io.InputStream;
 import java.io.Reader;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.iterator.IIteratingChemObjectReader;
 
 /**
  * This interface specifies the common functionality all IO readers should provide.
  *
- * IO readers should not implement this interface directly, but rather implement
- * one of its child interfaces: {@link ISimpleChemObjectReader} or {@link IIteratingChemObjectReader}.
- * These sub-interfaces specify the information access methods:
- * a simple read() method for the {@link ISimpleChemObjectReader} and
- * more advanced iterator based access for the {@link IIteratingChemObjectReader} (suitable for large files)
+ * <p>IO readers should not implement this interface directly, but rather implement one of its child
+ * interfaces: {@link ISimpleChemObjectReader} or {@link IIteratingChemObjectReader}. These
+ * sub-interfaces specify the information access methods: a simple read() method for the {@link
+ * ISimpleChemObjectReader} and more advanced iterator based access for the {@link
+ * IIteratingChemObjectReader} (suitable for large files)
  *
  * @cdk.module io
  * @cdk.githash
- *
  * @author Egon Willighagen &lt;egonw@users.sf.net&gt;
  * @see ISimpleChemObjectReader
  * @see IIteratingChemObjectReader
- **/
+ */
 public interface IChemObjectReader extends IChemObjectIO {
 
     public enum Mode {
@@ -53,22 +51,15 @@ public interface IChemObjectReader extends IChemObjectIO {
         STRICT
     }
 
-    /**
-     * Sets the Reader from which this ChemObjectReader should read
-     * the contents.
-     */
+    /** Sets the Reader from which this ChemObjectReader should read the contents. */
     public void setReader(Reader reader) throws CDKException;
 
-    /**
-     * Sets the InputStream from which this ChemObjectReader should read
-     * the contents.
-     */
+    /** Sets the InputStream from which this ChemObjectReader should read the contents. */
     public void setReader(InputStream reader) throws CDKException;
 
     /**
-     * Sets the reader mode. If Mode.STRICT, then the reader will fail on
-     * any problem in the format of the read file, instead of trying to
-     * recover from that.
+     * Sets the reader mode. If Mode.STRICT, then the reader will fail on any problem in the format
+     * of the read file, instead of trying to recover from that.
      *
      * @param mode
      */
@@ -77,48 +68,48 @@ public interface IChemObjectReader extends IChemObjectIO {
     /**
      * Sets an error handler that is sent events when file format issues occur.
      *
-     * @param handler {@link IChemObjectReaderErrorHandler} to send error
-     *                messages to.
+     * @param handler {@link IChemObjectReaderErrorHandler} to send error messages to.
      */
     public void setErrorHandler(IChemObjectReaderErrorHandler handler);
 
     /**
-     * Redirects an error message to the {@link IChemObjectReaderErrorHandler}.
-     * Throws an {@link CDKException} when in STRICT {@link Mode}.
+     * Redirects an error message to the {@link IChemObjectReaderErrorHandler}. Throws an {@link
+     * CDKException} when in STRICT {@link Mode}.
      *
      * @param message the error message.
      */
     public void handleError(String message) throws CDKException;
 
     /**
-     * Redirects an error message to the {@link IChemObjectReaderErrorHandler}.
-     * Throws an {@link CDKException} when in STRICT {@link Mode}.
+     * Redirects an error message to the {@link IChemObjectReaderErrorHandler}. Throws an {@link
+     * CDKException} when in STRICT {@link Mode}.
      *
-     * @param message  the error message.
+     * @param message the error message.
      * @param exception the corresponding {@link Exception}.
      */
     public void handleError(String message, Exception exception) throws CDKException;
 
     /**
-     * Redirects an error message to the {@link IChemObjectReaderErrorHandler}.
-     * Throws an {@link CDKException} when in STRICT {@link Mode}.
+     * Redirects an error message to the {@link IChemObjectReaderErrorHandler}. Throws an {@link
+     * CDKException} when in STRICT {@link Mode}.
      *
-     * @param message  the error message.
-     * @param row      Row in the file where the error is found.
+     * @param message the error message.
+     * @param row Row in the file where the error is found.
      * @param colStart Start column in the file where the error is found.
-     * @param colEnd   End column in the file where the error is found.
+     * @param colEnd End column in the file where the error is found.
      */
     public void handleError(String message, int row, int colStart, int colEnd) throws CDKException;
 
     /**
-     * Redirects an error message to the {@link IChemObjectReaderErrorHandler}.
-     * Throws an {@link CDKException} when in STRICT {@link Mode}.
+     * Redirects an error message to the {@link IChemObjectReaderErrorHandler}. Throws an {@link
+     * CDKException} when in STRICT {@link Mode}.
      *
-     * @param message  the error message.
+     * @param message the error message.
      * @param exception the corresponding {@link Exception}.
-     * @param row       Row in the file where the error is found.
+     * @param row Row in the file where the error is found.
      * @param colStart Start column in the file where the error is found.
-     * @param colEnd   End column in the file where the error is found.
+     * @param colEnd End column in the file where the error is found.
      */
-    public void handleError(String message, int row, int colStart, int colEnd, Exception exception) throws CDKException;
+    public void handleError(String message, int row, int colStart, int colEnd, Exception exception)
+            throws CDKException;
 }

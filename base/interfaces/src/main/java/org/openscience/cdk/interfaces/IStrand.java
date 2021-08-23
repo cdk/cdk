@@ -26,10 +26,10 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * A Strand is an AtomContainer which stores additional strand specific
- * informations for a group of Atoms.
+ * A Strand is an AtomContainer which stores additional strand specific informations for a group of
+ * Atoms.
  *
- * @cdk.module  interfaces
+ * @cdk.module interfaces
  * @cdk.githash
  * @cdk.created 2004-12-20
  * @author Martin Eklund &lt;martin.eklund@farmbio.uu.se&gt;
@@ -40,7 +40,7 @@ public interface IStrand extends IAtomContainer {
      * Retrieve the strand name.
      *
      * @return The name of the Strand object
-     * @see    #setStrandName(String)
+     * @see #setStrandName(String)
      */
     public String getStrandName();
 
@@ -48,31 +48,31 @@ public interface IStrand extends IAtomContainer {
      * Retrieve the strand type.
      *
      * @return The type of the Strand object
-     * @see    #setStrandType(String)
+     * @see #setStrandType(String)
      */
     public String getStrandType();
 
     /**
      * Set the name of the Strand object.
      *
-     * @param cStrandName  The new name for this strand
-     * @see                #getStrandName()
+     * @param cStrandName The new name for this strand
+     * @see #getStrandName()
      */
     public void setStrandName(String cStrandName);
 
     /**
      * Set the type of the Strand object.
      *
-     * @param cStrandType  The new type for this strand
-     * @see                #getStrandType()
+     * @param cStrandType The new type for this strand
+     * @see #getStrandType()
      */
     public void setStrandType(String cStrandType);
 
     /**
-     * Adds the atom oAtom without specifying a Monomer or a Strand. Therefore the
-     * atom gets added to a Monomer of type UNKNOWN in a Strand of type UNKNOWN.
+     * Adds the atom oAtom without specifying a Monomer or a Strand. Therefore the atom gets added
+     * to a Monomer of type UNKNOWN in a Strand of type UNKNOWN.
      *
-     * @param oAtom  The atom to add
+     * @param oAtom The atom to add
      */
     @Override
     public void addAtom(IAtom oAtom);
@@ -80,8 +80,8 @@ public interface IStrand extends IAtomContainer {
     /**
      * Adds the atom oAtom to a specific Monomer.
      *
-     * @param oAtom  The atom to add
-     * @param oMonomer  The monomer the atom belongs to
+     * @param oAtom The atom to add
+     * @param oMonomer The monomer the atom belongs to
      */
     public void addAtom(IAtom oAtom, IMonomer oMonomer);
 
@@ -95,14 +95,13 @@ public interface IStrand extends IAtomContainer {
     /**
      * Retrieve a Monomer object by specifying its name.
      *
-     * @param cName  The name of the monomer to look for
+     * @param cName The name of the monomer to look for
      * @return The Monomer object which was asked for
      */
     public IMonomer getMonomer(String cName);
 
     /**
-     * Returns a collection of the names of all <code>Monomer</code>s in this
-     * polymer.
+     * Returns a collection of the names of all <code>Monomer</code>s in this polymer.
      *
      * @return a <code>Collection</code> of all the monomer names.
      */
@@ -122,9 +121,7 @@ public interface IStrand extends IAtomContainer {
      */
     public Map<String, IMonomer> getMonomers();
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IStrand clone() throws CloneNotSupportedException;
 }

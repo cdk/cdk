@@ -56,7 +56,7 @@ public class PMPFormat extends SimpleChemFormatMatcher implements IChemFormatMat
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"pmp"};
+        return new String[] {"pmp"};
     }
 
     /** {@inheritDoc} */

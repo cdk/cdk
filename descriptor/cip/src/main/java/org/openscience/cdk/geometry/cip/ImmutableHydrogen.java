@@ -23,23 +23,19 @@
 package org.openscience.cdk.geometry.cip;
 
 import java.util.Map;
-
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.IBond.Order;
 
 /**
- * Helper class to represent a immutable hydrogen. All set methods are void, and only
- * {@link #getSymbol()}, {@link #getAtomicNumber()}, and {@link #getMassNumber()} are
- * implemented.
+ * Helper class to represent a immutable hydrogen. All set methods are void, and only {@link
+ * #getSymbol()}, {@link #getAtomicNumber()}, and {@link #getMassNumber()} are implemented.
  *
  * @author egonw
  * @cdk.module cip
@@ -116,8 +112,8 @@ class ImmutableHydrogen implements IAtom {
     }
 
     /**
-     * This field is not used by this immutable hydrogen.
-     * Any setting will have no effect what so ever.
+     * This field is not used by this immutable hydrogen. Any setting will have no effect what so
+     * ever.
      *
      * @param charge The value will be disregarded.
      */
@@ -125,8 +121,8 @@ class ImmutableHydrogen implements IAtom {
     public void setCharge(Double charge) {}
 
     /**
-     * This field is not used by this immutable hydrogen.
-     * Any setting will have no effect what so ever.
+     * This field is not used by this immutable hydrogen. Any setting will have no effect what so
+     * ever.
      *
      * @param point3d The value will be disregarded.
      */
@@ -134,8 +130,8 @@ class ImmutableHydrogen implements IAtom {
     public void setFractionalPoint3d(Point3d point3d) {}
 
     /**
-     * This field is not used by this immutable hydrogen.
-     * Any setting will have no effect what so ever.
+     * This field is not used by this immutable hydrogen. Any setting will have no effect what so
+     * ever.
      *
      * @param hydrogenCount The value will be disregarded.
      */
@@ -143,8 +139,8 @@ class ImmutableHydrogen implements IAtom {
     public void setImplicitHydrogenCount(Integer hydrogenCount) {}
 
     /**
-     * This field is not used by this immutable hydrogen.
-     * Any setting will have no effect what so ever.
+     * This field is not used by this immutable hydrogen. Any setting will have no effect what so
+     * ever.
      *
      * @param point2d The value will be disregarded.
      */
@@ -152,8 +148,8 @@ class ImmutableHydrogen implements IAtom {
     public void setPoint2d(Point2d point2d) {}
 
     /**
-     * This field is not used by this immutable hydrogen.
-     * Any setting will have no effect what so ever.
+     * This field is not used by this immutable hydrogen. Any setting will have no effect what so
+     * ever.
      *
      * @param point3d The value will be disregarded.
      */
@@ -161,8 +157,8 @@ class ImmutableHydrogen implements IAtom {
     public void setPoint3d(Point3d point3d) {}
 
     /**
-     * This field is not used by this immutable hydrogen.
-     * Any setting will have no effect what so ever.
+     * This field is not used by this immutable hydrogen. Any setting will have no effect what so
+     * ever.
      *
      * @param stereoParity The value will be disregarded.
      */
@@ -250,8 +246,8 @@ class ImmutableHydrogen implements IAtom {
     }
 
     /**
-     * This field is not used by this immutable hydrogen.
-     * Any setting will have no effect what so ever.
+     * This field is not used by this immutable hydrogen. Any setting will have no effect what so
+     * ever.
      *
      * @param identifier The value will be disregarded.
      */
@@ -259,8 +255,8 @@ class ImmutableHydrogen implements IAtom {
     public void setAtomTypeName(String identifier) {}
 
     /**
-     * This field is not used by this immutable hydrogen.
-     * Any setting will have no effect what so ever.
+     * This field is not used by this immutable hydrogen. Any setting will have no effect what so
+     * ever.
      *
      * @param bondOrderSum The value will be disregarded.
      */
@@ -268,8 +264,8 @@ class ImmutableHydrogen implements IAtom {
     public void setBondOrderSum(Double bondOrderSum) {}
 
     /**
-     * This field is not used by this immutable hydrogen.
-     * Any setting will have no effect what so ever.
+     * This field is not used by this immutable hydrogen. Any setting will have no effect what so
+     * ever.
      *
      * @param radius The value will be disregarded.
      */
@@ -277,8 +273,8 @@ class ImmutableHydrogen implements IAtom {
     public void setCovalentRadius(Double radius) {}
 
     /**
-     * This field is not used by this immutable hydrogen.
-     * Any setting will have no effect what so ever.
+     * This field is not used by this immutable hydrogen. Any setting will have no effect what so
+     * ever.
      *
      * @param charge The value will be disregarded.
      */
@@ -286,8 +282,8 @@ class ImmutableHydrogen implements IAtom {
     public void setFormalCharge(Integer charge) {}
 
     /**
-     * This field is not used by this immutable hydrogen.
-     * Any setting will have no effect what so ever.
+     * This field is not used by this immutable hydrogen. Any setting will have no effect what so
+     * ever.
      *
      * @param count The value will be disregarded.
      */
@@ -295,8 +291,8 @@ class ImmutableHydrogen implements IAtom {
     public void setFormalNeighbourCount(Integer count) {}
 
     /**
-     * This field is not used by this immutable hydrogen.
-     * Any setting will have no effect what so ever.
+     * This field is not used by this immutable hydrogen. Any setting will have no effect what so
+     * ever.
      *
      * @param hybridization The value will be disregarded.
      */
@@ -304,8 +300,8 @@ class ImmutableHydrogen implements IAtom {
     public void setHybridization(Hybridization hybridization) {}
 
     /**
-     * This field is not used by this immutable hydrogen.
-     * Any setting will have no effect what so ever.
+     * This field is not used by this immutable hydrogen. Any setting will have no effect what so
+     * ever.
      *
      * @param maxBondOrder The value will be disregarded.
      */
@@ -313,8 +309,8 @@ class ImmutableHydrogen implements IAtom {
     public void setMaxBondOrder(Order maxBondOrder) {}
 
     /**
-     * This field is not used by this immutable hydrogen.
-     * Any setting will have no effect what so ever.
+     * This field is not used by this immutable hydrogen. Any setting will have no effect what so
+     * ever.
      *
      * @param valency The value will be disregarded.
      */
@@ -352,8 +348,8 @@ class ImmutableHydrogen implements IAtom {
     }
 
     /**
-     * This field is not used by this immutable hydrogen.
-     * Any setting will have no effect what so ever.
+     * This field is not used by this immutable hydrogen. Any setting will have no effect what so
+     * ever.
      *
      * @param exactMass The value will be disregarded.
      */
@@ -361,8 +357,8 @@ class ImmutableHydrogen implements IAtom {
     public void setExactMass(Double exactMass) {}
 
     /**
-     * This field is not used by this immutable hydrogen.
-     * Any setting will have no effect what so ever.
+     * This field is not used by this immutable hydrogen. Any setting will have no effect what so
+     * ever.
      *
      * @param massNumber The value will be disregarded.
      */
@@ -370,8 +366,8 @@ class ImmutableHydrogen implements IAtom {
     public void setMassNumber(Integer massNumber) {}
 
     /**
-     * This field is not used by this immutable hydrogen.
-     * Any setting will have no effect what so ever.
+     * This field is not used by this immutable hydrogen. Any setting will have no effect what so
+     * ever.
      *
      * @param naturalAbundance The value will be disregarded.
      */
@@ -398,14 +394,16 @@ class ImmutableHydrogen implements IAtom {
         return SYMBOL;
     }
 
-    /** Using this method on this immutable object has no effect.
+    /**
+     * Using this method on this immutable object has no effect.
      *
      * @param atomicNumber An integer that will just be disregarded.
      */
     @Override
     public void setAtomicNumber(Integer atomicNumber) {}
 
-    /** Using this method on this immutable object has no effect.
+    /**
+     * Using this method on this immutable object has no effect.
      *
      * @param symbol A string that will just be disregarded.
      */
@@ -419,7 +417,7 @@ class ImmutableHydrogen implements IAtom {
     /**
      * This field is not used by this immutable hydrogen.
      *
-     * @param  flagType The value will be disregarded.
+     * @param flagType The value will be disregarded.
      * @return null.
      */
     @Override
@@ -483,7 +481,7 @@ class ImmutableHydrogen implements IAtom {
     /**
      * This field is not used by this immutable hydrogen.
      *
-     * @param  description The value will be disregarded.
+     * @param description The value will be disregarded.
      * @return null.
      */
     @Override
@@ -494,7 +492,7 @@ class ImmutableHydrogen implements IAtom {
     /**
      * This field is not used by this immutable hydrogen.
      *
-     * @param  description The value will be disregarded.
+     * @param description The value will be disregarded.
      * @return null.
      */
     @Override
@@ -523,8 +521,8 @@ class ImmutableHydrogen implements IAtom {
     public void setFlag(int flagType, boolean flagValue) {}
 
     /**
-     * This field is not used by this immutable hydrogen.
-     * Any setting will have no effect what so ever.
+     * This field is not used by this immutable hydrogen. Any setting will have no effect what so
+     * ever.
      *
      * @param flagsNew The value will be disregarded.
      */
@@ -532,8 +530,8 @@ class ImmutableHydrogen implements IAtom {
     public void setFlags(boolean[] flagsNew) {}
 
     /**
-     * This field is not used by this immutable hydrogen.
-     * Any setting will have no effect what so ever.
+     * This field is not used by this immutable hydrogen. Any setting will have no effect what so
+     * ever.
      *
      * @param identifier The value will be disregarded.
      */
@@ -545,8 +543,8 @@ class ImmutableHydrogen implements IAtom {
     public void setNotification(boolean bool) {}
 
     /**
-     * This field is not used by this immutable hydrogen.
-     * Any setting will have no effect what so ever.
+     * This field is not used by this immutable hydrogen. Any setting will have no effect what so
+     * ever.
      *
      * @param properties The value will be disregarded.
      */
@@ -554,8 +552,8 @@ class ImmutableHydrogen implements IAtom {
     public void setProperties(Map<Object, Object> properties) {}
 
     /**
-     * This field is not used by this immutable hydrogen.
-     * Any setting will have no effect what so ever.
+     * This field is not used by this immutable hydrogen. Any setting will have no effect what so
+     * ever.
      *
      * @param properties The value will be disregarded.
      */
@@ -563,11 +561,11 @@ class ImmutableHydrogen implements IAtom {
     public void addProperties(Map<Object, Object> properties) {}
 
     /**
-     * This field is not used by this immutable hydrogen.
-     * Any setting will have no effect what so ever.
+     * This field is not used by this immutable hydrogen. Any setting will have no effect what so
+     * ever.
      *
      * @param description The value will be disregarded.
-     * @param property    The value will be disregarded.
+     * @param property The value will be disregarded.
      */
     @Override
     public void setProperty(Object description, Object property) {}
@@ -590,8 +588,7 @@ class ImmutableHydrogen implements IAtom {
 
     /** {@inheritDoc} */
     @Override
-    public void setIsAromatic(boolean arom) {
-    }
+    public void setIsAromatic(boolean arom) {}
 
     /** {@inheritDoc} */
     @Override
@@ -601,8 +598,7 @@ class ImmutableHydrogen implements IAtom {
 
     /** {@inheritDoc} */
     @Override
-    public void setIsInRing(boolean ring) {
-    }
+    public void setIsInRing(boolean ring) {}
 
     @Override
     public IAtomContainer getContainer() {
@@ -631,11 +627,9 @@ class ImmutableHydrogen implements IAtom {
 
     @Override
     public int getMapIdx() {
-      return 0;
+        return 0;
     }
 
     @Override
-    public void setMapIdx(int mapidx) {
-
-    }
+    public void setMapIdx(int mapidx) {}
 }

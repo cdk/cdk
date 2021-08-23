@@ -53,7 +53,7 @@ public class EssentialCyclesTest {
         EssentialCycles essential = new EssentialCycles(norbornane);
         int[][] paths = essential.paths();
         assertThat(paths.length, is(2));
-        int[][] expected = new int[][]{{5, 6, 2, 1, 0, 5}, {5, 6, 2, 3, 4, 5}};
+        int[][] expected = new int[][] {{5, 6, 2, 1, 0, 5}, {5, 6, 2, 3, 4, 5}};
         assertThat(paths, is(expected));
     }
 
@@ -62,7 +62,7 @@ public class EssentialCyclesTest {
         int[][] napthalene = naphthalene();
         EssentialCycles essential = new EssentialCycles(napthalene);
         int[][] paths = essential.paths();
-        int[][] expected = new int[][]{{5, 0, 1, 2, 3, 4, 5}, {5, 4, 7, 8, 9, 6, 5}};
+        int[][] expected = new int[][] {{5, 0, 1, 2, 3, 4, 5}, {5, 4, 7, 8, 9, 6, 5}};
         assertThat(paths, is(expected));
     }
 
@@ -71,7 +71,10 @@ public class EssentialCyclesTest {
         int[][] anthracene = anthracene();
         EssentialCycles essential = new EssentialCycles(anthracene);
         int[][] paths = essential.paths();
-        int[][] expected = new int[][]{{5, 0, 1, 2, 3, 4, 5}, {9, 6, 5, 4, 7, 8, 9}, {9, 8, 10, 11, 12, 13, 9}};
+        int[][] expected =
+                new int[][] {
+                    {5, 0, 1, 2, 3, 4, 5}, {9, 6, 5, 4, 7, 8, 9}, {9, 8, 10, 11, 12, 13, 9}
+                };
         assertThat(paths, is(expected));
     }
 
@@ -80,7 +83,7 @@ public class EssentialCyclesTest {
         int[][] cyclophane_even = cyclophane_even();
         EssentialCycles essential = new EssentialCycles(cyclophane_even);
         int[][] paths = essential.paths();
-        int[][] expected = new int[][]{{3, 2, 1, 0, 5, 4, 3}};
+        int[][] expected = new int[][] {{3, 2, 1, 0, 5, 4, 3}};
         assertThat(paths, is(expected));
     }
 
@@ -89,7 +92,7 @@ public class EssentialCyclesTest {
         int[][] cyclophane_even = cyclophane_even();
         EssentialCycles essential = new EssentialCycles(cyclophane_even);
         int[][] paths = essential.paths();
-        int[][] expected = new int[][]{{3, 2, 1, 0, 5, 4, 3}};
+        int[][] expected = new int[][] {{3, 2, 1, 0, 5, 4, 3}};
         assertThat(paths, is(expected));
     }
 

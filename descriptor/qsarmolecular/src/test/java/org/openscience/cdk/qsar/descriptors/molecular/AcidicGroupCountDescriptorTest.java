@@ -19,7 +19,6 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import javax.vecmath.Point2d;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,9 +31,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-/**
- * @cdk.module test-qsarmolecular
- */
+/** @cdk.module test-qsarmolecular */
 public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
 
     @Before
@@ -94,9 +91,7 @@ public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(2, result.intValue());
     }
 
-    /**
-     * @cdk.inchi InChI=1S/C2H2N4O2/c7-2(8)1-3-5-6-4-1/h(H,7,8)(H,3,4,5,6)
-     */
+    /** @cdk.inchi InChI=1S/C2H2N4O2/c7-2(8)1-3-5-6-4-1/h(H,7,8)(H,3,4,5,6) */
     @Test
     public void testTwoGroup() throws Exception {
         IAtomContainer mol = SilentChemObjectBuilder.getInstance().newAtomContainer();
@@ -169,7 +164,8 @@ public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     /**
-     * @cdk.inchi InChI=1S/C6H12O10S/c7-2(1-16-17(13,14)15)3(8)4(9)5(10)6(11)12/h2-5,7-10H,1H2,(H,11,12)(H,13,14,15)/t2-,3-,4+,5-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C6H12O10S/c7-2(1-16-17(13,14)15)3(8)4(9)5(10)6(11)12/h2-5,7-10H,1H2,(H,11,12)(H,13,14,15)/t2-,3-,4+,5-/m1/s1
      */
     @Test
     public void testCID() throws Exception {

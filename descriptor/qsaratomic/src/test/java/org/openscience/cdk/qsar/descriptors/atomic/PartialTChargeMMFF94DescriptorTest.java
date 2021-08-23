@@ -31,10 +31,8 @@ public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
     /**
      * Constructor for the PartialTChargeMMFF94DescriptorTest object
      *
-     * All values taken from table V of Merck Molecular Force Field. II. Thomas
-     * A. Halgren DOI:
+     * <p>All values taken from table V of Merck Molecular Force Field. II. Thomas A. Halgren DOI:
      * 10.1002/(SICI)1096-987X(199604)17:5/6<520::AID-JCC2>3.0.CO;2-W
-     *
      */
     public PartialTChargeMMFF94DescriptorTest() {}
 

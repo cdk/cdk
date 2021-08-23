@@ -24,26 +24,22 @@ package org.openscience.cdk.tools;
 
 import java.util.Comparator;
 
-
 /**
-  * Compares elements based on the order commonly used in
-  * molecular formula. Order:
-  * C, H, other elements in alphabetic order.
-  *
-  * @cdk.module standard
+ * Compares elements based on the order commonly used in molecular formula. Order: C, H, other
+ * elements in alphabetic order.
+ *
+ * @cdk.module standard
  * @cdk.githash
-  *
-  * @cdk.keyword element, sorting
-  */
+ * @cdk.keyword element, sorting
+ */
 public class ElementComparator implements Comparator<String> {
 
     private static final String H_ELEMENT_SYMBOL = "H";
     private static final String C_ELEMENT_SYMBOL = "C";
 
     /**
-     * Returns a negative if o1 comes before o2 in a molecular formula,
-     * returns zero if they are identical, and positive if o1 comes
-     * after o2 in the formula.
+     * Returns a negative if o1 comes before o2 in a molecular formula, returns zero if they are
+     * identical, and positive if o1 comes after o2 in the formula.
      */
     @Override
     public int compare(String o1, String o2) {
@@ -69,5 +65,4 @@ public class ElementComparator implements Comparator<String> {
             }
         }
     }
-
 }

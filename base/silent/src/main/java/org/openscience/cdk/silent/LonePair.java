@@ -19,18 +19,15 @@
  */
 package org.openscience.cdk.silent;
 
+import java.io.Serializable;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.ILonePair;
 
-import java.io.Serializable;
-
 /**
- * A LonePair is an orbital primarily located with one Atom, containing
- * two electrons.
+ * A LonePair is an orbital primarily located with one Atom, containing two electrons.
  *
- * @cdk.module  silent
+ * @cdk.module silent
  * @cdk.githash
- *
  * @cdk.keyword orbital
  * @cdk.keyword lone-pair
  */
@@ -39,23 +36,20 @@ public class LonePair extends ElectronContainer implements Serializable, ILonePa
     /**
      * Determines if a de-serialized object is compatible with this class.
      *
-     * This value must only be changed if and only if the new version
-     * of this class is incompatible with the old version. See Sun docs
-     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
+     * <p>This value must only be changed if and only if the new version of this class is
+     * incompatible with the old version. See Sun docs for <a
+     * href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
      */
     private static final long serialVersionUID = 51311422004885329L;
 
     /** Number of electrons in the lone pair. */
-    protected final int       electronCount    = 2;
+    protected final int electronCount = 2;
 
     /** The atom with which this lone pair is associated. */
-    protected IAtom           atom;
+    protected IAtom atom;
 
-    /**
-     * Constructs an unconnected lone pair.
-     *
-     */
+    /** Constructs an unconnected lone pair. */
     public LonePair() {
         this.atom = null;
     }
@@ -63,7 +57,7 @@ public class LonePair extends ElectronContainer implements Serializable, ILonePa
     /**
      * Constructs an lone pair on an Atom.
      *
-     * @param atom  Atom to which this lone pair is connected
+     * @param atom Atom to which this lone pair is connected
      */
     public LonePair(IAtom atom) {
         this.atom = atom;
@@ -83,8 +77,7 @@ public class LonePair extends ElectronContainer implements Serializable, ILonePa
      * Returns the associated Atom.
      *
      * @return the associated Atom.
-     *
-     * @see    #setAtom
+     * @see #setAtom
      */
     @Override
     public IAtom getAtom() {
@@ -95,8 +88,7 @@ public class LonePair extends ElectronContainer implements Serializable, ILonePa
      * Sets the associated Atom.
      *
      * @param atom the Atom this lone pair will be associated with
-     *
-     * @see    #getAtom
+     * @see #getAtom
      */
     @Override
     public void setAtom(IAtom atom) {
@@ -106,8 +98,8 @@ public class LonePair extends ElectronContainer implements Serializable, ILonePa
     /**
      * Returns true if the given atom participates in this lone pair.
      *
-     * @param   atom  The atom to be tested if it participates in this bond
-     * @return     true if this lone pair is associated with the atom
+     * @param atom The atom to be tested if it participates in this bond
+     * @return true if this lone pair is associated with the atom
      */
     @Override
     public boolean contains(IAtom atom) {
@@ -115,10 +107,10 @@ public class LonePair extends ElectronContainer implements Serializable, ILonePa
     }
 
     /**
-     * Clones this LonePair object, including a clone of the atom for which the
-     * lone pair is defined.
+     * Clones this LonePair object, including a clone of the atom for which the lone pair is
+     * defined.
      *
-     * @return    The cloned object
+     * @return The cloned object
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
@@ -131,10 +123,9 @@ public class LonePair extends ElectronContainer implements Serializable, ILonePa
     }
 
     /**
-     * Returns a one line string representation of this LonePair.
-     * This method is conform RFC #9.
+     * Returns a one line string representation of this LonePair. This method is conform RFC #9.
      *
-     * @return    The string representation of this LonePair
+     * @return The string representation of this LonePair
      */
     @Override
     public String toString() {

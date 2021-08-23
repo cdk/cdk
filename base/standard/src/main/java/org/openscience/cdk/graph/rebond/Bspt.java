@@ -18,56 +18,50 @@
  */
 package org.openscience.cdk.graph.rebond;
 
-
 import java.util.Enumeration;
 
 /**
- *  BSP-Tree stands for Binary Space Partitioning Tree.
- *  The tree partitions n-dimensional space (in our case 3) into little
- *  boxes, facilitating searches for things which are *nearby*.
- *  For some useful background info, search the web for "bsp tree faq".
- *  Our application is somewhat simpler because we are storing points instead
- *  of polygons.
+ * BSP-Tree stands for Binary Space Partitioning Tree. The tree partitions n-dimensional space (in
+ * our case 3) into little boxes, facilitating searches for things which are *nearby*. For some
+ * useful background info, search the web for "bsp tree faq". Our application is somewhat simpler
+ * because we are storing points instead of polygons.
  *
- * <p>We are working with three dimensions. For the purposes of the Bspt code
- *  these dimensions are stored as 0, 1, or 2. Each node of the tree splits
- *  along the next dimension, wrapping around to 0.
+ * <p>We are working with three dimensions. For the purposes of the Bspt code these dimensions are
+ * stored as 0, 1, or 2. Each node of the tree splits along the next dimension, wrapping around to
+ * 0.
+ *
  * <pre>
  *    mySplitDimension = (parentSplitDimension + 1) % 3;
  * </pre>
- *  A split value is stored in the node. Values which are &le; splitValue are
- *  stored down the left branch. Values which are &ge; splitValue are stored
- *  down the right branch. When this happens, the search must proceed down
- *  both branches.
- *  Planar and crystalline substructures can generate values which are == along
- *  one dimension.
  *
- * <p>To get a good picture in your head, first think about it in one dimension,
- *  points on a number line. The tree just partitions the points.
- *  Now think about 2 dimensions. The first node of the tree splits the plane
- *  into two rectangles along the x dimension. The second level of the tree
- *  splits the subplanes (independently) along the y dimension into smaller
- *  rectangles. The third level splits along the x dimension.
- *  In three dimensions, we are doing the same thing, only working with
- *  3-d boxes.
+ * A split value is stored in the node. Values which are &le; splitValue are stored down the left
+ * branch. Values which are &ge; splitValue are stored down the right branch. When this happens, the
+ * search must proceed down both branches. Planar and crystalline substructures can generate values
+ * which are == along one dimension.
+ *
+ * <p>To get a good picture in your head, first think about it in one dimension, points on a number
+ * line. The tree just partitions the points. Now think about 2 dimensions. The first node of the
+ * tree splits the plane into two rectangles along the x dimension. The second level of the tree
+ * splits the subplanes (independently) along the y dimension into smaller rectangles. The third
+ * level splits along the x dimension. In three dimensions, we are doing the same thing, only
+ * working with 3-d boxes.
  *
  * <p>Three enumerators are provided
+ *
  * <ul>
- *    <li>enumNear(Bspt.Tuple center, double distance)<br>
- *      returns all the points contained in of all the boxes which are within
- *      distance from the center.
- *    <li>enumSphere(Bspt.Tuple center, double distance)<br>
- *      returns all the points which are contained within the sphere (inclusive)
- *      defined by center + distance
- *    <li>enumHemiSphere(Bspt.Tuple center, double distance)<br>
- *      same as sphere, but only the points which are greater along the
- *      x dimension
+ *   <li>enumNear(Bspt.Tuple center, double distance)<br>
+ *       returns all the points contained in of all the boxes which are within distance from the
+ *       center.
+ *   <li>enumSphere(Bspt.Tuple center, double distance)<br>
+ *       returns all the points which are contained within the sphere (inclusive) defined by center
+ *       + distance
+ *   <li>enumHemiSphere(Bspt.Tuple center, double distance)<br>
+ *       same as sphere, but only the points which are greater along the x dimension
  * </ul>
  *
- * @author  Miguel Howard
+ * @author Miguel Howard
  * @cdk.created 2003-05
- *
- * @cdk.module  standard
+ * @cdk.module standard
  * @cdk.githash
  * @cdk.keyword rebonding
  * @cdk.keyword Binary Space Partitioning Tree
@@ -75,13 +69,13 @@ import java.util.Enumeration;
  */
 public final class Bspt {
 
-    private final static int LEAF_COUNT  = 4;
-    private final static int STACK_DEPTH = 64;/*
+    private static final int LEAF_COUNT = 4;
+    private static final int STACK_DEPTH = 64; /*
                                                * this corresponds to the max
                                                * height of the tree
                                                */
-    int                      dimMax;
-    Element                  eleRoot;
+    int dimMax;
+    Element eleRoot;
 
     /*
      * static double distance(int dim, Tuple t1, Tuple t2) { return
@@ -119,9 +113,9 @@ public final class Bspt {
     class EnumerateAll implements Enumeration {
 
         Node[] stack;
-        int    sp;
-        int    i;
-        Leaf   leaf;
+        int sp;
+        int i;
+        Leaf leaf;
 
         EnumerateAll() {
             stack = new Node[STACK_DEPTH];
@@ -166,11 +160,11 @@ public final class Bspt {
     class EnumerateNear implements Enumeration {
 
         Node[] stack;
-        int    sp;
-        int    i;
-        Leaf   leaf;
+        int sp;
+        int i;
+        Leaf leaf;
         double distance;
-        Tuple  center;
+        Tuple center;
 
         EnumerateNear(Tuple center, double distance) {
             this.distance = distance;
@@ -182,7 +176,8 @@ public final class Bspt {
             while (ele instanceof Node) {
                 Node node = (Node) ele;
                 if (center.getDimValue(node.dim) - distance <= node.splitValue) {
-                    if (sp == STACK_DEPTH) throw new Error("Bspt.EnumerateNear tree stack overflow");
+                    if (sp == STACK_DEPTH)
+                        throw new Error("Bspt.EnumerateNear tree stack overflow");
                     stack[sp++] = node;
                     ele = node.eleLE;
                 } else {
@@ -233,15 +228,15 @@ public final class Bspt {
 
     class EnumerateSphere implements Enumeration {
 
-        Node[]  stack;
-        int     sp;
-        int     i;
-        Leaf    leaf;
-        double  distance;
-        double  distance2;
-        Tuple   center;
-        double  centerValues[];
-        double  foundDistance2; // the dist squared of a found Element;
+        Node[] stack;
+        int sp;
+        int i;
+        Leaf leaf;
+        double distance;
+        double distance2;
+        Tuple center;
+        double centerValues[];
+        double foundDistance2; // the dist squared of a found Element;
 
         // when set, only the hemisphere sphere .GT. or .EQ. the point
         // (on the first dim) is returned
@@ -253,15 +248,15 @@ public final class Bspt {
             this.center = center;
             this.tHemisphere = tHemisphere;
             centerValues = new double[dimMax];
-            for (int dim = dimMax; --dim >= 0;)
-                centerValues[dim] = center.getDimValue(dim);
+            for (int dim = dimMax; --dim >= 0; ) centerValues[dim] = center.getDimValue(dim);
             stack = new Node[STACK_DEPTH];
             sp = 0;
             Element ele = eleRoot;
             while (ele instanceof Node) {
                 Node node = (Node) ele;
                 if (center.getDimValue(node.dim) - distance <= node.splitValue) {
-                    if (sp == STACK_DEPTH) throw new Error("Bspt.EnumerateSphere tree stack overflow");
+                    if (sp == STACK_DEPTH)
+                        throw new Error("Bspt.EnumerateSphere tree stack overflow");
                     stack[sp++] = node;
                     ele = node.eleLE;
                 } else {
@@ -283,7 +278,7 @@ public final class Bspt {
             if (dist2 > distance2) {
                 return false;
             }
-            for (int dim = dimMax; --dim > 0;) {
+            for (int dim = dimMax; --dim > 0; ) {
                 distT = t.getDimValue(dim) - centerValues[dim];
                 dist2 += distT * distT;
                 if (dist2 > distance2) {
@@ -297,8 +292,7 @@ public final class Bspt {
         @Override
         public boolean hasMoreElements() {
             while (true) {
-                for (; i < leaf.count; ++i)
-                    if (isWithin(leaf.tuples[i])) return true;
+                for (; i < leaf.count; ++i) if (isWithin(leaf.tuples[i])) return true;
                 if (sp == 0) return false;
                 Element ele = stack[--sp];
                 while (ele instanceof Node) {
@@ -347,9 +341,9 @@ public final class Bspt {
     class Node implements Element {
 
         Element eleLE;
-        int     dim;
-        int     dimMax;
-        double  splitValue;
+        int dim;
+        int dimMax;
+        double splitValue;
         Element eleGE;
 
         Node(int dim, int dimMax, Leaf leafLE) {
@@ -372,14 +366,10 @@ public final class Bspt {
                 eleGE = new Node((dim + 1) % dimMax, dimMax, (Leaf) eleGE);
                 return eleGE.addTuple(tuple);
             }
-            if (eleLE.isLeafWithSpace())
-                eleLE.addTuple(tuple);
-            else if (eleGE.isLeafWithSpace())
-                eleGE.addTuple(tuple);
-            else if (eleLE instanceof Node)
-                eleLE.addTuple(tuple);
-            else if (eleGE instanceof Node)
-                eleGE.addTuple(tuple);
+            if (eleLE.isLeafWithSpace()) eleLE.addTuple(tuple);
+            else if (eleGE.isLeafWithSpace()) eleGE.addTuple(tuple);
+            else if (eleLE instanceof Node) eleLE.addTuple(tuple);
+            else if (eleGE instanceof Node) eleGE.addTuple(tuple);
             else {
                 eleLE = new Node((dim + 1) % dimMax, dimMax, (Leaf) eleLE);
                 return eleLE.addTuple(tuple);
@@ -396,8 +386,7 @@ public final class Bspt {
         public void dump(int level) {
             System.out.println("");
             eleLE.dump(level + 1);
-            for (int i = 0; i < level; ++i)
-                System.out.print("-");
+            for (int i = 0; i < level; ++i) System.out.print("-");
             System.out.println(">" + splitValue);
             eleGE.dump(level + 1);
         }
@@ -410,7 +399,7 @@ public final class Bspt {
 
     class Leaf implements Element {
 
-        int     count;
+        int count;
         Tuple[] tuples;
 
         Leaf() {
@@ -420,7 +409,7 @@ public final class Bspt {
 
         Leaf(Leaf leaf, int dim, double splitValue) {
             this();
-            for (int i = LEAF_COUNT; --i >= 0;) {
+            for (int i = LEAF_COUNT; --i >= 0; ) {
                 Tuple tuple = leaf.tuples[i];
                 double value = tuple.getDimValue(dim);
                 if (value > splitValue || (value == splitValue && ((i & 1) == 1))) {
@@ -456,8 +445,7 @@ public final class Bspt {
         public void dump(int level) {
             for (int i = 0; i < count; ++i) {
                 Tuple t = tuples[i];
-                for (int j = 0; j < level; ++j)
-                    System.out.print(".");
+                for (int j = 0; j < level; ++j) System.out.print(".");
                 for (int dim = 0; dim < dimMax - 1; ++dim)
                     System.out.print("" + t.getDimValue(dim) + ",");
                 System.out.println("" + t.getDimValue(dimMax - 1));

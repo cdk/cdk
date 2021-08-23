@@ -22,27 +22,24 @@
  *  */
 package org.openscience.cdk;
 
+import java.util.Collection;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBioPolymer;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IStrand;
 
-import java.util.Collection;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map;
-
 /**
- * A BioPolymer is a subclass of a Polymer which is supposed to store
- * additional informations about the Polymer which are connected to BioPolymers.
+ * A BioPolymer is a subclass of a Polymer which is supposed to store additional informations about
+ * the Polymer which are connected to BioPolymers.
  *
- * @cdk.module  data
+ * @cdk.module data
  * @cdk.githash
- *
  * @author Edgar Luttmann &lt;edgar@uni-paderborn.de&gt;
- * @author      Martin Eklund
+ * @author Martin Eklund
  * @cdk.created 2001-08-06
- *
  * @cdk.keyword polymer
  * @cdk.keyword biopolymer
  */
@@ -51,17 +48,15 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
     /**
      * Determines if a de-serialized object is compatible with this class.
      *
-     * This value must only be changed if and only if the new version
-     * of this class is incompatible with the old version. See Sun docs
-     * for <a href="http://java.sun.com/products/jdk/1.1/docs/guide/serialization/spec/version.doc.html">details</a>.
+     * <p>This value must only be changed if and only if the new version of this class is
+     * incompatible with the old version. See Sun docs for <a
+     * href="http://java.sun.com/products/jdk/1.1/docs/guide/serialization/spec/version.doc.html">details</a>.
      */
-    private static final long    serialVersionUID = -5001873073769634393L;
+    private static final long serialVersionUID = -5001873073769634393L;
 
-    private Map<String, IStrand> strands;                                 // the list of all the contained Strands.
+    private Map<String, IStrand> strands; // the list of all the contained Strands.
 
-    /**
-     * Constructs a new Polymer to store the Strands.
-     */
+    /** Constructs a new Polymer to store the Strands. */
     public BioPolymer() {
         super();
         // Strand stuff
@@ -69,10 +64,10 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
     }
 
     /**
-     * Adds the atom oAtom to a specified Strand, whereas the Monomer is unspecified. Hence
-     * the atom will be added to a Monomer of type UNKNOWN in the specified Strand.
+     * Adds the atom oAtom to a specified Strand, whereas the Monomer is unspecified. Hence the atom
+     * will be added to a Monomer of type UNKNOWN in the specified Strand.
      *
-     * @param oAtom   The atom to add
+     * @param oAtom The atom to add
      * @param oStrand The strand the atom belongs to
      */
     @Override
@@ -83,8 +78,11 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
         // Add atom to AtomContainer
         super.addAtom(oAtom);
 
-        if (atomCount != super.getAtomCount() && oStrand != null) { // Maybe better to throw null pointer exception here, so user realises that
-                                                                    // Strand == null and Atom only gets added to this BioPolymer, but not to a Strand.
+        if (atomCount != super.getAtomCount()
+                && oStrand
+                        != null) { // Maybe better to throw null pointer exception here, so user
+                                   // realises that
+            // Strand == null and Atom only gets added to this BioPolymer, but not to a Strand.
             oStrand.addAtom(oAtom);
             if (!strands.containsKey(oStrand.getStrandName())) {
                 strands.put(oStrand.getStrandName(), oStrand);
@@ -110,10 +108,13 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
         // Add atom to AtomContainer
         super.addAtom(oAtom);
 
-        if (atomCount != super.getAtomCount() && // OK, super did not yet contain the atom
+        if (atomCount != super.getAtomCount()
+                && // OK, super did not yet contain the atom
                 // Add atom to Strand (also adds the atom to the monomer).
                 oStrand != null) {
-            oStrand.addAtom(oAtom, oMonomer); // Same problem as above: better to throw nullpointer exception?
+            oStrand.addAtom(
+                    oAtom,
+                    oMonomer); // Same problem as above: better to throw nullpointer exception?
             if (!strands.containsKey(oStrand.getStrandName())) {
                 strands.put(oStrand.getStrandName(), oStrand);
             }
@@ -142,7 +143,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
         int number = 0;
 
         if (!keys.hasNext()) // no strands
-            return super.getMonomerCount();
+        return super.getMonomerCount();
 
         while (keys.hasNext()) {
             Strand tmp = (Strand) strands.get(keys.next()); // Cast exception?!
@@ -156,9 +157,8 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
      * monomers with the same name in different strands. There is at least one such case: every
      * strand contains a monomer called "".]
      *
-     * @param monName  The name of the monomer to look for
+     * @param monName The name of the monomer to look for
      * @return The Monomer object which was asked for
-     *
      */
     @Override
     public IMonomer getMonomer(String monName, String strandName) {
@@ -182,8 +182,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
      */
 
     /**
-     * Returns a collection of the names of all <code>Monomer</code>s in this
-     * BioPolymer.
+     * Returns a collection of the names of all <code>Monomer</code>s in this BioPolymer.
      *
      * @return a <code>Collection</code> of all the monomer names.
      */
@@ -193,7 +192,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
         Map<String, IMonomer> monomers = new Hashtable<String, IMonomer>();
 
         if (!keys.hasNext()) // no strands
-            return super.getMonomerNames();
+        return super.getMonomerNames();
 
         while (keys.hasNext()) {
             Strand oStrand = (Strand) strands.get(keys.next());
@@ -203,11 +202,9 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
     }
 
     /**
-     *
      * Returns the number of strands present in the BioPolymer.
      *
      * @return number of strands
-     *
      */
     @Override
     public int getStrandCount() {
@@ -215,12 +212,10 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
     }
 
     /**
-     *
      * Retrieves a Monomer object by specifying its name.
      *
-     * @param cName  The name of the monomer to look for
+     * @param cName The name of the monomer to look for
      * @return The Monomer object which was asked for
-     *
      */
     @Override
     public IStrand getStrand(String cName) {
@@ -228,8 +223,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
     }
 
     /**
-     * Returns a collection of the names of all <code>Strand</code>s in this
-     * BioPolymer.
+     * Returns a collection of the names of all <code>Strand</code>s in this BioPolymer.
      *
      * @return a <code>Collection</code> of all the strand names.
      */
@@ -252,9 +246,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
         }
     }
 
-    /**
-     * @return hashtable containing the monomers in the strand.
-     */
+    /** @return hashtable containing the monomers in the strand. */
     @Override
     public Map<String, IStrand> getStrands() {
         return strands;
@@ -274,9 +266,9 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
     public IBioPolymer clone() throws CloneNotSupportedException {
         BioPolymer clone = (BioPolymer) super.clone();
         clone.strands.clear();
-        for (Iterator<String> strands = clone.getStrandNames().iterator(); strands.hasNext();) {
+        for (Iterator<String> strands = clone.getStrandNames().iterator(); strands.hasNext(); ) {
             Strand strand = (Strand) clone.getStrand(strands.next().toString()).clone();
-            for (Iterator<String> iter = strand.getMonomerNames().iterator(); iter.hasNext();) {
+            for (Iterator<String> iter = strand.getMonomerNames().iterator(); iter.hasNext(); ) {
                 IMonomer monomer = strand.getMonomer(iter.next().toString());
                 Iterator<IAtom> atoms = monomer.atoms().iterator();
                 while (atoms.hasNext()) {

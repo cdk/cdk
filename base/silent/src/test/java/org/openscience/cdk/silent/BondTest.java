@@ -37,13 +37,14 @@ public class BondTest extends AbstractBondTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new Bond();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new Bond();
+                    }
+                });
     }
 
     @Test
@@ -65,7 +66,7 @@ public class BondTest extends AbstractBondTest {
         IAtom atom4 = object.getBuilder().newInstance(IAtom.class, "C");
         IAtom atom5 = object.getBuilder().newInstance(IAtom.class, "C");
 
-        IBond bond1 = new Bond(new IAtom[]{atom1, atom2, atom3, atom4, atom5});
+        IBond bond1 = new Bond(new IAtom[] {atom1, atom2, atom3, atom4, atom5});
         Assert.assertEquals(5, bond1.getAtomCount());
         Assert.assertEquals(atom1, bond1.getBegin());
         Assert.assertEquals(atom2, bond1.getEnd());
@@ -80,7 +81,7 @@ public class BondTest extends AbstractBondTest {
         IAtom atom4 = object.getBuilder().newInstance(IAtom.class, "C");
         IAtom atom5 = object.getBuilder().newInstance(IAtom.class, "C");
 
-        IBond bond1 = new Bond(new IAtom[]{atom1, atom2, atom3, atom4, atom5}, IBond.Order.SINGLE);
+        IBond bond1 = new Bond(new IAtom[] {atom1, atom2, atom3, atom4, atom5}, IBond.Order.SINGLE);
         Assert.assertEquals(5, bond1.getAtomCount());
         Assert.assertEquals(atom1, bond1.getBegin());
         Assert.assertEquals(atom2, bond1.getEnd());

@@ -29,9 +29,7 @@ package org.openscience.cdk.smiles.smarts.parser;
 @Deprecated
 class ASTAtomicMass extends SimpleNode {
 
-    /**
-     * The atomic mass value
-     */
+    /** The atomic mass value */
     private int mass;
 
     public ASTAtomicMass(int id) {
@@ -42,9 +40,7 @@ class ASTAtomicMass extends SimpleNode {
         super(p, id);
     }
 
-    /**
-     * Returns the mass value.
-     */
+    /** Returns the mass value. */
     public int getMass() {
         return mass;
     }

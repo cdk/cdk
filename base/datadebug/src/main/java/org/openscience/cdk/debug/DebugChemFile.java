@@ -19,20 +19,19 @@
 package org.openscience.cdk.debug;
 
 import java.util.Map;
-
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module datadebug
  * @cdk.githash
  */
@@ -40,7 +39,7 @@ public class DebugChemFile extends ChemFile implements IChemFile {
 
     private static final long serialVersionUID = -5575043161897814279L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugChemFile.class);
+    ILoggingTool logger = LoggingToolFactory.createLoggingTool(DebugChemFile.class);
 
     public DebugChemFile() {
         super();
@@ -211,5 +210,4 @@ public class DebugChemFile extends ChemFile implements IChemFile {
         logger.debug("Getting chemSequence count: ", super.getChemSequenceCount());
         return super.getChemSequenceCount();
     }
-
 }

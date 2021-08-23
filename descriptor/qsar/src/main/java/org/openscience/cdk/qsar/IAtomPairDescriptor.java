@@ -32,14 +32,13 @@ public interface IAtomPairDescriptor extends IDescriptor {
     /**
      * Calculates the descriptor value for the given IAtom.
      *
-     * @param  atom         The first {@link IAtom} of the pair for which this
-     * 						descriptor should be calculated
-     * @param  atom2        The second {@link IAtom} of the pair for which this
-     * 						descriptor should be calculated
-     * @param  container TODO
-     * @return              An object of {@link DescriptorValue} that contain the
-     *                      calculated value as well as specification details
+     * @param atom The first {@link IAtom} of the pair for which this descriptor should be
+     *     calculated
+     * @param atom2 The second {@link IAtom} of the pair for which this descriptor should be
+     *     calculated
+     * @param container TODO
+     * @return An object of {@link DescriptorValue} that contain the calculated value as well as
+     *     specification details
      */
     public DescriptorValue calculate(IAtom atom, IAtom atom2, IAtomContainer container);
-
 }

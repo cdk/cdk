@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.libio.cml;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import nu.xom.Document;
 import nu.xom.Serializer;
 import org.junit.Assert;
@@ -34,17 +36,10 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.xmlcml.cml.element.CMLBond;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-
-/**
- * @cdk.module test-libiocml
- */
+/** @cdk.module test-libiocml */
 public class ConvertorTest extends CDKTestCase {
 
-    /**
-     * @cdk.bug 1748257
-     */
+    /** @cdk.bug 1748257 */
     @Ignore("moved to MDMoleculeTest")
     public void testBug1748257() {}
 
@@ -71,7 +66,6 @@ public class ConvertorTest extends CDKTestCase {
         String actual = new String(out.toByteArray());
 
         Assert.assertTrue(actual.contains(expected));
-
     }
 
     @Test
@@ -97,7 +91,5 @@ public class ConvertorTest extends CDKTestCase {
         String actual = new String(out.toByteArray());
 
         Assert.assertTrue(actual.contains(expected));
-
     }
-
 }

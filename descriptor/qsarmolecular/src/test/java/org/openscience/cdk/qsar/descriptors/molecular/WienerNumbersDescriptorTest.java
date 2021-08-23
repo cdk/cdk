@@ -27,9 +27,7 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-/**
- * @cdk.module test-qsarmolecular
- */
+/** @cdk.module test-qsarmolecular */
 public class WienerNumbersDescriptorTest extends MolecularDescriptorTest {
 
     public WienerNumbersDescriptorTest() {}
@@ -50,9 +48,7 @@ public class WienerNumbersDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(testResult[1], retval.get(1), 0.0001);
     }
 
-    /**
-     * Test if the descriptor returns the same results with and without explicit hydrogens.
-     */
+    /** Test if the descriptor returns the same results with and without explicit hydrogens. */
     @Test
     public void testWithExplicitHydrogens() throws Exception {
         double[] testResult = {18, 2};
@@ -63,9 +59,7 @@ public class WienerNumbersDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(testResult[1], retval.get(1), 0.0001);
     }
 
-    /**
-     * Numbers extracted from {@cdk.cite Wiener1947}.
-     */
+    /** Numbers extracted from {@cdk.cite Wiener1947}. */
     @Test
     public void testOriginalWienerPaperCompounds() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

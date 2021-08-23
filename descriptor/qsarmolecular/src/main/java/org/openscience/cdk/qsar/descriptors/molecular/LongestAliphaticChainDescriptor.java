@@ -32,7 +32,9 @@ import org.openscience.cdk.qsar.result.IntegerResult;
 
 /**
  * Counts the number of atoms in the longest aliphatic chain.
+ *
  * <p>
+ *
  * <table border="1"><caption>Parameters for this descriptor:</caption>
  * <tr>
  * <td>Name</td>
@@ -45,8 +47,8 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * <td>True is the CDKConstant.ISINRING has to be set</td>
  * </tr>
  * </table>
- * <p>
- * Returns a single value named <i>nAtomLAC</i>
+ *
+ * <p>Returns a single value named <i>nAtomLAC</i>
  *
  * @author chhoppe from EUROSCREEN
  * @author John Mayfield
@@ -55,31 +57,26 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:largestAliphaticChain
  */
-public class LongestAliphaticChainDescriptor
-    extends AbstractMolecularDescriptor {
+public class LongestAliphaticChainDescriptor extends AbstractMolecularDescriptor {
 
     public static final String CHECK_RING_SYSTEM = "checkRingSystem";
     private boolean checkRingSystem = false;
 
     private static final String[] NAMES = {"nAtomLAC"};
 
-    /**
-     * Constructor for the LongestAliphaticChainDescriptor object.
-     */
-    public LongestAliphaticChainDescriptor() {
-    }
+    /** Constructor for the LongestAliphaticChainDescriptor object. */
+    public LongestAliphaticChainDescriptor() {}
 
     /**
-     * Returns a <code>Map</code> which specifies which descriptor
-     * is implemented by this class.
-     * <p>
-     * These fields are used in the map:
+     * Returns a <code>Map</code> which specifies which descriptor is implemented by this class.
+     *
+     * <p>These fields are used in the map:
+     *
      * <ul>
-     * <li>Specification-Reference: refers to an entry in a unique dictionary
-     * <li>Implementation-Title: anything
-     * <li>Implementation-Identifier: a unique identifier for this version of
-     * this class
-     * <li>Implementation-Vendor: CDK, JOELib, or anything else
+     *   <li>Specification-Reference: refers to an entry in a unique dictionary
+     *   <li>Implementation-Title: anything
+     *   <li>Implementation-Identifier: a unique identifier for this version of this class
+     *   <li>Implementation-Vendor: CDK, JOELib, or anything else
      * </ul>
      *
      * @return An object containing the descriptor specification
@@ -87,14 +84,15 @@ public class LongestAliphaticChainDescriptor
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#longestAliphaticChain", this
-            .getClass().getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#longestAliphaticChain",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     /**
      * Sets the parameters attribute of the LongestAliphaticChainDescriptor object.
-     * <p>
-     * This descriptor takes one parameter, which should be Boolean to indicate whether
+     *
+     * <p>This descriptor takes one parameter, which should be Boolean to indicate whether
      * aromaticity has been checked (TRUE) or not (FALSE).
      *
      * @param params The new parameters value
@@ -130,12 +128,13 @@ public class LongestAliphaticChainDescriptor
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
-        return new DescriptorValue(getSpecification(),
-                                   getParameterNames(),
-                                   getParameters(),
-                                   new IntegerResult(0),
-                                   getDescriptorNames(),
-                                   e);
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new IntegerResult(0),
+                getDescriptorNames(),
+                e);
     }
 
     private static boolean isAcyclicCarbon(IAtom atom) {
@@ -143,12 +142,12 @@ public class LongestAliphaticChainDescriptor
     }
 
     /**
-     * Depth-First-Search on an acyclic graph. Since we have no cycles we
-     * don't need the visit flags and only need to know which atom we came from.
+     * Depth-First-Search on an acyclic graph. Since we have no cycles we don't need the visit flags
+     * and only need to know which atom we came from.
      *
      * @param adjlist adjacency list representation of grah
-     * @param v       the current atom index
-     * @param prev    the previous atom index
+     * @param v the current atom index
+     * @param prev the previous atom index
      * @return the max length traversed
      */
     private static int getMaxDepth(int[][] adjlist, int v, int prev) {
@@ -157,17 +156,17 @@ public class LongestAliphaticChainDescriptor
             if (w == prev) continue;
             // no cycles so don't need to check previous
             int length = getMaxDepth(adjlist, w, v);
-            if (length > longest)
-                longest = length;
+            if (length > longest) longest = length;
         }
         return 1 + longest;
     }
 
     /**
-     * Calculate the count of atoms of the longest aliphatic chain in the supplied {@link IAtomContainer}.
-     * <p>
-     * The method require one parameter:
-     * if checkRingSyste is true the CDKConstant.ISINRING will be set
+     * Calculate the count of atoms of the longest aliphatic chain in the supplied {@link
+     * IAtomContainer}.
+     *
+     * <p>The method require one parameter: if checkRingSyste is true the CDKConstant.ISINRING will
+     * be set
      *
      * @param mol The {@link IAtomContainer} for which this descriptor is to be calculated
      * @return the number of atoms in the longest aliphatic chain of this AtomContainer
@@ -176,17 +175,14 @@ public class LongestAliphaticChainDescriptor
     @Override
     public DescriptorValue calculate(IAtomContainer mol) {
 
-        if (checkRingSystem)
-            Cycles.markRingAtomsAndBonds(mol);
+        if (checkRingSystem) Cycles.markRingAtomsAndBonds(mol);
 
         IAtomContainer aliphaticParts = mol.getBuilder().newAtomContainer();
         for (IAtom atom : mol.atoms()) {
-            if (isAcyclicCarbon(atom))
-                aliphaticParts.addAtom(atom);
+            if (isAcyclicCarbon(atom)) aliphaticParts.addAtom(atom);
         }
         for (IBond bond : mol.bonds()) {
-            if (isAcyclicCarbon(bond.getBegin()) &&
-                isAcyclicCarbon(bond.getEnd()))
+            if (isAcyclicCarbon(bond.getBegin()) && isAcyclicCarbon(bond.getEnd()))
                 aliphaticParts.addBond(bond);
         }
 
@@ -194,30 +190,31 @@ public class LongestAliphaticChainDescriptor
         final int[][] adjlist = GraphUtil.toAdjList(aliphaticParts);
         for (int i = 0; i < adjlist.length; i++) {
             // atom deg > 1 can't find the longest chain
-            if (adjlist[i].length != 1)
-                continue;
+            if (adjlist[i].length != 1) continue;
             int length = getMaxDepth(adjlist, i, -1);
-            if (length > longest)
-                longest = length;
+            if (length > longest) longest = length;
         }
 
-        return new DescriptorValue(getSpecification(),
-                                   getParameterNames(),
-                                   getParameters(),
-                                   new IntegerResult(longest),
-                                   getDescriptorNames());
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new IntegerResult(longest),
+                getDescriptorNames());
     }
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p>
-     * The return value from this method really indicates what type of result will
-     * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
-     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
-     * allows you to do the same thing, without actually calculating the descriptor.
      *
-     * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
-     * the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
+     * <p>The return value from this method really indicates what type of result will be obtained
+     * from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
+     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object;
+     * this method allows you to do the same thing, without actually calculating the descriptor.
+     *
+     * @return an object that implements the {@link
+     *     org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating the actual type
+     *     of values returned by the descriptor in the {@link
+     *     org.openscience.cdk.qsar.DescriptorValue} object
      */
     @Override
     public IDescriptorResult getDescriptorResultType() {
@@ -244,9 +241,7 @@ public class LongestAliphaticChainDescriptor
      */
     @Override
     public Object getParameterType(String name) {
-        if (name.equals(CHECK_RING_SYSTEM))
-            return Boolean.TRUE;
-        else
-            throw new IllegalArgumentException("No parameter for name: " + name);
+        if (name.equals(CHECK_RING_SYSTEM)) return Boolean.TRUE;
+        else throw new IllegalArgumentException("No parameter for name: " + name);
     }
 }

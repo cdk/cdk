@@ -24,27 +24,24 @@ import org.openscience.cdk.io.listener.IChemObjectIOListener;
 import org.openscience.cdk.io.listener.IReaderListener;
 
 /**
- * Abstract class that ChemObjectReader's can implement to have it
- * take care of basic stuff, like managing the ReaderListeners.
+ * Abstract class that ChemObjectReader's can implement to have it take care of basic stuff, like
+ * managing the ReaderListeners.
  *
  * @cdk.module io
  * @cdk.githash
  */
-public abstract class DefaultChemObjectReader extends ChemObjectIO implements ISimpleChemObjectReader {
+public abstract class DefaultChemObjectReader extends ChemObjectIO
+        implements ISimpleChemObjectReader {
 
-    /**
-     * An event to be sent to listeners when a frame is read.
-     */
-    private ReaderEvent                     frameReadEvent = null;
+    /** An event to be sent to listeners when a frame is read. */
+    private ReaderEvent frameReadEvent = null;
 
-    protected IChemObjectReader.Mode        mode           = IChemObjectReader.Mode.RELAXED;
-    protected IChemObjectReaderErrorHandler errorHandler   = null;
+    protected IChemObjectReader.Mode mode = IChemObjectReader.Mode.RELAXED;
+    protected IChemObjectReaderErrorHandler errorHandler = null;
 
     /* Extra convenience methods */
 
-    /**
-     * Sends a frame read event to the registered ReaderListeners.
-     */
+    /** Sends a frame read event to the registered ReaderListeners. */
     protected void fireFrameRead() {
         for (IChemObjectIOListener listener : getListeners()) {
             if (listener instanceof IReaderListener) {
@@ -87,14 +84,17 @@ public abstract class DefaultChemObjectReader extends ChemObjectIO implements IS
     /** {@inheritDoc} */
     @Override
     public void handleError(String message, int row, int colStart, int colEnd) throws CDKException {
-        if (this.errorHandler != null) this.errorHandler.handleError(message, row, colStart, colEnd);
+        if (this.errorHandler != null)
+            this.errorHandler.handleError(message, row, colStart, colEnd);
         if (this.mode == Mode.STRICT) throw new CDKException(message);
     }
 
     /** {@inheritDoc} */
     @Override
-    public void handleError(String message, int row, int colStart, int colEnd, Exception exception) throws CDKException {
-        if (this.errorHandler != null) this.errorHandler.handleError(message, row, colStart, colEnd, exception);
+    public void handleError(String message, int row, int colStart, int colEnd, Exception exception)
+            throws CDKException {
+        if (this.errorHandler != null)
+            this.errorHandler.handleError(message, row, colStart, colEnd, exception);
         if (this.mode == Mode.STRICT) {
             throw new CDKException(message, exception);
         }

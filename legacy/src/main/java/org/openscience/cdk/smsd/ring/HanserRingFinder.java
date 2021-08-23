@@ -51,7 +51,6 @@ package org.openscience.cdk.smsd.ring;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -61,23 +60,21 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 
 /**
- * Finds the Set of all Rings. This is an implementation of the algorithm
- * published in {@cdk.cite HAN96}. Some of the comments refer to pseudo code
- * fragments listed in this article. The concept is that a regular molecular
- * graph is first converted into a path graph (refer PathGraph.java),
- * i.e. a graph where the edges are actually paths. This can list several
- * nodes that are implicitly connecting the two nodes between the path
- * is formed (refer PathEdge.java).
+ * Finds the Set of all Rings. This is an implementation of the algorithm published in {@cdk.cite
+ * HAN96}. Some of the comments refer to pseudo code fragments listed in this article. The concept
+ * is that a regular molecular graph is first converted into a path graph (refer PathGraph.java),
+ * i.e. a graph where the edges are actually paths. This can list several nodes that are implicitly
+ * connecting the two nodes between the path is formed (refer PathEdge.java).
  *
- * The paths that join source and sink node are step by step fused and the joined
- * nodes are deleted from the path graph (collapsed path). What remains is a graph
- * of paths that have the same start and endpoint and are thus rings (source=sink=ring).
+ * <p>The paths that join source and sink node are step by step fused and the joined nodes are
+ * deleted from the path graph (collapsed path). What remains is a graph of paths that have the same
+ * start and endpoint and are thus rings (source=sink=ring).
  *
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt; 2009-2010
- * @deprecated Use CDK AllRingsFinder. A more recent version of SMSD is available at
- *             <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated Use CDK AllRingsFinder. A more recent version of SMSD is available at <a
+ *     href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public class HanserRingFinder implements RingFinder {
@@ -91,9 +88,10 @@ public class HanserRingFinder implements RingFinder {
     /**
      * Returns a collection of rings.
      *
-     * @param  molecule
+     * @param molecule
      * @return a {@link Collection} of {@link List}s containing one ring each
-     * @see org.openscience.cdk.smsd.ring.RingFinder#findRings(org.openscience.cdk.interfaces.IAtomContainer)
+     * @see
+     *     org.openscience.cdk.smsd.ring.RingFinder#findRings(org.openscience.cdk.interfaces.IAtomContainer)
      */
     @Override
     public Collection<List<IAtom>> findRings(IAtomContainer molecule) {
@@ -115,9 +113,11 @@ public class HanserRingFinder implements RingFinder {
 
     /**
      * Returns Ring set based on Hanser Ring Finding method
+     *
      * @param molecule
      * @return report collected the rings
-     * @see org.openscience.cdk.smsd.ring.RingFinder#getRingSet(org.openscience.cdk.interfaces.IAtomContainer)
+     * @see
+     *     org.openscience.cdk.smsd.ring.RingFinder#getRingSet(org.openscience.cdk.interfaces.IAtomContainer)
      */
     @Override
     public IRingSet getRingSet(IAtomContainer molecule) throws CDKException {

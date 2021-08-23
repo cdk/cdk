@@ -28,15 +28,10 @@ import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
-/**
- * @cdk.module test-qsaratomic
- */
+/** @cdk.module test-qsaratomic */
 public class CovalentRadiusDescriptorTest extends AtomicDescriptorTest {
 
-    /**
-     *  Constructor for the CovalentRadiusDescriptorTest object
-     *
-     */
+    /** Constructor for the CovalentRadiusDescriptorTest object */
     public CovalentRadiusDescriptorTest() {}
 
     @Before
@@ -45,20 +40,20 @@ public class CovalentRadiusDescriptorTest extends AtomicDescriptorTest {
     }
 
     /**
-     *  A unit test suite for JUnit
+     * A unit test suite for JUnit
      *
-     *@return    The test suite
+     * @return The test suite
      */
-    /**
-     *  A unit test for JUnit
-     */
+    /** A unit test for JUnit */
     @Test
-    public void testVdWRadiusDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testVdWRadiusDescriptor()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
         double[] testResult = {0.77};
         IAtomicDescriptor descriptor = new CovalentRadiusDescriptor();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("NCCN(C)(C)");
-        double retval = ((DoubleResult) descriptor.calculate(mol.getAtom(1), mol).getValue()).doubleValue();
+        double retval =
+                ((DoubleResult) descriptor.calculate(mol.getAtom(1), mol).getValue()).doubleValue();
 
         Assert.assertEquals(testResult[0], retval, 0.01);
     }

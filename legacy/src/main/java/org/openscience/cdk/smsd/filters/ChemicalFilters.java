@@ -1,26 +1,22 @@
 /**
+ * Copyright (C) 2006-2010 Syed Asad Rahman <asad@ebi.ac.uk>
  *
- * Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
+ * <p>Contact: cdk-devel@lists.sourceforge.net
  *
- * Contact: cdk-devel@lists.sourceforge.net
+ * <p>This program is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation; either version
+ * 2.1 of the License, or (at your option) any later version. All we ask is that proper credit is
+ * given for our work, which includes - but is not limited to - adding the above copyright notice to
+ * the beginning of your source code files, and to any copyright notice that you may distribute with
+ * programs based on this work.
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1
- * of the License, or (at your option) any later version.
- * All we ask is that proper credit is given for our work, which includes
- * - but is not limited to - adding the above copyright notice to the beginning
- * of your source code files, and to any copyright notice that you may distribute
- * with programs based on this work.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * <p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
- * You should have received eAtom copy of the GNU Lesser General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ * <p>You should have received eAtom copy of the GNU Lesser General Public License along with this
+ * program; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+ * Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.smsd.filters;
 
@@ -38,7 +34,6 @@ import java.util.Objects;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
@@ -63,30 +58,30 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is
+ *     available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public class ChemicalFilters {
 
-    private List<Map<Integer, Integer>> allMCS        = null;
-    private Map<Integer, Integer>       firstSolution = null;
-    private List<Map<IAtom, IAtom>>     allAtomMCS    = null;
-    private Map<IAtom, IAtom>           firstAtomMCS  = null;
-    private List<Double>                stereoScore   = null;
-    private List<Integer>               fragmentSize  = null;
-    private List<Double>                bEnergies     = null;
-    private IAtomContainer              rMol          = null;
-    private IAtomContainer              pMol          = null;
+    private List<Map<Integer, Integer>> allMCS = null;
+    private Map<Integer, Integer> firstSolution = null;
+    private List<Map<IAtom, IAtom>> allAtomMCS = null;
+    private Map<IAtom, IAtom> firstAtomMCS = null;
+    private List<Double> stereoScore = null;
+    private List<Integer> fragmentSize = null;
+    private List<Double> bEnergies = null;
+    private IAtomContainer rMol = null;
+    private IAtomContainer pMol = null;
 
     /**
-     * This class has all the three chemical filters supported by the SMSD.
-     * i.e ring matches, bond energy etc
+     * This class has all the three chemical filters supported by the SMSD. i.e ring matches, bond
+     * energy etc
      *
      * <OL>
-     * <lI>a: Bond energy,
-     * <lI>b: Fragment count,
-     * <lI>c: Stereo matches
+     *   <lI>a: Bond energy,
+     *   <lI>b: Fragment count,
+     *   <lI>c: Stereo matches
      * </OL>
      *
      * @param allMCS
@@ -96,8 +91,12 @@ public class ChemicalFilters {
      * @param sourceMol
      * @param targetMol
      */
-    public ChemicalFilters(List<Map<Integer, Integer>> allMCS, List<Map<IAtom, IAtom>> allAtomMCS,
-            Map<Integer, Integer> firstSolution, Map<IAtom, IAtom> firstAtomMCS, IAtomContainer sourceMol,
+    public ChemicalFilters(
+            List<Map<Integer, Integer>> allMCS,
+            List<Map<IAtom, IAtom>> allAtomMCS,
+            Map<Integer, Integer> firstSolution,
+            Map<IAtom, IAtom> firstAtomMCS,
+            IAtomContainer sourceMol,
             IAtomContainer targetMol) {
         this.allAtomMCS = allAtomMCS;
         this.allMCS = allMCS;
@@ -109,7 +108,6 @@ public class ChemicalFilters {
         stereoScore = new ArrayList<Double>();
         fragmentSize = new ArrayList<Integer>();
         bEnergies = new ArrayList<Double>();
-
     }
 
     private void clear() {
@@ -121,36 +119,44 @@ public class ChemicalFilters {
         stereoScore.clear();
         fragmentSize.clear();
         bEnergies.clear();
-
     }
 
-    private void clear(Map<Integer, Map<Integer, Integer>> sortedAllMCS,
-            Map<Integer, Map<IAtom, IAtom>> sortedAllAtomMCS, Map<Integer, Double> stereoScoreMap,
-            Map<Integer, Integer> fragmentScoreMap, Map<Integer, Double> energySelectionMap) {
+    private void clear(
+            Map<Integer, Map<Integer, Integer>> sortedAllMCS,
+            Map<Integer, Map<IAtom, IAtom>> sortedAllAtomMCS,
+            Map<Integer, Double> stereoScoreMap,
+            Map<Integer, Integer> fragmentScoreMap,
+            Map<Integer, Double> energySelectionMap) {
 
         sortedAllMCS.clear();
         sortedAllAtomMCS.clear();
         stereoScoreMap.clear();
         fragmentScoreMap.clear();
         energySelectionMap.clear();
-
     }
 
-    private void addSolution(int counter, int key, Map<Integer, Map<IAtom, IAtom>> allFragmentAtomMCS,
-            Map<Integer, Map<Integer, Integer>> allFragmentMCS, Map<Integer, Double> stereoScoreMap,
-            Map<Integer, Double> energyScoreMap, Map<Integer, Integer> fragmentScoreMap) {
+    private void addSolution(
+            int counter,
+            int key,
+            Map<Integer, Map<IAtom, IAtom>> allFragmentAtomMCS,
+            Map<Integer, Map<Integer, Integer>> allFragmentMCS,
+            Map<Integer, Double> stereoScoreMap,
+            Map<Integer, Double> energyScoreMap,
+            Map<Integer, Integer> fragmentScoreMap) {
 
         allAtomMCS.add(counter, allFragmentAtomMCS.get(key));
         allMCS.add(counter, allFragmentMCS.get(key));
         stereoScore.add(counter, stereoScoreMap.get(key));
         fragmentSize.add(counter, fragmentScoreMap.get(key));
         bEnergies.add(counter, energyScoreMap.get(key));
-
     }
 
-    private void initializeMaps(Map<Integer, Map<Integer, Integer>> sortedAllMCS,
-            Map<Integer, Map<IAtom, IAtom>> sortedAllAtomMCS, Map<Integer, Double> stereoScoreMap,
-            Map<Integer, Integer> fragmentScoreMap, Map<Integer, Double> energySelectionMap) {
+    private void initializeMaps(
+            Map<Integer, Map<Integer, Integer>> sortedAllMCS,
+            Map<Integer, Map<IAtom, IAtom>> sortedAllAtomMCS,
+            Map<Integer, Double> stereoScoreMap,
+            Map<Integer, Integer> fragmentScoreMap,
+            Map<Integer, Double> energySelectionMap) {
 
         Integer index = 0;
         for (Map<IAtom, IAtom> atomsMCS : allAtomMCS) {
@@ -184,37 +190,43 @@ public class ChemicalFilters {
             stereoScoreMap.put(index, score);
             index++;
         }
-
     }
 
     /**
      * Sort MCS solution by stereo and bond type matches.
+     *
      * @throws CDKException
      */
     public synchronized void sortResultsByStereoAndBondMatch() throws CDKException {
 
         //        System.out.println("\n\n\n\nSort By ResultsByStereoAndBondMatch");
 
-        Map<Integer, Map<Integer, Integer>> allStereoMCS = new HashMap<Integer, Map<Integer, Integer>>();
-        Map<Integer, Map<IAtom, IAtom>> allStereoAtomMCS = new HashMap<Integer, Map<IAtom, IAtom>>();
+        Map<Integer, Map<Integer, Integer>> allStereoMCS =
+                new HashMap<Integer, Map<Integer, Integer>>();
+        Map<Integer, Map<IAtom, IAtom>> allStereoAtomMCS =
+                new HashMap<Integer, Map<IAtom, IAtom>>();
 
         Map<Integer, Integer> fragmentScoreMap = new TreeMap<Integer, Integer>();
         Map<Integer, Double> energyScoreMap = new TreeMap<Integer, Double>();
         Map<Integer, Double> stereoScoreMap = new HashMap<Integer, Double>();
 
-        initializeMaps(allStereoMCS, allStereoAtomMCS, stereoScoreMap, fragmentScoreMap, energyScoreMap);
+        initializeMaps(
+                allStereoMCS, allStereoAtomMCS, stereoScoreMap, fragmentScoreMap, energyScoreMap);
 
-        boolean stereoMatchFlag = getStereoBondChargeMatch(stereoScoreMap, allStereoMCS, allStereoAtomMCS);
+        boolean stereoMatchFlag =
+                getStereoBondChargeMatch(stereoScoreMap, allStereoMCS, allStereoAtomMCS);
 
         boolean flag = false;
         if (stereoMatchFlag) {
 
-            //Higher Score is mapped preferred over lower
+            // Higher Score is mapped preferred over lower
             stereoScoreMap = sortMapByValueInDecendingOrder(stereoScoreMap);
-            double higestStereoScore = stereoScoreMap.isEmpty() ? 0 : stereoScoreMap.values().iterator().next();
+            double higestStereoScore =
+                    stereoScoreMap.isEmpty() ? 0 : stereoScoreMap.values().iterator().next();
             double secondhigestStereoScore = higestStereoScore;
             for (Integer key : stereoScoreMap.keySet()) {
-                if (secondhigestStereoScore < higestStereoScore && stereoScoreMap.get(key) > secondhigestStereoScore) {
+                if (secondhigestStereoScore < higestStereoScore
+                        && stereoScoreMap.get(key) > secondhigestStereoScore) {
                     secondhigestStereoScore = stereoScoreMap.get(key);
                 } else if (secondhigestStereoScore == higestStereoScore
                         && stereoScoreMap.get(key) < secondhigestStereoScore) {
@@ -231,43 +243,62 @@ public class ChemicalFilters {
 
             int counter = 0;
             for (Integer i : stereoScoreMap.keySet()) {
-                //                System.out.println("Sorted Map key " + I + " Sorted Value: " + stereoScoreMap.get(I));
-                //                System.out.println("Stereo MCS " + allStereoMCS.get(I) + " Stereo Value: "
+                //                System.out.println("Sorted Map key " + I + " Sorted Value: " +
+                // stereoScoreMap.get(I));
+                //                System.out.println("Stereo MCS " + allStereoMCS.get(I) + " Stereo
+                // Value: "
                 //                        + stereoScoreMap.get(I));
                 if (higestStereoScore == stereoScoreMap.get(i).doubleValue()) {
-                    //|| secondhigestStereoScore == stereoScoreMap.get(I).doubleValue()) {
-                    addSolution(counter, i, allStereoAtomMCS, allStereoMCS, stereoScoreMap, energyScoreMap,
+                    // || secondhigestStereoScore == stereoScoreMap.get(I).doubleValue()) {
+                    addSolution(
+                            counter,
+                            i,
+                            allStereoAtomMCS,
+                            allStereoMCS,
+                            stereoScoreMap,
+                            energyScoreMap,
                             fragmentScoreMap);
                     counter++;
 
-                    //                    System.out.println("Sorted Map key " + I + " Sorted Value: " + stereoScoreMap.get(I));
-                    //                    System.out.println("Stereo MCS " + allStereoMCS.get(I) + " Stereo Value: "
+                    //                    System.out.println("Sorted Map key " + I + " Sorted Value:
+                    // " + stereoScoreMap.get(I));
+                    //                    System.out.println("Stereo MCS " + allStereoMCS.get(I) + "
+                    // Stereo Value: "
                     //                            + stereoScoreMap.get(I));
                 }
             }
             if (flag) {
                 firstSolution.putAll(allMCS.get(0));
                 firstAtomMCS.putAll(allAtomMCS.get(0));
-                clear(allStereoMCS, allStereoAtomMCS, stereoScoreMap, fragmentScoreMap, energyScoreMap);
+                clear(
+                        allStereoMCS,
+                        allStereoAtomMCS,
+                        stereoScoreMap,
+                        fragmentScoreMap,
+                        energyScoreMap);
             }
         }
-
     }
 
-    /**
-     * Sort solution by ascending order of the fragment count.
-     */
+    /** Sort solution by ascending order of the fragment count. */
     public synchronized void sortResultsByFragments() {
 
         //        System.out.println("\nSort By Fragment");
-        Map<Integer, Map<Integer, Integer>> allFragmentMCS = new TreeMap<Integer, Map<Integer, Integer>>();
-        Map<Integer, Map<IAtom, IAtom>> allFragmentAtomMCS = new TreeMap<Integer, Map<IAtom, IAtom>>();
+        Map<Integer, Map<Integer, Integer>> allFragmentMCS =
+                new TreeMap<Integer, Map<Integer, Integer>>();
+        Map<Integer, Map<IAtom, IAtom>> allFragmentAtomMCS =
+                new TreeMap<Integer, Map<IAtom, IAtom>>();
 
         Map<Integer, Double> stereoScoreMap = new TreeMap<Integer, Double>();
         Map<Integer, Double> energyScoreMap = new TreeMap<Integer, Double>();
         Map<Integer, Integer> fragmentScoreMap = new TreeMap<Integer, Integer>();
 
-        initializeMaps(allFragmentMCS, allFragmentAtomMCS, stereoScoreMap, fragmentScoreMap, energyScoreMap);
+        initializeMaps(
+                allFragmentMCS,
+                allFragmentAtomMCS,
+                stereoScoreMap,
+                fragmentScoreMap,
+                energyScoreMap);
 
         int minFragmentScore = 9999;
         for (Integer key : allFragmentAtomMCS.keySet()) {
@@ -286,11 +317,19 @@ public class ChemicalFilters {
         int counter = 0;
         for (Map.Entry<Integer, Integer> map : fragmentScoreMap.entrySet()) {
             if (minFragmentScore == map.getValue().intValue()) {
-                addSolution(counter, map.getKey(), allFragmentAtomMCS, allFragmentMCS, stereoScoreMap, energyScoreMap,
+                addSolution(
+                        counter,
+                        map.getKey(),
+                        allFragmentAtomMCS,
+                        allFragmentMCS,
+                        stereoScoreMap,
+                        energyScoreMap,
                         fragmentScoreMap);
                 counter++;
-                //                System.out.println("Fragment key " + map.getKey() + " Size: " + fragmentScoreMap.get(map.getKey()));
-                //                System.out.println("Fragment MCS " + allFragmentMCS.get(map.getKey()) + " Stereo Value: "
+                //                System.out.println("Fragment key " + map.getKey() + " Size: " +
+                // fragmentScoreMap.get(map.getKey()));
+                //                System.out.println("Fragment MCS " +
+                // allFragmentMCS.get(map.getKey()) + " Stereo Value: "
                 //                        + stereoScoreMap.get(map.getKey()));
             }
         }
@@ -298,9 +337,13 @@ public class ChemicalFilters {
         if (flag) {
             firstSolution.putAll(allMCS.get(0));
             firstAtomMCS.putAll(allAtomMCS.get(0));
-            clear(allFragmentMCS, allFragmentAtomMCS, stereoScoreMap, fragmentScoreMap, energyScoreMap);
+            clear(
+                    allFragmentMCS,
+                    allFragmentAtomMCS,
+                    stereoScoreMap,
+                    fragmentScoreMap,
+                    energyScoreMap);
         }
-
     }
 
     /**
@@ -311,14 +354,21 @@ public class ChemicalFilters {
     public synchronized void sortResultsByEnergies() throws CDKException {
 
         //        System.out.println("\nSort By Energies");
-        Map<Integer, Map<Integer, Integer>> allEnergyMCS = new TreeMap<Integer, Map<Integer, Integer>>();
-        Map<Integer, Map<IAtom, IAtom>> allEnergyAtomMCS = new TreeMap<Integer, Map<IAtom, IAtom>>();
+        Map<Integer, Map<Integer, Integer>> allEnergyMCS =
+                new TreeMap<Integer, Map<Integer, Integer>>();
+        Map<Integer, Map<IAtom, IAtom>> allEnergyAtomMCS =
+                new TreeMap<Integer, Map<IAtom, IAtom>>();
 
         Map<Integer, Double> stereoScoreMap = new TreeMap<Integer, Double>();
         Map<Integer, Integer> fragmentScoreMap = new TreeMap<Integer, Integer>();
         Map<Integer, Double> energySelectionMap = new TreeMap<Integer, Double>();
 
-        initializeMaps(allEnergyMCS, allEnergyAtomMCS, stereoScoreMap, fragmentScoreMap, energySelectionMap);
+        initializeMaps(
+                allEnergyMCS,
+                allEnergyAtomMCS,
+                stereoScoreMap,
+                fragmentScoreMap,
+                energySelectionMap);
 
         for (Integer key : allEnergyMCS.keySet()) {
             Map<Integer, Integer> mcsAtom = allEnergyMCS.get(key);
@@ -340,12 +390,20 @@ public class ChemicalFilters {
         int counter = 0;
         for (Map.Entry<Integer, Double> map : energySelectionMap.entrySet()) {
             if (lowestEnergyScore == map.getValue().doubleValue()) {
-                addSolution(counter, map.getKey(), allEnergyAtomMCS, allEnergyMCS, stereoScoreMap, energySelectionMap,
+                addSolution(
+                        counter,
+                        map.getKey(),
+                        allEnergyAtomMCS,
+                        allEnergyMCS,
+                        stereoScoreMap,
+                        energySelectionMap,
                         fragmentScoreMap);
                 counter++;
                 //
-                //                System.out.println("Energy key " + map.getKey() + "Energy MCS " + allEnergyMCS.get(map.getKey()));
-                //                System.out.println("Frag Size: " + fragmentScoreMap.get(map.getKey()) + " Stereo Value: "
+                //                System.out.println("Energy key " + map.getKey() + "Energy MCS " +
+                // allEnergyMCS.get(map.getKey()));
+                //                System.out.println("Frag Size: " +
+                // fragmentScoreMap.get(map.getKey()) + " Stereo Value: "
                 //                        + stereoScoreMap.get(map.getKey()));
 
             }
@@ -354,12 +412,17 @@ public class ChemicalFilters {
         if (flag) {
             firstSolution.putAll(allMCS.get(0));
             firstAtomMCS.putAll(allAtomMCS.get(0));
-            clear(allEnergyMCS, allEnergyAtomMCS, stereoScoreMap, fragmentScoreMap, energySelectionMap);
+            clear(
+                    allEnergyMCS,
+                    allEnergyAtomMCS,
+                    stereoScoreMap,
+                    fragmentScoreMap,
+                    energySelectionMap);
         }
     }
 
-    private Map<IBond, IBond> makeBondMapsOfAtomMaps(IAtomContainer ac1, IAtomContainer ac2,
-            Map<Integer, Integer> mappings) {
+    private Map<IBond, IBond> makeBondMapsOfAtomMaps(
+            IAtomContainer ac1, IAtomContainer ac2, Map<Integer, Integer> mappings) {
 
         Map<IBond, IBond> maps = new HashMap<IBond, IBond>();
 
@@ -381,11 +444,16 @@ public class ChemicalFilters {
                             int ac2ConnectedAtomNumber = mappings.get(ac1ConnectedAtomNumber);
 
                             IBond ac1Bond = ac1.getBond(atoms, cAtoms);
-                            IBond ac2Bond = ac2
-                                    .getBond(ac2.getAtom(ac2AtomNumber), ac2.getAtom(ac2ConnectedAtomNumber));
+                            IBond ac2Bond =
+                                    ac2.getBond(
+                                            ac2.getAtom(ac2AtomNumber),
+                                            ac2.getAtom(ac2ConnectedAtomNumber));
 
                             if (ac2Bond == null) {
-                                ac2Bond = ac2.getBond(ac2.getAtom(ac2ConnectedAtomNumber), ac2.getAtom(ac2AtomNumber));
+                                ac2Bond =
+                                        ac2.getBond(
+                                                ac2.getAtom(ac2ConnectedAtomNumber),
+                                                ac2.getAtom(ac2AtomNumber));
                             }
 
                             if (ac1Bond != null && ac2Bond != null) {
@@ -398,16 +466,18 @@ public class ChemicalFilters {
         }
         //        System.out.println("Mol Map size:" + maps.size());
         return maps;
-
     }
 
     private synchronized int getMappedMoleculeFragmentSize(Map<IAtom, IAtom> mcsAtomSolution) {
 
-        //      System.out.println("Mol Size Eorg: " + sourceMol.getMolecule().getAtomCount() + " , Mol Size Porg: " +
+        //      System.out.println("Mol Size Eorg: " + sourceMol.getMolecule().getAtomCount() + " ,
+        // Mol Size Porg: " +
         //        targetMol.getMolecule().getAtomCount());
 
-        IAtomContainer educt = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, rMol);
-        IAtomContainer product = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, pMol);
+        IAtomContainer educt =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, rMol);
+        IAtomContainer product =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, pMol);
 
         if (mcsAtomSolution != null) {
             for (Map.Entry<IAtom, IAtom> map : mcsAtomSolution.entrySet()) {
@@ -420,13 +490,16 @@ public class ChemicalFilters {
         return getfragmentCount(educt) + getfragmentCount(product);
     }
 
-    private synchronized Double getMappedMoleculeEnergies(Map<Integer, Integer> mcsAtomSolution) throws CDKException {
+    private synchronized Double getMappedMoleculeEnergies(Map<Integer, Integer> mcsAtomSolution)
+            throws CDKException {
 
         //        System.out.println("\nSort By Energies");
         double totalBondEnergy = -9999.0;
 
-        IAtomContainer educt = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, rMol);
-        IAtomContainer product = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, pMol);
+        IAtomContainer educt =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, rMol);
+        IAtomContainer product =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class, pMol);
 
         for (IAtom eAtom : educt.atoms()) {
             eAtom.setFlag(CDKConstants.ISPLACED, false);
@@ -456,20 +529,27 @@ public class ChemicalFilters {
     }
 
     static Map<Integer, Double> sortMapByValueInAccendingOrder(Map<Integer, Double> map) {
-        List<Map.Entry<Integer, Double>> list = new LinkedList<Map.Entry<Integer, Double>>(map.entrySet());
-        // Sort the list using an annonymous inner class implementing Comparator for the compare method
-        Collections.sort(list, new Comparator<Map.Entry<Integer, Double>>() {
+        List<Map.Entry<Integer, Double>> list =
+                new LinkedList<Map.Entry<Integer, Double>>(map.entrySet());
+        // Sort the list using an annonymous inner class implementing Comparator for the compare
+        // method
+        Collections.sort(
+                list,
+                new Comparator<Map.Entry<Integer, Double>>() {
 
-            @Override
-            public int compare(Map.Entry<Integer, Double> entry, Map.Entry<Integer, Double> entry1) {
-                // Return 0 for eAtom match, -1 for less than and +1 for more then (Aceending Order Sort)
-                return (entry.getValue().equals(entry1.getValue()) ? 0
-                        : (entry.getValue() > entry1.getValue() ? 1 : -1));
-            }
-        });
+                    @Override
+                    public int compare(
+                            Map.Entry<Integer, Double> entry, Map.Entry<Integer, Double> entry1) {
+                        // Return 0 for eAtom match, -1 for less than and +1 for more then
+                        // (Aceending Order Sort)
+                        return (entry.getValue().equals(entry1.getValue())
+                                ? 0
+                                : (entry.getValue() > entry1.getValue() ? 1 : -1));
+                    }
+                });
         // logger.info(list);
         Map<Integer, Double> result = new LinkedHashMap<Integer, Double>();
-        for (Iterator<Map.Entry<Integer, Double>> it = list.iterator(); it.hasNext();) {
+        for (Iterator<Map.Entry<Integer, Double>> it = list.iterator(); it.hasNext(); ) {
             Map.Entry<Integer, Double> entry = it.next();
             result.put(entry.getKey(), entry.getValue());
         }
@@ -477,20 +557,27 @@ public class ChemicalFilters {
     }
 
     static Map<Integer, Double> sortMapByValueInDecendingOrder(Map<Integer, Double> map) {
-        List<Map.Entry<Integer, Double>> list = new LinkedList<Map.Entry<Integer, Double>>(map.entrySet());
-        // Sort the list using an annonymous inner class implementing Comparator for the compare method
-        Collections.sort(list, new Comparator<Map.Entry<Integer, Double>>() {
+        List<Map.Entry<Integer, Double>> list =
+                new LinkedList<Map.Entry<Integer, Double>>(map.entrySet());
+        // Sort the list using an annonymous inner class implementing Comparator for the compare
+        // method
+        Collections.sort(
+                list,
+                new Comparator<Map.Entry<Integer, Double>>() {
 
-            @Override
-            public int compare(Map.Entry<Integer, Double> entry, Map.Entry<Integer, Double> entry1) {
-                // Return 0 for eAtom match, -1 for less than and +1 for more then (Decending Order Sort)
-                return (entry.getValue().equals(entry1.getValue()) ? 0
-                        : (entry.getValue() < entry1.getValue() ? 1 : -1));
-            }
-        });
+                    @Override
+                    public int compare(
+                            Map.Entry<Integer, Double> entry, Map.Entry<Integer, Double> entry1) {
+                        // Return 0 for eAtom match, -1 for less than and +1 for more then
+                        // (Decending Order Sort)
+                        return (entry.getValue().equals(entry1.getValue())
+                                ? 0
+                                : (entry.getValue() < entry1.getValue() ? 1 : -1));
+                    }
+                });
         // logger.info(list);
         Map<Integer, Double> result = new LinkedHashMap<Integer, Double>();
-        for (Iterator<Map.Entry<Integer, Double>> it = list.iterator(); it.hasNext();) {
+        for (Iterator<Map.Entry<Integer, Double>> it = list.iterator(); it.hasNext(); ) {
             Map.Entry<Integer, Double> entry = it.next();
             result.put(entry.getKey(), entry.getValue());
         }
@@ -499,6 +586,7 @@ public class ChemicalFilters {
 
     /**
      * Return sorted energy in ascending order.
+     *
      * @return sorted bond breaking energy
      */
     public List<Double> getSortedEnergy() {
@@ -507,6 +595,7 @@ public class ChemicalFilters {
 
     /**
      * Return sorted fragment in ascending order of the size.
+     *
      * @return sorted fragment count
      */
     public List<Integer> getSortedFragment() {
@@ -515,6 +604,7 @@ public class ChemicalFilters {
 
     /**
      * Return Stereo matches in descending order.
+     *
      * @return sorted stereo matches
      */
     public List<Double> getStereoMatches() {
@@ -523,7 +613,8 @@ public class ChemicalFilters {
 
     private List<Object> getMappedFragment(IAtomContainer molecule, Collection<IAtom> atomsMCS)
             throws CloneNotSupportedException {
-        IAtomContainer subgraphContainer = molecule.getBuilder().newInstance(IAtomContainer.class, molecule);
+        IAtomContainer subgraphContainer =
+                molecule.getBuilder().newInstance(IAtomContainer.class, molecule);
         List<IAtom> list = new ArrayList<IAtom>(atomsMCS.size());
         for (IAtom atom : atomsMCS) {
             int post = molecule.indexOf(atom);
@@ -547,7 +638,10 @@ public class ChemicalFilters {
         return l;
     }
 
-    private double getAtomScore(double score, Map<IAtom, IAtom> atomMapMCS, IAtomContainer reactant,
+    private double getAtomScore(
+            double score,
+            Map<IAtom, IAtom> atomMapMCS,
+            IAtomContainer reactant,
             IAtomContainer product) {
         for (Map.Entry<IAtom, IAtom> mappings : atomMapMCS.entrySet()) {
             IAtom rAtom = mappings.getKey();
@@ -603,34 +697,36 @@ public class ChemicalFilters {
             IAtom patom1 = pBond.getBegin();
             IAtom patom2 = pBond.getEnd();
 
-            if (ratom1.getSymbol().equals(patom1.getSymbol()) && ratom1.getSymbol().equals(patom1.getSymbol())) {
+            if (ratom1.getSymbol().equals(patom1.getSymbol())
+                    && ratom1.getSymbol().equals(patom1.getSymbol())) {
                 if ((!Objects.equals(ratom1.getFormalCharge(), patom1.getFormalCharge()))
-                    || !Objects.equals(ratom2.getFormalCharge(), patom2.getFormalCharge())) {
+                        || !Objects.equals(ratom2.getFormalCharge(), patom2.getFormalCharge())) {
                     if (convertBondOrder(rBond) != convertBondOrder(pBond)) {
                         score += 5 * Math.abs(convertBondOrder(rBond) + convertBondOrder(pBond));
                     }
                 }
                 if (Objects.equals(ratom1.getFormalCharge(), patom1.getFormalCharge())
-                    && (convertBondOrder(rBond) - convertBondOrder(pBond)) == 0) {
+                        && (convertBondOrder(rBond) - convertBondOrder(pBond)) == 0) {
                     score += 100;
                 }
                 if (Objects.equals(ratom2.getFormalCharge(), patom2.getFormalCharge())
-                    && (convertBondOrder(rBond) - convertBondOrder(pBond)) == 0) {
+                        && (convertBondOrder(rBond) - convertBondOrder(pBond)) == 0) {
                     score += 100;
                 }
-            } else if (ratom1.getSymbol().equals(patom2.getSymbol()) && ratom2.getSymbol().equals(patom1.getSymbol())) {
+            } else if (ratom1.getSymbol().equals(patom2.getSymbol())
+                    && ratom2.getSymbol().equals(patom1.getSymbol())) {
                 if ((!Objects.equals(ratom1.getFormalCharge(), patom2.getFormalCharge()))
-                    || !Objects.equals(ratom2.getFormalCharge(), patom1.getFormalCharge())) {
+                        || !Objects.equals(ratom2.getFormalCharge(), patom1.getFormalCharge())) {
                     if (convertBondOrder(rBond) != convertBondOrder(pBond)) {
                         score += 5 * Math.abs(convertBondOrder(rBond) + convertBondOrder(pBond));
                     }
                 }
                 if (Objects.equals(ratom1.getFormalCharge(), patom2.getFormalCharge())
-                    && (convertBondOrder(rBond) - convertBondOrder(pBond)) == 0) {
+                        && (convertBondOrder(rBond) - convertBondOrder(pBond)) == 0) {
                     score += 100;
                 }
                 if (Objects.equals(ratom2.getFormalCharge(), patom1.getFormalCharge())
-                    && (convertBondOrder(rBond) - convertBondOrder(pBond)) == 0) {
+                        && (convertBondOrder(rBond) - convertBondOrder(pBond)) == 0) {
                     score += 100;
                 }
             }
@@ -649,7 +745,8 @@ public class ChemicalFilters {
             if (bond.matches(queryBond)) {
                 // ok, bonds match
                 if (atom1.matches(queryBond.getBegin()) && atom2.matches(queryBond.getEnd())
-                        || atom1.matches(queryBond.getEnd()) && atom2.matches(queryBond.getBegin())) {
+                        || atom1.matches(queryBond.getEnd())
+                                && atom2.matches(queryBond.getBegin())) {
                     // ok, atoms match in either order
                     score += 4;
                 }
@@ -663,7 +760,8 @@ public class ChemicalFilters {
             if (bond.matches(targetBond)) {
                 // ok, bonds match
                 if (atom1.matches(targetBond.getBegin()) && atom2.matches(targetBond.getEnd())
-                        || atom1.matches(targetBond.getEnd()) && atom2.matches(targetBond.getBegin())) {
+                        || atom1.matches(targetBond.getEnd())
+                                && atom2.matches(targetBond.getBegin())) {
                     // ok, atoms match in either order
                     score += 4;
                 }
@@ -676,10 +774,12 @@ public class ChemicalFilters {
             int productBondType = convertBondOrder(targetBond);
             int rStereo = convertBondStereo(queryBond);
             int pStereo = convertBondStereo(targetBond);
-            if ((queryBond.getFlag(CDKConstants.ISAROMATIC) == targetBond.getFlag(CDKConstants.ISAROMATIC))
+            if ((queryBond.getFlag(CDKConstants.ISAROMATIC)
+                            == targetBond.getFlag(CDKConstants.ISAROMATIC))
                     && (reactantBondType == productBondType)) {
                 score += 8;
-            } else if (queryBond.getFlag(CDKConstants.ISAROMATIC) && targetBond.getFlag(CDKConstants.ISAROMATIC)) {
+            } else if (queryBond.getFlag(CDKConstants.ISAROMATIC)
+                    && targetBond.getFlag(CDKConstants.ISAROMATIC)) {
                 score += 4;
             }
 
@@ -696,7 +796,6 @@ public class ChemicalFilters {
                     score -= 1;
                 }
             }
-
         }
         return score;
     }
@@ -735,9 +834,10 @@ public class ChemicalFilters {
 
     private double getBondEnergy(IBond bond, BondEnergies bondEnergy) {
         double energy = 0.0;
-        if ((bond.getBegin().getFlag(CDKConstants.ISPLACED) == true && bond.getEnd().getFlag(CDKConstants.ISPLACED) == false)
-                || (bond.getBegin().getFlag(CDKConstants.ISPLACED) == false && bond.getEnd().getFlag(
-                        CDKConstants.ISPLACED) == true)) {
+        if ((bond.getBegin().getFlag(CDKConstants.ISPLACED) == true
+                        && bond.getEnd().getFlag(CDKConstants.ISPLACED) == false)
+                || (bond.getBegin().getFlag(CDKConstants.ISPLACED) == false
+                        && bond.getEnd().getFlag(CDKConstants.ISPLACED) == true)) {
             Integer val = bondEnergy.getEnergies(bond.getBegin(), bond.getEnd(), bond.getOrder());
             if (val != null) {
                 energy = val;
@@ -758,8 +858,10 @@ public class ChemicalFilters {
         return score;
     }
 
-    private boolean getStereoBondChargeMatch(Map<Integer, Double> stereoScoreMap,
-            Map<Integer, Map<Integer, Integer>> allStereoMCS, Map<Integer, Map<IAtom, IAtom>> allStereoAtomMCS)
+    private boolean getStereoBondChargeMatch(
+            Map<Integer, Double> stereoScoreMap,
+            Map<Integer, Map<Integer, Integer>> allStereoMCS,
+            Map<Integer, Map<IAtom, IAtom>> allStereoAtomMCS)
             throws CDKException {
 
         boolean stereoMatchFlag = false;
@@ -802,7 +904,8 @@ public class ChemicalFilters {
 
     private int getfragmentCount(IAtomContainer molecule) {
         boolean fragmentFlag = true;
-        IAtomContainerSet fragmentMolSet = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet fragmentMolSet =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         int countFrag = 0;
         if (molecule.getAtomCount() > 0) {
             fragmentFlag = ConnectivityChecker.isConnected(molecule);
@@ -819,8 +922,8 @@ public class ChemicalFilters {
     /**
      * Get bond order value as {@link Order}.
      *
-     * @param  srcOrder numerical bond order
-     * @return          the bond order type for the given numerical bond order
+     * @param srcOrder numerical bond order
+     * @return the bond order type for the given numerical bond order
      */
     public static IBond.Order convertOrder(double srcOrder) {
         if (srcOrder > 3.5) {
@@ -841,9 +944,9 @@ public class ChemicalFilters {
     /**
      * Get bond order value as {@code int} value.
      *
-     * @param  bond The {@link IBond} for which the order is returned.
-     * @return      1 for a single bond, 2 for a double bond, 3 for a triple bond, 4 for a quadruple bond,
-     *              and 0 for any other bond type.
+     * @param bond The {@link IBond} for which the order is returned.
+     * @return 1 for a single bond, 2 for a double bond, 3 for a triple bond, 4 for a quadruple
+     *     bond, and 0 for any other bond type.
      */
     public static int convertBondOrder(IBond bond) {
         int value = 0;
@@ -868,6 +971,7 @@ public class ChemicalFilters {
 
     /**
      * Get stereo value as integer
+     *
      * @param bond
      */
     public static int convertBondStereo(IBond bond) {
@@ -902,6 +1006,7 @@ public class ChemicalFilters {
 
     /**
      * Get stereo value as Stereo enum
+     *
      * @param stereoValue
      */
     public static IBond.Stereo convertStereo(int stereoValue) {
@@ -916,10 +1021,10 @@ public class ChemicalFilters {
             // bond has no stereochemistry
             stereo = IBond.Stereo.NONE;
         } else if (stereoValue == 4) {
-            //up or down bond
+            // up or down bond
             stereo = IBond.Stereo.UP_OR_DOWN;
         } else if (stereoValue == 3) {
-            //e or z undefined
+            // e or z undefined
             stereo = IBond.Stereo.E_OR_Z;
         }
         return stereo;

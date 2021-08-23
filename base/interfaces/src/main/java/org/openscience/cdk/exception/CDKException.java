@@ -42,11 +42,10 @@ public class CDKException extends Exception {
     }
 
     /**
-     * Constructs a new CDKException with the given message and the
-     * Exception as cause.
+     * Constructs a new CDKException with the given message and the Exception as cause.
      *
      * @param message for the constructed exception
-     * @param cause   the Throwable that triggered this CDKException
+     * @param cause the Throwable that triggered this CDKException
      */
     public CDKException(String message, Throwable cause) {
         super(message, cause);

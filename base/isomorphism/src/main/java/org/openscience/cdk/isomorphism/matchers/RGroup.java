@@ -28,14 +28,14 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
- * Represents a single substitute structure in an {@link RGroupList}. <P>
- * The order of attachment points is provided (first and second only, conform
- * RGFile spec). This order is relevant when the structure connects to the root
- * with more than one bond.
- * <P>
- * See also {@link RGroupList} and {@link RGroupQuery}.
+ * Represents a single substitute structure in an {@link RGroupList}.
  *
- * @cdk.module  isomorphism
+ * <p>The order of attachment points is provided (first and second only, conform RGFile spec). This
+ * order is relevant when the structure connects to the root with more than one bond.
+ *
+ * <p>See also {@link RGroupList} and {@link RGroupQuery}.
+ *
+ * @cdk.module isomorphism
  * @cdk.githash
  * @cdk.keyword Rgroup
  * @cdk.keyword R group
@@ -44,13 +44,12 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  */
 public class RGroup {
 
-    /**
-     * Standard label/title to be used for the root atom container.
-     */
-    public final static String ROOT_LABEL = "Root structure";
+    /** Standard label/title to be used for the root atom container. */
+    public static final String ROOT_LABEL = "Root structure";
 
     /**
      * Makes a label/title to be used for a substituent.
+     *
      * @param rgroupNum R-Group number (1..32)
      * @return label for substituent, like "R3"
      */
@@ -58,8 +57,8 @@ public class RGroup {
         return "(R" + rgroupNum + ")";
     }
 
-    IAtom          firstAttachmentPoint;
-    IAtom          secondAttachmentPoint;
+    IAtom firstAttachmentPoint;
+    IAtom secondAttachmentPoint;
     IAtomContainer group;
 
     public void setFirstAttachmentPoint(IAtom firstAttachmentPoint) {

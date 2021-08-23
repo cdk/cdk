@@ -21,7 +21,6 @@ package org.openscience.cdk.io.cml;
 
 import java.util.Hashtable;
 import java.util.Map;
-
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -29,35 +28,34 @@ import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * SAX2 implementation for CML XML fragment reading. CML Core is supported
- * as well is the CRML module.
+ * SAX2 implementation for CML XML fragment reading. CML Core is supported as well is the CRML
+ * module.
  *
- * <p>Data is stored into the Chemical Document Object which is passed when
- * instantiating this class. This makes it possible that programs that do not
- * use CDK for internal data storage, use this CML library.
+ * <p>Data is stored into the Chemical Document Object which is passed when instantiating this
+ * class. This makes it possible that programs that do not use CDK for internal data storage, use
+ * this CML library.
  *
  * @cdk.module io
  * @cdk.githash
- *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
- **/
+ */
 public class CMLHandler extends DefaultHandler {
 
-    private ICMLModule              conv;
-    private static ILoggingTool     logger = LoggingToolFactory.createLoggingTool(CMLHandler.class);
-    private boolean                 debug  = true;
+    private ICMLModule conv;
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CMLHandler.class);
+    private boolean debug = true;
 
     private Map<String, ICMLModule> userConventions;
 
-    private CMLStack                xpath;
-    private CMLStack                conventionStack;
-    private CMLModuleStack          moduleStack;
+    private CMLStack xpath;
+    private CMLStack conventionStack;
+    private CMLModuleStack moduleStack;
 
     /**
      * Constructor for the CMLHandler.
      *
      * @param chemFile The document in which data is stored
-     **/
+     */
     public CMLHandler(IChemFile chemFile) {
         conv = new CMLCoreModule(chemFile);
         userConventions = new Hashtable<String, ICMLModule>();
@@ -73,7 +71,7 @@ public class CMLHandler extends DefaultHandler {
     /**
      * Implementation of the characters() procedure overwriting the DefaultHandler interface.
      *
-     * @param ch        characters to handle
+     * @param ch characters to handle
      */
     @Override
     public void characters(char ch[], int start, int length) {
@@ -83,9 +81,7 @@ public class CMLHandler extends DefaultHandler {
 
     public void doctypeDecl(String name, String publicId, String systemId) throws Exception {}
 
-    /**
-     * Calling this procedure signals the end of the XML document.
-     */
+    /** Calling this procedure signals the end of the XML document. */
     @Override
     public void endDocument() {
         conv.endDocument();
@@ -154,7 +150,7 @@ public class CMLHandler extends DefaultHandler {
                     } else if (convName.equals("qsar:DescriptorValue")) {
                         conv = new QSARConvention(conv);
                     } else if (userConventions.containsKey(convName)) {
-                        //unknown convention. userConvention?
+                        // unknown convention. userConvention?
                         ICMLModule newconv = (ICMLModule) userConventions.get(convName);
                         newconv.inherit(conv);
                         conv = newconv;
@@ -175,5 +171,4 @@ public class CMLHandler extends DefaultHandler {
         if (debug) logger.debug("ConventionStack: ", conventionStack);
         conv.startElement(xpath, uri, local, raw, atts);
     }
-
 }

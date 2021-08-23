@@ -25,13 +25,12 @@ package org.openscience.cdk.fingerprint;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.openscience.cdk.CDKTestCase;
-
 import org.junit.Test;
+import org.openscience.cdk.CDKTestCase;
 
 public abstract class AbstractBitFingerprintTest extends CDKTestCase {
 
-    protected IBitFingerprint                bitsetFP;
+    protected IBitFingerprint bitsetFP;
     private Class<? extends IBitFingerprint> C;
 
     public AbstractBitFingerprintTest(Class<? extends IBitFingerprint> C) throws Exception {
@@ -86,7 +85,7 @@ public abstract class AbstractBitFingerprintTest extends CDKTestCase {
         IBitFingerprint fp1 = C.newInstance();
         IBitFingerprint fp2 = C.newInstance();
 
-        for (IBitFingerprint fp : new IBitFingerprint[]{fp1, fp2}) {
+        for (IBitFingerprint fp : new IBitFingerprint[] {fp1, fp2}) {
             fp.set(0, true);
             fp.set(1, false);
             fp.set(2, true);

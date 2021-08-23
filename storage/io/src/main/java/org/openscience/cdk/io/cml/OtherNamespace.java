@@ -46,7 +46,8 @@ final class OtherNamespace implements ICMLModule {
 
     /** {@inheritDoc} */
     @Override
-    public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
+    public void startElement(
+            CMLStack xpath, String uri, String local, String raw, Attributes atts) {
         // ignore content from other namespaces
     }
 
@@ -72,5 +73,4 @@ final class OtherNamespace implements ICMLModule {
     /** {@inheritDoc} */
     @Override
     public void inherit(ICMLModule conv) {}
-
 }

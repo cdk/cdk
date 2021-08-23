@@ -22,6 +22,8 @@
  */
 package org.openscience.cdk.renderer;
 
+import java.awt.geom.Rectangle2D;
+import javax.vecmath.Point2d;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -29,13 +31,9 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 
-import javax.vecmath.Point2d;
-import java.awt.geom.Rectangle2D;
-
 /**
- * Utility class for calculating the 2D bounding rectangles (bounds)
- * of various IChemObject subtypes - IChemModel, IReactionSet, IReaction,
- * IAtomContainerSet, and IAtomContainer.
+ * Utility class for calculating the 2D bounding rectangles (bounds) of various IChemObject subtypes
+ * - IChemModel, IReactionSet, IReaction, IAtomContainerSet, and IAtomContainer.
  *
  * @author maclean
  * @cdk.module renderbasic
@@ -132,7 +130,8 @@ public class BoundsCalculator {
         } else if (atomContainer.getAtomCount() == 1) {
             Point2d point = atomContainer.getAtom(0).getPoint2d();
             if (point == null) {
-                throw new IllegalArgumentException("Cannot calculate bounds when 2D coordinates are missing.");
+                throw new IllegalArgumentException(
+                        "Cannot calculate bounds when 2D coordinates are missing.");
             }
             return new Rectangle2D.Double(point.x, point.y, 0, 0);
         }
@@ -145,7 +144,8 @@ public class BoundsCalculator {
         for (IAtom atom : atomContainer.atoms()) {
             Point2d point = atom.getPoint2d();
             if (point == null) {
-                throw new IllegalArgumentException("Cannot calculate bounds when 2D coordinates are missing.");
+                throw new IllegalArgumentException(
+                        "Cannot calculate bounds when 2D coordinates are missing.");
             }
             xmin = Math.min(xmin, point.x);
             xmax = Math.max(xmax, point.x);
@@ -156,5 +156,4 @@ public class BoundsCalculator {
         double height = ymax - ymin;
         return new Rectangle2D.Double(xmin, ymin, width, height);
     }
-
 }

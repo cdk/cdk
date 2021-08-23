@@ -49,5 +49,4 @@ public class AdductFormulaTest extends AbstractAdductFormulaTest {
         IAdductFormula mfS = new AdductFormula(getBuilder().newInstance(IMolecularFormula.class));
         Assert.assertEquals(1, mfS.size());
     }
-
 }

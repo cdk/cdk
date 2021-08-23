@@ -19,19 +19,18 @@
 package org.openscience.cdk.debug;
 
 import java.util.Map;
-
 import org.openscience.cdk.Element;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module datadebug
  * @cdk.githash
  */
@@ -39,7 +38,7 @@ public class DebugElement extends Element implements IElement {
 
     private static final long serialVersionUID = -8520499563841667066L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugElement.class);
+    ILoggingTool logger = LoggingToolFactory.createLoggingTool(DebugElement.class);
 
     public DebugElement() {
         super();
@@ -53,7 +52,9 @@ public class DebugElement extends Element implements IElement {
 
     public DebugElement(String symbol, int atomicNumber) {
         super(symbol, atomicNumber);
-        logger.debug("Instantiated a DebugElement: symbol= ", symbol + " atomic number= " + atomicNumber);
+        logger.debug(
+                "Instantiated a DebugElement: symbol= ",
+                symbol + " atomic number= " + atomicNumber);
     }
 
     public DebugElement(IElement element) {
@@ -219,5 +220,4 @@ public class DebugElement extends Element implements IElement {
     public IChemObjectBuilder getBuilder() {
         return DebugChemObjectBuilder.getInstance();
     }
-
 }

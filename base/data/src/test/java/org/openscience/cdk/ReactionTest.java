@@ -25,9 +25,9 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractReactionTest;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.AbstractReactionTest;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
@@ -39,13 +39,14 @@ public class ReactionTest extends AbstractReactionTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new Reaction();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new Reaction();
+                    }
+                });
     }
 
     @Test
@@ -56,5 +57,4 @@ public class ReactionTest extends AbstractReactionTest {
         Assert.assertEquals(0, reaction.getProductCount());
         Assert.assertEquals(IReaction.Direction.FORWARD, reaction.getDirection());
     }
-
 }

@@ -21,8 +21,8 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.AbstractAtomTypeTest;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
@@ -31,20 +31,20 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  * Checks the functionality of the AtomType class.
  *
  * @cdk.module test-data
- *
  * @see org.openscience.cdk.AtomType
  */
 public class AtomTypeTest extends AbstractAtomTypeTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new AtomType("C");
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new AtomType("C");
+                    }
+                });
     }
 
     @Test

@@ -24,9 +24,7 @@
 package org.openscience.cdk.templates;
 
 import javax.vecmath.Point2d;
-
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.interfaces.IAtom;
@@ -37,15 +35,16 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * This class contains methods for generating simple organic molecules and is
- * copy of {@link MoleculeFactory} for use in tests.
+ * This class contains methods for generating simple organic molecules and is copy of {@link
+ * MoleculeFactory} for use in tests.
  *
  * @cdk.module test-data
  */
 public class TestMoleculeFactory {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(TestMoleculeFactory.class);
-    
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(TestMoleculeFactory.class);
+
     private static IAtomContainer newAtomContainer() {
         return DefaultChemObjectBuilder.getInstance().newAtomContainer();
     }
@@ -90,10 +89,10 @@ public class TestMoleculeFactory {
     public static IAtomContainer makeAlkane(int chainLength) {
         IAtomContainer currentChain = newAtomContainer();
 
-        //Add the initial atom
+        // Add the initial atom
         currentChain.addAtom(new Atom("C"));
 
-        //Add further atoms and bonds as needed, a pair at a time.
+        // Add further atoms and bonds as needed, a pair at a time.
         for (int atomCount = 1; atomCount < chainLength; atomCount++) {
             currentChain.addAtom(new Atom("C"));
             currentChain.addBond(atomCount, atomCount - 1, IBond.Order.SINGLE);
@@ -469,7 +468,6 @@ public class TestMoleculeFactory {
         mol.addBond(9, 0, IBond.Order.SINGLE); // 11
         mol.addBond(5, 10, IBond.Order.SINGLE); // 12
         return mol;
-
     }
 
     public static IAtomContainer makeEthylPropylPhenantren() {
@@ -1211,7 +1209,6 @@ public class TestMoleculeFactory {
         mol.addBond(0, 6, IBond.Order.SINGLE);
 
         return mol;
-
     }
 
     public static IAtomContainer makeTetrahydropyran() {
@@ -1231,12 +1228,9 @@ public class TestMoleculeFactory {
         mol.addBond(5, 0, IBond.Order.SINGLE);
 
         return mol;
-
     }
 
-    /**
-     * @cdk.inchi InChI=1/C5H5N5/c6-4-3-5(9-1-7-3)10-2-8-4/h1-2H,(H3,6,7,8,9,10)/f/h7H,6H2
-     */
+    /** @cdk.inchi InChI=1/C5H5N5/c6-4-3-5(9-1-7-3)10-2-8-4/h1-2H,(H3,6,7,8,9,10)/f/h7H,6H2 */
     public static IAtomContainer makeAdenine() {
         IAtomContainer mol = newAtomContainer(); // Adenine
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "C");
@@ -1295,9 +1289,7 @@ public class TestMoleculeFactory {
         return mol;
     }
 
-    /**
-     * InChI=1/C10H8/c1-2-6-10-8-4-3-7-9(10)5-1/h1-8H
-     */
+    /** InChI=1/C10H8/c1-2-6-10-8-4-3-7-9(10)5-1/h1-8H */
     public static IAtomContainer makeNaphthalene() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
@@ -1356,9 +1348,7 @@ public class TestMoleculeFactory {
         return mol;
     }
 
-    /**
-     * @cdk.inchi InChI=1/C14H10/c1-2-6-12-10-14-8-4-3-7-13(14)9-11(12)5-1/h1-10H
-     */
+    /** @cdk.inchi InChI=1/C14H10/c1-2-6-12-10-14-8-4-3-7-13(14)9-11(12)5-1/h1-10H */
     public static IAtomContainer makeAnthracene() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
@@ -1441,7 +1431,9 @@ public class TestMoleculeFactory {
 
     /**
      * octacyclo[17.2.2.2¹,⁴.2⁴,⁷.2⁷,¹⁰.2¹⁰,¹³.2¹³,¹⁶.2¹⁶,¹⁹]pentatriacontane
-     * @cdk.inchi InChI=1/C35H56/c1-2-30-6-3-29(1)4-7-31(8-5-29)13-15-33(16-14-31)21-23-35(24-22-33)27-25-34(26-28-35)19-17-32(11-9-30,12-10-30)18-20-34/h1-28H2
+     *
+     * @cdk.inchi
+     *     InChI=1/C35H56/c1-2-30-6-3-29(1)4-7-31(8-5-29)13-15-33(16-14-31)21-23-35(24-22-33)27-25-34(26-28-35)19-17-32(11-9-30,12-10-30)18-20-34/h1-28H2
      */
     public static IAtomContainer makeCyclophaneLike() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
@@ -1640,7 +1632,9 @@ public class TestMoleculeFactory {
 
     /**
      * octacyclo[24.2.2.2²,⁵.2⁶,⁹.2¹⁰,¹³.2¹⁴,¹⁷.2¹⁸,²¹.2²²,²⁵]dotetracontane
-     * @cdk.inchi InChI=1/C42H70/c1-2-30-4-3-29(1)31-5-7-33(8-6-31)35-13-15-37(16-14-35)39-21-23-41(24-22-39)42-27-25-40(26-28-42)38-19-17-36(18-20-38)34-11-9-32(30)10-12-34/h29-42H,1-28H2
+     *
+     * @cdk.inchi
+     *     InChI=1/C42H70/c1-2-30-4-3-29(1)31-5-7-33(8-6-31)35-13-15-37(16-14-35)39-21-23-41(24-22-39)42-27-25-40(26-28-42)38-19-17-36(18-20-38)34-11-9-32(30)10-12-34/h29-42H,1-28H2
      */
     public static IAtomContainer makeGappedCyclophaneLike() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
@@ -1874,13 +1868,11 @@ public class TestMoleculeFactory {
 
     private static void configureAtoms(IAtomContainer mol) {
         try {
-            for (IAtom atom : mol.atoms())
-                atom.setImplicitHydrogenCount(null);
+            for (IAtom atom : mol.atoms()) atom.setImplicitHydrogenCount(null);
             Isotopes.getInstance().configureAtoms(mol);
         } catch (Exception exc) {
             logger.error("Could not configure molecule!");
             logger.debug(exc);
         }
     }
-
 }

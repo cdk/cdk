@@ -19,6 +19,11 @@
  */
 package org.openscience.cdk.fragment;
 
+import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.CoreMatchers.is;
+
+import java.util.Arrays;
+import java.util.List;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -26,12 +31,6 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
-
-import java.util.Arrays;
-import java.util.List;
-
-import static org.hamcrest.CoreMatchers.hasItems;
-import static org.hamcrest.CoreMatchers.is;
 
 /**
  * Test exhaustive fragmenter.
@@ -41,7 +40,7 @@ import static org.hamcrest.CoreMatchers.is;
 public class ExhaustiveFragmenterTest extends CDKTestCase {
 
     static ExhaustiveFragmenter fragmenter;
-    static SmilesParser         smilesParser;
+    static SmilesParser smilesParser;
 
     @BeforeClass
     public static void setup() {
@@ -70,7 +69,7 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
         IAtomContainer mol = smilesParser.parseSmiles("C1CCCCC1CC");
         fragmenter.generateFragments(mol);
         String[] frags = fragmenter.getFragments();
-        org.hamcrest.MatcherAssert.assertThat(frags, is(new String[]{"C1CCCCC1"}));
+        org.hamcrest.MatcherAssert.assertThat(frags, is(new String[] {"C1CCCCC1"}));
     }
 
     @Test
@@ -79,7 +78,7 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
         fragmenter.generateFragments(mol);
         String[] frags = fragmenter.getFragments();
         Assert.assertNotNull(frags);
-        org.hamcrest.MatcherAssert.assertThat(frags, is(new String[]{"c1ccccc1"}));
+        org.hamcrest.MatcherAssert.assertThat(frags, is(new String[] {"c1ccccc1"}));
     }
 
     @Test
@@ -88,10 +87,10 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
         fragmenter.generateFragments(mol);
         String[] frags = fragmenter.getFragments();
         Assert.assertNotNull(frags);
-        org.hamcrest.MatcherAssert.assertThat(Arrays.asList(frags), hasItems("c1ccc(cc1)C", "c1ccccc1"));
+        org.hamcrest.MatcherAssert.assertThat(
+                Arrays.asList(frags), hasItems("c1ccc(cc1)C", "c1ccccc1"));
         Assert.assertNotNull(fragmenter.getFragmentsAsContainers());
         Assert.assertEquals(2, fragmenter.getFragmentsAsContainers().length);
-
     }
 
     @Test
@@ -100,11 +99,10 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
         fragmenter.generateFragments(mol);
         String[] frags = fragmenter.getFragments();
         Assert.assertNotNull(frags);
-        org.hamcrest.MatcherAssert.assertThat(frags, is(new String[]{"c1ccccc1"}));
+        org.hamcrest.MatcherAssert.assertThat(frags, is(new String[] {"c1ccccc1"}));
 
         Assert.assertNotNull(fragmenter.getFragmentsAsContainers());
         Assert.assertEquals(1, fragmenter.getFragmentsAsContainers().length);
-
     }
 
     @Test
@@ -118,7 +116,12 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
         Assert.assertNotNull(fragmenter.getFragmentsAsContainers());
         Assert.assertEquals(25, fragmenter.getFragmentsAsContainers().length);
 
-        org.hamcrest.MatcherAssert.assertThat(frags, hasItems("c1ccccc1", "c1ccc(cc1)C2(CCC(CC)C2)CC3C=CC=C3", "c1ccc(cc1)C2(C)CCC(C)C2"));
+        org.hamcrest.MatcherAssert.assertThat(
+                frags,
+                hasItems(
+                        "c1ccccc1",
+                        "c1ccc(cc1)C2(CCC(CC)C2)CC3C=CC=C3",
+                        "c1ccc(cc1)C2(C)CCC(C)C2"));
     }
 
     @Test

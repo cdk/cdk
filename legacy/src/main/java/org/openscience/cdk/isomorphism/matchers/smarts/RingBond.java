@@ -24,7 +24,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * This smarts bond matches any bond that is in a ring.
  *
- * @cdk.module  smarts
+ * @cdk.module smarts
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
@@ -33,10 +33,7 @@ public class RingBond extends SMARTSBond {
 
     private static final long serialVersionUID = -8670609649648985629L;
 
-    /**
-     * Creates a new instance
-     *
-     */
+    /** Creates a new instance */
     public RingBond(IChemObjectBuilder builder) {
         super(builder);
         this.setFlag(CDKConstants.ISINRING, true);

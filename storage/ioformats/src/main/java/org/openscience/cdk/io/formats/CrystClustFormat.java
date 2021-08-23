@@ -56,7 +56,7 @@ public class CrystClustFormat extends SimpleChemFormatMatcher implements IChemFo
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"crystclust"};
+        return new String[] {"crystclust"};
     }
 
     /** {@inheritDoc} */
@@ -95,7 +95,8 @@ public class CrystClustFormat extends SimpleChemFormatMatcher implements IChemFo
     /** {@inheritDoc} */
     @Override
     public int getRequiredDataFeatures() {
-        return DataFeatures.HAS_3D_COORDINATES | DataFeatures.HAS_UNITCELL_PARAMETERS
+        return DataFeatures.HAS_3D_COORDINATES
+                | DataFeatures.HAS_UNITCELL_PARAMETERS
                 | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
     }
 }

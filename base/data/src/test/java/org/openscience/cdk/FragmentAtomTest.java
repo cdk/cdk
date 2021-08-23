@@ -35,13 +35,14 @@ public class FragmentAtomTest extends AbstractFragmentAtomTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new FragmentAtom();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new FragmentAtom();
+                    }
+                });
     }
 
     @Test
@@ -49,5 +50,4 @@ public class FragmentAtomTest extends AbstractFragmentAtomTest {
         IFragmentAtom a = new FragmentAtom();
         Assert.assertNotNull(a);
     }
-
 }

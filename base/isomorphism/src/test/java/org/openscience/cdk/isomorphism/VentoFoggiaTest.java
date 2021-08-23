@@ -24,12 +24,12 @@
 
 package org.openscience.cdk.isomorphism;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.google.common.collect.FluentIterable;
 import org.junit.Test;
 import org.openscience.cdk.templates.TestMoleculeFactory;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * Simple tests for exact and non exact matching.
@@ -41,45 +41,57 @@ public class VentoFoggiaTest {
 
     @Test
     public void benzeneIdentical() throws Exception {
-        int[] match = VentoFoggia.findIdentical(TestMoleculeFactory.makeBenzene()).match(
-                TestMoleculeFactory.makeBenzene());
-        assertThat(match, is(new int[]{0, 1, 2, 3, 4, 5}));
-        int count = FluentIterable.from(
+        int[] match =
                 VentoFoggia.findIdentical(TestMoleculeFactory.makeBenzene())
-                        .matchAll(TestMoleculeFactory.makeBenzene())).size();
+                        .match(TestMoleculeFactory.makeBenzene());
+        assertThat(match, is(new int[] {0, 1, 2, 3, 4, 5}));
+        int count =
+                FluentIterable.from(
+                                VentoFoggia.findIdentical(TestMoleculeFactory.makeBenzene())
+                                        .matchAll(TestMoleculeFactory.makeBenzene()))
+                        .size();
         assertThat(count, is(6)); // note: aromatic one would be 12
     }
 
     @Test
     public void benzeneNonIdentical() throws Exception {
-        int[] match = VentoFoggia.findIdentical(TestMoleculeFactory.makeBenzene()).match(
-                TestMoleculeFactory.makeNaphthalene());
+        int[] match =
+                VentoFoggia.findIdentical(TestMoleculeFactory.makeBenzene())
+                        .match(TestMoleculeFactory.makeNaphthalene());
         assertThat(match, is(new int[0]));
-        int count = FluentIterable.from(
-                VentoFoggia.findIdentical(TestMoleculeFactory.makeBenzene()).matchAll(
-                        TestMoleculeFactory.makeNaphthalene())).size();
+        int count =
+                FluentIterable.from(
+                                VentoFoggia.findIdentical(TestMoleculeFactory.makeBenzene())
+                                        .matchAll(TestMoleculeFactory.makeNaphthalene()))
+                        .size();
         assertThat(count, is(0));
     }
 
     @Test
     public void benzeneSubsearch() throws Exception {
-        int[] match = VentoFoggia.findSubstructure(TestMoleculeFactory.makeBenzene()).match(
-                TestMoleculeFactory.makeNaphthalene());
-        assertThat(match, is(new int[]{2, 7, 6, 5, 4, 3}));
-        int count = FluentIterable.from(
-                VentoFoggia.findSubstructure(TestMoleculeFactory.makeBenzene()).matchAll(
-                        TestMoleculeFactory.makeNaphthalene())).size();
+        int[] match =
+                VentoFoggia.findSubstructure(TestMoleculeFactory.makeBenzene())
+                        .match(TestMoleculeFactory.makeNaphthalene());
+        assertThat(match, is(new int[] {2, 7, 6, 5, 4, 3}));
+        int count =
+                FluentIterable.from(
+                                VentoFoggia.findSubstructure(TestMoleculeFactory.makeBenzene())
+                                        .matchAll(TestMoleculeFactory.makeNaphthalene()))
+                        .size();
         assertThat(count, is(6)); // note: aromatic one would be 24
     }
 
     @Test
     public void napthaleneSubsearch() throws Exception {
-        int[] match = VentoFoggia.findSubstructure(TestMoleculeFactory.makeNaphthalene()).match(
-                TestMoleculeFactory.makeBenzene());
+        int[] match =
+                VentoFoggia.findSubstructure(TestMoleculeFactory.makeNaphthalene())
+                        .match(TestMoleculeFactory.makeBenzene());
         assertThat(match, is(new int[0]));
-        int count = FluentIterable.from(
-                VentoFoggia.findSubstructure(TestMoleculeFactory.makeNaphthalene()).matchAll(
-                        TestMoleculeFactory.makeBenzene())).size();
+        int count =
+                FluentIterable.from(
+                                VentoFoggia.findSubstructure(TestMoleculeFactory.makeNaphthalene())
+                                        .matchAll(TestMoleculeFactory.makeBenzene()))
+                        .size();
         assertThat(count, is(0));
     }
 }

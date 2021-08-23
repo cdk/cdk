@@ -18,6 +18,14 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.StringTokenizer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -30,17 +38,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.StringTokenizer;
-
 /**
- *  This class returns the proton affinity of an atom containing.
+ * This class returns the proton affinity of an atom containing.
  *
  * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
@@ -55,48 +54,45 @@ import java.util.StringTokenizer;
  *   </tr>
  * </table>
  *
- * @author       Miguel Rojas
- * @cdk.created  2006-05-26
- * @cdk.module   qsaratomic
+ * @author Miguel Rojas
+ * @cdk.created 2006-05-26
+ * @cdk.module qsaratomic
  * @cdk.githash
- * @cdk.dictref  qsar-descriptors:protonaffinity
+ * @cdk.dictref qsar-descriptors:protonaffinity
  */
 public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
 
     private static final String[] NAMES = {"protonAffiHOSE"};
 
-    /** Maximum spheres to use by the HoseCode model.*/
-    int                           maxSpheresToUse = 10;
+    /** Maximum spheres to use by the HoseCode model. */
+    int maxSpheresToUse = 10;
 
-    private Affinitydb            db              = new Affinitydb();
+    private Affinitydb db = new Affinitydb();
 
-    /**
-     *  Constructor for the ProtonAffinityDescriptor object.
-     */
+    /** Constructor for the ProtonAffinityDescriptor object. */
     public ProtonAffinityHOSEDescriptor() {}
 
     /**
-     *  Gets the specification attribute of the ProtonAffinityDescriptor object
+     * Gets the specification attribute of the ProtonAffinityDescriptor object
      *
-     *@return    The specification value
+     * @return The specification value
      */
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ionizationPotential", this
-                        .getClass().getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ionizationPotential",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
-    /**
-     * This descriptor does have any parameter.
-     */
+    /** This descriptor does have any parameter. */
     @Override
     public void setParameters(Object[] params) throws CDKException {}
 
     /**
-     *  Gets the parameters attribute of the ProtonAffinityDescriptor object.
+     * Gets the parameters attribute of the ProtonAffinityDescriptor object.
      *
-     *@return    The parameters value
+     * @return The parameters value
      * @see #setParameters
      */
     @Override
@@ -110,11 +106,11 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
     }
 
     /**
-     *  This method calculates the protonation affinity of an atom.
+     * This method calculates the protonation affinity of an atom.
      *
-     *@param  atom              The IAtom to protonate
-     *@param  container         Parameter is the IAtomContainer.
-     *@return                   The protonation affinity. Not possible the ionization.
+     * @param atom The IAtom to protonate
+     * @param container Parameter is the IAtomContainer.
+     * @return The protonation affinity. Not possible the ionization.
      */
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
@@ -132,32 +128,43 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
             LonePairElectronChecker lpcheck = new LonePairElectronChecker();
             lpcheck.saturate(container);
         } catch (CDKException | CloneNotSupportedException e) {
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                    Double.NaN), NAMES, null);
+            return new DescriptorValue(
+                    getSpecification(),
+                    getParameterNames(),
+                    getParameters(),
+                    new DoubleResult(Double.NaN),
+                    NAMES,
+                    null);
         }
 
         value = db.extractAffinity(container, atom);
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(value),
-                                   NAMES);
-
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new DoubleResult(value),
+                NAMES);
     }
 
     /**
      * Looking if the Atom belongs to the halogen family.
      *
-     * @param  atom  The IAtom
-     * @return       True, if it belongs
+     * @param atom The IAtom
+     * @return True, if it belongs
      */
     private boolean familyHalogen(IAtom atom) {
         String symbol = atom.getSymbol();
-        return symbol.equals("F") || symbol.equals("Cl") || symbol.equals("Br") || symbol.equals("I");
+        return symbol.equals("F")
+                || symbol.equals("Cl")
+                || symbol.equals("Br")
+                || symbol.equals("I");
     }
 
     /**
-    * Gets the parameterNames attribute of the ProtonAffinityDescriptor object.
-    *
-    * @return    The parameterNames value
-    */
+     * Gets the parameterNames attribute of the ProtonAffinityDescriptor object.
+     *
+     * @return The parameterNames value
+     */
     @Override
     public String[] getParameterNames() {
         return new String[0];
@@ -166,8 +173,8 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
     /**
      * Gets the parameterType attribute of the ProtonAffinityDescriptor object.
      *
-     * @param  name  Description of the Parameter
-     * @return       An Object of class equal to that of the parameter being requested
+     * @param name Description of the Parameter
+     * @return An Object of class equal to that of the parameter being requested
      */
     @Override
     public Object getParameterType(String name) {
@@ -175,31 +182,27 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
     }
 
     /**
-     * Class defining the database containing the relation between the energy for ionizing and the HOSEcode
-     * fingerprints
+     * Class defining the database containing the relation between the energy for ionizing and the
+     * HOSEcode fingerprints
      *
      * @author Miguel Rojas
-     *
      */
     private class Affinitydb {
 
-        public static final String X_AFFI_PROTON_HOSE_DB = "/org/openscience/cdk/qsar/descriptors/atomic/data/X_AffiProton_HOSE.db";
-        public static final String X_AFFI_PROTON_HOSE_S_DB = "/org/openscience/cdk/qsar/descriptors/atomic/data/X_AffiProton_HOSE_S.db";
+        public static final String X_AFFI_PROTON_HOSE_DB =
+                "/org/openscience/cdk/qsar/descriptors/atomic/data/X_AffiProton_HOSE.db";
+        public static final String X_AFFI_PROTON_HOSE_S_DB =
+                "/org/openscience/cdk/qsar/descriptors/atomic/data/X_AffiProton_HOSE_S.db";
 
-        /**
-         * The constructor of the IPdb.
-         *
-         */
-        public Affinitydb() {
-
-        }
+        /** The constructor of the IPdb. */
+        public Affinitydb() {}
 
         /**
          * extract from the db the proton affinity.
          *
-         * @param container  The IAtomContainer
-         * @param atom       The IAtom
-         * @return           The energy value
+         * @param container The IAtomContainer
+         * @param atom The IAtom
+         * @return The energy value
          */
         public double extractAffinity(IAtomContainer container, IAtom atom) {
             // loading the files if they are not done
@@ -208,25 +211,24 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
 
             if (familyHalogen(atom)) {
                 try (InputStream ins = getClass().getResourceAsStream(X_AFFI_PROTON_HOSE_DB);
-                     BufferedReader insr = new BufferedReader(new InputStreamReader(ins))) {
+                        BufferedReader insr = new BufferedReader(new InputStreamReader(ins))) {
                     hoseVSenergy = extractAttributes(insr);
                 } catch (IOException e) {
                     LoggingToolFactory.createLoggingTool(getClass()).error(e);
                     return 0;
                 }
                 try (InputStream ins = getClass().getResourceAsStream(X_AFFI_PROTON_HOSE_S_DB);
-                     BufferedReader insr = new BufferedReader(new InputStreamReader(ins))) {
+                        BufferedReader insr = new BufferedReader(new InputStreamReader(ins))) {
                     hoseVSenergyS = extractAttributes(insr);
                 } catch (IOException e) {
                     LoggingToolFactory.createLoggingTool(getClass()).error(e);
                     return 0;
                 }
-            } else
-                return 0;
+            } else return 0;
 
             try {
                 HOSECodeGenerator hcg = new HOSECodeGenerator();
-                //Check starting from the exact sphere hose code and maximal a value of 10
+                // Check starting from the exact sphere hose code and maximal a value of 10
                 int exactSphere = 0;
                 String hoseCode = "";
                 for (int spheres = maxSpheresToUse; spheres > 0; spheres--) {
@@ -244,10 +246,12 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
                         break;
                     }
                 }
-                //Check starting from the rings bigger and smaller
-                //TODO:IP: Better application
+                // Check starting from the rings bigger and smaller
+                // TODO:IP: Better application
                 for (int i = 0; i < 3; i++) { // two rings
-                    for (int plusMinus = 0; plusMinus < 2; plusMinus++) { // plus==bigger, minus==smaller
+                    for (int plusMinus = 0;
+                            plusMinus < 2;
+                            plusMinus++) { // plus==bigger, minus==smaller
                         int sign = -1;
                         if (plusMinus == 1) sign = 1;
 
@@ -283,8 +287,8 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
         /**
          * Extract the Hose code and energy
          *
-         * @param input  The BufferedReader
-         * @return       HashMap with the Hose vs energy attributes
+         * @param input The BufferedReader
+         * @return HashMap with the Hose vs energy attributes
          */
         private HashMap<String, Double> extractAttributes(BufferedReader input) {
             HashMap<String, Double> hoseVSenergy = new HashMap<>();
@@ -307,23 +311,20 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
     /**
      * Extract the information from a line which contains HOSE_ID & energy.
      *
-     * @param str  String with the information
-     * @return     List with String = HOSECode and String = energy
+     * @param str String with the information
+     * @return List with String = HOSECode and String = energy
      */
     private static List<String> extractInfo(String str) {
         int beg = 0;
         int end = 0;
         int len = str.length();
         List<String> parts = new ArrayList<>();
-        while (end < len && !Character.isSpaceChar(str.charAt(end)))
-            end++;
-        parts.add(str.substring(beg,end));
-        while (end < len && Character.isSpaceChar(str.charAt(end)))
-            end++;
+        while (end < len && !Character.isSpaceChar(str.charAt(end))) end++;
+        parts.add(str.substring(beg, end));
+        while (end < len && Character.isSpaceChar(str.charAt(end))) end++;
         beg = end;
-        while (end < len && !Character.isSpaceChar(str.charAt(end)))
-            end++;
-        parts.add(str.substring(beg,end));
+        while (end < len && !Character.isSpaceChar(str.charAt(end))) end++;
+        parts.add(str.substring(beg, end));
         return parts;
     }
 }

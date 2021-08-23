@@ -23,10 +23,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -48,8 +46,9 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class CrystClustReader extends DefaultChemObjectReader {
 
-    private BufferedReader      input;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CrystClustReader.class);
+    private BufferedReader input;
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(CrystClustReader.class);
 
     public CrystClustReader() {}
 

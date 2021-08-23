@@ -27,8 +27,8 @@ package org.openscience.cdk.hash.stereo;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
- * Describes a factory for stereo elements. The factory create encoders for
- * specific stereo elements.
+ * Describes a factory for stereo elements. The factory create encoders for specific stereo
+ * elements.
  *
  * @author John May
  * @cdk.module hash
@@ -36,24 +36,22 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  */
 public interface StereoEncoderFactory {
 
-    /**
-     * Empty factory for when stereo encoding is not required
-     */
-    public static StereoEncoderFactory EMPTY = new StereoEncoderFactory() {
+    /** Empty factory for when stereo encoding is not required */
+    public static StereoEncoderFactory EMPTY =
+            new StereoEncoderFactory() {
 
-                                                 @Override
-                                                 public StereoEncoder create(IAtomContainer container, int[][] graph) {
-                                                     return StereoEncoder.EMPTY;
-                                                 }
-                                             };
+                @Override
+                public StereoEncoder create(IAtomContainer container, int[][] graph) {
+                    return StereoEncoder.EMPTY;
+                }
+            };
 
     /**
      * Create a stereo-encoder for possible stereo-chemical configurations.
      *
      * @param container the container
-     * @param graph     adjacency list representation of the container
+     * @param graph adjacency list representation of the container
      * @return a new stereo encoder
      */
     public StereoEncoder create(IAtomContainer container, int[][] graph);
-
 }

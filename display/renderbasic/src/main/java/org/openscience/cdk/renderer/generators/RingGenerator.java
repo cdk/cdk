@@ -26,9 +26,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import javax.vecmath.Point2d;
-
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
@@ -40,22 +38,22 @@ import org.openscience.cdk.renderer.elements.OvalElement;
 import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
 
 /**
- * Generates just the aromatic indicators for rings : circles, or light-gray
- * inner bonds, depending on the value of CDKStyleAromaticity.
+ * Generates just the aromatic indicators for rings : circles, or light-gray inner bonds, depending
+ * on the value of CDKStyleAromaticity.
  *
  * @cdk.module renderbasic
  * @cdk.githash
  */
 public class RingGenerator extends BasicBondGenerator {
 
-    /**
-     * Determines whether rings should be drawn with a circle if they are
-     * aromatic.
-     */
+    /** Determines whether rings should be drawn with a circle if they are aromatic. */
     public static class ShowAromaticity extends AbstractGeneratorParameter<Boolean> {
 
-        /** Returns the default value.
-         * @return {@link Boolean}.TRUE */
+        /**
+         * Returns the default value.
+         *
+         * @return {@link Boolean}.TRUE
+         */
         @Override
         public Boolean getDefault() {
             return Boolean.TRUE;
@@ -64,13 +62,14 @@ public class RingGenerator extends BasicBondGenerator {
 
     private IGeneratorParameter<Boolean> showAromaticity = new ShowAromaticity();
 
-    /**
-     * Depicts aromaticity of rings in the original CDK style.
-     */
+    /** Depicts aromaticity of rings in the original CDK style. */
     public static class CDKStyleAromaticity extends AbstractGeneratorParameter<Boolean> {
 
-        /** Returns the default value.
-         * @return {@link Boolean}.FALSE */
+        /**
+         * Returns the default value.
+         *
+         * @return {@link Boolean}.FALSE
+         */
         @Override
         public Boolean getDefault() {
             return Boolean.FALSE;
@@ -80,9 +79,7 @@ public class RingGenerator extends BasicBondGenerator {
     /** If true, the aromatic ring is indicated by light gray inner bonds */
     private IGeneratorParameter<Boolean> cdkStyleAromaticity = new CDKStyleAromaticity();
 
-    /**
-     * The maximum ring size for which an aromatic ring should be drawn.
-     */
+    /** The maximum ring size for which an aromatic ring should be drawn. */
     public static class MaxDrawableAromaticRing extends AbstractGeneratorParameter<Integer> {
 
         /**
@@ -99,13 +96,14 @@ public class RingGenerator extends BasicBondGenerator {
 
     private IGeneratorParameter<Integer> maxDrawableAromaticRing = new MaxDrawableAromaticRing();
 
-    /**
-     * The proportion of a ring bounds to use to draw the ring.
-     */
+    /** The proportion of a ring bounds to use to draw the ring. */
     public static class RingProportion extends AbstractGeneratorParameter<Double> {
 
-        /** Returns the default value.
-         * @return 0.35 */
+        /**
+         * Returns the default value.
+         *
+         * @return 0.35
+         */
         @Override
         public Double getDefault() {
             return 0.35;
@@ -115,14 +113,11 @@ public class RingGenerator extends BasicBondGenerator {
     private IGeneratorParameter<Double> ringProportion = new RingProportion();
 
     /**
-     * The rings that have already been painted - that is, a ring element
-     * has been generated for it.
+     * The rings that have already been painted - that is, a ring element has been generated for it.
      */
-    private Set<IRing>                  painted_rings;
+    private Set<IRing> painted_rings;
 
-    /**
-     * Make a generator for ring elements.
-     */
+    /** Make a generator for ring elements. */
     public RingGenerator() {
         this.painted_rings = new HashSet<IRing>();
     }
@@ -130,7 +125,8 @@ public class RingGenerator extends BasicBondGenerator {
     /** {@inheritDoc} */
     @Override
     public IRenderingElement generateRingElements(IBond bond, IRing ring, RendererModel model) {
-        if (ringIsAromatic(ring) && showAromaticity.getValue()
+        if (ringIsAromatic(ring)
+                && showAromaticity.getValue()
                 && ring.getAtomCount() < maxDrawableAromaticRing.getValue()) {
             ElementGroup pair = new ElementGroup();
             if (cdkStyleAromaticity.getValue()) {
@@ -191,7 +187,8 @@ public class RingGenerator extends BasicBondGenerator {
         // Allocate ArrayList with sufficient space for everything.
         // Note that the number should ideally be the same as the number of entries
         // that we add here, though this is *only* an efficiency consideration.
-        List<IGeneratorParameter<?>> pars = new ArrayList<IGeneratorParameter<?>>(superPars.size() + 3);
+        List<IGeneratorParameter<?>> pars =
+                new ArrayList<IGeneratorParameter<?>>(superPars.size() + 3);
 
         pars.addAll(superPars);
         pars.add(cdkStyleAromaticity);

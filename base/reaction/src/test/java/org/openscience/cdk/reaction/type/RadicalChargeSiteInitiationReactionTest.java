@@ -18,6 +18,8 @@
  */
 package org.openscience.cdk.reaction.type;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
@@ -36,12 +38,9 @@ import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * TestSuite that runs a test for the RearrangementRadicalReactionTest.
- * Generalized Reaction: [A*+]-B-C => [A+]=B + [c*].
+ * TestSuite that runs a test for the RearrangementRadicalReactionTest. Generalized Reaction:
+ * [A*+]-B-C => [A+]=B + [c*].
  *
  * @cdk.module test-reaction
  */
@@ -49,16 +48,12 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
 
     private IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
-    /**
-     *  The JUnit setup method
-     */
+    /** The JUnit setup method */
     public RadicalChargeSiteInitiationReactionTest() throws Exception {
         setReaction(RadicalChargeSiteInitiationReaction.class);
     }
 
-    /**
-     *  The JUnit setup method
-     */
+    /** The JUnit setup method */
     @Test
     public void testRadicalChargeSiteInitiationReaction() throws Exception {
         IReactionProcess type = new RadicalChargeSiteInitiationReaction();
@@ -66,10 +61,10 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
     }
 
     /**
-     * A unit test suite for JUnit. Reaction: [O+*]C([H])([H])C([H])([H])([H]) => [O+]=C([H])([H]) +[C*]([H])([H])([H])
-     * Automatic search of the center active.
+     * A unit test suite for JUnit. Reaction: [O+*]C([H])([H])C([H])([H])([H]) => [O+]=C([H])([H])
+     * +[C*]([H])([H])([H]) Automatic search of the center active.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     @Override
@@ -106,7 +101,7 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testCDKConstants_REACTIVE_CENTER() throws Exception {
@@ -147,7 +142,7 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testMapping() throws Exception {
@@ -175,16 +170,21 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
         IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
 
         Assert.assertEquals(9, setOfReactions.getReaction(0).getMappingCount());
-        IAtom mappedProductA1 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
-                molecule.getAtom(1));
+        IAtom mappedProductA1 =
+                (IAtom)
+                        ReactionManipulator.getMappedChemObject(
+                                setOfReactions.getReaction(0), molecule.getAtom(1));
         Assert.assertEquals(mappedProductA1, product1.getAtom(1));
-        IAtom mappedProductA2 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
-                molecule.getAtom(2));
+        IAtom mappedProductA2 =
+                (IAtom)
+                        ReactionManipulator.getMappedChemObject(
+                                setOfReactions.getReaction(0), molecule.getAtom(2));
         Assert.assertEquals(mappedProductA2, product2.getAtom(0));
-        IAtom mappedProductA3 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
-                molecule.getAtom(0));
+        IAtom mappedProductA3 =
+                (IAtom)
+                        ReactionManipulator.getMappedChemObject(
+                                setOfReactions.getReaction(0), molecule.getAtom(0));
         Assert.assertEquals(mappedProductA3, product1.getAtom(0));
-
     }
 
     /**
@@ -193,7 +193,8 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
      * @return The IAtomContainerSet
      */
     private IAtomContainerSet getExampleReactants() {
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "O"));
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));

@@ -21,8 +21,8 @@ package org.openscience.cdk.qsar.result;
 import java.io.Serializable;
 
 /**
- * Object that provides access to the calculated descriptor value.
- * The concept was taken from JOELib.
+ * Object that provides access to the calculated descriptor value. The concept was taken from
+ * JOELib.
  *
  * @cdk.module standard
  * @cdk.githash
@@ -43,5 +43,4 @@ public interface IDescriptorResult extends Serializable {
      * @return the length of the array of return values.
      */
     public int length();
-
 }

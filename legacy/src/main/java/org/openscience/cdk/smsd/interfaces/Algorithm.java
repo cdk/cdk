@@ -22,56 +22,42 @@
  */
 package org.openscience.cdk.smsd.interfaces;
 
-
 /**
- *
- * This class represents various algorithm type supported by SMSD.
- * Presently SMSD supports 5 different kinds of algorithms:
+ * This class represents various algorithm type supported by SMSD. Presently SMSD supports 5
+ * different kinds of algorithms:
  *
  * <OL>
- * <lI>0: default,
- * <lI>1: MCSPlus,
- * <lI>2: VFLibMCS,
- * <lI>3: CDKMCS,
- * <lI>4: SubStructure
- * <lI>5: TurboSubStructure
+ *   <lI>0: default,
+ *   <lI>1: MCSPlus,
+ *   <lI>2: VFLibMCS,
+ *   <lI>3: CDKMCS,
+ *   <lI>4: SubStructure
+ *   <lI>5: TurboSubStructure
  * </OL>
  *
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is
+ *     available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public enum Algorithm {
 
-    /**
-     * Default SMSD algorithm.
-     */
+    /** Default SMSD algorithm. */
     DEFAULT(0, "Default SMSD algorithm"),
-    /**
-     * MCS Plus algorithm.
-     */
+    /** MCS Plus algorithm. */
     MCSPlus(1, "MCS Plus algorithm"),
-    /**
-     * VF Lib based MCS algorithm.
-     */
+    /** VF Lib based MCS algorithm. */
     VFLibMCS(2, "VF Lib based MCS algorithm"),
-    /**
-     * CDK UIT MCS.
-     */
+    /** CDK UIT MCS. */
     CDKMCS(3, "CDK UIT MCS"),
-    /**
-     * Substructure search will return all maps.
-     */
+    /** Substructure search will return all maps. */
     SubStructure(4, "Substructure search"),
-    /**
-     * Substructure search will return first map.
-     */
+    /** Substructure search will return first map. */
     TurboSubStructure(5, "Turbo Mode- Substructure search");
 
-    private final int    type;
+    private final int type;
     private final String description;
 
     Algorithm(int aStatus, String desc) {
@@ -81,6 +67,7 @@ public enum Algorithm {
 
     /**
      * Returns type of algorithm.
+     *
      * @return type of algorithm
      */
     public int type() {
@@ -89,6 +76,7 @@ public enum Algorithm {
 
     /**
      * Returns short description of the algorithm.
+     *
      * @return description of the algorithm
      */
     public String description() {
@@ -97,6 +85,7 @@ public enum Algorithm {
 
     /**
      * Compares algorithm types.
+     *
      * @param <status>
      * @param obj
      * @return status

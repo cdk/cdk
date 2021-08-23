@@ -23,43 +23,42 @@
  */
 package org.openscience.cdk.similarity;
 
+import java.util.BitSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.fingerprint.BitSetFingerprint;
 import org.openscience.cdk.fingerprint.IBitFingerprint;
 import org.openscience.cdk.fingerprint.ICountFingerprint;
 import org.openscience.cdk.fingerprint.IntArrayFingerprint;
 
-import java.util.BitSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
-
 /**
- *  Calculates the Tanimoto coefficient for a given pair of two
- *  fingerprint bitsets or real valued feature vectors.
+ * Calculates the Tanimoto coefficient for a given pair of two fingerprint bitsets or real valued
+ * feature vectors.
  *
- *  The Tanimoto coefficient is one way to
- *  quantitatively measure the "distance" or similarity of
- *  two chemical structures.
+ * <p>The Tanimoto coefficient is one way to quantitatively measure the "distance" or similarity of
+ * two chemical structures.
  *
- *  <p>You can use the FingerPrinter class to retrieve two fingerprint bitsets.
- *  We assume that you have two structures stored in cdk.Molecule objects.
- *  A tanimoto coefficient can then be calculated like:
- *  <pre>
+ * <p>You can use the FingerPrinter class to retrieve two fingerprint bitsets. We assume that you
+ * have two structures stored in cdk.Molecule objects. A tanimoto coefficient can then be calculated
+ * like:
+ *
+ * <pre>
  *   BitSet fingerprint1 = Fingerprinter.getBitFingerprint(molecule1);
  *   BitSet fingerprint2 = Fingerprinter.getBitFingerprint(molecule2);
  *   float tanimoto_coefficient = Tanimoto.calculate(fingerprint1, fingerprint2);
  *  </pre>
  *
- *  <p>The FingerPrinter assumes that hydrogens are explicitely given, if this
- *  is desired!
- *  <p>Note that the continuous Tanimoto coefficient does not lead to a metric space
+ * <p>The FingerPrinter assumes that hydrogens are explicitely given, if this is desired!
  *
- *@author         steinbeck
+ * <p>Note that the continuous Tanimoto coefficient does not lead to a metric space
+ *
+ * @author steinbeck
  * @cdk.githash
- *@cdk.created    2005-10-19
- *@cdk.keyword    jaccard
- *@cdk.keyword    similarity, tanimoto
+ * @cdk.created 2005-10-19
+ * @cdk.keyword jaccard
+ * @cdk.keyword similarity, tanimoto
  * @cdk.module fingerprint
  */
 // see also SignatureFingerprintTanimotoTest
@@ -69,11 +68,13 @@ public class Tanimoto {
 
     /**
      * Evaluates Tanimoto coefficient for two bit sets.
+     *
      * <p>
+     *
      * @param bitset1 A bitset (such as a fingerprint) for the first molecule
      * @param bitset2 A bitset (such as a fingerprint) for the second molecule
      * @return The Tanimoto coefficient
-     * @throws org.openscience.cdk.exception.CDKException  if bitsets are not of the same length
+     * @throws org.openscience.cdk.exception.CDKException if bitsets are not of the same length
      */
     public static float calculate(BitSet bitset1, BitSet bitset2) throws CDKException {
         float _bitset1_cardinality = bitset1.cardinality();
@@ -84,12 +85,15 @@ public class Tanimoto {
         BitSet one_and_two = (BitSet) bitset1.clone();
         one_and_two.and(bitset2);
         float _common_bit_count = one_and_two.cardinality();
-        return _common_bit_count / (_bitset1_cardinality + _bitset2_cardinality - _common_bit_count);
+        return _common_bit_count
+                / (_bitset1_cardinality + _bitset2_cardinality - _common_bit_count);
     }
 
     /**
      * Evaluates Tanimoto coefficient for two <code>IBitFingerprint</code>.
+     *
      * <p>
+     *
      * @param fingerprint1 fingerprint for the first molecule
      * @param fingerprint2 fingerprint for the second molecule
      * @return The Tanimoto coefficient
@@ -104,8 +108,10 @@ public class Tanimoto {
         // If the fingerprint is an IntArrayFingeprint that could mean a big
         // fingerprint so let's take the safe way out and create a
         // new IntArrayfingerprint
-        IBitFingerprint one_and_two = fingerprint1 instanceof IntArrayFingerprint ? new IntArrayFingerprint(
-                fingerprint1) : new BitSetFingerprint(fingerprint1);
+        IBitFingerprint one_and_two =
+                fingerprint1 instanceof IntArrayFingerprint
+                        ? new IntArrayFingerprint(fingerprint1)
+                        : new BitSetFingerprint(fingerprint1);
         one_and_two.and(fingerprint2);
         double cardinalityCommon = one_and_two.cardinality();
         return cardinalityCommon / (cardinality1 + cardinality2 - cardinalityCommon);
@@ -113,11 +119,13 @@ public class Tanimoto {
 
     /**
      * Evaluates the continuous Tanimoto coefficient for two real valued vectors.
+     *
      * <p>
+     *
      * @param features1 The first feature vector
      * @param features2 The second feature vector
      * @return The continuous Tanimoto coefficient
-     * @throws org.openscience.cdk.exception.CDKException  if the features are not of the same length
+     * @throws org.openscience.cdk.exception.CDKException if the features are not of the same length
      */
     public static float calculate(double[] features1, double[] features2) throws CDKException {
 
@@ -140,15 +148,15 @@ public class Tanimoto {
 
     /**
      * Evaluate continuous Tanimoto coefficient for two feature, count fingerprint representations.
-     * <p>
-     * Note that feature/count type fingerprints may be of different length.
      *
-     * Uses Tanimoto method from 10.1021/ci800326z
+     * <p>Note that feature/count type fingerprints may be of different length.
+     *
+     * <p>Uses Tanimoto method from 10.1021/ci800326z
      *
      * @param features1 The first feature map
      * @param features2 The second feature map
      * @return The Tanimoto coefficient
-     */                         
+     */
     public static float calculate(Map<String, Integer> features1, Map<String, Integer> features2) {
         Set<String> common = new TreeSet<String>(features1.keySet());
         common.retainAll(features2.keySet());
@@ -168,9 +176,9 @@ public class Tanimoto {
 
     /**
      * Evaluate continuous Tanimoto coefficient for two feature, count fingerprint representations.
-     * <p>
-     * Note that feature/count type fingerprints may be of different length.
-     * Uses Tanimoto method from 10.1021/ci800326z
+     *
+     * <p>Note that feature/count type fingerprints may be of different length. Uses Tanimoto method
+     * from 10.1021/ci800326z
      *
      * @param fp1 The first fingerprint
      * @param fp2 The second fingerprint
@@ -185,9 +193,9 @@ public class Tanimoto {
     /**
      * Calculates Tanimoto distance for two count fingerprints using method 1.
      *
-     * The feature/count type fingerprints may be of different length.
-     * Uses Tanimoto method from {@cdk.cite Steffen09}.
-     * 
+     * <p>The feature/count type fingerprints may be of different length. Uses Tanimoto method from
+     * {@cdk.cite Steffen09}.
+     *
      * @param fp1 count fingerprint 1
      * @param fp2 count fingerprint 2
      * @return a Tanimoto distance

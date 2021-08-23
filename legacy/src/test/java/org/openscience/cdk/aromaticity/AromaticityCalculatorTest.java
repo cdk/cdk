@@ -28,9 +28,7 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.smiles.SmilesParser;
 
-/**
- * @cdk.module test-standard
- */
+/** @cdk.module test-standard */
 public class AromaticityCalculatorTest extends CDKTestCase {
 
     public AromaticityCalculatorTest() {
@@ -47,5 +45,4 @@ public class AromaticityCalculatorTest extends CDKTestCase {
         Assert.assertEquals(1, rs.getAtomContainerCount());
         Assert.assertTrue(AromaticityCalculator.isAromatic((IRing) rs.getAtomContainer(0), mol));
     }
-
 }

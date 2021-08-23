@@ -26,7 +26,11 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Map;
 import java.util.TreeMap;
-
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
@@ -35,15 +39,8 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.smsd.Isomorphism;
 import org.openscience.cdk.smsd.interfaces.Algorithm;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 /**
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- *
  * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
@@ -65,6 +62,7 @@ public class ChemicalFiltersTest {
 
     /**
      * Test of sortResultsByStereoAndBondMatch method, of class ChemicalFilters.
+     *
      * @throws Exception
      */
     @Test
@@ -86,6 +84,7 @@ public class ChemicalFiltersTest {
 
     /**
      * Test of sortResultsByFragments method, of class ChemicalFilters.
+     *
      * @throws InvalidSmilesException
      * @throws CDKException
      */
@@ -108,6 +107,7 @@ public class ChemicalFiltersTest {
 
     /**
      * Test of sortResultsByEnergies method, of class ChemicalFilters.
+     *
      * @throws Exception
      */
     @Test
@@ -127,9 +127,7 @@ public class ChemicalFiltersTest {
         assertEquals(2, smsd1.getAllAtomMapping().size());
     }
 
-    /**
-     * Test of sortMapByValueInAccendingOrder method, of class ChemicalFilters.
-     */
+    /** Test of sortMapByValueInAccendingOrder method, of class ChemicalFilters. */
     @Test
     public void testSortMapByValueInAccendingOrder() {
 
@@ -148,9 +146,7 @@ public class ChemicalFiltersTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of sortMapByValueInDecendingOrder method, of class ChemicalFilters.
-     */
+    /** Test of sortMapByValueInDecendingOrder method, of class ChemicalFilters. */
     @Test
     public void testSortMapByValueInDecendingOrder() {
         Map<Integer, Double> map = new TreeMap<Integer, Double>();
@@ -170,6 +166,7 @@ public class ChemicalFiltersTest {
 
     /**
      * Test of getSortedEnergy method, of class ChemicalFilters.
+     *
      * @throws InvalidSmilesException
      * @throws CDKException
      */
@@ -188,6 +185,7 @@ public class ChemicalFiltersTest {
 
     /**
      * Test of getSortedFragment method, of class ChemicalFilters.
+     *
      * @throws InvalidSmilesException
      * @throws CDKException
      */
@@ -206,6 +204,7 @@ public class ChemicalFiltersTest {
 
     /**
      * Test of getStereoMatches method, of class ChemicalFilters.
+     *
      * @throws InvalidSmilesException
      * @throws CDKException
      */

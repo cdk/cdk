@@ -23,21 +23,20 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
- * Helper class that all atom type matcher test classes must implement.
- * It keeps track of the atom types which have been tested, to ensure
- * that all atom types are tested.
+ * Helper class that all atom type matcher test classes must implement. It keeps track of the atom
+ * types which have been tested, to ensure that all atom types are tested.
  *
  * @cdk.module test-core
- * @cdk.bug    1890702
+ * @cdk.bug 1890702
  */
-abstract public class AbstractCDKAtomTypeTest extends AbstractAtomTypeTest {
+public abstract class AbstractCDKAtomTypeTest extends AbstractAtomTypeTest {
 
-    private final static String            ATOMTYPE_LIST = "cdk-atom-types.owl";
+    private static final String ATOMTYPE_LIST = "cdk-atom-types.owl";
 
-    protected final static AtomTypeFactory factory       = AtomTypeFactory
-                                                                 .getInstance("org/openscience/cdk/dict/data/"
-                                                                         + ATOMTYPE_LIST,
-                                                                         SilentChemObjectBuilder.getInstance());
+    protected static final AtomTypeFactory factory =
+            AtomTypeFactory.getInstance(
+                    "org/openscience/cdk/dict/data/" + ATOMTYPE_LIST,
+                    SilentChemObjectBuilder.getInstance());
 
     @Override
     public String getAtomTypeListName() {

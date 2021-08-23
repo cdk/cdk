@@ -20,9 +20,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 
 import java.io.IOException;
 import java.util.Iterator;
-
 import javax.vecmath.Point3d;
-
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -37,10 +35,13 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- *  Inductive atomic hardness of an atom in a polyatomic system can be defined
- *  as the "resistance" to a change of the atomic charge. Only works with 3D coordinates, which must be calculated beforehand. <p>
+ * Inductive atomic hardness of an atom in a polyatomic system can be defined as the "resistance" to
+ * a change of the atomic charge. Only works with 3D coordinates, which must be calculated
+ * beforehand.
  *
- *  <table border="1">
+ * <p>
+ *
+ * <table border="1">
  *    <caption>Parameters for this descriptor:</caption>
  *    <tr>
  *      <td>
@@ -62,53 +63,50 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *    </tr>
  *  </table>
  *
- *
- *@author         mfe4
- *@cdk.created    2004-11-03
- *@cdk.module     qsaratomic
+ * @author mfe4
+ * @cdk.created 2004-11-03
+ * @cdk.module qsaratomic
  * @cdk.githash
- * @cdk.dictref   qsar-descriptors:atomicHardness
+ * @cdk.dictref qsar-descriptors:atomicHardness
  */
-public class InductiveAtomicHardnessDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
+public class InductiveAtomicHardnessDescriptor extends AbstractAtomicDescriptor
+        implements IAtomicDescriptor {
 
-    private static final String[] NAMES   = {"indAtomHardnesss"};
+    private static final String[] NAMES = {"indAtomHardnesss"};
 
-    private static ILoggingTool   logger  = LoggingToolFactory
-                                                  .createLoggingTool(InductiveAtomicHardnessDescriptor.class);
-    private AtomTypeFactory       factory = null;
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(InductiveAtomicHardnessDescriptor.class);
+    private AtomTypeFactory factory = null;
 
     /**
-     *  Constructor for the InductiveAtomicHardnessDescriptor object
+     * Constructor for the InductiveAtomicHardnessDescriptor object
      *
-     *@exception  IOException             Description of the Exception
-     *@exception  ClassNotFoundException  Description of the Exception
+     * @exception IOException Description of the Exception
+     * @exception ClassNotFoundException Description of the Exception
      */
     public InductiveAtomicHardnessDescriptor() throws IOException, ClassNotFoundException {}
 
     /**
-     *  Gets the specification attribute of the InductiveAtomicHardnessDescriptor
-     *  object
+     * Gets the specification attribute of the InductiveAtomicHardnessDescriptor object
      *
-     *@return    The specification value
+     * @return The specification value
      */
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomicHardness", this.getClass()
-                        .getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomicHardness",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
-    /**
-     * This descriptor does have any parameter.
-     */
+    /** This descriptor does have any parameter. */
     @Override
     public void setParameters(Object[] params) throws CDKException {}
 
     /**
-     *  Gets the parameters attribute of the InductiveAtomicHardnessDescriptor
-     *  object
+     * Gets the parameters attribute of the InductiveAtomicHardnessDescriptor object
      *
-     * @return    The parameters value
+     * @return The parameters value
      * @see #setParameters
      */
     @Override
@@ -122,24 +120,31 @@ public class InductiveAtomicHardnessDescriptor extends AbstractAtomicDescriptor 
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                Double.NaN), NAMES, e);
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new DoubleResult(Double.NaN),
+                NAMES,
+                e);
     }
 
     /**
-     *  It is needed to call the addExplicitHydrogensToSatisfyValency method from
-     *  the class tools.HydrogenAdder, and 3D coordinates.
+     * It is needed to call the addExplicitHydrogensToSatisfyValency method from the class
+     * tools.HydrogenAdder, and 3D coordinates.
      *
-     *@param  atom              The IAtom for which the DescriptorValue is requested
-     *@param  ac                AtomContainer
-     *@return                   a double with polarizability of the heavy atom
+     * @param atom The IAtom for which the DescriptorValue is requested
+     * @param ac AtomContainer
+     * @return a double with polarizability of the heavy atom
      */
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
         if (factory == null)
             try {
-                factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt",
-                        ac.getBuilder());
+                factory =
+                        AtomTypeFactory.getInstance(
+                                "org/openscience/cdk/config/data/jmol_atomtypes.txt",
+                                ac.getBuilder());
             } catch (Exception exception) {
                 return getDummyDescriptorValue(exception);
             }
@@ -166,8 +171,9 @@ public class InductiveAtomicHardnessDescriptor extends AbstractAtomicDescriptor 
         while (allAtoms.hasNext()) {
             IAtom curAtom = allAtoms.next();
             if (atom.getPoint3d() == null || curAtom.getPoint3d() == null) {
-                return getDummyDescriptorValue(new CDKException(
-                        "The target atom or current atom had no 3D coordinates. These are required"));
+                return getDummyDescriptorValue(
+                        new CDKException(
+                                "The target atom or current atom had no 3D coordinates. These are required"));
             }
 
             if (!atom.equals(curAtom)) {
@@ -191,8 +197,12 @@ public class InductiveAtomicHardnessDescriptor extends AbstractAtomicDescriptor 
         atomicHardness = 2 * atomicHardness;
         atomicHardness = atomicHardness * 0.172;
         atomicHardness = 1 / atomicHardness;
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                atomicHardness), NAMES);
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new DoubleResult(atomicHardness),
+                NAMES);
     }
 
     private double calculateSquareDistanceBetweenTwoAtoms(IAtom atom1, IAtom atom2) {
@@ -206,10 +216,9 @@ public class InductiveAtomicHardnessDescriptor extends AbstractAtomicDescriptor 
     }
 
     /**
-     *  Gets the parameterNames attribute of the InductiveAtomicHardnessDescriptor
-     *  object
+     * Gets the parameterNames attribute of the InductiveAtomicHardnessDescriptor object
      *
-     *@return    The parameterNames value
+     * @return The parameterNames value
      */
     @Override
     public String[] getParameterNames() {
@@ -217,11 +226,10 @@ public class InductiveAtomicHardnessDescriptor extends AbstractAtomicDescriptor 
     }
 
     /**
-     *  Gets the parameterType attribute of the InductiveAtomicHardnessDescriptor
-     *  object
+     * Gets the parameterType attribute of the InductiveAtomicHardnessDescriptor object
      *
-     * @param  name  Description of the Parameter
-     * @return       An Object of class equal to that of the parameter being requested
+     * @param name Description of the Parameter
+     * @return An Object of class equal to that of the parameter being requested
      */
     @Override
     public Object getParameterType(String name) {

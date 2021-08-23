@@ -19,6 +19,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.io.InputStream;
+import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,15 +38,11 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
-import java.io.InputStream;
-import java.util.List;
-
 /**
  * TestSuite that runs all QSAR tests.
  *
  * @cdk.module test-qsarmolecular
  */
-
 public class BCUTDescriptorTest extends MolecularDescriptorTest {
 
     public BCUTDescriptorTest() {}
@@ -74,12 +72,13 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
         Assert.assertNotNull(retval);
         /* System.out.println("Num ret = "+retval.size()); */
         for (int i = 0; i < retval.length(); i++) {
-            Assert.assertTrue("The returned value must be non-zero", Math.abs(0.0 - retval.get(i)) > 0.0000001);
+            Assert.assertTrue(
+                    "The returned value must be non-zero",
+                    Math.abs(0.0 - retval.get(i)) > 0.0000001);
         }
 
         String[] names = descriptorValue.getNames();
-        for (String name : names)
-            Assert.assertNotNull(name);
+        for (String name : names) Assert.assertNotNull(name);
 
         /*
          * Assert.assertEquals(1756.5060703860984,
@@ -123,12 +122,10 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
         int nheavy = 20;
 
         Assert.assertEquals(75, retval.length());
-        for (int i = 0; i < nheavy; i++)
-            Assert.assertTrue(retval.get(i) != Double.NaN);
+        for (int i = 0; i < nheavy; i++) Assert.assertTrue(retval.get(i) != Double.NaN);
         for (int i = nheavy; i < nheavy + 5; i++) {
             Assert.assertTrue("Extra eigenvalue should have been NaN", Double.isNaN(retval.get(i)));
         }
-
     }
 
     @Test
@@ -155,22 +152,21 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
 
         Assert.assertEquals(result1.length(), result2.length());
         for (int i = 0; i < result1.length(); i++) {
-            Assert.assertEquals("element " + i + " does not match", result1.get(i), result2.get(i), 0.01);
+            Assert.assertEquals(
+                    "element " + i + " does not match", result1.get(i), result2.get(i), 0.01);
         }
     }
 
     @Test
     public void testHAddition() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer mol = sp.parseSmiles("C=1C=CC(=CC1)CNC2=CC=C(C=C2N(=O)=O)S(=O)(=O)C(Cl)(Cl)Br");
+        IAtomContainer mol =
+                sp.parseSmiles("C=1C=CC(=CC1)CNC2=CC=C(C=C2N(=O)=O)S(=O)(=O)C(Cl)(Cl)Br");
         DoubleArrayResult result1 = (DoubleArrayResult) descriptor.calculate(mol).getValue();
-        for (int i = 0; i < result1.length(); i++)
-            Assert.assertTrue(result1.get(i) != Double.NaN);
+        for (int i = 0; i < result1.length(); i++) Assert.assertTrue(result1.get(i) != Double.NaN);
     }
 
-    /**
-     * @cdk.bug 3489559
-     */
+    /** @cdk.bug 3489559 */
     @Test
     public void testUndefinedValues() throws Exception {
         String filename = "data/mdl/burden_undefined.sdf";
@@ -188,7 +184,8 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
         Exception e = descriptor.calculate(ac).getException();
         Assert.assertNotNull(e);
         // make sure exception was a NPE etc.
-        Assert.assertEquals("Could not calculate partial charges: Partial charge not-supported for element: 'As'.",
+        Assert.assertEquals(
+                "Could not calculate partial charges: Partial charge not-supported for element: 'As'.",
                 e.getMessage());
     }
 }

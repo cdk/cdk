@@ -20,12 +20,9 @@ package org.openscience.cdk.ringsearch;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.ringsearch.Queue;
 import org.openscience.cdk.CDKTestCase;
 
-/**
- * @cdk.module test-standard
- */
+/** @cdk.module test-standard */
 public class QueueTest extends CDKTestCase {
 
     public QueueTest() {
@@ -45,5 +42,4 @@ public class QueueTest extends CDKTestCase {
         queue.push("Hello");
         Assert.assertEquals(1, queue.pop());
     }
-
 }

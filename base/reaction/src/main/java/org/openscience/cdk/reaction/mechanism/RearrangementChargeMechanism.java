@@ -20,7 +20,6 @@ package org.openscience.cdk.reaction.mechanism;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
@@ -39,14 +38,15 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
- * <p>This mechanism displaces the charge(radical, charge + or charge -) because of
- * a double bond which is associated.
- * It returns the reaction mechanism which has been cloned the {@link IAtomContainer}.</p>
- * <p>This reaction could be represented as [A*]-Y=Z =&gt; A=Z-[Y*]</p>
+ * This mechanism displaces the charge(radical, charge + or charge -) because of a double bond which
+ * is associated. It returns the reaction mechanism which has been cloned the {@link
+ * IAtomContainer}.
  *
- * @author         miguelrojasch
- * @cdk.created    2008-02-10
- * @cdk.module     reaction
+ * <p>This reaction could be represented as [A*]-Y=Z =&gt; A=Z-[Y*]
+ *
+ * @author miguelrojasch
+ * @cdk.created 2008-02-10
+ * @cdk.module reaction
  * @cdk.githash
  */
 public class RearrangementChargeMechanism implements IReactionMechanism {
@@ -55,30 +55,33 @@ public class RearrangementChargeMechanism implements IReactionMechanism {
      * Initiates the process for the given mechanism. The atoms to apply are mapped between
      * reactants and products.
      *
-     *
      * @param atomContainerSet
-     * @param atomList    The list of atoms taking part in the mechanism. Only allowed two three.
-     *                    The first atom is the atom which must contain the charge to be moved, the second
-     *                    is the atom which is in the middle and the third is the atom which acquires the new charge
-     * @param bondList    The list of bonds taking part in the mechanism. Only allowed two bond.
-     * 					  The first bond is the bond to increase the order and the second is the bond
-     * 				      to decrease the order
-     * 					  It is the bond which is moved
-     * @return            The Reaction mechanism
-     *
+     * @param atomList The list of atoms taking part in the mechanism. Only allowed two three. The
+     *     first atom is the atom which must contain the charge to be moved, the second is the atom
+     *     which is in the middle and the third is the atom which acquires the new charge
+     * @param bondList The list of bonds taking part in the mechanism. Only allowed two bond. The
+     *     first bond is the bond to increase the order and the second is the bond to decrease the
+     *     order It is the bond which is moved
+     * @return The Reaction mechanism
      */
     @Override
-    public IReaction initiate(IAtomContainerSet atomContainerSet, ArrayList<IAtom> atomList, ArrayList<IBond> bondList)
+    public IReaction initiate(
+            IAtomContainerSet atomContainerSet,
+            ArrayList<IAtom> atomList,
+            ArrayList<IBond> bondList)
             throws CDKException {
-        CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(atomContainerSet.getBuilder());
+        CDKAtomTypeMatcher atMatcher =
+                CDKAtomTypeMatcher.getInstance(atomContainerSet.getBuilder());
         if (atomContainerSet.getAtomContainerCount() != 1) {
             throw new CDKException("RearrangementChargeMechanism only expects one IAtomContainer");
         }
         if (atomList.size() != 3) {
-            throw new CDKException("RearrangementChargeMechanism expects three atoms in the ArrayList");
+            throw new CDKException(
+                    "RearrangementChargeMechanism expects three atoms in the ArrayList");
         }
         if (bondList.size() != 2) {
-            throw new CDKException("RearrangementChargeMechanism only expect one bond in the ArrayList");
+            throw new CDKException(
+                    "RearrangementChargeMechanism only expect one bond in the ArrayList");
         }
         IAtomContainer molecule = atomContainerSet.getAtomContainer(0);
         IAtomContainer reactantCloned;
@@ -87,27 +90,28 @@ public class RearrangementChargeMechanism implements IReactionMechanism {
         } catch (CloneNotSupportedException e) {
             throw new CDKException("Could not clone IAtomContainer!", e);
         }
-        IAtom atom1 = atomList.get(0);// Atom with the charge
+        IAtom atom1 = atomList.get(0); // Atom with the charge
         IAtom atom1C = reactantCloned.getAtom(molecule.indexOf(atom1));
-        IAtom atom3 = atomList.get(2);// Atom which acquires the charge
+        IAtom atom3 = atomList.get(2); // Atom which acquires the charge
         IAtom atom3C = reactantCloned.getAtom(molecule.indexOf(atom3));
-        IBond bond1 = bondList.get(0);// Bond with single bond
+        IBond bond1 = bondList.get(0); // Bond with single bond
         int posBond1 = molecule.indexOf(bond1);
-        IBond bond2 = bondList.get(1);// Bond with double bond
+        IBond bond2 = bondList.get(1); // Bond with double bond
         int posBond2 = molecule.indexOf(bond2);
 
         BondManipulator.increaseBondOrder(reactantCloned.getBond(posBond1));
         if (bond2.getOrder() == IBond.Order.SINGLE)
             reactantCloned.removeBond(reactantCloned.getBond(posBond2));
-        else
-            BondManipulator.decreaseBondOrder(reactantCloned.getBond(posBond2));
+        else BondManipulator.decreaseBondOrder(reactantCloned.getBond(posBond2));
 
-        //Depending of the charge moving (radical, + or -) there is a different situation
+        // Depending of the charge moving (radical, + or -) there is a different situation
         if (reactantCloned.getConnectedSingleElectronsCount(atom1C) > 0) {
-            List<ISingleElectron> selectron = reactantCloned.getConnectedSingleElectronsList(atom1C);
+            List<ISingleElectron> selectron =
+                    reactantCloned.getConnectedSingleElectronsList(atom1C);
             reactantCloned.removeSingleElectron(selectron.get(selectron.size() - 1));
 
-            reactantCloned.addSingleElectron(bond2.getBuilder().newInstance(ISingleElectron.class, atom3C));
+            reactantCloned.addSingleElectron(
+                    bond2.getBuilder().newInstance(ISingleElectron.class, atom3C));
 
         } else if (atom1C.getFormalCharge() > 0) {
             int charge = atom1C.getFormalCharge();
@@ -127,8 +131,7 @@ public class RearrangementChargeMechanism implements IReactionMechanism {
             atom3C.setFormalCharge(charge - 1);
             reactantCloned.addLonePair(bond2.getBuilder().newInstance(ILonePair.class, atom3C));
             atom3C.setFlag(CDKConstants.ISAROMATIC, false);
-        } else
-            return null;
+        } else return null;
 
         atom1C.setHybridization(null);
         atom3C.setHybridization(null);
@@ -145,14 +148,19 @@ public class RearrangementChargeMechanism implements IReactionMechanism {
 
         /* mapping */
         for (IAtom atom : molecule.atoms()) {
-            IMapping mapping = bond2.getBuilder().newInstance(IMapping.class, atom,
-                    reactantCloned.getAtom(molecule.indexOf(atom)));
+            IMapping mapping =
+                    bond2.getBuilder()
+                            .newInstance(
+                                    IMapping.class,
+                                    atom,
+                                    reactantCloned.getAtom(molecule.indexOf(atom)));
             reaction.addMapping(mapping);
         }
         if (bond2.getOrder() != IBond.Order.SINGLE) {
             reaction.addProduct(reactantCloned);
         } else {
-            IAtomContainerSet moleculeSetP = ConnectivityChecker.partitionIntoMolecules(reactantCloned);
+            IAtomContainerSet moleculeSetP =
+                    ConnectivityChecker.partitionIntoMolecules(reactantCloned);
             for (int z = 0; z < moleculeSetP.getAtomContainerCount(); z++) {
                 reaction.addProduct((IAtomContainer) moleculeSetP.getAtomContainer(z));
             }
@@ -160,5 +168,4 @@ public class RearrangementChargeMechanism implements IReactionMechanism {
 
         return reaction;
     }
-
 }

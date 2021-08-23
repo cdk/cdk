@@ -23,11 +23,9 @@
 package org.openscience.cdk.io;
 
 import java.io.InputStream;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -42,7 +40,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * TestCase for the reading CTX files using a test file.
  *
  * @cdk.module test-io
- *
  * @see org.openscience.cdk.io.CrystClustReader
  */
 public class CTXReaderTest extends SimpleChemObjectReaderTest {

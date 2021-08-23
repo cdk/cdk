@@ -4,29 +4,28 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ConformerContainer;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * Iterate over conformers of a collection of molecules stored in SDF format.
- * 
- * This class is analogous to the {@link org.openscience.cdk.io.iterator.IteratingSDFReader} except that
- * rather than return a single {@link org.openscience.cdk.interfaces.IAtomContainer} at each iteration this
- * class will return all the conformers for a given molecule at each iteration.
- * 
- * The class assumes that the molecules are stored in SDF format and that all conformers for a given
- * molecule are in sequential order.
- * 
- * Currently, the code uses the title of each molecule in the SD file to perform te conformer check
- * and so it is important that all conformers for a given molecule have the same title field, but
- * different from the title fields of conformers of other molecules. In
- * the future the class will allow the user to perform the check using either the title or a more
- * rigorous (but more time-consuming) graph isomorphism check.
- * 
- * Example usage is
+ *
+ * <p>This class is analogous to the {@link org.openscience.cdk.io.iterator.IteratingSDFReader}
+ * except that rather than return a single {@link org.openscience.cdk.interfaces.IAtomContainer} at
+ * each iteration this class will return all the conformers for a given molecule at each iteration.
+ *
+ * <p>The class assumes that the molecules are stored in SDF format and that all conformers for a
+ * given molecule are in sequential order.
+ *
+ * <p>Currently, the code uses the title of each molecule in the SD file to perform te conformer
+ * check and so it is important that all conformers for a given molecule have the same title field,
+ * but different from the title fields of conformers of other molecules. In the future the class
+ * will allow the user to perform the check using either the title or a more rigorous (but more
+ * time-consuming) graph isomorphism check.
+ *
+ * <p>Example usage is
+ *
  * <pre>
  * String filename = "/Users/rguha/conf2.sdf";
  * IteratingMDLConformerReader2 reader = new IteratingMDLConformerReader2(
@@ -34,9 +33,9 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * while (reader.hasNext()) {
  *      ConformerContainer2 cc = (ConformerContainer2) reader.next();
  * }
- * 
+ *
  * // do something with this set of conformers
- * 
+ *
  * </pre>
  *
  * @cdk.module extra
@@ -50,10 +49,10 @@ public class IteratingMDLConformerReader implements Iterator {
 
     private IteratingSDFReader imdlr;
     private ConformerContainer container;
-    private IAtomContainer     lastMol     = null;
+    private IAtomContainer lastMol = null;
 
-    private boolean            hasNext     = false;
-    private boolean            nextIsKnown = false;
+    private boolean hasNext = false;
+    private boolean nextIsKnown = false;
 
     public IteratingMDLConformerReader(Reader in, IChemObjectBuilder builder) {
         imdlr = new IteratingSDFReader(in, builder);
@@ -75,11 +74,9 @@ public class IteratingMDLConformerReader implements Iterator {
             while (imdlr.hasNext()) {
                 slurpedConformers = true;
                 IAtomContainer mol = (IAtomContainer) imdlr.next();
-                if (container.size() == 0)
-                    container.add(mol);
+                if (container.size() == 0) container.add(mol);
                 else {
-                    if (container.getTitle().equals(mol.getTitle()))
-                        container.add(mol);
+                    if (container.getTitle().equals(mol.getTitle())) container.add(mol);
                     else {
                         lastMol = mol;
                         hasNext = true;
@@ -101,7 +98,8 @@ public class IteratingMDLConformerReader implements Iterator {
         nextIsKnown = false;
         if (!hasNext) throw new NoSuchElementException();
 
-        return container; //To change body of implemented methods use File | Settings | File Templates.
+        return container; // To change body of implemented methods use File | Settings | File
+                          // Templates.
     }
 
     @Override

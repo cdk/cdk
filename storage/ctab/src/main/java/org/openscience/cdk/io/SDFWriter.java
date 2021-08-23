@@ -33,7 +33,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -58,25 +57,25 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * Writes MDL SD files ({@cdk.cite DAL92}). A MDL SD file contains one or more molecules,
  * complemented by properties.
  *
- * @cdk.module  io
+ * @cdk.module io
  * @cdk.githash
  * @cdk.iooptions
  * @cdk.keyword file format, MDL SD file
  */
 public class SDFWriter extends DefaultChemObjectWriter {
 
-    private final static ILoggingTool logger = LoggingToolFactory.createLoggingTool(SDFWriter.class);
+    private static final ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(SDFWriter.class);
 
     public static final String OptAlwaysV3000 = "writeV3000";
     public static final String OptWriteData = "writeProperties";
-    public static final String OptTruncateLongData  = "TruncateLongData";
+    public static final String OptTruncateLongData = "TruncateLongData";
 
-
-  private BufferedWriter   writer;
+    private BufferedWriter writer;
     private BooleanIOSetting paramWriteData;
     private BooleanIOSetting paramWriteV3000;
     private BooleanIOSetting truncateData;
-    private Set<String>      propertiesToWrite;
+    private Set<String> propertiesToWrite;
 
     /**
      * Create an SDfile writer that will output directly to the provided buffered writer.
@@ -89,9 +88,8 @@ public class SDFWriter extends DefaultChemObjectWriter {
     }
 
     /**
-     * Create an SDfile writer, the provided writer is buffered
-     * if it's not an instance of BufferedWriter. For flush control
-     * etc please create with {@link BufferedWriter}.
+     * Create an SDfile writer, the provided writer is buffered if it's not an instance of
+     * BufferedWriter. For flush control etc please create with {@link BufferedWriter}.
      *
      * @param wtr writer
      */
@@ -101,15 +99,13 @@ public class SDFWriter extends DefaultChemObjectWriter {
     }
 
     /**
-     * Create an SDfile writer, the provided output stream is wrapped
-     * in a UTF-8 buffered writer.
+     * Create an SDfile writer, the provided output stream is wrapped in a UTF-8 buffered writer.
      *
      * @param output out stream
      */
     public SDFWriter(OutputStream output) {
         this(new OutputStreamWriter(output, StandardCharsets.UTF_8));
     }
-
 
     public SDFWriter() {
         this(new StringWriter());
@@ -127,8 +123,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
     }
 
     /**
-     * Constructs a new SdfWriter that can write to a given
-     * {@link OutputStream}.
+     * Constructs a new SdfWriter that can write to a given {@link OutputStream}.
      *
      * @param output The {@link OutputStream} to write to
      */
@@ -136,9 +131,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
         this(new OutputStreamWriter(output), propertiesToWrite);
     }
 
-    /**
-     * Writes SD-File to a String including the given properties
-     */
+    /** Writes SD-File to a String including the given properties */
     public SDFWriter(Set<String> propertiesToWrite) {
         this(new StringWriter(), propertiesToWrite);
     }
@@ -151,8 +144,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
      */
     private static BufferedWriter ensureBuffered(Writer wtr) {
         if (wtr == null) throw new NullPointerException("Provided writer was null");
-        return wtr instanceof BufferedWriter ? (BufferedWriter) wtr
-                                             : new BufferedWriter(wtr);
+        return wtr instanceof BufferedWriter ? (BufferedWriter) wtr : new BufferedWriter(wtr);
     }
 
     @Override
@@ -174,9 +166,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
         setWriter(new OutputStreamWriter(output));
     }
 
-    /**
-     * Flushes the output and closes this object.
-     */
+    /** Flushes the output and closes this object. */
     @Override
     public void close() throws IOException {
         writer.close();
@@ -201,12 +191,10 @@ public class SDFWriter extends DefaultChemObjectWriter {
     }
 
     /**
-     * Writes a IChemObject to the MDL SD file formated output. It can only
-     * output IChemObjects of type {@link IChemFile}, {@link IAtomContainerSet}
-     * and {@link IAtomContainerSet}.
+     * Writes a IChemObject to the MDL SD file formated output. It can only output IChemObjects of
+     * type {@link IChemFile}, {@link IAtomContainerSet} and {@link IAtomContainerSet}.
      *
      * @param object an acceptable {@link IChemObject}
-     *
      * @see #accepts(Class)
      */
     @Override
@@ -241,7 +229,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
     /**
      * Writes an {@link IAtomContainerSet}.
      *
-     * @param   som  the {@link IAtomContainerSet} to serialize
+     * @param som the {@link IAtomContainerSet} to serialize
      */
     private void writeMoleculeSet(IAtomContainerSet som) throws Exception {
         for (IAtomContainer mol : som.atomContainers()) {
@@ -265,10 +253,8 @@ public class SDFWriter extends DefaultChemObjectWriter {
             StringWriter stringWriter = new StringWriter();
             IChemObjectWriter mdlWriter;
 
-            if (writeV3000(container))
-                mdlWriter = new MDLV3000Writer(stringWriter);
-            else
-                mdlWriter = new MDLV2000Writer(stringWriter);
+            if (writeV3000(container)) mdlWriter = new MDLV3000Writer(stringWriter);
+            else mdlWriter = new MDLV2000Writer(stringWriter);
 
             mdlWriter.addSettings(getSettings());
             mdlWriter.write(container);
@@ -277,8 +263,8 @@ public class SDFWriter extends DefaultChemObjectWriter {
 
             // write non-structural data (mol properties in our case)
             if (paramWriteData.isSet()) {
-                Map<Object, Object> sdFields           = container.getProperties();
-                boolean             writeAllProperties = propertiesToWrite == null;
+                Map<Object, Object> sdFields = container.getProperties();
+                boolean writeAllProperties = propertiesToWrite == null;
                 if (sdFields != null) {
                     for (Object propKey : sdFields.keySet()) {
                         String headerKey = propKey.toString();
@@ -286,7 +272,11 @@ public class SDFWriter extends DefaultChemObjectWriter {
                             if (writeAllProperties || propertiesToWrite.contains(headerKey)) {
                                 String cleanHeaderKey = replaceInvalidHeaderChars(headerKey);
                                 if (!cleanHeaderKey.equals(headerKey))
-                                    logger.info("Replaced characters in SDfile data header: ", headerKey, " written as: ", cleanHeaderKey);
+                                    logger.info(
+                                            "Replaced characters in SDfile data header: ",
+                                            headerKey,
+                                            " written as: ",
+                                            cleanHeaderKey);
 
                                 Object val = sdFields.get(propKey);
 
@@ -294,24 +284,26 @@ public class SDFWriter extends DefaultChemObjectWriter {
                                     writer.write("> <" + cleanHeaderKey + ">");
                                     writer.write('\n');
                                     if (val != null) {
-                                      String valStr = val.toString();
-                                      int maxDataLen = 200; // set in the spec
-                                      if (truncateData.isSet()) {
-                                        for (String line : valStr.split("\n")) {
-                                          if (line.length() > maxDataLen)
-                                            writer.write(line.substring(0, maxDataLen));
-                                          else
+                                        String valStr = val.toString();
+                                        int maxDataLen = 200; // set in the spec
+                                        if (truncateData.isSet()) {
+                                            for (String line : valStr.split("\n")) {
+                                                if (line.length() > maxDataLen)
+                                                    writer.write(line.substring(0, maxDataLen));
+                                                else writer.write(valStr);
+                                            }
+                                        } else {
                                             writer.write(valStr);
                                         }
-                                      } else {
-                                        writer.write(valStr);
-                                      }
                                     }
                                     writer.write('\n');
                                     writer.write('\n');
                                 } else {
 
-                                    logger.info("Skipped property " + propKey + " because only primitive and string properties can be written by SDFWriter");
+                                    logger.info(
+                                            "Skipped property "
+                                                    + propKey
+                                                    + " because only primitive and string properties can be written by SDFWriter");
                                 }
                             }
                         }
@@ -320,35 +312,34 @@ public class SDFWriter extends DefaultChemObjectWriter {
             }
             writer.write("$$$$\n");
         } catch (IOException exception) {
-            throw new CDKException("Error while writing a SD file entry: " + exception.getMessage(), exception);
+            throw new CDKException(
+                    "Error while writing a SD file entry: " + exception.getMessage(), exception);
         }
     }
 
     private static boolean isPrimitiveDataValue(Object obj) {
-        return obj == null ||
-               obj.getClass() == String.class ||
-               obj.getClass() == Integer.class ||
-               obj.getClass() == Double.class ||
-               obj.getClass() == Boolean.class ||
-               obj.getClass() == Float.class ||
-               obj.getClass() == Byte.class ||
-               obj.getClass() == Short.class ||
-               obj.getClass() == Character.class;
+        return obj == null
+                || obj.getClass() == String.class
+                || obj.getClass() == Integer.class
+                || obj.getClass() == Double.class
+                || obj.getClass() == Boolean.class
+                || obj.getClass() == Float.class
+                || obj.getClass() == Byte.class
+                || obj.getClass() == Short.class
+                || obj.getClass() == Character.class;
     }
 
     private boolean writeV3000(IAtomContainer container) {
-        if (paramWriteV3000.isSet())
-            return true;
-        if (container.getAtomCount() > 999)
-            return true;
-        if (container.getBondCount() > 999)
-            return true;
+        if (paramWriteV3000.isSet()) return true;
+        if (container.getAtomCount() > 999) return true;
+        if (container.getBondCount() > 999) return true;
 
-        // enhanced stereo check, if every tetrahedral element is Absolute (ABS) or in the same Racemic (RAC) group then
+        // enhanced stereo check, if every tetrahedral element is Absolute (ABS) or in the same
+        // Racemic (RAC) group then
         // we can use V2000
-        boolean init     = false;
-        int     grp      = 0;
-        for (IStereoElement<?,?> se : container.stereoElements()) {
+        boolean init = false;
+        int grp = 0;
+        for (IStereoElement<?, ?> se : container.stereoElements()) {
             if (se.getConfigClass() == IStereoElement.TH) {
                 if (!init) {
                     init = true;
@@ -362,22 +353,20 @@ public class SDFWriter extends DefaultChemObjectWriter {
 
         // original V2000 didn't distinguish racemic and relative stereo (flag=0) however
         // MDL/Accelrys/BIOVIA decided these should be read as racemic, so even if all
-        if ((grp & IStereoElement.GRP_TYPE_MASK) == IStereoElement.GRP_REL)
-            return true;
+        if ((grp & IStereoElement.GRP_TYPE_MASK) == IStereoElement.GRP_REL) return true;
 
         // check for positional variation, this can be output in V3000 and not V2000
         List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
         if (sgroups != null) {
             for (Sgroup sgroup : sgroups)
-                if (sgroup.getType() == SgroupType.ExtMulticenter)
-                    return true;
+                if (sgroup.getType() == SgroupType.ExtMulticenter) return true;
         }
         return false;
     }
 
     /**
-     * A list of properties used by CDK algorithms which must never be
-     * serialized into the SD file format.
+     * A list of properties used by CDK algorithms which must never be serialized into the SD file
+     * format.
      */
     private static List<String> cdkInternalProperties = new ArrayList<String>();
 
@@ -396,15 +385,27 @@ public class SDFWriter extends DefaultChemObjectWriter {
     }
 
     private void initIOSettings() {
-        paramWriteData = addSetting(new BooleanIOSetting(OptWriteData,
-                                                         IOSetting.Importance.LOW,
-                                                         "Should molecule properties be written as non-structural data", "true"));
-        paramWriteV3000 = addSetting(new BooleanIOSetting(OptAlwaysV3000,
-                                                          IOSetting.Importance.LOW,
-                                                          "Write all records as V3000", "false"));
-        truncateData = addSetting(new BooleanIOSetting(OptTruncateLongData,
-                                                       IOSetting.Importance.LOW,
-                                                       "Truncate long data files >200 characters", "false"));
+        paramWriteData =
+                addSetting(
+                        new BooleanIOSetting(
+                                OptWriteData,
+                                IOSetting.Importance.LOW,
+                                "Should molecule properties be written as non-structural data",
+                                "true"));
+        paramWriteV3000 =
+                addSetting(
+                        new BooleanIOSetting(
+                                OptAlwaysV3000,
+                                IOSetting.Importance.LOW,
+                                "Write all records as V3000",
+                                "false"));
+        truncateData =
+                addSetting(
+                        new BooleanIOSetting(
+                                OptTruncateLongData,
+                                IOSetting.Importance.LOW,
+                                "Truncate long data files >200 characters",
+                                "false"));
         addSettings(new MDLV2000Writer().getSettings());
         addSettings(new MDLV3000Writer().getSettings());
     }
@@ -423,5 +424,4 @@ public class SDFWriter extends DefaultChemObjectWriter {
             fireIOSettingQuestion(setting);
         }
     }
-
 }

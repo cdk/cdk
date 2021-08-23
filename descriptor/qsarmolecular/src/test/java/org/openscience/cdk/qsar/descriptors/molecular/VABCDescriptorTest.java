@@ -24,13 +24,11 @@ import org.junit.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
-/**
- * @cdk.module test-qsarmolecular
- */
+/** @cdk.module test-qsarmolecular */
 public class VABCDescriptorTest extends MolecularDescriptorTest {
 
     @Before
@@ -40,9 +38,11 @@ public class VABCDescriptorTest extends MolecularDescriptorTest {
 
     @Test
     public void testIronChloride() throws InvalidSmilesException, CDKException {
-        IAtomContainer ironChloride = new SmilesParser(SilentChemObjectBuilder.getInstance()).parseSmiles("Cl[Fe]Cl");
-        Assert.assertEquals(Double.NaN, ((DoubleResult) descriptor.calculate(ironChloride).getValue()).doubleValue(),
+        IAtomContainer ironChloride =
+                new SmilesParser(SilentChemObjectBuilder.getInstance()).parseSmiles("Cl[Fe]Cl");
+        Assert.assertEquals(
+                Double.NaN,
+                ((DoubleResult) descriptor.calculate(ironChloride).getValue()).doubleValue(),
                 0.01);
     }
-
 }

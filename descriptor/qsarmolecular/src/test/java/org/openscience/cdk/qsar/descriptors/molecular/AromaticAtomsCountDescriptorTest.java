@@ -19,7 +19,6 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import java.util.Iterator;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,7 +35,6 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
  *
  * @cdk.module test-qsarmolecular
  */
-
 public class AromaticAtomsCountDescriptorTest extends MolecularDescriptorTest {
 
     public AromaticAtomsCountDescriptorTest() {}
@@ -58,9 +56,10 @@ public class AromaticAtomsCountDescriptorTest extends MolecularDescriptorTest {
     @Test
     public void testViaFlags() throws Exception {
         IAtomContainer molecule = TestMoleculeFactory.makeBenzene();
-        for (Iterator atoms = molecule.atoms().iterator(); atoms.hasNext();) {
+        for (Iterator atoms = molecule.atoms().iterator(); atoms.hasNext(); ) {
             ((IAtom) atoms.next()).setFlag(CDKConstants.ISAROMATIC, true);
         }
-        Assert.assertEquals(6, ((IntegerResult) descriptor.calculate(molecule).getValue()).intValue());
+        Assert.assertEquals(
+                6, ((IntegerResult) descriptor.calculate(molecule).getValue()).intValue());
     }
 }

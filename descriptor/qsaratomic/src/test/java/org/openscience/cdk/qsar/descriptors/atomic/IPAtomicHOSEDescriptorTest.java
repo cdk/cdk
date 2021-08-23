@@ -36,14 +36,11 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 
-    IPAtomicHOSEDescriptor  descriptor;
-    private SmilesParser    sp      = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+    IPAtomicHOSEDescriptor descriptor;
+    private SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
-    /**
-     *  Constructor for the IPAtomicHOSEDescriptorTest object
-     *
-     */
+    /** Constructor for the IPAtomicHOSEDescriptorTest object */
     public IPAtomicHOSEDescriptorTest() {
         descriptor = new IPAtomicHOSEDescriptor();
     }
@@ -53,9 +50,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
         setDescriptor(IPAtomicHOSEDescriptor.class);
     }
 
-    /**
-     *  A unit test for JUnit
-     */
+    /** A unit test for JUnit */
     @Test
     public void testIPAtomicHOSEDescriptor() throws Exception {
         IAtomicDescriptor descriptor = new IPAtomicHOSEDescriptor();
@@ -63,9 +58,9 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
     }
 
     /**
-     *  A unit test for JUnit with CCCCl
+     * A unit test for JUnit with CCCCl
      *
-     *  @cdk.inchi InChI=1/C3H7Cl/c1-2-3-4/h2-3H2,1H3
+     * @cdk.inchi InChI=1/C3H7Cl/c1-2-3-4/h2-3H2,1H3
      */
     @Test
     public void testIPDescriptor1() throws Exception {
@@ -75,16 +70,17 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getAtom(3), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getAtom(3), mol).getValue()).doubleValue();
         double resultAccordingNIST = 10.8;
 
         Assert.assertEquals(resultAccordingNIST, result, 0.00001);
     }
 
     /**
-     *  A unit test for JUnit with CC(C)Cl
+     * A unit test for JUnit with CC(C)Cl
      *
-     *  @cdk.inchi InChI=1/C3H7Cl/c1-3(2)4/h3H,1-2H3
+     * @cdk.inchi InChI=1/C3H7Cl/c1-3(2)4/h3H,1-2H3
      */
     @Test
     public void testIPDescriptor2() throws Exception {
@@ -94,16 +90,17 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getAtom(4), mol).getValue()).doubleValue();
-        double resultAccordingNIST = 10.57; //value for CC(C)Cl
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getAtom(4), mol).getValue()).doubleValue();
+        double resultAccordingNIST = 10.57; // value for CC(C)Cl
 
         Assert.assertEquals(resultAccordingNIST, result, 0.00001);
     }
 
     /**
-     *  A unit test for JUnit with C=CCCl
+     * A unit test for JUnit with C=CCCl
      *
-     *  @cdk.inchi InChI=1/C3H5Cl/c1-2-3-4/h2H,1,3H2
+     * @cdk.inchi InChI=1/C3H5Cl/c1-2-3-4/h2H,1,3H2
      */
     @Test
     public void testNotDB() throws Exception {
@@ -113,16 +110,17 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getAtom(3), mol).getValue()).doubleValue();
-        double resultAccordingNIST = 10.8; //value for CCCCl aprox.
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getAtom(3), mol).getValue()).doubleValue();
+        double resultAccordingNIST = 10.8; // value for CCCCl aprox.
 
         Assert.assertEquals(resultAccordingNIST, result, 0.00001);
     }
 
     /**
-     *  A unit test for JUnit with C-Cl
+     * A unit test for JUnit with C-Cl
      *
-     *  @cdk.inchi InChI=1/CH3F/c1-2/h1H3
+     * @cdk.inchi InChI=1/CH3F/c1-2/h1H3
      */
     @Test
     public void testIPDescriptor_1() throws Exception {
@@ -132,16 +130,14 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getAtom(1), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getAtom(1), mol).getValue()).doubleValue();
         double resultAccordingNIST = 11.26;
 
         Assert.assertEquals(resultAccordingNIST, result, 0.42);
     }
 
-    /**
-     *  A unit test for JUnit with C-C-Br
-     *
-     */
+    /** A unit test for JUnit with C-C-Br */
     @Test
     public void testIPDescriptor_2() throws Exception {
 
@@ -150,16 +146,14 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
         double resultAccordingNIST = 11.29;
 
         Assert.assertEquals(resultAccordingNIST, result, 1.95);
     }
 
-    /**
-     *  A unit test for JUnit with C-C-C-I
-     *
-     */
+    /** A unit test for JUnit with C-C-C-I */
     @Test
     public void testIPDescriptor_3() throws Exception {
 
@@ -168,7 +162,8 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getAtom(3), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getAtom(3), mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.27;
 
         Assert.assertEquals(resultAccordingNIST, result, 0.02);
@@ -188,7 +183,8 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
     //		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
     //		lpcheck.saturate(mol);
     //
-    //        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
+    //        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(2),
+    // mol).getValue()).doubleValue();
     //        double resultAccordingNIST = 10.48;
     //
     //        Assert.assertEquals(resultAccordingNIST, result, 1.24);
@@ -208,7 +204,8 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
     //		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
     //		lpcheck.saturate(mol);
     //
-    //        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(0), mol).getValue()).doubleValue();
+    //        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(0),
+    // mol).getValue()).doubleValue();
     //        double resultAccordingNIST = 7.77;
     //
     //        Assert.assertEquals(resultAccordingNIST, result, 0.02);
@@ -228,7 +225,8 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
     //		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
     //		lpcheck.saturate(mol);
     //
-    //        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(1),mol).getValue()).doubleValue();
+    //        double result=
+    // ((DoubleResult)descriptor.calculate(mol.getAtom(1),mol).getValue()).doubleValue();
     //        double resultAccordingNIST = 8.24;
     //
     //        Assert.assertEquals(resultAccordingNIST, result, 0.09);
@@ -248,7 +246,8 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
     //		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
     //		lpcheck.saturate(mol);
     //
-    //        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(2),mol).getValue()).doubleValue();
+    //        double result=
+    // ((DoubleResult)descriptor.calculate(mol.getAtom(2),mol).getValue()).doubleValue();
     //        double resultAccordingNIST = 8.9;
     //
     //        Assert.assertEquals(resultAccordingNIST, result, 0.35);
@@ -268,7 +267,8 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
     //		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
     //		lpcheck.saturate(mol);
     //
-    //        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
+    //        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(2),
+    // mol).getValue()).doubleValue();
     //        double resultAccordingNIST = 8.5;
     //
     //        Assert.assertEquals(resultAccordingNIST, result, 0.051);
@@ -289,7 +289,8 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
     //		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
     //		lpcheck.saturate(mol);
     //
-    //        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(0), mol).getValue()).doubleValue();
+    //        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(0),
+    // mol).getValue()).doubleValue();
     //        double resultAccordingNIST = 9.3;
     //
     //        Assert.assertEquals(resultAccordingNIST, result, 0.051);
@@ -309,7 +310,8 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
     //		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
     //		lpcheck.saturate(mol);
     //
-    //        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(0),mol).getValue()).doubleValue();
+    //        double result=
+    // ((DoubleResult)descriptor.calculate(mol.getAtom(0),mol).getValue()).doubleValue();
     //        double resultAccordingNIST = 9.01;
     //
     //        Assert.assertEquals(resultAccordingNIST, result, 0.06);
@@ -330,10 +332,12 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
     //		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
     //		lpcheck.saturate(mol);
     //
-    //        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
+    //        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(2),
+    // mol).getValue()).doubleValue();
     ////        Assert.assertNotNull(result);
     //
-    //        result= ((DoubleResult)descriptor.calculate(mol.getAtom(7), mol).getValue()).doubleValue();
+    //        result= ((DoubleResult)descriptor.calculate(mol.getAtom(7),
+    // mol).getValue()).doubleValue();
     ////        Assert.assertNotNull(result);
     //
     //    }
@@ -363,8 +367,10 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
     //		IReactionSet reactionSet = descriptor.getReactionSet();
     //
     //		assertNotNull("No reaction was found", reactionSet.getReaction(0));
-    //		assertNotNull("The ionization energy was not set for the reaction", reactionSet.getReaction(0).getProperty("IonizationEnergy"));
-    //        double result = ((Double) reactionSet.getReaction(0).getProperty("IonizationEnergy")).doubleValue();
+    //		assertNotNull("The ionization energy was not set for the reaction",
+    // reactionSet.getReaction(0).getProperty("IonizationEnergy"));
+    //        double result = ((Double)
+    // reactionSet.getReaction(0).getProperty("IonizationEnergy")).doubleValue();
     //        double resultAccordingNIST = 8.9;
     //
     //        Assert.assertEquals(1, reactionSet.getReactionCount());
@@ -416,7 +422,8 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
     //		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
     //		lpcheck.saturate(mol);
     //
-    //		double result= ((DoubleResult)descriptor.calculate(mol.getAtom(0),mol).getValue()).doubleValue();
+    //		double result=
+    // ((DoubleResult)descriptor.calculate(mol.getAtom(0),mol).getValue()).doubleValue();
     //        double resultAccordingNIST = 8.03;
     //        Assert.assertEquals(resultAccordingNIST, result, 0.11);
     //
@@ -444,7 +451,8 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
     //		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
     //		lpcheck.saturate(mol);
     //
-    //		double result= ((DoubleResult)descriptor.calculate(mol.getAtom(0),mol).getValue()).doubleValue();
+    //		double result=
+    // ((DoubleResult)descriptor.calculate(mol.getAtom(0),mol).getValue()).doubleValue();
     //        double resultAccordingNIST = 8.64;
     //        Assert.assertEquals(resultAccordingNIST, result, 0.21);
     //
@@ -472,7 +480,8 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
     //		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
     //		lpcheck.saturate(mol);
     //
-    //		double result= ((DoubleResult)descriptor.calculate(mol.getAtom(5),mol).getValue()).doubleValue();
+    //		double result=
+    // ((DoubleResult)descriptor.calculate(mol.getAtom(5),mol).getValue()).doubleValue();
     //        double resultAccordingNIST = 7.77;
     //        Assert.assertEquals(resultAccordingNIST, result, 0.3);
     //

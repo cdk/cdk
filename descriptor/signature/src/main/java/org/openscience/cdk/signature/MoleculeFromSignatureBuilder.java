@@ -27,7 +27,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-
 import signature.AbstractGraphBuilder;
 
 /**
@@ -39,15 +38,11 @@ import signature.AbstractGraphBuilder;
  */
 public class MoleculeFromSignatureBuilder extends AbstractGraphBuilder {
 
-    /**
-     * The chem object builder
-     */
+    /** The chem object builder */
     private IChemObjectBuilder builder;
 
-    /**
-     * The container that is being constructed
-     */
-    private IAtomContainer     container;
+    /** The container that is being constructed */
+    private IAtomContainer container;
 
     /**
      * Uses the chem object builder for making molecules.
@@ -60,7 +55,11 @@ public class MoleculeFromSignatureBuilder extends AbstractGraphBuilder {
 
     @Override
     /** {@inheritDoc} */
-    public void makeEdge(int vertexIndex1, int vertexIndex2, String vertexSymbol1, String vertexSymbol2,
+    public void makeEdge(
+            int vertexIndex1,
+            int vertexIndex2,
+            String vertexSymbol1,
+            String vertexSymbol2,
             String edgeLabel) {
         if (edgeLabel.equals("")) {
             container.addBond(vertexIndex1, vertexIndex2, IBond.Order.SINGLE);
@@ -69,8 +68,12 @@ public class MoleculeFromSignatureBuilder extends AbstractGraphBuilder {
         } else if (edgeLabel.equals("#")) {
             container.addBond(vertexIndex1, vertexIndex2, IBond.Order.TRIPLE);
         } else if (edgeLabel.equals("p")) {
-            IBond bond = builder.newInstance(IBond.class, container.getAtom(vertexIndex1),
-                    container.getAtom(vertexIndex2), IBond.Order.SINGLE);
+            IBond bond =
+                    builder.newInstance(
+                            IBond.class,
+                            container.getAtom(vertexIndex1),
+                            container.getAtom(vertexIndex2),
+                            IBond.Order.SINGLE);
             bond.setFlag(CDKConstants.ISAROMATIC, true);
             container.addBond(bond);
         }
@@ -96,5 +99,4 @@ public class MoleculeFromSignatureBuilder extends AbstractGraphBuilder {
     public IAtomContainer getAtomContainer() {
         return this.container;
     }
-
 }

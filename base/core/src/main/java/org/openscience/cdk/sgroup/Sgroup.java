@@ -23,28 +23,25 @@
 
 package org.openscience.cdk.sgroup;
 
+import java.util.*;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 
-import java.util.*;
-
 /**
- * Generic CTab Sgroup (substructure group) that stores all other types of group. This representation
- * is allows reading from CTfiles (e.g. Molfile, SDfile).
- * 
- * The class uses a key-value store for Sgroup attributes simplifying both input and output.
+ * Generic CTab Sgroup (substructure group) that stores all other types of group. This
+ * representation is allows reading from CTfiles (e.g. Molfile, SDfile).
+ *
+ * <p>The class uses a key-value store for Sgroup attributes simplifying both input and output.
  */
 public class Sgroup {
 
-    private final Set<IAtom>  atoms   = new LinkedHashSet<>();
-    private final Set<IBond>  bonds   = new LinkedHashSet<>();
+    private final Set<IAtom> atoms = new LinkedHashSet<>();
+    private final Set<IBond> bonds = new LinkedHashSet<>();
     private final Set<Sgroup> parents = new LinkedHashSet<>();
 
     private final Map<SgroupKey, Object> attributes = new EnumMap<>(SgroupKey.class);
 
-    /**
-     * Create a new generic Sgroup.
-     */
+    /** Create a new generic Sgroup. */
     public Sgroup() {
         setType(SgroupType.CtabGeneric);
     }
@@ -70,16 +67,12 @@ public class Sgroup {
         return attributes.keySet();
     }
 
-    /**
-     * Set the type of the Sgroup.
-     */
+    /** Set the type of the Sgroup. */
     public final void setType(SgroupType type) {
         putValue(SgroupKey.CtabType, type);
     }
 
-    /**
-     * Access the type of the Sgroup.
-     */
+    /** Access the type of the Sgroup. */
     public final SgroupType getType() {
         return getValue(SgroupKey.CtabType);
     }
@@ -94,9 +87,8 @@ public class Sgroup {
     }
 
     /**
-     * Access the bonds that belong to this substructure group.
-     * For data Sgroups, the bonds are the containment bonds,
-     * for all other Sgroup types, they are crossing bonds.
+     * Access the bonds that belong to this substructure group. For data Sgroups, the bonds are the
+     * containment bonds, for all other Sgroup types, they are crossing bonds.
      *
      * @return unmodifiable bond set
      */
@@ -124,6 +116,7 @@ public class Sgroup {
 
     /**
      * Remove an atom from this Sgroup.
+     *
      * @param atom the atom
      */
     public final void removeAtom(IAtom atom) {
@@ -141,6 +134,7 @@ public class Sgroup {
 
     /**
      * Remove a bond from this Sgroup.
+     *
      * @param bond the bond
      */
     public final void removeBond(IBond bond) {
@@ -194,9 +188,7 @@ public class Sgroup {
         return getValue(SgroupKey.CtabSubScript);
     }
 
-    /**
-     * Set the subscript value.
-     */
+    /** Set the subscript value. */
     public final void setSubscript(String label) {
         putValue(SgroupKey.CtabSubScript, label);
     }
@@ -209,15 +201,14 @@ public class Sgroup {
     public final void addBracket(SgroupBracket bracket) {
         List<SgroupBracket> brackets = getValue(SgroupKey.CtabBracket);
         if (brackets == null) {
-            putValue(SgroupKey.CtabBracket,
-                     brackets = new ArrayList<>(2));
+            putValue(SgroupKey.CtabBracket, brackets = new ArrayList<>(2));
         }
         brackets.add(bracket);
     }
 
     /**
-     * Downcast this, maybe generic, Sgroup to a specific concrete implementation. This
-     * method should be called on load by a reader once all data has been added to the sgroup.
+     * Downcast this, maybe generic, Sgroup to a specific concrete implementation. This method
+     * should be called on load by a reader once all data has been added to the sgroup.
      *
      * @param <T> return type
      * @return downcast instance

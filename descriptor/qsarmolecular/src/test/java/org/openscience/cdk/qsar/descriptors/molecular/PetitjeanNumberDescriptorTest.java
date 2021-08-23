@@ -46,13 +46,17 @@ public class PetitjeanNumberDescriptorTest extends MolecularDescriptorTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O=C(O)CC");
         AtomContainerManipulator.removeHydrogens(mol);
-        Assert.assertEquals(0.33333334, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.01);
+        Assert.assertEquals(
+                0.33333334,
+                ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(),
+                0.01);
     }
 
     @Test
     public void testSingleAtomCase() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O");
-        Assert.assertEquals(0, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.01);
+        Assert.assertEquals(
+                0, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.01);
     }
 }

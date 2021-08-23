@@ -25,9 +25,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IBond;
 
-/**
- * @cdk.module test-standard
- */
+/** @cdk.module test-standard */
 public class AtomContainerPermutorTest extends CDKTestCase {
 
     @Test
@@ -84,9 +82,8 @@ public class AtomContainerPermutorTest extends CDKTestCase {
             for (int f = 0; f < result.getBondCount(); f++) {
                 bonds += result.getBond(f).getOrder();
             }
-            //logger.debug(bonds);
+            // logger.debug(bonds);
         }
         Assert.assertEquals(119, counter);
     }
-
 }

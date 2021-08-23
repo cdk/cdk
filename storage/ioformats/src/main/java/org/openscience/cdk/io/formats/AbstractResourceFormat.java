@@ -25,10 +25,9 @@
 package org.openscience.cdk.io.formats;
 
 /**
- * An abstract class providing {@link #hashCode()} and {@link #equals} for
- * {@link org.openscience.cdk.io.formats.IResourceFormat}s. As {@link
- * IResourceFormat}s are stateless this implementation uses the class for
- * equality testing.
+ * An abstract class providing {@link #hashCode()} and {@link #equals} for {@link
+ * org.openscience.cdk.io.formats.IResourceFormat}s. As {@link IResourceFormat}s are stateless this
+ * implementation uses the class for equality testing.
  *
  * @author John May
  * @cdk.module ioformats

@@ -19,6 +19,9 @@
  */
 package org.openscience.cdk.smiles.smarts;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import org.hamcrest.core.Is;
 import org.junit.Assert;
 import org.junit.Before;
@@ -45,14 +48,11 @@ import org.openscience.cdk.isomorphism.matchers.smarts.MassAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
-
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.MatcherAssert.assertThat;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 
 /**
- * @cdk.module  test-smarts
+ * @cdk.module test-smarts
  * @cdk.require java1.4+
  */
 public class SMARTSTest extends CDKTestCase {
@@ -106,7 +106,8 @@ public class SMARTSTest extends CDKTestCase {
         carbon2.setImplicitHydrogenCount(3);
         container.addAtom(carbon);
         container.addAtom(carbon2);
-        container.addBond(carbon.getBuilder().newInstance(IBond.class, carbon, carbon2, IBond.Order.SINGLE));
+        container.addBond(
+                carbon.getBuilder().newInstance(IBond.class, carbon, carbon2, IBond.Order.SINGLE));
         return container;
     }
 
@@ -146,7 +147,8 @@ public class SMARTSTest extends CDKTestCase {
             IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 
             SymbolQueryAtom c1 = new SymbolQueryAtom(new org.openscience.cdk.Atom("C"));
-            SymbolAndChargeQueryAtom c2 = new SymbolAndChargeQueryAtom(new org.openscience.cdk.Atom("C"));
+            SymbolAndChargeQueryAtom c2 =
+                    new SymbolAndChargeQueryAtom(new org.openscience.cdk.Atom("C"));
 
             IAtomContainer c = TestMoleculeFactory.makeAlkane(2);
 
@@ -165,15 +167,13 @@ public class SMARTSTest extends CDKTestCase {
         } catch (CDKException exception) {
             Assert.fail(exception.getMessage());
         }
-
     }
 
-    @Test public void testUnspecifiedIsotope() {
-        IAtom aexpr = SMARTSParser.parse("[!0]", SilentChemObjectBuilder.getInstance())
-                                  .getAtom(0);
+    @Test
+    public void testUnspecifiedIsotope() {
+        IAtom aexpr = SMARTSParser.parse("[!0]", SilentChemObjectBuilder.getInstance()).getAtom(0);
         assertThat(aexpr, instanceOf(LogicalOperatorAtom.class));
-        assertThat(((LogicalOperatorAtom)aexpr).getOperator(),
-                   Is.is("not"));
+        assertThat(((LogicalOperatorAtom) aexpr).getOperator(), Is.is("not"));
         IQueryAtom subexpr = ((LogicalOperatorAtom) aexpr).getLeft();
         assertThat(subexpr, instanceOf(MassAtom.class));
         assertThat(subexpr.getMassNumber(), Is.is(0));

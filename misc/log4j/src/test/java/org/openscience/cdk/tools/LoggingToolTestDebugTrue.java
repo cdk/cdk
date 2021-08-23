@@ -22,9 +22,7 @@ package org.openscience.cdk.tools;
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * @cdk.module test-log4j
- */
+/** @cdk.module test-log4j */
 public class LoggingToolTestDebugTrue extends AbstractLoggingToolTest {
 
     @Override

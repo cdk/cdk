@@ -20,44 +20,39 @@ package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
 
-
 /**
- * A 'wedge' is a triangle aligned along a bond that indicates stereochemistry.
- * It can be dashed or not to indicate up and down.
+ * A 'wedge' is a triangle aligned along a bond that indicates stereochemistry. It can be dashed or
+ * not to indicate up and down.
  *
  * @cdk.module renderbasic
  * @cdk.githash
  */
 public class WedgeLineElement extends LineElement {
 
-    /**
-     * If the bond is dashed ,wedged, or "up_or_down", i.e., not defined.
-     */
+    /** If the bond is dashed ,wedged, or "up_or_down", i.e., not defined. */
     public enum TYPE {
-        DASHED, WEDGED, INDIFF
+        DASHED,
+        WEDGED,
+        INDIFF
     }
 
-    /**
-     * The type of the bond (dashed, wedged, not defined).
-     */
-    public final TYPE      type;
+    /** The type of the bond (dashed, wedged, not defined). */
+    public final TYPE type;
 
-    /**
-     * The direction indicates which way the wedge gets thicker.
-     */
+    /** The direction indicates which way the wedge gets thicker. */
     public final Direction direction;
 
     /**
-     * 'toFirst' means that the wedge gets thicker in the direction of the first
-     * point in the line.
+     * 'toFirst' means that the wedge gets thicker in the direction of the first point in the line.
      */
     public enum Direction {
-        toFirst, toSecond;
+        toFirst,
+        toSecond;
     }
 
     /**
-     * Make a wedge between the points (x1, y1) and (x2, y2) with a certain
-     * width, direction, dash, and color.
+     * Make a wedge between the points (x1, y1) and (x2, y2) with a certain width, direction, dash,
+     * and color.
      *
      * @param x1 the x-coordinate of the first point
      * @param y1 the y-coordinate of the first point
@@ -68,7 +63,14 @@ public class WedgeLineElement extends LineElement {
      * @param direction the direction of the thickness
      * @param color the color of the wedge
      */
-    public WedgeLineElement(double x1, double y1, double x2, double y2, double width, TYPE type, Direction direction,
+    public WedgeLineElement(
+            double x1,
+            double y1,
+            double x2,
+            double y2,
+            double width,
+            TYPE type,
+            Direction direction,
             Color color) {
         super(x1, y1, x2, y2, width, color);
         this.type = type;
@@ -84,16 +86,18 @@ public class WedgeLineElement extends LineElement {
      * @param color the color of the wedge
      */
     public WedgeLineElement(LineElement element, TYPE type, Direction direction, Color color) {
-        this(direction == Direction.toFirst ? element.secondPointX : element.firstPointX,
+        this(
+                direction == Direction.toFirst ? element.secondPointX : element.firstPointX,
                 direction == Direction.toFirst ? element.secondPointY : element.firstPointY,
                 direction == Direction.toFirst ? element.firstPointX : element.secondPointX,
-                direction == Direction.toFirst ? element.firstPointY : element.secondPointY, element.width, type,
-                direction, color);
+                direction == Direction.toFirst ? element.firstPointY : element.secondPointY,
+                element.width,
+                type,
+                direction,
+                color);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void accept(IRenderingVisitor v) {
         v.visit(this);

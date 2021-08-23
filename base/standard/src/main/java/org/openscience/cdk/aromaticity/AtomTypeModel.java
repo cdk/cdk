@@ -24,8 +24,13 @@
 
 package org.openscience.cdk.aromaticity;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+import static org.openscience.cdk.interfaces.IAtomType.Hybridization;
+
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import java.util.Arrays;
+import java.util.Map;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.NoSuchAtomTypeException;
@@ -35,19 +40,12 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.ringsearch.RingSearch;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import static com.google.common.base.Preconditions.checkNotNull;
-import static org.openscience.cdk.interfaces.IAtomType.Hybridization;
-
 /**
- * Electron donation model using the CDK atom types. This model closely mirrors
- * the previously implementations {@code CDKHueckelAromaticityDetector} and
- * {@code DoubleBondAcceptingAromaticityDetector}. One can choose to allow
- * contribution from exocyclic pi bonds in the constructor. Allowing exocyclic
- * pi bonds results in molecules such as hexamethylidenecyclohexane ({@code
- * C=C1C(=C)C(=C)C(=C)C(=C)C1=C}) being considered aromatic.
+ * Electron donation model using the CDK atom types. This model closely mirrors the previously
+ * implementations {@code CDKHueckelAromaticityDetector} and {@code
+ * DoubleBondAcceptingAromaticityDetector}. One can choose to allow contribution from exocyclic pi
+ * bonds in the constructor. Allowing exocyclic pi bonds results in molecules such as
+ * hexamethylidenecyclohexane ({@code C=C1C(=C)C(=C)C(=C)C(=C)C1=C}) being considered aromatic.
  *
  * @author John May
  * @cdk.module standard
@@ -56,20 +54,27 @@ import static org.openscience.cdk.interfaces.IAtomType.Hybridization;
 final class AtomTypeModel extends ElectronDonation {
 
     /** Predefined electron contribution for several atom types. */
-    private final static Map<String, Integer> TYPES = ImmutableMap.<String, Integer> builder().put("N.planar3", 2)
-                                                            .put("N.minus.planar3", 2).put("N.amide", 2).put("S.2", 2)
-                                                            .put("S.planar3", 2).put("C.minus.planar", 2)
-                                                            .put("O.planar3", 2).put("N.sp2.3", 1).put("C.sp2", 1)
-                                                            .build();
+    private static final Map<String, Integer> TYPES =
+            ImmutableMap.<String, Integer>builder()
+                    .put("N.planar3", 2)
+                    .put("N.minus.planar3", 2)
+                    .put("N.amide", 2)
+                    .put("S.2", 2)
+                    .put("S.planar3", 2)
+                    .put("C.minus.planar", 2)
+                    .put("O.planar3", 2)
+                    .put("N.sp2.3", 1)
+                    .put("C.sp2", 1)
+                    .build();
 
     /** Allow exocyclic pi bonds. */
-    private final boolean                     exocyclic;
+    private final boolean exocyclic;
 
     /**
-     * Create the electron donation model specifying whether exocyclic pi bonds
-     * are allowed. Exocyclic pi bonds <i>sprout</i> from a ring, allowing these
-     * bonds to contribute means structure such as hexamethylidenecyclohexane,
-     * {@code C=C1C(=C)C(=C)C(=C)C(=C)C1=C} are considered <i>aromatic</i>.
+     * Create the electron donation model specifying whether exocyclic pi bonds are allowed.
+     * Exocyclic pi bonds <i>sprout</i> from a ring, allowing these bonds to contribute means
+     * structure such as hexamethylidenecyclohexane, {@code C=C1C(=C)C(=C)C(=C)C(=C)C1=C} are
+     * considered <i>aromatic</i>.
      *
      * @param exocyclic allow exocyclic double bonds
      */
@@ -77,7 +82,7 @@ final class AtomTypeModel extends ElectronDonation {
         this.exocyclic = exocyclic;
     }
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     int[] contribution(IAtomContainer container, RingSearch ringSearch) {
 
@@ -135,8 +140,8 @@ final class AtomTypeModel extends ElectronDonation {
 
                     // XXX: single exception - we could make this more general but
                     // for now this mirrors the existing behavior
-                    if (a1Type.equals("N.sp2.3") && a2Type.equals("O.sp2") || a1Type.equals("O.sp2")
-                            && a2Type.equals("N.sp2.3")) continue;
+                    if (a1Type.equals("N.sp2.3") && a2Type.equals("O.sp2")
+                            || a1Type.equals("O.sp2") && a2Type.equals("N.sp2.3")) continue;
 
                     electrons[u] = electrons[v] = -1;
                 }
@@ -147,8 +152,7 @@ final class AtomTypeModel extends ElectronDonation {
     }
 
     /**
-     * The number of contributed electrons for the atom type of the specified
-     * atom type.
+     * The number of contributed electrons for the atom type of the specified atom type.
      *
      * @param atom an atom to get the contribution of
      * @return the number of electrons
@@ -159,8 +163,11 @@ final class AtomTypeModel extends ElectronDonation {
         if (electrons != null) return electrons;
 
         try {
-            IAtomType atomType = AtomTypeFactory.getInstance("org/openscience/cdk/dict/data/cdk-atom-types.owl",
-                    atom.getBuilder()).getAtomType(atom.getAtomTypeName());
+            IAtomType atomType =
+                    AtomTypeFactory.getInstance(
+                                    "org/openscience/cdk/dict/data/cdk-atom-types.owl",
+                                    atom.getBuilder())
+                            .getAtomType(atom.getAtomTypeName());
             electrons = atomType.getProperty(CDKConstants.PI_BOND_COUNT);
             return electrons != null ? electrons : 0;
         } catch (NoSuchAtomTypeException e) {
@@ -169,8 +176,7 @@ final class AtomTypeModel extends ElectronDonation {
     }
 
     /**
-     * Access to the number of lone-pairs (specified as a property of the
-     * atom).
+     * Access to the number of lone-pairs (specified as a property of the atom).
      *
      * @param atom the atom to get the lone pairs from
      * @return number of lone pairs

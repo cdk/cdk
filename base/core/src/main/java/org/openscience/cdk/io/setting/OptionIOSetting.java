@@ -19,27 +19,26 @@
 package org.openscience.cdk.io.setting;
 
 import java.util.List;
-
 import org.openscience.cdk.exception.CDKException;
 
 /**
- * An class for a reader setting which must be found in the list
- * of possible settings.
+ * An class for a reader setting which must be found in the list of possible settings.
  *
  * @cdk.module io
  * @cdk.githash
- *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  */
 public class OptionIOSetting extends IOSetting {
 
     private List<String> settings;
 
-    /**
-     * OptionIOSetting is IOSetting for which the value must be
-     * in the list of possible options.
-     */
-    public OptionIOSetting(String name, Importance level, String question, List<String> settings, String defaultSetting) {
+    /** OptionIOSetting is IOSetting for which the value must be in the list of possible options. */
+    public OptionIOSetting(
+            String name,
+            Importance level,
+            String question,
+            List<String> settings,
+            String defaultSetting) {
         super(name, level, question, defaultSetting);
         this.settings = settings;
         if (!this.settings.contains(defaultSetting)) {
@@ -48,9 +47,8 @@ public class OptionIOSetting extends IOSetting {
     }
 
     /**
-     * Sets the setting for a certain question. It will throw
-     * a CDKException when the setting is not valid.
-     *
+     * Sets the setting for a certain question. It will throw a CDKException when the setting is not
+     * valid.
      */
     @Override
     public void setSetting(String setting) throws CDKException {
@@ -62,10 +60,8 @@ public class OptionIOSetting extends IOSetting {
     }
 
     /**
-     * Sets the setting for a certain question. It will throw
-     * a CDKException when the setting is not valid. The first setting is
-     * setting 1.
-     *
+     * Sets the setting for a certain question. It will throw a CDKException when the setting is not
+     * valid. The first setting is setting 1.
      */
     public void setSetting(int setting) throws CDKException {
         if (setting < settings.size() + 1 && setting > 0) {
@@ -75,11 +71,8 @@ public class OptionIOSetting extends IOSetting {
         }
     }
 
-    /**
-     * Returns a Vector of Strings containing all possible options.
-     */
+    /** Returns a Vector of Strings containing all possible options. */
     public List<String> getOptions() {
         return settings;
     }
-
 }

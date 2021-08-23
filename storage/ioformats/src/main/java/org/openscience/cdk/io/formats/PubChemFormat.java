@@ -58,7 +58,7 @@ public class PubChemFormat extends AbstractResourceFormat implements IChemFormat
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"pc"};
+        return new String[] {"pc"};
     }
 
     /** {@inheritDoc} */

@@ -24,12 +24,11 @@
 
 package org.openscience.cdk.hash;
 
-import org.junit.Test;
-
-import java.util.BitSet;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import java.util.BitSet;
+import org.junit.Test;
 
 /**
  * @author John May
@@ -73,6 +72,5 @@ public class SuppressedTest {
         assertFalse(suppressed.contains(12));
         assertFalse(suppressed.contains(13));
         assertFalse(suppressed.contains(14));
-
     }
 }

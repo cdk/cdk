@@ -21,9 +21,7 @@ package org.openscience.cdk.aromaticity;
 import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
-
 import javax.vecmath.Point2d;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -82,7 +80,6 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
             if (((IBond) mol.getBond(i)).getFlag(CDKConstants.ISAROMATIC)) numberOfAromaticBonds++;
         }
         Assert.assertEquals(6, numberOfAromaticBonds);
-
     }
 
     @Test
@@ -98,13 +95,15 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 
         IAtomContainer mol = sp.parseSmiles("c1ccn(C)c1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        Assert.assertTrue("Expected the molecule to be aromatic.", Aromaticity.cdkLegacy().apply(mol));
+        Assert.assertTrue(
+                "Expected the molecule to be aromatic.", Aromaticity.cdkLegacy().apply(mol));
 
         IRingSet ringset = (new SSSRFinder(mol)).findSSSR();
         int numberOfAromaticRings = 0;
         RingSetManipulator.markAromaticRings(ringset);
         for (int i = 0; i < ringset.getAtomContainerCount(); i++) {
-            if (ringset.getAtomContainer(i).getFlag(CDKConstants.ISAROMATIC)) numberOfAromaticRings++;
+            if (ringset.getAtomContainer(i).getFlag(CDKConstants.ISAROMATIC))
+                numberOfAromaticRings++;
         }
         Assert.assertEquals(1, numberOfAromaticRings);
     }
@@ -125,7 +124,8 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         mol.addBond(4, 5, IBond.Order.SINGLE);
         mol.addBond(0, 5, IBond.Order.DOUBLE);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        Assert.assertTrue("Expected the molecule to be aromatic.", Aromaticity.cdkLegacy().apply(mol));
+        Assert.assertTrue(
+                "Expected the molecule to be aromatic.", Aromaticity.cdkLegacy().apply(mol));
 
         Iterator<IAtom> atoms = mol.atoms().iterator();
         while (atoms.hasNext()) {
@@ -136,7 +136,8 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         int numberOfAromaticRings = 0;
         RingSetManipulator.markAromaticRings(ringset);
         for (int i = 0; i < ringset.getAtomContainerCount(); i++) {
-            if (ringset.getAtomContainer(i).getFlag(CDKConstants.ISAROMATIC)) numberOfAromaticRings++;
+            if (ringset.getAtomContainer(i).getFlag(CDKConstants.ISAROMATIC))
+                numberOfAromaticRings++;
         }
         Assert.assertEquals(1, numberOfAromaticRings);
     }
@@ -153,7 +154,8 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         }
         mol.addBond(0, 4, IBond.Order.SINGLE);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        Assert.assertTrue("Expected the molecule to be aromatic.", Aromaticity.cdkLegacy().apply(mol));
+        Assert.assertTrue(
+                "Expected the molecule to be aromatic.", Aromaticity.cdkLegacy().apply(mol));
 
         Iterator<IAtom> atoms = mol.atoms().iterator();
         while (atoms.hasNext()) {
@@ -172,8 +174,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     public void testPyridineOxide_SP2() throws Exception {
         IAtomContainer molecule = TestMoleculeFactory.makePyridineOxide();
         Iterator<IBond> bonds = molecule.bonds().iterator();
-        while (bonds.hasNext())
-            bonds.next().setOrder(Order.SINGLE);
+        while (bonds.hasNext()) bonds.next().setOrder(Order.SINGLE);
         for (int i = 0; i < 6; i++) {
             molecule.getAtom(i).setHybridization(IAtomType.Hybridization.SP2);
         }
@@ -193,14 +194,13 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         int numberOfAromaticRings = 0;
         RingSetManipulator.markAromaticRings(ringset);
         for (int i = 0; i < ringset.getAtomContainerCount(); i++) {
-            if (ringset.getAtomContainer(i).getFlag(CDKConstants.ISAROMATIC)) numberOfAromaticRings++;
+            if (ringset.getAtomContainer(i).getFlag(CDKConstants.ISAROMATIC))
+                numberOfAromaticRings++;
         }
         Assert.assertEquals(1, numberOfAromaticRings);
     }
 
-    /**
-     * @cdk.bug 1294
-     */
+    /** @cdk.bug 1294 */
     @Test
     public void testBug1294() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -208,13 +208,10 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         IAtomContainer mol = sp.parseSmiles("C2=C1C=CC=CC1=CN2");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue("Molecule is not detected aromatic", Aromaticity.cdkLegacy().apply(mol));
-        for (IAtom atom : mol.atoms())
-            Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+        for (IAtom atom : mol.atoms()) Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
     }
 
-    /**
-     * @cdk.bug 1294
-     */
+    /** @cdk.bug 1294 */
     @Test
     public void testBug1294_2() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -222,84 +219,87 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         IAtomContainer mol = sp.parseSmiles("c2c1ccccc1c[nH]2");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue("Molecule is not detected aromatic", Aromaticity.cdkLegacy().apply(mol));
-        for (IAtom atom : mol.atoms())
-            Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+        for (IAtom atom : mol.atoms()) Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
     }
 
     /**
-     * A unit test for JUnit The special difficulty with Azulene is that only the
-     * outermost larger 10-ring is aromatic according to Hueckel rule.
+     * A unit test for JUnit The special difficulty with Azulene is that only the outermost larger
+     * 10-ring is aromatic according to Hueckel rule.
      */
     @Test
     public void testAzulene() throws Exception {
         boolean[] testResults = {true, true, true, true, true, true, true, true, true, true};
         IAtomContainer molecule = TestMoleculeFactory.makeAzulene();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-        Assert.assertTrue("Expected the molecule to be aromatic.", Aromaticity.cdkLegacy().apply(molecule));
+        Assert.assertTrue(
+                "Expected the molecule to be aromatic.", Aromaticity.cdkLegacy().apply(molecule));
         for (int f = 0; f < molecule.getAtomCount(); f++) {
-            Assert.assertEquals("Atom " + f + " is not correctly marked", testResults[f],
+            Assert.assertEquals(
+                    "Atom " + f + " is not correctly marked",
+                    testResults[f],
                     molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
         }
     }
 
-    /**
-     * A unit test for JUnit. The N has to be counted correctly.
-     */
+    /** A unit test for JUnit. The N has to be counted correctly. */
     @Test
     public void testIndole() throws Exception {
         IAtomContainer molecule = TestMoleculeFactory.makeIndole();
         boolean testResults[] = {true, true, true, true, true, true, true, true, true};
-        //boolean isAromatic = false;
+        // boolean isAromatic = false;
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-        Assert.assertTrue("Expected the molecule to be aromatic.", Aromaticity.cdkLegacy().apply(molecule));
+        Assert.assertTrue(
+                "Expected the molecule to be aromatic.", Aromaticity.cdkLegacy().apply(molecule));
         for (int f = 0; f < molecule.getAtomCount(); f++) {
-            Assert.assertEquals("Atom " + f + " is not correctly marked", testResults[f],
+            Assert.assertEquals(
+                    "Atom " + f + " is not correctly marked",
+                    testResults[f],
                     molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
         }
     }
 
-    /**
-     * A unit test for JUnit. The N has to be counted correctly.
-     */
+    /** A unit test for JUnit. The N has to be counted correctly. */
     @Test
     public void testPyrrole() throws Exception {
         IAtomContainer molecule = TestMoleculeFactory.makePyrrole();
         boolean testResults[] = {true, true, true, true, true};
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-        Assert.assertTrue("Expected the molecule to be aromatic.", Aromaticity.cdkLegacy().apply(molecule));
+        Assert.assertTrue(
+                "Expected the molecule to be aromatic.", Aromaticity.cdkLegacy().apply(molecule));
         for (int f = 0; f < molecule.getAtomCount(); f++) {
-            Assert.assertEquals("Atom " + f + " is not correctly marked", testResults[f],
+            Assert.assertEquals(
+                    "Atom " + f + " is not correctly marked",
+                    testResults[f],
                     molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
         }
     }
 
-    /**
-     * A unit test for JUnit
-     */
+    /** A unit test for JUnit */
     @Test
     public void testThiazole() throws Exception {
         IAtomContainer molecule = TestMoleculeFactory.makeThiazole();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-        Assert.assertTrue("Molecule is not detected as aromatic", Aromaticity.cdkLegacy().apply(molecule));
+        Assert.assertTrue(
+                "Molecule is not detected as aromatic", Aromaticity.cdkLegacy().apply(molecule));
 
         for (int f = 0; f < molecule.getAtomCount(); f++) {
-            Assert.assertTrue("Atom " + f + " is not correctly marked",
+            Assert.assertTrue(
+                    "Atom " + f + " is not correctly marked",
                     molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
         }
     }
 
-    /**
-     * A unit test for JUnit
-     */
+    /** A unit test for JUnit */
     @Test
     public void testTetraDehydroDecaline() throws Exception {
         boolean isAromatic = false;
-        //boolean testResults[] = {true, false, false};
+        // boolean testResults[] = {true, false, false};
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
         IAtomContainer mol = sp.parseSmiles("C1CCCc2c1cccc2");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        Assert.assertTrue("Expected the molecule to be aromatic.", Aromaticity.cdkLegacy().apply(mol));
+        Assert.assertTrue(
+                "Expected the molecule to be aromatic.", Aromaticity.cdkLegacy().apply(mol));
         IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
         RingSetManipulator.markAromaticRings(rs);
         IRing r = null;
@@ -359,32 +359,38 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     @Test
     public void testNoxide() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer mol = sp.parseSmiles("C=1C=CC(=CC1)CNC2=CC=C(C=C2N(=O)=O)S(=O)(=O)C(Cl)(Cl)Br");
+        IAtomContainer mol =
+                sp.parseSmiles("C=1C=CC(=CC1)CNC2=CC=C(C=C2N(=O)=O)S(=O)(=O)C(Cl)(Cl)Br");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue(Aromaticity.cdkLegacy().apply(mol));
     }
 
-    /**
-     * A unit test for JUnit
-     */
+    /** A unit test for JUnit */
     @Test
     public void testPorphyrine() throws Exception {
         boolean isAromatic = false;
-        boolean testResults[] = {false, false, false, false, false, true, true, true, true, true, false, true, true,
-                true, false, true, true, false, false, true, true, false, false, false, true, true, false, false,
-                false, true, true, false, false, false, false, true, true, true, true, false, false, false};
+        boolean testResults[] = {
+            false, false, false, false, false, true, true, true, true, true, false, true, true,
+            true, false, true, true, false, false, true, true, false, false, false, true, true,
+            false, false, false, true, true, false, false, false, false, true, true, true, true,
+            false, false, false
+        };
 
         String filename = "data/mdl/porphyrin.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        IAtomContainer molecule = (IAtomContainer) reader.read(DefaultChemObjectBuilder.getInstance().newInstance(
-                IAtomContainer.class));
+        IAtomContainer molecule =
+                (IAtomContainer)
+                        reader.read(
+                                DefaultChemObjectBuilder.getInstance()
+                                        .newInstance(IAtomContainer.class));
         reader.close();
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         isAromatic = Aromaticity.cdkLegacy().apply(molecule);
         for (int f = 0; f < molecule.getAtomCount(); f++) {
-            Assert.assertEquals(testResults[f], molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
+            Assert.assertEquals(
+                    testResults[f], molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
         }
         Assert.assertTrue(isAromatic);
     }
@@ -396,55 +402,63 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
      */
     @Test
     public void testBug698152() throws Exception {
-        //boolean isAromatic = false;
-        boolean[] testResults = {true, true, true, true, true, true, false, false, false, false, false, false, false,
-                false, false, false, false, false};
+        // boolean isAromatic = false;
+        boolean[] testResults = {
+            true, true, true, true, true, true, false, false, false, false, false, false, false,
+            false, false, false, false, false
+        };
 
         String filename = "data/mdl/bug698152.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        IAtomContainer molecule = (IAtomContainer) reader.read(DefaultChemObjectBuilder.getInstance().newInstance(
-                IAtomContainer.class));
+        IAtomContainer molecule =
+                (IAtomContainer)
+                        reader.read(
+                                DefaultChemObjectBuilder.getInstance()
+                                        .newInstance(IAtomContainer.class));
         reader.close();
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         Aromaticity.cdkLegacy().apply(molecule);
         for (int f = 0; f < molecule.getAtomCount(); f++) {
-            Assert.assertEquals(testResults[f], molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
+            Assert.assertEquals(
+                    testResults[f], molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
         }
     }
 
     /**
-     * A test for the fix of bug #716259, where a quinone ring
-     * was falsely detected as aromatic.
+     * A test for the fix of bug #716259, where a quinone ring was falsely detected as aromatic.
      *
      * @cdk.bug 716259
      */
     @Test
     public void testBug716259() throws Exception {
         IAtomContainer molecule = null;
-        //boolean isAromatic = false;
-        boolean[] testResults = {true, true, true, true, true, true, true, true, true, true, false, false, false,
-                false, false, false, false, false, false};
+        // boolean isAromatic = false;
+        boolean[] testResults = {
+            true, true, true, true, true, true, true, true, true, true, false, false, false, false,
+            false, false, false, false, false
+        };
 
         String filename = "data/mdl/bug716259.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        molecule = (IAtomContainer) reader.read(DefaultChemObjectBuilder.getInstance()
-                .newInstance(IAtomContainer.class));
+        molecule =
+                (IAtomContainer)
+                        reader.read(
+                                DefaultChemObjectBuilder.getInstance()
+                                        .newInstance(IAtomContainer.class));
         reader.close();
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         Aromaticity.cdkLegacy().apply(molecule);
         for (int f = 0; f < molecule.getAtomCount(); f++) {
-            Assert.assertEquals(testResults[f], molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
+            Assert.assertEquals(
+                    testResults[f], molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
         }
-
     }
 
-    /**
-     * A unit test for JUnit
-     */
+    /** A unit test for JUnit */
     @Test
     public void testQuinone() throws Exception {
         IAtomContainer molecule = TestMoleculeFactory.makeQuinone();
@@ -453,21 +467,22 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         Aromaticity.cdkLegacy().apply(molecule);
         for (int f = 0; f < molecule.getAtomCount(); f++) {
-            Assert.assertEquals(testResults[f], molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
+            Assert.assertEquals(
+                    testResults[f], molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
         }
-
     }
 
-    /**
-     * @cdk.bug 1328739
-     */
+    /** @cdk.bug 1328739 */
     @Test
     public void testBug1328739() throws Exception {
         String filename = "data/mdl/bug1328739.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        IAtomContainer molecule = (IAtomContainer) reader.read(DefaultChemObjectBuilder.getInstance().newInstance(
-                IAtomContainer.class));
+        IAtomContainer molecule =
+                (IAtomContainer)
+                        reader.read(
+                                DefaultChemObjectBuilder.getInstance()
+                                        .newInstance(IAtomContainer.class));
         reader.close();
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
@@ -482,9 +497,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         Assert.assertTrue(molecule.getBond(6).getFlag(CDKConstants.ISAROMATIC));
     }
 
-    /**
-     * A unit test for JUnit
-     */
+    /** A unit test for JUnit */
     @Test
     public void testBenzene() throws Exception {
         IAtomContainer molecule = TestMoleculeFactory.makeBenzene();
@@ -508,7 +521,8 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     }
 
     private IAtomContainer makeAromaticMolecule() {
-        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer mol =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class, "C");
         a1.setPoint2d(new Point2d(329.99999999999994, 971.0));
         mol.addAtom(a1);
@@ -564,9 +578,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         return mol;
     }
 
-    /**
-     * @cdk.bug 1957684
-     */
+    /** @cdk.bug 1957684 */
     @Test
     public void test3Amino2MethylPyridine() throws Exception {
 
@@ -664,17 +676,12 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
             if (atom.getSymbol().equals("C")) {
-                if (atom.getFlag(CDKConstants.ISAROMATIC))
-                    nCarom++;
-                else
-                    nCalip++;
+                if (atom.getFlag(CDKConstants.ISAROMATIC)) nCarom++;
+                else nCalip++;
             } else if (atom.getSymbol().equals("N")) {
-                if (atom.getFlag(CDKConstants.ISAROMATIC))
-                    nNarom++;
-                else
-                    nNaliph++;
+                if (atom.getFlag(CDKConstants.ISAROMATIC)) nNarom++;
+                else nNaliph++;
             }
-
         }
         Assert.assertEquals(5, nCarom);
         Assert.assertEquals(1, nCalip);
@@ -688,7 +695,8 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
      */
     @Test
     public void testPolyCyclicSystem() throws Exception {
-        CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance());
+        CDKHydrogenAdder adder =
+                CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance());
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
         IAtomContainer kekuleForm = sp.parseSmiles("C1=CC2=CC3=CC4=C(C=CC=C4)C=C3C=C2C=C1");
@@ -707,7 +715,8 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         isAromatic = Aromaticity.cdkLegacy().apply(aromaticForm);
         Assert.assertTrue(isAromatic);
 
-        // double bond locations may alter. So, we can expect things like in a 'diff': "BondDiff{order:SINGLE/DOUBLE}"
+        // double bond locations may alter. So, we can expect things like in a 'diff':
+        // "BondDiff{order:SINGLE/DOUBLE}"
         // but, we should not see aromaticity differences
         for (IAtom atom : aromaticForm.atoms()) {
             if ("C".equals(atom.getSymbol())) {
@@ -723,9 +732,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         }
     }
 
-    /**
-     * @cdk.bug 1579235
-     */
+    /** @cdk.bug 1579235 */
     @Test
     public void testIndolizine() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -736,21 +743,19 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 
         // all atoms are supposed to be aromatic
         for (IAtom atom : aromaticForm.atoms()) {
-            Assert.assertTrue(atom.toString() + " should be aromatic", atom.getFlag(CDKConstants.ISAROMATIC));
+            Assert.assertTrue(
+                    atom.toString() + " should be aromatic", atom.getFlag(CDKConstants.ISAROMATIC));
         }
     }
 
-    /**
-     * @cdk.bug 2976054
-     */
+    /** @cdk.bug 2976054 */
     @Test
     public void testAnotherNitrogen_SP2() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("c1cnc2s[cH][cH]n12");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue(Aromaticity.cdkLegacy().apply(mol));
-        for (IAtom atom : mol.atoms())
-            Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+        for (IAtom atom : mol.atoms()) Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
     }
 
     /**
@@ -766,7 +771,8 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         Assert.assertTrue(Aromaticity.cdkLegacy().apply(mol));
         for (IAtom atom : mol.atoms()) {
             if (atom.getSymbol().equals("O")) continue;
-            Assert.assertTrue(atom.getSymbol() + " was not aromatic but should have been",
+            Assert.assertTrue(
+                    atom.getSymbol() + " was not aromatic but should have been",
                     atom.getFlag(CDKConstants.ISAROMATIC));
         }
     }
@@ -784,7 +790,8 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         Assert.assertTrue(Aromaticity.cdkLegacy().apply(mol));
         for (IAtom atom : mol.atoms()) {
             if (atom.getSymbol().equals("O")) continue;
-            Assert.assertTrue(atom.getSymbol() + " was not aromatic but should have been",
+            Assert.assertTrue(
+                    atom.getSymbol() + " was not aromatic but should have been",
                     atom.getFlag(CDKConstants.ISAROMATIC));
         }
     }
@@ -796,7 +803,9 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue(Aromaticity.cdkLegacy().apply(mol));
         for (IAtom atom : mol.atoms())
-            Assert.assertTrue("Atom is expected to be aromatic: " + atom, atom.getFlag(CDKConstants.ISAROMATIC));
+            Assert.assertTrue(
+                    "Atom is expected to be aromatic: " + atom,
+                    atom.getFlag(CDKConstants.ISAROMATIC));
     }
 
     @Test
@@ -807,7 +816,9 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         Assert.assertTrue(Aromaticity.cdkLegacy().apply(mol));
         for (int i = 2; i <= 6; i++) {
             IAtom atom = mol.getAtom(i);
-            Assert.assertTrue("Atom is expected to be aromatic: " + atom, atom.getFlag(CDKConstants.ISAROMATIC));
+            Assert.assertTrue(
+                    "Atom is expected to be aromatic: " + atom,
+                    atom.getFlag(CDKConstants.ISAROMATIC));
         }
     }
 
@@ -819,13 +830,13 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         Assert.assertTrue(Aromaticity.cdkLegacy().apply(mol));
         for (int i = 3; i <= 7; i++) {
             IAtom atom = mol.getAtom(i);
-            Assert.assertTrue("Atom is expected to be aromatic: " + atom, atom.getFlag(CDKConstants.ISAROMATIC));
+            Assert.assertTrue(
+                    "Atom is expected to be aromatic: " + atom,
+                    atom.getFlag(CDKConstants.ISAROMATIC));
         }
     }
 
-    /**
-     * @cdk.bug 3001616
-     */
+    /** @cdk.bug 3001616 */
     @Test
     public void test3001616() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -856,9 +867,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         }
     }
 
-    /**
-     * @cdk.bug 2853035
-     */
+    /** @cdk.bug 2853035 */
     @Test
     public void testBug2853035() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -885,9 +894,8 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     }
 
     /**
-     * Due to using iterators some Sp3 atoms in the oxaspirodeadiene example
-     * would not be removed and the molcule would incorrectly be found to be
-     * aromatic.
+     * Due to using iterators some Sp3 atoms in the oxaspirodeadiene example would not be removed
+     * and the molcule would incorrectly be found to be aromatic.
      *
      * @cdk.bug 1313
      */
@@ -899,11 +907,10 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     }
 
     /**
-     * Ensures atoms/bonds are marked as cyclic before being removed. Otherwise
-     * this means changing an atom outside of an aromatic system can alter
-     * perception (not good). It results in finding an aromatic ring in
-     * 'OC1=C2C=CC=CC2=CNC1=C' but not in 'OS1(=O)=C2C=CC=CC2=CNC1=C'. Whether
-     * a pi bond is exocyclic should be invariant to the connected atom.
+     * Ensures atoms/bonds are marked as cyclic before being removed. Otherwise this means changing
+     * an atom outside of an aromatic system can alter perception (not good). It results in finding
+     * an aromatic ring in 'OC1=C2C=CC=CC2=CNC1=C' but not in 'OS1(=O)=C2C=CC=CC2=CNC1=C'. Whether a
+     * pi bond is exocyclic should be invariant to the connected atom.
      *
      * @cdk.bug 1313
      */
@@ -922,8 +929,8 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     }
 
     /**
-     * 8-oxaspiro[4.5]deca-6,9-diene
-     * C1CCC2(C1)C=COC=C2
+     * 8-oxaspiro[4.5]deca-6,9-diene C1CCC2(C1)C=COC=C2
+     *
      * @cdk.inchi InChI=1/C9H12O/c1-2-4-9(3-1)5-7-10-8-6-9/h5-8H,1-4H2
      */
     static IAtomContainer oxaspirodeadiene() throws Exception {
@@ -973,5 +980,4 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         mol.addBond(b11);
         return mol;
     }
-
 }

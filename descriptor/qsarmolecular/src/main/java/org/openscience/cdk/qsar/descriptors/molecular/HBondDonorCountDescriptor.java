@@ -20,9 +20,9 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -31,20 +31,22 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 
 /**
- * This descriptor calculates the number of hydrogen bond donors using a slightly simplified version of the
- * <a href="http://www.chemie.uni-erlangen.de/model2001/abstracts/rester.html">PHACIR atom types</a>.
- * The following groups are counted as hydrogen bond donors:
- * <ul>
- * <li>Any-OH where the formal charge of the oxygen is non-negative (i.e. formal charge &ge; 0)</li>
- * <li>Any-NH where the formal charge of the nitrogen is non-negative (i.e. formal charge &ge; 0)</li>
- * </ul>
- * <p>
- * This descriptor uses no parameters.
- * <p>
- * This descriptor works properly with AtomContainers whose atoms contain either <b>implicit</b> or <b>explicit
- * hydrogen</b> atoms. It does not work with atoms that contain neither implicit nor explicit hydrogens.
+ * This descriptor calculates the number of hydrogen bond donors using a slightly simplified version
+ * of the <a href="http://www.chemie.uni-erlangen.de/model2001/abstracts/rester.html">PHACIR atom
+ * types</a>. The following groups are counted as hydrogen bond donors:
  *
- * Returns a single value named <i>nHBDon</i>.
+ * <ul>
+ *   <li>Any-OH where the formal charge of the oxygen is non-negative (i.e. formal charge &ge; 0)
+ *   <li>Any-NH where the formal charge of the nitrogen is non-negative (i.e. formal charge &ge; 0)
+ * </ul>
+ *
+ * <p>This descriptor uses no parameters.
+ *
+ * <p>This descriptor works properly with AtomContainers whose atoms contain either <b>implicit</b>
+ * or <b>explicit hydrogen</b> atoms. It does not work with atoms that contain neither implicit nor
+ * explicit hydrogens.
+ *
+ * <p>Returns a single value named <i>nHBDon</i>.
  *
  * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
@@ -59,39 +61,38 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  *   </tr>
  * </table>
  *
- * @author      ulif
+ * @author ulif
  * @cdk.created 2005-22-07
- * @cdk.module  qsarmolecular
+ * @cdk.module qsarmolecular
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:hBondDonors
  */
-public class HBondDonorCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
+public class HBondDonorCountDescriptor extends AbstractMolecularDescriptor
+        implements IMolecularDescriptor {
 
     private static final String[] NAMES = {"nHBDon"};
 
-    /**
-     *  Constructor for the HBondDonorCountDescriptor object
-     */
+    /** Constructor for the HBondDonorCountDescriptor object */
     public HBondDonorCountDescriptor() {}
 
     /**
-     * Gets the specification attribute of the HBondDonorCountDescriptor
-     * object
+     * Gets the specification attribute of the HBondDonorCountDescriptor object
      *
-     * @return    The specification value
+     * @return The specification value
      */
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hBondDonors", this.getClass()
-                        .getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hBondDonors",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     /**
      * Sets the parameter of this HBondDonorCountDescriptor instance.
      *
-     * @param  params            this descriptor does not have any parameters
-     * @exception  CDKException  Description of the Exception
+     * @param params this descriptor does not have any parameters
+     * @exception CDKException Description of the Exception
      */
     @Override
     public void setParameters(Object[] params) throws CDKException {
@@ -101,7 +102,7 @@ public class HBondDonorCountDescriptor extends AbstractMolecularDescriptor imple
     /**
      * Gets the parameters of the HBondDonorCountDescriptor instance.
      *
-     * @return    null as this descriptor does not have any parameters
+     * @return null as this descriptor does not have any parameters
      */
     @Override
     public Object[] getParameters() {
@@ -115,15 +116,20 @@ public class HBondDonorCountDescriptor extends AbstractMolecularDescriptor imple
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
-                (int) Double.NaN), getDescriptorNames(), e);
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new IntegerResult((int) Double.NaN),
+                getDescriptorNames(),
+                e);
     }
 
     /**
      * Calculates the number of H bond donors.
      *
-     * @param  atomContainer               AtomContainer
-     * @return                   number of H bond donors
+     * @param atomContainer AtomContainer
+     * @return number of H bond donors
      */
     @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
@@ -136,18 +142,23 @@ public class HBondDonorCountDescriptor extends AbstractMolecularDescriptor imple
             return getDummyDescriptorValue(e);
         }
 
-        //org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
-        // iterate over all atoms of this AtomContainer; use label atomloop to allow for labelled continue
-        atomloop: for (int atomIndex = 0; atomIndex < ac.getAtomCount(); atomIndex++) {
+        // org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
+        // iterate over all atoms of this AtomContainer; use label atomloop to allow for labelled
+        // continue
+        atomloop:
+        for (int atomIndex = 0; atomIndex < ac.getAtomCount(); atomIndex++) {
             IAtom atom = (IAtom) ac.getAtom(atomIndex);
             // checking for O and N atoms where the formal charge is >= 0
-            if ((atom.getAtomicNumber() == IElement.O || atom.getAtomicNumber() == IElement.N) && atom.getFormalCharge() >= 0) {
+            if ((atom.getAtomicNumber() == IElement.O || atom.getAtomicNumber() == IElement.N)
+                    && atom.getFormalCharge() >= 0) {
                 // implicit hydrogens
                 Integer implicitH = atom.getImplicitHydrogenCount();
                 if (implicitH == CDKConstants.UNSET) implicitH = 0;
                 if (implicitH > 0) {
                     hBondDonors++;
-                    continue atomloop; // we skip the explicit hydrogens part cause we found implicit hydrogens
+                    continue
+                            atomloop; // we skip the explicit hydrogens part cause we found implicit
+                                      // hydrogens
                 }
                 // explicit hydrogens
                 java.util.List neighbours = ac.getConnectedAtomsList(atom);
@@ -160,20 +171,26 @@ public class HBondDonorCountDescriptor extends AbstractMolecularDescriptor imple
             }
         }
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
-                hBondDonors), getDescriptorNames());
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new IntegerResult(hBondDonors),
+                getDescriptorNames());
     }
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * 
-     * The return value from this method really indicates what type of result will
-     * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
-     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
-     * allows you to do the same thing, without actually calculating the descriptor.
      *
-     * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
-     *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
+     * <p>The return value from this method really indicates what type of result will be obtained
+     * from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
+     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object;
+     * this method allows you to do the same thing, without actually calculating the descriptor.
+     *
+     * @return an object that implements the {@link
+     *     org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating the actual type
+     *     of values returned by the descriptor in the {@link
+     *     org.openscience.cdk.qsar.DescriptorValue} object
      */
     @Override
     public IDescriptorResult getDescriptorResultType() {
@@ -183,7 +200,7 @@ public class HBondDonorCountDescriptor extends AbstractMolecularDescriptor imple
     /**
      * Gets the parameterNames of the HBondDonorCountDescriptor.
      *
-     * @return    null as this descriptor does not have any parameters
+     * @return null as this descriptor does not have any parameters
      */
     @Override
     public String[] getParameterNames() {
@@ -194,8 +211,8 @@ public class HBondDonorCountDescriptor extends AbstractMolecularDescriptor imple
     /**
      * Gets the parameterType of the HBondDonorCountDescriptor.
      *
-     * @param  name  Description of the Parameter
-     * @return       null as this descriptor does not have any parameters
+     * @param name Description of the Parameter
+     * @return null as this descriptor does not have any parameters
      */
     @Override
     public Object getParameterType(String name) {

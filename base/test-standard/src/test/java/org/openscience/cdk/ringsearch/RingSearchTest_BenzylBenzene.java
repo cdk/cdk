@@ -22,6 +22,10 @@
  */
 package org.openscience.cdk.ringsearch;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import java.util.List;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -30,24 +34,21 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
-import java.util.List;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 /**
  * benzylbenzene ring search unit tests
  *
  * @author John May
  * @cdk.module test-standard
- * */
+ */
 public final class RingSearchTest_BenzylBenzene {
 
     private final IAtomContainer benzylbenzene = benzylbenzene();
 
     @Test
     public void testCyclic() {
-        assertThat(new RingSearch(benzylbenzene).cyclic().length, is(benzylbenzene.getAtomCount() - 1));
+        assertThat(
+                new RingSearch(benzylbenzene).cyclic().length,
+                is(benzylbenzene.getAtomCount() - 1));
     }
 
     @Test
@@ -57,16 +58,13 @@ public final class RingSearchTest_BenzylBenzene {
 
         int cyclic = 0, acyclic = 0;
         for (int i = 0; i < n; i++) {
-            if (ringSearch.cyclic(i))
-                cyclic++;
-            else
-                acyclic++;
+            if (ringSearch.cyclic(i)) cyclic++;
+            else acyclic++;
         }
 
         // single atom not in a ring
         assertThat(acyclic, is(1));
         assertThat(cyclic, is(n - 1));
-
     }
 
     @Test
@@ -108,9 +106,7 @@ public final class RingSearchTest_BenzylBenzene {
         assertThat(fused.size(), is(0));
     }
 
-    /**
-     * @cdk.inchi InChI=1S/C13H12/c1-3-7-12(8-4-1)11-13-9-5-2-6-10-13/h1-10H,11H2
-     */
+    /** @cdk.inchi InChI=1S/C13H12/c1-3-7-12(8-4-1)11-13-9-5-2-6-10-13/h1-10H,11H2 */
     public static IAtomContainer benzylbenzene() {
         IAtomContainer mol = new AtomContainer();
         IAtom a1 = new Atom("C");
@@ -169,5 +165,4 @@ public final class RingSearchTest_BenzylBenzene {
         mol.addBond(b14);
         return mol;
     }
-
 }

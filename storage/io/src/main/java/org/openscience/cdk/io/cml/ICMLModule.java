@@ -27,14 +27,13 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.xml.sax.Attributes;
 
 /**
- * This interface describes the procedures classes must implement to be plugable
- * into the CMLHandler. Most procedures reflect those in SAX2.
+ * This interface describes the procedures classes must implement to be plugable into the
+ * CMLHandler. Most procedures reflect those in SAX2.
  *
  * @cdk.module io
  * @cdk.githash
- *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
- **/
+ */
 public interface ICMLModule {
 
     void startDocument();
@@ -50,5 +49,4 @@ public interface ICMLModule {
     IChemFile returnChemFile();
 
     void inherit(ICMLModule conv);
-
 }

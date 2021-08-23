@@ -22,11 +22,11 @@
  */
 package org.openscience.cdk.hash;
 
-import org.junit.Test;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
 
 /**
  * @author John May
@@ -59,13 +59,13 @@ public class XorshiftTest {
         }
 
         for (int v : values) {
-            assertTrue(v + " was not within 0.1 % of a uniform distribution", 99000 <= v && v <= 101000);
+            assertTrue(
+                    v + " was not within 0.1 % of a uniform distribution",
+                    99000 <= v && v <= 101000);
         }
     }
 
-    /**
-     * demonstrates a limitation of the xor-shift, 0 will always return 0
-     */
+    /** demonstrates a limitation of the xor-shift, 0 will always return 0 */
     @Test
     public void demonstrateZeroLimitation() {
         assertThat(new Xorshift().next(0L), is(0L));

@@ -5,13 +5,17 @@ import java.util.Arrays;
 /**
  * Compute the connected components of an adjacency list.
  *
- * <blockquote><pre>{@code
- *     int[][]             g          = GraphUtil.toAdjList(container);
- *     ConnectedComponents cc         = new ConnectedComponents(g);
- *     int[]               components = cc.components();
- *     for (int v = 0; v < g.length; v++)
- *         components[v];
- * }</pre></blockquote>
+ * <blockquote>
+ *
+ * <pre>{@code
+ * int[][]             g          = GraphUtil.toAdjList(container);
+ * ConnectedComponents cc         = new ConnectedComponents(g);
+ * int[]               components = cc.components();
+ * for (int v = 0; v < g.length; v++)
+ *     components[v];
+ * }</pre>
+ *
+ * </blockquote>
  *
  * @author John May
  * @cdk.module core
@@ -23,13 +27,13 @@ public final class ConnectedComponents {
     private final int[][] g;
 
     /** Stores the component of each vertex. */
-    private final int[]   component;
+    private final int[] component;
 
     /** The number of components. */
-    private int           components;
+    private int components;
 
     /** The number remaining vertices. */
-    private int           remaining;
+    private int remaining;
 
     /**
      * Compute the connected components of an adjacency list, {@code g}.
@@ -53,8 +57,7 @@ public final class ConnectedComponents {
     private void visit(int v, int c) {
         remaining--;
         component[v] = c;
-        for (int w : g[v])
-            if (component[w] == 0) visit(w, c);
+        for (int w : g[v]) if (component[w] == 0) visit(w, c);
     }
 
     /**

@@ -33,7 +33,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @cdk.module test-qsarmolecular
  */
-
 public class KappaShapeIndicesDescriptorTest extends MolecularDescriptorTest {
 
     public KappaShapeIndicesDescriptorTest() {}
@@ -44,7 +43,8 @@ public class KappaShapeIndicesDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testKappaShapeIndicesDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testKappaShapeIndicesDescriptor()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
         double[] testResult = {5, 2.25, 4};
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O=C(O)CC");
@@ -52,8 +52,10 @@ public class KappaShapeIndicesDescriptorTest extends MolecularDescriptorTest {
         DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(mol).getValue();
         // position 0 =  kier1
         // positions 1 = kier2
-        // THIS IS OK: Assert.assertEquals(testResult[1], ((Double)retval.get(1)).doubleValue(), 0.0001);
-        // THIS IS OK: Assert.assertEquals(testResult[0], ((Double)retval.get(0)).doubleValue(), 0.0001);
+        // THIS IS OK: Assert.assertEquals(testResult[1], ((Double)retval.get(1)).doubleValue(),
+        // 0.0001);
+        // THIS IS OK: Assert.assertEquals(testResult[0], ((Double)retval.get(0)).doubleValue(),
+        // 0.0001);
         Assert.assertEquals(testResult[2], retval.get(2), 0.0001);
     }
 }

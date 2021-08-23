@@ -28,7 +28,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * This class matches an atom based on the atomic mass.
  *
- * @cdk.module  smarts
+ * @cdk.module smarts
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
@@ -56,10 +56,8 @@ public class MassAtom extends SMARTSAtom {
      */
     @Override
     public boolean matches(IAtom atom) {
-        if (mass == 0)
-            return atom.getMassNumber() == null;
-        else
-            return atom.getMassNumber() != null && mass == atom.getMassNumber();
+        if (mass == 0) return atom.getMassNumber() == null;
+        else return atom.getMassNumber() != null && mass == atom.getMassNumber();
     }
 
     /*
@@ -70,5 +68,4 @@ public class MassAtom extends SMARTSAtom {
     public String toString() {
         return ("(MassAtom(" + mass + ")");
     }
-
 }

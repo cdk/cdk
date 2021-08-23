@@ -18,6 +18,8 @@
  */
 package org.openscience.cdk.structgen;
 
+import java.util.Vector;
+import javax.vecmath.Vector2d;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -26,16 +28,11 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
-import javax.vecmath.Vector2d;
-import java.util.Vector;
-
-/**
- * @cdk.module test-structgen
- */
+/** @cdk.module test-structgen */
 public class RandomStructureGeneratorTest extends CDKTestCase {
 
-    public boolean debug      = false;
-    boolean        standAlone = false;
+    public boolean debug = false;
+    boolean standAlone = false;
 
     public void setStandAlone(boolean standAlone) {
         this.standAlone = standAlone;
@@ -49,7 +46,8 @@ public class RandomStructureGeneratorTest extends CDKTestCase {
         for (int f = 0; f < 50; f++) {
             result = rg.proposeStructure();
             Assert.assertEquals(molecule.getAtomCount(), result.getAtomCount());
-            Assert.assertEquals(1, ConnectivityChecker.partitionIntoMolecules(result).getAtomContainerCount());
+            Assert.assertEquals(
+                    1, ConnectivityChecker.partitionIntoMolecules(result).getAtomContainerCount());
         }
     }
 
@@ -71,5 +69,4 @@ public class RandomStructureGeneratorTest extends CDKTestCase {
         }
         return true;
     }
-
 }

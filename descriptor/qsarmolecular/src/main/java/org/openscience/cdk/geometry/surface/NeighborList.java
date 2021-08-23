@@ -20,37 +20,33 @@
 
 package org.openscience.cdk.geometry.surface;
 
-import org.openscience.cdk.interfaces.IAtom;
-
-import javax.vecmath.Point3d;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import javax.vecmath.Point3d;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * Creates a list of atoms neighboring each atom in the molecule.
  *
- * <p>The routine is a simplified version of the neighbor list described
- * in {@cdk.cite EIS95} and is based on the implementation by Peter McCluskey.
- * Due to the fact that it divides the cube into a fixed number of sub cubes,
- * some accuracy may be lost.
+ * <p>The routine is a simplified version of the neighbor list described in {@cdk.cite EIS95} and is
+ * based on the implementation by Peter McCluskey. Due to the fact that it divides the cube into a
+ * fixed number of sub cubes, some accuracy may be lost.
  *
  * @author Rajarshi Guha
  * @cdk.created 2005-05-09
- * @cdk.module  qsarmolecular
+ * @cdk.module qsarmolecular
  * @cdk.githash
  */
 public class NeighborList {
 
     Map<Key, List<Integer>> boxes;
-    double                  boxSize;
-    IAtom[]                 atoms;
+    double boxSize;
+    IAtom[] atoms;
 
-    /**
-     * Custom key class for looking up items in the map.
-     */
+    /** Custom key class for looking up items in the map. */
     private final class Key {
         private final int x, y, z;
 
@@ -74,9 +70,7 @@ public class NeighborList {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             Key key = (Key) o;
-            return x == key.x &&
-                   y == key.y &&
-                   z == key.z;
+            return x == key.x && y == key.y && z == key.z;
         }
 
         @Override
@@ -92,8 +86,7 @@ public class NeighborList {
         for (int i = 0; i < atoms.length; i++) {
             Key key = new Key(atoms[i]);
             List<Integer> arl = this.boxes.get(key);
-            if (arl == null)
-                this.boxes.put(key, arl = new ArrayList<>());
+            if (arl == null) this.boxes.put(key, arl = new ArrayList<>());
             arl.add(i);
         }
     }
@@ -104,28 +97,28 @@ public class NeighborList {
 
     /**
      * Get the neighbors that are with the given radius of atom i.
+     *
      * @param i atom index
      * @return atom indexs within that radius
      */
     public int[] getNeighbors(int i) {
-        List<Integer> result   = new ArrayList<>();
-        double        maxDist2 = this.boxSize * this.boxSize;
-        IAtom         atom     = this.atoms[i];
-        Key           key      = new Key(atom);
-        int[]         bval     = {-1, 0, 1};
+        List<Integer> result = new ArrayList<>();
+        double maxDist2 = this.boxSize * this.boxSize;
+        IAtom atom = this.atoms[i];
+        Key key = new Key(atom);
+        int[] bval = {-1, 0, 1};
         for (int x : bval) {
             for (int y : bval) {
                 for (int z : bval) {
-                    Key probe = new Key(key.x+x, key.y+y, key.z+z);
+                    Key probe = new Key(key.x + x, key.y + y, key.z + z);
                     List<Integer> nbrs = boxes.get(probe);
                     if (nbrs != null) {
                         for (Integer nbr : nbrs) {
                             if (nbr != i) {
-                                IAtom   anbr = atoms[nbr];
+                                IAtom anbr = atoms[nbr];
                                 Point3d p1 = anbr.getPoint3d();
                                 Point3d p2 = atom.getPoint3d();
-                                if (p1.distanceSquared(p2) < maxDist2)
-                                    result.add(nbr);
+                                if (p1.distanceSquared(p2) < maxDist2) result.add(nbr);
                             }
                         }
                     }
@@ -135,8 +128,7 @@ public class NeighborList {
 
         // convert to primitive array
         int[] ret = new int[result.size()];
-        for (int j = 0; j < ret.length; j++)
-            ret[j] = result.get(j);
+        for (int j = 0; j < ret.length; j++) ret[j] = result.get(j);
         return (ret);
     }
 }

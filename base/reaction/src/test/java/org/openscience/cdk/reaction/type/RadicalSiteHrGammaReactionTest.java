@@ -18,6 +18,9 @@
  */
 package org.openscience.cdk.reaction.type;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
@@ -39,13 +42,9 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 /**
- * TestSuite that runs a test for the RadicalSiteHrGammaReaction.
- * Generalized Reaction: [A*]-(C)_3-C4[H] => A([H])-(C_3)-[C4*].
+ * TestSuite that runs a test for the RadicalSiteHrGammaReaction. Generalized Reaction:
+ * [A*]-(C)_3-C4[H] => A([H])-(C_3)-[C4*].
  *
  * @cdk.module test-reaction
  */
@@ -53,16 +52,12 @@ public class RadicalSiteHrGammaReactionTest extends ReactionProcessTest {
 
     private IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
-    /**
-     *  The JUnit setup method
-     */
+    /** The JUnit setup method */
     public RadicalSiteHrGammaReactionTest() throws Exception {
         setReaction(RadicalSiteHrGammaReaction.class);
     }
 
-    /**
-     *  The JUnit setup method
-     */
+    /** The JUnit setup method */
     @Test
     public void testRadicalSiteHrGammaReaction() throws Exception {
         IReactionProcess type = new RadicalSiteHrGammaReaction();
@@ -70,10 +65,10 @@ public class RadicalSiteHrGammaReactionTest extends ReactionProcessTest {
     }
 
     /**
-     * A unit test suite for JUnit. Reaction: [A*]-C1-C2-C3[H] => A([H])-C1-C2-[C3*]
-     * Automatic search of the center active.
+     * A unit test suite for JUnit. Reaction: [A*]-C1-C2-C3[H] => A([H])-C1-C2-[C3*] Automatic
+     * search of the center active.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     @Override
@@ -108,7 +103,8 @@ public class RadicalSiteHrGammaReactionTest extends ReactionProcessTest {
      * @throws Exception
      */
     private IAtomContainerSet getExampleReactants() {
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
 
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -186,7 +182,7 @@ public class RadicalSiteHrGammaReactionTest extends ReactionProcessTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testCDKConstants_REACTIVE_CENTER() throws Exception {
@@ -223,7 +219,7 @@ public class RadicalSiteHrGammaReactionTest extends ReactionProcessTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testMapping() throws Exception {
@@ -246,21 +242,27 @@ public class RadicalSiteHrGammaReactionTest extends ReactionProcessTest {
         IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 
         Assert.assertEquals(19, setOfReactions.getReaction(0).getMappingCount());
-        IAtom mappedProductA1 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
-                molecule.getAtom(0));
+        IAtom mappedProductA1 =
+                (IAtom)
+                        ReactionManipulator.getMappedChemObject(
+                                setOfReactions.getReaction(0), molecule.getAtom(0));
         Assert.assertEquals(mappedProductA1, product.getAtom(0));
-        IAtom mappedProductA2 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
-                molecule.getAtom(6));
+        IAtom mappedProductA2 =
+                (IAtom)
+                        ReactionManipulator.getMappedChemObject(
+                                setOfReactions.getReaction(0), molecule.getAtom(6));
         Assert.assertEquals(mappedProductA2, product.getAtom(6));
-        IAtom mappedProductA3 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
-                molecule.getAtom(4));
+        IAtom mappedProductA3 =
+                (IAtom)
+                        ReactionManipulator.getMappedChemObject(
+                                setOfReactions.getReaction(0), molecule.getAtom(4));
         Assert.assertEquals(mappedProductA3, product.getAtom(4));
     }
 
     /**
      * Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
      *
-     * @param molecule          The IAtomContainer to analyze
+     * @param molecule The IAtomContainer to analyze
      * @throws CDKException
      */
     private void makeSureAtomTypesAreRecognized(IAtomContainer molecule) throws CDKException {
@@ -269,8 +271,9 @@ public class RadicalSiteHrGammaReactionTest extends ReactionProcessTest {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
         while (atoms.hasNext()) {
             IAtom nextAtom = atoms.next();
-            Assert.assertNotNull("Missing atom type for: " + nextAtom, matcher.findMatchingAtomType(molecule, nextAtom));
+            Assert.assertNotNull(
+                    "Missing atom type for: " + nextAtom,
+                    matcher.findMatchingAtomType(molecule, nextAtom));
         }
     }
-
 }

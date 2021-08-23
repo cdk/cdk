@@ -25,27 +25,23 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * AtomType list configurator that uses the AtomTypes originally
- * defined in Jmol v5. This class was added to be able to port
- * Jmol to CDK. The AtomType's themselves seems have a computational
+ * AtomType list configurator that uses the AtomTypes originally defined in Jmol v5. This class was
+ * added to be able to port Jmol to CDK. The AtomType's themselves seems have a computational
  * background, but this is not clear.
  *
  * @cdk.module core
  * @cdk.githash
- *
  * @author Bradley A. Smith &lt;bradley@baysmith.com&gt;
- *
- * @cdk.keyword    atom, type
+ * @cdk.keyword atom, type
  */
 public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
 
-    private String      configFile = "org/openscience/cdk/config/data/jmol_atomtypes.txt";
-    private InputStream ins        = null;
+    private String configFile = "org/openscience/cdk/config/data/jmol_atomtypes.txt";
+    private InputStream ins = null;
 
     public TXTBasedAtomTypeConfigurator() {}
 
@@ -59,8 +55,8 @@ public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
      * Reads a text based configuration file.
      *
      * @param builder IChemObjectBuilder used to construct the IAtomType's.
-     * @throws        IOException when a problem occurred with reading from the InputStream
-     * @return        A List with read IAtomType's.
+     * @throws IOException when a problem occurred with reading from the InputStream
+     * @return A List with read IAtomType's.
      */
     @Override
     public List<IAtomType> readAtomTypes(IChemObjectBuilder builder) throws IOException {
@@ -68,11 +64,12 @@ public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
 
         if (ins == null) {
             // trying the default
-            //logger.debug("readAtomTypes getResourceAsStream:"
+            // logger.debug("readAtomTypes getResourceAsStream:"
             //                   + configFile);
             ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
         }
-        if (ins == null) throw new IOException("There was a problem getting the default stream: " + configFile);
+        if (ins == null)
+            throw new IOException("There was a problem getting the default stream: " + configFile);
 
         // read the contents from file
         BufferedReader reader = new BufferedReader(new InputStreamReader(ins), 1024);
@@ -121,8 +118,11 @@ public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
 
                     // pack the RGB color space components into a single int. Note we
                     // avoid java.awt.Color (not available on some JREs)
-                    atomType.setProperty("org.openscience.cdk.renderer.color", ((colorR << 16) & 0xff0000)
-                            | ((colorG << 8) & 0x00ff00) | (colorB & 0x0000ff));
+                    atomType.setProperty(
+                            "org.openscience.cdk.renderer.color",
+                            ((colorR << 16) & 0xff0000)
+                                    | ((colorG << 8) & 0x00ff00)
+                                    | (colorB & 0x0000ff));
                     atomTypes.add(atomType);
                 } else {
                     throw new IOException("AtomTypeTable.ReadAtypes: " + "Wrong Number of fields");

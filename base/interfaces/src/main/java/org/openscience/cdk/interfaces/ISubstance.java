@@ -19,14 +19,11 @@
 package org.openscience.cdk.interfaces;
 
 /**
- * A chemical substance that consists of one or more chemical structures.
- * Examples uses include that of a racemic mixture, a drug composition, and
- * a nanomaterial with impurities.
+ * A chemical substance that consists of one or more chemical structures. Examples uses include that
+ * of a racemic mixture, a drug composition, and a nanomaterial with impurities.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module interfaces
  * @cdk.githash
  */
-public interface ISubstance extends IAtomContainerSet {
-
-}
+public interface ISubstance extends IAtomContainerSet {}

@@ -21,7 +21,6 @@ package org.openscience.cdk.io.random;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
@@ -29,19 +28,18 @@ import org.openscience.cdk.io.listener.IChemObjectIOListener;
 import org.openscience.cdk.io.setting.IOSetting;
 
 /**
- * Abstract class that {@link IRandomAccessChemObjectReader}'s can implement to
- * have it take care of basic stuff, like managing the ReaderListeners.
+ * Abstract class that {@link IRandomAccessChemObjectReader}'s can implement to have it take care of
+ * basic stuff, like managing the ReaderListeners.
  *
- * @cdk.module  io
+ * @cdk.module io
  * @cdk.githash
  */
-public abstract class DefaultRandomAccessChemObjectReader implements IRandomAccessChemObjectReader<IChemObject> {
+public abstract class DefaultRandomAccessChemObjectReader
+        implements IRandomAccessChemObjectReader<IChemObject> {
 
-    protected IChemObjectReader.Mode    mode         = IChemObjectReader.Mode.RELAXED;
+    protected IChemObjectReader.Mode mode = IChemObjectReader.Mode.RELAXED;
 
-    /**
-     * Holder of reader event listeners.
-     */
+    /** Holder of reader event listeners. */
     private List<IChemObjectIOListener> listenerList = new ArrayList<IChemObjectIOListener>();
 
     public void addChemObjectIOListener(IChemObjectIOListener listener) {
@@ -68,5 +66,4 @@ public abstract class DefaultRandomAccessChemObjectReader implements IRandomAcce
     public void setReaderMode(ISimpleChemObjectReader.Mode mode) {
         this.mode = mode;
     }
-
 }

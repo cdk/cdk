@@ -24,7 +24,6 @@ package org.openscience.cdk.libio.md;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
@@ -34,16 +33,14 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  */
 public class MDMolecule extends AtomContainer {
 
-    /**
-     *
-     */
+    /** */
     private static final long serialVersionUID = -3129626782945020908L;
 
-    //List of Residues
-    private List<Residue>              residues;
+    // List of Residues
+    private List<Residue> residues;
 
-    //List of ChargeGroups
-    private List<ChargeGroup>          chargeGroups;
+    // List of ChargeGroups
+    private List<ChargeGroup> chargeGroups;
 
     public MDMolecule() {
         super();
@@ -63,14 +60,16 @@ public class MDMolecule extends AtomContainer {
 
     /**
      * Add a Residue to the MDMolecule if not already present.
+     *
      * @param residue Residue to add
      */
     public void addResidue(Residue residue) {
         if (residues == null) residues = new ArrayList<Residue>();
 
-        //Check if exists
+        // Check if exists
         if (residues.contains(residue)) {
-            System.out.println("Residue: " + residue.getName() + " already present in molecule: " + getID());
+            System.out.println(
+                    "Residue: " + residue.getName() + " already present in molecule: " + getID());
             return;
         }
 
@@ -93,13 +92,16 @@ public class MDMolecule extends AtomContainer {
     public void addChargeGroup(ChargeGroup chargeGroup) {
         if (chargeGroups == null) chargeGroups = new ArrayList<ChargeGroup>();
 
-        //Check if exists
+        // Check if exists
         if (chargeGroups.contains(chargeGroup)) {
-            System.out.println("Charge group: " + chargeGroup.getNumber() + " already present in molecule: " + getID());
+            System.out.println(
+                    "Charge group: "
+                            + chargeGroup.getNumber()
+                            + " already present in molecule: "
+                            + getID());
             return;
         }
 
         chargeGroups.add(chargeGroup);
     }
-
 }

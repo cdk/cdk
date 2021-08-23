@@ -26,21 +26,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
 /**
- * A permutation with some associated methods to multiply, invert, and convert
- * to cycle strings. Much of the code in this was implemented from the
- * C.A.G.E.S. book {@cdk.cite Kreher98}.
+ * A permutation with some associated methods to multiply, invert, and convert to cycle strings.
+ * Much of the code in this was implemented from the C.A.G.E.S. book {@cdk.cite Kreher98}.
  *
  * @author maclean
  * @cdk.module group
- *
  */
 public final class Permutation {
 
-    /**
-     * The elements of the permutation.
-     */
+    /** The elements of the permutation. */
     private final int[] values;
 
     /**
@@ -56,8 +51,7 @@ public final class Permutation {
     }
 
     /**
-     * Make a permutation from a set of values such that p[i] = x for
-     * the value x at position i.
+     * Make a permutation from a set of values such that p[i] = x for the value x at position i.
      *
      * @param values the elements of the permutation
      */
@@ -74,9 +68,7 @@ public final class Permutation {
         this.values = other.values.clone();
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean equals(Object other) {
 
@@ -84,12 +76,9 @@ public final class Permutation {
         if (other == null || getClass() != other.getClass()) return false;
 
         return Arrays.equals(values, ((Permutation) other).values);
-
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int hashCode() {
         return Arrays.hashCode(values);
@@ -139,6 +128,7 @@ public final class Permutation {
 
     /**
      * Find an r such that this[r] != other[r].
+     *
      * @param other the other permutation to compare with
      * @return the first point at which the two permutations differ
      */
@@ -181,8 +171,7 @@ public final class Permutation {
      * Alter a permutation by setting it to the values in the other permutation.
      *
      * @param other the other permutation to use
-     * @throws IllegalArgumentException thrown if the permutations are of different
-     *                                  size
+     * @throws IllegalArgumentException thrown if the permutations are of different size
      */
     public void setTo(Permutation other) {
 
@@ -195,8 +184,7 @@ public final class Permutation {
     }
 
     /**
-     * Multiply this permutation by another such that for all i,
-     * this[i] = this[other[i]].
+     * Multiply this permutation by another such that for all i, this[i] = this[other[i]].
      *
      * @param other the other permutation to use
      * @return a new permutation with the result of multiplying the permutations
@@ -252,12 +240,9 @@ public final class Permutation {
         return sb.toString();
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         return Arrays.toString(this.values);
     }
-
 }

@@ -25,14 +25,12 @@ package org.openscience.cdk.smsd.algorithm.mcsplus;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
-
-import org.openscience.cdk.AtomContainer;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.AtomContainer;
 
 /**
  * @cdk.module test-smsd
@@ -57,6 +55,7 @@ public class GenerateCompatibilityGraphTest {
     @Test
     public void testSomeMethod() throws IOException {
         // TODO review the generated test code and remove the default call to fail.
-        assertNotNull(new GenerateCompatibilityGraph(new AtomContainer(), new AtomContainer(), true));
+        assertNotNull(
+                new GenerateCompatibilityGraph(new AtomContainer(), new AtomContainer(), true));
     }
 }

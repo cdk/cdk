@@ -22,29 +22,23 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 
 /**
- * This class matches a logical operator that connects two query atoms. Logical
- * matchers are created with, {@link #and}, {@link #not} and {@link #or}.
+ * This class matches a logical operator that connects two query atoms. Logical matchers are created
+ * with, {@link #and}, {@link #not} and {@link #or}.
  *
- * @cdk.module  smarts
+ * @cdk.module smarts
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
 @Deprecated
 public class LogicalOperatorAtom extends SMARTSAtom {
 
-    /**
-     * Left child
-     */
+    /** Left child */
     private IQueryAtom left;
 
-    /**
-     * Name of operator
-     */
-    private String     operator;
+    /** Name of operator */
+    private String operator;
 
-    /**
-     * Right child
-     */
+    /** Right child */
     private IQueryAtom right;
 
     public LogicalOperatorAtom(IChemObjectBuilder builder) {
@@ -72,9 +66,8 @@ public class LogicalOperatorAtom extends SMARTSAtom {
     }
 
     /**
-     *
-     * @deprecated use static utility methods to create logical atom matcher,
-     * {@link #and}, {@link #or} or {@link #not}.
+     * @deprecated use static utility methods to create logical atom matcher, {@link #and}, {@link
+     *     #or} or {@link #not}.
      */
     @Deprecated
     public void setOperator(String name) {
@@ -183,8 +176,8 @@ public class LogicalOperatorAtom extends SMARTSAtom {
          * Create a disjunction of {@code left} or {@code right}.
          *
          * @param builder chem object builder
-         * @param left    the expression to negate
-         * @param right   the expression to negate
+         * @param left the expression to negate
+         * @param right the expression to negate
          */
         private Conjunction(IChemObjectBuilder builder, IQueryAtom left, IQueryAtom right) {
             super(builder);
@@ -195,25 +188,28 @@ public class LogicalOperatorAtom extends SMARTSAtom {
             super.setOperator("and");
         }
 
-        @Override public void setLeft(IQueryAtom left) {
+        @Override
+        public void setLeft(IQueryAtom left) {
             throw new UnsupportedOperationException("create a new logical atom");
         }
 
-        @Override public void setRight(IQueryAtom left) {
+        @Override
+        public void setRight(IQueryAtom left) {
             throw new UnsupportedOperationException("create a new logical atom");
         }
 
-        @Override public void setOperator(String name) {
+        @Override
+        public void setOperator(String name) {
             throw new UnsupportedOperationException("create a new logical atom");
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         public boolean matches(IAtom atom) {
             return left.matches(atom) && right.matches(atom);
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         public boolean chiralityMatches(IAtom target, int tParity, int permParity) {
             // contract dictates that left.matches() & right.matches() are known to be true
@@ -232,8 +228,8 @@ public class LogicalOperatorAtom extends SMARTSAtom {
          * Create a disjunction of {@code left} or {@code right}.
          *
          * @param builder chem object builder
-         * @param left    the expression to negate
-         * @param right   the expression to negate
+         * @param left the expression to negate
+         * @param right the expression to negate
          */
         private Disjunction(IChemObjectBuilder builder, IQueryAtom left, IQueryAtom right) {
             super(builder);
@@ -244,31 +240,34 @@ public class LogicalOperatorAtom extends SMARTSAtom {
             super.setOperator("or");
         }
 
-        @Override public void setLeft(IQueryAtom left) {
+        @Override
+        public void setLeft(IQueryAtom left) {
             throw new UnsupportedOperationException("create a new logical atom");
         }
 
-        @Override public void setRight(IQueryAtom left) {
+        @Override
+        public void setRight(IQueryAtom left) {
             throw new UnsupportedOperationException("create a new logical atom");
         }
 
-        @Override public void setOperator(String name) {
+        @Override
+        public void setOperator(String name) {
             throw new UnsupportedOperationException("create a new logical atom");
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         public boolean matches(IAtom atom) {
             return left.matches(atom) || right.matches(atom);
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         public boolean chiralityMatches(IAtom target, int tParity, int permParity) {
             // we know the left or right was true, for each side which matched try to verify
             // the chirality
-            return left.matches(target) && left.chiralityMatches(target, tParity, permParity) || right.matches(target)
-                    && right.chiralityMatches(target, tParity, permParity);
+            return left.matches(target) && left.chiralityMatches(target, tParity, permParity)
+                    || right.matches(target) && right.chiralityMatches(target, tParity, permParity);
         }
     }
 
@@ -279,41 +278,44 @@ public class LogicalOperatorAtom extends SMARTSAtom {
         private SMARTSAtom expression;
 
         /** Is the expression chiral - if so, always true! */
-        private boolean    chiral;
+        private boolean chiral;
 
         /**
          * Create a negation of {@code expression}.
          *
-         * @param builder    chem object builder
+         * @param builder chem object builder
          * @param expression the expression to negate
          */
         private Negation(IChemObjectBuilder builder, IQueryAtom expression) {
             super(builder);
             this.expression = (SMARTSAtom) expression;
-            this.chiral     = expression.getClass().equals(ChiralityAtom.class);
+            this.chiral = expression.getClass().equals(ChiralityAtom.class);
             super.setLeft(expression);
             super.setOperator("not");
         }
 
-        @Override public void setLeft(IQueryAtom left) {
+        @Override
+        public void setLeft(IQueryAtom left) {
             throw new UnsupportedOperationException("create a new logical atom");
         }
 
-        @Override public void setRight(IQueryAtom left) {
+        @Override
+        public void setRight(IQueryAtom left) {
             throw new UnsupportedOperationException("create a new logical atom");
         }
 
-        @Override public void setOperator(String name) {
+        @Override
+        public void setOperator(String name) {
             throw new UnsupportedOperationException("create a new logical atom");
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         public boolean matches(IAtom atom) {
             return chiral || !expression.matches(atom);
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         public boolean chiralityMatches(IAtom target, int tParity, int permParity) {
             return !expression.chiralityMatches(target, tParity, permParity);

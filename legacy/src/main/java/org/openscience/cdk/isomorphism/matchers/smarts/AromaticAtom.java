@@ -19,26 +19,21 @@
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
-* This matcher any aromatic atom. This assumes that aromaticity in the molecule
-* has been perceived.
-*
-* @cdk.module  smarts
-* @cdk.githash
-* @cdk.keyword SMARTS
-*/
+ * This matcher any aromatic atom. This assumes that aromaticity in the molecule has been perceived.
+ *
+ * @cdk.module smarts
+ * @cdk.githash
+ * @cdk.keyword SMARTS
+ */
 @Deprecated
 public class AromaticAtom extends SMARTSAtom {
 
     private static final long serialVersionUID = -3345204886992669829L;
 
-    /**
-     * Creates a new instance
-     *
-     */
+    /** Creates a new instance */
     public AromaticAtom(IChemObjectBuilder builder) {
         super(builder);
         setIsAromatic(true);

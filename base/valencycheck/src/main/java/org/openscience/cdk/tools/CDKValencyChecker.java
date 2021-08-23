@@ -24,7 +24,6 @@ package org.openscience.cdk.tools;
 
 import java.util.Hashtable;
 import java.util.Map;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -35,22 +34,23 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * Assumes CDK atom types to be detected and adds missing hydrogens based on the
- * atom typing.
+ * Assumes CDK atom types to be detected and adds missing hydrogens based on the atom typing.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module valencycheck
  * @cdk.githash
  */
 public class CDKValencyChecker implements IValencyChecker {
 
-    private AtomTypeFactory                       atomTypeList;
-    private final static String                   ATOM_TYPE_LIST = "org/openscience/cdk/dict/data/cdk-atom-types.owl";
+    private AtomTypeFactory atomTypeList;
+    private static final String ATOM_TYPE_LIST = "org/openscience/cdk/dict/data/cdk-atom-types.owl";
 
-    private static Map<String, CDKValencyChecker> tables         = new Hashtable<String, CDKValencyChecker>(3);
+    private static Map<String, CDKValencyChecker> tables =
+            new Hashtable<String, CDKValencyChecker>(3);
 
     private CDKValencyChecker(IChemObjectBuilder builder) {
-        if (atomTypeList == null) atomTypeList = AtomTypeFactory.getInstance(ATOM_TYPE_LIST, builder);
+        if (atomTypeList == null)
+            atomTypeList = AtomTypeFactory.getInstance(ATOM_TYPE_LIST, builder);
     }
 
     public static CDKValencyChecker getInstance(IChemObjectBuilder builder) {
@@ -71,7 +71,8 @@ public class CDKValencyChecker implements IValencyChecker {
     public boolean isSaturated(IAtom atom, IAtomContainer container) throws CDKException {
         IAtomType type = atomTypeList.getAtomType(atom.getAtomTypeName());
         if (type == null)
-            throw new CDKException("Atom type is not a recognized CDK atom type: " + atom.getAtomTypeName());
+            throw new CDKException(
+                    "Atom type is not a recognized CDK atom type: " + atom.getAtomTypeName());
 
         if (type.getFormalNeighbourCount() == CDKConstants.UNSET)
             throw new CDKException(
@@ -79,12 +80,16 @@ public class CDKValencyChecker implements IValencyChecker {
                             + atom.getAtomTypeName());
 
         if (type.getProperty(CDKConstants.PI_BOND_COUNT) == CDKConstants.UNSET)
-            throw new CDKException("Atom type is too general; cannot determine the number of pi bonds for: "
-                    + atom.getAtomTypeName());
+            throw new CDKException(
+                    "Atom type is too general; cannot determine the number of pi bonds for: "
+                            + atom.getAtomTypeName());
 
         double bondOrderSum = container.getBondOrderSum(atom);
         IBond.Order maxBondOrder = container.getMaximumBondOrder(atom);
-        Integer hcount = atom.getImplicitHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getImplicitHydrogenCount();
+        Integer hcount =
+                atom.getImplicitHydrogenCount() == CDKConstants.UNSET
+                        ? 0
+                        : atom.getImplicitHydrogenCount();
 
         int piBondCount = ((Integer) type.getProperty(CDKConstants.PI_BOND_COUNT)).intValue();
         int formalNeighborCount = type.getFormalNeighbourCount().intValue();
@@ -92,10 +97,10 @@ public class CDKValencyChecker implements IValencyChecker {
         int typeMaxBondOrder = piBondCount + 1;
         int typeBondOrderSum = formalNeighborCount + piBondCount;
 
-        if (bondOrderSum + hcount == typeBondOrderSum && maxBondOrder.numeric() <= typeMaxBondOrder) {
+        if (bondOrderSum + hcount == typeBondOrderSum
+                && maxBondOrder.numeric() <= typeMaxBondOrder) {
             return true;
         }
         return false;
     }
-
 }

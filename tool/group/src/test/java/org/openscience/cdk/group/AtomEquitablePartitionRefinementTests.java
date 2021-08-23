@@ -30,14 +30,13 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
  * Test equitable refinement over atom refinables.
- * 
- * @author maclean
  *
+ * @author maclean
  */
 public class AtomEquitablePartitionRefinementTests {
-    
+
     public static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-    
+
     @Test
     public void cube2eneWithoutBonds() {
         AtomRefinable ar = make(cubene(), true);
@@ -46,7 +45,7 @@ public class AtomEquitablePartitionRefinementTests {
         Partition expected = Partition.unit(8);
         Assert.assertEquals(expected, finer);
     }
-    
+
     @Test
     public void cube2eneWithBonds() {
         AtomRefinable ar = make(cubene(), false);
@@ -55,16 +54,16 @@ public class AtomEquitablePartitionRefinementTests {
         Partition expected = Partition.fromString("0,2,5,7|1,3,4,6");
         Assert.assertEquals(expected, finer);
     }
-    
+
     private IAtomContainer cubene() {
-        String acpString = "C0C1C2C3C4C5C6C7 0:1(1),0:2(2),0:4(1),1:3(1),"
-                                          + "1:5(1),2:3(1),2:6(1),3:7(1),"
-                                          + "4:5(1),4:6(1),5:7(2),6:7(1)";
+        String acpString =
+                "C0C1C2C3C4C5C6C7 0:1(1),0:2(2),0:4(1),1:3(1),"
+                        + "1:5(1),2:3(1),2:6(1),3:7(1),"
+                        + "4:5(1),4:6(1),5:7(2),6:7(1)";
         return AtomContainerPrinter.fromString(acpString, builder);
     }
-    
+
     private AtomRefinable make(IAtomContainer atomContainer, boolean ignoreBonds) {
         return new AtomRefinable(atomContainer, false, ignoreBonds);
     }
-
 }

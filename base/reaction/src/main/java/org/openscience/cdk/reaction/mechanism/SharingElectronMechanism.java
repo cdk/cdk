@@ -18,6 +18,8 @@
  */
 package org.openscience.cdk.reaction.mechanism;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -32,18 +34,15 @@ import org.openscience.cdk.reaction.IReactionMechanism;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * <p>This mechanism displaces the charge (lonePair) because of
- * deficiency of charge.
- * It returns the reaction mechanism which has been cloned the {@link IAtomContainer}.</p>
- * <p>This reaction could be represented as [A*]-B| =&gt; A=[B*]</p>
+ * This mechanism displaces the charge (lonePair) because of deficiency of charge. It returns the
+ * reaction mechanism which has been cloned the {@link IAtomContainer}.
  *
- * @author         miguelrojasch
- * @cdk.created    2008-02-10
- * @cdk.module     reaction
+ * <p>This reaction could be represented as [A*]-B| =&gt; A=[B*]
+ *
+ * @author miguelrojasch
+ * @cdk.created 2008-02-10
+ * @cdk.module reaction
  * @cdk.githash
  */
 public class SharingElectronMechanism implements IReactionMechanism {
@@ -52,17 +51,19 @@ public class SharingElectronMechanism implements IReactionMechanism {
      * Initiates the process for the given mechanism. The atoms to apply are mapped between
      * reactants and products.
      *
-     *
      * @param atomContainerSet
-     * @param atomList    The list of atoms taking part in the mechanism. Only allowed two atoms
-     * @param bondList    The list of bonds taking part in the mechanism. Only allowed one bond
-     * @return            The Reaction mechanism
-     *
+     * @param atomList The list of atoms taking part in the mechanism. Only allowed two atoms
+     * @param bondList The list of bonds taking part in the mechanism. Only allowed one bond
+     * @return The Reaction mechanism
      */
     @Override
-    public IReaction initiate(IAtomContainerSet atomContainerSet, ArrayList<IAtom> atomList, ArrayList<IBond> bondList)
+    public IReaction initiate(
+            IAtomContainerSet atomContainerSet,
+            ArrayList<IAtom> atomList,
+            ArrayList<IBond> bondList)
             throws CDKException {
-        CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(atomContainerSet.getBuilder());
+        CDKAtomTypeMatcher atMatcher =
+                CDKAtomTypeMatcher.getInstance(atomContainerSet.getBuilder());
         if (atomContainerSet.getAtomContainerCount() != 1) {
             throw new CDKException("SharingElectronMechanism only expects one IAtomContainer");
         }
@@ -70,7 +71,8 @@ public class SharingElectronMechanism implements IReactionMechanism {
             throw new CDKException("SharingElectronMechanism expects two atoms in the ArrayList");
         }
         if (bondList.size() != 1) {
-            throw new CDKException("SharingElectronMechanism only expect one bond in the ArrayList");
+            throw new CDKException(
+                    "SharingElectronMechanism only expect one bond in the ArrayList");
         }
         IAtomContainer molecule = atomContainerSet.getAtomContainer(0);
         IAtomContainer reactantCloned;
@@ -112,13 +114,16 @@ public class SharingElectronMechanism implements IReactionMechanism {
 
         /* mapping */
         for (IAtom atom : molecule.atoms()) {
-            IMapping mapping = atom2C.getBuilder().newInstance(IMapping.class, atom,
-                    reactantCloned.getAtom(molecule.indexOf(atom)));
+            IMapping mapping =
+                    atom2C.getBuilder()
+                            .newInstance(
+                                    IMapping.class,
+                                    atom,
+                                    reactantCloned.getAtom(molecule.indexOf(atom)));
             reaction.addMapping(mapping);
         }
         reaction.addProduct(reactantCloned);
 
         return reaction;
     }
-
 }

@@ -25,7 +25,6 @@ package org.openscience.cdk.tautomers;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.InChINumbersTools;
@@ -45,11 +44,10 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * Creates tautomers for a given input molecule, based on the mobile H atoms listed in the InChI.
- * Algorithm described in {@cdk.cite Thalheim2010}.
- * <br>
+ * Algorithm described in {@cdk.cite Thalheim2010}. <br>
  * <b>Provide your input molecules in Kekule form, and make sure atom type are perceived.</b><br>
- * When creating an input molecule by reading an MDL file, make sure to set implicit hydrogens. See the
- * InChITautomerGeneratorTest test case.
+ * When creating an input molecule by reading an MDL file, make sure to set implicit hydrogens. See
+ * the InChITautomerGeneratorTest test case.
  *
  * @author Mark Rijnbeek
  * @cdk.module tautomer
@@ -57,12 +55,13 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public final class InChITautomerGenerator {
 
-    private final static ILoggingTool LOGGER = LoggingToolFactory.createLoggingTool(InChITautomerGenerator.class);
+    private static final ILoggingTool LOGGER =
+            LoggingToolFactory.createLoggingTool(InChITautomerGenerator.class);
 
     private static final SmilesGenerator CANSMI = new SmilesGenerator(SmiFlavor.Canonical);
 
     /** Generate InChI with -KET (keto-enol tautomers) option. */
-    public static final int KETO_ENOL      = 0x1;
+    public static final int KETO_ENOL = 0x1;
 
     /** Generate InChI with -15T (1,5-shift tautomers) option. */
     public static final int ONE_FIVE_SHIFT = 0x2;
@@ -70,7 +69,8 @@ public final class InChITautomerGenerator {
     private final int flags;
 
     /**
-     * Create a tautomer generator specifygin whether to enable, keto-enol (-KET) and 1,5-shifts (-15T).
+     * Create a tautomer generator specifygin whether to enable, keto-enol (-KET) and 1,5-shifts
+     * (-15T).
      *
      * <pre>{@code
      * // enabled -KET option
@@ -85,44 +85,44 @@ public final class InChITautomerGenerator {
         this.flags = flags;
     }
 
-    /**
-     * Create a tautomer generator, keto-enol (-KET) and 1,5-shifts (-15T) are disabled.
-     */
+    /** Create a tautomer generator, keto-enol (-KET) and 1,5-shifts (-15T) are disabled. */
     public InChITautomerGenerator() {
         this(0);
     }
 
     /**
-     * Public method to get tautomers for an input molecule, based on the InChI which will be calculated by JNI-InChI.
+     * Public method to get tautomers for an input molecule, based on the InChI which will be
+     * calculated by JNI-InChI.
+     *
      * @param mol molecule for which to generate tautomers
      * @return a list of tautomers, if any
      * @throws CDKException
      * @throws CloneNotSupportedException
      */
-    public List<IAtomContainer> getTautomers(IAtomContainer mol) throws CDKException, CloneNotSupportedException {
+    public List<IAtomContainer> getTautomers(IAtomContainer mol)
+            throws CDKException, CloneNotSupportedException {
 
         String opt = "";
-        if ((flags & KETO_ENOL) != 0)
-            opt += " -KET";
-        if ((flags & ONE_FIVE_SHIFT) != 0)
-            opt += " -15T";
+        if ((flags & KETO_ENOL) != 0) opt += " -KET";
+        if ((flags & ONE_FIVE_SHIFT) != 0) opt += " -15T";
 
-        InChIGenerator gen   = InChIGeneratorFactory.getInstance().getInChIGenerator(mol, opt);
-        String         inchi = gen.getInchi();
-        String         aux   = gen.getAuxInfo();
+        InChIGenerator gen = InChIGeneratorFactory.getInstance().getInChIGenerator(mol, opt);
+        String inchi = gen.getInchi();
+        String aux = gen.getAuxInfo();
 
         long[] amap = new long[mol.getAtomCount()];
         InChINumbersTools.parseAuxInfo(aux, amap);
 
         if (inchi == null)
-            throw new CDKException(InChIGenerator.class
-                    + " failed to create an InChI for the provided molecule, InChI -> null.");
+            throw new CDKException(
+                    InChIGenerator.class
+                            + " failed to create an InChI for the provided molecule, InChI -> null.");
         return getTautomers(mol, inchi, amap);
     }
 
     /**
-     * This method is slower than recalculating the InChI with {@link #getTautomers(IAtomContainer)} as the mapping
-     * between the two can be found more efficiently.
+     * This method is slower than recalculating the InChI with {@link #getTautomers(IAtomContainer)}
+     * as the mapping between the two can be found more efficiently.
      *
      * @param mol
      * @param inchi
@@ -132,48 +132,49 @@ public final class InChITautomerGenerator {
      * @deprecated use {@link #getTautomers(IAtomContainer)} directly
      */
     @Deprecated
-    public List<IAtomContainer> getTautomers(IAtomContainer mol, String inchi) throws CDKException, CloneNotSupportedException {
+    public List<IAtomContainer> getTautomers(IAtomContainer mol, String inchi)
+            throws CDKException, CloneNotSupportedException {
         return getTautomers(mol, inchi, null);
     }
 
     /**
-     * Overloaded {@link #getTautomers(IAtomContainer)} to get tautomers for an input molecule with the InChI already
-     * provided as input argument.
+     * Overloaded {@link #getTautomers(IAtomContainer)} to get tautomers for an input molecule with
+     * the InChI already provided as input argument.
      *
-     * @param mol   and input molecule for which to generate tautomers
+     * @param mol and input molecule for which to generate tautomers
      * @param inchi InChI for the input molecule
-     * @param amap  ordering of the molecules atoms in the InChI
+     * @param amap ordering of the molecules atoms in the InChI
      * @return a list of tautomers
      * @throws CDKException
      * @throws CloneNotSupportedException no longer thrown
      */
-    private List<IAtomContainer> getTautomers(IAtomContainer mol, String inchi, long[] amap) throws CDKException, CloneNotSupportedException {
+    private List<IAtomContainer> getTautomers(IAtomContainer mol, String inchi, long[] amap)
+            throws CDKException, CloneNotSupportedException {
 
-        //Initial checks
+        // Initial checks
         if (mol == null || inchi == null)
-            throw new CDKException("Please provide a valid input molecule and its corresponding InChI value.");
+            throw new CDKException(
+                    "Please provide a valid input molecule and its corresponding InChI value.");
 
         // shallow copy since we will suppress hydrogens
         mol = mol.getBuilder().newInstance(IAtomContainer.class, mol);
         for (IAtom atom : mol.atoms()) {
-            if (atom.getImplicitHydrogenCount() == null)
-                atom.setImplicitHydrogenCount(0);
+            if (atom.getImplicitHydrogenCount() == null) atom.setImplicitHydrogenCount(0);
         }
 
         List<IAtomContainer> tautomers = new ArrayList<IAtomContainer>();
-        if (!inchi.contains("(H")) { //No mobile H atoms according to InChI, so bail out.
+        if (!inchi.contains("(H")) { // No mobile H atoms according to InChI, so bail out.
             tautomers.add(mol);
             return tautomers;
         }
 
-        //Preparation: translate the InChi
+        // Preparation: translate the InChi
         Map<Integer, IAtom> inchiAtomsByPosition = getElementsByPosition(inchi, mol);
         IAtomContainer inchiMolGraph = connectAtoms(inchi, mol, inchiAtomsByPosition);
 
         if (amap != null && amap.length == mol.getAtomCount()) {
             for (int i = 0; i < amap.length; i++) {
-                mol.getAtom(i)
-                   .setID(Long.toString(amap[i]));
+                mol.getAtom(i).setID(Long.toString(amap[i]));
             }
             mol = AtomContainerManipulator.suppressHydrogens(mol);
         } else {
@@ -185,20 +186,20 @@ public final class InChITautomerGenerator {
         int totalMobHydrCount = parseMobileHydrogens(mobHydrAttachPositions, inchi);
 
         tautomers = constructTautomers(mol, mobHydrAttachPositions, totalMobHydrCount);
-        //Remove duplicates
+        // Remove duplicates
         return removeDuplicates(tautomers);
     }
 
     /**
-     * Parses the InChI's formula (ignoring hydrogen) and returns a map
-     * with with a position for each atom, increasing in the order
-     * of the elements as listed in the formula.
+     * Parses the InChI's formula (ignoring hydrogen) and returns a map with with a position for
+     * each atom, increasing in the order of the elements as listed in the formula.
+     *
      * @param inputInchi user input InChI
      * @param inputMolecule user input molecule
      * @return <Integer,IAtom> map indicating position and atom
      */
-    private Map<Integer, IAtom> getElementsByPosition(String inputInchi, IAtomContainer inputMolecule)
-            throws CDKException {
+    private Map<Integer, IAtom> getElementsByPosition(
+            String inputInchi, IAtomContainer inputMolecule) throws CDKException {
         Map<Integer, IAtom> inchiAtomsByPosition = new HashMap<Integer, IAtom>();
         int position = 0;
         String inchi = inputInchi;
@@ -215,8 +216,9 @@ public final class InChITautomerGenerator {
          * )2-1-3-6;;;/h1-3H2,(H,7,8)(H,9,10);2*1H3;/q;;;+2/p-2
          */
         if (formula.contains("."))
-            throw new CDKException("Cannot parse InChI, formula contains dot (unsupported feature). Input formula="
-                    + formula);
+            throw new CDKException(
+                    "Cannot parse InChI, formula contains dot (unsupported feature). Input formula="
+                            + formula);
 
         Pattern formulaPattern = Pattern.compile("\\.?[0-9]*[A-Z]{1}[a-z]?[0-9]*");
         Matcher match = formulaPattern.matcher(formula);
@@ -248,13 +250,17 @@ public final class InChITautomerGenerator {
 
     /**
      * Pops and pushes its ways through the InChI connection table to build up a simple molecule.
+     *
      * @param inputInchi user input InChI
      * @param inputMolecule user input molecule
      * @param inchiAtomsByPosition
      * @return molecule with single bonds and no hydrogens.
      */
-    private IAtomContainer connectAtoms(String inputInchi, IAtomContainer inputMolecule,
-            Map<Integer, IAtom> inchiAtomsByPosition) throws CDKException {
+    private IAtomContainer connectAtoms(
+            String inputInchi,
+            IAtomContainer inputMolecule,
+            Map<Integer, IAtom> inchiAtomsByPosition)
+            throws CDKException {
         String inchi = inputInchi;
         inchi = inchi.substring(inchi.indexOf('/') + 1);
         inchi = inchi.substring(inchi.indexOf('/') + 1);
@@ -279,8 +285,11 @@ public final class InChITautomerGenerator {
                         } else {
                             prevAtom = atomStack.get(atomStack.size() - 1);
                         }
-                        IBond bond = inputMolecule.getBuilder().newInstance(IBond.class, prevAtom, atom,
-                                IBond.Order.SINGLE);
+                        IBond bond =
+                                inputMolecule
+                                        .getBuilder()
+                                        .newInstance(
+                                                IBond.class, prevAtom, atom, IBond.Order.SINGLE);
                         inchiMolGraph.addBond(bond);
                     }
                     if (push) {
@@ -301,11 +310,12 @@ public final class InChITautomerGenerator {
                     pop = true;
                     push = true;
                 } else {
-                    throw new CDKException("Unexpected token " + group + " in connection table encountered.");
+                    throw new CDKException(
+                            "Unexpected token " + group + " in connection table encountered.");
                 }
             }
         }
-        //put any unconnected atoms in the output as well
+        // put any unconnected atoms in the output as well
         for (IAtom at : inchiAtomsByPosition.values()) {
             if (!inchiMolGraph.contains(at)) inchiMolGraph.addAtom(at);
         }
@@ -313,48 +323,60 @@ public final class InChITautomerGenerator {
     }
 
     /**
-     * Atom-atom mapping of the input molecule to the bare container constructed from the InChI connection table.
-     * This makes it possible to map the positions of the mobile hydrogens in the InChI back to the input molecule.
+     * Atom-atom mapping of the input molecule to the bare container constructed from the InChI
+     * connection table. This makes it possible to map the positions of the mobile hydrogens in the
+     * InChI back to the input molecule.
+     *
      * @param inchiMolGraph molecule (bare) as defined in InChI
      * @param mol user input molecule
      * @throws CDKException
      */
-    private void mapInputMoleculeToInchiMolgraph(IAtomContainer inchiMolGraph, IAtomContainer mol) throws CDKException {
-        Iterator<Map<IAtom, IAtom>> iter = org.openscience.cdk.isomorphism.VentoFoggia.findIdentical(inchiMolGraph,
-                                                                                                     AtomMatcher.forElement(),
-                                                                                                     BondMatcher.forAny())
-                                                                                  .matchAll(mol)
-                                                                                  .limit(1)
-                                                                                  .toAtomMap()
-                                                                                  .iterator();
+    private void mapInputMoleculeToInchiMolgraph(IAtomContainer inchiMolGraph, IAtomContainer mol)
+            throws CDKException {
+        Iterator<Map<IAtom, IAtom>> iter =
+                org.openscience.cdk.isomorphism.VentoFoggia.findIdentical(
+                                inchiMolGraph, AtomMatcher.forElement(), BondMatcher.forAny())
+                        .matchAll(mol)
+                        .limit(1)
+                        .toAtomMap()
+                        .iterator();
         if (iter.hasNext()) {
-            for (Map.Entry<IAtom,IAtom> e : iter.next().entrySet()) {
+            for (Map.Entry<IAtom, IAtom> e : iter.next().entrySet()) {
                 IAtom src = e.getKey();
                 IAtom dst = e.getValue();
                 String position = src.getID();
                 dst.setID(position);
-                LOGGER.debug("Mapped InChI ", src.getSymbol(), " ", src.getID(), " to ", dst.getSymbol(),
-                             " " + dst.getID());
+                LOGGER.debug(
+                        "Mapped InChI ",
+                        src.getSymbol(),
+                        " ",
+                        src.getID(),
+                        " to ",
+                        dst.getSymbol(),
+                        " " + dst.getID());
             }
         } else {
-            throw new IllegalArgumentException(CANSMI.create(inchiMolGraph) + " " + CANSMI.create(mol));
+            throw new IllegalArgumentException(
+                    CANSMI.create(inchiMolGraph) + " " + CANSMI.create(mol));
         }
     }
 
     /**
      * Parses mobile H group(s) in an InChI String.
-     * <p>
-     * Multiple InChI sequences of mobile hydrogens are joined into a single sequence (list),
-     * see step 1 of algorithm in paper.
-     * <br>
-     * Mobile H group has syntax (H[n][-[m]],a1,a2[,a3[,a4...]])
-     * Brackets [ ] surround optional terms.
+     *
+     * <p>Multiple InChI sequences of mobile hydrogens are joined into a single sequence (list), see
+     * step 1 of algorithm in paper. <br>
+     * Mobile H group has syntax (H[n][-[m]],a1,a2[,a3[,a4...]]) Brackets [ ] surround optional
+     * terms.
+     *
      * <ul>
-     *  <li>Term H[n] stands for 1 or, if the number n (n>1) is present, n mobile hydrogen atoms.</li>
-     *  <li>Term [-[m]], if present, stands for 1 or, if the number m (m>1) is present, m mobile negative charges.</li>
-     *  <li>a1,a2[,a3[,a4...]] are canonical numbers of atoms in the mobile H group.</li>
-     *  <li>no two mobile H groups may have an atom (a canonical number) in common.</li>
+     *   <li>Term H[n] stands for 1 or, if the number n (n>1) is present, n mobile hydrogen atoms.
+     *   <li>Term [-[m]], if present, stands for 1 or, if the number m (m>1) is present, m mobile
+     *       negative charges.
+     *   <li>a1,a2[,a3[,a4...]] are canonical numbers of atoms in the mobile H group.
+     *   <li>no two mobile H groups may have an atom (a canonical number) in common.
      * </ul>
+     *
      * @param mobHydrAttachPositions list of positions where mobile H can attach
      * @param inputInchi InChI input
      * @return overall count of hydrogens to be dispersed over the positions
@@ -395,7 +417,8 @@ public final class InChITautomerGenerator {
                     }
                 }
                 totalMobHydrCount += mobHCount;
-                mobileHGroup = mobileHGroup.substring(mobileHGroup.indexOf(',') + 1).replace(")", "");
+                mobileHGroup =
+                        mobileHGroup.substring(mobileHGroup.indexOf(',') + 1).replace(")", "");
                 StringTokenizer tokenizer = new StringTokenizer(mobileHGroup, ",");
                 while (tokenizer.hasMoreTokens()) {
                     Integer position = Integer.valueOf(tokenizer.nextToken());
@@ -409,24 +432,29 @@ public final class InChITautomerGenerator {
 
     /**
      * Constructs tautomers following (most) steps of the algorithm in {@cdk.cite Thalheim2010}.
+     *
      * @param inputMolecule input molecule
      * @param mobHydrAttachPositions mobile H positions
      * @param totalMobHydrCount count of mobile hydrogens in molecule
      * @return tautomers
      * @throws CloneNotSupportedException
      */
-    private List<IAtomContainer> constructTautomers(IAtomContainer inputMolecule, List<Integer> mobHydrAttachPositions,
-            int totalMobHydrCount) throws CloneNotSupportedException {
+    private List<IAtomContainer> constructTautomers(
+            IAtomContainer inputMolecule,
+            List<Integer> mobHydrAttachPositions,
+            int totalMobHydrCount)
+            throws CloneNotSupportedException {
         List<IAtomContainer> tautomers = new ArrayList<IAtomContainer>();
 
-        //Tautomeric skeleton generation
+        // Tautomeric skeleton generation
         IAtomContainer skeleton = (IAtomContainer) inputMolecule.clone();
 
         boolean atomsToRemove = true;
         List<IAtom> removedAtoms = new ArrayList<IAtom>();
         boolean atomRemoved = false;
         while (atomsToRemove) {
-            ATOMS: for (IAtom atom : skeleton.atoms()) {
+            ATOMS:
+            for (IAtom atom : skeleton.atoms()) {
                 atomRemoved = false;
                 int position = Integer.valueOf(atom.getID());
                 if (!mobHydrAttachPositions.contains(position)
@@ -447,12 +475,12 @@ public final class InChITautomerGenerator {
                 }
             }
             if (!atomRemoved) atomsToRemove = false;
-
         }
         boolean bondsToRemove = true;
         boolean bondRemoved = false;
         while (bondsToRemove) {
-            BONDS: for (IBond bond : skeleton.bonds()) {
+            BONDS:
+            for (IBond bond : skeleton.bonds()) {
                 bondRemoved = false;
                 for (IAtom removedAtom : removedAtoms) {
                     if (bond.contains(removedAtom)) {
@@ -480,12 +508,11 @@ public final class InChITautomerGenerator {
                 }
             }
             if (!bondRemoved) bondsToRemove = false;
-
         }
         int doubleBondCount = 0;
         for (IBond bond : skeleton.bonds()) {
             if (bond.getOrder().equals(IBond.Order.DOUBLE)) {
-            	bond.setOrder(IBond.Order.SINGLE);
+                bond.setOrder(IBond.Order.SINGLE);
                 doubleBondCount++;
             }
         }
@@ -495,11 +522,13 @@ public final class InChITautomerGenerator {
             atom.setImplicitHydrogenCount(0);
         }
 
-       
-
         // Make combinations for mobile Hydrogen attachments
         List<List<Integer>> combinations = new ArrayList<List<Integer>>();
-        combineHydrogenPositions(new ArrayList<Integer>(), combinations, skeleton, totalMobHydrCount,
+        combineHydrogenPositions(
+                new ArrayList<Integer>(),
+                combinations,
+                skeleton,
+                totalMobHydrCount,
                 mobHydrAttachPositions);
 
         Stack<Object> solutions = new Stack<Object>();
@@ -511,20 +540,24 @@ public final class InChITautomerGenerator {
             }
             List<IAtom> atomsInNeedOfFix = new ArrayList<IAtom>();
             for (IAtom atom : tautomerSkeleton.atoms()) {
-                if (atom.getValency() - atom.getFormalCharge() != atom.getImplicitHydrogenCount()
-                        + getConnectivity(atom, tautomerSkeleton)) atomsInNeedOfFix.add(atom);
+                if (atom.getValency() - atom.getFormalCharge()
+                        != atom.getImplicitHydrogenCount()
+                                + getConnectivity(atom, tautomerSkeleton))
+                    atomsInNeedOfFix.add(atom);
             }
-            List<Integer> dblBondPositions = tryDoubleBondCombinations(tautomerSkeleton, 0, 0, doubleBondCount,
-                    atomsInNeedOfFix);
+            List<Integer> dblBondPositions =
+                    tryDoubleBondCombinations(
+                            tautomerSkeleton, 0, 0, doubleBondCount, atomsInNeedOfFix);
             if (dblBondPositions != null) {
-                //Found a valid double bond combination for this mobile hydrogen configuration..
+                // Found a valid double bond combination for this mobile hydrogen configuration..
                 solutions.push(dblBondPositions);
                 solutions.push(tautomerSkeleton);
             }
         }
         LOGGER.debug("#possible solutions : ", solutions.size());
         if (solutions.size() == 0) {
-            LOGGER.error("Could not generate any tautomers for the input. Is input in Kekule form? ");
+            LOGGER.error(
+                    "Could not generate any tautomers for the input. Is input in Kekule form? ");
             tautomers.add(inputMolecule);
         } else {
 
@@ -536,7 +569,9 @@ public final class InChITautomerGenerator {
                     for (IAtom atom1 : tautomer.atoms()) {
                         if (atom1.getID().equals(skAtom1.getID())) {
                             atom1.setImplicitHydrogenCount(skAtom1.getImplicitHydrogenCount());
-                            for (int bondIdx = 0; bondIdx < tautomerSkeleton.getBondCount(); bondIdx++) {
+                            for (int bondIdx = 0;
+                                    bondIdx < tautomerSkeleton.getBondCount();
+                                    bondIdx++) {
                                 IBond skBond = tautomerSkeleton.getBond(bondIdx);
                                 if (skBond.contains(skAtom1)) {
                                     IAtom skAtom2 = skBond.getOther(skAtom1);
@@ -545,8 +580,7 @@ public final class InChITautomerGenerator {
                                             IBond tautBond = tautomer.getBond(atom1, atom2);
                                             if (dblBondPositions.contains(bondIdx))
                                                 tautBond.setOrder(IBond.Order.DOUBLE);
-                                            else
-                                                tautBond.setOrder(IBond.Order.SINGLE);
+                                            else tautBond.setOrder(IBond.Order.SINGLE);
                                         }
                                     }
                                 }
@@ -558,8 +592,7 @@ public final class InChITautomerGenerator {
                     atom.setFlag(CDKConstants.ISAROMATIC, false);
                     atom.setValency(null);
                 }
-                for (IBond bond : tautomer.bonds())
-                    bond.setFlag(CDKConstants.ISAROMATIC, false);
+                for (IBond bond : tautomer.bonds()) bond.setFlag(CDKConstants.ISAROMATIC, false);
                 tautomers.add(tautomer);
             }
         }
@@ -576,12 +609,12 @@ public final class InChITautomerGenerator {
      * @return tautomers same set with duplicates removed
      * @throws CDKException unable to calculate canonical SMILES
      */
-    private List<IAtomContainer> removeDuplicates(List<IAtomContainer> tautomers) throws CDKException {
-        Set<String>          cansmis = new HashSet<>();
-        List<IAtomContainer> result  = new ArrayList<>();
+    private List<IAtomContainer> removeDuplicates(List<IAtomContainer> tautomers)
+            throws CDKException {
+        Set<String> cansmis = new HashSet<>();
+        List<IAtomContainer> result = new ArrayList<>();
         for (IAtomContainer tautomer : tautomers) {
-            if (cansmis.add(CANSMI.create(tautomer)))
-                result.add(tautomer);
+            if (cansmis.add(CANSMI.create(tautomer))) result.add(tautomer);
         }
         LOGGER.debug("# tautomers after clean up : ", tautomers.size());
         return result;
@@ -589,25 +622,34 @@ public final class InChITautomerGenerator {
 
     /**
      * Makes combinations recursively of all possible mobile Hydrogen positions.
+     *
      * @param taken positions taken by hydrogen
      * @param combinations combinations made so far
      * @param skeleton container to work on
      * @param totalMobHydrCount
      * @param mobHydrAttachPositions
      */
-    private void combineHydrogenPositions(List<Integer> taken, List<List<Integer>> combinations,
-            IAtomContainer skeleton, int totalMobHydrCount, List<Integer> mobHydrAttachPositions) {
+    private void combineHydrogenPositions(
+            List<Integer> taken,
+            List<List<Integer>> combinations,
+            IAtomContainer skeleton,
+            int totalMobHydrCount,
+            List<Integer> mobHydrAttachPositions) {
         if (taken.size() != totalMobHydrCount) {
             for (int i = 0; i < mobHydrAttachPositions.size(); i++) {
                 int pos = mobHydrAttachPositions.get(i);
                 IAtom atom = findAtomByPosition(skeleton, pos);
                 int conn = getConnectivity(atom, skeleton);
                 int hCnt = 0;
-                for (int t : taken)
-                    if (t == pos) hCnt++;
+                for (int t : taken) if (t == pos) hCnt++;
                 if (atom.getValency() - atom.getFormalCharge() > (hCnt + conn)) {
                     taken.add(pos);
-                    combineHydrogenPositions(taken, combinations, skeleton, totalMobHydrCount, mobHydrAttachPositions);
+                    combineHydrogenPositions(
+                            taken,
+                            combinations,
+                            skeleton,
+                            totalMobHydrCount,
+                            mobHydrAttachPositions);
                     taken.remove(taken.size() - 1);
                 }
             }
@@ -622,8 +664,9 @@ public final class InChITautomerGenerator {
     }
 
     /**
-     * Helper method that locates an atom based on its InChI atom table
-     * position, which has been set as ID.
+     * Helper method that locates an atom based on its InChI atom table position, which has been set
+     * as ID.
+     *
      * @param container input container
      * @param position InChI atom table position
      * @return atom on the position
@@ -637,31 +680,40 @@ public final class InChITautomerGenerator {
     }
 
     /**
-     * Tries double bond combinations for a certain input container of which the double bonds have been stripped
-     * around the mobile hydrogen positions. Recursively.
+     * Tries double bond combinations for a certain input container of which the double bonds have
+     * been stripped around the mobile hydrogen positions. Recursively.
      *
      * @param container
      * @param dblBondsAdded counts double bonds added so far
      * @param bondOffSet offset for next double bond position to consider
      * @param doubleBondMax maximum number of double bonds to add
      * @param atomsInNeedOfFix atoms that require more bonds
-     * @return a list of double bond positions (index) that make a valid combination, null if none found
+     * @return a list of double bond positions (index) that make a valid combination, null if none
+     *     found
      */
-    private List<Integer> tryDoubleBondCombinations(IAtomContainer container, int dblBondsAdded, int bondOffSet,
-            int doubleBondMax, List<IAtom> atomsInNeedOfFix) {
+    private List<Integer> tryDoubleBondCombinations(
+            IAtomContainer container,
+            int dblBondsAdded,
+            int bondOffSet,
+            int doubleBondMax,
+            List<IAtom> atomsInNeedOfFix) {
 
         int offSet = bondOffSet;
         List<Integer> dblBondPositions = null;
 
         while (offSet < container.getBondCount() && dblBondPositions == null) {
             IBond bond = container.getBond(offSet);
-            if (atomsInNeedOfFix.contains(bond.getBegin()) && atomsInNeedOfFix.contains(bond.getEnd())) {
+            if (atomsInNeedOfFix.contains(bond.getBegin())
+                    && atomsInNeedOfFix.contains(bond.getEnd())) {
                 bond.setOrder(IBond.Order.DOUBLE);
                 dblBondsAdded = dblBondsAdded + 1;
                 if (dblBondsAdded == doubleBondMax) {
                     boolean validDoubleBondConfig = true;
-                    CHECK: for (IAtom atom : container.atoms()) {
-                        if (atom.getValency() != atom.getImplicitHydrogenCount() + getConnectivity(atom, container)) {
+                    CHECK:
+                    for (IAtom atom : container.atoms()) {
+                        if (atom.getValency()
+                                != atom.getImplicitHydrogenCount()
+                                        + getConnectivity(atom, container)) {
                             validDoubleBondConfig = false;
                             break CHECK;
                         }
@@ -675,8 +727,13 @@ public final class InChITautomerGenerator {
                         return dblBondPositions;
                     }
                 } else {
-                    dblBondPositions = tryDoubleBondCombinations(container, dblBondsAdded, offSet + 1, doubleBondMax,
-                            atomsInNeedOfFix);
+                    dblBondPositions =
+                            tryDoubleBondCombinations(
+                                    container,
+                                    dblBondsAdded,
+                                    offSet + 1,
+                                    doubleBondMax,
+                                    atomsInNeedOfFix);
                 }
 
                 bond.setOrder(IBond.Order.SINGLE);
@@ -689,6 +746,7 @@ public final class InChITautomerGenerator {
 
     /**
      * Sums the number of bonds (counting order) an atom is hooked up with.
+     *
      * @param atom an atom in the container
      * @param container the container
      * @return valence (bond order sum) of the atom

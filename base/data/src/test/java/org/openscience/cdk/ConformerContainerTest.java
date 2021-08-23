@@ -2,9 +2,7 @@ package org.openscience.cdk;
 
 import java.util.Iterator;
 import java.util.Random;
-
 import javax.vecmath.Point3d;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,21 +10,20 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
-/**
- * @cdk.module test-data
- */
+/** @cdk.module test-data */
 public class ConformerContainerTest extends CDKTestCase {
 
-    private IAtomContainer   base;
+    private IAtomContainer base;
     private IAtomContainer[] confs;
 
-    private static int       natom  = 10;
-    private static int       nconfs = 20;
+    private static int natom = 10;
+    private static int nconfs = 20;
 
-    private static Random    rnd    = new Random();
+    private static Random rnd = new Random();
 
     private static IAtomContainer getBaseAtomContainer(int natom, String title) {
-        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer container =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         container.setTitle(title);
         for (int i = 0; i < natom; i++) {
             Point3d coord = new Point3d();
@@ -34,21 +31,24 @@ public class ConformerContainerTest extends CDKTestCase {
             coord.y = rnd.nextDouble();
             coord.z = rnd.nextDouble();
 
-            IAtom atom = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C", coord);
+            IAtom atom =
+                    DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class, "C", coord);
             container.addAtom(atom);
         }
 
         for (int i = 0; i < natom - 1; i++) {
             IAtom atom1 = container.getAtom(i);
             IAtom atom2 = container.getAtom(i + 1);
-            IBond bond = DefaultChemObjectBuilder.getInstance().newInstance(IBond.class, atom1, atom2,
-                    IBond.Order.SINGLE);
+            IBond bond =
+                    DefaultChemObjectBuilder.getInstance()
+                            .newInstance(IBond.class, atom1, atom2, IBond.Order.SINGLE);
             container.addBond(bond);
         }
         return container;
     }
 
-    private static IAtomContainer[] getConformers(IAtomContainer base, int nconf) throws CloneNotSupportedException {
+    private static IAtomContainer[] getConformers(IAtomContainer base, int nconf)
+            throws CloneNotSupportedException {
         IAtomContainer[] ret = new IAtomContainer[nconf];
         for (int i = 0; i < nconf; i++) {
             for (int j = 0; j < base.getAtomCount(); j++) {
@@ -77,8 +77,7 @@ public class ConformerContainerTest extends CDKTestCase {
         container.add(base);
         Assert.assertEquals(1, container.size());
 
-        for (IAtomContainer conf : confs)
-            container.add(conf);
+        for (IAtomContainer conf : confs) container.add(conf);
         Assert.assertEquals(nconfs + 1, container.size());
     }
 
@@ -135,7 +134,6 @@ public class ConformerContainerTest extends CDKTestCase {
             nmol++;
         }
         Assert.assertEquals(nconfs, nmol);
-
     }
 
     @Test
@@ -144,8 +142,7 @@ public class ConformerContainerTest extends CDKTestCase {
         container.clear();
         Assert.assertEquals(0, container.size());
 
-        for (int i = 0; i < nconfs; i++)
-            container.add(confs[i]);
+        for (int i = 0; i < nconfs; i++) container.add(confs[i]);
         Assert.assertEquals(nconfs, container.size());
 
         container.remove(0);
@@ -176,8 +173,7 @@ public class ConformerContainerTest extends CDKTestCase {
     @Test(expected = IndexOutOfBoundsException.class)
     public void testGet2() {
         ConformerContainer container = new ConformerContainer(confs);
-        for (int i = 0; i < container.size() + 1; i++)
-            container.get(i);
+        for (int i = 0; i < container.size() + 1; i++) container.get(i);
     }
 
     @Test
@@ -196,8 +192,7 @@ public class ConformerContainerTest extends CDKTestCase {
     public void testAdd_Object() {
         ConformerContainer container = new ConformerContainer();
         Assert.assertNotNull(container);
-        for (IAtomContainer conf : confs)
-            container.add(conf);
+        for (IAtomContainer conf : confs) container.add(conf);
         Assert.assertEquals(nconfs, container.size());
     }
 
@@ -258,7 +253,7 @@ public class ConformerContainerTest extends CDKTestCase {
     @Test(expected = UnsupportedOperationException.class)
     public void testToArray_arrayObject() {
         ConformerContainer container = new ConformerContainer(confs);
-        container.toArray(new IAtomContainer[]{});
+        container.toArray(new IAtomContainer[] {});
     }
 
     @Test
@@ -350,5 +345,4 @@ public class ConformerContainerTest extends CDKTestCase {
         Assert.assertNotNull(container);
         Assert.assertEquals(1, container.size());
     }
-
 }

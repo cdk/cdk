@@ -22,7 +22,6 @@ import org.openscience.cdk.tools.DataFeatures;
 
 /**
  * @author Miguel Rojas
- *
  * @cdk.module ioformats
  * @cdk.githash
  */
@@ -58,7 +57,7 @@ public class AlchemyFormat extends AbstractResourceFormat implements IChemFormat
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"alc"};
+        return new String[] {"alc"};
     }
 
     /** {@inheritDoc} */

@@ -23,28 +23,27 @@
 package org.openscience.cdk.tools.manipulator;
 
 import org.openscience.cdk.formula.MolecularFormulaRange;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * Class with convenience methods that provide methods to manipulate
- * MolecularFormulaRange's.
+ * Class with convenience methods that provide methods to manipulate MolecularFormulaRange's.
  *
- * @cdk.module  formula
- * @author      miguelrojasch
+ * @cdk.module formula
+ * @author miguelrojasch
  * @cdk.created 2007-11-20
  * @cdk.githash
  */
 public class MolecularFormulaRangeManipulator {
 
     /**
-     * Extract from a set of MolecularFormula the range of each each element found and
-     * put the element and occurrence in a new MolecularFormulaRange.
+     * Extract from a set of MolecularFormula the range of each each element found and put the
+     * element and occurrence in a new MolecularFormulaRange.
      *
-     * @param mfSet    The set of molecularFormules to inspect
-     * @return         A MolecularFormulaRange containing range occurrence of the elements
+     * @param mfSet The set of molecularFormules to inspect
+     * @return A MolecularFormulaRange containing range occurrence of the elements
      */
     public static MolecularFormulaRange getRange(IMolecularFormulaSet mfSet) {
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
@@ -82,13 +81,14 @@ public class MolecularFormulaRangeManipulator {
     }
 
     /**
-     * Returns the maximal occurrence of the IIsotope into IMolecularFormula
-     * from this MolelecularFormulaRange.
+     * Returns the maximal occurrence of the IIsotope into IMolecularFormula from this
+     * MolelecularFormulaRange.
      *
-     * @param   mfRange The MolecularFormulaRange to analyze
-     * @return  A IMolecularFormula containing the maximal occurrence of each isotope
+     * @param mfRange The MolecularFormulaRange to analyze
+     * @return A IMolecularFormula containing the maximal occurrence of each isotope
      */
-    public static IMolecularFormula getMaximalFormula(MolecularFormulaRange mfRange, IChemObjectBuilder builder) {
+    public static IMolecularFormula getMaximalFormula(
+            MolecularFormulaRange mfRange, IChemObjectBuilder builder) {
         IMolecularFormula formula = builder.newInstance(IMolecularFormula.class);
 
         for (IIsotope isotope : mfRange.isotopes()) {
@@ -99,13 +99,14 @@ public class MolecularFormulaRangeManipulator {
     }
 
     /**
-     * Returns the minimal occurrence of the IIsotope into IMolecularFormula
-     * from this MolelecularFormulaRange.
+     * Returns the minimal occurrence of the IIsotope into IMolecularFormula from this
+     * MolelecularFormulaRange.
      *
-     * @param   mfRange The MolecularFormulaRange to analyze
-     * @return  A IMolecularFormula containing the minimal occurrence of each isotope
+     * @param mfRange The MolecularFormulaRange to analyze
+     * @return A IMolecularFormula containing the minimal occurrence of each isotope
      */
-    public static IMolecularFormula getMinimalFormula(MolecularFormulaRange mfRange, IChemObjectBuilder builder) {
+    public static IMolecularFormula getMinimalFormula(
+            MolecularFormulaRange mfRange, IChemObjectBuilder builder) {
         IMolecularFormula formula = builder.newInstance(IMolecularFormula.class);
 
         for (IIsotope isotope : mfRange.isotopes()) {
@@ -114,5 +115,4 @@ public class MolecularFormulaRangeManipulator {
 
         return formula;
     }
-
 }

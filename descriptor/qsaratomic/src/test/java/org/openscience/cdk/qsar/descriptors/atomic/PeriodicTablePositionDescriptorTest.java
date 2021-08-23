@@ -43,10 +43,13 @@ public class PeriodicTablePositionDescriptorTest extends AtomicDescriptorTest {
     }
 
     @Test
-    public void testPeriodicTablePositionDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testPeriodicTablePositionDescriptor()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
         IAtomicDescriptor descriptor = new PeriodicTablePositionDescriptor();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCCl"); //
-        Assert.assertEquals(3, ((IntegerResult) descriptor.calculate(mol.getAtom(2), mol).getValue()).intValue());
+        Assert.assertEquals(
+                3,
+                ((IntegerResult) descriptor.calculate(mol.getAtom(2), mol).getValue()).intValue());
     }
 }

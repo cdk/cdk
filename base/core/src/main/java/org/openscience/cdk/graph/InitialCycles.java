@@ -23,24 +23,22 @@
  */
 package org.openscience.cdk.graph;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+import static java.util.Arrays.copyOf;
+
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.TreeMultimap;
 import com.google.common.primitives.Ints;
-
 import java.util.BitSet;
 import java.util.Collection;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-import static java.util.Arrays.copyOf;
-
 /**
- * Compute the set of initial cycles (<i>C'<sub>I</sub></i>) in a graph. The
- * super-set contains the minimum cycle basis (<i>C<sub>B</sub></i>) and the
- * relevant cycles (<i>C<sub>R</sub></i>) of the provided graph {@cdk.cite
- * Vismara97}. This class is intend for internal use by other cycle processing
- * algorithms.
+ * Compute the set of initial cycles (<i>C'<sub>I</sub></i>) in a graph. The super-set contains the
+ * minimum cycle basis (<i>C<sub>B</sub></i>) and the relevant cycles (<i>C<sub>R</sub></i>) of the
+ * provided graph {@cdk.cite Vismara97}. This class is intend for internal use by other cycle
+ * processing algorithms.
  *
  * @author John May
  * @cdk.module core
@@ -49,39 +47,36 @@ import static java.util.Arrays.copyOf;
 final class InitialCycles {
 
     /** Adjacency list representation of a chemical graph. */
-    private final int[][]                  graph;
+    private final int[][] graph;
 
     /** Vertex ordering. */
-    private final int[]                    ordering;
+    private final int[] ordering;
 
     /** Cycle prototypes indexed by their length. */
-    private final Multimap<Integer, Cycle> cycles         = TreeMultimap.create();
+    private final Multimap<Integer, Cycle> cycles = TreeMultimap.create();
 
     /** Index of edges in the graph */
-    private final BiMap<Edge, Integer>     edges;
+    private final BiMap<Edge, Integer> edges;
 
     /**
-     * Initial array size for 'ordering()'. This method sorts vertices by degree
-     * by counting how many of each degree there is then putting values in place
-     * directly. This is known as key-value counting and is used in radix
-     * sorts.
+     * Initial array size for 'ordering()'. This method sorts vertices by degree by counting how
+     * many of each degree there is then putting values in place directly. This is known as
+     * key-value counting and is used in radix sorts.
      *
-     * @see <a href="https://en.wikipedia.org/wiki/Radix_sort#Least_significant_digit_radix_sorts">Radix
-     *      Sort</a>
+     * @see <a
+     *     href="https://en.wikipedia.org/wiki/Radix_sort#Least_significant_digit_radix_sorts">Radix
+     *     Sort</a>
      */
-    private final static int               DEFAULT_DEGREE = 4;
+    private static final int DEFAULT_DEGREE = 4;
 
     /** Number of vertices which have degree 2. */
-    private int                            nDeg2Vertices;
+    private int nDeg2Vertices;
 
     /** Limit the size of cycles discovered. */
-    private final int                      limit;
+    private final int limit;
 
-    /**
-     * Is the graph known to be a biconnected component. This allows a small
-     * optimisation.
-     */
-    private final boolean                  biconnected;
+    /** Is the graph known to be a biconnected component. This allows a small optimisation. */
+    private final boolean biconnected;
 
     /**
      * Create a set of initial cycles for the provided graph.
@@ -105,8 +100,8 @@ final class InitialCycles {
     }
 
     /**
-     * Internal constructor - takes a graph and a flag that the graph is a
-     * biconnected component. This allows a minor optimisation to trigger.
+     * Internal constructor - takes a graph and a flag that the graph is a biconnected component.
+     * This allows a minor optimisation to trigger.
      *
      * @param graph input graph
      * @param biconnected the graph is known to be biconnected
@@ -158,8 +153,8 @@ final class InitialCycles {
     }
 
     /**
-     * Access all the prototype cycles of the given length. If no cycles were
-     * found of given length an empty list is returned.
+     * Access all the prototype cycles of the given length. If no cycles were found of given length
+     * an empty list is returned.
      *
      * @param length desired length of cycles
      * @return cycles of the given length
@@ -207,8 +202,7 @@ final class InitialCycles {
     }
 
     /**
-     * Lookup the index of the edge formed by the vertices <i>u</i> and
-     * <i>v</i>.
+     * Lookup the index of the edge formed by the vertices <i>u</i> and <i>v</i>.
      *
      * @param u a vertex adjacent to <i>v</i>
      * @param v a vertex adjacent to <i>u</i>
@@ -219,8 +213,8 @@ final class InitialCycles {
     }
 
     /**
-     * Convert a path of vertices to a binary vector of edges. It is possible to
-     * convert the vector back to the path using {@see #edge}.
+     * Convert a path of vertices to a binary vector of edges. It is possible to convert the vector
+     * back to the path using {@see #edge}.
      *
      * @param path the vertices which define the cycle
      * @return vector edges which make up the path
@@ -236,9 +230,8 @@ final class InitialCycles {
     }
 
     /**
-     * Compute the initial cycles. The code corresponds to algorithm 1 from
-     * {@cdk.cite Vismara97}, where possible the variable names have been kept
-     * the same.
+     * Compute the initial cycles. The code corresponds to algorithm 1 from {@cdk.cite Vismara97},
+     * where possible the variable names have been kept the same.
      */
     private void compute() {
 
@@ -364,10 +357,9 @@ final class InitialCycles {
     }
 
     /**
-     * Compute the vertex ordering (π). The ordering is based on the vertex
-     * degree and {@literal π(x) < π(y) => deg(x) ≤ deg(y)}. The ordering
-     * guarantees the number of elements in <i>C<sub>I</sub></i> is <
-     * <i>2m<sup>2</sup> + vn</i>. See Lemma 3 of {@cdk.cite Vismara97}.
+     * Compute the vertex ordering (π). The ordering is based on the vertex degree and {@literal
+     * π(x) < π(y) => deg(x) ≤ deg(y)}. The ordering guarantees the number of elements in
+     * <i>C<sub>I</sub></i> is < <i>2m<sup>2</sup> + vn</i>. See Lemma 3 of {@cdk.cite Vismara97}.
      *
      * @return the order of each vertex
      */
@@ -397,9 +389,8 @@ final class InitialCycles {
     }
 
     /**
-     * Given two paths from a common start vertex <i>r</i> check whether there
-     * are any intersects. If the paths are different length the shorter of the
-     * two should be given as <i>p</i>.
+     * Given two paths from a common start vertex <i>r</i> check whether there are any intersects.
+     * If the paths are different length the shorter of the two should be given as <i>p</i>.
      *
      * @param p a path from <i>r</i>
      * @param q a path from <i>r</i>
@@ -407,14 +398,13 @@ final class InitialCycles {
      */
     static boolean singletonIntersect(final int[] p, final int[] q) {
         int n = p.length;
-        for (int i = 1; i < n; i++)
-            if (p[i] == q[i]) return false;
+        for (int i = 1; i < n; i++) if (p[i] == q[i]) return false;
         return true;
     }
 
     /**
-     * Join the two paths end on end and ignore the first vertex of the second
-     * path. {0, 1, 2} and {0, 3, 4} becomes {0, 1, 2, 4, 3}.
+     * Join the two paths end on end and ignore the first vertex of the second path. {0, 1, 2} and
+     * {0, 3, 4} becomes {0, 1, 2, 4, 3}.
      *
      * @param pathToY first path
      * @param pathToZ second path
@@ -430,12 +420,11 @@ final class InitialCycles {
     }
 
     /**
-     * Join the two paths end on end using 'y'. The first vertex of the second
-     * path is truncated. {0, 1, 2}, {5} and {0, 3, 4} becomes {0, 1, 2, 5, 4,
-     * 3}.
+     * Join the two paths end on end using 'y'. The first vertex of the second path is truncated.
+     * {0, 1, 2}, {5} and {0, 3, 4} becomes {0, 1, 2, 5, 4, 3}.
      *
      * @param pathToP first path
-     * @param y       how to join the two paths
+     * @param y how to join the two paths
      * @param pathToQ second path
      * @return the paths joined end on end and the last vertex truncated
      */
@@ -473,14 +462,13 @@ final class InitialCycles {
     }
 
     /**
-     * Abstract description of a cycle. Stores the path and computes the edge
-     * vector representation.
+     * Abstract description of a cycle. Stores the path and computes the edge vector representation.
      */
-    static abstract class Cycle implements Comparable<Cycle> {
+    abstract static class Cycle implements Comparable<Cycle> {
 
         private int[] path;
         ShortestPaths paths;
-        BitSet        edgeVector;
+        BitSet edgeVector;
 
         Cycle(final ShortestPaths paths, final int[] path) {
             this.path = path;
@@ -489,8 +477,8 @@ final class InitialCycles {
         }
 
         /**
-         * Provides the edges of <i>path</i>, this method only exists so we can
-         * refer to the class in a static context.
+         * Provides the edges of <i>path</i>, this method only exists so we can refer to the class
+         * in a static context.
          *
          * @param path path of vertices
          * @return set of edges
@@ -523,9 +511,8 @@ final class InitialCycles {
         abstract int[][] family();
 
         /**
-         * The number of cycles in this prototypes family. This method be used
-         * to avoid the potentially exponential reconstruction of all the cycles
-         * using {@link #family()}.
+         * The number of cycles in this prototypes family. This method be used to avoid the
+         * potentially exponential reconstruction of all the cycles using {@link #family()}.
          *
          * @return number of cycles
          */
@@ -547,9 +534,9 @@ final class InitialCycles {
     }
 
     /**
-     * An even cycle is formed from two shortest paths of the same length
-     * and 'two' edges to a common vertex. The cycle formed by these is
-     * even, 2n + 2 = even.
+     * An even cycle is formed from two shortest paths of the same length and 'two' edges to a
+     * common vertex. The cycle formed by these is even, 2n + 2 = even.
+     *
      * @see #compute()
      */
     class EvenCycle extends Cycle {
@@ -563,13 +550,13 @@ final class InitialCycles {
             this.y = y;
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         BitSet edges(int[] path) {
             return toEdgeVector(path);
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         int[][] family() {
 
@@ -586,7 +573,7 @@ final class InitialCycles {
             return paths;
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         int sizeOfFamily() {
             return paths.nPathsTo(p) * paths.nPathsTo(q);
@@ -594,9 +581,9 @@ final class InitialCycles {
     }
 
     /**
-     * An odd cycle is formed from two shortest paths of the same length
-     * and 'one' edge to a common vertex. The cycle formed by these is odd,
-     * 2n + 1 = odd.
+     * An odd cycle is formed from two shortest paths of the same length and 'one' edge to a common
+     * vertex. The cycle formed by these is odd, 2n + 1 = odd.
+     *
      * @see #compute()
      */
     class OddCycle extends Cycle {
@@ -609,13 +596,13 @@ final class InitialCycles {
             z = pathToZ[pathToY.length - 1];
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         BitSet edges(int[] path) {
             return toEdgeVector(path);
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         int[][] family() {
             int[][] pathsToY = paths.pathsTo(y);
@@ -631,7 +618,7 @@ final class InitialCycles {
             return paths;
         }
 
-        /**{@inheritDoc} */
+        /** {@inheritDoc} */
         @Override
         int sizeOfFamily() {
             return paths.nPathsTo(y) * paths.nPathsTo(z);
@@ -639,8 +626,8 @@ final class InitialCycles {
     }
 
     /**
-     * A simple value which acts as an immutable unordered tuple for two
-     * primitive integers. This allows to index edges of a graph.
+     * A simple value which acts as an immutable unordered tuple for two primitive integers. This
+     * allows to index edges of a graph.
      */
     static final class Edge {
 

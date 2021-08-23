@@ -26,18 +26,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Analyses a molecular formula given in String format and builds
- * an AtomContainer with the Atoms in the molecular formula.
+ * Analyses a molecular formula given in String format and builds an AtomContainer with the Atoms in
+ * the molecular formula.
  *
- * About implicit H handling: By default the methods to calculate formula, natural and canonical mass
- * use the explicit Hs and only the explicit Hs if there is at least one in the molecule, implicit Hs are
- * ignored. If there is no explicit H and only then the implicit Hs are used. If you use the constructor
- * MFAnalyser(IAtomContainer ac, boolean useboth) and set useboth to true, all explicit Hs and all implicit Hs are used,
- * the implicit ones also on atoms with explicit Hs.
+ * <p>About implicit H handling: By default the methods to calculate formula, natural and canonical
+ * mass use the explicit Hs and only the explicit Hs if there is at least one in the molecule,
+ * implicit Hs are ignored. If there is no explicit H and only then the implicit Hs are used. If you
+ * use the constructor MFAnalyser(IAtomContainer ac, boolean useboth) and set useboth to true, all
+ * explicit Hs and all implicit Hs are used, the implicit ones also on atoms with explicit Hs.
  *
- * @author         egonw
- * @cdk.created    2007-03-08
- * @cdk.module     extra
+ * @author egonw
+ * @cdk.created 2007-03-08
+ * @cdk.module extra
  * @cdk.githash
  */
 public class HOSECodeAnalyser {
@@ -79,5 +79,4 @@ public class HOSECodeAnalyser {
         }
         return elementList;
     }
-
 }

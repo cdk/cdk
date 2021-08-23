@@ -27,8 +27,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
- * Concept of a ligand in CIP terms, reflecting a side chain of a central atom that can
- * have precedence over another.
+ * Concept of a ligand in CIP terms, reflecting a side chain of a central atom that can have
+ * precedence over another.
  *
  * @cdk.module cip
  * @cdk.githash
@@ -50,8 +50,8 @@ public interface ILigand {
     public IAtom getCentralAtom();
 
     /**
-     * {@link IAtom} of the ligand that is connected to the central {@link IAtom} via
-     * one {@link IBond}.
+     * {@link IAtom} of the ligand that is connected to the central {@link IAtom} via one {@link
+     * IBond}.
      *
      * @return the ligand atom
      */
@@ -67,10 +67,8 @@ public interface ILigand {
     /**
      * Returns a true if the atom has been visited before.
      *
-     * @param  atom the atom to be analyzed
-     * @return true if the {@link IAtom} is the chiral atom, or part of the
-     *              ligand
+     * @param atom the atom to be analyzed
+     * @return true if the {@link IAtom} is the chiral atom, or part of the ligand
      */
     public boolean isVisited(IAtom atom);
-
 }

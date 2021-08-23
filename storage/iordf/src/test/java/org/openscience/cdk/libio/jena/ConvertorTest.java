@@ -22,6 +22,7 @@
  */
 package org.openscience.cdk.libio.jena;
 
+import com.hp.hpl.jena.rdf.model.Model;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -38,11 +39,7 @@ import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.diff.AtomContainerDiff;
 
-import com.hp.hpl.jena.rdf.model.Model;
-
-/**
- * @cdk.module test-iordf
- */
+/** @cdk.module test-iordf */
 public class ConvertorTest extends CDKTestCase {
 
     private static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();

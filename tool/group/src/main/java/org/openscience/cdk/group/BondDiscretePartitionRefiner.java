@@ -27,32 +27,26 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 /**
  * An {@link AtomContainerDiscretePartitionRefiner} for bonds.
  *
- * If two bonds are equivalent under an automorphism in the group, then
- * roughly speaking they are in symmetric positions in the molecule. For
- * example, the C-C bonds attaching two methyl groups to a benzene ring
- * are 'equivalent' in this sense.
- *
+ * <p>If two bonds are equivalent under an automorphism in the group, then roughly speaking they are
+ * in symmetric positions in the molecule. For example, the C-C bonds attaching two methyl groups to
+ * a benzene ring are 'equivalent' in this sense.
  *
  * @author maclean
  * @cdk.module group
  */
 class BondDiscretePartitionRefiner extends AtomContainerDiscretePartitionRefinerImpl {
 
-    /**
-     * Specialised option to allow generating automorphisms that ignore the bond order.
-     */
+    /** Specialised option to allow generating automorphisms that ignore the bond order. */
     private boolean ignoreBondOrders;
 
-    /**
-     * Make a bond partition refiner that takes bond-orders into account.
-     */
+    /** Make a bond partition refiner that takes bond-orders into account. */
     public BondDiscretePartitionRefiner() {
         this(false);
     }
 
     /**
-     * Make a bond partition refiner and specify whether bonds-orders should be
-     * considered when calculating the automorphisms.
+     * Make a bond partition refiner and specify whether bonds-orders should be considered when
+     * calculating the automorphisms.
      *
      * @param ignoreBondOrders if true, ignore the bond orders
      */
@@ -60,9 +54,7 @@ class BondDiscretePartitionRefiner extends AtomContainerDiscretePartitionRefiner
         this.ignoreBondOrders = ignoreBondOrders;
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected Refinable createRefinable(IAtomContainer atomContainer) {
         return new BondRefinable(atomContainer, ignoreBondOrders);

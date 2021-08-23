@@ -24,15 +24,13 @@
 
 package org.openscience.cdk.forcefield.mmff;
 
-import org.junit.Assert;
+import static org.hamcrest.CoreMatchers.is;
+
+import java.util.Arrays;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesGenerator;
-
-import java.util.Arrays;
-
-import static org.hamcrest.CoreMatchers.is;
 
 /**
  * Ensure the atom types of the validation suite (http://server.ccl.net/cca/data/MMFF94/) are

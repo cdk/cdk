@@ -23,29 +23,29 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractElectronContainerTest;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.AbstractElectronContainerTest;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link ElectronContainer} class.
  *
  * @cdk.module test-data
- *
  * @see org.openscience.cdk.ElectronContainer
  */
 public class ElectronContainerTest extends AbstractElectronContainerTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new ElectronContainer();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new ElectronContainer();
+                    }
+                });
     }
 
     @Test
@@ -54,5 +54,4 @@ public class ElectronContainerTest extends AbstractElectronContainerTest {
         Assert.assertNotNull(ec);
         Assert.assertEquals(0, ec.getElectronCount().intValue());
     }
-
 }

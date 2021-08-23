@@ -28,12 +28,8 @@ package org.openscience.cdk.graph.invariant;
  * from the {@link SmiFlavor} settings.
  */
 public class CanonOpts {
-    /**
-     * Default canon flavour options.
-     */
-    public static final int Default    = 0;
-    /**
-     * Distinguish atoms based on atomic mass.
-     */
+    /** Default canon flavour options. */
+    public static final int Default = 0;
+    /** Distinguish atoms based on atomic mass. */
     public static final int AtomicMass = 0x008;
 }

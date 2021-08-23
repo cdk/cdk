@@ -22,10 +22,12 @@
  */
 package org.openscience.cdk.io;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import java.io.InputStream;
 import java.io.StringReader;
 import java.util.Iterator;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -41,19 +43,16 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 /**
  * TestCase for the reading MDL RXN files using one test file.
  *
  * @cdk.module test-io
- *
  * @see org.openscience.cdk.io.MDLRXNReader
  */
 public class MDLRXNV2000ReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNV2000ReaderTest.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(MDLRXNV2000ReaderTest.class);
 
     @BeforeClass
     public static void setup() throws Exception {
@@ -68,9 +67,7 @@ public class MDLRXNV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertTrue(reader.accepts(Reaction.class));
     }
 
-    /**
-     * @cdk.bug 1849923
-     */
+    /** @cdk.bug 1849923 */
     @Test
     public void testReadReactions1() throws Exception {
         String filename1 = "data/mdl/0024.stg02.rxn";
@@ -92,12 +89,9 @@ public class MDLRXNV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertNotNull(product);
         Assert.assertEquals(46, product.getAtomCount());
         Assert.assertEquals(43, product.getBondCount());
-
     }
 
-    /**
-     * @cdk.bug 1851202
-     */
+    /** @cdk.bug 1851202 */
     @Test
     public void testBug1851202() throws Exception {
         String filename1 = "data/mdl/0002.stg01.rxn";
@@ -119,7 +113,6 @@ public class MDLRXNV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertNotNull(product);
         Assert.assertEquals(30, product.getAtomCount());
         Assert.assertEquals(26, product.getBondCount());
-
     }
 
     @Test
@@ -141,24 +134,26 @@ public class MDLRXNV2000ReaderTest extends SimpleChemObjectReaderTest {
     @Test
     public void testAgentParts() throws Exception {
         try (InputStream in = this.getClass().getResourceAsStream("ethylesterification.mol");
-             MDLRXNV2000Reader rdr = new MDLRXNV2000Reader(in);) {
+                MDLRXNV2000Reader rdr = new MDLRXNV2000Reader(in); ) {
             IReaction reaction = rdr.read(new Reaction());
             assertThat(reaction.getAgents().getAtomContainerCount(), is(1));
         }
     }
 
-    @Test public void optionalSdfSeparator() throws Exception {
-        String dummyRecord = "ethanol\n" +
-                       "  Mrv1810 09251921392D          \n" +
-                       "\n" +
-                       "  3  2  0  0  0  0            999 V2000\n" +
-                       "    1.9520   -1.1270    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                       "    1.2375   -0.7145    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                       "    2.6664   -0.7145    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                       "  1  2  1  0  0  0  0\n" +
-                       "  1  3  1  0  0  0  0\n" +
-                       "M  END\n" +
-                       "$$$$\n";
+    @Test
+    public void optionalSdfSeparator() throws Exception {
+        String dummyRecord =
+                "ethanol\n"
+                        + "  Mrv1810 09251921392D          \n"
+                        + "\n"
+                        + "  3  2  0  0  0  0            999 V2000\n"
+                        + "    1.9520   -1.1270    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                        + "    1.2375   -0.7145    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                        + "    2.6664   -0.7145    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                        + "  1  2  1  0  0  0  0\n"
+                        + "  1  3  1  0  0  0  0\n"
+                        + "M  END\n"
+                        + "$$$$\n";
         StringBuilder sb = new StringBuilder();
         sb.append("$RXN\n");
         sb.append("Test\n\n\n  2  1\n");

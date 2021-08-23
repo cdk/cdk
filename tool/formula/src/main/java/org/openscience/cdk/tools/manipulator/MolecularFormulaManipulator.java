@@ -23,7 +23,8 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
-import org.openscience.cdk.CDK;
+import java.io.IOException;
+import java.util.*;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.Elements;
@@ -35,67 +36,59 @@ import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import java.io.IOException;
-import java.util.*;
-
 /**
- * Class with convenience methods that provide methods to manipulate
- * {@link IMolecularFormula}'s. For example:
+ * Class with convenience methods that provide methods to manipulate {@link IMolecularFormula}'s.
+ * For example:
  *
- *
- * @cdk.module  formula
- * @author      miguelrojasch
+ * @cdk.module formula
+ * @author miguelrojasch
  * @cdk.created 2007-11-20
  * @cdk.githash
  */
 public class MolecularFormulaManipulator {
 
     /**
-     * For use with {@link #getMass(IMolecularFormula)}. This option uses the mass
-     * stored on atoms ({@link IAtom#getExactMass()}) or the average mass of the
-     * element when unspecified.
+     * For use with {@link #getMass(IMolecularFormula)}. This option uses the mass stored on atoms
+     * ({@link IAtom#getExactMass()}) or the average mass of the element when unspecified.
      */
-    public static final int MolWeight                = AtomContainerManipulator.MolWeight;
+    public static final int MolWeight = AtomContainerManipulator.MolWeight;
 
     /**
-     * For use with {@link #getMass(IMolecularFormula)}. This option ignores the
-     * mass stored on atoms ({@link IAtom#getExactMass()}) and uses the average
-     * mass of each element. This option is primarily provided for backwards
-     * compatibility.
+     * For use with {@link #getMass(IMolecularFormula)}. This option ignores the mass stored on
+     * atoms ({@link IAtom#getExactMass()}) and uses the average mass of each element. This option
+     * is primarily provided for backwards compatibility.
      */
-    public static final int MolWeightIgnoreSpecified = AtomContainerManipulator.MolWeightIgnoreSpecified;
+    public static final int MolWeightIgnoreSpecified =
+            AtomContainerManipulator.MolWeightIgnoreSpecified;
 
     /**
-     * For use with {@link #getMass(IMolecularFormula)}. This option uses the mass
-     * stored on atoms {@link IAtom#getExactMass()} or the mass of the major
-     * isotope when this is not specified.
+     * For use with {@link #getMass(IMolecularFormula)}. This option uses the mass stored on atoms
+     * {@link IAtom#getExactMass()} or the mass of the major isotope when this is not specified.
      */
-    public static final int MonoIsotopic             = AtomContainerManipulator.MonoIsotopic;
+    public static final int MonoIsotopic = AtomContainerManipulator.MonoIsotopic;
 
     /**
-     * For use with {@link #getMass(IMolecularFormula)}. This option uses the mass
-     * stored on atoms {@link IAtom#getExactMass()} and then calculates a
-     * distribution for any unspecified atoms and uses the most abundant
-     * distribution. For example C<sub>6</sub>Br<sub>6</sub> would have three
-     * <sup>79</sup>Br and <sup>81</sup>Br because their abundance is 51 and
-     * 49%.
+     * For use with {@link #getMass(IMolecularFormula)}. This option uses the mass stored on atoms
+     * {@link IAtom#getExactMass()} and then calculates a distribution for any unspecified atoms and
+     * uses the most abundant distribution. For example C<sub>6</sub>Br<sub>6</sub> would have three
+     * <sup>79</sup>Br and <sup>81</sup>Br because their abundance is 51 and 49%.
      */
-    public static final int MostAbundant             = AtomContainerManipulator.MostAbundant;
+    public static final int MostAbundant = AtomContainerManipulator.MostAbundant;
 
-    public static final Comparator<IIsotope> NAT_ABUN_COMP = new Comparator<IIsotope>() {
-        @Override
-        public int compare(IIsotope o1, IIsotope o2) {
-            return -Double.compare(o1.getNaturalAbundance(),
-                                   o2.getNaturalAbundance());
-        }
-    };
+    public static final Comparator<IIsotope> NAT_ABUN_COMP =
+            new Comparator<IIsotope>() {
+                @Override
+                public int compare(IIsotope o1, IIsotope o2) {
+                    return -Double.compare(o1.getNaturalAbundance(), o2.getNaturalAbundance());
+                }
+            };
 
     /**
-     *  Checks a set of Nodes for the occurrence of each isotopes
-     *  instance in the molecular formula. In short number of atoms.
+     * Checks a set of Nodes for the occurrence of each isotopes instance in the molecular formula.
+     * In short number of atoms.
      *
-     * @param   formula  The MolecularFormula to check
-     * @return           The occurrence total
+     * @param formula The MolecularFormula to check
+     * @return The occurrence total
      */
     public static int getAtomCount(IMolecularFormula formula) {
 
@@ -107,19 +100,20 @@ public class MolecularFormulaManipulator {
     }
 
     /**
-     * Checks a set of Nodes for the occurrence of the isotopes in the
-     * molecular formula from a particular IElement. It returns 0 if the
-     * element does not exist. The search is based only on the IElement.
+     * Checks a set of Nodes for the occurrence of the isotopes in the molecular formula from a
+     * particular IElement. It returns 0 if the element does not exist. The search is based only on
+     * the IElement.
      *
-     * @param   formula The MolecularFormula to check
-     * @param   element The IElement object
-     * @return          The occurrence of this element in this molecular formula
+     * @param formula The MolecularFormula to check
+     * @param element The IElement object
+     * @return The occurrence of this element in this molecular formula
      */
     public static int getElementCount(IMolecularFormula formula, IElement element) {
 
         int count = 0;
         for (IIsotope isotope : formula.isotopes()) {
-            if (isotope.getSymbol().equals(element.getSymbol())) count += formula.getIsotopeCount(isotope);
+            if (isotope.getSymbol().equals(element.getSymbol()))
+                count += formula.getIsotopeCount(isotope);
         }
         return count;
     }
@@ -127,9 +121,9 @@ public class MolecularFormulaManipulator {
     /**
      * Occurrences of a given element from an isotope in a molecular formula.
      *
-     * @param  formula the formula
-     * @param  isotope isotope of an element
-     * @return         number of the times the element occurs
+     * @param formula the formula
+     * @param isotope isotope of an element
+     * @return number of the times the element occurs
      * @see #getElementCount(IMolecularFormula, IElement)
      */
     public static int getElementCount(IMolecularFormula formula, IIsotope isotope) {
@@ -139,9 +133,9 @@ public class MolecularFormulaManipulator {
     /**
      * Occurrences of a given element in a molecular formula.
      *
-     * @param  formula the formula
-     * @param  symbol  element symbol (e.g. C for carbon)
-     * @return         number of the times the element occurs
+     * @param formula the formula
+     * @param symbol element symbol (e.g. C for carbon)
+     * @return number of the times the element occurs
      * @see #getElementCount(IMolecularFormula, IElement)
      */
     public static int getElementCount(IMolecularFormula formula, String symbol) {
@@ -149,29 +143,27 @@ public class MolecularFormulaManipulator {
     }
 
     /**
-     * Get a list of IIsotope from a given IElement which is contained
-     * molecular. The search is based only on the IElement.
+     * Get a list of IIsotope from a given IElement which is contained molecular. The search is
+     * based only on the IElement.
      *
-     * @param   formula The MolecularFormula to check
-     * @param   element The IElement object
-     * @return          The list with the IIsotopes in this molecular formula
+     * @param formula The MolecularFormula to check
+     * @param element The IElement object
+     * @return The list with the IIsotopes in this molecular formula
      */
     public static List<IIsotope> getIsotopes(IMolecularFormula formula, IElement element) {
 
         List<IIsotope> isotopeList = new ArrayList<IIsotope>();
         for (IIsotope isotope : formula.isotopes()) {
             if (isotope.getSymbol().equals(element.getSymbol())) isotopeList.add(isotope);
-
         }
         return isotopeList;
     }
 
     /**
-     *  Get a list of all Elements which are contained
-     *  molecular.
+     * Get a list of all Elements which are contained molecular.
      *
-     *@param   formula The MolecularFormula to check
-     *@return          The list with the IElements in this molecular formula
+     * @param formula The MolecularFormula to check
+     * @return The list with the IElements in this molecular formula
      */
     public static List<IElement> elements(IMolecularFormula formula) {
 
@@ -182,7 +174,6 @@ public class MolecularFormulaManipulator {
                 elementList.add(isotope);
                 stringList.add(isotope.getSymbol());
             }
-
         }
         return elementList;
     }
@@ -190,9 +181,9 @@ public class MolecularFormulaManipulator {
     /**
      * True, if the MolecularFormula contains the given element as IIsotope object.
      *
-     * @param  formula   IMolecularFormula molecularFormula
-     * @param  element   The element this MolecularFormula is searched for
-     * @return           True, if the MolecularFormula contains the given element object
+     * @param formula IMolecularFormula molecularFormula
+     * @param element The element this MolecularFormula is searched for
+     * @return True, if the MolecularFormula contains the given element object
      */
     public static boolean containsElement(IMolecularFormula formula, IElement element) {
 
@@ -206,9 +197,9 @@ public class MolecularFormulaManipulator {
     /**
      * Removes all isotopes from a given element in the MolecularFormula.
      *
-     * @param  formula   IMolecularFormula molecularFormula
-     * @param  element   The IElement of the IIsotopes to be removed
-     * @return           The molecularFormula with the isotopes removed
+     * @param formula IMolecularFormula molecularFormula
+     * @param element The IElement of the IIsotopes to be removed
+     * @return The molecularFormula with the isotopes removed
      */
     public static IMolecularFormula removeElement(IMolecularFormula formula, IElement element) {
         for (IIsotope isotope : getIsotopes(formula, element)) {
@@ -220,98 +211,84 @@ public class MolecularFormulaManipulator {
     /**
      * Returns the string representation of the molecular formula.
      *
-     * @param formula       The IMolecularFormula Object
+     * @param formula The IMolecularFormula Object
      * @param orderElements The order of Elements
-     * @param setOne        True, when must be set the value 1 for elements with
-     *                      one atom
+     * @param setOne True, when must be set the value 1 for elements with one atom
      * @return A String containing the molecular formula
      * @see #getHTML(IMolecularFormula)
      * @see #generateOrderEle()
      * @see #generateOrderEle_Hill_NoCarbons()
      * @see #generateOrderEle_Hill_WithCarbons()
      */
-    public static String getString(IMolecularFormula formula, String[] orderElements,
-                                   boolean setOne) {
+    public static String getString(
+            IMolecularFormula formula, String[] orderElements, boolean setOne) {
         return getString(formula, orderElements, setOne, true);
     }
 
     private static void appendElement(StringBuilder sb, Integer mass, int elem, int count) {
         String symbol = Elements.ofNumber(elem).symbol();
-        if (symbol.isEmpty())
-            symbol = "R";
-        if (mass != null)
-            sb.append('[')
-              .append(mass)
-              .append(']')
-              .append(symbol);
-        else
-            sb.append(symbol);
-        if (count != 0)
-            sb.append(count);
+        if (symbol.isEmpty()) symbol = "R";
+        if (mass != null) sb.append('[').append(mass).append(']').append(symbol);
+        else sb.append(symbol);
+        if (count != 0) sb.append(count);
     }
 
     /**
      * Returns the string representation of the molecular formula.
      *
-     * @param formula       The IMolecularFormula Object
+     * @param formula The IMolecularFormula Object
      * @param orderElements The order of Elements
-     * @param setOne        True, when must be set the value 1 for elements with
-     *                      one atom
-     * @param setMassNumber If the formula contains an isotope of an element that is the
-     *                      non-major isotope, the element is represented as <code>[XE]</code> where
-     *                      <code>X</code> is the mass number and <code>E</code> is the element symbol
+     * @param setOne True, when must be set the value 1 for elements with one atom
+     * @param setMassNumber If the formula contains an isotope of an element that is the non-major
+     *     isotope, the element is represented as <code>[XE]</code> where <code>X</code> is the mass
+     *     number and <code>E</code> is the element symbol
      * @return A String containing the molecular formula
      * @see #getHTML(IMolecularFormula)
      * @see #generateOrderEle()
      * @see #generateOrderEle_Hill_NoCarbons()
      * @see #generateOrderEle_Hill_WithCarbons()
      */
-    public static String getString(IMolecularFormula formula, String[] orderElements,
-                                   boolean setOne, boolean setMassNumber) {
-        StringBuilder  stringMF     = new StringBuilder();
+    public static String getString(
+            IMolecularFormula formula,
+            String[] orderElements,
+            boolean setOne,
+            boolean setMassNumber) {
+        StringBuilder stringMF = new StringBuilder();
         List<IIsotope> isotopesList = putInOrder(orderElements, formula);
         Integer q = formula.getCharge();
 
-        if (q != null && q != 0)
-            stringMF.append('[');
+        if (q != null && q != 0) stringMF.append('[');
 
         if (!setMassNumber) {
             int count = 0;
-            int prev  = -1;
+            int prev = -1;
             for (IIsotope isotope : isotopesList) {
                 if (!Objects.equals(isotope.getAtomicNumber(), prev)) {
                     if (count != 0)
-                        appendElement(stringMF,
-                                      null, prev,
-                                      setOne || count != 1 ? count : 0);
-                    prev   = isotope.getAtomicNumber();
-                    count  = formula.getIsotopeCount(isotope);
-                } else
-                    count += formula.getIsotopeCount(isotope);
+                        appendElement(stringMF, null, prev, setOne || count != 1 ? count : 0);
+                    prev = isotope.getAtomicNumber();
+                    count = formula.getIsotopeCount(isotope);
+                } else count += formula.getIsotopeCount(isotope);
             }
-            if (count != 0)
-                appendElement(stringMF,
-                              null, prev,
-                              setOne || count != 1 ? count : 0);
+            if (count != 0) appendElement(stringMF, null, prev, setOne || count != 1 ? count : 0);
         } else {
             for (IIsotope isotope : isotopesList) {
                 int count = formula.getIsotopeCount(isotope);
-                appendElement(stringMF,
-                              isotope.getMassNumber(), isotope.getAtomicNumber(),
-                              setOne || count != 1 ? count : 0);
+                appendElement(
+                        stringMF,
+                        isotope.getMassNumber(),
+                        isotope.getAtomicNumber(),
+                        setOne || count != 1 ? count : 0);
             }
         }
-
 
         if (q != null && q != 0) {
             stringMF.append(']');
             if (q > 0) {
-                if (q > 1)
-                    stringMF.append(q);
+                if (q > 1) stringMF.append(q);
                 stringMF.append('+');
             } else {
-                if (q < -1)
-                    stringMF.append(-q);
+                if (q < -1) stringMF.append(-q);
                 stringMF.append('-');
             }
         }
@@ -320,17 +297,14 @@ public class MolecularFormulaManipulator {
     }
 
     /**
-     * Returns the string representation of the molecular formula.
-     * Based on Hill System. The Hill system is a system of writing
-     * chemical formulas such that the number of carbon atoms in a
-     * molecule is indicated first, the number of hydrogen atoms next,
-     * and then the number of all other chemical elements subsequently,
-     * in alphabetical order. When the formula contains no carbon, all
-     * the elements, including hydrogen, are listed alphabetically.
+     * Returns the string representation of the molecular formula. Based on Hill System. The Hill
+     * system is a system of writing chemical formulas such that the number of carbon atoms in a
+     * molecule is indicated first, the number of hydrogen atoms next, and then the number of all
+     * other chemical elements subsequently, in alphabetical order. When the formula contains no
+     * carbon, all the elements, including hydrogen, are listed alphabetically.
      *
-     * @param  formula  The IMolecularFormula Object
-     * @return          A String containing the molecular formula
-     *
+     * @param formula The IMolecularFormula Object
+     * @return A String containing the molecular formula
      * @see #getHTML(IMolecularFormula)
      */
     public static String getString(IMolecularFormula formula) {
@@ -339,55 +313,45 @@ public class MolecularFormulaManipulator {
     }
 
     /**
-     * Returns the string representation of the molecular formula.
-     * Based on Hill System. The Hill system is a system of writing
-     * chemical formulas such that the number of carbon atoms in a
-     * molecule is indicated first, the number of hydrogen atoms next,
-     * and then the number of all other chemical elements subsequently,
-     * in alphabetical order. When the formula contains no carbon, all
-     * the elements, including hydrogen, are listed alphabetically.
+     * Returns the string representation of the molecular formula. Based on Hill System. The Hill
+     * system is a system of writing chemical formulas such that the number of carbon atoms in a
+     * molecule is indicated first, the number of hydrogen atoms next, and then the number of all
+     * other chemical elements subsequently, in alphabetical order. When the formula contains no
+     * carbon, all the elements, including hydrogen, are listed alphabetically.
      *
-     * @param  formula  The IMolecularFormula Object
-     * @param  setOne   True, when must be set the value 1 for elements with
-     * 					one atom
-     * @return          A String containing the molecular formula
-     *
+     * @param formula The IMolecularFormula Object
+     * @param setOne True, when must be set the value 1 for elements with one atom
+     * @return A String containing the molecular formula
      * @see #getHTML(IMolecularFormula)
      */
     public static String getString(IMolecularFormula formula, boolean setOne) {
 
         if (containsElement(formula, formula.getBuilder().newInstance(IElement.class, "C")))
             return getString(formula, generateOrderEle_Hill_WithCarbons(), setOne, false);
-        else
-            return getString(formula, generateOrderEle_Hill_NoCarbons(), setOne, false);
+        else return getString(formula, generateOrderEle_Hill_NoCarbons(), setOne, false);
     }
 
-
     /**
-     * Returns the string representation of the molecular formula.
-     * Based on Hill System. The Hill system is a system of writing
-     * chemical formulas such that the number of carbon atoms in a
-     * molecule is indicated first, the number of hydrogen atoms next,
-     * and then the number of all other chemical elements subsequently,
-     * in alphabetical order. When the formula contains no carbon, all
-     * the elements, including hydrogen, are listed alphabetically.
+     * Returns the string representation of the molecular formula. Based on Hill System. The Hill
+     * system is a system of writing chemical formulas such that the number of carbon atoms in a
+     * molecule is indicated first, the number of hydrogen atoms next, and then the number of all
+     * other chemical elements subsequently, in alphabetical order. When the formula contains no
+     * carbon, all the elements, including hydrogen, are listed alphabetically.
      *
-     * @param  formula  The IMolecularFormula Object
-     * @param  setOne   True, when must be set the value 1 for elements with
-     * 					one atom
-     * @param setMassNumber If the formula contains an isotope of an element that is the
-     *                      non-major isotope, the element is represented as <code>[XE]</code> where
-     *                      <code>X</code> is the mass number and <code>E</code> is the element symbol
-     * @return          A String containing the molecular formula
-     *
+     * @param formula The IMolecularFormula Object
+     * @param setOne True, when must be set the value 1 for elements with one atom
+     * @param setMassNumber If the formula contains an isotope of an element that is the non-major
+     *     isotope, the element is represented as <code>[XE]</code> where <code>X</code> is the mass
+     *     number and <code>E</code> is the element symbol
+     * @return A String containing the molecular formula
      * @see #getHTML(IMolecularFormula)
      */
-    public static String getString(IMolecularFormula formula, boolean setOne, boolean setMassNumber) {
+    public static String getString(
+            IMolecularFormula formula, boolean setOne, boolean setMassNumber) {
 
         if (containsElement(formula, formula.getBuilder().newInstance(IElement.class, "C")))
             return getString(formula, generateOrderEle_Hill_WithCarbons(), setOne, setMassNumber);
-        else
-            return getString(formula, generateOrderEle_Hill_NoCarbons(), setOne, setMassNumber);
+        else return getString(formula, generateOrderEle_Hill_NoCarbons(), setOne, setMassNumber);
     }
 
     public static List<IIsotope> putInOrder(String[] orderElements, IMolecularFormula formula) {
@@ -396,29 +360,25 @@ public class MolecularFormulaManipulator {
             IElement element = formula.getBuilder().newInstance(IElement.class, orderElement);
             if (containsElement(formula, element)) {
                 List<IIsotope> isotopes = getIsotopes(formula, element);
-                Collections.sort(isotopes,
-                                 new Comparator<IIsotope>() {
-                                     @Override
-                                     public int compare(IIsotope a,
-                                                        IIsotope b) {
-                                         Integer aMass = a.getMassNumber();
-                                         Integer bMass = b.getMassNumber();
-                                         if (aMass == null)
-                                             return -1;
-                                         if (bMass == null)
-                                             return +1;
-                                         return aMass.compareTo(bMass);
-                                     }
-                                 });
+                Collections.sort(
+                        isotopes,
+                        new Comparator<IIsotope>() {
+                            @Override
+                            public int compare(IIsotope a, IIsotope b) {
+                                Integer aMass = a.getMassNumber();
+                                Integer bMass = b.getMassNumber();
+                                if (aMass == null) return -1;
+                                if (bMass == null) return +1;
+                                return aMass.compareTo(bMass);
+                            }
+                        });
                 isotopesList.addAll(isotopes);
             }
         }
         return isotopesList;
     }
 
-    /**
-     * @deprecated  Use {@link #getString(org.openscience.cdk.interfaces.IMolecularFormula)}
-     */
+    /** @deprecated Use {@link #getString(org.openscience.cdk.interfaces.IMolecularFormula)} */
     @Deprecated
     public static String getHillString(IMolecularFormula formula) {
         StringBuffer hillString = new StringBuffer();
@@ -428,8 +388,7 @@ public class MolecularFormulaManipulator {
             String symbol = isotope.getSymbol();
             if (hillMap.containsKey(symbol))
                 hillMap.put(symbol, hillMap.get(symbol) + formula.getIsotopeCount(isotope));
-            else
-                hillMap.put(symbol, formula.getIsotopeCount(isotope));
+            else hillMap.put(symbol, formula.getIsotopeCount(isotope));
         }
 
         // if we have a C append it and also add in the H
@@ -458,61 +417,57 @@ public class MolecularFormulaManipulator {
     }
 
     /**
-     * Returns the string representation of the molecular formula based on Hill
-     * System with numbers wrapped in &lt;sub&gt;&lt;/sub&gt; tags. Useful for
-     * displaying formulae in Swing components or on the web.
+     * Returns the string representation of the molecular formula based on Hill System with numbers
+     * wrapped in &lt;sub&gt;&lt;/sub&gt; tags. Useful for displaying formulae in Swing components
+     * or on the web.
      *
-     *
-     * @param   formula  The IMolecularFormula object
-     * @return           A HTML representation of the molecular formula
-     * @see              #getHTML(IMolecularFormula, boolean, boolean)
-     *
+     * @param formula The IMolecularFormula object
+     * @return A HTML representation of the molecular formula
+     * @see #getHTML(IMolecularFormula, boolean, boolean)
      */
     public static String getHTML(IMolecularFormula formula) {
         return getHTML(formula, true, true);
     }
 
     /**
-     * Returns the string representation of the molecular formula based on Hill
-     * System with numbers wrapped in &lt;sub&gt;&lt;/sub&gt; tags and the
-     * isotope of each Element in &lt;sup&gt;&lt;/sup&gt; tags and the total
-     * charge of IMolecularFormula in &lt;sup&gt;&lt;/sup&gt; tags. Useful for
-     * displaying formulae in Swing components or on the web.
+     * Returns the string representation of the molecular formula based on Hill System with numbers
+     * wrapped in &lt;sub&gt;&lt;/sub&gt; tags and the isotope of each Element in
+     * &lt;sup&gt;&lt;/sup&gt; tags and the total charge of IMolecularFormula in
+     * &lt;sup&gt;&lt;/sup&gt; tags. Useful for displaying formulae in Swing components or on the
+     * web.
      *
-     *
-     * @param   formula  The IMolecularFormula object
-     * @param   chargeB  True, If it has to show the charge
-     * @param   isotopeB True, If it has to show the Isotope mass
-     * @return           A HTML representation of the molecular formula
-     * @see              #getHTML(IMolecularFormula)
-     *
+     * @param formula The IMolecularFormula object
+     * @param chargeB True, If it has to show the charge
+     * @param isotopeB True, If it has to show the Isotope mass
+     * @return A HTML representation of the molecular formula
+     * @see #getHTML(IMolecularFormula)
      */
     public static String getHTML(IMolecularFormula formula, boolean chargeB, boolean isotopeB) {
         String[] orderElements;
         if (containsElement(formula, formula.getBuilder().newInstance(IElement.class, "C")))
             orderElements = generateOrderEle_Hill_WithCarbons();
-        else
-            orderElements = generateOrderEle_Hill_NoCarbons();
+        else orderElements = generateOrderEle_Hill_NoCarbons();
         return getHTML(formula, orderElements, chargeB, isotopeB);
     }
 
     /**
-     * Returns the string representation of the molecular formula with numbers
-     * wrapped in &lt;sub&gt;&lt;/sub&gt; tags and the isotope of each Element
-     * in &lt;sup&gt;&lt;/sup&gt; tags and the total showCharge of IMolecularFormula
-     * in &lt;sup&gt;&lt;/sup&gt; tags. Useful for displaying formulae in Swing
-     * components or on the web.
+     * Returns the string representation of the molecular formula with numbers wrapped in
+     * &lt;sub&gt;&lt;/sub&gt; tags and the isotope of each Element in &lt;sup&gt;&lt;/sup&gt; tags
+     * and the total showCharge of IMolecularFormula in &lt;sup&gt;&lt;/sup&gt; tags. Useful for
+     * displaying formulae in Swing components or on the web.
      *
-     *
-     * @param   formula  The IMolecularFormula object
-     * @param   orderElements The order of Elements
-     * @param   showCharge  True, If it has to show the showCharge
-     * @param   showIsotopes True, If it has to show the Isotope mass
-     * @return           A HTML representation of the molecular formula
-     * @see              #getHTML(IMolecularFormula)
-     *
+     * @param formula The IMolecularFormula object
+     * @param orderElements The order of Elements
+     * @param showCharge True, If it has to show the showCharge
+     * @param showIsotopes True, If it has to show the Isotope mass
+     * @return A HTML representation of the molecular formula
+     * @see #getHTML(IMolecularFormula)
      */
-    public static String getHTML(IMolecularFormula formula, String[] orderElements, boolean showCharge, boolean showIsotopes) {
+    public static String getHTML(
+            IMolecularFormula formula,
+            String[] orderElements,
+            boolean showCharge,
+            boolean showIsotopes) {
         StringBuilder sb = new StringBuilder();
         for (String orderElement : orderElements) {
             IElement element = formula.getBuilder().newInstance(IElement.class, orderElement);
@@ -544,12 +499,9 @@ public class MolecularFormulaManipulator {
                 return sb.toString();
             } else {
                 sb.append("<sup>");
-                if (charge > 1 || charge < -1)
-                    sb.append(Math.abs(charge));
-                if (charge > 0)
-                    sb.append('+');
-                else
-                    sb.append(MINUS); // note, not a hyphen!
+                if (charge > 1 || charge < -1) sb.append(Math.abs(charge));
+                if (charge > 0) sb.append('+');
+                else sb.append(MINUS); // note, not a hyphen!
                 sb.append("</sup>");
             }
         }
@@ -557,58 +509,60 @@ public class MolecularFormulaManipulator {
     }
 
     /**
-     * Construct an instance of IMolecularFormula, initialized with a molecular
-     * formula string. The string is immediately analyzed and a set of Nodes
-     * is built based on this analysis
-     * <p> The hydrogens must be implicit.
+     * Construct an instance of IMolecularFormula, initialized with a molecular formula string. The
+     * string is immediately analyzed and a set of Nodes is built based on this analysis
      *
-     * @param  stringMF   The molecularFormula string
+     * <p>The hydrogens must be implicit.
+     *
+     * @param stringMF The molecularFormula string
      * @param builder a IChemObjectBuilder which is used to construct atoms
-     * @return            The filled IMolecularFormula
-     * @see               #getMolecularFormula(String,IMolecularFormula)
+     * @return The filled IMolecularFormula
+     * @see #getMolecularFormula(String,IMolecularFormula)
      */
-    public static IMolecularFormula getMolecularFormula(String stringMF, IChemObjectBuilder builder) {
+    public static IMolecularFormula getMolecularFormula(
+            String stringMF, IChemObjectBuilder builder) {
         return getMolecularFormula(stringMF, false, builder);
     }
 
     /**
-     * Construct an instance of IMolecularFormula, initialized with a molecular
-     * formula string. The string is immediately analyzed and a set of Nodes
-     * is built based on this analysis. The hydrogens must be implicit. Major
-     * isotopes are being used.
+     * Construct an instance of IMolecularFormula, initialized with a molecular formula string. The
+     * string is immediately analyzed and a set of Nodes is built based on this analysis. The
+     * hydrogens must be implicit. Major isotopes are being used.
      *
-     * @param  stringMF   The molecularFormula string
+     * @param stringMF The molecularFormula string
      * @param builder a IChemObjectBuilder which is used to construct atoms
      * @return The filled IMolecularFormula
-     * @see               #getMolecularFormula(String,IMolecularFormula)
+     * @see #getMolecularFormula(String,IMolecularFormula)
      */
-    public static IMolecularFormula getMajorIsotopeMolecularFormula(String stringMF, IChemObjectBuilder builder) {
+    public static IMolecularFormula getMajorIsotopeMolecularFormula(
+            String stringMF, IChemObjectBuilder builder) {
         return getMolecularFormula(stringMF, true, builder);
     }
 
-    private static IMolecularFormula getMolecularFormula(String stringMF, boolean assumeMajorIsotope,
-            IChemObjectBuilder builder) {
+    private static IMolecularFormula getMolecularFormula(
+            String stringMF, boolean assumeMajorIsotope, IChemObjectBuilder builder) {
         IMolecularFormula formula = builder.newInstance(IMolecularFormula.class);
 
         return getMolecularFormula(stringMF, formula, assumeMajorIsotope);
     }
 
     private static final char HYPHEN = '-';
-    private static final char MINUS  = '–';
+    private static final char MINUS = '–';
     private static final String HYPHEN_STR = "-";
-    private static final String MINUS_STR  = "–";
+    private static final String MINUS_STR = "–";
 
     /**
-     * add in a instance of IMolecularFormula the elements extracts form
-     * molecular formula string. The string is immediately analyzed and a set of Nodes
-     * is built based on this analysis
-     * <p> The hydrogens must be implicit.
+     * add in a instance of IMolecularFormula the elements extracts form molecular formula string.
+     * The string is immediately analyzed and a set of Nodes is built based on this analysis
      *
-     * @param  stringMF   The molecularFormula string
-     * @return            The filled IMolecularFormula
-     * @see               #getMolecularFormula(String, IChemObjectBuilder)
+     * <p>The hydrogens must be implicit.
+     *
+     * @param stringMF The molecularFormula string
+     * @return The filled IMolecularFormula
+     * @see #getMolecularFormula(String, IChemObjectBuilder)
      */
-    public static IMolecularFormula getMolecularFormula(String stringMF, IMolecularFormula formula) {
+    public static IMolecularFormula getMolecularFormula(
+            String stringMF, IMolecularFormula formula) {
         return getMolecularFormula(stringMF, formula, false);
     }
 
@@ -633,12 +587,10 @@ public class MolecularFormulaManipulator {
         int pos;
         String str;
 
-
         public CharIter(int pos, String str) {
             this.pos = pos;
             this.str = str;
         }
-
 
         char next() {
             return pos == str.length() ? '\0' : str.charAt(pos++);
@@ -647,15 +599,12 @@ public class MolecularFormulaManipulator {
         int nextUInt() {
             char c = next();
             if (!isDigit(c)) {
-                if (c != '\0')
-                    pos--;
+                if (c != '\0') pos--;
                 return -1;
             }
             int res = c - '0';
-            while (isDigit(c = next()))
-                res = (10 * res) + (c - '0');
-            if (c != '\0')
-                pos--;
+            while (isDigit(c = next())) res = (10 * res) + (c - '0');
+            if (c != '\0') pos--;
             return res;
         }
 
@@ -683,38 +632,30 @@ public class MolecularFormulaManipulator {
     }
 
     // parses an isotope from a symbol in the form:
-     // ('[' <DIGIT> ']')? <UPPER> <LOWER>? <DIGIT>+?
-    private static boolean parseIsotope(CharIter iter,
-                                        IMolecularFormula mf,
-                                        boolean setMajor) {
+    // ('[' <DIGIT> ']')? <UPPER> <LOWER>? <DIGIT>+?
+    private static boolean parseIsotope(CharIter iter, IMolecularFormula mf, boolean setMajor) {
         Elements elem = null;
         int mass = 0;
         int count = 0;
         if (iter.nextIf('[')) {
             mass = iter.nextUInt();
-            if (mass < 0)
-                return false;
+            if (mass < 0) return false;
             elem = iter.nextElement(); // optional
-            if (!iter.nextIf(']'))
-                return false;
+            if (!iter.nextIf(']')) return false;
         }
         if (elem == null) {
             elem = iter.nextElement();
-            if (elem == null)
-                return false;
+            if (elem == null) return false;
         }
         count = iter.nextUInt();
-        if (count < 0)
-            count = 1;
+        if (count < 0) count = 1;
         IIsotope isotope = mf.getBuilder().newInstance(IIsotope.class, elem.symbol());
         isotope.setAtomicNumber(elem.number());
-        if (mass != 0)
-            isotope.setMassNumber(mass);
+        if (mass != 0) isotope.setMassNumber(mass);
         else if (setMajor) {
             try {
                 IIsotope major = Isotopes.getInstance().getMajorIsotope(elem.number());
-                if (major != null)
-                    isotope.setMassNumber(major.getMassNumber());
+                if (major != null) isotope.setMassNumber(major.getMassNumber());
             } catch (IOException ex) {
                 // ignored
             }
@@ -724,45 +665,46 @@ public class MolecularFormulaManipulator {
     }
 
     /**
-     * Add to an instance of IMolecularFormula the elements extracts form
-     * molecular formula string. The string is immediately analyzed and a set of Nodes
-     * is built based on this analysis. The hydrogens are assumed to be implicit.
-     * The boolean indicates if the major isotope is to be assumed, or if no
-     * assumption is to be made.
+     * Add to an instance of IMolecularFormula the elements extracts form molecular formula string.
+     * The string is immediately analyzed and a set of Nodes is built based on this analysis. The
+     * hydrogens are assumed to be implicit. The boolean indicates if the major isotope is to be
+     * assumed, or if no assumption is to be made.
      *
-     * @param  stringMF           The molecularFormula string
-     * @param  assumeMajorIsotope If true, it will take the major isotope for each element
-     * @return                    The filled IMolecularFormula
-     * @see                       #getMolecularFormula(String, org.openscience.cdk.interfaces.IChemObjectBuilder)
+     * @param stringMF The molecularFormula string
+     * @param assumeMajorIsotope If true, it will take the major isotope for each element
+     * @return The filled IMolecularFormula
+     * @see #getMolecularFormula(String, org.openscience.cdk.interfaces.IChemObjectBuilder)
      * @see #getMolecularFormula(String, boolean, org.openscience.cdk.interfaces.IChemObjectBuilder)
      */
-    private static IMolecularFormula getMolecularFormula(String stringMF, IMolecularFormula formula,
-            boolean assumeMajorIsotope) {
+    private static IMolecularFormula getMolecularFormula(
+            String stringMF, IMolecularFormula formula, boolean assumeMajorIsotope) {
 
-        if (stringMF.contains(".") || stringMF.contains("(") || stringMF.length() > 0 && stringMF.charAt(0) >= '0' && stringMF.charAt(0) <= '9')
+        if (stringMF.contains(".")
+                || stringMF.contains("(")
+                || stringMF.length() > 0 && stringMF.charAt(0) >= '0' && stringMF.charAt(0) <= '9')
             stringMF = simplifyMolecularFormula(stringMF);
 
         // Extract charge from String when contains []X- format
         Integer charge = null;
-        if ((stringMF.contains("+") || stringMF.contains(HYPHEN_STR) || stringMF.contains(MINUS_STR))) {
+        if ((stringMF.contains("+")
+                || stringMF.contains(HYPHEN_STR)
+                || stringMF.contains(MINUS_STR))) {
             int pos = findChargePosition(stringMF);
             if (pos >= 0 && pos != stringMF.length()) {
                 charge = parseCharge(new CharIter(pos, stringMF));
                 stringMF = stringMF.substring(0, pos);
-                if (stringMF.charAt(0) == '[' &&
-                    stringMF.charAt(stringMF.length()-1) == ']')
-                    stringMF = stringMF.substring(1, stringMF.length()-1);
+                if (stringMF.charAt(0) == '[' && stringMF.charAt(stringMF.length() - 1) == ']')
+                    stringMF = stringMF.substring(1, stringMF.length() - 1);
             }
         }
-        if (stringMF.isEmpty())
-            return null;
+        if (stringMF.isEmpty()) return null;
         int len = stringMF.length();
         CharIter iter = new CharIter(0, stringMF);
         iter.str = stringMF;
         while (iter.pos < len) {
             if (!parseIsotope(iter, formula, assumeMajorIsotope)) {
                 LoggingToolFactory.createLoggingTool(MolecularFormulaManipulator.class)
-                    .error("Could not parse MF: " + iter.str);
+                        .error("Could not parse MF: " + iter.str);
                 return null;
             }
         }
@@ -770,7 +712,6 @@ public class MolecularFormulaManipulator {
         if (charge != null) formula.setCharge(charge);
         return formula;
     }
-
 
     private static int parseCharge(CharIter iter) {
         int sign = 0;
@@ -784,10 +725,8 @@ public class MolecularFormulaManipulator {
                 sign = -1;
                 break;
         }
-        if (number < 0)
-            number = iter.nextUInt();
-        if (number < 0)
-            number = 1;
+        if (number < 0) number = iter.nextUInt();
+        if (number < 0) number = 1;
         if (sign == 0) {
             switch (iter.next()) {
                 case '+':
@@ -806,29 +745,25 @@ public class MolecularFormulaManipulator {
      * Extract the charge position given a molecular formula format [O3S]2-.
      *
      * @param formula The formula to inspect
-     * @return        The charge position in the string
+     * @return The charge position in the string
      */
     private static int findChargePosition(String formula) {
-        int end  = formula.length() - 1;
-        int pos  = end;
-        while (pos >= 0 && isSign(formula.charAt(pos)))
-            pos--;
+        int end = formula.length() - 1;
+        int pos = end;
+        while (pos >= 0 && isSign(formula.charAt(pos))) pos--;
         int mark1 = pos;
-        while (pos >= 0 && isDigit(formula.charAt(pos)))
-            pos--;
+        while (pos >= 0 && isDigit(formula.charAt(pos))) pos--;
         int mark2 = pos;
-        while (pos >= 0 && isSign(formula.charAt(pos)))
-            pos--;
+        while (pos >= 0 && isSign(formula.charAt(pos))) pos--;
         if (pos == mark2 && formula.charAt(pos) != ']')
             pos = mark1; // not a charge CH3- we sucked up a number
-        return pos+1;
+        return pos + 1;
     }
 
     /**
-     * @deprecated calls {@link #getMass(IMolecularFormula, int)} with option
-     * {@link #MonoIsotopic} and adjusts for charge with
-     * {@link #correctMass(double, Integer)}. These functions should be used
-     * directly.
+     * @deprecated calls {@link #getMass(IMolecularFormula, int)} with option {@link #MonoIsotopic}
+     *     and adjusts for charge with {@link #correctMass(double, Integer)}. These functions should
+     *     be used directly.
      */
     @Deprecated
     public static double getTotalExactMass(IMolecularFormula formula) {
@@ -836,29 +771,27 @@ public class MolecularFormulaManipulator {
     }
 
     /**
-     * Correct the mass according the charge of the IMmoleculeFormula.
-     * Negative charge will add the mass of one electron to the mass.
+     * Correct the mass according the charge of the IMmoleculeFormula. Negative charge will add the
+     * mass of one electron to the mass.
      *
-     * @param mass      The mass to correct
-     * @param charge    The charge
-     * @return          The mass with the correction
+     * @param mass The mass to correct
+     * @param charge The charge
+     * @return The mass with the correction
      */
     private static double correctMass(double mass, Integer charge) {
-        if (charge == null)
-            return mass;
+        if (charge == null) return mass;
         double massE = 0.00054857990927;
-        if (charge > 0)
-            mass -= massE * charge;
+        if (charge > 0) mass -= massE * charge;
         else if (charge < 0) mass += massE * Math.abs(charge);
         return mass;
     }
 
     /**
-     * Get the summed mass number of all isotopes from an MolecularFormula. It
-     * assumes isotope masses to be preset, and returns 0.0 if not.
+     * Get the summed mass number of all isotopes from an MolecularFormula. It assumes isotope
+     * masses to be preset, and returns 0.0 if not.
      *
-     * @param  formula The IMolecularFormula to calculate
-     * @return         The summed nominal mass of all atoms in this MolecularFormula
+     * @param formula The IMolecularFormula to calculate
+     * @return The summed nominal mass of all atoms in this MolecularFormula
      */
     public static double getTotalMassNumber(IMolecularFormula formula) {
         double mass = 0.0;
@@ -876,44 +809,34 @@ public class MolecularFormulaManipulator {
     }
 
     private static double getExactMass(IsotopeFactory isofact, IIsotope atom) {
-        if (atom.getExactMass() != null)
-            return atom.getExactMass();
+        if (atom.getExactMass() != null) return atom.getExactMass();
         else if (atom.getMassNumber() != null)
-            return isofact.getExactMass(atom.getAtomicNumber(),
-                                        atom.getMassNumber());
-        else
-            return isofact.getMajorIsotopeMass(atom.getAtomicNumber());
+            return isofact.getExactMass(atom.getAtomicNumber(), atom.getMassNumber());
+        else return isofact.getMajorIsotopeMass(atom.getAtomicNumber());
     }
 
     private static double getMassOrAvg(IsotopeFactory isofact, IIsotope atom) {
-        if (atom.getMassNumber() == null ||
-            atom.getMassNumber() == 0)
+        if (atom.getMassNumber() == null || atom.getMassNumber() == 0)
             return isofact.getNaturalMass(atom);
-        else
-            return getExactMass(isofact, atom);
+        else return getExactMass(isofact, atom);
     }
 
     /**
-     * Calculate the mass of a formula, this function takes an optional
-     * 'mass flavour' that switches the computation type. The key distinction
-     * is how specified/unspecified isotopes are handled. A specified isotope
-     * is an atom that has either {@link IAtom#setMassNumber(Integer)}
-     * or {@link IAtom#setExactMass(Double)} set to non-null and non-zero.
-     * <br>
-     * The flavours are:
-     * <br>
+     * Calculate the mass of a formula, this function takes an optional 'mass flavour' that switches
+     * the computation type. The key distinction is how specified/unspecified isotopes are handled.
+     * A specified isotope is an atom that has either {@link IAtom#setMassNumber(Integer)} or {@link
+     * IAtom#setExactMass(Double)} set to non-null and non-zero. <br>
+     * The flavours are: <br>
+     *
      * <ul>
-     *     <li>{@link #MolWeight} (default) - uses the exact mass of each
-     *     atom when an isotope is specified, if not specified the average mass
-     *     of the element is used.</li>
-     *     <li>{@link #MolWeightIgnoreSpecified} - uses the average mass of each
-     *     element, ignoring any isotopic/exact mass specification</li>
-     *     <li>{@link #MonoIsotopic} - uses the exact mass of each
-     *     atom when an isotope is specified, if not specified the major isotope
-     *     mass for that element is used.</li>
-     *     <li>{@link #MostAbundant} - uses the exact mass of each atom when
-     *     specified, if not specified a distribution is calculated and the
-     *     most abundant isotope pattern is used.</li>
+     *   <li>{@link #MolWeight} (default) - uses the exact mass of each atom when an isotope is
+     *       specified, if not specified the average mass of the element is used.
+     *   <li>{@link #MolWeightIgnoreSpecified} - uses the average mass of each element, ignoring any
+     *       isotopic/exact mass specification
+     *   <li>{@link #MonoIsotopic} - uses the exact mass of each atom when an isotope is specified,
+     *       if not specified the major isotope mass for that element is used.
+     *   <li>{@link #MostAbundant} - uses the exact mass of each atom when specified, if not
+     *       specified a distribution is calculated and the most abundant isotope pattern is used.
      * </ul>
      *
      * @param mf molecular formula
@@ -937,52 +860,43 @@ public class MolecularFormulaManipulator {
         switch (flav & 0xf) {
             case MolWeight:
                 for (IIsotope iso : mf.isotopes()) {
-                    mass += mf.getIsotopeCount(iso) *
-                            getMassOrAvg(isofact, iso);
+                    mass += mf.getIsotopeCount(iso) * getMassOrAvg(isofact, iso);
                 }
                 break;
             case MolWeightIgnoreSpecified:
                 for (IIsotope iso : mf.isotopes()) {
-                    mass += mf.getIsotopeCount(iso) *
-                            isofact.getNaturalMass(iso.getAtomicNumber());
+                    mass += mf.getIsotopeCount(iso) * isofact.getNaturalMass(iso.getAtomicNumber());
                 }
                 break;
             case MonoIsotopic:
                 for (IIsotope iso : mf.isotopes()) {
-                    mass += mf.getIsotopeCount(iso) *
-                            getExactMass(isofact, iso);
+                    mass += mf.getIsotopeCount(iso) * getExactMass(isofact, iso);
                 }
                 break;
             case MostAbundant:
                 IMolecularFormula mamf = getMostAbundant(mf);
-                if (mamf != null)
-                    mass = getMass(mamf, MonoIsotopic);
+                if (mamf != null) mass = getMass(mamf, MonoIsotopic);
                 break;
         }
         return mass;
     }
 
     /**
-     * Calculate the mass of a formula, this function takes an optional
-     * 'mass flavour' that switches the computation type. The key distinction
-     * is how specified/unspecified isotopes are handled. A specified isotope
-     * is an atom that has either {@link IAtom#setMassNumber(Integer)}
-     * or {@link IAtom#setExactMass(Double)} set to non-null and non-zero.
-     * <br>
-     * The flavours are:
-     * <br>
+     * Calculate the mass of a formula, this function takes an optional 'mass flavour' that switches
+     * the computation type. The key distinction is how specified/unspecified isotopes are handled.
+     * A specified isotope is an atom that has either {@link IAtom#setMassNumber(Integer)} or {@link
+     * IAtom#setExactMass(Double)} set to non-null and non-zero. <br>
+     * The flavours are: <br>
+     *
      * <ul>
-     *     <li>{@link #MolWeight} (default) - uses the exact mass of each
-     *     atom when an isotope is specified, if not specified the average mass
-     *     of the element is used.</li>
-     *     <li>{@link #MolWeightIgnoreSpecified} - uses the average mass of each
-     *     element, ignoring any isotopic/exact mass specification</li>
-     *     <li>{@link #MonoIsotopic} - uses the exact mass of each
-     *     atom when an isotope is specified, if not specified the major isotope
-     *     mass for that element is used.</li>
-     *     <li>{@link #MostAbundant} - uses the exact mass of each atom when
-     *     specified, if not specified a distribution is calculated and the
-     *     most abundant isotope pattern is used.</li>
+     *   <li>{@link #MolWeight} (default) - uses the exact mass of each atom when an isotope is
+     *       specified, if not specified the average mass of the element is used.
+     *   <li>{@link #MolWeightIgnoreSpecified} - uses the average mass of each element, ignoring any
+     *       isotopic/exact mass specification
+     *   <li>{@link #MonoIsotopic} - uses the exact mass of each atom when an isotope is specified,
+     *       if not specified the major isotope mass for that element is used.
+     *   <li>{@link #MostAbundant} - uses the exact mass of each atom when specified, if not
+     *       specified a distribution is calculated and the most abundant isotope pattern is used.
      * </ul>
      *
      * @param mf molecular formula
@@ -998,8 +912,8 @@ public class MolecularFormulaManipulator {
     }
 
     /**
-     * @deprecated use {@link #getMass(IMolecularFormula, int)} with option
-     * {@link #MolWeightIgnoreSpecified}.
+     * @deprecated use {@link #getMass(IMolecularFormula, int)} with option {@link
+     *     #MolWeightIgnoreSpecified}.
      */
     @Deprecated
     public static double getNaturalExactMass(IMolecularFormula formula) {
@@ -1007,8 +921,7 @@ public class MolecularFormulaManipulator {
     }
 
     /**
-     * @deprecated use {@link #getMass(IMolecularFormula, int)} with option
-     * {@link #MonoIsotopic}.
+     * @deprecated use {@link #getMass(IMolecularFormula, int)} with option {@link #MonoIsotopic}.
      */
     @Deprecated
     public static double getMajorIsotopeMass(IMolecularFormula formula) {
@@ -1016,17 +929,21 @@ public class MolecularFormulaManipulator {
     }
 
     /**
-     * Get the summed natural abundance of all isotopes from an MolecularFormula. Assumes
-     * abundances to be preset, and will return 0.0 if not.
+     * Get the summed natural abundance of all isotopes from an MolecularFormula. Assumes abundances
+     * to be preset, and will return 0.0 if not.
      *
-     * @param  formula The IMolecularFormula to calculate
-     * @return         The summed natural abundance of all isotopes in this MolecularFormula
+     * @param formula The IMolecularFormula to calculate
+     * @return The summed natural abundance of all isotopes in this MolecularFormula
      */
     public static double getTotalNaturalAbundance(IMolecularFormula formula) {
         double abundance = 1.0;
         for (IIsotope isotope : formula.isotopes()) {
             if (isotope.getNaturalAbundance() == null) return 0.0;
-            abundance = abundance * Math.pow(isotope.getNaturalAbundance(), formula.getIsotopeCount(isotope));
+            abundance =
+                    abundance
+                            * Math.pow(
+                                    isotope.getNaturalAbundance(),
+                                    formula.getIsotopeCount(isotope));
         }
         return abundance / Math.pow(100, getAtomCount(formula));
     }
@@ -1034,18 +951,18 @@ public class MolecularFormulaManipulator {
     /**
      * Returns the number of double bond equivalents in this molecule.
      *
-     * @param  formula  The IMolecularFormula to calculate
-     * @return          The number of DBEs
-     * @throws          CDKException if DBE cannot be be evaluated
-     *
+     * @param formula The IMolecularFormula to calculate
+     * @return The number of DBEs
+     * @throws CDKException if DBE cannot be be evaluated
      * @cdk.keyword DBE
      * @cdk.keyword double bond equivalent
      */
     public static double getDBE(IMolecularFormula formula) throws CDKException {
         int valencies[] = new int[5];
         IAtomContainer ac = getAtomContainer(formula);
-        AtomTypeFactory factory = AtomTypeFactory.getInstance(
-                "org/openscience/cdk/config/data/structgen_atomtypes.xml", ac.getBuilder());
+        AtomTypeFactory factory =
+                AtomTypeFactory.getInstance(
+                        "org/openscience/cdk/config/data/structgen_atomtypes.xml", ac.getBuilder());
 
         for (int f = 0; f < ac.getAtomCount(); f++) {
             IAtomType[] types = factory.getAtomTypes(ac.getAtom(f).getSymbol());
@@ -1060,13 +977,13 @@ public class MolecularFormulaManipulator {
     }
 
     /**
-     * Method that actually does the work of convert the atomContainer
-     * to IMolecularFormula.
-     * <p> The hydrogens must be implicit.
+     * Method that actually does the work of convert the atomContainer to IMolecularFormula.
      *
-     * @param 	atomContainer     IAtomContainer object
-     * @return	a molecular formula object
-     * @see		#getMolecularFormula(IAtomContainer,IMolecularFormula)
+     * <p>The hydrogens must be implicit.
+     *
+     * @param atomContainer IAtomContainer object
+     * @return a molecular formula object
+     * @see #getMolecularFormula(IAtomContainer,IMolecularFormula)
      */
     public static IMolecularFormula getMolecularFormula(IAtomContainer atomContainer) {
 
@@ -1076,16 +993,18 @@ public class MolecularFormulaManipulator {
     }
 
     /**
-     * Method that actually does the work of convert the atomContainer
-     * to IMolecularFormula given a IMolecularFormula.
-     * <p> The hydrogens must be implicit.
+     * Method that actually does the work of convert the atomContainer to IMolecularFormula given a
+     * IMolecularFormula.
      *
-     * @param  atomContainer     IAtomContainer object
-     * @param  formula           IMolecularFormula molecularFormula to put the new Isotopes
-     * @return                   the filled AtomContainer
-     * @see                      #getMolecularFormula(IAtomContainer)
+     * <p>The hydrogens must be implicit.
+     *
+     * @param atomContainer IAtomContainer object
+     * @param formula IMolecularFormula molecularFormula to put the new Isotopes
+     * @return the filled AtomContainer
+     * @see #getMolecularFormula(IAtomContainer)
      */
-    public static IMolecularFormula getMolecularFormula(IAtomContainer atomContainer, IMolecularFormula formula) {
+    public static IMolecularFormula getMolecularFormula(
+            IAtomContainer atomContainer, IMolecularFormula formula) {
 
         // mark multi-center attachments to be excluded from the formula
         Set<IAtom> mattach = null;
@@ -1096,8 +1015,7 @@ public class MolecularFormulaManipulator {
                     for (IBond bond : sgroup.getBonds()) {
                         for (IAtom atom : sgroup.getAtoms()) {
                             if (bond.contains(atom)) {
-                                if (mattach == null)
-                                    mattach = new HashSet<>();
+                                if (mattach == null) mattach = new HashSet<>();
                                 mattach.add(atom);
                             }
                         }
@@ -1105,22 +1023,18 @@ public class MolecularFormulaManipulator {
                 }
             }
         }
-        if (mattach == null)
-            mattach = Collections.emptySet();
+        if (mattach == null) mattach = Collections.emptySet();
 
         int charge = 0;
-        int hcnt   = 0;
+        int hcnt = 0;
         for (IAtom atm : atomContainer.atoms()) {
             if ((atm instanceof IPseudoAtom && ((IPseudoAtom) atm).getAttachPointNum() != 0))
                 continue;
-            if (mattach.contains(atm))
-                continue;
+            if (mattach.contains(atm)) continue;
             formula.addIsotope(atm);
-            if (atm.getFormalCharge() != null)
-                charge += atm.getFormalCharge();
-            if (atm.getImplicitHydrogenCount() != null)
-                hcnt += atm.getImplicitHydrogenCount();
-            }
+            if (atm.getFormalCharge() != null) charge += atm.getFormalCharge();
+            if (atm.getImplicitHydrogenCount() != null) hcnt += atm.getImplicitHydrogenCount();
+        }
         if (hcnt != 0) {
             IAtom hAtom = atomContainer.getBuilder().newInstance(IAtom.class, "H");
             formula.addIsotope(hAtom, hcnt);
@@ -1130,13 +1044,13 @@ public class MolecularFormulaManipulator {
     }
 
     /**
-     * Method that actually does the work of convert the IMolecularFormula
-     * to IAtomContainer.
-     * <p> The hydrogens must be implicit.
+     * Method that actually does the work of convert the IMolecularFormula to IAtomContainer.
      *
-     * @param  formula  IMolecularFormula object
-     * @return          the filled AtomContainer
-     * @see             #getAtomContainer(IMolecularFormula, IAtomContainer)
+     * <p>The hydrogens must be implicit.
+     *
+     * @param formula IMolecularFormula object
+     * @return the filled AtomContainer
+     * @see #getAtomContainer(IMolecularFormula, IAtomContainer)
      */
     public static IAtomContainer getAtomContainer(IMolecularFormula formula) {
 
@@ -1145,16 +1059,18 @@ public class MolecularFormulaManipulator {
     }
 
     /**
-     * Method that actually does the work of convert the IMolecularFormula
-     * to IAtomContainer given a IAtomContainer.
-     * <p> The hydrogens must be implicit.
+     * Method that actually does the work of convert the IMolecularFormula to IAtomContainer given a
+     * IAtomContainer.
      *
-     * @param  formula           IMolecularFormula object
-     * @param  atomContainer     IAtomContainer to put the new Elements
-     * @return                   the filled AtomContainer
-     * @see                      #getAtomContainer(IMolecularFormula)
+     * <p>The hydrogens must be implicit.
+     *
+     * @param formula IMolecularFormula object
+     * @param atomContainer IAtomContainer to put the new Elements
+     * @return the filled AtomContainer
+     * @see #getAtomContainer(IMolecularFormula)
      */
-    public static IAtomContainer getAtomContainer(IMolecularFormula formula, IAtomContainer atomContainer) {
+    public static IAtomContainer getAtomContainer(
+            IMolecularFormula formula, IAtomContainer atomContainer) {
 
         for (IIsotope isotope : formula.isotopes()) {
             int occur = formula.getIsotopeCount(isotope);
@@ -1168,98 +1084,412 @@ public class MolecularFormulaManipulator {
     }
 
     /**
-     * Converts a formula string (like "C2H4") into an atom container with atoms
-     * but no bonds.
+     * Converts a formula string (like "C2H4") into an atom container with atoms but no bonds.
      *
      * @param formulaString the formula to convert
      * @param builder a chem object builder
      * @return atoms wrapped in an atom container
      */
-    public static IAtomContainer getAtomContainer(String formulaString, IChemObjectBuilder builder) {
-        return MolecularFormulaManipulator.getAtomContainer(MolecularFormulaManipulator.getMolecularFormula(
-                formulaString, builder));
+    public static IAtomContainer getAtomContainer(
+            String formulaString, IChemObjectBuilder builder) {
+        return MolecularFormulaManipulator.getAtomContainer(
+                MolecularFormulaManipulator.getMolecularFormula(formulaString, builder));
     }
 
     /**
      * Returns the Elements ordered according to (approximate) probability of occurrence.
      *
-     * <p>This begins with the "elements of life" C, H, O, N, (Si, P, S, F, Cl),
-     * then continues with the "common" chemical synthesis ingredients, closing off
-     * with the tail-end of the periodic table in atom-number order and finally
-     * the generic R-group.
+     * <p>This begins with the "elements of life" C, H, O, N, (Si, P, S, F, Cl), then continues with
+     * the "common" chemical synthesis ingredients, closing off with the tail-end of the periodic
+     * table in atom-number order and finally the generic R-group.
      *
-     * @return  fixed-order array
-     *
+     * @return fixed-order array
      */
     public static String[] generateOrderEle() {
-        return new String[]{
-                // Elements of life
-                "C", "H", "O", "N", "Si", "P", "S", "F", "Cl",
+        return new String[] {
+            // Elements of life
+            "C",
+            "H",
+            "O",
+            "N",
+            "Si",
+            "P",
+            "S",
+            "F",
+            "Cl",
+            "Br",
+            "I",
+            "Sn",
+            "B",
+            "Pb",
+            "Tl",
+            "Ba",
+            "In",
+            "Pd",
+            "Pt",
+            "Os",
+            "Ag",
+            "Zr",
+            "Se",
+            "Zn",
+            "Cu",
+            "Ni",
+            "Co",
+            "Fe",
+            "Cr",
+            "Ti",
+            "Ca",
+            "K",
+            "Al",
+            "Mg",
+            "Na",
+            "Ce",
+            "Hg",
+            "Au",
+            "Ir",
+            "Re",
+            "W",
+            "Ta",
+            "Hf",
+            "Lu",
+            "Yb",
+            "Tm",
+            "Er",
+            "Ho",
+            "Dy",
+            "Tb",
+            "Gd",
+            "Eu",
+            "Sm",
+            "Pm",
+            "Nd",
+            "Pr",
+            "La",
+            "Cs",
+            "Xe",
+            "Te",
+            "Sb",
+            "Cd",
+            "Rh",
+            "Ru",
+            "Tc",
+            "Mo",
+            "Nb",
+            "Y",
+            "Sr",
+            "Rb",
+            "Kr",
+            "As",
+            "Ge",
+            "Ga",
+            "Mn",
+            "V",
+            "Sc",
+            "Ar",
+            "Ne",
+            "He",
+            "Be",
+            "Li",
 
-                "Br", "I", "Sn", "B", "Pb", "Tl", "Ba", "In", "Pd", "Pt", "Os", "Ag", "Zr", "Se", "Zn", "Cu", "Ni",
-                "Co", "Fe", "Cr", "Ti", "Ca", "K", "Al", "Mg", "Na", "Ce", "Hg", "Au", "Ir", "Re", "W", "Ta", "Hf",
-                "Lu", "Yb", "Tm", "Er", "Ho", "Dy", "Tb", "Gd", "Eu", "Sm", "Pm", "Nd", "Pr", "La", "Cs", "Xe", "Te",
-                "Sb", "Cd", "Rh", "Ru", "Tc", "Mo", "Nb", "Y", "Sr", "Rb", "Kr", "As", "Ge", "Ga", "Mn", "V", "Sc",
-                "Ar", "Ne", "He", "Be", "Li",
+            // rest of periodic table, in atom-number order.
+            "Bi",
+            "Po",
+            "At",
+            "Rn",
+            // row-7 elements (including f-block)
+            "Fr",
+            "Ra",
+            "Ac",
+            "Th",
+            "Pa",
+            "U",
+            "Np",
+            "Pu",
+            "Am",
+            "Cm",
+            "Bk",
+            "Cf",
+            "Es",
+            "Fm",
+            "Md",
+            "No",
+            "Lr",
+            "Rf",
+            "Db",
+            "Sg",
+            "Bh",
+            "Hs",
+            "Mt",
+            "Ds",
+            "Rg",
+            "Cn",
 
-                // rest of periodic table, in atom-number order.
-                "Bi", "Po", "At", "Rn",
-                // row-7 elements (including f-block)
-                "Fr", "Ra", "Ac", "Th", "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr",
-                "Rf", "Db", "Sg", "Bh", "Hs", "Mt", "Ds", "Rg", "Cn",
-
-                // The "odd one out": an unspecified R-group
-                "R"};
-
+            // The "odd one out": an unspecified R-group
+            "R"
+        };
     }
 
     /**
-     * Returns the Elements in Hill system order for non-carbon-containing formulas
-     * (i.e. strict alphabetical order, with one-letter elements preceding two-letter elements.)
-     * The generic R-group is treated specially and comes last.
+     * Returns the Elements in Hill system order for non-carbon-containing formulas (i.e. strict
+     * alphabetical order, with one-letter elements preceding two-letter elements.) The generic
+     * R-group is treated specially and comes last.
      *
-     * @return  Elements in Hill system order (strictly alphabetical), with generic R-groups last.
+     * @return Elements in Hill system order (strictly alphabetical), with generic R-groups last.
      */
     private static String[] generateOrderEle_Hill_NoCarbons() {
-        return new String[]{"Ac", "Ag", "Al", "Am", "Ar", "As", "At", "Au", "B", "Ba", "Be", "Bh", "Bi", "Bk", "Br",
-                "C", "Ca", "Cd", "Ce", "Cf", "Cl", "Cm", "Cn", "Co", "Cr", "Cs", "Cu", "Db", "Ds", "Dy", "Er", "Es",
-                "Eu", "F", "Fe", "Fm", "Fr", "Ga", "Gd", "Ge", "H", "He", "Hf", "Hg", "Ho", "Hs", "I", "In", "Ir", "K",
-                "Kr", "La", "Li", "Lr", "Lu", "Md", "Mg", "Mn", "Mo", "Mt", "N", "Na", "Nb", "Nd", "Ne", "Ni", "No",
-                "Np", "O", "Os", "P", "Pa", "Pb", "Pd", "Pm", "Po", "Pr", "Pt", "Pu", "Ra", "Rb", "Re", "Rf", "Rg",
-                "Rh", "Rn", "Ru", "S", "Sb", "Sc", "Se", "Sg", "Si", "Sm", "Sn", "Sr", "Ta", "Tb", "Tc", "Te", "Th",
-                "Ti", "Tl", "Tm", "U", "V", "W", "Xe", "Y", "Yb", "Zn", "Zr",
-                // The "odd one out": an unspecified R-group
-                "R"};
+        return new String[] {
+            "Ac",
+            "Ag",
+            "Al",
+            "Am",
+            "Ar",
+            "As",
+            "At",
+            "Au",
+            "B",
+            "Ba",
+            "Be",
+            "Bh",
+            "Bi",
+            "Bk",
+            "Br",
+            "C",
+            "Ca",
+            "Cd",
+            "Ce",
+            "Cf",
+            "Cl",
+            "Cm",
+            "Cn",
+            "Co",
+            "Cr",
+            "Cs",
+            "Cu",
+            "Db",
+            "Ds",
+            "Dy",
+            "Er",
+            "Es",
+            "Eu",
+            "F",
+            "Fe",
+            "Fm",
+            "Fr",
+            "Ga",
+            "Gd",
+            "Ge",
+            "H",
+            "He",
+            "Hf",
+            "Hg",
+            "Ho",
+            "Hs",
+            "I",
+            "In",
+            "Ir",
+            "K",
+            "Kr",
+            "La",
+            "Li",
+            "Lr",
+            "Lu",
+            "Md",
+            "Mg",
+            "Mn",
+            "Mo",
+            "Mt",
+            "N",
+            "Na",
+            "Nb",
+            "Nd",
+            "Ne",
+            "Ni",
+            "No",
+            "Np",
+            "O",
+            "Os",
+            "P",
+            "Pa",
+            "Pb",
+            "Pd",
+            "Pm",
+            "Po",
+            "Pr",
+            "Pt",
+            "Pu",
+            "Ra",
+            "Rb",
+            "Re",
+            "Rf",
+            "Rg",
+            "Rh",
+            "Rn",
+            "Ru",
+            "S",
+            "Sb",
+            "Sc",
+            "Se",
+            "Sg",
+            "Si",
+            "Sm",
+            "Sn",
+            "Sr",
+            "Ta",
+            "Tb",
+            "Tc",
+            "Te",
+            "Th",
+            "Ti",
+            "Tl",
+            "Tm",
+            "U",
+            "V",
+            "W",
+            "Xe",
+            "Y",
+            "Yb",
+            "Zn",
+            "Zr",
+            // The "odd one out": an unspecified R-group
+            "R"
+        };
     }
 
     /**
-     * Returns the Elements in Hill system order for carbon-containing formulas
-     * (i.e. first carbon and hydrogen, and then the rest of the elements in strict
-     * alphabetical order, with one-letter elements preceding two-letter elements.)
-     * The generic R-group is treated specially and comes last.
+     * Returns the Elements in Hill system order for carbon-containing formulas (i.e. first carbon
+     * and hydrogen, and then the rest of the elements in strict alphabetical order, with one-letter
+     * elements preceding two-letter elements.) The generic R-group is treated specially and comes
+     * last.
      *
-     * @return  Elements in Hill system order with carbons and hydrogens
-     * 		first (and generic R-groups last).
+     * @return Elements in Hill system order with carbons and hydrogens first (and generic R-groups
+     *     last).
      */
     private static String[] generateOrderEle_Hill_WithCarbons() {
-        return new String[]{"C", "H", "Ac", "Ag", "Al", "Am", "Ar", "As", "At", "Au", "B", "Ba", "Be", "Bh", "Bi",
-                "Bk", "Br", "Ca", "Cd", "Ce", "Cf", "Cl", "Cm", "Cn", "Co", "Cr", "Cs", "Cu", "Db", "Ds", "Dy", "Er",
-                "Es", "Eu", "F", "Fe", "Fm", "Fr", "Ga", "Gd", "Ge", "He", "Hf", "Hg", "Ho", "Hs", "I", "In", "Ir",
-                "K", "Kr", "La", "Li", "Lr", "Lu", "Md", "Mg", "Mn", "Mo", "Mt", "N", "Na", "Nb", "Nd", "Ne", "Ni",
-                "No", "Np", "O", "Os", "P", "Pa", "Pb", "Pd", "Pm", "Po", "Pr", "Pt", "Pu", "Ra", "Rb", "Re", "Rf",
-                "Rg", "Rh", "Rn", "Ru", "S", "Sb", "Sc", "Se", "Sg", "Si", "Sm", "Sn", "Sr", "Ta", "Tb", "Tc", "Te",
-                "Th", "Ti", "Tl", "Tm", "U", "V", "W", "Xe", "Y", "Yb", "Zn", "Zr",
-                // The "odd one out": an unspecified R-group
-                "R"};
+        return new String[] {
+            "C",
+            "H",
+            "Ac",
+            "Ag",
+            "Al",
+            "Am",
+            "Ar",
+            "As",
+            "At",
+            "Au",
+            "B",
+            "Ba",
+            "Be",
+            "Bh",
+            "Bi",
+            "Bk",
+            "Br",
+            "Ca",
+            "Cd",
+            "Ce",
+            "Cf",
+            "Cl",
+            "Cm",
+            "Cn",
+            "Co",
+            "Cr",
+            "Cs",
+            "Cu",
+            "Db",
+            "Ds",
+            "Dy",
+            "Er",
+            "Es",
+            "Eu",
+            "F",
+            "Fe",
+            "Fm",
+            "Fr",
+            "Ga",
+            "Gd",
+            "Ge",
+            "He",
+            "Hf",
+            "Hg",
+            "Ho",
+            "Hs",
+            "I",
+            "In",
+            "Ir",
+            "K",
+            "Kr",
+            "La",
+            "Li",
+            "Lr",
+            "Lu",
+            "Md",
+            "Mg",
+            "Mn",
+            "Mo",
+            "Mt",
+            "N",
+            "Na",
+            "Nb",
+            "Nd",
+            "Ne",
+            "Ni",
+            "No",
+            "Np",
+            "O",
+            "Os",
+            "P",
+            "Pa",
+            "Pb",
+            "Pd",
+            "Pm",
+            "Po",
+            "Pr",
+            "Pt",
+            "Pu",
+            "Ra",
+            "Rb",
+            "Re",
+            "Rf",
+            "Rg",
+            "Rh",
+            "Rn",
+            "Ru",
+            "S",
+            "Sb",
+            "Sc",
+            "Se",
+            "Sg",
+            "Si",
+            "Sm",
+            "Sn",
+            "Sr",
+            "Ta",
+            "Tb",
+            "Tc",
+            "Te",
+            "Th",
+            "Ti",
+            "Tl",
+            "Tm",
+            "U",
+            "V",
+            "W",
+            "Xe",
+            "Y",
+            "Yb",
+            "Zn",
+            "Zr",
+            // The "odd one out": an unspecified R-group
+            "R"
+        };
     }
 
     /**
-     * Compare two IMolecularFormula looking at type and number of IIsotope and
-     * charge of the formula.
+     * Compare two IMolecularFormula looking at type and number of IIsotope and charge of the
+     * formula.
      *
-     * @param formula1   The first IMolecularFormula
-     * @param formula2   The second IMolecularFormula
-     * @return           True, if the both IMolecularFormula are the same
+     * @param formula1 The first IMolecularFormula
+     * @param formula2 The second IMolecularFormula
+     * @return True, if the both IMolecularFormula are the same
      */
     public static boolean compare(IMolecularFormula formula1, IMolecularFormula formula2) {
 
@@ -1270,13 +1500,14 @@ public class MolecularFormulaManipulator {
         for (IIsotope isotope : formula1.isotopes()) {
             if (!formula2.contains(isotope)) return false;
 
-            if (formula1.getIsotopeCount(isotope) != formula2.getIsotopeCount(isotope)) return false;
-
+            if (formula1.getIsotopeCount(isotope) != formula2.getIsotopeCount(isotope))
+                return false;
         }
 
         for (IIsotope isotope : formula2.isotopes()) {
             if (!formula1.contains(isotope)) return false;
-            if (formula2.getIsotopeCount(isotope) != formula1.getIsotopeCount(isotope)) return false;
+            if (formula2.getIsotopeCount(isotope) != formula1.getIsotopeCount(isotope))
+                return false;
         }
 
         return true;
@@ -1285,10 +1516,9 @@ public class MolecularFormulaManipulator {
     /**
      * Returns a set of nodes excluding all the hydrogens.
      *
-     * @param   formula The IMolecularFormula
-     * @return          The heavyElements value into a List
-     *
-     * @cdk.keyword    hydrogen, removal
+     * @param formula The IMolecularFormula
+     * @return The heavyElements value into a List
+     * @cdk.keyword hydrogen, removal
      */
     public static List<IElement> getHeavyElements(IMolecularFormula formula) {
         List<IElement> newEle = new ArrayList<IElement>();
@@ -1301,12 +1531,12 @@ public class MolecularFormulaManipulator {
     }
 
     /**
-     * Simplify the molecular formula. E.g the dot '.' character convention is
-     * used when dividing a formula into parts. In this case any numeral following a dot refers
-     * to all the elements within that part of the formula that follow it.
+     * Simplify the molecular formula. E.g the dot '.' character convention is used when dividing a
+     * formula into parts. In this case any numeral following a dot refers to all the elements
+     * within that part of the formula that follow it.
      *
-     * @param formula  The molecular formula
-     * @return         The simplified molecular formula
+     * @param formula The molecular formula
+     * @return The simplified molecular formula
      */
     public static String simplifyMolecularFormula(String formula) {
         String newFormula = formula;
@@ -1378,7 +1608,6 @@ public class MolecularFormulaManipulator {
                         eleCount.remove(posit);
                         eleCount.add(posit, value);
                     }
-
                 }
             }
         }
@@ -1386,29 +1615,25 @@ public class MolecularFormulaManipulator {
         for (int i = 0; i < eleCount.size(); i++) {
             String element = eleSymb.get(i);
             int num = eleCount.get(i);
-            if (num == 0)
-                newF += element;
-            else
-                newF += element + num;
-
+            if (num == 0) newF += element;
+            else newF += element + num;
         }
         return newF;
     }
 
     /**
-     * The parenthesis convention is used to show a quantity by which a formula is multiplied.
-     * For example: (C12H20O11)2 really means that a C24H40O22 unit.
+     * The parenthesis convention is used to show a quantity by which a formula is multiplied. For
+     * example: (C12H20O11)2 really means that a C24H40O22 unit.
      *
      * @param formula Formula to correct
-     * @return        Formula with the correction
+     * @return Formula with the correction
      */
     private static String breakExtractor(String formula) {
         boolean finalBreak = false;
 
         int innerMostBracket = formula.lastIndexOf("(");
 
-        if (innerMostBracket<0)
-        	return formula;
+        if (innerMostBracket < 0) return formula;
 
         String finalformula = formula.substring(0, innerMostBracket);
         String multipliedformula = "";
@@ -1418,26 +1643,25 @@ public class MolecularFormulaManipulator {
         for (int f = innerMostBracket + 1; f < formula.length(); f++) {
             char thisChar = formula.charAt(f);
 
-        	if ( finalBreak ) {
-        		if ( isDigit(thisChar) ){
+            if (finalBreak) {
+                if (isDigit(thisChar)) {
                     multiple += thisChar;
                 } else {
-                	formulaEnd = formula.substring(f, formula.length());
-                	break;
+                    formulaEnd = formula.substring(f, formula.length());
+                    break;
                 }
-        	}else {
-        		if ( thisChar == ')' ) {
+            } else {
+                if (thisChar == ')') {
                     finalBreak = true;
-                }else
-                    multipliedformula += thisChar;
-        	}
+                } else multipliedformula += thisChar;
+            }
         }
-        finalformula += muliplier(multipliedformula, multiple.isEmpty() ? 1:Integer.valueOf(multiple)) + formulaEnd;
+        finalformula +=
+                muliplier(multipliedformula, multiple.isEmpty() ? 1 : Integer.valueOf(multiple))
+                        + formulaEnd;
 
-        if (finalformula.contains("("))
-        	return breakExtractor(finalformula);
-        else
-        	return finalformula;
+        if (finalformula.contains("(")) return breakExtractor(finalformula);
+        else return finalformula;
     }
 
     /**
@@ -1445,7 +1669,7 @@ public class MolecularFormulaManipulator {
      * For example: 2H2O really means that a H4O2 unit.
      *
      * @param formula Formula to correct
-     * @return        Formula with the correction
+     * @return Formula with the correction
      */
     private static String multipleExtractor(String formula) {
         String recentCompoundCount = "0";
@@ -1455,10 +1679,8 @@ public class MolecularFormulaManipulator {
         for (int f = 0; f < formula.length(); f++) {
             char thisChar = formula.charAt(f);
             if (thisChar >= '0' && thisChar <= '9') {
-                if (!found)
-                    recentCompoundCount += thisChar;
-                else
-                    recentCompound += thisChar;
+                if (!found) recentCompoundCount += thisChar;
+                else recentCompound += thisChar;
 
             } else {
                 found = true;
@@ -1472,8 +1694,8 @@ public class MolecularFormulaManipulator {
      * This method multiply all the element over a value.
      *
      * @param formula Formula to correct
-     * @param factor  Factor to multiply
-     * @return        Formula with the correction
+     * @param factor Factor to multiply
+     * @return Formula with the correction
      */
     private static String muliplier(String formula, int factor) {
         String finalformula = "";
@@ -1493,20 +1715,19 @@ public class MolecularFormulaManipulator {
                     recentElementCountString += thisChar;
                 }
             }
-            if (f == formula.length() - 1 || (formula.charAt(f + 1) >= 'A' && formula.charAt(f + 1) <= 'Z')) {
+            if (f == formula.length() - 1
+                    || (formula.charAt(f + 1) >= 'A' && formula.charAt(f + 1) <= 'Z')) {
                 Integer recentElementCount = Integer.valueOf(recentElementCountString);
-                if (recentElementCount == 0)
-                    finalformula += recentElementSymbol + factor;
-                else
-                    finalformula += recentElementSymbol + recentElementCount * factor;
+                if (recentElementCount == 0) finalformula += recentElementSymbol + factor;
+                else finalformula += recentElementSymbol + recentElementCount * factor;
             }
         }
         return finalformula;
     }
 
     /**
-     * Adjust the protonation of a molecular formula. This utility method adjusts the hydrogen isotope count
-     * and charge at the same time.
+     * Adjust the protonation of a molecular formula. This utility method adjusts the hydrogen
+     * isotope count and charge at the same time.
      *
      * <pre>
      * IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula("[C6H5O]-", bldr);
@@ -1524,8 +1745,8 @@ public class MolecularFormulaManipulator {
      * MolecularFormulaManipulator.adjustProtonation(mf, -1); // false still "[Cl]-" (no H to remove!)
      * </pre>
      *
-     * The method tries to select an existing hydrogen isotope to augment. If no hydrogen isotopes are found
-     * a new major isotope (<sup>1</sup>H) is created.
+     * The method tries to select an existing hydrogen isotope to augment. If no hydrogen isotopes
+     * are found a new major isotope (<sup>1</sup>H) is created.
      *
      * @param mf molecular formula
      * @param hcnt the number of hydrogens to add/remove, (&gt;0 protonate:, &lt;0: deprotonate)
@@ -1536,7 +1757,7 @@ public class MolecularFormulaManipulator {
         if (hcnt == 0) return false; // no protons to add
 
         final IChemObjectBuilder bldr = mf.getBuilder();
-        final int                chg  = mf.getCharge() != null ? mf.getCharge() : 0;
+        final int chg = mf.getCharge() != null ? mf.getCharge() : 0;
 
         IIsotope proton = null;
         int pcount = 0;
@@ -1544,24 +1765,22 @@ public class MolecularFormulaManipulator {
         for (IIsotope iso : mf.isotopes()) {
             if ("H".equals(iso.getSymbol())) {
                 final int count = mf.getIsotopeCount(iso);
-                if (count < hcnt)
-                    continue;
+                if (count < hcnt) continue;
                 // acceptable
-                if (proton == null &&
-                    (iso.getMassNumber() == null || iso.getMassNumber() == 1)) {
+                if (proton == null && (iso.getMassNumber() == null || iso.getMassNumber() == 1)) {
                     proton = iso;
                     pcount = count;
                 }
                 // better
-                else if (proton != null &&
-                           iso.getMassNumber() != null && iso.getMassNumber() == 1 &&
-                           proton.getMassNumber() == null) {
+                else if (proton != null
+                        && iso.getMassNumber() != null
+                        && iso.getMassNumber() == 1
+                        && proton.getMassNumber() == null) {
                     proton = iso;
                     pcount = count;
                 }
             }
         }
-
 
         if (proton == null && hcnt < 0) {
             return false;
@@ -1571,35 +1790,30 @@ public class MolecularFormulaManipulator {
         }
 
         mf.removeIsotope(proton);
-        if (pcount + hcnt > 0)
-            mf.addIsotope(proton, pcount + hcnt);
+        if (pcount + hcnt > 0) mf.addIsotope(proton, pcount + hcnt);
         mf.setCharge(chg + hcnt);
 
         return true;
     }
 
     /**
-     * Helper method for adding isotope distributions to a MF. The method adds
-     * a distribution of isotopes by splitting the set of isotopes in two,
-     * the one under consideration (specified by 'idx') and the remaining to be
-     * considered ('&gt;idx'). The inflection point is calculate as 'k'
-     * &le 'count' isotopes added. If there are remaining isotopes the method
-     * calls it's self with 'idx+1' and 'count := k'.
+     * Helper method for adding isotope distributions to a MF. The method adds a distribution of
+     * isotopes by splitting the set of isotopes in two, the one under consideration (specified by
+     * 'idx') and the remaining to be considered ('&gt;idx'). The inflection point is calculate as
+     * 'k' &le 'count' isotopes added. If there are remaining isotopes the method calls it's self
+     * with 'idx+1' and 'count := k'.
      *
-     * @param mf       the molecular formula to update
+     * @param mf the molecular formula to update
      * @param isotopes the isotopes, sorted most abundance to least
-     * @param idx      which isotope we're currently considering
-     * @param count    the number of isotopes remaining to select from
+     * @param idx which isotope we're currently considering
+     * @param count the number of isotopes remaining to select from
      * @return the distribution is unique (or not)
      */
-    private static boolean addIsotopeDist(IMolecularFormula mf,
-                                          IIsotope[] isotopes,
-                                          int idx, int count) {
-        if (count == 0)
-            return true;
+    private static boolean addIsotopeDist(
+            IMolecularFormula mf, IIsotope[] isotopes, int idx, int count) {
+        if (count == 0) return true;
         double frac = 100d;
-        for (int i = 0; i < idx; i++)
-            frac -= isotopes[i].getNaturalAbundance();
+        for (int i = 0; i < idx; i++) frac -= isotopes[i].getNaturalAbundance();
         double p = isotopes[idx].getNaturalAbundance() / frac;
 
         if (p >= 1.0) {
@@ -1619,9 +1833,8 @@ public class MolecularFormulaManipulator {
     }
 
     /**
-     * Compute the most abundant MF. Given the MF C<sub>6</sub>Br<sub>6</sub>
-     * this function rapidly computes the most abundant MF as
-     * <sup>12</sup>C<sub>6</sub><sup>79</sup>Br<sub>3</sub><sup>81
+     * Compute the most abundant MF. Given the MF C<sub>6</sub>Br<sub>6</sub> this function rapidly
+     * computes the most abundant MF as <sup>12</sup>C<sub>6</sub><sup>79</sup>Br<sub>3</sub><sup>81
      * </sup>Br<sub>3</sub>.
      *
      * @param mf a molecular formula with unspecified isotopes
@@ -1634,27 +1847,22 @@ public class MolecularFormulaManipulator {
         } catch (IOException e) {
             return null;
         }
-        IMolecularFormula res = mf.getBuilder()
-                                  .newInstance(IMolecularFormula.class);
+        IMolecularFormula res = mf.getBuilder().newInstance(IMolecularFormula.class);
         for (IIsotope iso : mf.isotopes()) {
             int count = mf.getIsotopeCount(iso);
             if (iso.getMassNumber() == null || iso.getMassNumber() == 0) {
                 IIsotope[] isotopes = isofact.getIsotopes(iso.getSymbol());
                 Arrays.sort(isotopes, NAT_ABUN_COMP);
-                if (!addIsotopeDist(res, isotopes, 0, count))
-                    return null;
-            } else
-                res.addIsotope(iso, count);
+                if (!addIsotopeDist(res, isotopes, 0, count)) return null;
+            } else res.addIsotope(iso, count);
         }
         return res;
     }
 
     /**
-     * Compute the most abundant MF. Given the a molecule
-     * C<sub>6</sub>Br<sub>6</sub> this function rapidly computes the most
-     * abundant MF as
-     * <sup>12</sup>C<sub>6</sub><sup>79</sup>Br<sub>3</sub><sup>81
-     * </sup>Br<sub>3</sub>.
+     * Compute the most abundant MF. Given the a molecule C<sub>6</sub>Br<sub>6</sub> this function
+     * rapidly computes the most abundant MF as
+     * <sup>12</sup>C<sub>6</sub><sup>79</sup>Br<sub>3</sub><sup>81 </sup>Br<sub>3</sub>.
      *
      * @param mol a molecule with unspecified isotopes
      * @return the most abundant MF, or null if it could not be computed

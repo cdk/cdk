@@ -20,7 +20,6 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import java.io.InputStream;
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,7 +40,6 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *
  * @cdk.module test-qsarmolecular
  */
-
 public class WeightedPathDescriptorTest extends MolecularDescriptorTest {
 
     public WeightedPathDescriptorTest() {}
@@ -52,7 +50,8 @@ public class WeightedPathDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testWeightedPathDescriptor() throws ClassNotFoundException, CDKException, Exception {
+    public void testWeightedPathDescriptor()
+            throws ClassNotFoundException, CDKException, Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = null;
         DescriptorValue value = null;
@@ -97,6 +96,5 @@ public class WeightedPathDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(19.02049, result.get(2), 0.00001);
         Assert.assertEquals(0, result.get(3), 0.000001);
         Assert.assertEquals(19.02049, result.get(4), 0.00001);
-
     }
 }

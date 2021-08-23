@@ -18,14 +18,14 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
+import static org.mockito.Mockito.mock;
+
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.Bond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-
-import static org.mockito.Mockito.mock;
 
 /**
  * Checks the functionality of the IsomorphismTester
@@ -34,9 +34,7 @@ import static org.mockito.Mockito.mock;
  */
 public class AnyOrderQueryBondTest extends CDKTestCase {
 
-    /**
-     * @cdk.bug 1305
-     */
+    /** @cdk.bug 1305 */
     @Test
     public void testMatches() {
         IBond testBond = null;

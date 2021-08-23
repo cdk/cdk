@@ -23,10 +23,8 @@ package org.openscience.cdk.renderer.generators;
 import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.graph.ConnectivityChecker;
@@ -53,8 +51,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerComparatorBy2DCenter;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
- * Generator for elements from bonds. Only two-atom bonds are supported
- * by this generator.
+ * Generator for elements from bonds. Only two-atom bonds are supported by this generator.
  *
  * @cdk.module renderbasic
  * @cdk.githash
@@ -62,13 +59,14 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 public class BasicBondGenerator implements IGenerator<IAtomContainer> {
 
     // FIXME: bond width should be defined in world, not screen coordinates
-    /**
-     * The width on screen of a bond.
-     */
+    /** The width on screen of a bond. */
     public static class BondWidth extends AbstractGeneratorParameter<Double> {
 
-        /** Returns the default value.
-         * @return 1.0 */
+        /**
+         * Returns the default value.
+         *
+         * @return 1.0
+         */
         @Override
         public Double getDefault() {
             return 1.0;
@@ -77,13 +75,14 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
 
     private IGeneratorParameter<Double> bondWidth = new BondWidth();
 
-    /**
-     * The gap between double and triple bond lines on the screen.
-     */
+    /** The gap between double and triple bond lines on the screen. */
     public static class BondDistance extends AbstractGeneratorParameter<Double> {
 
-        /** Returns the default value.
-         * @return 2.0. */
+        /**
+         * Returns the default value.
+         *
+         * @return 2.0.
+         */
         @Override
         public Double getDefault() {
             return 2.0;
@@ -92,13 +91,14 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
 
     private IGeneratorParameter<Double> bondDistance = new BondDistance();
 
-    /**
-     * The color to draw bonds if not other color is given.
-     */
+    /** The color to draw bonds if not other color is given. */
     public static class DefaultBondColor extends AbstractGeneratorParameter<Color> {
 
-        /** Returns the default value.
-         * @return Color.BLACK */
+        /**
+         * Returns the default value.
+         *
+         * @return Color.BLACK
+         */
         @Override
         public Color getDefault() {
             return Color.BLACK;
@@ -107,13 +107,14 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
 
     private IGeneratorParameter<Color> defaultBondColor = new DefaultBondColor();
 
-    /**
-     * The width on screen of the fat end of a wedge bond.
-     */
+    /** The width on screen of the fat end of a wedge bond. */
     public static class WedgeWidth extends AbstractGeneratorParameter<Double> {
 
-        /** Returns the default value.
-         * @return 2.0 */
+        /**
+         * Returns the default value.
+         *
+         * @return 2.0
+         */
         @Override
         public Double getDefault() {
             return 2.0;
@@ -122,13 +123,14 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
 
     private IGeneratorParameter<Double> wedgeWidth = new WedgeWidth();
 
-    /**
-     * The proportion to move in towards the ring center.
-     */
+    /** The proportion to move in towards the ring center. */
     public static class TowardsRingCenterProportion extends AbstractGeneratorParameter<Double> {
 
-        /** Returns the default value.
-         * @return 0.15 */
+        /**
+         * Returns the default value.
+         *
+         * @return 0.15
+         */
         @Override
         public Double getDefault() {
             return 0.15;
@@ -137,38 +139,27 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
 
     private IGeneratorParameter<Double> ringCenterProportion = new TowardsRingCenterProportion();
 
-    private ILoggingTool                logger               = LoggingToolFactory
-                                                                     .createLoggingTool(BasicBondGenerator.class);
+    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(BasicBondGenerator.class);
+
+    /** Necessary for calculating inner-ring bond elements. */
+    protected IRingSet ringSet;
 
     /**
-     * Necessary for calculating inner-ring bond elements.
+     * A hack to allow the HighlightGenerator to override the standard colors. Set it to non-null to
+     * have all bond-lines in this color.
      */
-    protected IRingSet                  ringSet;
+    private Color overrideColor = null;
 
-    /**
-     * A hack to allow the HighlightGenerator to override the standard colors.
-     * Set it to non-null to have all bond-lines in this color.
-     */
-    private Color                       overrideColor        = null;
+    /** A similar story to the override color */
+    private double overrideBondWidth = -1;
 
-    /**
-     * A similar story to the override color
-     */
-    private double                      overrideBondWidth    = -1;
+    /** The ideal ring size for the given center proportion. */
+    private int IDEAL_RINGSIZE = 6;
 
-    /**
-     * The ideal ring size for the given center proportion.
-     */
-    private int                         IDEAL_RINGSIZE       = 6;
+    /** The minimum ring size factor to ensure a minimum gap. */
+    private double MIN_RINGSIZE_FACTOR = 2.5;
 
-    /**
-     * The minimum ring size factor to ensure a minimum gap.
-     */
-    private double                      MIN_RINGSIZE_FACTOR  = 2.5;
-
-    /**
-     * An empty constructor necessary for reflection.
-     */
+    /** An empty constructor necessary for reflection. */
     public BasicBondGenerator() {}
 
     /**
@@ -213,8 +204,8 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
     }
 
     /**
-     * Determine the color of a bond, returning either the default color,
-     * the override color or whatever is in the color hash for that bond.
+     * Determine the color of a bond, returning either the default color, the override color or
+     * whatever is in the color hash for that bond.
      *
      * @param bond the bond we are generating an element for
      * @param model the rendering model
@@ -234,9 +225,8 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
     }
 
     /**
-     * Determine the width of a bond, returning either the width defined
-     * in the model, or the override width. Note that this will be scaled
-     * to the space of the model.
+     * Determine the width of a bond, returning either the width defined in the model, or the
+     * override width. Note that this will be scaled to the space of the model.
      *
      * @param bond the bond to determine the width for
      * @param model the renderer model
@@ -257,8 +247,8 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
         ElementGroup group = new ElementGroup();
         this.ringSet = this.getRingSet(container);
 
-        //Sort the ringSet consistently to ensure consistent rendering.
-        //If this is omitted, the bonds may 'tremble'.
+        // Sort the ringSet consistently to ensure consistent rendering.
+        // If this is omitted, the bonds may 'tremble'.
         ringSet.sortAtomContainers(new AtomContainerComparatorBy2DCenter());
 
         for (IBond bond : container.bonds()) {
@@ -268,8 +258,8 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
     }
 
     /**
-     * Generate rendering element(s) for the current bond, including ring
-     * elements if this bond is part of a ring.
+     * Generate rendering element(s) for the current bond, including ring elements if this bond is
+     * part of a ring.
      *
      * @param currentBond the bond to use when generating elements
      * @param model the renderer model
@@ -285,8 +275,8 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
     }
 
     /**
-     * Generate rendering elements for a bond, without ring elements but
-     * considering the type of the bond (single, double, triple).
+     * Generate rendering elements for a bond, without ring elements but considering the type of the
+     * bond (single, double, triple).
      *
      * @param bond the bond to use when generating elements
      * @param model the renderer model
@@ -297,16 +287,16 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
     }
 
     /**
-     * Generate a LineElement or an ElementGroup of LineElements for this bond.
-     * This version should be used if you want to override the type - for
-     * example, for ring double bonds.
+     * Generate a LineElement or an ElementGroup of LineElements for this bond. This version should
+     * be used if you want to override the type - for example, for ring double bonds.
      *
      * @param bond the bond to generate for
      * @param type the type of the bond - single, double, etc
      * @param model the renderer model
      * @return one or more rendering elements
      */
-    public IRenderingElement generateBondElement(IBond bond, IBond.Order type, RendererModel model) {
+    public IRenderingElement generateBondElement(
+            IBond bond, IBond.Order type, RendererModel model) {
         // More than 2 atoms per bond not supported by this module
         if (bond.getAtomCount() > 2) return null;
 
@@ -315,7 +305,8 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
         Point2d point2 = bond.getEnd().getPoint2d();
         Color color = this.getColorForBond(bond, model);
         double bondWidth = this.getWidthForBond(bond, model);
-        double bondDistance = (Double) model.get(BondDistance.class) / model.getParameter(Scale.class).getValue();
+        double bondDistance =
+                (Double) model.get(BondDistance.class) / model.getParameter(Scale.class).getValue();
         if (type == IBond.Order.SINGLE) {
             return new LineElement(point1.x, point1.y, point2.x, point2.y, bondWidth, color);
         } else {
@@ -326,7 +317,9 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
                     break;
                 case TRIPLE:
                     createLines(point1, point2, bondWidth, bondDistance * 2, color, group);
-                    group.add(new LineElement(point1.x, point1.y, point2.x, point2.y, bondWidth, color));
+                    group.add(
+                            new LineElement(
+                                    point1.x, point1.y, point2.x, point2.y, bondWidth, color));
                     break;
                 case QUADRUPLE:
                     createLines(point1, point2, bondWidth, bondDistance, color, group);
@@ -338,7 +331,13 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
         }
     }
 
-    private void createLines(Point2d point1, Point2d point2, double width, double dist, Color color, ElementGroup group) {
+    private void createLines(
+            Point2d point1,
+            Point2d point2,
+            double width,
+            double dist,
+            Color color,
+            ElementGroup group) {
         double[] out = generateDistanceData(point1, point2, dist);
         LineElement l1 = new LineElement(out[0], out[1], out[4], out[5], width, color);
         LineElement l2 = new LineElement(out[2], out[3], out[6], out[7], width, color);
@@ -364,7 +363,9 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
         line2p1.add(point1, normal);
         line2p2.add(point2, normal);
 
-        return new double[]{line1p1.x, line1p1.y, line2p1.x, line2p1.y, line1p2.x, line1p2.y, line2p2.x, line2p2.y};
+        return new double[] {
+            line1p1.x, line1p1.y, line2p1.x, line2p1.y, line1p2.x, line1p2.y, line2p2.x, line2p2.y
+        };
     }
 
     /**
@@ -404,7 +405,8 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
         // the proportion to move in towards the ring center
         double distanceFactor = model.getParameter(TowardsRingCenterProportion.class).getValue();
         double ringDistance = distanceFactor * IDEAL_RINGSIZE / ring.getAtomCount();
-        if (ringDistance < distanceFactor / MIN_RINGSIZE_FACTOR) ringDistance = distanceFactor / MIN_RINGSIZE_FACTOR;
+        if (ringDistance < distanceFactor / MIN_RINGSIZE_FACTOR)
+            ringDistance = distanceFactor / MIN_RINGSIZE_FACTOR;
 
         Point2d w = new Point2d();
         w.interpolate(a, center, ringDistance);
@@ -428,10 +430,12 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
         IBond.Stereo stereo = bond.getStereo();
         WedgeLineElement.TYPE type = WedgeLineElement.TYPE.WEDGED;
         Direction dir = Direction.toSecond;
-        if (stereo == IBond.Stereo.DOWN || stereo == IBond.Stereo.DOWN_INVERTED) type = WedgeLineElement.TYPE.DASHED;
+        if (stereo == IBond.Stereo.DOWN || stereo == IBond.Stereo.DOWN_INVERTED)
+            type = WedgeLineElement.TYPE.DASHED;
         if (stereo == IBond.Stereo.UP_OR_DOWN || stereo == IBond.Stereo.UP_OR_DOWN_INVERTED)
             type = WedgeLineElement.TYPE.INDIFF;
-        if (stereo == IBond.Stereo.DOWN_INVERTED || stereo == IBond.Stereo.UP_INVERTED
+        if (stereo == IBond.Stereo.DOWN_INVERTED
+                || stereo == IBond.Stereo.UP_INVERTED
                 || stereo == IBond.Stereo.UP_OR_DOWN_INVERTED) dir = Direction.toFirst;
 
         IRenderingElement base = generateBondElement(bond, IBond.Order.SINGLE, model);
@@ -465,7 +469,8 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
      * @return true if the bond has stero information
      */
     private boolean isStereoBond(IBond bond) {
-        return bond.getStereo() != IBond.Stereo.NONE && bond.getStereo() != (IBond.Stereo) CDKConstants.UNSET
+        return bond.getStereo() != IBond.Stereo.NONE
+                && bond.getStereo() != (IBond.Stereo) CDKConstants.UNSET
                 && bond.getStereo() != IBond.Stereo.E_Z_BY_COORDINATES;
     }
 
@@ -493,7 +498,8 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
     public IRenderingElement generateBond(IBond bond, RendererModel model) {
         boolean showExplicitHydrogens = true;
         if (model.hasParameter(BasicAtomGenerator.ShowExplicitHydrogens.class)) {
-            showExplicitHydrogens = model.getParameter(BasicAtomGenerator.ShowExplicitHydrogens.class).getValue();
+            showExplicitHydrogens =
+                    model.getParameter(BasicAtomGenerator.ShowExplicitHydrogens.class).getValue();
         }
 
         if (!showExplicitHydrogens && bindsHydrogen(bond)) {
@@ -510,8 +516,9 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
     /** {@inheritDoc} */
     @Override
     public List<IGeneratorParameter<?>> getParameters() {
-        return Arrays.asList(new IGeneratorParameter<?>[]{bondWidth, defaultBondColor, wedgeWidth, bondDistance,
-                ringCenterProportion});
+        return Arrays.asList(
+                new IGeneratorParameter<?>[] {
+                    bondWidth, defaultBondColor, wedgeWidth, bondDistance, ringCenterProportion
+                });
     }
-
 }

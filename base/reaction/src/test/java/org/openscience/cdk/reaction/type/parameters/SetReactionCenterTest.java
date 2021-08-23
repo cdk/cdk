@@ -29,9 +29,7 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class SetReactionCenterTest extends CDKTestCase {
 
-    /**
-     *  Constructor for the SetReactionCenterTest object.
-     */
+    /** Constructor for the SetReactionCenterTest object. */
     public SetReactionCenterTest() {
         super();
     }

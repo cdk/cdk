@@ -24,7 +24,8 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.module ioformats
  * @cdk.githash
  */
-public class PubChemCompoundsXMLFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
+public class PubChemCompoundsXMLFormat extends SimpleChemFormatMatcher
+        implements IChemFormatMatcher {
 
     private static IResourceFormat myself = null;
 
@@ -56,7 +57,7 @@ public class PubChemCompoundsXMLFormat extends SimpleChemFormatMatcher implement
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"xml"};
+        return new String[] {"xml"};
     }
 
     /** {@inheritDoc} */

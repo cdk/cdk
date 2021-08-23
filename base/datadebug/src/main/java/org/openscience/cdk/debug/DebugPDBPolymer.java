@@ -19,7 +19,6 @@
 package org.openscience.cdk.debug;
 
 import java.util.Collection;
-
 import org.openscience.cdk.interfaces.IBioPolymer;
 import org.openscience.cdk.interfaces.IPDBStructure;
 import org.openscience.cdk.protein.data.PDBPolymer;
@@ -29,7 +28,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * Debugging data class.
  *
- * @author     Miguel Rojas
+ * @author Miguel Rojas
  * @cdk.module datadebug
  * @cdk.githash
  */
@@ -37,7 +36,7 @@ public class DebugPDBPolymer extends PDBPolymer implements IBioPolymer {
 
     private static final long serialVersionUID = -8485559594520919850L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugAtomContainer.class);
+    ILoggingTool logger = LoggingToolFactory.createLoggingTool(DebugAtomContainer.class);
 
     /** {@inheritDoc} */
     @Override
@@ -52,5 +51,4 @@ public class DebugPDBPolymer extends PDBPolymer implements IBioPolymer {
         logger.debug("Adding Structure: ", structure);
         super.addStructure(structure);
     }
-
 }

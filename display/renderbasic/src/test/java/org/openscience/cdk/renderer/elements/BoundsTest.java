@@ -24,12 +24,12 @@
 
 package org.openscience.cdk.renderer.elements;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.number.IsCloseTo.closeTo;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  * @author John May

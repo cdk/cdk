@@ -24,6 +24,11 @@ package org.openscience.cdk.smsd.interfaces;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -31,25 +36,15 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.smsd.algorithm.vflib.VFlibSubStructureHandler;
 import org.openscience.cdk.smsd.tools.MolHandler;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 /**
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- *
  * @cdk.module test-smsd
  */
 public abstract class AbstractSubGraphTest {
 
     private static AbstractSubGraphTest algorithm = null;
 
-    /**
-     *
-     * @param algorithm
-     */
+    /** @param algorithm */
     public static void setMCSAlgorithm(AbstractSubGraphTest algorithm) {
         AbstractSubGraphTest.algorithm = algorithm;
     }
@@ -70,6 +65,7 @@ public abstract class AbstractSubGraphTest {
 
     /**
      * Test of isSubgraph method, of class AbstractSubGraph.
+     *
      * @throws InvalidSmilesException
      */
     @Test

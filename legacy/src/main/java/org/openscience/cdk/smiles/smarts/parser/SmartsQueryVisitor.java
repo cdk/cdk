@@ -17,6 +17,14 @@
  */
 package org.openscience.cdk.smiles.smarts.parser;
 
+import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.BitSet;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ReactionRole;
 import org.openscience.cdk.interfaces.IAtom;
@@ -68,20 +76,11 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.BitSet;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;
-
 /**
- * An AST tree visitor. It builds an instance of <code>QueryAtomContainer</code>
- * from the AST tree.
+ * An AST tree visitor. It builds an instance of <code>QueryAtomContainer</code> from the AST tree.
  *
- * To use this visitor:
+ * <p>To use this visitor:
+ *
  * <pre>
  * SMARTSParser parser = new SMARTSParser(new java.io.StringReader("C*C"));
  * ASTStart ast = parser.start();
@@ -99,34 +98,26 @@ import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conforma
 public class SmartsQueryVisitor implements SMARTSParserVisitor {
 
     // current atoms with a ring identifier
-    private RingIdentifierAtom[]                ringAtoms;
+    private RingIdentifierAtom[] ringAtoms;
 
     // query
-    private IQueryAtomContainer                 query;
+    private IQueryAtomContainer query;
 
-    private final IChemObjectBuilder            builder;
+    private final IChemObjectBuilder builder;
 
-    /**
-     * Maintain order of neighboring atoms - required for atom-based
-     * stereochemistry.
-     */
-    private Map<IAtom, List<IAtom>>             neighbors      = new HashMap<IAtom, List<IAtom>>();
+    /** Maintain order of neighboring atoms - required for atom-based stereochemistry. */
+    private Map<IAtom, List<IAtom>> neighbors = new HashMap<IAtom, List<IAtom>>();
 
-    /**
-     * Lookup of atom indices.
-     */
-    private BitSet                              tetrahedral    = new BitSet();
+    /** Lookup of atom indices. */
+    private BitSet tetrahedral = new BitSet();
 
     /**
-     * Stores the directional '/' or '\' bonds. Speeds up looking for double
-     * bond configurations.
+     * Stores the directional '/' or '\' bonds. Speeds up looking for double bond configurations.
      */
-    private List<IBond>                         stereoBonds    = new ArrayList<IBond>();
+    private List<IBond> stereoBonds = new ArrayList<IBond>();
 
-    /**
-     * Stores the double bonds in the query.
-     */
-    private List<IBond>                         doubleBonds    = new ArrayList<IBond>();
+    /** Stores the double bonds in the query. */
+    private List<IBond> doubleBonds = new ArrayList<IBond>();
 
     public SmartsQueryVisitor(IChemObjectBuilder builder) {
         this.builder = builder;
@@ -188,10 +179,11 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
                     ringBond = ringIdAtom.getRingBond();
                 }
             } else {
-                // Here I assume the bond are always same. This should be checked by the parser already
+                // Here I assume the bond are always same. This should be checked by the parser
+                // already
                 ringBond = ringAtoms[ringId].getRingBond();
             }
-            ((IBond) ringBond).setAtoms(new IAtom[]{ringAtoms[ringId].getAtom(), atom});
+            ((IBond) ringBond).setAtoms(new IAtom[] {ringAtoms[ringId].getAtom(), atom});
             query.addBond((IBond) ringBond);
 
             // if the connected atoms was tracking neighbors, replace the
@@ -208,7 +200,8 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
         }
     }
 
-    private final static ILoggingTool logger = LoggingToolFactory.createLoggingTool(SmartsQueryVisitor.class);
+    private static final ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(SmartsQueryVisitor.class);
 
     public Object visit(SimpleNode node, Object data) {
         return null;
@@ -253,11 +246,11 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
                         IAtom org = query.getAtom(rollback);
                         IAtom rep = LogicalOperatorAtom.and(roleQueryAtom, (IQueryAtom) org);
                         // ensure AAM is propagated
-                        rep.setProperty(CDKConstants.ATOM_ATOM_MAPPING, org.getProperty(CDKConstants.ATOM_ATOM_MAPPING));
+                        rep.setProperty(
+                                CDKConstants.ATOM_ATOM_MAPPING,
+                                org.getProperty(CDKConstants.ATOM_ATOM_MAPPING));
                         rep.setProperty(CDKConstants.REACTION_ROLE, role);
-                        AtomContainerManipulator.replaceAtomByAtom(query,
-                                                                   org,
-                                                                   rep);
+                        AtomContainerManipulator.replaceAtomByAtom(query, org, rep);
                         rollback++;
                     }
                 }
@@ -269,17 +262,16 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
     public Object visit(ASTGroup node, Object data) {
         IAtomContainer fullQuery = (IAtomContainer) data;
 
-        if (fullQuery == null)
-            fullQuery = new QueryAtomContainer(builder);
+        if (fullQuery == null) fullQuery = new QueryAtomContainer(builder);
 
         // keeps track of component grouping
-        int[] components = fullQuery.getProperty("COMPONENT.GROUPING") != null
-                ? fullQuery.getProperty("COMPONENT.GROUPING", int[].class)
-                : new int[0];
+        int[] components =
+                fullQuery.getProperty("COMPONENT.GROUPING") != null
+                        ? fullQuery.getProperty("COMPONENT.GROUPING", int[].class)
+                        : new int[0];
         int maxId = 0;
         if (components.length > 0) {
-            for (int id : components)
-                if (id > maxId) maxId = id;
+            for (int id : components) if (id > maxId) maxId = id;
         }
 
         for (int i = 0; i < node.jjtGetNumChildren(); i++) {
@@ -291,7 +283,9 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 
             // update component info
             if (components.length > 0 || smarts.componentId() > 0) {
-                components = Arrays.copyOf(components, 1 + fullQuery.getAtomCount() + query.getAtomCount());
+                components =
+                        Arrays.copyOf(
+                                components, 1 + fullQuery.getAtomCount() + query.getAtomCount());
                 int id = smarts.componentId();
                 Arrays.fill(components, fullQuery.getAtomCount(), components.length, id);
                 if (id > maxId) maxId = id;
@@ -302,7 +296,8 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 
         // only store if there was a component grouping
         if (maxId > 0) {
-            components[components.length - 1] = maxId; // we left space to store how many groups there were
+            components[components.length - 1] =
+                    maxId; // we left space to store how many groups there were
             fullQuery.setProperty("COMPONENT.GROUPING", components);
         }
 
@@ -310,12 +305,19 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
         for (IAtom atom : neighbors.keySet()) {
             List<IAtom> localNeighbors = neighbors.get(atom);
             if (localNeighbors.size() == 4) {
-                fullQuery.addStereoElement(new TetrahedralChirality(atom, localNeighbors.toArray(new IAtom[4]),
-                        ITetrahedralChirality.Stereo.CLOCKWISE)); // <- to be modified later
+                fullQuery.addStereoElement(
+                        new TetrahedralChirality(
+                                atom,
+                                localNeighbors.toArray(new IAtom[4]),
+                                ITetrahedralChirality.Stereo.CLOCKWISE)); // <- to be modified later
             } else if (localNeighbors.size() == 5) {
-                localNeighbors.remove(atom); // remove central atom (which represented implicit part)
-                fullQuery.addStereoElement(new TetrahedralChirality(atom, localNeighbors.toArray(new IAtom[4]),
-                        ITetrahedralChirality.Stereo.CLOCKWISE)); // <- to be modified later
+                localNeighbors.remove(
+                        atom); // remove central atom (which represented implicit part)
+                fullQuery.addStereoElement(
+                        new TetrahedralChirality(
+                                atom,
+                                localNeighbors.toArray(new IAtom[4]),
+                                ITetrahedralChirality.Stereo.CLOCKWISE)); // <- to be modified later
             }
         }
 
@@ -327,10 +329,13 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
             StereoBond leftBond = findStereoBond(left);
             StereoBond rightBond = findStereoBond(right);
             if (leftBond == null || rightBond == null) continue;
-            Conformation conformation = leftBond.direction(left) == rightBond.direction(right) ? Conformation.TOGETHER
-                    : Conformation.OPPOSITE;
-            fullQuery.addStereoElement(new DoubleBondStereochemistry(bond, new IBond[]{leftBond, rightBond},
-                    conformation));
+            Conformation conformation =
+                    leftBond.direction(left) == rightBond.direction(right)
+                            ? Conformation.TOGETHER
+                            : Conformation.OPPOSITE;
+            fullQuery.addStereoElement(
+                    new DoubleBondStereochemistry(
+                            bond, new IBond[] {leftBond, rightBond}, conformation));
         }
 
         return fullQuery;
@@ -343,8 +348,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
      * @return a stereo bond or null if non found
      */
     private StereoBond findStereoBond(IAtom atom) {
-        for (IBond bond : stereoBonds)
-            if (bond.contains(atom)) return (StereoBond) bond;
+        for (IBond bond : stereoBonds) if (bond.contains(atom)) return (StereoBond) bond;
         return null;
     }
 
@@ -359,9 +363,9 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
             IAtom prev = (SMARTSAtom) ((Object[]) data)[0];
             if (bond == null) { // since no bond was specified it could be aromatic or single
                 bond = new AromaticOrSingleQueryBond(builder);
-                bond.setAtoms(new IAtom[]{prev, atom});
+                bond.setAtoms(new IAtom[] {prev, atom});
             } else {
-                bond.setAtoms(new IAtom[]{prev, atom});
+                bond.setAtoms(new IAtom[] {prev, atom});
             }
             if (neighbors.containsKey(prev)) {
                 neighbors.get(prev).add(atom);
@@ -389,7 +393,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
                 if (bond == null) { // since no bond was specified it could be aromatic or single
                     bond = new AromaticOrSingleQueryBond(builder);
                 }
-                bond.setAtoms(new IAtom[]{atom, newAtom});
+                bond.setAtoms(new IAtom[] {atom, newAtom});
                 query.addBond(bond);
                 query.addAtom(newAtom);
 
@@ -397,7 +401,8 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
                     neighbors.get(atom).add(newAtom);
                 }
                 if (tetrahedral.get(query.getAtomCount() - 1)) {
-                    List<IAtom> localNeighbors = new ArrayList<IAtom>(query.getConnectedAtomsList(newAtom));
+                    List<IAtom> localNeighbors =
+                            new ArrayList<IAtom>(query.getConnectedAtomsList(newAtom));
                     localNeighbors.add(newAtom);
                     neighbors.put(newAtom, localNeighbors);
                 }
@@ -405,7 +410,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
                 atom = newAtom;
                 bond = null;
             } else if (child instanceof ASTSmarts) { // another smarts
-                child.jjtAccept(this, new Object[]{atom, bond});
+                child.jjtAccept(this, new Object[] {atom, bond});
                 bond = null;
             } else if (child instanceof ASTRingIdentifier) {
                 handleRingClosure(atom, (ASTRingIdentifier) child);
@@ -533,7 +538,8 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
         SmartsQueryVisitor recursiveVisitor = new SmartsQueryVisitor(builder);
         recursiveVisitor.query = new QueryAtomContainer(builder);
         recursiveVisitor.ringAtoms = new RingIdentifierAtom[10];
-        return new RecursiveSmartsAtom((IQueryAtomContainer) node.jjtGetChild(0).jjtAccept(recursiveVisitor, null));
+        return new RecursiveSmartsAtom(
+                (IQueryAtomContainer) node.jjtGetChild(0).jjtAccept(recursiveVisitor, null));
     }
 
     public ASTStart getRoot(Node node) {
@@ -546,8 +552,13 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
     public Object visit(ASTElement node, Object data) {
         String symbol = node.getSymbol();
         SMARTSAtom atom;
-        if ("o".equals(symbol) || "n".equals(symbol) || "c".equals(symbol) || "s".equals(symbol) || "p".equals(symbol)
-                || "as".equals(symbol) || "se".equals(symbol)) {
+        if ("o".equals(symbol)
+                || "n".equals(symbol)
+                || "c".equals(symbol)
+                || "s".equals(symbol)
+                || "p".equals(symbol)
+                || "as".equals(symbol)
+                || "se".equals(symbol)) {
             String atomSymbol = symbol.substring(0, 1).toUpperCase() + symbol.substring(1);
             atom = new AromaticSymbolAtom(atomSymbol, builder);
         } else {
@@ -642,7 +653,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
             IQueryAtom right = (IQueryAtom) node.jjtGetChild(1).jjtAccept(this, data);
             expr = LogicalOperatorAtom.and((IQueryAtom) expr, right);
         }
-        if (node.getMapIdx()>0)
+        if (node.getMapIdx() > 0)
             expr.setProperty(CDKConstants.ATOM_ATOM_MAPPING, node.getMapIdx());
         return expr;
     }
@@ -691,8 +702,13 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
             atom = new AliphaticAtom(builder);
         } else if ("a".equals(symbol)) {
             atom = new AromaticAtom(builder);
-        } else if ("o".equals(symbol) || "n".equals(symbol) || "c".equals(symbol) || "s".equals(symbol)
-                || "p".equals(symbol) || "as".equals(symbol) || "se".equals(symbol)) {
+        } else if ("o".equals(symbol)
+                || "n".equals(symbol)
+                || "c".equals(symbol)
+                || "s".equals(symbol)
+                || "p".equals(symbol)
+                || "as".equals(symbol)
+                || "se".equals(symbol)) {
             String atomSymbol = symbol.substring(0, 1).toUpperCase() + symbol.substring(1);
             atom = new AromaticSymbolAtom(atomSymbol, builder);
         } else if ("H".equals(symbol)) {

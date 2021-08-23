@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -33,39 +32,40 @@ import org.openscience.cdk.qsar.result.DoubleResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 
 /**
- * <p>Prediction of logP based on the number of carbon and hetero atoms. The
- * implemented equation was proposed in {@cdk.cite Mannhold2009}.
+ * Prediction of logP based on the number of carbon and hetero atoms. The implemented equation was
+ * proposed in {@cdk.cite Mannhold2009}.
  *
- * @cdk.module     qsarmolecular
+ * @cdk.module qsarmolecular
  * @cdk.githash
- * @cdk.dictref    qsar-descriptors:mannholdLogP
- *
+ * @cdk.dictref qsar-descriptors:mannholdLogP
  * @cdk.keyword LogP
  * @cdk.keyword descriptor
  */
-public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
+public class MannholdLogPDescriptor extends AbstractMolecularDescriptor
+        implements IMolecularDescriptor {
 
     private static final String[] NAMES = {"MLogP"};
 
     /**
      * Gets the specification attribute of the MannholdLogPDescriptor object.
      *
-     * @return    The specification value
+     * @return The specification value
      */
     @Override
     public DescriptorSpecification getSpecification() {
-        return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/"
-                + "chemoinformatics-algorithms/#mannholdLogP", this.getClass().getName(),
+        return new DescriptorSpecification(
+                "http://www.blueobelisk.org/ontologies/"
+                        + "chemoinformatics-algorithms/#mannholdLogP",
+                this.getClass().getName(),
                 "The Chemistry Development Kit");
     }
 
     /**
-     * This {@link IDescriptor} does not have any parameters. If it had, this
-     * would have been the method to set them.
+     * This {@link IDescriptor} does not have any parameters. If it had, this would have been the
+     * method to set them.
      *
-     * @param  params            The new parameter value
-     * @exception  CDKException  Exception throw when invalid parameter values
-     *                           are passed
+     * @param params The new parameter value
+     * @exception CDKException Exception throw when invalid parameter values are passed
      * @see #getParameters
      */
     @Override
@@ -78,7 +78,7 @@ public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implemen
     /**
      * Gets the parameters attribute of the MannholdLogPDescriptor object.
      *
-     * @return    A zero-length Object array.
+     * @return A zero-length Object array.
      * @see #setParameters
      */
     @Override
@@ -92,15 +92,19 @@ public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implemen
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                Double.NaN), getDescriptorNames(), e);
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new DoubleResult(Double.NaN),
+                getDescriptorNames(),
+                e);
     }
 
     /**
-     *  Calculates the Mannhold LogP for an atom container.
+     * Calculates the Mannhold LogP for an atom container.
      *
-     * @param  atomContainer      {@link IAtomContainer} to calculate the
-     *                            descriptor value for.
+     * @param atomContainer {@link IAtomContainer} to calculate the descriptor value for.
      * @return A descriptor value wrapping a {@link DoubleResult}.
      */
     @Override
@@ -125,7 +129,11 @@ public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implemen
         }
         double mLogP = 1.46 + 0.11 * carbonCount - 0.11 * heteroCount;
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(mLogP),
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new DoubleResult(mLogP),
                 getDescriptorNames());
     }
 
@@ -142,7 +150,7 @@ public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implemen
     /**
      * Gets the parameterNames attribute for this descriptor.
      *
-     * @return    A zero-length String array.
+     * @return A zero-length String array.
      */
     @Override
     public String[] getParameterNames() {
@@ -150,15 +158,14 @@ public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implemen
     }
 
     /**
-     * Gets the parameterType attribute for a given parameter name. It
-     * always returns null, as this descriptor does not have any parameters.
+     * Gets the parameterType attribute for a given parameter name. It always returns null, as this
+     * descriptor does not have any parameters.
      *
-     * @param  name  Name of the parameter for which the type is requested.
-     * @return       The parameterType of the given parameter.
+     * @param name Name of the parameter for which the type is requested.
+     * @return The parameterType of the given parameter.
      */
     @Override
     public Object getParameterType(String name) {
         return null;
     }
-
 }

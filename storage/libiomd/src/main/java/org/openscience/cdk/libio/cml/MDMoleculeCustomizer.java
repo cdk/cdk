@@ -23,9 +23,7 @@
 package org.openscience.cdk.libio.cml;
 
 import java.util.Iterator;
-
 import nu.xom.Attribute;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -44,35 +42,29 @@ import org.xmlcml.cml.element.CMLScalar;
  * @author ola
  * @cdk.module libiomd
  * @cdk.githash
- *
- * @cdk.set       libio-cml-customizers
+ * @cdk.set libio-cml-customizers
  */
 public class MDMoleculeCustomizer implements ICMLCustomizer {
 
-    /**
-     * No customization for bonds.
-     */
+    /** No customization for bonds. */
     @Override
     public void customize(IBond bond, Object nodeToAdd) throws Exception {
         // nothing to do
     }
 
-    /**
-     * Customize Atom.
-     */
+    /** Customize Atom. */
     @Override
     public void customize(IAtom atom, Object nodeToAdd) throws Exception {
         // nothing to do
     }
 
-    /**
-     * Customize Molecule.
-     */
+    /** Customize Molecule. */
     @Override
     public void customize(IAtomContainer molecule, Object nodeToAdd) throws Exception {
-        if (!(nodeToAdd instanceof CMLMolecule)) throw new CDKException("NodeToAdd must be of type nu.xom.Element!");
+        if (!(nodeToAdd instanceof CMLMolecule))
+            throw new CDKException("NodeToAdd must be of type nu.xom.Element!");
 
-        //The nodeToAdd
+        // The nodeToAdd
         CMLMolecule molToCustomize = (CMLMolecule) nodeToAdd;
 
         if ((molecule instanceof MDMolecule)) {
@@ -80,7 +72,7 @@ public class MDMoleculeCustomizer implements ICMLCustomizer {
             molToCustomize.setConvention("md:mdMolecule");
             molToCustomize.addNamespaceDeclaration("md", "http://www.bioclipse.net/mdmolecule/");
 
-            //Residues
+            // Residues
             if (mdmol.getResidues().size() > 0) {
                 Iterator it = mdmol.getResidues().iterator();
                 while (it.hasNext()) {
@@ -91,19 +83,21 @@ public class MDMoleculeCustomizer implements ICMLCustomizer {
                     resMol.setDictRef("md:residue");
                     resMol.setTitle(residue.getName());
 
-                    //Append resNo
+                    // Append resNo
                     CMLScalar residueNumber = new CMLScalar(number);
                     residueNumber.addAttribute(new Attribute("dictRef", "md:resNumber"));
                     resMol.addScalar(residueNumber);
 
                     // prefix for residue atom id
                     String rprefix = "r" + number;
-                    //Append atoms
+                    // Append atoms
                     CMLAtomArray ar = new CMLAtomArray();
                     for (int i = 0; i < residue.getAtomCount(); i++) {
                         CMLAtom cmlAtom = new CMLAtom();
-                        //            			System.out.println("atom ID: "+ residue.getAtom(i).getID());
-                        //            			cmlAtom.addAttribute(new Attribute("ref", residue.getAtom(i).getID()));
+                        //            			System.out.println("atom ID: "+
+                        // residue.getAtom(i).getID());
+                        //            			cmlAtom.addAttribute(new Attribute("ref",
+                        // residue.getAtom(i).getID()));
                         // the next thing is better, but throws an exception
                         //
                         // setRef to keep consistent usage
@@ -118,19 +112,19 @@ public class MDMoleculeCustomizer implements ICMLCustomizer {
                 }
             }
 
-            //Chargegroups
+            // Chargegroups
             if (mdmol.getChargeGroups().size() > 0) {
                 Iterator it = mdmol.getChargeGroups().iterator();
                 while (it.hasNext()) {
                     ChargeGroup chargeGroup = (ChargeGroup) it.next();
                     int number = chargeGroup.getNumber();
 
-                    //FIXME: persist the ChargeGroup
+                    // FIXME: persist the ChargeGroup
                     CMLMolecule cgMol = new CMLMolecule();
                     cgMol.setDictRef("md:chargeGroup");
                     // etc: add name, refs to atoms etc
 
-                    //Append chgrpNo
+                    // Append chgrpNo
                     CMLScalar cgNo = new CMLScalar(number);
                     cgNo.addAttribute(new Attribute("dictRef", "md:cgNumber"));
                     cgMol.appendChild(cgNo);
@@ -138,7 +132,7 @@ public class MDMoleculeCustomizer implements ICMLCustomizer {
                     // prefix for residue atom id
                     String cprefix = "cg" + number;
 
-                    //Append atoms from chargeGroup as it is an AC
+                    // Append atoms from chargeGroup as it is an AC
                     CMLAtomArray ar = new CMLAtomArray();
                     for (int i = 0; i < chargeGroup.getAtomCount(); i++) {
                         CMLAtom cmlAtom = new CMLAtom();
@@ -147,7 +141,7 @@ public class MDMoleculeCustomizer implements ICMLCustomizer {
                         cmlAtom.setRef(chargeGroup.getAtom(i).getID());
                         cmlAtom.setId(cprefix + "_" + chargeGroup.getAtom(i).getID());
 
-                        //Append switching atom?
+                        // Append switching atom?
                         if (chargeGroup.getAtom(i).equals(chargeGroup.getSwitchingAtom())) {
                             CMLScalar scalar = new CMLScalar();
                             scalar.setDictRef("md:switchingAtom");
@@ -162,5 +156,4 @@ public class MDMoleculeCustomizer implements ICMLCustomizer {
             }
         }
     }
-
 }

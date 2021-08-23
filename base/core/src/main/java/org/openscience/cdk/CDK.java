@@ -25,7 +25,6 @@ package org.openscience.cdk;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -47,8 +46,7 @@ public class CDK {
      * @return The library version, or null if it could not be found
      */
     public static String getVersion() {
-        if (version != null)
-            return version;
+        if (version != null) return version;
         try (InputStream stream = CDK.class.getResourceAsStream(RESOURCE_LOCATION)) {
             if (stream == null) {
                 // load from JAR (as packaged with maven)

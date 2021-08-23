@@ -22,12 +22,18 @@
  */
 package org.openscience.cdk.io;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.openscience.cdk.CDKConstants.ISAROMATIC;
+
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Collections;
 import java.util.Properties;
-
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -50,19 +56,10 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.InvPair;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.openscience.cdk.CDKConstants.ISAROMATIC;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 /**
  * TestCase for the writer MDL SD file writer.
  *
  * @cdk.module test-io
- *
  * @see org.openscience.cdk.io.SDFWriter
  */
 public class SDFWriterTest extends ChemObjectWriterTest {
@@ -103,9 +100,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         Assert.assertFalse(result.contains("<foo>"));
     }
 
-    /**
-     * @cdk.bug 2827745
-     */
+    /** @cdk.bug 2827745 */
     @Test
     public void testWrite_IAtomContainerSet() throws Exception {
         StringWriter writer = new StringWriter();
@@ -216,7 +211,8 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         sdfWriter.write(molecule);
 
         sdfWriter.close();
-        org.hamcrest.MatcherAssert.assertThat(writer.toString(), Matchers.containsString("> <http://not_valid_com>"));
+        org.hamcrest.MatcherAssert.assertThat(
+                writer.toString(), Matchers.containsString("> <http://not_valid_com>"));
     }
 
     @Test
@@ -229,8 +225,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         sdfWriter.write(molecule);
 
         molecule = new AtomContainer();
-        for (int i = 0; i < 1000; i++)
-            molecule.addAtom(new Atom("CH4"));
+        for (int i = 0; i < 1000; i++) molecule.addAtom(new Atom("CH4"));
         sdfWriter.write(molecule);
 
         molecule = new AtomContainer();
@@ -254,8 +249,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         sdfWriter.write(molecule);
 
         molecule = new AtomContainer();
-        for (int i = 0; i < 1000; i++)
-            molecule.addAtom(new Atom("CH4"));
+        for (int i = 0; i < 1000; i++) molecule.addAtom(new Atom("CH4"));
         sdfWriter.write(molecule);
 
         molecule = new AtomContainer();
@@ -268,9 +262,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
         assertThat(result, Matchers.containsString("V3000"));
     }
 
-    /**
-     * @cdk.bug 3392485
-     */
+    /** @cdk.bug 3392485 */
     @Test
     public void testIOPropPropagation() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makeBenzene();
@@ -341,7 +333,7 @@ public class SDFWriterTest extends ChemObjectWriterTest {
     public void testPropertyOutput_none() throws CDKException, IOException {
         IAtomContainer adenine = TestMoleculeFactory.makeAdenine();
         StringWriter sw = new StringWriter();
-        SDFWriter sdf = new SDFWriter(sw, Collections.<String> emptySet());
+        SDFWriter sdf = new SDFWriter(sw, Collections.<String>emptySet());
         adenine.setProperty("one", "a");
         adenine.setProperty("two", "b");
         sdf.write(adenine);
@@ -355,15 +347,12 @@ public class SDFWriterTest extends ChemObjectWriterTest {
     public void setProgramName() {
         StringWriter sw = new StringWriter();
         try (SDFWriter sdfw = new SDFWriter(sw)) {
-            sdfw.getSetting(MDLV2000Writer.OptWriteDefaultProperties)
-                .setSetting("false");
-            sdfw.getSetting(MDLV2000Writer.OptProgramName)
-                .setSetting("Bioclipse");
+            sdfw.getSetting(MDLV2000Writer.OptWriteDefaultProperties).setSetting("false");
+            sdfw.getSetting(MDLV2000Writer.OptProgramName).setSetting("Bioclipse");
 
             sdfw.write(TestMoleculeFactory.make123Triazole());
 
-            sdfw.getSetting(SDFWriter.OptAlwaysV3000)
-                .setSetting("true");
+            sdfw.getSetting(SDFWriter.OptAlwaysV3000).setSetting("true");
 
             sdfw.write(TestMoleculeFactory.make123Triazole());
         } catch (IOException | CDKException e) {
@@ -379,104 +368,110 @@ public class SDFWriterTest extends ChemObjectWriterTest {
     public void optionallyTruncateLongProperties() {
         StringWriter sw = new StringWriter();
         try (SDFWriter sdfw = new SDFWriter(sw)) {
-            sdfw.getSetting(MDLV2000Writer.OptWriteDefaultProperties)
-                .setSetting("false");
-            sdfw.getSetting(SDFWriter.OptTruncateLongData)
-                .setSetting("true");
+            sdfw.getSetting(MDLV2000Writer.OptWriteDefaultProperties).setSetting("false");
+            sdfw.getSetting(SDFWriter.OptTruncateLongData).setSetting("true");
             IAtomContainer mol = TestMoleculeFactory.make123Triazole();
-            mol.setProperty("MyLongField",
-                            "ThisIsAVeryLongFieldThatShouldBeWrapped" +
-                            "ThisIsAVeryLongFieldThatShouldBeWrapped" +
-                            "ThisIsAVeryLongFieldThatShouldBeWrapped" +
-                            "ThisIsAVeryLongFieldThatShouldBeWrapped" +
-                            "ThisIsAVeryLongFieldThatShouldBeWrapped" +
-                            "ThisIsAVeryLongFieldThatShouldBeWrapped" +
-                            "ThisIsAVeryLongFieldThatShouldBeWrapped" +
-                            "ThisIsAVeryLongFieldThatShouldBeWrapped" +
-                            "ThisIsAVeryLongFieldThatShouldBeWrapped" +
-                            "ThisIsAVeryLongFieldThatShouldBeWrapped");
+            mol.setProperty(
+                    "MyLongField",
+                    "ThisIsAVeryLongFieldThatShouldBeWrapped"
+                            + "ThisIsAVeryLongFieldThatShouldBeWrapped"
+                            + "ThisIsAVeryLongFieldThatShouldBeWrapped"
+                            + "ThisIsAVeryLongFieldThatShouldBeWrapped"
+                            + "ThisIsAVeryLongFieldThatShouldBeWrapped"
+                            + "ThisIsAVeryLongFieldThatShouldBeWrapped"
+                            + "ThisIsAVeryLongFieldThatShouldBeWrapped"
+                            + "ThisIsAVeryLongFieldThatShouldBeWrapped"
+                            + "ThisIsAVeryLongFieldThatShouldBeWrapped"
+                            + "ThisIsAVeryLongFieldThatShouldBeWrapped");
             sdfw.write(mol);
         } catch (IOException | CDKException e) {
             e.printStackTrace();
         }
         String sdf = sw.toString();
-        assertThat(sdf,
-                   CoreMatchers.containsString("ThisIsAVeryLongFieldThatShouldBeWrappedThisIsAVeryLongFieldThatShouldBeWrappedThisIsAVeryLongFieldThatShouldBeWrappedThisIsAVeryLongFieldThatShouldBeWrappedThisIsAVeryLongFieldThatShouldBeWrappedThisI\n"));
+        assertThat(
+                sdf,
+                CoreMatchers.containsString(
+                        "ThisIsAVeryLongFieldThatShouldBeWrappedThisIsAVeryLongFieldThatShouldBeWrappedThisIsAVeryLongFieldThatShouldBeWrappedThisIsAVeryLongFieldThatShouldBeWrappedThisIsAVeryLongFieldThatShouldBeWrappedThisI\n"));
     }
-
 
     @Test
     public void testNoChiralFlag() throws Exception {
-        final String input = "\n" +
-                "  Mrv1810 02052112362D          \n" +
-                "\n" +
-                "  0  0  0     0  0            999 V3000\n" +
-                "M  V30 BEGIN CTAB\n" +
-                "M  V30 COUNTS 7 7 0 0 0\n" +
-                "M  V30 BEGIN ATOM\n" +
-                "M  V30 1 C -2.1407 12.3148 0 0 CFG=2\n" +
-                "M  V30 2 C -3.4743 11.5447 0 0\n" +
-                "M  V30 3 C -3.4743 10.0047 0 0\n" +
-                "M  V30 4 C -2.1407 9.2347 0 0\n" +
-                "M  V30 5 C -0.807 10.0047 0 0\n" +
-                "M  V30 6 N -0.807 11.5447 0 0\n" +
-                "M  V30 7 O -2.1407 13.8548 0 0\n" +
-                "M  V30 END ATOM\n" +
-                "M  V30 BEGIN BOND\n" +
-                "M  V30 1 1 1 2\n" +
-                "M  V30 2 1 2 3\n" +
-                "M  V30 3 1 3 4\n" +
-                "M  V30 4 1 4 5\n" +
-                "M  V30 5 1 5 6\n" +
-                "M  V30 6 1 1 6\n" +
-                "M  V30 7 1 1 7 CFG=1\n" +
-                "M  V30 END BOND\n" +
-                "M  V30 END CTAB\n" +
-                "M  END\n";
+        final String input =
+                "\n"
+                        + "  Mrv1810 02052112362D          \n"
+                        + "\n"
+                        + "  0  0  0     0  0            999 V3000\n"
+                        + "M  V30 BEGIN CTAB\n"
+                        + "M  V30 COUNTS 7 7 0 0 0\n"
+                        + "M  V30 BEGIN ATOM\n"
+                        + "M  V30 1 C -2.1407 12.3148 0 0 CFG=2\n"
+                        + "M  V30 2 C -3.4743 11.5447 0 0\n"
+                        + "M  V30 3 C -3.4743 10.0047 0 0\n"
+                        + "M  V30 4 C -2.1407 9.2347 0 0\n"
+                        + "M  V30 5 C -0.807 10.0047 0 0\n"
+                        + "M  V30 6 N -0.807 11.5447 0 0\n"
+                        + "M  V30 7 O -2.1407 13.8548 0 0\n"
+                        + "M  V30 END ATOM\n"
+                        + "M  V30 BEGIN BOND\n"
+                        + "M  V30 1 1 1 2\n"
+                        + "M  V30 2 1 2 3\n"
+                        + "M  V30 3 1 3 4\n"
+                        + "M  V30 4 1 4 5\n"
+                        + "M  V30 5 1 5 6\n"
+                        + "M  V30 6 1 1 6\n"
+                        + "M  V30 7 1 1 7 CFG=1\n"
+                        + "M  V30 END BOND\n"
+                        + "M  V30 END CTAB\n"
+                        + "M  END\n";
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         StringWriter sw = new StringWriter();
         try (MDLV3000Reader mdlr = new MDLV3000Reader(new StringReader(input));
-             SDFWriter mdlw = new SDFWriter(sw)) {
+                SDFWriter mdlw = new SDFWriter(sw)) {
             mdlw.write(mdlr.read(bldr.newAtomContainer()));
         }
         assertThat(sw.toString(), containsString("  7  7  0  0  0  0  0  0  0  0999 V2000"));
-        assertThat(sw.toString(), not(containsString("BEGIN COLLECTION\n" +
-                "M  V30 MDLV30/STERAC1 ATOMS=(1)\n" +
-                "END COLLECTION")));
+        assertThat(
+                sw.toString(),
+                not(
+                        containsString(
+                                "BEGIN COLLECTION\n"
+                                        + "M  V30 MDLV30/STERAC1 ATOMS=(1)\n"
+                                        + "END COLLECTION")));
     }
 
     @Test
     public void testChiralFlag() throws Exception {
-        final String input = "\n" +
-                "  Mrv1810 02052112362D          \n" +
-                "\n" +
-                "  0  0  0     0  0            999 V3000\n" +
-                "M  V30 BEGIN CTAB\n" +
-                "M  V30 COUNTS 7 7 0 0 1\n" +
-                "M  V30 BEGIN ATOM\n" +
-                "M  V30 1 C -2.1407 12.3148 0 0 CFG=2\n" +
-                "M  V30 2 C -3.4743 11.5447 0 0\n" +
-                "M  V30 3 C -3.4743 10.0047 0 0\n" +
-                "M  V30 4 C -2.1407 9.2347 0 0\n" +
-                "M  V30 5 C -0.807 10.0047 0 0\n" +
-                "M  V30 6 N -0.807 11.5447 0 0\n" +
-                "M  V30 7 O -2.1407 13.8548 0 0\n" +
-                "M  V30 END ATOM\n" +
-                "M  V30 BEGIN BOND\n" +
-                "M  V30 1 1 1 2\n" +
-                "M  V30 2 1 2 3\n" +
-                "M  V30 3 1 3 4\n" +
-                "M  V30 4 1 4 5\n" +
-                "M  V30 5 1 5 6\n" +
-                "M  V30 6 1 1 6\n" +
-                "M  V30 7 1 1 7 CFG=1\n" +
-                "M  V30 END BOND\n" +
-                "M  V30 END CTAB\n" +
-                "M  END\n";
+        final String input =
+                "\n"
+                        + "  Mrv1810 02052112362D          \n"
+                        + "\n"
+                        + "  0  0  0     0  0            999 V3000\n"
+                        + "M  V30 BEGIN CTAB\n"
+                        + "M  V30 COUNTS 7 7 0 0 1\n"
+                        + "M  V30 BEGIN ATOM\n"
+                        + "M  V30 1 C -2.1407 12.3148 0 0 CFG=2\n"
+                        + "M  V30 2 C -3.4743 11.5447 0 0\n"
+                        + "M  V30 3 C -3.4743 10.0047 0 0\n"
+                        + "M  V30 4 C -2.1407 9.2347 0 0\n"
+                        + "M  V30 5 C -0.807 10.0047 0 0\n"
+                        + "M  V30 6 N -0.807 11.5447 0 0\n"
+                        + "M  V30 7 O -2.1407 13.8548 0 0\n"
+                        + "M  V30 END ATOM\n"
+                        + "M  V30 BEGIN BOND\n"
+                        + "M  V30 1 1 1 2\n"
+                        + "M  V30 2 1 2 3\n"
+                        + "M  V30 3 1 3 4\n"
+                        + "M  V30 4 1 4 5\n"
+                        + "M  V30 5 1 5 6\n"
+                        + "M  V30 6 1 1 6\n"
+                        + "M  V30 7 1 1 7 CFG=1\n"
+                        + "M  V30 END BOND\n"
+                        + "M  V30 END CTAB\n"
+                        + "M  END\n";
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         StringWriter sw = new StringWriter();
         try (MDLV3000Reader mdlr = new MDLV3000Reader(new StringReader(input));
-             SDFWriter mdlw = new SDFWriter(sw)) {
+                SDFWriter mdlw = new SDFWriter(sw)) {
             mdlw.write(mdlr.read(bldr.newAtomContainer()));
         }
         assertThat(sw.toString(), containsString("7  7  0  0  1  0  0  0  0  0999 V2000"));
@@ -484,39 +479,40 @@ public class SDFWriterTest extends ChemObjectWriterTest {
 
     @Test
     public void testStereoRac1() throws Exception {
-        final String input = "\n" +
-                "  Mrv1810 02052113162D          \n" +
-                "\n" +
-                "  0  0  0     0  0            999 V3000\n" +
-                "M  V30 BEGIN CTAB\n" +
-                "M  V30 COUNTS 7 7 0 0 0\n" +
-                "M  V30 BEGIN ATOM\n" +
-                "M  V30 1 C -2.1407 12.3148 0 0 CFG=2\n" +
-                "M  V30 2 C -3.4743 11.5447 0 0\n" +
-                "M  V30 3 C -3.4743 10.0047 0 0\n" +
-                "M  V30 4 C -2.1407 9.2347 0 0\n" +
-                "M  V30 5 C -0.807 10.0047 0 0\n" +
-                "M  V30 6 N -0.807 11.5447 0 0\n" +
-                "M  V30 7 O -2.1407 13.8548 0 0\n" +
-                "M  V30 END ATOM\n" +
-                "M  V30 BEGIN BOND\n" +
-                "M  V30 1 1 1 2\n" +
-                "M  V30 2 1 2 3\n" +
-                "M  V30 3 1 3 4\n" +
-                "M  V30 4 1 4 5\n" +
-                "M  V30 5 1 5 6\n" +
-                "M  V30 6 1 1 6\n" +
-                "M  V30 7 1 1 7 CFG=1\n" +
-                "M  V30 END BOND\n" +
-                "M  V30 BEGIN COLLECTION\n" +
-                "M  V30 MDLV30/STERAC1 ATOMS=(1 1)\n" +
-                "M  V30 END COLLECTION\n" +
-                "M  V30 END CTAB\n" +
-                "M  END";
+        final String input =
+                "\n"
+                        + "  Mrv1810 02052113162D          \n"
+                        + "\n"
+                        + "  0  0  0     0  0            999 V3000\n"
+                        + "M  V30 BEGIN CTAB\n"
+                        + "M  V30 COUNTS 7 7 0 0 0\n"
+                        + "M  V30 BEGIN ATOM\n"
+                        + "M  V30 1 C -2.1407 12.3148 0 0 CFG=2\n"
+                        + "M  V30 2 C -3.4743 11.5447 0 0\n"
+                        + "M  V30 3 C -3.4743 10.0047 0 0\n"
+                        + "M  V30 4 C -2.1407 9.2347 0 0\n"
+                        + "M  V30 5 C -0.807 10.0047 0 0\n"
+                        + "M  V30 6 N -0.807 11.5447 0 0\n"
+                        + "M  V30 7 O -2.1407 13.8548 0 0\n"
+                        + "M  V30 END ATOM\n"
+                        + "M  V30 BEGIN BOND\n"
+                        + "M  V30 1 1 1 2\n"
+                        + "M  V30 2 1 2 3\n"
+                        + "M  V30 3 1 3 4\n"
+                        + "M  V30 4 1 4 5\n"
+                        + "M  V30 5 1 5 6\n"
+                        + "M  V30 6 1 1 6\n"
+                        + "M  V30 7 1 1 7 CFG=1\n"
+                        + "M  V30 END BOND\n"
+                        + "M  V30 BEGIN COLLECTION\n"
+                        + "M  V30 MDLV30/STERAC1 ATOMS=(1 1)\n"
+                        + "M  V30 END COLLECTION\n"
+                        + "M  V30 END CTAB\n"
+                        + "M  END";
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         StringWriter sw = new StringWriter();
         try (MDLV3000Reader mdlr = new MDLV3000Reader(new StringReader(input));
-             SDFWriter mdlw = new SDFWriter(sw)) {
+                SDFWriter mdlw = new SDFWriter(sw)) {
             mdlw.write(mdlr.read(bldr.newAtomContainer()));
         }
         assertThat(sw.toString(), containsString("  7  7  0  0  0  0  0  0  0  0999 V2000"));
@@ -524,96 +520,104 @@ public class SDFWriterTest extends ChemObjectWriterTest {
 
     @Test
     public void testStereoRel1() throws Exception {
-        final String input = "\n" +
-                "  Mrv1810 02052113162D          \n" +
-                "\n" +
-                "  0  0  0     0  0            999 V3000\n" +
-                "M  V30 BEGIN CTAB\n" +
-                "M  V30 COUNTS 7 7 0 0 0\n" +
-                "M  V30 BEGIN ATOM\n" +
-                "M  V30 1 C -2.1407 12.3148 0 0 CFG=2\n" +
-                "M  V30 2 C -3.4743 11.5447 0 0\n" +
-                "M  V30 3 C -3.4743 10.0047 0 0\n" +
-                "M  V30 4 C -2.1407 9.2347 0 0\n" +
-                "M  V30 5 C -0.807 10.0047 0 0\n" +
-                "M  V30 6 N -0.807 11.5447 0 0\n" +
-                "M  V30 7 O -2.1407 13.8548 0 0\n" +
-                "M  V30 END ATOM\n" +
-                "M  V30 BEGIN BOND\n" +
-                "M  V30 1 1 1 2\n" +
-                "M  V30 2 1 2 3\n" +
-                "M  V30 3 1 3 4\n" +
-                "M  V30 4 1 4 5\n" +
-                "M  V30 5 1 5 6\n" +
-                "M  V30 6 1 1 6\n" +
-                "M  V30 7 1 1 7 CFG=1\n" +
-                "M  V30 END BOND\n" +
-                "M  V30 BEGIN COLLECTION\n" +
-                "M  V30 MDLV30/STEREL5 ATOMS=(1 1)\n" +
-                "M  V30 END COLLECTION\n" +
-                "M  V30 END CTAB\n" +
-                "M  END";
+        final String input =
+                "\n"
+                        + "  Mrv1810 02052113162D          \n"
+                        + "\n"
+                        + "  0  0  0     0  0            999 V3000\n"
+                        + "M  V30 BEGIN CTAB\n"
+                        + "M  V30 COUNTS 7 7 0 0 0\n"
+                        + "M  V30 BEGIN ATOM\n"
+                        + "M  V30 1 C -2.1407 12.3148 0 0 CFG=2\n"
+                        + "M  V30 2 C -3.4743 11.5447 0 0\n"
+                        + "M  V30 3 C -3.4743 10.0047 0 0\n"
+                        + "M  V30 4 C -2.1407 9.2347 0 0\n"
+                        + "M  V30 5 C -0.807 10.0047 0 0\n"
+                        + "M  V30 6 N -0.807 11.5447 0 0\n"
+                        + "M  V30 7 O -2.1407 13.8548 0 0\n"
+                        + "M  V30 END ATOM\n"
+                        + "M  V30 BEGIN BOND\n"
+                        + "M  V30 1 1 1 2\n"
+                        + "M  V30 2 1 2 3\n"
+                        + "M  V30 3 1 3 4\n"
+                        + "M  V30 4 1 4 5\n"
+                        + "M  V30 5 1 5 6\n"
+                        + "M  V30 6 1 1 6\n"
+                        + "M  V30 7 1 1 7 CFG=1\n"
+                        + "M  V30 END BOND\n"
+                        + "M  V30 BEGIN COLLECTION\n"
+                        + "M  V30 MDLV30/STEREL5 ATOMS=(1 1)\n"
+                        + "M  V30 END COLLECTION\n"
+                        + "M  V30 END CTAB\n"
+                        + "M  END";
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         StringWriter sw = new StringWriter();
         try (MDLV3000Reader mdlr = new MDLV3000Reader(new StringReader(input));
-             SDFWriter mdlw = new SDFWriter(sw)) {
+                SDFWriter mdlw = new SDFWriter(sw)) {
             mdlw.write(mdlr.read(bldr.newAtomContainer()));
         }
-        assertThat(sw.toString(), containsString("M  V30 BEGIN COLLECTION\n" +
-                "M  V30 MDLV30/STEREL1 ATOMS=(1)\n" +
-                "M  V30 END COLLECTION"));
+        assertThat(
+                sw.toString(),
+                containsString(
+                        "M  V30 BEGIN COLLECTION\n"
+                                + "M  V30 MDLV30/STEREL1 ATOMS=(1)\n"
+                                + "M  V30 END COLLECTION"));
     }
 
     @Test
     public void testStereoRac1And() throws Exception {
-        final String input = "\n" +
-                "  Mrv1810 02062121432D          \n" +
-                "\n" +
-                "  0  0  0     0  0            999 V3000\n" +
-                "M  V30 BEGIN CTAB\n" +
-                "M  V30 COUNTS 11 11 0 0 1\n" +
-                "M  V30 BEGIN ATOM\n" +
-                "M  V30 1 C 0 6.16 0 0\n" +
-                "M  V30 2 C 0 4.62 0 0 CFG=2\n" +
-                "M  V30 3 O -1.3337 3.85 0 0\n" +
-                "M  V30 4 C 1.3337 3.85 0 0 CFG=2\n" +
-                "M  V30 5 O 2.6674 4.62 0 0\n" +
-                "M  V30 6 C 1.3337 2.31 0 0\n" +
-                "M  V30 7 C 2.6674 1.54 0 0\n" +
-                "M  V30 8 C 2.6674 -0 0 0\n" +
-                "M  V30 9 C 1.3337 -0.77 0 0\n" +
-                "M  V30 10 C 0 0 0 0\n" +
-                "M  V30 11 C 0 1.54 0 0\n" +
-                "M  V30 END ATOM\n" +
-                "M  V30 BEGIN BOND\n" +
-                "M  V30 1 1 2 1\n" +
-                "M  V30 2 1 2 3 CFG=1\n" +
-                "M  V30 3 1 2 4\n" +
-                "M  V30 4 1 4 5 CFG=3\n" +
-                "M  V30 5 1 4 6\n" +
-                "M  V30 6 1 6 7\n" +
-                "M  V30 7 1 7 8\n" +
-                "M  V30 8 1 8 9\n" +
-                "M  V30 9 1 9 10\n" +
-                "M  V30 10 1 10 11\n" +
-                "M  V30 11 1 6 11\n" +
-                "M  V30 END BOND\n" +
-                "M  V30 BEGIN COLLECTION\n" +
-                "M  V30 MDLV30/STEABS ATOMS=(1 4)\n" +
-                "M  V30 MDLV30/STERAC1 ATOMS=(1 2)\n" +
-                "M  V30 END COLLECTION\n" +
-                "M  V30 END CTAB\n" +
-                "M  END\n";
+        final String input =
+                "\n"
+                        + "  Mrv1810 02062121432D          \n"
+                        + "\n"
+                        + "  0  0  0     0  0            999 V3000\n"
+                        + "M  V30 BEGIN CTAB\n"
+                        + "M  V30 COUNTS 11 11 0 0 1\n"
+                        + "M  V30 BEGIN ATOM\n"
+                        + "M  V30 1 C 0 6.16 0 0\n"
+                        + "M  V30 2 C 0 4.62 0 0 CFG=2\n"
+                        + "M  V30 3 O -1.3337 3.85 0 0\n"
+                        + "M  V30 4 C 1.3337 3.85 0 0 CFG=2\n"
+                        + "M  V30 5 O 2.6674 4.62 0 0\n"
+                        + "M  V30 6 C 1.3337 2.31 0 0\n"
+                        + "M  V30 7 C 2.6674 1.54 0 0\n"
+                        + "M  V30 8 C 2.6674 -0 0 0\n"
+                        + "M  V30 9 C 1.3337 -0.77 0 0\n"
+                        + "M  V30 10 C 0 0 0 0\n"
+                        + "M  V30 11 C 0 1.54 0 0\n"
+                        + "M  V30 END ATOM\n"
+                        + "M  V30 BEGIN BOND\n"
+                        + "M  V30 1 1 2 1\n"
+                        + "M  V30 2 1 2 3 CFG=1\n"
+                        + "M  V30 3 1 2 4\n"
+                        + "M  V30 4 1 4 5 CFG=3\n"
+                        + "M  V30 5 1 4 6\n"
+                        + "M  V30 6 1 6 7\n"
+                        + "M  V30 7 1 7 8\n"
+                        + "M  V30 8 1 8 9\n"
+                        + "M  V30 9 1 9 10\n"
+                        + "M  V30 10 1 10 11\n"
+                        + "M  V30 11 1 6 11\n"
+                        + "M  V30 END BOND\n"
+                        + "M  V30 BEGIN COLLECTION\n"
+                        + "M  V30 MDLV30/STEABS ATOMS=(1 4)\n"
+                        + "M  V30 MDLV30/STERAC1 ATOMS=(1 2)\n"
+                        + "M  V30 END COLLECTION\n"
+                        + "M  V30 END CTAB\n"
+                        + "M  END\n";
         IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
         StringWriter sw = new StringWriter();
         try (MDLV3000Reader mdlr = new MDLV3000Reader(new StringReader(input));
-             SDFWriter mdlw = new SDFWriter(sw)) {
+                SDFWriter mdlw = new SDFWriter(sw)) {
             mdlw.write(mdlr.read(bldr.newAtomContainer()));
         }
         assertThat(sw.toString(), containsString("M  V30 COUNTS 11 11 0 0 0"));
-        assertThat(sw.toString(), containsString("M  V30 BEGIN COLLECTION\n" +
-                "M  V30 MDLV30/STEABS ATOMS=(4)\n" +
-                "M  V30 MDLV30/STERAC1 ATOMS=(2)\n" +
-                "M  V30 END COLLECTION"));
+        assertThat(
+                sw.toString(),
+                containsString(
+                        "M  V30 BEGIN COLLECTION\n"
+                                + "M  V30 MDLV30/STEABS ATOMS=(4)\n"
+                                + "M  V30 MDLV30/STERAC1 ATOMS=(2)\n"
+                                + "M  V30 END COLLECTION"));
     }
 }

@@ -87,5 +87,4 @@ public abstract class AbstractPDBMonomerTest extends AbstractMonomerTest {
             Assert.assertTrue('\r' != description.charAt(i));
         }
     }
-
 }

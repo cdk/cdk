@@ -20,50 +20,47 @@ package org.openscience.cdk.config;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.List;
-
 import org.openscience.cdk.config.isotopes.IsotopeReader;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 
 /**
- * Used to store and return data of a particular isotope. As this class is a
- * singleton class, one gets an instance with:
+ * Used to store and return data of a particular isotope. As this class is a singleton class, one
+ * gets an instance with:
+ *
  * <pre>
  * IsotopeFactory ifac = IsotopFactory.getInstance(new IChemObject().getNewBuilder());
  * </pre>
  *
- * <p>Data about the isotopes are read from the file
- * org.openscience.cdk.config.isotopes.xml in the cdk-standard
- * module. Part of the data in this file was collected from
- * the website <a href="http://www.webelements.org">webelements.org</a>.
+ * <p>Data about the isotopes are read from the file org.openscience.cdk.config.isotopes.xml in the
+ * cdk-standard module. Part of the data in this file was collected from the website <a
+ * href="http://www.webelements.org">webelements.org</a>.
  *
- * <p>The use of this class is exemplified as follows. To get information
- * about the major isotope of hydrogen, one can use this code:
+ * <p>The use of this class is exemplified as follows. To get information about the major isotope of
+ * hydrogen, one can use this code:
+ *
  * <pre>
  *   IsotopeFactory factory = XMLIsotopeFactory.getInstance(DefaultChemObjectBuilder.getInstance());
  *   Isotope major = factory.getMajorIsotope("H");
  * </pre>
  *
- * @cdk.module     extra
+ * @cdk.module extra
  * @cdk.githash
- *
- * @author     steinbeck
- * @cdk.created    2001-08-29
- * @cdk.keyword    isotope
- * @cdk.keyword    element
+ * @author steinbeck
+ * @cdk.created 2001-08-29
+ * @cdk.keyword isotope
+ * @cdk.keyword element
  */
 public class XMLIsotopeFactory extends IsotopeFactory {
 
-    private static XMLIsotopeFactory ifac  = null;
-    private boolean                  debug = false;
+    private static XMLIsotopeFactory ifac = null;
+    private boolean debug = false;
 
     /**
      * Private constructor for the IsotopeFactory object.
      *
-     *@exception IOException             A problem with reading the isotopes.xml
-     *      file
+     * @exception IOException A problem with reading the isotopes.xml file
      * @param builder The builder from which we the factory will be generated
      */
     private XMLIsotopeFactory(IChemObjectBuilder builder) throws IOException {
@@ -71,7 +68,9 @@ public class XMLIsotopeFactory extends IsotopeFactory {
 
         InputStream ins;
         // ObjIn in = null;
-        String errorMessage = "There was a problem getting org.openscience.cdk." + "config.isotopes.xml as a stream";
+        String errorMessage =
+                "There was a problem getting org.openscience.cdk."
+                        + "config.isotopes.xml as a stream";
         try {
             String configFile = "org/openscience/cdk/config/data/isotopes.xml";
             if (debug) logger.debug("Getting stream for ", configFile);
@@ -86,10 +85,9 @@ public class XMLIsotopeFactory extends IsotopeFactory {
             throw new IOException(errorMessage);
         }
         IsotopeReader reader = new IsotopeReader(ins, builder);
-        //in = new ObjIn(ins, new Config().aliasID(false));
+        // in = new ObjIn(ins, new Config().aliasID(false));
         List<IIsotope> isotopes = reader.readIsotopes();
-        for (IIsotope isotope : isotopes)
-            add(isotope);
+        for (IIsotope isotope : isotopes) add(isotope);
         if (debug) logger.debug("Found #isotopes in file: ", isotopes.size());
         /*
          * for (int f = 0; f < isotopes.size(); f++) { Isotope isotope =
@@ -100,9 +98,9 @@ public class XMLIsotopeFactory extends IsotopeFactory {
     /**
      * Returns an IsotopeFactory instance.
      *
-         * @param      builder                 ChemObjectBuilder used to construct the Isotope's
-     * @return                             The instance value
-     * @exception  IOException  if isotopic data files could not be read.
+     * @param builder ChemObjectBuilder used to construct the Isotope's
+     * @return The instance value
+     * @exception IOException if isotopic data files could not be read.
      */
     public static XMLIsotopeFactory getInstance(IChemObjectBuilder builder) throws IOException {
         if (ifac == null) {
@@ -110,5 +108,4 @@ public class XMLIsotopeFactory extends IsotopeFactory {
         }
         return ifac;
     }
-
 }

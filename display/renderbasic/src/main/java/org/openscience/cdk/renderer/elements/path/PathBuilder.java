@@ -26,14 +26,13 @@ package org.openscience.cdk.renderer.elements.path;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.vecmath.Point2d;
-
 import org.openscience.cdk.renderer.elements.GeneralPath;
 
 /**
- * Builder class for paths. All methods for constructing path elements return
- * a reference to the builder, so that it can be used like:
+ * Builder class for paths. All methods for constructing path elements return a reference to the
+ * builder, so that it can be used like:
+ *
  * <pre>
  *  PathBuilder builder = new PathBuilder();
  *  builder.moveTo(p1).lineTo(p1).close();
@@ -50,11 +49,9 @@ public class PathBuilder {
     private List<PathElement> elements;
 
     /** The color of the path */
-    private Color             color;
+    private Color color;
 
-    /**
-     * Make a new path builder with a default color of black.
-     */
+    /** Make a new path builder with a default color of black. */
     public PathBuilder() {
         this(Color.BLACK);
     }
@@ -79,8 +76,7 @@ public class PathBuilder {
     }
 
     /**
-     * Make a move in the path, without drawing anything. This is usually used
-     * to start a path.
+     * Make a move in the path, without drawing anything. This is usually used to start a path.
      *
      * @param point the point to move to
      * @return a reference to this builder
@@ -119,16 +115,14 @@ public class PathBuilder {
      * @param cp1 the first control point
      * @param cp2 the second control point
      * @param ep the end point of the curve
-     * @return  a reference to this builder
+     * @return a reference to this builder
      */
     public PathBuilder cubicTo(Point2d cp1, Point2d cp2, Point2d ep) {
         add(new CubicTo(cp1, cp2, ep));
         return this;
     }
 
-    /**
-     * Close the path.
-     */
+    /** Close the path. */
     public void close() {
         add(new Close());
     }
@@ -136,8 +130,8 @@ public class PathBuilder {
     /**
      * Sets the color if this path.
      *
-     * @param  color the new {@link Color}.
-     * @return       returns itself.
+     * @param color the new {@link Color}.
+     * @return returns itself.
      */
     public PathBuilder color(Color color) {
         this.color = color;

@@ -29,7 +29,7 @@ import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 
 /**
- *  This class returns the number of bonds on the shortest path between two atoms.
+ * This class returns the number of bonds on the shortest path between two atoms.
  *
  * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
@@ -44,38 +44,37 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  *   </tr>
  * </table>
  *
- * @author         mfe4
- * @cdk.created    2004-11-13
- * @cdk.module     qsaratomic
+ * @author mfe4
+ * @cdk.created 2004-11-13
+ * @cdk.module qsaratomic
  * @cdk.githash
- * @cdk.dictref    qsar-descriptors:bondsToAtom
+ * @cdk.dictref qsar-descriptors:bondsToAtom
  */
 public class BondsToAtomDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
     private int focusPosition = 0;
 
-    /**
-     *  Constructor for the BondsToAtomDescriptor object
-     */
+    /** Constructor for the BondsToAtomDescriptor object */
     public BondsToAtomDescriptor() {}
 
     /**
-     *  Gets the specification attribute of the BondsToAtomDescriptor object
+     * Gets the specification attribute of the BondsToAtomDescriptor object
      *
-     *@return    The specification value
+     * @return The specification value
      */
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondsToAtom", this.getClass()
-                        .getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondsToAtom",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     /**
-     *  Sets the parameters attribute of the BondsToAtomDescriptor object
+     * Sets the parameters attribute of the BondsToAtomDescriptor object
      *
-     * @param  params            The parameter is the position to focus
-     * @exception  CDKException  Description of the Exception
+     * @param params The parameter is the position to focus
+     * @exception CDKException Description of the Exception
      */
     @Override
     public void setParameters(Object[] params) throws CDKException {
@@ -89,9 +88,9 @@ public class BondsToAtomDescriptor extends AbstractAtomicDescriptor implements I
     }
 
     /**
-     *  Gets the parameters attribute of the BondsToAtomDescriptor object
+     * Gets the parameters attribute of the BondsToAtomDescriptor object
      *
-     *@return    The parameters value
+     * @return The parameters value
      */
     @Override
     public Object[] getParameters() {
@@ -102,17 +101,16 @@ public class BondsToAtomDescriptor extends AbstractAtomicDescriptor implements I
 
     @Override
     public String[] getDescriptorNames() {
-        return new String[]{"bondsToAtom"};
+        return new String[] {"bondsToAtom"};
     }
 
     /**
-     *  This method calculate the number of bonds on the shortest path between two atoms.
+     * This method calculate the number of bonds on the shortest path between two atoms.
      *
-     *@param  atom              The IAtom for which the DescriptorValue is requested
-     *@param  container         Parameter is the atom container.
-     *@return                   The number of bonds on the shortest path between two atoms
+     * @param atom The IAtom for which the DescriptorValue is requested
+     * @param container Parameter is the atom container.
+     * @return The number of bonds on the shortest path between two atoms
      */
-
     @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
 
@@ -121,15 +119,18 @@ public class BondsToAtomDescriptor extends AbstractAtomicDescriptor implements I
         // could be cached
         int bondsToAtom = new ShortestPaths(container, atom).distanceTo(focus);
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
-                bondsToAtom), getDescriptorNames());
-
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new IntegerResult(bondsToAtom),
+                getDescriptorNames());
     }
 
     /**
-     *  Gets the parameterNames attribute of the BondsToAtomDescriptor object
+     * Gets the parameterNames attribute of the BondsToAtomDescriptor object
      *
-     *@return    The parameterNames value
+     * @return The parameterNames value
      */
     @Override
     public String[] getParameterNames() {
@@ -139,10 +140,10 @@ public class BondsToAtomDescriptor extends AbstractAtomicDescriptor implements I
     }
 
     /**
-     *  Gets the parameterType attribute of the BondsToAtomDescriptor object
+     * Gets the parameterType attribute of the BondsToAtomDescriptor object
      *
-     *@param  name  Description of the Parameter
-     *@return       The parameterType value
+     * @param name Description of the Parameter
+     * @return The parameterType value
      */
     @Override
     public Object getParameterType(String name) {

@@ -25,24 +25,22 @@ package org.openscience.cdk.smsd.tools;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
-
 /**
  * Class that handles execution time of the MCS search.
+ *
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is
+ *     available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public class TimeManager {
 
-    private double           startTime;
+    private double startTime;
     private SimpleDateFormat dateFormat;
 
-    /**
-     * Constructor for storing execution time
-     */
+    /** Constructor for storing execution time */
     public TimeManager() {
 
         dateFormat = new SimpleDateFormat("HH:mm:ss");
@@ -53,48 +51,48 @@ public class TimeManager {
 
     /**
      * Returns Elapsed Time In Hours
+     *
      * @return Elapsed Time In Hours
      */
     public double getElapsedTimeInHours() {
         double currentTime = System.currentTimeMillis();
 
         return (currentTime - startTime) / (60 * 60 * 1000);
-
     }
 
     /**
      * Returns Elapsed Time In Minutes
+     *
      * @return Elapsed Time In Minutes
      */
     public double getElapsedTimeInMinutes() {
 
-        //long diffSeconds = diff / 1000;
-        //long diffMinutes = diff / (60 * 1000);
-        //long diffHours = diff / (60 * 60 * 1000);
-        //long diffDays = diff / (24 * 60 * 60 * 1000);
+        // long diffSeconds = diff / 1000;
+        // long diffMinutes = diff / (60 * 1000);
+        // long diffHours = diff / (60 * 60 * 1000);
+        // long diffDays = diff / (24 * 60 * 60 * 1000);
 
         double currentTime = System.currentTimeMillis();
         return (currentTime - startTime) / (60 * 1000);
-
     }
 
     /**
      * Return Elapsed Time In Seconds
+     *
      * @return Elapsed Time In Seconds
      */
     public double getElapsedTimeInSeconds() {
         double currentTime = System.currentTimeMillis();
         return ((currentTime - startTime) / 1000);
-
     }
 
     /**
      * Returns Elapsed Time In Mill Seconds
+     *
      * @return Elapsed Time In Mill Seconds
      */
     public double getElapsedTimeInMilliSeconds() {
         double currentTime = System.currentTimeMillis();
         return (currentTime - startTime);
-
     }
 }

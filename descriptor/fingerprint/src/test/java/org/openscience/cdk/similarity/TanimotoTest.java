@@ -24,6 +24,13 @@
 
 package org.openscience.cdk.similarity;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.closeTo;
+
+import java.util.BitSet;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -40,17 +47,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.util.BitSet;
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.closeTo;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-/**
- * @cdk.module test-fingerprint
- */
+/** @cdk.module test-fingerprint */
 public class TanimotoTest extends CDKTestCase {
 
     boolean standAlone = false;
@@ -84,7 +81,8 @@ public class TanimotoTest extends CDKTestCase {
         IAtomContainer mol1 = TestMoleculeFactory.makeIndole();
         IAtomContainer mol2 = TestMoleculeFactory.makePyrrole();
         Fingerprinter fp = new Fingerprinter(1024, 8);
-        double similarity = Tanimoto.calculate(fp.getBitFingerprint(mol1), fp.getBitFingerprint(mol2));
+        double similarity =
+                Tanimoto.calculate(fp.getBitFingerprint(mol1), fp.getBitFingerprint(mol2));
         Assert.assertEquals(0.3939, similarity, 0.01);
     }
 
@@ -101,7 +99,6 @@ public class TanimotoTest extends CDKTestCase {
         Map<String, Integer> feat2 = fingerprinter.getRawFingerprint(mol2);
         float tanimoto = Tanimoto.calculate(feat1, feat2);
         Assert.assertEquals(1.0, tanimoto, 0.001);
-
     }
 
     @Test
@@ -140,35 +137,43 @@ public class TanimotoTest extends CDKTestCase {
 
     @Test
     public void method1() throws CDKException {
-        ICountFingerprint fp1 = new IntArrayCountFingerprint(new HashMap<String, Integer>() {
+        ICountFingerprint fp1 =
+                new IntArrayCountFingerprint(
+                        new HashMap<String, Integer>() {
 
-            {
-                put("A", 3);
-            }
-        });
-        ICountFingerprint fp2 = new IntArrayCountFingerprint(new HashMap<String, Integer>() {
+                            {
+                                put("A", 3);
+                            }
+                        });
+        ICountFingerprint fp2 =
+                new IntArrayCountFingerprint(
+                        new HashMap<String, Integer>() {
 
-            {
-                put("A", 4);
-            }
-        });
+                            {
+                                put("A", 4);
+                            }
+                        });
         Assert.assertEquals(0.923, Tanimoto.method1(fp1, fp2), 0.001);
     }
 
     @Test
     public void method2() throws CDKException {
-        ICountFingerprint fp1 = new IntArrayCountFingerprint(new HashMap<String, Integer>() {
+        ICountFingerprint fp1 =
+                new IntArrayCountFingerprint(
+                        new HashMap<String, Integer>() {
 
-            {
-                put("A", 3);
-            }
-        });
-        ICountFingerprint fp2 = new IntArrayCountFingerprint(new HashMap<String, Integer>() {
+                            {
+                                put("A", 3);
+                            }
+                        });
+        ICountFingerprint fp2 =
+                new IntArrayCountFingerprint(
+                        new HashMap<String, Integer>() {
 
-            {
-                put("A", 4);
-            }
-        });
+                            {
+                                put("A", 4);
+                            }
+                        });
         Assert.assertEquals(0.75, Tanimoto.method2(fp1, fp2), 0.001);
     }
 
@@ -193,5 +198,4 @@ public class TanimotoTest extends CDKTestCase {
         tanimoto2 = Tanimoto.calculate(ifp1, ifp2);
         Assert.assertEquals(tanimoto, tanimoto2, 0.01);
     }
-
 }

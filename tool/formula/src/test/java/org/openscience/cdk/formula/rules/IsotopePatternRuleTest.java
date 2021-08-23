@@ -20,28 +20,23 @@ package org.openscience.cdk.formula.rules;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 
-/**
- * @cdk.module test-formula
- */
+/** @cdk.module test-formula */
 public class IsotopePatternRuleTest extends FormulaRuleTest {
 
     private static IChemObjectBuilder builder;
-    private static IsotopeFactory     ifac;
+    private static IsotopeFactory ifac;
 
-    /**
-     *  The JUnit setup method
-     */
+    /** The JUnit setup method */
     @BeforeClass
     public static void setUp() throws Exception {
         builder = DefaultChemObjectBuilder.getInstance();
@@ -52,20 +47,19 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testIsotopePatternRule() throws Exception {
 
         IRule rule = new IsotopePatternRule();
         Assert.assertNotNull(rule);
-
     }
 
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testDefault() throws Exception {
@@ -79,7 +73,7 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testSetParameters() throws Exception {
@@ -101,15 +95,15 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testValid_Bromine() throws Exception {
 
         List<double[]> spectrum = new ArrayList<double[]>();
-        spectrum.add(new double[]{157.8367, 51.399});
-        spectrum.add(new double[]{159.8346, 100.00});
-        spectrum.add(new double[]{161.8326, 48.639});
+        spectrum.add(new double[] {157.8367, 51.399});
+        spectrum.add(new double[] {159.8346, 100.00});
+        spectrum.add(new double[] {161.8326, 48.639});
 
         IRule rule = new IsotopePatternRule();
         Object[] params = new Object[2];
@@ -128,7 +122,7 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testValidate_IMolecularFormula() throws Exception {
@@ -140,12 +134,11 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
         formula.addIsotope(ifac.getMajorIsotope("O"), 2);
         formula.setCharge(0);
 
-        /** experimental results*/
-
+        /** experimental results */
         List<double[]> spectrum = new ArrayList<double[]>();
-        spectrum.add(new double[]{133.0977, 100.00});
-        spectrum.add(new double[]{134.09475, 0.6});
-        spectrum.add(new double[]{134.1010, 5.4});
+        spectrum.add(new double[] {133.0977, 100.00});
+        spectrum.add(new double[] {134.09475, 0.6});
+        spectrum.add(new double[] {134.1010, 5.4});
 
         IRule rule = new IsotopePatternRule();
         Object[] params = new Object[2];
@@ -155,5 +148,4 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
 
         Assert.assertEquals(0.9433, rule.validate(formula), 0.001);
     }
-
 }

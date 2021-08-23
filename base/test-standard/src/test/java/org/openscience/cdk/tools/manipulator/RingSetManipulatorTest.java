@@ -24,7 +24,6 @@ package org.openscience.cdk.tools.manipulator;
 
 import java.util.List;
 import java.util.Vector;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,20 +40,18 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
-/**
- * @cdk.module test-standard
- */
+/** @cdk.module test-standard */
 public class RingSetManipulatorTest extends CDKTestCase {
 
     protected IChemObjectBuilder builder;
 
-    private IRingSet             ringset        = null;
-    private IAtom                ring1Atom1     = null;
-    private IAtom                ring1Atom3     = null;
-    private IAtom                ring2Atom3     = null;
-    private IBond                bondRing2Ring3 = null;
-    private IRing                ring2          = null;
-    private IRing                ring3          = null;
+    private IRingSet ringset = null;
+    private IAtom ring1Atom1 = null;
+    private IAtom ring1Atom3 = null;
+    private IAtom ring2Atom3 = null;
+    private IBond bondRing2Ring3 = null;
+    private IRing ring2 = null;
+    private IRing ring3 = null;
 
     @Before
     public void setUp() {
@@ -77,7 +74,8 @@ public class RingSetManipulatorTest extends CDKTestCase {
         IBond ring1Bond3 = builder.newInstance(IBond.class, ring1Atom3, ring1Atom1);
         bondRing2Ring3 = builder.newInstance(IBond.class, ring2Atom1, ring2Atom2);
         IBond ring2Bond2 = builder.newInstance(IBond.class, ring2Atom2, ring2Atom3);
-        IBond ring2Bond3 = builder.newInstance(IBond.class, ring2Atom3, ring2Atom1, IBond.Order.DOUBLE);
+        IBond ring2Bond3 =
+                builder.newInstance(IBond.class, ring2Atom3, ring2Atom1, IBond.Order.DOUBLE);
         IBond ring3Bond2 = builder.newInstance(IBond.class, ring2Atom2, ring3Atom3);
         IBond bondRing3Ring4 = builder.newInstance(IBond.class, ring3Atom3, ring3Atom4);
         IBond ring3Bond4 = builder.newInstance(IBond.class, ring3Atom4, ring2Atom1);

@@ -23,20 +23,20 @@ import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IBond;
 
-/**
- * @cdk.module test-diff
- */
+/** @cdk.module test-diff */
 public class BondOrderDifferenceTest extends CDKTestCase {
 
     @Test
     public void testDiff() {
-        IDifference result = BondOrderDifference.construct("Foo", IBond.Order.SINGLE, IBond.Order.DOUBLE);
+        IDifference result =
+                BondOrderDifference.construct("Foo", IBond.Order.SINGLE, IBond.Order.DOUBLE);
         Assert.assertNotNull(result);
     }
 
     @Test
     public void testSame() {
-        IDifference result = BondOrderDifference.construct("Foo", IBond.Order.SINGLE, IBond.Order.SINGLE);
+        IDifference result =
+                BondOrderDifference.construct("Foo", IBond.Order.SINGLE, IBond.Order.SINGLE);
         Assert.assertNull(result);
     }
 

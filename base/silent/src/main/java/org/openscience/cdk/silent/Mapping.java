@@ -19,23 +19,19 @@
  */
 package org.openscience.cdk.silent;
 
+import java.util.Iterator;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMapping;
 
-import java.util.Iterator;
-
 /**
- * A Mapping is an relation between two ChemObjects in a non-chemical
- * entity. It is not a Bond, nor a Association, merely a relation.
- * An example of such a mapping, is the mapping between corresponding atoms
- * in a Reaction.
+ * A Mapping is an relation between two ChemObjects in a non-chemical entity. It is not a Bond, nor
+ * a Association, merely a relation. An example of such a mapping, is the mapping between
+ * corresponding atoms in a Reaction.
  *
- * @cdk.module  silent
+ * @cdk.module silent
  * @cdk.githash
- *
  * @cdk.keyword reaction, atom mapping
- *
- * @author  Egon Willighagen
+ * @author Egon Willighagen
  * @cdk.created 2003-08-16
  */
 public class Mapping extends ChemObject implements java.io.Serializable, Cloneable, IMapping {
@@ -43,14 +39,14 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
     /**
      * Determines if a de-serialized object is compatible with this class.
      *
-     * This value must only be changed if and only if the new version
-     * of this class is incompatible with the old version. See Sun docs
-     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
+     * <p>This value must only be changed if and only if the new version of this class is
+     * incompatible with the old version. See Sun docs for <a
+     * href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
      */
     private static final long serialVersionUID = -6541914644492043503L;
 
-    private IChemObject[]     relation;
+    private IChemObject[] relation;
 
     /**
      * Constructs an unconnected lone pair.
@@ -65,8 +61,7 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
     }
 
     /**
-     * Returns an Iterable to the two IChemObjects.
-     * Iterable.remove() is not implemented.
+     * Returns an Iterable to the two IChemObjects. Iterable.remove() is not implemented.
      *
      * @return An Iterable to two IChemObjects that define the mapping
      */
@@ -81,10 +76,7 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
         };
     }
 
-    /**
-     * The inner Iterator class.
-     *
-     */
+    /** The inner Iterator class. */
     private class ChemObjectIterator implements Iterator<IChemObject> {
 
         private int pointer = 0;
@@ -101,14 +93,13 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
 
         @Override
         public void remove() {}
-
     }
 
     /**
      * Retrieves the first or second of the related IChemObjects.
      *
-     * @param   pos  The position of the IChemObject.
-     * @return  The IChemObject to retrieve.
+     * @param pos The position of the IChemObject.
+     * @return The IChemObject to retrieve.
      */
     @Override
     public IChemObject getChemObject(int pos) {
@@ -118,7 +109,7 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
     /**
      * Clones this <code>Mapping</code> and the mapped <code>IChemObject</code>s.
      *
-     * @return  The cloned object
+     * @return The cloned object
      */
     @Override
     public Object clone() throws CloneNotSupportedException {

@@ -29,8 +29,8 @@ import org.openscience.cdk.io.formats.INChIPlainTextFormat;
 import org.openscience.cdk.io.formats.VASPFormat;
 
 /**
- * TestCase for the instantiation and functionality of the {@link ReaderFactory} for
- * io classes currently in 'cdk-extra'.
+ * TestCase for the instantiation and functionality of the {@link ReaderFactory} for io classes
+ * currently in 'cdk-extra'.
  *
  * @cdk.module test-extra
  */
@@ -57,5 +57,4 @@ public class ExtraReaderFactoryTest extends AbstractReaderFactoryTest {
     public void testGamess() throws Exception {
         expectReader("data/gamess/ch3oh_gam.out", GamessFormat.getInstance(), -1, -1);
     }
-
 }

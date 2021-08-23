@@ -2,10 +2,8 @@ package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
 
-
 /**
- * A ring is just a circle - in other words, an oval whose width and height are
- * the same.
+ * A ring is just a circle - in other words, an oval whose width and height are the same.
  *
  * @cdk.module renderbasic
  * @cdk.githash
@@ -29,5 +27,4 @@ public class RingElement extends OvalElement implements IRenderingElement {
     public void accept(IRenderingVisitor v) {
         v.visit(this);
     }
-
 }

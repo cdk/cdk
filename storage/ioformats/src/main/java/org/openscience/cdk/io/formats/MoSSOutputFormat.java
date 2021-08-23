@@ -59,7 +59,7 @@ public class MoSSOutputFormat extends SimpleChemFormatMatcher implements IChemFo
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"mossoutput"};
+        return new String[] {"mossoutput"};
     }
 
     /** {@inheritDoc} */

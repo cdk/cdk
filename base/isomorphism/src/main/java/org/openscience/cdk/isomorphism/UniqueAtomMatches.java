@@ -26,20 +26,23 @@ package org.openscience.cdk.isomorphism;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;
-
 import java.util.BitSet;
 import java.util.Set;
 
 /**
- * A predicate for filtering atom-mapping results. This class is intended for
- * use with {@link Pattern}.
+ * A predicate for filtering atom-mapping results. This class is intended for use with {@link
+ * Pattern}.
  *
- * <blockquote><pre>{@code
- *     Pattern     pattern = Ullmann.findSubstructure(query);
- *     List<int[]> unique  = FluentIterable.of(patter.matchAll(target))
- *                                         .filter(new UniqueAtomMatches())
- *                                         .toList();
- * }</pre></blockquote>
+ * <blockquote>
+ *
+ * <pre>{@code
+ * Pattern     pattern = Ullmann.findSubstructure(query);
+ * List<int[]> unique  = FluentIterable.of(patter.matchAll(target))
+ *                                     .filter(new UniqueAtomMatches())
+ *                                     .toList();
+ * }</pre>
+ *
+ * </blockquote>
  *
  * @author John May
  * @cdk.module isomorphism
@@ -50,8 +53,8 @@ final class UniqueAtomMatches implements Predicate<int[]> {
     private final Set<BitSet> unique;
 
     /**
-     * Create filter for the expected number of unique matches. The number
-     * of matches can grow if required.
+     * Create filter for the expected number of unique matches. The number of matches can grow if
+     * required.
      *
      * @param expectedHits expected number of unique matches
      */
@@ -59,16 +62,12 @@ final class UniqueAtomMatches implements Predicate<int[]> {
         this.unique = Sets.newHashSetWithExpectedSize(expectedHits);
     }
 
-    /**
-     * Create filter for unique matches.
-     */
+    /** Create filter for unique matches. */
     public UniqueAtomMatches() {
         this(10);
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean apply(int[] input) {
         return unique.add(toBitSet(input));
@@ -82,8 +81,7 @@ final class UniqueAtomMatches implements Predicate<int[]> {
      */
     private BitSet toBitSet(int[] mapping) {
         BitSet hits = new BitSet();
-        for (int v : mapping)
-            hits.set(v);
+        for (int v : mapping) hits.set(v);
         return hits;
     }
 }

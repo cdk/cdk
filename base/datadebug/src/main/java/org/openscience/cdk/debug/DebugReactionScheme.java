@@ -19,11 +19,10 @@
 package org.openscience.cdk.debug;
 
 import java.util.Map;
-
 import org.openscience.cdk.ReactionScheme;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReactionScheme;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -39,7 +38,7 @@ public class DebugReactionScheme extends ReactionScheme implements IReactionSche
 
     private static final long serialVersionUID = 705803374163613819L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugReactionScheme.class);
+    ILoggingTool logger = LoggingToolFactory.createLoggingTool(DebugReactionScheme.class);
 
     /** {@inheritDoc} */
     @Override
@@ -199,5 +198,4 @@ public class DebugReactionScheme extends ReactionScheme implements IReactionSche
         logger.debug("Removing all reactionSchemes");
         super.removeAllReactionSchemes();
     }
-
 }

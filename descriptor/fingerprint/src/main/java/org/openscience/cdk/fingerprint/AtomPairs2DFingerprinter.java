@@ -1,21 +1,14 @@
 /*
  * Note: I adapted this fingerprint from Yap Chun Wei's PaDEL source code, which can be found here:
  * http://www.yapcwsoft.com/dd/padeldescriptor/
- * 
+ *
  * Author: Lyle D. Burgoon, Ph.D. (lyle.d.burgoon@usace.army.mil)
- * 
+ *
  * This is the work of a US Government employee. This code is in the public domain.
- * 
+ *
  */
 
-
 package org.openscience.cdk.fingerprint;
-
-import org.openscience.cdk.config.Elements;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.graph.AllPairsShortestPaths;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
 
 import java.util.ArrayList;
 import java.util.BitSet;
@@ -23,12 +16,16 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.AllPairsShortestPaths;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 
-//import org.openscience.cdk.graph.matrix.TopologicalMatrix;
+// import org.openscience.cdk.graph.matrix.TopologicalMatrix;
 
 /**
- * Generates an atom pair 2D fingerprint as implemented in PaDEL given an  {@link IAtomContainer}, that
- * extends the {@link Fingerprinter}.
+ * Generates an atom pair 2D fingerprint as implemented in PaDEL given an {@link IAtomContainer},
+ * that extends the {@link Fingerprinter}.
  *
  * @author Lyle Burgoon (lyle.d.burgoon@usace.army.mil)
  * @cdk.created 2018-02-05
@@ -40,8 +37,10 @@ import java.util.Map;
  */
 public class AtomPairs2DFingerprinter extends AbstractFingerprinter implements IFingerprinter {
 
-    private static final int      MAX_DISTANCE = 10;
-    private static final String[] atypes       = {"C", "N", "O", "S", "P", "F", "Cl", "Br", "I", "B", "Si", "X"};
+    private static final int MAX_DISTANCE = 10;
+    private static final String[] atypes = {
+        "C", "N", "O", "S", "P", "F", "Cl", "Br", "I", "B", "Si", "X"
+    };
 
     private final Map<String, Integer> pathToBit = new HashMap<>();
     private final Map<Integer, String> bitToPath = new HashMap<>();
@@ -65,12 +64,13 @@ public class AtomPairs2DFingerprinter extends AbstractFingerprinter implements I
 
     /**
      * Checks if an atom is a halogen
+     *
      * @param atom
      * @return
      */
     private static boolean isHalogen(final IAtom atom) {
         switch (atom.getAtomicNumber()) {
-            case 9:  // F
+            case 9: // F
             case 17: // Cl
             case 35: // Br
             case 53: // I
@@ -82,19 +82,20 @@ public class AtomPairs2DFingerprinter extends AbstractFingerprinter implements I
 
     /**
      * Atoms that we are using in the fingerprint
+     *
      * @param atom
      * @return
      */
     private static boolean include(final IAtom atom) {
         switch (atom.getAtomicNumber()) {
-            case 5:  // B
-            case 6:  // C
-            case 7:  // N
-            case 8:  // O
+            case 5: // B
+            case 6: // C
+            case 7: // N
+            case 8: // O
             case 14: // Si
             case 15: // P
             case 16: // S
-            case 9:  // F
+            case 9: // F
             case 17: // Cl
             case 35: // Br
             case 53: // I
@@ -106,6 +107,7 @@ public class AtomPairs2DFingerprinter extends AbstractFingerprinter implements I
 
     /**
      * Creates the fingerprint name which is used as a key in our hashes
+     *
      * @param dist
      * @param a
      * @param b
@@ -117,32 +119,35 @@ public class AtomPairs2DFingerprinter extends AbstractFingerprinter implements I
 
     /**
      * Encodes name for halogen paths
+     *
      * @param dist
      * @param a
      * @param b
      * @return
      */
     private static String encodeHalPath(int dist, IAtom a, IAtom b) {
-        return dist + "_" + (isHalogen(a) ? "X" : a.getSymbol()) + "_" +
-               (isHalogen(b) ? "X" : b.getSymbol());
+        return dist
+                + "_"
+                + (isHalogen(a) ? "X" : a.getSymbol())
+                + "_"
+                + (isHalogen(b) ? "X" : b.getSymbol());
     }
 
     /**
      * This performs the calculations used to generate the fingerprint
+     *
      * @param paths
      * @param mol
      */
     private void calculate(List<String> paths, IAtomContainer mol) {
-        AllPairsShortestPaths apsp     = new AllPairsShortestPaths(mol);
-        int                   numAtoms = mol.getAtomCount();
+        AllPairsShortestPaths apsp = new AllPairsShortestPaths(mol);
+        int numAtoms = mol.getAtomCount();
         for (int i = 0; i < numAtoms; i++) {
-            if (!include(mol.getAtom(i)))
-                continue;
+            if (!include(mol.getAtom(i))) continue;
             for (int j = i + 1; j < numAtoms; j++) {
                 if (!include(mol.getAtom(j))) continue;
                 final int dist = apsp.from(i).distanceTo(j);
-                if (dist > MAX_DISTANCE)
-                    continue;
+                if (dist > MAX_DISTANCE) continue;
                 final IAtom beg = mol.getAtom(i);
                 final IAtom end = mol.getAtom(j);
                 paths.add(encodePath(dist, beg, end));
@@ -161,17 +166,15 @@ public class AtomPairs2DFingerprinter extends AbstractFingerprinter implements I
         List<String> paths = new ArrayList<>();
         calculate(paths, container);
         for (String path : paths) {
-        	if (!pathToBit.containsKey(path))
-        		continue;
+            if (!pathToBit.containsKey(path)) continue;
             fp.set(pathToBit.get(path));
         }
         return new BitSetFingerprint(fp);
     }
 
     @Override
-    public Map<String, Integer> getRawFingerprint(IAtomContainer mol) throws
-                                                                      CDKException {
-        Map<String,Integer> raw = new HashMap<>();
+    public Map<String, Integer> getRawFingerprint(IAtomContainer mol) throws CDKException {
+        Map<String, Integer> raw = new HashMap<>();
         List<String> paths = new ArrayList<>();
         calculate(paths, mol);
 
@@ -180,24 +183,22 @@ public class AtomPairs2DFingerprinter extends AbstractFingerprinter implements I
         String prev = null;
         for (String path : paths) {
             if (prev == null || !path.equals(prev)) {
-                if (count > 0)
-                    raw.put(prev, count);
+                if (count > 0) raw.put(prev, count);
                 count = 1;
                 prev = path;
             } else {
                 ++count;
             }
         }
-        if (count > 0)
-            raw.put(prev, count);
+        if (count > 0) raw.put(prev, count);
 
         return raw;
     }
 
     @Override
     public ICountFingerprint getCountFingerprint(IAtomContainer mol) throws CDKException {
-        final Map<String,Integer> raw  = getRawFingerprint(mol);
-        final List<String>        keys = new ArrayList<>(raw.keySet());
+        final Map<String, Integer> raw = getRawFingerprint(mol);
+        final List<String> keys = new ArrayList<>(raw.keySet());
         return new ICountFingerprint() {
             @Override
             public long size() {
@@ -220,15 +221,10 @@ public class AtomPairs2DFingerprinter extends AbstractFingerprinter implements I
             }
 
             @Override
-            public void merge(ICountFingerprint fp) {
-
-            }
+            public void merge(ICountFingerprint fp) {}
 
             @Override
-            public void setBehaveAsBitFingerprint(
-                boolean behaveAsBitFingerprint) {
-
-            }
+            public void setBehaveAsBitFingerprint(boolean behaveAsBitFingerprint) {}
 
             @Override
             public boolean hasHash(int hash) {

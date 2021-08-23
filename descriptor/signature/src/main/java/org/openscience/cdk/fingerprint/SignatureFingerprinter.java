@@ -27,7 +27,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -36,7 +35,7 @@ import org.openscience.cdk.signature.AtomSignature;
 /**
  * An implementation of a {@link AtomSignature}-based fingerprint.
  *
- * @cdk.module  signature
+ * @cdk.module signature
  * @cdk.keyword fingerprint
  * @cdk.githash
  */
@@ -44,9 +43,7 @@ public class SignatureFingerprinter extends AbstractFingerprinter implements IFi
 
     private int signatureDepth;
 
-    /**
-     * Initialize the fingerprinter with a default signature depth of 1.
-     */
+    /** Initialize the fingerprinter with a default signature depth of 1. */
     public SignatureFingerprinter() {
         this(1);
     }
@@ -60,12 +57,11 @@ public class SignatureFingerprinter extends AbstractFingerprinter implements IFi
         this.signatureDepth = depth;
     }
 
-
     @Override
     protected List<Map.Entry<String, String>> getParameters() {
-        return Collections.<Map.Entry<String,String>>singletonList(
-            new AbstractMap.SimpleImmutableEntry<>("signatureDepth", Integer.toString(signatureDepth))
-        );
+        return Collections.<Map.Entry<String, String>>singletonList(
+                new AbstractMap.SimpleImmutableEntry<>(
+                        "signatureDepth", Integer.toString(signatureDepth)));
     }
 
     @Override
@@ -74,10 +70,12 @@ public class SignatureFingerprinter extends AbstractFingerprinter implements IFi
     }
 
     @Override
-    public Map<String, Integer> getRawFingerprint(IAtomContainer atomContainer) throws CDKException {
+    public Map<String, Integer> getRawFingerprint(IAtomContainer atomContainer)
+            throws CDKException {
         Map<String, Integer> map = new HashMap<String, Integer>();
         for (IAtom atom : atomContainer.atoms()) {
-            String signature = new AtomSignature(atom, signatureDepth, atomContainer).toCanonicalString();
+            String signature =
+                    new AtomSignature(atom, signatureDepth, atomContainer).toCanonicalString();
             if (map.containsKey(signature)) {
                 map.put(signature, map.get(signature) + 1);
             } else {
@@ -96,5 +94,4 @@ public class SignatureFingerprinter extends AbstractFingerprinter implements IFi
     public ICountFingerprint getCountFingerprint(IAtomContainer container) throws CDKException {
         return new IntArrayCountFingerprint(getRawFingerprint(container));
     }
-
 }

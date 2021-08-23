@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2014 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *   
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *   
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -24,7 +24,18 @@
 
 package org.openscience.cdk.stereo;
 
-import org.junit.Assert;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.junit.Assert.assertTrue;
+import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
+import static org.openscience.cdk.stereo.CyclicCarbohydrateRecognition.Turn;
+import static org.openscience.cdk.stereo.CyclicCarbohydrateRecognition.Turn.Left;
+import static org.openscience.cdk.stereo.CyclicCarbohydrateRecognition.Turn.Right;
+
+import java.util.Collections;
+import java.util.List;
+import javax.vecmath.Point2d;
 import org.junit.Test;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.graph.GraphUtil;
@@ -36,94 +47,101 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.AtomContainer;
 
-import javax.vecmath.Point2d;
-
-import java.util.Collections;
-import java.util.List;
-
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertTrue;
-import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
-import static org.openscience.cdk.stereo.CyclicCarbohydrateRecognition.Turn;
-import static org.openscience.cdk.stereo.CyclicCarbohydrateRecognition.Turn.Left;
-import static org.openscience.cdk.stereo.CyclicCarbohydrateRecognition.Turn.Right;
-
 public class CyclicCarbohydrateRecognitionTest {
 
-    @Test public void haworthAnticlockwise() throws Exception {
-        org.hamcrest.MatcherAssert.assertThat(CyclicCarbohydrateRecognition.turns(new Point2d[]{
-                new Point2d(4.1, 3.0),
-                new Point2d(3.3, 2.6),
-                new Point2d(3.3, 1.8),
-                new Point2d(4.1, 1.4),
-                new Point2d(4.8, 1.8),
-                new Point2d(4.8, 2.6),
-        }), is(new Turn[]{Left,  Left,  Left,  Left,  Left,  Left}));
+    @Test
+    public void haworthAnticlockwise() throws Exception {
+        org.hamcrest.MatcherAssert.assertThat(
+                CyclicCarbohydrateRecognition.turns(
+                        new Point2d[] {
+                            new Point2d(4.1, 3.0),
+                            new Point2d(3.3, 2.6),
+                            new Point2d(3.3, 1.8),
+                            new Point2d(4.1, 1.4),
+                            new Point2d(4.8, 1.8),
+                            new Point2d(4.8, 2.6),
+                        }),
+                is(new Turn[] {Left, Left, Left, Left, Left, Left}));
     }
 
-
-    @Test public void haworthClockwise() throws Exception {
-        org.hamcrest.MatcherAssert.assertThat(CyclicCarbohydrateRecognition.turns(new Point2d[]{
-                new Point2d(4.1, 3.0),
-                new Point2d(4.8, 2.6),
-                new Point2d(4.8, 1.8),
-                new Point2d(4.1, 1.4),
-                new Point2d(3.3, 1.8),
-                new Point2d(3.3, 2.6)
-        }), is(new Turn[]{Right,  Right,  Right,  Right,  Right,  Right}));
+    @Test
+    public void haworthClockwise() throws Exception {
+        org.hamcrest.MatcherAssert.assertThat(
+                CyclicCarbohydrateRecognition.turns(
+                        new Point2d[] {
+                            new Point2d(4.1, 3.0),
+                            new Point2d(4.8, 2.6),
+                            new Point2d(4.8, 1.8),
+                            new Point2d(4.1, 1.4),
+                            new Point2d(3.3, 1.8),
+                            new Point2d(3.3, 2.6)
+                        }),
+                is(new Turn[] {Right, Right, Right, Right, Right, Right}));
     }
 
-    @Test public void chairAnticlockwise() throws Exception {
-        org.hamcrest.MatcherAssert.assertThat(CyclicCarbohydrateRecognition.turns(new Point2d[]{
-                new Point2d(0.9, 2.6),
-                new Point2d(0.1, 2.4),
-                new Point2d(0.2, 3.1),
-                new Point2d(0.5, 2.9),
-                new Point2d(1.3, 3.1),
-                new Point2d(1.7, 2.4)
-        }), is(new Turn[]{Left, Right, Right, Left, Right, Right}));
+    @Test
+    public void chairAnticlockwise() throws Exception {
+        org.hamcrest.MatcherAssert.assertThat(
+                CyclicCarbohydrateRecognition.turns(
+                        new Point2d[] {
+                            new Point2d(0.9, 2.6),
+                            new Point2d(0.1, 2.4),
+                            new Point2d(0.2, 3.1),
+                            new Point2d(0.5, 2.9),
+                            new Point2d(1.3, 3.1),
+                            new Point2d(1.7, 2.4)
+                        }),
+                is(new Turn[] {Left, Right, Right, Left, Right, Right}));
     }
 
-    @Test public void chairClockwise() throws Exception {
-        org.hamcrest.MatcherAssert.assertThat(CyclicCarbohydrateRecognition.turns(new Point2d[]{
-                new Point2d(1.7, 2.4),
-                new Point2d(1.3, 3.1),
-                new Point2d(0.5, 2.9),
-                new Point2d(0.2, 3.1),
-                new Point2d(0.1, 2.4),
-                new Point2d(0.9, 2.6)
-        }), is(new Turn[]{Left, Left, Right, Left, Left, Right}));
-    }
-    
-
-    @Test public void boatAnticlockwise() throws Exception {
-        org.hamcrest.MatcherAssert.assertThat(CyclicCarbohydrateRecognition.turns(new Point2d[]{
-                new Point2d(3.3, 3.8),
-                new Point2d(2.1, 3.8),
-                new Point2d(1.6, 4.9),
-                new Point2d(2.3, 4.2),
-                new Point2d(3.1, 4.2),
-                new Point2d(3.8, 4.8)
-        }), is(new Turn[]{Right, Right, Right, Left, Left, Right}));
+    @Test
+    public void chairClockwise() throws Exception {
+        org.hamcrest.MatcherAssert.assertThat(
+                CyclicCarbohydrateRecognition.turns(
+                        new Point2d[] {
+                            new Point2d(1.7, 2.4),
+                            new Point2d(1.3, 3.1),
+                            new Point2d(0.5, 2.9),
+                            new Point2d(0.2, 3.1),
+                            new Point2d(0.1, 2.4),
+                            new Point2d(0.9, 2.6)
+                        }),
+                is(new Turn[] {Left, Left, Right, Left, Left, Right}));
     }
 
-    @Test public void boatClockwise() throws Exception {
-        org.hamcrest.MatcherAssert.assertThat(CyclicCarbohydrateRecognition.turns(new Point2d[]{
-                new Point2d(3.8, 4.8),
-                new Point2d(3.1, 4.2),
-                new Point2d(2.3, 4.2),
-                new Point2d(1.6, 4.9),
-                new Point2d(2.1, 3.8),
-                new Point2d(3.3, 3.8)
-        }), is(new Turn[]{Left, Right, Right, Left, Left, Left}));
+    @Test
+    public void boatAnticlockwise() throws Exception {
+        org.hamcrest.MatcherAssert.assertThat(
+                CyclicCarbohydrateRecognition.turns(
+                        new Point2d[] {
+                            new Point2d(3.3, 3.8),
+                            new Point2d(2.1, 3.8),
+                            new Point2d(1.6, 4.9),
+                            new Point2d(2.3, 4.2),
+                            new Point2d(3.1, 4.2),
+                            new Point2d(3.8, 4.8)
+                        }),
+                is(new Turn[] {Right, Right, Right, Left, Left, Right}));
     }
 
-    /**
-     * @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2
-     */
-    @Test public void betaDGlucose_Haworth() throws Exception {
+    @Test
+    public void boatClockwise() throws Exception {
+        org.hamcrest.MatcherAssert.assertThat(
+                CyclicCarbohydrateRecognition.turns(
+                        new Point2d[] {
+                            new Point2d(3.8, 4.8),
+                            new Point2d(3.1, 4.2),
+                            new Point2d(2.3, 4.2),
+                            new Point2d(1.6, 4.9),
+                            new Point2d(2.1, 3.8),
+                            new Point2d(3.3, 3.8)
+                        }),
+                is(new Turn[] {Left, Right, Right, Left, Left, Left}));
+    }
+
+    /** @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2 */
+    @Test
+    public void betaDGlucose_Haworth() throws Exception {
         IAtomContainer m = new AtomContainer(12, 12, 0, 0);
         m.addAtom(atom("C", 1, 4.16d, 1.66d));
         m.addAtom(atom("C", 1, 3.75d, 0.94d));
@@ -149,41 +167,60 @@ public class CyclicCarbohydrateRecognitionTest {
         m.addBond(1, 9, IBond.Order.SINGLE);
         m.addBond(2, 10, IBond.Order.SINGLE);
         m.addBond(3, 11, IBond.Order.SINGLE);
-        
-        EdgeToBondMap                 bondMap = EdgeToBondMap.withSpaceFor(m);
-        int[][]                       graph   = GraphUtil.toAdjList(m, bondMap);
+
+        EdgeToBondMap bondMap = EdgeToBondMap.withSpaceFor(m);
+        int[][] graph = GraphUtil.toAdjList(m, bondMap);
         Stereocenters stereocenters = new Stereocenters(m, graph, bondMap);
         stereocenters.checkSymmetry();
-        CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
-                                                                                stereocenters);
+        CyclicCarbohydrateRecognition recon =
+                new CyclicCarbohydrateRecognition(m, graph, bondMap, stereocenters);
 
         List<IStereoElement> elements = recon.recognise(Collections.singleton(Projection.Haworth));
-        assertTetrahedralCenter(elements.get(0),
-                                m.getAtom(1),
-                                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
-                                m.getAtom(1), m.getAtom(0), m.getAtom(9), m.getAtom(2));
-        assertTetrahedralCenter(elements.get(1),
-                                m.getAtom(2),
-                                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
-                                m.getAtom(10), m.getAtom(1), m.getAtom(2), m.getAtom(3));
-        assertTetrahedralCenter(elements.get(2),
-                                m.getAtom(3),
-                                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
-                                m.getAtom(3), m.getAtom(2), m.getAtom(11), m.getAtom(4));
-        assertTetrahedralCenter(elements.get(3),
-                                m.getAtom(4),
-                                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
-                                m.getAtom(6), m.getAtom(3), m.getAtom(4), m.getAtom(5));
-        assertTetrahedralCenter(elements.get(4),
-                                m.getAtom(0),
-                                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
-                                m.getAtom(7), m.getAtom(5), m.getAtom(0), m.getAtom(1));
+        assertTetrahedralCenter(
+                elements.get(0),
+                m.getAtom(1),
+                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
+                m.getAtom(1),
+                m.getAtom(0),
+                m.getAtom(9),
+                m.getAtom(2));
+        assertTetrahedralCenter(
+                elements.get(1),
+                m.getAtom(2),
+                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
+                m.getAtom(10),
+                m.getAtom(1),
+                m.getAtom(2),
+                m.getAtom(3));
+        assertTetrahedralCenter(
+                elements.get(2),
+                m.getAtom(3),
+                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
+                m.getAtom(3),
+                m.getAtom(2),
+                m.getAtom(11),
+                m.getAtom(4));
+        assertTetrahedralCenter(
+                elements.get(3),
+                m.getAtom(4),
+                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
+                m.getAtom(6),
+                m.getAtom(3),
+                m.getAtom(4),
+                m.getAtom(5));
+        assertTetrahedralCenter(
+                elements.get(4),
+                m.getAtom(0),
+                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
+                m.getAtom(7),
+                m.getAtom(5),
+                m.getAtom(0),
+                m.getAtom(1));
     }
-    
-    /**
-     * @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2
-     */
-    @Test public void betaDGlucose_Chair() throws Exception {
+
+    /** @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2 */
+    @Test
+    public void betaDGlucose_Chair() throws Exception {
         IAtomContainer m = new AtomContainer(12, 12, 0, 0);
         m.addAtom(atom("C", 1, -0.77d, 10.34d));
         m.addAtom(atom("C", 1, 0.03d, 10.13d));
@@ -210,42 +247,59 @@ public class CyclicCarbohydrateRecognitionTest {
         m.addBond(0, 10, IBond.Order.SINGLE);
         m.addBond(5, 11, IBond.Order.SINGLE);
 
-
-        EdgeToBondMap                 bondMap = EdgeToBondMap.withSpaceFor(m);
-        int[][]                       graph   = GraphUtil.toAdjList(m, bondMap);
+        EdgeToBondMap bondMap = EdgeToBondMap.withSpaceFor(m);
+        int[][] graph = GraphUtil.toAdjList(m, bondMap);
         Stereocenters stereocenters = new Stereocenters(m, graph, bondMap);
         stereocenters.checkSymmetry();
-        CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
-                                                                                stereocenters);
-
+        CyclicCarbohydrateRecognition recon =
+                new CyclicCarbohydrateRecognition(m, graph, bondMap, stereocenters);
 
         List<IStereoElement> elements = recon.recognise(Collections.singleton(Projection.Chair));
-        assertTetrahedralCenter(elements.get(0),
-                                m.getAtom(1),
-                                ITetrahedralChirality.Stereo.CLOCKWISE,
-                                m.getAtom(8), m.getAtom(0), m.getAtom(1), m.getAtom(2));
-        assertTetrahedralCenter(elements.get(1),
-                                m.getAtom(3),
-                                ITetrahedralChirality.Stereo.CLOCKWISE,
-                                m.getAtom(7), m.getAtom(2), m.getAtom(3), m.getAtom(4));
-        assertTetrahedralCenter(elements.get(2),
-                                m.getAtom(4),
-                                ITetrahedralChirality.Stereo.CLOCKWISE,
-                                m.getAtom(4), m.getAtom(3), m.getAtom(6), m.getAtom(5));
-        assertTetrahedralCenter(elements.get(3),
-                                m.getAtom(5),
-                                ITetrahedralChirality.Stereo.CLOCKWISE,
-                                m.getAtom(11), m.getAtom(4), m.getAtom(5), m.getAtom(0));
-        assertTetrahedralCenter(elements.get(4),
-                                m.getAtom(0),
-                                ITetrahedralChirality.Stereo.CLOCKWISE,
-                                m.getAtom(0), m.getAtom(5), m.getAtom(10), m.getAtom(1));
+        assertTetrahedralCenter(
+                elements.get(0),
+                m.getAtom(1),
+                ITetrahedralChirality.Stereo.CLOCKWISE,
+                m.getAtom(8),
+                m.getAtom(0),
+                m.getAtom(1),
+                m.getAtom(2));
+        assertTetrahedralCenter(
+                elements.get(1),
+                m.getAtom(3),
+                ITetrahedralChirality.Stereo.CLOCKWISE,
+                m.getAtom(7),
+                m.getAtom(2),
+                m.getAtom(3),
+                m.getAtom(4));
+        assertTetrahedralCenter(
+                elements.get(2),
+                m.getAtom(4),
+                ITetrahedralChirality.Stereo.CLOCKWISE,
+                m.getAtom(4),
+                m.getAtom(3),
+                m.getAtom(6),
+                m.getAtom(5));
+        assertTetrahedralCenter(
+                elements.get(3),
+                m.getAtom(5),
+                ITetrahedralChirality.Stereo.CLOCKWISE,
+                m.getAtom(11),
+                m.getAtom(4),
+                m.getAtom(5),
+                m.getAtom(0));
+        assertTetrahedralCenter(
+                elements.get(4),
+                m.getAtom(0),
+                ITetrahedralChirality.Stereo.CLOCKWISE,
+                m.getAtom(0),
+                m.getAtom(5),
+                m.getAtom(10),
+                m.getAtom(1));
     }
 
-    /**
-     * @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2
-     */
-    @Test public void betaDGlucoseWithExplicitHydrogens_Haworth() throws Exception {
+    /** @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2 */
+    @Test
+    public void betaDGlucoseWithExplicitHydrogens_Haworth() throws Exception {
         IAtomContainer m = new AtomContainer(17, 17, 0, 0);
         m.addAtom(atom("C", 0, 4.16d, 1.66d));
         m.addAtom(atom("C", 0, 3.75d, 0.94d));
@@ -281,44 +335,66 @@ public class CyclicCarbohydrateRecognitionTest {
         m.addBond(4, 14, IBond.Order.SINGLE);
         m.addBond(1, 15, IBond.Order.SINGLE);
         m.addBond(0, 16, IBond.Order.SINGLE);
-        
-        EdgeToBondMap      bondMap    = EdgeToBondMap.withSpaceFor(m);
-        int[][]            graph      = GraphUtil.toAdjList(m, bondMap);
+
+        EdgeToBondMap bondMap = EdgeToBondMap.withSpaceFor(m);
+        int[][] graph = GraphUtil.toAdjList(m, bondMap);
 
         Stereocenters stereocenters = new Stereocenters(m, graph, bondMap);
         stereocenters.checkSymmetry();
-        CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
-                                                                                stereocenters);
+        CyclicCarbohydrateRecognition recon =
+                new CyclicCarbohydrateRecognition(m, graph, bondMap, stereocenters);
 
         List<IStereoElement> elements = recon.recognise(Collections.singleton(Projection.Haworth));
-        assertTetrahedralCenter(elements.get(0),
-                                m.getAtom(1),
-                                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
-                                m.getAtom(15), m.getAtom(0), m.getAtom(9), m.getAtom(2));
-        assertTetrahedralCenter(elements.get(1),
-                                m.getAtom(2),
-                                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
-                                m.getAtom(10), m.getAtom(1), m.getAtom(12), m.getAtom(3));
-        assertTetrahedralCenter(elements.get(2),
-                                m.getAtom(3),
-                                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
-                                m.getAtom(13), m.getAtom(2), m.getAtom(11), m.getAtom(4));
-        assertTetrahedralCenter(elements.get(3),
-                                m.getAtom(4),
-                                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
-                                m.getAtom(6), m.getAtom(3), m.getAtom(14), m.getAtom(5));
-        assertTetrahedralCenter(elements.get(4),
-                                m.getAtom(0),
-                                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
-                                m.getAtom(7), m.getAtom(5), m.getAtom(16), m.getAtom(1));
-        
+        assertTetrahedralCenter(
+                elements.get(0),
+                m.getAtom(1),
+                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
+                m.getAtom(15),
+                m.getAtom(0),
+                m.getAtom(9),
+                m.getAtom(2));
+        assertTetrahedralCenter(
+                elements.get(1),
+                m.getAtom(2),
+                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
+                m.getAtom(10),
+                m.getAtom(1),
+                m.getAtom(12),
+                m.getAtom(3));
+        assertTetrahedralCenter(
+                elements.get(2),
+                m.getAtom(3),
+                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
+                m.getAtom(13),
+                m.getAtom(2),
+                m.getAtom(11),
+                m.getAtom(4));
+        assertTetrahedralCenter(
+                elements.get(3),
+                m.getAtom(4),
+                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
+                m.getAtom(6),
+                m.getAtom(3),
+                m.getAtom(14),
+                m.getAtom(5));
+        assertTetrahedralCenter(
+                elements.get(4),
+                m.getAtom(0),
+                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
+                m.getAtom(7),
+                m.getAtom(5),
+                m.getAtom(16),
+                m.getAtom(1));
     }
 
     /**
      * Example from: http://www.google.com/patents/WO2008025160A1?cl=en
-     * @cdk.inchi InChI=1S/C13H26O5/c1-4-10-7-11(17-6-5-16-3)9(2)18-12(8-14)13(10)15/h9-15H,4-8H2,1-3H3/t9-,10+,11+,12+,13-/m0/s1
+     *
+     * @cdk.inchi
+     *     InChI=1S/C13H26O5/c1-4-10-7-11(17-6-5-16-3)9(2)18-12(8-14)13(10)15/h9-15H,4-8H2,1-3H3/t9-,10+,11+,12+,13-/m0/s1
      */
-    @Test public void oxpene() throws Exception {
+    @Test
+    public void oxpene() throws Exception {
         IAtomContainer m = new AtomContainer(18, 18, 0, 0);
         m.addAtom(atom("C", 1, 1.39d, 3.65d));
         m.addAtom(atom("C", 2, 2.22d, 3.65d));
@@ -356,41 +432,63 @@ public class CyclicCarbohydrateRecognitionTest {
         m.addBond(14, 15, IBond.Order.SINGLE);
         m.addBond(15, 16, IBond.Order.SINGLE);
         m.addBond(16, 17, IBond.Order.SINGLE);
-        EdgeToBondMap      bondMap    = EdgeToBondMap.withSpaceFor(m);
-        int[][]            graph      = GraphUtil.toAdjList(m, bondMap);
+        EdgeToBondMap bondMap = EdgeToBondMap.withSpaceFor(m);
+        int[][] graph = GraphUtil.toAdjList(m, bondMap);
 
         Stereocenters stereocenters = new Stereocenters(m, graph, bondMap);
         stereocenters.checkSymmetry();
-        CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
-                                                                                stereocenters);
+        CyclicCarbohydrateRecognition recon =
+                new CyclicCarbohydrateRecognition(m, graph, bondMap, stereocenters);
 
         List<IStereoElement> elements = recon.recognise(Collections.singleton(Projection.Haworth));
-        assertTetrahedralCenter(elements.get(0),
-                                m.getAtom(2),
-                                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
-                                m.getAtom(2), m.getAtom(1), m.getAtom(11), m.getAtom(5));
-        assertTetrahedralCenter(elements.get(1),
-                                m.getAtom(5),
-                                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
-                                m.getAtom(10), m.getAtom(2), m.getAtom(5), m.getAtom(6));
-        assertTetrahedralCenter(elements.get(2),
-                                m.getAtom(4),
-                                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
-                                m.getAtom(8), m.getAtom(6), m.getAtom(4), m.getAtom(3));
-        assertTetrahedralCenter(elements.get(3),
-                                m.getAtom(3),
-                                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
-                                m.getAtom(3), m.getAtom(4), m.getAtom(7), m.getAtom(0));
-        assertTetrahedralCenter(elements.get(4),
-                                m.getAtom(0),
-                                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
-                                m.getAtom(12), m.getAtom(3), m.getAtom(0), m.getAtom(1));
+        assertTetrahedralCenter(
+                elements.get(0),
+                m.getAtom(2),
+                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
+                m.getAtom(2),
+                m.getAtom(1),
+                m.getAtom(11),
+                m.getAtom(5));
+        assertTetrahedralCenter(
+                elements.get(1),
+                m.getAtom(5),
+                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
+                m.getAtom(10),
+                m.getAtom(2),
+                m.getAtom(5),
+                m.getAtom(6));
+        assertTetrahedralCenter(
+                elements.get(2),
+                m.getAtom(4),
+                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
+                m.getAtom(8),
+                m.getAtom(6),
+                m.getAtom(4),
+                m.getAtom(3));
+        assertTetrahedralCenter(
+                elements.get(3),
+                m.getAtom(3),
+                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
+                m.getAtom(3),
+                m.getAtom(4),
+                m.getAtom(7),
+                m.getAtom(0));
+        assertTetrahedralCenter(
+                elements.get(4),
+                m.getAtom(0),
+                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
+                m.getAtom(12),
+                m.getAtom(3),
+                m.getAtom(0),
+                m.getAtom(1));
     }
 
     /**
-     * @cdk.inchi InChI=1S/C10H16N5O13P3/c11-8-5-9(13-2-12-8)15(3-14-5)10-7(17)6(16)4(26-10)1-25-30(21,22)28-31(23,24)27-29(18,19)20/h2-4,6-7,10,16-17H,1H2,(H,21,22)(H,23,24)(H2,11,12,13)(H2,18,19,20)/t4-,6-,7-,10-/m1/s1
+     * @cdk.inchi
+     *     InChI=1S/C10H16N5O13P3/c11-8-5-9(13-2-12-8)15(3-14-5)10-7(17)6(16)4(26-10)1-25-30(21,22)28-31(23,24)27-29(18,19)20/h2-4,6-7,10,16-17H,1H2,(H,21,22)(H,23,24)(H2,11,12,13)(H2,18,19,20)/t4-,6-,7-,10-/m1/s1
      */
-    @Test public void atp_Haworth() throws Exception {
+    @Test
+    public void atp_Haworth() throws Exception {
         IAtomContainer m = new AtomContainer(31, 33, 0, 0);
         m.addAtom(atom("O", 0, 2.56d, -6.46d));
         m.addAtom(atom("C", 1, 1.90d, -6.83d));
@@ -456,39 +554,57 @@ public class CyclicCarbohydrateRecognitionTest {
         m.addBond(4, 30, IBond.Order.SINGLE);
         m.addBond(30, 27, IBond.Order.SINGLE);
         m.addBond(23, 30, IBond.Order.SINGLE);
-        
-        EdgeToBondMap      bondMap    = EdgeToBondMap.withSpaceFor(m);
-        int[][]            graph      = GraphUtil.toAdjList(m, bondMap);
+
+        EdgeToBondMap bondMap = EdgeToBondMap.withSpaceFor(m);
+        int[][] graph = GraphUtil.toAdjList(m, bondMap);
 
         Stereocenters stereocenters = new Stereocenters(m, graph, bondMap);
         stereocenters.checkSymmetry();
-        CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
-                                                                                stereocenters);
+        CyclicCarbohydrateRecognition recon =
+                new CyclicCarbohydrateRecognition(m, graph, bondMap, stereocenters);
 
         List<IStereoElement> elements = recon.recognise(Collections.singleton(Projection.Haworth));
-        assertTetrahedralCenter(elements.get(0),
-                                m.getAtom(1),
-                                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
-                                m.getAtom(5), m.getAtom(0), m.getAtom(1), m.getAtom(2));
-        assertTetrahedralCenter(elements.get(1),
-                                m.getAtom(2),
-                                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
-                                m.getAtom(2), m.getAtom(1), m.getAtom(7), m.getAtom(3));
-        assertTetrahedralCenter(elements.get(2),
-                                m.getAtom(3),
-                                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
-                                m.getAtom(3), m.getAtom(2), m.getAtom(8), m.getAtom(4));
-        assertTetrahedralCenter(elements.get(3),
-                                m.getAtom(4),
-                                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
-                                m.getAtom(30), m.getAtom(3), m.getAtom(4), m.getAtom(0));
+        assertTetrahedralCenter(
+                elements.get(0),
+                m.getAtom(1),
+                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
+                m.getAtom(5),
+                m.getAtom(0),
+                m.getAtom(1),
+                m.getAtom(2));
+        assertTetrahedralCenter(
+                elements.get(1),
+                m.getAtom(2),
+                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
+                m.getAtom(2),
+                m.getAtom(1),
+                m.getAtom(7),
+                m.getAtom(3));
+        assertTetrahedralCenter(
+                elements.get(2),
+                m.getAtom(3),
+                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
+                m.getAtom(3),
+                m.getAtom(2),
+                m.getAtom(8),
+                m.getAtom(4));
+        assertTetrahedralCenter(
+                elements.get(3),
+                m.getAtom(4),
+                ITetrahedralChirality.Stereo.ANTI_CLOCKWISE,
+                m.getAtom(30),
+                m.getAtom(3),
+                m.getAtom(4),
+                m.getAtom(0));
     }
-    
+
     /**
      * avoid false positive
+     *
      * @cdk.inchi InChI=1S/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2
      */
-    @Test public void hexopyranose() {
+    @Test
+    public void hexopyranose() {
         IAtomContainer m = new AtomContainer(12, 12, 0, 0);
         m.addAtom(atom("O", 1, 0.00d, 2.48d));
         m.addAtom(atom("C", 2, 0.71d, 2.06d));
@@ -514,25 +630,25 @@ public class CyclicCarbohydrateRecognitionTest {
         m.addBond(8, 10, IBond.Order.SINGLE);
         m.addBond(2, 10, IBond.Order.SINGLE);
         m.addBond(10, 11, IBond.Order.SINGLE);
-        EdgeToBondMap      bondMap    = EdgeToBondMap.withSpaceFor(m);
-        int[][]            graph      = GraphUtil.toAdjList(m, bondMap);
+        EdgeToBondMap bondMap = EdgeToBondMap.withSpaceFor(m);
+        int[][] graph = GraphUtil.toAdjList(m, bondMap);
 
         Stereocenters stereocenters = new Stereocenters(m, graph, bondMap);
         stereocenters.checkSymmetry();
-        CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
-                                                                                stereocenters);
+        CyclicCarbohydrateRecognition recon =
+                new CyclicCarbohydrateRecognition(m, graph, bondMap, stereocenters);
 
         assertTrue(recon.recognise(Collections.singleton(Projection.Haworth)).isEmpty());
     }
 
     /**
-     * Given a chair projection of beta-D-glucose we rotate it from -80 -> +80
-     * and check the interpretation is the same. Going upside down inverts all
-     * configurations.
-     * 
+     * Given a chair projection of beta-D-glucose we rotate it from -80 -> +80 and check the
+     * interpretation is the same. Going upside down inverts all configurations.
+     *
      * @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5?,6-/s2
      */
-    @Test public void betaDGlucose_Chair_Rotated() throws Exception {
+    @Test
+    public void betaDGlucose_Chair_Rotated() throws Exception {
         IAtomContainer m = new AtomContainer(12, 12, 0, 0);
         m.addAtom(atom("C", 1, -0.77d, 10.34d));
         m.addAtom(atom("C", 1, 0.03d, 10.13d));
@@ -564,46 +680,68 @@ public class CyclicCarbohydrateRecognitionTest {
 
         for (int i = 0; i < 30; i++) {
             GeometryUtil.rotate(m, center, Math.toRadians(5));
-            
+
             EdgeToBondMap bondMap = EdgeToBondMap.withSpaceFor(m);
             int[][] graph = GraphUtil.toAdjList(m, bondMap);
             Stereocenters stereocenters = new Stereocenters(m, graph, bondMap);
             stereocenters.checkSymmetry();
-            CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
-                                                                                    stereocenters);
+            CyclicCarbohydrateRecognition recon =
+                    new CyclicCarbohydrateRecognition(m, graph, bondMap, stereocenters);
 
-
-            List<IStereoElement> elements = recon.recognise(Collections.singleton(Projection.Chair));
+            List<IStereoElement> elements =
+                    recon.recognise(Collections.singleton(Projection.Chair));
             m.setStereoElements(elements);
 
-            assertTetrahedralCenter(elements.get(0),
-                                    m.getAtom(1),
-                                    ITetrahedralChirality.Stereo.CLOCKWISE,
-                                    m.getAtom(8), m.getAtom(0), m.getAtom(1), m.getAtom(2));
-            assertTetrahedralCenter(elements.get(1),
-                                    m.getAtom(3),
-                                    ITetrahedralChirality.Stereo.CLOCKWISE,
-                                    m.getAtom(7), m.getAtom(2), m.getAtom(3), m.getAtom(4));
-            assertTetrahedralCenter(elements.get(2),
-                                    m.getAtom(4),
-                                    ITetrahedralChirality.Stereo.CLOCKWISE,
-                                    m.getAtom(4), m.getAtom(3), m.getAtom(6), m.getAtom(5));
-            assertTetrahedralCenter(elements.get(3),
-                                    m.getAtom(5),
-                                    ITetrahedralChirality.Stereo.CLOCKWISE,
-                                    m.getAtom(11), m.getAtom(4), m.getAtom(5), m.getAtom(0));
-            assertTetrahedralCenter(elements.get(4),
-                                    m.getAtom(0),
-                                    ITetrahedralChirality.Stereo.CLOCKWISE,
-                                    m.getAtom(0), m.getAtom(5), m.getAtom(10), m.getAtom(1));
+            assertTetrahedralCenter(
+                    elements.get(0),
+                    m.getAtom(1),
+                    ITetrahedralChirality.Stereo.CLOCKWISE,
+                    m.getAtom(8),
+                    m.getAtom(0),
+                    m.getAtom(1),
+                    m.getAtom(2));
+            assertTetrahedralCenter(
+                    elements.get(1),
+                    m.getAtom(3),
+                    ITetrahedralChirality.Stereo.CLOCKWISE,
+                    m.getAtom(7),
+                    m.getAtom(2),
+                    m.getAtom(3),
+                    m.getAtom(4));
+            assertTetrahedralCenter(
+                    elements.get(2),
+                    m.getAtom(4),
+                    ITetrahedralChirality.Stereo.CLOCKWISE,
+                    m.getAtom(4),
+                    m.getAtom(3),
+                    m.getAtom(6),
+                    m.getAtom(5));
+            assertTetrahedralCenter(
+                    elements.get(3),
+                    m.getAtom(5),
+                    ITetrahedralChirality.Stereo.CLOCKWISE,
+                    m.getAtom(11),
+                    m.getAtom(4),
+                    m.getAtom(5),
+                    m.getAtom(0));
+            assertTetrahedralCenter(
+                    elements.get(4),
+                    m.getAtom(0),
+                    ITetrahedralChirality.Stereo.CLOCKWISE,
+                    m.getAtom(0),
+                    m.getAtom(5),
+                    m.getAtom(10),
+                    m.getAtom(1));
         }
     }
 
     /**
      * p-menthane (CHEBI:25826)
+     *
      * @cdk.inchi InChI=1S/C10H20/c1-8(2)10-6-4-9(3)5-7-10/h8-10H,4-7H2,1-3H3
      */
-    @Test public void haworthFalsePositive() {
+    @Test
+    public void haworthFalsePositive() {
         IAtomContainer m = new AtomContainer(10, 10, 0, 0);
         m.addAtom(atom("C", 2, -0.71d, 0.41d));
         m.addAtom(atom("C", 2, 0.71d, -0.41d));
@@ -630,9 +768,8 @@ public class CyclicCarbohydrateRecognitionTest {
         int[][] graph = GraphUtil.toAdjList(m, bondMap);
         Stereocenters stereocenters = new Stereocenters(m, graph, bondMap);
         stereocenters.checkSymmetry();
-        CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
-                                                                                stereocenters);
-
+        CyclicCarbohydrateRecognition recon =
+                new CyclicCarbohydrateRecognition(m, graph, bondMap, stereocenters);
 
         List<IStereoElement> elements = recon.recognise(Collections.singleton(Projection.Haworth));
         assertTrue(elements.isEmpty());
@@ -640,9 +777,11 @@ public class CyclicCarbohydrateRecognitionTest {
 
     /**
      * prolinate (CHEBI:32871)
+     *
      * @cdk.cite InChI=1S/C5H9NO2/c7-5(8)4-2-1-3-6-4/h4,6H,1-3H2,(H,7,8)/p-1
      */
-    @Test public void requireAtLeastTwoProjectedSubstituents() {
+    @Test
+    public void requireAtLeastTwoProjectedSubstituents() {
         IAtomContainer m = new AtomContainer(8, 8, 0, 0);
         m.addAtom(atom("O", 0, -0.71d, 1.24d));
         m.addAtom(atom("C", 0, 0.00d, 0.83d));
@@ -664,24 +803,25 @@ public class CyclicCarbohydrateRecognitionTest {
         int[][] graph = GraphUtil.toAdjList(m, bondMap);
         Stereocenters stereocenters = new Stereocenters(m, graph, bondMap);
         stereocenters.checkSymmetry();
-        CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
-                                                                                stereocenters);
+        CyclicCarbohydrateRecognition recon =
+                new CyclicCarbohydrateRecognition(m, graph, bondMap, stereocenters);
 
         List<IStereoElement> elements = recon.recognise(Collections.singleton(Projection.Haworth));
         assertTrue(elements.isEmpty());
     }
 
-    static void assertTetrahedralCenter(IStereoElement element,
-                                        IAtom focus,
-                                        ITetrahedralChirality.Stereo winding,
-                                        IAtom ... neighbors) {
+    static void assertTetrahedralCenter(
+            IStereoElement element,
+            IAtom focus,
+            ITetrahedralChirality.Stereo winding,
+            IAtom... neighbors) {
         org.hamcrest.MatcherAssert.assertThat(element, is(instanceOf(ITetrahedralChirality.class)));
         ITetrahedralChirality actual = (ITetrahedralChirality) element;
         org.hamcrest.MatcherAssert.assertThat(actual.getChiralAtom(), is(sameInstance(focus)));
         org.hamcrest.MatcherAssert.assertThat(actual.getStereo(), is(winding));
         org.hamcrest.MatcherAssert.assertThat(actual.getLigands(), is(neighbors));
     }
-    
+
     static IAtom atom(String symbol, int h, double x, double y) {
         IAtom a = new Atom(symbol);
         a.setImplicitHydrogenCount(h);

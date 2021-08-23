@@ -25,7 +25,6 @@ package org.openscience.cdk.io;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.StringWriter;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.AtomContainer;
@@ -37,44 +36,42 @@ import org.openscience.cdk.interfaces.IChemFile;
  *
  * @cdk.module test-libiocml
  */
-
 public class MDLCMLRoundtripTest {
 
     public MDLCMLRoundtripTest() {
         super();
     }
 
-    /**
-     * @cdk.bug 1649526
-     */
+    /** @cdk.bug 1649526 */
     @Test
     public void testBug1649526() throws Exception {
-        //Read the original
+        // Read the original
         String filename = "data/mdl/bug-1649526.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLReader reader = new MDLReader(ins);
         IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
-        //Write it as cml
+        // Write it as cml
         StringWriter writer = new StringWriter();
         CMLWriter cmlWriter = new CMLWriter(writer);
         cmlWriter.write(mol);
         cmlWriter.close();
-        //Read this again
+        // Read this again
         CMLReader cmlreader = new CMLReader(new ByteArrayInputStream(writer.toString().getBytes()));
         IChemFile file = (IChemFile) cmlreader.read(new org.openscience.cdk.ChemFile());
         cmlreader.close();
-        //And finally write as mol
+        // And finally write as mol
         StringWriter writermdl = new StringWriter();
         MDLV2000Writer mdlWriter = new MDLV2000Writer(writermdl);
         mdlWriter.write(file);
         mdlWriter.close();
         String output = writermdl.toString();
-        //if there would be 3 instances (as in the bug), the only instance wouldnt't be right at the end
+        // if there would be 3 instances (as in the bug), the only instance wouldnt't be right at
+        // the end
         Assert.assertEquals(2961, output.indexOf("M  END"));
-        //there would need some $$$$ to be in
+        // there would need some $$$$ to be in
         Assert.assertEquals(-1, output.indexOf("$$$$"));
-        //check atom/bond count
+        // check atom/bond count
         Assert.assertEquals(25, output.indexOf(" 31 33  0  0  0  0"));
     }
 }

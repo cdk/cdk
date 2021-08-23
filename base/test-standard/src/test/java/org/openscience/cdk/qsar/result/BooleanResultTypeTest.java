@@ -20,13 +20,9 @@ package org.openscience.cdk.qsar.result;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.qsar.result.BooleanResultType;
-import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.CDKTestCase;
 
-/**
- * @cdk.module test-standard
- */
+/** @cdk.module test-standard */
 public class BooleanResultTypeTest extends CDKTestCase {
 
     public BooleanResultTypeTest() {
@@ -48,5 +44,4 @@ public class BooleanResultTypeTest extends CDKTestCase {
     public void testLength() {
         Assert.assertEquals(1, new BooleanResultType().length());
     }
-
 }

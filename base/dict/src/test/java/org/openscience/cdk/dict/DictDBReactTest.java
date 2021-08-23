@@ -21,7 +21,6 @@ package org.openscience.cdk.dict;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -30,7 +29,6 @@ import org.openscience.cdk.CDKTestCase;
  * Checks the functionality of the dictionary reaction-processes class.
  *
  * @cdk.module test-dict
- *
  * @see org.openscience.cdk.dict.DictionaryDatabase
  */
 public class DictDBReactTest extends CDKTestCase {
@@ -50,13 +48,11 @@ public class DictDBReactTest extends CDKTestCase {
         idList.add(entries[0].getID());
         for (int i = 1; i < entries.length; i++) {
             //    		System.out.println(entries[i].getID());
-            if (!idList.contains(entries[i].getID()))
-                idList.add(entries[i].getID());
+            if (!idList.contains(entries[i].getID())) idList.add(entries[i].getID());
             else
-                Assert.assertFalse("The entry is contained " + entries[i] + "two times",
+                Assert.assertFalse(
+                        "The entry is contained " + entries[i] + "two times",
                         idList.contains(entries[i].getID()));
-
         }
     }
-
 }

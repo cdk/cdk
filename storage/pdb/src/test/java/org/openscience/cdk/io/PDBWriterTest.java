@@ -25,10 +25,8 @@ package org.openscience.cdk.io;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
-
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -52,8 +50,7 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
  * TestCase for the PDBWriter class.
  *
  * @cdk.module test-pdb
- *
- * @author      Egon Willighagen
+ * @author Egon Willighagen
  * @cdk.created 2001-08-09
  */
 public class PDBWriterTest extends ChemObjectIOTest {
@@ -254,7 +251,8 @@ public class PDBWriterTest extends ChemObjectIOTest {
         PDBReader reader = new PDBReader(new StringReader(output));
         IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
         reader.close();
-        IAtomContainer reconstructed = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
+        IAtomContainer reconstructed =
+                chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
         Assert.assertEquals(original.getAtomCount(), reconstructed.getAtomCount());
         Assert.assertEquals(original.getBondCount(), reconstructed.getBondCount());
     }

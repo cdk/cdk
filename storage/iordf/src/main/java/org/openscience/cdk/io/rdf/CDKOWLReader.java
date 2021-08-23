@@ -22,11 +22,12 @@
  */
 package org.openscience.cdk.io.rdf;
 
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -35,13 +36,10 @@ import org.openscience.cdk.io.formats.CDKOWLFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.libio.jena.Convertor;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-
 /**
  * Reads content from a CDK OWL serialization.
  *
- * @cdk.module  iordf
+ * @cdk.module iordf
  * @cdk.githash
  * @cdk.keyword file format, OWL
  */
@@ -58,9 +56,7 @@ public class CDKOWLReader extends DefaultChemObjectReader {
         this.input = input;
     }
 
-    /**
-     * Creates a new CDKOWLReader with an undefined input.
-     */
+    /** Creates a new CDKOWLReader with an undefined input. */
     public CDKOWLReader() {
         this.input = null;
     }
@@ -76,8 +72,8 @@ public class CDKOWLReader extends DefaultChemObjectReader {
     }
 
     /**
-     * This method must not be used; XML reading requires the use of an
-     * {@link InputStream}. Use {@link #setReader(InputStream)} instead.
+     * This method must not be used; XML reading requires the use of an {@link InputStream}. Use
+     * {@link #setReader(InputStream)} instead.
      *
      * @param reader reader to which should be written.
      * @deprecated
@@ -127,5 +123,4 @@ public class CDKOWLReader extends DefaultChemObjectReader {
     public void close() throws IOException {
         input.close();
     }
-
 }

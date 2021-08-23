@@ -23,7 +23,6 @@
 package org.openscience.cdk.tools.manipulator;
 
 import java.util.Iterator;
-
 import org.openscience.cdk.formula.MolecularFormulaRange;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
@@ -31,42 +30,48 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 
 /**
- * Class with convenience methods that provide methods to manipulate
- * MolecularFormulaSet's. For example:
+ * Class with convenience methods that provide methods to manipulate MolecularFormulaSet's. For
+ * example:
+ *
  * <pre>
  *  IMolecularFormula molecularFormula = MolecularManipulatorSet.getMaxOccurrenceElements(molecularFormulaSet);
  * </pre>
+ *
  * .
  *
- * @cdk.module  formula
- * @author      miguelrojasch
+ * @cdk.module formula
+ * @author miguelrojasch
  * @cdk.created 2007-11-20
  * @cdk.githash
  */
 public class MolecularFormulaSetManipulator {
 
     /**
-     * Extract from a set of MolecularFormula the maximum occurrence of each element found and
-     * put the element and occurrence in a new IMolecularFormula.
+     * Extract from a set of MolecularFormula the maximum occurrence of each element found and put
+     * the element and occurrence in a new IMolecularFormula.
      *
-     * @param mfSet    The set of molecularFormules to inspect
-     * @return         A IMolecularFormula containing the maximum occurrence of the elements
-     * @see            #getMinOccurrenceElements(IMolecularFormulaSet)
+     * @param mfSet The set of molecularFormules to inspect
+     * @return A IMolecularFormula containing the maximum occurrence of the elements
+     * @see #getMinOccurrenceElements(IMolecularFormulaSet)
      */
     public static IMolecularFormula getMaxOccurrenceElements(IMolecularFormulaSet mfSet) {
 
-        IMolecularFormula molecularFormula = mfSet.getBuilder().newInstance(IMolecularFormula.class);
+        IMolecularFormula molecularFormula =
+                mfSet.getBuilder().newInstance(IMolecularFormula.class);
         for (IMolecularFormula mf : mfSet.molecularFormulas()) {
             for (IIsotope isotope : mf.isotopes()) {
                 IElement element = mfSet.getBuilder().newInstance(IElement.class, isotope);
                 int occur_new = MolecularFormulaManipulator.getElementCount(mf, element);
                 if (!MolecularFormulaManipulator.containsElement(molecularFormula, element)) {
-                    molecularFormula.addIsotope(mfSet.getBuilder().newInstance(IIsotope.class, element), occur_new);
+                    molecularFormula.addIsotope(
+                            mfSet.getBuilder().newInstance(IIsotope.class, element), occur_new);
                 } else {
-                    int occur_old = MolecularFormulaManipulator.getElementCount(molecularFormula, element);
+                    int occur_old =
+                            MolecularFormulaManipulator.getElementCount(molecularFormula, element);
                     if (occur_new > occur_old) {
                         MolecularFormulaManipulator.removeElement(molecularFormula, element);
-                        molecularFormula.addIsotope(mfSet.getBuilder().newInstance(IIsotope.class, element), occur_new);
+                        molecularFormula.addIsotope(
+                                mfSet.getBuilder().newInstance(IIsotope.class, element), occur_new);
                     }
                 }
             }
@@ -75,27 +80,31 @@ public class MolecularFormulaSetManipulator {
     }
 
     /**
-     * Extract from a set of MolecularFormula the minimal occurrence of each element found and
-     * put the element and occurrence in a new IMolecularFormula.
+     * Extract from a set of MolecularFormula the minimal occurrence of each element found and put
+     * the element and occurrence in a new IMolecularFormula.
      *
-     * @param mfSet    The set of molecularFormules to inspect
-     * @return         A IMolecularFormula containing the minimal occurrence of the elements
-     * @see            #getMaxOccurrenceElements(IMolecularFormulaSet)
+     * @param mfSet The set of molecularFormules to inspect
+     * @return A IMolecularFormula containing the minimal occurrence of the elements
+     * @see #getMaxOccurrenceElements(IMolecularFormulaSet)
      */
     public static IMolecularFormula getMinOccurrenceElements(IMolecularFormulaSet mfSet) {
 
-        IMolecularFormula molecularFormula = mfSet.getBuilder().newInstance(IMolecularFormula.class);
+        IMolecularFormula molecularFormula =
+                mfSet.getBuilder().newInstance(IMolecularFormula.class);
         for (IMolecularFormula mf : mfSet.molecularFormulas()) {
             for (IIsotope isotope : mf.isotopes()) {
                 IElement element = mfSet.getBuilder().newInstance(IElement.class, isotope);
                 int occur_new = MolecularFormulaManipulator.getElementCount(mf, element);
                 if (!MolecularFormulaManipulator.containsElement(molecularFormula, element)) {
-                    molecularFormula.addIsotope(mfSet.getBuilder().newInstance(IIsotope.class, element), occur_new);
+                    molecularFormula.addIsotope(
+                            mfSet.getBuilder().newInstance(IIsotope.class, element), occur_new);
                 } else {
-                    int occur_old = MolecularFormulaManipulator.getElementCount(molecularFormula, element);
+                    int occur_old =
+                            MolecularFormulaManipulator.getElementCount(molecularFormula, element);
                     if (occur_new < occur_old) {
                         MolecularFormulaManipulator.removeElement(molecularFormula, element);
-                        molecularFormula.addIsotope(mfSet.getBuilder().newInstance(IIsotope.class, element), occur_new);
+                        molecularFormula.addIsotope(
+                                mfSet.getBuilder().newInstance(IIsotope.class, element), occur_new);
                     }
                 }
             }
@@ -104,24 +113,28 @@ public class MolecularFormulaSetManipulator {
     }
 
     /**
-     * Remove all those IMolecularFormula which are not fit theirs IElement
-     * occurrence into a limits. The limits are given from formulaMax and formulaMin.
-     * In the minimal IMolecularFormula must contain all those IElement found in the
-     * minimal IMolecularFormula.
+     * Remove all those IMolecularFormula which are not fit theirs IElement occurrence into a
+     * limits. The limits are given from formulaMax and formulaMin. In the minimal IMolecularFormula
+     * must contain all those IElement found in the minimal IMolecularFormula.
      *
-     * @param formulaSet  IMolecularFormulaSet to look for
-     * @param formulaMax  A IMolecularFormula which contains the maximal representation of the Elements
-     * @param formulaMin  A IMolecularFormula which contains the minimal representation of the Elements
-     * @return            A IMolecularFormulaSet with only the IMolecularFormula which the IElements
-     * 						are into the correct occurrence
+     * @param formulaSet IMolecularFormulaSet to look for
+     * @param formulaMax A IMolecularFormula which contains the maximal representation of the
+     *     Elements
+     * @param formulaMin A IMolecularFormula which contains the minimal representation of the
+     *     Elements
+     * @return A IMolecularFormulaSet with only the IMolecularFormula which the IElements are into
+     *     the correct occurrence
      */
-    public static IMolecularFormulaSet remove(IMolecularFormulaSet formulaSet, IMolecularFormula formulaMin,
+    public static IMolecularFormulaSet remove(
+            IMolecularFormulaSet formulaSet,
+            IMolecularFormula formulaMin,
             IMolecularFormula formulaMax) {
 
         // prove the correlation between maximum and minimum molecularFormula
         if (!validCorrelation(formulaMin, formulaMax)) return null;
 
-        IMolecularFormulaSet newFormulaSet = formulaSet.getBuilder().newInstance(IMolecularFormulaSet.class);
+        IMolecularFormulaSet newFormulaSet =
+                formulaSet.getBuilder().newInstance(IMolecularFormulaSet.class);
 
         for (IMolecularFormula formula : formulaSet.molecularFormulas()) {
             boolean flagPass = true;
@@ -138,41 +151,40 @@ public class MolecularFormulaSetManipulator {
                     flagPass = false;
                     break;
                 }
-
             }
             if (flagPass) // stored if each IElement occurrence is into the limits
-                newFormulaSet.addMolecularFormula(formula);
-
+            newFormulaSet.addMolecularFormula(formula);
         }
         return newFormulaSet;
     }
 
     /**
-     * In the minimal IMolecularFormula must contain all those IElement found in the
-     * minimal IMolecularFormula.
+     * In the minimal IMolecularFormula must contain all those IElement found in the minimal
+     * IMolecularFormula.
      *
-     * @param formulaMax  A IMolecularFormula which contains the maximal representation of the Elements
-     * @param formulaMin  A IMolecularFormula which contains the minimal representation of the Elements
-     * @return            True, if the correlation is valid
+     * @param formulaMax A IMolecularFormula which contains the maximal representation of the
+     *     Elements
+     * @param formulaMin A IMolecularFormula which contains the minimal representation of the
+     *     Elements
+     * @return True, if the correlation is valid
      */
-    private static boolean validCorrelation(IMolecularFormula formulaMin, IMolecularFormula formulamax) {
+    private static boolean validCorrelation(
+            IMolecularFormula formulaMin, IMolecularFormula formulamax) {
         for (IElement element : MolecularFormulaManipulator.elements(formulaMin)) {
             if (!MolecularFormulaManipulator.containsElement(formulamax, element)) return false;
-
         }
         return true;
     }
 
     /**
-     *  True, if the IMolecularFormulaSet contains the given IMolecularFormula but not
-     *  as object. It compare according contains the same number and type of Isotopes.
-     *  It is not based on compare objects.
+     * True, if the IMolecularFormulaSet contains the given IMolecularFormula but not as object. It
+     * compare according contains the same number and type of Isotopes. It is not based on compare
+     * objects.
      *
-     * @param formulaSet   The IMolecularFormulaSet
-     * @param  formula     The IMolecularFormula this IMolecularFormulaSet is searched for
-     * @return             True, if the IMolecularFormulaSet contains the given formula
-     *
-     * @see                IMolecularFormulaSet#contains(IMolecularFormula)
+     * @param formulaSet The IMolecularFormulaSet
+     * @param formula The IMolecularFormula this IMolecularFormulaSet is searched for
+     * @return True, if the IMolecularFormulaSet contains the given formula
+     * @see IMolecularFormulaSet#contains(IMolecularFormula)
      */
     public static boolean contains(IMolecularFormulaSet formulaSet, IMolecularFormula formula) {
         for (IMolecularFormula fm : formulaSet.molecularFormulas()) {
@@ -184,17 +196,19 @@ public class MolecularFormulaSetManipulator {
     }
 
     /**
-     * Remove all those IMolecularFormula which are not fit theirs IElement
-     * occurrence into a limits. The limits are given from formulaMax and formulaMin.
-     * In the minimal IMolecularFormula must contain all those IElement found in the
-     * minimal IMolecularFormula.
+     * Remove all those IMolecularFormula which are not fit theirs IElement occurrence into a
+     * limits. The limits are given from formulaMax and formulaMin. In the minimal IMolecularFormula
+     * must contain all those IElement found in the minimal IMolecularFormula.
      *
-     * @param formulaSet   IMolecularFormulaSet to look for
-     * @param formulaRange A IMolecularFormulaRange which contains the range representation of the IIsotope
+     * @param formulaSet IMolecularFormulaSet to look for
+     * @param formulaRange A IMolecularFormulaRange which contains the range representation of the
+     *     IIsotope
      */
-    public static IMolecularFormulaSet remove(IMolecularFormulaSet formulaSet, MolecularFormulaRange formulaRange) {
+    public static IMolecularFormulaSet remove(
+            IMolecularFormulaSet formulaSet, MolecularFormulaRange formulaRange) {
 
-        IMolecularFormulaSet newFormulaSet = formulaSet.getBuilder().newInstance(IMolecularFormulaSet.class);
+        IMolecularFormulaSet newFormulaSet =
+                formulaSet.getBuilder().newInstance(IMolecularFormulaSet.class);
 
         for (IMolecularFormula formula : formulaSet.molecularFormulas()) {
 
@@ -202,8 +216,10 @@ public class MolecularFormulaSetManipulator {
             Iterator<IIsotope> itEle = formulaRange.isotopes().iterator();
             for (IIsotope isotope : formulaRange.isotopes()) {
                 if (formula.getIsotopeCount(isotope) != 0) {
-                    if ((formula.getIsotopeCount(isotope) < formulaRange.getIsotopeCountMin(isotope))
-                            || (formula.getIsotopeCount(isotope) > formulaRange.getIsotopeCountMax(isotope))) {
+                    if ((formula.getIsotopeCount(isotope)
+                                    < formulaRange.getIsotopeCountMin(isotope))
+                            || (formula.getIsotopeCount(isotope)
+                                    > formulaRange.getIsotopeCountMax(isotope))) {
                         flagCorrect = false;
                         break;
                     }
@@ -221,10 +237,8 @@ public class MolecularFormulaSetManipulator {
                 }
             }
             if (flagCorrect) // stored if each IElement occurrence is into the limits
-                newFormulaSet.addMolecularFormula(formula);
-
+            newFormulaSet.addMolecularFormula(formula);
         }
         return newFormulaSet;
     }
-
 }

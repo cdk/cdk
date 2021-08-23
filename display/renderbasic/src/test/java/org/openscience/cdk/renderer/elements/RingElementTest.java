@@ -22,12 +22,9 @@
 package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
-
 import org.junit.BeforeClass;
 
-/**
- * @cdk.module test-renderbasic
- */
+/** @cdk.module test-renderbasic */
 public class RingElementTest extends AbstractElementTest {
 
     @BeforeClass
@@ -35,5 +32,4 @@ public class RingElementTest extends AbstractElementTest {
         IRenderingElement element = new RingElement(3, 4, 5, Color.orange);
         setRenderingElement(element);
     }
-
 }

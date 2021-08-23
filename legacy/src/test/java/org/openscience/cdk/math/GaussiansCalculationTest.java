@@ -22,8 +22,13 @@
  */
 package org.openscience.cdk.math;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.Iterator;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -40,23 +45,13 @@ import org.openscience.cdk.math.qm.SimpleBasisSet;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.Iterator;
-
-import org.openscience.cdk.exception.CDKException;
-
 /**
- * Demonstration of the quantum mechanical capabilities of CDK.
- * This application takes a XYZ, CML or MDL mol file, calculates
- * orbitals and outputs them to STDOUT.
+ * Demonstration of the quantum mechanical capabilities of CDK. This application takes a XYZ, CML or
+ * MDL mol file, calculates orbitals and outputs them to STDOUT.
  *
  * @cdk.module test-qm
- *
  * @author Stephan Michels &lt;stephan@vern.chem.tu-berlin.de&gt;
  * @cdk.created 2001-06-09
- *
  * @cdk.keyword command line util
  */
 public class GaussiansCalculationTest {
@@ -78,7 +73,8 @@ public class GaussiansCalculationTest {
 
             IChemSequence chemSequence = chemFile.getChemSequence(0);
             IChemModel chemModel = chemSequence.getChemModel(0);
-            Iterator<IAtomContainer> containers = ChemModelManipulator.getAllAtomContainers(chemModel).iterator();
+            Iterator<IAtomContainer> containers =
+                    ChemModelManipulator.getAllAtomContainers(chemModel).iterator();
             while (containers.hasNext()) {
                 IAtomContainer atomContainer = containers.next();
                 IAtom[] atoms = AtomContainerManipulator.getAtomArray(atomContainer);
@@ -99,5 +95,4 @@ public class GaussiansCalculationTest {
             exc.printStackTrace();
         }
     }
-
 }

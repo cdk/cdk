@@ -21,7 +21,6 @@ package org.openscience.cdk.interfaces;
 
 import java.util.Hashtable;
 import java.util.Map;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -290,9 +289,7 @@ public abstract class AbstractPDBPolymerTest extends AbstractBioPolymerTest {
         Assert.assertEquals(strands, pdbPolymer.getStrands());
     }
 
-    /**
-     * Method to test whether the class complies with RFC #9.
-     */
+    /** Method to test whether the class complies with RFC #9. */
     @Test
     @Override
     public void testToString() {
@@ -304,9 +301,7 @@ public abstract class AbstractPDBPolymerTest extends AbstractBioPolymerTest {
         }
     }
 
-    /**
-     * Method to test the clone() method
-     */
+    /** Method to test the clone() method */
     @Test
     @Override
     public void testClone() throws Exception {
@@ -314,5 +309,4 @@ public abstract class AbstractPDBPolymerTest extends AbstractBioPolymerTest {
         Object clone = polymer.clone();
         Assert.assertTrue(clone instanceof IBioPolymer);
     }
-
 }

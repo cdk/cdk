@@ -38,13 +38,14 @@ public class AtomContainerTest extends AbstractAtomContainerTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new AtomContainer();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new AtomContainer();
+                    }
+                });
     }
 
     @Test
@@ -57,9 +58,17 @@ public class AtomContainerTest extends AbstractAtomContainerTest {
         Assert.assertEquals(0, ac.getElectronContainerCount());
 
         // test whether the ElectronContainer is correctly initialized
-        ac.addBond(ac.getBuilder().newInstance(IBond.class, ac.getBuilder().newInstance(IAtom.class, "C"),
-                ac.getBuilder().newInstance(IAtom.class, "C"), IBond.Order.DOUBLE));
-        ac.addLonePair(ac.getBuilder().newInstance(ILonePair.class, ac.getBuilder().newInstance(IAtom.class, "N")));
+        ac.addBond(
+                ac.getBuilder()
+                        .newInstance(
+                                IBond.class,
+                                ac.getBuilder().newInstance(IAtom.class, "C"),
+                                ac.getBuilder().newInstance(IAtom.class, "C"),
+                                IBond.Order.DOUBLE));
+        ac.addLonePair(
+                ac.getBuilder()
+                        .newInstance(
+                                ILonePair.class, ac.getBuilder().newInstance(IAtom.class, "N")));
     }
 
     @Test
@@ -71,11 +80,20 @@ public class AtomContainerTest extends AbstractAtomContainerTest {
         Assert.assertEquals(0, container.getBondCount());
 
         // test whether the ElectronContainer is correctly initialized
-        container.addBond(container.getBuilder().newInstance(IBond.class,
-                container.getBuilder().newInstance(IAtom.class, "C"),
-                container.getBuilder().newInstance(IAtom.class, "C"), IBond.Order.DOUBLE));
-        container.addLonePair(container.getBuilder().newInstance(ILonePair.class,
-                container.getBuilder().newInstance(IAtom.class, "N")));
+        container.addBond(
+                container
+                        .getBuilder()
+                        .newInstance(
+                                IBond.class,
+                                container.getBuilder().newInstance(IAtom.class, "C"),
+                                container.getBuilder().newInstance(IAtom.class, "C"),
+                                IBond.Order.DOUBLE));
+        container.addLonePair(
+                container
+                        .getBuilder()
+                        .newInstance(
+                                ILonePair.class,
+                                container.getBuilder().newInstance(IAtom.class, "N")));
     }
 
     @Test

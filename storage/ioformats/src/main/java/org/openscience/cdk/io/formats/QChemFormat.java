@@ -58,7 +58,7 @@ public class QChemFormat extends SimpleChemFormatMatcher implements IChemFormatM
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"qc"};
+        return new String[] {"qc"};
     }
 
     /** {@inheritDoc} */

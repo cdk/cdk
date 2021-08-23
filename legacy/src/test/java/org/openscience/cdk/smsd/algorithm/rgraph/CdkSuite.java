@@ -31,17 +31,18 @@ import org.junit.runners.Suite;
 
 /**
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- *
  * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({org.openscience.cdk.smsd.algorithm.rgraph.CDKMCSHandlerTest.class,
-        org.openscience.cdk.smsd.algorithm.rgraph.CDKRMapHandlerTest.class,
-        org.openscience.cdk.smsd.algorithm.rgraph.CDKRMapTest.class,
-        org.openscience.cdk.smsd.algorithm.rgraph.CDKRGraphTest.class,
-        org.openscience.cdk.smsd.algorithm.rgraph.CDKRNodeTest.class,
-        org.openscience.cdk.smsd.algorithm.rgraph.CDKMCSTest.class})
+@Suite.SuiteClasses({
+    org.openscience.cdk.smsd.algorithm.rgraph.CDKMCSHandlerTest.class,
+    org.openscience.cdk.smsd.algorithm.rgraph.CDKRMapHandlerTest.class,
+    org.openscience.cdk.smsd.algorithm.rgraph.CDKRMapTest.class,
+    org.openscience.cdk.smsd.algorithm.rgraph.CDKRGraphTest.class,
+    org.openscience.cdk.smsd.algorithm.rgraph.CDKRNodeTest.class,
+    org.openscience.cdk.smsd.algorithm.rgraph.CDKMCSTest.class
+})
 public class CdkSuite {
 
     @BeforeClass

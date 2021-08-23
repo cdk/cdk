@@ -75,5 +75,4 @@ public class IsoAlkanes {
         mol.addBond(4, 5, IBond.Order.SINGLE);
         return mol;
     }
-
 }

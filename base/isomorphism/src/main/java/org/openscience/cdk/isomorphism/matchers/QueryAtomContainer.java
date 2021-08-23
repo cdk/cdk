@@ -18,6 +18,8 @@
  */
 package org.openscience.cdk.isomorphism.matchers;
 
+import static org.openscience.cdk.isomorphism.matchers.Expr.Type.*;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -27,7 +29,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import org.openscience.cdk.AtomRef;
 import org.openscience.cdk.BondRef;
 import org.openscience.cdk.CDKConstants;
@@ -43,10 +44,8 @@ import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStereoElement;
 
-import static org.openscience.cdk.isomorphism.matchers.Expr.Type.*;
-
 /**
- * @cdk.module  isomorphism
+ * @cdk.module isomorphism
  * @cdk.githash
  */
 public class QueryAtomContainer extends QueryChemObject implements IQueryAtomContainer {
@@ -76,70 +75,49 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
         return s.toString();
     }
 
-    /**
-     *  Number of atoms contained by this object.
-     */
-    protected int                  atomCount;
+    /** Number of atoms contained by this object. */
+    protected int atomCount;
+
+    /** Number of bonds contained by this object. */
+    protected int bondCount;
+
+    /** Number of lone pairs contained by this object. */
+    protected int lonePairCount;
+
+    /** Number of single electrons contained by this object. */
+    protected int singleElectronCount;
 
     /**
-     *  Number of bonds contained by this object.
+     * Amount by which the bond and atom arrays grow when elements are added and the arrays are not
+     * large enough for that.
      */
-    protected int                  bondCount;
+    protected int growArraySize = 10;
 
-    /**
-     *  Number of lone pairs contained by this object.
-     */
-    protected int                  lonePairCount;
+    /** Internal array of atoms. */
+    protected IAtom[] atoms;
 
-    /**
-     *  Number of single electrons contained by this object.
-     */
-    protected int                  singleElectronCount;
+    /** Internal array of bonds. */
+    protected IBond[] bonds;
 
-    /**
-     *  Amount by which the bond and atom arrays grow when elements are added and
-     *  the arrays are not large enough for that.
-     */
-    protected int                  growArraySize = 10;
+    /** Internal array of lone pairs. */
+    protected ILonePair[] lonePairs;
 
-    /**
-     *  Internal array of atoms.
-     */
-    protected IAtom[]              atoms;
+    /** Internal array of single electrons. */
+    protected ISingleElectron[] singleElectrons;
 
-    /**
-     *  Internal array of bonds.
-     */
-    protected IBond[]              bonds;
-
-    /**
-     *  Internal array of lone pairs.
-     */
-    protected ILonePair[]          lonePairs;
-
-    /**
-     *  Internal array of single electrons.
-     */
-    protected ISingleElectron[]    singleElectrons;
-
-    /**
-     * Internal list of atom parities.
-     */
+    /** Internal list of atom parities. */
     protected List<IStereoElement> stereoElements;
 
-    /**
-     *  Constructs an empty AtomContainer.
-     */
+    /** Constructs an empty AtomContainer. */
     public QueryAtomContainer(IChemObjectBuilder builder) {
         this(10, 10, 0, 0, builder);
     }
 
     /**
-     * Constructs an AtomContainer with a copy of the atoms and electronContainers
-     * of another AtomContainer (A shallow copy, i.e., with the same objects as in
-     * the original AtomContainer).
+     * Constructs an AtomContainer with a copy of the atoms and electronContainers of another
+     * AtomContainer (A shallow copy, i.e., with the same objects as in the original AtomContainer).
      *
-     * @param  container  An AtomContainer to copy the atoms and electronContainers from
+     * @param container An AtomContainer to copy the atoms and electronContainers from
      */
     public QueryAtomContainer(IAtomContainer container, IChemObjectBuilder builder) {
         super(builder);
@@ -173,17 +151,17 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Constructs an empty AtomContainer that will contain a certain number of
-     *  atoms and electronContainers. It will set the starting array lengths to the
-     *  defined values, but will not create any Atom or ElectronContainer's.
+     * Constructs an empty AtomContainer that will contain a certain number of atoms and
+     * electronContainers. It will set the starting array lengths to the defined values, but will
+     * not create any Atom or ElectronContainer's.
      *
-     *@param  atomCount        Number of atoms to be in this container
-     *@param  bondCount        Number of bonds to be in this container
-     *@param  lpCount          Number of lone pairs to be in this container
-     *@param  seCount          Number of single electrons to be in this container
-     *
+     * @param atomCount Number of atoms to be in this container
+     * @param bondCount Number of bonds to be in this container
+     * @param lpCount Number of lone pairs to be in this container
+     * @param seCount Number of single electrons to be in this container
      */
-    public QueryAtomContainer(int atomCount, int bondCount, int lpCount, int seCount, IChemObjectBuilder builder) {
+    public QueryAtomContainer(
+            int atomCount, int bondCount, int lpCount, int seCount, IChemObjectBuilder builder) {
         super(builder);
         this.atomCount = 0;
         this.bondCount = 0;
@@ -215,10 +193,10 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Sets the array of atoms of this AtomContainer.
+     * Sets the array of atoms of this AtomContainer.
      *
-     *@param  atoms  The array of atoms to be assigned to this AtomContainer
-     *@see           #getAtom
+     * @param atoms The array of atoms to be assigned to this AtomContainer
+     * @see #getAtom
      */
     @Override
     public void setAtoms(IAtom[] atoms) {
@@ -233,9 +211,8 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     /**
      * Sets the array of bonds of this AtomContainer.
      *
-     * @param  bonds  The array of bonds to be assigned to
-     *                             this AtomContainer
-     * @see  #getBond
+     * @param bonds The array of bonds to be assigned to this AtomContainer
+     * @see #getBond
      */
     @Override
     public void setBonds(IBond[] bonds) {
@@ -246,13 +223,10 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
         this.bondCount = bonds.length;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setAtom(int idx, IAtom atom) {
-        if (idx >= atomCount)
-            throw new IndexOutOfBoundsException("No atom at index: " + idx);
+        if (idx >= atomCount) throw new IndexOutOfBoundsException("No atom at index: " + idx);
         int aidx = indexOf(atom);
         if (aidx >= 0)
             throw new IllegalArgumentException("Atom already in container at index: " + idx);
@@ -270,12 +244,10 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
             }
         }
         for (ISingleElectron ec : singleElectrons()) {
-            if (oldAtom.equals(ec.getAtom()))
-                ec.setAtom(atom);
+            if (oldAtom.equals(ec.getAtom())) ec.setAtom(atom);
         }
         for (ILonePair lp : lonePairs()) {
-            if (oldAtom.equals(lp.getAtom()))
-                lp.setAtom(atom);
+            if (oldAtom.equals(lp.getAtom())) lp.setAtom(atom);
         }
 
         // update stereo
@@ -301,50 +273,49 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
         notifyChanged();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtom getAtom(int idx) {
         if (idx < 0 || idx >= atomCount)
-            throw new IndexOutOfBoundsException("Atom index out of bounds: 0 <= " + idx + " < " + atomCount);
+            throw new IndexOutOfBoundsException(
+                    "Atom index out of bounds: 0 <= " + idx + " < " + atomCount);
         return atoms[idx];
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IBond getBond(int idx) {
         if (idx < 0 || idx >= bondCount)
-            throw new IndexOutOfBoundsException("Bond index out of bounds: 0 <= " + idx + " < " + bondCount);
+            throw new IndexOutOfBoundsException(
+                    "Bond index out of bounds: 0 <= " + idx + " < " + bondCount);
         return bonds[idx];
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public ILonePair getLonePair(int idx) {
         if (idx < 0 || idx >= lonePairCount)
-            throw new IndexOutOfBoundsException("Lone Pair index out of bounds: 0 <= " + idx + " < " + lonePairCount);
+            throw new IndexOutOfBoundsException(
+                    "Lone Pair index out of bounds: 0 <= " + idx + " < " + lonePairCount);
         return lonePairs[idx];
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public ISingleElectron getSingleElectron(int idx) {
         if (idx < 0 || idx >= singleElectronCount)
-            throw new IndexOutOfBoundsException("Single Electrong index out of bounds: 0 <= " + idx + " < " + singleElectronCount);
+            throw new IndexOutOfBoundsException(
+                    "Single Electrong index out of bounds: 0 <= "
+                            + idx
+                            + " < "
+                            + singleElectronCount);
         return singleElectrons[idx];
     }
 
     /**
-     *  Returns an Iterable for looping over all atoms in this container.
+     * Returns an Iterable for looping over all atoms in this container.
      *
-     *@return    An Iterable with the atoms in this container
+     * @return An Iterable with the atoms in this container
      */
     @Override
     public Iterable<IAtom> atoms() {
@@ -357,10 +328,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
         };
     }
 
-    /**
-     * The inner AtomIterator class.
-     *
-     */
+    /** The inner AtomIterator class. */
     private class AtomIterator implements Iterator<IAtom> {
 
         private int pointer = 0;
@@ -379,13 +347,12 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
         public void remove() {
             removeAtomOnly(--pointer);
         }
-
     }
 
     /**
-     *  Returns an Iterable for looping over all bonds in this container.
+     * Returns an Iterable for looping over all bonds in this container.
      *
-     *@return    An Iterable with the bonds in this container
+     * @return An Iterable with the bonds in this container
      */
     @Override
     public Iterable<IBond> bonds() {
@@ -398,10 +365,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
         };
     }
 
-    /**
-     * The inner BondIterator class.
-     *
-     */
+    /** The inner BondIterator class. */
     private class BondIterator implements Iterator<IBond> {
 
         private int pointer = 0;
@@ -420,13 +384,12 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
         public void remove() {
             removeBond(--pointer);
         }
-
     }
 
     /**
-     *  Returns an Iterable for looping over all lone pairs in this container.
+     * Returns an Iterable for looping over all lone pairs in this container.
      *
-     *@return    An Iterable with the lone pairs in this container
+     * @return An Iterable with the lone pairs in this container
      */
     @Override
     public Iterable<ILonePair> lonePairs() {
@@ -439,10 +402,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
         };
     }
 
-    /**
-     * The inner LonePairIterator class.
-     *
-     */
+    /** The inner LonePairIterator class. */
     private class LonePairIterator implements Iterator<ILonePair> {
 
         private int pointer = 0;
@@ -461,13 +421,12 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
         public void remove() {
             removeLonePair(--pointer);
         }
-
     }
 
     /**
-     *  Returns an Iterable for looping over all single electrons in this container.
+     * Returns an Iterable for looping over all single electrons in this container.
      *
-     *@return    An Iterable with the single electrons in this container
+     * @return An Iterable with the single electrons in this container
      */
     @Override
     public Iterable<ISingleElectron> singleElectrons() {
@@ -480,10 +439,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
         };
     }
 
-    /**
-     * The inner SingleElectronIterator class.
-     *
-     */
+    /** The inner SingleElectronIterator class. */
     private class SingleElectronIterator implements Iterator<ISingleElectron> {
 
         private int pointer = 0;
@@ -502,13 +458,12 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
         public void remove() {
             removeSingleElectron(--pointer);
         }
-
     }
 
     /**
-     *  Returns an Iterable for looping over all electron containers in this container.
+     * Returns an Iterable for looping over all electron containers in this container.
      *
-     *@return    An Iterable with the electron containers in this container
+     * @return An Iterable with the electron containers in this container
      */
     @Override
     public Iterable<IElectronContainer> electronContainers() {
@@ -521,10 +476,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
         };
     }
 
-    /**
-     * The inner ElectronContainerIterator class.
-     *
-     */
+    /** The inner ElectronContainerIterator class. */
     private class ElectronContainerIterator implements Iterator<IElectronContainer> {
 
         private int pointer = 0;
@@ -536,10 +488,8 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
 
         @Override
         public IElectronContainer next() {
-            if (pointer < bondCount)
-                return bonds[pointer++];
-            else if (pointer < bondCount + lonePairCount)
-                return lonePairs[(pointer++) - bondCount];
+            if (pointer < bondCount) return bonds[pointer++];
+            else if (pointer < bondCount + lonePairCount) return lonePairs[(pointer++) - bondCount];
             else if (pointer < bondCount + lonePairCount + singleElectronCount)
                 return singleElectrons[(pointer++) - bondCount - lonePairCount];
             return null;
@@ -547,20 +497,17 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
 
         @Override
         public void remove() {
-            if (pointer <= bondCount)
-                removeBond(--pointer);
-            else if (pointer <= bondCount + lonePairCount)
-                removeLonePair((--pointer) - bondCount);
+            if (pointer <= bondCount) removeBond(--pointer);
+            else if (pointer <= bondCount + lonePairCount) removeLonePair((--pointer) - bondCount);
             else if (pointer <= bondCount + lonePairCount + singleElectronCount)
                 removeSingleElectron((--pointer) - bondCount - lonePairCount);
         }
-
     }
 
     /**
-     *  Returns the atom at position 0 in the container.
+     * Returns the atom at position 0 in the container.
      *
-     *@return    The atom at position 0 .
+     * @return The atom at position 0 .
      */
     @Override
     public IAtom getFirstAtom() {
@@ -568,9 +515,9 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Returns the atom at the last position in the container.
+     * Returns the atom at the last position in the container.
      *
-     *@return    The atom at the last position
+     * @return The atom at the last position
      */
     @Override
     public IAtom getLastAtom() {
@@ -578,11 +525,11 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Returns the position of a given atom in the atoms array. It returns -1 if
-     *  the atom does not exist.
+     * Returns the position of a given atom in the atoms array. It returns -1 if the atom does not
+     * exist.
      *
-     *@param  atom  The atom to be sought
-     *@return       The Position of the atom in the atoms array in [0,..].
+     * @param atom The atom to be sought
+     * @return The Position of the atom in the atoms array in [0,..].
      */
     @Override
     public int getAtomNumber(IAtom atom) {
@@ -590,13 +537,12 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Returns the position of the bond between two given atoms in the
-     *  electronContainers array. It returns -1 if the bond does not exist.
+     * Returns the position of the bond between two given atoms in the electronContainers array. It
+     * returns -1 if the bond does not exist.
      *
-     *@param  atom1  The first atom
-     *@param  atom2  The second atom
-     *@return        The Position of the bond between a1 and a2 in the
-     *               electronContainers array.
+     * @param atom1 The first atom
+     * @param atom2 The second atom
+     * @return The Position of the bond between a1 and a2 in the electronContainers array.
      */
     @Override
     public int getBondNumber(IAtom atom1, IAtom atom2) {
@@ -604,11 +550,11 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Returns the position of a given bond in the electronContainers array. It
-     *  returns -1 if the bond does not exist.
+     * Returns the position of a given bond in the electronContainers array. It returns -1 if the
+     * bond does not exist.
      *
-     *@param  bond  The bond to be sought
-     *@return       The Position of the bond in the electronContainers array in [0,..].
+     * @param bond The bond to be sought
+     * @return The Position of the bond in the electronContainers array in [0,..].
      */
     @Override
     public int getBondNumber(IBond bond) {
@@ -616,11 +562,11 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Returns the position of a given lone pair in the lone pair array.
-     *  It returns -1 if the lone pair does not exist.
+     * Returns the position of a given lone pair in the lone pair array. It returns -1 if the lone
+     * pair does not exist.
      *
-     *@param  lonePair  The lone pair to be sought
-     *@return       The Position of the lone pair in the array..
+     * @param lonePair The lone pair to be sought
+     * @return The Position of the lone pair in the array..
      */
     @Override
     public int getLonePairNumber(ILonePair lonePair) {
@@ -628,11 +574,11 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Returns the position of a given single electron in the single electron array.
-     *  It returns -1 if the single electron does not exist.
+     * Returns the position of a given single electron in the single electron array. It returns -1
+     * if the single electron does not exist.
      *
-     *@param  singleElectron  The single electron to be sought
-     *@return       The Position of the single electron in the array.
+     * @param singleElectron The single electron to be sought
+     * @return The Position of the single electron in the array.
      */
     @Override
     public int getSingleElectronNumber(ISingleElectron singleElectron) {
@@ -672,11 +618,10 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Returns the ElectronContainer at position <code>number</code> in the
-     *  container.
+     * Returns the ElectronContainer at position <code>number</code> in the container.
      *
-     * @param  number  The position of the ElectronContainer to be returned.
-     * @return         The ElectronContainer at position <code>number</code>.
+     * @param number The position of the ElectronContainer to be returned.
+     * @return The ElectronContainer at position <code>number</code>.
      */
     @Override
     public IElectronContainer getElectronContainer(int number) {
@@ -691,9 +636,9 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     /**
      * Returns the bond that connects the two given atoms.
      *
-     * @param  atom1  The first atom
-     * @param  atom2  The second atom
-     * @return        The bond that connects the two atoms
+     * @param atom1 The first atom
+     * @param atom2 The second atom
+     * @return The bond that connects the two atoms
      */
     @Override
     public IBond getBond(IAtom atom1, IAtom atom2) {
@@ -706,9 +651,9 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Returns the number of Atoms in this Container.
+     * Returns the number of Atoms in this Container.
      *
-     *@return    The number of Atoms in this Container
+     * @return The number of Atoms in this Container
      */
     @Override
     public int getAtomCount() {
@@ -716,9 +661,9 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Returns the number of Bonds in this Container.
+     * Returns the number of Bonds in this Container.
      *
-     *@return    The number of Bonds in this Container
+     * @return The number of Bonds in this Container
      */
     @Override
     public int getBondCount() {
@@ -726,9 +671,9 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Returns the number of LonePairs in this Container.
+     * Returns the number of LonePairs in this Container.
      *
-     *@return    The number of LonePairs in this Container
+     * @return The number of LonePairs in this Container
      */
     @Override
     public int getLonePairCount() {
@@ -736,9 +681,9 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Returns the number of the single electrons in this container,
+     * Returns the number of the single electrons in this container,
      *
-     *@return       The number of SingleElectron objects of this AtomContainer
+     * @return The number of SingleElectron objects of this AtomContainer
      */
     @Override
     public int getSingleElectronCount() {
@@ -748,7 +693,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     /**
      * Returns the number of ElectronContainers in this Container.
      *
-     * @return    The number of ElectronContainers in this Container
+     * @return The number of ElectronContainers in this Container
      */
     @Override
     public int getElectronContainerCount() {
@@ -756,10 +701,10 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Returns an ArrayList of all atoms connected to the given atom.
+     * Returns an ArrayList of all atoms connected to the given atom.
      *
-     *@param  atom  The atom the bond partners are searched of.
-     *@return       The ArrayList with the connected atoms
+     * @param atom The atom the bond partners are searched of.
+     * @return The ArrayList with the connected atoms
      */
     @Override
     public List<IAtom> getConnectedAtomsList(IAtom atom) {
@@ -771,10 +716,10 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Returns an ArrayList of all Bonds connected to the given atom.
+     * Returns an ArrayList of all Bonds connected to the given atom.
      *
-     *@param  atom  The atom the connected bonds are searched of
-     *@return       The ArrayList with connected atoms
+     * @param atom The atom the connected bonds are searched of
+     * @return The ArrayList with connected atoms
      */
     @Override
     public List<IBond> getConnectedBondsList(IAtom atom) {
@@ -804,10 +749,10 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Returns an array of all SingleElectron connected to the given atom.
+     * Returns an array of all SingleElectron connected to the given atom.
      *
-     *@param  atom  The atom on which the single electron is located
-     *@return       The array of SingleElectron of this AtomContainer
+     * @param atom The atom on which the single electron is located
+     * @return The array of SingleElectron of this AtomContainer
      */
     @Override
     public List<ISingleElectron> getConnectedSingleElectronsList(IAtom atom) {
@@ -819,10 +764,10 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Returns an ArrayList of all electronContainers connected to the given atom.
+     * Returns an ArrayList of all electronContainers connected to the given atom.
      *
-     *@param  atom  The atom the connected electronContainers are searched of
-     *@return       The ArrayList with the  connected atoms
+     * @param atom The atom the connected electronContainers are searched of
+     * @return The ArrayList with the connected atoms
      */
     @Override
     public List<IElectronContainer> getConnectedElectronContainersList(IAtom atom) {
@@ -840,10 +785,10 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Returns the number of atoms connected to the given atom.
+     * Returns the number of atoms connected to the given atom.
      *
-     *@param  atom  The atom the number of bond partners are searched of.
-     *@return       The the size of connected atoms
+     * @param atom The atom the number of bond partners are searched of.
+     * @return The the size of connected atoms
      */
     @Override
     public int getConnectedAtomsCount(IAtom atom) {
@@ -855,10 +800,10 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Returns the number of Bonds for a given Atom.
+     * Returns the number of Bonds for a given Atom.
      *
-     *@param  atom  The atom
-     *@return       The number of Bonds for this atom
+     * @param atom The atom
+     * @return The number of Bonds for this atom
      */
     @Override
     public int getConnectedBondsCount(IAtom atom) {
@@ -866,10 +811,10 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Returns the number of connected atoms (degree) to the given atom.
+     * Returns the number of connected atoms (degree) to the given atom.
      *
-     *@param  idx  The atomnumber the degree is searched for
-     *@return             The number of connected atoms (degree)
+     * @param idx The atomnumber the degree is searched for
+     * @return The number of connected atoms (degree)
      */
     @Override
     public int getConnectedBondsCount(int idx) {
@@ -877,10 +822,10 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Returns the number of LonePairs for a given Atom.
+     * Returns the number of LonePairs for a given Atom.
      *
-     *@param  atom  The atom
-     *@return       The number of LonePairs for this atom
+     * @param atom The atom
+     * @return The number of LonePairs for this atom
      */
     @Override
     public int getConnectedLonePairsCount(IAtom atom) {
@@ -892,10 +837,10 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Returns the sum of the SingleElectron for a given Atom.
+     * Returns the sum of the SingleElectron for a given Atom.
      *
-     *@param  atom  The atom on which the single electron is located
-     *@return       The array of SingleElectron of this AtomContainer
+     * @param atom The atom on which the single electron is located
+     * @return The array of SingleElectron of this AtomContainer
      */
     @Override
     public int getConnectedSingleElectronsCount(IAtom atom) {
@@ -909,10 +854,10 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     /**
      * Returns the sum of the bond orders for a given Atom.
      *
-     * @param  atom  The atom
-     * @return       The number of bond orders for this atom
-     *
-     * @deprecated   Replaced by <code>AtomContainerManipulator#getBondOrderSum(IAtomContainer, IAtom)</code>
+     * @param atom The atom
+     * @return The number of bond orders for this atom
+     * @deprecated Replaced by <code>AtomContainerManipulator#getBondOrderSum(IAtomContainer, IAtom)
+     *     </code>
      */
     @Override
     public double getBondOrderSum(IAtom atom) {
@@ -934,11 +879,11 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     * Returns the maximum bond order that this atom currently has in the context
-     * of this AtomContainer.
+     * Returns the maximum bond order that this atom currently has in the context of this
+     * AtomContainer.
      *
-     * @param  atom  The atom
-     * @return       The maximum bond order that this atom currently has
+     * @param atom The atom
+     * @return The maximum bond order that this atom currently has
      */
     @Override
     public Order getMaximumBondOrder(IAtom atom) {
@@ -952,11 +897,11 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Returns the minimum bond order that this atom currently has in the context
-     *  of this AtomContainer.
+     * Returns the minimum bond order that this atom currently has in the context of this
+     * AtomContainer.
      *
-     *@param  atom  The atom
-     *@return       The minimum bond order that this atom currently has
+     * @param atom The atom
+     * @return The minimum bond order that this atom currently has
      */
     @Override
     public Order getMinimumBondOrder(IAtom atom) {
@@ -970,10 +915,9 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Adds all atoms and electronContainers of a given atomcontainer to this
-     *  container.
+     * Adds all atoms and electronContainers of a given atomcontainer to this container.
      *
-     *@param  atomContainer  The atomcontainer to be added
+     * @param atomContainer The atomcontainer to be added
      */
     @Override
     public void add(IAtomContainer atomContainer) {
@@ -1005,9 +949,9 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Adds an atom to this container.
+     * Adds an atom to this container.
      *
-     *@param  atom  The atom to be added to this container
+     * @param atom The atom to be added to this container
      */
     @Override
     public void addAtom(IAtom atom) {
@@ -1025,9 +969,9 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Adds a Bond to this AtomContainer.
+     * Adds a Bond to this AtomContainer.
      *
-     *@param  bond  The bond to added to this container
+     * @param bond The bond to added to this container
      */
     @Override
     public void addBond(IBond bond) {
@@ -1038,9 +982,9 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Adds a lone pair to this AtomContainer.
+     * Adds a lone pair to this AtomContainer.
      *
-     *@param  lonePair  The LonePair to added to this container
+     * @param lonePair The LonePair to added to this container
      */
     @Override
     public void addLonePair(ILonePair lonePair) {
@@ -1051,9 +995,9 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Adds a single electron to this AtomContainer.
+     * Adds a single electron to this AtomContainer.
      *
-     *@param  singleElectron  The SingleElectron to added to this container
+     * @param singleElectron The SingleElectron to added to this container
      */
     @Override
     public void addSingleElectron(ISingleElectron singleElectron) {
@@ -1064,22 +1008,22 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Adds a ElectronContainer to this AtomContainer.
+     * Adds a ElectronContainer to this AtomContainer.
      *
-     *@param  electronContainer  The ElectronContainer to added to this container
+     * @param electronContainer The ElectronContainer to added to this container
      */
     @Override
     public void addElectronContainer(IElectronContainer electronContainer) {
         if (electronContainer instanceof IBond) this.addBond((IBond) electronContainer);
         if (electronContainer instanceof ILonePair) this.addLonePair((ILonePair) electronContainer);
-        if (electronContainer instanceof ISingleElectron) this.addSingleElectron((ISingleElectron) electronContainer);
+        if (electronContainer instanceof ISingleElectron)
+            this.addSingleElectron((ISingleElectron) electronContainer);
     }
 
     /**
-     *  Removes all atoms and electronContainers of a given atomcontainer from this
-     *  container.
+     * Removes all atoms and electronContainers of a given atomcontainer from this container.
      *
-     *@param  atomContainer  The atomcontainer to be removed
+     * @param atomContainer The atomcontainer to be removed
      */
     @Override
     public void remove(IAtomContainer atomContainer) {
@@ -1098,11 +1042,11 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Removes the atom at the given position from the AtomContainer. Note that
-     *  the electronContainers are unaffected: you also have to take care of
-     *  removing all electronContainers to this atom from the container manually.
+     * Removes the atom at the given position from the AtomContainer. Note that the
+     * electronContainers are unaffected: you also have to take care of removing all
+     * electronContainers to this atom from the container manually.
      *
-     *@param  position  The position of the atom to be removed.
+     * @param position The position of the atom to be removed.
      */
     @Override
     public void removeAtomOnly(int position) {
@@ -1116,11 +1060,11 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Removes the given atom from the AtomContainer. Note that the
-     *  electronContainers are unaffected: you also have to take care of removing
-     *  all electronContainers to this atom from the container.
+     * Removes the given atom from the AtomContainer. Note that the electronContainers are
+     * unaffected: you also have to take care of removing all electronContainers to this atom from
+     * the container.
      *
-     *@param  atom  The atom to be removed
+     * @param atom The atom to be removed
      */
     @Override
     public void removeAtomOnly(IAtom atom) {
@@ -1131,9 +1075,9 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Removes the bond at the given position from the AtomContainer.
+     * Removes the bond at the given position from the AtomContainer.
      *
-     *@param  position  The position of the bond to be removed.
+     * @param position The position of the bond to be removed.
      */
     @Override
     public IBond removeBond(int position) {
@@ -1151,9 +1095,9 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     /**
      * Removes the bond that connects the two given atoms.
      *
-     * @param  atom1  The first atom
-     * @param  atom2  The second atom
-     * @return        The bond that connects the two atoms
+     * @param atom1 The first atom
+     * @param atom2 The second atom
+     * @return The bond that connects the two atoms
      */
     @Override
     public IBond removeBond(IAtom atom1, IAtom atom2) {
@@ -1169,7 +1113,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     /**
      * Removes the bond from this container.
      *
-     * @param  bond   The bond to be removed.
+     * @param bond The bond to be removed.
      */
     @Override
     public void removeBond(IBond bond) {
@@ -1178,9 +1122,9 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Removes the lone pair at the given position from the AtomContainer.
+     * Removes the lone pair at the given position from the AtomContainer.
      *
-     *@param  position  The position of the LonePair to be removed.
+     * @param position The position of the LonePair to be removed.
      */
     @Override
     public ILonePair removeLonePair(int position) {
@@ -1196,9 +1140,9 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Removes the lone pair from the AtomContainer.
+     * Removes the lone pair from the AtomContainer.
      *
-     *@param  lonePair  The LonePair to be removed.
+     * @param lonePair The LonePair to be removed.
      */
     @Override
     public void removeLonePair(ILonePair lonePair) {
@@ -1207,9 +1151,9 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Removes the single electron at the given position from the AtomContainer.
+     * Removes the single electron at the given position from the AtomContainer.
      *
-     *@param  position  The position of the SingleElectron to be removed.
+     * @param position The position of the SingleElectron to be removed.
      */
     @Override
     public ISingleElectron removeSingleElectron(int position) {
@@ -1225,9 +1169,9 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Removes the single electron from the AtomContainer.
+     * Removes the single electron from the AtomContainer.
      *
-     *@param  singleElectron  The SingleElectron to be removed.
+     * @param singleElectron The SingleElectron to be removed.
      */
     @Override
     public void removeSingleElectron(ISingleElectron singleElectron) {
@@ -1238,8 +1182,8 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     /**
      * Removes the bond at the given position from this container.
      *
-     * @param  number  The position of the bond in the electronContainers array
-     * @return           Bond that was removed
+     * @param number The position of the bond in the electronContainers array
+     * @return Bond that was removed
      */
     @Override
     public IElectronContainer removeElectronContainer(int number) {
@@ -1258,17 +1202,14 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      */
     @Override
     public void removeElectronContainer(IElectronContainer electronContainer) {
-        if (electronContainer instanceof IBond)
-            removeBond((IBond) electronContainer);
+        if (electronContainer instanceof IBond) removeBond((IBond) electronContainer);
         else if (electronContainer instanceof ILonePair)
             removeLonePair((ILonePair) electronContainer);
         else if (electronContainer instanceof ISingleElectron)
             removeSingleElectron((ISingleElectron) electronContainer);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     @Deprecated
     public void removeAtomAndConnectedElectronContainers(IAtom atom) {
@@ -1276,10 +1217,9 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Removes the given atom and all connected electronContainers from the
-     *  AtomContainer.
+     * Removes the given atom and all connected electronContainers from the AtomContainer.
      *
-     *@param  atom  The atom to be removed
+     * @param atom The atom to be removed
      */
     @Override
     public void removeAtom(IAtom atom) {
@@ -1308,17 +1248,13 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
         notifyChanged();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void removeAtom(int pos) {
         removeAtom(getAtom(pos));
     }
 
-    /**
-     * Removes all atoms and bond from this container.
-     */
+    /** Removes all atoms and bond from this container. */
     @Override
     public void removeAllElements() {
         removeAllElectronContainers();
@@ -1330,9 +1266,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
         notifyChanged();
     }
 
-    /**
-     *  Removes electronContainers from this container.
-     */
+    /** Removes electronContainers from this container. */
     @Override
     public void removeAllElectronContainers() {
         removeAllBonds();
@@ -1349,9 +1283,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
         notifyChanged();
     }
 
-    /**
-     *  Removes all Bonds from this container.
-     */
+    /** Removes all Bonds from this container. */
     @Override
     public void removeAllBonds() {
         for (int f = 0; f < getBondCount(); f++) {
@@ -1363,16 +1295,18 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Adds a bond to this container.
+     * Adds a bond to this container.
      *
-     *@param  atom1   Id of the first atom of the Bond in [0,..]
-     *@param  atom2   Id of the second atom of the Bond in [0,..]
-     *@param  order   Bondorder
-     *@param  stereo  Stereochemical orientation
+     * @param atom1 Id of the first atom of the Bond in [0,..]
+     * @param atom2 Id of the second atom of the Bond in [0,..]
+     * @param order Bondorder
+     * @param stereo Stereochemical orientation
      */
     @Override
     public void addBond(int atom1, int atom2, IBond.Order order, IBond.Stereo stereo) {
-        IBond bond = getBuilder().newInstance(IBond.class, getAtom(atom1), getAtom(atom2), order, stereo);
+        IBond bond =
+                getBuilder()
+                        .newInstance(IBond.class, getAtom(atom1), getAtom(atom2), order, stereo);
 
         if (contains(bond)) {
             return;
@@ -1388,11 +1322,11 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Adds a bond to this container.
+     * Adds a bond to this container.
      *
-     *@param  atom1  Id of the first atom of the Bond in [0,..]
-     *@param  atom2  Id of the second atom of the Bond in [0,..]
-     *@param  order  Bondorder
+     * @param atom1 Id of the first atom of the Bond in [0,..]
+     * @param atom2 Id of the second atom of the Bond in [0,..]
+     * @param order Bondorder
      */
     @Override
     public void addBond(int atom1, int atom2, IBond.Order order) {
@@ -1408,9 +1342,9 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Adds a LonePair to this Atom.
+     * Adds a LonePair to this Atom.
      *
-     *@param  atomID  The atom number to which the LonePair is added in [0,..]
+     * @param atomID The atom number to which the LonePair is added in [0,..]
      */
     @Override
     public void addLonePair(int atomID) {
@@ -1424,13 +1358,14 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Adds a LonePair to this Atom.
+     * Adds a LonePair to this Atom.
      *
-     *@param  atomID  The atom number to which the LonePair is added in [0,..]
+     * @param atomID The atom number to which the LonePair is added in [0,..]
      */
     @Override
     public void addSingleElectron(int atomID) {
-        ISingleElectron singleElectron = getBuilder().newInstance(ISingleElectron.class, atoms[atomID]);
+        ISingleElectron singleElectron =
+                getBuilder().newInstance(ISingleElectron.class, atoms[atomID]);
         singleElectron.addListener(this);
         addSingleElectron(singleElectron);
         /*
@@ -1439,10 +1374,10 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  True, if the AtomContainer contains the given atom object.
+     * True, if the AtomContainer contains the given atom object.
      *
-     *@param  atom  the atom this AtomContainer is searched for
-     *@return       true if the AtomContainer contains the given atom object
+     * @param atom the atom this AtomContainer is searched for
+     * @return true if the AtomContainer contains the given atom object
      */
     @Override
     public boolean contains(IAtom atom) {
@@ -1453,10 +1388,10 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  True, if the AtomContainer contains the given bond object.
+     * True, if the AtomContainer contains the given bond object.
      *
-     *@param  bond  the bond this AtomContainer is searched for
-     *@return       true if the AtomContainer contains the given bond object
+     * @param bond the bond this AtomContainer is searched for
+     * @return true if the AtomContainer contains the given bond object
      */
     @Override
     public boolean contains(IBond bond) {
@@ -1467,10 +1402,10 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  True, if the AtomContainer contains the given LonePair object.
+     * True, if the AtomContainer contains the given LonePair object.
      *
-     *@param  lonePair  the LonePair this AtomContainer is searched for
-     *@return           true if the AtomContainer contains the given LonePair object
+     * @param lonePair the LonePair this AtomContainer is searched for
+     * @return true if the AtomContainer contains the given LonePair object
      */
     @Override
     public boolean contains(ILonePair lonePair) {
@@ -1481,10 +1416,10 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  True, if the AtomContainer contains the given SingleElectron object.
+     * True, if the AtomContainer contains the given SingleElectron object.
      *
-     *@param  singleElectron  the LonePair this AtomContainer is searched for
-     *@return           true if the AtomContainer contains the given LonePair object
+     * @param singleElectron the LonePair this AtomContainer is searched for
+     * @return true if the AtomContainer contains the given LonePair object
      */
     @Override
     public boolean contains(ISingleElectron singleElectron) {
@@ -1495,24 +1430,26 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  True, if the AtomContainer contains the given ElectronContainer object.
+     * True, if the AtomContainer contains the given ElectronContainer object.
      *
-     *@param  electronContainer ElectronContainer that is searched for
-     *@return                   true if the AtomContainer contains the given bond object
+     * @param electronContainer ElectronContainer that is searched for
+     * @return true if the AtomContainer contains the given bond object
      */
     @Override
     public boolean contains(IElectronContainer electronContainer) {
         if (electronContainer instanceof IBond) return contains((IBond) electronContainer);
         if (electronContainer instanceof ILonePair) return contains((ILonePair) electronContainer);
-        if (electronContainer instanceof ISingleElectron) return contains((ISingleElectron) electronContainer);
+        if (electronContainer instanceof ISingleElectron)
+            return contains((ISingleElectron) electronContainer);
         return false;
     }
 
     /**
      * Clones this AtomContainer object and its content.
      *
-     * @return    The cloned object
-     * @see       #QueryAtomContainer(org.openscience.cdk.interfaces.IAtomContainer, org.openscience.cdk.interfaces.IChemObjectBuilder)
+     * @return The cloned object
+     * @see #QueryAtomContainer(org.openscience.cdk.interfaces.IAtomContainer,
+     *     org.openscience.cdk.interfaces.IChemObjectBuilder)
      */
     @Override
     public IQueryAtomContainer clone() throws CloneNotSupportedException {
@@ -1561,9 +1498,9 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Grows the atom array by a given size.
+     * Grows the atom array by a given size.
      *
-     *@see    #growArraySize
+     * @see #growArraySize
      */
     private void growAtomArray() {
         growArraySize = (atoms.length < growArraySize) ? growArraySize : atoms.length;
@@ -1573,9 +1510,9 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Grows the bond array by a given size.
+     * Grows the bond array by a given size.
      *
-     *@see    #growArraySize
+     * @see #growArraySize
      */
     private void growBondArray() {
         growArraySize = (bonds.length < growArraySize) ? growArraySize : bonds.length;
@@ -1585,9 +1522,9 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Grows the lone pair array by a given size.
+     * Grows the lone pair array by a given size.
      *
-     *@see    #growArraySize
+     * @see #growArraySize
      */
     private void growLonePairArray() {
         growArraySize = (lonePairs.length < growArraySize) ? growArraySize : lonePairs.length;
@@ -1597,23 +1534,24 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     *  Grows the single electron array by a given size.
+     * Grows the single electron array by a given size.
      *
-     *@see    #growArraySize
+     * @see #growArraySize
      */
     private void growSingleElectronArray() {
-        growArraySize = (singleElectrons.length < growArraySize) ? growArraySize : singleElectrons.length;
-        ISingleElectron[] newSingleElectrons = new ISingleElectron[singleElectrons.length + growArraySize];
+        growArraySize =
+                (singleElectrons.length < growArraySize) ? growArraySize : singleElectrons.length;
+        ISingleElectron[] newSingleElectrons =
+                new ISingleElectron[singleElectrons.length + growArraySize];
         System.arraycopy(singleElectrons, 0, newSingleElectrons, 0, singleElectrons.length);
         singleElectrons = newSingleElectrons;
     }
 
     /**
-    *  Called by objects to which this object has
-    *  registered as a listener.
-    *
-    *@param  event  A change event pointing to the source of the change
-    */
+     * Called by objects to which this object has registered as a listener.
+     *
+     * @param event A change event pointing to the source of the change
+     */
     @Override
     public void stateChanged(IChemObjectChangeEvent event) {
         notifyChanged(event);
@@ -1625,17 +1563,13 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
         return atomCount == 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public String getTitle() {
         return getProperty(CDKConstants.TITLE);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setTitle(String title) {
         setProperty(CDKConstants.TITLE, title);
@@ -1648,10 +1582,11 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     }
 
     /**
-     * Populate a query from a molecule and a provided set of expressions. The
-     * molecule is converted and any features specified in the {@code opts}
-     * will be matched. <br><br>
+     * Populate a query from a molecule and a provided set of expressions. The molecule is converted
+     * and any features specified in the {@code opts} will be matched. <br>
+     * <br>
      * A good starting point is the following options:
+     *
      * <pre>{@code
      * // [nH]1ccc(=O)cc1 => n1:c:c:c(=O):c:c:1
      * QueryAtomContainer.create(qry, mol,
@@ -1661,11 +1596,11 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      *                                ALIPHATIC_ORDER,
      *                                STEREOCHEMISTRY);
      * }</pre>
+     *
      * <br>
-     * Specifying {@link Expr.Type#DEGREE} (or {@link Expr.Type#TOTAL_DEGREE} +
-     * {@link Expr.Type#IMPL_H_COUNT}) means the molecule will not match as a
-     * substructure.
-     * <br>
+     * Specifying {@link Expr.Type#DEGREE} (or {@link Expr.Type#TOTAL_DEGREE} + {@link
+     * Expr.Type#IMPL_H_COUNT}) means the molecule will not match as a substructure. <br>
+     *
      * <pre>{@code
      * // [nH]1ccc(=O)cc1 => [nD2]1:[cD2]:[cD2]:[cD2](=[OD1]):[cD2]:[cD2]:1
      * QueryAtomContainer.create(qry, mol,
@@ -1675,12 +1610,12 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      *                                SINGLE_OR_AROMATIC,
      *                                ALIPHATIC_ORDER);
      * }</pre>
+     *
      * <br>
-     * The {@link Expr.Type#RING_BOND_COUNT} property is useful for locking in
-     * ring systems. Specifying the ring bond count on benzene means it will
-     * not match larger ring systems (e.g. naphthalenee) but can still be
-     * substituted.
-     * <br>
+     * The {@link Expr.Type#RING_BOND_COUNT} property is useful for locking in ring systems.
+     * Specifying the ring bond count on benzene means it will not match larger ring systems (e.g.
+     * naphthalenee) but can still be substituted. <br>
+     *
      * <pre>{@code
      * // [nH]1ccc(=O)cc1 =>
      * //   [nx2+0]1:[cx2+0]:[cx2+0]:[cx2+0](=[O&x0+0]):[cx2+0]:[cx2+0]:1
@@ -1694,12 +1629,12 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      *                                SINGLE_OR_AROMATIC,
      *                                ALIPHATIC_ORDER);
      * }</pre>
+     *
      * <br>
-     * Note that {@link Expr.Type#FORMAL_CHARGE},
-     * {@link Expr.Type#IMPL_H_COUNT}, and {@link Expr.Type#ISOTOPE} are ignored
-     * if null. Explicitly setting these to zero (only required for Isotope from
-     * SMILES) forces their inclusion.
-     * <br>
+     * Note that {@link Expr.Type#FORMAL_CHARGE}, {@link Expr.Type#IMPL_H_COUNT}, and {@link
+     * Expr.Type#ISOTOPE} are ignored if null. Explicitly setting these to zero (only required for
+     * Isotope from SMILES) forces their inclusion. <br>
+     *
      * <pre>{@code
      * // [nH]1ccc(=O)cc1 =>
      * //   [0n+0]1:[0c+0]:[0c+0]:[0c+0](=[O+0]):[0c+0]:[0c+0]:1
@@ -1713,30 +1648,27 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      *                                ALIPHATIC_ORDER);
      * }</pre>
      *
-     * Please note not all {@link Expr.Type}s are currently supported, if you
-     * require a specific type that you think is useful please open an issue.
+     * Please note not all {@link Expr.Type}s are currently supported, if you require a specific
+     * type that you think is useful please open an issue.
      *
      * @param dst the output destination
      * @param src the input molecule
      * @param opts set of the expr types to match
      */
-    public static void create(IAtomContainer dst,
-                              IAtomContainer src,
-                              Expr.Type... opts) {
+    public static void create(IAtomContainer dst, IAtomContainer src, Expr.Type... opts) {
         Set<Expr.Type> optset = EnumSet.noneOf(Expr.Type.class);
         optset.addAll(Arrays.asList(opts));
 
-        Map<IChemObject, IChemObject>    mapping = new HashMap<>();
+        Map<IChemObject, IChemObject> mapping = new HashMap<>();
         Map<IChemObject, IStereoElement> stereos = new HashMap<>();
 
-        for (IStereoElement se : src.stereoElements())
-            stereos.put(se.getFocus(), se);
+        for (IStereoElement se : src.stereoElements()) stereos.put(se.getFocus(), se);
         List<IStereoElement> qstereo = new ArrayList<>();
 
         for (IAtom atom : src.atoms()) {
             Expr expr;
             if (atom instanceof IQueryAtom) {
-                expr = ((QueryAtom)AtomRef.deref(atom)).getExpression();
+                expr = ((QueryAtom) AtomRef.deref(atom)).getExpression();
                 IStereoElement se = stereos.get(atom);
                 if (se != null) qstereo.add(se);
             } else {
@@ -1746,60 +1678,47 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
                 if (optset.contains(ISOTOPE) && atom.getMassNumber() != null)
                     expr.and(new Expr(ISOTOPE, atom.getMassNumber()));
 
-                if (atom.getAtomicNumber() != null &&
-                        atom.getAtomicNumber() != 0) {
+                if (atom.getAtomicNumber() != null && atom.getAtomicNumber() != 0) {
                     if (atom.isAromatic()) {
                         if (optset.contains(AROMATIC_ELEMENT)) {
-                            expr.and(new Expr(AROMATIC_ELEMENT,
-                                    atom.getAtomicNumber()));
+                            expr.and(new Expr(AROMATIC_ELEMENT, atom.getAtomicNumber()));
                         } else {
                             if (optset.contains(IS_AROMATIC)) {
                                 if (optset.contains(ELEMENT))
-                                    expr.and(new Expr(AROMATIC_ELEMENT,
-                                            atom.getAtomicNumber()));
-                                else
-                                    expr.and(new Expr(Expr.Type.IS_AROMATIC));
+                                    expr.and(new Expr(AROMATIC_ELEMENT, atom.getAtomicNumber()));
+                                else expr.and(new Expr(Expr.Type.IS_AROMATIC));
                             } else if (optset.contains(ELEMENT)) {
-                                expr.and(new Expr(ELEMENT,
-                                        atom.getAtomicNumber()));
+                                expr.and(new Expr(ELEMENT, atom.getAtomicNumber()));
                             }
                         }
                     } else {
                         if (optset.contains(ALIPHATIC_ELEMENT)) {
-                            expr.and(new Expr(ALIPHATIC_ELEMENT,
-                                    atom.getAtomicNumber()));
+                            expr.and(new Expr(ALIPHATIC_ELEMENT, atom.getAtomicNumber()));
                         } else {
                             if (optset.contains(IS_ALIPHATIC)) {
                                 if (optset.contains(ELEMENT))
-                                    expr.and(new Expr(ALIPHATIC_ELEMENT,
-                                            atom.getAtomicNumber()));
-                                else
-                                    expr.and(new Expr(Expr.Type.IS_ALIPHATIC));
+                                    expr.and(new Expr(ALIPHATIC_ELEMENT, atom.getAtomicNumber()));
+                                else expr.and(new Expr(Expr.Type.IS_ALIPHATIC));
                             } else if (optset.contains(ELEMENT)) {
-                                expr.and(new Expr(ELEMENT,
-                                        atom.getAtomicNumber()));
+                                expr.and(new Expr(ELEMENT, atom.getAtomicNumber()));
                             }
                         }
                     }
                 }
 
-                if (optset.contains(DEGREE))
-                    expr.and(new Expr(DEGREE,
-                            atom.getBondCount()));
+                if (optset.contains(DEGREE)) expr.and(new Expr(DEGREE, atom.getBondCount()));
                 if (optset.contains(TOTAL_DEGREE))
-                    expr.and(new Expr(DEGREE,
-                            atom.getBondCount() + atom.getImplicitHydrogenCount()));
-                if (optset.contains(IS_IN_RING) && atom.isInRing())
-                    expr.and(new Expr(IS_IN_RING));
+                    expr.and(
+                            new Expr(
+                                    DEGREE, atom.getBondCount() + atom.getImplicitHydrogenCount()));
+                if (optset.contains(IS_IN_RING) && atom.isInRing()) expr.and(new Expr(IS_IN_RING));
                 if (optset.contains(IS_IN_CHAIN) && !atom.isInRing())
                     expr.and(new Expr(IS_IN_CHAIN));
-                if (optset.contains(IMPL_H_COUNT))
-                    expr.and(new Expr(IMPL_H_COUNT));
+                if (optset.contains(IMPL_H_COUNT)) expr.and(new Expr(IMPL_H_COUNT));
                 if (optset.contains(RING_BOND_COUNT)) {
                     int rbonds = 0;
                     for (IBond bond : src.getConnectedBondsList(atom))
-                        if (bond.isInRing())
-                            rbonds++;
+                        if (bond.isInRing()) rbonds++;
 
                     expr.and(new Expr(RING_BOND_COUNT, rbonds));
                 }
@@ -1807,9 +1726,9 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
                     expr.and(new Expr(FORMAL_CHARGE, atom.getFormalCharge()));
 
                 IStereoElement se = stereos.get(atom);
-                if (se != null &&
-                        se.getConfigClass() == IStereoElement.TH &&
-                        optset.contains(STEREOCHEMISTRY)) {
+                if (se != null
+                        && se.getConfigClass() == IStereoElement.TH
+                        && optset.contains(STEREOCHEMISTRY)) {
                     expr.and(new Expr(STEREOCHEMISTRY, se.getConfigOrder()));
                     qstereo.add(se);
                 }
@@ -1820,14 +1739,14 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
 
             // backward compatibility for naughty methods that are expecting
             // these to be set for a query!
-            if (optset.contains(Expr.Type.ELEMENT) ||
-                optset.contains(Expr.Type.AROMATIC_ELEMENT) ||
-                optset.contains(Expr.Type.ALIPHATIC_ELEMENT)) {
+            if (optset.contains(Expr.Type.ELEMENT)
+                    || optset.contains(Expr.Type.AROMATIC_ELEMENT)
+                    || optset.contains(Expr.Type.ALIPHATIC_ELEMENT)) {
                 qatom.setSymbol(atom.getSymbol());
                 qatom.setAtomicNumber(atom.getAtomicNumber());
             }
-            if (optset.contains(Expr.Type.AROMATIC_ELEMENT) ||
-                optset.contains(Expr.Type.IS_AROMATIC))
+            if (optset.contains(Expr.Type.AROMATIC_ELEMENT)
+                    || optset.contains(Expr.Type.IS_AROMATIC))
                 qatom.setIsAromatic(atom.isAromatic());
 
             mapping.put(atom, qatom);
@@ -1837,67 +1756,66 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
         for (IBond bond : src.bonds()) {
             Expr expr;
             if (bond instanceof IQueryBond) {
-                expr = ((QueryBond)BondRef.deref(bond)).getExpression();
+                expr = ((QueryBond) BondRef.deref(bond)).getExpression();
                 IStereoElement se = stereos.get(bond);
                 if (se != null) qstereo.add(se);
             } else {
                 expr = new Expr();
 
-                if (bond.isAromatic() &&
-                        (optset.contains(SINGLE_OR_AROMATIC) ||
-                                optset.contains(DOUBLE_OR_AROMATIC) ||
-                                optset.contains(IS_AROMATIC)))
+                if (bond.isAromatic()
+                        && (optset.contains(SINGLE_OR_AROMATIC)
+                                || optset.contains(DOUBLE_OR_AROMATIC)
+                                || optset.contains(IS_AROMATIC)))
                     expr.and(new Expr(Expr.Type.IS_AROMATIC));
-                else if ((optset.contains(SINGLE_OR_AROMATIC) ||
-                        optset.contains(DOUBLE_OR_AROMATIC) ||
-                        optset.contains(ALIPHATIC_ORDER)) && !bond.isAromatic())
+                else if ((optset.contains(SINGLE_OR_AROMATIC)
+                                || optset.contains(DOUBLE_OR_AROMATIC)
+                                || optset.contains(ALIPHATIC_ORDER))
+                        && !bond.isAromatic())
                     expr.and(new Expr(ALIPHATIC_ORDER, bond.getOrder().numeric()));
                 else if (bond.isAromatic() && optset.contains(IS_ALIPHATIC))
                     expr.and(new Expr(IS_ALIPHATIC));
                 else if (optset.contains(ORDER))
                     expr.and(new Expr(ORDER, bond.getOrder().numeric()));
 
-
-                if (optset.contains(IS_IN_RING) && bond.isInRing())
-                    expr.and(new Expr(IS_IN_RING));
+                if (optset.contains(IS_IN_RING) && bond.isInRing()) expr.and(new Expr(IS_IN_RING));
                 else if (optset.contains(IS_IN_CHAIN) && !bond.isInRing())
                     expr.and(new Expr(IS_IN_CHAIN));
 
                 IStereoElement se = stereos.get(bond);
-                if (se != null &&
-                        optset.contains(STEREOCHEMISTRY)) {
+                if (se != null && optset.contains(STEREOCHEMISTRY)) {
                     expr.and(new Expr(STEREOCHEMISTRY, se.getConfigOrder()));
                     qstereo.add(se);
                 }
             }
 
-            QueryBond qbond = new QueryBond((IAtom) mapping.get(bond.getBegin()),
-                                            (IAtom) mapping.get(bond.getEnd()),
-                                            expr);
+            QueryBond qbond =
+                    new QueryBond(
+                            (IAtom) mapping.get(bond.getBegin()),
+                            (IAtom) mapping.get(bond.getEnd()),
+                            expr);
             qbond.setIsInRing(bond.isInRing());
             // backward compatibility for naughty methods that are expecting
             // these to be set for a query!
-            if (optset.contains(Expr.Type.ALIPHATIC_ORDER) ||
-                optset.contains(Expr.Type.ORDER))
+            if (optset.contains(Expr.Type.ALIPHATIC_ORDER) || optset.contains(Expr.Type.ORDER))
                 qbond.setOrder(bond.getOrder());
-            if (optset.contains(Expr.Type.SINGLE_OR_AROMATIC) ||
-                optset.contains(Expr.Type.DOUBLE_OR_AROMATIC) ||
-                optset.contains(Expr.Type.IS_AROMATIC))
+            if (optset.contains(Expr.Type.SINGLE_OR_AROMATIC)
+                    || optset.contains(Expr.Type.DOUBLE_OR_AROMATIC)
+                    || optset.contains(Expr.Type.IS_AROMATIC))
                 qbond.setIsAromatic(bond.isAromatic());
 
             mapping.put(bond, qbond);
             dst.addBond(qbond);
         }
 
-        for (IStereoElement se : qstereo)
-            dst.addStereoElement(se.map(mapping));
+        for (IStereoElement se : qstereo) dst.addStereoElement(se.map(mapping));
     }
 
     /**
-     * Create a query from a molecule and a provided set of expressions. The
-     * molecule is converted and any features specified in the {@code opts}
-     * will be matched. <br><br>
+     * Create a query from a molecule and a provided set of expressions. The molecule is converted
+     * and any features specified in the {@code opts} will be matched. <br>
+     * <br>
      * A good starting point is the following options:
+     *
      * <pre>{@code
      * // [nH]1ccc(=O)cc1 => n1:c:c:c(=O):c:c:1
      * QueryAtomContainer.create(mol, ALIPHATIC_ELEMENT,
@@ -1906,11 +1824,11 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      *                                ALIPHATIC_ORDER,
      *                                STEREOCHEMISTRY);
      * }</pre>
+     *
      * <br>
-     * Specifying {@link Expr.Type#DEGREE} (or {@link Expr.Type#TOTAL_DEGREE} +
-     * {@link Expr.Type#IMPL_H_COUNT}) means the molecule will not match as a
-     * substructure.
-     * <br>
+     * Specifying {@link Expr.Type#DEGREE} (or {@link Expr.Type#TOTAL_DEGREE} + {@link
+     * Expr.Type#IMPL_H_COUNT}) means the molecule will not match as a substructure. <br>
+     *
      * <pre>{@code
      * // [nH]1ccc(=O)cc1 => [nD2]1:[cD2]:[cD2]:[cD2](=[OD1]):[cD2]:[cD2]:1
      * QueryAtomContainer.create(mol, ALIPHATIC_ELEMENT,
@@ -1919,12 +1837,12 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      *                                SINGLE_OR_AROMATIC,
      *                                ALIPHATIC_ORDER);
      * }</pre>
+     *
      * <br>
-     * The {@link Expr.Type#RING_BOND_COUNT} property is useful for locking in
-     * ring systems. Specifying the ring bond count on benzene means it will
-     * not match larger ring systems (e.g. naphthalenee) but can still be
-     * substituted.
-     * <br>
+     * The {@link Expr.Type#RING_BOND_COUNT} property is useful for locking in ring systems.
+     * Specifying the ring bond count on benzene means it will not match larger ring systems (e.g.
+     * naphthalenee) but can still be substituted. <br>
+     *
      * <pre>{@code
      * // [nH]1ccc(=O)cc1 =>
      * //   [nx2+0]1:[cx2+0]:[cx2+0]:[cx2+0](=[O&x0+0]):[cx2+0]:[cx2+0]:1
@@ -1937,12 +1855,12 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      *                                SINGLE_OR_AROMATIC,
      *                                ALIPHATIC_ORDER);
      * }</pre>
+     *
      * <br>
-     * Note that {@link Expr.Type#FORMAL_CHARGE},
-     * {@link Expr.Type#IMPL_H_COUNT}, and {@link Expr.Type#ISOTOPE} are ignored
-     * if null. Explicitly setting these to zero (only required for Isotope from
-     * SMILES) forces their inclusion.
-     * <br>
+     * Note that {@link Expr.Type#FORMAL_CHARGE}, {@link Expr.Type#IMPL_H_COUNT}, and {@link
+     * Expr.Type#ISOTOPE} are ignored if null. Explicitly setting these to zero (only required for
+     * Isotope from SMILES) forces their inclusion. <br>
+     *
      * <pre>{@code
      * // [nH]1ccc(=O)cc1 =>
      * //   [0n+0]1:[0c+0]:[0c+0]:[0c+0](=[O+0]):[0c+0]:[0c+0]:1
@@ -1955,15 +1873,14 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      *                                ALIPHATIC_ORDER);
      * }</pre>
      *
-     * Please note not all {@link Expr.Type}s are currently supported, if you
-     * require a specific type that you think is useful please open an issue.
+     * Please note not all {@link Expr.Type}s are currently supported, if you require a specific
+     * type that you think is useful please open an issue.
      *
      * @param src the input molecule
      * @param opts set of the expr types to match
      * @return the query container
      */
-    public static QueryAtomContainer create(IAtomContainer src,
-                                            Expr.Type... opts) {
+    public static QueryAtomContainer create(IAtomContainer src, Expr.Type... opts) {
         QueryAtomContainer dst = new QueryAtomContainer(src.getBuilder());
         create(dst, src, opts);
         return dst;

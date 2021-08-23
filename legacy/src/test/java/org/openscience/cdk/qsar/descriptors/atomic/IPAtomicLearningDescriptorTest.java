@@ -44,15 +44,12 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
 
-    IPAtomicLearningDescriptor      descriptor;
-    private SmilesParser            sp      = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-    private IChemObjectBuilder      builder = SilentChemObjectBuilder.getInstance();
+    IPAtomicLearningDescriptor descriptor;
+    private SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+    private IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
     private LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
-    /**
-     *  Constructor for the IPAtomicLearningDescriptorTest object
-     *
-     */
+    /** Constructor for the IPAtomicLearningDescriptorTest object */
     public IPAtomicLearningDescriptorTest() {
         descriptor = new IPAtomicLearningDescriptor();
     }
@@ -62,9 +59,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
         setDescriptor(IPAtomicLearningDescriptor.class);
     }
 
-    /**
-     *  A unit test for JUnit
-     */
+    /** A unit test for JUnit */
     @Test
     public void testIPAtomicLearningDescriptor() throws Exception {
         IAtomicDescriptor descriptor = new IPAtomicLearningDescriptor();
@@ -72,12 +67,13 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
     }
 
     /**
-     *  A unit test for JUnit with CC(C)C(C)C
+     * A unit test for JUnit with CC(C)C(C)C
      *
-     *  @cdk.inchi InChI=1/C6H14/c1-5(2)6(3)4/h5-6H,1-4H3
+     * @cdk.inchi InChI=1/C6H14/c1-5(2)6(3)4/h5-6H,1-4H3
      */
     @Test
-    public void testIPDescriptor0() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testIPDescriptor0()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
 
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -96,16 +92,17 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getAtom(3), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getAtom(3), mol).getValue()).doubleValue();
         double resultAccordingNIST = 0.0;
 
         Assert.assertEquals(resultAccordingNIST, result, 0.0001);
     }
 
     /**
-     *  A unit test for JUnit with CCCCl
+     * A unit test for JUnit with CCCCl
      *
-     *  @cdk.inchi InChI=1/C3H7Cl/c1-2-3-4/h2-3H2,1H3
+     * @cdk.inchi InChI=1/C3H7Cl/c1-2-3-4/h2-3H2,1H3
      */
     @Test
     @Category(SlowTest.class)
@@ -124,35 +121,38 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getAtom(3), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getAtom(3), mol).getValue()).doubleValue();
         double resultAccordingNIST = 10.8;
         Assert.assertEquals(resultAccordingNIST, result, 0.4);
     }
 
     /**
-     *  A unit test for JUnit with CC(C)Cl
+     * A unit test for JUnit with CC(C)Cl
      *
-     *  @cdk.inchi InChI=1/C3H7Cl/c1-3(2)4/h3H,1-2H3
+     * @cdk.inchi InChI=1/C3H7Cl/c1-3(2)4/h3H,1-2H3
      */
     @Test
     @Category(SlowTest.class)
-    public void testIPDescriptor2() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testIPDescriptor2()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("CC(CC)Cl"); // not in db
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getAtom(4), mol).getValue()).doubleValue();
-        double resultAccordingNIST = 10.57; //value for CC(C)Cl
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getAtom(4), mol).getValue()).doubleValue();
+        double resultAccordingNIST = 10.57; // value for CC(C)Cl
 
         Assert.assertEquals(resultAccordingNIST, result, 0.35);
     }
 
     /**
-     *  A unit test for JUnit with C=CCCl
+     * A unit test for JUnit with C=CCCl
      *
-     *  @cdk.inchi InChI=1/C3H5Cl/c1-2-3-4/h2H,1,3H2
+     * @cdk.inchi InChI=1/C3H5Cl/c1-2-3-4/h2H,1,3H2
      */
     @Ignore("IonizationPotentialTool now deprecated due to bugs")
     public void testNotDB() throws ClassNotFoundException, CDKException, java.lang.Exception {
@@ -162,96 +162,97 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getAtom(3), mol).getValue()).doubleValue();
-        double resultAccordingNIST = 10.05; //value for CCCCl aprox.
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getAtom(3), mol).getValue()).doubleValue();
+        double resultAccordingNIST = 10.05; // value for CCCCl aprox.
 
         Assert.assertEquals(resultAccordingNIST, result, 0.5);
     }
 
     /**
-     *  A unit test for JUnit with C-Cl
+     * A unit test for JUnit with C-Cl
      *
-     *  @cdk.inchi InChI=1/CH3F/c1-2/h1H3
+     * @cdk.inchi InChI=1/CH3F/c1-2/h1H3
      */
     @Test
     @Category(SlowTest.class)
-    public void testIPDescriptor_1() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testIPDescriptor_1()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-Cl");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getAtom(1), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getAtom(1), mol).getValue()).doubleValue();
         double resultAccordingNIST = 11.26;
 
         Assert.assertEquals(resultAccordingNIST, result, 0.3);
     }
 
-    /**
-     *  A unit test for JUnit with C-C-Br
-     *
-     */
+    /** A unit test for JUnit with C-C-Br */
     @Test
     @Category(SlowTest.class)
-    public void testIPDescriptor_2() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testIPDescriptor_2()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-C-Br");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
         double resultAccordingNIST = 10.29;
 
         Assert.assertEquals(resultAccordingNIST, result, 0.8);
     }
 
-    /**
-     *  A unit test for JUnit with C-C-C-I
-     *
-     */
+    /** A unit test for JUnit with C-C-C-I */
     @Ignore("IonizationPotentialTool now deprecated due to bugs")
-    public void testIPDescriptor_3() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testIPDescriptor_3()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-C-C-I");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getAtom(3), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getAtom(3), mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.27;
 
         Assert.assertEquals(resultAccordingNIST, result, 0.4);
     }
 
     /**
-     *  A unit test for JUnit with C-C-O
+     * A unit test for JUnit with C-C-O
      *
-     *  @cdk.inchi InChI=1/C2H6O/c1-2-3/h3H,2H2,1H3
+     * @cdk.inchi InChI=1/C2H6O/c1-2-3/h3H,2H2,1H3
      */
     @Test
     @Category(SlowTest.class)
-    public void testIPDescriptor_4() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testIPDescriptor_4()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-C-O");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
         double resultAccordingNIST = 10.48;
 
         Assert.assertEquals(resultAccordingNIST, result, 0.5);
     }
 
-    /**
-     *  A unit test for JUnit with N1(C)CCC(C)(C)CC1
-     *
-     */
+    /** A unit test for JUnit with N1(C)CCC(C)(C)CC1 */
     @Test
     @Category(SlowTest.class)
-    public void testIPDescriptor_5() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testIPDescriptor_5()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("N1(C)CCC(C)(C)CC1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -260,20 +261,22 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getAtom(0), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getAtom(0), mol).getValue()).doubleValue();
         double resultAccordingNIST = 7.77;
 
         Assert.assertEquals(resultAccordingNIST, result, 0.3);
     }
 
     /**
-     *  A unit test for JUnit with C-N-C
+     * A unit test for JUnit with C-N-C
      *
-     *  @cdk.inchi InChI=1/C2H7N/c1-3-2/h3H,1-2H3
+     * @cdk.inchi InChI=1/C2H7N/c1-3-2/h3H,1-2H3
      */
     @Test
     @Category(SlowTest.class)
-    public void testIPDescriptor_6() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testIPDescriptor_6()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-N-C");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -282,20 +285,22 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getAtom(1), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getAtom(1), mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.24;
 
         Assert.assertEquals(resultAccordingNIST, result, 0.5);
     }
 
     /**
-     *  A unit test for JUnit with C-C-N
+     * A unit test for JUnit with C-C-N
      *
-     *  @cdk.inchi InChI=1/C2H7N/c1-2-3/h2-3H2,1H3
+     * @cdk.inchi InChI=1/C2H7N/c1-2-3/h2-3H2,1H3
      */
     @Test
     @Category(SlowTest.class)
-    public void testIPDescriptor_7() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testIPDescriptor_7()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-C-N");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -304,20 +309,22 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.9;
 
         Assert.assertEquals(resultAccordingNIST, result, 0.35);
     }
 
     /**
-     *  A unit test for JUnit with C-C-P-C-C
+     * A unit test for JUnit with C-C-P-C-C
      *
-     *  @cdk.inchi InChI=1/C4H11P/c1-3-5-4-2/h5H,3-4H2,1-2H3
+     * @cdk.inchi InChI=1/C4H11P/c1-3-5-4-2/h5H,3-4H2,1-2H3
      */
     @Test
     @Category(SlowTest.class)
-    public void testIPDescriptor_8() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testIPDescriptor_8()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-C-P-C-C");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -326,56 +333,61 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.5;
 
         Assert.assertEquals(resultAccordingNIST, result, 0.38);
     }
 
     /**
-     *  A unit test for JUnit with O=C(C)CC(C)C
+     * A unit test for JUnit with O=C(C)CC(C)C
      *
-     *  @cdk.inchi InChI=1/C6H12O/c1-5(2)4-6(3)7/h5H,4H2,1-3H3
+     * @cdk.inchi InChI=1/C6H12O/c1-5(2)4-6(3)7/h5H,4H2,1-3H3
      */
     @Test
     @Category(SlowTest.class)
-    public void testIPDescriptor_9() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testIPDescriptor_9()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("O=C(C)CC(C)C");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getAtom(0), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getAtom(0), mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.3;
 
         Assert.assertEquals(resultAccordingNIST, result, 0.4);
     }
 
     /**
-     *  A unit test for JUnit with O=C1C2CCC1CC2
+     * A unit test for JUnit with O=C1C2CCC1CC2
      *
-     *  @cdk.inchi InChI=1/C7H10O/c8-7-5-1-2-6(7)4-3-5/h5-6H,1-4H2
+     * @cdk.inchi InChI=1/C7H10O/c8-7-5-1-2-6(7)4-3-5/h5-6H,1-4H2
      */
     @Test
     @Category(SlowTest.class)
-    public void testIPDescriptor_10() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testIPDescriptor_10()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("O=C1C2CCC1CC2");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getAtom(0), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getAtom(0), mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.01;
 
         Assert.assertEquals(resultAccordingNIST, result, 0.3);
     }
 
     /**
-     *  A unit test for JUnit with CCOCCCO
+     * A unit test for JUnit with CCOCCCO
      *
-     *  @cdk.inchi InChI=1/C5H12O2/c1-2-7-5-3-4-6/h6H,2-5H2,1H3
+     * @cdk.inchi InChI=1/C5H12O2/c1-2-7-5-3-4-6/h6H,2-5H2,1H3
      */
     @Test
     @Category(SlowTest.class)
@@ -386,9 +398,11 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
         Assert.assertFalse(Double.isNaN(result));
-        result = ((DoubleResult) descriptor.calculate(mol.getAtom(7), mol).getValue()).doubleValue();
+        result =
+                ((DoubleResult) descriptor.calculate(mol.getAtom(7), mol).getValue()).doubleValue();
         Assert.assertFalse(Double.isNaN(result));
     }
 
@@ -402,7 +416,8 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
     //     * @throws java.lang.Exception
     //     */
     //    @Test
-    //    public void testIPDescriptorReaction() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    //    public void testIPDescriptorReaction() throws ClassNotFoundException, CDKException,
+    // java.lang.Exception{
     //
     //    	IAtomContainer mol = sp.parseSmiles("C-C-N");
     //		assertEquals(3, mol.getAtomCount());
@@ -417,8 +432,10 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
     //		IReactionSet reactionSet = descriptor.getReactionSet();
     //
     //		assertNotNull("No reaction was found", reactionSet.getReaction(0));
-    //		assertNotNull("The ionization energy was not set for the reaction", reactionSet.getReaction(0).getProperty("IonizationEnergy"));
-    //        double result = ((Double) reactionSet.getReaction(0).getProperty("IonizationEnergy")).doubleValue();
+    //		assertNotNull("The ionization energy was not set for the reaction",
+    // reactionSet.getReaction(0).getProperty("IonizationEnergy"));
+    //        double result = ((Double)
+    // reactionSet.getReaction(0).getProperty("IonizationEnergy")).doubleValue();
     //        double resultAccordingNIST = 8.9;
     //
     //        Assert.assertEquals(1, reactionSet.getReactionCount());
@@ -434,7 +451,8 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
     //     * @throws java.lang.Exception
     //     */
     //    @Test
-    //    public void testIPDescriptorReaction2() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    //    public void testIPDescriptorReaction2() throws ClassNotFoundException, CDKException,
+    // java.lang.Exception{
     //
     //		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     //		IAtomContainer mol = sp.parseSmiles("CCCCCC");
@@ -453,8 +471,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
     /**
      * A unit test for JUnit with O(C=CC=C)C
      *
-     *  @cdk.inchi InChI=1/C5H8O/c1-3-4-5-6-2/h3-5H,1H2,2H3
-     *
+     * @cdk.inchi InChI=1/C5H8O/c1-3-4-5-6-2/h3-5H,1H2,2H3
      */
     @Test
     @Category(SlowTest.class)
@@ -466,7 +483,8 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getAtom(0), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getAtom(0), mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.03;
         Assert.assertEquals(resultAccordingNIST, result, 0.8);
 
@@ -478,8 +496,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
     /**
      * A unit test for JUnit with OC=CC
      *
-     *  @cdk.inchi InChI=1/C3H6O/c1-2-3-4/h2-4H,1H3
-     *
+     * @cdk.inchi InChI=1/C3H6O/c1-2-3-4/h2-4H,1H3
      */
     @Test
     @Category(SlowTest.class)
@@ -491,7 +508,8 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getAtom(0), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getAtom(0), mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.64;
         Assert.assertEquals(resultAccordingNIST, result, 0.21);
 
@@ -503,8 +521,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
     /**
      * A unit test for JUnit with C1=C(C)CCS1
      *
-     *  @cdk.inchi  InChI=1/C5H8S/c1-5-2-3-6-4-5/h4H,2-3H2,1H3
-     *
+     * @cdk.inchi InChI=1/C5H8S/c1-5-2-3-6-4-5/h4H,2-3H2,1H3
      */
     @Test
     @Category(SlowTest.class)
@@ -516,7 +533,8 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
         addExplicitHydrogens(mol);
         lpcheck.saturate(mol);
 
-        double result = ((DoubleResult) descriptor.calculate(mol.getAtom(5), mol).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(mol.getAtom(5), mol).getValue()).doubleValue();
         double resultAccordingNIST = 7.77;
         Assert.assertEquals(resultAccordingNIST, result, 0.7);
 
@@ -536,7 +554,8 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
     ////     * @throws java.lang.Exception
     ////     */
     ////    @Test
-    //    public void testIDescriptor5() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    //    public void testIDescriptor5() throws ClassNotFoundException, CDKException,
+    // java.lang.Exception{
     ////
     ////		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     ////		IAtomContainer mol = sp.parseSmiles("OC(C#CC)(C)C");
@@ -554,11 +573,10 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
     ////    }
     ////
     /**
-     * A unit test suite for JUnit: Resonance Fluorobenzene  Fc1ccccc1 <=> ...
+     * A unit test suite for JUnit: Resonance Fluorobenzene Fc1ccccc1 <=> ...
      *
      * @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
-     *
-     * @return    The test suite
+     * @return The test suite
      */
     @Ignore("IonizationPotentialTool now deprecated due to bugs")
     public void testFluorobenzene() throws Exception {
@@ -583,9 +601,10 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
         addExplicitHydrogens(molecule);
         lpcheck.saturate(molecule);
 
-        double result = ((DoubleResult) descriptor.calculate(molecule.getAtom(0), molecule).getValue()).doubleValue();
+        double result =
+                ((DoubleResult) descriptor.calculate(molecule.getAtom(0), molecule).getValue())
+                        .doubleValue();
         double resultAccordingNIST = 9.20;
         Assert.assertEquals(resultAccordingNIST, result, 0.2);
     }
-
 }

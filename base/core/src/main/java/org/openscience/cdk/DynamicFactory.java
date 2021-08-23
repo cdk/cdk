@@ -23,11 +23,6 @@
  */
 package org.openscience.cdk;
 
-import org.openscience.cdk.interfaces.ICDKObject;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.tools.ILoggingTool;
-import org.openscience.cdk.tools.LoggingToolFactory;
-
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -38,71 +33,69 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import org.openscience.cdk.interfaces.ICDKObject;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * A factory class for constructing {@link ICDKObject} and {@link IChemObject}
- * implementations. Instances can be created by registering a construction key
- * ({@link ConstructorKey}) with a corresponding creator ({@link Creator}). In
- * most cases a class can simply be registered by providing an interface and an
- * implementation {@link #register(Class, Class)}.
+ * A factory class for constructing {@link ICDKObject} and {@link IChemObject} implementations.
+ * Instances can be created by registering a construction key ({@link ConstructorKey}) with a
+ * corresponding creator ({@link Creator}). In most cases a class can simply be registered by
+ * providing an interface and an implementation {@link #register(Class, Class)}.
  *
- * Internally the factory stores the object creators in a symbol table which
- * allows near constant time access for all registered classes. 
+ * <p>Internally the factory stores the object creators in a symbol table which allows near constant
+ * time access for all registered classes.
  *
- * In cases of a non-direct parameter match (e.g. {@code Atom(Atom)} can resolve
- * to {@code Atom(Element)}) the constructor is matched by invoking {@link
- * #find(ConstructorKey)}. If a constructor was found the new key will be
- * registered with cache to avoid the overhead of finding the correct
- * constructor again. 
+ * <p>In cases of a non-direct parameter match (e.g. {@code Atom(Atom)} can resolve to {@code
+ * Atom(Element)}) the constructor is matched by invoking {@link #find(ConstructorKey)}. If a
+ * constructor was found the new key will be registered with cache to avoid the overhead of finding
+ * the correct constructor again.
  *
  * <pre>{@code
+ * // create an instance of the factory
+ * DynamicFactory factory = new DynamicFactory(5);
  *
- *     // create an instance of the factory
- *     DynamicFactory factory = new DynamicFactory(5);
+ * // register some implementations
+ * factory.register(IAtom.class,          Atom.class);
+ * factory.register(IElement.class,       Element.class);
+ * factory.register(IAtomContainer.class, AtomContainer.class);
  *
- *     // register some implementations
- *     factory.register(IAtom.class,          Atom.class);
- *     factory.register(IElement.class,       Element.class);
- *     factory.register(IAtomContainer.class, AtomContainer.class);
+ * // create an instance using the default constructor
+ * IAtom a1 = factory.ofClass(IAtom.class);
  *
- *     // create an instance using the default constructor
- *     IAtom a1 = factory.ofClass(IAtom.class);
+ * // create an instance using a parametrised constructor
+ * IAtom c  = factory.ofClass(IAtom.class, "C");
  *
- *     // create an instance using a parametrised constructor
- *     IAtom c  = factory.ofClass(IAtom.class, "C");
- *
- *     // using a custom creator to actually invoke a constructor
- *     // import static org.openscience.cdk.DynamicFactory.key;
- *     // import static org.openscience.cdk.DynamicFactory.BasicCreator;
- *     factory.register(key(IBond.class, IAtom[].class),
- *                      new BasicCreator<IAtom>(null) {
- *                          public IAtom create(Object[] objects) {
- *                              return new Bond((IAtom[]) objects);
- *                          }
- *                      });
+ * // using a custom creator to actually invoke a constructor
+ * // import static org.openscience.cdk.DynamicFactory.key;
+ * // import static org.openscience.cdk.DynamicFactory.BasicCreator;
+ * factory.register(key(IBond.class, IAtom[].class),
+ *                  new BasicCreator<IAtom>(null) {
+ *                      public IAtom create(Object[] objects) {
+ *                          return new Bond((IAtom[]) objects);
+ *                      }
+ *                  });
  *
  * }</pre>
- *  It is not always convenient to specify a custom {@link Creator} for
- * every construction type but the objects may still need some modification
- * directly after creation. The factory provides {@link CreationModifier} which
- * is invoked directly after object creation. This allows changing the default
- * of creation. As an example it is possible to set a non-null charge on all
- * atoms that are created. 
+ *
+ * It is not always convenient to specify a custom {@link Creator} for every construction type but
+ * the objects may still need some modification directly after creation. The factory provides {@link
+ * CreationModifier} which is invoked directly after object creation. This allows changing the
+ * default of creation. As an example it is possible to set a non-null charge on all atoms that are
+ * created.
  *
  * <pre>{@code
- *      // import static org.openscience.cdk.DynamicFactory.CreationModifier;
- *     factory.register(IAtom.class, Atom.class,
- *                      new CreationModifier<Atom>() {
- *                          public void modify(Atom atom) {
- *                               atom.setFormalCharge(0);
- *                          }
- *                      }));
+ *  // import static org.openscience.cdk.DynamicFactory.CreationModifier;
+ * factory.register(IAtom.class, Atom.class,
+ *                  new CreationModifier<Atom>() {
+ *                      public void modify(Atom atom) {
+ *                           atom.setFormalCharge(0);
+ *                      }
+ *                  }));
  * }</pre>
- *
- * 
  *
  * It is also possible change the object creation based on the input parameters.
- * 
  *
  * <pre>{@code
  * factory.register(key(IAtom.class, String.class),
@@ -126,22 +119,16 @@ import java.util.TreeSet;
  */
 public class DynamicFactory {
 
-    /**
-     * logger for use in this class
-     */
-    private static final ILoggingTool             LOGGER            = LoggingToolFactory
-                                                                            .createLoggingTool(DynamicFactory.class);
+    /** logger for use in this class */
+    private static final ILoggingTool LOGGER =
+            LoggingToolFactory.createLoggingTool(DynamicFactory.class);
 
-    /**
-     * an empty class array which can be used to avoid object creation in
-     * default constructors
-     */
-    private static final Class<?>[]               EMPTY_CLASS_ARRAY = new Class<?>[0];
+    /** an empty class array which can be used to avoid object creation in default constructors */
+    private static final Class<?>[] EMPTY_CLASS_ARRAY = new Class<?>[0];
 
-    /**
-     * conversion map of primitives to their boxed equivalents
-     */
-    private static final Map<Class<?>, Class<?>>  BOXED_EQUIVALENT  = new HashMap<Class<?>, Class<?>>(20);
+    /** conversion map of primitives to their boxed equivalents */
+    private static final Map<Class<?>, Class<?>> BOXED_EQUIVALENT =
+            new HashMap<Class<?>, Class<?>>(20);
 
     // populates the primitive conversion map
     static {
@@ -163,29 +150,25 @@ public class DynamicFactory {
     /*
      * lookup to help find non-exact constructors and print suggestions
      */
-    private final ConstructorLookup               lookup;
+    private final ConstructorLookup lookup;
+
+    /** provide the interfaces this class implements */
+    private final InterfaceProvider interfaceProvider;
 
     /**
-     * provide the interfaces this class implements
-     */
-    private final InterfaceProvider               interfaceProvider;
-
-    /**
-     * Create a new default factory with an expected number of registered
-     * classes and an interface provider. The interface provider is used when
-     * registering an implementation without a specified interface {@link
-     * #register(Class)}.
+     * Create a new default factory with an expected number of registered classes and an interface
+     * provider. The interface provider is used when registering an implementation without a
+     * specified interface {@link #register(Class)}.
      *
-     * @param interfaceProvider provides the interfaces of a given
-     *                          implementation class
-     * @param n                 the expected number of constructors that will be
-     *                          stored.
+     * @param interfaceProvider provides the interfaces of a given implementation class
+     * @param n the expected number of constructors that will be stored.
      * @see #DynamicFactory(int)
      */
     public DynamicFactory(InterfaceProvider interfaceProvider, int n) {
 
         if (n < 0) throw new IllegalArgumentException("cannot create factory with negative size");
-        if (interfaceProvider == null) throw new IllegalArgumentException("null interface provider");
+        if (interfaceProvider == null)
+            throw new IllegalArgumentException("null interface provider");
 
         this.interfaceProvider = interfaceProvider;
 
@@ -195,14 +178,13 @@ public class DynamicFactory {
         // (e.g. Atom(Atom) -> Atom(Element)
         cache = new HashMap<ConstructorKey, Creator<?>>(size * 2);
         lookup = new ConstructorLookup(size);
-
     }
 
     /**
-     * Create a new default factory with an expected number of registered
-     * classes and a default interface provider. The default interface provider
-     * simply invokes {@link Class#getInterfaces()} when registering an
-     * implementation without an explicit interface {@link #register(Class)}.
+     * Create a new default factory with an expected number of registered classes and a default
+     * interface provider. The default interface provider simply invokes {@link
+     * Class#getInterfaces()} when registering an implementation without an explicit interface
+     * {@link #register(Class)}.
      *
      * @param n the expected number of constructors that will be stored.
      */
@@ -221,8 +203,7 @@ public class DynamicFactory {
     }
 
     /**
-     * Inspects whether the provided class is a concrete implementation and thus
-     * instantiable.
+     * Inspects whether the provided class is a concrete implementation and thus instantiable.
      *
      * @param c class to test
      * @return whether the class is concrete
@@ -232,23 +213,22 @@ public class DynamicFactory {
     }
 
     /**
-     * Registers a class with the factory. The interfaces of the class will be
-     * checked to see if they are CDK interfaces before they are registered.
-     * This method is provided for utility but will register the implementation
-     * with all valid interfaces. If a restricted registration is required then
-     * the safer {@link #register(Class, Class)} can be used.
+     * Registers a class with the factory. The interfaces of the class will be checked to see if
+     * they are CDK interfaces before they are registered. This method is provided for utility but
+     * will register the implementation with all valid interfaces. If a restricted registration is
+     * required then the safer {@link #register(Class, Class)} can be used.
      *
      * @param impl a concrete class
-     * @throws IllegalArgumentException thrown if a non-concrete class is
-     *                                  registered
+     * @throws IllegalArgumentException thrown if a non-concrete class is registered
      * @see #register(Class, Class)
      * @see #register(Class, java.lang.reflect.Constructor)
      * @see #register(org.openscience.cdk.DynamicFactory.ConstructorKey,
-     *      org.openscience.cdk.DynamicFactory.Creator)
+     *     org.openscience.cdk.DynamicFactory.Creator)
      */
     public <T extends ICDKObject> boolean register(Class<? extends T> impl) {
 
-        if (!isConcrete(impl)) throw new IllegalArgumentException("non-concrete implementation provided");
+        if (!isConcrete(impl))
+            throw new IllegalArgumentException("non-concrete implementation provided");
 
         boolean registered = Boolean.FALSE;
 
@@ -262,21 +242,17 @@ public class DynamicFactory {
                 Class<T> intf = (Class<T>) c;
                 registered = register(intf, impl) || registered;
             }
-
         }
 
         return registered;
-
     }
 
     /**
-     * Explicitly register a concrete class with a provided interface. The
-     * {@link Creator} will be automatically created for all public
-     * constructors.
+     * Explicitly register a concrete class with a provided interface. The {@link Creator} will be
+     * automatically created for all public constructors.
      *
      * @param intf the interface class to register
-     * @param impl the concrete class which should implement the interface
-     *             class
+     * @param impl the concrete class which should implement the interface class
      * @return whether registration was successful
      */
     public <T extends ICDKObject> boolean register(Class<T> intf, Class<? extends T> impl) {
@@ -284,37 +260,36 @@ public class DynamicFactory {
     }
 
     /**
-     * Explicitly register a concrete class with a provided interface and a
-     * given modifier. The {@link Creator} will be automatically created for all
-     * public constructors. The modifier is incorporated into the {@link
-     * Creator} and is invoked directly after instantiation. 
-     *
+     * Explicitly register a concrete class with a provided interface and a given modifier. The
+     * {@link Creator} will be automatically created for all public constructors. The modifier is
+     * incorporated into the {@link Creator} and is invoked directly after instantiation.
      *
      * <pre>{@code
-     *      // import static org.openscience.cdk.DynamicFactory.CreationModifier;
-     *     factory.register(IAtom.class, Atom.class,
-     *                      new CreationModifier<Atom>() {
-     *                          public void modify(Atom atom) {
-     *                               atom.setFormalCharge(0);
-     *                          }
-     *                      }));
+     *  // import static org.openscience.cdk.DynamicFactory.CreationModifier;
+     * factory.register(IAtom.class, Atom.class,
+     *                  new CreationModifier<Atom>() {
+     *                      public void modify(Atom atom) {
+     *                           atom.setFormalCharge(0);
+     *                      }
+     *                  }));
      * }</pre>
      *
-     * @param intf     the interface class to register
-     * @param impl     the concrete class which should implement the interface
-     *                 class
+     * @param intf the interface class to register
+     * @param impl the concrete class which should implement the interface class
      * @param modifier modify a instance after creation
-     * @param <S>      interface type
-     * @param <T>      implementation type (must extend interface)
+     * @param <S> interface type
+     * @param <T> implementation type (must extend interface)
      * @return whether registration was successful
      */
-    public <S extends ICDKObject, T extends S> boolean register(Class<S> intf, Class<T> impl,
-            CreationModifier<T> modifier) {
+    public <S extends ICDKObject, T extends S> boolean register(
+            Class<S> intf, Class<T> impl, CreationModifier<T> modifier) {
 
-        if (!isConcrete(impl)) throw new IllegalArgumentException("attempt to register non-concrete class");
+        if (!isConcrete(impl))
+            throw new IllegalArgumentException("attempt to register non-concrete class");
 
         if (!intf.isInterface())
-            throw new IllegalArgumentException("attempt to register a non-interface interface: " + intf.getSimpleName());
+            throw new IllegalArgumentException(
+                    "attempt to register a non-interface interface: " + intf.getSimpleName());
 
         boolean registered = Boolean.FALSE;
         for (Constructor<?> untyped : impl.getDeclaredConstructors()) {
@@ -324,80 +299,88 @@ public class DynamicFactory {
         }
 
         if (registered) {
-            LOGGER.debug("registered '", intf.getSimpleName(), "' with '", impl.getSimpleName(), "' implementation");
+            LOGGER.debug(
+                    "registered '",
+                    intf.getSimpleName(),
+                    "' with '",
+                    impl.getSimpleName(),
+                    "' implementation");
         } else {
-            LOGGER.debug("could not registered '", intf.getSimpleName(), "' with '", impl.getSimpleName(),
+            LOGGER.debug(
+                    "could not registered '",
+                    intf.getSimpleName(),
+                    "' with '",
+                    impl.getSimpleName(),
                     "' implementation");
         }
 
         return registered;
-
     }
 
     /**
-     * Register a specific constructor with an explicit interface. 
+     * Register a specific constructor with an explicit interface.
      *
      * <pre>{@code
-     *     // only register construction of IAtom using a string - Atom("C")
-     *     factory.register(IAtom.class,
-     *                      Atom.class.getConstructor(String.class));
+     * // only register construction of IAtom using a string - Atom("C")
+     * factory.register(IAtom.class,
+     *                  Atom.class.getConstructor(String.class));
      * }</pre>
      *
-     * @param intf        the interface
+     * @param intf the interface
      * @param constructor a constructor which builds the given interface
-     * @param <S>         interface type
-     * @param <T>         implementation type (must extend interface)
+     * @param <S> interface type
+     * @param <T> implementation type (must extend interface)
      * @return whether the constructor was registered
      */
-    public <S extends ICDKObject, T extends S> boolean register(Class<S> intf, Constructor<T> constructor) {
+    public <S extends ICDKObject, T extends S> boolean register(
+            Class<S> intf, Constructor<T> constructor) {
         return register(intf, constructor, null);
     }
 
     /**
-     * Register a specific constructor with a creation modifier to an explicit
-     * interface. 
+     * Register a specific constructor with a creation modifier to an explicit interface.
      *
      * <pre>{@code
-     *      // only register construction of IAtom using a string - Atom("C")
-     *      factory.register(IAtom.class,
-     *                       Atom.class.getConstructor(String.class),
-     *                       new DynamicFactory.CreationModifier<Atom>() {
+     * // only register construction of IAtom using a string - Atom("C")
+     * factory.register(IAtom.class,
+     *                  Atom.class.getConstructor(String.class),
+     *                  new DynamicFactory.CreationModifier<Atom>() {
      *
-     *                           public void modify(Atom instance) {
-     *                              instance.setFormalCharge(0);
-     *                           }
-     *                       });
+     *                      public void modify(Atom instance) {
+     *                         instance.setFormalCharge(0);
+     *                      }
+     *                  });
      * }</pre>
      *
-     * @param intf        the interface
+     * @param intf the interface
      * @param constructor a constructor which builds the given interface
-     * @param <S>         interface type
-     * @param <T>         implementation type (must extend interface)
+     * @param <S> interface type
+     * @param <T> implementation type (must extend interface)
      * @return whether the constructor was registered
      */
-    public <S extends ICDKObject, T extends S> boolean register(Class<S> intf, Constructor<T> constructor,
-            CreationModifier<T> modifier) {
+    public <S extends ICDKObject, T extends S> boolean register(
+            Class<S> intf, Constructor<T> constructor, CreationModifier<T> modifier) {
 
         // do not register private constructors
-        if (Modifier.isPrivate(constructor.getModifiers()) ||
-            Modifier.isProtected(constructor.getModifiers())) return Boolean.FALSE;
+        if (Modifier.isPrivate(constructor.getModifiers())
+                || Modifier.isProtected(constructor.getModifiers())) return Boolean.FALSE;
 
         // maybe package-private, make sure we can call it
         constructor.setAccessible(true);
 
         return register(key(intf, constructor), constructor, modifier) != null;
-
     }
 
     /**
      * Register a constructor key with a public constructor.
      *
-     * @param key         the key to register this constructor with
+     * @param key the key to register this constructor with
      * @param constructor the constructor to invoke when the key is match
-     * @param <T>         the type the constructor will create
+     * @param <T> the type the constructor will create
      * @return return the constructor passed as the parameter
      */
-    private <T> Creator<T> register(ConstructorKey key, Constructor<T> constructor, CreationModifier<T> modifier) {
+    private <T> Creator<T> register(
+            ConstructorKey key, Constructor<T> constructor, CreationModifier<T> modifier) {
 
         Creator<T> creator = new ReflectionCreator<T>(constructor);
 
@@ -407,18 +390,17 @@ public class DynamicFactory {
     }
 
     /**
-     * Register a constructor key with a defined {@link Creator}. The key
-     * defines the interface and parameters of the creation and the creator
-     * actually creates the object. 
+     * Register a constructor key with a defined {@link Creator}. The key defines the interface and
+     * parameters of the creation and the creator actually creates the object.
      *
      * <pre>{@code
-     *     // import static org.openscience.cdk.DynamicFactory.key;
-     *     factory.register(key(IBond.class, IAtom[].class),
-     *                      new BasicCreator<IAtom>(null) {
-     *                          public IAtom create(Object[] objects) {
-     *                              return new Bond((IAtom[]) objects);
-     *                          }
-     *                      });
+     * // import static org.openscience.cdk.DynamicFactory.key;
+     * factory.register(key(IBond.class, IAtom[].class),
+     *                  new BasicCreator<IAtom>(null) {
+     *                      public IAtom create(Object[] objects) {
+     *                          return new Bond((IAtom[]) objects);
+     *                      }
+     *                  });
      * }</pre>
      *
      * @param key construction key, defines interface and parameter types
@@ -432,23 +414,21 @@ public class DynamicFactory {
 
         // make sure we don't register a constructor over an existing key
         if (cache.containsKey(key))
-            throw new IllegalArgumentException("cannot register " + key + " suppressed " + cache.get(key));
+            throw new IllegalArgumentException(
+                    "cannot register " + key + " suppressed " + cache.get(key));
 
         lookup.put(key.intf(), key);
         cache.put(key, creator);
 
         return creator;
-
     }
 
     /**
-     * Creates a constructor key for use in accessing constructors. The key
-     * combines the interface and types in a single instance which we can then
-     * use in a map.
+     * Creates a constructor key for use in accessing constructors. The key combines the interface
+     * and types in a single instance which we can then use in a map.
      *
-     * @param intf        the interface to build the key for
-     * @param constructor the constructor value which this key will be linked
-     *                    to
+     * @param intf the interface to build the key for
+     * @param constructor the constructor value which this key will be linked to
      * @return a constructor key which can be used to lookup a constructor
      */
     private static ConstructorKey key(Class<?> intf, Constructor<?> constructor) {
@@ -456,11 +436,10 @@ public class DynamicFactory {
     }
 
     /**
-     * Creates a constructor key for use in accessing constructors. The key
-     * combines the interface and types in a single instance which we can then
-     * use in a map.
+     * Creates a constructor key for use in accessing constructors. The key combines the interface
+     * and types in a single instance which we can then use in a map.
      *
-     * @param intf  the interface to build the key for
+     * @param intf the interface to build the key for
      * @param types the classes that the the constructor requires
      * @return a constructor key which can be used to lookup a constructor
      */
@@ -469,9 +448,8 @@ public class DynamicFactory {
     }
 
     /**
-     * Converts the provided array of classes to a version with 'boxed'
-     * primitives. This will convert {int, int, int} to {Integer, Integer,
-     * Integer}.
+     * Converts the provided array of classes to a version with 'boxed' primitives. This will
+     * convert {int, int, int} to {Integer, Integer, Integer}.
      *
      * @param classes converted classes
      * @return converted types
@@ -485,9 +463,8 @@ public class DynamicFactory {
     }
 
     /**
-     * Converts primitive types to their boxed equivalent {@link int} converts
-     * to {@link Integer}. If not conversion was found the parameter is returned
-     * without modification.
+     * Converts primitive types to their boxed equivalent {@link int} converts to {@link Integer}.
+     * If not conversion was found the parameter is returned without modification.
      *
      * @param unboxed the type to convert
      * @return the boxed type
@@ -498,22 +475,21 @@ public class DynamicFactory {
     }
 
     /**
-     * Construct an implementation using a constructor whose parameters match
-     * that of the provided objects.
+     * Construct an implementation using a constructor whose parameters match that of the provided
+     * objects.
      *
      * @param intf the interface to construct an instance of
-     * @param <T>  the type of the class
+     * @param <T> the type of the class
      * @return an implementation of provided interface
-     * @throws IllegalArgumentException thrown if the implementation can not be
-     *                                  constructed
-     * @throws IllegalArgumentException thrown if the provided class is not an
-     *                                  interface
+     * @throws IllegalArgumentException thrown if the implementation can not be constructed
+     * @throws IllegalArgumentException thrown if the provided class is not an interface
      */
     public <T extends ICDKObject> T ofClass(Class<T> intf, Object... objects) {
 
         try {
 
-            if (!intf.isInterface()) throw new IllegalArgumentException("expected interface, got " + intf.getClass());
+            if (!intf.isInterface())
+                throw new IllegalArgumentException("expected interface, got " + intf.getClass());
 
             Creator<T> constructor = get(new ObjectBasedKey(intf, objects));
             return constructor.create(objects);
@@ -525,27 +501,24 @@ public class DynamicFactory {
         } catch (InvocationTargetException e) {
             throw new IllegalArgumentException("invocation target exception: ", e);
         }
-
     }
 
     /**
-     * Construct an implementation using the default constructor. This provides
-     * some speed boost over invoking {@link #ofClass(Class, Object...)}.
+     * Construct an implementation using the default constructor. This provides some speed boost
+     * over invoking {@link #ofClass(Class, Object...)}.
      *
      * @param intf the interface to construct an instance of
-     * @param <T>  the type of the class
-     * @return an implementation of provided interface constructed using the
-     *         default constructor.
-     * @throws IllegalArgumentException thrown if the implementation can not be
-     *                                  constructed
-     * @throws IllegalArgumentException thrown if the provided class is not an
-     *                                  interface
+     * @param <T> the type of the class
+     * @return an implementation of provided interface constructed using the default constructor.
+     * @throws IllegalArgumentException thrown if the implementation can not be constructed
+     * @throws IllegalArgumentException thrown if the provided class is not an interface
      */
     public <T extends ICDKObject> T ofClass(Class<T> intf) {
 
         try {
 
-            if (!intf.isInterface()) throw new IllegalArgumentException("expected interface, got " + intf.getClass());
+            if (!intf.isInterface())
+                throw new IllegalArgumentException("expected interface, got " + intf.getClass());
 
             Creator<T> creator = get(new ClassBasedKey(intf, EMPTY_CLASS_ARRAY));
             return creator.create(null); // throws an exception if no impl was found
@@ -557,18 +530,16 @@ public class DynamicFactory {
         } catch (InvocationTargetException e) {
             throw new IllegalArgumentException("invocation target exception: ", e);
         }
-
     }
 
     /**
-     * Access a constructor for a given constructor key. If the key is not found
-     * the {@link #find(ConstructorKey)} is automatically invoked.
+     * Access a constructor for a given constructor key. If the key is not found the {@link
+     * #find(ConstructorKey)} is automatically invoked.
      *
      * @param key the constructor key of the interface to find
      * @param <T> the type of the constructor
      * @return a constructor for the given key
-     * @throws IllegalArgumentException thrown if a key is provided which cannot
-     *                                  be resolved.
+     * @throws IllegalArgumentException thrown if a key is provided which cannot be resolved.
      */
     @SuppressWarnings("unchecked")
     private <T> Creator<T> get(ConstructorKey key) {
@@ -588,21 +559,18 @@ public class DynamicFactory {
         }
 
         return creator;
-
     }
 
     /* thread lock for finding new constructors */
     private final Object lock = new Object();
 
     /**
-     * Find a constructor whose parameters are assignable from the provided
-     * key.
+     * Find a constructor whose parameters are assignable from the provided key.
      *
      * @param key a key to find the constructor for
      * @param <T> type of the constructor
      * @return a constructor compatible with the given key
-     * @throws IllegalArgumentException when no constructor is found the given
-     *                                  key
+     * @throws IllegalArgumentException when no constructor is found the given key
      */
     private <T> Creator<T> find(final ConstructorKey key) {
 
@@ -617,7 +585,7 @@ public class DynamicFactory {
 
             // convert the key parameter types (length doesn't matter)
             Object types = Array.newInstance(key.type(0), 0);
-            final ConstructorKey alt = new ObjectBasedKey(key.intf(), new Object[]{types});
+            final ConstructorKey alt = new ObjectBasedKey(key.intf(), new Object[] {types});
 
             // find the creator for the new alternate key
             Creator<T> creator = get(alt);
@@ -647,15 +615,13 @@ public class DynamicFactory {
                 throw new IllegalArgumentException("missing declaring class");
             }
         };
-
     }
 
     /**
      * Access the registered implementations for a given interface.
      *
-     * @param intf an interface which has registered implementations in the
-     *             factory
-     * @param <T>  the type of the interface
+     * @param intf an interface which has registered implementations in the factory
+     * @param <T> the type of the interface
      * @return set of implementation classes (empty if none found)
      */
     public <T extends ICDKObject> Set<Class<?>> implementorsOf(Class<T> intf) {
@@ -667,8 +633,7 @@ public class DynamicFactory {
     }
 
     /**
-     * Provides a list of all possible constructor keys for the provided
-     * interface.
+     * Provides a list of all possible constructor keys for the provided interface.
      *
      * @param intf an interface to find all constructors for
      * @return an iterator of constructor keys
@@ -678,9 +643,8 @@ public class DynamicFactory {
     }
 
     /**
-     * Provides a message for use with exceptions when no valid constructor is
-     * found. The message is built using the suggestions from {@link
-     * #suggest(Class)}.
+     * Provides a message for use with exceptions when no valid constructor is found. The message is
+     * built using the suggestions from {@link #suggest(Class)}.
      *
      * @param key the constructor key to build the message for
      * @return a message listing possible constructors
@@ -702,17 +666,13 @@ public class DynamicFactory {
         }
 
         return sb.toString();
-
     }
 
-    /**
-     * A simple wrapper class for a HashMap so we can insert and access
-     * constructors easier.
-     */
+    /** A simple wrapper class for a HashMap so we can insert and access constructors easier. */
     private static class ConstructorLookup {
 
         private final Map<Class<?>, Map<Integer, Set<ConstructorKey>>> keys;
-        private final Set<ConstructorKey>                              EMPTY_KEY_SET = new HashSet<ConstructorKey>(0);
+        private final Set<ConstructorKey> EMPTY_KEY_SET = new HashSet<ConstructorKey>(0);
 
         /**
          * Create a new lookup with an expected number of entries.
@@ -727,7 +687,7 @@ public class DynamicFactory {
          * Add a key for a given interface.
          *
          * @param intf an interface
-         * @param key  the key to add for the interface
+         * @param key the key to add for the interface
          */
         public void put(Class<?> intf, ConstructorKey key) {
 
@@ -744,7 +704,6 @@ public class DynamicFactory {
             }
 
             map.get(n).add(key);
-
         }
 
         /**
@@ -765,13 +724,11 @@ public class DynamicFactory {
             }
 
             return keys;
-
         }
 
         /**
-         * Access a set of candidates for a given key. Candidates match the
-         * interface an number of parameters for the constructors. A key may
-         * match when it's parameters are subclasses.
+         * Access a set of candidates for a given key. Candidates match the interface an number of
+         * parameters for the constructors. A key may match when it's parameters are subclasses.
          *
          * @param key the key to find possible candidates for
          * @return set of constructors which 'could' match the given key
@@ -781,11 +738,10 @@ public class DynamicFactory {
         }
 
         /**
-         * Find all constructor keys which match the given interface and
-         * parameters number.
+         * Find all constructor keys which match the given interface and parameters number.
          *
          * @param intf the interface to lookup
-         * @param n    number of parameters
+         * @param n number of parameters
          * @return set of constructors which 'could' match the given key
          */
         public Set<ConstructorKey> getCandidates(Class<?> intf, int n) {
@@ -807,25 +763,22 @@ public class DynamicFactory {
             }
 
             return candidates;
-
         }
-
     }
 
     /**
-     * A simple class based key which allows a key to use an object array for
-     * it's parameter types.
+     * A simple class based key which allows a key to use an object array for it's parameter types.
      */
-    private final static class ObjectBasedKey extends ConstructorKey {
+    private static final class ObjectBasedKey extends ConstructorKey {
 
         private final Class<?> intf;
         private final Object[] params;
-        private final int      n;
+        private final int n;
 
         /**
          * Create the key with an interface and array of parameters.
          *
-         * @param intf   interface class
+         * @param intf interface class
          * @param params the object parameters
          */
         private ObjectBasedKey(Class<?> intf, Object[] params) {
@@ -834,47 +787,39 @@ public class DynamicFactory {
             this.n = params.length;
         }
 
-        /**
-         *{@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
         public Class<?> intf() {
             return intf;
         }
 
-        /**
-         *{@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
         public Class<?> type(int i) {
             if (params[i] == null) throw new IllegalArgumentException("null param type");
             return params[i].getClass();
         }
 
-        /**
-         *{@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
         public int n() {
             return n;
         }
-
     }
 
     /**
-     * A simple class based key which allows a key to use a class array for it's
-     * parameter types.
+     * A simple class based key which allows a key to use a class array for it's parameter types.
      */
-    private final static class ClassBasedKey extends ConstructorKey {
+    private static final class ClassBasedKey extends ConstructorKey {
 
-        private final Class<?>   intf;
+        private final Class<?> intf;
         private final Class<?>[] params;
-        private final int        n;
+        private final int n;
 
         /**
          * Create the key with an interface and array of parameters.
          *
-         * @param intf   interface class
+         * @param intf interface class
          * @param params the parameter types
          */
         private ClassBasedKey(Class<?> intf, Class<?>[] params) {
@@ -883,37 +828,30 @@ public class DynamicFactory {
             this.n = params.length;
         }
 
-        /**
-         *{@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
         public Class<?> intf() {
             return intf;
         }
 
-        /**
-         *{@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
         public Class<?> type(int i) {
             return params[i];
         }
 
-        /**
-         *{@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
         public int n() {
             return n;
         }
-
     }
 
     /**
-     * A class which encapsulates the information about an interface (of this
-     * implementation) and the parameter types of the constructor.
+     * A class which encapsulates the information about an interface (of this implementation) and
+     * the parameter types of the constructor.
      */
-    public static abstract class ConstructorKey implements Comparable<ConstructorKey> {
+    public abstract static class ConstructorKey implements Comparable<ConstructorKey> {
 
         /**
          * Access the interface this key indexes.
@@ -937,9 +875,7 @@ public class DynamicFactory {
          */
         public abstract int n();
 
-        /**
-         *{@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
         public boolean equals(Object o) {
 
@@ -954,14 +890,12 @@ public class DynamicFactory {
                 if (!type(i).equals(that.type(i))) return false;
             }
             return true;
-
         }
 
         /**
-         * Indicates whether this key has multiple parameters and they are of
-         * uniform type. If there are less then two types this method will
-         * return false.  {@code new Object[]{ Atom, Bond, Atom } } // false
-         * {@code new Object[]{ Atom, Atom, Atom } } // true
+         * Indicates whether this key has multiple parameters and they are of uniform type. If there
+         * are less then two types this method will return false. {@code new Object[]{ Atom, Bond,
+         * Atom } } // false {@code new Object[]{ Atom, Atom, Atom } } // true
          *
          * @return whether the key is uniform
          */
@@ -977,29 +911,23 @@ public class DynamicFactory {
             }
 
             return true;
-
         }
 
-        /**
-         *{@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
         public int hashCode() {
             int result = intf().hashCode();
 
-            for (int i = 0; i < n(); i++)
-                result = 31 * result + type(i).hashCode();
+            for (int i = 0; i < n(); i++) result = 31 * result + type(i).hashCode();
 
             return result;
         }
 
         /**
-         * Orders constructor keys by the number of parameters and then this
-         * name.
+         * Orders constructor keys by the number of parameters and then this name.
          *
          * @param o another constructor key
-         * @return whether the other key is greater than, less than or equal to
-         *         this key
+         * @return whether the other key is greater than, less than or equal to this key
          */
         @Override
         public int compareTo(ConstructorKey o) {
@@ -1011,7 +939,6 @@ public class DynamicFactory {
 
             // use the lexicographic order of the toString method
             return toString().compareTo(o.toString());
-
         }
 
         /**
@@ -1031,12 +958,9 @@ public class DynamicFactory {
 
             // no conflicts this constructor is okay
             return true;
-
         }
 
-        /**
-         *{@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
         public String toString() {
             StringBuilder sb = new StringBuilder(n() * 50);
@@ -1050,18 +974,15 @@ public class DynamicFactory {
             sb.append(')');
             return sb.toString();
         }
-
     }
 
     /**
-     * A default interface provider implementation that simply returns the
-     * classes from {@link Class#getInterfaces()}.
+     * A default interface provider implementation that simply returns the classes from {@link
+     * Class#getInterfaces()}.
      */
     protected static class DefaultInterfaceProvider implements InterfaceProvider {
 
-        /**
-         *{@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
         public Class<?>[] getInterfaces(Class<?> c) {
             return c.getInterfaces();
@@ -1069,9 +990,8 @@ public class DynamicFactory {
     }
 
     /**
-     * An interface that can provide which interfaces the given class
-     * implements. This interface is constructor injectable allowing us to test
-     * the registration using this method.
+     * An interface that can provide which interfaces the given class implements. This interface is
+     * constructor injectable allowing us to test the registration using this method.
      */
     public static interface InterfaceProvider {
 
@@ -1085,8 +1005,7 @@ public class DynamicFactory {
     }
 
     /**
-     * An interface that allows posterior modification of an instance after it
-     * has been created.
+     * An interface that allows posterior modification of an instance after it has been created.
      *
      * @param <T> instance instance to be modified
      */
@@ -1103,14 +1022,13 @@ public class DynamicFactory {
     private static class ModifiedCreator<T> implements Creator<T> {
 
         private final CreationModifier<T> modifier;
-        private final Creator<T>          parent;
+        private final Creator<T> parent;
 
         /**
-         * Create a new modified created which delegate instance creation to the
-         * given parent and applies the modifier after the instance has been
-         * constructed.
+         * Create a new modified created which delegate instance creation to the given parent and
+         * applies the modifier after the instance has been constructed.
          *
-         * @param parent   parent creator
+         * @param parent parent creator
          * @param modifier a modify to apply after creation
          */
         private ModifiedCreator(Creator<T> parent, CreationModifier<T> modifier) {
@@ -1118,20 +1036,16 @@ public class DynamicFactory {
             this.modifier = modifier;
         }
 
-        /**
-         *{@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
-        public T create(Object[] objects) throws InvocationTargetException, IllegalAccessException,
-                InstantiationException {
+        public T create(Object[] objects)
+                throws InvocationTargetException, IllegalAccessException, InstantiationException {
             T instance = parent.create(objects);
             modifier.modify(instance);
             return instance;
         }
 
-        /**
-         *{@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
         public Class<T> getDeclaringClass() {
             return parent.getDeclaringClass();
@@ -1139,8 +1053,7 @@ public class DynamicFactory {
     }
 
     /**
-     * An interface that wraps object creation via the {@link #create(Object[])}
-     * method.
+     * An interface that wraps object creation via the {@link #create(Object[])} method.
      *
      * @param <T> the type of object that will be created
      */
@@ -1151,14 +1064,12 @@ public class DynamicFactory {
          *
          * @param objects parameters for the constructor excluding
          * @return a new instance, created with the provided parameters
-         * @throws InvocationTargetException thrown if an error occurred during
-         *                                   construction
-         * @throws IllegalAccessException    if the constructor can't be
-         *                                   accessed (e.g. private)
-         * @throws InstantiationException    thrown if class is abstract
+         * @throws InvocationTargetException thrown if an error occurred during construction
+         * @throws IllegalAccessException if the constructor can't be accessed (e.g. private)
+         * @throws InstantiationException thrown if class is abstract
          */
-        public T create(Object[] objects) throws InvocationTargetException, IllegalAccessException,
-                InstantiationException;
+        public T create(Object[] objects)
+                throws InvocationTargetException, IllegalAccessException, InstantiationException;
 
         /**
          * Access the implementation of this class.
@@ -1169,12 +1080,11 @@ public class DynamicFactory {
     }
 
     /**
-     * A simple creator that helps in creating an anonymous classes for a
-     * creator.
+     * A simple creator that helps in creating an anonymous classes for a creator.
      *
      * @param <T> the type of object that will be created
      */
-    public static abstract class BasicCreator<T> implements Creator<T> {
+    public abstract static class BasicCreator<T> implements Creator<T> {
 
         private final Class<T> c;
 
@@ -1187,9 +1097,7 @@ public class DynamicFactory {
             this.c = c;
         }
 
-        /**
-         *{@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
         public Class<T> getDeclaringClass() {
             return c;
@@ -1197,8 +1105,8 @@ public class DynamicFactory {
     }
 
     /**
-     * A simple creator that wraps the object parameters before invoking {@link
-     * #create(Object[])} on the provided parent.
+     * A simple creator that wraps the object parameters before invoking {@link #create(Object[])}
+     * on the provided parent.
      *
      * @param <T> the type of object that will be created
      */
@@ -1207,9 +1115,9 @@ public class DynamicFactory {
         private final Creator<T> parent;
 
         /**
-         * Create a new creator with a given parent. The parent is used to
-         * actually create the object, this creator wraps the provided params in
-         * another and is required if 'varargs' are 'unpacked'.
+         * Create a new creator with a given parent. The parent is used to actually create the
+         * object, this creator wraps the provided params in another and is required if 'varargs'
+         * are 'unpacked'.
          *
          * @param parent the parent creator
          */
@@ -1217,23 +1125,18 @@ public class DynamicFactory {
             this.parent = parent;
         }
 
-        /**
-         *{@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
-        public T create(Object[] objects) throws InvocationTargetException, IllegalAccessException,
-                InstantiationException {
-            return parent.create(new Object[]{objects});
+        public T create(Object[] objects)
+                throws InvocationTargetException, IllegalAccessException, InstantiationException {
+            return parent.create(new Object[] {objects});
         }
 
-        /**
-         *{@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
         public Class<T> getDeclaringClass() {
             return parent.getDeclaringClass();
         }
-
     }
 
     /**
@@ -1254,22 +1157,17 @@ public class DynamicFactory {
             this.constructor = constructor;
         }
 
-        /**
-         *{@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
-        public T create(Object[] objects) throws InvocationTargetException, IllegalAccessException,
-                InstantiationException {
+        public T create(Object[] objects)
+                throws InvocationTargetException, IllegalAccessException, InstantiationException {
             return constructor.newInstance(objects);
         }
 
-        /**
-         *{@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
         public Class<T> getDeclaringClass() {
             return constructor.getDeclaringClass();
         }
     }
-
 }

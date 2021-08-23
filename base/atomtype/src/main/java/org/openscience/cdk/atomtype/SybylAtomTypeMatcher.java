@@ -21,7 +21,6 @@ import java.io.InputStream;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.atomtype.mapper.AtomTypeMapper;
@@ -32,48 +31,51 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IElement;
-
 
 /**
- * Atom Type matcher for Sybyl atom types. It uses the {@link CDKAtomTypeMatcher}
- * for perception and then maps CDK to Sybyl atom types.
+ * Atom Type matcher for Sybyl atom types. It uses the {@link CDKAtomTypeMatcher} for perception and
+ * then maps CDK to Sybyl atom types.
  *
- * @author         egonw
- * @cdk.created    2008-07-13
- * @cdk.module     atomtype
+ * @author egonw
+ * @cdk.created 2008-07-13
+ * @cdk.module atomtype
  * @cdk.githash
- * @cdk.keyword    atom type, Sybyl
+ * @cdk.keyword atom type, Sybyl
  */
 public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
 
-    private final static String                                  SYBYL_ATOM_TYPE_LIST = "org/openscience/cdk/dict/data/sybyl-atom-types.owl";
-    private final static String                                  CDK_TO_SYBYL_MAP     = "org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl";
+    private static final String SYBYL_ATOM_TYPE_LIST =
+            "org/openscience/cdk/dict/data/sybyl-atom-types.owl";
+    private static final String CDK_TO_SYBYL_MAP =
+            "org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl";
 
-    private AtomTypeFactory                                      factory;
-    private CDKAtomTypeMatcher                                   cdkMatcher;
-    private AtomTypeMapper                                       mapper;
+    private AtomTypeFactory factory;
+    private CDKAtomTypeMatcher cdkMatcher;
+    private AtomTypeMapper mapper;
 
-    private static Map<IChemObjectBuilder, SybylAtomTypeMatcher> factories            = new Hashtable<IChemObjectBuilder, SybylAtomTypeMatcher>(
-                                                                                              1);
+    private static Map<IChemObjectBuilder, SybylAtomTypeMatcher> factories =
+            new Hashtable<IChemObjectBuilder, SybylAtomTypeMatcher>(1);
 
     private SybylAtomTypeMatcher(IChemObjectBuilder builder) {
-        InputStream stream = this.getClass().getClassLoader().getResourceAsStream(SYBYL_ATOM_TYPE_LIST);
+        InputStream stream =
+                this.getClass().getClassLoader().getResourceAsStream(SYBYL_ATOM_TYPE_LIST);
         factory = AtomTypeFactory.getInstance(stream, "owl", builder);
         cdkMatcher = CDKAtomTypeMatcher.getInstance(builder);
-        InputStream mapStream = this.getClass().getClassLoader().getResourceAsStream(CDK_TO_SYBYL_MAP);
+        InputStream mapStream =
+                this.getClass().getClassLoader().getResourceAsStream(CDK_TO_SYBYL_MAP);
         mapper = AtomTypeMapper.getInstance(CDK_TO_SYBYL_MAP, mapStream);
     }
 
     /**
-     * Returns an instance of this atom typer. It uses the given <code>builder</code> to
-     * create atom type objects.
+     * Returns an instance of this atom typer. It uses the given <code>builder</code> to create atom
+     * type objects.
      *
      * @param builder {@link IChemObjectBuilder} to use to create {@link IAtomType} instances.
      * @return an instance of this atom type matcher.
      */
     public static SybylAtomTypeMatcher getInstance(IChemObjectBuilder builder) {
-        if (!factories.containsKey(builder)) factories.put(builder, new SybylAtomTypeMatcher(builder));
+        if (!factories.containsKey(builder))
+            factories.put(builder, new SybylAtomTypeMatcher(builder));
         return factories.get(builder);
     }
 
@@ -101,39 +103,39 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     /**
-     * Sybyl atom type perception for a single atom. The molecular property <i>aromaticity</i> is not perceived;
-     * Aromatic carbons will, therefore, be perceived as <i>C.2</i> and not <i>C.ar</i>. If the latter is
-     * required, please use findMatchingAtomType(IAtomContainer) instead.
+     * Sybyl atom type perception for a single atom. The molecular property <i>aromaticity</i> is
+     * not perceived; Aromatic carbons will, therefore, be perceived as <i>C.2</i> and not
+     * <i>C.ar</i>. If the latter is required, please use findMatchingAtomType(IAtomContainer)
+     * instead.
      *
-     * @param  atomContainer the {@link IAtomContainer} in which the atom is found
-     * @param  atom          the {@link IAtom} to find the atom type of
-     * @return               the atom type perceived from the given atom
+     * @param atomContainer the {@link IAtomContainer} in which the atom is found
+     * @param atom the {@link IAtom} to find the atom type of
+     * @return the atom type perceived from the given atom
      */
     @Override
-    public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+    public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom)
+            throws CDKException {
         IAtomType type = cdkMatcher.findMatchingAtomType(atomContainer, atom);
         if ("Cr".equals(atom.getSymbol())) {
             // if only I had good descriptions of the Sybyl atom types
             int neighbors = atomContainer.getConnectedBondsCount(atom);
-            if (neighbors > 4 && neighbors <= 6)
-                return factory.getAtomType("Cr.oh");
+            if (neighbors > 4 && neighbors <= 6) return factory.getAtomType("Cr.oh");
             else if (neighbors > 0) return factory.getAtomType("Cr.th");
         } else if ("Co".equals(atom.getSymbol())) {
             // if only I had good descriptions of the Sybyl atom types
             int neibors = atomContainer.getConnectedBondsCount(atom);
             if (neibors == 6) return factory.getAtomType("Co.oh");
         }
-        if (type == null)
-            return null;
-        else
-            atom.setAtomTypeName(type.getAtomTypeName());
+        if (type == null) return null;
+        else atom.setAtomTypeName(type.getAtomTypeName());
         String mappedType = mapCDKToSybylType(atom);
         if (mappedType == null) return null;
         // special case: O.co2
-        if (("O.3".equals(mappedType) || "O.2".equals(mappedType)) && isCarbonyl(atomContainer, atom))
-            mappedType = "O.co2";
+        if (("O.3".equals(mappedType) || "O.2".equals(mappedType))
+                && isCarbonyl(atomContainer, atom)) mappedType = "O.co2";
         // special case: nitrates, which can be perceived as N.2
-        if ("N.2".equals(mappedType) && isNitro(atomContainer, atom)) mappedType = "N.pl3"; // based on sparse examples
+        if ("N.2".equals(mappedType) && isNitro(atomContainer, atom))
+            mappedType = "N.pl3"; // based on sparse examples
         return factory.getAtomType(mappedType);
     }
 
@@ -144,9 +146,11 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
         IAtom neighborAtom = neighbor.getOther(atom);
         if ("C".equals(neighborAtom.getSymbol())) {
             if (neighbor.getOrder() == IBond.Order.SINGLE) {
-                if (countAttachedBonds(atomContainer, neighborAtom, IBond.Order.DOUBLE, "O") == 1) return true;
+                if (countAttachedBonds(atomContainer, neighborAtom, IBond.Order.DOUBLE, "O") == 1)
+                    return true;
             } else if (neighbor.getOrder() == IBond.Order.DOUBLE) {
-                if (countAttachedBonds(atomContainer, neighborAtom, IBond.Order.SINGLE, "O") == 1) return true;
+                if (countAttachedBonds(atomContainer, neighborAtom, IBond.Order.SINGLE, "O") == 1)
+                    return true;
             }
         }
         return false;
@@ -156,12 +160,12 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
         List<IAtom> neighbors = atomContainer.getConnectedAtomsList(atom);
         if (neighbors.size() != 3) return false;
         int oxygenCount = 0;
-        for (IAtom neighbor : neighbors)
-            if ("O".equals(neighbor.getSymbol())) oxygenCount++;
+        for (IAtom neighbor : neighbors) if ("O".equals(neighbor.getSymbol())) oxygenCount++;
         return (oxygenCount == 2);
     }
 
-    private int countAttachedBonds(IAtomContainer container, IAtom atom, IBond.Order order, String symbol) {
+    private int countAttachedBonds(
+            IAtomContainer container, IAtom atom, IBond.Order order, String symbol) {
         List<IBond> neighbors = container.getConnectedBondsList(atom);
         int neighborcount = neighbors.size();
         int doubleBondedAtoms = 0;
@@ -196,5 +200,4 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
         }
         return mappedType;
     }
-
 }

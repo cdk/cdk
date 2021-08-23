@@ -22,6 +22,11 @@
  */
 package org.openscience.cdk.forcefield.mmff;
 
+import java.math.BigDecimal;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.HashSet;
+import java.util.Set;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.graph.GraphUtil;
@@ -30,48 +35,39 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 
-import java.math.BigDecimal;
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * Facade to access Merck Molecular Force Field (MMFF) functions.
- * 
+ *
  * <ul>
- *     <li>{@cdk.cite Halgren96a}</li>
- *     <li>{@cdk.cite Halgren96b}</li>
- *     <li>{@cdk.cite Halgren96c}</li>
- *     <li>{@cdk.cite Halgren96d}</li>
- *     <li>{@cdk.cite Halgren96e}</li>     
+ *   <li>{@cdk.cite Halgren96a}
+ *   <li>{@cdk.cite Halgren96b}
+ *   <li>{@cdk.cite Halgren96c}
+ *   <li>{@cdk.cite Halgren96d}
+ *   <li>{@cdk.cite Halgren96e}
  * </ul>
  *
  * <br>
  * <b>Atom Types</b>
- * 
- * Symbolic atom types are assigned with {@link Mmff#assignAtomTypes(IAtomContainer)}.
- * The atom type name can be accessed with {@link IAtom#getAtomTypeName()}.
  *
- * <br>
+ * <p>Symbolic atom types are assigned with {@link Mmff#assignAtomTypes(IAtomContainer)}. The atom
+ * type name can be accessed with {@link IAtom#getAtomTypeName()}. <br>
  * <b>Partial Charges</b>
- * 
- * Partial charges are assigned with {@link Mmff#partialCharges(IAtomContainer)}.
- * Atom types must be assigned before calling this function. Effective formal
- * charges can also be obtained with {@link Mmff#effectiveCharges(IAtomContainer)}
- * both charge values are accessed with {@link IAtom#getCharge()}. Atoms of
- * unknown type are assigned a neutral charge - to avoid this check the return
- * value of {@link Mmff#assignAtomTypes(IAtomContainer)}.
- * 
+ *
+ * <p>Partial charges are assigned with {@link Mmff#partialCharges(IAtomContainer)}. Atom types must
+ * be assigned before calling this function. Effective formal charges can also be obtained with
+ * {@link Mmff#effectiveCharges(IAtomContainer)} both charge values are accessed with {@link
+ * IAtom#getCharge()}. Atoms of unknown type are assigned a neutral charge - to avoid this check the
+ * return value of {@link Mmff#assignAtomTypes(IAtomContainer)}.
+ *
  * <pre>{@code
  * IAtomContainer mol = ...;
- * 
+ *
  * Mmff mmff = new Mmff();
  * mmff.assignAtomTypes(mol);
  * mmff.partialCharges(mol);
  * mmff.clearProps(mol); // optional
  * }</pre>
- * 
+ *
  * @author John May
  * @cdk.githash
  */
@@ -79,16 +75,15 @@ public class Mmff {
 
     private static final String MMFF_ADJLIST_CACHE = "mmff.adjlist.cache";
     private static final String MMFF_EDGEMAP_CACHE = "mmff.edgemap.cache";
-    private static final String MMFF_AROM          = "mmff.arom";
+    private static final String MMFF_AROM = "mmff.arom";
 
     private final MmffAtomTypeMatcher mmffAtomTyper = new MmffAtomTypeMatcher();
-    private final MmffParamSet        mmffParamSet  = MmffParamSet.INSTANCE;
-    
+    private final MmffParamSet mmffParamSet = MmffParamSet.INSTANCE;
+
     /**
-     * Assign MMFF Symbolic atom types. The symbolic type can be accessed with
-     * {@link IAtom#getAtomTypeName()}. An atom of unknown type is assigned the
-     * symbolic type {@code 'UNK'}. 
-     * All atoms, including hydrogens must be explicitly represented.
+     * Assign MMFF Symbolic atom types. The symbolic type can be accessed with {@link
+     * IAtom#getAtomTypeName()}. An atom of unknown type is assigned the symbolic type {@code
+     * 'UNK'}. All atoms, including hydrogens must be explicitly represented.
      *
      * @param mol molecule
      * @return all atoms had a type assigned
@@ -98,7 +93,8 @@ public class Mmff {
         // preconditions need explicit hydrogens
         for (IAtom atom : mol.atoms()) {
             if (atom.getImplicitHydrogenCount() == null || atom.getImplicitHydrogenCount() > 0)
-                throw new IllegalArgumentException("Hydrogens must be explicit nodes, each must have a zero (non-null) impl H count.");
+                throw new IllegalArgumentException(
+                        "Hydrogens must be explicit nodes, each must have a zero (non-null) impl H count.");
         }
 
         // conversion to faster data structures
@@ -114,8 +110,7 @@ public class Mmff {
 
         // note: for MMFF we need to remove current aromatic flags for type
         // assignment (they are restored after)
-        for (IChemObject chemObj : oldArom)
-            chemObj.setFlag(CDKConstants.ISAROMATIC, false);
+        for (IChemObject chemObj : oldArom) chemObj.setFlag(CDKConstants.ISAROMATIC, false);
         String[] atomTypes = mmffAtomTyper.symbolicTypes(mol, adjList, edgeMap, aromBonds);
 
         boolean hasUnkType = false;
@@ -123,30 +118,26 @@ public class Mmff {
             if (atomTypes[i] == null) {
                 mol.getAtom(i).setAtomTypeName("UNK");
                 hasUnkType = true;
-            }
-            else {
+            } else {
                 mol.getAtom(i).setAtomTypeName(atomTypes[i]);
             }
         }
 
         // restore aromatic flags and mark the MMFF aromatic bonds
-        for (IChemObject chemObj : oldArom)
-            chemObj.setFlag(CDKConstants.ISAROMATIC, true);
-        for (IBond bond : aromBonds)
-            bond.setProperty(MMFF_AROM, true);
+        for (IChemObject chemObj : oldArom) chemObj.setFlag(CDKConstants.ISAROMATIC, true);
+        for (IBond bond : aromBonds) bond.setProperty(MMFF_AROM, true);
 
         return !hasUnkType;
     }
 
     /**
-     * Assign the effective formal charges used by MMFF in calculating the
-     * final partial charge values. Atom types must be assigned first. All 
-     * existing charges are cleared.
-     * 
+     * Assign the effective formal charges used by MMFF in calculating the final partial charge
+     * values. Atom types must be assigned first. All existing charges are cleared.
+     *
      * @param mol molecule
      * @return charges were assigned
-     * @see #partialCharges(IAtomContainer) 
-     * @see #assignAtomTypes(IAtomContainer) 
+     * @see #partialCharges(IAtomContainer)
+     * @see #assignAtomTypes(IAtomContainer)
      */
     public boolean effectiveCharges(IAtomContainer mol) {
 
@@ -163,8 +154,8 @@ public class Mmff {
     }
 
     /**
-     * Assign the partial charges, all existing charges are cleared.
-     * Atom types must be assigned first. 
+     * Assign the partial charges, all existing charges are cleared. Atom types must be assigned
+     * first.
      *
      * @param mol molecule
      * @return charges were assigned
@@ -180,7 +171,7 @@ public class Mmff {
             throw new IllegalArgumentException("Invoke assignAtomTypes first.");
 
         effectiveCharges(mol);
-        
+
         for (int v = 0; v < mol.getAtomCount(); v++) {
 
             IAtom atom = mol.getAtom(v);
@@ -188,8 +179,7 @@ public class Mmff {
             final int thisType = mmffParamSet.intType(symbType);
 
             // unknown
-            if (thisType == 0)
-                continue;
+            if (thisType == 0) continue;
 
             double pbci = mmffParamSet.getPartialBondChargeIncrement(thisType).doubleValue();
 
@@ -198,18 +188,26 @@ public class Mmff {
                 int otherType = mmffParamSet.intType(mol.getAtom(w).getAtomTypeName());
 
                 // unknown
-                if (otherType == 0)
-                    continue;
+                if (otherType == 0) continue;
 
                 IBond bond = edgeMap.get(v, w);
-                int bondCls = mmffParamSet.getBondCls(thisType, otherType, bond.getOrder().numeric(), bond.getProperty(MMFF_AROM) != null);
+                int bondCls =
+                        mmffParamSet.getBondCls(
+                                thisType,
+                                otherType,
+                                bond.getOrder().numeric(),
+                                bond.getProperty(MMFF_AROM) != null);
                 BigDecimal bci = mmffParamSet.getBondChargeIncrement(bondCls, thisType, otherType);
                 if (bci != null) {
                     atom.setCharge(atom.getCharge() - bci.doubleValue());
-                }
-                else {
+                } else {
                     // empirical BCI
-                    atom.setCharge(atom.getCharge() + (pbci - mmffParamSet.getPartialBondChargeIncrement(otherType).doubleValue()));
+                    atom.setCharge(
+                            atom.getCharge()
+                                    + (pbci
+                                            - mmffParamSet
+                                                    .getPartialBondChargeIncrement(otherType)
+                                                    .doubleValue()));
                 }
             }
         }
@@ -218,45 +216,46 @@ public class Mmff {
     }
 
     /**
-     * Clear all transient properties assigned by this class. Assigned charges
-     * and atom type names remain set.
-     * 
+     * Clear all transient properties assigned by this class. Assigned charges and atom type names
+     * remain set.
+     *
      * @param mol molecule
      */
     public void clearProps(IAtomContainer mol) {
         mol.removeProperty(MMFF_EDGEMAP_CACHE);
         mol.removeProperty(MMFF_ADJLIST_CACHE);
-        for (IBond bond : mol.bonds())
-            bond.removeProperty(MMFF_AROM);
+        for (IBond bond : mol.bonds()) bond.removeProperty(MMFF_AROM);
     }
 
     /**
-     * Internal method, MMFF primary charges. Tabulated (MMFFFORMCHG.PAR) and
-     * variable (assigned in code).
-     * 
+     * Internal method, MMFF primary charges. Tabulated (MMFFFORMCHG.PAR) and variable (assigned in
+     * code).
+     *
      * @param mol molecule
      * @param adjList adjacency list representation
      * @param edgeMap edge to bond mapping
      */
     void primaryCharges(IAtomContainer mol, int[][] adjList, GraphUtil.EdgeToBondMap edgeMap) {
 
-
         for (int v = 0; v < mol.getAtomCount(); v++) {
             IAtom atom = mol.getAtom(v);
             String symbType = atom.getAtomTypeName();
             BigDecimal fc = mmffParamSet.getFormalCharge(symbType);
-            
+
             atom.setCharge(0d);
 
             if (fc != null) {
                 atom.setCharge(fc.doubleValue());
             }
             // charge sharing between equivalent terminal oxygens
-            else if (symbType.equals("O2S") || symbType.equals("O3S") || symbType.equals("O2P") || symbType.equals("O3P") || symbType.equals("O4P")) {
+            else if (symbType.equals("O2S")
+                    || symbType.equals("O3S")
+                    || symbType.equals("O2P")
+                    || symbType.equals("O3P")
+                    || symbType.equals("O4P")) {
 
                 // already handled
-                if (atom.getCharge() != 0)
-                    continue;
+                if (atom.getCharge() != 0) continue;
 
                 // find the central atom (S or P)
                 int focus = -1;
@@ -272,8 +271,7 @@ public class Mmff {
                 }
 
                 // log - multiple or unfound focus
-                if (focus < 0)
-                    continue;
+                if (focus < 0) continue;
 
                 // ensure [P+]-[O-] vs P=O are same by including the charge from
                 // the focus
@@ -295,11 +293,10 @@ public class Mmff {
                 }
 
             }
-            // charge sharing between nitrogen anions 
+            // charge sharing between nitrogen anions
             else if (symbType.equals("N5M")) {
 
-                if (atom.getCharge() != 0)
-                    continue;
+                if (atom.getCharge() != 0) continue;
 
                 Set<IAtom> eqiv = new HashSet<>();
                 Set<Integer> visit = new HashSet<>();
@@ -311,8 +308,7 @@ public class Mmff {
                     int w = queue.poll();
                     visit.add(w);
 
-                    if (mol.getAtom(w).getAtomTypeName().equals("N5M"))
-                        eqiv.add(mol.getAtom(w));
+                    if (mol.getAtom(w).getAtomTypeName().equals("N5M")) eqiv.add(mol.getAtom(w));
 
                     for (int u : adjList[w]) {
                         IBond bond = edgeMap.get(w, u);
@@ -336,10 +332,10 @@ public class Mmff {
 
     /**
      * Internal effective charges method.
-     * 
+     *
      * @param mol molecule
      * @param adjList adjacency list representation
-     * @see {@link #effectiveCharges(IAtomContainer)}                
+     * @see {@link #effectiveCharges(IAtomContainer)}
      */
     void effectiveCharges(IAtomContainer mol, int[][] adjList) {
         double[] tmp = new double[mol.getAtomCount()];
@@ -355,18 +351,17 @@ public class Mmff {
             int crd = mmffParamSet.getCrd(intType);
             BigDecimal fcAdj = mmffParamSet.getFormalChargeAdjustment(intType);
 
-
             double adjust = fcAdj.doubleValue();
             tmp[v] = atom.getCharge();
 
-            // sharing when no formal charge adjustment - needed to match 
+            // sharing when no formal charge adjustment - needed to match
             // phosphate examples from paper V but documented?
             if (adjust == 0) {
                 for (int w : adjList[v]) {
                     if (mol.getAtom(w).getCharge() < 0) {
                         tmp[v] += mol.getAtom(w).getCharge() / (2.0 * adjList[w].length);
                     }
-                }   
+                }
             }
 
             // positive charge sharing - undocumented but inferred from validation suite
@@ -395,29 +390,25 @@ public class Mmff {
 
     /**
      * Helper method to find all existing aromatic chem objects.
-     * 
+     *
      * @param mol molecule
      * @return chem objects
      */
     private Set<IChemObject> getAromatics(IAtomContainer mol) {
         Set<IChemObject> oldArom = new HashSet<>();
-        for (IAtom atom : mol.atoms())
-            if (atom.getFlag(CDKConstants.ISAROMATIC))
-                oldArom.add(atom);
-        for (IBond bond : mol.bonds())
-            if (bond.getFlag(CDKConstants.ISAROMATIC))
-                oldArom.add(bond);
+        for (IAtom atom : mol.atoms()) if (atom.getFlag(CDKConstants.ISAROMATIC)) oldArom.add(atom);
+        for (IBond bond : mol.bonds()) if (bond.getFlag(CDKConstants.ISAROMATIC)) oldArom.add(bond);
         return oldArom;
     }
 
     /**
      * Access the formal charge - if the charge is null 0 is returned.
+     *
      * @param atom atom
      * @return formal charge
      */
     int fCharge(IAtom atom) {
-        if (atom.getFormalCharge() == null)
-            return 0;
+        if (atom.getFormalCharge() == null) return 0;
         return atom.getFormalCharge();
     }
 }

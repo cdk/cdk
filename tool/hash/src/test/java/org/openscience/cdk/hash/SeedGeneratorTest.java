@@ -1,9 +1,5 @@
 package org.openscience.cdk.hash;
 
-import org.junit.Test;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -13,6 +9,10 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
+
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  * @author John May
@@ -141,7 +141,5 @@ public class SeedGeneratorTest {
         }
 
         verifyNoMoreInteractions(m1, m2, c1, c2, c3, c4, c5, c6, encoder);
-
     }
-
 }

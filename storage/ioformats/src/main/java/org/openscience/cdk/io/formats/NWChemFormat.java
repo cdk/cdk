@@ -58,7 +58,7 @@ public class NWChemFormat extends SimpleChemFormatMatcher implements IChemFormat
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"nw", "nwo"};
+        return new String[] {"nw", "nwo"};
     }
 
     /** {@inheritDoc} */

@@ -6,37 +6,37 @@ import java.util.Map;
 /**
  * Set the right atoms order to get the parameters.
  *
- * @author         chhoppe
- * @cdk.created    2004-10-8
- * @cdk.module     forcefield
+ * @author chhoppe
+ * @cdk.created 2004-10-8
+ * @cdk.module forcefield
  * @cdk.githash
  */
 public class MMFF94ParametersCall {
 
     private Map<String, List> pSet = null;
 
-    //private final static double DEFAULT_BOND_LENGTH = 1.5;
-    //private final static double DEFAULT_ANGLE = 90;			// Only to test
-    //private final static double DEFAULT_TORSION_ANGLE = 90;
+    // private final static double DEFAULT_BOND_LENGTH = 1.5;
+    // private final static double DEFAULT_ANGLE = 90;			// Only to test
+    // private final static double DEFAULT_TORSION_ANGLE = 90;
 
     public MMFF94ParametersCall() {}
 
     /**
      * Initialize the AtomOrder class.
      *
-     * @param  parameterSet  Force Field parameter as Map
+     * @param parameterSet Force Field parameter as Map
      */
     public void initialize(Map<String, List> parameterSet) {
         pSet = parameterSet;
     }
 
     /**
-     *  Gets the bond parameter set.
+     * Gets the bond parameter set.
      *
-     * @param  id1            atom1 id
-     * @param  id2            atom2 id
-     * @return                The distance value from the force field parameter set
-     * @exception  Exception  Description of the Exception
+     * @param id1 atom1 id
+     * @param id2 atom2 id
+     * @return The distance value from the force field parameter set
+     * @exception Exception Description of the Exception
      */
     public List getBondData(String code, String id1, String id2) throws Exception {
         String dkey = "";
@@ -49,20 +49,21 @@ public class MMFF94ParametersCall {
            * + code + ";" + id2 + " ;" + id1+" take default bon length:" +
            * DEFAULT_BOND_LENGTH); return DEFAULT_BOND_LENGTH; }
            */
-        //logger.debug("dkey = " + dkey);
+        // logger.debug("dkey = " + dkey);
         return (List) pSet.get(dkey);
     }
 
     /**
-     *  Gets the angle parameter set.
+     * Gets the angle parameter set.
      *
-     * @param  id1            ID from Atom 1.
-     * @param  id2            ID from Atom 2.
-     * @param  id3            ID from Atom 3.
-     * @return                The angle data from the force field parameter set
-     * @exception  Exception  Description of the Exception
+     * @param id1 ID from Atom 1.
+     * @param id2 ID from Atom 2.
+     * @param id3 ID from Atom 3.
+     * @return The angle data from the force field parameter set
+     * @exception Exception Description of the Exception
      */
-    public List getAngleData(String angleType, String id1, String id2, String id3) throws Exception {
+    public List getAngleData(String angleType, String id1, String id2, String id3)
+            throws Exception {
         String akey = "";
         if (pSet.containsKey(("angle" + angleType + ";" + id1 + ";" + id2 + ";" + id3))) {
             akey = "angle" + angleType + ";" + id1 + ";" + id2 + ";" + id3;
@@ -75,20 +76,21 @@ public class MMFF94ParametersCall {
            * +" take default angle:" + DEFAULT_ANGLE); return
            * (Vector)[DEFAULT_ANGLE,0,0]; }
            */
-        //logger.debug("angle key : " + akey);
+        // logger.debug("angle key : " + akey);
         return (List) pSet.get(akey);
     }
 
     /**
-     *  Gets the bond-angle interaction parameter set.
+     * Gets the bond-angle interaction parameter set.
      *
-     * @param  id1            ID from Atom 1.
-     * @param  id2            ID from Atom 2.
-     * @param  id3            ID from Atom 3.
-     * @return                The bond-angle interaction data from the force field parameter set
-     * @exception  Exception  Description of the Exception
+     * @param id1 ID from Atom 1.
+     * @param id2 ID from Atom 2.
+     * @param id3 ID from Atom 3.
+     * @return The bond-angle interaction data from the force field parameter set
+     * @exception Exception Description of the Exception
      */
-    public List getBondAngleInteractionData(String strbndType, String id1, String id2, String id3) throws Exception {
+    public List getBondAngleInteractionData(String strbndType, String id1, String id2, String id3)
+            throws Exception {
         String akey = "";
         if (pSet.containsKey(("strbnd" + strbndType + ";" + id1 + ";" + id2 + ";" + id3))) {
             akey = "strbnd" + strbndType + ";" + id1 + ";" + id2 + ";" + id3;
@@ -108,18 +110,18 @@ public class MMFF94ParametersCall {
            * + " ; " + id2 + " ; " + id3+" take default angle:" +
            * DEFAULT_ANGLE); return (Vector)[DEFAULT_ANGLE,0,0]; }
            */
-        //logger.debug("akey : " + akey);
+        // logger.debug("akey : " + akey);
         return (List) pSet.get(akey);
     }
 
     /**
      * Gets the bond-angle interaction parameter set.
      *
-     * @param  iR             ID from Atom 1.
-     * @param  jR             ID from Atom 2.
-     * @param  kR             ID from Atom 3.
-     * @return                The bond-angle interaction data from the force field parameter set
-     * @exception  Exception  Description of the Exception
+     * @param iR ID from Atom 1.
+     * @param jR ID from Atom 2.
+     * @param kR ID from Atom 3.
+     * @return The bond-angle interaction data from the force field parameter set
+     * @exception Exception Description of the Exception
      */
     public List getDefaultStretchBendData(int iR, int jR, int kR) throws Exception {
         String dfsbkey = "";
@@ -130,23 +132,25 @@ public class MMFF94ParametersCall {
            * "KEYErrorDefaultStretchBend:Unknown default stretch-bend key in pSet: "
            * + iR + " ; " + jR + " ; " + kR); }
            */
-        //logger.debug("dfsbkey : " + dfsbkey);
+        // logger.debug("dfsbkey : " + dfsbkey);
         return (List) pSet.get(dfsbkey);
     }
 
     /**
-     *  Gets the bond parameter set.
+     * Gets the bond parameter set.
      *
-     * @param  id1            atom1 id
-     * @param  id2            atom2 id
-     * @return                The distance value from the force field parameter set
-     * @exception  Exception  Description of the Exception
+     * @param id1 atom1 id
+     * @param id2 atom2 id
+     * @return The distance value from the force field parameter set
+     * @exception Exception Description of the Exception
      */
-    public List getTorsionData(String code, String id1, String id2, String id3, String id4) throws Exception {
+    public List getTorsionData(String code, String id1, String id2, String id3, String id4)
+            throws Exception {
         String dkey = "";
         if (pSet.containsKey(("torsion" + code + ";" + id1 + ";" + id2 + ";" + id3 + ";" + id4))) {
             dkey = "torsion" + code + ";" + id1 + ";" + id2 + ";" + id3 + ";" + id4;
-        } else if (pSet.containsKey(("torsion" + code + ";" + id4 + ";" + id3 + ";" + id2 + ";" + id1))) {
+        } else if (pSet.containsKey(
+                ("torsion" + code + ";" + id4 + ";" + id3 + ";" + id2 + ";" + id1))) {
             dkey = "torsion" + code + ";" + id4 + ";" + id3 + ";" + id2 + ";" + id1;
         } else if (pSet.containsKey(("torsion" + code + ";*;" + id2 + ";" + id3 + ";*"))) {
             dkey = "torsion" + code + ";*;" + id2 + ";" + id3 + ";*";
@@ -163,8 +167,7 @@ public class MMFF94ParametersCall {
            * " take default torsion angle:" + DEFAULT_TORSION_ANGLES); return
            * DEFAULT_TORSION_ANGLE; }
            */
-        //logger.debug("dkey = " + dkey);
+        // logger.debug("dkey = " + dkey);
         return (List) pSet.get(dkey);
     }
-
 }

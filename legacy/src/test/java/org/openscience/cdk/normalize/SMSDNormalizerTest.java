@@ -39,7 +39,6 @@ import org.openscience.cdk.smiles.SmilesParser;
 
 /**
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- *
  * @cdk.module test-smsd
  */
 public class SMSDNormalizerTest {
@@ -60,6 +59,7 @@ public class SMSDNormalizerTest {
 
     /**
      * Test of makeDeepCopy method, of class SMSDNormalizer.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -78,11 +78,11 @@ public class SMSDNormalizerTest {
             assertEquals(result.getAtom(i).getSymbol(), container.getAtom(i).getSymbol());
             assertEquals(result.getAtom(i).getID(), container.getAtom(i).getID());
         }
-
     }
 
     /**
      * Test of aromatizeMolecule method, of class SMSDNormalizer.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -102,6 +102,7 @@ public class SMSDNormalizerTest {
 
     /**
      * Test of getExplicitHydrogenCount method, of class SMSDNormalizer.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -125,6 +126,7 @@ public class SMSDNormalizerTest {
 
     /**
      * Test of getImplicitHydrogenCount method, of class SMSDNormalizer.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -148,6 +150,7 @@ public class SMSDNormalizerTest {
 
     /**
      * Test of getHydrogenCount method, of class SMSDNormalizer.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -169,6 +172,7 @@ public class SMSDNormalizerTest {
 
     /**
      * Test of removeHydrogensAndPreserveAtomID method, of class SMSDNormalizer.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -199,6 +203,7 @@ public class SMSDNormalizerTest {
 
     /**
      * Test of convertExplicitToImplicitHydrogens method, of class SMSDNormalizer.
+     *
      * @throws InvalidSmilesException
      */
     @Test
@@ -213,6 +218,7 @@ public class SMSDNormalizerTest {
 
     /**
      * Test of percieveAtomTypesAndConfigureAtoms method, of class SMSDNormalizer.
+     *
      * @throws Exception
      */
     @Test

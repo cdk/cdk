@@ -18,6 +18,9 @@
  */
 package org.openscience.cdk.reaction.type;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
@@ -39,13 +42,9 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 /**
- * TestSuite that runs a test for the RearrangementRadicalReactionTest.
- * Generalized Reaction: [A*]-B=C => A=B-[c*].
+ * TestSuite that runs a test for the RearrangementRadicalReactionTest. Generalized Reaction:
+ * [A*]-B=C => A=B-[c*].
  *
  * @cdk.module test-reaction
  */
@@ -53,16 +52,12 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
 
     private IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
-    /**
-     *  The JUnit setup method
-     */
+    /** The JUnit setup method */
     public RearrangementRadicalReactionTest() throws Exception {
         setReaction(RearrangementRadicalReaction.class);
     }
 
-    /**
-     *  The JUnit setup method
-     */
+    /** The JUnit setup method */
     @Test
     public void testRearrangementRadicalReaction() throws Exception {
         IReactionProcess type = new RearrangementRadicalReaction();
@@ -70,10 +65,10 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
     }
 
     /**
-     * A unit test suite for JUnit. Reaction: [C*]-C=C-C => C=C-[C*]-C
-     * Automatic search of the center active.
+     * A unit test suite for JUnit. Reaction: [C*]-C=C-C => C=C-[C*]-C Automatic search of the
+     * center active.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     @Override
@@ -102,10 +97,10 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
     }
 
     /**
-     * A unit test suite for JUnit. Reaction: [C*]-C=C-C => C=C-[C*]-C
-     * Manually put of the center active.
+     * A unit test suite for JUnit. Reaction: [C*]-C=C-C => C=C-[C*]-C Manually put of the center
+     * active.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testManuallyCentreActive() throws Exception {
@@ -145,7 +140,7 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testCDKConstants_REACTIVE_CENTER() throws Exception {
@@ -186,7 +181,7 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testMapping() throws Exception {
@@ -209,35 +204,35 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
 
         Assert.assertEquals(11, setOfReactions.getReaction(0).getMappingCount());
 
-        IAtom mappedProductA1 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
-                molecule.getAtom(0));
+        IAtom mappedProductA1 =
+                (IAtom)
+                        ReactionManipulator.getMappedChemObject(
+                                setOfReactions.getReaction(0), molecule.getAtom(0));
         Assert.assertEquals(mappedProductA1, product.getAtom(0));
-        mappedProductA1 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
-                molecule.getAtom(1));
+        mappedProductA1 =
+                (IAtom)
+                        ReactionManipulator.getMappedChemObject(
+                                setOfReactions.getReaction(0), molecule.getAtom(1));
         Assert.assertEquals(mappedProductA1, product.getAtom(1));
-        mappedProductA1 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
-                molecule.getAtom(2));
+        mappedProductA1 =
+                (IAtom)
+                        ReactionManipulator.getMappedChemObject(
+                                setOfReactions.getReaction(0), molecule.getAtom(2));
         Assert.assertEquals(mappedProductA1, product.getAtom(2));
     }
 
-    /**
-     * Test to recognize if this IAtomContainer_1 matches correctly into the CDKAtomTypes.
-     */
+    /** Test to recognize if this IAtomContainer_1 matches correctly into the CDKAtomTypes. */
     @Test
     public void testAtomTypesAtomContainer1() throws Exception {
         IAtomContainer moleculeTest = getExampleReactants().getAtomContainer(0);
         makeSureAtomTypesAreRecognized(moleculeTest);
-
     }
 
-    /**
-     * Test to recognize if this IAtomContainer_2 matches correctly into the CDKAtomTypes.
-     */
+    /** Test to recognize if this IAtomContainer_2 matches correctly into the CDKAtomTypes. */
     @Test
     public void testAtomTypesAtomContainer2() throws Exception {
         IAtomContainer moleculeTest = getExpectedProducts().getAtomContainer(0);
         makeSureAtomTypesAreRecognized(moleculeTest);
-
     }
 
     /**
@@ -246,7 +241,8 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
      * @return The IAtomContainerSet
      */
     private IAtomContainerSet getExampleReactants() {
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
 
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -281,7 +277,7 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
      */
     private IAtomContainerSet getExpectedProducts() {
         IAtomContainerSet setOfProducts = builder.newInstance(IAtomContainerSet.class);
-        //C=C-[C*]-C
+        // C=C-[C*]-C
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -311,7 +307,7 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
     /**
      * Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
      *
-     * @param molecule          The IAtomContainer to analyze
+     * @param molecule The IAtomContainer to analyze
      * @throws CDKException
      */
     private void makeSureAtomTypesAreRecognized(IAtomContainer molecule) throws Exception {
@@ -320,7 +316,9 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
         while (atoms.hasNext()) {
             IAtom nextAtom = atoms.next();
-            Assert.assertNotNull("Missing atom type for: " + nextAtom, matcher.findMatchingAtomType(molecule, nextAtom));
+            Assert.assertNotNull(
+                    "Missing atom type for: " + nextAtom,
+                    matcher.findMatchingAtomType(molecule, nextAtom));
         }
     }
 }

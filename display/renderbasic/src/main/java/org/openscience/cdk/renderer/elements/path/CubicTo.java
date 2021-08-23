@@ -20,10 +20,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- */package org.openscience.cdk.renderer.elements.path;
+ */ package org.openscience.cdk.renderer.elements.path;
 
 import javax.vecmath.Point2d;
-
 
 /**
  * A cubic curve in the path.
@@ -51,8 +50,7 @@ public class CubicTo extends PathElement {
     /**
      * Make a cubic curve path element.
      *
-     * @param coords [0,1] : control point 1, [2,3] : control point 2, [4,5] end
-     *               point
+     * @param coords [0,1] : control point 1, [2,3] : control point 2, [4,5] end point
      */
     public CubicTo(double[] coords) {
         super(Type.CubicTo);
@@ -76,17 +74,23 @@ public class CubicTo extends PathElement {
      * @param epy end point of the cubic y coord
      */
     public CubicTo(double cp1x, double cp1y, double cp2x, double cp2y, double epx, double epy) {
-        this(new double[]{cp1x, cp1y, cp2x, cp2y, epx, epy});
+        this(new double[] {cp1x, cp1y, cp2x, cp2y, epx, epy});
     }
 
-    /** {@inheritDoc} **/
+    /** {@inheritDoc} * */
     @Override
     public float[] points() {
-        return new float[]{(float) coords[0], (float) coords[1], (float) coords[2], (float) coords[3],
-                (float) coords[4], (float) coords[5]};
+        return new float[] {
+            (float) coords[0],
+            (float) coords[1],
+            (float) coords[2],
+            (float) coords[3],
+            (float) coords[4],
+            (float) coords[5]
+        };
     }
 
-    /**{@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     public void points(double[] coords) {
         coords[0] = this.coords[0];

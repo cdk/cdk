@@ -24,28 +24,28 @@
 package org.openscience.cdk.tools;
 
 /**
- * Class with constants for possible data features defined in the
- * a Data Feature Ontology. Actual integers are random
- * and should <b>not</b> be used directly.
+ * Class with constants for possible data features defined in the a Data Feature Ontology. Actual
+ * integers are random and should <b>not</b> be used directly.
  *
- * <p>To test whether a IChemFormat supports a certain feature, the
- * following code can be used:
+ * <p>To test whether a IChemFormat supports a certain feature, the following code can be used:
+ *
  * <pre>{@code
  * int features = new XYZFormat().getSupportedDataFeatures();
  * boolean has3DCoords = (features & HAS_3D_COORDINATES) == HAS_3D_COORDINATES;
  * }</pre>
  *
- * <p>This list of constants matches the latest <a href="http://qsar.sourceforge.net/ontologies/data-features/index.xhtml"
- * >Blue Obelisk Data Features Ontology</a>.
+ * <p>This list of constants matches the latest <a
+ * href="http://qsar.sourceforge.net/ontologies/data-features/index.xhtml" >Blue Obelisk Data
+ * Features Ontology</a>.
  *
  * @author Egon Willighagen &lt;ewilligh@uni-koeln.de&gt;
  * @cdk.module annotation
  * @cdk.githash
- **/
+ */
 public class DataFeatures {
 
-	/** Indicated that no feature are defined. */
-    public final static int NONE                               = 0;
+    /** Indicated that no feature are defined. */
+    public static final int NONE = 0;
 
     // The int allows for up to 750 different properties. Should
     // be enough for now.
@@ -53,40 +53,39 @@ public class DataFeatures {
     // COORDINATE SYSTEMS
 
     /** @cdk.dictref bodf:coordinates2D */
-    public final static int HAS_2D_COORDINATES                 = 1 << 0;
+    public static final int HAS_2D_COORDINATES = 1 << 0;
     /** @cdk.dictref bodf:coordinates3D */
-    public final static int HAS_3D_COORDINATES                 = 1 << 1;
+    public static final int HAS_3D_COORDINATES = 1 << 1;
     /** @cdk.dictref bodf:fractionalUnitCellCoordinatesCoordinates */
-    public final static int HAS_FRACTIONAL_CRYSTAL_COORDINATES = 1 << 2;
+    public static final int HAS_FRACTIONAL_CRYSTAL_COORDINATES = 1 << 2;
 
     // ATOMIC FEATURES
     //                      HAS_ATOMS ??
 
     /** @cdk.dictref bodf:hasAtomElementSymbol */
-    public final static int HAS_ATOM_ELEMENT_SYMBOL            = 1 << 3;
+    public static final int HAS_ATOM_ELEMENT_SYMBOL = 1 << 3;
     /** @cdk.dictref bodf:partialAtomicCharges */
-    public final static int HAS_ATOM_PARTIAL_CHARGES           = 1 << 4;
+    public static final int HAS_ATOM_PARTIAL_CHARGES = 1 << 4;
     /** @cdk.dictref bodf:formalAtomicCharges */
-    public final static int HAS_ATOM_FORMAL_CHARGES            = 1 << 5;
-    /** FIXME: NOT YET IN BODF !!! **/
-    public final static int HAS_ATOM_HYBRIDIZATIONS            = 1 << 6;
+    public static final int HAS_ATOM_FORMAL_CHARGES = 1 << 5;
+    /** FIXME: NOT YET IN BODF !!! * */
+    public static final int HAS_ATOM_HYBRIDIZATIONS = 1 << 6;
     /** @cdk.dictref bodf:massNumbers */
-    public final static int HAS_ATOM_MASS_NUMBERS              = 1 << 7;
+    public static final int HAS_ATOM_MASS_NUMBERS = 1 << 7;
     /** @cdk.dictref bodf:isotopeNumbers */
-    public final static int HAS_ATOM_ISOTOPE_NUMBERS           = 1 << 8;
+    public static final int HAS_ATOM_ISOTOPE_NUMBERS = 1 << 8;
 
     // GRAPH FEATURES
 
     /** @cdk.dictref bodf:graphRepresentation */
-    public final static int HAS_GRAPH_REPRESENTATION           = 1 << 9;
+    public static final int HAS_GRAPH_REPRESENTATION = 1 << 9;
     /** @cdk.dictref bodf:dietzRepresentation */
-    public final static int HAS_DIETZ_REPRESENTATION           = 1 << 10;
+    public static final int HAS_DIETZ_REPRESENTATION = 1 << 10;
 
     // MODEL FEATURES
 
-    /** FIXME: NOT YET IN BODF !!! **/
-    public final static int HAS_UNITCELL_PARAMETERS            = 1 << 11;
-    /** FIXME: NOT YET IN BODF !!! **/
-    public final static int HAS_REACTIONS                      = 1 << 12;
-
+    /** FIXME: NOT YET IN BODF !!! * */
+    public static final int HAS_UNITCELL_PARAMETERS = 1 << 11;
+    /** FIXME: NOT YET IN BODF !!! * */
+    public static final int HAS_REACTIONS = 1 << 12;
 }

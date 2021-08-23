@@ -26,6 +26,16 @@ package org.openscience.cdk.smiles;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.ConnectivityChecker;
@@ -50,23 +60,14 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 import uk.ac.ebi.beam.Graph;
 
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 /**
  * Read molecules and reactions from a SMILES {@cdk.cite SMILESTUT} string.
  *
- * <b>Example usage</b>
+ * <p><b>Example usage</b>
  *
- * <blockquote><pre>
+ * <blockquote>
+ *
+ * <pre>
  * try {
  *     SmilesParser   sp  = new SmilesParser(SilentChemObjectBuilder.getInstance());
  *     IAtomContainer m   = sp.parseSmiles("c1ccccc1");
@@ -74,43 +75,47 @@ import java.util.Set;
  *     System.err.println(e.getMessage());
  * }
  * </pre>
+ *
  * </blockquote>
  *
  * <b>Reading Aromatic SMILES</b>
- * <p>
- * Aromatic SMILES are automatically kekulised producing a structure with
- * assigned bond orders. The aromatic specification on the atoms is maintained
- * from the SMILES even if the structures are not considered aromatic. For
- * example 'c1ccc1' will correctly have two pi bonds assigned but the
- * atoms/bonds will still be flagged as aromatic. Recomputing or clearing the
- * aromaticty will remove these erroneous flags. If a kekulé structure could not
- * be assigned this is considered an error. The most common example is the
- * omission of hydrogens on aromatic nitrogens (aromatic pyrrole is specified as
- * '[nH]1cccc1' not 'n1cccc1'). These structures can not be corrected without
- * modifying their formula. If there are multiple locations a hydrogen could be
- * placed the returned structure would differ depending on the atom input order.
- * If you wish to skip the kekulistation (not recommended) then it can be
- * disabled with {@link #kekulise}. SMILES can be verified for validity with the
- * <a href="http://www.daylight.com/daycgi/depict">DEPICT</a> service.
  *
- * <b>Unsupported Features</b>
- * <p>
- * The following features are not supported by this parser. <ul> <li>variable
- * order of bracket atom attributes, '[C-H]', '[CH@]' are considered invalid.
- * The predefined order required by this parser follows the <a
- * href="http://www.opensmiles.org/opensmiles.html">OpenSMILES</a> specification
- * of 'isotope', 'symbol', 'chiral', 'hydrogens', 'charge', 'atom class'</li>
- * <li>atom class indication - <i>this information is loaded but not annotated
- * on the structure</i> </li> <li>extended tetrahedral stereochemistry
- * (cumulated double bonds)</li> <li>trigonal bipyramidal stereochemistry</li>
- * <li>octahedral stereochemistry</li> </ul>
+ * <p>Aromatic SMILES are automatically kekulised producing a structure with assigned bond orders.
+ * The aromatic specification on the atoms is maintained from the SMILES even if the structures are
+ * not considered aromatic. For example 'c1ccc1' will correctly have two pi bonds assigned but the
+ * atoms/bonds will still be flagged as aromatic. Recomputing or clearing the aromaticty will remove
+ * these erroneous flags. If a kekulé structure could not be assigned this is considered an error.
+ * The most common example is the omission of hydrogens on aromatic nitrogens (aromatic pyrrole is
+ * specified as '[nH]1cccc1' not 'n1cccc1'). These structures can not be corrected without modifying
+ * their formula. If there are multiple locations a hydrogen could be placed the returned structure
+ * would differ depending on the atom input order. If you wish to skip the kekulistation (not
+ * recommended) then it can be disabled with {@link #kekulise}. SMILES can be verified for validity
+ * with the <a href="http://www.daylight.com/daycgi/depict">DEPICT</a> service.
+ *
+ * <p><b>Unsupported Features</b>
+ *
+ * <p>The following features are not supported by this parser.
+ *
+ * <ul>
+ *   <li>variable order of bracket atom attributes, '[C-H]', '[CH@]' are considered invalid. The
+ *       predefined order required by this parser follows the <a
+ *       href="http://www.opensmiles.org/opensmiles.html">OpenSMILES</a> specification of 'isotope',
+ *       'symbol', 'chiral', 'hydrogens', 'charge', 'atom class'
+ *   <li>atom class indication - <i>this information is loaded but not annotated on the
+ *       structure</i>
+ *   <li>extended tetrahedral stereochemistry (cumulated double bonds)
+ *   <li>trigonal bipyramidal stereochemistry
+ *   <li>octahedral stereochemistry
+ * </ul>
  *
  * <b>Atom Class</b>
- * <p>
- * The atom class is stored as the {@link org.openscience.cdk.CDKConstants#ATOM_ATOM_MAPPING}
+ *
+ * <p>The atom class is stored as the {@link org.openscience.cdk.CDKConstants#ATOM_ATOM_MAPPING}
  * property.
  *
- * <blockquote><pre>
+ * <blockquote>
+ *
+ * <pre>
  *
  * SmilesParser   sp  = new SmilesParser(SilentChemObjectBuilder.getInstance());
  * IAtomContainer m   = sp.parseSmiles("c1[cH:5]cccc1");
@@ -120,6 +125,7 @@ import java.util.Set;
  *                       .getProperty(CDKConstants.ATOM_ATOM_MAPPING); // null
  *
  * </pre>
+ *
  * </blockquote>
  *
  * @author Christoph Steinbeck
@@ -134,33 +140,26 @@ public final class SmilesParser {
 
     private ILoggingTool logger = LoggingToolFactory.createLoggingTool(SmilesParser.class);
 
-    /**
-     * The builder determines which CDK domain objects to create.
-     */
+    /** The builder determines which CDK domain objects to create. */
     private final IChemObjectBuilder builder;
 
-    /**
-     * Direct converter from Beam to CDK.
-     */
+    /** Direct converter from Beam to CDK. */
     private final BeamToCDK beamToCDK;
 
     /**
-     * Kekulise the molecule on load. Generally this is a good idea as a
-     * lower-case symbols in a SMILES do not really mean 'aromatic' but rather
-     * 'conjugated'. Loading with kekulise 'on' will automatically assign
-     * bond orders (if possible) using an efficient algorithm from the
+     * Kekulise the molecule on load. Generally this is a good idea as a lower-case symbols in a
+     * SMILES do not really mean 'aromatic' but rather 'conjugated'. Loading with kekulise 'on' will
+     * automatically assign bond orders (if possible) using an efficient algorithm from the
      * underlying Beam library (soon to be added to CDK).
      */
     private boolean kekulise = true;
 
-    /**
-     * Whether the parser is in strict mode or not.
-     */
+    /** Whether the parser is in strict mode or not. */
     private boolean strict = false;
 
     /**
-     * Create a new SMILES parser which will create {@link IAtomContainer}s with
-     * the specified builder.
+     * Create a new SMILES parser which will create {@link IAtomContainer}s with the specified
+     * builder.
      *
      * @param builder used to create the CDK domain objects
      */
@@ -170,8 +169,8 @@ public final class SmilesParser {
     }
 
     /**
-     * Sets whether the parser is in strict mode. In non-strict mode (default)
-     * recoverable issues with SMILES are reported as warnings.
+     * Sets whether the parser is in strict mode. In non-strict mode (default) recoverable issues
+     * with SMILES are reported as warnings.
      *
      * @param strict strict mode true/false.
      */
@@ -195,8 +194,7 @@ public final class SmilesParser {
         final int first = smiles.indexOf('>');
         final int second = smiles.indexOf('>', first + 1);
 
-        if (second < 0)
-            throw new InvalidSmilesException("Invalid reaction SMILES:" + smiles);
+        if (second < 0) throw new InvalidSmilesException("Invalid reaction SMILES:" + smiles);
 
         final String reactants = smiles.substring(0, first);
         final String agents = smiles.substring(first + 1, second);
@@ -207,7 +205,8 @@ public final class SmilesParser {
         // add reactants
         if (!reactants.isEmpty()) {
             IAtomContainer reactantContainer = parseSmiles(reactants, true);
-            IAtomContainerSet reactantSet = ConnectivityChecker.partitionIntoMolecules(reactantContainer);
+            IAtomContainerSet reactantSet =
+                    ConnectivityChecker.partitionIntoMolecules(reactantContainer);
             for (int i = 0; i < reactantSet.getAtomContainerCount(); i++) {
                 reaction.addReactant(reactantSet.getAtomContainer(i));
             }
@@ -227,11 +226,13 @@ public final class SmilesParser {
         // add products
         if (!products.isEmpty()) {
             IAtomContainer productContainer = parseSmiles(products, true);
-            IAtomContainerSet productSet = ConnectivityChecker.partitionIntoMolecules(productContainer);
+            IAtomContainerSet productSet =
+                    ConnectivityChecker.partitionIntoMolecules(productContainer);
             for (int i = 0; i < productSet.getAtomContainerCount(); i++) {
                 reaction.addProduct(productSet.getAtomContainer(i));
             }
-            reaction.setProperty(CDKConstants.TITLE, title = productContainer.getProperty(CDKConstants.TITLE));
+            reaction.setProperty(
+                    CDKConstants.TITLE, title = productContainer.getProperty(CDKConstants.TITLE));
         }
 
         try {
@@ -256,18 +257,17 @@ public final class SmilesParser {
         return parseSmiles(smiles, false);
     }
 
-    private IAtomContainer parseSmiles(String smiles, boolean isRxnPart) throws InvalidSmilesException {
+    private IAtomContainer parseSmiles(String smiles, boolean isRxnPart)
+            throws InvalidSmilesException {
         try {
             // create the Beam object from parsing the SMILES
             Set<String> warnings = new HashSet<>();
             Graph g = Graph.parse(smiles, strict, warnings);
-            for (String warning : warnings)
-                logger.warn(warning);
+            for (String warning : warnings) logger.warn(warning);
 
             // convert the Beam object model to the CDK - note exception thrown
             // if a kekule structure could not be assigned.
-            IAtomContainer mol = beamToCDK.toAtomContainer(kekulise ? g.kekule() : g,
-                    kekulise);
+            IAtomContainer mol = beamToCDK.toAtomContainer(kekulise ? g.kekule() : g, kekulise);
 
             if (!isRxnPart) {
                 try {
@@ -305,7 +305,7 @@ public final class SmilesParser {
      * Parses CXSMILES layer and set attributes for atoms and bonds on the provided molecule.
      *
      * @param title SMILES title field
-     * @param mol   molecule
+     * @param mol molecule
      */
     private void parseMolCXSMILES(String title, IAtomContainer mol) throws InvalidSmilesException {
         CxSmilesState cxstate;
@@ -316,7 +316,8 @@ public final class SmilesParser {
                 // set the correct title
                 mol.setTitle(title.substring(pos));
 
-                final Map<IAtom, IAtomContainer> atomToMol = Maps.newHashMapWithExpectedSize(mol.getAtomCount());
+                final Map<IAtom, IAtomContainer> atomToMol =
+                        Maps.newHashMapWithExpectedSize(mol.getAtomCount());
                 final List<IAtom> atoms = new ArrayList<>(mol.getAtomCount());
 
                 for (IAtom atom : mol.atoms()) {
@@ -333,7 +334,7 @@ public final class SmilesParser {
      * Parses CXSMILES layer and set attributes for atoms and bonds on the provided reaction.
      *
      * @param title SMILES title field
-     * @param rxn   parsed reaction
+     * @param rxn parsed reaction
      */
     private void parseRxnCXSMILES(String title, IReaction rxn) throws InvalidSmilesException {
         CxSmilesState cxstate;
@@ -349,29 +350,23 @@ public final class SmilesParser {
 
                 // collect atom offsets before handling fragment groups
                 for (IAtomContainer mol : rxn.getReactants().atomContainers())
-                    for (IAtom atom : mol.atoms())
-                        atoms.add(atom);
+                    for (IAtom atom : mol.atoms()) atoms.add(atom);
                 for (IAtomContainer mol : rxn.getAgents().atomContainers())
-                    for (IAtom atom : mol.atoms())
-                        atoms.add(atom);
+                    for (IAtom atom : mol.atoms()) atoms.add(atom);
                 for (IAtomContainer mol : rxn.getProducts().atomContainers())
-                    for (IAtom atom : mol.atoms())
-                        atoms.add(atom);
+                    for (IAtom atom : mol.atoms()) atoms.add(atom);
 
                 handleFragmentGrouping(rxn, cxstate);
 
                 // merge all together
                 for (IAtomContainer mol : rxn.getReactants().atomContainers()) {
-                    for (IAtom atom : mol.atoms())
-                        atomToMol.put(atom, mol);
+                    for (IAtom atom : mol.atoms()) atomToMol.put(atom, mol);
                 }
                 for (IAtomContainer mol : rxn.getAgents().atomContainers()) {
-                    for (IAtom atom : mol.atoms())
-                        atomToMol.put(atom, mol);
+                    for (IAtom atom : mol.atoms()) atomToMol.put(atom, mol);
                 }
                 for (IAtomContainer mol : rxn.getProducts().atomContainers()) {
-                    for (IAtom atom : mol.atoms())
-                        atomToMol.put(atom, mol);
+                    for (IAtom atom : mol.atoms()) atomToMol.put(atom, mol);
                 }
 
                 assignCxSmilesInfo(rxn.getBuilder(), rxn, atoms, atomToMol, cxstate);
@@ -380,10 +375,10 @@ public final class SmilesParser {
     }
 
     /**
-     * Handle fragment grouping of a reaction that specifies certain disconnected components
-     * are actually considered a single molecule. Normally used for salts, [Na+].[OH-].
+     * Handle fragment grouping of a reaction that specifies certain disconnected components are
+     * actually considered a single molecule. Normally used for salts, [Na+].[OH-].
      *
-     * @param rxn     reaction
+     * @param rxn reaction
      * @param cxstate state
      */
     private void handleFragmentGrouping(IReaction rxn, CxSmilesState cxstate) {
@@ -413,11 +408,9 @@ public final class SmilesParser {
 
         if (cxstate.racemicFrags != null) {
             for (Integer grp : cxstate.racemicFrags) {
-                if (grp >= fragMap.size())
-                    continue;
+                if (grp >= fragMap.size()) continue;
                 IAtomContainer mol = fragMap.get(grp);
-                if (mol == null)
-                    continue;
+                if (mol == null) continue;
                 for (IStereoElement<?, ?> e : mol.stereoElements()) {
                     // maybe also Al and AT?
                     if (e.getConfigClass() == IStereoElement.TH) {
@@ -435,18 +428,13 @@ public final class SmilesParser {
             Set<Integer> visit = new HashSet<>();
 
             for (List<Integer> grouping : cxstate.fragGroups) {
-                if (grouping.get(0) >= fragMap.size())
-                    continue;
+                if (grouping.get(0) >= fragMap.size()) continue;
                 IAtomContainer dest = fragMap.get(grouping.get(0));
-                if (dest == null)
-                    continue;
-                if (!visit.add(grouping.get(0)))
-                    invalid = true;
+                if (dest == null) continue;
+                if (!visit.add(grouping.get(0))) invalid = true;
                 for (int i = 1; i < grouping.size(); i++) {
-                    if (!visit.add(grouping.get(i)))
-                        invalid = true;
-                    if (grouping.get(i) >= fragMap.size())
-                        continue;
+                    if (!visit.add(grouping.get(i))) invalid = true;
+                    if (grouping.get(i) >= fragMap.size()) continue;
                     IAtomContainer src = fragMap.get(grouping.get(i));
                     if (src != null) {
                         dest.add(src);
@@ -479,25 +467,26 @@ public final class SmilesParser {
     /**
      * Transfers the CXSMILES state onto the CDK atom/molecule data-structures.
      *
-     * @param bldr      chem-object builder
-     * @param atoms     atoms parsed from the molecule or reaction. Reaction molecules are list
-     *                  left to right.
+     * @param bldr chem-object builder
+     * @param atoms atoms parsed from the molecule or reaction. Reaction molecules are list left to
+     *     right.
      * @param atomToMol look-up of atoms to molecules when connectivity/sgroups need modification
-     * @param cxstate   the CXSMILES state to read from
+     * @param cxstate the CXSMILES state to read from
      */
-    private void assignCxSmilesInfo(IChemObjectBuilder bldr,
-                                    IChemObject chemObj,
-                                    List<IAtom> atoms,
-                                    Map<IAtom, IAtomContainer> atomToMol,
-                                    CxSmilesState cxstate) throws InvalidSmilesException {
+    private void assignCxSmilesInfo(
+            IChemObjectBuilder bldr,
+            IChemObject chemObj,
+            List<IAtom> atoms,
+            Map<IAtom, IAtomContainer> atomToMol,
+            CxSmilesState cxstate)
+            throws InvalidSmilesException {
 
         // atom-labels - must be done first as we replace atoms
         if (cxstate.atomLabels != null) {
             for (Map.Entry<Integer, String> e : cxstate.atomLabels.entrySet()) {
 
                 // bounds check
-                if (e.getKey() >= atoms.size())
-                    continue;
+                if (e.getKey() >= atoms.size()) continue;
 
                 IAtom old = atoms.get(e.getKey());
                 IPseudoAtom pseudo = bldr.newInstance(IPseudoAtom.class);
@@ -505,9 +494,9 @@ public final class SmilesParser {
 
                 // specialised label handling
                 if (val.endsWith("_p")) // pseudo label
-                    val = val.substring(0, val.length() - 2);
+                val = val.substring(0, val.length() - 2);
                 else if (val.startsWith("_AP")) // attachment point
-                    pseudo.setAttachPointNum(parseIntSafe(val.substring(3)));
+                pseudo.setAttachPointNum(parseIntSafe(val.substring(3)));
 
                 pseudo.setLabel(val);
                 pseudo.setAtomicNumber(0);
@@ -543,21 +532,20 @@ public final class SmilesParser {
         if (cxstate.atomRads != null) {
             for (Map.Entry<Integer, CxSmilesState.Radical> e : cxstate.atomRads.entrySet()) {
                 // bounds check
-                if (e.getKey() >= atoms.size())
-                    continue;
+                if (e.getKey() >= atoms.size()) continue;
 
                 int count = 0;
                 switch (e.getValue()) {
                     case Monovalent:
                         count = 1;
                         break;
-                    // no distinction in CDK between singled/triplet
+                        // no distinction in CDK between singled/triplet
                     case Divalent:
                     case DivalentSinglet:
                     case DivalentTriplet:
                         count = 2;
                         break;
-                    // no distinction in CDK between doublet/quartet
+                        // no distinction in CDK between doublet/quartet
                     case Trivalent:
                     case TrivalentDoublet:
                     case TrivalentQuartet:
@@ -582,12 +570,10 @@ public final class SmilesParser {
                 IAtom beg = atoms.get(e.getKey());
                 IAtomContainer mol = atomToMol.get(beg);
                 List<IBond> bonds = mol.getConnectedBondsList(beg);
-                if (bonds.isEmpty())
-                    continue; // possibly okay
+                if (bonds.isEmpty()) continue; // possibly okay
                 sgroup.addAtom(beg);
                 sgroup.addBond(bonds.get(0));
-                for (Integer endpt : e.getValue())
-                    sgroup.addAtom(atoms.get(endpt));
+                for (Integer endpt : e.getValue()) sgroup.addAtom(atoms.get(endpt));
                 sgroupMap.put(mol, sgroup);
             }
         }
@@ -603,12 +589,14 @@ public final class SmilesParser {
                 if (bonds.isEmpty())
                     throw new InvalidSmilesException("CXSMILES LO: no bonds to order");
                 if (bonds.size() != e.getValue().size())
-                    throw new InvalidSmilesException("CXSMILES LO: bond count and ordering count was different");
+                    throw new InvalidSmilesException(
+                            "CXSMILES LO: bond count and ordering count was different");
                 sgroup.addAtom(beg);
                 for (Integer endpt : e.getValue()) {
                     IBond bond = beg.getBond(atoms.get(endpt));
                     if (bond == null)
-                        throw new InvalidSmilesException("CXSMILES LO: defined ordering to non-existant bond");
+                        throw new InvalidSmilesException(
+                                "CXSMILES LO: defined ordering to non-existant bond");
                     sgroup.addBond(bond);
                 }
                 sgroupMap.put(mol, sgroup);
@@ -620,34 +608,28 @@ public final class SmilesParser {
 
             PolySgroup:
             for (CxSmilesState.CxSgroup cxsgroup : cxstate.mysgroups) {
-                if (!(cxsgroup instanceof CxPolymerSgroup))
-                    continue;
+                if (!(cxsgroup instanceof CxPolymerSgroup)) continue;
                 CxPolymerSgroup psgroup = (CxPolymerSgroup) cxsgroup;
                 Sgroup sgroup = new Sgroup();
 
                 Set<IAtom> atomset = new HashSet<>();
                 IAtomContainer mol = null;
                 for (Integer idx : psgroup.atoms) {
-                    if (idx >= atoms.size())
-                        continue;
+                    if (idx >= atoms.size()) continue;
                     IAtom atom = atoms.get(idx);
                     IAtomContainer amol = atomToMol.get(atom);
 
-                    if (mol == null)
-                        mol = amol;
-                    else if (amol != mol)
-                        continue PolySgroup;
+                    if (mol == null) mol = amol;
+                    else if (amol != mol) continue PolySgroup;
 
                     atomset.add(atom);
                 }
 
-                if (mol == null)
-                    continue;
+                if (mol == null) continue;
 
                 for (IAtom atom : atomset) {
                     for (IBond bond : mol.getConnectedBondsList(atom)) {
-                        if (!atomset.contains(bond.getOther(atom)))
-                            sgroup.addBond(bond);
+                        if (!atomset.contains(bond.getOther(atom))) sgroup.addBond(bond);
                     }
                     sgroup.addAtom(atom);
                 }
@@ -717,22 +699,18 @@ public final class SmilesParser {
 
             DataSgroup:
             for (CxSmilesState.CxSgroup cxsgroup : cxstate.mysgroups) {
-                if (!(cxsgroup instanceof CxDataSgroup))
-                    continue;
+                if (!(cxsgroup instanceof CxDataSgroup)) continue;
                 CxDataSgroup dsgroup = (CxDataSgroup) cxsgroup;
 
                 Set<IAtom> atomset = new HashSet<>();
                 IAtomContainer mol = null;
                 for (Integer idx : dsgroup.atoms) {
-                    if (idx >= atoms.size())
-                        continue;
+                    if (idx >= atoms.size()) continue;
                     IAtom atom = atoms.get(idx);
                     IAtomContainer amol = atomToMol.get(atom);
 
-                    if (mol == null)
-                        mol = amol;
-                    else if (amol != mol)
-                        continue DataSgroup;
+                    if (mol == null) mol = amol;
+                    else if (amol != mol) continue DataSgroup;
 
                     atomset.add(atom);
                 }
@@ -742,14 +720,12 @@ public final class SmilesParser {
                 } else {
                     Sgroup cdkSgroup = new Sgroup();
                     cdkSgroup.setType(SgroupType.CtabData);
-                    for (IAtom atom : atomset)
-                        cdkSgroup.addAtom(atom);
+                    for (IAtom atom : atomset) cdkSgroup.addAtom(atom);
                     cdkSgroup.putValue(SgroupKey.DataFieldName, dsgroup.field);
                     cdkSgroup.putValue(SgroupKey.DataFieldUnits, dsgroup.unit);
                     cdkSgroup.putValue(SgroupKey.Data, dsgroup.value);
                     sgroupRemap.put(dsgroup, cdkSgroup);
-                    if (mol != null)
-                        sgroupMap.put(mol, cdkSgroup);
+                    if (mol != null) sgroupMap.put(mol, cdkSgroup);
                     else if (chemObj instanceof IAtomContainer)
                         sgroupMap.put((IAtomContainer) chemObj, cdkSgroup);
                 }
@@ -759,12 +735,10 @@ public final class SmilesParser {
         if (cxstate.mysgroups != null) {
             for (CxSmilesState.CxSgroup parent : cxstate.mysgroups) {
                 Sgroup cdkParent = sgroupRemap.get(parent);
-                if (cdkParent == null)
-                    continue;
+                if (cdkParent == null) continue;
                 for (CxSmilesState.CxSgroup child : parent.children) {
                     Sgroup cdkChild = sgroupRemap.get(child);
-                    if (cdkChild == null)
-                        continue;
+                    if (cdkChild == null) continue;
                     cdkChild.addParent(cdkParent);
                 }
             }
@@ -780,7 +754,8 @@ public final class SmilesParser {
                     }
                 }
             } else if (chemObj instanceof IReaction) {
-                for (IAtomContainer mol : ReactionManipulator.getAllAtomContainers((IReaction) chemObj)) {
+                for (IAtomContainer mol :
+                        ReactionManipulator.getAllAtomContainers((IReaction) chemObj)) {
                     for (IStereoElement<?, ?> e : mol.stereoElements()) {
                         // maybe also Al and AT?
                         if (e.getConfigClass() == IStereoElement.TH) {
@@ -791,15 +766,14 @@ public final class SmilesParser {
             }
         }
 
-
         if (cxstate.stereoGrps != null) {
             for (Map.Entry<Integer, Integer> e : cxstate.stereoGrps.entrySet()) {
                 IAtom atm = atoms.get(e.getKey());
                 IAtomContainer mol = atomToMol.get(atm);
                 for (IStereoElement<?, ?> stereo : mol.stereoElements()) {
                     // maybe also Al and AT?
-                    if (stereo.getConfigClass() == IStereoElement.TH &&
-                            stereo.getFocus().equals(atm)) {
+                    if (stereo.getConfigClass() == IStereoElement.TH
+                            && stereo.getFocus().equals(atm)) {
                         stereo.setGroupInfo(e.getValue());
                     }
                 }
@@ -812,12 +786,10 @@ public final class SmilesParser {
     }
 
     /**
-     * Makes the Smiles parser set aromaticity as provided in the Smiles itself,
-     * without detecting it. Default false. Atoms will not be typed when set to
-     * true.
+     * Makes the Smiles parser set aromaticity as provided in the Smiles itself, without detecting
+     * it. Default false. Atoms will not be typed when set to true.
      *
-     * @param preservingAromaticity boolean to indicate if aromaticity is to be
-     *                              preserved.
+     * @param preservingAromaticity boolean to indicate if aromaticity is to be preserved.
      * @see #kekulise
      */
     @Deprecated
@@ -826,8 +798,7 @@ public final class SmilesParser {
     }
 
     /**
-     * Gets the (default false) setting to preserve aromaticity as provided in
-     * the Smiles itself.
+     * Gets the (default false) setting to preserve aromaticity as provided in the Smiles itself.
      *
      * @return true or false indicating if aromaticity is preserved.
      */
@@ -837,10 +808,9 @@ public final class SmilesParser {
     }
 
     /**
-     * Indicated whether structures should be automatically kekulised if they
-     * are provided as aromatic. Kekulisation is on by default but can be
-     * turned off if it is believed the structures can be handled without
-     * assigned bond orders (not recommended).
+     * Indicated whether structures should be automatically kekulised if they are provided as
+     * aromatic. Kekulisation is on by default but can be turned off if it is believed the
+     * structures can be handled without assigned bond orders (not recommended).
      *
      * @param kekulise should structures be kekulised
      */

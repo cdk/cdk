@@ -24,11 +24,10 @@ package org.openscience.cdk.group;
 
 import java.util.Set;
 
-
 /**
- * Refines vertex partitions until they are discrete, and therefore equivalent
- * to permutations. These permutations are automorphisms of the graph that was
- * used during the refinement to guide the splitting of partition blocks.
+ * Refines vertex partitions until they are discrete, and therefore equivalent to permutations.
+ * These permutations are automorphisms of the graph that was used during the refinement to guide
+ * the splitting of partition blocks.
  *
  * @author maclean
  * @cdk.module group
@@ -36,44 +35,37 @@ import java.util.Set;
 abstract class AbstractDiscretePartitionRefiner implements DiscretePartitionRefiner {
 
     /**
-     * The result of a comparison between the current partition
-     * and the best permutation found so far.
-     *
+     * The result of a comparison between the current partition and the best permutation found so
+     * far.
      */
     enum Result {
-        WORSE, EQUAL, BETTER
+        WORSE,
+        EQUAL,
+        BETTER
     };
 
     /**
-     * If true, then at least one partition has been refined
-     * to a permutation (IE : to a discrete partition).
+     * If true, then at least one partition has been refined to a permutation (IE : to a discrete
+     * partition).
      */
-    private boolean                    bestExist;
+    private boolean bestExist;
 
     /**
-     * The best permutation is the one that gives the maximal
-     * half-matrix string (so far) when applied to the graph.
+     * The best permutation is the one that gives the maximal half-matrix string (so far) when
+     * applied to the graph.
      */
-    private Permutation                best;
+    private Permutation best;
 
-    /**
-     * The first permutation seen when refining.
-     */
-    private Permutation                first;
+    /** The first permutation seen when refining. */
+    private Permutation first;
 
-    /**
-     * An equitable refiner.
-     */
+    /** An equitable refiner. */
     private EquitablePartitionRefiner equitableRefiner;
 
-    /**
-     * The automorphism group that is used to prune the search.
-     */
-    private PermutationGroup           group;
+    /** The automorphism group that is used to prune the search. */
+    private PermutationGroup group;
 
-    /**
-     * A refiner - it is necessary to call {@link #setup} before use.
-     */
+    /** A refiner - it is necessary to call {@link #setup} before use. */
     public AbstractDiscretePartitionRefiner() {
         this.bestExist = false;
         this.best = null;
@@ -88,9 +80,8 @@ abstract class AbstractDiscretePartitionRefiner implements DiscretePartitionRefi
     protected abstract int getVertexCount();
 
     /**
-     * Get the connectivity between two vertices as an integer, to allow
-     * for multigraphs : so a single edge is 1, a double edge 2, etc. If
-     * there is no edge, then 0 should be returned.
+     * Get the connectivity between two vertices as an integer, to allow for multigraphs : so a
+     * single edge is 1, a double edge 2, etc. If there is no edge, then 0 should be returned.
      *
      * @param vertexI a vertex of the graph
      * @param vertexJ a vertex of the graph
@@ -99,8 +90,8 @@ abstract class AbstractDiscretePartitionRefiner implements DiscretePartitionRefi
     protected abstract int getConnectivity(int vertexI, int vertexJ);
 
     /**
-     * Setup the group and refiner; it is important to call this method before
-     * calling {@link #refine} otherwise the refinement process will fail.
+     * Setup the group and refiner; it is important to call this method before calling {@link
+     * #refine} otherwise the refinement process will fail.
      *
      * @param group a group (possibly empty) of automorphisms
      * @param refiner the equitable refiner
@@ -129,39 +120,40 @@ abstract class AbstractDiscretePartitionRefiner implements DiscretePartitionRefi
     public Partition getAutomorphismPartition() {
         final int n = group.getSize();
         final DisjointSetForest forest = new DisjointSetForest(n);
-        group.apply(new PermutationGroup.Backtracker() {
+        group.apply(
+                new PermutationGroup.Backtracker() {
 
-            boolean[]       inOrbit      = new boolean[n];
-            private int     inOrbitCount = 0;
-            private boolean isFinished;
+                    boolean[] inOrbit = new boolean[n];
+                    private int inOrbitCount = 0;
+                    private boolean isFinished;
 
-            @Override
-            public boolean isFinished() {
-                return isFinished;
-            }
+                    @Override
+                    public boolean isFinished() {
+                        return isFinished;
+                    }
 
-            @Override
-            public void applyTo(Permutation p) {
-                for (int elementX = 0; elementX < n; elementX++) {
-                    if (inOrbit[elementX]) {
-                        continue;
-                    } else {
-                        int elementY = p.get(elementX);
-                        while (elementY != elementX) {
-                            if (!inOrbit[elementY]) {
-                                inOrbitCount++;
-                                inOrbit[elementY] = true;
-                                forest.makeUnion(elementX, elementY);
+                    @Override
+                    public void applyTo(Permutation p) {
+                        for (int elementX = 0; elementX < n; elementX++) {
+                            if (inOrbit[elementX]) {
+                                continue;
+                            } else {
+                                int elementY = p.get(elementX);
+                                while (elementY != elementX) {
+                                    if (!inOrbit[elementY]) {
+                                        inOrbitCount++;
+                                        inOrbit[elementY] = true;
+                                        forest.makeUnion(elementX, elementY);
+                                    }
+                                    elementY = p.get(elementY);
+                                }
                             }
-                            elementY = p.get(elementY);
+                        }
+                        if (inOrbitCount == n) {
+                            isFinished = true;
                         }
                     }
-                }
-                if (inOrbitCount == n) {
-                    isFinished = true;
-                }
-            }
-        });
+                });
 
         // convert to a partition
         Partition partition = new Partition();
@@ -237,8 +229,7 @@ abstract class AbstractDiscretePartitionRefiner implements DiscretePartitionRefi
     }
 
     /**
-     * Check for a canonical graph, without generating the whole
-     * automorphism group.
+     * Check for a canonical graph, without generating the whole automorphism group.
      *
      * @return true if the graph is canonical
      */
@@ -256,8 +247,8 @@ abstract class AbstractDiscretePartitionRefiner implements DiscretePartitionRefi
     }
 
     /**
-     * Does the work of the class, that refines a coarse partition into a finer
-     * one using the supplied automorphism group to prune the search.
+     * Does the work of the class, that refines a coarse partition into a finer one using the
+     * supplied automorphism group to prune the search.
      *
      * @param group the automorphism group of the graph
      * @param coarser the partition to refine
@@ -298,7 +289,8 @@ abstract class AbstractDiscretePartitionRefiner implements DiscretePartitionRefi
                 Set<Integer> blockCopy = finer.copyBlock(firstNonDiscreteCell);
                 for (int vertexInBlock = 0; vertexInBlock < vertexCount; vertexInBlock++) {
                     if (blockCopy.contains(vertexInBlock)) {
-                        Partition nextPartition = finer.splitBefore(firstNonDiscreteCell, vertexInBlock);
+                        Partition nextPartition =
+                                finer.splitBefore(firstNonDiscreteCell, vertexInBlock);
 
                         this.refine(group, nextPartition);
 
@@ -333,8 +325,7 @@ abstract class AbstractDiscretePartitionRefiner implements DiscretePartitionRefi
     }
 
     /**
-     * Check a permutation to see if it is better, equal, or worse than the
-     * current best.
+     * Check a permutation to see if it is better, equal, or worse than the current best.
      *
      * @param perm the permutation to check
      * @return BETTER, EQUAL, or WORSE
@@ -351,5 +342,4 @@ abstract class AbstractDiscretePartitionRefiner implements DiscretePartitionRefi
         }
         return Result.EQUAL;
     }
-
 }

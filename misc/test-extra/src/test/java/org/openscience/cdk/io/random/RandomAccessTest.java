@@ -22,6 +22,9 @@
  */
 package org.openscience.cdk.io.random;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -30,10 +33,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 
 /**
  * Test for {@link RandomAccessSDFReader}.
@@ -65,14 +64,21 @@ public class RandomAccessTest extends CDKTestCase {
                 if (out != null) out.close();
             }
 
-            //System.out.println(System.getProperty("user.dir"));
-            RandomAccessReader rf = new RandomAccessSDFReader(f, DefaultChemObjectBuilder.getInstance());
+            // System.out.println(System.getProperty("user.dir"));
+            RandomAccessReader rf =
+                    new RandomAccessSDFReader(f, DefaultChemObjectBuilder.getInstance());
             try {
                 Assert.assertEquals(6, rf.size());
 
-                String[] mdlnumbers = {"MFCD00000387", "MFCD00000661", "MFCD00000662", "MFCD00000663", "MFCD00000664",
-                        "MFCD03453215"};
-                //reading backwards - just for the test
+                String[] mdlnumbers = {
+                    "MFCD00000387",
+                    "MFCD00000661",
+                    "MFCD00000662",
+                    "MFCD00000663",
+                    "MFCD00000664",
+                    "MFCD03453215"
+                };
+                // reading backwards - just for the test
                 for (int i = rf.size() - 1; i >= 0; i--) {
                     IChemObject m = rf.readRecord(i);
                     Assert.assertEquals(m.getProperty("MDLNUMBER"), mdlnumbers[i]);

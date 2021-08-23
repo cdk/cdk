@@ -29,32 +29,30 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
-
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * Database of dictionaries listing entries with compounds, fragments
- * and entities.
+ * Database of dictionaries listing entries with compounds, fragments and entities.
  *
- * @author     Egon Willighagen
+ * @author Egon Willighagen
  * @cdk.githash
- * @cdk.created    2003-04-06
- * @cdk.keyword    dictionary
- * @cdk.module     dict
+ * @cdk.created 2003-04-06
+ * @cdk.keyword dictionary
+ * @cdk.module dict
  */
 public class DictionaryDatabase {
 
-    private static final Map<String,Dictionary> cache = new HashMap<>();
+    private static final Map<String, Dictionary> cache = new HashMap<>();
 
-    public final static String      DICTREFPROPERTYNAME = "org.openscience.cdk.dict";
+    public static final String DICTREFPROPERTYNAME = "org.openscience.cdk.dict";
 
-    private ILoggingTool            logger              = LoggingToolFactory
-                                                                .createLoggingTool(DictionaryDatabase.class);
+    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(DictionaryDatabase.class);
 
-    private String[]                dictionaryNames     = {"chemical", "elements", "descriptor-algorithms",
-            "reaction-processes"                        };
-    private String[]                dictionaryTypes     = {"xml", "owl", "owl", "owl_React"};
+    private String[] dictionaryNames = {
+        "chemical", "elements", "descriptor-algorithms", "reaction-processes"
+    };
+    private String[] dictionaryTypes = {"xml", "owl", "owl", "owl_React"};
 
     private Map<String, Dictionary> dictionaries;
 
@@ -75,18 +73,18 @@ public class DictionaryDatabase {
     private Dictionary readDictionary(String databaseLocator, String type) {
         Dictionary dictionary;
         // to distinguish between OWL: QSAR & REACT
-        if (type.contains("_React"))
-            databaseLocator += "." + type.substring(0, type.length() - 6);
-        else
-            databaseLocator += "." + type;
+        if (type.contains("_React")) databaseLocator += "." + type.substring(0, type.length() - 6);
+        else databaseLocator += "." + type;
         if (cache.containsKey(databaseLocator)) {
             return cache.get(databaseLocator);
-        }
-        else {
+        } else {
             logger.info("Reading dictionary from ", databaseLocator);
             try {
-                InputStreamReader reader = new InputStreamReader(this.getClass().getClassLoader()
-                                                                     .getResourceAsStream(databaseLocator));
+                InputStreamReader reader =
+                        new InputStreamReader(
+                                this.getClass()
+                                        .getClassLoader()
+                                        .getResourceAsStream(databaseLocator));
                 if (type.equals("owl")) {
                     dictionary = OWLFile.unmarshal(reader);
                 } else if (type.equals("owl_React")) {
@@ -106,6 +104,7 @@ public class DictionaryDatabase {
 
     /**
      * Reads a custom dictionary into the database.
+     *
      * @param reader The reader from which the dictionary data will be read
      * @param name The name of the dictionary
      */
@@ -128,6 +127,7 @@ public class DictionaryDatabase {
 
     /**
      * Returns a String[] with the names of the known dictionaries.
+     *
      * @return The names of the dictionaries
      */
     public String[] getDictionaryNames() {
@@ -140,6 +140,7 @@ public class DictionaryDatabase {
 
     /**
      * Returns a String[] with the id's of all entries in the specified database.
+     *
      * @return The entry names for the specified dictionary
      * @param dictionaryName The name of the dictionary
      */
@@ -152,7 +153,8 @@ public class DictionaryDatabase {
             // FIXME: dummy method that needs an implementation
             Entry[] entries = dictionary.getEntries();
             String[] entryNames = new String[entries.length];
-            logger.info("Found ", "" + entryNames.length, " entries in dictionary ", dictionaryName);
+            logger.info(
+                    "Found ", "" + entryNames.length, " entries in dictionary ", dictionaryName);
             for (int i = 0; i < entries.length; i++) {
                 entryNames[i] = entries[i].getLabel();
             }
@@ -165,24 +167,17 @@ public class DictionaryDatabase {
         return dictionary.getEntries();
     }
 
-    /**
-     * Returns true if the database contains the dictionary.
-     */
+    /** Returns true if the database contains the dictionary. */
     public boolean hasDictionary(String name) {
         return dictionaries.containsKey(name.toLowerCase());
     }
 
-    /**
-     * Returns true if the database contains the dictionary.
-     */
+    /** Returns true if the database contains the dictionary. */
     public Iterator<String> listDictionaries() {
         return dictionaries.keySet().iterator();
     }
 
-    /**
-     * Returns true if the given dictionary contains the given
-     * entry.
-     */
+    /** Returns true if the given dictionary contains the given entry. */
     public boolean hasEntry(String dictName, String entryID) {
         if (hasDictionary(dictName)) {
             Dictionary dictionary = (Dictionary) dictionaries.get(dictName);
@@ -191,5 +186,4 @@ public class DictionaryDatabase {
             return false;
         }
     }
-
 }

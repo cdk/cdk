@@ -30,7 +30,6 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -40,31 +39,30 @@ import org.openscience.cdk.smsd.interfaces.IMCSBase;
 import org.openscience.cdk.smsd.tools.MolHandler;
 
 /**
- * This is a handler class for single atom mapping
- * ({@link org.openscience.cdk.smsd.algorithm.single.SingleMapping}).
+ * This is a handler class for single atom mapping ({@link
+ * org.openscience.cdk.smsd.algorithm.single.SingleMapping}).
+ *
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public
- *             access to internal implementation details. SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK
+ *     or provides public access to internal implementation details. SMSD has been deprecated from
+ *     the CDK with a newer, more recent version of SMSD is available at <a
+ *     href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public class SingleMappingHandler extends AbstractMCSAlgorithm implements IMCSBase {
 
-    private static List<Map<IAtom, IAtom>>     allAtomMCS     = null;
-    private static Map<IAtom, IAtom>           atomsMCS       = null;
-    private static Map<Integer, Integer>       firstMCS       = null;
-    private static List<Map<Integer, Integer>> allMCS         = null;
-    private IAtomContainer                     source         = null;
-    private IQueryAtomContainer                smartSource    = null;
-    private IAtomContainer                     target         = null;
-    private boolean                            removeHydrogen = false;
+    private static List<Map<IAtom, IAtom>> allAtomMCS = null;
+    private static Map<IAtom, IAtom> atomsMCS = null;
+    private static Map<Integer, Integer> firstMCS = null;
+    private static List<Map<Integer, Integer>> allMCS = null;
+    private IAtomContainer source = null;
+    private IQueryAtomContainer smartSource = null;
+    private IAtomContainer target = null;
+    private boolean removeHydrogen = false;
 
-    /**
-     *
-     * @param removeH true
-     */
+    /** @param removeH true */
     public SingleMappingHandler(boolean removeH) {
 
         this.removeHydrogen = removeH;
@@ -72,10 +70,10 @@ public class SingleMappingHandler extends AbstractMCSAlgorithm implements IMCSBa
         atomsMCS = new HashMap<IAtom, IAtom>();
         firstMCS = new TreeMap<Integer, Integer>();
         allMCS = new ArrayList<Map<Integer, Integer>>();
-
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      *
      * @param source
      * @param target
@@ -86,7 +84,8 @@ public class SingleMappingHandler extends AbstractMCSAlgorithm implements IMCSBa
         this.target = target.getMolecule();
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      *
      * @param source
      * @param target
@@ -98,9 +97,11 @@ public class SingleMappingHandler extends AbstractMCSAlgorithm implements IMCSBa
         this.target = target;
     }
 
-    //Function is called by the main program and serves as a starting point for the comparision procedure.
+    // Function is called by the main program and serves as a starting point for the comparision
+    // procedure.
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      *
      * @param bondTypeMatch
      */
@@ -122,12 +123,13 @@ public class SingleMappingHandler extends AbstractMCSAlgorithm implements IMCSBa
         setAllMapping(mappings);
         setFirstMapping();
         setFirstAtomMapping();
-        //setStereoScore();
+        // setStereoScore();
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      *
-     * Set the mappings
+     * <p>Set the mappings
      */
     private void setAllMapping(List<Map<IAtom, IAtom>> mappings) {
         try {
@@ -169,7 +171,6 @@ public class SingleMappingHandler extends AbstractMCSAlgorithm implements IMCSBa
         if (allMCS.size() > 0) {
             firstMCS = new TreeMap<Integer, Integer>(allMCS.iterator().next());
         }
-
     }
 
     private synchronized void setFirstAtomMapping() {

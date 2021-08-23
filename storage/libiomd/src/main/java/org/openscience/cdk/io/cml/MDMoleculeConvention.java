@@ -32,18 +32,15 @@ import org.openscience.cdk.libio.md.Residue;
 import org.xml.sax.Attributes;
 
 /**
- *
  * Implements a Convention for parsing an MDMolecule from CML.
  *
  * @cdk.module libiomd
  * @cdk.githash
- *
  * @author Ola Spjuth &lt;ola.spjuth@farmbio.uu.se&gt;
- *
  */
 public class MDMoleculeConvention extends CMLCoreModule {
 
-    private Residue     currentResidue;
+    private Residue currentResidue;
     private ChargeGroup currentChargeGroup;
 
     public MDMoleculeConvention(IChemFile chemFile) {
@@ -57,22 +54,14 @@ public class MDMoleculeConvention extends CMLCoreModule {
     /**
      * Add parsing of elements in mdmolecule:
      *
-     * mdmolecule
-     * 		chargeGroup
-     * 			id
-     * 			cgNumber
-     * 			atomArray
-     * 			switchingAtom
-     * 		residue
-     * 			id
-     * 			title
-     * 			resNumber
-     * 			atomArray
+     * <p>mdmolecule chargeGroup id cgNumber atomArray switchingAtom residue id title resNumber
+     * atomArray
      *
      * @cdk.todo The JavaDoc of this class needs to be converted into HTML
      */
     @Override
-    public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
+    public void startElement(
+            CMLStack xpath, String uri, String local, String raw, Attributes atts) {
         //		<molecule convention="md:mdMolecule"
         //	          xmlns="http://www.xml-cml.org/schema"
         //	          xmlns:md="http://www.bioclipse.org/mdmolecule">
@@ -101,37 +90,37 @@ public class MDMoleculeConvention extends CMLCoreModule {
         if ("molecule".equals(local)) {
 
             // the copy the parsed content into a new MDMolecule
-            if (atts.getValue("convention") != null && atts.getValue("convention").equals("md:mdMolecule")) {
+            if (atts.getValue("convention") != null
+                    && atts.getValue("convention").equals("md:mdMolecule")) {
                 //				System.out.println("creating a MDMolecule");
                 super.startElement(xpath, uri, local, raw, atts);
                 currentMolecule = new MDMolecule(currentMolecule);
             } else {
                 DICTREF = atts.getValue("dictRef") != null ? atts.getValue("dictRef") : "";
-                //If residue or chargeGroup, set up a new one
+                // If residue or chargeGroup, set up a new one
                 if (DICTREF.equals("md:chargeGroup")) {
                     //					System.out.println("Creating a new charge group...");
                     currentChargeGroup = new ChargeGroup();
                 } else if (DICTREF.equals("md:residue")) {
                     //					System.out.println("Creating a new residue group...");
                     currentResidue = new Residue();
-                    if (atts.getValue("title") != null) currentResidue.setName(atts.getValue("title"));
+                    if (atts.getValue("title") != null)
+                        currentResidue.setName(atts.getValue("title"));
                 }
             }
         } else
 
-        //We have a scalar element. Now check who it belongs to
+        // We have a scalar element. Now check who it belongs to
         if ("scalar".equals(local)) {
             DICTREF = atts.getValue("dictRef");
-            //Switching Atom
+            // Switching Atom
             if ("md:switchingAtom".equals(DICTREF)) {
-                //Set current atom as switching atom
+                // Set current atom as switching atom
                 currentChargeGroup.setSwitchingAtom(currentAtom);
             } else {
                 super.startElement(xpath, uri, local, raw, atts);
             }
-        }
-
-        else if ("atom".equals(local)) {
+        } else if ("atom".equals(local)) {
             if (currentChargeGroup != null) {
                 String id = atts.getValue("ref");
                 if (id != null) {
@@ -144,7 +133,10 @@ public class MDMoleculeConvention extends CMLCoreModule {
                         }
                     }
                     if (currentAtom == null) {
-                        logger.error("Could not found the referenced atom '" + id + "' for this charge group!");
+                        logger.error(
+                                "Could not found the referenced atom '"
+                                        + id
+                                        + "' for this charge group!");
                     } else {
                         currentChargeGroup.addAtom(currentAtom);
                     }
@@ -161,7 +153,10 @@ public class MDMoleculeConvention extends CMLCoreModule {
                         }
                     }
                     if (referencedAtom == null) {
-                        logger.error("Could not found the referenced atom '" + id + "' for this residue!");
+                        logger.error(
+                                "Could not found the referenced atom '"
+                                        + id
+                                        + "' for this residue!");
                     } else {
                         currentResidue.addAtom(referencedAtom);
                     }
@@ -170,17 +165,12 @@ public class MDMoleculeConvention extends CMLCoreModule {
                 // ok, fine, just add it to the currentMolecule
                 super.startElement(xpath, uri, local, raw, atts);
             }
-        }
-
-        else {
+        } else {
             super.startElement(xpath, uri, local, raw, atts);
         }
-
     }
 
-    /**
-     * Finish up parsing of elements in mdmolecule.
-     */
+    /** Finish up parsing of elements in mdmolecule. */
     @Override
     public void endElement(CMLStack xpath, String uri, String name, String raw) {
         if (name.equals("molecule")) {
@@ -190,7 +180,8 @@ public class MDMoleculeConvention extends CMLCoreModule {
                 if (currentMolecule instanceof MDMolecule) {
                     ((MDMolecule) currentMolecule).addChargeGroup(currentChargeGroup);
                 } else {
-                    logger.error("Need to store a charge group, but the current molecule is not a MDMolecule!");
+                    logger.error(
+                            "Need to store a charge group, but the current molecule is not a MDMolecule!");
                 }
                 currentChargeGroup = null;
             } else
@@ -200,7 +191,8 @@ public class MDMoleculeConvention extends CMLCoreModule {
                 if (currentMolecule instanceof MDMolecule) {
                     ((MDMolecule) currentMolecule).addResidue(currentResidue);
                 } else {
-                    logger.error("Need to store a residue group, but the current molecule is not a MDMolecule!");
+                    logger.error(
+                            "Need to store a residue group, but the current molecule is not a MDMolecule!");
                 }
                 currentResidue = null;
             } else {
@@ -224,12 +216,12 @@ public class MDMoleculeConvention extends CMLCoreModule {
                 newBondData();
             }
         } else if ("scalar".equals(name)) {
-            //Residue number
+            // Residue number
             if ("md:resNumber".equals(DICTREF)) {
                 int myInt = Integer.parseInt(currentChars);
                 currentResidue.setNumber(myInt);
             }
-            //ChargeGroup number
+            // ChargeGroup number
             else if ("md:cgNumber".equals(DICTREF)) {
                 int myInt = Integer.parseInt(currentChars);
                 currentChargeGroup.setNumber(myInt);
@@ -238,5 +230,4 @@ public class MDMoleculeConvention extends CMLCoreModule {
             super.endElement(xpath, uri, name, raw);
         }
     }
-
 }

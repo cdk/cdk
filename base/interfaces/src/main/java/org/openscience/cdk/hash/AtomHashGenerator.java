@@ -26,8 +26,7 @@ package org.openscience.cdk.hash;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
- * A hash function which generates 64-bit hash codes for the atoms of a
- * molecule.
+ * A hash function which generates 64-bit hash codes for the atoms of a molecule.
  *
  * @author John May
  * @cdk.module interfaces
@@ -42,5 +41,4 @@ public interface AtomHashGenerator {
      * @return atomic hash codes
      */
     public long[] generate(IAtomContainer container);
-
 }

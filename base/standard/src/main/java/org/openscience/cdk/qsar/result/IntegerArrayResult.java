@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.qsar.result;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +29,7 @@ public class IntegerArrayResult extends IntegerArrayResultType {
 
     private static final long serialVersionUID = 4077762427385735922L;
 
-    private List<Integer>     array;
+    private List<Integer> array;
 
     public IntegerArrayResult() {
         super(0);
@@ -46,9 +45,7 @@ public class IntegerArrayResult extends IntegerArrayResultType {
         array.add(value);
     }
 
-    /**
-     * The first int is at index = 0.
-     */
+    /** The first int is at index = 0. */
     public int get(int index) {
         if (index >= this.array.size()) {
             return 0;
@@ -70,5 +67,4 @@ public class IntegerArrayResult extends IntegerArrayResultType {
         }
         return buf.toString();
     }
-
 }

@@ -3,7 +3,6 @@ package org.openscience.cdk.smsd.labelling;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -11,9 +10,10 @@ import org.openscience.cdk.interfaces.IBond;
 /**
  * @cdk.module smsd
  * @cdk.githash
- * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public
- *             access to internal implementation details. SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK
+ *     or provides public access to internal implementation details. SMSD has been deprecated from
+ *     the CDK with a newer, more recent version of SMSD is available at <a
+ *     href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public class AtomContainerPrinter {
@@ -22,9 +22,9 @@ public class AtomContainerPrinter {
 
         public String firstString;
         public String lastString;
-        public int    first;
-        public int    last;
-        public int    order;
+        public int first;
+        public int last;
+        public int order;
 
         public Edge(int first, int last, int order, String firstString, String lastString) {
             this.first = first;
@@ -34,9 +34,7 @@ public class AtomContainerPrinter {
             this.lastString = lastString;
         }
 
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
         public int compareTo(Edge o) {
             if (first < o.first || (first == o.first && last < o.last)) {
@@ -77,5 +75,4 @@ public class AtomContainerPrinter {
         sb.append(edges.toString());
         return sb.toString();
     }
-
 }

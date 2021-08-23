@@ -23,35 +23,32 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionScheme;
 
 /**
- * Classes that extends the definition of reaction to a scheme.
- * This is designed to contain a set of reactions which are linked in
- * some way but without hard coded semantics.
+ * Classes that extends the definition of reaction to a scheme. This is designed to contain a set of
+ * reactions which are linked in some way but without hard coded semantics.
  *
  * @author miguelrojasch &lt;miguelrojasch@yahoo.es&gt;
- * @cdk.module  silent
+ * @cdk.module silent
  * @cdk.keyword reaction
  */
 public class ReactionScheme extends ReactionSet implements IReactionScheme {
 
-    /** A List of reaction schemes*/
+    /** A List of reaction schemes */
     private List<IReactionScheme> reactionScheme;
     /**
      * Determines if a de-serialized object is compatible with this class.
      *
-     * This value must only be changed if and only if the new version
-     * of this class is incompatible with the old version. See Sun docs
-     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
+     * <p>This value must only be changed if and only if the new version of this class is
+     * incompatible with the old version. See Sun docs for <a
+     * href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
      */
-    private static final long     serialVersionUID = -3676327644698347260L;
+    private static final long serialVersionUID = -3676327644698347260L;
 
-    /**  Constructs an empty ReactionScheme.
-     */
+    /** Constructs an empty ReactionScheme. */
     public ReactionScheme() {
         reactionScheme = new ArrayList<IReactionScheme>();
     }
@@ -67,10 +64,9 @@ public class ReactionScheme extends ReactionSet implements IReactionScheme {
     }
 
     /**
-     *  Returns an Iterable for looping over all IMolecularScheme
-     *   in this ReactionScheme.
+     * Returns an Iterable for looping over all IMolecularScheme in this ReactionScheme.
      *
-     * @return    An Iterable with the IMolecularScheme in this ReactionScheme
+     * @return An Iterable with the IMolecularScheme in this ReactionScheme
      */
     @Override
     public Iterable<IReactionScheme> reactionSchemes() {
@@ -80,16 +76,14 @@ public class ReactionScheme extends ReactionSet implements IReactionScheme {
     /**
      * Returns the number of ReactionScheme in this Scheme.
      *
-     * @return     The number of ReactionScheme in this Scheme
+     * @return The number of ReactionScheme in this Scheme
      */
     @Override
     public int getReactionSchemeCount() {
         return reactionScheme.size();
     }
 
-    /**
-     * Removes all IReactionScheme from this chemObject.
-     */
+    /** Removes all IReactionScheme from this chemObject. */
     @Override
     public void removeAllReactionSchemes() {
         reactionScheme.clear();
@@ -98,7 +92,7 @@ public class ReactionScheme extends ReactionSet implements IReactionScheme {
     /**
      * Removes an IReactionScheme from this chemObject.
      *
-     * @param  scheme  The IReactionScheme to be removed from this chemObject
+     * @param scheme The IReactionScheme to be removed from this chemObject
      */
     @Override
     public void removeReactionScheme(IReactionScheme scheme) {
@@ -108,7 +102,7 @@ public class ReactionScheme extends ReactionSet implements IReactionScheme {
     /**
      * Clones this ReactionScheme object and its content.
      *
-     * @return    The cloned object
+     * @return The cloned object
      */
     @Override
     public Object clone() throws CloneNotSupportedException {

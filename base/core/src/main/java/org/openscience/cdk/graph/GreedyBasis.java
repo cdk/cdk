@@ -23,16 +23,15 @@
  */
 package org.openscience.cdk.graph;
 
+import static org.openscience.cdk.graph.InitialCycles.Cycle;
+
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collections;
 import java.util.List;
 
-import static org.openscience.cdk.graph.InitialCycles.Cycle;
-
 /**
- * Greedily compute a cycle basis from a provided set of initial cycles using
- * Gaussian elimination.
+ * Greedily compute a cycle basis from a provided set of initial cycles using Gaussian elimination.
  *
  * @author John May
  * @cdk.module core
@@ -45,15 +44,14 @@ final class GreedyBasis {
     private final List<Cycle> basis;
 
     /** Edges of the current basis. */
-    private final BitSet      edgesOfBasis;
+    private final BitSet edgesOfBasis;
 
     /** Number of edges */
-    private final int         m;
+    private final int m;
 
     /**
-     * Create a new basis for the <i>potential</i> number of cycles and the
-     * <i>exact</i> number of edges. These values can be obtained from an {@link
-     * InitialCycles} instance.
+     * Create a new basis for the <i>potential</i> number of cycles and the <i>exact</i> number of
+     * edges. These values can be obtained from an {@link InitialCycles} instance.
      *
      * @param n potential number of cycles in the basis
      * @param m number of edges in the graph
@@ -100,13 +98,11 @@ final class GreedyBasis {
      * @param cycles new members of the basis
      */
     final void addAll(final Iterable<Cycle> cycles) {
-        for (final Cycle cycle : cycles)
-            add(cycle);
+        for (final Cycle cycle : cycles) add(cycle);
     }
 
     /**
-     * Check if all the edges of the <i>cycle</i> are present in the current
-     * <i>basis</i>.
+     * Check if all the edges of the <i>cycle</i> are present in the current <i>basis</i>.
      *
      * @param cycle an initial cycle
      * @return any edges of the basis are present
@@ -118,8 +114,8 @@ final class GreedyBasis {
     }
 
     /**
-     * Determine whether the <i>candidate</i> cycle is linearly
-     * <i>independent</i> from the current basis.
+     * Determine whether the <i>candidate</i> cycle is linearly <i>independent</i> from the current
+     * basis.
      *
      * @param candidate a cycle not in currently in the basis
      * @return the candidate is independent

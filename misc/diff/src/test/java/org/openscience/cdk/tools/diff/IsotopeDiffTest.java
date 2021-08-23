@@ -18,18 +18,16 @@
  */
 package org.openscience.cdk.tools.diff;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.tools.diff.tree.IDifference;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-/**
- * @cdk.module test-diff
- */
+/** @cdk.module test-diff */
 public class IsotopeDiffTest extends CDKTestCase {
 
     @Test

@@ -26,20 +26,18 @@ package org.openscience.cdk.io.formats;
 import java.util.List;
 
 /**
- * This interface is used for classes that are able to match a certain
- * chemical file format. For example: Chemical Markup Language, PDB etc.
+ * This interface is used for classes that are able to match a certain chemical file format. For
+ * example: Chemical Markup Language, PDB etc.
  *
  * @cdk.module ioformats
  * @cdk.githash
- *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  * @cdk.created 2004-10-25
- **/
+ */
 public interface IChemFormatMatcher extends IChemFormat {
 
     /**
-     * Method that checks whether the given lines are part of the format read by
-     * this reader.
+     * Method that checks whether the given lines are part of the format read by this reader.
      *
      * @param lines lines of the input to be checked
      * @return whether the format matched and when it matched
@@ -50,17 +48,16 @@ public interface IChemFormatMatcher extends IChemFormat {
     static MatchResult NO_MATCH = new MatchResult(false, null, Integer.MAX_VALUE);
 
     /**
-     * Simple class holds whether a format matcher matched, when it matched and
-     * what the format was. The result is comparable to be prioritised (lower
-     * match position being favoured).
+     * Simple class holds whether a format matcher matched, when it matched and what the format was.
+     * The result is comparable to be prioritised (lower match position being favoured).
      */
     static final class MatchResult implements Comparable<MatchResult> {
 
         /** Did the format match. */
-        private final boolean     matched;
+        private final boolean matched;
 
         /** When did the format match. */
-        private final int         position;
+        private final int position;
 
         /** Which format matched. */
         private final IChemFormat format;
@@ -81,8 +78,7 @@ public interface IChemFormatMatcher extends IChemFormat {
         }
 
         /**
-         * What was the format which matched if there was a match ({@link
-         * #matched()}).
+         * What was the format which matched if there was a match ({@link #matched()}).
          *
          * @return the format which matched
          * @throws IllegalArgumentException there was no match
@@ -93,8 +89,8 @@ public interface IChemFormatMatcher extends IChemFormat {
         }
 
         /**
-         * Compares the match result with another, results with lower position
-         * are ordered before those with higher position.
+         * Compares the match result with another, results with lower position are ordered before
+         * those with higher position.
          */
         @Override
         public int compareTo(MatchResult that) {

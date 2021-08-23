@@ -25,8 +25,8 @@ import org.openscience.cdk.AbstractChemObjectBuilderTest;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * Checks the functionality of the {@link IChemObjectBuilder}
- * {@link DebugChemObjectBuilder} implementation.
+ * Checks the functionality of the {@link IChemObjectBuilder} {@link DebugChemObjectBuilder}
+ * implementation.
  *
  * @cdk.module test-datadebug
  */
@@ -44,5 +44,4 @@ public class DebugChemObjectBuilderTest extends AbstractChemObjectBuilderTest {
         Assert.assertTrue(builder instanceof IChemObjectBuilder);
         Assert.assertTrue(builder instanceof DebugChemObjectBuilder);
     }
-
 }

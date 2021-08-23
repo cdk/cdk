@@ -21,9 +21,9 @@ package org.openscience.cdk.interfaces;
 /**
  * Represents a mapping of two atoms.
  *
- * @cdk.module  interfaces
+ * @cdk.module interfaces
  * @cdk.githash
- * @author      kaihartmann
+ * @author kaihartmann
  * @cdk.created 2006-02-15
  */
 public interface IMapping extends IChemObject {
@@ -38,9 +38,8 @@ public interface IMapping extends IChemObject {
     /**
      * Retrieve the first or second of the related IChemObjects.
      *
-     * @param   pos  The position of the IChemObject.
-     * @return  The IChemObject to retrieve.
+     * @param pos The position of the IChemObject.
+     * @return The IChemObject to retrieve.
      */
     public IChemObject getChemObject(int pos);
-
 }

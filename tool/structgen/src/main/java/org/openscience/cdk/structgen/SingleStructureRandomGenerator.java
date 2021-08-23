@@ -24,7 +24,6 @@
 package org.openscience.cdk.structgen;
 
 import java.util.Random;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
@@ -36,52 +35,46 @@ import org.openscience.cdk.tools.SaturationChecker;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
- * Randomly generates a single, connected, correctly bonded structure for
- * a given molecular formula.
- * To see it working run the graphical
- * test org.openscience.cdk.test.SingleStructureRandomGeneratorTest
- * and add more structures to the panel using the "More" button.
- * In order to use this class, use MFAnalyser to get an AtomContainer from
+ * Randomly generates a single, connected, correctly bonded structure for a given molecular formula.
+ * To see it working run the graphical test
+ * org.openscience.cdk.test.SingleStructureRandomGeneratorTest and add more structures to the panel
+ * using the "More" button. In order to use this class, use MFAnalyser to get an AtomContainer from
  * a molecular formula string.
  *
- * <p>Assign hydrogen counts to each heavy atom. The hydrogens should not be
- * in the atom pool but should be assigned implicitly to the heavy atoms in
- * order to reduce computational cost.
- * Assign this AtomContainer to the
- * SingleStructureRandomGenerator and retrieve a randomly generated, but correctly bonded
- * structure by using the generate() method. You can then repeatedly call
- * the generate() method in order to retrieve further structures.
+ * <p>Assign hydrogen counts to each heavy atom. The hydrogens should not be in the atom pool but
+ * should be assigned implicitly to the heavy atoms in order to reduce computational cost. Assign
+ * this AtomContainer to the SingleStructureRandomGenerator and retrieve a randomly generated, but
+ * correctly bonded structure by using the generate() method. You can then repeatedly call the
+ * generate() method in order to retrieve further structures.
  *
  * <p>Agenda:
+ *
  * <ul>
- *  <li>add a method for randomly adding hydrogens to the atoms
- *  <li>add a seed for random generator for reproducability
+ *   <li>add a method for randomly adding hydrogens to the atoms
+ *   <li>add a seed for random generator for reproducability
  * </ul>
  *
- * @author      steinbeck
+ * @author steinbeck
  * @cdk.created 2001-09-04
- * @cdk.module  structgen
+ * @cdk.module structgen
  * @cdk.githash
  */
 public class SingleStructureRandomGenerator {
 
-    ILoggingTool      logger = LoggingToolFactory.createLoggingTool(SingleStructureRandomGenerator.class);
+    ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(SingleStructureRandomGenerator.class);
 
-    IAtomContainer    atomContainer;
+    IAtomContainer atomContainer;
     SaturationChecker satCheck;
-    Random            random = null;
+    Random random = null;
 
-    /**
-     * Constructor for the SingleStructureRandomGenerator object.
-     */
+    /** Constructor for the SingleStructureRandomGenerator object. */
     public SingleStructureRandomGenerator(long seed) throws java.lang.Exception {
         satCheck = new SaturationChecker();
         random = new Random(seed);
     }
 
-    /**
-     * Constructor for the SingleStructureRandomGenerator object.
-     */
+    /** Constructor for the SingleStructureRandomGenerator object. */
     public SingleStructureRandomGenerator() throws java.lang.Exception {
         this((long) 11000);
     }
@@ -89,15 +82,13 @@ public class SingleStructureRandomGenerator {
     /**
      * Sets the AtomContainer attribute of the SingleStructureRandomGenerator object.
      *
-     * @param  ac  The new AtomContainer value
+     * @param ac The new AtomContainer value
      */
     public void setAtomContainer(IAtomContainer ac) {
         this.atomContainer = ac;
     }
 
-    /**
-     * Generates a random structure based on the atoms in the given IAtomContainer.
-     */
+    /** Generates a random structure based on the atoms in the given IAtomContainer. */
     public IAtomContainer generate() throws CDKException {
         boolean structureFound = false;
         boolean bondFormed;
@@ -121,16 +112,26 @@ public class SingleStructureRandomGenerator {
 
                             cmax2 = satCheck.getCurrentMaxBondOrder(partner, atomContainer);
                             max = Math.min(cmax1, cmax2);
-                            order = Math.min(Math.max(1.0, random.nextInt((int) Math.round(max))), 3.0);
+                            order =
+                                    Math.min(
+                                            Math.max(1.0, random.nextInt((int) Math.round(max))),
+                                            3.0);
                             logger.debug("Forming bond of order ", order);
-                            atomContainer.addBond(atomContainer.getBuilder().newInstance(IBond.class, atom, partner,
-                                    BondManipulator.createBondOrder(order)));
+                            atomContainer.addBond(
+                                    atomContainer
+                                            .getBuilder()
+                                            .newInstance(
+                                                    IBond.class,
+                                                    atom,
+                                                    partner,
+                                                    BondManipulator.createBondOrder(order)));
                             bondFormed = true;
                         }
                     }
                 }
             } while (bondFormed);
-            if (ConnectivityChecker.isConnected(atomContainer) && satCheck.allSaturated(atomContainer)) {
+            if (ConnectivityChecker.isConnected(atomContainer)
+                    && satCheck.allSaturated(atomContainer)) {
                 structureFound = true;
             }
         } while (!structureFound && iteration < 20);
@@ -141,7 +142,7 @@ public class SingleStructureRandomGenerator {
     /**
      * Gets the AnotherUnsaturatedNode attribute of the SingleStructureRandomGenerator object.
      *
-     * @return                The AnotherUnsaturatedNode value
+     * @return The AnotherUnsaturatedNode value
      */
     private IAtom getAnotherUnsaturatedNode(IAtom exclusionAtom) throws CDKException {
         IAtom atom;
@@ -149,19 +150,20 @@ public class SingleStructureRandomGenerator {
 
         for (int f = next; f < atomContainer.getAtomCount(); f++) {
             atom = atomContainer.getAtom(f);
-            if (!satCheck.isSaturated(atom, atomContainer) && !exclusionAtom.equals(atom)
+            if (!satCheck.isSaturated(atom, atomContainer)
+                    && !exclusionAtom.equals(atom)
                     && !atomContainer.getConnectedAtomsList(exclusionAtom).contains(atom)) {
                 return atom;
             }
         }
         for (int f = 0; f < next; f++) {
             atom = atomContainer.getAtom(f);
-            if (!satCheck.isSaturated(atom, atomContainer) && !exclusionAtom.equals(atom)
+            if (!satCheck.isSaturated(atom, atomContainer)
+                    && !exclusionAtom.equals(atom)
                     && !atomContainer.getConnectedAtomsList(exclusionAtom).contains(atom)) {
                 return atom;
             }
         }
         return null;
     }
-
 }

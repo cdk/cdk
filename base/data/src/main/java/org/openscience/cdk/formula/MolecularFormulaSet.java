@@ -21,41 +21,42 @@ package org.openscience.cdk.formula;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- *  Class defining an set object of MolecularFormulas. It maintains
- *   a list of list IMolecularFormula.<p>
+ * Class defining an set object of MolecularFormulas. It maintains a list of list IMolecularFormula.
  *
- * @cdk.module  data
- * @author      miguelrojasch
+ * <p>
+ *
+ * @cdk.module data
+ * @author miguelrojasch
  * @cdk.created 2007-11-20
  * @cdk.keyword molecular formula
  * @cdk.githash
  */
-public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecularFormulaSet, Cloneable {
+public class MolecularFormulaSet
+        implements Iterable<IMolecularFormula>, IMolecularFormulaSet, Cloneable {
 
     /**
      * Determines if a de-serialized object is compatible with this class.
      *
-     * This value must only be changed if and only if the new version
-     * of this class is incompatible with the old version. See Sun docs
-     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
+     * <p>This value must only be changed if and only if the new version of this class is
+     * incompatible with the old version. See Sun docs for <a
+     * href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
      */
-    private static final long       serialVersionUID = -2043178712150212550L;
+    private static final long serialVersionUID = -2043178712150212550L;
 
-    /**  Internal List of IMolecularFormula. */
+    /** Internal List of IMolecularFormula. */
     private List<IMolecularFormula> components;
 
     /**
-     *  Constructs an empty MolecularFormulaSet.
+     * Constructs an empty MolecularFormulaSet.
      *
-     *  @see #MolecularFormulaSet(IMolecularFormula)
+     * @see #MolecularFormulaSet(IMolecularFormula)
      */
     public MolecularFormulaSet() {
         components = new ArrayList<IMolecularFormula>();
@@ -63,11 +64,11 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
 
     /**
      * Constructs a MolecularFormulaSet with a copy MolecularFormulaSet of another
-     * MolecularFormulaSet (A shallow copy, i.e., with the same objects as in
-     * the original MolecularFormulaSet).
+     * MolecularFormulaSet (A shallow copy, i.e., with the same objects as in the original
+     * MolecularFormulaSet).
      *
-     *  @param  formula  An MolecularFormula to copy from
-     *  @see             #MolecularFormulaSet()
+     * @param formula An MolecularFormula to copy from
+     * @see #MolecularFormulaSet()
      */
     public MolecularFormulaSet(IMolecularFormula formula) {
         components = new ArrayList<IMolecularFormula>();
@@ -75,9 +76,9 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
     }
 
     /**
-     *  Adds all molecularFormulas in the MolecularFormulaSet to this chemObject.
+     * Adds all molecularFormulas in the MolecularFormulaSet to this chemObject.
      *
-     * @param  formulaSet  The MolecularFormulaSet
+     * @param formulaSet The MolecularFormulaSet
      */
     @Override
     public void add(IMolecularFormulaSet formulaSet) {
@@ -92,7 +93,7 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
     /**
      * Adds an molecularFormula to this chemObject.
      *
-     * @param  formula  The molecularFormula to be added to this chemObject
+     * @param formula The molecularFormula to be added to this chemObject
      */
     @Override
     public void addMolecularFormula(IMolecularFormula formula) {
@@ -100,10 +101,9 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
     }
 
     /**
-     *  Returns an Iterable for looping over all IMolecularFormula
-     *   in this MolecularFormulaSet.
+     * Returns an Iterable for looping over all IMolecularFormula in this MolecularFormulaSet.
      *
-     * @return    An Iterable with the IMolecularFormula in this MolecularFormulaSet
+     * @return An Iterable with the IMolecularFormula in this MolecularFormulaSet
      */
     @Override
     public Iterable<IMolecularFormula> molecularFormulas() {
@@ -111,10 +111,9 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
     }
 
     /**
-     *  Returns an Iterator for looping over all IMolecularFormula
-     *   in this MolecularFormulaSet.
+     * Returns an Iterator for looping over all IMolecularFormula in this MolecularFormulaSet.
      *
-     * @return    An Iterator with the IMolecularFormula in this MolecularFormulaSet
+     * @return An Iterator with the IMolecularFormula in this MolecularFormulaSet
      */
     @Override
     public Iterator<IMolecularFormula> iterator() {
@@ -124,7 +123,7 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
     /**
      * Returns the number of MolecularFormulas in this MolecularFormulaSet.
      *
-     * @return     The number of MolecularFormulas in this MolecularFormulaSet
+     * @return The number of MolecularFormulas in this MolecularFormulaSet
      */
     @Override
     public int size() {
@@ -132,10 +131,10 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
     }
 
     /**
-     *  True, if the MolecularFormulaSet contains the given IMolecularFormula object.
+     * True, if the MolecularFormulaSet contains the given IMolecularFormula object.
      *
-     * @param  formula  The IMolecularFormula this MolecularFormulaSet is searched for
-     * @return          True, if the MolecularFormulaSet contains the given IMolecularFormula object
+     * @param formula The IMolecularFormula this MolecularFormulaSet is searched for
+     * @return True, if the MolecularFormulaSet contains the given IMolecularFormula object
      */
     @Override
     public boolean contains(IMolecularFormula formula) {
@@ -143,21 +142,17 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
     }
 
     /**
+     * Returns the MolecularFormula at position <code>number</code> in the chemObject.
      *
-     * Returns the MolecularFormula at position <code>number</code> in the
-     * chemObject.
-     *
-     * @param  position The position of the IMolecularFormula to be returned.
-     * @return          The IMolecularFormula at position <code>number</code> .
+     * @param position The position of the IMolecularFormula to be returned.
+     * @return The IMolecularFormula at position <code>number</code> .
      */
     @Override
     public IMolecularFormula getMolecularFormula(int position) {
         return components.get(position);
     }
 
-    /**
-     * Removes all IMolecularFormula from this chemObject.
-     */
+    /** Removes all IMolecularFormula from this chemObject. */
     @Override
     public void removeAllMolecularFormulas() {
         components.clear();
@@ -166,7 +161,7 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
     /**
      * Removes an IMolecularFormula from this chemObject.
      *
-     * @param  formula  The IMolecularFormula to be removed from this chemObject
+     * @param formula The IMolecularFormula to be removed from this chemObject
      */
     @Override
     public void removeMolecularFormula(IMolecularFormula formula) {
@@ -176,7 +171,7 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
     /**
      * Removes an MolecularFormula from this chemObject.
      *
-     * @param  position  The position of the MolecularFormula to be removed from this chemObject
+     * @param position The position of the MolecularFormula to be removed from this chemObject
      */
     @Override
     public void removeMolecularFormula(int position) {
@@ -186,7 +181,7 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
     /**
      * Clones this MolecularFormulaSet object and its content.
      *
-     * @return    The cloned object
+     * @return The cloned object
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
@@ -212,5 +207,4 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
     public IChemObjectBuilder getBuilder() {
         return DefaultChemObjectBuilder.getInstance();
     }
-
 }

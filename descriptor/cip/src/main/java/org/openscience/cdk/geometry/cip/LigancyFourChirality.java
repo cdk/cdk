@@ -28,47 +28,45 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 
-import java.util.Objects;
-
 /**
  * Stereochemistry specification for quadrivalent atoms to be used for the CIP algorithm only.
  *
- * <p>The data model defines the central, chiral {@link IAtom},
- * and its four {@link ILigand}s, each of which has an ligand {@link IAtom}, directly bonded to the chiral atom via
- * an {@link IBond}. The ordering of the four ligands is important, and defines together with the {@link STEREO}
- * to spatial geometry around the chiral atom. The first ligand points towards to observer, and the three other
- * ligands point away from the observer; the {@link STEREO} then defines the order of the second, third, and
- * fourth ligand to be clockwise or anti-clockwise.
+ * <p>The data model defines the central, chiral {@link IAtom}, and its four {@link ILigand}s, each
+ * of which has an ligand {@link IAtom}, directly bonded to the chiral atom via an {@link IBond}.
+ * The ordering of the four ligands is important, and defines together with the {@link STEREO} to
+ * spatial geometry around the chiral atom. The first ligand points towards to observer, and the
+ * three other ligands point away from the observer; the {@link STEREO} then defines the order of
+ * the second, third, and fourth ligand to be clockwise or anti-clockwise.
  *
  * @cdk.module cip
  * @cdk.githash
  */
 class LigancyFourChirality {
 
-    private IAtom                        chiralAtom;
-    private ILigand[]                    ligands;
+    private IAtom chiralAtom;
+    private ILigand[] ligands;
     private ITetrahedralChirality.Stereo stereo;
 
     /**
      * Creates a new data model for chirality for the CIP rules.
      *
      * @param chiralAtom The {@link IAtom} that is actually chiral.
-     * @param ligands    An array with exactly four {@link ILigand}s.
-     * @param stereo     A indication of clockwise or anticlockwise orientation of the atoms.
-     *
+     * @param ligands An array with exactly four {@link ILigand}s.
+     * @param stereo A indication of clockwise or anticlockwise orientation of the atoms.
      * @see ITetrahedralChirality.Stereo
      */
-    public LigancyFourChirality(IAtom chiralAtom, ILigand[] ligands, ITetrahedralChirality.Stereo stereo) {
+    public LigancyFourChirality(
+            IAtom chiralAtom, ILigand[] ligands, ITetrahedralChirality.Stereo stereo) {
         this.chiralAtom = chiralAtom;
         this.ligands = ligands;
         this.stereo = stereo;
     }
 
     /**
-     * Creates a new data model for chirality for the CIP rules based on a chirality definition
-     * in the CDK data model with {@link ITetrahedralChirality}.
+     * Creates a new data model for chirality for the CIP rules based on a chirality definition in
+     * the CDK data model with {@link ITetrahedralChirality}.
      *
-     * @param container    {@link IAtomContainer} to which the chiral atom belongs.
+     * @param container {@link IAtomContainer} to which the chiral atom belongs.
      * @param cdkChirality {@link ITetrahedralChirality} object specifying the chirality.
      */
     public LigancyFourChirality(IAtomContainer container, ITetrahedralChirality cdkChirality) {

@@ -23,7 +23,6 @@
 package org.openscience.cdk.io;
 
 import java.io.InputStream;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -39,13 +38,13 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * TestCase for the reading INChI files using one test file.
  *
  * @cdk.module test-extra
- *
  * @see org.openscience.cdk.io.INChIReader
  * @cdk.require java1.4+
  */
 public class INChIReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(INChIReaderTest.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(INChIReaderTest.class);
 
     @BeforeClass
     public static void setup() {
@@ -57,10 +56,7 @@ public class INChIReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertTrue(chemObjectIO.accepts(ChemFile.class));
     }
 
-    /**
-     * Test a INChI 1.1Beta file containing the two tautomers
-     * of guanine.
-     */
+    /** Test a INChI 1.1Beta file containing the two tautomers of guanine. */
     @Test
     public void testGuanine() throws Exception {
         String filename = "data/inchi/guanine.inchi.xml";
@@ -92,5 +88,4 @@ public class INChIReaderTest extends SimpleChemObjectReaderTest {
         // be read via InputStreams
         super.testSetReader_Reader();
     }
-
 }

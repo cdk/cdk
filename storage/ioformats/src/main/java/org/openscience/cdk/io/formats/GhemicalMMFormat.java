@@ -58,7 +58,7 @@ public class GhemicalMMFormat extends SimpleChemFormatMatcher implements IChemFo
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"gpr"};
+        return new String[] {"gpr"};
     }
 
     /** {@inheritDoc} */

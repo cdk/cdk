@@ -1,5 +1,6 @@
 package org.openscience.cdk.libio.cml;
 
+import java.io.StringWriter;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.AtomContainer;
@@ -10,15 +11,14 @@ import org.openscience.cdk.protein.data.PDBAtom;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import java.io.StringWriter;
-
 /**
  * @author John May
  * @cdk.module test-pdbcml
  */
 public class PDBAtomCustomizerTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(PDBAtomCustomizerTest.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(PDBAtomCustomizerTest.class);
 
     @Test
     public void testPDBAtomCustomization() throws Exception {

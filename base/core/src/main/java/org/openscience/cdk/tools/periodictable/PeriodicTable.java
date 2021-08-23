@@ -20,20 +20,18 @@
  */
 package org.openscience.cdk.tools.periodictable;
 
-import org.openscience.cdk.config.Elements;
+import static org.openscience.cdk.config.Elements.*;
 
 import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.Map;
 import java.util.Set;
-
-import static org.openscience.cdk.config.Elements.*;
+import org.openscience.cdk.config.Elements;
 
 /**
- * Represents elements of the Periodic Table.  This utility class was
- * previously useful when one wants generic properties of elements such as
- * atomic number, VdW radius etc. The new approach to this is to use the
- * {@link Elements} enumeration.
+ * Represents elements of the Periodic Table. This utility class was previously useful when one
+ * wants generic properties of elements such as atomic number, VdW radius etc. The new approach to
+ * this is to use the {@link Elements} enumeration.
  *
  * @author Rajarshi Guha
  * @cdk.created 2008-06-12
@@ -50,7 +48,7 @@ public final class PeriodicTable {
     private static volatile Map<Elements, String> ids;
 
     /** A lock used for locking CAD ID initialisation. */
-    private final static Object                   LOCK = new Object();
+    private static final Object LOCK = new Object();
 
     /**
      * Get the Van der Waals radius for the element in question.
@@ -90,8 +88,7 @@ public final class PeriodicTable {
      */
     public static String getChemicalSeries(String symbol) {
         Elements e = Elements.ofString(symbol);
-        for (Series s : Series.values())
-            if (s.contains(e)) return s.name();
+        for (Series s : Series.values()) if (s.contains(e)) return s.name();
         return null;
     }
 
@@ -133,8 +130,7 @@ public final class PeriodicTable {
      */
     public static String getPhase(String symbol) {
         Elements e = Elements.ofString(symbol);
-        for (Phase p : Phase.values())
-            if (p.contains(e)) return p.name();
+        for (Phase p : Phase.values()) if (p.contains(e)) return p.name();
         return null;
     }
 
@@ -169,8 +165,7 @@ public final class PeriodicTable {
     }
 
     /**
-     * Return the number of elements currently considered in the periodic
-     * table.
+     * Return the number of elements currently considered in the periodic table.
      *
      * @return the number of elements in the periodic table
      */
@@ -178,23 +173,86 @@ public final class PeriodicTable {
         return Elements.values().length;
     }
 
-    /**
-     * Enumeration of chemical series and the elements which are members of each
-     * series.
-     */
+    /** Enumeration of chemical series and the elements which are members of each series. */
     private enum Series {
-        NonMetals(Sulfur, Selenium, Oxygen, Carbon, Phosphorus, Hydrogen, Nitrogen), NobleGasses(Helium, Krypton,
-                Xenon, Argon, Radon, Neon), AlkaliMetals(Sodium, Rubidium, Potassium, Caesium, Francium, Lithium), AlkaliEarthMetals(
-                Strontium, Radium, Calcium, Magnesium, Barium, Beryllium), Metalloids(Silicon, Arsenic, Tellurium,
-                Germanium, Antimony, Polonium, Boron), Halogens(Fluorine, Iodine, Chlorine, Astatine, Bromine), Metals(
-                Gallium, Indium, Aluminium, Thallium, Tin, Lead, Bismuth), TransitionMetals(Seaborgium, Hafnium,
-                Roentgenium, Iridium, Nickel, Meitnerium, Yttrium, Copper, Rutherfordium, Tungsten, Copernicium,
-                Rhodium, Cobalt, Zinc, Platinum, Gold, Cadmium, Manganese, Darmstadtium, Dubnium, Palladium, Vanadium,
-                Titanium, Tantalum, Chromium, Molybdenum, Ruthenium, Zirconium, Osmium, Bohrium, Rhenium, Niobium,
-                Scandium, Technetium, Hassium, Mercury, Iron, Silver), Lanthanides(Terbium, Samarium, Lutetium,
-                Neodymium, Cerium, Europium, Gadolinium, Thulium, Lanthanum, Erbium, Promethium, Holmium, Praseodymium,
-                Dysprosium, Ytterbium), Actinides(Fermium, Protactinium, Plutonium, Thorium, Lawrencium, Einsteinium,
-                Nobelium, Actinium, Americium, Curium, Berkelium, Mendelevium, Uranium, Californium, Neptunium);
+        NonMetals(Sulfur, Selenium, Oxygen, Carbon, Phosphorus, Hydrogen, Nitrogen),
+        NobleGasses(Helium, Krypton, Xenon, Argon, Radon, Neon),
+        AlkaliMetals(Sodium, Rubidium, Potassium, Caesium, Francium, Lithium),
+        AlkaliEarthMetals(Strontium, Radium, Calcium, Magnesium, Barium, Beryllium),
+        Metalloids(Silicon, Arsenic, Tellurium, Germanium, Antimony, Polonium, Boron),
+        Halogens(Fluorine, Iodine, Chlorine, Astatine, Bromine),
+        Metals(Gallium, Indium, Aluminium, Thallium, Tin, Lead, Bismuth),
+        TransitionMetals(
+                Seaborgium,
+                Hafnium,
+                Roentgenium,
+                Iridium,
+                Nickel,
+                Meitnerium,
+                Yttrium,
+                Copper,
+                Rutherfordium,
+                Tungsten,
+                Copernicium,
+                Rhodium,
+                Cobalt,
+                Zinc,
+                Platinum,
+                Gold,
+                Cadmium,
+                Manganese,
+                Darmstadtium,
+                Dubnium,
+                Palladium,
+                Vanadium,
+                Titanium,
+                Tantalum,
+                Chromium,
+                Molybdenum,
+                Ruthenium,
+                Zirconium,
+                Osmium,
+                Bohrium,
+                Rhenium,
+                Niobium,
+                Scandium,
+                Technetium,
+                Hassium,
+                Mercury,
+                Iron,
+                Silver),
+        Lanthanides(
+                Terbium,
+                Samarium,
+                Lutetium,
+                Neodymium,
+                Cerium,
+                Europium,
+                Gadolinium,
+                Thulium,
+                Lanthanum,
+                Erbium,
+                Promethium,
+                Holmium,
+                Praseodymium,
+                Dysprosium,
+                Ytterbium),
+        Actinides(
+                Fermium,
+                Protactinium,
+                Plutonium,
+                Thorium,
+                Lawrencium,
+                Einsteinium,
+                Nobelium,
+                Actinium,
+                Americium,
+                Curium,
+                Berkelium,
+                Mendelevium,
+                Uranium,
+                Californium,
+                Neptunium);
 
         private final Set<Elements> elements;
 
@@ -207,28 +265,116 @@ public final class PeriodicTable {
         }
     }
 
-    /**
-     * Enumeration of matter phases and the chemical elements which are present
-     * in each phase.
-     */
+    /** Enumeration of matter phases and the chemical elements which are present in each phase. */
     private enum Phase {
-
-        Solid(Sulfur, Hafnium, Terbium, Calcium, Gadolinium, Nickel, Cerium, Germanium, Phosphorus, Copper, Polonium,
-                Lead, Gold, Iodine, Cadmium, Ytterbium, Manganese, Lithium, Palladium, Vanadium, Chromium, Molybdenum,
-                Potassium, Ruthenium, Osmium, Boron, Bismuth, Rhenium, Holmium, Niobium, Praseodymium, Barium,
-                Antimony, Thallium, Iron, Silver, Silicon, Caesium, Astatine, Iridium, Francium, Lutetium, Yttrium,
-                Rubidium, Lanthanum, Tungsten, Erbium, Selenium, Gallium, Carbon, Rhodium, Uranium, Dysprosium, Cobalt,
-                Zinc, Platinum, Protactinium, Titanium, Arsenic, Tantalum, Thorium, Samarium, Europium, Neodymium,
-                Zirconium, Radium, Thulium, Sodium, Scandium, Tellurium, Indium, Beryllium, Aluminium, Strontium, Tin,
+        Solid(
+                Sulfur,
+                Hafnium,
+                Terbium,
+                Calcium,
+                Gadolinium,
+                Nickel,
+                Cerium,
+                Germanium,
+                Phosphorus,
+                Copper,
+                Polonium,
+                Lead,
+                Gold,
+                Iodine,
+                Cadmium,
+                Ytterbium,
+                Manganese,
+                Lithium,
+                Palladium,
+                Vanadium,
+                Chromium,
+                Molybdenum,
+                Potassium,
+                Ruthenium,
+                Osmium,
+                Boron,
+                Bismuth,
+                Rhenium,
+                Holmium,
+                Niobium,
+                Praseodymium,
+                Barium,
+                Antimony,
+                Thallium,
+                Iron,
+                Silver,
+                Silicon,
+                Caesium,
+                Astatine,
+                Iridium,
+                Francium,
+                Lutetium,
+                Yttrium,
+                Rubidium,
+                Lanthanum,
+                Tungsten,
+                Erbium,
+                Selenium,
+                Gallium,
+                Carbon,
+                Rhodium,
+                Uranium,
+                Dysprosium,
+                Cobalt,
+                Zinc,
+                Platinum,
+                Protactinium,
+                Titanium,
+                Arsenic,
+                Tantalum,
+                Thorium,
+                Samarium,
+                Europium,
+                Neodymium,
+                Zirconium,
+                Radium,
+                Thulium,
+                Sodium,
+                Scandium,
+                Tellurium,
+                Indium,
+                Beryllium,
+                Aluminium,
+                Strontium,
+                Tin,
                 Magnesium),
 
         Liquid(Bromine, Mercury),
 
-        Gas(Fluorine, Oxygen, Xenon, Argon, Chlorine, Helium, Krypton, Hydrogen, Radon, Nitrogen, Neon),
+        Gas(
+                Fluorine, Oxygen, Xenon, Argon, Chlorine, Helium, Krypton, Hydrogen, Radon,
+                Nitrogen, Neon),
 
-        Synthetic(Fermium, Seaborgium, Plutonium, Roentgenium, Lawrencium, Meitnerium, Einsteinium, Nobelium, Actinium,
-                Rutherfordium, Americium, Curium, Bohrium, Berkelium, Promethium, Copernicium, Technetium, Hassium,
-                Californium, Mendelevium, Neptunium, Darmstadtium, Dubnium);
+        Synthetic(
+                Fermium,
+                Seaborgium,
+                Plutonium,
+                Roentgenium,
+                Lawrencium,
+                Meitnerium,
+                Einsteinium,
+                Nobelium,
+                Actinium,
+                Rutherfordium,
+                Americium,
+                Curium,
+                Bohrium,
+                Berkelium,
+                Promethium,
+                Copernicium,
+                Technetium,
+                Hassium,
+                Californium,
+                Mendelevium,
+                Neptunium,
+                Darmstadtium,
+                Dubnium);
 
         private final Set<Elements> elements;
 
@@ -383,5 +529,4 @@ public final class PeriodicTable {
         ids.put(Ununoctium, "");
         return ids;
     }
-
 }

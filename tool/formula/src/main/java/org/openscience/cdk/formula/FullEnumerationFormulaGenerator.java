@@ -22,6 +22,9 @@
  */
 package org.openscience.cdk.formula;
 
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.TreeSet;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
@@ -29,17 +32,12 @@ import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.TreeSet;
-
 /**
- * This class generates molecular formulas within given mass range and elemental
- * composition. There is no guaranteed order in which the formulas are
- * generated.
- * 
- * Usage:
- * 
+ * This class generates molecular formulas within given mass range and elemental composition. There
+ * is no guaranteed order in which the formulas are generated.
+ *
+ * <p>Usage:
+ *
  * <pre>
  * IsotopeFactory ifac = Isotopes.getInstance();
  * IIsotope c = ifac.getMajorIsotope(&quot;C&quot;);
@@ -48,7 +46,7 @@ import java.util.TreeSet;
  * IIsotope o = ifac.getMajorIsotope(&quot;O&quot;);
  * IIsotope p = ifac.getMajorIsotope(&quot;P&quot;);
  * IIsotope s = ifac.getMajorIsotope(&quot;S&quot;);
- * 
+ *
  * MolecularFormulaRange mfRange = new MolecularFormulaRange();
  * mfRange.addIsotope(c, 0, 50);
  * mfRange.addIsotope(h, 0, 100);
@@ -56,17 +54,17 @@ import java.util.TreeSet;
  * mfRange.addIsotope(n, 0, 50);
  * mfRange.addIsotope(p, 0, 10);
  * mfRange.addIsotope(s, 0, 10);
- * 
+ *
  * MolecularFormulaGenerator mfg = new MolecularFormulaGenerator(builder, minMass,
  *         maxMass, mfRange);
  * double minMass = 133.003;
  * double maxMass = 133.005;
  * IMolecularFormulaSet mfSet = mfg.getAllFormulas();
  * </pre>
- * 
- * The code was originally developed for a MZmine 2 framework module, published
- * in Pluskal et al. {@cdk.cite Pluskal2012}.
- * 
+ *
+ * The code was originally developed for a MZmine 2 framework module, published in Pluskal et al.
+ * {@cdk.cite Pluskal2012}.
+ *
  * @cdk.module formula
  * @author Tomas Pluskal
  * @cdk.created 2014-12-28
@@ -74,73 +72,66 @@ import java.util.TreeSet;
  */
 class FullEnumerationFormulaGenerator implements IFormulaGenerator {
 
-    private static final ILoggingTool logger = LoggingToolFactory
-            .createLoggingTool(FullEnumerationFormulaGenerator.class);
+    private static final ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(FullEnumerationFormulaGenerator.class);
 
     private final IChemObjectBuilder builder;
 
-    /**
-     * Mass range to search by this instance of MolecularFormulaGenerator
-     */
+    /** Mass range to search by this instance of MolecularFormulaGenerator */
     private final double minMass, maxMass;
 
     /**
-     * Internal arrays of isotopes (elements) used for the formula generation,
-     * their minimal and maximal counts, and the current counts, which
-     * correspond to the latest formula candidate.
-     * 
-     * For example, let's assume we set isotopes=[C,H,N], minCounts=[0,0,0], and
-     * maxCounts=[3,3,3]. Then, currentCounts will be iterated in the following
-     * order: [0,0,0], [1,0,0], [2,0,0], [3,0,0], [0,1,0], [1,1,0], [2,1,0],
-     * [3,1,0], [0,2,0], [1,2,0], [2,2,0], etc.
-     * 
-     * The lastIncreasedPosition index indicates the last position in
-     * currentCounts that was increased by calling increaseCounter(position)
+     * Internal arrays of isotopes (elements) used for the formula generation, their minimal and
+     * maximal counts, and the current counts, which correspond to the latest formula candidate.
+     *
+     * <p>For example, let's assume we set isotopes=[C,H,N], minCounts=[0,0,0], and
+     * maxCounts=[3,3,3]. Then, currentCounts will be iterated in the following order: [0,0,0],
+     * [1,0,0], [2,0,0], [3,0,0], [0,1,0], [1,1,0], [2,1,0], [3,1,0], [0,2,0], [1,2,0], [2,2,0],
+     * etc.
+     *
+     * <p>The lastIncreasedPosition index indicates the last position in currentCounts that was
+     * increased by calling increaseCounter(position)
      */
     private final IIsotope isotopes[];
+
     private final int minCounts[], maxCounts[], currentCounts[];
     private int lastIncreasedPosition = 0;
 
     /**
-     * A flag indicating that the formula generation is running. If the search
-     * is finished (the whole search space has been examined) or the search is
-     * canceled by calling the cancel() method, this flag is set to false.
-     * 
+     * A flag indicating that the formula generation is running. If the search is finished (the
+     * whole search space has been examined) or the search is canceled by calling the cancel()
+     * method, this flag is set to false.
+     *
      * @see #cancel()
      */
     private volatile boolean searchRunning = true;
 
     /**
      * Initiate the MolecularFormulaGenerator.
-     * 
-     * @param minMass
-     *            Lower boundary of the target mass range
-     * @param maxMass
-     *            Upper boundary of the target mass range
-     * @param mfRange
-     *            A range of elemental compositions defining the search space
-     * @throws IllegalArgumentException
-     *             In case some of the isotopes in mfRange has undefined exact
-     *             mass or in case illegal parameters are provided (e.g.,
-     *             negative mass values or empty MolecularFormulaRange)
+     *
+     * @param minMass Lower boundary of the target mass range
+     * @param maxMass Upper boundary of the target mass range
+     * @param mfRange A range of elemental compositions defining the search space
+     * @throws IllegalArgumentException In case some of the isotopes in mfRange has undefined exact
+     *     mass or in case illegal parameters are provided (e.g., negative mass values or empty
+     *     MolecularFormulaRange)
      * @see MolecularFormulaRange
      */
-    public FullEnumerationFormulaGenerator(final IChemObjectBuilder builder,
-                                           final double minMass, final double maxMass,
-                                           final MolecularFormulaRange mfRange) {
+    public FullEnumerationFormulaGenerator(
+            final IChemObjectBuilder builder,
+            final double minMass,
+            final double maxMass,
+            final MolecularFormulaRange mfRange) {
 
-        logger.info("Initiate MolecularFormulaGenerator, mass range ", minMass,
-                "-", maxMass);
+        logger.info("Initiate MolecularFormulaGenerator, mass range ", minMass, "-", maxMass);
 
         // Check parameter values
         if ((minMass < 0.0) || (maxMass < 0.0)) {
-            throw (new IllegalArgumentException(
-                    "The minimum and maximum mass values must be >=0"));
+            throw (new IllegalArgumentException("The minimum and maximum mass values must be >=0"));
         }
 
         if ((minMass > maxMass)) {
-            throw (new IllegalArgumentException(
-                    "Minimum mass must be <= maximum mass"));
+            throw (new IllegalArgumentException("Minimum mass must be <= maximum mass"));
         }
 
         if ((mfRange == null) || (mfRange.getIsotopeCount() == 0)) {
@@ -155,14 +146,12 @@ class FullEnumerationFormulaGenerator implements IFormulaGenerator {
 
         // Sort the elements by mass in ascending order. That speeds up
         // the search.
-        final TreeSet<IIsotope> isotopesSet = new TreeSet<IIsotope>(
-                new IIsotopeSorterByMass());
+        final TreeSet<IIsotope> isotopesSet = new TreeSet<IIsotope>(new IIsotopeSorterByMass());
         for (IIsotope isotope : mfRange.isotopes()) {
             // Check if exact mass of each isotope is set
             if (isotope.getExactMass() == null)
                 throw new IllegalArgumentException(
-                        "The exact mass value of isotope " + isotope
-                                + " is not set");
+                        "The exact mass value of isotope " + isotope + " is not set");
             isotopesSet.add(isotope);
         }
         isotopes = isotopesSet.toArray(new IIsotope[isotopesSet.size()]);
@@ -175,27 +164,23 @@ class FullEnumerationFormulaGenerator implements IFormulaGenerator {
             maxCounts[i] = mfRange.getIsotopeCountMax(isotopes[i]);
 
             // Update the maximum count according to the mass limit
-            int maxCountAccordingToMass = (int) Math.floor(maxMass
-                    / isotopes[i].getExactMass());
-            if (maxCounts[i] > maxCountAccordingToMass)
-                maxCounts[i] = maxCountAccordingToMass;
-
+            int maxCountAccordingToMass = (int) Math.floor(maxMass / isotopes[i].getExactMass());
+            if (maxCounts[i] > maxCountAccordingToMass) maxCounts[i] = maxCountAccordingToMass;
         }
 
         // Set the current counters to minimal values, initially
         currentCounts = Arrays.copyOf(minCounts, minCounts.length);
-
     }
 
     /**
-     * Returns next generated formula or null in case no new formula was found
-     * (search is finished). There is no guaranteed order in which the formulas
-     * are generated.
+     * Returns next generated formula or null in case no new formula was found (search is finished).
+     * There is no guaranteed order in which the formulas are generated.
      */
     public synchronized IMolecularFormula getNextFormula() {
 
         // Main cycle iterating through element counters
-        mainCycle: while (searchRunning) {
+        mainCycle:
+        while (searchRunning) {
 
             double currentMass = calculateCurrentMass();
 
@@ -227,26 +212,22 @@ class FullEnumerationFormulaGenerator implements IFormulaGenerator {
 
         // All combinations tested, return null
         return null;
-
     }
 
     /**
      * Generates a {@link IMolecularFormulaSet} by repeatedly calling {@link
-     * FullEnumerationFormulaGenerator#getNextFormula()} until all possible formulas are generated. There is no
-     * guaranteed order to the formulas in the resulting
-     * {@link IMolecularFormulaSet}.
-     * 
-     * Note: if some formulas were already generated by calling {@link
-     * FullEnumerationFormulaGenerator#getNextFormula()} on this MolecularFormulaGenerator instance, those
-     * formulas will not be included in the returned
-     * {@link IMolecularFormulaSet}.
-     * 
+     * FullEnumerationFormulaGenerator#getNextFormula()} until all possible formulas are generated.
+     * There is no guaranteed order to the formulas in the resulting {@link IMolecularFormulaSet}.
+     *
+     * <p>Note: if some formulas were already generated by calling {@link
+     * FullEnumerationFormulaGenerator#getNextFormula()} on this MolecularFormulaGenerator instance,
+     * those formulas will not be included in the returned {@link IMolecularFormulaSet}.
+     *
      * @see #getNextFormula()
      */
     public synchronized IMolecularFormulaSet getAllFormulas() {
 
-        final IMolecularFormulaSet result = builder
-                .newInstance(IMolecularFormulaSet.class);
+        final IMolecularFormulaSet result = builder.newInstance(IMolecularFormulaSet.class);
         IMolecularFormula nextFormula;
         while ((nextFormula = getNextFormula()) != null) {
             result.addMolecularFormula(nextFormula);
@@ -255,20 +236,18 @@ class FullEnumerationFormulaGenerator implements IFormulaGenerator {
     }
 
     /**
-     * Increases the internal counter array currentCounts[] at given position.
-     * If the position has reached its maximum value, its value is reset to the
-     * minimum value and the next position is increased.
-     * 
-     * @param position
-     *            Index to the currentCounts[] array that should be increased
+     * Increases the internal counter array currentCounts[] at given position. If the position has
+     * reached its maximum value, its value is reset to the minimum value and the next position is
+     * increased.
+     *
+     * @param position Index to the currentCounts[] array that should be increased
      */
     private void increaseCounter(int position) {
 
         // This should never happen, but let's check, just in case
         if (position >= currentCounts.length) {
             throw new IllegalArgumentException(
-                    "Cannot increase the currentCounts counter at position "
-                            + position);
+                    "Cannot increase the currentCounts counter at position " + position);
         }
 
         lastIncreasedPosition = position;
@@ -276,7 +255,6 @@ class FullEnumerationFormulaGenerator implements IFormulaGenerator {
         // Keep a lock on the currentCounts, because
         // getFinishedPercentage() might be called from another thread
         synchronized (currentCounts) {
-
             if (currentCounts[position] < maxCounts[position]) {
                 currentCounts[position]++;
             } else {
@@ -292,18 +270,15 @@ class FullEnumerationFormulaGenerator implements IFormulaGenerator {
 
                     // Copy the maxCounts[] array to currentCounts[]. This
                     // ensures that getFinishedPercentage() will return 1.0
-                    System.arraycopy(maxCounts, 0, currentCounts, 0,
-                            maxCounts.length);
+                    System.arraycopy(maxCounts, 0, currentCounts, 0, maxCounts.length);
                 }
             }
         }
-
     }
 
     /**
-     * Calculates the exact mass of the currently evaluated formula. Basically,
-     * it multiplies the currentCounts[] array by the masses of the isotopes in
-     * the isotopes[] array.
+     * Calculates the exact mass of the currently evaluated formula. Basically, it multiplies the
+     * currentCounts[] array by the masses of the isotopes in the isotopes[] array.
      */
     private double calculateCurrentMass() {
         double mass = 0;
@@ -315,30 +290,25 @@ class FullEnumerationFormulaGenerator implements IFormulaGenerator {
     }
 
     /**
-     * Generates a MolecularFormula object that contains the isotopes in the
-     * isotopes[] array with counts in the currentCounts[] array. In other
-     * words, generates a proper CDK representation of the currently examined
-     * formula.
+     * Generates a MolecularFormula object that contains the isotopes in the isotopes[] array with
+     * counts in the currentCounts[] array. In other words, generates a proper CDK representation of
+     * the currently examined formula.
      */
     private IMolecularFormula generateFormulaObject() {
-        IMolecularFormula formulaObject = builder
-                .newInstance(IMolecularFormula.class);
+        IMolecularFormula formulaObject = builder.newInstance(IMolecularFormula.class);
         for (int i = 0; i < isotopes.length; i++) {
-            if (currentCounts[i] == 0)
-                continue;
+            if (currentCounts[i] == 0) continue;
             formulaObject.addIsotope(isotopes[i], currentCounts[i]);
         }
         return formulaObject;
-
     }
 
     /**
-     * Returns a value between 0.0 and 1.0 indicating what portion of the search
-     * space has been examined so far by this MolecularFormulaGenerator. Before
-     * the first call to {@link FullEnumerationFormulaGenerator#getNextFormula()}, this method returns 0. After
-     * all possible formulas are generated, this method returns 1.0 (the exact
-     * returned value might be slightly off due to rounding errors). This method
-     * can be called from any thread.
+     * Returns a value between 0.0 and 1.0 indicating what portion of the search space has been
+     * examined so far by this MolecularFormulaGenerator. Before the first call to {@link
+     * FullEnumerationFormulaGenerator#getNextFormula()}, this method returns 0. After all possible
+     * formulas are generated, this method returns 1.0 (the exact returned value might be slightly
+     * off due to rounding errors). This method can be called from any thread.
      */
     public double getFinishedPercentage() {
         double result = 0.0;
@@ -349,8 +319,7 @@ class FullEnumerationFormulaGenerator implements IFormulaGenerator {
         synchronized (currentCounts) {
             for (int i = currentCounts.length - 1; i >= 0; i--) {
                 double max = maxCounts[i];
-                if (i > 0)
-                    max += 1.0;
+                if (i > 0) max += 1.0;
                 result += remainingPerc * ((double) currentCounts[i] / max);
                 remainingPerc /= max;
             }
@@ -359,23 +328,20 @@ class FullEnumerationFormulaGenerator implements IFormulaGenerator {
     }
 
     /**
-     * Cancel the current search. This method can be called from any thread. If
-     * another thread is executing the {@link FullEnumerationFormulaGenerator#getNextFormula()} method, that
-     * method call will return immediately with null return value. If another
-     * thread is executing the {@link FullEnumerationFormulaGenerator#getAllFormulas()} method, that method call
-     * will return immediately, returning all formulas generated until this
-     * moment. The search cannot be restarted once canceled - any subsequent
-     * calls to {@link FullEnumerationFormulaGenerator#getNextFormula()} will return null.
+     * Cancel the current search. This method can be called from any thread. If another thread is
+     * executing the {@link FullEnumerationFormulaGenerator#getNextFormula()} method, that method
+     * call will return immediately with null return value. If another thread is executing the
+     * {@link FullEnumerationFormulaGenerator#getAllFormulas()} method, that method call will return
+     * immediately, returning all formulas generated until this moment. The search cannot be
+     * restarted once canceled - any subsequent calls to {@link
+     * FullEnumerationFormulaGenerator#getNextFormula()} will return null.
      */
     public void cancel() {
         logger.info("Canceling MolecularFormulaGenerator");
         this.searchRunning = false;
     }
 
-    /**
-     * A simple {@link Comparator} implementation for sorting IIsotopes by their
-     * mass
-     */
+    /** A simple {@link Comparator} implementation for sorting IIsotopes by their mass */
     private class IIsotopeSorterByMass implements Comparator<IIsotope> {
         @Override
         public int compare(IIsotope i1, IIsotope i2) {

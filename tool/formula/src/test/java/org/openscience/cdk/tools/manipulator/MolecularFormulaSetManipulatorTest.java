@@ -24,10 +24,10 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.formula.MolecularFormulaRange;
 import org.openscience.cdk.formula.MolecularFormulaSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
@@ -37,12 +37,9 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  */
 public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
 
-    private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    private static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
-    /**
-     *  Constructor for the MolecularFormulaSetManipulatorTest object.
-     *
-     */
+    /** Constructor for the MolecularFormulaSetManipulatorTest object. */
     public MolecularFormulaSetManipulatorTest() {
 
         super();
@@ -51,7 +48,7 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testGetMaxOccurrenceElements_IMolecularFormulaSet() {
@@ -77,23 +74,27 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
         mfSet.addMolecularFormula(mf2);
         mfSet.addMolecularFormula(mf3);
 
-        IMolecularFormula molecularFormula = MolecularFormulaSetManipulator.getMaxOccurrenceElements(mfSet);
+        IMolecularFormula molecularFormula =
+                MolecularFormulaSetManipulator.getMaxOccurrenceElements(mfSet);
 
         /* Result: C9H20N4O7 */
 
         Assert.assertEquals(40, MolecularFormulaManipulator.getAtomCount(molecularFormula));
         Assert.assertEquals(4, molecularFormula.getIsotopeCount());
-        Assert.assertEquals(9, molecularFormula.getIsotopeCount(builder.newInstance(IIsotope.class, "C")));
-        Assert.assertEquals(20, molecularFormula.getIsotopeCount(builder.newInstance(IIsotope.class, "H")));
-        Assert.assertEquals(4, molecularFormula.getIsotopeCount(builder.newInstance(IIsotope.class, "N")));
-        Assert.assertEquals(7, molecularFormula.getIsotopeCount(builder.newInstance(IIsotope.class, "O")));
-
+        Assert.assertEquals(
+                9, molecularFormula.getIsotopeCount(builder.newInstance(IIsotope.class, "C")));
+        Assert.assertEquals(
+                20, molecularFormula.getIsotopeCount(builder.newInstance(IIsotope.class, "H")));
+        Assert.assertEquals(
+                4, molecularFormula.getIsotopeCount(builder.newInstance(IIsotope.class, "N")));
+        Assert.assertEquals(
+                7, molecularFormula.getIsotopeCount(builder.newInstance(IIsotope.class, "O")));
     }
 
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testGetMinOccurrenceElements_IMolecularFormulaSet() {
@@ -119,23 +120,27 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
         mfSet.addMolecularFormula(mf2);
         mfSet.addMolecularFormula(mf3);
 
-        IMolecularFormula molecularFormula = MolecularFormulaSetManipulator.getMinOccurrenceElements(mfSet);
+        IMolecularFormula molecularFormula =
+                MolecularFormulaSetManipulator.getMinOccurrenceElements(mfSet);
 
         /* Result: C4H5NO2 */
 
         Assert.assertEquals(12, MolecularFormulaManipulator.getAtomCount(molecularFormula));
         Assert.assertEquals(4, molecularFormula.getIsotopeCount());
-        Assert.assertEquals(4, molecularFormula.getIsotopeCount(builder.newInstance(IIsotope.class, "C")));
-        Assert.assertEquals(5, molecularFormula.getIsotopeCount(builder.newInstance(IIsotope.class, "H")));
-        Assert.assertEquals(1, molecularFormula.getIsotopeCount(builder.newInstance(IIsotope.class, "N")));
-        Assert.assertEquals(2, molecularFormula.getIsotopeCount(builder.newInstance(IIsotope.class, "O")));
-
+        Assert.assertEquals(
+                4, molecularFormula.getIsotopeCount(builder.newInstance(IIsotope.class, "C")));
+        Assert.assertEquals(
+                5, molecularFormula.getIsotopeCount(builder.newInstance(IIsotope.class, "H")));
+        Assert.assertEquals(
+                1, molecularFormula.getIsotopeCount(builder.newInstance(IIsotope.class, "N")));
+        Assert.assertEquals(
+                2, molecularFormula.getIsotopeCount(builder.newInstance(IIsotope.class, "O")));
     }
 
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testRemove_IMolecularFormulaSet_IMolecularFormula_IMolecularFormula() {
@@ -158,16 +163,16 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
         IMolecularFormulaSet formulaSet = new MolecularFormulaSet();
         formulaSet.addMolecularFormula(mf1);
 
-        IMolecularFormulaSet newMFSet = MolecularFormulaSetManipulator.remove(formulaSet, formulaMin, formulaMax);
+        IMolecularFormulaSet newMFSet =
+                MolecularFormulaSetManipulator.remove(formulaSet, formulaMin, formulaMax);
 
         Assert.assertNull(newMFSet);
-
     }
 
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testRemove_1() {
@@ -208,23 +213,26 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
         formulaSet.addMolecularFormula(mf3);
         formulaSet.addMolecularFormula(mf4);
 
-        IMolecularFormulaSet newMFSet = MolecularFormulaSetManipulator.remove(formulaSet, formulaMin, formulaMax);
+        IMolecularFormulaSet newMFSet =
+                MolecularFormulaSetManipulator.remove(formulaSet, formulaMin, formulaMax);
         /* the mf4 is excluded from the limits */
 
         Assert.assertEquals(3, newMFSet.size());
-        Assert.assertEquals(MolecularFormulaManipulator.getString(mf1),
+        Assert.assertEquals(
+                MolecularFormulaManipulator.getString(mf1),
                 MolecularFormulaManipulator.getString(newMFSet.getMolecularFormula(0)));
-        Assert.assertEquals(MolecularFormulaManipulator.getString(mf2),
+        Assert.assertEquals(
+                MolecularFormulaManipulator.getString(mf2),
                 MolecularFormulaManipulator.getString(newMFSet.getMolecularFormula(1)));
-        Assert.assertEquals(MolecularFormulaManipulator.getString(mf3),
+        Assert.assertEquals(
+                MolecularFormulaManipulator.getString(mf3),
                 MolecularFormulaManipulator.getString(newMFSet.getMolecularFormula(2)));
-
     }
 
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testRemove_2() {
@@ -252,19 +260,20 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
         formulaSet.addMolecularFormula(mf1);
         formulaSet.addMolecularFormula(mf2);
 
-        IMolecularFormulaSet newMFSet = MolecularFormulaSetManipulator.remove(formulaSet, formulaMin, formulaMax);
+        IMolecularFormulaSet newMFSet =
+                MolecularFormulaSetManipulator.remove(formulaSet, formulaMin, formulaMax);
         /* the mf2 is excluded from the limits. It doesn't contain N */
 
         Assert.assertEquals(1, newMFSet.size());
-        Assert.assertEquals(MolecularFormulaManipulator.getString(mf1),
+        Assert.assertEquals(
+                MolecularFormulaManipulator.getString(mf1),
                 MolecularFormulaManipulator.getString(newMFSet.getMolecularFormula(0)));
-
     }
 
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testRemove_3() {
@@ -293,19 +302,20 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
         formulaSet.addMolecularFormula(mf1);
         formulaSet.addMolecularFormula(mf2);
 
-        IMolecularFormulaSet newMFSet = MolecularFormulaSetManipulator.remove(formulaSet, formulaMin, formulaMax);
+        IMolecularFormulaSet newMFSet =
+                MolecularFormulaSetManipulator.remove(formulaSet, formulaMin, formulaMax);
         /* the mf2 is excluded from the limits. It doesn't contain N */
 
         Assert.assertEquals(1, newMFSet.size());
-        Assert.assertEquals(MolecularFormulaManipulator.getString(mf1),
+        Assert.assertEquals(
+                MolecularFormulaManipulator.getString(mf1),
                 MolecularFormulaManipulator.getString(newMFSet.getMolecularFormula(0)));
-
     }
 
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testRemove_IMolecularFormulaSet_MolecularFormulaRange() {
@@ -328,17 +338,17 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
         formulaSet.addMolecularFormula(mf1);
         formulaSet.addMolecularFormula(mf2);
 
-        IMolecularFormulaSet newMFSet = MolecularFormulaSetManipulator.remove(formulaSet, formulaRange);
+        IMolecularFormulaSet newMFSet =
+                MolecularFormulaSetManipulator.remove(formulaSet, formulaRange);
         /* the mf2 is excluded from the limits. It doesn't contain N */
 
         Assert.assertEquals(2, newMFSet.size());
-
     }
 
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testContains_IMolecularFormulaSet_IMolecularFormula() {
@@ -373,7 +383,5 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
 
         Assert.assertTrue(MolecularFormulaSetManipulator.contains(formulaSet, mf2));
         Assert.assertFalse(MolecularFormulaSetManipulator.contains(formulaSet, mf4));
-
     }
-
 }

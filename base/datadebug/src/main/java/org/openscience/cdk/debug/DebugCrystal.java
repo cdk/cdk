@@ -20,13 +20,12 @@ package org.openscience.cdk.debug;
 
 import java.util.List;
 import java.util.Map;
-
 import javax.vecmath.Vector3d;
-
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
@@ -35,14 +34,13 @@ import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStereoElement;
-import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module datadebug
  * @cdk.githash
  */
@@ -50,7 +48,7 @@ public class DebugCrystal extends Crystal implements ICrystal {
 
     private static final long serialVersionUID = -1749989529794094087L;
 
-    static ILoggingTool       logger           = LoggingToolFactory.createLoggingTool(DebugCrystal.class);
+    static ILoggingTool logger = LoggingToolFactory.createLoggingTool(DebugCrystal.class);
 
     public DebugCrystal() {
         super();
@@ -122,7 +120,8 @@ public class DebugCrystal extends Crystal implements ICrystal {
     }
 
     //	public void setElectronContainer(int number, IElectronContainer electronContainer) {
-    //		logger.debug("Setting electron container at: pos=" + number, " electron container=" +electronContainer);
+    //		logger.debug("Setting electron container at: pos=" + number, " electron container="
+    // +electronContainer);
     //		super.setElectronContainer(number, electronContainer);
     //	}
 
@@ -296,7 +295,8 @@ public class DebugCrystal extends Crystal implements ICrystal {
     /** {@inheritDoc} */
     @Override
     public List<ILonePair> getConnectedLonePairsList(IAtom atom) {
-        logger.debug("Getting lone pairs at atom: atom=" + atom,
+        logger.debug(
+                "Getting lone pairs at atom: atom=" + atom,
                 " lone pairs=" + super.getConnectedLonePairsCount(atom));
         return super.getConnectedLonePairsList(atom);
     }
@@ -304,7 +304,8 @@ public class DebugCrystal extends Crystal implements ICrystal {
     /** {@inheritDoc} */
     @Override
     public List<ISingleElectron> getConnectedSingleElectronsList(IAtom atom) {
-        logger.debug("Getting single electrons at atom: atom=" + atom,
+        logger.debug(
+                "Getting single electrons at atom: atom=" + atom,
                 " single electrons=" + super.getConnectedSingleElectronsCount(atom));
         return super.getConnectedSingleElectronsList(atom);
     }
@@ -527,7 +528,9 @@ public class DebugCrystal extends Crystal implements ICrystal {
     /** {@inheritDoc} */
     @Override
     public void addBond(int atom1, int atom2, IBond.Order order, IBond.Stereo stereo) {
-        logger.debug("Adding bond: atom1=" + atom1 + " atom2=" + atom2, " order=" + order + " stereo=" + stereo);
+        logger.debug(
+                "Adding bond: atom1=" + atom1 + " atom2=" + atom2,
+                " order=" + order + " stereo=" + stereo);
         super.addBond(atom1, atom2, order, stereo);
     }
 

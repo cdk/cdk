@@ -23,15 +23,15 @@
 package org.openscience.cdk.geometry.cip.rules;
 
 import java.util.Arrays;
-
 import org.openscience.cdk.geometry.cip.CIPTool;
 import org.openscience.cdk.geometry.cip.ILigand;
 
 /**
  * Compares to {@link ILigand}s based on CIP sequences sub rules. The used CIP sub rules are:
+ *
  * <ol>
- *   <li>{@link MassNumberRule}</li>
- *   <li>{@link AtomicNumberRule}</li>
+ *   <li>{@link MassNumberRule}
+ *   <li>{@link AtomicNumberRule}
  * </ol>
  *
  * @cdk.module cip
@@ -73,17 +73,12 @@ public class CIPLigandRule implements ISequenceSubRule<ILigand> {
         }
         // OK, if we reached this point, then the ligands they 'share' are all equals, so the one
         // with more ligands wins
-        if (ligand1Ligands.length > ligand2Ligands.length)
-            return 1;
-        else if (ligand1Ligands.length < ligand2Ligands.length)
-            return -1;
-        else
-            return 0;
+        if (ligand1Ligands.length > ligand2Ligands.length) return 1;
+        else if (ligand1Ligands.length < ligand2Ligands.length) return -1;
+        else return 0;
     }
 
-    /**
-     * Order the ligands from high to low precedence according to atomic and mass numbers.
-     */
+    /** Order the ligands from high to low precedence according to atomic and mass numbers. */
     private ILigand[] order(ILigand[] ligands) {
         ILigand[] newLigands = new ILigand[ligands.length];
         System.arraycopy(ligands, 0, newLigands, 0, ligands.length);
@@ -96,5 +91,4 @@ public class CIPLigandRule implements ISequenceSubRule<ILigand> {
         }
         return reverseLigands;
     }
-
 }

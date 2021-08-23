@@ -23,22 +23,19 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import org.openscience.cdk.interfaces.IAtom;
-
 import java.io.Serializable;
 import java.util.Comparator;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
- * <P> This code returns a sorted set of atoms for a container according to its
- * symbol and hybridization states. This will aid in finding a deterministic
- * path rather than Stochastic one. </P>
+ * This code returns a sorted set of atoms for a container according to its symbol and hybridization
+ * states. This will aid in finding a deterministic path rather than Stochastic one.
  *
  * @author Syed Asad Rahman (2012)
  * @cdk.keyword fingerprint
  * @cdk.keyword similarity
  * @cdk.module fingerprint
  * @cdk.githash
- *
  */
 public class SimpleAtomComparator implements Comparator<IAtom>, Serializable {
 

@@ -29,40 +29,28 @@ package org.openscience.cdk.smiles.smarts.parser;
 @Deprecated
 class ASTCharge extends SimpleNode {
 
-    /**
-     * The value of the charge.
-     */
-    private int     charge;
+    /** The value of the charge. */
+    private int charge;
 
-    /**
-     * Whether the charge is positive.
-     */
+    /** Whether the charge is positive. */
     private boolean isPositive;
 
-    /**
-     * Creates a new instance.
-     */
+    /** Creates a new instance. */
     public ASTCharge(int id) {
         super(id);
     }
 
-    /**
-     * Creates a new instance.
-     */
+    /** Creates a new instance. */
     public ASTCharge(SMARTSParser p, int id) {
         super(p, id);
     }
 
-    /**
-     * Returns the charge value.
-     */
+    /** Returns the charge value. */
     public int getCharge() {
         return charge;
     }
 
-    /**
-     * Returns true if charge is positive.
-     */
+    /** Returns true if charge is positive. */
     public boolean isPositive() {
         return isPositive;
     }
@@ -78,18 +66,13 @@ class ASTCharge extends SimpleNode {
         return visitor.visit(this, data);
     }
 
-    /**
-     * Sets the charge value.
-     */
+    /** Sets the charge value. */
     public void setCharge(int charge) {
         this.charge = charge;
     }
 
-    /**
-     * Sets whether the charge is positive.
-     */
+    /** Sets whether the charge is positive. */
     public void setPositive(boolean isPositive) {
         this.isPositive = isPositive;
     }
-
 }

@@ -23,6 +23,10 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import java.util.BitSet;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -33,14 +37,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.util.BitSet;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-/**
- * @cdk.module test-fingerprint
- */
+/** @cdk.module test-fingerprint */
 public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
     @Override
@@ -80,8 +77,12 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
         IBitFingerprint superBits = fpr.getBitFingerprint(superStructure);
         IBitFingerprint subBits = fpr.getBitFingerprint(subStructure);
 
-        assertThat(superBits.asBitSet(),
-                is(asBitSet(0, 11, 13, 17, 40, 48, 136, 273, 274, 278, 286, 294, 299, 301, 304, 306)));
+        assertThat(
+                superBits.asBitSet(),
+                is(
+                        asBitSet(
+                                0, 11, 13, 17, 40, 48, 136, 273, 274, 278, 286, 294, 299, 301, 304,
+                                306)));
         assertThat(subBits.asBitSet(), is(asBitSet(1, 17, 273, 274, 278, 294, 306)));
     }
 
@@ -133,7 +134,8 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
         // Tests are modified copy of the test included in the MACCS-FPs class
 
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        IFingerprinter printer = new SubstructureFingerprinter(StandardSubstructureSets.getCountableMACCSSMARTS());
+        IFingerprinter printer =
+                new SubstructureFingerprinter(StandardSubstructureSets.getCountableMACCSSMARTS());
         Assert.assertEquals(142, printer.getSize());
 
         IAtomContainer mol0 = parser.parseSmiles("CC(N)CCCN");
@@ -176,7 +178,8 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
     @Test
     public void testCountableMACCSBinary2() throws Exception {
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        IFingerprinter printer = new SubstructureFingerprinter(StandardSubstructureSets.getCountableMACCSSMARTS());
+        IFingerprinter printer =
+                new SubstructureFingerprinter(StandardSubstructureSets.getCountableMACCSSMARTS());
         IAtomContainer mol;
         BitSet bs;
 
@@ -224,7 +227,8 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
     @Test
     public void testCountableMACCSCount2() throws Exception {
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        IFingerprinter printer = new SubstructureFingerprinter(StandardSubstructureSets.getCountableMACCSSMARTS());
+        IFingerprinter printer =
+                new SubstructureFingerprinter(StandardSubstructureSets.getCountableMACCSSMARTS());
         IAtomContainer mol;
         ICountFingerprint cfp;
 
@@ -266,7 +270,8 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
     @Test
     public void testCountableMACCSCount_Rings() throws Exception {
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        IFingerprinter printer = new SubstructureFingerprinter(StandardSubstructureSets.getCountableMACCSSMARTS());
+        IFingerprinter printer =
+                new SubstructureFingerprinter(StandardSubstructureSets.getCountableMACCSSMARTS());
         IAtomContainer mol;
         ICountFingerprint cfp;
 
@@ -326,7 +331,8 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
     @Test
     public void testCountableMACCSBinary_Rings() throws Exception {
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        IFingerprinter printer = new SubstructureFingerprinter(StandardSubstructureSets.getCountableMACCSSMARTS());
+        IFingerprinter printer =
+                new SubstructureFingerprinter(StandardSubstructureSets.getCountableMACCSSMARTS());
         IAtomContainer mol;
         BitSet bs;
 
@@ -385,11 +391,9 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
 
     /**
      * @cdk.bug 2871303
-     *
-     * While this test fails, Daylight says that the
-     * SMARTS pattern used for vinylogous ester should
-     * match benzaldehyde twice. So according to the
-     * supplied definition this answer is actually correct.
+     *     <p>While this test fails, Daylight says that the SMARTS pattern used for vinylogous ester
+     *     should match benzaldehyde twice. So according to the supplied definition this answer is
+     *     actually correct.
      */
     @Ignore("the SMARTS pattern vinylogous ester is not strict enough - we can not fix this")
     public void testVinylogousEster() throws Exception {

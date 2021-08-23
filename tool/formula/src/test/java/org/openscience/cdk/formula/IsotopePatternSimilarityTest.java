@@ -3,8 +3,8 @@ package org.openscience.cdk.formula;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
@@ -15,7 +15,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  */
 public class IsotopePatternSimilarityTest extends CDKTestCase {
 
-    private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    private static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
     public IsotopePatternSimilarityTest() {
         super();
@@ -24,7 +24,7 @@ public class IsotopePatternSimilarityTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testIsotopePatternSimilarity() {
@@ -35,7 +35,7 @@ public class IsotopePatternSimilarityTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testSeTolerance_double() {
@@ -47,7 +47,7 @@ public class IsotopePatternSimilarityTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testGetTolerance() {
@@ -71,10 +71,12 @@ public class IsotopePatternSimilarityTest extends CDKTestCase {
         spExp.addIsotope(new IsotopeContainer(157.08059, 0.0003));
         spExp.addIsotope(new IsotopeContainer(158.08135, 0.002));
 
-        IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C6H10N3O2", builder);
+        IMolecularFormula formula =
+                MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C6H10N3O2", builder);
         IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.1);
         IsotopePattern patternIsoPredicted = isotopeGe.getIsotopes(formula);
-        IsotopePattern patternIsoNormalize = IsotopePatternManipulator.normalize(patternIsoPredicted);
+        IsotopePattern patternIsoNormalize =
+                IsotopePatternManipulator.normalize(patternIsoPredicted);
         double score = is.compare(spExp, patternIsoNormalize);
         Assert.assertNotSame(0.0, score);
     }
@@ -97,14 +99,18 @@ public class IsotopePatternSimilarityTest extends CDKTestCase {
 
         double score = 0;
         String mfString = "";
-        String[] listMF = {"C4H8N6O", "C2H12N4O4", "C3H12N2O5", "C6H10N3O2", "CH10N5O4", "C4H14NO5"};
+        String[] listMF = {
+            "C4H8N6O", "C2H12N4O4", "C3H12N2O5", "C6H10N3O2", "CH10N5O4", "C4H14NO5"
+        };
 
         for (int i = 0; i < listMF.length; i++) {
-            IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula(listMF[i], builder);
+            IMolecularFormula formula =
+                    MolecularFormulaManipulator.getMajorIsotopeMolecularFormula(listMF[i], builder);
             IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.01);
             IsotopePattern patternIsoPredicted = isotopeGe.getIsotopes(formula);
 
-            IsotopePattern patternIsoNormalize = IsotopePatternManipulator.normalize(patternIsoPredicted);
+            IsotopePattern patternIsoNormalize =
+                    IsotopePatternManipulator.normalize(patternIsoPredicted);
             double tempScore = is.compare(spExp, patternIsoNormalize);
             if (score < tempScore) {
                 mfString = MolecularFormulaManipulator.getString(formula);
@@ -128,8 +134,9 @@ public class IsotopePatternSimilarityTest extends CDKTestCase {
         spExp.addIsotope(new IsotopeContainer(764.6064, 15432262));
         spExp.setCharge(1.0);
 
-        IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C42H85NO8P",
-                SilentChemObjectBuilder.getInstance());
+        IMolecularFormula formula =
+                MolecularFormulaManipulator.getMajorIsotopeMolecularFormula(
+                        "C42H85NO8P", SilentChemObjectBuilder.getInstance());
 
         IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.01);
         IsotopePattern patternIsoPredicted = isotopeGe.getIsotopes(formula);
@@ -139,5 +146,4 @@ public class IsotopePatternSimilarityTest extends CDKTestCase {
 
         Assert.assertEquals(0.97, score, .01);
     }
-
 }

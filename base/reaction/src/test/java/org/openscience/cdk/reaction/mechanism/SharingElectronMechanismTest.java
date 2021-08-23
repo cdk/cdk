@@ -31,17 +31,13 @@ import org.openscience.cdk.reaction.ReactionMechanismTest;
  */
 public class SharingElectronMechanismTest extends ReactionMechanismTest {
 
-    /**
-     *  The JUnit setup method
-     */
+    /** The JUnit setup method */
     @BeforeClass
     public static void setUp() throws Exception {
         setMechanism(SharingElectronMechanism.class);
     }
 
-    /**
-     *  Constructor for the SharingElectronMechanismTest object.
-     */
+    /** Constructor for the SharingElectronMechanismTest object. */
     public SharingElectronMechanismTest() {
         super();
     }
@@ -58,8 +54,7 @@ public class SharingElectronMechanismTest extends ReactionMechanismTest {
     }
 
     /**
-     * Junit test.
-     * TODDO: REACT: add an example
+     * Junit test. TODDO: REACT: add an example
      *
      * @throws Exception
      */

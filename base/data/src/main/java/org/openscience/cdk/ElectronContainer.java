@@ -21,7 +21,6 @@
 package org.openscience.cdk;
 
 import java.io.Serializable;
-
 import org.openscience.cdk.interfaces.IElectronContainer;
 
 /**
@@ -29,29 +28,27 @@ import org.openscience.cdk.interfaces.IElectronContainer;
  *
  * @cdk.module data
  * @cdk.githash
- *
  * @cdk.keyword orbital
  * @cdk.keyword lone-pair
  * @cdk.keyword bond
  */
-public class ElectronContainer extends ChemObject implements Serializable, IElectronContainer, Cloneable {
+public class ElectronContainer extends ChemObject
+        implements Serializable, IElectronContainer, Cloneable {
 
     /**
      * Determines if a de-serialized object is compatible with this class.
      *
-     * This value must only be changed if and only if the new version
-     * of this class is incompatible with the old version. See Sun docs
-     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
+     * <p>This value must only be changed if and only if the new version of this class is
+     * incompatible with the old version. See Sun docs for <a
+     * href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
      */
     private static final long serialVersionUID = -2207894536767670743L;
 
     /** Number of electrons in the ElectronContainer. */
-    protected Integer         electronCount;
+    protected Integer electronCount;
 
-    /**
-     * Constructs an empty ElectronContainer.
-     */
+    /** Constructs an empty ElectronContainer. */
     public ElectronContainer() {
         electronCount = 0;
     }
@@ -60,8 +57,7 @@ public class ElectronContainer extends ChemObject implements Serializable, IElec
      * Returns the number of electrons in this electron container.
      *
      * @return The number of electrons in this electron container.
-     *
-     * @see     #setElectronCount
+     * @see #setElectronCount
      */
     @Override
     public Integer getElectronCount() {
@@ -71,9 +67,8 @@ public class ElectronContainer extends ChemObject implements Serializable, IElec
     /**
      * Sets the number of electrons in this electron container.
      *
-     * @param   electronCount The number of electrons in this electron container.
-     *
-     * @see     #getElectronCount
+     * @param electronCount The number of electrons in this electron container.
+     * @see #getElectronCount
      */
     @Override
     public void setElectronCount(Integer electronCount) {
@@ -96,5 +91,4 @@ public class ElectronContainer extends ChemObject implements Serializable, IElec
         resultString.append(')');
         return resultString.toString();
     }
-
 }

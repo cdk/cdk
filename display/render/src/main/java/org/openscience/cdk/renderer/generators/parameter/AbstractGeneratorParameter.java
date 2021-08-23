@@ -21,10 +21,9 @@ package org.openscience.cdk.renderer.generators.parameter;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 
 /**
- * Abstract class to provide the base functionality for
- * {@link IGeneratorParameter} implementations.
+ * Abstract class to provide the base functionality for {@link IGeneratorParameter} implementations.
  *
- * @cdk.module  render
+ * @cdk.module render
  * @cdk.githash
  */
 public abstract class AbstractGeneratorParameter<T> implements IGeneratorParameter<T> {
@@ -42,17 +41,14 @@ public abstract class AbstractGeneratorParameter<T> implements IGeneratorParamet
     }
 
     /**
-     * Gets the value for this parameter. It must provide a reasonable
-     * default when no other value has been set.
+     * Gets the value for this parameter. It must provide a reasonable default when no other value
+     * has been set.
      *
      * @return the current parameter value
      */
     @Override
     public T getValue() {
-        if (this.parameterSetting == null)
-            return getDefault();
-        else
-            return this.parameterSetting;
+        if (this.parameterSetting == null) return getDefault();
+        else return this.parameterSetting;
     }
-
 }

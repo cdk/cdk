@@ -26,9 +26,7 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
-/**
- * @cdk.module test-standard
- */
+/** @cdk.module test-standard */
 public class AtomContainerAtomPermutorTest extends CDKTestCase {
 
     public AtomContainerAtomPermutorTest() {
@@ -79,10 +77,9 @@ public class AtomContainerAtomPermutorTest extends CDKTestCase {
         atomContainer.addBond(0, 1, IBond.Order.SINGLE);
         atomContainer.addBond(0, 2, IBond.Order.SINGLE);
         AtomContainerAtomPermutor acap = new AtomContainerAtomPermutor(atomContainer);
-        IAtomContainer permuted = acap.containerFromPermutation(new int[]{1, 0, 2});
+        IAtomContainer permuted = acap.containerFromPermutation(new int[] {1, 0, 2});
         Assert.assertNotNull(permuted);
         Assert.assertEquals(atomContainer.getAtomCount(), permuted.getAtomCount());
         Assert.assertEquals(atomContainer.getBondCount(), permuted.getBondCount());
     }
-
 }

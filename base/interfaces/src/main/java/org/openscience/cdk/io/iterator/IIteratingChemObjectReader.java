@@ -23,23 +23,19 @@
 package org.openscience.cdk.io.iterator;
 
 import java.util.Iterator;
-
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.IChemObjectReader;
 
 /**
- * Interface for an iterating molecule reader. It allows to iterate over all molecules
- * in specific file format (e.g. SDF), without reading them into memory first. Suitable
- * for very large files, with thousands of molecules.
+ * Interface for an iterating molecule reader. It allows to iterate over all molecules in specific
+ * file format (e.g. SDF), without reading them into memory first. Suitable for very large files,
+ * with thousands of molecules.
  *
  * @cdk.module io
  * @cdk.githash
- *
  * @see org.openscience.cdk.io.IChemObjectIO
- *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  * @cdk.created 2003-10-19
  */
-public interface IIteratingChemObjectReader<T extends IChemObject> extends IChemObjectReader, Iterator<T> {
-
-}
+public interface IIteratingChemObjectReader<T extends IChemObject>
+        extends IChemObjectReader, Iterator<T> {}

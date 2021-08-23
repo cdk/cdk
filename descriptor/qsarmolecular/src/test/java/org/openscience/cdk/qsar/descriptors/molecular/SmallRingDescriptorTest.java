@@ -37,7 +37,8 @@ import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -47,18 +48,15 @@ import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import org.junit.Before;
-import org.junit.Test;
-
 /**
  * Test for small rings descriptor.
  *
  * @cdk.module test-qsarmolecular
  */
-
 public class SmallRingDescriptorTest extends MolecularDescriptorTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(SmallRingDescriptorTest.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(SmallRingDescriptorTest.class);
 
     public SmallRingDescriptorTest() {}
 
@@ -105,10 +103,9 @@ public class SmallRingDescriptorTest extends MolecularDescriptorTest {
 
         zip.close();
 
-        for (int idx = 1;; idx++) {
+        for (int idx = 1; ; idx++) {
             String basefn = String.valueOf(idx);
-            while (basefn.length() < 6)
-                basefn = "0" + basefn;
+            while (basefn.length() < 6) basefn = "0" + basefn;
             byte[] molBytes = content.get(basefn + ".mol");
             if (molBytes == null) break;
 
@@ -126,9 +123,21 @@ public class SmallRingDescriptorTest extends MolecularDescriptorTest {
             int wantAromRings = Integer.parseInt(bits[2]);
             int wantAromBlocks = Integer.parseInt(bits[3]);
 
-            logger.info("FN=" + basefn + " MOL=" + mol.getAtomCount() + "," + mol.getBondCount() + " nSmallRings="
-                    + wantSmallRings + " nRingBlocks=" + wantRingBlocks + " nAromRings=" + wantAromRings
-                    + " nAromBlocks=" + wantAromBlocks);
+            logger.info(
+                    "FN="
+                            + basefn
+                            + " MOL="
+                            + mol.getAtomCount()
+                            + ","
+                            + mol.getBondCount()
+                            + " nSmallRings="
+                            + wantSmallRings
+                            + " nRingBlocks="
+                            + wantRingBlocks
+                            + " nAromRings="
+                            + wantAromRings
+                            + " nAromBlocks="
+                            + wantAromBlocks);
 
             SmallRingDescriptor descr = new SmallRingDescriptor();
             DescriptorValue results = descr.calculate(mol);
@@ -137,12 +146,9 @@ public class SmallRingDescriptorTest extends MolecularDescriptorTest {
 
             int gotSmallRings = 0, gotRingBlocks = 0, gotAromRings = 0, gotAromBlocks = 0;
             for (int n = 0; n < names.length; n++) {
-                if (names[n].equals("nSmallRings"))
-                    gotSmallRings = values.get(n);
-                else if (names[n].equals("nRingBlocks"))
-                    gotRingBlocks = values.get(n);
-                else if (names[n].equals("nAromRings"))
-                    gotAromRings = values.get(n);
+                if (names[n].equals("nSmallRings")) gotSmallRings = values.get(n);
+                else if (names[n].equals("nRingBlocks")) gotRingBlocks = values.get(n);
+                else if (names[n].equals("nAromRings")) gotAromRings = values.get(n);
                 else if (names[n].equals("nAromBlocks")) gotAromBlocks = values.get(n);
             }
 
@@ -166,5 +172,4 @@ public class SmallRingDescriptorTest extends MolecularDescriptorTest {
             }
         }
     }
-
 }

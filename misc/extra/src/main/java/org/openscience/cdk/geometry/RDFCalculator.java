@@ -24,22 +24,21 @@
 package org.openscience.cdk.geometry;
 
 import java.util.Iterator;
-
 import javax.vecmath.Point3d;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * Calculator of radial distribution functions. The RDF has bins defined around
- * a point, i.e. the first bin starts at 0 &Aring; and ends at 0.5*resolution
- * &Aring;, and the second bins ends at 1.5*resolution &Aring;.
+ * Calculator of radial distribution functions. The RDF has bins defined around a point, i.e. the
+ * first bin starts at 0 &Aring; and ends at 0.5*resolution &Aring;, and the second bins ends at
+ * 1.5*resolution &Aring;.
  *
- * <p>By default, the RDF is unweighted. By implementing and registering a
- * <code>RDFWeightFunction</code>, the RDF can become weighted. For example,
- * to weight according to partial charge interaction, this code could be used:
+ * <p>By default, the RDF is unweighted. By implementing and registering a <code>RDFWeightFunction
+ * </code>, the RDF can become weighted. For example, to weight according to partial charge
+ * interaction, this code could be used:
+ *
  * <pre>
  * RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0,
  *     new RDFWeightFunction() {
@@ -50,53 +49,51 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * );
  * </pre>
  *
- * @cdk.module  extra
+ * @cdk.module extra
  * @cdk.githash
- *
- * @author      Egon Willighagen
+ * @author Egon Willighagen
  * @cdk.created 2005-01-10
- *
  * @cdk.keyword radial distribution function
  * @cdk.keyword RDF
- *
- * @see         org.openscience.cdk.geometry.IRDFWeightFunction
+ * @see org.openscience.cdk.geometry.IRDFWeightFunction
  */
 public class RDFCalculator {
 
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(RDFCalculator.class);
 
-    private double              startCutoff;
-    private double              cutoff;
-    private double              resolution;
-    private double              peakWidth;
+    private double startCutoff;
+    private double cutoff;
+    private double resolution;
+    private double peakWidth;
 
-    private IRDFWeightFunction  weightFunction;
+    private IRDFWeightFunction weightFunction;
 
     /**
-     * Constructs a RDF calculator that calculates a unweighted, digitized
-     * RDF function.
+     * Constructs a RDF calculator that calculates a unweighted, digitized RDF function.
      *
      * @param startCutoff radial length in &Aring;ngstrom at which the RDF starts
-     * @param cutoff      radial length in &Aring;ngstrom at which the RDF stops
-     * @param resolution  width of the bins
-     * @param peakWidth   width of the gaussian applied to the peaks in &Aring;ngstrom
+     * @param cutoff radial length in &Aring;ngstrom at which the RDF stops
+     * @param resolution width of the bins
+     * @param peakWidth width of the gaussian applied to the peaks in &Aring;ngstrom
      */
     public RDFCalculator(double startCutoff, double cutoff, double resolution, double peakWidth) {
         this(startCutoff, cutoff, resolution, peakWidth, null);
     }
 
     /**
-     * Constructs a RDF calculator that calculates a digitized
-     * RDF function.
+     * Constructs a RDF calculator that calculates a digitized RDF function.
      *
-     * @param startCutoff    radial length in &Aring;ngstrom at which the RDF starts
-     * @param cutoff         radial length in &Aring;ngstrom at which the RDF stops
-     * @param resolution     width of the bins
-     * @param peakWidth      width of the gaussian applied to the peaks in &Aring;ngstrom
-     * @param weightFunction the weight function. If null, then an unweighted RDF is
-     *                       calculated
+     * @param startCutoff radial length in &Aring;ngstrom at which the RDF starts
+     * @param cutoff radial length in &Aring;ngstrom at which the RDF stops
+     * @param resolution width of the bins
+     * @param peakWidth width of the gaussian applied to the peaks in &Aring;ngstrom
+     * @param weightFunction the weight function. If null, then an unweighted RDF is calculated
      */
-    public RDFCalculator(double startCutoff, double cutoff, double resolution, double peakWidth,
+    public RDFCalculator(
+            double startCutoff,
+            double cutoff,
+            double resolution,
+            double peakWidth,
             IRDFWeightFunction weightFunction) {
         this.startCutoff = startCutoff;
         this.cutoff = cutoff;
@@ -106,8 +103,8 @@ public class RDFCalculator {
     }
 
     /**
-     * Calculates a RDF for <code>Atom</code> atom in the environment
-     * of the atoms in the <code>AtomContainer</code>.
+     * Calculates a RDF for <code>Atom</code> atom in the environment of the atoms in the <code>
+     * AtomContainer</code>.
      */
     public double[] calculate(IAtomContainer container, IAtom atom) {
         int length = (int) ((cutoff - startCutoff) / resolution) + 1;
@@ -122,7 +119,11 @@ public class RDFCalculator {
         if (factors.length > 0) {
             factors[0] = 1;
             for (int binCounter = 1; binCounter < factors.length; binCounter++) {
-                double height = Math.exp(-1.0 * (Math.pow(((double) binCounter) * resolution, 2.0)) / sigmaSquare);
+                double height =
+                        Math.exp(
+                                -1.0
+                                        * (Math.pow(((double) binCounter) * resolution, 2.0))
+                                        / sigmaSquare);
                 factors[binCounter] = height;
                 totalArea += height;
             }
@@ -166,5 +167,4 @@ public class RDFCalculator {
         }
         return rdf;
     }
-
 }

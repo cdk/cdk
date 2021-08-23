@@ -21,9 +21,7 @@ package org.openscience.cdk.dict;
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * @cdk.module test-dict
- */
+/** @cdk.module test-dict */
 public abstract class AbstractDictionaryTest {
 
     private Dictionary testClass;
@@ -63,5 +61,4 @@ public abstract class AbstractDictionaryTest {
         Assert.assertTrue(dict.hasEntry("someidentifier"));
         Assert.assertEquals(entry, dict.getEntry("someidentifier"));
     }
-
 }

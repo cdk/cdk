@@ -28,23 +28,21 @@ package org.openscience.cdk.isomorphism.mcss;
 import java.util.BitSet;
 
 /**
- *  Node of the resolution graph (RGraph) An RNode represents an association
- *  between two edges of the source graphs G1 and G2 that are compared. Two
- *  edges may be associated if they have at least one common feature. The
- *  association is defined outside this class. The node keeps tracks of the ID
- *  of the mapped edges (in an RMap), of its neighbours in the RGraph it belongs
- *  to and of the set of incompatible nodes (nodes that may not be along with
- *  this node in the same solution)
+ * Node of the resolution graph (RGraph) An RNode represents an association between two edges of the
+ * source graphs G1 and G2 that are compared. Two edges may be associated if they have at least one
+ * common feature. The association is defined outside this class. The node keeps tracks of the ID of
+ * the mapped edges (in an RMap), of its neighbours in the RGraph it belongs to and of the set of
+ * incompatible nodes (nodes that may not be along with this node in the same solution)
  *
- * @author      Stephane Werner from IXELIS mail@ixelis.net
+ * @author Stephane Werner from IXELIS mail@ixelis.net
  * @cdk.created 2002-07-17
- * @cdk.module  standard
+ * @cdk.module standard
  * @cdk.githash
  */
 public class RNode {
 
     // G1/G2 mapping
-    RMap   rMap      = null;
+    RMap rMap = null;
 
     // set of neighbour nodes in the RGraph
     BitSet extension = null;
@@ -53,10 +51,10 @@ public class RNode {
     BitSet forbidden = null;
 
     /**
-     *  Constructor for the RNode object.
+     * Constructor for the RNode object.
      *
-     *@param  id1  number of the bond in the graph 1
-     *@param  id2  number of the bond in the graph 2
+     * @param id1 number of the bond in the graph 1
+     * @param id2 number of the bond in the graph 2
      */
     public RNode(int id1, int id2) {
         rMap = new RMap(id1, id2);
@@ -65,66 +63,75 @@ public class RNode {
     }
 
     /**
-     *  Sets the rMap attribute of the RNode object.
+     * Sets the rMap attribute of the RNode object.
      *
-     *@param  rMap  The new rMap value
+     * @param rMap The new rMap value
      */
     public void setRMap(RMap rMap) {
         this.rMap = rMap;
     }
 
     /**
-     *  Sets the extension attribute of the RNode object.
+     * Sets the extension attribute of the RNode object.
      *
-     *@param  extension  The new extension value
+     * @param extension The new extension value
      */
     public void setExtension(BitSet extension) {
         this.extension = extension;
     }
 
     /**
-     *  Sets the forbidden attribute of the RNode object.
+     * Sets the forbidden attribute of the RNode object.
      *
-     *@param  forbidden  The new forbidden value
+     * @param forbidden The new forbidden value
      */
     public void setForbidden(BitSet forbidden) {
         this.forbidden = forbidden;
     }
 
     /**
-     *  Gets the rMap attribute of the RNode object.
+     * Gets the rMap attribute of the RNode object.
      *
-     *@return    The rMap value
+     * @return The rMap value
      */
     public RMap getRMap() {
         return rMap;
     }
 
     /**
-     *  Gets the extension attribute of the RNode object.
+     * Gets the extension attribute of the RNode object.
      *
-     *@return    The extension value
+     * @return The extension value
      */
     public BitSet getExtension() {
         return extension;
     }
 
     /**
-     *  Gets the forbidden attribute of the RNode object.
+     * Gets the forbidden attribute of the RNode object.
      *
-     *@return    The forbidden value
+     * @return The forbidden value
      */
     public BitSet getForbidden() {
         return forbidden;
     }
 
     /**
-     *  Returns a string representation of the RNode.
+     * Returns a string representation of the RNode.
      *
-     *@return    the string representation of the RNode
+     * @return the string representation of the RNode
      */
     @Override
     public String toString() {
-        return ("id1 : " + rMap.id1 + ", id2 : " + rMap.id2 + "\n" + "extension : " + extension + "\n" + "forbiden : " + forbidden);
+        return ("id1 : "
+                + rMap.id1
+                + ", id2 : "
+                + rMap.id2
+                + "\n"
+                + "extension : "
+                + extension
+                + "\n"
+                + "forbiden : "
+                + forbidden);
     }
 }

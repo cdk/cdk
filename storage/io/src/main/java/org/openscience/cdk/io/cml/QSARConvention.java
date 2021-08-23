@@ -25,7 +25,6 @@
 package org.openscience.cdk.io.cml;
 
 import java.util.StringTokenizer;
-
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -35,7 +34,6 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
-
 import org.xml.sax.Attributes;
 
 /**
@@ -43,17 +41,16 @@ import org.xml.sax.Attributes;
  *
  * @cdk.module io
  * @cdk.githash
- *
  * @author egonw
  */
 public class QSARConvention extends CMLCoreModule {
 
-    private String  currentDescriptorAlgorithmSpecification;
-    private String  currentDescriptorImplementationTitel;
-    private String  currentDescriptorImplementationVendor;
-    private String  currentDescriptorImplementationIdentifier;
-    private String  currentDescriptorDataType;
-    private String  currentDescriptorResult;
+    private String currentDescriptorAlgorithmSpecification;
+    private String currentDescriptorImplementationTitel;
+    private String currentDescriptorImplementationVendor;
+    private String currentDescriptorImplementationIdentifier;
+    private String currentDescriptorDataType;
+    private String currentDescriptorResult;
     private boolean currentDescriptorDataIsArray;
 
     public QSARConvention(IChemFile chemFile) {
@@ -65,14 +62,18 @@ public class QSARConvention extends CMLCoreModule {
     }
 
     @Override
-    public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
-        //        <property xmlns:qsar="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/"
+    public void startElement(
+            CMLStack xpath, String uri, String local, String raw, Attributes atts) {
+        //        <property
+        // xmlns:qsar="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/"
         //            convention="qsar:DescriptorValue">
         //            <metadataList>
         //              <metadata dictRef="qsar:specificationReference" content="qsar:weight"/>
-        //              <metadata dictRef="qsar:implementationTitle" content="org.openscience.cdk.qsar.descriptors.atomic.WeightDescriptor"/>
+        //              <metadata dictRef="qsar:implementationTitle"
+        // content="org.openscience.cdk.qsar.descriptors.atomic.WeightDescriptor"/>
         //              <metadata dictRef="qsar:implementationIdentifier" content="$Id$"/>
-        //              <metadata dictRef="qsar:implementationVendor" content="The Chemistry Development Kit"/>
+        //              <metadata dictRef="qsar:implementationVendor" content="The Chemistry
+        // Development Kit"/>
         //              <metadataList title="qsar:descriptorParameters">
         //                <metadata title="elementSymbol" content="*"/>
         //              </metadataList>
@@ -92,20 +93,25 @@ public class QSARConvention extends CMLCoreModule {
         } else if (xpath.endsWith("property", "metadataList", "metadata")) {
             super.startElement(xpath, uri, local, raw, atts);
             if (DICTREF.equals("qsar:specificationReference")) {
-                //    			cdo.setObjectProperty("MolecularDescriptor", "SpecificationReference", atts.getValue("content"));
+                //    			cdo.setObjectProperty("MolecularDescriptor", "SpecificationReference",
+                // atts.getValue("content"));
                 currentDescriptorAlgorithmSpecification = atts.getValue("content");
             } else if (DICTREF.equals("qsar:implementationTitle")) {
-                //    			cdo.setObjectProperty("MolecularDescriptor", "ImplementationTitle", atts.getValue("content"));
+                //    			cdo.setObjectProperty("MolecularDescriptor", "ImplementationTitle",
+                // atts.getValue("content"));
                 currentDescriptorImplementationTitel = atts.getValue("content");
             } else if (DICTREF.equals("qsar:implementationIdentifier")) {
-                //    			cdo.setObjectProperty("MolecularDescriptor", "ImplementationIdentifier", atts.getValue("content"));
+                //    			cdo.setObjectProperty("MolecularDescriptor", "ImplementationIdentifier",
+                // atts.getValue("content"));
                 currentDescriptorImplementationIdentifier = atts.getValue("content");
             } else if (DICTREF.equals("qsar:implementationVendor")) {
-                //    			cdo.setObjectProperty("MolecularDescriptor", "ImplementationVendor", atts.getValue("content"));
+                //    			cdo.setObjectProperty("MolecularDescriptor", "ImplementationVendor",
+                // atts.getValue("content"));
                 currentDescriptorImplementationVendor = atts.getValue("content");
             }
         } else if (xpath.endsWith("propertyList", "property", "scalar")) {
-            //    		cdo.setObjectProperty("MolecularDescriptor", "DataType", atts.getValue("dataType"));
+            //    		cdo.setObjectProperty("MolecularDescriptor", "DataType",
+            // atts.getValue("dataType"));
             currentDescriptorDataType = atts.getValue("dataType");
             super.startElement(xpath, uri, local, raw, atts);
         } else {
@@ -117,13 +123,22 @@ public class QSARConvention extends CMLCoreModule {
     public void endElement(CMLStack xpath, String uri, String local, String raw) {
         if (xpath.endsWith("molecule", "propertyList", "property")) {
             //    		cdo.endObject("MolecularDescriptor");
-            DescriptorSpecification descriptorSpecification = new DescriptorSpecification(
-                    currentDescriptorAlgorithmSpecification, currentDescriptorImplementationTitel,
-                    currentDescriptorImplementationIdentifier, currentDescriptorImplementationVendor);
-            currentMolecule.setProperty(descriptorSpecification, new DescriptorValue(descriptorSpecification,
-                    new String[0], new Object[0],
-                    currentDescriptorDataIsArray ? newDescriptorResultArray(currentDescriptorResult)
-                            : newDescriptorResult(currentDescriptorResult), new String[0]));
+            DescriptorSpecification descriptorSpecification =
+                    new DescriptorSpecification(
+                            currentDescriptorAlgorithmSpecification,
+                                    currentDescriptorImplementationTitel,
+                            currentDescriptorImplementationIdentifier,
+                                    currentDescriptorImplementationVendor);
+            currentMolecule.setProperty(
+                    descriptorSpecification,
+                    new DescriptorValue(
+                            descriptorSpecification,
+                            new String[0],
+                            new Object[0],
+                            currentDescriptorDataIsArray
+                                    ? newDescriptorResultArray(currentDescriptorResult)
+                                    : newDescriptorResult(currentDescriptorResult),
+                            new String[0]));
         } else if (xpath.endsWith("property", "scalar")) {
             //    		cdo.setObjectProperty("MolecularDescriptor", "DescriptorValue", currentChars);
             currentDescriptorResult = currentChars;

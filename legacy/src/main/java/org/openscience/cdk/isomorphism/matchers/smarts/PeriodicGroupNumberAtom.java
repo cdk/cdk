@@ -30,11 +30,10 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
 /**
  * This matcher checks the periodic group number of an atom.
  *
- * @cdk.module  smarts
+ * @cdk.module smarts
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
-
 @Deprecated
 public class PeriodicGroupNumberAtom extends SMARTSAtom {
 
@@ -71,5 +70,4 @@ public class PeriodicGroupNumberAtom extends SMARTSAtom {
     public String toString() {
         return ("PeriodicGroupNumberAtom(" + this.groupNumber + ")");
     }
-
 }

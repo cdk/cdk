@@ -22,28 +22,36 @@
 package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-/**
- * @cdk.module test-renderbasic
- */
+/** @cdk.module test-renderbasic */
 public class WedgeLineElementTest extends AbstractElementTest {
 
     @BeforeClass
     public static void setup() {
-        IRenderingElement element = new WedgeLineElement(0, 0, 1, 1, 1.0, WedgeLineElement.TYPE.DASHED,
-                WedgeLineElement.Direction.toFirst, Color.orange);
+        IRenderingElement element =
+                new WedgeLineElement(
+                        0,
+                        0,
+                        1,
+                        1,
+                        1.0,
+                        WedgeLineElement.TYPE.DASHED,
+                        WedgeLineElement.Direction.toFirst,
+                        Color.orange);
         setRenderingElement(element);
     }
 
     @Test
     public void testConstructor_LineElement() {
-        IRenderingElement element = new WedgeLineElement(new LineElement(0, 0, 1, 1, 1.0, Color.red),
-                WedgeLineElement.TYPE.DASHED, WedgeLineElement.Direction.toFirst, Color.orange);
+        IRenderingElement element =
+                new WedgeLineElement(
+                        new LineElement(0, 0, 1, 1, 1.0, Color.red),
+                        WedgeLineElement.TYPE.DASHED,
+                        WedgeLineElement.Direction.toFirst,
+                        Color.orange);
         Assert.assertNotNull(element);
     }
-
 }

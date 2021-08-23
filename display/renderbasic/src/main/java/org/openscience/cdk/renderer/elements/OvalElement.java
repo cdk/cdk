@@ -20,7 +20,6 @@ package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
 
-
 /**
  * An oval element (should) have both a width and a height.
  *
@@ -29,23 +28,23 @@ import java.awt.Color;
  */
 public class OvalElement implements IRenderingElement {
 
-    /** The x-coordinate of the center of the oval. **/
-    public final double  xCoord;
+    /** The x-coordinate of the center of the oval. * */
+    public final double xCoord;
 
-    /** The y-coordinate of the center of the oval. **/
-    public final double  yCoord;
+    /** The y-coordinate of the center of the oval. * */
+    public final double yCoord;
 
-    /** The radius of the oval. **/
-    public final double  radius;
+    /** The radius of the oval. * */
+    public final double radius;
 
     /** The stroke width. */
     public final double stroke;
 
-    /** If true, draw the oval as filled. **/
+    /** If true, draw the oval as filled. * */
     public final boolean fill;
 
-    /** The color to draw the oval. **/
-    public final Color   color;
+    /** The color to draw the oval. * */
+    public final Color color;
 
     /**
      * Make an oval with a default radius of 10.
@@ -79,8 +78,8 @@ public class OvalElement implements IRenderingElement {
      * @param fill if true, fill the oval when drawing
      * @param color the color of the oval
      */
-    public OvalElement(double xCoord, double yCoord, double radius, double stroke,
-                       boolean fill, Color color) {
+    public OvalElement(
+            double xCoord, double yCoord, double radius, double stroke, boolean fill, Color color) {
         this.xCoord = xCoord;
         this.yCoord = yCoord;
         this.radius = radius;
@@ -89,8 +88,7 @@ public class OvalElement implements IRenderingElement {
         this.color = color;
     }
 
-    public OvalElement(double xCoord, double yCoord, double radius,
-                       boolean fill, Color color) {
+    public OvalElement(double xCoord, double yCoord, double radius, boolean fill, Color color) {
         this.xCoord = xCoord;
         this.yCoord = yCoord;
         this.radius = radius;
@@ -99,7 +97,7 @@ public class OvalElement implements IRenderingElement {
         this.color = color;
     }
 
-    /** {@inheritDoc} **/
+    /** {@inheritDoc} * */
     @Override
     public void accept(IRenderingVisitor visitor) {
         visitor.visit(this);

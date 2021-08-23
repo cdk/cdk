@@ -23,7 +23,6 @@
 package org.openscience.cdk.group;
 
 import org.junit.Assert;
-
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -87,5 +86,4 @@ public class AtomGroupTests extends CDKTestCase {
     public void hetatmMultipleCycle() throws InvalidSmilesException {
         test(getMol("C1=OC=C1"), 1);
     }
-
 }

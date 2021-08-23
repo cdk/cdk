@@ -20,7 +20,6 @@
 package org.openscience.cdk.interfaces;
 
 import java.util.Iterator;
-
 import org.junit.Assert;
 
 /**
@@ -30,9 +29,7 @@ import org.junit.Assert;
  */
 public abstract class AbstractMappingTest extends AbstractChemObjectTest {
 
-    /**
-     * Method to test whether the class complies with RFC #9.
-     */
+    /** Method to test whether the class complies with RFC #9. */
     public void testToString() {
         IMapping mapping = (IMapping) newChemObject();
         String description = mapping.toString();
@@ -76,9 +73,9 @@ public abstract class AbstractMappingTest extends AbstractChemObjectTest {
         IMapping mapping = (IMapping) newChemObject();
 
         IMapping clone = (IMapping) mapping.clone();
-        //IChemObject[] map = mapping.getRelatedChemObjects();
-        //IChemObject[] mapClone = clone.getRelatedChemObjects();
-        //assertEquals(map.length, mapClone.length);
+        // IChemObject[] map = mapping.getRelatedChemObjects();
+        // IChemObject[] mapClone = clone.getRelatedChemObjects();
+        // assertEquals(map.length, mapClone.length);
         for (int f = 0; f < 2; f++) {
             for (int g = 0; g < 2; g++) {
                 Assert.assertNotNull(mapping.getChemObject(f));

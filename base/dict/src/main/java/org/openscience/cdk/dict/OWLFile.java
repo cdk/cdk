@@ -25,14 +25,12 @@ package org.openscience.cdk.dict;
 
 import java.io.IOException;
 import java.io.Reader;
-
 import nu.xom.Attribute;
 import nu.xom.Builder;
 import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Elements;
 import nu.xom.ParsingException;
-
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -41,14 +39,13 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @author Egon Willighagen &lt;egonw@users.sf.net&gt;
  * @cdk.githash
- * @cdk.created  2005-11-18
- * @cdk.keyword  dictionary
- * @cdk.module   dict
- *
+ * @cdk.created 2005-11-18
+ * @cdk.keyword dictionary
+ * @cdk.module dict
  */
 public class OWLFile extends Dictionary {
 
-    private static String rdfNS  = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+    private static String rdfNS = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
     private static String rdfsNS = "http://www.w3.org/2000/01/rdf-schema#";
 
     public OWLFile() {
@@ -125,5 +122,4 @@ public class OWLFile extends Dictionary {
 
         return dbEntry;
     }
-
 }

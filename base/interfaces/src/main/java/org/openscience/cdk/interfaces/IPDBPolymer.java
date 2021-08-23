@@ -25,15 +25,13 @@ package org.openscience.cdk.interfaces;
 import java.util.Collection;
 
 /**
- * A PDBPolymer is a subclass of a BioPolymer which is supposed to store
- * additional informations about the BioPolymer which are connected to BioPolymers.
+ * A PDBPolymer is a subclass of a BioPolymer which is supposed to store additional informations
+ * about the BioPolymer which are connected to BioPolymers.
  *
- * @cdk.module  interfaces
+ * @cdk.module interfaces
  * @cdk.githash
- *
  * @author Miguel Rojas &lt;miguel.rojas@uni-koeln.de&gt;
  * @cdk.created 2006-11-20
- *
  * @cdk.keyword polymer
  * @cdk.keyword biopolymer
  * @cdk.keyword pdbpolymer
@@ -41,27 +39,26 @@ import java.util.Collection;
 public interface IPDBPolymer extends IBioPolymer {
 
     /**
-     * Adds the atom oAtom without specifying a Monomer or a Strand. Therefore the
-     * atom to this AtomContainer, but not to a certain Strand or Monomer (intended
-     * e.g. for HETATMs).
+     * Adds the atom oAtom without specifying a Monomer or a Strand. Therefore the atom to this
+     * AtomContainer, but not to a certain Strand or Monomer (intended e.g. for HETATMs).
      *
-     * @param oAtom  The atom to add
+     * @param oAtom The atom to add
      */
     public void addAtom(IPDBAtom oAtom);
 
     /**
      * Adds the atom to a specified Strand and a specified Monomer.
      *
-     * @param oAtom    The atom to add
+     * @param oAtom The atom to add
      * @param oMonomer The monomer the atom belongs to
-     * @param oStrand  The strand the atom belongs to
+     * @param oStrand The strand the atom belongs to
      */
     public void addAtom(IPDBAtom oAtom, IMonomer oMonomer, IStrand oStrand);
 
     /**
      * Adds the PDBStructure structure a this PDBPolymer.
      *
-     * @param structure  The PDBStructure to add
+     * @param structure The PDBStructure to add
      */
     public void addStructure(IPDBStructure structure);
 
@@ -72,9 +69,7 @@ public interface IPDBPolymer extends IBioPolymer {
      */
     public Collection<IPDBStructure> getStructures();
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IPDBPolymer clone() throws CloneNotSupportedException;
 }

@@ -24,15 +24,15 @@
 
 package org.openscience.cdk.isomorphism;
 
-import org.junit.Test;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.isomorphism.matchers.IQueryBond;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.openscience.cdk.CDKConstants.ISAROMATIC;
+
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 
 /**
  * @author John May

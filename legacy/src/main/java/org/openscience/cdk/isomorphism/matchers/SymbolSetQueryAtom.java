@@ -20,21 +20,19 @@ package org.openscience.cdk.isomorphism.matchers;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- *  A QueryAtom that matches all symbols in this container. You may add symbols
- *  to this container. This QueryAtom will only give a match if it contains the
- *  symbol of the Atom to match (example: add "F", "Cl", "Br", "I" to get a
- *  match for the most common halogens).
+ * A QueryAtom that matches all symbols in this container. You may add symbols to this container.
+ * This QueryAtom will only give a match if it contains the symbol of the Atom to match (example:
+ * add "F", "Cl", "Br", "I" to get a match for the most common halogens).
  *
- *@author        kha
+ * @author kha
  * @cdk.githash
- *@cdk.created   2004-09-16
- *@see           InverseSymbolSetQueryAtom
- *@cdk.module    isomorphism
+ * @cdk.created 2004-09-16
+ * @see InverseSymbolSetQueryAtom
+ * @cdk.module isomorphism
  * @deprecated Use {@code new Expr(Element, 6).and(new Expr(Element, 8))} etc
  */
 @Deprecated
@@ -42,11 +40,9 @@ public class SymbolSetQueryAtom extends QueryAtom implements IQueryAtom {
 
     private static final long serialVersionUID = 7539577277779603551L;
 
-    private Set<String>       symbols          = new HashSet<String>();
+    private Set<String> symbols = new HashSet<String>();
 
-    /**
-     *  Constructor for the SymbolSetQueryAtom object
-     */
+    /** Constructor for the SymbolSetQueryAtom object */
     public SymbolSetQueryAtom(IChemObjectBuilder builder) {
         super(builder);
     }
@@ -54,10 +50,10 @@ public class SymbolSetQueryAtom extends QueryAtom implements IQueryAtom {
     public void setOperator(String str) {}
 
     /**
-     *  The matches implementation of the QueryAtom interface.
+     * The matches implementation of the QueryAtom interface.
      *
-     *@param  atom  The atom to be matched by this QueryAtom
-     *@return       true if Atom matched
+     * @param atom The atom to be matched by this QueryAtom
+     * @return true if Atom matched
      */
     @Override
     public boolean matches(IAtom atom) {
@@ -65,46 +61,46 @@ public class SymbolSetQueryAtom extends QueryAtom implements IQueryAtom {
     }
 
     /**
-     *  Add a symbol to this QueryAtom
+     * Add a symbol to this QueryAtom
      *
-     *@param  symbol  The symbol to add
+     * @param symbol The symbol to add
      */
     public void addSymbol(String symbol) {
         symbols.add(symbol);
     }
 
     /**
-     *  Remove a symbol from this QueryAtom
+     * Remove a symbol from this QueryAtom
      *
-     *@param  symbol  The symbol to remove
+     * @param symbol The symbol to remove
      */
     public void removeSymbol(String symbol) {
         symbols.remove(symbol);
     }
 
     /**
-     *  Check whether a symbol is already registered
+     * Check whether a symbol is already registered
      *
-     *@param  symbol  The symbol to check for
-     *@return         true if symbol already registered
+     * @param symbol The symbol to check for
+     * @return true if symbol already registered
      */
     public boolean hasSymbol(String symbol) {
         return symbols.contains(symbol);
     }
 
     /**
-     *  Retrieve the Set of symbols
+     * Retrieve the Set of symbols
      *
-     *@return    The symbol Set
+     * @return The symbol Set
      */
     public Set<String> getSymbolSet() {
         return symbols;
     }
 
     /**
-     *  The toString method
+     * The toString method
      *
-     *@return    The String representation of this object.
+     * @return The String representation of this object.
      */
     @Override
     public String toString() {

@@ -32,7 +32,6 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 /**
  * @cdk.module test-signature
  * @author maclean
- *
  */
 public class AbstractSignatureTest {
 
@@ -272,8 +271,7 @@ public class AbstractSignatureTest {
     }
 
     /**
-     * Strictly speaking, this is more like a cube than cubane, as it has no
-     * hydrogens.
+     * Strictly speaking, this is more like a cube than cubane, as it has no hydrogens.
      *
      * @return
      */
@@ -403,9 +401,9 @@ public class AbstractSignatureTest {
     }
 
     /**
-     * This may not be a real molecule, but it is a good, simple test.
-     * It is something like cyclobutane with a single carbon bridge across it,
-     * or propellane without one of its bonds (see makePropellane).
+     * This may not be a real molecule, but it is a good, simple test. It is something like
+     * cyclobutane with a single carbon bridge across it, or propellane without one of its bonds
+     * (see makePropellane).
      *
      * @return
      */
@@ -428,5 +426,4 @@ public class AbstractSignatureTest {
         mol.addBond(0, 4, IBond.Order.SINGLE);
         return mol;
     }
-
 }

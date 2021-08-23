@@ -25,11 +25,10 @@ import javax.vecmath.Point3d;
 /**
  * Representation of a triangle in 3D.
  *
- * By default this class represent the triangle in clockwise
- * fashion.
+ * <p>By default this class represent the triangle in clockwise fashion.
  *
  * @author Rajarshi Guha
- * @cdk.module  qsarmolecular
+ * @cdk.module qsarmolecular
  * @cdk.githash
  */
 public class Triangle {

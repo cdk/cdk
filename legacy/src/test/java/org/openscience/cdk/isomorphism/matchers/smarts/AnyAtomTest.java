@@ -24,10 +24,10 @@
 
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 import org.openscience.cdk.silent.Atom;
-
-import static org.junit.Assert.assertTrue;
 
 public class AnyAtomTest {
 

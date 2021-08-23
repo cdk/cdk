@@ -24,7 +24,6 @@ package org.openscience.cdk.signature;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,15 +31,14 @@ import org.junit.Test;
 /**
  * @cdk.module test-signature
  * @author maclean
- *
  */
 public class OrbitTest {
 
     private String orbitLabel;
 
-    private Orbit  orbit;
+    private Orbit orbit;
 
-    private Orbit  unsortedOrbit;
+    private Orbit unsortedOrbit;
 
     @Before
     public void setUp() {
@@ -50,7 +48,7 @@ public class OrbitTest {
         orbitLabel = "ORBIT";
         int height = 2;
         orbit = new Orbit(orbitLabel, height);
-        int[] atomIndices = new int[]{0, 1, 2, 3};
+        int[] atomIndices = new int[] {0, 1, 2, 3};
         for (int atomIndex : atomIndices) {
             orbit.addAtom(atomIndex);
         }
@@ -59,11 +57,10 @@ public class OrbitTest {
         String unsortedOrbitLabel = "UNSORTED_ORBIT";
         int unsortedHeight = 2;
         unsortedOrbit = new Orbit(unsortedOrbitLabel, unsortedHeight);
-        int[] unsortedAtomIndices = new int[]{3, 1, 0, 2};
+        int[] unsortedAtomIndices = new int[] {3, 1, 0, 2};
         for (int atomIndex : unsortedAtomIndices) {
             unsortedOrbit.addAtom(atomIndex);
         }
-
     }
 
     @Test
@@ -88,7 +85,9 @@ public class OrbitTest {
 
     @Test
     public void isEmptyTest() {
-        Assert.assertFalse("The setUp method should have made an orbit with " + "some indices in it", orbit.isEmpty());
+        Assert.assertFalse(
+                "The setUp method should have made an orbit with " + "some indices in it",
+                orbit.isEmpty());
         List<Integer> indices = new ArrayList<Integer>();
         for (int index : orbit) {
             indices.add(index);
@@ -168,5 +167,4 @@ public class OrbitTest {
     public void toStringTest() {
         Assert.assertEquals("ORBIT [0, 1, 2, 3]", orbit.toString());
     }
-
 }

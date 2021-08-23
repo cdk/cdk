@@ -56,8 +56,8 @@ public class MOPAC7InputFormat extends SimpleChemFormatMatcher implements IChemF
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-    	String[] extensions = new String[1];
-    	extensions[0] = "dat";
+        String[] extensions = new String[1];
+        extensions[0] = "dat";
         return extensions;
     }
 

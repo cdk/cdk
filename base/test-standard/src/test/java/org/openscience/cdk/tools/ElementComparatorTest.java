@@ -21,11 +21,8 @@ package org.openscience.cdk.tools;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.tools.ElementComparator;
 
-/**
- * @cdk.module test-standard
- */
+/** @cdk.module test-standard */
 public class ElementComparatorTest extends CDKTestCase {
 
     public ElementComparatorTest() {
@@ -38,9 +35,7 @@ public class ElementComparatorTest extends CDKTestCase {
         Assert.assertNotNull(comp);
     }
 
-    /**
-     * @cdk.bug 1638375
-     */
+    /** @cdk.bug 1638375 */
     @Test
     public void testCompare_Object_Object() {
         ElementComparator comp = new ElementComparator();
@@ -51,5 +46,4 @@ public class ElementComparatorTest extends CDKTestCase {
         Assert.assertEquals(0, comp.compare("Cl", "Cl"));
         Assert.assertTrue(comp.compare("Cl", "C") > 0);
     }
-
 }

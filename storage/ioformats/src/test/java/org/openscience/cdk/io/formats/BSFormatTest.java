@@ -22,13 +22,10 @@
  */
 package org.openscience.cdk.io.formats;
 
-/**
- * @cdk.module test-ioformats
- */
+/** @cdk.module test-ioformats */
 public class BSFormatTest extends ChemFormatTest {
 
     public BSFormatTest() {
         super.setChemFormat((IChemFormat) BSFormat.getInstance());
     }
-
 }

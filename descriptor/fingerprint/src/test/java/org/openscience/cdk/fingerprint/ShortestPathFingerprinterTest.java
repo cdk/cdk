@@ -27,7 +27,6 @@ package org.openscience.cdk.fingerprint;
 import java.io.FileNotFoundException;
 import java.math.BigInteger;
 import java.util.BitSet;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -51,8 +50,9 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
-    boolean                     standAlone = false;
-    private static ILoggingTool logger     = LoggingToolFactory.createLoggingTool(ShortestPathFingerprinter.class);
+    boolean standAlone = false;
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(ShortestPathFingerprinter.class);
 
     @Override
     public IFingerprinter getBitFingerprinter() {
@@ -68,11 +68,13 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         ShortestPathFingerprinter fingerprinter = new ShortestPathFingerprinter();
         IBitFingerprint bs1 = fingerprinter.getBitFingerprint(mol1);
         Assert.assertEquals(
-                "Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 22,
+                "Seems the fingerprint code has changed. This will cause a number of other tests to fail too!",
+                22,
                 bs1.cardinality());
         IBitFingerprint bs2 = fingerprinter.getBitFingerprint(mol2);
         Assert.assertEquals(
-                "Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 11,
+                "Seems the fingerprint code has changed. This will cause a number of other tests to fail too!",
+                11,
                 bs2.cardinality());
     }
 
@@ -139,8 +141,9 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
      * @throws FileNotFoundException
      */
     @Test
-    public void testGenerateFingerprintIsNotASubset1() throws InvalidSmilesException, CDKException,
-            FileNotFoundException, FileNotFoundException {
+    public void testGenerateFingerprintIsNotASubset1()
+            throws InvalidSmilesException, CDKException, FileNotFoundException,
+                    FileNotFoundException {
 
         String smilesT = "O[C@H]1[C@H](O)[C@@H](O)[C@H](O)[C@H](O)[C@@H]1O";
         String smilesQ = "OC[C@@H](O)[C@@H](O)[C@H](O)[C@@H](O)C(O)=O";
@@ -270,7 +273,6 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
 
     /**
      * @cdk.bug 2819557
-     *
      * @throws org.openscience.cdk.exception.CDKException
      */
     @Test
@@ -282,7 +284,9 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         BitSet b1 = fp.getBitFingerprint(butane).asBitSet();
         BitSet b2 = fp.getBitFingerprint(propylAmine).asBitSet();
 
-        Assert.assertFalse("butane should not be a substructure of propylamine", FingerprinterTool.isSubset(b2, b1));
+        Assert.assertFalse(
+                "butane should not be a substructure of propylamine",
+                FingerprinterTool.isSubset(b2, b1));
     }
 
     @Test
@@ -344,7 +348,8 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
     }
 
     public static IAtomContainer makeFragment1() {
-        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer mol =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         mol.addAtom(new Atom("C")); // 0
         mol.addAtom(new Atom("C")); // 1
         mol.addAtom(new Atom("C")); // 2
@@ -363,7 +368,8 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
     }
 
     public static IAtomContainer makeFragment4() {
-        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer mol =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         mol.addAtom(new Atom("C")); // 0
         mol.addAtom(new Atom("C")); // 1
 
@@ -372,7 +378,8 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
     }
 
     public static IAtomContainer makeFragment2() {
-        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer mol =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         mol.addAtom(new Atom("C")); // 0
         mol.addAtom(new Atom("C")); // 1
         mol.addAtom(new Atom("C")); // 2
@@ -392,7 +399,8 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
     }
 
     public static IAtomContainer makeFragment3() {
-        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer mol =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         mol.addAtom(new Atom("C")); // 0
         mol.addAtom(new Atom("C")); // 1
         mol.addAtom(new Atom("C")); // 2
@@ -411,7 +419,8 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
     }
 
     public static IAtomContainer makeButane() {
-        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer mol =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         Atom atom = new Atom("C");
         atom.setID("0");
         mol.addAtom(atom); // 0
@@ -436,7 +445,8 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
     }
 
     public static IAtomContainer makePropylAmine() {
-        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtomContainer mol =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         Atom atom = new Atom("C");
         atom.setID("0");
         mol.addAtom(atom); // 0

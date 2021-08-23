@@ -37,14 +37,11 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.SaturationChecker;
 
 /**
- * This class shows some limitations of algorithms in the SaturationChecker
- * class.
+ * This class shows some limitations of algorithms in the SaturationChecker class.
  *
  * @cdk.module test-extra
- *
- * @author     egonw
- * @cdk.created    2003-11-02
- *
+ * @author egonw
+ * @cdk.created 2003-11-02
  * @see org.openscience.cdk.tools.SaturationChecker
  */
 @Ignore("Limitations actually cause failing tests")
@@ -57,9 +54,7 @@ public class SaturationCheckerTest extends CDKTestCase {
         satcheck = new SaturationChecker();
     }
 
-    /**
-     * Tests the method saturate().
-     */
+    /** Tests the method saturate(). */
     @Test
     public void testSaturate_WithNitrate() throws Exception {
         IAtomContainer mol = new AtomContainer();
@@ -132,9 +127,7 @@ public class SaturationCheckerTest extends CDKTestCase {
         Assert.assertEquals(IBond.Order.DOUBLE, b2.getOrder());
     }
 
-    /**
-     * Tests the method saturate().
-     */
+    /** Tests the method saturate(). */
     @Test
     public void testSaturation_S4AtomType() throws Exception {
         IAtomContainer mol = new AtomContainer();
@@ -239,9 +232,7 @@ public class SaturationCheckerTest extends CDKTestCase {
         Assert.assertEquals(IBond.Order.DOUBLE, b7.getOrder());
     }
 
-    /**
-     * Tests the method saturate().
-     */
+    /** Tests the method saturate(). */
     @Test
     public void testSaturate_NumberingProblem() throws Exception {
         IAtomContainer mol = new AtomContainer();
@@ -289,9 +280,7 @@ public class SaturationCheckerTest extends CDKTestCase {
         Assert.assertEquals(IBond.Order.DOUBLE, b4.getOrder());
     }
 
-    /**
-     * Tests whether the saturation checker gets a proton right.
-     */
+    /** Tests whether the saturation checker gets a proton right. */
     @Test
     public void testIsSaturated_Proton() throws Exception {
         // test H+
@@ -314,5 +303,4 @@ public class SaturationCheckerTest extends CDKTestCase {
         Assert.assertEquals(5, ring.getBondCount());
         Assert.assertEquals(1, satcheck.calculateNumberOfImplicitHydrogens(n, pyrrole));
     }
-
 }

@@ -19,7 +19,6 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import javax.vecmath.Point3d;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -46,7 +45,8 @@ public class DistanceToAtomDescriptorTest extends AtomicDescriptorTest {
     }
 
     @Test
-    public void testDistanceToAtomDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testDistanceToAtomDescriptor()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
         IAtomicDescriptor descriptor = new DistanceToAtomDescriptor();
         Object[] params = {Integer.valueOf(2)};
         descriptor.setParameters(params);
@@ -65,7 +65,9 @@ public class DistanceToAtomDescriptorTest extends AtomicDescriptorTest {
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
         // mol.addBond(2, 3, IBond.Order.SINGLE); // 3 // jwmay: there is no atom at index 3
 
-        Assert.assertEquals(2.46, ((DoubleResult) descriptor.calculate(mol.getAtom(0), mol).getValue()).doubleValue(),
+        Assert.assertEquals(
+                2.46,
+                ((DoubleResult) descriptor.calculate(mol.getAtom(0), mol).getValue()).doubleValue(),
                 0.1);
     }
 }

@@ -18,6 +18,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import static org.hamcrest.Matchers.is;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,14 +37,11 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import static org.hamcrest.Matchers.is;
-
 /**
  * TestSuite that runs all QSAR tests.
  *
  * @cdk.module test-qsarmolecular
  */
-
 public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
 
     public RotatableBondsCountDescriptorTest() {}
@@ -53,11 +52,14 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testRotatableBondsCount() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testRotatableBondsCount()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
         Object[] params = {true, false};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer mol = sp.parseSmiles("CC2CCC(C1CCCCC1)CC2"); // molecule with 2 bridged cicloexane and 1 methyl
+        IAtomContainer mol =
+                sp.parseSmiles(
+                        "CC2CCC(C1CCCCC1)CC2"); // molecule with 2 bridged cicloexane and 1 methyl
         Assert.assertEquals(2, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
 
@@ -82,7 +84,7 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
     public void testEthaneIncludeTerminals() throws Exception {
         IAtomContainer container = makeEthane();
         IMolecularDescriptor descriptor = new RotatableBondsCountDescriptor();
-        descriptor.setParameters(new Object[]{true, false});
+        descriptor.setParameters(new Object[] {true, false});
         DescriptorValue result = descriptor.calculate(container);
         Assert.assertEquals(1, ((IntegerResult) result.getValue()).intValue());
     }
@@ -91,7 +93,7 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
     public void testEthane() throws Exception {
         IAtomContainer container = makeEthane();
         IMolecularDescriptor descriptor = new RotatableBondsCountDescriptor();
-        descriptor.setParameters(new Object[]{false, false});
+        descriptor.setParameters(new Object[] {false, false});
         DescriptorValue result = descriptor.calculate(container);
         Assert.assertEquals(0, ((IntegerResult) result.getValue()).intValue());
     }
@@ -100,7 +102,7 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
     public void testButaneIncludeTerminals() throws Exception {
         IAtomContainer container = makeButane();
         IMolecularDescriptor descriptor = new RotatableBondsCountDescriptor();
-        descriptor.setParameters(new Object[]{true, false});
+        descriptor.setParameters(new Object[] {true, false});
         DescriptorValue result = descriptor.calculate(container);
         Assert.assertEquals(3, ((IntegerResult) result.getValue()).intValue());
     }
@@ -109,14 +111,12 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
     public void testButane() throws Exception {
         IAtomContainer container = makeButane();
         IMolecularDescriptor descriptor = new RotatableBondsCountDescriptor();
-        descriptor.setParameters(new Object[]{false, false});
+        descriptor.setParameters(new Object[] {false, false});
         DescriptorValue result = descriptor.calculate(container);
         Assert.assertEquals(1, ((IntegerResult) result.getValue()).intValue());
     }
 
-    /**
-     * @cdk.bug 2449257
-     */
+    /** @cdk.bug 2449257 */
     @Test
     public void testEthaneIncludeTerminalsExplicitH() throws Exception {
         IAtomContainer container = makeEthane();
@@ -125,14 +125,12 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
         adder.addImplicitHydrogens(container);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
         IMolecularDescriptor descriptor = new RotatableBondsCountDescriptor();
-        descriptor.setParameters(new Object[]{true, false});
+        descriptor.setParameters(new Object[] {true, false});
         DescriptorValue result = descriptor.calculate(container);
         Assert.assertEquals(1, ((IntegerResult) result.getValue()).intValue());
     }
 
-    /**
-     * @cdk.bug 2449257
-     */
+    /** @cdk.bug 2449257 */
     @Test
     public void testEthaneExplicitH() throws Exception {
         IAtomContainer container = makeEthane();
@@ -141,14 +139,12 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
         adder.addImplicitHydrogens(container);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
         IMolecularDescriptor descriptor = new RotatableBondsCountDescriptor();
-        descriptor.setParameters(new Object[]{false, false});
+        descriptor.setParameters(new Object[] {false, false});
         DescriptorValue result = descriptor.calculate(container);
         Assert.assertEquals(0, ((IntegerResult) result.getValue()).intValue());
     }
 
-    /**
-     * @cdk.bug 2449257
-     */
+    /** @cdk.bug 2449257 */
     @Test
     public void testButaneIncludeTerminalsExplicitH() throws Exception {
         IAtomContainer container = makeButane();
@@ -157,14 +153,12 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
         adder.addImplicitHydrogens(container);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
         IMolecularDescriptor descriptor = new RotatableBondsCountDescriptor();
-        descriptor.setParameters(new Object[]{true, false});
+        descriptor.setParameters(new Object[] {true, false});
         DescriptorValue result = descriptor.calculate(container);
         Assert.assertEquals(3, ((IntegerResult) result.getValue()).intValue());
     }
 
-    /**
-     * @cdk.bug 2449257
-     */
+    /** @cdk.bug 2449257 */
     @Test
     public void testButaneExplicitH() throws Exception {
         IAtomContainer container = makeButane();
@@ -173,7 +167,7 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
         adder.addImplicitHydrogens(container);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
         IMolecularDescriptor descriptor = new RotatableBondsCountDescriptor();
-        descriptor.setParameters(new Object[]{false, false});
+        descriptor.setParameters(new Object[] {false, false});
         DescriptorValue result = descriptor.calculate(container);
         Assert.assertEquals(1, ((IntegerResult) result.getValue()).intValue());
     }
@@ -186,9 +180,10 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         addExplicitHydrogens(mol);
         IMolecularDescriptor descriptor = new RotatableBondsCountDescriptor();
-        descriptor.setParameters(new Object[]{false, false});
+        descriptor.setParameters(new Object[] {false, false});
         DescriptorValue result = descriptor.calculate(mol);
-        org.hamcrest.MatcherAssert.assertThat(((IntegerResult) result.getValue()).intValue(), is(4));
+        org.hamcrest.MatcherAssert.assertThat(
+                ((IntegerResult) result.getValue()).intValue(), is(4));
     }
 
     @Test
@@ -199,8 +194,9 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         addExplicitHydrogens(mol);
         IMolecularDescriptor descriptor = new RotatableBondsCountDescriptor();
-        descriptor.setParameters(new Object[]{false, true});
+        descriptor.setParameters(new Object[] {false, true});
         DescriptorValue result = descriptor.calculate(mol);
-        org.hamcrest.MatcherAssert.assertThat(((IntegerResult) result.getValue()).intValue(), is(3));
+        org.hamcrest.MatcherAssert.assertThat(
+                ((IntegerResult) result.getValue()).intValue(), is(3));
     }
 }

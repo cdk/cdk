@@ -25,9 +25,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
-
 import javax.vecmath.Point2d;
-
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.renderer.elements.Bounds;
 import org.openscience.cdk.renderer.elements.ElementGroup;
@@ -43,23 +41,20 @@ import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 
 /**
- * <p>The base class for all renderers, handling the core aspects of rendering
- * such as the location of the model in 'model space' and the location on
- * the screen to draw the model. It also holds a reference to the list of
- * {@link IGenerator} instances that are used to create the diagram. These
- * generators are accessed through the generateDiagram method.</p>
+ * The base class for all renderers, handling the core aspects of rendering such as the location of
+ * the model in 'model space' and the location on the screen to draw the model. It also holds a
+ * reference to the list of {@link IGenerator} instances that are used to create the diagram. These
+ * generators are accessed through the generateDiagram method.
  *
- * <p>The terminology 'model space' and 'screen space' refer to the coordinate
- * systems for the model and the drawing, respectively. So the 2D points for
- * atoms in the model might be 1 unit apart (roughly representing &Aring;ngstrom,
- * perhaps) but the circles in the diagram that represent those atoms might be
- * 10 pixels apart on screen. Therefore screen space will be 10 times model
- * space for this example.</p>
+ * <p>The terminology 'model space' and 'screen space' refer to the coordinate systems for the model
+ * and the drawing, respectively. So the 2D points for atoms in the model might be 1 unit apart
+ * (roughly representing &Aring;ngstrom, perhaps) but the circles in the diagram that represent
+ * those atoms might be 10 pixels apart on screen. Therefore screen space will be 10 times model
+ * space for this example.
  *
- * <p>The abstract method {@link #calculateScaleForBondLength(double)} is
- * needed to determine the scale. For the model example just given, this would
- * return '10.0' for an input of '10.0', as that is the scale for that desired
- * bond length.</p>
+ * <p>The abstract method {@link #calculateScaleForBondLength(double)} is needed to determine the
+ * scale. For the model example just given, this would return '10.0' for an input of '10.0', as that
+ * is the scale for that desired bond length.
  *
  * @cdk.module renderbasic
  * @author maclean
@@ -67,49 +62,34 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  */
 public abstract class AbstractRenderer<T extends IChemObject> {
 
-    /**
-     *The renderer model is final as it is not intended to be replaced.
-     */
+    /** The renderer model is final as it is not intended to be replaced. */
     protected final RendererModel rendererModel;
 
-    /**
-     * Font managers change the font size depending on the zoom.
-     */
-    protected IFontManager        fontManager;
+    /** Font managers change the font size depending on the zoom. */
+    protected IFontManager fontManager;
 
-    /**
-     * The center point of the model (IAtomContainer, IAtomContainerSet, etc).
-     */
-    protected Point2d             modelCenter = new Point2d(0, 0);
+    /** The center point of the model (IAtomContainer, IAtomContainerSet, etc). */
+    protected Point2d modelCenter = new Point2d(0, 0);
 
-    /**
-     * The center of the desired position on screen to draw.
-     */
-    protected Point2d             drawCenter  = new Point2d(150, 200);
+    /** The center of the desired position on screen to draw. */
+    protected Point2d drawCenter = new Point2d(150, 200);
 
-    /**
-     * Generators for diagram elements.
-     */
+    /** Generators for diagram elements. */
     protected List<IGenerator<T>> generators;
 
-    /**
-     * Used when repainting an unchanged model.
-     */
-    protected IRenderingElement   cachedDiagram;
+    /** Used when repainting an unchanged model. */
+    protected IRenderingElement cachedDiagram;
 
-    /**
-     * Converts between model coordinates and screen coordinates.
-     */
-    protected AffineTransform     transform;
+    /** Converts between model coordinates and screen coordinates. */
+    protected AffineTransform transform;
 
     public AbstractRenderer(RendererModel rendererModel) {
         this.rendererModel = rendererModel;
     }
 
     /**
-     * The main method of the renderer, that uses each of the generators
-     * to create a different set of {@link IRenderingElement}s grouped
-     * together into a tree.
+     * The main method of the renderer, that uses each of the generators to create a different set
+     * of {@link IRenderingElement}s grouped together into a tree.
      *
      * @param object the object of type T to draw
      * @return the diagram as a tree of {@link IRenderingElement}s
@@ -123,10 +103,9 @@ public abstract class AbstractRenderer<T extends IChemObject> {
     }
 
     /**
-     * Calculate the scale to convert the model bonds into bonds of the length
-     * supplied. A standard way to do this is to calculate the average bond
-     * length (mean, or median) in model space, and divide the supplied screen
-     * distance by this average to give a scale.
+     * Calculate the scale to convert the model bonds into bonds of the length supplied. A standard
+     * way to do this is to calculate the average bond length (mean, or median) in model space, and
+     * divide the supplied screen distance by this average to give a scale.
      *
      * @param bondLength the desired length on screen
      * @return a multiplication factor, or 'scale'
@@ -134,9 +113,9 @@ public abstract class AbstractRenderer<T extends IChemObject> {
     public abstract double calculateScaleForBondLength(double bondLength);
 
     /**
-     * Converts a bounding rectangle in 'model space' into the equivalent
-     * bounds in 'screen space'. Used to determine how much space the model
-     * will take up on screen given a particular scale, zoom, and margin.
+     * Converts a bounding rectangle in 'model space' into the equivalent bounds in 'screen space'.
+     * Used to determine how much space the model will take up on screen given a particular scale,
+     * zoom, and margin.
      *
      * @param modelBounds the bounds of the model
      * @return the bounds of the diagram as drawn on screen
@@ -145,11 +124,15 @@ public abstract class AbstractRenderer<T extends IChemObject> {
         double scale = rendererModel.getParameter(Scale.class).getValue();
         double zoom = rendererModel.getParameter(ZoomFactor.class).getValue();
         double margin = rendererModel.getParameter(Margin.class).getValue();
-        Point2d modelScreenCenter = this.toScreenCoordinates(modelBounds.getCenterX(), modelBounds.getCenterY());
+        Point2d modelScreenCenter =
+                this.toScreenCoordinates(modelBounds.getCenterX(), modelBounds.getCenterY());
         double width = (scale * zoom * modelBounds.getWidth()) + (2 * margin);
         double height = (scale * zoom * modelBounds.getHeight()) + (2 * margin);
-        return new Rectangle((int) (modelScreenCenter.x - width / 2), (int) (modelScreenCenter.y - height / 2),
-                (int) width, (int) height);
+        return new Rectangle(
+                (int) (modelScreenCenter.x - width / 2),
+                (int) (modelScreenCenter.y - height / 2),
+                (int) width,
+                (int) height);
     }
 
     /**
@@ -162,7 +145,7 @@ public abstract class AbstractRenderer<T extends IChemObject> {
     public Point2d toModelCoordinates(double screenX, double screenY) {
         try {
             double[] dest = new double[2];
-            double[] src = new double[]{screenX, screenY};
+            double[] src = new double[] {screenX, screenY};
             transform.inverseTransform(src, 0, dest, 0, 1);
             return new Point2d(dest[0], dest[1]);
         } catch (NoninvertibleTransformException n) {
@@ -179,7 +162,7 @@ public abstract class AbstractRenderer<T extends IChemObject> {
      */
     public Point2d toScreenCoordinates(double modelX, double modelY) {
         double[] dest = new double[2];
-        transform.transform(new double[]{modelX, modelY}, 0, dest, 0, 1);
+        transform.transform(new double[] {modelX, modelY}, 0, dest, 0, 1);
         return new Point2d(dest[0], dest[1]);
     }
 
@@ -200,7 +183,6 @@ public abstract class AbstractRenderer<T extends IChemObject> {
      * @param modelX the x-coordinate of the point to draw at
      * @param modelY the y-coordinate of the point to draw at
      */
-
     public void setDrawCenter(double modelX, double modelY) {
         this.drawCenter = new Point2d(modelX, modelY);
         setup();
@@ -217,10 +199,9 @@ public abstract class AbstractRenderer<T extends IChemObject> {
     }
 
     /**
-     * Creates the transform using the scale, zoom, drawCenter, and modelCenter.
-     * In order to scale (and zoom) all elements in a uniform way, a point is
-     * first moved so that the center of the model is at the origin, scaled,
-     * then moved to the correct place on screen.
+     * Creates the transform using the scale, zoom, drawCenter, and modelCenter. In order to scale
+     * (and zoom) all elements in a uniform way, a point is first moved so that the center of the
+     * model is at the origin, scaled, then moved to the correct place on screen.
      */
     protected void setup() {
         double scale = rendererModel.getParameter(Scale.class).getValue();
@@ -235,15 +216,16 @@ public abstract class AbstractRenderer<T extends IChemObject> {
             transform.translate(-this.modelCenter.x, -this.modelCenter.y);
         } catch (NullPointerException npe) {
             // one of the drawCenter or modelCenter points have not been set!
-            String errorString = "null pointer when setting transform: "
-                    + "drawCenter=%s scale=%s zoom=%s modelCenter=%s";
+            String errorString =
+                    "null pointer when setting transform: "
+                            + "drawCenter=%s scale=%s zoom=%s modelCenter=%s";
             System.err.println(String.format(errorString, drawCenter, scale, zoom, modelCenter));
         }
     }
 
     /**
-     * Get the {@link RendererModel} used by this renderer, which provides
-     * access to the various parameters used to generate and draw the diagram.
+     * Get the {@link RendererModel} used by this renderer, which provides access to the various
+     * parameters used to generate and draw the diagram.
      *
      * @return a reference to the RendererModel
      */
@@ -281,15 +263,16 @@ public abstract class AbstractRenderer<T extends IChemObject> {
     }
 
     /**
-     * Calculate and set the zoom factor needed to completely fit the diagram
-     * onto the screen bounds.
+     * Calculate and set the zoom factor needed to completely fit the diagram onto the screen
+     * bounds.
      *
      * @param drawWidth the width of the area to draw onto
      * @param drawHeight the height of the area to draw onto
      * @param diagramWidth the width of the diagram
      * @param diagramHeight the height of the diagram
      */
-    public void setZoomToFit(double drawWidth, double drawHeight, double diagramWidth, double diagramHeight) {
+    public void setZoomToFit(
+            double drawWidth, double drawHeight, double diagramWidth, double diagramHeight) {
 
         double margin = rendererModel.getParameter(Margin.class).getValue();
 
@@ -303,7 +286,6 @@ public abstract class AbstractRenderer<T extends IChemObject> {
 
         // record the zoom in the model, so that generators can use it
         rendererModel.getParameter(ZoomFactor.class).setValue(zoom);
-
     }
 
     /**
@@ -318,10 +300,8 @@ public abstract class AbstractRenderer<T extends IChemObject> {
     /**
      * The target method for paintChemModel, paintReaction, and paintMolecule.
      *
-     * @param drawVisitor
-     *            the visitor to draw with
-     * @param diagram
-     *            the IRenderingElement tree to render
+     * @param drawVisitor the visitor to draw with
+     * @param diagram the IRenderingElement tree to render
      */
     protected void paint(IDrawVisitor drawVisitor, IRenderingElement diagram) {
         if (diagram == null) return;
@@ -341,8 +321,7 @@ public abstract class AbstractRenderer<T extends IChemObject> {
     /**
      * Set the transform for a non-fit to screen paint.
      *
-     * @param modelBounds
-     *            the bounding box of the model
+     * @param modelBounds the bounding box of the model
      */
     protected void setupTransformNatural(Rectangle2D modelBounds) {
         double zoom = rendererModel.getParameter(ZoomFactor.class).getValue();
@@ -351,15 +330,12 @@ public abstract class AbstractRenderer<T extends IChemObject> {
     }
 
     /**
-     * Determine the overlap of the diagram with the screen, and shift (if
-     * necessary) the diagram draw center. It returns a rectangle only because
-     * that is a convenient class to hold the four parameters calculated, but it
-     * is not a rectangle representing an area...
+     * Determine the overlap of the diagram with the screen, and shift (if necessary) the diagram
+     * draw center. It returns a rectangle only because that is a convenient class to hold the four
+     * parameters calculated, but it is not a rectangle representing an area...
      *
-     * @param screenBounds
-     *            the bounds of the screen
-     * @param diagramBounds
-     *            the bounds of the diagram
+     * @param screenBounds the bounds of the screen
+     * @param diagramBounds the bounds of the diagram
      * @return the shape that the screen should be
      */
     public Rectangle shift(Rectangle screenBounds, Rectangle diagramBounds) {
@@ -402,8 +378,7 @@ public abstract class AbstractRenderer<T extends IChemObject> {
     }
 
     /**
-     * Calculate the bounds of the diagram on screen, given the current scale,
-     * zoom, and margin.
+     * Calculate the bounds of the diagram on screen, given the current scale, zoom, and margin.
      *
      * @param modelBounds the bounds in model space of the chem object
      * @return the bounds in screen space of the drawn diagram
@@ -434,16 +409,13 @@ public abstract class AbstractRenderer<T extends IChemObject> {
     }
 
     /**
-     * Sets the transformation needed to draw the model on the canvas when
-     * the diagram needs to fit the screen.
+     * Sets the transformation needed to draw the model on the canvas when the diagram needs to fit
+     * the screen.
      *
-     * @param screenBounds
-     *            the bounding box of the draw area
-     * @param modelBounds
-     *            the bounding box of the model
-     * @param reset
-     *            if true, model center will be set to the modelBounds center
-     *            and the scale will be re-calculated
+     * @param screenBounds the bounding box of the draw area
+     * @param modelBounds the bounding box of the model
+     * @param reset if true, model center will be set to the modelBounds center and the scale will
+     *     be re-calculated
      */
     void setupTransformToFit(Rectangle2D screenBounds, Rectangle2D modelBounds, boolean reset) {
 
@@ -471,21 +443,17 @@ public abstract class AbstractRenderer<T extends IChemObject> {
     }
 
     /**
-     * Sets the transformation needed to draw the model on the canvas when
-     * the diagram needs to fit the screen.
+     * Sets the transformation needed to draw the model on the canvas when the diagram needs to fit
+     * the screen.
      *
-     * @param screenBounds
-     *            the bounding box of the draw area
-     * @param modelBounds
-     *            the bounding box of the model
-     * @param bondLength
-     *            the average bond length of the model
-     * @param reset
-     *            if true, model center will be set to the modelBounds center
-     *            and the scale will be re-calculated
+     * @param screenBounds the bounding box of the draw area
+     * @param modelBounds the bounding box of the model
+     * @param bondLength the average bond length of the model
+     * @param reset if true, model center will be set to the modelBounds center and the scale will
+     *     be re-calculated
      */
-    protected void setupTransformToFit(Rectangle2D screenBounds, Rectangle2D modelBounds, double bondLength,
-            boolean reset) {
+    protected void setupTransformToFit(
+            Rectangle2D screenBounds, Rectangle2D modelBounds, double bondLength, boolean reset) {
 
         if (screenBounds == null) return;
 
@@ -514,10 +482,9 @@ public abstract class AbstractRenderer<T extends IChemObject> {
     }
 
     /**
-     * Given a rendering element, traverse the elements compute required bounds
-     * to full display all elements. The method searches for {@link Bounds}
-     * elements which act to specify the required bounds when adjunct labels
-     * are considered.
+     * Given a rendering element, traverse the elements compute required bounds to full display all
+     * elements. The method searches for {@link Bounds} elements which act to specify the required
+     * bounds when adjunct labels are considered.
      *
      * @param element a rendering element
      * @return the bounds required (null if unspecified)
@@ -525,7 +492,6 @@ public abstract class AbstractRenderer<T extends IChemObject> {
     public Rectangle2D getBounds(IRenderingElement element) {
         if (element == null) return null;
         final Bounds bounds = new Bounds(element);
-        return new Rectangle2D.Double(bounds.minX, bounds.minY,
-                                      bounds.width(), bounds.height());
+        return new Rectangle2D.Double(bounds.minX, bounds.minY, bounds.width(), bounds.height());
     }
 }

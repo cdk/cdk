@@ -27,11 +27,9 @@ import org.openscience.cdk.CDKTestCase;
  * Tests CDK's CAS Number class.
  *
  * @cdk.module test-extra
- *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  * @author Nathana&euml;l "M.Le_maudit" Mazuir
- *
- * @cdk.created    2003-07-01
+ * @cdk.created 2003-07-01
  * @cdk.require java1.4+
  */
 public class CASNumberTest extends CDKTestCase {

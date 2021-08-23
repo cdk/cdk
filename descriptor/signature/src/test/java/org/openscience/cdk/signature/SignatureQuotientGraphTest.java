@@ -31,7 +31,6 @@ import org.openscience.cdk.interfaces.IBond;
 /**
  * @cdk.module test-signature
  * @author maclean
- *
  */
 public class SignatureQuotientGraphTest extends AbstractSignatureTest {
 
@@ -45,7 +44,10 @@ public class SignatureQuotientGraphTest extends AbstractSignatureTest {
         Assert.assertTrue(quotientGraph.isConnected(0, 1));
     }
 
-    public void checkParameters(SignatureQuotientGraph qGraph, int expectedVertexCount, int expectedEdgeCount,
+    public void checkParameters(
+            SignatureQuotientGraph qGraph,
+            int expectedVertexCount,
+            int expectedEdgeCount,
             int expectedLoopEdgeCount) {
         Assert.assertEquals(expectedVertexCount, qGraph.getVertexCount());
         Assert.assertEquals(expectedEdgeCount, qGraph.getEdgeCount());
@@ -106,5 +108,4 @@ public class SignatureQuotientGraphTest extends AbstractSignatureTest {
         SignatureQuotientGraph qGraph = new SignatureQuotientGraph(benzene);
         checkParameters(qGraph, 1, 1, 1);
     }
-
 }

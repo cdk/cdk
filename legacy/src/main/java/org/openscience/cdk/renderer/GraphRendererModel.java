@@ -26,7 +26,6 @@ package org.openscience.cdk.renderer;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.openscience.cdk.math.IFunction;
 
 /**
@@ -35,34 +34,32 @@ import org.openscience.cdk.math.IFunction;
  * @author Stephan Michels &lt;stephan@vern.chem.tu-berlin.de&gt;
  * @cdk.githash
  * @cdk.created 2001-07-02
- * @cdk.module  qm
+ * @cdk.module qm
  */
 public class GraphRendererModel {
 
-    private double          xmin        = -1d;
-    private double          xmax        = +1d;
-    private double          ymin        = -1d;
-    private double          ymax        = +1d;
+    private double xmin = -1d;
+    private double xmax = +1d;
+    private double ymin = -1d;
+    private double ymax = +1d;
 
-    private String          title       = "Main title";              // Main title
-    private String          xtitle      = "X title";                 // Title of the x axis
-    private String          ytitle      = "Y title";                 // Title of the y axis
+    private String title = "Main title"; // Main title
+    private String xtitle = "X title"; // Title of the x axis
+    private String ytitle = "Y title"; // Title of the y axis
 
-    private List<IFunction> functions   = new ArrayList<IFunction>();
-    private List<Color>     colors      = new ArrayList<Color>();
+    private List<IFunction> functions = new ArrayList<IFunction>();
+    private List<Color> colors = new ArrayList<Color>();
 
     /** Paints the function normal */
-    public final static int NORMAL      = 0;
+    public static final int NORMAL = 0;
     /** Paints the area below the function */
-    public final static int BELOWAREA   = 1;
+    public static final int BELOWAREA = 1;
     /** Paints the area over the function */
-    public final static int OVERAREA    = 2;
+    public static final int OVERAREA = 2;
 
-    private int             displaymode = NORMAL;
+    private int displaymode = NORMAL;
 
-    /**
-     * Sets the function area, which will painted
-     */
+    /** Sets the function area, which will painted */
     public void setX(double xmin, double xmax) {
         if (xmin < xmax) {
             this.xmin = xmin;
@@ -70,9 +67,7 @@ public class GraphRendererModel {
         }
     }
 
-    /**
-     * Sets the function area, which will painted
-     */
+    /** Sets the function area, which will painted */
     public void setY(double ymin, double ymax) {
         if (ymin < ymax) {
             this.ymin = ymin;
@@ -80,93 +75,67 @@ public class GraphRendererModel {
         }
     }
 
-    /**
-     * Gets the function area, which will painted
-     */
+    /** Gets the function area, which will painted */
     public double getXMin() {
         return xmin;
     }
 
-    /**
-     * Sets the function area, which will painted
-     */
+    /** Sets the function area, which will painted */
     public double getXMax() {
         return xmax;
     }
 
-    /**
-     * Sets the function area, which will painted
-     */
+    /** Sets the function area, which will painted */
     public double getYMin() {
         return ymin;
     }
 
-    /**
-     * Sets the function area, which will painted
-     */
+    /** Sets the function area, which will painted */
     public double getYMax() {
         return ymax;
     }
 
-    /**
-     * Set the main title
-     */
+    /** Set the main title */
     public void setTitle(String string) {
         if (string != null) title = string;
     }
 
-    /**
-     * Get the main title
-     */
+    /** Get the main title */
     public String getTitle() {
         return title;
     }
 
-    /**
-     * Set the title of the x axis
-     */
+    /** Set the title of the x axis */
     public void setXTitle(String string) {
         if (string != null) xtitle = string;
     }
 
-    /**
-     * Get the title of the x axis
-     */
+    /** Get the title of the x axis */
     public String getXTitle() {
         return xtitle;
     }
 
-    /**
-     * Set the title of the y axis
-     */
+    /** Set the title of the y axis */
     public void setYTitle(String string) {
         if (string != null) ytitle = string;
     }
 
-    /**
-     * Get the title of the y axis
-     */
+    /** Get the title of the y axis */
     public String getYTitle() {
         return ytitle;
     }
 
-    /**
-     * Set the display mode
-     */
+    /** Set the display mode */
     public void setDisplayMode(int mode) {
         if ((NORMAL <= mode) && (mode <= OVERAREA)) displaymode = mode;
     }
 
-    /**
-     * Get the display mode
-     */
+    /** Get the display mode */
     public int getDisplayMode() {
         return displaymode;
     }
 
-    /**
-     * Add a function to the set of functions
-     */
+    /** Add a function to the set of functions */
     public void addFunction(IFunction function) {
         if ((function != null) && (!functions.contains(function))) {
             functions.add(function);
@@ -174,34 +143,25 @@ public class GraphRendererModel {
         }
     }
 
-    /**
-     * Add a function to the set of functions
-     */
+    /** Add a function to the set of functions */
     public void addFunction(IFunction function, Color color) {
         if ((function != null) && (!functions.contains(function))) {
             functions.add(function);
             colors.add(color);
-        } else
-            colors.set(functions.indexOf(function), color);
+        } else colors.set(functions.indexOf(function), color);
     }
 
-    /**
-     * Get the count of functions in this set
-     */
+    /** Get the count of functions in this set */
     public int getFunctionsSize() {
         return functions.size();
     }
 
-    /**
-     * Get a function from this set
-     */
+    /** Get a function from this set */
     public IFunction getFunction(int index) {
         return functions.get(index);
     }
 
-    /**
-     * Get a color from a function in this set
-     */
+    /** Get a color from a function in this set */
     public Color getFunctionColor(int index) {
         return colors.get(index);
     }

@@ -36,7 +36,7 @@ public class SymbolSetQueryAtomTest extends CDKTestCase {
     private static SymbolSetQueryAtom symbolSet = null;
 
     @BeforeClass
-    static public void setUp() {
+    public static void setUp() {
         symbolSet = new SymbolSetQueryAtom(DefaultChemObjectBuilder.getInstance());
         symbolSet.addSymbol("C");
         symbolSet.addSymbol("Fe");
@@ -64,5 +64,4 @@ public class SymbolSetQueryAtomTest extends CDKTestCase {
         Assert.assertTrue(symbolSet.hasSymbol("C"));
         Assert.assertFalse(symbolSet.hasSymbol("N"));
     }
-
 }

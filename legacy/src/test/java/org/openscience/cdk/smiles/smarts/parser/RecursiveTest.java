@@ -18,10 +18,14 @@
  */
 package org.openscience.cdk.smiles.smarts.parser;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.openscience.cdk.smiles.smarts.parser.SMARTSSearchTest.smarts;
+import static org.openscience.cdk.smiles.smarts.parser.SMARTSSearchTest.smiles;
 
 import com.google.common.io.CharStreams;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -37,11 +41,6 @@ import org.openscience.cdk.io.iterator.IteratingSMILESReader;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.openscience.cdk.smiles.smarts.parser.SMARTSSearchTest.smarts;
-import static org.openscience.cdk.smiles.smarts.parser.SMARTSSearchTest.smiles;
 
 /**
  * Test recursive smarts
@@ -262,7 +261,6 @@ public class RecursiveTest extends CDKTestCase {
         match("[C;D2;H2;$(C(C)(C))]", "C(C)(C)C(C)C(C)CCCC");
         Assert.assertEquals(3, nmatch);
         Assert.assertEquals(3, nqmatch);
-
     }
 
     @Test
@@ -278,7 +276,6 @@ public class RecursiveTest extends CDKTestCase {
         match("[S;D2;$(S(C)(C))]", "CCCCC");
         Assert.assertEquals(0, nmatch);
         Assert.assertEquals(0, nqmatch);
-
     }
 
     @Test
@@ -386,7 +383,9 @@ public class RecursiveTest extends CDKTestCase {
     @Test
     public void testRecursive29() throws Exception {
         SMARTSQueryTool sqt = smarts("[NX3;H2,H1;!$(NC=O)]");
-        IAtomContainer smi = smiles("Cc1cc(=O)c(c[nH]1)C(=O)NC(c1ccc(cc1)O)C(=O)NC1C(=O)N2C1SCC(=C2C(=O)O)CSc1nnnn1C");
+        IAtomContainer smi =
+                smiles(
+                        "Cc1cc(=O)c(c[nH]1)C(=O)NC(c1ccc(cc1)O)C(=O)NC1C(=O)N2C1SCC(=C2C(=O)O)CSc1nnnn1C");
         int[] result = SMARTSSearchTest.match(sqt, smi);
         Assert.assertEquals(0, result[0]);
         Assert.assertEquals(0, result[1]);
@@ -394,14 +393,16 @@ public class RecursiveTest extends CDKTestCase {
 
     @Test
     public void nestedRecursion() throws Exception {
-        assertThat(SMARTSSearchTest.match("[$(*C[$(*C)$(**N)])]", "CCCCN"), is(new int[]{2, 2}));
-        assertThat(SMARTSSearchTest.match("[$(*C[$(*C)$(**N)])]", "CCN"), is(new int[]{1, 1}));
+        assertThat(SMARTSSearchTest.match("[$(*C[$(*C)$(**N)])]", "CCCCN"), is(new int[] {2, 2}));
+        assertThat(SMARTSSearchTest.match("[$(*C[$(*C)$(**N)])]", "CCN"), is(new int[] {1, 1}));
     }
 
     @Test
     public void testRecursive29_cdkAromaticModel() throws Exception {
         SMARTSQueryTool sqt = smarts("[NX3;H2,H1;!$(NC=O)]");
-        IAtomContainer smi = smiles("Cc1cc(=O)c(c[nH]1)C(=O)NC(c1ccc(cc1)O)C(=O)NC1C(=O)N2C1SCC(=C2C(=O)O)CSc1nnnn1C");
+        IAtomContainer smi =
+                smiles(
+                        "Cc1cc(=O)c(c[nH]1)C(=O)NC(c1ccc(cc1)O)C(=O)NC1C(=O)N2C1SCC(=C2C(=O)O)CSc1nnnn1C");
         sqt.setAromaticity(new Aromaticity(ElectronDonation.cdk(), Cycles.cdkAromaticSet()));
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(smi);
         int[] result = SMARTSSearchTest.match(sqt, smi);
@@ -414,13 +415,16 @@ public class RecursiveTest extends CDKTestCase {
     public void testBasicAmineOnDrugs_cdkAromaticModel() throws Exception {
         String filename = "drugs.smi";
         InputStream ins = this.getClass().getResourceAsStream(filename);
-        IteratingSMILESReader reader = new IteratingSMILESReader(ins, DefaultChemObjectBuilder.getInstance());
+        IteratingSMILESReader reader =
+                new IteratingSMILESReader(ins, DefaultChemObjectBuilder.getInstance());
 
-        SMARTSQueryTool sqt = new SMARTSQueryTool("[NX3;H2,H1;!$(NC=O)]", DefaultChemObjectBuilder.getInstance());
+        SMARTSQueryTool sqt =
+                new SMARTSQueryTool("[NX3;H2,H1;!$(NC=O)]", DefaultChemObjectBuilder.getInstance());
         sqt.setAromaticity(new Aromaticity(ElectronDonation.cdk(), Cycles.cdkAromaticSet()));
         int nmatch = 0;
         int nmol = 0;
-        READ: while (reader.hasNext()) {
+        READ:
+        while (reader.hasNext()) {
             IAtomContainer container = reader.next();
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
 
@@ -448,7 +452,8 @@ public class RecursiveTest extends CDKTestCase {
         String filename = "drugs.smi";
         InputStream ins = this.getClass().getResourceAsStream(filename);
 
-        SMARTSQueryTool sqt = new SMARTSQueryTool("[NX3;H2,H1;!$(NC=O)]", DefaultChemObjectBuilder.getInstance());
+        SMARTSQueryTool sqt =
+                new SMARTSQueryTool("[NX3;H2,H1;!$(NC=O)]", DefaultChemObjectBuilder.getInstance());
 
         // iterating SMILES reader doesn't allow us to turn off automatic aromaticity
         // perception
@@ -467,20 +472,22 @@ public class RecursiveTest extends CDKTestCase {
         Assert.assertEquals(0, nmatch);
     }
 
-    /**
-     * @cdk.bug 1312
-     */
+    /** @cdk.bug 1312 */
     @Test
     public void recursiveComponentGrouping() throws Exception {
-        assertThat(SMARTSSearchTest.match("[O;D1;$(([a,A]).([A,a]))][CH]=O", "OC=O.c1ccccc1"), is(new int[]{1, 1}));
-        assertThat(SMARTSSearchTest.match("[O;D1;$(([a,A]).([A,a]))][CH]=O", "OC=O"), is(new int[]{0, 0}));
+        assertThat(
+                SMARTSSearchTest.match("[O;D1;$(([a,A]).([A,a]))][CH]=O", "OC=O.c1ccccc1"),
+                is(new int[] {1, 1}));
+        assertThat(
+                SMARTSSearchTest.match("[O;D1;$(([a,A]).([A,a]))][CH]=O", "OC=O"),
+                is(new int[] {0, 0}));
     }
 
-    /**
-     * @cdk.bug 844
-      */
+    /** @cdk.bug 844 */
     @Test
     public void bug844() throws Exception {
-        assertThat(SMARTSSearchTest.match("[*R0]-[$([NRD3][CR]=O)]", "N1(CC)C(=O)CCCC1"), is(new int[]{1, 1}));
+        assertThat(
+                SMARTSSearchTest.match("[*R0]-[$([NRD3][CR]=O)]", "N1(CC)C(=O)CCCC1"),
+                is(new int[] {1, 1}));
     }
 }

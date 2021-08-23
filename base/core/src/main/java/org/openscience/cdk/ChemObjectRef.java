@@ -23,202 +23,154 @@
 
 package org.openscience.cdk;
 
+import java.util.Map;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
-
-import java.util.Map;
 
 class ChemObjectRef implements IChemObject {
 
     private final IChemObject chemobj;
 
     ChemObjectRef(IChemObject chemobj) {
-        if (chemobj == null)
-            throw new NullPointerException("Proxy object can not be null!");
+        if (chemobj == null) throw new NullPointerException("Proxy object can not be null!");
         this.chemobj = chemobj;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IChemObjectBuilder getBuilder() {
         return chemobj.getBuilder();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void addListener(IChemObjectListener col) {
         chemobj.addListener(col);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getListenerCount() {
         return chemobj.getListenerCount();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void removeListener(IChemObjectListener col) {
         chemobj.removeListener(col);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setNotification(boolean bool) {
         chemobj.setNotification(bool);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean getNotification() {
         return chemobj.getNotification();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void notifyChanged() {
         chemobj.notifyChanged();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void notifyChanged(IChemObjectChangeEvent evt) {
         chemobj.notifyChanged(evt);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setProperty(Object description, Object property) {
         chemobj.setProperty(description, property);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void removeProperty(Object description) {
         chemobj.removeProperty(description);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public <T> T getProperty(Object description) {
         return chemobj.getProperty(description);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public <T> T getProperty(Object description, Class<T> c) {
         return chemobj.getProperty(description, c);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Map<Object, Object> getProperties() {
         return chemobj.getProperties();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public String getID() {
         return chemobj.getID();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setID(String identifier) {
         chemobj.setID(identifier);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setFlag(int mask, boolean value) {
         chemobj.setFlag(mask, value);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean getFlag(int mask) {
         return chemobj.getFlag(mask);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setProperties(Map<Object, Object> properties) {
         chemobj.setProperties(properties);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void addProperties(Map<Object, Object> properties) {
         chemobj.addProperties(properties);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setFlags(boolean[] newFlags) {
         chemobj.setFlags(newFlags);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean[] getFlags() {
         return chemobj.getFlags();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Number getFlagValue() {
         return chemobj.getFlagValue();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Object clone() throws CloneNotSupportedException {
         return new ChemObjectRef((IChemObject) chemobj.clone());

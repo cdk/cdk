@@ -24,7 +24,6 @@ import org.openscience.cdk.tools.DataFeatures;
  * See <a href="http://dasher.wustl.edu/tinker/">here</a>.
  *
  * @author Miguel Rojas
- *
  * @cdk.module ioformats
  * @cdk.githash
  */
@@ -60,7 +59,7 @@ public class TinkerXYZFormat extends AbstractResourceFormat implements IChemForm
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"txyz"};
+        return new String[] {"txyz"};
     }
 
     /** {@inheritDoc} */

@@ -21,16 +21,14 @@ package org.openscience.cdk.renderer.generators;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 
 /**
- * Combination generator for basic drawing of molecules. It only creates drawing
- * elements for atoms and bonds, using the {@link BasicAtomGenerator} and
- * {@link BasicBondGenerator}.
+ * Combination generator for basic drawing of molecules. It only creates drawing elements for atoms
+ * and bonds, using the {@link BasicAtomGenerator} and {@link BasicBondGenerator}.
  *
  * @author maclean
  * @cdk.module renderbasic
@@ -42,14 +40,12 @@ public class BasicGenerator implements IGenerator<IAtomContainer> {
     private BasicSceneGenerator sceneGenerator;
 
     /** Generates elements for each atom in a container */
-    private BasicAtomGenerator  atomGenerator;
+    private BasicAtomGenerator atomGenerator;
 
     /** Generates elements for each bond in a container */
-    private BasicBondGenerator  bondGenerator;
+    private BasicBondGenerator bondGenerator;
 
-    /**
-     * Make a basic generator that creates elements for atoms and bonds.
-     */
+    /** Make a basic generator that creates elements for atoms and bonds. */
     public BasicGenerator() {
         this.atomGenerator = new BasicAtomGenerator();
         this.bondGenerator = new BasicBondGenerator();
@@ -75,5 +71,4 @@ public class BasicGenerator implements IGenerator<IAtomContainer> {
         list.addAll(this.sceneGenerator.getParameters());
         return list;
     }
-
 }

@@ -23,10 +23,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * A molecular vibration composed of a set of atom vectors.
- * The atom vectors represent forces acting on the atoms. They
- * are specified by double[3] arrays containing the components
- * of the vector.
+ * A molecular vibration composed of a set of atom vectors. The atom vectors represent forces acting
+ * on the atoms. They are specified by double[3] arrays containing the components of the vector.
  *
  * @author Bradley A. Smith &lt;yeldar@home.com&gt;
  * @cdk.githash
@@ -34,14 +32,12 @@ import java.util.List;
 public class Vibration {
 
     /**
-     * Label identifying this vibration. For example, the
-     * frequency in reciprocal centimetres could be used.
+     * Label identifying this vibration. For example, the frequency in reciprocal centimetres could
+     * be used.
      */
-    private String         label;
+    private String label;
 
-    /**
-     * List of atom vectors of type double[3]
-     */
+    /** List of atom vectors of type double[3] */
     private List<double[]> atomVectors = new ArrayList<double[]>();
 
     /**
@@ -99,9 +95,7 @@ public class Vibration {
         return atomVectors.iterator();
     }
 
-    /**
-     * Removes all atom vectors from this vibration.
-     */
+    /** Removes all atom vectors from this vibration. */
     public void removeAtomVectors() {
         atomVectors.clear();
     }

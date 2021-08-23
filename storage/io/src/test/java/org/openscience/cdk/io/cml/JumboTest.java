@@ -23,7 +23,6 @@
 package org.openscience.cdk.io.cml;
 
 import java.io.InputStream;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -37,9 +36,8 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * TestCase for reading CML files using a few test files
- * in data/cmltest as found in the original Jumbo3 release
- * (http://www.xml-cml.org/).
+ * TestCase for reading CML files using a few test files in data/cmltest as found in the original
+ * Jumbo3 release (http://www.xml-cml.org/).
  *
  * @cdk.module test-io
  */
@@ -47,15 +45,9 @@ public class JumboTest extends CDKTestCase {
 
     private ILoggingTool logger = LoggingToolFactory.createLoggingTool(JumboTest.class);
 
-    /**
-     * Now come the actual tests...
-     */
+    /** Now come the actual tests... */
 
-    /**
-     * Special CML characteristics:
-     * - <atomArray><atom/><atom/></atomArray>
-     * - X2D only
-     */
+    /** Special CML characteristics: - <atomArray><atom/><atom/></atomArray> - X2D only */
     @Test
     public void testCuran() throws Exception {
         String filename = "data/cml/curan.xml";
@@ -84,11 +76,7 @@ public class JumboTest extends CDKTestCase {
         Assert.assertTrue(GeometryUtil.has2DCoordinates(mol));
     }
 
-    /**
-     * Special CML characteristics:
-     * - use of cml: namespace
-     * - X2D only
-     */
+    /** Special CML characteristics: - use of cml: namespace - X2D only */
     @Test
     public void testCephNS() throws Exception {
         String filename = "data/cml/ceph-ns.xml";
@@ -118,10 +106,8 @@ public class JumboTest extends CDKTestCase {
     }
 
     /**
-     * Special CML characteristics:
-     * - <atomArray><stringArray builtin="atomId"/></atomArray>
-     * - <bondArray><stringArray builtin="atomRef"/></atomArray>
-     * - no coords
+     * Special CML characteristics: - <atomArray><stringArray builtin="atomId"/></atomArray> -
+     * <bondArray><stringArray builtin="atomRef"/></atomArray> - no coords
      */
     @Test
     public void testNucleustest() throws Exception {
@@ -150,5 +136,4 @@ public class JumboTest extends CDKTestCase {
         Assert.assertFalse("File does not have 3D coordinates", GeometryUtil.has3DCoordinates(mol));
         Assert.assertFalse("File does not have 2D coordinates", GeometryUtil.has2DCoordinates(mol));
     }
-
 }

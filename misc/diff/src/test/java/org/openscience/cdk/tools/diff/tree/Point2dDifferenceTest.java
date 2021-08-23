@@ -19,14 +19,11 @@
 package org.openscience.cdk.tools.diff.tree;
 
 import javax.vecmath.Point2d;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 
-/**
- * @cdk.module test-diff
- */
+/** @cdk.module test-diff */
 public class Point2dDifferenceTest extends CDKTestCase {
 
     @Test

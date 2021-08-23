@@ -34,7 +34,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
-
 @Deprecated
 public class HybridizationNumberAtom extends SMARTSAtom {
 
@@ -92,5 +91,4 @@ public class HybridizationNumberAtom extends SMARTSAtom {
     public String toString() {
         return ("HybridizationNumberAtom(" + getHybridization() + ")");
     }
-
 }

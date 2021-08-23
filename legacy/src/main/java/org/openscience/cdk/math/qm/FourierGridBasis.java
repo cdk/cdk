@@ -28,23 +28,22 @@ import org.openscience.cdk.math.Matrix;
 import org.openscience.cdk.math.Vector;
 
 /**
- * At this time this class does not work correcly.
- * The theory were from {@cdk.cite MAR89}.
- * @cdk.githash
+ * At this time this class does not work correcly. The theory were from {@cdk.cite MAR89}.
  *
+ * @cdk.githash
  * @author Stephan Michels &lt;stephan@vern.chem.tu-berlin.de&gt;
- * @cdk.created   2001-07-02
- * @cdk.module    qm
+ * @cdk.created 2001-07-02
+ * @cdk.module qm
  */
 public class FourierGridBasis implements IBasis {
 
-    private int       N;
-    private double    minx;
-    private double    maxx;
-    private double    dx;
+    private int N;
+    private double minx;
+    private double maxx;
+    private double dx;
     private IFunction potential;
-    private double    Tl;
-    private int       N2;
+    private double Tl;
+    private int N2;
 
     public FourierGridBasis(int N, double minx, double maxx, IFunction potential) {
         this.N = N;
@@ -53,7 +52,7 @@ public class FourierGridBasis implements IBasis {
         dx = (maxx - minx) / N;
         this.potential = potential;
 
-        //Tl = (2/m)*(hdash*Math.PI/(N*dx))*(hdash*Math.PI/(N*dx));
+        // Tl = (2/m)*(hdash*Math.PI/(N*dx))*(hdash*Math.PI/(N*dx));
         Tl = 2 * (Math.PI / (N * dx)) * (Math.PI / (N * dx)) / 10;
         N2 = (N - 1) / 2;
 
@@ -111,8 +110,7 @@ public class FourierGridBasis implements IBasis {
         for (int i = 0; i < m.columns; i++)
             if ((index * dx + minx <= m.matrix[0][i]) && (m.matrix[0][i] <= index * dx + maxx + dx))
                 result.vector[i] = 1d;
-            else
-                result.vector[i] = 0d;
+            else result.vector[i] = 0d;
 
         return result;
     }

@@ -19,20 +19,19 @@
 package org.openscience.cdk.debug;
 
 import java.util.Map;
-
 import org.openscience.cdk.Isotope;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module datadebug
  * @cdk.githash
  */
@@ -40,19 +39,25 @@ public class DebugIsotope extends Isotope implements IIsotope {
 
     private static final long serialVersionUID = -2659188100080921299L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugIsotope.class);
+    ILoggingTool logger = LoggingToolFactory.createLoggingTool(DebugIsotope.class);
 
     public DebugIsotope(String elementSymbol) {
         super(elementSymbol);
         logger.debug("Instantiated a DebugIsotope.");
     }
 
-    public DebugIsotope(int atomicNumber, String elementSymbol, int massNumber, double exactMass, double abundance) {
+    public DebugIsotope(
+            int atomicNumber,
+            String elementSymbol,
+            int massNumber,
+            double exactMass,
+            double abundance) {
         super(atomicNumber, elementSymbol, massNumber, exactMass, abundance);
         logger.debug("Instantiated a DebugIsotope.");
     }
 
-    public DebugIsotope(int atomicNumber, String elementSymbol, double exactMass, double abundance) {
+    public DebugIsotope(
+            int atomicNumber, String elementSymbol, double exactMass, double abundance) {
         super(atomicNumber, elementSymbol, exactMass, abundance);
         logger.debug("Instantiated a DebugIsotope.");
     }
@@ -238,7 +243,6 @@ public class DebugIsotope extends Isotope implements IIsotope {
     public void setExactMass(Double exactMass) {
         logger.debug("Setting exact mass: ", exactMass);
         super.setExactMass(exactMass);
-
     }
 
     /** {@inheritDoc} */
@@ -268,5 +272,4 @@ public class DebugIsotope extends Isotope implements IIsotope {
         logger.debug("Setting mass number: ", massNumber);
         super.setMassNumber(massNumber);
     }
-
 }

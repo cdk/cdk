@@ -22,11 +22,11 @@
  */
 package org.openscience.cdk.io.cml;
 
+import static org.hamcrest.CoreMatchers.is;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-
-import static org.hamcrest.CoreMatchers.is;
 
 /**
  * TestCase for the CMLStack class.

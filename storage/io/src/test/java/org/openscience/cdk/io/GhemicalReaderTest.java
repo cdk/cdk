@@ -24,7 +24,6 @@ package org.openscience.cdk.io;
 
 import java.io.InputStream;
 import java.io.StringReader;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -38,7 +37,6 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
  * TestCase for the reading Ghemical molecular dynamics files using one test file.
  *
  * @cdk.module test-io
- *
  * @see org.openscience.cdk.io.GhemicalReader
  */
 public class GhemicalReaderTest extends SimpleChemObjectReaderTest {
@@ -55,13 +53,37 @@ public class GhemicalReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testExample() throws Exception {
-        String testfile = "!Header mm1gp 100\n" + "!Info 1\n" + "!Atoms 6\n" + "0 6 \n" + "1 6 \n" + "2 1 \n"
-                + "3 1 \n" + "4 1 \n" + "5 1 \n" + "!Bonds 5\n" + "1 0 D \n" + "2 0 S \n" + "3 0 S \n" + "4 1 S \n"
-                + "5 1 S \n" + "!Coord\n" + "0 0.06677 -0.00197151 4.968e-07 \n"
-                + "1 -0.0667699 0.00197154 -5.19252e-07 \n" + "2 0.118917 -0.097636 2.03406e-06 \n"
-                + "3 0.124471 0.0904495 -4.84021e-07 \n" + "4 -0.118917 0.0976359 -2.04017e-06 \n"
-                + "5 -0.124471 -0.0904493 5.12591e-07 \n" + "!Charges\n" + "0 -0.2\n" + "1 -0.2\n" + "2 0.1\n"
-                + "3 0.1\n" + "4 0.1\n" + "5 0.1\n" + "!End";
+        String testfile =
+                "!Header mm1gp 100\n"
+                        + "!Info 1\n"
+                        + "!Atoms 6\n"
+                        + "0 6 \n"
+                        + "1 6 \n"
+                        + "2 1 \n"
+                        + "3 1 \n"
+                        + "4 1 \n"
+                        + "5 1 \n"
+                        + "!Bonds 5\n"
+                        + "1 0 D \n"
+                        + "2 0 S \n"
+                        + "3 0 S \n"
+                        + "4 1 S \n"
+                        + "5 1 S \n"
+                        + "!Coord\n"
+                        + "0 0.06677 -0.00197151 4.968e-07 \n"
+                        + "1 -0.0667699 0.00197154 -5.19252e-07 \n"
+                        + "2 0.118917 -0.097636 2.03406e-06 \n"
+                        + "3 0.124471 0.0904495 -4.84021e-07 \n"
+                        + "4 -0.118917 0.0976359 -2.04017e-06 \n"
+                        + "5 -0.124471 -0.0904493 5.12591e-07 \n"
+                        + "!Charges\n"
+                        + "0 -0.2\n"
+                        + "1 -0.2\n"
+                        + "2 0.1\n"
+                        + "3 0.1\n"
+                        + "4 0.1\n"
+                        + "5 0.1\n"
+                        + "!End";
         StringReader stringReader = new StringReader(testfile);
         GhemicalMMReader reader = new GhemicalMMReader(stringReader);
         ChemModel model = (ChemModel) reader.read((ChemObject) new ChemModel());

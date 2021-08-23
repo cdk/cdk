@@ -26,7 +26,6 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.Locale;
 import java.util.StringTokenizer;
-
 import org.openscience.cdk.ReactionRole;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -41,25 +40,23 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * Class that implements the new MDL mol format introduced in August 2002.
- * The overall syntax is compatible with the old format, but I consider
- * the format completely different, and thus implemented a separate Reader
- * for it.
+ * Class that implements the new MDL mol format introduced in August 2002. The overall syntax is
+ * compatible with the old format, but I consider the format completely different, and thus
+ * implemented a separate Reader for it.
  *
  * @cdk.module io
  * @cdk.githash
  * @cdk.iooptions
- *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  * @cdk.created 2003-10-05
- *
  * @cdk.keyword MDL V3000
  * @cdk.require java1.4+
  */
 public class MDLRXNV3000Reader extends DefaultChemObjectReader {
 
-    BufferedReader              input  = null;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNV3000Reader.class);
+    BufferedReader input = null;
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(MDLRXNV3000Reader.class);
 
     public MDLRXNV3000Reader(Reader in) {
         this(in, Mode.RELAXED);
@@ -131,14 +128,15 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
             model.setReactionSet(reactionSet);
             return (T) model;
         } else {
-            throw new CDKException("Only supported are Reaction and ChemModel, and not " + object.getClass().getName()
-                    + ".");
+            throw new CDKException(
+                    "Only supported are Reaction and ChemModel, and not "
+                            + object.getClass().getName()
+                            + ".");
         }
     }
 
     /**
-     * Reads the command on this line. If the line is continued on the next, that
-     * part is added.
+     * Reads the command on this line. If the line is continued on the next, that part is added.
      *
      * @return Returns the command on this line.
      */
@@ -214,9 +212,10 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
         return reaction;
     }
 
-    private void readMols(IChemObjectBuilder builder, IReaction reaction, ReactionRole role, int count) throws CDKException {
-        if (count == 0)
-            return;
+    private void readMols(
+            IChemObjectBuilder builder, IReaction reaction, ReactionRole role, int count)
+            throws CDKException {
+        if (count == 0) return;
         String command = readCommand();
         if (!command.equals("BEGIN " + role.name().toUpperCase(Locale.ROOT)))
             throw new CDKException("Expected start of " + role + "s  but got: " + command);
@@ -235,13 +234,13 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
             String molFileLine = "";
             while ((molFileLine = readLine()) != null) {
                 molFile.append(molFileLine).append('\n');
-                if (molFileLine.endsWith("END CTAB"))
-                    break;
+                if (molFileLine.endsWith("END CTAB")) break;
             }
 
             try {
                 // read MDL molfile content
-                MDLV3000Reader reader = new MDLV3000Reader(new StringReader(molFile.toString()), super.mode);
+                MDLV3000Reader reader =
+                        new MDLV3000Reader(new StringReader(molFile.toString()), super.mode);
                 IAtomContainer mol = reader.read(builder.newAtomContainer());
                 reader.close();
 
@@ -296,5 +295,4 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
     }
 
     private void initIOSettings() {}
-
 }

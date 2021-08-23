@@ -34,70 +34,67 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.smsd.tools.TimeManager;
 
 /**
- * This class implements the Resolution Graph (CDKRGraph).
- * The CDKRGraph is a graph based representation of the search problem.
- * An CDKRGraph is constructed from the two compared graphs (G1 and G2).
- * Each vertex (node) in the CDKRGraph represents a possible association
- * from an edge in G1 with an edge in G2. Thus two compatible bonds
- * in two molecular graphs are represented by a vertex in the CDKRGraph.
- * Each edge in the CDKRGraph corresponds to a common adjacency relationship
- * between the 2 couple of compatible edges associated to the 2 CDKRGraph nodes
- * forming this edge.
+ * This class implements the Resolution Graph (CDKRGraph). The CDKRGraph is a graph based
+ * representation of the search problem. An CDKRGraph is constructed from the two compared graphs
+ * (G1 and G2). Each vertex (node) in the CDKRGraph represents a possible association from an edge
+ * in G1 with an edge in G2. Thus two compatible bonds in two molecular graphs are represented by a
+ * vertex in the CDKRGraph. Each edge in the CDKRGraph corresponds to a common adjacency
+ * relationship between the 2 couple of compatible edges associated to the 2 CDKRGraph nodes forming
+ * this edge.
  *
  * <p>Example:
+ *
  * <pre>
  *    G1 : C-C=O  and G2 : C-C-C=0
  *         1 2 3           1 2 3 4
  * </pre>
  *
- *  <p>The resulting CDKRGraph(G1,G2) will contain 3 nodes:
- *  <ul>
- *    <li>Node sourceBitSet : association between bond C-C :  1-2 in G1 and 1-2 in G2
- *    <li>Node targetBitSet : association between bond C-C :  1-2 in G1 and 2-3 in G2
- *    <li>Node C : association between bond C=0 :  2-3 in G1 and 3-4 in G2
- *  </ul>
- *  The CDKRGraph will also contain one edge representing the
- *  adjacency between node targetBitSet and C  that is : bonds 1-2 and 2-3 in G1
- *  and bonds 2-3 and 3-4 in G2.
+ * <p>The resulting CDKRGraph(G1,G2) will contain 3 nodes:
  *
- *  <p>Once the CDKRGraph has been built from the two compared graphs
- *  maxIterator becomes a very interesting tool to perform all kinds of
- *  structural search (isomorphism, substructure search, maximal common
- *  substructure,....).
+ * <ul>
+ *   <li>Node sourceBitSet : association between bond C-C : 1-2 in G1 and 1-2 in G2
+ *   <li>Node targetBitSet : association between bond C-C : 1-2 in G1 and 2-3 in G2
+ *   <li>Node C : association between bond C=0 : 2-3 in G1 and 3-4 in G2
+ * </ul>
  *
- *  <p>The  search may be constrained by mandatory elements (e.g. bonds that
- *  have to be present in the mapped common substructures).
+ * The CDKRGraph will also contain one edge representing the adjacency between node targetBitSet and
+ * C that is : bonds 1-2 and 2-3 in G1 and bonds 2-3 and 3-4 in G2.
  *
- *  <p>Performing a query on an CDKRGraph requires simply to set the constrains
- *  (if any) and to invoke the parsing method (parse())
+ * <p>Once the CDKRGraph has been built from the two compared graphs maxIterator becomes a very
+ * interesting tool to perform all kinds of structural search (isomorphism, substructure search,
+ * maximal common substructure,....).
  *
- *  <p>The CDKRGraph has been designed to be a generic tool. It may be constructed
- *  from any kind of source graphs, thus maxIterator is not restricted to a chemical
- *  context.
+ * <p>The search may be constrained by mandatory elements (e.g. bonds that have to be present in the
+ * mapped common substructures).
  *
- *  <p>The CDKRGraph model is indendant from the CDK model and the link between
- *  both model is performed by the RTools class. In this way the CDKRGraph
- *  class may be reused in other graph context (conceptual graphs,....)
+ * <p>Performing a query on an CDKRGraph requires simply to set the constrains (if any) and to
+ * invoke the parsing method (parse())
  *
- *  <p><b>Important note</b>: This implementation of the algorithm has not been
- *                      optimized for speed at this stage. It has been
- *                      written with the goal to clearly retrace the
- *                      principle of the underlined search method. There is
- *                      room for optimization in many ways including the
- *                      the algorithm itself.
+ * <p>The CDKRGraph has been designed to be a generic tool. It may be constructed from any kind of
+ * source graphs, thus maxIterator is not restricted to a chemical context.
  *
- *  <p>This algorithm derives from the algorithm described in
- *  {@cdk.cite HAN90} and modified in the thesis of T. Hanser {@cdk.cite HAN93}.
+ * <p>The CDKRGraph model is indendant from the CDK model and the link between both model is
+ * performed by the RTools class. In this way the CDKRGraph class may be reused in other graph
+ * context (conceptual graphs,....)
  *
- * @author      Stephane Werner from IXELIS mail@ixelis.net,
- *              Syed Asad Rahman &gt;asad@ebi.ac.uk&lt; (modified the orignal code)
+ * <p><b>Important note</b>: This implementation of the algorithm has not been optimized for speed
+ * at this stage. It has been written with the goal to clearly retrace the principle of the
+ * underlined search method. There is room for optimization in many ways including the the algorithm
+ * itself.
+ *
+ * <p>This algorithm derives from the algorithm described in {@cdk.cite HAN90} and modified in the
+ * thesis of T. Hanser {@cdk.cite HAN93}.
+ *
+ * @author Stephane Werner from IXELIS mail@ixelis.net, Syed Asad Rahman &gt;asad@ebi.ac.uk&lt;
+ *     (modified the orignal code)
  * @cdk.created 2002-07-17
  * @cdk.require java1.4+
- * @cdk.module  smsd
+ * @cdk.module smsd
  * @cdk.githash
- * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public
- *             access to internal implementation details. SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated This class is part of SMSD and either duplicates functionality elsewhere in the CDK
+ *     or provides public access to internal implementation details. SMSD has been deprecated from
+ *     the CDK with a newer, more recent version of SMSD is available at <a
+ *     href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public class CDKRGraph {
@@ -106,32 +103,30 @@ public class CDKRGraph {
     // each node keeping track of its
     // neighbors.
 
-    private List<CDKRNode> graph            = null;
+    private List<CDKRNode> graph = null;
     // maximal number of iterations before
     // search break
-    private int            maxIteration     = -1;
+    private int maxIteration = -1;
     // dimensions of the compared graphs
-    private int            firstGraphSize   = 0;
-    private int            secondGraphSize  = 0;
+    private int firstGraphSize = 0;
+    private int secondGraphSize = 0;
     // constrains
-    private BitSet         sourceBitSet     = null;
-    private BitSet         targetBitSet     = null;
+    private BitSet sourceBitSet = null;
+    private BitSet targetBitSet = null;
     // current solution list
-    private List<BitSet>   solutionList     = null;
+    private List<BitSet> solutionList = null;
     // flag to define if we want to get all possible 'mappings'
-    private boolean        findAllMap       = false;
+    private boolean findAllMap = false;
     // flag to define if we want to get all possible 'structures'
-    private boolean        findAllStructure = true;
+    private boolean findAllStructure = true;
     // working variables
-    private boolean        stop             = false;
-    private int            nbIteration      = 0;
-    private BitSet         graphBitSet      = null;
+    private boolean stop = false;
+    private int nbIteration = 0;
+    private BitSet graphBitSet = null;
 
     // -1 for infinite search and one min is 1
 
-    /**
-     * Constructor for the CDKRGraph object and creates an empty CDKRGraph.
-     */
+    /** Constructor for the CDKRGraph object and creates an empty CDKRGraph. */
     public CDKRGraph() {
         graph = new ArrayList<CDKRNode>();
         solutionList = new ArrayList<BitSet>();
@@ -147,8 +142,8 @@ public class CDKRGraph {
     }
 
     /**
-     *  Returns the size of the first of the two
-     *  compared graphs.
+     * Returns the size of the first of the two compared graphs.
+     *
      * @return The size of the first of the two compared graphs
      */
     public int getFirstGraphSize() {
@@ -156,8 +151,8 @@ public class CDKRGraph {
     }
 
     /**
-     *  Returns the size of the second of the two
-     *  compared graphs.
+     * Returns the size of the second of the two compared graphs.
+     *
      * @return The size of the second of the two compared graphs
      */
     public int getSecondGraphSize() {
@@ -165,8 +160,8 @@ public class CDKRGraph {
     }
 
     /**
-     *  Sets the size of the first of the two
-     *  compared graphs.
+     * Sets the size of the first of the two compared graphs.
+     *
      * @param graphSize The size of the second of the two compared graphs
      */
     public void setFirstGraphSize(int graphSize) {
@@ -174,33 +169,33 @@ public class CDKRGraph {
     }
 
     /**
-     *  Returns the size of the second of the two
-     *  compared graphs.
+     * Returns the size of the second of the two compared graphs.
+     *
      * @param graphSize The size of the second of the two compared graphs
      */
     public void setSecondGraphSize(int graphSize) {
         secondGraphSize = graphSize;
     }
 
-    /**
-     *  Reinitialisation of the TGraph.
-     */
+    /** Reinitialisation of the TGraph. */
     public void clear() {
         getGraph().clear();
         getGraphBitSet().clear();
     }
 
     /**
-     *  Returns the graph object of this CDKRGraph.
-     * @return      The graph object, a list
+     * Returns the graph object of this CDKRGraph.
+     *
+     * @return The graph object, a list
      */
     public List<CDKRNode> getGraph() {
         return this.graph;
     }
 
     /**
-     *  Adds a new node to the CDKRGraph.
-     * @param  newNode  The node to add to the graph
+     * Adds a new node to the CDKRGraph.
+     *
+     * @param newNode The node to add to the graph
      */
     public void addNode(CDKRNode newNode) {
         getGraph().add(newNode);
@@ -208,23 +203,25 @@ public class CDKRGraph {
     }
 
     /**
-     *  Parsing of the CDKRGraph. This is the main method
-     *  to perform a query. Given the constrains sourceBitSet and targetBitSet
-     *  defining mandatory elements in G1 and G2 and given
-     *  the search options, this method builds an initial set
-     *  of starting nodes (targetBitSet) and parses recursively the
-     *  CDKRGraph to find a list of solution according to
-     *  these parameters.
+     * Parsing of the CDKRGraph. This is the main method to perform a query. Given the constrains
+     * sourceBitSet and targetBitSet defining mandatory elements in G1 and G2 and given the search
+     * options, this method builds an initial set of starting nodes (targetBitSet) and parses
+     * recursively the CDKRGraph to find a list of solution according to these parameters.
      *
-     * @param  sourceBitSet  constrain on the graph G1
-     * @param  targetBitSet  constrain on the graph G2
-     * @param  findAllStructure true if we want all results to be generated
-     * @param  findAllMap true is we want all possible 'mappings'
+     * @param sourceBitSet constrain on the graph G1
+     * @param targetBitSet constrain on the graph G2
+     * @param findAllStructure true if we want all results to be generated
+     * @param findAllMap true is we want all possible 'mappings'
      * @param timeManager
      * @throws CDKException
      */
-    public void parse(BitSet sourceBitSet, BitSet targetBitSet, boolean findAllStructure, boolean findAllMap,
-            TimeManager timeManager) throws CDKException {
+    public void parse(
+            BitSet sourceBitSet,
+            BitSet targetBitSet,
+            boolean findAllStructure,
+            boolean findAllMap,
+            TimeManager timeManager)
+            throws CDKException {
         // initialize the list of solution
         checkTimeOut();
         // initialize the list of solution
@@ -243,16 +240,16 @@ public class CDKRGraph {
     }
 
     /**
-     *  Parsing of the CDKRGraph. This is the recursive method
-     *  to perform a query. The method will recursively
-     *  parse the CDKRGraph thru connected nodes and visiting the
-     *  CDKRGraph using allowed adjacency relationship.
+     * Parsing of the CDKRGraph. This is the recursive method to perform a query. The method will
+     * recursively parse the CDKRGraph thru connected nodes and visiting the CDKRGraph using allowed
+     * adjacency relationship.
      *
-     * @param  traversed  node already parsed
-     * @param  extension  possible extension node (allowed neighbors)
-     * @param  forbiden   node forbidden (set of node incompatible with the current solution)
+     * @param traversed node already parsed
+     * @param extension possible extension node (allowed neighbors)
+     * @param forbiden node forbidden (set of node incompatible with the current solution)
      */
-    private void parseRec(BitSet traversed, BitSet extension, BitSet forbidden) throws CDKException {
+    private void parseRec(BitSet traversed, BitSet extension, BitSet forbidden)
+            throws CDKException {
         BitSet newTraversed = null;
         BitSet newExtension = null;
         BitSet newForbidden = null;
@@ -281,7 +278,9 @@ public class CDKRGraph {
                 // for each node in the set of possible extension (neighbors of
                 // the current partial solution, include the node to the solution
                 // and parse recursively the CDKRGraph with the new context.
-                for (int x = extension.nextSetBit(0); x >= 0 && !isStop(); x = extension.nextSetBit(x + 1)) {
+                for (int x = extension.nextSetBit(0);
+                        x >= 0 && !isStop();
+                        x = extension.nextSetBit(x + 1)) {
                     // evaluates the new set of forbidden nodes
                     // by including the nodes not compatible with the
                     // newly accepted node.
@@ -295,7 +294,7 @@ public class CDKRGraph {
                     if (traversed.isEmpty()) {
                         newExtension = (BitSet) ((getGraph().get(x)).getExtension().clone());
                     } // else we simply update the set of solution by
-                      // including the neighbors of the newly accepted node
+                    // including the neighbors of the newly accepted node
                     else {
                         newExtension = (BitSet) extension.clone();
                         newExtension.or((getGraph().get(x)).getExtension());
@@ -320,12 +319,10 @@ public class CDKRGraph {
     }
 
     /**
-     * Checks if a potential solution is a real one
-     * (not included in a previous solution)
-     *  and add this solution to the solution list
-     * in case of success.
+     * Checks if a potential solution is a real one (not included in a previous solution) and add
+     * this solution to the solution list in case of success.
      *
-     * @param  traversed  new potential solution
+     * @param traversed new potential solution
      */
     private void solution(BitSet traversed) throws CDKException {
         boolean included = false;
@@ -339,18 +336,23 @@ public class CDKRGraph {
             // at the CDKRGraph level. So we check against all previous solution
             // On the other hand if a previous solution is included in the
             // new one, the previous solution is removed.
-            for (Iterator<BitSet> i = getSolutionList().listIterator(); i.hasNext() && !included;) {
+            for (Iterator<BitSet> i = getSolutionList().listIterator();
+                    i.hasNext() && !included; ) {
                 BitSet sol = i.next();
                 checkTimeOut();
                 if (!sol.equals(traversed)) {
                     // if we asked to save all 'mappings' then keep this mapping
-                    if (isFindAllMap() && (projG1.equals(projectG1(sol)) || projG2.equals(projectG2(sol)))) {
+                    if (isFindAllMap()
+                            && (projG1.equals(projectG1(sol)) || projG2.equals(projectG2(sol)))) {
                         // do nothing
                     } // if the new solution is included mark maxIterator as included
-                    else if (isContainedIn(projG1, projectG1(sol)) || isContainedIn(projG2, projectG2(sol))) {
+                    else if (isContainedIn(projG1, projectG1(sol))
+                            || isContainedIn(projG2, projectG2(sol))) {
                         included = true;
-                    } // if the previous solution is contained in the new one, remove the previous solution
-                    else if (isContainedIn(projectG1(sol), projG1) || isContainedIn(projectG2(sol), projG2)) {
+                    } // if the previous solution is contained in the new one, remove the previous
+                      // solution
+                    else if (isContainedIn(projectG1(sol), projG1)
+                            || isContainedIn(projectG2(sol), projG2)) {
                         i.remove();
                     }
                 } else {
@@ -375,9 +377,10 @@ public class CDKRGraph {
     }
 
     /**
-     *  Determine if there are potential solution remaining.
-     * @param       potentialNode  set of remaining potential nodes
-     * @return      true if maxIterator is worse to continue the search
+     * Determine if there are potential solution remaining.
+     *
+     * @param potentialNode set of remaining potential nodes
+     * @return true if maxIterator is worse to continue the search
      */
     private boolean mustContinue(BitSet potentialNode) {
         boolean result = true;
@@ -398,14 +401,17 @@ public class CDKRGraph {
 
         // check if the solution potential is not included in an already
         // existing solution
-        for (Iterator<BitSet> i = getSolutionList().iterator(); i.hasNext() && !cancel;) {
+        for (Iterator<BitSet> i = getSolutionList().iterator(); i.hasNext() && !cancel; ) {
             BitSet sol = i.next();
 
             // if we want every 'mappings' do not stop
-            if (isFindAllMap() && (projG1.equals(projectG1(sol)) || projG2.equals(projectG2(sol)))) {
+            if (isFindAllMap()
+                    && (projG1.equals(projectG1(sol)) || projG2.equals(projectG2(sol)))) {
                 // do nothing
-            } // if maxIterator is not possible to do better than an already existing solution than stop.
-            else if (isContainedIn(projG1, projectG1(sol)) || isContainedIn(projG2, projectG2(sol))) {
+            } // if maxIterator is not possible to do better than an already existing solution than
+              // stop.
+            else if (isContainedIn(projG1, projectG1(sol))
+                    || isContainedIn(projG2, projectG2(sol))) {
                 result = false;
                 cancel = true;
             }
@@ -415,12 +421,11 @@ public class CDKRGraph {
     }
 
     /**
-     *  Builds the initial extension set. This is the
-     *  set of node that may be used as seed for the
-     *  CDKRGraph parsing. This set depends on the constrains
-     *  defined by the user.
-     * @param  sourceBitSet  constraint in the graph G1
-     * @param  targetBitSet  constraint in the graph G2
+     * Builds the initial extension set. This is the set of node that may be used as seed for the
+     * CDKRGraph parsing. This set depends on the constrains defined by the user.
+     *
+     * @param sourceBitSet constraint in the graph G1
+     * @param targetBitSet constraint in the graph G2
      * @return
      */
     private BitSet buildB(BitSet sourceBitSet, BitSet targetBitSet) throws CDKException {
@@ -431,7 +436,7 @@ public class CDKRGraph {
 
         // only nodes that fulfill the initial constrains
         // are allowed in the initial extension set : targetBitSet
-        for (Iterator<CDKRNode> i = getGraph().iterator(); i.hasNext();) {
+        for (Iterator<CDKRNode> i = getGraph().iterator(); i.hasNext(); ) {
             CDKRNode rNode = i.next();
 
             checkTimeOut();
@@ -445,23 +450,21 @@ public class CDKRGraph {
     }
 
     /**
-     *  Returns the list of solutions.
+     * Returns the list of solutions.
      *
-     * @return    The solution list
+     * @return The solution list
      */
     public List<BitSet> getSolutions() {
         return getSolutionList();
     }
 
     /**
-     *  Converts a CDKRGraph bitset (set of CDKRNode)
-     * to a list of CDKRMap that represents the
-     * mapping between to substructures in G1 and G2
-     * (the projection of the CDKRGraph bitset on G1
+     * Converts a CDKRGraph bitset (set of CDKRNode) to a list of CDKRMap that represents the
+     * mapping between to substructures in G1 and G2 (the projection of the CDKRGraph bitset on G1
      * and G2).
      *
-     * @param  set  the BitSet
-     * @return      the CDKRMap list
+     * @param set the BitSet
+     * @return the CDKRMap list
      */
     public List<CDKRMap> bitSetToRMap(BitSet set) {
         List<CDKRMap> rMapList = new ArrayList<CDKRMap>();
@@ -474,42 +477,39 @@ public class CDKRGraph {
     }
 
     /**
-     *  Sets the 'AllStructres' option. If true
-     * all possible solutions will be generated. If false
-     * the search will stop as soon as a solution is found.
-     * (e.g. when we just want to know if a G2 is
-     *  a substructure of G1 or not).
+     * Sets the 'AllStructres' option. If true all possible solutions will be generated. If false
+     * the search will stop as soon as a solution is found. (e.g. when we just want to know if a G2
+     * is a substructure of G1 or not).
      *
-     * @param  findAllStructure
+     * @param findAllStructure
      */
     public void setAllStructure(boolean findAllStructure) {
         this.setFindAllStructure(findAllStructure);
     }
 
     /**
-     *  Sets the 'finAllMap' option. If true
-     * all possible 'mappings' will be generated. If false
-     * the search will keep only one 'mapping' per structure
-     * association.
+     * Sets the 'finAllMap' option. If true all possible 'mappings' will be generated. If false the
+     * search will keep only one 'mapping' per structure association.
      *
-     * @param  findAllMap
+     * @param findAllMap
      */
     public void setAllMap(boolean findAllMap) {
         this.setFindAllMap(findAllMap);
     }
 
     /**
-     * Sets the maxIteration for the CDKRGraph parsing. If set to -1,
-     * then no iteration maximum is taken into account.
+     * Sets the maxIteration for the CDKRGraph parsing. If set to -1, then no iteration maximum is
+     * taken into account.
      *
-     * @param  maxIterator  The new maxIteration value
+     * @param maxIterator The new maxIteration value
      */
     public void setMaxIteration(int maxIterator) {
         this.maxIteration = maxIterator;
     }
 
     /**
-     *  Returns a string representation of the CDKRGraph.
+     * Returns a string representation of the CDKRGraph.
+     *
      * @return the string representation of the CDKRGraph
      */
     @Override
@@ -517,7 +517,7 @@ public class CDKRGraph {
         String message = "";
         int jIndex = 0;
 
-        for (Iterator<CDKRNode> i = getGraph().iterator(); i.hasNext();) {
+        for (Iterator<CDKRNode> i = getGraph().iterator(); i.hasNext(); ) {
             CDKRNode rNode = i.next();
             message += "-------------\n" + "CDKRNode " + jIndex + "\n" + rNode.toString() + "\n";
             jIndex++;
@@ -528,9 +528,10 @@ public class CDKRGraph {
     /////////////////////////////////
     // BitSet tools
     /**
-     *  Projects a CDKRGraph bitset on the source graph G1.
-     * @param  set  CDKRGraph BitSet to project
-     * @return      The associate BitSet in G1
+     * Projects a CDKRGraph bitset on the source graph G1.
+     *
+     * @param set CDKRGraph BitSet to project
+     * @return The associate BitSet in G1
      */
     public BitSet projectG1(BitSet set) {
         BitSet projection = new BitSet(getFirstGraphSize());
@@ -544,9 +545,10 @@ public class CDKRGraph {
     }
 
     /**
-     *  Projects a CDKRGraph bitset on the source graph G2.
-     * @param  set  CDKRGraph BitSet to project
-     * @return      The associate BitSet in G2
+     * Projects a CDKRGraph bitset on the source graph G2.
+     *
+     * @param set CDKRGraph BitSet to project
+     * @return The associate BitSet in G2
      */
     public BitSet projectG2(BitSet set) {
         BitSet projection = new BitSet(getSecondGraphSize());
@@ -560,10 +562,11 @@ public class CDKRGraph {
     }
 
     /**
-     *  Test if set sourceBitSet is contained in  set targetBitSet.
-     * @param  sourceBitSet  a bitSet
-     * @param  targetBitSet  a bitSet
-     * @return    true if  sourceBitSet is contained in  targetBitSet
+     * Test if set sourceBitSet is contained in set targetBitSet.
+     *
+     * @param sourceBitSet a bitSet
+     * @param targetBitSet a bitSet
+     * @return true if sourceBitSet is contained in targetBitSet
      */
     private boolean isContainedIn(BitSet sourceBitSet, BitSet targetBitSet) {
         boolean result = false;
@@ -582,78 +585,59 @@ public class CDKRGraph {
         return result;
     }
 
-    /**
-     * @return the findAllStructure
-     */
+    /** @return the findAllStructure */
     private boolean isFindAllStructure() {
         return findAllStructure;
     }
 
-    /**
-     * @param findAllStructure the findAllStructure to set
-     */
+    /** @param findAllStructure the findAllStructure to set */
     private void setFindAllStructure(boolean findAllStructure) {
         this.findAllStructure = findAllStructure;
     }
 
-    /**
-     * @return the solutionList
-     */
+    /** @return the solutionList */
     private List<BitSet> getSolutionList() {
         return solutionList;
     }
 
-    /**
-     * @return the targetBitSet
-     */
+    /** @return the targetBitSet */
     private BitSet getTargetBitSet() {
         return targetBitSet;
     }
 
-    /**
-     * @param targetBitSet the targetBitSet to set
-     */
+    /** @param targetBitSet the targetBitSet to set */
     private void setTargetBitSet(BitSet targetBitSet) {
         this.targetBitSet = targetBitSet;
     }
 
-    /**
-     * @return the sourceBitSet
-     */
+    /** @return the sourceBitSet */
     private BitSet getSourceBitSet() {
         return sourceBitSet;
     }
 
-    /**
-     * @param sourceBitSet the sourceBitSet to set
-     */
+    /** @param sourceBitSet the sourceBitSet to set */
     private void setSourceBitSet(BitSet sourceBitSet) {
         this.sourceBitSet = sourceBitSet;
     }
 
-    /**
-     * @return the maxIteration
-     */
+    /** @return the maxIteration */
     private int getMaxIteration() {
         return maxIteration;
     }
 
-    /**
-     * @return the findAllMap
-     */
+    /** @return the findAllMap */
     private boolean isFindAllMap() {
         return findAllMap;
     }
 
-    /**
-     * @param findAllMap the findAllMap to set
-     */
+    /** @param findAllMap the findAllMap to set */
     private void setFindAllMap(boolean findAllMap) {
         this.findAllMap = findAllMap;
     }
 
     /**
      * True if stop search is set.
+     *
      * @return the stop
      */
     private boolean isStop() {
@@ -662,29 +646,24 @@ public class CDKRGraph {
 
     /**
      * Set if true is a search has to be stopped
+     *
      * @param stop the stop to set
      */
     private void setStop(boolean stop) {
         this.stop = stop;
     }
 
-    /**
-     * @return the nbIteration
-     */
+    /** @return the nbIteration */
     private int getNbIteration() {
         return nbIteration;
     }
 
-    /**
-     * @param nbIteration the nbIteration to set
-     */
+    /** @param nbIteration the nbIteration to set */
     private void setNbIteration(int nbIteration) {
         this.nbIteration = nbIteration;
     }
 
-    /**
-     * @return the graphBitSet
-     */
+    /** @return the graphBitSet */
     private BitSet getGraphBitSet() {
         return graphBitSet;
     }

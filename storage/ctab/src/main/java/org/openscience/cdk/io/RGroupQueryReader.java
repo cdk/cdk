@@ -30,12 +30,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -53,19 +51,16 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * A reader for Symyx' Rgroup files (RGFiles).
- * An RGfile describes a single molecular query with Rgroups.
- * Each RGfile is a combination of Ctabs defining the root molecule and each
- * member of each Rgroup in the query.
+ * A reader for Symyx' Rgroup files (RGFiles). An RGfile describes a single molecular query with
+ * Rgroups. Each RGfile is a combination of Ctabs defining the root molecule and each member of each
+ * Rgroup in the query.
  *
- * <p>The RGFile format is described in the manual
- * <a href="http://www.symyx.com/downloads/public/ctfile/ctfile.pdf">
- * "CTFile Formats"</a> , Chapter 5.
+ * <p>The RGFile format is described in the manual <a
+ * href="http://www.symyx.com/downloads/public/ctfile/ctfile.pdf">"CTFile Formats"</a> , Chapter 5.
  *
  * @cdk.module io
  * @cdk.githash
  * @cdk.iooptions
- *
  * @cdk.keyword Rgroup
  * @cdk.keyword R group
  * @cdk.keyword R-group
@@ -73,29 +68,27 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class RGroupQueryReader extends DefaultChemObjectReader {
 
-    /**
-     * Private bean style class to capture LOG (logic) lines.
-     */
+    /** Private bean style class to capture LOG (logic) lines. */
     private class RGroupLogic {
 
-        int     rgoupNumberRequired;
+        int rgoupNumberRequired;
         boolean restH;
-        String  occurence;
+        String occurence;
     }
 
-    BufferedReader              input  = null;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(RGroupQueryReader.class);
+    BufferedReader input = null;
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(RGroupQueryReader.class);
 
-    /**
-     * Default constructor, input not set.
-     */
+    /** Default constructor, input not set. */
     public RGroupQueryReader() {
         this(new StringReader(""));
     }
 
     /**
-     * Constructs a new RgroupQueryReader that can read RgroupAtomContainerSet
-     * from a given InputStream.
+     * Constructs a new RgroupQueryReader that can read RgroupAtomContainerSet from a given
+     * InputStream.
+     *
      * @param in The InputStream to read from.
      */
     public RGroupQueryReader(InputStream in) {
@@ -103,9 +96,9 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
     }
 
     /**
-     * Constructs a new RgroupQueryReader that can read RgroupAtomContainerSet
-     * from a given Reader.
-     * @param  in  The Reader to read from.
+     * Constructs a new RgroupQueryReader that can read RgroupAtomContainerSet from a given Reader.
+     *
+     * @param in The Reader to read from.
      */
     public RGroupQueryReader(Reader in) {
         input = new BufferedReader(in);
@@ -113,6 +106,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
 
     /**
      * Sets the input Reader.
+     *
      * @param input Reader object
      * @throws CDKException
      */
@@ -152,8 +146,9 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
     }
 
     /**
-     * Check input IChemObject and proceed to parse.
-     * Accepts/returns IChemObject of type RGroupQuery only.
+     * Check input IChemObject and proceed to parse. Accepts/returns IChemObject of type RGroupQuery
+     * only.
+     *
      * @return IChemObject read from file
      * @param object class must be of type RGroupQuery
      */
@@ -162,13 +157,14 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
         if (object instanceof RGroupQuery) {
             return (T) parseRGFile((RGroupQuery) object);
         } else {
-            throw new CDKException("Reader only supports " + RGroupQuery.class.getName() + " objects");
+            throw new CDKException(
+                    "Reader only supports " + RGroupQuery.class.getName() + " objects");
         }
     }
 
     /**
-     * Parse the RGFile. Uses of {@link org.openscience.cdk.io.MDLV2000Reader}
-     * to parse individual $CTAB blocks.
+     * Parse the RGFile. Uses of {@link org.openscience.cdk.io.MDLV2000Reader} to parse individual
+     * $CTAB blocks.
      *
      * @param rGroupQuery empty
      * @return populated query
@@ -189,11 +185,12 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
          * order "integer" (1,2,3) for the Rgroup The order is based on the atom
          * block, unless there is an AAL line for the pseudo atom.
          */
-        Map<IAtom, Map<Integer, IBond>> attachmentPoints = new HashMap<IAtom, Map<Integer, IBond>>();
+        Map<IAtom, Map<Integer, IBond>> attachmentPoints =
+                new HashMap<IAtom, Map<Integer, IBond>>();
 
         try {
             // Process the Header block_________________________________________
-            //__________________________________________________________________
+            // __________________________________________________________________
             logger.info("Process the Header block");
             checkLineBeginsWith(input.readLine(), "$MDL", ++lineCount);
             checkLineBeginsWith(input.readLine(), "$MOL", ++lineCount);
@@ -202,24 +199,25 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
             for (int i = 1; i <= 3; i++) {
                 lineCount++;
                 if (input.readLine() == null) {
-                    throw new CDKException("RGFile invalid, empty/null header line at #" + lineCount);
+                    throw new CDKException(
+                            "RGFile invalid, empty/null header line at #" + lineCount);
                 }
-                //optional: parse header info here (not implemented)
+                // optional: parse header info here (not implemented)
             }
             checkLineBeginsWith(input.readLine(), "$END HDR", ++lineCount);
 
-            //Process the root structure (scaffold)_____________________________
-            //__________________________________________________________________
+            // Process the root structure (scaffold)_____________________________
+            // __________________________________________________________________
             logger.info("Process the root structure (scaffold)");
             checkLineBeginsWith(input.readLine(), "$CTAB", ++lineCount);
-            //Force header
+            // Force header
             StringBuilder sb = new StringBuilder(RGroup.ROOT_LABEL + "\n\n\n");
             line = input.readLine();
             ++lineCount;
             while (line != null && !line.equals("$END CTAB")) {
                 sb.append(line + eol);
 
-                //LOG lines: Logic, Unsatisfied Sites, Range of Occurrence.
+                // LOG lines: Logic, Unsatisfied Sites, Range of Occurrence.
                 if (line.startsWith("M  LOG")) {
                     strTk = new StringTokenizer(line);
                     strTk.nextToken();
@@ -245,12 +243,15 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
             }
             String rootStr = sb.toString();
 
-            //Let MDL reader process $CTAB block of the root structure.
-            MDLV2000Reader reader = new MDLV2000Reader(new StringReader(rootStr), ISimpleChemObjectReader.Mode.STRICT);
-            IAtomContainer root = reader.read(defaultChemObjectBuilder.newInstance(IAtomContainer.class));
+            // Let MDL reader process $CTAB block of the root structure.
+            MDLV2000Reader reader =
+                    new MDLV2000Reader(
+                            new StringReader(rootStr), ISimpleChemObjectReader.Mode.STRICT);
+            IAtomContainer root =
+                    reader.read(defaultChemObjectBuilder.newInstance(IAtomContainer.class));
             rGroupQuery.setRootStructure(root);
 
-            //Atom attachment order: parse AAL lines first
+            // Atom attachment order: parse AAL lines first
             strTk = new StringTokenizer(rootStr, eol);
             while (strTk.hasMoreTokens()) {
                 line = strTk.nextToken();
@@ -268,22 +269,28 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                         IBond bond = root.getBond(rGroup, partner);
                         int order = Integer.valueOf(stAAL.nextToken());
                         bondMap.put(order, bond);
-                        logger.info("AAL " + order + " " + ((IPseudoAtom) rGroup).getLabel() + "-"
-                                + partner.getSymbol());
+                        logger.info(
+                                "AAL "
+                                        + order
+                                        + " "
+                                        + ((IPseudoAtom) rGroup).getLabel()
+                                        + "-"
+                                        + partner.getSymbol());
                     }
                     if (bondMap.size() != 0) {
                         attachmentPoints.put(rGroup, bondMap);
                     }
-
                 }
             }
-            //Deal with remaining attachment points (non AAL)
+            // Deal with remaining attachment points (non AAL)
             for (IAtom atom : root.atoms()) {
                 if (atom instanceof IPseudoAtom) {
                     IPseudoAtom rGroup = (IPseudoAtom) atom;
-                    if (rGroup.getLabel().startsWith("R") && !rGroup.getLabel().equals("R") && // only numbered ones
+                    if (rGroup.getLabel().startsWith("R")
+                            && !rGroup.getLabel().equals("R")
+                            && // only numbered ones
                             !attachmentPoints.containsKey(rGroup)) {
-                        //Order reflects the order of atoms in the Atom Block
+                        // Order reflects the order of atoms in the Atom Block
                         int order = 0;
                         Map<Integer, IBond> bondMap = new HashMap<Integer, IBond>();
                         for (IAtom atom2 : root.atoms()) {
@@ -291,7 +298,13 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                                 for (IBond bond : root.bonds()) {
                                     if (bond.contains(atom) && bond.contains(atom2)) {
                                         bondMap.put(++order, bond);
-                                        logger.info("Def " + order + " " + rGroup.getLabel() + "-" + atom2.getSymbol());
+                                        logger.info(
+                                                "Def "
+                                                        + order
+                                                        + " "
+                                                        + rGroup.getLabel()
+                                                        + "-"
+                                                        + atom2.getSymbol());
                                         break;
                                     }
                                 }
@@ -303,14 +316,14 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                     }
                 }
             }
-            //Done with attachment points
+            // Done with attachment points
             rGroupQuery.setRootAttachmentPoints(attachmentPoints);
             logger.info("Attachm.points defined for " + attachmentPoints.size() + " R# atoms");
 
-            //Process each Rgroup's $CTAB block(s)_____________________________
-            //__________________________________________________________________
+            // Process each Rgroup's $CTAB block(s)_____________________________
+            // __________________________________________________________________
 
-            //Set up the RgroupLists, one for each unique R# (# = 1..32 max)
+            // Set up the RgroupLists, one for each unique R# (# = 1..32 max)
             Map<Integer, RGroupList> rGroupDefinitions = new HashMap<Integer, RGroupList>();
 
             for (IAtom atom : root.atoms()) {
@@ -338,7 +351,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                 }
             }
 
-            //Parse all $CTAB blocks per Rgroup (there can be more than one)
+            // Parse all $CTAB blocks per Rgroup (there can be more than one)
             line = input.readLine();
             ++lineCount;
             boolean hasMoreRGP = true;
@@ -364,12 +377,16 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                         ++lineCount;
                     }
                     String groupStr = sb.toString();
-                    reader = new MDLV2000Reader(new StringReader(groupStr), ISimpleChemObjectReader.Mode.STRICT);
-                    IAtomContainer group = reader.read(defaultChemObjectBuilder.newInstance(IAtomContainer.class));
+                    reader =
+                            new MDLV2000Reader(
+                                    new StringReader(groupStr),
+                                    ISimpleChemObjectReader.Mode.STRICT);
+                    IAtomContainer group =
+                            reader.read(defaultChemObjectBuilder.newInstance(IAtomContainer.class));
                     RGroup rGroup = new RGroup();
                     rGroup.setGroup(group);
 
-                    //Parse the Rgroup's attachment points (APO)
+                    // Parse the Rgroup's attachment points (APO)
                     strTk = new StringTokenizer(groupStr, eol);
                     while (strTk.hasMoreTokens()) {
                         line = strTk.nextToken();
@@ -389,10 +406,11 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                                     case 2:
                                         rGroup.setSecondAttachmentPoint(at);
                                         break;
-                                    case 3: {
-                                        rGroup.setFirstAttachmentPoint(at);
-                                        rGroup.setSecondAttachmentPoint(at);
-                                    }
+                                    case 3:
+                                        {
+                                            rGroup.setFirstAttachmentPoint(at);
+                                            rGroup.setSecondAttachmentPoint(at);
+                                        }
                                         break;
                                 }
                             }
@@ -400,7 +418,8 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                     }
                     RGroupList rList = rGroupDefinitions.get(rgroupNum);
                     if (rList == null) {
-                        throw new CDKException("R" + rgroupNum + " not defined but referenced in $RGP.");
+                        throw new CDKException(
+                                "R" + rgroupNum + " not defined but referenced in $RGP.");
                     } else {
                         rList.getRGroups().add(rGroup);
                     }
@@ -424,14 +443,26 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
             return rGroupQuery;
 
         } catch (CDKException exception) {
-            String error = "CDK Error while parsing line " + lineCount + ": " + line + " -> " + exception.getMessage();
+            String error =
+                    "CDK Error while parsing line "
+                            + lineCount
+                            + ": "
+                            + line
+                            + " -> "
+                            + exception.getMessage();
             logger.error(error);
             logger.debug(exception);
             throw exception;
         } catch (IOException | IllegalArgumentException exception) {
             exception.printStackTrace();
-            String error = exception.getClass() + "Error while parsing line " + lineCount + ": " + line + " -> "
-                    + exception.getMessage();
+            String error =
+                    exception.getClass()
+                            + "Error while parsing line "
+                            + lineCount
+                            + ": "
+                            + line
+                            + " -> "
+                            + exception.getMessage();
             logger.error(error);
             logger.debug(exception);
             throw new CDKException(error, exception);
@@ -440,18 +471,20 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
 
     /**
      * Checks that a given line starts as expected, according to RGFile format.
+     *
      * @param line
      * @param expect
      * @param lineCount
      * @throws CDKException
      */
-    private void checkLineBeginsWith(String line, String expect, int lineCount) throws CDKException {
+    private void checkLineBeginsWith(String line, String expect, int lineCount)
+            throws CDKException {
         if (line == null) {
             throw new CDKException("RGFile invalid, empty/null line at #" + lineCount);
         }
         if (!line.startsWith(expect)) {
-            throw new CDKException("RGFile invalid, line #" + lineCount + " should start with:" + expect + ".");
+            throw new CDKException(
+                    "RGFile invalid, line #" + lineCount + " should start with:" + expect + ".");
         }
     }
-
 }

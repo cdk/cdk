@@ -32,11 +32,12 @@ import org.openscience.cdk.smsd.tools.MolHandler;
 
 /**
  * Interface that holds basic core interface for all MCS algorithm.
+ *
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman &lt;asad@ebi.ac.uk&gt;
- * @deprecated SMSD has been deprecated from the CDK with a newer, more recent
- *             version of SMSD is available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
+ * @deprecated SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is
+ *     available at <a href="http://github.com/asad/smsd">http://github.com/asad/smsd</a>.
  */
 @Deprecated
 public interface IMCSBase {
@@ -47,7 +48,6 @@ public interface IMCSBase {
      * @param source source molecule
      * @param target target molecule
      * @throws CDKException
-     *
      */
     public abstract void set(MolHandler source, MolHandler target) throws CDKException;
 
@@ -57,36 +57,37 @@ public interface IMCSBase {
      * @param source source molecule
      * @param target target molecule
      * @throws CDKException
-     *
      */
     public abstract void set(IQueryAtomContainer source, IAtomContainer target) throws CDKException;
 
     /**
-     * Returns all plausible mappings between query and target molecules.
-     * Each map in the list has atom-atom equivalence of the mappings
-     * between query and target molecule i.e. map.getKey() for the query
-     * and map.getValue() for the target molecule
+     * Returns all plausible mappings between query and target molecules. Each map in the list has
+     * atom-atom equivalence of the mappings between query and target molecule i.e. map.getKey() for
+     * the query and map.getValue() for the target molecule
+     *
      * @return All possible MCS atom Mappings
      */
     public abstract List<Map<IAtom, IAtom>> getAllAtomMapping();
 
     /**
-     * Returns all plausible mappings between query and target molecules.
-     * Each map in the list has atom-atom equivalence index of the mappings
-     * between query and target molecule i.e. map.getKey() for the query
-     * and map.getValue() for the target molecule
+     * Returns all plausible mappings between query and target molecules. Each map in the list has
+     * atom-atom equivalence index of the mappings between query and target molecule i.e.
+     * map.getKey() for the query and map.getValue() for the target molecule
+     *
      * @return All possible MCS Mapping Index
      */
     public abstract List<Map<Integer, Integer>> getAllMapping();
 
     /**
      * Returns one of the best matches with atoms mapped.
+     *
      * @return Best Atom Mapping
      */
     public abstract Map<IAtom, IAtom> getFirstAtomMapping();
 
     /**
      * Returns one of the best matches with atom indexes mapped.
+     *
      * @return Best Mapping Index
      */
     public abstract Map<Integer, Integer> getFirstMapping();

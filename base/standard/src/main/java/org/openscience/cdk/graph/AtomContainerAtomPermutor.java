@@ -27,10 +27,12 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
- * An atom container atom permutor that uses ranking and unranking to calculate
- * the next permutation in the series.
+ * An atom container atom permutor that uses ranking and unranking to calculate the next permutation
+ * in the series.
  *
- * <p>Typical use:</p><pre>
+ * <p>Typical use:
+ *
+ * <pre>
  * AtomContainerAtomPermutor permutor = new AtomContainerAtomPermutor(container);
  * while (permutor.hasNext()) {
  *   IAtomContainer permutedContainer = permutor.next();
@@ -46,8 +48,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 public class AtomContainerAtomPermutor extends AtomContainerPermutor {
 
     /**
-     * A permutor wraps the original atom container, and produces cloned
-     * (and permuted!) copies on demand.
+     * A permutor wraps the original atom container, and produces cloned (and permuted!) copies on
+     * demand.
      *
      * @param atomContainer the atom container to permute
      */
@@ -75,5 +77,4 @@ public class AtomContainerAtomPermutor extends AtomContainerPermutor {
             return null;
         }
     }
-
 }

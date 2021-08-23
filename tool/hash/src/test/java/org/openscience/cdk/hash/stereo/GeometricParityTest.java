@@ -24,10 +24,10 @@
 
 package org.openscience.cdk.hash.stereo;
 
-import org.junit.Test;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+
+import org.junit.Test;
 
 /**
  * @author John May

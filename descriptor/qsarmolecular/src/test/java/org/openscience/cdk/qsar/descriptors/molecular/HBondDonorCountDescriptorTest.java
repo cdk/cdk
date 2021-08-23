@@ -19,7 +19,6 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import javax.vecmath.Point3d;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,9 +31,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
-/**
- * @cdk.module test-qsarmolecular
- */
+/** @cdk.module test-qsarmolecular */
 public class HBondDonorCountDescriptorTest extends MolecularDescriptorTest {
 
     public HBondDonorCountDescriptorTest() {}
@@ -45,7 +42,8 @@ public class HBondDonorCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testHBondDonorCountDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testHBondDonorCountDescriptor()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
         Object[] params = {new Boolean(true)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -54,7 +52,7 @@ public class HBondDonorCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     /**
-     * @cdk.bug   3133610
+     * @cdk.bug 3133610
      * @cdk.inchi InChI=1S/C2H3N3/c1-3-2-5-4-1/h1-2H,(H,3,4,5)
      */
     @Test
@@ -112,5 +110,4 @@ public class HBondDonorCountDescriptorTest extends MolecularDescriptorTest {
 
         Assert.assertEquals(1, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
-
 }

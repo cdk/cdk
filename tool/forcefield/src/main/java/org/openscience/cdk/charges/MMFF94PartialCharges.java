@@ -27,8 +27,9 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * The calculation of the MMFF94 partial charges. Charges are stored as atom
- * properties ("MMFF94charge") for an AtomContainer ac, values are calculated with:
+ * The calculation of the MMFF94 partial charges. Charges are stored as atom properties
+ * ("MMFF94charge") for an AtomContainer ac, values are calculated with:
+ *
  * <pre>
  *  HydrogenAdder hAdder = new HydrogenAdder();
  *  SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -37,32 +38,32 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *  MMFF94PartialCharges mmff = new MMFF94PartialCharges();
  *  mmff.assignMMFF94PartialCharges(ac);
  *  </pre>
+ *
  * and for each atom, the value is given by:
+ *
  * <pre>
  *  ( (Double)atom.getProperty("MMFF94charge") ).doubleValue().
  *  </pre>
- *  
- * <b>Note:</b> This class delegates to {@link Mmff} and charges are also assigned
- * directly to the atom attribute {@link IAtom#getCharge()}. 
+ *
+ * <b>Note:</b> This class delegates to {@link Mmff} and charges are also assigned directly to the
+ * atom attribute {@link IAtom#getCharge()}.
  *
  * @author mfe4
  * @author chhoppe
  * @cdk.created 2004-11-03
  * @cdk.module forcefield
  * @cdk.githash
- * @see Mmff#partialCharges(IAtomContainer) 
+ * @see Mmff#partialCharges(IAtomContainer)
  */
 public class MMFF94PartialCharges implements IChargeCalculator {
 
     public static final String MMFF_94_CHARGE = "MMFF94charge";
-    private final ILoggingTool LOG = LoggingToolFactory.createLoggingTool(MMFF94BasedParameterSetReader.class);
+    private final ILoggingTool LOG =
+            LoggingToolFactory.createLoggingTool(MMFF94BasedParameterSetReader.class);
     private final Mmff mmff = new Mmff();
 
-    /**
-     * Constructor for the MMFF94PartialCharges object
-     */
-    public MMFF94PartialCharges() {
-    }
+    /** Constructor for the MMFF94PartialCharges object */
+    public MMFF94PartialCharges() {}
 
     /**
      * Main method which assigns MMFF94 partial charges
@@ -75,8 +76,7 @@ public class MMFF94PartialCharges implements IChargeCalculator {
             throw new CDKException("Molecule had an atom of unknown MMFF type");
         mmff.partialCharges(ac);
         mmff.clearProps(ac);
-        for (IAtom atom : ac.atoms())
-            atom.setProperty(MMFF_94_CHARGE, atom.getCharge());
+        for (IAtom atom : ac.atoms()) atom.setProperty(MMFF_94_CHARGE, atom.getCharge());
         return ac;
     }
 
@@ -85,7 +85,9 @@ public class MMFF94PartialCharges implements IChargeCalculator {
         try {
             assignMMFF94PartialCharges(container);
         } catch (Exception exception) {
-            throw new CDKException("Could not calculate MMFF94 partial charges: " + exception.getMessage(), exception);
+            throw new CDKException(
+                    "Could not calculate MMFF94 partial charges: " + exception.getMessage(),
+                    exception);
         }
     }
 }

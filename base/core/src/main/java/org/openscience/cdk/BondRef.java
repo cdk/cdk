@@ -23,17 +23,15 @@
 
 package org.openscience.cdk;
 
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
 /**
- * A bond ref, references a CDK {@link IBond} indirectly. All
- * methods are passed through to the referenced bond. The reference can
- * be used to override the behaviour of the base bond.
+ * A bond ref, references a CDK {@link IBond} indirectly. All methods are passed through to the
+ * referenced bond. The reference can be used to override the behaviour of the base bond.
  *
  * @author John Mayfield
  */
@@ -52,21 +50,19 @@ public class BondRef extends ChemObjectRef implements IBond {
     }
 
     /**
-     * Utility method to dereference an bond pointer. If the bond is not
-     * an {@link BondRef} it simply returns the input.
+     * Utility method to dereference an bond pointer. If the bond is not an {@link BondRef} it
+     * simply returns the input.
      *
      * @param bond the bond
      * @return non-pointer bond
      */
     public static IBond deref(IBond bond) {
-        while (bond instanceof BondRef)
-            bond = ((BondRef) bond).deref();
+        while (bond instanceof BondRef) bond = ((BondRef) bond).deref();
         return bond;
     }
 
     /**
-     * Dereference the bond pointer once providing access to the base
-     * bond.
+     * Dereference the bond pointer once providing access to the base bond.
      *
      * @return the bond pointed to
      */
@@ -74,234 +70,175 @@ public class BondRef extends ChemObjectRef implements IBond {
         return bond;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Integer getElectronCount() {
         return bond.getElectronCount();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setElectronCount(Integer count) {
         bond.setElectronCount(count);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Iterable<IAtom> atoms() {
         return bond.atoms();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setAtoms(IAtom[] atoms) {
         bond.setAtoms(atoms);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtom getBegin() {
         return bond.getBegin();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtom getEnd() {
         return bond.getEnd();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getIndex() {
         return bond.getIndex();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtomContainer getContainer() {
         return bond.getContainer();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getAtomCount() {
         return bond.getAtomCount();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtom getAtom(int position) {
         return bond.getAtom(position);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtom getConnectedAtom(IAtom atom) {
         return bond.getConnectedAtom(atom);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtom getOther(IAtom atom) {
         return bond.getOther(atom);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IAtom[] getConnectedAtoms(IAtom atom) {
         return bond.getConnectedAtoms(atom);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean contains(IAtom atom) {
         return bond.contains(atom);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setAtom(IAtom atom, int position) {
         bond.setAtom(atom, position);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Order getOrder() {
         return bond.getOrder();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setOrder(Order order) {
         bond.setOrder(order);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Stereo getStereo() {
         return bond.getStereo();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setStereo(Stereo stereo) {
         bond.setStereo(stereo);
     }
 
-
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Display getDisplay() {
         return bond.getDisplay();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setDisplay(Display display) {
         bond.setDisplay(display);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Point2d get2DCenter() {
         return bond.get2DCenter();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Point3d get3DCenter() {
         return bond.get3DCenter();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean compare(Object object) {
         return bond.compare(object);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean isConnectedTo(IBond bond) {
         return this.bond.isConnectedTo(bond);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean isAromatic() {
         return bond.isAromatic();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setIsAromatic(boolean arom) {
         bond.setIsAromatic(arom);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean isInRing() {
         return bond.isInRing();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setIsInRing(boolean ring) {
         bond.setIsInRing(ring);
@@ -317,9 +254,7 @@ public class BondRef extends ChemObjectRef implements IBond {
         return bond.equals(obj);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public IBond clone() throws CloneNotSupportedException {
         return bond.clone();

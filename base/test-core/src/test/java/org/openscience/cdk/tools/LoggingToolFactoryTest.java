@@ -21,16 +21,15 @@ package org.openscience.cdk.tools;
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * @cdk.module test-core
- */
+/** @cdk.module test-core */
 public class LoggingToolFactoryTest {
 
     @Test
     public void testSetGetLoggingToolClass() {
         Class<? extends ILoggingTool> logger = LoggingTool.class;
         LoggingToolFactory.setLoggingToolClass(logger);
-        Assert.assertEquals(LoggingTool.class.getName(), LoggingToolFactory.getLoggingToolClass().getName());
+        Assert.assertEquals(
+                LoggingTool.class.getName(), LoggingToolFactory.getLoggingToolClass().getName());
     }
 
     @Test
@@ -55,11 +54,9 @@ public class LoggingToolFactoryTest {
     }
 
     /**
-     * Custom dummy logger used in the
-     * {@link LoggingToolFactoryTest#testCustomLogger()} test to see if
-     * the custom {@link ILoggingTool} is really being used. It does
-     * not really implement any method, as the test uses a mere
-     * <code>instanceof</code> call.
+     * Custom dummy logger used in the {@link LoggingToolFactoryTest#testCustomLogger()} test to see
+     * if the custom {@link ILoggingTool} is really being used. It does not really implement any
+     * method, as the test uses a mere <code>instanceof</code> call.
      */
     private static class CustomLogger implements ILoggingTool {
 
@@ -111,9 +108,7 @@ public class LoggingToolFactoryTest {
         public void warn(Object object, Object... objects) {}
 
         @Override
-        public void setLevel(int level) {
-
-        }
+        public void setLevel(int level) {}
 
         @Override
         public int getLevel() {

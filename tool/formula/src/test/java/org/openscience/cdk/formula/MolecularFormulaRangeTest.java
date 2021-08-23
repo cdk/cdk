@@ -20,29 +20,24 @@
 package org.openscience.cdk.formula;
 
 import java.util.Iterator;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /**
  * Checks the functionality of the MolecularFormulaRange.
  *
  * @cdk.module test-formula
- *
  * @see MolecularFormula
  */
 public class MolecularFormulaRangeTest extends CDKTestCase {
 
-    private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    private static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
-    /**
-     *  Constructor for the MolecularFormulaRangeTest object.
-     *
-     */
+    /** Constructor for the MolecularFormulaRangeTest object. */
     public MolecularFormulaRangeTest() {
         super();
     }
@@ -50,7 +45,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testMolecularFormulaRange() {
@@ -63,7 +58,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testGetIsotopeCount() {
@@ -76,7 +71,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testAddIsotope_IIsotope_int_int() {
@@ -91,7 +86,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testAddIsotope2() {
@@ -110,7 +105,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testGetIsotopeCountMax_IIsotope() {
@@ -129,7 +124,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testGetIsotopeCountMin_IIsotope() {
@@ -150,7 +145,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testGetIsotopeCountMin_IIsotope2() {
@@ -167,13 +162,12 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
         Assert.assertEquals(2, mfRange.getIsotopeCount());
         Assert.assertEquals(5, mfRange.getIsotopeCountMin(carb));
         Assert.assertEquals(5, mfRange.getIsotopeCountMin(h1));
-
     }
 
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testGetIsotopeCountMin_IIsotope3() {
@@ -196,13 +190,12 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
         Assert.assertEquals(5, mfRange.getIsotopeCountMin(h1));
         Assert.assertEquals(5, mfRange.getIsotopeCountMin(carb2));
         Assert.assertEquals(5, mfRange.getIsotopeCountMin(h2));
-
     }
 
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testGetIsotopeCountMin_IIsotope4() {
@@ -227,13 +220,12 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
         Assert.assertEquals(0, mfRange.getIsotopeCountMin(h1));
         Assert.assertEquals(5, mfRange.getIsotopeCountMin(carb2));
         Assert.assertEquals(5, mfRange.getIsotopeCountMin(h2));
-
     }
 
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testIsotopes() {
@@ -254,7 +246,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testContains_IIsotope() {
@@ -278,7 +270,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     public void testRemoveIsotope_IIsotope() {
 
@@ -296,13 +288,12 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
         Assert.assertEquals(2, mfRange.getIsotopeCount());
         Assert.assertEquals(0, mfRange.getIsotopeCountMin(carb));
         Assert.assertEquals(-1, mfRange.getIsotopeCountMin(flu));
-
     }
 
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testRemoveAllIsotopes() {
@@ -321,28 +312,23 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
         Assert.assertEquals(-1, mfRange.getIsotopeCountMin(carb));
         Assert.assertEquals(-1, mfRange.getIsotopeCountMin(h1));
         Assert.assertEquals(-1, mfRange.getIsotopeCountMin(flu));
-
     }
 
     /**
-     * A unit test suite for JUnit. Only test whether the
-     * MolecularFormula are correctly cloned.
+     * A unit test suite for JUnit. Only test whether the MolecularFormula are correctly cloned.
      *
-     * @return    The test suite
-    */
+     * @return The test suite
+     */
     @Test
     public void testClone() throws Exception {
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         Object clone = mfRange.clone();
         Assert.assertTrue(clone instanceof MolecularFormulaRange);
-        Assert.assertEquals(mfRange.getIsotopeCount(), ((MolecularFormulaRange) clone).getIsotopeCount());
-
+        Assert.assertEquals(
+                mfRange.getIsotopeCount(), ((MolecularFormulaRange) clone).getIsotopeCount());
     }
 
-    /**
-     * A unit test suite for JUnit. Only test whether
-     * the MolecularFormula are correctly cloned.
-    */
+    /** A unit test suite for JUnit. Only test whether the MolecularFormula are correctly cloned. */
     @Test
     public void testClone_Isotopes() throws Exception {
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
@@ -363,7 +349,8 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
 
         Object clone = mfRange.clone();
         Assert.assertTrue(clone instanceof MolecularFormulaRange);
-        Assert.assertEquals(mfRange.getIsotopeCount(), ((MolecularFormulaRange) clone).getIsotopeCount());
+        Assert.assertEquals(
+                mfRange.getIsotopeCount(), ((MolecularFormulaRange) clone).getIsotopeCount());
 
         Assert.assertEquals(3, ((MolecularFormulaRange) clone).getIsotopeCount());
 
@@ -375,11 +362,9 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
         Assert.assertEquals(8, ((MolecularFormulaRange) clone).getIsotopeCountMax(flu));
         Assert.assertEquals(10, ((MolecularFormulaRange) clone).getIsotopeCountMax(h1));
     }
-    
-    /**
-     * Test what happens when null isotope is added to MF range.
-     */
-    @Test(expected=IllegalArgumentException.class)
+
+    /** Test what happens when null isotope is added to MF range. */
+    @Test(expected = IllegalArgumentException.class)
     public void testNull() throws Exception {
         MolecularFormulaRange mfRange = new MolecularFormulaRange();
         IIsotope carb = builder.newInstance(IIsotope.class, "C");
@@ -387,5 +372,4 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
         mfRange.addIsotope(carb, 2, 5);
         mfRange.addIsotope(nul, 3, 7);
     }
-    
 }

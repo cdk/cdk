@@ -23,17 +23,15 @@
 package org.openscience.cdk.silent;
 
 import java.io.Serializable;
-
 import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
- * A AminoAcid is Monomer which stores additional amino acid specific
- * informations, like the N-terminus atom.
+ * A AminoAcid is Monomer which stores additional amino acid specific informations, like the
+ * N-terminus atom.
  *
- * @cdk.module  silent
+ * @cdk.module silent
  * @cdk.githash
- *
  * @author Egon Willighagen &lt;e.willighagen@science.ru.nl&gt;
  * @cdk.created 2005-08-11
  * @cdk.keyword amino acid
@@ -43,21 +41,19 @@ public class AminoAcid extends Monomer implements IAminoAcid, Serializable, Clon
     /**
      * Determines if a de-serialized object is compatible with this class.
      *
-     * This value must only be changed if and only if the new version
-     * of this class is incompatible with the old version. See Sun docs
-     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
+     * <p>This value must only be changed if and only if the new version of this class is
+     * incompatible with the old version. See Sun docs for <a
+     * href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
      */
     private static final long serialVersionUID = -5032283549467862509L;
 
     /** The atom that constitutes the N-terminus. */
-    private IAtom             nTerminus;
+    private IAtom nTerminus;
     /** The atom that constitutes the C-terminus. */
-    private IAtom             cTerminus;
+    private IAtom cTerminus;
 
-    /**
-     * Constructs a new AminoAcid.
-     */
+    /** Constructs a new AminoAcid. */
     public AminoAcid() {
         super();
     }
@@ -66,8 +62,7 @@ public class AminoAcid extends Monomer implements IAminoAcid, Serializable, Clon
      * Retrieves the N-terminus atom.
      *
      * @return The Atom that is the N-terminus
-     *
-     * @see    #addNTerminus(IAtom)
+     * @see #addNTerminus(IAtom)
      */
     @Override
     public IAtom getNTerminus() {
@@ -77,9 +72,8 @@ public class AminoAcid extends Monomer implements IAminoAcid, Serializable, Clon
     /**
      * Add an Atom and makes it the N-terminus atom.
      *
-     * @param atom  The Atom that is the N-terminus
-     *
-     * @see    #getNTerminus
+     * @param atom The Atom that is the N-terminus
+     * @see #getNTerminus
      */
     @Override
     public void addNTerminus(IAtom atom) {
@@ -88,12 +82,11 @@ public class AminoAcid extends Monomer implements IAminoAcid, Serializable, Clon
     }
 
     /**
-     * Marks an Atom as being the N-terminus atom. It assumes that the Atom
-     * is already added to the AminoAcid.
+     * Marks an Atom as being the N-terminus atom. It assumes that the Atom is already added to the
+     * AminoAcid.
      *
-     * @param atom  The Atom that is the N-terminus
-     *
-     * @see    #addNTerminus
+     * @param atom The Atom that is the N-terminus
+     * @see #addNTerminus
      */
     private void setNTerminus(IAtom atom) {
         nTerminus = atom;
@@ -103,8 +96,7 @@ public class AminoAcid extends Monomer implements IAminoAcid, Serializable, Clon
      * Retrieves the C-terminus atom.
      *
      * @return The Atom that is the C-terminus
-     *
-     * @see    #addCTerminus(IAtom)
+     * @see #addCTerminus(IAtom)
      */
     @Override
     public IAtom getCTerminus() {
@@ -114,9 +106,8 @@ public class AminoAcid extends Monomer implements IAminoAcid, Serializable, Clon
     /**
      * Add an Atom and makes it the C-terminus atom.
      *
-     * @param atom  The Atom that is the C-terminus
-     *
-     * @see    #getCTerminus
+     * @param atom The Atom that is the C-terminus
+     * @see #getCTerminus
      */
     @Override
     public void addCTerminus(IAtom atom) {
@@ -125,12 +116,11 @@ public class AminoAcid extends Monomer implements IAminoAcid, Serializable, Clon
     }
 
     /**
-     * Marks an Atom as being the C-terminus atom. It assumes that the Atom
-     * is already added to the AminoAcid.
+     * Marks an Atom as being the C-terminus atom. It assumes that the Atom is already added to the
+     * AminoAcid.
      *
-     * @param atom  The Atom that is the C-terminus
-     *
-     * @see    #addCTerminus
+     * @param atom The Atom that is the C-terminus
+     * @see #addCTerminus
      */
     private void setCTerminus(IAtom atom) {
         cTerminus = atom;
@@ -139,14 +129,16 @@ public class AminoAcid extends Monomer implements IAminoAcid, Serializable, Clon
     /**
      * Clones this AminoAcid object.
      *
-     * @return    The cloned object
+     * @return The cloned object
      */
     @Override
     public IAminoAcid clone() throws CloneNotSupportedException {
         AminoAcid clone = (AminoAcid) super.clone();
         // copying the new N-terminus and C-terminus pointers
-        if (getNTerminus() != null) clone.setNTerminus(clone.getAtom(getAtomNumber(getNTerminus())));
-        if (getCTerminus() != null) clone.setCTerminus(clone.getAtom(getAtomNumber(getCTerminus())));
+        if (getNTerminus() != null)
+            clone.setNTerminus(clone.getAtom(getAtomNumber(getNTerminus())));
+        if (getCTerminus() != null)
+            clone.setCTerminus(clone.getAtom(getAtomNumber(getCTerminus())));
         return clone;
     }
 
@@ -165,5 +157,4 @@ public class AminoAcid extends Monomer implements IAminoAcid, Serializable, Clon
         stringContent.append(')');
         return stringContent.toString();
     }
-
 }

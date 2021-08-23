@@ -22,19 +22,15 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
-
+import org.junit.Assert;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
-import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
-
-/**
- * @cdk.module test-diff
- */
+/** @cdk.module test-diff */
 public class AtomContainerDiffTest extends CDKTestCase {
 
     @Test
@@ -119,8 +115,9 @@ public class AtomContainerDiffTest extends CDKTestCase {
         Assert.assertNotNull(result);
     }
 
-    @Ignore("unit test did not test AtomContainerDiff but rather the ability of AtomContainer"
-            + "to be serialized. This is already tested in each respective domain module")
+    @Ignore(
+            "unit test did not test AtomContainerDiff but rather the ability of AtomContainer"
+                    + "to be serialized. This is already tested in each respective domain module")
     public void testDiffFromSerialized() throws IOException, ClassNotFoundException {
         //        IAtomContainer atomContainer = new AtomContainer();
         //        IBond bond1 = new Bond(new Atom("C"), new Atom("C"));
@@ -148,7 +145,8 @@ public class AtomContainerDiffTest extends CDKTestCase {
         //        IAtomContainer newAtomContainer = (IAtomContainer) obj;
         //        String diff = AtomDiff.diff(atomContainer, newAtomContainer);
         //
-        //        Assert.assertTrue("There were differences between original and deserialized version!", diff.equals(""));
+        //        Assert.assertTrue("There were differences between original and deserialized
+        // version!", diff.equals(""));
 
     }
 }

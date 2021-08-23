@@ -21,7 +21,6 @@ package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
 
-
 /**
  * {@link IRenderingElement} for linear arrows.
  *
@@ -31,33 +30,39 @@ import java.awt.Color;
 public class ArrowElement implements IRenderingElement {
 
     /** X coordinate of the point where the arrow starts. */
-    public final double  startX;
+    public final double startX;
     /** Y coordinate of the point where the arrow starts. */
-    public final double  startY;
+    public final double startY;
     /** X coordinate of the point where the arrow ends. */
-    public final double  endX;
+    public final double endX;
     /** Y coordinate of the point where the arrow ends. */
-    public final double  endY;
+    public final double endY;
     /** Width of the arrow line. */
-    public final double  width;
+    public final double width;
     /** Color of the arrow. */
-    public final Color   color;
+    public final Color color;
     /** Boolean that is true if the arrow points from start to end, false if from end to start. */
     public final boolean direction;
 
     /**
-     * Constructor for an arrow element, based on starting point, end point, width,
-     * direction, and color.
+     * Constructor for an arrow element, based on starting point, end point, width, direction, and
+     * color.
      *
-     * @param startX    X coordinate of the point where the arrow starts.
-     * @param startY    Y coodrinate of the point where the arrow starts.
-     * @param endX      X coordinate of the point where the arrow ends.
-     * @param endY      Y coordinate of the point where the arrow ends.
-     * @param width     width of the arrow line.
+     * @param startX X coordinate of the point where the arrow starts.
+     * @param startY Y coodrinate of the point where the arrow starts.
+     * @param endX X coordinate of the point where the arrow ends.
+     * @param endY Y coordinate of the point where the arrow ends.
+     * @param width width of the arrow line.
      * @param direction true is the arrow points from start to end, false if from end to start
-     * @param color     {@link Color} of the arrow
+     * @param color {@link Color} of the arrow
      */
-    public ArrowElement(double startX, double startY, double endX, double endY, double width, boolean direction,
+    public ArrowElement(
+            double startX,
+            double startY,
+            double endX,
+            double endY,
+            double width,
+            boolean direction,
             Color color) {
         this.endX = startX;
         this.endY = startY;

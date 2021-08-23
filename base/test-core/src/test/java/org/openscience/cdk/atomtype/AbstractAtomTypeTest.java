@@ -23,7 +23,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import org.junit.Assert;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
@@ -38,53 +37,69 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
- * Helper class that all atom type matcher test classes must implement.
- * It keeps track of the atom types which have been tested, to ensure
- * that all atom types are tested.
+ * Helper class that all atom type matcher test classes must implement. It keeps track of the atom
+ * types which have been tested, to ensure that all atom types are tested.
  *
  * @cdk.module test-core
- * @cdk.bug    1890702
+ * @cdk.bug 1890702
  */
-abstract public class AbstractAtomTypeTest extends CDKTestCase implements IAtomTypeTest {
+public abstract class AbstractAtomTypeTest extends CDKTestCase implements IAtomTypeTest {
 
     /**
      * Helper method to test if atom types are correctly perceived. Meanwhile, it maintains a list
      * of atom types that have been tested so far, which allows testing afterwards that all atom
      * types are at least tested once.
      *
-     * @param testedAtomTypes   List of atom types tested so far.
-     * @param expectedTypes     Expected atom types for the atoms given in <code>mol</code>.
-     * @param mol               The <code>IAtomContainer</code> with <code>IAtom</code>s for which atom types should be perceived.
-     * @throws Exception     Thrown if something went wrong during the atom type perception.
+     * @param testedAtomTypes List of atom types tested so far.
+     * @param expectedTypes Expected atom types for the atoms given in <code>mol</code>.
+     * @param mol The <code>IAtomContainer</code> with <code>IAtom</code>s for which atom types
+     *     should be perceived.
+     * @throws Exception Thrown if something went wrong during the atom type perception.
      */
-    public void assertAtomTypes(Map<String, Integer> testedAtomTypes, String[] expectedTypes, IAtomContainer mol)
+    public void assertAtomTypes(
+            Map<String, Integer> testedAtomTypes, String[] expectedTypes, IAtomContainer mol)
             throws Exception {
-        Assert.assertEquals("The number of expected atom types is unequal to the number of atoms",
-                expectedTypes.length, mol.getAtomCount());
+        Assert.assertEquals(
+                "The number of expected atom types is unequal to the number of atoms",
+                expectedTypes.length,
+                mol.getAtomCount());
         IAtomTypeMatcher atm = getAtomTypeMatcher(mol.getBuilder());
         for (int i = 0; i < expectedTypes.length; i++) {
             IAtom testedAtom = mol.getAtom(i);
             IAtomType foundType = atm.findMatchingAtomType(mol, testedAtom);
-            assertAtomType(testedAtomTypes, "Incorrect perception for atom " + i, expectedTypes[i], foundType);
+            assertAtomType(
+                    testedAtomTypes,
+                    "Incorrect perception for atom " + i,
+                    expectedTypes[i],
+                    foundType);
             assertConsistentProperties(mol, testedAtom, foundType);
             // test for bug #1890702: configure, and then make sure the same atom type is perceived
             AtomTypeManipulator.configure(testedAtom, foundType);
             IAtomType secondType = atm.findMatchingAtomType(mol, testedAtom);
-            assertAtomType(testedAtomTypes,
-                    "Incorrect perception *after* assigning atom type properties for atom " + i, expectedTypes[i],
+            assertAtomType(
+                    testedAtomTypes,
+                    "Incorrect perception *after* assigning atom type properties for atom " + i,
+                    expectedTypes[i],
                     secondType);
         }
     }
 
-    public void assertAtomTypeNames(Map<String, Integer> testedAtomTypes, String[] expectedTypes, IAtomContainer mol)
+    public void assertAtomTypeNames(
+            Map<String, Integer> testedAtomTypes, String[] expectedTypes, IAtomContainer mol)
             throws Exception {
-        Assert.assertEquals("The number of expected atom types is unequal to the number of atoms",
-                expectedTypes.length, mol.getAtomCount());
+        Assert.assertEquals(
+                "The number of expected atom types is unequal to the number of atoms",
+                expectedTypes.length,
+                mol.getAtomCount());
         IAtomTypeMatcher atm = getAtomTypeMatcher(mol.getBuilder());
         for (int i = 0; i < expectedTypes.length; i++) {
             IAtom testedAtom = mol.getAtom(i);
             IAtomType foundType = atm.findMatchingAtomType(mol, testedAtom);
-            assertAtomType(testedAtomTypes, "Incorrect perception for atom " + i, expectedTypes[i], foundType);
+            assertAtomType(
+                    testedAtomTypes,
+                    "Incorrect perception for atom " + i,
+                    expectedTypes[i],
+                    foundType);
         }
     }
 
@@ -100,16 +115,26 @@ abstract public class AbstractAtomTypeTest extends CDKTestCase implements IAtomT
             return;
         }
 
-        if (atom.getHybridization() != CDKConstants.UNSET && matched.getHybridization() != CDKConstants.UNSET) {
-            Assert.assertEquals("Hybridization does not match", atom.getHybridization(), matched.getHybridization());
+        if (atom.getHybridization() != CDKConstants.UNSET
+                && matched.getHybridization() != CDKConstants.UNSET) {
+            Assert.assertEquals(
+                    "Hybridization does not match",
+                    atom.getHybridization(),
+                    matched.getHybridization());
         }
-        if (atom.getFormalCharge() != CDKConstants.UNSET && matched.getFormalCharge() != CDKConstants.UNSET) {
-            Assert.assertEquals("Formal charge does not match", atom.getFormalCharge(), matched.getFormalCharge());
+        if (atom.getFormalCharge() != CDKConstants.UNSET
+                && matched.getFormalCharge() != CDKConstants.UNSET) {
+            Assert.assertEquals(
+                    "Formal charge does not match",
+                    atom.getFormalCharge(),
+                    matched.getFormalCharge());
         }
         List<IBond> connections = mol.getConnectedBondsList(atom);
         int connectionCount = connections.size();
         if (matched.getFormalNeighbourCount() != CDKConstants.UNSET) {
-            Assert.assertFalse("Number of neighbors is too high", connectionCount > matched.getFormalNeighbourCount());
+            Assert.assertFalse(
+                    "Number of neighbors is too high",
+                    connectionCount > matched.getFormalNeighbourCount());
         }
         if (matched.getMaxBondOrder() != null) {
             Order expectedMax = matched.getMaxBondOrder();
@@ -117,26 +142,33 @@ abstract public class AbstractAtomTypeTest extends CDKTestCase implements IAtomT
                 IBond.Order order = bond.getOrder();
                 if (order != CDKConstants.UNSET && order != IBond.Order.UNSET) {
                     if (BondManipulator.isHigherOrder(order, expectedMax)) {
-                        Assert.fail("At least one bond order exceeds the maximum for the atom type");
+                        Assert.fail(
+                                "At least one bond order exceeds the maximum for the atom type");
                     }
                 } else if (bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE)) {
                     if (expectedMax != IBond.Order.SINGLE && expectedMax != IBond.Order.DOUBLE) {
-                        Assert.fail("A single or double flagged bond does not match the bond order of the atom type");
+                        Assert.fail(
+                                "A single or double flagged bond does not match the bond order of the atom type");
                     }
                 }
             }
         }
     }
 
-    public void assertAtomType(Map<String, Integer> testedAtomTypes, String expectedID, IAtomType foundAtomType) {
+    public void assertAtomType(
+            Map<String, Integer> testedAtomTypes, String expectedID, IAtomType foundAtomType) {
         this.assertAtomType(testedAtomTypes, "", expectedID, foundAtomType);
     }
 
-    public void assertAtomType(Map<String, Integer> testedAtomTypes, String error, String expectedID,
+    public void assertAtomType(
+            Map<String, Integer> testedAtomTypes,
+            String error,
+            String expectedID,
             IAtomType foundAtomType) {
         addTestedAtomType(testedAtomTypes, expectedID);
 
-        Assert.assertNotNull("No atom type was recognized, but expected: " + expectedID, foundAtomType);
+        Assert.assertNotNull(
+                "No atom type was recognized, but expected: " + expectedID, foundAtomType);
         Assert.assertEquals(error, expectedID, foundAtomType.getAtomTypeName());
     }
 
@@ -147,11 +179,18 @@ abstract public class AbstractAtomTypeTest extends CDKTestCase implements IAtomT
 
         try {
             IAtomType type = getFactory().getAtomType(expectedID);
-            Assert.assertNotNull("Attempt to test atom type which is not defined in the " + getAtomTypeListName()
-                    + ": " + expectedID, type);
+            Assert.assertNotNull(
+                    "Attempt to test atom type which is not defined in the "
+                            + getAtomTypeListName()
+                            + ": "
+                            + expectedID,
+                    type);
         } catch (NoSuchAtomTypeException exception) {
-            System.err.println("Attempt to test atom type which is not defined in the " + getAtomTypeListName()
-                    + ": " + exception.getMessage());
+            System.err.println(
+                    "Attempt to test atom type which is not defined in the "
+                            + getAtomTypeListName()
+                            + ": "
+                            + exception.getMessage());
         }
         if (testedAtomTypes.containsKey(expectedID)) {
             // increase the count, so that redundancy can be calculated
@@ -174,7 +213,8 @@ abstract public class AbstractAtomTypeTest extends CDKTestCase implements IAtomT
         }
     }
 
-    public static void countTestedAtomTypes(Map<String, Integer> testedAtomTypesMap, AtomTypeFactory factory) {
+    public static void countTestedAtomTypes(
+            Map<String, Integer> testedAtomTypesMap, AtomTypeFactory factory) {
         Set<String> testedAtomTypes = new HashSet<String>();
         testedAtomTypes.addAll(testedAtomTypesMap.keySet());
 
@@ -184,7 +224,8 @@ abstract public class AbstractAtomTypeTest extends CDKTestCase implements IAtomT
             definedTypes.add(expectedTypesArray[i].getAtomTypeName());
         }
 
-        if (definedTypes.size() == testedAtomTypes.size() && definedTypes.containsAll(testedAtomTypes)) {
+        if (definedTypes.size() == testedAtomTypes.size()
+                && definedTypes.containsAll(testedAtomTypes)) {
             // all is fine
         } else if (definedTypes.size() > testedAtomTypes.size()) {
             // more atom types defined than tested
@@ -210,5 +251,4 @@ abstract public class AbstractAtomTypeTest extends CDKTestCase implements IAtomT
             }
         }
     }
-
 }

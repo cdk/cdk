@@ -23,23 +23,19 @@
 package org.openscience.cdk.geometry.cip;
 
 import java.util.Properties;
-
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
-import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectListener;
 
-/**
- * @cdk.module test-cip
- */
+/** @cdk.module test-cip */
 public class ImmutableHydrogenTest extends CDKTestCase {
 
     // FIXME: think about how to cover all other IAtom methods that are not implemented...
@@ -67,27 +63,30 @@ public class ImmutableHydrogenTest extends CDKTestCase {
     public void testListenerStuff() throws Exception {
         IAtom hydrogen = new ImmutableHydrogen();
         Assert.assertEquals(0, hydrogen.getListenerCount());
-        hydrogen.addListener(new IChemObjectListener() {
+        hydrogen.addListener(
+                new IChemObjectListener() {
 
-            @Override
-            public void stateChanged(IChemObjectChangeEvent event) {}
-        });
+                    @Override
+                    public void stateChanged(IChemObjectChangeEvent event) {}
+                });
         Assert.assertEquals(0, hydrogen.getListenerCount());
-        hydrogen.removeListener(new IChemObjectListener() {
+        hydrogen.removeListener(
+                new IChemObjectListener() {
 
-            @Override
-            public void stateChanged(IChemObjectChangeEvent event) {}
-        });
+                    @Override
+                    public void stateChanged(IChemObjectChangeEvent event) {}
+                });
         Assert.assertEquals(0, hydrogen.getListenerCount());
 
         hydrogen.notifyChanged();
-        hydrogen.notifyChanged(new IChemObjectChangeEvent() {
+        hydrogen.notifyChanged(
+                new IChemObjectChangeEvent() {
 
-            @Override
-            public Object getSource() {
-                return new String();
-            }
-        });
+                    @Override
+                    public Object getSource() {
+                        return new String();
+                    }
+                });
 
         Assert.assertFalse(hydrogen.getNotification());
         hydrogen.setNotification(true);

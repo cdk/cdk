@@ -24,38 +24,35 @@
 
 package org.openscience.cdk.graph.invariant;
 
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Comparator;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- * An implementation based on the canon algorithm {@cdk.cite WEI89}. The
- * algorithm uses an initial set of of invariants which are assigned a rank.
- * Equivalent ranks are then shattered using an unambiguous function (in this
- * case, the product of primes of adjacent ranks). Once no more equivalent ranks
- * can be shattered ties are artificially broken and rank shattering continues.
- * Unlike the original description rank stability is not maintained reducing
- * the number of values to rank at each stage to only those which are equivalent.
- * 
+ * An implementation based on the canon algorithm {@cdk.cite WEI89}. The algorithm uses an initial
+ * set of of invariants which are assigned a rank. Equivalent ranks are then shattered using an
+ * unambiguous function (in this case, the product of primes of adjacent ranks). Once no more
+ * equivalent ranks can be shattered ties are artificially broken and rank shattering continues.
+ * Unlike the original description rank stability is not maintained reducing the number of values to
+ * rank at each stage to only those which are equivalent.
  *
- * The initial set of invariants is basic and are - <i>
- * "sufficient for the purpose of obtaining unique notation for simple SMILES,
- *  but it is not necessarily a “complete” set. No “perfect” set of invariants
- *  is known that will distinguish all possible graph asymmetries. However,
- *  for any given set of structures, a set of invariants can be devised to
- *  provide the necessary discrimination"</i> {@cdk.cite WEI89}. As such this
- *  producer should not be considered a complete canonical labelled but in
- *  practice performs well. For a more accurate and computationally expensive
- *  labelling, please using the {@link InChINumbersTools}.
+ * <p>The initial set of invariants is basic and are - <i> "sufficient for the purpose of obtaining
+ * unique notation for simple SMILES, but it is not necessarily a “complete” set. No “perfect” set
+ * of invariants is known that will distinguish all possible graph asymmetries. However, for any
+ * given set of structures, a set of invariants can be devised to provide the necessary
+ * discrimination"</i> {@cdk.cite WEI89}. As such this producer should not be considered a complete
+ * canonical labelled but in practice performs well. For a more accurate and computationally
+ * expensive labelling, please using the {@link InChINumbersTools}.
  *
- * <blockquote><pre>
+ * <blockquote>
+ *
+ * <pre>
  * IAtomContainer m = ...;
  * int[][]        g = GraphUtil.toAdjList(m);
  *
@@ -64,7 +61,9 @@ import java.util.Comparator;
  *
  * // obtain symmetry classes
  * long[] labels = Canon.symmetry(m, g);
- * </pre></blockquote>
+ * </pre>
+ *
+ * </blockquote>
  *
  * @author John May
  * @cdk.module standard
@@ -73,24 +72,19 @@ import java.util.Comparator;
 public final class Canon {
 
     private static final int N_PRIMES = 10000;
-    /**
-     * Graph, adjacency list representation.
-     */
+    /** Graph, adjacency list representation. */
     private final int[][] g;
 
-    /**
-     * Storage of canon labelling and symmetry classes.
-     */
+    /** Storage of canon labelling and symmetry classes. */
     private final long[] labelling, symmetry;
 
     /** Only compute the symmetry classes. */
     private boolean symOnly = false;
 
     /**
-     * Create a canon labelling for the graph (g) with the specified
-     * invariants.
+     * Create a canon labelling for the graph (g) with the specified invariants.
      *
-     * @param g         a graph (adjacency list representation)
+     * @param g a graph (adjacency list representation)
      * @param hydrogens binary vector of terminal hydrogens
      * @param partition an initial partition of the vertices
      */
@@ -102,16 +96,15 @@ public final class Canon {
     }
 
     /**
-     * Compute the canonical labels for the provided structure. The labelling
-     * does not consider isomer information or stereochemistry. The current
-     * implementation does not fully distinguish all structure topologies
-     * but in practise performs well in the majority of cases. A complete
-     * canonical labelling can be obtained using the {@link InChINumbersTools}
-     * but is computationally much more expensive.
+     * Compute the canonical labels for the provided structure. The labelling does not consider
+     * isomer information or stereochemistry. The current implementation does not fully distinguish
+     * all structure topologies but in practise performs well in the majority of cases. A complete
+     * canonical labelling can be obtained using the {@link InChINumbersTools} but is
+     * computationally much more expensive.
      *
      * @param container structure
-     * @param g         adjacency list graph representation
-     * @param opts      canonical generation options see {@link CanonOpts}
+     * @param g adjacency list graph representation
+     * @param opts canonical generation options see {@link CanonOpts}
      * @return the canonical labelling
      * @see EquivalentClassPartitioner
      * @see InChINumbersTools
@@ -121,15 +114,14 @@ public final class Canon {
     }
 
     /**
-     * Compute the canonical labels for the provided structure. The labelling
-     * does not consider isomer information or stereochemistry. The current
-     * implementation does not fully distinguish all structure topologies
-     * but in practise performs well in the majority of cases. A complete
-     * canonical labelling can be obtained using the {@link InChINumbersTools}
-     * but is computationally much more expensive.
+     * Compute the canonical labels for the provided structure. The labelling does not consider
+     * isomer information or stereochemistry. The current implementation does not fully distinguish
+     * all structure topologies but in practise performs well in the majority of cases. A complete
+     * canonical labelling can be obtained using the {@link InChINumbersTools} but is
+     * computationally much more expensive.
      *
      * @param container structure
-     * @param g         adjacency list graph representation
+     * @param g adjacency list graph representation
      * @return the canonical labelling
      * @see EquivalentClassPartitioner
      * @see InChINumbersTools
@@ -139,20 +131,17 @@ public final class Canon {
     }
 
     /**
-     * Compute the canonical labels for the provided structure. The labelling
-     * does not consider isomer information or stereochemistry. This method
-     * allows provision of a custom array of initial invariants.
+     * Compute the canonical labels for the provided structure. The labelling does not consider
+     * isomer information or stereochemistry. This method allows provision of a custom array of
+     * initial invariants.
      *
-     * 
-     * The current
-     * implementation does not fully distinguish all structure topologies
-     * but in practise performs well in the majority of cases. A complete
-     * canonical labelling can be obtained using the {@link InChINumbersTools}
-     * but is computationally much more expensive.
+     * <p>The current implementation does not fully distinguish all structure topologies but in
+     * practise performs well in the majority of cases. A complete canonical labelling can be
+     * obtained using the {@link InChINumbersTools} but is computationally much more expensive.
      *
-     * @param container  structure
-     * @param g          adjacency list graph representation
-     * @param initial    initial seed invariants
+     * @param container structure
+     * @param g adjacency list graph representation
+     * @param initial initial seed invariants
      * @return the canonical labelling
      * @see EquivalentClassPartitioner
      * @see InChINumbersTools
@@ -164,59 +153,58 @@ public final class Canon {
     }
 
     /**
-     * Compute the canonical labels for the provided structure. The initial
-     * labelling is seed-ed with the provided atom comparator <code>cmp</code>
-     * allowing arbitary properties to be distinguished or ignored.
+     * Compute the canonical labels for the provided structure. The initial labelling is seed-ed
+     * with the provided atom comparator <code>cmp</code> allowing arbitary properties to be
+     * distinguished or ignored.
      *
-     * @param container  structure
-     * @param g          adjacency list graph representation
-     * @param cmp        comparator to compare atoms
+     * @param container structure
+     * @param g adjacency list graph representation
+     * @param cmp comparator to compare atoms
      * @return the canonical labelling
      */
-    public static long[] label(IAtomContainer    container,
-                               int[][]           g,
-                               Comparator<IAtom> cmp) {
-        if (g.length == 0)
-            return new long[0];
+    public static long[] label(IAtomContainer container, int[][] g, Comparator<IAtom> cmp) {
+        if (g.length == 0) return new long[0];
         IAtom[] atoms = AtomContainerManipulator.getAtomArray(container);
         Arrays.sort(atoms, cmp);
         long[] initial = new long[atoms.length];
-        long   part    = 1;
+        long part = 1;
         initial[container.indexOf(atoms[0])] = part;
-        for (int i=1; i<atoms.length; i++) {
-            if (cmp.compare(atoms[i], atoms[i-1]) != 0)
-                ++part;
+        for (int i = 1; i < atoms.length; i++) {
+            if (cmp.compare(atoms[i], atoms[i - 1]) != 0) ++part;
             initial[container.indexOf(atoms[i])] = part;
         }
         return label(container, g, initial);
     }
 
     /**
-     * Compute the symmetry classes for the provided structure. There are known
-     * examples where symmetry is incorrectly found. The {@link
-     * EquivalentClassPartitioner} gives more accurate symmetry perception but
-     * this method is very quick and in practise successfully portions the
+     * Compute the symmetry classes for the provided structure. There are known examples where
+     * symmetry is incorrectly found. The {@link EquivalentClassPartitioner} gives more accurate
+     * symmetry perception but this method is very quick and in practise successfully portions the
      * majority of chemical structures.
      *
      * @param container structure
-     * @param g         adjacency list graph representation
-     * @param opts      canonical generation options see {@link CanonOpts}
+     * @param g adjacency list graph representation
+     * @param opts canonical generation options see {@link CanonOpts}
      * @return symmetry classes
      * @see EquivalentClassPartitioner
      */
     public static long[] symmetry(IAtomContainer container, int[][] g, int opts) {
-        return new Canon(g, basicInvariants(container, g, opts), terminalHydrogens(container, g), true).symmetry;
+        return new Canon(
+                        g,
+                        basicInvariants(container, g, opts),
+                        terminalHydrogens(container, g),
+                        true)
+                .symmetry;
     }
 
     /**
-     * Compute the symmetry classes for the provided structure. There are known
-     * examples where symmetry is incorrectly found. The {@link
-     * EquivalentClassPartitioner} gives more accurate symmetry perception but
-     * this method is very quick and in practise successfully portions the
+     * Compute the symmetry classes for the provided structure. There are known examples where
+     * symmetry is incorrectly found. The {@link EquivalentClassPartitioner} gives more accurate
+     * symmetry perception but this method is very quick and in practise successfully portions the
      * majority of chemical structures.
      *
      * @param container structure
-     * @param g         adjacency list graph representation
+     * @param g adjacency list graph representation
      * @return symmetry classes
      * @see EquivalentClassPartitioner
      * @see #basicInvariants(IAtomContainer, int[][], int)
@@ -225,14 +213,11 @@ public final class Canon {
         return symmetry(container, g, CanonOpts.Default);
     }
 
-
     /**
-     * Internal - refine invariants to a canonical labelling and
-     * symmetry classes.
+     * Internal - refine invariants to a canonical labelling and symmetry classes.
      *
-     * @param invariants the invariants to refine (canonical labelling gets
-     *                   written here)
-     * @param hydrogens  binary vector of terminal hydrogens
+     * @param invariants the invariants to refine (canonical labelling gets written here)
+     * @param hydrogens binary vector of terminal hydrogens
      * @return the symmetry classes
      */
     private long[] refine(long[] invariants, boolean[] hydrogens) {
@@ -248,8 +233,7 @@ public final class Canon {
 
         // fill with identity (also set number of non-unique)
         int nnu = ord;
-        for (int i = 0; i < ord; i++)
-            currVs[i] = i;
+        for (int i = 0; i < ord; i++) currVs[i] = i;
 
         long[] prev = invariants;
         long[] curr = Arrays.copyOf(invariants, ord);
@@ -317,17 +301,15 @@ public final class Canon {
             System.arraycopy(nextVs, 0, currVs, 0, nnu);
         }
 
-        if (symmetry == null)
-            symmetry = new long[0];
+        if (symmetry == null) symmetry = new long[0];
 
         return symmetry;
     }
 
     /**
-     * Compute the prime product of the values (ranks) for the given
-     * adjacent neighbors (ws).
+     * Compute the prime product of the values (ranks) for the given adjacent neighbors (ws).
      *
-     * @param ws    indices (adjacent neighbors)
+     * @param ws indices (adjacent neighbors)
      * @param ranks invariant ranks
      * @return the prime product
      */
@@ -343,9 +325,9 @@ public final class Canon {
 
     /**
      * See {@link #basicInvariants(IAtomContainer, int[][], int)}.
+     *
      * @param container an atom container to generate labels for
-     * @param graph     graph representation (adjacency list)
-
+     * @param graph graph representation (adjacency list)
      * @return the initial invariants
      * @see #basicInvariants(IAtomContainer, int[][], int)
      */
@@ -354,33 +336,31 @@ public final class Canon {
     }
 
     /**
-     * Generate the initial invariants for each atom in the {@code container}.
-     * The labels use the invariants described in {@cdk.cite WEI89}. 
+     * Generate the initial invariants for each atom in the {@code container}. The labels use the
+     * invariants described in {@cdk.cite WEI89}.
      *
-     * The bits in the low 32-bits are: {@code 0000000000xxxxXXXXeeeeeeescchhhh}
-     * where:
+     * <p>The bits in the low 32-bits are: {@code 0000000000xxxxXXXXeeeeeeescchhhh} where:
+     *
      * <ul>
-     *     <li>0: padding</li>
-     *     <li>x: number of connections</li>
-     *     <li>X: number of non-hydrogens bonds</li>
-     *     <li>e: atomic number</li>
-     *     <li>s: sign of charge</li>
-     *     <li>c: absolute charge</li>
-     *     <li>h: number of attached hydrogens</li>
+     *   <li>0: padding
+     *   <li>x: number of connections
+     *   <li>X: number of non-hydrogens bonds
+     *   <li>e: atomic number
+     *   <li>s: sign of charge
+     *   <li>c: absolute charge
+     *   <li>h: number of attached hydrogens
      * </ul>
      *
-     * <b>Important: These invariants are <i>basic</i> and there are known
-     * examples they don't distinguish. One trivial example to consider is
-     * {@code [O]C=O} where both oxygens have no hydrogens and a single
-     * connection but the atoms are not equivalent. Including a better
+     * <b>Important: These invariants are <i>basic</i> and there are known examples they don't
+     * distinguish. One trivial example to consider is {@code [O]C=O} where both oxygens have no
+     * hydrogens and a single connection but the atoms are not equivalent. Including a better
      * initial partition is more expensive</b>
      *
      * @param container an atom container to generate labels for
-     * @param graph     graph representation (adjacency list)
-     * @param flav      bit mask canon flavor (see {@link CanonOpts})
+     * @param graph graph representation (adjacency list)
+     * @param flav bit mask canon flavor (see {@link CanonOpts})
      * @return initial invariants
-     * @throws NullPointerException an atom had unset atomic number, hydrogen
-     *                              count or formal charge
+     * @throws NullPointerException an atom had unset atomic number, hydrogen count or formal charge
      */
     public static long[] basicInvariants(IAtomContainer container, int[][] graph, int flav) {
 
@@ -396,8 +376,7 @@ public final class Canon {
             int chg = charge(atom);
 
             // count non-suppressed (explicit) hydrogens
-            for (int w : graph[v])
-                if (atomicNumber(container.getAtom(w)) == 1) expH++;
+            for (int w : graph[v]) if (atomicNumber(container.getAtom(w)) == 1) expH++;
 
             long label = 0; // connectivity (first in)
             label |= deg + impH & 0xf;
@@ -421,7 +400,7 @@ public final class Canon {
                 label <<= 10;
                 label |= atom.getMassNumber();
             }
-            
+
             labels[v] = label;
         }
         return labels;
@@ -432,8 +411,7 @@ public final class Canon {
      *
      * @param atom an atom
      * @return the atomic number
-     * @throws NullPointerException the atom was non-pseudo at did not have an
-     *                              atomic number
+     * @throws NullPointerException the atom was non-pseudo at did not have an atomic number
      */
     private static int atomicNumber(IAtom atom) {
         Integer elem = atom.getAtomicNumber();
@@ -443,13 +421,12 @@ public final class Canon {
     }
 
     /**
-     * Access implicit hydrogen count of the atom defaulting to 0 for pseudo
-     * atoms.
+     * Access implicit hydrogen count of the atom defaulting to 0 for pseudo atoms.
      *
      * @param atom an atom
      * @return the implicit hydrogen count
-     * @throws NullPointerException the atom was non-pseudo at did not have an
-     *                              implicit hydrogen count
+     * @throws NullPointerException the atom was non-pseudo at did not have an implicit hydrogen
+     *     count
      */
     private static int implH(IAtom atom) {
         Integer h = atom.getImplicitHydrogenCount();
@@ -484,21 +461,20 @@ public final class Canon {
         // if not, something major is wrong
         for (int i = 0; i < ac.getAtomCount(); i++) {
             IAtom atom = ac.getAtom(i);
-            hydrogens[i] = atom.getAtomicNumber() == 1 &&
-                           atom.getMassNumber() == null &&
-                           g[i].length == 1;
+            hydrogens[i] =
+                    atom.getAtomicNumber() == 1 && atom.getMassNumber() == null && g[i].length == 1;
         }
 
         return hydrogens;
     }
 
-    /**
-     * The first 10,000 primes.
-     */
+    /** The first 10,000 primes. */
     private static final int[] PRIMES = loadPrimes();
 
     private static int[] loadPrimes() {
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(Canon.class.getResourceAsStream("primes.dat")))) {
+        try (BufferedReader br =
+                new BufferedReader(
+                        new InputStreamReader(Canon.class.getResourceAsStream("primes.dat")))) {
             int[] primes = new int[N_PRIMES];
             int i = 0;
             String line = null;

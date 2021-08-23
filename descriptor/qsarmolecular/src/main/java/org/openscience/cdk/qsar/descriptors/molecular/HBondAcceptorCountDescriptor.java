@@ -18,13 +18,14 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.util.List;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -33,24 +34,24 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.util.List;
-
 /**
- * This descriptor calculates the number of hydrogen bond acceptors using a slightly simplified version of the
- * <a href="http://www.chemie.uni-erlangen.de/model2001/abstracts/rester.html">PHACIR atom types</a>.
- * The following groups are counted as hydrogen bond acceptors:
+ * This descriptor calculates the number of hydrogen bond acceptors using a slightly simplified
+ * version of the <a href="http://www.chemie.uni-erlangen.de/model2001/abstracts/rester.html">PHACIR
+ * atom types</a>. The following groups are counted as hydrogen bond acceptors:
+ *
  * <ul>
- * <li>any oxygen where the formal charge of the oxygen is non-positive (i.e. formal charge &le; 0) <b>except</b>
- * <ol>
- * <li>an aromatic ether oxygen (i.e. an ether oxygen that is adjacent to at least one aromatic carbon)</li>
- * <li>an oxygen that is adjacent to a nitrogen</li>
- * </ol>
- * </li>
- * <li>any nitrogen where the formal charge of the nitrogen is non-positive (i.e. formal charge &le; 0) <b>except</b>
- * <ol>
- * <li>a nitrogen that is adjacent to an oxygen</li>
- * </ol>
- * </li>
+ *   <li>any oxygen where the formal charge of the oxygen is non-positive (i.e. formal charge &le;
+ *       0) <b>except</b>
+ *       <ol>
+ *         <li>an aromatic ether oxygen (i.e. an ether oxygen that is adjacent to at least one
+ *             aromatic carbon)
+ *         <li>an oxygen that is adjacent to a nitrogen
+ *       </ol>
+ *   <li>any nitrogen where the formal charge of the nitrogen is non-positive (i.e. formal charge
+ *       &le; 0) <b>except</b>
+ *       <ol>
+ *         <li>a nitrogen that is adjacent to an oxygen
+ *       </ol>
  * </ul>
  *
  * Returns a single value named <i>nHBAcc</i>.
@@ -68,44 +69,45 @@ import java.util.List;
  *     <td>true if the aromaticity has to be checked</td>
  *   </tr>
  * </table>
- * <p>
- * This descriptor works properly with AtomContainers whose atoms contain <b>implicit hydrogens</b> or <b>explicit
- * hydrogens</b>.
  *
- * @author      ulif
+ * <p>This descriptor works properly with AtomContainers whose atoms contain <b>implicit
+ * hydrogens</b> or <b>explicit hydrogens</b>.
+ *
+ * @author ulif
  * @cdk.created 2005-22-07
- * @cdk.module  qsarmolecular
+ * @cdk.module qsarmolecular
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:hBondacceptors
  */
-public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
+public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor
+        implements IMolecularDescriptor {
 
-    // only parameter of this descriptor; true if aromaticity has to be checked prior to descriptor calculation, false otherwise
-    private boolean               checkAromaticity = false;
-    private static final String[] NAMES            = {"nHBAcc"};
+    // only parameter of this descriptor; true if aromaticity has to be checked prior to descriptor
+    // calculation, false otherwise
+    private boolean checkAromaticity = false;
+    private static final String[] NAMES = {"nHBAcc"};
 
-    /**
-     *  Constructor for the HBondAcceptorCountDescriptor object
-     */
+    /** Constructor for the HBondAcceptorCountDescriptor object */
     public HBondAcceptorCountDescriptor() {}
 
     /**
      * Gets the specification attribute of the HBondAcceptorCountDescriptor object.
      *
-     * @return    The specification value
+     * @return The specification value
      */
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hBondacceptors", this.getClass()
-                        .getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hBondacceptors",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     /**
      * Sets the parameters attribute of the HBondAcceptorCountDescriptor object.
      *
-     * @param  params            a boolean true means that aromaticity has to be checked
-     * @exception  CDKException  Description of the Exception
+     * @param params a boolean true means that aromaticity has to be checked
+     * @exception CDKException Description of the Exception
      */
     @Override
     public void setParameters(Object[] params) throws CDKException {
@@ -122,7 +124,7 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
     /**
      * Gets the parameters attribute of the HBondAcceptorCountDescriptor object.
      *
-     * @return    The parameters value
+     * @return The parameters value
      */
     @Override
     public Object[] getParameters() {
@@ -138,15 +140,20 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
-                (int) Double.NaN), getDescriptorNames(), e);
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new IntegerResult((int) Double.NaN),
+                getDescriptorNames(),
+                e);
     }
 
     /**
-     *  Calculates the number of H bond acceptors.
+     * Calculates the number of H bond acceptors.
      *
-     * @param  atomContainer             AtomContainer
-     * @return                   number of H bond acceptors
+     * @param atomContainer AtomContainer
+     * @return number of H bond acceptors
      */
     @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
@@ -159,7 +166,8 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
             return getDummyDescriptorValue(e);
         }
 
-        // aromaticity is detected prior to descriptor calculation if the respective parameter is set to true
+        // aromaticity is detected prior to descriptor calculation if the respective parameter is
+        // set to true
 
         if (checkAromaticity) {
             try {
@@ -170,9 +178,10 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
             }
         }
 
-        //org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
+        // org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
         // labelled for loop to allow for labelled continue statements within the loop
-        atomloop: for (IAtom atom : ac.atoms()) {
+        atomloop:
+        for (IAtom atom : ac.atoms()) {
             // looking for suitable nitrogen atoms
             if (atom.getAtomicNumber() == IElement.N && atom.getFormalCharge() <= 0) {
 
@@ -192,34 +201,40 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
             }
             // looking for suitable oxygen atoms
             else if (atom.getAtomicNumber() == IElement.O && atom.getFormalCharge() <= 0) {
-                //excluding oxygens that are adjacent to a nitrogen or to an aromatic carbon
+                // excluding oxygens that are adjacent to a nitrogen or to an aromatic carbon
                 List<IBond> neighbours = ac.getConnectedBondsList(atom);
                 for (IBond bond : neighbours) {
                     IAtom neighbor = bond.getOther(atom);
-                    if (neighbor.getAtomicNumber() == IElement.N ||
-                        (neighbor.getAtomicNumber() == IElement.C &&
-                         neighbor.isAromatic() &&
-                         bond.getOrder() != IBond.Order.DOUBLE))
-                        continue atomloop;;
+                    if (neighbor.getAtomicNumber() == IElement.N
+                            || (neighbor.getAtomicNumber() == IElement.C
+                                    && neighbor.isAromatic()
+                                    && bond.getOrder() != IBond.Order.DOUBLE)) continue atomloop;
+                    ;
                 }
                 hBondAcceptors++;
             }
         }
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
-                hBondAcceptors), getDescriptorNames());
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new IntegerResult(hBondAcceptors),
+                getDescriptorNames());
     }
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * 
-     * The return value from this method really indicates what type of result will
-     * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
-     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
-     * allows you to do the same thing, without actually calculating the descriptor.
      *
-     * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
-     *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
+     * <p>The return value from this method really indicates what type of result will be obtained
+     * from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
+     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object;
+     * this method allows you to do the same thing, without actually calculating the descriptor.
+     *
+     * @return an object that implements the {@link
+     *     org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating the actual type
+     *     of values returned by the descriptor in the {@link
+     *     org.openscience.cdk.qsar.DescriptorValue} object
      */
     @Override
     public IDescriptorResult getDescriptorResultType() {
@@ -229,7 +244,7 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
     /**
      * Gets the parameterNames attribute of the HBondAcceptorCountDescriptor object.
      *
-     * @return    The parameterNames value
+     * @return The parameterNames value
      */
     @Override
     public String[] getParameterNames() {
@@ -241,8 +256,8 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
     /**
      * Gets the parameterType attribute of the HBondAcceptorCountDescriptor object.
      *
-     * @param  name  Description of the Parameter
-     * @return       The parameterType value
+     * @param name Description of the Parameter
+     * @return The parameterType value
      */
     @Override
     public Object getParameterType(String name) {

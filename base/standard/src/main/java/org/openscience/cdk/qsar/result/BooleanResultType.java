@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.qsar.result;
 
-
 /**
  * IDescriptorResult type for boolean.
  *

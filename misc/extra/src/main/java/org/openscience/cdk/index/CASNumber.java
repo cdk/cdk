@@ -27,21 +27,19 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Tools to work with CAS registry numbers.
- *
- * <br>
+ * Tools to work with CAS registry numbers. <br>
  * <b>References:</b>
+ *
  * <ul>
- * 	<li><a href="http://www.cas.org/EO/regsys.html">A CAS Registry Number</a></li>
- * 	<li><a href="http://www.cas.org/EO/checkdig.html">Check Digit Verification of CAS Registry Numbers</a></li>
+ *   <li><a href="http://www.cas.org/EO/regsys.html">A CAS Registry Number</a>
+ *   <li><a href="http://www.cas.org/EO/checkdig.html">Check Digit Verification of CAS Registry
+ *       Numbers</a>
  * </ul>
  *
  * @author Egon Willighagen &lt;egonw@sci.kun.nl&gt;
  * @cdk.githash
  * @author Nathana&euml;l "M.Le_maudit" Mazuir
- *
  * @see <a href="http://www.cas.org">CAS website</a>
- *
  * @cdk.created 2003-06-30
  * @cdk.keyword CAS number
  * @cdk.require java1.4+
@@ -51,7 +49,7 @@ public class CASNumber {
     /**
      * Checks whether the registry number is valid.
      *
-     * @param casNumber  the CAS number to validate
+     * @param casNumber the CAS number to validate
      * @cdk.keyword CAS number
      * @cdk.keyword validation
      * @return true if a valid CAS number, false otherwise

@@ -31,8 +31,7 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * The calculation of total partial charges of an heavy atom is based on MMFF94
- * model.
+ * The calculation of total partial charges of an heavy atom is based on MMFF94 model.
  *
  * <table border="1"><caption>Parameters for this descriptor</caption><tr>
  * <td>Name</td> <td>Default</td> <td>Description</td> </tr> <tr> <td></td>
@@ -56,37 +55,32 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
 
     private ILoggingTool logger = LoggingToolFactory.createLoggingTool(getClass());
 
-    /**
-     * Constructor for the PartialTChargeMMFF94Descriptor object
-     */
+    /** Constructor for the PartialTChargeMMFF94Descriptor object */
     public PartialTChargeMMFF94Descriptor() {
         mmff = new Mmff();
     }
 
     /**
-     * Gets the specification attribute of the PartialTChargeMMFF94Descriptor
-     * object
+     * Gets the specification attribute of the PartialTChargeMMFF94Descriptor object
      *
      * @return The specification value
      */
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialTChargeMMFF94", this
-                .getClass().getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialTChargeMMFF94",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
-    /**
-     * This descriptor does not have any parameter to be set.
-     */
+    /** This descriptor does not have any parameter to be set. */
     @Override
     public void setParameters(Object[] params) throws CDKException {
         // no parameters
     }
 
     /**
-     * Gets the parameters attribute of the PartialTChargeMMFF94Descriptor
-     * object
+     * Gets the parameters attribute of the PartialTChargeMMFF94Descriptor object
      *
      * @return The parameters value
      * @see #setParameters
@@ -102,12 +96,12 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
     }
 
     /**
-     * The method returns partial charges assigned to an heavy atom through
-     * MMFF94 method. It is needed to call the addExplicitHydrogensToSatisfyValency
-     * method from the class tools.HydrogenAdder.
+     * The method returns partial charges assigned to an heavy atom through MMFF94 method. It is
+     * needed to call the addExplicitHydrogensToSatisfyValency method from the class
+     * tools.HydrogenAdder.
      *
      * @param atom The IAtom for which the DescriptorValue is requested
-     * @param org  AtomContainer
+     * @param org AtomContainer
      * @return partial charge of parameter atom
      */
     @Override
@@ -119,15 +113,23 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
             try {
                 copy = org.clone();
             } catch (CloneNotSupportedException e) {
-                return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                        Double.NaN), NAMES);
+                return new DescriptorValue(
+                        getSpecification(),
+                        getParameterNames(),
+                        getParameters(),
+                        new DoubleResult(Double.NaN),
+                        NAMES);
             }
 
             for (IAtom a : org.atoms()) {
                 if (a.getImplicitHydrogenCount() == null || a.getImplicitHydrogenCount() != 0) {
                     logger.error("Hydrogens must be explict for MMFF charge calculation");
-                    return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                                               new DoubleResult(Double.NaN), NAMES);
+                    return new DescriptorValue(
+                            getSpecification(),
+                            getParameterNames(),
+                            getParameters(),
+                            new DoubleResult(Double.NaN),
+                            NAMES);
                 }
             }
 
@@ -138,21 +140,20 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
 
             // cache charges
             for (int i = 0; i < org.getAtomCount(); i++) {
-                org.getAtom(i).setProperty(CHARGE_CACHE,
-                                           copy.getAtom(i).getCharge());
+                org.getAtom(i).setProperty(CHARGE_CACHE, copy.getAtom(i).getCharge());
             }
         }
 
-        return new DescriptorValue(getSpecification(),
-                                   getParameterNames(),
-                                   getParameters(),
-                                   new DoubleResult(atom.getProperty(CHARGE_CACHE, Double.class)),
-                                   NAMES);
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new DoubleResult(atom.getProperty(CHARGE_CACHE, Double.class)),
+                NAMES);
     }
 
     /**
-     * Gets the parameterNames attribute of the PartialTChargeMMFF94Descriptor
-     * object
+     * Gets the parameterNames attribute of the PartialTChargeMMFF94Descriptor object
      *
      * @return The parameterNames value
      */
@@ -162,8 +163,7 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
     }
 
     /**
-     * Gets the parameterType attribute of the PartialTChargeMMFF94Descriptor
-     * object
+     * Gets the parameterType attribute of the PartialTChargeMMFF94Descriptor object
      *
      * @param name Description of the Parameter
      * @return The parameterType value

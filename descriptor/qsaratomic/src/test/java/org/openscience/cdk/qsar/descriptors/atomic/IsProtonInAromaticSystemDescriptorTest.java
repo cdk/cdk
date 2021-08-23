@@ -18,6 +18,9 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,9 +30,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -46,8 +46,8 @@ public class IsProtonInAromaticSystemDescriptorTest extends AtomicDescriptorTest
     }
 
     @Test
-    public void testIsProtonInAromaticSystemDescriptor() throws ClassNotFoundException, CDKException,
-            java.lang.Exception {
+    public void testIsProtonInAromaticSystemDescriptor()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
         IAtomicDescriptor descriptor = new IsProtonInAromaticSystemDescriptor();
         Object[] params = {new Boolean(true)};
         descriptor.setParameters(params);
@@ -60,11 +60,23 @@ public class IsProtonInAromaticSystemDescriptorTest extends AtomicDescriptorTest
         assertThat(mol.getAtom(14).getSymbol(), is("H"));
         assertThat(mol.getAtom(15).getSymbol(), is("H"));
         assertThat(mol.getAtom(16).getSymbol(), is("H"));
-        Assert.assertEquals(0, ((IntegerResult) descriptor.calculate(mol.getAtom(11), mol).getValue()).intValue());
-        Assert.assertEquals(1, ((IntegerResult) descriptor.calculate(mol.getAtom(12), mol).getValue()).intValue());
-        Assert.assertEquals(0, ((IntegerResult) descriptor.calculate(mol.getAtom(13), mol).getValue()).intValue());
-        Assert.assertEquals(0, ((IntegerResult) descriptor.calculate(mol.getAtom(14), mol).getValue()).intValue());
-        Assert.assertEquals(0, ((IntegerResult) descriptor.calculate(mol.getAtom(15), mol).getValue()).intValue());
-        Assert.assertEquals(1, ((IntegerResult) descriptor.calculate(mol.getAtom(16), mol).getValue()).intValue());
+        Assert.assertEquals(
+                0,
+                ((IntegerResult) descriptor.calculate(mol.getAtom(11), mol).getValue()).intValue());
+        Assert.assertEquals(
+                1,
+                ((IntegerResult) descriptor.calculate(mol.getAtom(12), mol).getValue()).intValue());
+        Assert.assertEquals(
+                0,
+                ((IntegerResult) descriptor.calculate(mol.getAtom(13), mol).getValue()).intValue());
+        Assert.assertEquals(
+                0,
+                ((IntegerResult) descriptor.calculate(mol.getAtom(14), mol).getValue()).intValue());
+        Assert.assertEquals(
+                0,
+                ((IntegerResult) descriptor.calculate(mol.getAtom(15), mol).getValue()).intValue());
+        Assert.assertEquals(
+                1,
+                ((IntegerResult) descriptor.calculate(mol.getAtom(16), mol).getValue()).intValue());
     }
 }

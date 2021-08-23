@@ -23,16 +23,16 @@
  */
 package org.openscience.cdk.graph;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.templates.TestMoleculeFactory;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * @author John May
@@ -60,10 +60,8 @@ public class AllPairsShortestPathsTest {
 
                 assertThat(asp.from(i).nPathsTo(j), is(0));
                 assertThat(asp.from(i).distanceTo(j), is(Integer.MAX_VALUE));
-
             }
         }
-
     }
 
     @Test
@@ -93,29 +91,28 @@ public class AllPairsShortestPathsTest {
         assertNotNull(asp.from(c6));
 
         {
-            IAtom[] expected = new IAtom[]{c1, c2, c3};
+            IAtom[] expected = new IAtom[] {c1, c2, c3};
             IAtom[] actual = asp.from(c1).atomsTo(c3);
             assertArrayEquals(expected, actual);
         }
 
         {
-            IAtom[] expected = new IAtom[]{c3, c2, c1};
+            IAtom[] expected = new IAtom[] {c3, c2, c1};
             IAtom[] actual = asp.from(c3).atomsTo(c1);
             assertArrayEquals(expected, actual);
         }
 
         {
-            IAtom[] expected = new IAtom[]{c1, c6, c5};
+            IAtom[] expected = new IAtom[] {c1, c6, c5};
             IAtom[] actual = asp.from(c1).atomsTo(c5);
             assertArrayEquals(expected, actual);
         }
 
         {
-            IAtom[] expected = new IAtom[]{c5, c6, c1};
+            IAtom[] expected = new IAtom[] {c5, c6, c1};
             IAtom[] actual = asp.from(c5).atomsTo(c1);
             assertArrayEquals(expected, actual);
         }
-
     }
 
     @Test
@@ -138,28 +135,27 @@ public class AllPairsShortestPathsTest {
         assertNotNull(asp.from(5));
 
         {
-            int[] expected = new int[]{0, 1, 2};
+            int[] expected = new int[] {0, 1, 2};
             int[] actual = asp.from(0).pathTo(2);
             assertArrayEquals(expected, actual);
         }
 
         {
-            int[] expected = new int[]{2, 1, 0};
+            int[] expected = new int[] {2, 1, 0};
             int[] actual = asp.from(2).pathTo(0);
             assertArrayEquals(expected, actual);
         }
 
         {
-            int[] expected = new int[]{0, 5, 4};
+            int[] expected = new int[] {0, 5, 4};
             int[] actual = asp.from(0).pathTo(4);
             assertArrayEquals(expected, actual);
         }
 
         {
-            int[] expected = new int[]{4, 5, 0};
+            int[] expected = new int[] {4, 5, 0};
             int[] actual = asp.from(4).pathTo(0);
             assertArrayEquals(expected, actual);
         }
-
     }
 }

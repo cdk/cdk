@@ -26,7 +26,6 @@ import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -56,7 +55,10 @@ public class ExactMappingTest {
     @Test
     public void testSomeMethod() {
         // TODO review the generated test code and remove the default call to fail.
-        assertNotNull(ExactMapping.extractMapping(new ArrayList<List<Integer>>(), new ArrayList<Integer>(),
-                new ArrayList<Integer>()));
+        assertNotNull(
+                ExactMapping.extractMapping(
+                        new ArrayList<List<Integer>>(),
+                        new ArrayList<Integer>(),
+                        new ArrayList<Integer>()));
     }
 }

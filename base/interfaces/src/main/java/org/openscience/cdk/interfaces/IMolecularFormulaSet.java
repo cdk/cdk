@@ -19,18 +19,18 @@
 package org.openscience.cdk.interfaces;
 
 /**
- *  Class defining a molecular formula object. It maintains
- *   a list of list IMoleculaFormula.<p>
+ * Class defining a molecular formula object. It maintains a list of list IMoleculaFormula.
  *
- *  Examples:
+ * <p>Examples:
+ *
  * <ul>
- *   <li><code>[C5H5]-</code></li>
- *   <li><code>C6H6</code></li>
- *   <li><code><sup>12</sup>C<sub>5</sub><sup>13</sup>CH<sub>6</sub></code></li>
+ *   <li><code>[C5H5]-</code>
+ *   <li><code>C6H6</code>
+ *   <li><code><sup>12</sup>C<sub>5</sub><sup>13</sup>CH<sub>6</sub></code>
  * </ul>
  *
- * @cdk.module  interfaces
- * @author      miguelrojasch
+ * @cdk.module interfaces
+ * @author miguelrojasch
  * @cdk.created 2007-11-20
  * @cdk.keyword molecular formula
  * @cdk.githash
@@ -38,34 +38,31 @@ package org.openscience.cdk.interfaces;
 public interface IMolecularFormulaSet extends ICDKObject {
 
     /**
-     *  Adds all molecularFormulas in the MolecularFormulaSet to this chemObject.
+     * Adds all molecularFormulas in the MolecularFormulaSet to this chemObject.
      *
-     * @param  formulaSet  The MolecularFormulaSet
+     * @param formulaSet The MolecularFormulaSet
      */
     public void add(IMolecularFormulaSet formulaSet);
 
     /**
      * Adds an IMolecularFormula to this chemObject.
      *
-     * @param  formula  The IMolecularFormula to be added to this chemObject
+     * @param formula The IMolecularFormula to be added to this chemObject
      */
     public void addMolecularFormula(IMolecularFormula formula);
 
     /**
+     * Returns the IMolecularFormula at position <code>number</code> in the chemObject.
      *
-     * Returns the IMolecularFormula at position <code>number</code> in the
-     * chemObject.
-     *
-     * @param  position  The position of the MolecularFormula to be returned.
-     * @return           The IMolecularFormula at position <code>number</code> .
+     * @param position The position of the MolecularFormula to be returned.
+     * @return The IMolecularFormula at position <code>number</code> .
      */
     public IMolecularFormula getMolecularFormula(int position);
 
     /**
      * Returns the array of IMolecularFormula of this chemObject.
      *
-     * @return    The array of IMolecularFormulas of this chemObject
-     *
+     * @return The array of IMolecularFormulas of this chemObject
      * @see #addMolecularFormula(IMolecularFormula)
      */
     public Iterable<IMolecularFormula> molecularFormulas();
@@ -73,42 +70,39 @@ public interface IMolecularFormulaSet extends ICDKObject {
     /**
      * Returns the number of MolecularFormulas in this IMolecularFormulaSet.
      *
-     * @return     The number of MolecularFormulas in this IMolecularFormulaSet
+     * @return The number of MolecularFormulas in this IMolecularFormulaSet
      */
     public int size();
 
     /**
-     *  True, if the IMolecularFormulaSet contains the given IMolecularFormula object.
+     * True, if the IMolecularFormulaSet contains the given IMolecularFormula object.
      *
-     * @param  formula  The IMolecularFormula this IMolecularFormulaSet is searched for
-     * @return          True, if the IMolecularFormulaSet contains the given formula object
+     * @param formula The IMolecularFormula this IMolecularFormulaSet is searched for
+     * @return True, if the IMolecularFormulaSet contains the given formula object
      */
     public boolean contains(IMolecularFormula formula);
 
     /**
-     *  Removes the given IMolecularFormula from the IMolecularFormulaSet.
+     * Removes the given IMolecularFormula from the IMolecularFormulaSet.
      *
-     * @param formula  The IMolecularFormula to be removed
+     * @param formula The IMolecularFormula to be removed
      */
     public void removeMolecularFormula(IMolecularFormula formula);
 
     /**
-     *  Removes the IMolecularFormula at the given position from the IMolecularFormulaSet.
+     * Removes the IMolecularFormula at the given position from the IMolecularFormulaSet.
      *
-     * @param  position  The position of the IMolecularFormula to be removed.
+     * @param position The position of the IMolecularFormula to be removed.
      */
     public void removeMolecularFormula(int position);
 
-    /**
-     * Removes all IMolecularFormula of this IMolecularFormulaSet.
-     */
+    /** Removes all IMolecularFormula of this IMolecularFormulaSet. */
     public void removeAllMolecularFormulas();
 
     /**
      * Clones this IMolecularFormulaSet object and its content.
      *
-     * @return    The cloned object
+     * @return The cloned object
      */
     public Object clone() throws CloneNotSupportedException;
-
 }

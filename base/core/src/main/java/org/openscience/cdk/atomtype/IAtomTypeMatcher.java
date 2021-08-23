@@ -25,38 +25,33 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 
 /**
- * Classes that implement this interface are atom type matchers. They find the
- * most appropriate AtomType matching the given Atom in a given atom type list.
+ * Classes that implement this interface are atom type matchers. They find the most appropriate
+ * AtomType matching the given Atom in a given atom type list.
  *
- * @author      mfe4
+ * @author mfe4
  * @cdk.created 2004-12-02
- * @cdk.module  core
+ * @cdk.module core
  * @cdk.githash
- *
- * @see         IAtomTypeGuesser
+ * @see IAtomTypeGuesser
  */
 public interface IAtomTypeMatcher {
 
     /**
-     * Method that assigns an atom type to a given atom belonging to an atom
-     * container.
+     * Method that assigns an atom type to a given atom belonging to an atom container.
      *
-     * @param  container AtomContainer of which the <code>atom</code> is part
-     * @param  atom      Atom for which a matching atom type is searched
-     * @return           The matching AtomType
-     * @throws           CDKException when something went wrong with going through
-     *                   the AtomType's
+     * @param container AtomContainer of which the <code>atom</code> is part
+     * @param atom Atom for which a matching atom type is searched
+     * @return The matching AtomType
+     * @throws CDKException when something went wrong with going through the AtomType's
      */
     public IAtomType findMatchingAtomType(IAtomContainer container, IAtom atom) throws CDKException;
 
     /**
      * Method that assigns atom types to atoms in the given atom container.
      *
-     * @param  container AtomContainer for which atom types are perceived
-     * @return           The matching AtomType
-     * @throws           CDKException when something went wrong with going through
-     *                   the AtomType's
+     * @param container AtomContainer for which atom types are perceived
+     * @return The matching AtomType
+     * @throws CDKException when something went wrong with going through the AtomType's
      */
     public IAtomType[] findMatchingAtomTypes(IAtomContainer container) throws CDKException;
-
 }

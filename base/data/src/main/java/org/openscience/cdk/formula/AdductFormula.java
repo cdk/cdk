@@ -22,25 +22,25 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
-
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAdductFormula;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- *  Class defining an adduct object in a MolecularFormula. It maintains
- *   a list of list IMolecularFormula.<p>
+ * Class defining an adduct object in a MolecularFormula. It maintains a list of list
+ * IMolecularFormula.
  *
- *  Examples:
+ * <p>Examples:
+ *
  * <ul>
- *   <li><code>[C2H4O2+Na]+</code></li>
+ *   <li><code>[C2H4O2+Na]+</code>
  * </ul>
  *
- * @cdk.module  data
- * @author      miguelrojasch
+ * @cdk.module data
+ * @author miguelrojasch
  * @cdk.created 2007-11-20
  * @cdk.keyword molecular formula
  * @cdk.githash
@@ -50,32 +50,31 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
     /**
      * Determines if a de-serialized object is compatible with this class.
      *
-     * This value must only be changed if and only if the new version
-     * of this class is incompatible with the old version. See Sun docs
-     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
+     * <p>This value must only be changed if and only if the new version of this class is
+     * incompatible with the old version. See Sun docs for <a
+     * href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
      */
-    private static final long       serialVersionUID = -811384981700039389L;
+    private static final long serialVersionUID = -811384981700039389L;
 
-    /**  Internal List of IMolecularFormula. */
+    /** Internal List of IMolecularFormula. */
     private List<IMolecularFormula> components;
 
     /**
-     *  Constructs an empty AdductFormula.
+     * Constructs an empty AdductFormula.
      *
-     *  @see #AdductFormula(IMolecularFormula)
+     * @see #AdductFormula(IMolecularFormula)
      */
     public AdductFormula() {
         components = new ArrayList<IMolecularFormula>();
     }
 
     /**
-     * Constructs an AdductFormula with a copy AdductFormula of another
-     * AdductFormula (A shallow copy, i.e., with the same objects as in
-     * the original AdductFormula).
+     * Constructs an AdductFormula with a copy AdductFormula of another AdductFormula (A shallow
+     * copy, i.e., with the same objects as in the original AdductFormula).
      *
-     *  @param  formula  An MolecularFormula to copy from
-     *  @see             #AdductFormula()
+     * @param formula An MolecularFormula to copy from
+     * @see #AdductFormula()
      */
     public AdductFormula(IMolecularFormula formula) {
         components = new ArrayList<IMolecularFormula>();
@@ -85,7 +84,7 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
     /**
      * Adds an molecularFormula to this chemObject.
      *
-     * @param  formula  The molecularFormula to be added to this chemObject
+     * @param formula The molecularFormula to be added to this chemObject
      */
     @Override
     public void addMolecularFormula(IMolecularFormula formula) {
@@ -93,9 +92,9 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
     }
 
     /**
-     *  Adds all molecularFormulas in the AdductFormula to this chemObject.
+     * Adds all molecularFormulas in the AdductFormula to this chemObject.
      *
-     * @param  formulaSet  The MolecularFormulaSet
+     * @param formulaSet The MolecularFormulaSet
      */
     @Override
     public void add(IMolecularFormulaSet formulaSet) {
@@ -109,16 +108,15 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
     }
 
     /**
-     *  True, if the AdductFormula contains the given IIsotope object and not
-     *  the instance. The method looks for other isotopes which has the same
-     *  symbol, natural abundance and exact mass.
+     * True, if the AdductFormula contains the given IIsotope object and not the instance. The
+     * method looks for other isotopes which has the same symbol, natural abundance and exact mass.
      *
-     * @param  isotope  The IIsotope this AdductFormula is searched for
-     * @return          True, if the AdductFormula contains the given isotope object
+     * @param isotope The IIsotope this AdductFormula is searched for
+     * @return True, if the AdductFormula contains the given isotope object
      */
     @Override
     public boolean contains(IIsotope isotope) {
-        for (Iterator<IIsotope> it = isotopes().iterator(); it.hasNext();) {
+        for (Iterator<IIsotope> it = isotopes().iterator(); it.hasNext(); ) {
             IIsotope thisIsotope = it.next();
             if (isTheSame(thisIsotope, isotope)) {
                 return true;
@@ -128,12 +126,11 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
     }
 
     /**
-     *  Returns the partial charge of this Adduct. If the charge
-     *  has not been set the return value is Double.NaN.
+     * Returns the partial charge of this Adduct. If the charge has not been set the return value is
+     * Double.NaN.
      *
      * @return the charge of this Adduct
-     *
-     * @see    #setCharge
+     * @see #setCharge
      */
     @Override
     public Integer getCharge() {
@@ -146,12 +143,12 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
     }
 
     /**
-     *  Checks a set of Nodes for the occurrence of the isotope in the
-     *  adduct formula from a particular isotope. It returns 0 if the does not exist.
+     * Checks a set of Nodes for the occurrence of the isotope in the adduct formula from a
+     * particular isotope. It returns 0 if the does not exist.
      *
-     * @param   isotope          The IIsotope to look for
-     * @return                   The occurrence of this isotope in this adduct
-     * @see                      #getIsotopeCount()
+     * @param isotope The IIsotope to look for
+     * @return The occurrence of this isotope in this adduct
+     * @see #getIsotopeCount()
      */
     @Override
     public int getIsotopeCount(IIsotope isotope) {
@@ -164,11 +161,10 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
     }
 
     /**
-     *  Checks a set of Nodes for the number of different isotopes in the
-     *  adduct formula.
+     * Checks a set of Nodes for the number of different isotopes in the adduct formula.
      *
-     * @return        The the number of different isotopes in this adduct formula
-     * @see           #getIsotopeCount(IIsotope)
+     * @return The the number of different isotopes in this adduct formula
+     * @see #getIsotopeCount(IIsotope)
      */
     @Override
     public int getIsotopeCount() {
@@ -176,9 +172,9 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
     }
 
     /**
-     *  Returns an Iterator for looping over all isotopes in this adduct formula.
+     * Returns an Iterator for looping over all isotopes in this adduct formula.
      *
-     * @return    An Iterator with the isotopes in this adduct formula
+     * @return An Iterator with the isotopes in this adduct formula
      */
     @Override
     public Iterable<IIsotope> isotopes() {
@@ -192,9 +188,9 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
     }
 
     /**
-     *  Returns a List for looping over all isotopes in this adduct formula.
+     * Returns a List for looping over all isotopes in this adduct formula.
      *
-     * @return    A List with the isotopes in this adduct formula
+     * @return A List with the isotopes in this adduct formula
      */
     private List<IIsotope> isotopesList() {
         List<IIsotope> isotopes = new ArrayList<IIsotope>();
@@ -212,13 +208,11 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
     }
 
     /**
-     *  No use this method. The charge is defined in each
-     *  IMolecularFormula.
+     * No use this method. The charge is defined in each IMolecularFormula.
      *
-     * @param  charge  The partial charge
+     * @param charge The partial charge
      * @deprecated
-     *
-     * @see    #getCharge
+     * @see #getCharge
      */
     @Override
     public void setCharge(Integer charge) {
@@ -226,10 +220,9 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
     }
 
     /**
-     *  Returns an Iterable for looping over all IMolecularFormula
-     *   in this adduct formula.
+     * Returns an Iterable for looping over all IMolecularFormula in this adduct formula.
      *
-     * @return    An Iterable with the IMolecularFormula in this adduct formula
+     * @return An Iterable with the IMolecularFormula in this adduct formula
      */
     @Override
     public Iterable<IMolecularFormula> molecularFormulas() {
@@ -237,10 +230,9 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
     }
 
     /**
-     *  Returns an Iterator for looping over all IMolecularFormula
-     *   in this adduct formula.
+     * Returns an Iterator for looping over all IMolecularFormula in this adduct formula.
      *
-     * @return    An Iterator with the IMolecularFormula in this adduct formula
+     * @return An Iterator with the IMolecularFormula in this adduct formula
      */
     @Override
     public Iterator<IMolecularFormula> iterator() {
@@ -250,7 +242,7 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
     /**
      * Returns the number of MolecularFormulas in this AdductFormula.
      *
-     * @return     The number of MolecularFormulas in this AdductFormula
+     * @return The number of MolecularFormulas in this AdductFormula
      */
     @Override
     public int size() {
@@ -258,10 +250,10 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
     }
 
     /**
-     *  True, if the AdductFormula contains the given IMolecularFormula object.
+     * True, if the AdductFormula contains the given IMolecularFormula object.
      *
-     * @param  formula  The IMolecularFormula this AdductFormula is searched for
-     * @return          True, if the AdductFormula contains the given IMolecularFormula object
+     * @param formula The IMolecularFormula this AdductFormula is searched for
+     * @return True, if the AdductFormula contains the given IMolecularFormula object
      */
     @Override
     public boolean contains(IMolecularFormula formula) {
@@ -269,21 +261,17 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
     }
 
     /**
+     * Returns the MolecularFormula at position <code>number</code> in the chemObject.
      *
-     * Returns the MolecularFormula at position <code>number</code> in the
-     * chemObject.
-     *
-     * @param  position The position of the IMolecularFormula to be returned.
-     * @return          The IMolecularFormula at position <code>number</code> .
+     * @param position The position of the IMolecularFormula to be returned.
+     * @return The IMolecularFormula at position <code>number</code> .
      */
     @Override
     public IMolecularFormula getMolecularFormula(int position) {
         return components.get(position);
     }
 
-    /**
-     * Removes all IMolecularFormula from this chemObject.
-     */
+    /** Removes all IMolecularFormula from this chemObject. */
     @Override
     public void removeAllMolecularFormulas() {
         components.clear();
@@ -292,7 +280,7 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
     /**
      * Removes an IMolecularFormula from this chemObject.
      *
-     * @param  formula  The IMolecularFormula to be removed from this chemObject
+     * @param formula The IMolecularFormula to be removed from this chemObject
      */
     @Override
     public void removeMolecularFormula(IMolecularFormula formula) {
@@ -302,7 +290,7 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
     /**
      * Removes an MolecularFormula from this chemObject.
      *
-     * @param  position The position of the MolecularFormula to be removed from this chemObject
+     * @param position The position of the MolecularFormula to be removed from this chemObject
      */
     @Override
     public void removeMolecularFormula(int position) {
@@ -312,7 +300,7 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
     /**
      * Clones this AdductFormula object and its content.
      *
-     * @return    The cloned object
+     * @return The cloned object
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
@@ -335,17 +323,18 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
     }
 
     /**
-     * Compare to IIsotope. The method doesn't compare instance but if they
-     * have the same symbol, natural abundance and exact mass.
+     * Compare to IIsotope. The method doesn't compare instance but if they have the same symbol,
+     * natural abundance and exact mass.
      *
-     * @param isotopeOne   The first Isotope to compare
-     * @param isotopeTwo   The second Isotope to compare
-     * @return             True, if both isotope are the same
+     * @param isotopeOne The first Isotope to compare
+     * @param isotopeTwo The second Isotope to compare
+     * @return True, if both isotope are the same
      */
     private boolean isTheSame(IIsotope isotopeOne, IIsotope isotopeTwo) {
         // XXX: floating point comparision!
         if (!Objects.equals(isotopeOne.getSymbol(), isotopeTwo.getSymbol())) return false;
-        if (!Objects.equals(isotopeOne.getNaturalAbundance(), isotopeTwo.getNaturalAbundance())) return false;
+        if (!Objects.equals(isotopeOne.getNaturalAbundance(), isotopeTwo.getNaturalAbundance()))
+            return false;
         if (!Objects.equals(isotopeOne.getExactMass(), isotopeTwo.getExactMass())) return false;
 
         return true;

@@ -24,9 +24,8 @@ package org.openscience.cdk.tools.manipulator;
 
 import java.io.IOException;
 import java.util.Comparator;
-
-import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -35,25 +34,28 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * <p>Compares two IAtomContainers for order with the following criteria with decreasing priority:</p>
+ * Compares two IAtomContainers for order with the following criteria with decreasing priority:
+ *
  * <ul>
  *   <li>Compare atom count
  *   <li>Compare molecular weight (heavy atoms only)
  *   <li>Compare bond count
  *   <li>Compare sum of bond orders (heavy atoms only)
  * </ul>
- * <p>If no difference can be found with the above criteria, the IAtomContainers are
- * considered equal.</p>
+ *
+ * <p>If no difference can be found with the above criteria, the IAtomContainers are considered
+ * equal.
  *
  * @author Andreas Schueller
- * @cdk.created  2007-09-05
- * @cdk.module   standard
+ * @cdk.created 2007-09-05
+ * @cdk.module standard
  * @cdk.githash
  */
 public class AtomContainerComparator implements Comparator<IAtomContainer> {
 
     /** Configure LoggingTool */
-    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(AtomContainerComparator.class);
+    private ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(AtomContainerComparator.class);
 
     /** Creates a new instance of AtomContainerComparator */
     public AtomContainerComparator() {}
@@ -83,10 +85,8 @@ public class AtomContainerComparator implements Comparator<IAtomContainer> {
         IAtomContainer atomContainer2 = o2;
 
         // 1. Compare atom count
-        if (atomContainer1.getAtomCount() > atomContainer2.getAtomCount())
-            return 1;
-        else if (atomContainer1.getAtomCount() < atomContainer2.getAtomCount())
-            return -1;
+        if (atomContainer1.getAtomCount() > atomContainer2.getAtomCount()) return 1;
+        else if (atomContainer1.getAtomCount() < atomContainer2.getAtomCount()) return -1;
         else {
             // 2. Atom count equal, compare molecular weight (heavy atoms only)
             double mw1 = 0;
@@ -98,25 +98,21 @@ public class AtomContainerComparator implements Comparator<IAtomContainer> {
                 logger.warn("Exception in molecular mass calculation.");
                 return 0;
             }
-            if (mw1 > mw2)
-                return 1;
-            else if (mw1 < mw2)
-                return -1;
+            if (mw1 > mw2) return 1;
+            else if (mw1 < mw2) return -1;
             else {
                 // 3. Molecular weight equal, compare bond count
-                if (atomContainer1.getBondCount() > atomContainer2.getBondCount())
-                    return 1;
-                else if (atomContainer1.getBondCount() < atomContainer2.getBondCount())
-                    return -1;
+                if (atomContainer1.getBondCount() > atomContainer2.getBondCount()) return 1;
+                else if (atomContainer1.getBondCount() < atomContainer2.getBondCount()) return -1;
                 else {
                     // 4. Bond count equal, compare sum of bond orders (heavy atoms only)
-                    double bondOrderSum1 = AtomContainerManipulator.getSingleBondEquivalentSum(atomContainer1);
-                    double bondOrderSum2 = AtomContainerManipulator.getSingleBondEquivalentSum(atomContainer2);
-                    if (bondOrderSum1 > bondOrderSum2)
-                        return 1;
+                    double bondOrderSum1 =
+                            AtomContainerManipulator.getSingleBondEquivalentSum(atomContainer1);
+                    double bondOrderSum2 =
+                            AtomContainerManipulator.getSingleBondEquivalentSum(atomContainer2);
+                    if (bondOrderSum1 > bondOrderSum2) return 1;
                     else if (bondOrderSum1 < bondOrderSum2) return -1;
                 }
-
             }
         }
         // AtomContainers are equal in terms of this comparator
@@ -124,12 +120,13 @@ public class AtomContainerComparator implements Comparator<IAtomContainer> {
     }
 
     /**
-     * Returns the molecular weight (exact mass) of the major isotopes
-     * of all heavy atoms of the given IAtomContainer.
+     * Returns the molecular weight (exact mass) of the major isotopes of all heavy atoms of the
+     * given IAtomContainer.
+     *
      * @param atomContainer an IAtomContainer to calculate the mocular weight for
      * @throws org.openscience.cdk.exception.CDKException if an error occurs with the IsotopeFactory
-     * @return the molecularweight (exact mass) of the major isotopes
-     *         of all heavy atoms of the given IAtomContainer
+     * @return the molecularweight (exact mass) of the major isotopes of all heavy atoms of the
+     *     given IAtomContainer
      */
     private double getMolecularWeight(IAtomContainer atomContainer) throws CDKException {
         double mw = 0.0;
@@ -150,5 +147,4 @@ public class AtomContainerComparator implements Comparator<IAtomContainer> {
         }
         return mw;
     }
-
 }

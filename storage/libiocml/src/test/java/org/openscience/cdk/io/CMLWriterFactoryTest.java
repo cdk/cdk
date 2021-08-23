@@ -45,5 +45,4 @@ public class CMLWriterFactoryTest {
         Assert.assertNotNull(writer);
         Assert.assertEquals(new CMLWriter().getClass().getName(), writer.getClass().getName());
     }
-
 }

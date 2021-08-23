@@ -42,12 +42,15 @@ public class BondsToAtomDescriptorTest extends AtomicDescriptorTest {
     }
 
     @Test
-    public void testBondsToAtomDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testBondsToAtomDescriptor()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
         BondsToAtomDescriptor descriptor = new BondsToAtomDescriptor();
         Object[] params = {Integer.valueOf(5)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCCCCC"); //
-        Assert.assertEquals(5, ((IntegerResult) descriptor.calculate(mol.getAtom(0), mol).getValue()).intValue());
+        Assert.assertEquals(
+                5,
+                ((IntegerResult) descriptor.calculate(mol.getAtom(0), mol).getValue()).intValue());
     }
 }

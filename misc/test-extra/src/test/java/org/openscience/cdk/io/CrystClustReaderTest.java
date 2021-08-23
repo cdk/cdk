@@ -23,9 +23,7 @@
 package org.openscience.cdk.io;
 
 import java.io.InputStream;
-
 import javax.vecmath.Vector3d;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -39,12 +37,12 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * TestCase for the reading MDL mol files using one test file.
  *
  * @cdk.module test-extra
- *
  * @see org.openscience.cdk.io.CrystClustReader
  */
 public class CrystClustReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CrystClustReaderTest.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(CrystClustReaderTest.class);
 
     @BeforeClass
     public static void setup() {

@@ -18,6 +18,9 @@
  */
 package org.openscience.cdk.tools;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -51,23 +54,17 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 /**
-* TestSuite that runs all tests.
-*
-* @cdk.module test-reaction
-*/
+ * TestSuite that runs all tests.
+ *
+ * @cdk.module test-reaction
+ */
 public class StructureResonanceGeneratorTest extends CDKTestCase {
 
-    private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-    LonePairElectronChecker                 lpcheck = new LonePairElectronChecker();
+    private static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
-    /**
-     * Constructor of the StructureResonanceGeneratorTest.
-     */
+    /** Constructor of the StructureResonanceGeneratorTest. */
     public StructureResonanceGeneratorTest() {
         super();
     }
@@ -75,7 +72,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testStructureResonanceGenerator() {
@@ -86,7 +83,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testStructureResonanceGenerator_boolean() {
@@ -97,7 +94,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testGetReactions() {
@@ -108,7 +105,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testSetDefaultReactions() {
@@ -122,57 +119,64 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         SharingLonePairReaction slReaction = (SharingLonePairReaction) reactionList.get(0);
         Assert.assertEquals(1, slReaction.getParameterList().size());
         List<IParameterReact> objects = slReaction.getParameterList();
-        for (Iterator<IParameterReact> it = objects.iterator(); it.hasNext();) {
+        for (Iterator<IParameterReact> it = objects.iterator(); it.hasNext(); ) {
             IParameterReact object = it.next();
-            if (object instanceof SetReactionCenter) Assert.assertFalse((Boolean) object.isSetParameter());
+            if (object instanceof SetReactionCenter)
+                Assert.assertFalse((Boolean) object.isSetParameter());
         }
 
         PiBondingMovementReaction pBReaction = (PiBondingMovementReaction) reactionList.get(1);
         Assert.assertEquals(1, pBReaction.getParameterList().size());
         objects = pBReaction.getParameterList();
-        for (Iterator<IParameterReact> it = objects.iterator(); it.hasNext();) {
+        for (Iterator<IParameterReact> it = objects.iterator(); it.hasNext(); ) {
             IParameterReact object = it.next();
-            if (object instanceof SetReactionCenter) Assert.assertFalse((Boolean) object.isSetParameter());
+            if (object instanceof SetReactionCenter)
+                Assert.assertFalse((Boolean) object.isSetParameter());
         }
 
         RearrangementAnionReaction raReaction = (RearrangementAnionReaction) reactionList.get(2);
         Assert.assertEquals(1, raReaction.getParameterList().size());
         objects = raReaction.getParameterList();
-        for (Iterator<IParameterReact> it = objects.iterator(); it.hasNext();) {
+        for (Iterator<IParameterReact> it = objects.iterator(); it.hasNext(); ) {
             IParameterReact object = it.next();
-            if (object instanceof SetReactionCenter) Assert.assertFalse((Boolean) object.isSetParameter());
+            if (object instanceof SetReactionCenter)
+                Assert.assertFalse((Boolean) object.isSetParameter());
         }
 
         RearrangementCationReaction rcReaction = (RearrangementCationReaction) reactionList.get(3);
         Assert.assertEquals(1, rcReaction.getParameterList().size());
         objects = rcReaction.getParameterList();
-        for (Iterator<IParameterReact> it = objects.iterator(); it.hasNext();) {
+        for (Iterator<IParameterReact> it = objects.iterator(); it.hasNext(); ) {
             IParameterReact object = it.next();
-            if (object instanceof SetReactionCenter) Assert.assertFalse((Boolean) object.isSetParameter());
+            if (object instanceof SetReactionCenter)
+                Assert.assertFalse((Boolean) object.isSetParameter());
         }
 
-        RearrangementLonePairReaction lnReaction = (RearrangementLonePairReaction) reactionList.get(4);
+        RearrangementLonePairReaction lnReaction =
+                (RearrangementLonePairReaction) reactionList.get(4);
         Assert.assertEquals(1, lnReaction.getParameterList().size());
         objects = lnReaction.getParameterList();
-        for (Iterator<IParameterReact> it = objects.iterator(); it.hasNext();) {
+        for (Iterator<IParameterReact> it = objects.iterator(); it.hasNext(); ) {
             IParameterReact object = it.next();
-            if (object instanceof SetReactionCenter) Assert.assertFalse((Boolean) object.isSetParameter());
+            if (object instanceof SetReactionCenter)
+                Assert.assertFalse((Boolean) object.isSetParameter());
         }
 
-        RearrangementRadicalReaction rrReaction = (RearrangementRadicalReaction) reactionList.get(5);
+        RearrangementRadicalReaction rrReaction =
+                (RearrangementRadicalReaction) reactionList.get(5);
         Assert.assertEquals(1, rrReaction.getParameterList().size());
         objects = rrReaction.getParameterList();
-        for (Iterator<IParameterReact> it = objects.iterator(); it.hasNext();) {
+        for (Iterator<IParameterReact> it = objects.iterator(); it.hasNext(); ) {
             IParameterReact object = it.next();
-            if (object instanceof SetReactionCenter) Assert.assertFalse((Boolean) object.isSetParameter());
+            if (object instanceof SetReactionCenter)
+                Assert.assertFalse((Boolean) object.isSetParameter());
         }
-
     }
 
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     * @return The test suite
      * @throws Exception Thrown to indicate the failure of this unit test
      */
     @Test
@@ -193,18 +197,19 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         sRG.setReactions(newReactionList);
 
         Assert.assertEquals(1, sRG.getReactions().size());
-
     }
 
     //
     //    /**
     //	 * <p>A unit test suite for JUnit: Resonance - CC(=[O*+])C=O</p>
-    //	 * <p>CC(=[O*+])C=O <=> C[C+]([O*])C=O <=> CC([O*])=CO <=> CC(=O)[C*][O+] <=> CC(=O)C=[O*+]</p>
+    //	 * <p>CC(=[O*+])C=O <=> C[C+]([O*])C=O <=> CC([O*])=CO <=> CC(=O)[C*][O+] <=>
+    // CC(=O)C=[O*+]</p>
     //	 *
     //	 * @return    The test suite
     //	 */
     //	@Test public void testGetAllStructures_IAtomContainer() throws Exception {
-    //		IAtomContainer molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("CC(=O)C=O");
+    //		IAtomContainer molecule = (new
+    // SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("CC(=O)C=O");
     //        addExplicitHydrogens(molecule);
     //		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
     //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -219,10 +224,12 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     //		System.out.println("> "+sg.createSMILES(molecule));
     //		makeSureAtomTypesAreRecognized(molecule);
     //
-    //		StructureResonanceGenerator gRI = new StructureResonanceGenerator(true,true,true,true,false,false,-1);
+    //		StructureResonanceGenerator gRI = new
+    // StructureResonanceGenerator(true,true,true,true,false,false,-1);
     //		IAtomContainerSet setOfMolecules = gRI.getAllStructures(molecule);
     //		for(int i = 0; i < setOfMolecules.getAtomContainerCount(); i++)
-    //			System.out.println("> "+sg.createSMILES((IAtomContainer) setOfMolecules.getAtomContainer(i)));
+    //			System.out.println("> "+sg.createSMILES((IAtomContainer)
+    // setOfMolecules.getAtomContainer(i)));
     //
     //
     //		Iterator<IAtomContainer> containers = setOfMolecules.atomContainers();
@@ -233,7 +240,8 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     //		Assert.assertEquals(8,setOfMolecules.getAtomContainerCount());
     //
     //		/*1*/
-    //        IAtomContainer molecule1 = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("C[C+](O)C=O");
+    //        IAtomContainer molecule1 = (new
+    // SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("C[C+](O)C=O");
     //        for(int i = 0; i < 4; i++)
     //			molecule1.addAtom(new Atom("H"));
     //		molecule1.addBond(0, 5, IBond.Order.SINGLE);
@@ -243,8 +251,10 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     //        lpcheck.saturate(molecule1);
     //        IAtom atom1 =  molecule1.getAtom(2);
     //        molecule1.addSingleElectron(new SingleElectron(atom1));
-    //        QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
-    //		Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
+    //        QueryAtomContainer qAC =
+    // QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
+    //		Assert.assertTrue(new
+    // UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
     //
     ////		/*2*/
     ////		Molecule molecule2 = (new SmilesParser()).parseSmiles("CC(O)=CO");
@@ -263,7 +273,8 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     ////		atom2b.setFormalCharge(1);
     ////
     ////		qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
-    ////		Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(3),qAC));
+    ////		Assert.assertTrue(new
+    // UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(3),qAC));
     //	}
     //
     //	private void makeSureAtomTypesAreRecognized(IAtomContainer molecule)
@@ -284,7 +295,8 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     //	 * @return    The test suite
     //	 */
     //	@Test public void testGetStructures_IAtomContainer() throws Exception {
-    //		IAtomContainer molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("CC(=O)C=O");
+    //		IAtomContainer molecule = (new
+    // SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("CC(=O)C=O");
     //        addExplicitHydrogens(molecule);
     //		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
     //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -302,7 +314,8 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     //
     //		Assert.assertEquals(2,setOfMolecules.getAtomContainerCount());
     //
-    //		IAtomContainer molecule1 = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("CC(=O)C=O");
+    //		IAtomContainer molecule1 = (new
+    // SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("CC(=O)C=O");
     //		addExplicitHydrogens(molecule1);
     //		lpcheck.saturate(molecule1);
     //		IAtom atom1 =  molecule1.getAtom(4);
@@ -312,8 +325,10 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     //		atom1.setFormalCharge(1);
     //
     //
-    //		QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
-    //		Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
+    //		QueryAtomContainer qAC =
+    // QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
+    //		Assert.assertTrue(new
+    // UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
     //
     //	}
     //	/**
@@ -322,7 +337,8 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     //	 * @return    The test suite
     //	 */
     //	@Test public void testGetStructures2() throws Exception {
-    //		IAtomContainer molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("CCC(=O)C(C)=O");
+    //		IAtomContainer molecule = (new
+    // SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("CCC(=O)C(C)=O");
     //        addExplicitHydrogens(molecule);
     //		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
     //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -340,7 +356,8 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     //
     //		Assert.assertEquals(2,setOfMolecules.getAtomContainerCount());
     //
-    //		IAtomContainer molecule1 = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("CCC(=O)C(C)=O");
+    //		IAtomContainer molecule1 = (new
+    // SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("CCC(=O)C(C)=O");
     //		addExplicitHydrogens(molecule1);
     //		lpcheck.saturate(molecule1);
     //
@@ -350,15 +367,17 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     //        selectron = molecule.getConnectedLonePairsList(atom);
     //		molecule.removeLonePair((ILonePair)selectron.get(0));
     //
-    //		QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
-    //		Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
+    //		QueryAtomContainer qAC =
+    // QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
+    //		Assert.assertTrue(new
+    // UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
     //
     //	}
     /**
      * A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] <=> C-[C+]-C=C-C-C=C-[C+] +
      * C-C=C-[C+]-C-[C+]-C=C + C-[C+]-C=C-C-[C+]-C=C
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testGetStructures_IAtomContainer() throws Exception {
@@ -386,13 +405,12 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         IAtomContainerSet setOfMolecules = sRG.getStructures(molecule);
 
         Assert.assertEquals(4, setOfMolecules.getAtomContainerCount());
-
     }
 
     /**
      * A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] <=> C-[C+]-C=C-C-C=C-[C+]
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     @Category(SlowTest.class)
@@ -459,14 +477,17 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         molecule2.getAtom(7).setFormalCharge(+1);
         addExplicitHydrogens(molecule2);
 
-        QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(1), qAC));
+        QueryAtomContainer qAC =
+                QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
+        Assert.assertTrue(
+                new UniversalIsomorphismTester()
+                        .isIsomorph(setOfMolecules.getAtomContainer(1), qAC));
     }
 
     /**
      * A unit test suite for JUnit: Resonance C-C=C-[C-] <=> C=C-[C-]-C
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testtestGetStructures2() throws Exception {
@@ -499,16 +520,18 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         molecule2.addLonePair(new LonePair(molecule2.getAtom(2)));
         addExplicitHydrogens(molecule2);
 
-        QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(1), qAC));
+        QueryAtomContainer qAC =
+                QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
+        Assert.assertTrue(
+                new UniversalIsomorphismTester()
+                        .isIsomorph(setOfMolecules.getAtomContainer(1), qAC));
     }
 
     /**
-     * A unit test suite for JUnit: Resonance Formic acid  C(=O)O <=> [C+](-[O-])O <=> C([O-])=[O+]
+     * A unit test suite for JUnit: Resonance Formic acid C(=O)O <=> [C+](-[O-])O <=> C([O-])=[O+]
      *
-     *  @cdk.inchi InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)/f/h2H
-     *
-     * @return    The test suite
+     * @cdk.inchi InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)/f/h2H
+     * @return The test suite
      */
     @Test
     public void testFormicAcid() throws Exception {
@@ -542,17 +565,18 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule2);
         lpcheck.saturate(molecule2);
 
-        QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(1), qAC));
-
+        QueryAtomContainer qAC =
+                QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
+        Assert.assertTrue(
+                new UniversalIsomorphismTester()
+                        .isIsomorph(setOfMolecules.getAtomContainer(1), qAC));
     }
 
     /**
-     * A unit test suite for JUnit: Resonance Formic acid  F-C=C <=> [F+]=C-[C-]
+     * A unit test suite for JUnit: Resonance Formic acid F-C=C <=> [F+]=C-[C-]
      *
-     *  @cdk.inchi InChI=1/C2H3F/c1-2-3/h2H,1H2
-     *
-     * @return    The test suite
+     * @cdk.inchi InChI=1/C2H3F/c1-2-3/h2H,1H2
+     * @return The test suite
      */
     @Test
     public void testFluoroethene() throws Exception {
@@ -583,16 +607,18 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule1);
         lpcheck.saturate(molecule1);
 
-        QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(1), qAC));
+        QueryAtomContainer qAC =
+                QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
+        Assert.assertTrue(
+                new UniversalIsomorphismTester()
+                        .isIsomorph(setOfMolecules.getAtomContainer(1), qAC));
     }
 
     /**
-     * A unit test suite for JUnit: Resonance Fluorobenzene  Fc1ccccc1 <=> ...
+     * A unit test suite for JUnit: Resonance Fluorobenzene Fc1ccccc1 <=> ...
      *
      * @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
-     *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     @Category(SlowTest.class)
@@ -644,8 +670,11 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule1);
         lpcheck.saturate(molecule1);
 
-        QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(2), qAC));
+        QueryAtomContainer qAC =
+                QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
+        Assert.assertTrue(
+                new UniversalIsomorphismTester()
+                        .isIsomorph(setOfMolecules.getAtomContainer(2), qAC));
 
         IAtomContainer molecule2 = builder.newInstance(IAtomContainer.class);
         molecule2.addAtom(builder.newInstance(IAtom.class, "F"));
@@ -671,15 +700,13 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         IAtomContainer product2 = setOfMolecules.getAtomContainer(4);
         qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
         Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(product2, qAC));
-
     }
 
     /**
-     * A unit test suite for JUnit: Resonance Fluorobenzene  Fc1ccccc1 <=> ...
+     * A unit test suite for JUnit: Resonance Fluorobenzene Fc1ccccc1 <=> ...
      *
      * @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
-     *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     @Category(SlowTest.class)
@@ -709,15 +736,13 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         IAtomContainer container = gRI.getContainer(molecule, molecule.getAtom(0));
 
         Assert.assertEquals(7, container.getAtomCount());
-
     }
 
     /**
-     * A unit test suite for JUnit: Resonance Fluorobenzene  Fc1ccccc1 <=> ...
+     * A unit test suite for JUnit: Resonance Fluorobenzene Fc1ccccc1 <=> ...
      *
      * @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
-     *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     @Category(SlowTest.class)
@@ -769,8 +794,11 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule1);
         lpcheck.saturate(molecule1);
 
-        QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(setOfMolecules.getAtomContainer(1), qAC));
+        QueryAtomContainer qAC =
+                QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
+        Assert.assertTrue(
+                new UniversalIsomorphismTester()
+                        .isIsomorph(setOfMolecules.getAtomContainer(1), qAC));
 
         IAtomContainer molecule2 = builder.newInstance(IAtomContainer.class);
         molecule2.addAtom(builder.newInstance(IAtom.class, "F"));
@@ -796,15 +824,13 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         IAtomContainer product2 = setOfMolecules.getAtomContainer(2);
         qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
         Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(product2, qAC));
-
     }
 
     /**
-     * A unit test suite for JUnit: Resonance   n1ccccc1 <=> ...
+     * A unit test suite for JUnit: Resonance n1ccccc1 <=> ...
      *
      * @cdk.inchi InChI=1/C6H7N/c7-6-4-2-1-3-5-6/h1-5H,7H2
-     *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     @Category(SlowTest.class)
@@ -835,11 +861,10 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     }
 
     /**
-     * A unit test suite for JUnit: Resonance   n1ccccc1 <=> ...
+     * A unit test suite for JUnit: Resonance n1ccccc1 <=> ...
      *
      * @cdk.inchi InChI=1/C6H7N/c7-6-4-2-1-3-5-6/h1-5H,7H2
-     *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testAniline_Symm() throws Exception {
@@ -869,8 +894,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     }
 
     /**
-     * A unit test suite for JUnit.
-     * ClC([H])=C([H])[C+]([H])[H] => [H]C([H])=C([H])[C+](Cl)[H] +
+     * A unit test suite for JUnit. ClC([H])=C([H])[C+]([H])[H] => [H]C([H])=C([H])[C+](Cl)[H] +
      * Cl=C([H])[C-]([H])[C+]([H])[H] + Cl=C([H])C([H])=C([H])[H]
      *
      * @throws Exception
@@ -928,11 +952,9 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     }
 
     /**
-     * A unit test suite for JUnit.
-     * [H]C([H])=C([H])[O-] => O=C([H])[C-]([H])[H]
+     * A unit test suite for JUnit. [H]C([H])=C([H])[O-] => O=C([H])[C-]([H])[H]
      *
      * @cdk.inchi InChI=1/C2H4O/c1-2-3/h2-3H,1H2/p-1/fC2H3O/h3h/q-1
-     *
      * @throws Exception
      */
     @Test
@@ -956,14 +978,12 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     }
 
     /**
-     * A unit test suite for JUnit.
-     * [H]N([H])C1=C([H])C([H])=C([H])C([H])=C1C([H])([H])[H] =>
-     *  + [H]C=1C([H])=C(C(=[N+]([H])[H])[C-]([H])C=1([H]))C([H])([H])[H]
-     *  + [H]C1=C([H])[C-]([H])C([H])=C(C1=[N+]([H])[H])C([H])([H])[H]
-     *  + [H]C=1C([H])=C([H])[C-](C(C=1([H]))=[N+]([H])[H])C([H])([H])[H]
+     * A unit test suite for JUnit. [H]N([H])C1=C([H])C([H])=C([H])C([H])=C1C([H])([H])[H] => +
+     * [H]C=1C([H])=C(C(=[N+]([H])[H])[C-]([H])C=1([H]))C([H])([H])[H] +
+     * [H]C1=C([H])[C-]([H])C([H])=C(C1=[N+]([H])[H])C([H])([H])[H] +
+     * [H]C=1C([H])=C([H])[C-](C(C=1([H]))=[N+]([H])[H])C([H])([H])[H]
      *
      * @cdk.inchi InChI=1/C7H9N/c1-6-4-2-3-5-7(6)8/h2-5H,8H2,1H3
-     *
      * @throws Exception
      */
     @Test
@@ -998,14 +1018,11 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     }
 
     /**
-     *
      * A unit test suite for JUnit.
      *
      * @cdk.inchi InChI=1/C8H10/c1-7-5-3-4-6-8(7)2/h3-6H,1-2H3
-     *
-     *
-     * @return    The test suite
-     * @throws    Exception
+     * @return The test suite
+     * @throws Exception
      */
     @Test
     public void test12DimethylBenzene() throws Exception {
@@ -1048,11 +1065,10 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     }
 
     /**
-     * A unit test suite for JUnit: Resonance Fluorobenzene  Fc1ccccc1 <=> ...
+     * A unit test suite for JUnit: Resonance Fluorobenzene Fc1ccccc1 <=> ...
      *
      * @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
-     *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testPreservingAromaticity() throws Exception {
@@ -1080,17 +1096,23 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         boolean isAromatic = Aromaticity.cdkLegacy().apply(molecule);
         Assert.assertTrue("Molecule is expected to be marked aromatic!", isAromatic);
 
-        Assert.assertTrue("Bond is expected to be marked aromatic!",
+        Assert.assertTrue(
+                "Bond is expected to be marked aromatic!",
                 molecule.getBond(1).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!",
+        Assert.assertTrue(
+                "Bond is expected to be marked aromatic!",
                 molecule.getBond(2).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!",
+        Assert.assertTrue(
+                "Bond is expected to be marked aromatic!",
                 molecule.getBond(3).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!",
+        Assert.assertTrue(
+                "Bond is expected to be marked aromatic!",
                 molecule.getBond(4).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!",
+        Assert.assertTrue(
+                "Bond is expected to be marked aromatic!",
                 molecule.getBond(5).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!",
+        Assert.assertTrue(
+                "Bond is expected to be marked aromatic!",
                 molecule.getBond(6).getFlag(CDKConstants.ISAROMATIC));
 
         StructureResonanceGenerator gRI = new StructureResonanceGenerator(false);
@@ -1099,27 +1121,62 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         Assert.assertEquals(5, setOfMolecules.getAtomContainerCount());
 
         IAtomContainer prod1 = setOfMolecules.getAtomContainer(1);
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod1.getBond(1).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod1.getBond(2).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod1.getBond(3).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod1.getBond(4).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod1.getBond(5).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod1.getBond(6).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue(
+                "Bond is expected to be marked aromatic!",
+                prod1.getBond(1).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue(
+                "Bond is expected to be marked aromatic!",
+                prod1.getBond(2).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue(
+                "Bond is expected to be marked aromatic!",
+                prod1.getBond(3).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue(
+                "Bond is expected to be marked aromatic!",
+                prod1.getBond(4).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue(
+                "Bond is expected to be marked aromatic!",
+                prod1.getBond(5).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue(
+                "Bond is expected to be marked aromatic!",
+                prod1.getBond(6).getFlag(CDKConstants.ISAROMATIC));
         IAtomContainer prod2 = setOfMolecules.getAtomContainer(2);
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod2.getBond(1).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod2.getBond(2).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod2.getBond(3).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod2.getBond(4).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod2.getBond(5).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod2.getBond(6).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue(
+                "Bond is expected to be marked aromatic!",
+                prod2.getBond(1).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue(
+                "Bond is expected to be marked aromatic!",
+                prod2.getBond(2).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue(
+                "Bond is expected to be marked aromatic!",
+                prod2.getBond(3).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue(
+                "Bond is expected to be marked aromatic!",
+                prod2.getBond(4).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue(
+                "Bond is expected to be marked aromatic!",
+                prod2.getBond(5).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue(
+                "Bond is expected to be marked aromatic!",
+                prod2.getBond(6).getFlag(CDKConstants.ISAROMATIC));
         IAtomContainer prod3 = setOfMolecules.getAtomContainer(3);
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod3.getBond(1).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod3.getBond(2).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod3.getBond(3).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod3.getBond(4).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod3.getBond(5).getFlag(CDKConstants.ISAROMATIC));
-        Assert.assertTrue("Bond is expected to be marked aromatic!", prod3.getBond(6).getFlag(CDKConstants.ISAROMATIC));
-
+        Assert.assertTrue(
+                "Bond is expected to be marked aromatic!",
+                prod3.getBond(1).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue(
+                "Bond is expected to be marked aromatic!",
+                prod3.getBond(2).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue(
+                "Bond is expected to be marked aromatic!",
+                prod3.getBond(3).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue(
+                "Bond is expected to be marked aromatic!",
+                prod3.getBond(4).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue(
+                "Bond is expected to be marked aromatic!",
+                prod3.getBond(5).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue(
+                "Bond is expected to be marked aromatic!",
+                prod3.getBond(6).getFlag(CDKConstants.ISAROMATIC));
     }
 
     @Test
@@ -1134,13 +1191,12 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         IAtomContainerSet setOfMolecules = gRI.getStructures(molecule);
 
         Assert.assertEquals(2, setOfMolecules.getAtomContainerCount());
-
     }
 
     /**
      * A unit test for JUnit
      *
-     * @cdk.bug      1728830
+     * @cdk.bug 1728830
      */
     @Test
     @Category(SlowTest.class)
@@ -1157,11 +1213,9 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     }
 
     /**
-     * A unit test suite for JUnit.
-     * [H]C([H])=C([H])[O-] => OCC
+     * A unit test suite for JUnit. [H]C([H])=C([H])[O-] => OCC
      *
      * @cdk.inchi InChI=1/C2H4O/c1-2-3/h2-3H,1H2/p-1/fC2H3O/h3h/q-1
-     *
      * @throws Exception
      */
     @Test
@@ -1190,7 +1244,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] <=> C-[C+]-C=C-C-C=C-[C+]
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     public void testGetContainers2Groups() throws Exception {
@@ -1230,14 +1284,13 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         for (int i = 0; i < 2; i++) {
             Assert.assertEquals(3, setOfContainers.getAtomContainer(i).getAtomCount());
             Assert.assertEquals(2, setOfContainers.getAtomContainer(i).getBondCount());
-
         }
     }
 
     /**
      * A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] <=> C-[C+]-C=C-C-C=C-[C+]
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     @Category(SlowTest.class)
@@ -1279,13 +1332,12 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         Assert.assertEquals(3, container.getAtomCount());
         Assert.assertEquals(2, container.getBondCount());
         Assert.assertTrue(container.contains(atom4));
-
     }
 
     /**
      * A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] <=> C-[C+]-C=C-C-C=C-[C+]
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     @Category(SlowTest.class)
@@ -1327,13 +1379,12 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         Assert.assertEquals(3, container.getAtomCount());
         Assert.assertEquals(2, container.getBondCount());
         Assert.assertTrue(container.contains(molecule.getBond(1)));
-
     }
 
     /**
      * A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] <=> C-[C+]-C=C-C-C=C-[C+]
      *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     @Category(SlowTest.class)
@@ -1385,15 +1436,13 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         Assert.assertEquals(atom2.getID(), container.getAtom(0).getID());
         Assert.assertEquals(atom3.getID(), container.getAtom(1).getID());
         Assert.assertEquals(atom4.getID(), container.getAtom(2).getID());
-
     }
 
     /**
-     * A unit test suite for JUnit: Resonance 1-fluoro-2-methylbenzene  Fc1ccccc1C <=> Fc1ccccc1
+     * A unit test suite for JUnit: Resonance 1-fluoro-2-methylbenzene Fc1ccccc1C <=> Fc1ccccc1
      *
-     * @cdk.inchi  InChI=1/C7H7F/c1-6-4-2-3-5-7(6)8/h2-5H,1H3
-     *
-     * @return    The test suite
+     * @cdk.inchi InChI=1/C7H7F/c1-6-4-2-3-5-7(6)8/h2-5H,1H3
+     * @return The test suite
      */
     @Test
     @Category(SlowTest.class)
@@ -1433,15 +1482,13 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
 
         Assert.assertEquals(15, molecule.getBondCount());
         Assert.assertEquals(7, container.getBondCount());
-
     }
 
     /**
-     * A unit test suite for JUnit: Resonance 1-fluoro-benzene  Fc1ccccc1C <=> Fc1ccccc1
+     * A unit test suite for JUnit: Resonance 1-fluoro-benzene Fc1ccccc1C <=> Fc1ccccc1
      *
      * @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
-     *
-     * @return    The test suite
+     * @return The test suite
      */
     @Test
     @Category(SlowTest.class)
@@ -1479,18 +1526,15 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
 
         Assert.assertEquals(12, molecule.getBondCount());
         Assert.assertEquals(7, container.getBondCount());
-
     }
 
     /**
-     * A unit test suite for JUnit: Resonance Formic acid  C-C(C)=C <=> [Cl+]=C(C)-[C-]
+     * A unit test suite for JUnit: Resonance Formic acid C-C(C)=C <=> [Cl+]=C(C)-[C-]
      *
-     *  @cdk.inchi InChI=1/C3H5Cl/c1-3(2)4/h1H2,2H3
-     *
-     * @return    The test suite
+     * @cdk.inchi InChI=1/C3H5Cl/c1-3(2)4/h1H2,2H3
+     * @return The test suite
      */
     @Test
-
     @Category(SlowTest.class)
     public void test1Propene2chloro() throws Exception {
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
@@ -1515,9 +1559,8 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit: COC1=CC=C(C=C1)Br
      *
-     *  @cdk.inchi InChI=1/C7H7BrO/c1-9-7-4-2-6(8)3-5-7/h2-5H,1H3
-     *
-     * @return    The test suite
+     * @cdk.inchi InChI=1/C7H7BrO/c1-9-7-4-2-6(8)3-5-7/h2-5H,1H3
+     * @return The test suite
      */
     @Test
     @Category(SlowTest.class)
@@ -1554,9 +1597,8 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit: COC1=CC=C(C=C1)Br
      *
-     *  @cdk.inchi InChI=1/C7H7BrO/c1-9-7-4-2-6(8)3-5-7/h2-5H,1H3
-     *
-     * @return    The test suite
+     * @cdk.inchi InChI=1/C7H7BrO/c1-9-7-4-2-6(8)3-5-7/h2-5H,1H3
+     * @return The test suite
      */
     @Test
     public void testBenzene1bromo4methoxy_with() throws Exception {
@@ -1593,18 +1635,19 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
 
     /**
      * A unit test suite for JUnit
-     * @return    The test suite
+     *
+     * @return The test suite
      */
     @Test
     public void testGetMaximalStructures() throws Exception {
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
         Assert.assertEquals(50, gRI.getMaximalStructures());
-
     }
 
     /**
      * A unit test suite for JUnit
-     * @return    The test suite
+     *
+     * @return The test suite
      */
     @Test
     @Category(SlowTest.class)
@@ -1613,15 +1656,13 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         Assert.assertEquals(50, gRI.getMaximalStructures());
         gRI.setMaximalStructures(1);
         Assert.assertEquals(1, gRI.getMaximalStructures());
-
     }
 
     /**
      * A unit test suite for JUnit: c1ccccc1CN
      *
-     *  @cdk.inchi InChI=1/C7H9N/c8-6-7-4-2-1-3-5-7/h1-5H,6,8H2
-     *
-     * @return    The test suite
+     * @cdk.inchi InChI=1/C7H9N/c8-6-7-4-2-1-3-5-7/h1-5H,6,8H2
+     * @return The test suite
      */
     @Test
     public void testBenzylamine() throws Exception {
@@ -1658,10 +1699,9 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit: c1ccccc1CN
      *
-     *  @cdk.inchi InChI=1/C7H9N/c8-6-7-4-2-1-3-5-7/h1-5H,6,8H2
-     *  @cdk.bug 2014515
-     *
-     * @return    The test suite
+     * @cdk.inchi InChI=1/C7H9N/c8-6-7-4-2-1-3-5-7/h1-5H,6,8H2
+     * @cdk.bug 2014515
+     * @return The test suite
      */
     @Test
     public void testBenzylamine_Aromatic() throws Exception {
@@ -1701,9 +1741,8 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit: c1ccccc1CN
      *
-     *  @cdk.inchi InChI=1/C7H9N/c8-6-7-4-2-1-3-5-7/h1-5H,6,8H2
-     *
-     * @return    The test suite
+     * @cdk.inchi InChI=1/C7H9N/c8-6-7-4-2-1-3-5-7/h1-5H,6,8H2
+     * @return The test suite
      */
     @Test
     public void testBenzylamine_Aromatic_lookingSymmetry() throws Exception {

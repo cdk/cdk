@@ -24,19 +24,20 @@
 
 package org.openscience.cdk.hash;
 
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
- * An atom encoder which takes several atom encodes and combines the encodings
- * into a single encoder. The order of the encoders matter and for persistent
- * results should be ordered before construction.
+ * An atom encoder which takes several atom encodes and combines the encodings into a single
+ * encoder. The order of the encoders matter and for persistent results should be ordered before
+ * construction.
  *
- * <blockquote><pre>
+ * <blockquote>
+ *
+ * <pre>
  * // import org.openscience.cdk.hash.seed.BasicAtomEncoder.*
  * AtomEncoder encoder = new ConjugatedAtomEncoder(Arrays.asList(ATOMIC_NUMBER,
  *                                                               FORMAL_CHARGE));
@@ -55,7 +56,9 @@ import java.util.List;
  *                                  }
  *                                });
  *
- * </pre></blockquote>
+ * </pre>
+ *
+ * </blockquote>
  *
  * @author John May
  * @cdk.module hash
@@ -67,11 +70,11 @@ final class ConjugatedAtomEncoder implements AtomEncoder {
     private final List<AtomEncoder> encoders;
 
     /**
-     * Create a new conjugated encoder for the specified list of atom encoders.
-     * The encoders are combined in an order dependant manner.
+     * Create a new conjugated encoder for the specified list of atom encoders. The encoders are
+     * combined in an order dependant manner.
      *
      * @param encoders non-empty list of encoders
-     * @throws NullPointerException     the list of encoders was null
+     * @throws NullPointerException the list of encoders was null
      * @throws IllegalArgumentException the list of encoders was empty
      */
     public ConjugatedAtomEncoder(List<AtomEncoder> encoders) {
@@ -80,38 +83,38 @@ final class ConjugatedAtomEncoder implements AtomEncoder {
         this.encoders = Collections.unmodifiableList(new ArrayList<AtomEncoder>(encoders));
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int encode(IAtom atom, IAtomContainer container) {
         int hash = 179426549;
-        for (AtomEncoder encoder : encoders)
-            hash = 31 * hash + encoder.encode(atom, container);
+        for (AtomEncoder encoder : encoders) hash = 31 * hash + encoder.encode(atom, container);
         return hash;
     }
 
     /**
-     * Convenience method for creating a conjugated encoder from one or more
-     * {@link AtomEncoder}s.
+     * Convenience method for creating a conjugated encoder from one or more {@link AtomEncoder}s.
      *
-     * <blockquote><pre>
+     * <blockquote>
+     *
+     * <pre>
      * // import org.openscience.cdk.hash.seed.BasicAtomEncoder.*
      * AtomEncoder encoder = ConjugatedAtomEncoder.create(ATOMIC_NUMBER,
      *                                                    FORMAL_CHARGE);
-     * </pre></blockquote>
+     * </pre>
      *
-     * @param encoder  the first encoder
+     * </blockquote>
+     *
+     * @param encoder the first encoder
      * @param encoders the other encoders
      * @return a new conjugated encoder
      * @throws NullPointerException either argument was null
      */
     public static AtomEncoder create(AtomEncoder encoder, AtomEncoder... encoders) {
-        if (encoder == null || encoders == null) throw new NullPointerException("null encoders provided");
+        if (encoder == null || encoders == null)
+            throw new NullPointerException("null encoders provided");
         List<AtomEncoder> tmp = new ArrayList<AtomEncoder>(encoders.length + 1);
         tmp.add(encoder);
-        for (AtomEncoder e : encoders)
-            tmp.add(e);
+        for (AtomEncoder e : encoders) tmp.add(e);
         return new ConjugatedAtomEncoder(tmp);
     }
 }

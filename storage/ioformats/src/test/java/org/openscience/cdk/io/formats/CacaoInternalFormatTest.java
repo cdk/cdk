@@ -22,13 +22,10 @@
  */
 package org.openscience.cdk.io.formats;
 
-/**
- * @cdk.module test-ioformats
- */
+/** @cdk.module test-ioformats */
 public class CacaoInternalFormatTest extends ChemFormatTest {
 
     public CacaoInternalFormatTest() {
         super.setChemFormat((IChemFormat) CacaoInternalFormat.getInstance());
     }
-
 }

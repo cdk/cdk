@@ -22,23 +22,22 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * This matcher checks the valence of the Atom. The valence is the number of
- * bonds formed by an atom (including bonds to implicit hydrogens).
+ * This matcher checks the valence of the Atom. The valence is the number of bonds formed by an atom
+ * (including bonds to implicit hydrogens).
  *
- * @cdk.module  smarts
+ * @cdk.module smarts
  * @cdk.keyword SMARTS
  * @cdk.githash
  */
 @Deprecated
 public final class TotalValencyAtom extends SMARTSAtom {
 
-    /**
-     * The valence to match.
-     */
+    /** The valence to match. */
     private final int valence;
 
     /**
      * Match the valence of atom.
+     *
      * @param valence valence value
      * @param builder chem object builder (required for ChemObject.getBuilder)
      */
@@ -47,9 +46,7 @@ public final class TotalValencyAtom extends SMARTSAtom {
         this.valence = valence;
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean matches(IAtom atom) {
         return invariants(atom).valence() == valence;

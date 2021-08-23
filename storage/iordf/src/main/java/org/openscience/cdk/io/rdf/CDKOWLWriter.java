@@ -18,11 +18,11 @@
  */
 package org.openscience.cdk.io.rdf;
 
+import com.hp.hpl.jena.rdf.model.Model;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -30,8 +30,6 @@ import org.openscience.cdk.io.DefaultChemObjectWriter;
 import org.openscience.cdk.io.formats.CDKOWLFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.libio.jena.Convertor;
-
-import com.hp.hpl.jena.rdf.model.Model;
 
 /**
  * Serializes the data model into CDK OWL.
@@ -52,9 +50,7 @@ public class CDKOWLWriter extends DefaultChemObjectWriter {
         this.output = output;
     }
 
-    /**
-     * Creates a new CDKOWLWriter with an undefined output.
-     */
+    /** Creates a new CDKOWLWriter with an undefined output. */
     public CDKOWLWriter() {
         this.output = null;
     }
@@ -118,5 +114,4 @@ public class CDKOWLWriter extends DefaultChemObjectWriter {
         Model model = Convertor.molecule2Model(mol);
         model.write(output, "N3");
     }
-
 }

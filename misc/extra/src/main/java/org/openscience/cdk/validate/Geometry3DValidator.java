@@ -24,9 +24,8 @@ import org.openscience.cdk.interfaces.IBond;
 /**
  * Validates the 3D geometry of the model.
  *
- * @cdk.module  extra
+ * @cdk.module extra
  * @cdk.githash
- *
  * @cdk.created 2006-05-11
  */
 public class Geometry3DValidator extends AbstractValidator {
@@ -39,11 +38,14 @@ public class Geometry3DValidator extends AbstractValidator {
         ValidationReport report = new ValidationReport();
         // only consider two atom bonds
         if (subject.getAtomCount() == 2) {
-            double distance = subject.getBegin().getPoint3d().distance(subject.getEnd().getPoint3d());
+            double distance =
+                    subject.getBegin().getPoint3d().distance(subject.getEnd().getPoint3d());
             if (distance > 3.0) { // should really depend on the elements
-                ValidationTest badBondLengthError = new ValidationTest(subject,
-                        "Bond length cannot exceed 3 Angstroms.",
-                        "A bond length typically is between 0.5 and 3.0 Angstroms.");
+                ValidationTest badBondLengthError =
+                        new ValidationTest(
+                                subject,
+                                "Bond length cannot exceed 3 Angstroms.",
+                                "A bond length typically is between 0.5 and 3.0 Angstroms.");
                 report.addError(badBondLengthError);
             }
         }

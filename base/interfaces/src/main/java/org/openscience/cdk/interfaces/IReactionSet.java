@@ -21,9 +21,8 @@ package org.openscience.cdk.interfaces;
 /**
  * A set of reactions, for example those taking part in a reaction.
  *
- * @cdk.module  interfaces
+ * @cdk.module interfaces
  * @cdk.githash
- *
  * @cdk.keyword reaction
  */
 public interface IReactionSet extends IChemObject {
@@ -31,43 +30,40 @@ public interface IReactionSet extends IChemObject {
     /**
      * Adds an reaction to this container.
      *
-     * @param  reaction  The reaction to be added to this container
+     * @param reaction The reaction to be added to this container
      */
     public void addReaction(IReaction reaction);
 
     /**
-         * Remove a reaction from this set.
-         *
-         * @param  pos  The position of the reaction to be removed.
-         */
+     * Remove a reaction from this set.
+     *
+     * @param pos The position of the reaction to be removed.
+     */
     public void removeReaction(int pos);
 
     /**
-    * Returns the Reaction at position <code>number</code> in the
-    * container.
-    *
-    * @param  number  The position of the Reaction to be returned
-    * @return         The Reaction at position <code>number</code>
-    */
+     * Returns the Reaction at position <code>number</code> in the container.
+     *
+     * @param number The position of the Reaction to be returned
+     * @return The Reaction at position <code>number</code>
+     */
     public IReaction getReaction(int number);
 
     /**
      * Returns the {@link Iterable} over Reactions of this container.
      *
-     * @return    The {@link Iterable} over Reactions of this container
+     * @return The {@link Iterable} over Reactions of this container
      */
     public Iterable<IReaction> reactions();
 
     /**
      * Returns the number of Reactions in this Container.
      *
-     * @return     The number of Reactions in this Container
+     * @return The number of Reactions in this Container
      */
     public int getReactionCount();
 
-    /**
-     * Removes all reactions from this set.
-     */
+    /** Removes all reactions from this set. */
     public void removeAllReactions();
 
     /**

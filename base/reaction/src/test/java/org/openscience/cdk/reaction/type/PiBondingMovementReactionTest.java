@@ -18,6 +18,9 @@
  */
 package org.openscience.cdk.reaction.type;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
@@ -33,22 +36,18 @@ import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionProcessTest;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 /**
- * TestSuite that runs a test for the PiBondingMovementReactionTest.
- * Generalized Reaction: C1=C(C)-C(C)=C-C=C1 -> C1(C)=C(C)-C=C-C=C1.
+ * TestSuite that runs a test for the PiBondingMovementReactionTest. Generalized Reaction:
+ * C1=C(C)-C(C)=C-C=C1 -> C1(C)=C(C)-C=C-C=C1.
  *
- * FIXME: REACT: The tests fail if I don't put the smiles, strange
+ * <p>FIXME: REACT: The tests fail if I don't put the smiles, strange
  *
  * @cdk.module test-reaction
  */
@@ -56,16 +55,12 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 
     private IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
-    /**
-     *  The JUnit setup method
-     */
+    /** The JUnit setup method */
     public PiBondingMovementReactionTest() throws Exception {
         setReaction(PiBondingMovementReaction.class);
     }
 
-    /**
-     *  The JUnit setup method
-     */
+    /** The JUnit setup method */
     @Test
     public void testPiBondingMovementReaction() {
         IReactionProcess type = new PiBondingMovementReaction();
@@ -73,11 +68,10 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
     }
 
     /**
-     * A unit test suite for JUnit with benzene.
-     * Reaction:  C1=CC=CC=C1 -> C1(C)=C(C)-C=C-C=C1
+     * A unit test suite for JUnit with benzene. Reaction: C1=CC=CC=C1 -> C1(C)=C(C)-C=C-C=C1
      * Automatic search of the center active.
      *
-     * InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H
+     * <p>InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H
      */
     @Test
     @Override
@@ -102,7 +96,8 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         makeSureAtomTypesAreRecognized(molecule);
 
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         setOfReactants.addAtomContainer(molecule);
 
         /* initiate */
@@ -118,17 +113,16 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 
         IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 
-        IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
+        IQueryAtomContainer queryAtom =
+                QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
         Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule, queryAtom));
-
     }
 
     /**
-     * A unit test suite for JUnit with 1,2-dimethylbenzene.
-     * Reaction: C1=C(C)-C(C)=C-C=C1 -> C1(C)=C(C)-C=C-C=C1
-     * Automatic search of the center active.
+     * A unit test suite for JUnit with 1,2-dimethylbenzene. Reaction: C1=C(C)-C(C)=C-C=C1 ->
+     * C1(C)=C(C)-C=C-C=C1 Automatic search of the center active.
      *
-     * InChI=1/C8H10/c1-7-5-3-4-6-8(7)2/h3-6H,1-2H3
+     * <p>InChI=1/C8H10/c1-7-5-3-4-6-8(7)2/h3-6H,1-2H3
      */
     @Test
     public void testAutomaticSearchCentreActiveExample1() throws Exception {
@@ -156,7 +150,8 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         makeSureAtomTypesAreRecognized(molecule);
 
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         setOfReactants.addAtomContainer(molecule);
 
         /* initiate */
@@ -172,7 +167,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 
         IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 
-        //C1(C)=C(C)-C=C-C=C1
+        // C1(C)=C(C)-C=C-C=C1
         IAtomContainer molecule2 = builder.newInstance(IAtomContainer.class);
         molecule2.addAtom(builder.newInstance(IAtom.class, "C"));
         molecule2.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -195,23 +190,22 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule2);
         makeSureAtomTypesAreRecognized(molecule2);
 
-        IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
+        IQueryAtomContainer queryAtom =
+                QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
         Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, queryAtom));
-
     }
 
     static boolean matches(IAtomContainer a, IAtomContainer b) throws CDKException {
-        IQueryAtomContainer query = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(b);
+        IQueryAtomContainer query =
+                QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(b);
         return new UniversalIsomorphismTester().isIsomorph(a, query);
     }
 
     /**
-     * A unit test suite for JUnit with 2-methylnaphthalene.
-     * Reaction: C1=CC(=CC2=C1C=CC=C2)C
-     * -> C1=CC(=CC2=CC=CC=C12)C + C1=C2C(=CC(=C1)C)C=CC=C2
-     * Automatic search of the center active.
+     * A unit test suite for JUnit with 2-methylnaphthalene. Reaction: C1=CC(=CC2=C1C=CC=C2)C ->
+     * C1=CC(=CC2=CC=CC=C12)C + C1=C2C(=CC(=C1)C)C=CC=C2 Automatic search of the center active.
      *
-     * InChI=1/C11H10/c1-9-6-7-10-4-2-3-5-11(10)8-9/h2-8H,1H3
+     * <p>InChI=1/C11H10/c1-9-6-7-10-4-2-3-5-11(10)8-9/h2-8H,1H3
      */
     @Test
     public void testDoubleRingConjugated() throws Exception {
@@ -236,7 +230,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
         Assert.assertEquals(1, setOfReactions.getReaction(1).getProductCount());
 
         IAtomContainer product2 = setOfReactions.getReaction(1).getProducts().getAtomContainer(0);
-        //C1=CC(=CC2=CC=CC=C12)C
+        // C1=CC(=CC2=CC=CC=C12)C
         IAtomContainer molecule2 = builder.newInstance(IAtomContainer.class);
         molecule2.addAtom(builder.newInstance(IAtom.class, "C"));
         molecule2.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -268,20 +262,18 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 
         // order depends on ring perception order (may change between versions) we check both
         // combinations just in case
-        Assert.assertTrue((matches(molecule2, product1) && matches(molecule1, product2))
-                || (matches(molecule1, product1) && matches(molecule2, product2)));
-
+        Assert.assertTrue(
+                (matches(molecule2, product1) && matches(molecule1, product2))
+                        || (matches(molecule1, product1) && matches(molecule2, product2)));
     }
 
     /**
-     * A unit test suite for JUnit with 2-methylnaphthalene.
-     * Reaction: C1=CC(=CC2=C1C=CC=C2)C
-     * -> C1=CC(=CC2=CC=CC=C12)C + {NO => C1=C2C(=CC(=C1)C)C=CC=C2}
+     * A unit test suite for JUnit with 2-methylnaphthalene. Reaction: C1=CC(=CC2=C1C=CC=C2)C ->
+     * C1=CC(=CC2=CC=CC=C12)C + {NO => C1=C2C(=CC(=C1)C)C=CC=C2}
      *
-     * restricted the reaction center.
+     * <p>restricted the reaction center.
      *
-     * InChI=1/C11H10/c1-9-6-7-10-4-2-3-5-11(10)8-9/h2-8H,1H3
-     *
+     * <p>InChI=1/C11H10/c1-9-6-7-10-4-2-3-5-11(10)8-9/h2-8H,1H3
      */
     @Test
     public void testDoubleRingConjugated2() throws Exception {
@@ -314,19 +306,19 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
 
-        IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
+        IQueryAtomContainer queryAtom =
+                QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
         Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, queryAtom));
-
     }
 
     /**
-     * Create one of the resonance for 2-methylnaphthalene.
-     * C1=CC(=CC2=C1C=CC=C2)C
+     * Create one of the resonance for 2-methylnaphthalene. C1=CC(=CC2=C1C=CC=C2)C
      *
      * @return The IAtomContainerSet
      */
     private IAtomContainerSet getExampleReactants() {
-        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        IAtomContainerSet setOfReactants =
+                DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         // C{0}1=C{1}C{2}(=C{3}C{4}2=C{5}1C{6}=C{7}C{8}=C{9}2)C{10}
         // C1=CC(=CC2=C1C=CC=C2)C
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
@@ -367,15 +359,14 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
     }
 
     /**
-     * Get the expected set of molecules. 2-methylnaphthalene.
-     * C=1C=CC2=CC(=CC=C2(C=1))C
+     * Get the expected set of molecules. 2-methylnaphthalene. C=1C=CC2=CC(=CC=C2(C=1))C
      *
      * @return The IAtomContainerSet
      */
     private IAtomContainerSet getExpectedProducts() {
         IAtomContainerSet setOfProducts = builder.newInstance(IAtomContainerSet.class);
 
-        //C=1C=CC2=CC(=CC=C2(C=1))C
+        // C=1C=CC2=CC(=CC=C2(C=1))C
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
         molecule.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -416,7 +407,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
     /**
      * Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
      *
-     * @param molecule          The IAtomContainer to analyze
+     * @param molecule The IAtomContainer to analyze
      */
     private void makeSureAtomTypesAreRecognized(IAtomContainer molecule) throws Exception {
 
@@ -424,7 +415,9 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
         while (atoms.hasNext()) {
             IAtom nextAtom = atoms.next();
-            Assert.assertNotNull("Missing atom type for: " + nextAtom, matcher.findMatchingAtomType(molecule, nextAtom));
+            Assert.assertNotNull(
+                    "Missing atom type for: " + nextAtom,
+                    matcher.findMatchingAtomType(molecule, nextAtom));
         }
     }
 }

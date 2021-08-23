@@ -18,6 +18,8 @@
  */
 package org.openscience.cdk.reaction.type;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -35,75 +37,71 @@ import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 /**
- * <p>IReactionProcess which make an electron impact for pi-Bond Dissociation.</p>
- * <p>This reaction type is a representation of the processes which occurs in the mass spectrometer.</p>
- * <p>It is processed by the RemovingSEofPBMechanism class</p>
+ * IReactionProcess which make an electron impact for pi-Bond Dissociation.
+ *
+ * <p>This reaction type is a representation of the processes which occurs in the mass spectrometer.
+ *
+ * <p>It is processed by the RemovingSEofPBMechanism class
  *
  * <pre>
  *  IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newAtomContainerSet();
  *  setOfReactants.addAtomContainer(new AtomContainer());
  *  IReactionProcess type = new ElectronImpactPDBReaction();
  *  Object[] params = {Boolean.FALSE};
-    type.setParameters(params);
+ * type.setParameters(params);
  *  IReactionSet setOfReactions = type.initiate(setOfReactants, null);
  *  </pre>
  *
- * <p>We have the possibility to localize the reactive center. Good method if you
- * want to localize the reaction in a fixed point</p>
+ * <p>We have the possibility to localize the reactive center. Good method if you want to localize
+ * the reaction in a fixed point
+ *
  * <pre>atoms[0].setFlag(CDKConstants.REACTIVE_CENTER,true);</pre>
- * <p>Moreover you must put the parameter Boolean.TRUE</p>
- * <p>If the reactive center is not localized then the reaction process will
- * try to find automatically the possible reactive center.</p>
  *
+ * <p>Moreover you must put the parameter Boolean.TRUE
  *
- * @author         Miguel Rojas
+ * <p>If the reactive center is not localized then the reaction process will try to find
+ * automatically the possible reactive center.
  *
- * @cdk.created    2006-04-01
- * @cdk.module     reaction
+ * @author Miguel Rojas
+ * @cdk.created 2006-04-01
+ * @cdk.module reaction
  * @cdk.githash
- *
  * @see RemovingSEofBMechanism
- *
- **/
+ */
 public class ElectronImpactPDBReaction extends ReactionEngine implements IReactionProcess {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(ElectronImpactPDBReaction.class);
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(ElectronImpactPDBReaction.class);
 
-    /**
-     * Constructor of the ElectronImpactPDBReaction object.
-     *
-     */
+    /** Constructor of the ElectronImpactPDBReaction object. */
     public ElectronImpactPDBReaction() {}
 
     /**
-     *  Gets the specification attribute of the ElectronImpactPDBReaction object.
+     * Gets the specification attribute of the ElectronImpactPDBReaction object.
      *
-     *@return    The specification value
+     * @return The specification value
      */
     @Override
     public ReactionSpecification getSpecification() {
         return new ReactionSpecification(
-                "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#ElectronImpactPDB", this
-                        .getClass().getName(), "$Id$", "The Chemistry Development Kit");
+                "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#ElectronImpactPDB",
+                this.getClass().getName(),
+                "$Id$",
+                "The Chemistry Development Kit");
     }
 
     /**
-     *  Initiate process.
-     *  It is needed to call the addExplicitHydrogensToSatisfyValency
-     *  from the class tools.HydrogenAdder.
+     * Initiate process. It is needed to call the addExplicitHydrogensToSatisfyValency from the
+     * class tools.HydrogenAdder.
      *
-     *
-     *@exception  CDKException  Description of the Exception
-
-     * @param  reactants         reactants of the reaction.
-    * @param  agents            agents of the reaction (Must be in this case null).
+     * @exception CDKException Description of the Exception
+     * @param reactants reactants of the reaction.
+     * @param agents agents of the reaction (Must be in this case null).
      */
     @Override
-    public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents) throws CDKException {
+    public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents)
+            throws CDKException {
 
         logger.debug("initiate reaction: ElectronImpactPDBReaction");
 
@@ -130,10 +128,14 @@ public class ElectronImpactPDBReaction extends ReactionEngine implements IReacti
             IAtom atom1 = bondi.getBegin();
             IAtom atom2 = bondi.getEnd();
             if (bondi.getFlag(CDKConstants.REACTIVE_CENTER)
-                    && (bondi.getOrder() == IBond.Order.DOUBLE || bondi.getOrder() == IBond.Order.TRIPLE)
-                    && atom1.getFlag(CDKConstants.REACTIVE_CENTER) && atom2.getFlag(CDKConstants.REACTIVE_CENTER)
-                    && (atom1.getFormalCharge() == CDKConstants.UNSET ? 0 : atom1.getFormalCharge()) == 0
-                    && (atom2.getFormalCharge() == CDKConstants.UNSET ? 0 : atom2.getFormalCharge()) == 0
+                    && (bondi.getOrder() == IBond.Order.DOUBLE
+                            || bondi.getOrder() == IBond.Order.TRIPLE)
+                    && atom1.getFlag(CDKConstants.REACTIVE_CENTER)
+                    && atom2.getFlag(CDKConstants.REACTIVE_CENTER)
+                    && (atom1.getFormalCharge() == CDKConstants.UNSET ? 0 : atom1.getFormalCharge())
+                            == 0
+                    && (atom2.getFormalCharge() == CDKConstants.UNSET ? 0 : atom2.getFormalCharge())
+                            == 0
                     && reactant.getConnectedSingleElectronsCount(atom1) == 0
                     && reactant.getConnectedSingleElectronsCount(atom2) == 0) {
 
@@ -150,24 +152,21 @@ public class ElectronImpactPDBReaction extends ReactionEngine implements IReacti
                     ArrayList<IBond> bondList = new ArrayList<IBond>();
                     bondList.add(bondi);
 
-                    IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(IAtomContainerSet.class);
+                    IAtomContainerSet moleculeSet =
+                            reactant.getBuilder().newInstance(IAtomContainerSet.class);
                     moleculeSet.addAtomContainer(reactant);
                     IReaction reaction = mechanism.initiate(moleculeSet, atomList, bondList);
-                    if (reaction == null)
-                        continue;
-                    else
-                        setOfReactions.addReaction(reaction);
+                    if (reaction == null) continue;
+                    else setOfReactions.addReaction(reaction);
                 }
-
             }
         }
         return setOfReactions;
-
     }
 
     /**
-     * Set the active center for this molecule. The active center will be double bonds.
-     * As default is only those atoms without charge and between a double bond.
+     * Set the active center for this molecule. The active center will be double bonds. As default
+     * is only those atoms without charge and between a double bond.
      *
      * @param reactant The molecule to set the activity
      * @throws CDKException
@@ -179,8 +178,10 @@ public class ElectronImpactPDBReaction extends ReactionEngine implements IReacti
             IAtom atom1 = bondi.getBegin();
             IAtom atom2 = bondi.getEnd();
             if ((bondi.getOrder() == IBond.Order.DOUBLE || bondi.getOrder() == IBond.Order.TRIPLE)
-                    && (atom1.getFormalCharge() == CDKConstants.UNSET ? 0 : atom1.getFormalCharge()) == 0
-                    && (atom2.getFormalCharge() == CDKConstants.UNSET ? 0 : atom2.getFormalCharge()) == 0
+                    && (atom1.getFormalCharge() == CDKConstants.UNSET ? 0 : atom1.getFormalCharge())
+                            == 0
+                    && (atom2.getFormalCharge() == CDKConstants.UNSET ? 0 : atom2.getFormalCharge())
+                            == 0
                     && reactant.getConnectedSingleElectronsCount(atom1) == 0
                     && reactant.getConnectedSingleElectronsCount(atom2) == 0) {
                 bondi.setFlag(CDKConstants.REACTIVE_CENTER, true);

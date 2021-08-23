@@ -27,10 +27,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.tools.DataFeatures;
 
-/**
- * @cdk.module test-ioformats
- */
-abstract public class ChemFormatTest extends ResourceFormatTest {
+/** @cdk.module test-ioformats */
+public abstract class ChemFormatTest extends ResourceFormatTest {
 
     private IChemFormat chemFormat;
 
@@ -41,7 +39,8 @@ abstract public class ChemFormatTest extends ResourceFormatTest {
 
     @Test
     public void testChemFormatSet() {
-        Assert.assertNotNull("You must use setChemFormat() to set the IChemFormat object.", chemFormat);
+        Assert.assertNotNull(
+                "You must use setChemFormat() to set the IChemFormat object.", chemFormat);
     }
 
     @Ignore("Test cannot be run because it causes a circular dependency cycle")
@@ -49,7 +48,8 @@ abstract public class ChemFormatTest extends ResourceFormatTest {
         // two valid output options: NULL and non-zero, existing class
         if (chemFormat.getReaderClassName() != null) {
             String readerClass = chemFormat.getReaderClassName();
-            Assert.assertNotSame("Reader Class name String must be of non-zero length", 0, readerClass.length());
+            Assert.assertNotSame(
+                    "Reader Class name String must be of non-zero length", 0, readerClass.length());
             Class<?> reader = Class.forName(readerClass);
             Assert.assertNotNull(reader);
         }
@@ -60,7 +60,8 @@ abstract public class ChemFormatTest extends ResourceFormatTest {
         // two valid output options: NULL and non-zero, existing class
         if (chemFormat.getWriterClassName() != null) {
             String writerClass = chemFormat.getWriterClassName();
-            Assert.assertNotSame("Writer Class name String must be of non-zero length", 0, writerClass.length());
+            Assert.assertNotSame(
+                    "Writer Class name String must be of non-zero length", 0, writerClass.length());
             Class<?> writer = Class.forName(writerClass);
             Assert.assertNotNull(writer);
         }
@@ -83,5 +84,4 @@ abstract public class ChemFormatTest extends ResourceFormatTest {
         int supported = chemFormat.getSupportedDataFeatures();
         Assert.assertTrue(supported - required >= 0);
     }
-
 }

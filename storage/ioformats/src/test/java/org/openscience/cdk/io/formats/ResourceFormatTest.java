@@ -22,17 +22,15 @@
  */
 package org.openscience.cdk.io.formats;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertFalse;
+
 import org.junit.Assert;
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertFalse;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-/**
- * @cdk.module test-ioformats
- */
-abstract public class ResourceFormatTest {
+/** @cdk.module test-ioformats */
+public abstract class ResourceFormatTest {
 
     private IResourceFormat resourceFormat;
 
@@ -42,7 +40,9 @@ abstract public class ResourceFormatTest {
 
     @Test
     public void testResourceFormatSet() {
-        Assert.assertNotNull("You must use setResourceFormatSet() to set the resourceFormat object.", resourceFormat);
+        Assert.assertNotNull(
+                "You must use setResourceFormatSet() to set the resourceFormat object.",
+                resourceFormat);
     }
 
     @Test
@@ -63,11 +63,13 @@ abstract public class ResourceFormatTest {
     @Test
     public void testGetPreferredNameExtension() {
         if (resourceFormat.getPreferredNameExtension() == null) {
-            if (resourceFormat.getNameExtensions() == null || resourceFormat.getNameExtensions().length == 0) {
+            if (resourceFormat.getNameExtensions() == null
+                    || resourceFormat.getNameExtensions().length == 0) {
                 // Seems to be current practice
                 // FIXME: needs to be discussed
             } else {
-                Assert.fail("This format define file name extensions (getNameExtensions()), but does not provide a prefered extension (getPreferredNameExtension()).");
+                Assert.fail(
+                        "This format define file name extensions (getNameExtensions()), but does not provide a prefered extension (getPreferredNameExtension()).");
             }
         } else {
             String prefExtension = resourceFormat.getPreferredNameExtension();
@@ -80,7 +82,9 @@ abstract public class ResourceFormatTest {
             for (int i = 0; i < allExtensions.length; i++) {
                 if (allExtensions[i].equals(prefExtension)) prefExtInAllExtList = true;
             }
-            Assert.assertTrue("The preferred extension is not found in the list of all extensions", prefExtInAllExtList);
+            Assert.assertTrue(
+                    "The preferred extension is not found in the list of all extensions",
+                    prefExtInAllExtList);
         }
     }
 
@@ -98,8 +102,12 @@ abstract public class ResourceFormatTest {
                 String extension = exts[i];
                 Assert.assertNotNull(extension);
                 Assert.assertNotSame(0, extension.length());
-                assertFalse("File name extensions should not contain ',' characters", extension.contains(","));
-                assertFalse("File name extensions should not contain '.' characters", extension.contains("."));
+                assertFalse(
+                        "File name extensions should not contain ',' characters",
+                        extension.contains(","));
+                assertFalse(
+                        "File name extensions should not contain '.' characters",
+                        extension.contains("."));
             }
         }
     }

@@ -25,9 +25,7 @@ package org.openscience.cdk.io.iterator.event;
 
 import java.io.IOException;
 import java.io.Reader;
-
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -38,41 +36,37 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.listener.IReaderListener;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
-
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 
 /**
- * Reads a molecule in CML 1.x and 2.0 format.
- * CML is an XML based application {@cdk.cite PMR99}, and this Reader
- * applies the method described in {@cdk.cite WIL01}.
+ * Reads a molecule in CML 1.x and 2.0 format. CML is an XML based application {@cdk.cite PMR99},
+ * and this Reader applies the method described in {@cdk.cite WIL01}.
  *
  * @cdk.module io
  * @cdk.githash
- *
- * @author       Egon L. Willighagen
- * @cdk.created  2001-02-01
- *
+ * @author Egon L. Willighagen
+ * @cdk.created 2001-02-01
  * @cdk.keyword file format, CML
  */
 public class EventCMLReader extends DefaultEventChemObjectReader {
 
-    private XMLReader           parser;
-    private Reader              input;
-    private IChemObjectBuilder  builder;
-    private EventCMLHandler     cdo;
+    private XMLReader parser;
+    private Reader input;
+    private IChemObjectBuilder builder;
+    private EventCMLHandler cdo;
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(EventCMLReader.class); ;
+    private static ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(EventCMLReader.class);;
 
     /**
-     * Define this CMLReader to take the input from a java.io.Reader
-     * class. Possible readers are (among others) StringReader and FileReader.
-     * The given ReaderListener catches the events thrown to signal that a
-     * a new molecule is read.
+     * Define this CMLReader to take the input from a java.io.Reader class. Possible readers are
+     * (among others) StringReader and FileReader. The given ReaderListener catches the events
+     * thrown to signal that a a new molecule is read.
      *
-     * @param input    Reader type input
+     * @param input Reader type input
      * @param listener ReaderListener that listens to newMolecule events.
      */
     public EventCMLReader(Reader input, IReaderListener listener, IChemObjectBuilder builder) {
@@ -102,7 +96,8 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
         // If JAXP is prefered (comes with Sun JVM 1.4.0 and higher)
         if (!success) {
             try {
-                javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
+                javax.xml.parsers.SAXParserFactory spf =
+                        javax.xml.parsers.SAXParserFactory.newInstance();
                 spf.setNamespaceAware(true);
                 javax.xml.parsers.SAXParser saxParser = spf.newSAXParser();
                 parser = saxParser.getXMLReader();
@@ -116,8 +111,12 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
         // Aelfred is first alternative.
         if (!success) {
             try {
-                parser = (XMLReader) this.getClass().getClassLoader().loadClass("gnu.xml.aelfred2.XmlReader")
-                        .newInstance();
+                parser =
+                        (XMLReader)
+                                this.getClass()
+                                        .getClassLoader()
+                                        .loadClass("gnu.xml.aelfred2.XmlReader")
+                                        .newInstance();
                 logger.info("Using Aelfred2 XML parser.");
                 success = true;
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
@@ -128,8 +127,12 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
         // Xerces is second alternative
         if (!success) {
             try {
-                parser = (XMLReader) this.getClass().getClassLoader().loadClass("org.apache.xerces.parsers.SAXParser")
-                        .newInstance();
+                parser =
+                        (XMLReader)
+                                this.getClass()
+                                        .getClassLoader()
+                                        .loadClass("org.apache.xerces.parsers.SAXParser")
+                                        .newInstance();
                 logger.info("Using Xerces XML parser.");
                 success = true;
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
@@ -143,8 +146,8 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
     }
 
     /**
-     * Starts the reading of the CML file. Whenever a new Molecule is read,
-     * a event is thrown to the ReaderListener.
+     * Starts the reading of the CML file. Whenever a new Molecule is read, a event is thrown to the
+     * ReaderListener.
      */
     public void process() throws CDKException {
         logger.debug("Started parsing from input...");
@@ -183,5 +186,4 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
     public void close() throws IOException {
         input.close();
     }
-
 }

@@ -43,14 +43,16 @@ public class IsProtonInConjugatedPiSystemDescriptorTest extends AtomicDescriptor
     }
 
     @Test
-    public void testIsProtonInConjugatedPiSystemDescriptor() throws ClassNotFoundException, CDKException,
-            java.lang.Exception {
+    public void testIsProtonInConjugatedPiSystemDescriptor()
+            throws ClassNotFoundException, CDKException, java.lang.Exception {
         IAtomicDescriptor descriptor = new IsProtonInConjugatedPiSystemDescriptor();
         Object[] params = {new Boolean(true)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CNC=CC=C");
         addExplicitHydrogens(mol);
-        Assert.assertTrue(((BooleanResult) descriptor.calculate(mol.getAtom(13), mol).getValue()).booleanValue());
+        Assert.assertTrue(
+                ((BooleanResult) descriptor.calculate(mol.getAtom(13), mol).getValue())
+                        .booleanValue());
     }
 }

@@ -24,7 +24,6 @@ package org.openscience.cdk.structgen;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -34,26 +33,25 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
- * The VicinitySampler is a generator of constitutional isomers. It needs to be
- * provided with a starting constitution and it makes random moves in
- * constitutional space from there. This generator was first suggested by
- * Faulon {@cdk.cite FAU96}.
+ * The VicinitySampler is a generator of constitutional isomers. It needs to be provided with a
+ * starting constitution and it makes random moves in constitutional space from there. This
+ * generator was first suggested by Faulon {@cdk.cite FAU96}.
  *
- * @cdk.keyword  structure generator
- * @cdk.module   structgen
+ * @cdk.keyword structure generator
+ * @cdk.module structgen
  * @cdk.githash
- * @cdk.bug      1632610
+ * @cdk.bug 1632610
  */
 public class VicinitySampler {
 
-    private final static ILoggingTool LOGGER     = LoggingToolFactory.createLoggingTool(VicinitySampler.class);
+    private static final ILoggingTool LOGGER =
+            LoggingToolFactory.createLoggingTool(VicinitySampler.class);
 
-    int                               molCounter = 0;
+    int molCounter = 0;
 
     /**
-     * Choose any possible quadruple of the set of atoms
-     * in ac and establish all of the possible bonding schemes according to
-     * Faulon's equations.
+     * Choose any possible quadruple of the set of atoms in ac and establish all of the possible
+     * bonding schemes according to Faulon's equations.
      */
     public static List<IAtomContainer> sample(IAtomContainer ac) {
         LOGGER.debug("RandomGenerator->mutate() Start");
@@ -71,7 +69,7 @@ public class VicinitySampler {
 
         IAtom ax1 = null, ax2 = null, ay1 = null, ay2 = null;
         IBond b1 = null, b2 = null, b3 = null, b4 = null;
-        //int[] choices = new int[3];
+        // int[] choices = new int[3];
         /* We need at least two non-zero bonds in order to be successful */
         int nonZeroBondsCounter = 0;
         for (int x1 = 0; x1 < nrOfAtoms; x1++) {
@@ -139,7 +137,15 @@ public class VicinitySampler {
                                     b12 = a11 + a12 - b11;
                                     b21 = a11 + a21 - b11;
                                     b22 = a22 - a11 + b11;
-                                    LOGGER.debug("Trying atom combination : " + x1 + ":" + x2 + ":" + y1 + ":" + y2);
+                                    LOGGER.debug(
+                                            "Trying atom combination : "
+                                                    + x1
+                                                    + ":"
+                                                    + x2
+                                                    + ":"
+                                                    + y1
+                                                    + ":"
+                                                    + y2);
                                     try {
                                         newAc = (IAtomContainer) ac.clone();
                                         change(newAc, x1, y1, x2, y2, b11, b12, b21, b22);
@@ -162,8 +168,16 @@ public class VicinitySampler {
         return structures;
     }
 
-    private static IAtomContainer change(IAtomContainer ac, int x1, int y1, int x2, int y2, double b11, double b12,
-            double b21, double b22) {
+    private static IAtomContainer change(
+            IAtomContainer ac,
+            int x1,
+            int y1,
+            int x2,
+            int y2,
+            double b11,
+            double b12,
+            double b21,
+            double b22) {
         IAtom ax1 = null, ax2 = null, ay1 = null, ay2 = null;
         IBond b1 = null, b2 = null, b3 = null, b4 = null;
         try {
@@ -181,7 +195,13 @@ public class VicinitySampler {
         if (b11 > 0) {
             if (b1 == null) {
                 LOGGER.debug("no bond " + x1 + "-" + y1 + ". Adding it with order " + b11);
-                b1 = ac.getBuilder().newInstance(IBond.class, ax1, ay1, BondManipulator.createBondOrder(b11));
+                b1 =
+                        ac.getBuilder()
+                                .newInstance(
+                                        IBond.class,
+                                        ax1,
+                                        ay1,
+                                        BondManipulator.createBondOrder(b11));
                 ac.addBond(b1);
             } else {
                 b1.setOrder(BondManipulator.createBondOrder(b11));
@@ -195,7 +215,13 @@ public class VicinitySampler {
         if (b12 > 0) {
             if (b2 == null) {
                 LOGGER.debug("no bond " + x1 + "-" + y2 + ". Adding it with order " + b12);
-                b2 = ac.getBuilder().newInstance(IBond.class, ax1, ay2, BondManipulator.createBondOrder(b12));
+                b2 =
+                        ac.getBuilder()
+                                .newInstance(
+                                        IBond.class,
+                                        ax1,
+                                        ay2,
+                                        BondManipulator.createBondOrder(b12));
                 ac.addBond(b2);
             } else {
                 b2.setOrder(BondManipulator.createBondOrder(b12));
@@ -209,7 +235,13 @@ public class VicinitySampler {
         if (b21 > 0) {
             if (b3 == null) {
                 LOGGER.debug("no bond " + x2 + "-" + y1 + ". Adding it with order " + b21);
-                b3 = ac.getBuilder().newInstance(IBond.class, ax2, ay1, BondManipulator.createBondOrder(b21));
+                b3 =
+                        ac.getBuilder()
+                                .newInstance(
+                                        IBond.class,
+                                        ax2,
+                                        ay1,
+                                        BondManipulator.createBondOrder(b21));
                 ac.addBond(b3);
             } else {
                 b3.setOrder(BondManipulator.createBondOrder(b21));
@@ -223,7 +255,13 @@ public class VicinitySampler {
         if (b22 > 0) {
             if (b4 == null) {
                 LOGGER.debug("no bond " + x2 + "-" + y2 + ". Adding it  with order " + b22);
-                b4 = ac.getBuilder().newInstance(IBond.class, ax2, ay2, BondManipulator.createBondOrder(b22));
+                b4 =
+                        ac.getBuilder()
+                                .newInstance(
+                                        IBond.class,
+                                        ax2,
+                                        ay2,
+                                        BondManipulator.createBondOrder(b22));
                 ac.addBond(b4);
             } else {
                 b4.setOrder(BondManipulator.createBondOrder(b22));
@@ -235,5 +273,4 @@ public class VicinitySampler {
         }
         return ac;
     }
-
 }

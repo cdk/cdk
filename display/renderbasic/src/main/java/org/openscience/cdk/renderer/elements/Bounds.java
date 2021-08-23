@@ -24,18 +24,15 @@
 
 package org.openscience.cdk.renderer.elements;
 
-
-import org.openscience.cdk.tools.LoggingToolFactory;
-
-import javax.vecmath.Vector2d;
 import java.util.ArrayDeque;
 import java.util.Deque;
+import javax.vecmath.Vector2d;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * Defines a bounding box element which the renderer can use to determine the true
- * drawing limits. Using only atom coordinates adjuncts (e.g. hydrogen labels)
- * may be truncated. If a generator provide a bounding box element, then the
- * min/max bounds of all bounding boxes are utilised.
+ * Defines a bounding box element which the renderer can use to determine the true drawing limits.
+ * Using only atom coordinates adjuncts (e.g. hydrogen labels) may be truncated. If a generator
+ * provide a bounding box element, then the min/max bounds of all bounding boxes are utilised.
  *
  * @author John May
  * @cdk.module renderbasic
@@ -43,19 +40,13 @@ import java.util.Deque;
  */
 public final class Bounds implements IRenderingElement {
 
-    /**
-     * Minimum x/y coordinates.
-     */
+    /** Minimum x/y coordinates. */
     public double minX, minY;
 
-    /**
-     * Maximum x/y coordinates.
-     */
+    /** Maximum x/y coordinates. */
     public double maxX, maxY;
 
-    /**
-     * Know which elements are within this bound box.
-     */
+    /** Know which elements are within this bound box. */
     private final ElementGroup elements = new ElementGroup();
 
     /**
@@ -73,25 +64,18 @@ public final class Bounds implements IRenderingElement {
         this.maxY = y2;
     }
 
-    /**
-     * An empty bounding box.
-     */
+    /** An empty bounding box. */
     public Bounds() {
-        this(+Double.MAX_VALUE, +Double.MAX_VALUE,
-             -Double.MAX_VALUE, -Double.MAX_VALUE);
+        this(+Double.MAX_VALUE, +Double.MAX_VALUE, -Double.MAX_VALUE, -Double.MAX_VALUE);
     }
 
-    /**
-     * An bounding box around the specified element.
-     */
+    /** An bounding box around the specified element. */
     public Bounds(IRenderingElement element) {
         this();
         add(element);
     }
 
-    /**
-     * Add the specified element bounds.
-     */
+    /** Add the specified element bounds. */
     public void add(IRenderingElement element) {
         elements.add(element);
         traverse(element);
@@ -157,17 +141,23 @@ public final class Bounds implements IRenderingElement {
                 add((GeneralPath) element);
             } else if (element instanceof LineElement) {
                 LineElement lineElem = (LineElement) element;
-                Vector2d vec = new Vector2d(lineElem.secondPointX-lineElem.firstPointX,
-                                            lineElem.secondPointY-lineElem.firstPointY);
+                Vector2d vec =
+                        new Vector2d(
+                                lineElem.secondPointX - lineElem.firstPointX,
+                                lineElem.secondPointY - lineElem.firstPointY);
                 Vector2d ortho = new Vector2d(-vec.y, vec.x);
                 ortho.normalize();
                 vec.normalize();
-                ortho.scale(lineElem.width / 2);  // stroke width
-                vec.scale(lineElem.width / 2);    // stroke rounded also makes line longer
+                ortho.scale(lineElem.width / 2); // stroke width
+                vec.scale(lineElem.width / 2); // stroke rounded also makes line longer
                 add(lineElem.firstPointX - vec.x + ortho.x, lineElem.firstPointY - vec.y + ortho.y);
-                add(lineElem.secondPointX + vec.x + ortho.x, lineElem.secondPointY + vec.y + ortho.y);
+                add(
+                        lineElem.secondPointX + vec.x + ortho.x,
+                        lineElem.secondPointY + vec.y + ortho.y);
                 add(lineElem.firstPointX - vec.x - ortho.x, lineElem.firstPointY - vec.y - ortho.y);
-                add(lineElem.secondPointX + vec.x - ortho.x, lineElem.secondPointY + vec.y - ortho.y);
+                add(
+                        lineElem.secondPointX + vec.x - ortho.x,
+                        lineElem.secondPointY + vec.y - ortho.y);
             } else if (element instanceof OvalElement) {
                 OvalElement oval = (OvalElement) element;
                 add(oval.xCoord - oval.radius, oval.yCoord);
@@ -175,22 +165,20 @@ public final class Bounds implements IRenderingElement {
                 add(oval.xCoord, oval.yCoord - oval.radius);
                 add(oval.xCoord, oval.yCoord + oval.radius);
             } else if (element instanceof ElementGroup) {
-                for (IRenderingElement child : (ElementGroup) element)
-                    stack.add(child);
+                for (IRenderingElement child : (ElementGroup) element) stack.add(child);
             } else if (element instanceof MarkedElement) {
-                stack.add(((MarkedElement)element).element());
+                stack.add(((MarkedElement) element).element());
             } else {
                 // ignored from bounds calculation, we don't really
                 // care but log we skipped it
                 LoggingToolFactory.createLoggingTool(Bounds.class)
-                                  .warn(element.getClass() + " not included in bounds calculation");
+                        .warn(element.getClass() + " not included in bounds calculation");
             }
         }
     }
 
     /**
-     * Access the root rendering element, it contains all
-     * elements added to the bounds so far.
+     * Access the root rendering element, it contains all elements added to the bounds so far.
      *
      * @return root rendering element
      */
@@ -225,17 +213,13 @@ public final class Bounds implements IRenderingElement {
         return minX > maxX || minY > maxY;
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void accept(IRenderingVisitor visitor) {
         visitor.visit(this);
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         return "{{" + minX + ", " + minY + "} - {" + maxX + ", " + maxY + "}}";

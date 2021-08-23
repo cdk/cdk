@@ -21,9 +21,7 @@ package org.openscience.cdk.io.formats;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
- *
  * @author Miguel Rojas
- *
  * @cdk.module ioformats
  * @cdk.githash
  */
@@ -59,7 +57,7 @@ public class MacroModelFormat extends AbstractResourceFormat implements IChemFor
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"mmd", "mmod"};
+        return new String[] {"mmd", "mmod"};
     }
 
     /** {@inheritDoc} */

@@ -22,13 +22,10 @@
  */
 package org.openscience.cdk.io.formats;
 
-/**
- * @cdk.module test-ioformats
- */
+/** @cdk.module test-ioformats */
 public class CRK2DFormatTest extends ChemFormatTest {
 
     public CRK2DFormatTest() {
         super.setChemFormat((IChemFormat) CRK2DFormat.getInstance());
     }
-
 }

@@ -19,7 +19,6 @@
 package org.openscience.cdk.io.listener;
 
 import java.util.EventListener;
-
 import org.openscience.cdk.io.setting.IOSetting;
 
 /**
@@ -27,17 +26,14 @@ import org.openscience.cdk.io.setting.IOSetting;
  *
  * @cdk.module io
  * @cdk.githash
- *
  * @author Egon Willighagen
  */
 public interface IChemObjectIOListener extends EventListener {
 
     /**
-     * Prompted when the IO filter needs information to process the
-     * file. The ReaderListener may redirect this question to the
-     * user, disregard it (and let the Reader take the default),
-     * or answer it itself.
+     * Prompted when the IO filter needs information to process the file. The ReaderListener may
+     * redirect this question to the user, disregard it (and let the Reader take the default), or
+     * answer it itself.
      */
     public void processIOSettingQuestion(IOSetting setting);
-
 }

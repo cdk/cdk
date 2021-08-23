@@ -25,9 +25,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 
-/**
- * @cdk.module test-render
- */
+/** @cdk.module test-render */
 public class AbstractGeneratorParameterTest {
 
     class MockParameter extends AbstractGeneratorParameter<Boolean> {
@@ -48,5 +46,4 @@ public class AbstractGeneratorParameterTest {
         param.setValue(false);
         Assert.assertFalse(param.getValue());
     }
-
 }

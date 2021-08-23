@@ -23,35 +23,33 @@
 package org.openscience.cdk.debug;
 
 import java.util.Map;
-
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-
 import org.openscience.cdk.FragmentAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IFragmentAtom;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * Class to represent an IPseudoAtom which embeds an IAtomContainer. Very much
- * like the MDL molfile <code>Group</code> concept.
+ * Class to represent an IPseudoAtom which embeds an IAtomContainer. Very much like the MDL molfile
+ * <code>Group</code> concept.
  *
  * @cdk.module datadebug
  * @cdk.githash
- *
  * @author egonw
  */
 public class DebugFragmentAtom extends FragmentAtom {
 
     private static final long serialVersionUID = 0L;
 
-    private static final ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugFragmentAtom.class);
+    private static final ILoggingTool logger =
+            LoggingToolFactory.createLoggingTool(DebugFragmentAtom.class);
 
     public DebugFragmentAtom() {
         super();
@@ -131,7 +129,9 @@ public class DebugFragmentAtom extends FragmentAtom {
     /** {@inheritDoc} */
     @Override
     public void setFractionalPoint3d(Point3d point3d) {
-        logger.debug("Setting fractional point3d: x=" + point3d.x + ", y=" + point3d.y, ", z=" + point3d.z);
+        logger.debug(
+                "Setting fractional point3d: x=" + point3d.x + ", y=" + point3d.y,
+                ", z=" + point3d.z);
         super.setFractionalPoint3d(point3d);
     }
 
@@ -161,7 +161,8 @@ public class DebugFragmentAtom extends FragmentAtom {
         if (point3d == null) {
             logger.debug("Getting point3d: null");
         } else {
-            logger.debug("Getting point3d: x=" + point3d.x + ", y=" + point3d.y, ", z=" + point3d.z);
+            logger.debug(
+                    "Getting point3d: x=" + point3d.x + ", y=" + point3d.y, ", z=" + point3d.z);
         }
         return point3d;
     }
@@ -173,7 +174,9 @@ public class DebugFragmentAtom extends FragmentAtom {
         if (point3d == null) {
             logger.debug("Getting fractional point3d: null");
         } else {
-            logger.debug("Getting fractional point3d: x=" + point3d.x + ", y=" + point3d.y, ", z=" + point3d.z);
+            logger.debug(
+                    "Getting fractional point3d: x=" + point3d.x + ", y=" + point3d.y,
+                    ", z=" + point3d.z);
         }
         return point3d;
     }
@@ -309,7 +312,6 @@ public class DebugFragmentAtom extends FragmentAtom {
     public void setExactMass(Double exactMass) {
         logger.debug("Setting exact mass: ", exactMass);
         super.setExactMass(exactMass);
-
     }
 
     /** {@inheritDoc} */

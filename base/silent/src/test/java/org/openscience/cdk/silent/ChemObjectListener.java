@@ -29,7 +29,7 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
  */
 public class ChemObjectListener implements IChemObjectListener {
 
-    private boolean                changed;
+    private boolean changed;
     private IChemObjectChangeEvent event;
 
     public ChemObjectListener() {

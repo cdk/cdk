@@ -36,13 +36,14 @@ public class DebugReactionSchemeTest extends AbstractReactionSchemeTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
+        setTestObjectBuilder(
+                new ITestObjectBuilder() {
 
-            @Override
-            public IChemObject newTestObject() {
-                return new DebugReactionScheme();
-            }
-        });
+                    @Override
+                    public IChemObject newTestObject() {
+                        return new DebugReactionScheme();
+                    }
+                });
     }
 
     @Test

@@ -22,20 +22,19 @@
  */
 package org.openscience.cdk;
 
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IMonomer;
-import org.openscience.cdk.interfaces.IStrand;
-
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IMonomer;
+import org.openscience.cdk.interfaces.IStrand;
 
 /**
- * A Strand is an AtomContainer which stores additional strand specific
- * informations for a group of Atoms.
+ * A Strand is an AtomContainer which stores additional strand specific informations for a group of
+ * Atoms.
  *
- * @cdk.module  data
+ * @cdk.module data
  * @cdk.githash
  * @cdk.created 2004-12-20
  * @author Martin Eklund &lt;martin.eklund@farmbio.uu.se&gt;
@@ -46,23 +45,21 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
     /**
      * Determines if a de-serialized object is compatible with this class.
      *
-     * This value must only be changed if and only if the new version
-     * of this class is incompatible with the old version. See Sun docs
-     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
+     * <p>This value must only be changed if and only if the new version of this class is
+     * incompatible with the old version. See Sun docs for <a
+     * href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
      */
-    private static final long     serialVersionUID = 4200943086350928356L;
+    private static final long serialVersionUID = 4200943086350928356L;
 
-    /** The list of all Monomers in the Strand.*/
+    /** The list of all Monomers in the Strand. */
     private Map<String, IMonomer> monomers;
     /** The name of this strand (e.g. A, B). */
-    private String                strandName;
+    private String strandName;
     /** The type of this strand (e.g. PEPTIDE, DNA, RNA). */
-    private String                strandType;
+    private String strandType;
 
-    /**
-     * Constructs a new Strand.
-     */
+    /** Constructs a new Strand. */
     public Strand() {
         super();
         // Stand stuff
@@ -99,7 +96,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
     /**
      * Sets the name of the Strand object.
      *
-     * @param cStrandName  The new name for this strand
+     * @param cStrandName The new name for this strand
      * @see #getStrandName
      */
     @Override
@@ -110,7 +107,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
     /**
      * Sets the type of the Strand object.
      *
-     * @param cStrandType  The new type for this strand
+     * @param cStrandType The new type for this strand
      * @see #getStrandType
      */
     @Override
@@ -119,12 +116,10 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
     }
 
     /**
+     * Adds the atom oAtom without specifying a Monomer or a Strand. Therefore the atom gets added
+     * to a Monomer of type UNKNOWN in a Strand of type UNKNOWN.
      *
-     * Adds the atom oAtom without specifying a Monomer or a Strand. Therefore the
-     * atom gets added to a Monomer of type UNKNOWN in a Strand of type UNKNOWN.
-     *
-     * @param oAtom  The atom to add
-     *
+     * @param oAtom The atom to add
      */
     @Override
     public void addAtom(IAtom oAtom) {
@@ -132,12 +127,10 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
     }
 
     /**
-     *
      * Adds the atom oAtom to a specific Monomer.
      *
-     * @param oAtom  The atom to add
-     * @param oMonomer  The monomer the atom belongs to
-     *
+     * @param oAtom The atom to add
+     * @param oMonomer The monomer the atom belongs to
      */
     @Override
     public void addAtom(IAtom oAtom, IMonomer oMonomer) {
@@ -161,11 +154,9 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
     }
 
     /**
-     *
      * Returns the number of monomers present in the Strand.
      *
      * @return number of monomers
-     *
      */
     @Override
     public int getMonomerCount() {
@@ -173,12 +164,10 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
     }
 
     /**
-     *
      * Retrieves a Monomer object by specifying its name.
      *
-     * @param cName  The name of the monomer to look for
+     * @param cName The name of the monomer to look for
      * @return The Monomer object which was asked for
-     *
      */
     @Override
     public IMonomer getMonomer(String cName) {
@@ -186,8 +175,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
     }
 
     /**
-     * Returns a collection of the names of all <code>Monomer</code>s in this
-     * polymer.
+     * Returns a collection of the names of all <code>Monomer</code>s in this polymer.
      *
      * @return a <code>Collection</code> of all the monomer names.
      */
@@ -197,11 +185,10 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
     }
 
     /**
+     * Adds a <code>Monomer</code> to this <code>Strand</code>. All atoms and bonds in the Monomer
+     * are added. NB: The <code>Monomer</code> will *not* "automatically" be connected to the <code>
+     * Strand</code>. That has to be done "manually" (as the "connection point" is not known).
      *
-     * Adds a <code>Monomer</code> to this <code>Strand</code>. All atoms and
-     * bonds in the Monomer are added. NB: The <code>Monomer</code> will *not*
-     * "automatically" be connected to the <code>Strand</code>. That has to be
-     * done "manually" (as the "connection point" is not known).
      * @param monomer
      */
     /*
@@ -254,7 +241,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
     public IStrand clone() throws CloneNotSupportedException {
         Strand clone = (Strand) super.clone();
         clone.monomers.clear();
-        for (Iterator<String> iter = clone.getMonomerNames().iterator(); iter.hasNext();) {
+        for (Iterator<String> iter = clone.getMonomerNames().iterator(); iter.hasNext(); ) {
             Monomer monomerClone = (Monomer) (clone.getMonomer(iter.next().toString()).clone());
             Iterator<IAtom> atoms = monomerClone.atoms().iterator();
             while (atoms.hasNext()) {

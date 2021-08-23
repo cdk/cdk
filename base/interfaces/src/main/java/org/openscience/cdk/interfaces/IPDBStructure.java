@@ -21,12 +21,10 @@ package org.openscience.cdk.interfaces;
 /**
  * Represents the idea of an chemical structure.
  *
- * @cdk.module  interfaces
+ * @cdk.module interfaces
  * @cdk.githash
- *
  * @author Miguel Rojas &lt;miguel.rojas@uni-koeln.de&gt;
  * @cdk.created 2006-11-20
- *
  * @cdk.keyword pdbpolymer
  */
 public interface IPDBStructure extends ICDKObject {
@@ -41,7 +39,7 @@ public interface IPDBStructure extends ICDKObject {
     /**
      * set the ending Chain identifier of this structure.
      *
-     * @param endChainID  the ending Chain identifier of this structure
+     * @param endChainID the ending Chain identifier of this structure
      */
     public void setEndChainID(Character endChainID);
 
@@ -55,7 +53,7 @@ public interface IPDBStructure extends ICDKObject {
     /**
      * set the ending Code for insertion of residues of this structure.
      *
-     * @param endInsertionCode  the ending Code for insertion of residues of this structure
+     * @param endInsertionCode the ending Code for insertion of residues of this structure
      */
     public void setEndInsertionCode(Character endInsertionCode);
 
@@ -69,7 +67,7 @@ public interface IPDBStructure extends ICDKObject {
     /**
      * set the ending sequence number of this structure.
      *
-     * @param endSequenceNumber  the ending sequence number of this structure
+     * @param endSequenceNumber the ending sequence number of this structure
      */
     public void setEndSequenceNumber(Integer endSequenceNumber);
 
@@ -83,7 +81,7 @@ public interface IPDBStructure extends ICDKObject {
     /**
      * set the start Chain identifier of this structure.
      *
-     * @param startChainID  the start Chain identifier of this structure
+     * @param startChainID the start Chain identifier of this structure
      */
     public void setStartChainID(Character startChainID);
 
@@ -97,7 +95,7 @@ public interface IPDBStructure extends ICDKObject {
     /**
      * set the start Chain identifier of this structure.
      *
-     * @param startInsertionCode  the start Chain identifier of this structure
+     * @param startInsertionCode the start Chain identifier of this structure
      */
     public void setStartInsertionCode(Character startInsertionCode);
 
@@ -111,7 +109,7 @@ public interface IPDBStructure extends ICDKObject {
     /**
      * set the start sequence number of this structure.
      *
-     * @param startSequenceNumber  the start sequence number of this structure
+     * @param startSequenceNumber the start sequence number of this structure
      */
     public void setStartSequenceNumber(Integer startSequenceNumber);
 
@@ -125,8 +123,7 @@ public interface IPDBStructure extends ICDKObject {
     /**
      * set the Structure Type of this structure.
      *
-     * @param structureType  the Structure Type of this structure
+     * @param structureType the Structure Type of this structure
      */
     public void setStructureType(String structureType);
-
 }

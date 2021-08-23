@@ -26,35 +26,32 @@ import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
-
 /**
- * Partial implementation of the {@link IDrawVisitor} interface for the AWT
- * widget toolkit, allowing molecules to be rendered with toolkits based on
- * AWT, like the Java reference graphics platform Swing.
+ * Partial implementation of the {@link IDrawVisitor} interface for the AWT widget toolkit, allowing
+ * molecules to be rendered with toolkits based on AWT, like the Java reference graphics platform
+ * Swing.
  *
  * @cdk.module renderawt
  * @cdk.githash
  */
 public abstract class AbstractAWTDrawVisitor implements IDrawVisitor {
 
-    /**
-     * This is initially null, and must be set in the setTransform method!
-     */
+    /** This is initially null, and must be set in the setTransform method! */
     protected AffineTransform transform = null;
 
     /**
-     * Transforms a point according to the current affine transformation,
-     * converting a world coordinate into a screen coordinate.
+     * Transforms a point according to the current affine transformation, converting a world
+     * coordinate into a screen coordinate.
      *
      * @param xCoord x-coordinate of the world point to transform
      * @param yCoord y-coordinate of the world point to transform
-     * @return       the transformed screen coordinate
+     * @return the transformed screen coordinate
      */
     public int[] transformPoint(double xCoord, double yCoord) {
-        double[] src = new double[]{xCoord, yCoord};
+        double[] src = new double[] {xCoord, yCoord};
         double[] dest = new double[2];
         this.transform.transform(src, 0, dest, 0, 1);
-        return new int[]{(int) dest[0], (int) dest[1]};
+        return new int[] {(int) dest[0], (int) dest[1]};
     }
 
     public void transformPoint(double[] xy) {
@@ -64,13 +61,14 @@ public abstract class AbstractAWTDrawVisitor implements IDrawVisitor {
     /**
      * Calculates the boundaries of a text string in screen coordinates.
      *
-     * @param text     the text string
-     * @param xCoord   the world x-coordinate of where the text should be placed
-     * @param yCoord   the world y-coordinate of where the text should be placed
+     * @param text the text string
+     * @param xCoord the world x-coordinate of where the text should be placed
+     * @param yCoord the world y-coordinate of where the text should be placed
      * @param graphics the graphics to which the text is provided as output
-     * @return         the screen coordinates
+     * @return the screen coordinates
      */
-    protected Rectangle2D getTextBounds(String text, double xCoord, double yCoord, Graphics2D graphics) {
+    protected Rectangle2D getTextBounds(
+            String text, double xCoord, double yCoord, Graphics2D graphics) {
         FontMetrics fontMetrics = graphics.getFontMetrics();
         Rectangle2D bounds = fontMetrics.getStringBounds(text, graphics);
 
@@ -84,20 +82,20 @@ public abstract class AbstractAWTDrawVisitor implements IDrawVisitor {
     }
 
     /**
-     * Calculates the base point where text should be rendered, as text in Java
-     * is typically placed using the left-lower corner point in screen coordinates.
-     * However, because the Java coordinate system is inverted in the y-axis with
-     * respect to scientific coordinate systems (Java has 0,0 in the top left
-     * corner, while in science we have 0,0 in the lower left corner), some
-     * special action is needed, involving the size of the text.
+     * Calculates the base point where text should be rendered, as text in Java is typically placed
+     * using the left-lower corner point in screen coordinates. However, because the Java coordinate
+     * system is inverted in the y-axis with respect to scientific coordinate systems (Java has 0,0
+     * in the top left corner, while in science we have 0,0 in the lower left corner), some special
+     * action is needed, involving the size of the text.
      *
-     * @param text     the text string
-     * @param xCoord   the world x-coordinate of where the text should be placed
-     * @param yCoord   the world y-coordinate of where the text should be placed
+     * @param text the text string
+     * @param xCoord the world x-coordinate of where the text should be placed
+     * @param yCoord the world y-coordinate of where the text should be placed
      * @param graphics the graphics to which the text is provided as output
-     * @return         the screen coordinates
+     * @return the screen coordinates
      */
-    protected Point getTextBasePoint(String text, double xCoord, double yCoord, Graphics2D graphics) {
+    protected Point getTextBasePoint(
+            String text, double xCoord, double yCoord, Graphics2D graphics) {
         FontMetrics fontMetrics = graphics.getFontMetrics();
         Rectangle2D stringBounds = fontMetrics.getStringBounds(text, graphics);
         int[] point = this.transformPoint(xCoord, yCoord);
@@ -109,11 +107,10 @@ public abstract class AbstractAWTDrawVisitor implements IDrawVisitor {
     }
 
     /**
-     * Obtain the exact bounding box of the {@code text} in the provided
-     * graphics environment.
+     * Obtain the exact bounding box of the {@code text} in the provided graphics environment.
      *
      * @param text the text to obtain the bounds of
-     * @param g2   the graphic environment
+     * @param g2 the graphic environment
      * @return bounds of the text
      * @see TextLayout
      */
@@ -122,8 +119,7 @@ public abstract class AbstractAWTDrawVisitor implements IDrawVisitor {
     }
 
     /**
-     * Sets a new affine transformation to convert world coordinates into
-     * screen coordinates.
+     * Sets a new affine transformation to convert world coordinates into screen coordinates.
      *
      * @param transform the new {@link AffineTransform}.
      */

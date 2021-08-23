@@ -18,38 +18,35 @@
  */
 package org.openscience.cdk.config.atomtypes;
 
-import org.xml.sax.Attributes;
-import org.xml.sax.helpers.DefaultHandler;
-
 import java.util.Hashtable;
 import java.util.Map;
+import org.xml.sax.Attributes;
+import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * SAX Handler for the {@link OWLAtomTypeMappingReader}.
  *
- * @cdk.module  atomtype
+ * @cdk.module atomtype
  * @cdk.githash
  */
 public class OWLAtomTypeMappingHandler extends DefaultHandler {
 
-    private final String        NS_ATOMTYPE_MAPPING = "http://cdk.sf.net/ontologies/atomtypemappings#";
-    private final String        NS_OWL              = "http://www.w3.org/2002/07/owl#";
+    private final String NS_ATOMTYPE_MAPPING = "http://cdk.sf.net/ontologies/atomtypemappings#";
+    private final String NS_OWL = "http://www.w3.org/2002/07/owl#";
 
     private Map<String, String> atomTypeMappings;
 
-    private String              fromType;
-    private String              toType;
+    private String fromType;
+    private String toType;
 
-    /**
-     * Constructs a new OWLAtomTypeMappingHandler.
-     */
+    /** Constructs a new OWLAtomTypeMappingHandler. */
     public OWLAtomTypeMappingHandler() {}
 
     /**
      * Returns a {@link Map} with atom type mappings.
      *
-     * @return a {@link Map} with the atom type name of the source schema as key, and the atom type name of
-     *         the target schema as values.
+     * @return a {@link Map} with the atom type name of the source schema as key, and the atom type
+     *     name of the target schema as values.
      */
     public Map<String, String> getAtomTypeMappings() {
         return atomTypeMappings;
@@ -105,5 +102,4 @@ public class OWLAtomTypeMappingHandler extends DefaultHandler {
     /** {@inheritDoc} */
     @Override
     public void characters(char chars[], int start, int length) {}
-
 }

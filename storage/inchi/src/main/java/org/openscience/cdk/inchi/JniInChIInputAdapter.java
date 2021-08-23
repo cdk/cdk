@@ -23,23 +23,19 @@
 
 package org.openscience.cdk.inchi;
 
+import java.util.List;
+import java.util.StringTokenizer;
 import net.sf.jniinchi.INCHI_OPTION;
 import net.sf.jniinchi.JniInchiException;
 import net.sf.jniinchi.JniInchiInput;
 
-import java.util.List;
-import java.util.StringTokenizer;
-
 public class JniInChIInputAdapter extends JniInchiInput {
 
-    /**
-     * Flag indicating windows or linux.
-     */
-    private static final boolean IS_WINDOWS = System.getProperty("os.name", "").toLowerCase().startsWith("windows");
+    /** Flag indicating windows or linux. */
+    private static final boolean IS_WINDOWS =
+            System.getProperty("os.name", "").toLowerCase().startsWith("windows");
 
-    /**
-     * Switch character for passing options. / in windows, - on other systems.
-     */
+    /** Switch character for passing options. / in windows, - on other systems. */
     private static final String FLAG_CHAR = IS_WINDOWS ? "/" : "-";
 
     public static final String FIVE_SECOND_TIMEOUT = FLAG_CHAR + "W5";
@@ -55,16 +51,13 @@ public class JniInChIInputAdapter extends JniInchiInput {
     private static boolean isTimeoutOptions(String op) {
         if (op == null || op.length() < 2) return false;
         return op.charAt(0) == 'W';
-
     }
-
 
     private static String checkOptions(final String ops) throws JniInchiException {
         if (ops == null) {
             throw new IllegalArgumentException("Null options");
         }
         StringBuilder sbOptions = new StringBuilder();
-
 
         boolean hasUserSpecifiedTimeout = false;
 
@@ -112,8 +105,7 @@ public class JniInChIInputAdapter extends JniInchiInput {
         }
 
         if (!hasUserSpecifiedTimeout) {
-            if (sbOptions.length() > 0)
-                sbOptions.append(' ');
+            if (sbOptions.length() > 0) sbOptions.append(' ');
             sbOptions.append(FIVE_SECOND_TIMEOUT);
         }
 
@@ -130,8 +122,7 @@ public class JniInChIInputAdapter extends JniInchiInput {
             sbOptions.append(FLAG_CHAR).append(op.name()).append(" ");
         }
 
-        if (sbOptions.length() > 0)
-            sbOptions.append(' ');
+        if (sbOptions.length() > 0) sbOptions.append(' ');
         sbOptions.append(FIVE_SECOND_TIMEOUT);
 
         return sbOptions.toString();

@@ -18,8 +18,8 @@
 package org.openscience.cdk.smiles.smarts.parser;
 
 /**
- * An AST node. It represents the low precedence and logical operator (;) used
- * between atomic primitives or recursive smarts in smarts.
+ * An AST node. It represents the low precedence and logical operator (;) used between atomic
+ * primitives or recursive smarts in smarts.
  *
  * @author Dazhi Jiao
  * @cdk.created 2007-04-24
@@ -32,16 +32,12 @@ class ASTLowAndExpression extends SimpleNode {
 
     private int mapIdx = 0;
 
-    /**
-     * Creates a new instance.
-     */
+    /** Creates a new instance. */
     public ASTLowAndExpression(int id) {
         super(id);
     }
 
-    /**
-     * Creates a new instance.
-     */
+    /** Creates a new instance. */
     public ASTLowAndExpression(SMARTSParser p, int id) {
         super(p, id);
     }
@@ -55,11 +51,11 @@ class ASTLowAndExpression extends SimpleNode {
     }
 
     /*
-         * (non-Javadoc)
-         * @see
-         * org.openscience.cdk.smiles.smarts.parser.SimpleNode#jjtAccept(org.openscience
-         * .cdk.smiles.smarts.parser.SMARTSParserVisitor, java.lang.Object)
-         */
+     * (non-Javadoc)
+     * @see
+     * org.openscience.cdk.smiles.smarts.parser.SimpleNode#jjtAccept(org.openscience
+     * .cdk.smiles.smarts.parser.SMARTSParserVisitor, java.lang.Object)
+     */
     @Override
     public Object jjtAccept(SMARTSParserVisitor visitor, Object data) {
         return visitor.visit(this, data);
@@ -70,8 +66,8 @@ class ASTLowAndExpression extends SimpleNode {
         while (!(firstNode instanceof ASTImplicitHighAndExpression)) {
             firstNode = firstNode.jjtGetChild(0);
         }
-        ASTImplicitHighAndExpression insert = new ASTImplicitHighAndExpression(
-                SMARTSParser.JJTIMPLICITHIGHANDEXPRESSION);
+        ASTImplicitHighAndExpression insert =
+                new ASTImplicitHighAndExpression(SMARTSParser.JJTIMPLICITHIGHANDEXPRESSION);
         insert.jjtAddChild(node, 0);
         insert.jjtAddChild(firstNode.jjtGetChild(0), 1);
         firstNode.jjtRemoveChild(0);

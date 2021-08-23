@@ -24,18 +24,16 @@ package org.openscience.cdk.tools.manipulator;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 
 /**
- * Class with convenience methods that provide methods from
- * methods from ChemObjects within the ChemSequence.
+ * Class with convenience methods that provide methods from methods from ChemObjects within the
+ * ChemSequence.
  *
  * @see org.openscience.cdk.AtomContainer#removeAtomAndConnectedElectronContainers(IAtom)
- *
  * @cdk.module standard
  * @cdk.githash
  */
@@ -44,8 +42,8 @@ public class ChemSequenceManipulator {
     /**
      * Get the total number of atoms inside an IChemSequence.
      *
-     * @param sequence   The IChemSequence object.
-     * @return           The number of Atom objects inside.
+     * @param sequence The IChemSequence object.
+     * @return The number of Atom objects inside.
      */
     public static int getAtomCount(IChemSequence sequence) {
         int count = 0;
@@ -58,8 +56,8 @@ public class ChemSequenceManipulator {
     /**
      * Get the total number of bonds inside an IChemSequence.
      *
-     * @param sequence   The IChemSequence object.
-     * @return           The number of Bond objects inside.
+     * @param sequence The IChemSequence object.
+     * @return The number of Bond objects inside.
      */
     public static int getBondCount(IChemSequence sequence) {
         int count = 0;
@@ -69,9 +67,7 @@ public class ChemSequenceManipulator {
         return count;
     }
 
-    /**
-     * Returns all the AtomContainer's of a ChemSequence.
-     */
+    /** Returns all the AtomContainer's of a ChemSequence. */
     public static List<IAtomContainer> getAllAtomContainers(IChemSequence sequence) {
         List<IAtomContainer> acList = new ArrayList<IAtomContainer>();
         for (IChemModel model : sequence.chemModels()) {
@@ -83,18 +79,18 @@ public class ChemSequenceManipulator {
     /**
      * Returns a List of all IChemObject inside a ChemSequence.
      *
-     * @return  A List of all ChemObjects.
+     * @return A List of all ChemObjects.
      */
     public static List<IChemObject> getAllChemObjects(IChemSequence sequence) {
         List<IChemObject> list = new ArrayList<IChemObject>();
         // list.add(sequence);
         for (int i = 0; i < sequence.getChemModelCount(); i++) {
             list.add(sequence.getChemModel(i));
-            List<IChemObject> current = ChemModelManipulator.getAllChemObjects(sequence.getChemModel(i));
+            List<IChemObject> current =
+                    ChemModelManipulator.getAllChemObjects(sequence.getChemModel(i));
             for (IChemObject chemObject : current) {
                 if (!list.contains(chemObject)) list.add(chemObject);
             }
-
         }
         return list;
     }

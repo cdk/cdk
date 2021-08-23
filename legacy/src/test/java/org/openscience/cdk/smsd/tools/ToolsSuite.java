@@ -35,10 +35,12 @@ import org.junit.runners.Suite;
  * @author Asad
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({org.openscience.cdk.smsd.tools.BondEnergiesTest.class,
-        org.openscience.cdk.smsd.tools.MoleculeSanityCheckTest.class,
-        org.openscience.cdk.smsd.tools.ExtAtomContainerManipulatorTest.class,
-        org.openscience.cdk.smsd.tools.TimeManagerTest.class})
+@Suite.SuiteClasses({
+    org.openscience.cdk.smsd.tools.BondEnergiesTest.class,
+    org.openscience.cdk.smsd.tools.MoleculeSanityCheckTest.class,
+    org.openscience.cdk.smsd.tools.ExtAtomContainerManipulatorTest.class,
+    org.openscience.cdk.smsd.tools.TimeManagerTest.class
+})
 public class ToolsSuite {
 
     @BeforeClass
@@ -52,5 +54,4 @@ public class ToolsSuite {
 
     @After
     public void tearDown() throws Exception {}
-
 }

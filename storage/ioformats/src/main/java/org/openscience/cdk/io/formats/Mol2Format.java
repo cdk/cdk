@@ -58,7 +58,7 @@ public class Mol2Format extends SimpleChemFormatMatcher implements IChemFormatMa
     /** {@inheritDoc} */
     @Override
     public String[] getNameExtensions() {
-        return new String[]{"mol2"};
+        return new String[] {"mol2"};
     }
 
     /** {@inheritDoc} */
@@ -91,7 +91,9 @@ public class Mol2Format extends SimpleChemFormatMatcher implements IChemFormatMa
     /** {@inheritDoc} */
     @Override
     public int getSupportedDataFeatures() {
-        return getRequiredDataFeatures() | DataFeatures.HAS_2D_COORDINATES | DataFeatures.HAS_3D_COORDINATES
+        return getRequiredDataFeatures()
+                | DataFeatures.HAS_2D_COORDINATES
+                | DataFeatures.HAS_3D_COORDINATES
                 | DataFeatures.HAS_GRAPH_REPRESENTATION;
     }
 

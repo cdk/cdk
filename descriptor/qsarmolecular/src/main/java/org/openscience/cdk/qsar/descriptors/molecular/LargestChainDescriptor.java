@@ -18,6 +18,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.util.HashSet;
+import java.util.Set;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.AllPairsShortestPaths;
 import org.openscience.cdk.graph.Cycles;
@@ -31,12 +33,9 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * Class that returns the number of atoms in the largest chain.
- * 
+ *
  * <table border="1"><caption>Parameters for this descriptor:</caption>
  * <tr>
  * <td>Name</td>
@@ -54,9 +53,9 @@ import java.util.Set;
  * <td>True is the CDKConstant.ISINRING has to be set</td>
  * </tr>
  * </table>
- * 
- * Returns a single value named <i>nAtomLAC</i>. Note that a chain exists if there
- * are two or more atoms. Thus single atom molecules will return 0
+ *
+ * Returns a single value named <i>nAtomLAC</i>. Note that a chain exists if there are two or more
+ * atoms. Thus single atom molecules will return 0
  *
  * @author chhoppe from EUROSCREEN
  * @cdk.created 2006-1-03
@@ -64,28 +63,26 @@ import java.util.Set;
  * @cdk.githash
  * @cdk.dictref qsar-descriptors:largestChain
  */
-public class LargestChainDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
+public class LargestChainDescriptor extends AbstractMolecularDescriptor
+        implements IMolecularDescriptor {
 
-    private boolean               checkAromaticity = false;
-    private boolean               checkRingSystem  = false;
-    private static final String[] NAMES            = {"nAtomLC"};
+    private boolean checkAromaticity = false;
+    private boolean checkRingSystem = false;
+    private static final String[] NAMES = {"nAtomLC"};
 
-    /**
-     * Constructor for the LargestChain object.
-     */
+    /** Constructor for the LargestChain object. */
     public LargestChainDescriptor() {}
 
     /**
-     * Returns a <code>Map</code> which specifies which descriptor
-     * is implemented by this class.
-     * 
-     * These fields are used in the map:
+     * Returns a <code>Map</code> which specifies which descriptor is implemented by this class.
+     *
+     * <p>These fields are used in the map:
+     *
      * <ul>
-     * <li>Specification-Reference: refers to an entry in a unique dictionary
-     * <li>Implementation-Title: anything
-     * <li>Implementation-Identifier: a unique identifier for this version of
-     * this class
-     * <li>Implementation-Vendor: CDK, JOELib, or anything else
+     *   <li>Specification-Reference: refers to an entry in a unique dictionary
+     *   <li>Implementation-Title: anything
+     *   <li>Implementation-Identifier: a unique identifier for this version of this class
+     *   <li>Implementation-Vendor: CDK, JOELib, or anything else
      * </ul>
      *
      * @return An object containing the descriptor specification
@@ -93,14 +90,15 @@ public class LargestChainDescriptor extends AbstractMolecularDescriptor implemen
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#largestChain", this.getClass()
-                        .getName(), "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#largestChain",
+                this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     /**
      * Sets the parameters attribute of the LargestChain object.
-     * 
-     * This descriptor takes two parameters, which should be Booleans to indicate whether
+     *
+     * <p>This descriptor takes two parameters, which should be Booleans to indicate whether
      * aromaticity and ring member ship needs been checked (TRUE) or not (FALSE). The first
      * parameter (aromaticity) is deprecated and ignored.
      *
@@ -142,8 +140,13 @@ public class LargestChainDescriptor extends AbstractMolecularDescriptor implemen
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
-                (int) Double.NaN), getDescriptorNames(), e);
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new IntegerResult((int) Double.NaN),
+                getDescriptorNames(),
+                e);
     }
 
     /**
@@ -156,14 +159,12 @@ public class LargestChainDescriptor extends AbstractMolecularDescriptor implemen
     @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
 
-        if (checkRingSystem)
-            Cycles.markRingAtomsAndBonds(atomContainer);
+        if (checkRingSystem) Cycles.markRingAtomsAndBonds(atomContainer);
 
         // make a subset molecule only including acyclic non-hydrogen atoms
         final Set<IAtom> included = new HashSet<>();
         for (IAtom atom : atomContainer.atoms()) {
-            if (!atom.isInRing() && atom.getAtomicNumber() != 1)
-                included.add(atom);
+            if (!atom.isInRing() && atom.getAtomicNumber() != 1) included.add(atom);
         }
         IAtomContainer subset = subsetMol(atomContainer, included);
 
@@ -172,27 +173,32 @@ public class LargestChainDescriptor extends AbstractMolecularDescriptor implemen
         int max = 0;
         int numAtoms = subset.getAtomCount();
         for (int i = 0; i < numAtoms; i++) {
-            for (int j = i+1; j < numAtoms; j++) {
+            for (int j = i + 1; j < numAtoms; j++) {
                 int len = apsp.from(i).pathTo(j).length;
-                if (len > max)
-                    max = len;
+                if (len > max) max = len;
             }
         }
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
-                max), getDescriptorNames());
+        return new DescriptorValue(
+                getSpecification(),
+                getParameterNames(),
+                getParameters(),
+                new IntegerResult(max),
+                getDescriptorNames());
     }
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * 
-     * The return value from this method really indicates what type of result will
-     * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
-     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
-     * allows you to do the same thing, without actually calculating the descriptor.
      *
-     * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
-     *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
+     * <p>The return value from this method really indicates what type of result will be obtained
+     * from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
+     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object;
+     * this method allows you to do the same thing, without actually calculating the descriptor.
+     *
+     * @return an object that implements the {@link
+     *     org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating the actual type
+     *     of values returned by the descriptor in the {@link
+     *     org.openscience.cdk.qsar.DescriptorValue} object
      */
     @Override
     public IDescriptorResult getDescriptorResultType() {
@@ -224,10 +230,12 @@ public class LargestChainDescriptor extends AbstractMolecularDescriptor implemen
     }
 
     private static IAtomContainer subsetMol(IAtomContainer mol, Set<IAtom> include) {
-        IAtomContainer cpy = mol.getBuilder().newInstance(IAtomContainer.class, mol.getAtomCount(), mol.getBondCount(), 0, 0);
+        IAtomContainer cpy =
+                mol.getBuilder()
+                        .newInstance(
+                                IAtomContainer.class, mol.getAtomCount(), mol.getBondCount(), 0, 0);
         for (IAtom atom : mol.atoms()) {
-            if (include.contains(atom))
-                cpy.addAtom(atom);
+            if (include.contains(atom)) cpy.addAtom(atom);
         }
         for (IBond bond : mol.bonds()) {
             if (include.contains(bond.getBegin()) && include.contains(bond.getEnd()))

@@ -19,21 +19,20 @@
 package org.openscience.cdk.debug;
 
 import java.util.Map;
-
 import org.openscience.cdk.AtomType;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
  *
- * @author     egonw
+ * @author egonw
  * @cdk.module datadebug
  * @cdk.githash
  */
@@ -41,7 +40,7 @@ public class DebugAtomType extends AtomType implements IAtomType {
 
     private static final long serialVersionUID = 1427549696666679540L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugAtomType.class);
+    ILoggingTool logger = LoggingToolFactory.createLoggingTool(DebugAtomType.class);
 
     public DebugAtomType(String elementSymbol) {
         super(elementSymbol);
@@ -50,7 +49,9 @@ public class DebugAtomType extends AtomType implements IAtomType {
 
     public DebugAtomType(String identifier, String elementSymbol) {
         super(elementSymbol); // cannot use super(identifier, elementSymbol); that gives a NPE
-        logger.debug("Instantiated a DebugAtomType: identifier= " + identifier + " symbol= ", elementSymbol);
+        logger.debug(
+                "Instantiated a DebugAtomType: identifier= " + identifier + " symbol= ",
+                elementSymbol);
         this.setSymbol(elementSymbol);
         this.setAtomTypeName(identifier);
     }
@@ -231,7 +232,6 @@ public class DebugAtomType extends AtomType implements IAtomType {
     public void setExactMass(Double exactMass) {
         logger.debug("Setting exact mass: ", exactMass);
         super.setExactMass(exactMass);
-
     }
 
     /** {@inheritDoc} */
@@ -373,5 +373,4 @@ public class DebugAtomType extends AtomType implements IAtomType {
         logger.debug("Getting valency: ", super.getValency());
         return super.getValency();
     }
-
 }
