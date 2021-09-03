@@ -273,7 +273,6 @@ public class SDFWriter extends DefaultChemObjectWriter {
             mdlWriter.addSettings(getSettings());
             mdlWriter.write(container);
             mdlWriter.close();
-            writer.write(stringWriter.toString());
 
             // write non-structural data (mol properties in our case)
             if (paramWriteData.isSet()) {
@@ -291,24 +290,22 @@ public class SDFWriter extends DefaultChemObjectWriter {
                                 Object val = sdFields.get(propKey);
 
                                 if (isPrimitiveDataValue(val)) {
-                                    writer.write("> <" + cleanHeaderKey + ">");
-                                    writer.write('\n');
+                                    stringWriter.append("> <" + cleanHeaderKey + ">\n");
                                     if (val != null) {
                                       String valStr = val.toString();
                                       int maxDataLen = 200; // set in the spec
                                       if (truncateData.isSet()) {
                                         for (String line : valStr.split("\n")) {
                                           if (line.length() > maxDataLen)
-                                            writer.write(line.substring(0, maxDataLen));
+                                            stringWriter.append(line.substring(0, maxDataLen));
                                           else
-                                            writer.write(valStr);
+                                            stringWriter.append(valStr);
                                         }
                                       } else {
-                                        writer.write(valStr);
+                                        stringWriter.append(valStr);
                                       }
                                     }
-                                    writer.write('\n');
-                                    writer.write('\n');
+                                    stringWriter.append("\n\n");
                                 } else {
 
                                     logger.info("Skipped property " + propKey + " because only primitive and string properties can be written by SDFWriter");
@@ -318,7 +315,8 @@ public class SDFWriter extends DefaultChemObjectWriter {
                     }
                 }
             }
-            writer.write("$$$$\n");
+            stringWriter.append("$$$$\n");
+            writer.write(stringWriter.toString());
         } catch (IOException exception) {
             throw new CDKException("Error while writing a SD file entry: " + exception.getMessage(), exception);
         }
