@@ -23,6 +23,9 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.riot.Lang;
+import org.apache.jena.riot.RDFDataMgr;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -30,8 +33,6 @@ import org.openscience.cdk.io.DefaultChemObjectWriter;
 import org.openscience.cdk.io.formats.CDKOWLFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.libio.jena.Convertor;
-
-import com.hp.hpl.jena.rdf.model.Model;
 
 /**
  * Serializes the data model into CDK OWL.
@@ -107,6 +108,7 @@ public class CDKOWLWriter extends DefaultChemObjectWriter {
             try {
                 writeMolecule((IAtomContainer) object);
             } catch (Exception ex) {
+            	ex.printStackTrace();
                 throw new CDKException("Error while writing HIN file: " + ex.getMessage(), ex);
             }
         } else {
@@ -116,7 +118,7 @@ public class CDKOWLWriter extends DefaultChemObjectWriter {
 
     private void writeMolecule(IAtomContainer mol) {
         Model model = Convertor.molecule2Model(mol);
-        model.write(output, "N3");
+        RDFDataMgr.write(output, model, Lang.RDFXML);
     }
 
 }
