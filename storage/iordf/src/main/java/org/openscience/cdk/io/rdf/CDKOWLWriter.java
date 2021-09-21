@@ -109,7 +109,7 @@ public class CDKOWLWriter extends DefaultChemObjectWriter {
                 writeMolecule((IAtomContainer) object);
             } catch (Exception ex) {
             	ex.printStackTrace();
-                throw new CDKException("Error while writing HIN file: " + ex.getMessage(), ex);
+                throw new CDKException("Error while writing CDK OWL file: " + ex.getMessage(), ex);
             }
         } else {
             throw new CDKException("CDKOWLWriter only supports output of IAtomContainer classes.");
