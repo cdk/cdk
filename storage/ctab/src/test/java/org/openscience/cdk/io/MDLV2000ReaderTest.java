@@ -593,21 +593,18 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     }
 
     /**
+     * Don't accept hydrogen isotopes D/T in strict mode.
      * @cdk.bug 1826577
      */
-    @Test
+    @Test(expected = CDKException.class)
     public void testHisotopes_Strict() throws Exception {
         String filename = "hisotopes.mol";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getResourceAsStream(filename);
-        try {
-            MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try (MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT)){
             reader.read(new ChemFile());
-            reader.close();
-            Assert.fail("Expected a CDKException");
-        } catch (CDKException | IOException exception) {
-            // OK, that's what's is supposed to happen
         }
+        Assert.fail("Expected invalid symbol: D");
     }
 
     /**
