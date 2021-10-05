@@ -43,7 +43,7 @@ public class CMLModuleStackTest extends CDKTestCase {
         }
     }
 
-    @Test
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void testPop() {
         CMLModuleStack stack = new CMLModuleStack();
         ICMLModule first = new CMLCoreModule((IChemFile) null);
@@ -55,12 +55,7 @@ public class CMLModuleStackTest extends CDKTestCase {
         Assert.assertEquals(third, stack.pop());
         Assert.assertEquals(second, stack.pop());
         Assert.assertEquals(first, stack.pop());
-        try {
-            Assert.assertEquals("doesNotExist", stack.pop());
-            Assert.fail("Should have received an ArrayIndexOutOfBoundsException");
-        } catch (Exception exception) {
-            // OK, should happen
-        }
+        stack.pop();
     }
 
     @Test
