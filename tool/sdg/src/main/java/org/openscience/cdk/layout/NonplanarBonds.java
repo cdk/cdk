@@ -592,7 +592,9 @@ final class NonplanarBonds {
             if ((!rnums.get(0).equals(0) && rnums.get(0).equals(rnums.get(4))) ||
                 (!rnums.get(1).equals(0) && rnums.get(1).equals(rnums.get(5)))) {
                 swap(bonds, 1, 4);
+                swap(bonds, 2, 3);
                 swap(rnums, 1, 4);
+                swap(rnums, 2, 3);
                 return SPIRO_MIRROR;
             }
 

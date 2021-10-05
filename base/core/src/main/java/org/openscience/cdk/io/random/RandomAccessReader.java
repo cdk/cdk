@@ -183,97 +183,95 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
             file.delete();
             return;
         }
-        FileWriter out = new FileWriter(file);
-        out.write(Integer.toString(indexVersion));
-        out.write('\n');
-        out.write(filename);
-        out.write('\n');
-        out.write(Long.toString(raFile.length()));
-        out.write('\n');
-        out.write(Integer.toString(records));
-        out.write('\n');
-        for (int i = 0; i < records; i++) {
-            out.write(Long.toString(index[i][0]));
-            out.write('\t');
-            out.write(Long.toString(index[i][1]));
-            out.write('\t');
-            out.write(Long.toString(index[i][2]));
+        try (FileWriter out = new FileWriter(file)) {
+            out.write(Integer.toString(indexVersion));
+            out.write('\n');
+            out.write(filename);
+            out.write('\n');
+            out.write(Long.toString(raFile.length()));
+            out.write('\n');
+            out.write(Integer.toString(records));
+            out.write('\n');
+            for (int i = 0; i < records; i++) {
+                out.write(Long.toString(index[i][0]));
+                out.write('\t');
+                out.write(Long.toString(index[i][1]));
+                out.write('\t');
+                out.write(Long.toString(index[i][2]));
+                out.write('\n');
+            }
+            out.write(Integer.toString(records));
+            out.write('\n');
+            out.write(filename);
             out.write('\n');
         }
-        out.write(Integer.toString(records));
-        out.write('\n');
-        out.write(filename);
-        out.write('\n');
-        out.close();
     }
 
     protected synchronized void loadIndex(File file) throws Exception {
-        BufferedReader in = new BufferedReader(new FileReader(file));
-        String version = in.readLine();
-        try {
-            if (Integer.parseInt(version) != indexVersion) {
-                in.close();
-                throw new Exception("Expected index version " + indexVersion + " instead of " + version);
-            }
-        } catch (Exception x) {
-            in.close();
-            throw new Exception("Invalid index version " + version);
-        }
-        String fileIndexed = in.readLine();
-        if (!filename.equals(fileIndexed)) {
-            in.close();
-            throw new Exception("Index for " + fileIndexed + " found instead of " + filename + ". Creating new index.");
-        }
-        String line = in.readLine();
-        int fileLength = Integer.parseInt(line);
-        if (fileLength != raFile.length()) {
-            in.close();
-            throw new Exception("Index for file of size " + fileLength + " found instead of " + raFile.length());
-        }
-        line = in.readLine();
-        int indexLength = Integer.parseInt(line);
-        if (indexLength <= 0) {
-            in.close();
-            throw new Exception("Index of zero length! " + file.getAbsolutePath());
-        }
-        index = new long[indexLength][3];
-        records = 0;
-        int maxRecordLength = 0;
-        for (int i = 0; i < index.length; i++) {
-            line = in.readLine();
-            String[] result = line.split("\t");
-            for (int j = 0; j < 3; j++)
-                try {
-                    index[i][j] = Long.parseLong(result[j]);
-
-                } catch (Exception x) {
+        try (BufferedReader in = new BufferedReader(new FileReader(file))) {
+            String version = in.readLine();
+            try {
+                if (Integer.parseInt(version) != indexVersion) {
                     in.close();
-                    throw new Exception("Error reading index! " + result[j], x);
+                    throw new Exception("Expected index version " + indexVersion + " instead of " + version);
                 }
+            } catch (Exception x) {
+                in.close();
+                throw new Exception("Invalid index version " + version);
+            }
+            String fileIndexed = in.readLine();
+            if (!filename.equals(fileIndexed)) {
+                in.close();
+                throw new Exception("Index for " + fileIndexed + " found instead of " + filename + ". Creating new index.");
+            }
+            String line = in.readLine();
+            int fileLength = Integer.parseInt(line);
+            if (fileLength != raFile.length()) {
+                in.close();
+                throw new Exception("Index for file of size " + fileLength + " found instead of " + raFile.length());
+            }
+            line = in.readLine();
+            int indexLength = Integer.parseInt(line);
+            if (indexLength <= 0) {
+                in.close();
+                throw new Exception("Index of zero length! " + file.getAbsolutePath());
+            }
+            index = new long[indexLength][3];
+            records = 0;
+            int maxRecordLength = 0;
+            for (int i = 0; i < index.length; i++) {
+                line = in.readLine();
+                String[] result = line.split("\t");
+                for (int j = 0; j < 3; j++)
+                    try {
+                        index[i][j] = Long.parseLong(result[j]);
 
-            if (maxRecordLength < index[records][1]) maxRecordLength = (int) index[records][1];
-            records++;
-        }
+                    } catch (Exception x) {
+                        in.close();
+                        throw new Exception("Error reading index! " + result[j], x);
+                    }
 
-        line = in.readLine();
-        int indexLength2 = Integer.parseInt(line);
-        if (indexLength2 <= 0) {
-            in.close();
-            throw new Exception("Index of zero lenght!");
-        }
-        if (indexLength2 != indexLength) {
-            in.close();
-            throw new Exception("Wrong index length!");
-        }
-        line = in.readLine();
-        if (!line.equals(filename)) {
-            in.close();
-            throw new Exception("Index for " + line + " found instead of " + filename);
-        }
-        in.close();
+                if (maxRecordLength < index[records][1]) maxRecordLength = (int) index[records][1];
+                records++;
+            }
 
-        b = new byte[maxRecordLength];
-        //fireFrameRead();
+            line = in.readLine();
+            int indexLength2 = Integer.parseInt(line);
+            if (indexLength2 <= 0) {
+                in.close();
+                throw new Exception("Index of zero lenght!");
+            }
+            if (indexLength2 != indexLength) {
+                in.close();
+                throw new Exception("Wrong index length!");
+            }
+            line = in.readLine();
+            if (!line.equals(filename)) {
+                in.close();
+                throw new Exception("Index for " + line + " found instead of " + filename);
+            }
+            b = new byte[maxRecordLength];
+        }
     }
 
     /**

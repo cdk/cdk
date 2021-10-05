@@ -122,10 +122,9 @@ public class ProteinPocketFinder {
      * Creates from a PDB File a BioPolymer.
      */
     private void readBioPolymer(String biopolymerFile) {
-        try {
-            // Read PDB file
-            FileReader fileReader = new FileReader(biopolymerFile);
-            ISimpleChemObjectReader reader = new ReaderFactory().createReader(fileReader);
+        // Read PDB file
+        try (FileReader fileReader = new FileReader(biopolymerFile);
+             ISimpleChemObjectReader reader = new ReaderFactory().createReader(fileReader)) {
             IChemFile chemFile = (IChemFile) reader.read((IChemObject) new ChemFile());
             // Get molecule from ChemFile
             IChemSequence chemSequence = chemFile.getChemSequence(0);
@@ -872,17 +871,17 @@ public class ProteinPocketFinder {
         try {
             for (int i = 0; i < pockets.size(); i++) {// go through every
                 // pocket
-                BufferedWriter writer = new BufferedWriter(new FileWriter(outPutFileName + "-" + i + ".pmesh"));
-                List<Point3d> pocket = pockets.get(i);
-                writer.write(pocket.size() + "\n");
-                for (int j = 0; j < pocket.size(); j++) {// go through every
-                    // grid point of the
-                    // actual pocket
-                    Point3d actualGridPoint = (Point3d) pocket.get(j);
-                    Point3d coords = gridGenerator.getCoordinatesFromGridPoint(actualGridPoint);
-                    writer.write(coords.x + "\t" + coords.y + "\t" + coords.z + "\n");
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(outPutFileName + "-" + i + ".pmesh"))) {
+                    List<Point3d> pocket = pockets.get(i);
+                    writer.write(pocket.size() + "\n");
+                    for (int j = 0; j < pocket.size(); j++) {// go through every
+                        // grid point of the
+                        // actual pocket
+                        Point3d actualGridPoint = (Point3d) pocket.get(j);
+                        Point3d coords = gridGenerator.getCoordinatesFromGridPoint(actualGridPoint);
+                        writer.write(coords.x + "\t" + coords.y + "\t" + coords.z + "\n");
+                    }
                 }
-                writer.close();
             }
         } catch (IOException e) {
             logger.debug(e);

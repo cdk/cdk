@@ -23,6 +23,7 @@ package org.openscience.cdk.modeling.builder3d;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -129,31 +130,21 @@ public class TemplateExtractor {
     }
 
     public void PartitionRingsFromComplexRing(String dataFile) {
-        IteratingSDFReader imdl = null;
         IAtomContainerSet som = builder.newInstance(IAtomContainerSet.class);
         IAtomContainer m = null;
-        try {
-            System.out.println("Start...");
-            BufferedReader fin = new BufferedReader(new FileReader(dataFile));
-            imdl = new IteratingSDFReader(fin, builder);
-            System.out.print("Read File in..");
-        } catch (Exception exc) {
-            System.out.println("Could not read Molecules from file " + dataFile + " due to: " + exc.getMessage());
-        }
-        System.out.println("READY");
-        while (imdl.hasNext()) {
-            m = (IAtomContainer) imdl.next();
-            System.out.println("Atoms:" + m.getAtomCount());
-            IRingSet ringSetM = Cycles.sssr(m).toRingSet();
-            // som.addAtomContainer(m);
-            for (int i = 0; i < ringSetM.getAtomContainerCount(); i++) {
-                som.addAtomContainer(builder.newInstance(IAtomContainer.class, ringSetM.getAtomContainer(i)));
+        try (BufferedReader fin = new BufferedReader(new FileReader(dataFile));
+             IteratingSDFReader imdl = new IteratingSDFReader(fin, builder)) {
+            while (imdl.hasNext()) {
+                m = (IAtomContainer) imdl.next();
+                System.out.println("Atoms:" + m.getAtomCount());
+                IRingSet ringSetM = Cycles.sssr(m).toRingSet();
+                // som.addAtomContainer(m);
+                for (int i = 0; i < ringSetM.getAtomContainerCount(); i++) {
+                    som.addAtomContainer(builder.newInstance(IAtomContainer.class, ringSetM.getAtomContainer(i)));
+                }
             }
-        }
-        try {
-            imdl.close();
-        } catch (Exception exc1) {
-            System.out.println("Could not close Reader due to: " + exc1.getMessage());
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
         }
         System.out.println(som.getAtomContainerCount() + " Templates are read in");
         writeChemModel(som, dataFile, "_VERSUCH");
@@ -165,7 +156,6 @@ public class TemplateExtractor {
         IAtomContainer m = null;
         // RingPartitioner ringPartitioner=new RingPartitioner();
         List<IRingSet> ringSystems = null;
-        IteratingSDFReader imdl = null;
 
         HashMap<String, String> hashRingSystems = new HashMap<String, String>();
         SmilesGenerator smilesGenerator = new SmilesGenerator();
@@ -180,93 +170,79 @@ public class TemplateExtractor {
         String molfile = dataFile + "_UniqueRings";
 
         // FileOutputStream fout=null;
-        MDLV2000Writer mdlw = null;
-        try {
-            FileOutputStream fout = new FileOutputStream(molfile);
-            mdlw = new MDLV2000Writer(fout);
-        } catch (Exception ex2) {
-            System.out.println("IOError:cannot write file due to:" + ex2.toString());
-        }
+        try (FileOutputStream fout = new FileOutputStream(molfile);
+             MDLV2000Writer mdlw = new MDLV2000Writer(fout);
+             BufferedReader fin = new BufferedReader(new FileReader(dataFile));
+             IteratingSDFReader imdl = new IteratingSDFReader(fin, builder)) {
+            while (imdl.hasNext()) {
+                m = (IAtomContainer) imdl.next();
+                counterMolecules = counterMolecules + 1;
+                /*
+                 * try{ HueckelAromaticityDetector.detectAromaticity(m);
+                 * }catch(Exception ex1){ System.out.println("Could not find
+                 * aromaticity due to:"+ex1); }
+                 */
+                IRingSet ringSetM = Cycles.sssr(m).toRingSet();
 
-        try {
-            System.out.println("Start...");
-            BufferedReader fin = new BufferedReader(new FileReader(dataFile));
-            imdl = new IteratingSDFReader(fin, builder);
-            System.out.println("Read File in..");
-        } catch (Exception exc) {
-            System.out.println("Could not read Molecules from file " + dataFile + " due to: " + exc.getMessage());
-        }
-        while (imdl.hasNext()) {
-            m = (IAtomContainer) imdl.next();
-            counterMolecules = counterMolecules + 1;
-            /*
-             * try{ HueckelAromaticityDetector.detectAromaticity(m);
-             * }catch(Exception ex1){ System.out.println("Could not find
-             * aromaticity due to:"+ex1); }
-             */
-            IRingSet ringSetM = Cycles.sssr(m).toRingSet();
-
-            if (counterMolecules % 1000 == 0) {
-                System.out.println("Molecules:" + counterMolecules);
-            }
-
-            if (ringSetM.getAtomContainerCount() > 0) {
-                ringSystems = RingPartitioner.partitionRings(ringSetM);
-
-                for (int i = 0; i < ringSystems.size(); i++) {
-                    ringSet = (IRingSet) ringSystems.get(i);
-                    ac = builder.newInstance(IAtomContainer.class);
-                    Iterator<IAtomContainer> containers = RingSetManipulator.getAllAtomContainers(ringSet).iterator();
-                    while (containers.hasNext()) {
-                        ac.add((IAtomContainer) containers.next());
-                    }
-                    counterRings = counterRings + 1;
-                    // Only connection is important
-                    for (int j = 0; j < ac.getAtomCount(); j++) {
-                        (ac.getAtom(j)).setSymbol("C");
-                    }
-
-                    try {
-                        key = smilesGenerator.create(builder.newInstance(IAtomContainer.class, ac));
-                    } catch (CDKException e) {
-                        LoggingToolFactory.createLoggingTool(getClass()).error(e);
-                        return;
-                    }
-
-                    // System.out.println("OrgKey:"+key+" For
-                    // Molecule:"+counter);
-                    if (hashRingSystems.containsKey(key)) {
-                        // System.out.println("HAS KEY:ADD");
-                        // Vector tmp=(Vector)HashRingSystems.get(key);
-                        // tmp.add((AtomContainer)ringSet.getRingSetInAtomContainer());
-                        // HashRingSystems.put(key,tmp);
-                        // int
-                        // tmp=((Integer)HashRingSystems.get(key)).intValue();
-                        // tmp=tmp+1;
-                        // HashRingSystems.put(key,new Integer(tmp));
-                    } else {
-                        counterUniqueRings = counterUniqueRings + 1;
-                        // Vector rings2=new Vector();
-                        // rings2.add((AtomContainer)RingSetManipulator.getAllInOneContainer(ringSet));
-                        hashRingSystems.put(key, "1");
-                        try {
-                            // mdlw.write(new Molecule
-                            // ((AtomContainer)RingSetManipulator.getAllInOneContainer(ringSet)));
-                            mdlw.write(builder.newInstance(IAtomContainer.class, ac));
-                        } catch (IllegalArgumentException | CDKException emdl) {
-                        }
-
-                    }
+                if (counterMolecules % 1000 == 0) {
+                    System.out.println("Molecules:" + counterMolecules);
                 }
 
+                if (ringSetM.getAtomContainerCount() > 0) {
+                    ringSystems = RingPartitioner.partitionRings(ringSetM);
+
+                    for (int i = 0; i < ringSystems.size(); i++) {
+                        ringSet = (IRingSet) ringSystems.get(i);
+                        ac = builder.newInstance(IAtomContainer.class);
+                        Iterator<IAtomContainer> containers = RingSetManipulator.getAllAtomContainers(ringSet).iterator();
+                        while (containers.hasNext()) {
+                            ac.add((IAtomContainer) containers.next());
+                        }
+                        counterRings = counterRings + 1;
+                        // Only connection is important
+                        for (int j = 0; j < ac.getAtomCount(); j++) {
+                            (ac.getAtom(j)).setSymbol("C");
+                        }
+
+                        try {
+                            key = smilesGenerator.create(builder.newInstance(IAtomContainer.class, ac));
+                        } catch (CDKException e) {
+                            LoggingToolFactory.createLoggingTool(getClass()).error(e);
+                            return;
+                        }
+
+                        // System.out.println("OrgKey:"+key+" For
+                        // Molecule:"+counter);
+                        if (hashRingSystems.containsKey(key)) {
+                            // System.out.println("HAS KEY:ADD");
+                            // Vector tmp=(Vector)HashRingSystems.get(key);
+                            // tmp.add((AtomContainer)ringSet.getRingSetInAtomContainer());
+                            // HashRingSystems.put(key,tmp);
+                            // int
+                            // tmp=((Integer)HashRingSystems.get(key)).intValue();
+                            // tmp=tmp+1;
+                            // HashRingSystems.put(key,new Integer(tmp));
+                        } else {
+                            counterUniqueRings = counterUniqueRings + 1;
+                            // Vector rings2=new Vector();
+                            // rings2.add((AtomContainer)RingSetManipulator.getAllInOneContainer(ringSet));
+                            hashRingSystems.put(key, "1");
+                            try {
+                                // mdlw.write(new Molecule
+                                // ((AtomContainer)RingSetManipulator.getAllInOneContainer(ringSet)));
+                                mdlw.write(builder.newInstance(IAtomContainer.class, ac));
+                            } catch (IllegalArgumentException | CDKException emdl) {
+                            }
+
+                        }
+                    }
+
+                }
             }
+        } catch (Exception exc) {
+            System.out.println("Could not read/write Molecules from file " + dataFile + " due to: " + exc.getMessage());
         }
-        try {
-            imdl.close();
-            mdlw.close();
-        } catch (Exception exc1) {
-            System.out.println("Could not close iterator mdl reader due to: " + exc1.getMessage());
-        }
+
         // System.out.println("READY Molecules:"+counterMolecules);
         System.out.println("READY Molecules:" + counterMolecules + " RingSystems:" + counterRings
                 + " UniqueRingsSystem:" + counterUniqueRings);
@@ -290,11 +266,9 @@ public class TemplateExtractor {
     public void writeChemModel(IAtomContainerSet som, String file, String endFix) {
         System.out.println("WRITE Molecules:" + som.getAtomContainerCount());
         String molfile = file + endFix;
-        try {
-            FileOutputStream fout = new FileOutputStream(molfile);
-            MDLV2000Writer mdlw = new MDLV2000Writer(fout);
+        try ( FileOutputStream fout = new FileOutputStream(molfile);
+              MDLV2000Writer mdlw = new MDLV2000Writer(fout)) {
             mdlw.write(som);
-            mdlw.close();
         } catch (CDKException | IOException ex2) {
             System.out.println("IOError:cannot write file due to:" + ex2.toString());
         }

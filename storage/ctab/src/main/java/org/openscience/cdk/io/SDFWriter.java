@@ -406,8 +406,12 @@ public class SDFWriter extends DefaultChemObjectWriter {
         truncateData = addSetting(new BooleanIOSetting(OptTruncateLongData,
                                                        IOSetting.Importance.LOW,
                                                        "Truncate long data files >200 characters", "false"));
-        addSettings(new MDLV2000Writer().getSettings());
-        addSettings(new MDLV3000Writer().getSettings());
+        try (MDLV2000Writer mdlv2 = new MDLV2000Writer();
+             MDLV3000Writer mdlv3 = new MDLV3000Writer()) {
+            addSettings(mdlv2.getSettings());
+            addSettings(mdlv3.getSettings());
+        } catch (IOException ignored) {
+        }
     }
 
     public void setAlwaysV3000(boolean val) {

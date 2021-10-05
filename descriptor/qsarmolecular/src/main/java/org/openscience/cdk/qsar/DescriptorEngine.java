@@ -551,9 +551,7 @@ public class DescriptorEngine {
         List<String> classlist = new ArrayList<String>();
         for (int i = 0; i < jars.length; i++) {
             logger.debug("Looking in " + jars[i]);
-            JarFile jarFile;
-            try {
-                jarFile = new JarFile(jars[i]);
+            try (JarFile jarFile = new JarFile(jars[i])) {
                 Enumeration enumeration = jarFile.entries();
                 while (enumeration.hasMoreElements()) {
                     JarEntry jarEntry = (JarEntry) enumeration.nextElement();
@@ -629,9 +627,7 @@ public class DescriptorEngine {
 
         for (String jar : jars) {
             logger.debug("Looking in " + jar);
-            JarFile jarFile;
-            try {
-                jarFile = new JarFile(jar);
+            try (JarFile jarFile = new JarFile(jar)) {
                 Enumeration enumeration = jarFile.entries();
                 while (enumeration.hasMoreElements()) {
                     JarEntry jarEntry = (JarEntry) enumeration.nextElement();
