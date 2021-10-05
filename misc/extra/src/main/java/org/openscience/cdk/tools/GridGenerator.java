@@ -245,18 +245,18 @@ public class GridGenerator {
      * Method transforms the grid into pmesh format.
      */
     public void writeGridInPmeshFormat(String outPutFileName) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter(outPutFileName + ".pmesh"));
-        int numberOfGridPoints = grid.length * grid[0].length * grid[0][0].length;
-        writer.write(numberOfGridPoints + "\n");
-        for (int z = 0; z < grid[0][0].length; z++) {
-            for (int y = 0; y < grid[0].length; y++) {
-                for (int x = 0; x < grid.length; x++) {
-                    Point3d coords = getCoordinatesFromGridPoint(new Point3d(x, y, z));
-                    writer.write(coords.x + "\t" + coords.y + "\t" + coords.z + "\n");
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(outPutFileName + ".pmesh"))) {
+            int numberOfGridPoints = grid.length * grid[0].length * grid[0][0].length;
+            writer.write(numberOfGridPoints + "\n");
+            for (int z = 0; z < grid[0][0].length; z++) {
+                for (int y = 0; y < grid[0].length; y++) {
+                    for (int x = 0; x < grid.length; x++) {
+                        Point3d coords = getCoordinatesFromGridPoint(new Point3d(x, y, z));
+                        writer.write(coords.x + "\t" + coords.y + "\t" + coords.z + "\n");
+                    }
                 }
             }
         }
-        writer.close();
     }
 
     /**
@@ -268,47 +268,47 @@ public class GridGenerator {
      * }</pre>
      */
     public void writeGridInPmeshFormat(String outPutFileName, double cutOff) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter(outPutFileName + ".pmesh"));
-        boolean negative = false;
-        if (cutOff < 0) {
-            negative = true;
-        } else {
-            negative = false;
-        }
-        int numberOfGridPoints = 0;
-        for (int z = 0; z < grid[0][0].length; z++) {
-            for (int y = 0; y < grid[0].length; y++) {
-                for (int x = 0; x < grid.length; x++) {
-                    if (negative) {
-                        if (grid[x][y][z] <= cutOff) {
-                            numberOfGridPoints++;
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(outPutFileName + ".pmesh"))) {
+            boolean negative = false;
+            if (cutOff < 0) {
+                negative = true;
+            } else {
+                negative = false;
+            }
+            int numberOfGridPoints = 0;
+            for (int z = 0; z < grid[0][0].length; z++) {
+                for (int y = 0; y < grid[0].length; y++) {
+                    for (int x = 0; x < grid.length; x++) {
+                        if (negative) {
+                            if (grid[x][y][z] <= cutOff) {
+                                numberOfGridPoints++;
+                            }
+                        } else {
+                            if (grid[x][y][z] >= cutOff) {
+                                numberOfGridPoints++;
+                            }
                         }
-                    } else {
-                        if (grid[x][y][z] >= cutOff) {
-                            numberOfGridPoints++;
+                    }
+                }
+            }
+            writer.write(numberOfGridPoints + "\n");
+            for (int z = 0; z < grid[0][0].length; z++) {
+                for (int y = 0; y < grid[0].length; y++) {
+                    for (int x = 0; x < grid.length; x++) {
+                        Point3d coords = getCoordinatesFromGridPoint(new Point3d(x, y, z));
+                        if (negative) {
+                            if (grid[x][y][z] <= cutOff) {
+                                writer.write(coords.x + "\t" + coords.y + "\t" + coords.z + "\n");
+                            }
+                        } else {
+                            if (grid[x][y][z] >= cutOff) {
+                                writer.write(coords.x + "\t" + coords.y + "\t" + coords.z + "\n");
+                            }
                         }
                     }
                 }
             }
         }
-        writer.write(numberOfGridPoints + "\n");
-        for (int z = 0; z < grid[0][0].length; z++) {
-            for (int y = 0; y < grid[0].length; y++) {
-                for (int x = 0; x < grid.length; x++) {
-                    Point3d coords = getCoordinatesFromGridPoint(new Point3d(x, y, z));
-                    if (negative) {
-                        if (grid[x][y][z] <= cutOff) {
-                            writer.write(coords.x + "\t" + coords.y + "\t" + coords.z + "\n");
-                        }
-                    } else {
-                        if (grid[x][y][z] >= cutOff) {
-                            writer.write(coords.x + "\t" + coords.y + "\t" + coords.z + "\n");
-                        }
-                    }
-                }
-            }
-        }
-        writer.close();
     }
 
     @Override
