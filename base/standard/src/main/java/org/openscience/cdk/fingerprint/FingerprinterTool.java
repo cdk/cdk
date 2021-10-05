@@ -156,7 +156,7 @@ public class FingerprinterTool {
      */
     public static IBitFingerprint makeBitFingerprint(final Map<String,Integer> features, int len, int bits) {
         final BitSetFingerprint fingerprint = new BitSetFingerprint(len);
-        final Random rand = new Random();
+        final Random rand = new Random("SEED_SET_LATER".hashCode());
         for (String feature : features.keySet()) {
             int hash = feature.hashCode();
             fingerprint.set(Math.abs(hash % len));
