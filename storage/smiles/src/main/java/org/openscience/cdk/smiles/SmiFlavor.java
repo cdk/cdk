@@ -241,7 +241,13 @@ public final class SmiFlavor {
      */
     public static final int UniversalSmiles     = InChILabelling | Isomeric;
 
+    // test if a single bit flag is set
     static boolean isSet(int opts, int opt) {
         return (opts & opt) != 0;
+    }
+
+    // test if the flag is fully set with all bits
+    static boolean isFullySet(int opts, int opt) {
+        return (opts & opt) == opt;
     }
 }

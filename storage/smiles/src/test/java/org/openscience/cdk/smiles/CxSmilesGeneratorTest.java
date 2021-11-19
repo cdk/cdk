@@ -189,4 +189,11 @@ public class CxSmilesGeneratorTest {
         SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxEnhancedStereo);
         assertThat(smigen.create(mol), is("C[C@H](O)[C@H](O)C1CCCCC1 |a:1,&1:3|"));
     }
+
+    @Test public void noEnhancedStereoInIsomeric() throws Exception {
+        SmilesParser    smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer  mol    = smipar.parseSmiles("C[C@H](O)[C@H](O)C1CCCCC1 |r|");
+        SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Isomeric);
+        assertThat(smigen.create(mol), is("C[C@H](O)[C@H](O)C1CCCCC1"));
+    }
 }

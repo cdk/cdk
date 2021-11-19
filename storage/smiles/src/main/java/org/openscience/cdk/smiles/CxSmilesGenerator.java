@@ -192,7 +192,7 @@ public class CxSmilesGenerator {
             sb.append('$');
         }
 
-        if (SmiFlavor.isSet(opts, SmiFlavor.CxEnhancedStereo)) {
+        if (SmiFlavor.isFullySet(opts, SmiFlavor.CxEnhancedStereo)) {
             if (state.racemic) {
                 if (sb.length() > 2)
                     sb.append(',');
