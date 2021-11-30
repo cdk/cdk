@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2021 Mehmet Aziz Yirik
+ Copyright (c) 2021 Mehmet Aziz Yirik <mehmetazizyirik@outlook.com> <0000-0001-7520-7215@orcid.org>
 
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software
  and associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -19,13 +19,6 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-/*
- * This is the junit test class for MAYGEN. Randomly selected 40 molecular formulas are used.
- * The number of generated structures are checked. The number of isomers are also tested with
- * MOLGEN algorithm. MAYGEN generates same number of isomers like MOLGEN.
- *
- * @author Mehmet Aziz Yirik
- */
 package org.openscience.cdk.structgen.maygen;
 
 import static org.junit.Assert.assertEquals;
@@ -35,6 +28,18 @@ import java.io.IOException;
 import org.junit.Test;
 import org.openscience.cdk.exception.CDKException;
 
+/**
+ * <p>
+ * Unit test class for the MAYGEN class. Randomly selected molecular formulae are tested.
+ * The number of generated structures are checked. The number of isomers are also tested with
+ * MOLGEN algorithm. MAYGEN generates same number of isomers like MOLGEN.
+ * </p>
+ *
+ * @author MehmetAzizYirik <mehmetazizyirik@outlook.com> <0000-0001-7520-7215@orcid.org>
+ * 
+ * @cdk.module structgen
+ *
+ */
 public class MaygenTest {
 
     @Test

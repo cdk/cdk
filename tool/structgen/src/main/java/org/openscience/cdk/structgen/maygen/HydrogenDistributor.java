@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2018 Mehmet Aziz Yirik
+ Copyright (c) 2018 Mehmet Aziz Yirik <mehmetazizyirik@outlook.com> <0000-0001-7520-7215@orcid.org>
 
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software
  and associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -19,12 +19,6 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-/*
- This class is for the distribution of hydrogens into chemical structures. For a given chemical
- formula, all the possible distributions of the hydrogen atoms to the hetero atoms are generated.
-
- @author Mehmet Aziz Yirik
-*/
 package org.openscience.cdk.structgen.maygen;
 
 import java.util.ArrayList;
@@ -33,6 +27,20 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+/**
+ * <p>
+ * The hydrogen distribution process is a preliminary step in the generation.
+ * The pre-distribution of hydrogens accelerates the generation. For a given chemical
+ * formula, all the possible distributions of the hydrogen atoms to the hetero atoms
+ * are generated.For example, C6H6 has 6 hydrogens and 6 carbons. There are 7 unique
+ * possible distribution of these hydrogens to these carbons.    
+ * </p>
+ *
+ * @author MehmetAzizYirik <mehmetazizyirik@outlook.com> <0000-0001-7520-7215@orcid.org>
+ * 
+ * @cdk.module structgen
+ *
+ */
 class HydrogenDistributor {
     private int[] capacity;
     private int[] valences;
@@ -41,17 +49,26 @@ class HydrogenDistributor {
     private int hydrogens2distribute;
 
     /**
-     * The basic functions used in the hydrogen distributor.
+     * Adding new element to an int array.
      *
-     * @param a the a
-     * @param e the e
-     * @return the new array
+     * @param a		int[] a
+     * @param e 	int[] e
+     * @return int[]
      */
+    
     public int[] addElement(int[] a, int e) {
         a = Arrays.copyOf(a, a.length + 1);
         a[a.length - 1] = e;
         return a;
     }
+
+    /**
+     * Summing the entries of an array.
+     *
+     * @param list		int[] list
+     * @param index 	int  entry index
+     * @return int
+     */
 
     public int sum(int[] list, int index) {
         int sum = 0;
@@ -61,6 +78,14 @@ class HydrogenDistributor {
         return sum;
     }
 
+    /**
+     * Setting the global variables based on the initial partition and degrees.
+     * 
+     * @param partition		int[] atom partition
+     * @param degrees		int[] atom valences
+     * @return int[] 
+     */
+    
     public int[] setValues(int[] partition, int[] degrees) {
         int partitionSize = partition.length;
         int[] localCapacity = new int[partitionSize];
@@ -82,6 +107,13 @@ class HydrogenDistributor {
         return localCapacity;
     }
 
+    /**
+     * Summing entries of an int array
+     * 
+     * @param array		int[] array
+     * @return int 
+     */
+    
     public int sum(int[] array) {
         int sum = 0;
         for (int i = 0; i < array.length; i++) {
@@ -90,6 +122,13 @@ class HydrogenDistributor {
         return sum;
     }
 
+    /**
+     * Combining list of int arrays.
+     * 
+     * @param arrays	List<int[]> list of int arrays
+     * @return int[] 
+     */
+    
     public int[] mergeArrays(List<int[]> arrays) {
         int size = 0;
         for (int[] array : arrays) {
@@ -105,6 +144,14 @@ class HydrogenDistributor {
         return mergedArray;
     }
 
+    /**
+     * Combining 2 int arrays.
+     * 
+     * @param a		int[] int array
+     * @param b		int[] int array
+     * @return int[] 
+     */
+    
     public int[] arraySum(int[] a, int[] b) {
         List<int[]> arrays = new ArrayList<>();
         arrays.add(a);
@@ -112,6 +159,13 @@ class HydrogenDistributor {
         return mergeArrays(arrays);
     }
 
+    /**
+     * Combining list of int arrays.
+     * 
+     * @param lists		LinkedList<List<int[]>> lists
+     * @return List<int[]> 
+     */
+    
     public List<int[]> combineArrays(LinkedList<List<int[]>> lists) {
         List<int[]> comb = new ArrayList<>(lists.removeFirst());
         while (!lists.isEmpty()) {
@@ -130,10 +184,11 @@ class HydrogenDistributor {
     /**
      * To initialise the inputs and run the functions while recording the duration time.
      *
-     * @param partition the partition
-     * @param degrees the degrees
-     * @return the list of int arrays
+     * @param partition		int[] partition
+     * @param degrees 		int[] degrees
+     * @return List<int[]>
      */
+    
     public List<int[]> run(int[] partition, int[] degrees) {
         int partitionSize = partition.length;
         int hydrogen = partition[partitionSize - 1];
@@ -169,11 +224,13 @@ class HydrogenDistributor {
     /**
      * These functions are built for the integer partitioning problem.
      *
-     * @param n the n
-     * @param d the d
-     * @param depth the depth
-     * @return the list of int arrays
+     * @param n 	int total number of hydrogens  
+     * @param d 	int total number of isotopes to distribute hydrogens
+     * @param depth int starting from zero until the number of isotopes recursively filling.
+     * 
+     * @return List<int[]>
      */
+    
     public List<int[]> partition(int n, int d, int depth) {
         if (d == depth) {
             List<int[]> array = new ArrayList<>();
@@ -184,6 +241,16 @@ class HydrogenDistributor {
         return buildArray(n, d, depth);
     }
 
+    /**
+     * Subfunction of partition function.
+     *
+     * @param n 	int total number of hydrogens  
+     * @param d 	int total number of isotopes to distribute hydrogens
+     * @param depth int starting from zero until the number of isotopes recursively filling.
+     * 
+     * @return List<int[]>
+     */
+    
     public List<int[]> buildArray(int n, int d, int depth) {
         List<int[]> array = new ArrayList<>();
         IntStream range = IntStream.rangeClosed(0, n);
@@ -195,6 +262,17 @@ class HydrogenDistributor {
         return array;
     }
 
+    /**
+     * These functions are built for the integer partitioning problem.
+     *
+     * @param d 			int total number of isotopes to distribute hydrogens
+     * @param List<int[]> 	List<int[]> list of partition
+     * @param i				int entry
+     * @param item			int[] new partition
+     * 
+     * @return List<int[]>
+     */
+    
     public void buildArrayItem(int d, List<int[]> array, int i, int[] item) {
         if (i <= capacity[item.length]) {
             item = addElement(item, i);
@@ -208,6 +286,15 @@ class HydrogenDistributor {
         }
     }
 
+    /**
+     * Adding zeros to the end of an array.
+     *
+     * @param array 		int[] partition
+     * @param zeros			int number of zeros
+     *     
+     * @return int[]
+     */
+    
     public int[] addZeros(int[] array, int zeros) {
         for (int i = 0; i < zeros; i++) {
             array = addElement(array, 0);
@@ -215,10 +302,28 @@ class HydrogenDistributor {
         return array;
     }
 
+    /**
+     * Ordering the int array in descending order. 
+     * 
+     * @param array		int[] array
+     * 
+     * @return int[]
+     */
+    
     public int[] descendingOrderArray(int[] arr) {
         return Arrays.stream(arr).boxed().sorted().mapToInt(Integer::intValue).toArray();
     }
 
+    /**
+     * Distributing number of hydrogens in an unique way to a number of isotopes.
+     * 
+     * @param arrays		List<int[]> list of output arrays
+     * @param hydrogen		int number of hydrogens to add
+     * @param array			int[] array
+     * @param valence		int atom valence
+     * @param numAtom		int number of atoms in a given index 
+     */
+    
     public void distribute(List<int[]> arrays, int hydrogen, int[] arr, int valence, int numAtom) {
         if (hydrogen == 0 && sum(arr) == hydrogens2distribute) {
             if (arr.length != numAtom) {
@@ -240,6 +345,16 @@ class HydrogenDistributor {
         }
     }
 
+    /**
+     * Subfunction of the distribute functon for the case when (numAtom - arr.length == 1)
+     * 
+     * @param arrays		List<int[]> list of output arrays
+     * @param hydrogen		int number of hydrogens to add
+     * @param array			int[] array
+     * @param valence		int atom valence
+     * @param numAtom		int number of atoms in a given index 
+     */
+    
     public void numAtomMinusArrLengthEqualsOne(
             List<int[]> arrays, int hydrogen, int[] arr, int valence, int numAtom) {
         int add = Math.min(hydrogen, valence);
