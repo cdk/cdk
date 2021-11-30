@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2021 Mehmet Aziz Yirik
+ Copyright (c) 2021 Mehmet Aziz Yirik <mehmetazizyirik@outlook.com> <0000-0001-7520-7215@orcid.org>
 
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software
  and associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -19,23 +19,37 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-/*
- The class includes the early boundary conditions for the chemical graph generation.
 
- @author Mehmet Aziz Yirik
-*/
 package org.openscience.cdk.structgen.maygen;
 
+/**
+ * <p>
+ * This class is for the early boundary conditions class of MAYGEN package.
+ * Users can define their early boundary conditions for the structure generation process.
+ * This will help to avoid post processing filtering.
+ * </p>
+ * 
+ * <p>
+ * For example, with detectTripleBonds, users can avoid the generation of molecular structures
+ * with triple bonds. Users can add their functions, the early boundary conditions, here.  
+ * </p>
+ *
+ * @author MehmetAzizYirik <mehmetazizyirik@outlook.com> <0000-0001-7520-7215@orcid.org>
+ * 
+ * @cdk.module structgen
+ *
+ */
 class BoundaryConditions {
 
     private BoundaryConditions() {}
 
     /**
-     * No triple bonds
+     * No triple bonds.
      *
-     * @param mat the adjacency matrix
+     * @param mat		int[][] the adjacency matrix
      * @return boolean
      */
+    
     public static boolean detectTripleBonds(int[][] mat) {
         int length = mat.length;
         for (int i = 0; i < length; i++) {
@@ -49,9 +63,9 @@ class BoundaryConditions {
     }
 
     /**
-     * No adjacent double bonds
+     * No adjacent double bonds.
      *
-     * @param mat the adjacency matrix
+     * @param mat		int[][] the adjacency matrix
      * @return boolean
      */
     public static boolean detectAdjacentDoubleBonds(int[][] mat) {
@@ -71,12 +85,13 @@ class BoundaryConditions {
     }
 
     /**
-     * No allenes
+     * No allenes.
      *
-     * @param mat the adjacency matrix
-     * @param symbols the symbols
+     * @param mat		int[][]the adjacency matrix
+     * @param symbols	String[] atom symbols
      * @return boolean
      */
+    
     public static boolean detectAllenes(int[][] mat, String[] symbols) {
         boolean check = false;
         int count;
@@ -101,13 +116,11 @@ class BoundaryConditions {
      * After defining the above early boundary conditions, they need to be added to the
      * boundaryConditionCheck function.
      *
-     * <p>This class will help users to easily define the badlist or the any sort of filtering in
-     * the generation process. This will help to avoid post processing filtering.
-     *
-     * @param mat the adjacency matrix
-     * @param symbolArray the symbolArray
+     * @param mat			int[][]  adjacency matrix
+     * @param symbolArray	String[] symbolArray
      * @return boolean
      */
+    
     public static boolean boundaryConditionCheck(int[][] mat, String[] symbolArray) {
         boolean check = true;
 
