@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2021 Mehmet Aziz Yirik
+ Copyright (c) 2021 Mehmet Aziz Yirik <mehmetazizyirik@outlook.com> <0000-0001-7520-7215@orcid.org>
 
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software
  and associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -19,11 +19,6 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-/*
- * This is the junit test class for BoundaryConditions.
- *
- * @author Mehmet Aziz Yirik
- */
 package org.openscience.cdk.structgen.maygen;
 
 import static org.junit.Assert.assertFalse;
@@ -31,6 +26,16 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+/**
+ * <p>
+ * Unit test class for the BundaryConditions class of MAYGEN. 
+ * </p>
+ *
+ * @author MehmetAzizYirik <mehmetazizyirik@outlook.com> <0000-0001-7520-7215@orcid.org>
+ * 
+ * @cdk.module structgen
+ *
+ */
 public class BoundaryConditionsTest {
 
     @Test
