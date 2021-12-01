@@ -30,15 +30,11 @@ import org.openscience.cdk.group.Permutation;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
- * <p>
  * The generation process in maygen class is given here. Due to the parallelization, the generation
- * functions are kept in a separate class.    
- * </p>
+ * functions are kept in a separate class.
  *
  * @author MehmetAzizYirik <mehmetazizyirik@outlook.com> <0000-0001-7520-7215@orcid.org>
- * 
  * @cdk.module structgen
- *
  */
 class Generation {
     private final Maygen maygen;
@@ -49,10 +45,9 @@ class Generation {
 
     /**
      * The initial function of the generation process
-     * 
-     * @param degree	int[] the list of node degrees ( the atom valences )
+     *
+     * @param degree int[] the list of node degrees ( the atom valences )
      */
-    
     public void run(int[] degree) {
         IAtomContainer atomContainer = maygen.getBuilder().newInstance(IAtomContainer.class);
         int[] partSize = new int[] {0};
