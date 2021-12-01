@@ -61,24 +61,19 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.io.SDFWriter;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import org.openscience.cdk.io.SDFWriter;
 
 /**
- * <p>
- * The main class of the MAYGEN package. The basic input is the molecular formula.
- * For a molecular formula, MAYGEN first  distributes hydrogens, then for each distribution
- * starting the generation process. The algorithm can be run in sequential or parallel mode.
- * 
- * </p>
+ * The main class of the MAYGEN package. The basic input is the molecular formula. For a molecular
+ * formula, MAYGEN first distributes hydrogens, then for each distribution starting the generation
+ * process. The algorithm can be run in sequential or parallel mode.
  *
  * @author MehmetAzizYirik <mehmetazizyirik@outlook.com> <0000-0001-7520-7215@orcid.org>
- * 
  * @cdk.module structgen
- *
  */
 public class Maygen {
     public static final String VERSION = "1.8";
@@ -552,10 +547,9 @@ public class Maygen {
 
     /**
      * Getting the symbol occurrences from the input local formula.
-     * 
-     * @param localFormula 		String molecular formula
+     *
+     * @param localFormula String molecular formula
      */
-    
     public void getSymbolOccurrences(String localFormula) {
         String[] atoms = localFormula.split(LETTERS_FROM_A_TO_Z);
         List<String> symbolList = new ArrayList<>();
@@ -594,7 +588,7 @@ public class Maygen {
             noHydrogen = true;
         }
     }
-    
+
     public int getHydrogensInfoLengthIsOne(List<String> symbolList, String[] info, int hydrogens) {
         String symbol;
         int occur;
@@ -614,14 +608,12 @@ public class Maygen {
 
     /**
      * Get the hydrogen information from the input molecular formula information.
-     * 
-     * @param symbolList		List<String> list of symbols
-     * @param info				String[] the molecular formula information
-     * @param hydrogens			int the number of hydrogens
-     * 
+     *
+     * @param symbolList List<String> list of symbols
+     * @param info String[] the molecular formula information
+     * @param hydrogens int the number of hydrogens
      * @return int
      */
-    
     private int getHydrogens(List<String> symbolList, String[] info, int hydrogens) {
         String symbol;
         int occur;
@@ -666,12 +658,10 @@ public class Maygen {
 
     /**
      * Getting the partition of symbols
-     * 
-     * @param symbols		List<String> list of symbols
-     * 
-     * @return int[] 
+     *
+     * @param symbols the list of symbols
+     * @return int[]
      */
-    
     public int[] getPartition(List<String> symbols) {
         int i = 0;
         int[] partition = new int[sizePart + 1];
@@ -695,9 +685,8 @@ public class Maygen {
     /**
      * Setting the firstSymbols and symbols global variables for the initial sorted list of symbols.
      *
-     * @param symbolList		List<String> sorted list of atom symbols
+     * @param symbolList the sorted list of atom symbols
      */
-    
     public void setSymbols(List<String> symbolList) {
         symbolArray = new String[matrixSize];
         int index = 0;
@@ -733,13 +722,12 @@ public class Maygen {
     /**
      * Checking whether a molecular formula can represent a graph or not.
      *
-     * For a graph with n nodes, the sum of all its node degrees should be equal or bigger than
+     * <p>For a graph with n nodes, the sum of all its node degrees should be equal or bigger than
      * 2*(n-1). Thus, the minimum number of nodes.
      *
-     * @param formula		String molecular formula
+     * @param formula String molecular formula
      * @return boolean
      */
-    
     public boolean canBuildIsomer(String formula) {
         String[] atoms = normalizeFormula(formula).split(LETTERS_FROM_A_TO_Z);
         String[] info;
@@ -766,16 +754,15 @@ public class Maygen {
     }
 
     /**
-     * Checking whether a molecular formula can represent a graph or not.
-     * This is just for the case of molecular formulae with single heteroatoms.
+     * Checking whether a molecular formula can represent a graph or not. This is just for the case
+     * of molecular formulae with single heteroatoms.
      *
-     * For a graph with n nodes, the sum of all its node degrees should be equal or bigger than
+     * <p>For a graph with n nodes, the sum of all its node degrees should be equal or bigger than
      * 2*(n-1). Thus, the minimum number of nodes.
      *
-     * @param formula		String molecular formula
+     * @param formula String molecular formula
      * @return boolean
      */
-    
     public boolean canBuildIsomerSingle(String formula) {
         String[] atoms = normalizeFormula(formula).split(LETTERS_FROM_A_TO_Z);
         String[] info;
@@ -800,12 +787,7 @@ public class Maygen {
         return check;
     }
 
-    /** 
-     * 
-     * Initial degree arrays are set based on the molecular formula. 
-     * 
-     */
-    
+    /** Initial degree arrays are set based on the molecular formula. */
     public void initialDegrees() {
         firstDegrees = new int[matrixSize];
         int index = 0;
@@ -828,7 +810,6 @@ public class Maygen {
      * @param partition int[] atom partition
      * @return boolean
      */
-    
     public boolean equalSetCheck(int[] array1, int[] array2, int[] partition) {
         int[] temp = cloneArray(array2);
         temp = descendingSortWithPartition(temp, partition);
@@ -841,10 +822,8 @@ public class Maygen {
      * @param array int[] array
      * @param begin int beginning index
      * @param end int ending index
-     * 
      * @return Integer[]
      */
-    
     public int[] getBlocks(int[] array, int begin, int end) {
         return Arrays.copyOfRange(array, begin, end);
     }
@@ -855,10 +834,8 @@ public class Maygen {
      * @param partition int[] atom partition
      * @param array1 int[] array
      * @param array2 int[] array
-     * 
      * @return boolean
      */
-    
     public boolean equalSetCheck2(int[] partition, int[] array1, int[] array2) {
         boolean check = true;
         int i = 0;
@@ -892,9 +869,7 @@ public class Maygen {
      * @param array2 int[] array
      * @param index1 int beginning index
      * @param index2 int last index
-     * 
      * @return boolean
-     * 
      */
     public boolean compareIndexwise(int[] array, int[] array2, int index1, int index2) {
         boolean check = true;
@@ -915,11 +890,8 @@ public class Maygen {
      * @param a int[][] adjacency matrix
      * @param cycleTransposition Permutation cycle transposition
      * @param permutation Permutation permutation
-     * 
      * @return boolean
-     * 
      */
-    
     public boolean equalRowsCheck(
             int index, int[][] a, Permutation cycleTransposition, Permutation permutation) {
         int[] canonical = a[index];
@@ -939,7 +911,6 @@ public class Maygen {
      * @param index1 int last index
      * @return int[]
      */
-    
     public int[] descendingSort(int[] array, int index0, int index1) {
         int temp = 0;
         for (int i = index0; i < index1; i++) {
@@ -961,7 +932,6 @@ public class Maygen {
      * @param partition int[] atom partition
      * @return int[]
      */
-    
     public int[] descendingSortWithPartition(int[] array, int[] partition) {
         int i = 0;
         int p = 0;
@@ -1103,16 +1073,14 @@ public class Maygen {
 
     /**
      * The row descending test is the part of canonical test function.
-     * 
-     * @param index							int index
-     * @param a								int[][] adjacency matrix
-     * @param partition						int[] atom partition
-     * @param nonCanonicalIndices			int[] the indices of the non canonical entry 
-     * @param learningFromCanonicalTest		boolean[] the boolean setting
-     * 
+     *
+     * @param index int index
+     * @param a int[][] adjacency matrix
+     * @param partition int[] atom partition
+     * @param nonCanonicalIndices int[] the indices of the non canonical entry
+     * @param learningFromCanonicalTest boolean[] the boolean setting
      * @return boolean
      */
-    
     public boolean rowDescendingTest(
             int index,
             int[][] a,
@@ -1141,11 +1109,8 @@ public class Maygen {
      *
      * @param permutation Permutation permutation
      * @param index int entry index in the row
-     * 
      * @return int
-     * 
      */
-    
     public int getPermutedIndex(Permutation permutation, int index) {
         int out = 0;
         for (int i = 0; i < permutation.size(); i++) {
@@ -1166,7 +1131,6 @@ public class Maygen {
      * @param permutation Permutation permutation from canonical test
      * @return int[]
      */
-    
     public int[] limit(int index, int nextRowIndex, int[][] a, Permutation permutation) {
         int[] original = a[index];
         int[] permuted = a[nextRowIndex];
@@ -1198,7 +1162,6 @@ public class Maygen {
      * @param permutation Permutation permutation from canonical test
      * @return int[]
      */
-    
     public int[] lowerIndex(int index, int nextRowIndex, int[][] a, Permutation permutation) {
         int max = 0;
         int upperLimit = limit(index, nextRowIndex, a, permutation)[1];
@@ -1228,7 +1191,6 @@ public class Maygen {
      * @param permutation Permutation permutation from canonical test
      * @return int[]
      */
-    
     public int[] upperIndex(int index, int nextRowIndex, int[][] a, Permutation permutation) {
         int[] limit = limit(index, nextRowIndex, a, permutation);
         int[] lowerLimit = lowerIndex(index, nextRowIndex, a, permutation);
@@ -1247,7 +1209,6 @@ public class Maygen {
      * @param maximalIndices int[] maximal indices for canonical test
      * @return int[]
      */
-    
     public int[] maximalIndexWithNonZeroEntry(int[][] a, int[] maximalIndices) {
         int rowIndex = maximalIndices[0];
         int columnIndex = maximalIndices[1];
@@ -1272,7 +1233,6 @@ public class Maygen {
      * @param indices int[] indices
      * @return int[]
      */
-    
     public int[] getTranspose(int[] indices) {
         int[] out = new int[2];
         if (indices[0] > indices[1]) {
@@ -1291,7 +1251,6 @@ public class Maygen {
      * @param b int[] indices
      * @return int[]
      */
-    
     public int[] getMaximumPair(int[] a, int[] b) {
         if (a[0] > b[0]) {
             return a;
@@ -1712,7 +1671,6 @@ public class Maygen {
      * @throws CDKException in case of CDKException
      * @throws CloneNotSupportedException in case of CloneNotSupportedException
      */
-    
     public void nextStep(
             IAtomContainer ac,
             String[] symbolArrayCopy,
@@ -1777,7 +1735,6 @@ public class Maygen {
      * @param hydrogens the hydrogens
      * @return the adjacency matrix
      */
-    
     public int[][] addHydrogens(int[][] a, int index, int[] hydrogens) {
         int localHIndex = index;
         if (singleAtom) {
@@ -1805,14 +1762,12 @@ public class Maygen {
     }
 
     /**
-     * 
      * Finding the R index of a block
-     * 
-     * @param indices			int[] entry indices
-     * @param initialPartition	int[] initial partition
-     * @param r					int[] r
+     *
+     * @param indices int[] entry indices
+     * @param initialPartition int[] initial partition
+     * @param r int[] r
      */
-    
     public void findR(int[] indices, int[] initialPartition, int[] r) {
         int block = 0;
         int index = 0;
@@ -1845,8 +1800,7 @@ public class Maygen {
     }
 
     /**
-     *
-     * <p>Backward step in the algorithm.
+     * Backward step in the algorithm.
      *
      * @param a the adjacency matrix
      * @param indices the indices
@@ -2262,15 +2216,12 @@ public class Maygen {
     }
 
     /**
-     * 
-     * checking whether a molecular formula is length 2 or not.
-     * The length is counted based on the number of isotopes.
-     * 
-     * @param atoms		String[] atom symbols
-     * 
-     * @return boolean 
+     * checking whether a molecular formula is length 2 or not. The length is counted based on the
+     * number of isotopes.
+     *
+     * @param atoms String[] atom symbols
+     * @return boolean
      */
-    
     public boolean checkLengthTwoFormula(String[] atoms) {
         boolean check = true;
         String[] info2;
@@ -2297,7 +2248,6 @@ public class Maygen {
      * @throws CloneNotSupportedException in case of CloneNotSupportedException
      * @throws CDKException in case of CDKException
      */
-    
     public void run() throws IOException, CDKException, CloneNotSupportedException {
         clearGlobals();
         if (Objects.nonNull(fuzzyFormula)) {
@@ -2498,9 +2448,8 @@ public class Maygen {
      * pre-hydrogen distribution. Then, the new list of degrees is defined for each hydrogen
      * distribution.
      *
-     * @return List<int[]>
+     * @return the list of integer array
      */
-    
     public List<int[]> distributeHydrogens() {
         List<int[]> degreeList = new ArrayList<>();
         if (!callHydrogenDistributor) {
@@ -2523,7 +2472,6 @@ public class Maygen {
         return degreeList;
     }
 
-    
     public void fillDegreeListHindexIsTwo(List<int[]> degreeList, List<int[]> distributions) {
         for (int[] dist : distributions) {
             int[] newDegree = new int[size];
@@ -2542,7 +2490,6 @@ public class Maygen {
      * @param ys the ys
      * @param zs the zs
      */
-    
     public void setYZValues(int[] initialPartition, int[][] ys, int[][] zs) {
         ys[0] = new int[size];
         zs[0] = new int[size];
@@ -2570,7 +2517,6 @@ public class Maygen {
      * @param initialPartition the initial partition
      * @return int
      */
-    
     public int findY(int r, int[] initialPartition) {
         return sum(initialPartition, r - 1);
     }
@@ -2582,17 +2528,18 @@ public class Maygen {
      * @param initialPartition the initial partition
      * @return int
      */
-    
     public int findZ(int r, int[] initialPartition) {
         return (sum(initialPartition, r) - 1);
     }
 
     /**
      * Writing the single atom molecule in a output file.
-     * 
-     * @param hydrogens		int[] hydrogens
+     *
+     * @param hydrogens int[] hydrogens
+     * @throws IOException in case of IOException
+     * @throws CDKException in case of CDKException
+     * @throws CloneNotSupportedException in case of CloneNotSupportedException
      */
-    
     public void writeSingleAtom(int[] hydrogens)
             throws IOException, CDKException, CloneNotSupportedException {
         int[][] a = new int[matrixSize][matrixSize];
@@ -2610,10 +2557,9 @@ public class Maygen {
     /**
      * Calling the generate function for each degree values after the hydrogen distribution.
      *
-     * @param degree		int[] degree
+     * @param degree int[] degree
      * @return int[]
      */
-    
     public int[] setHydrogens(int[] degree) {
         int[] hydrogens = new int[size];
         for (int i = 0; i < size; i++) {
@@ -2623,12 +2569,10 @@ public class Maygen {
     }
 
     /**
-     * After the hydrogen distribution, calling the structure generator
-     * functions.
-     * 
-     * @param localFormula		String localFormula
+     * After the hydrogen distribution, calling the structure generator functions.
+     *
+     * @param localFormula String localFormula
      */
-    
     public void structureGenerator(String localFormula) {
         if (noHydrogen) {
             size = sum(firstOccurrences, firstOccurrences.length - 1);
@@ -2660,12 +2604,7 @@ public class Maygen {
         }
     }
 
-    /** 
-     * 
-     * For several calls of the run function, setting the global variables. 
-     * 
-     */
-    
+    /** For several calls of the run function, setting the global variables. */
     public void clearGlobals() {
         singleAtom = true;
         onlyDegree2 = true;
@@ -2700,7 +2639,6 @@ public class Maygen {
      * @param mat the adjacency matrix
      * @return the nValues
      */
-    
     public Set<Integer> nValues(int index, int total, int[][] mat) {
         Set<Integer> nValues = new HashSet<>();
         nValues.add(index);
@@ -3230,15 +3168,13 @@ public class Maygen {
 
     /**
      * For maximal and tested rows, getting the cycle lists
-     * 
-     * @param max		int[] maximal row
-     * @param non 		int[] non maximal row to test
-     * @param index		int row index
-     * @param values	int[] values
-     * 
+     *
+     * @param max int[] maximal row
+     * @param non int[] non maximal row to test
+     * @param index int row index
+     * @param values int[] values
      * @return int[]
      */
-    
     public int[] getCyclesList(int[] max, int[] non, int index, int[] values) {
         int i = 0;
         int permutationIndex = 0;
@@ -3259,11 +3195,11 @@ public class Maygen {
 
     /**
      * Find the matching entries index in compared two rows.
-     * 
-     * @param max 		int[] max
-     * @param non 		int[] non
-     * @param value 	int value
-     * @param start 	int start
+     *
+     * @param max int[] max
+     * @param non int[] non
+     * @param value int value
+     * @param start int start
      * @return int
      */
     public int findMatch(int[] max, int[] non, int value, int start) {
@@ -3280,33 +3216,29 @@ public class Maygen {
 
     /**
      * Getting the permutation making two rows identical.
-     * 
-     * @param cycleTransposition		Permutation cycle transposition
-     * @param index						int row index
-     * @param a							int[][] adjacency matrices
-     * @param newPartition				int[] refined atom partition
-     * 
+     *
+     * @param cycleTransposition Permutation cycle transposition
+     * @param index int row index
+     * @param a int[][] adjacency matrices
+     * @param newPartition int[] refined atom partition
      * @return Permutation
      */
-    
     public Permutation getEqualPerm(
             Permutation cycleTransposition, int index, int[][] a, int[] newPartition) {
         int[] check = row2compare(index, a, cycleTransposition);
         return getCanonicalPermutation(a[index], check, newPartition);
     }
-    
+
     /**
      * Getting the canonical cycle of a row.
-     * 
-     * @param index						int row index
-     * @param total						int matrix size
-     * @param a							int[][] adjacency matrices
-     * @param newPartition				int[] refined atom partition
-     * @param cycleTransposition		Permutation cycle transposition
-     * 
+     *
+     * @param index int row index
+     * @param total int matrix size
+     * @param a int[][] adjacency matrices
+     * @param newPartition int[] refined atom partition
+     * @param cycleTransposition Permutation cycle transposition
      * @return Permutation
      */
-
     public Permutation getCanonicalCycle(
             int index, int total, int[][] a, int[] newPartition, Permutation cycleTransposition) {
         Permutation canonicalPermutation = idPermutation(total);
@@ -3361,13 +3293,11 @@ public class Maygen {
 
     /**
      * Getting the list of cycle transpositions for a given atom partition and the row index
-     * 
-     * @param index			int row index
-     * @param partition		int[] atom partition
-     * 
-     * @return List<Permutation>
+     *
+     * @param index int row index
+     * @param partition int[] atom partition
+     * @return the list of permutations
      */
-    
     public List<Permutation> cycleTranspositions(int index, int[] partition) {
         List<Permutation> perms = new ArrayList<>();
         int lValue = LValue(partition, index);
@@ -3385,8 +3315,7 @@ public class Maygen {
     }
 
     /**
-     * To calculate the number of conjugacy classes, used in cycle transposition
-     * calculation.
+     * To calculate the number of conjugacy classes, used in cycle transposition calculation.
      *
      * @param partEx int[] former atom partition
      * @param degree the degree
@@ -3465,14 +3394,13 @@ public class Maygen {
 
     /**
      * Ordering degrees, hydrogens and symbols in ascending order
-     * 
-     * @param degree		int[] atom valences
-     * @param symbol		String[] atom symbols
-     * @param index0		int first index
-     * @param index1		int second index
-     * @param hydrogens		int[] hydrogens array
+     *
+     * @param degree int[] atom valences
+     * @param symbol String[] atom symbols
+     * @param index0 int first index
+     * @param index1 int second index
+     * @param hydrogens int[] hydrogens array
      */
-    
     public void orderDegreeSymbols(
             int[] degree, String[] symbol, int index0, int index1, int[] hydrogens) {
         int temp = 0;
@@ -3507,13 +3435,13 @@ public class Maygen {
 
     /**
      * Sort arrays with partitions.
-     * 
-     * @param partitionList		int[] atom partition
-     * @param degrees			int[] atom valences
-     * @param symbols			String[] atom symbols
-     * @param hydrogens			int[] hydrogens
+     *
+     * @param partitionList int[] atom partition
+     * @param degrees int[] atom valences
+     * @param symbols String[] atom symbols
+     * @param hydrogens int[] hydrogens
+     * @return int array
      */
-    
     public int[] sortWithPartition(
             int[] partitionList, int[] degrees, String[] symbols, int[] hydrogens) {
         int[] partition = buildArray(partitionList);
@@ -3534,12 +3462,10 @@ public class Maygen {
 
     /**
      * Initial atom partition of the input molecular formula
-     * 
-     * @param partition		int[] atom partition
-     * 
+     *
+     * @param partition int[] atom partition
      * @return int[]
      */
-    
     public int[] initialPartition(int[] partition) {
         int index = 0;
         int index2 = 0;
@@ -3555,12 +3481,10 @@ public class Maygen {
 
     /**
      * Building the copy of the partition array
-     * 
-     * @param partition		int[] atom partition
-     * 
+     *
+     * @param partition int[] atom partition
      * @return int[]
      */
-    
     public int[] buildArray(int[] partition) {
         int[] partitionArray = new int[sum(partition)];
         int index = 0;
@@ -3575,13 +3499,12 @@ public class Maygen {
 
     /**
      * Re-order all the global variables based on the refined new partitioning.
-     * 
-     * @param partition		int[] atom partition 
-     * @param degrees		int[] atom valences
-     * @param symbols		String[] atom symbols
-     * @param hydrohgens	int[] hydrogens
+     *
+     * @param partition int[] atom partition
+     * @param degrees int[] atom valences
+     * @param symbols String[] atom symbols
+     * @param hydrogens int[] hydrogens
      */
-    
     public void reOrder(int[] partition, int[] degrees, String[] symbols, int[] hydrogens) {
         int index = 0;
         int part;
@@ -3597,11 +3520,10 @@ public class Maygen {
     /**
      * To get the fuzzy formula ranges for each element type in the molecular formula
      *
-     * @param localFormula 		String molecular localFormula
-     * @param symbolList 		List<String> symbol list
-     * @return Map<String, Integer[]>
+     * @param localFormula String molecular localFormula
+     * @param symbolList the symbol list
+     * @return the map of string ant integer array
      */
-    
     public Map<String, Integer[]> getFuzzyFormulaRanges(
             String localFormula, List<String> symbolList) {
         String[] atoms = localFormula.split(LETTERS_FROM_A_TO_Z);
@@ -3690,13 +3612,12 @@ public class Maygen {
     /**
      * Formulae generator for each element ranges
      *
-     * @param result		List<String> result
-     * @param symbolList 	List<String> symbolList
-     * @param symbols 		Map<String, Integer[]> symbols map
-     * @param localFormula  String localFormula
-     * @param index			int index
+     * @param result the list of string
+     * @param symbolList list of string
+     * @param symbols the symbols map
+     * @param localFormula String localFormula
+     * @param index int index
      */
-    
     public void generateFormulae(
             List<String> result,
             List<String> symbolList,
@@ -3722,12 +3643,11 @@ public class Maygen {
     /**
      * Adding new entry to the new molecular formula
      *
-     * @param localFormula		String localFormula
-     * @param number 			int number
-     * @param symbol 			String symbol
+     * @param localFormula String localFormula
+     * @param number int number
+     * @param symbol String symbol
      * @return String
      */
-    
     public String extendFormula(String localFormula, int number, String symbol) {
         String newFormula = localFormula;
         if (number == 1) {
@@ -3741,10 +3661,9 @@ public class Maygen {
     /**
      * Generating list of formulae for the input fuzzy formula
      *
-     * @param normalizedLocalFuzzyFormula 		String normalizedLocalFuzzyFormula
-     * @return List<String>
+     * @param normalizedLocalFuzzyFormula String normalizedLocalFuzzyFormula
+     * @return the list of string
      */
-    
     public List<String> getFormulaList(String normalizedLocalFuzzyFormula) {
         List<String> result = new ArrayList<>();
         String[] unsupportedSymbols = null;
@@ -3774,11 +3693,13 @@ public class Maygen {
 
     /**
      * Writing the SMILES of a molecule into the output file
-     * 
-     * @param mat		int[][] adjacency matrices
-     * @param ac		IAtomContainer molecule's atom container	
+     *
+     * @param mat int[][] adjacency matrices
+     * @param ac IAtomContainer molecule's atom container
+     * @throws IOException in case of IOException
+     * @throws CloneNotSupportedException in case of CloneNotSupportedException
+     * @throws CDKException in case of CDKException
      */
-    
     public void write2smiles(int[][] mat, IAtomContainer ac)
             throws IOException, CloneNotSupportedException, CDKException {
         IAtomContainer ac2 = ac.clone();
@@ -3789,10 +3710,12 @@ public class Maygen {
 
     /**
      * Writing the SMILES of a molecule into the output file
-     * 
-     * @param symbols		String[] atom symbols
+     *
+     * @param symbols String[] atom symbols
+     * @throws IOException in case of IOException
+     * @throws CloneNotSupportedException in case of CloneNotSupportedException
+     * @throws CDKException in case of CDKException
      */
-    
     public void write2smiles(String[] symbols)
             throws IOException, CloneNotSupportedException, CDKException {
         IAtomContainer ac = buildContainer4SDF(symbols);
@@ -3800,13 +3723,7 @@ public class Maygen {
         smilesOut.write(smilesString + "\n");
     }
 
-    /**
-     * 
-     * Setting the initial atom container of a 
-     * molecular formula with a single heavy atom 
-     * 
-     */
-    
+    /** Setting the initial atom container of a molecular formula with a single heavy atom */
     public void initSingleAC() {
         atomContainer = builder.newInstance(IAtomContainer.class);
         for (int i = 0; i < symbolArray.length; i++) {
@@ -3818,11 +3735,10 @@ public class Maygen {
     }
 
     /**
-     * 
-     * Setting the initial atom container of a molecular formula 
-     * 
+     * Setting the initial atom container of a molecular formula
+     *
+     * @param formula the formula
      */
-    
     public void intAC(String formula) {
         String[] atoms = formula.split(LETTERS_FROM_A_TO_Z);
         ArrayList<String> symbolList = new ArrayList<>();
@@ -3849,12 +3765,10 @@ public class Maygen {
     /**
      * Building an atom container from a string of atom-implicit hydrogen information.
      *
-     * @param ac 				IAtomContainer IAtomContainer
-     * @param symbolArrayCopy 	String[] symbol array of atoms 
-     *       
+     * @param ac IAtomContainer IAtomContainer
+     * @param symbolArrayCopy String[] symbol array of atoms
      * @return IAtomContainer
      */
-    
     public IAtomContainer initAC(IAtomContainer ac, String[] symbolArrayCopy) {
         for (int i = 0; i < symbolArrayCopy.length; i++) {
             ac.addAtom(new Atom(symbolArrayCopy[i].split(NUMBERS_FROM_0_TO_9)[0]));
@@ -3884,11 +3798,10 @@ public class Maygen {
     /**
      * Building an atom container for an adjacency matrix.
      *
-     * @param mat 				int[][] adjacency matrix
-     * @param atomContainer 	IAtomContainer atomContainer
+     * @param mat int[][] adjacency matrix
+     * @param atomContainer IAtomContainer atomContainer
      * @return IAtomContainer
      */
-    
     public IAtomContainer buildAtomContainerFromMatrix(int[][] mat, IAtomContainer atomContainer) {
         for (int i = 0; i < mat.length; i++) {
             for (int j = i + 1; j < mat.length; j++) {
@@ -3907,8 +3820,8 @@ public class Maygen {
     /**
      * Building an atom container for an adjacency matrix.
      *
-     * @param ac 		IAtomContainer IAtomContainer
-     * @param mat 		int[][] adjacency matrix
+     * @param ac IAtomContainer IAtomContainer
+     * @param mat int[][] adjacency matrix
      * @return IAtomContainer
      * @throws CloneNotSupportedException in case of CloneNotSupportedException
      */
@@ -3932,7 +3845,7 @@ public class Maygen {
     /**
      * Building an atom container for an adjacency matrix.
      *
-     * @param mat 		int[][] adjacency matrix
+     * @param mat int[][] adjacency matrix
      * @return IAtomContainer
      * @throws CloneNotSupportedException in case of CloneNotSupportedException
      */
@@ -3955,12 +3868,10 @@ public class Maygen {
     /**
      * Building an atom container for SDF output from its symbols
      *
-     * @param symbols 		String[] atom symbols
-     * 
+     * @param symbols String[] atom symbols
      * @return IAtomContainer
      * @throws CloneNotSupportedException in case of CloneNotSupportedException
      */
-    
     public IAtomContainer buildContainer4SDF(String[] symbols) throws CloneNotSupportedException {
         IAtomContainer ac = this.builder.newAtomContainer();
         String symbol = null;
@@ -3976,10 +3887,9 @@ public class Maygen {
 
     /**
      * Building an OnSm molecule for a given total number of atoms.
-     * 
-     * @return int[][] 
+     *
+     * @return int[][]
      */
-    
     public int[][] generateOnSmMat() {
         int[][] ring = new int[matrixSize][matrixSize];
         ring[0][1] = 1;
@@ -3989,12 +3899,14 @@ public class Maygen {
         }
         return ring;
     }
-    
+
     /**
      * Building a degree 2 graph for a single element type.
      *
+     * @throws IOException in case of IOException
+     * @throws CDKException in case of CDKException
+     * @throws CloneNotSupportedException in case of CloneNotSupportedException
      */
-
     public void degree2graph() throws IOException, CDKException, CloneNotSupportedException {
         int[][] mat = new int[matrixSize][matrixSize];
         mat[0][1] = 1;
