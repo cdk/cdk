@@ -112,6 +112,8 @@ public class InChIToStructure {
      * @throws CDKException
      */
     protected InChIToStructure(String inchi, IChemObjectBuilder builder) throws CDKException {
+        if (inchi == null)
+            throw new NullPointerException();
         try {
             input = new JniInchiInputInchi(inchi, "");
         } catch (JniInchiException jie) {
@@ -127,6 +129,8 @@ public class InChIToStructure {
      * @throws CDKException
      */
     protected InChIToStructure(String inchi, IChemObjectBuilder builder, String options) throws CDKException {
+        if (inchi == null)
+            throw new NullPointerException();
         try {
             input = new JniInchiInputInchi(inchi, options);
         } catch (JniInchiException jie) {
@@ -142,6 +146,8 @@ public class InChIToStructure {
      * @throws CDKException
      */
     protected InChIToStructure(String inchi, IChemObjectBuilder builder, List<String> options) throws CDKException {
+        if (inchi == null)
+            throw new NullPointerException();
         try {
             input = new JniInchiInputInchi(inchi, options);
         } catch (JniInchiException jie) {
