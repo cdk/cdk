@@ -84,6 +84,7 @@ Mark Rijnbeek
 David Robinson
 Miguel Rojas Cherto
 Bhupinder Sandhu
+Robin Schmid
 Jean-Sebastien Senecal
 Onkar Shinde
 Sulev Sild

@@ -134,4 +134,15 @@ public class HBondAcceptorCountDescriptorTest extends MolecularDescriptorTest {
         int actual = ((IntegerResult)hbond_acceptor_desc.calculate(m).getValue()).intValue();
         org.hamcrest.MatcherAssert.assertThat(actual, CoreMatchers.is(3));
     }
+
+    @Test
+    public void testPhenol() throws CDKException {
+        Object[] params = {new Boolean(true)};
+        descriptor.setParameters(params);
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        // original molecule O=N(=O)c1cccc2cn[nH]c12 - correct kekulisation will give
+        // the same result. this test though should depend on kekulisation working
+        IAtomContainer mol = sp.parseSmiles("Oc1ccccc1");
+        Assert.assertEquals(1, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+    }
 }
