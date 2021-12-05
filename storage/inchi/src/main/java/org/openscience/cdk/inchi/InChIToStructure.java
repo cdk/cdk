@@ -47,6 +47,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
+import org.openscience.cdk.stereo.ExtendedCisTrans;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
@@ -154,6 +155,14 @@ public class InChIToStructure {
             throw new CDKException("Failed to convert InChI to molecule: " + jie.getMessage());
         }
         generateAtomContainerFromInchi(builder);
+    }
+
+    /**
+     * Flip the storage order of atoms in a bond.
+     * @param bond the bond
+     */
+    private void flip(IBond bond) {
+        bond.setAtoms(new IAtom[]{bond.getEnd(), bond.getBegin()});
     }
 
     /**
@@ -355,6 +364,7 @@ public class InChIToStructure {
                 assert stereoElement != null;
                 molecule.addStereoElement(stereoElement);
             } else if (stereo0d.getStereoType() == INCHI_STEREOTYPE.DOUBLEBOND) {
+                boolean extended = false;
                 JniInchiAtom[] neighbors = stereo0d.getNeighbors();
 
                 // from JNI InChI doc
@@ -369,28 +379,35 @@ public class InChIToStructure {
                 IAtom b = inchiCdkAtomMap.get(neighbors[2]);
                 IAtom y = inchiCdkAtomMap.get(neighbors[3]);
 
-                // XXX: AtomContainer is doing slow lookup
                 IBond stereoBond = molecule.getBond(a, b);
-                stereoBond.setAtoms(new IAtom[]{a, b}); // ensure a is first atom
-
-                Conformation conformation = null;
-
-                switch (stereo0d.getParity()) {
-                    case ODD:
-                        conformation = Conformation.TOGETHER;
-                        break;
-                    case EVEN:
-                        conformation = Conformation.OPPOSITE;
-                        break;
+                if (stereoBond == null) {
+                    extended = true;
+                    IBond tmp = null;
+                    // A = C = C = B
+                    stereoBond = ExtendedCisTrans.findCentralBond(molecule, a);
+                    if (stereoBond == null)
+                        continue; // warn on invalid input?
+                    IAtom[] ends = ExtendedCisTrans.findTerminalAtoms(molecule, stereoBond);
+                    assert ends != null;
+                    if (ends[0] != a)
+                        flip(stereoBond);
+                } else {
+                    flip(stereoBond);
                 }
 
-                // unspecified not stored
-                if (conformation == null) continue;
+                int config = IStereoElement.TOGETHER;
+                if (stereo0d.getParity() == INCHI_PARITY.EVEN)
+                    config = IStereoElement.OPPOSITE;
 
-                molecule.addStereoElement(new DoubleBondStereochemistry(stereoBond, new IBond[]{molecule.getBond(x, a),
-                        molecule.getBond(b, y)}, conformation));
-            } else {
-                // TODO - other types of atom parity - double bond, etc
+                if (extended) {
+                    molecule.addStereoElement(new ExtendedCisTrans(stereoBond,
+                            new IBond[]{molecule.getBond(x, a),
+                                        molecule.getBond(b, y)}, config));
+                } else {
+                    molecule.addStereoElement(new DoubleBondStereochemistry(stereoBond,
+                            new IBond[]{molecule.getBond(x, a),
+                                        molecule.getBond(b, y)}, config));
+                }
             }
         }
     }

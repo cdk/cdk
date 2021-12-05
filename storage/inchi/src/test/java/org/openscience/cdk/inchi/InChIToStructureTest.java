@@ -265,4 +265,20 @@ public class InChIToStructureTest extends CDKTestCase {
         assertThat(mol.getAtomCount(), is(1));
         assertThat(mol.getAtom(0).getMassNumber(), is(121));
     }
+
+    @Test
+    public void testExtendedCisTrans() throws Exception {
+        IAtomContainer mol = InChIGeneratorFactory.getInstance()
+                .getInChIToStructure("InChI=1/C4BrClFI/c5-3(8)1-2-4(6)7/b4-3-",
+                        SilentChemObjectBuilder.getInstance()).getAtomContainer();
+        assertNotNull(mol);
+        int nExtendedCisTrans = 0;
+        for (IStereoElement se : mol.stereoElements()) {
+            if (se.getConfig() != IStereoElement.CU)
+                nExtendedCisTrans++;
+            else
+                Assert.fail("Expected onl extended cis/trans");
+        }
+        Assert.assertEquals(1, nExtendedCisTrans);
+    }
 }
