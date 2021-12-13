@@ -30,11 +30,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>net.sf.jni-inchi</groupId>
-            <artifactId>jni-inchi</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>uk.ac.ebi.beam</groupId>
             <artifactId>beam-core</artifactId>
             <scope>test</scope>
