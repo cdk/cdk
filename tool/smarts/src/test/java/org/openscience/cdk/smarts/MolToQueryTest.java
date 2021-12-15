@@ -89,6 +89,12 @@ public class MolToQueryTest {
     }
 
     @Test
+    public void elementAndConnectivityDegree() throws InvalidSmilesException {
+        test("[#6X3]1~[#6X3]~[#6X3]~[#6X3]~[#7X2]~[#6X3]~1~[#6X4]", "c1cccnc1C",
+                Expr.Type.ELEMENT, Expr.Type.TOTAL_DEGREE);
+    }
+
+    @Test
     public void complexDocExample() throws InvalidSmilesException {
         test("[nx2+0]1:[cx2+0]:[cx2+0]:[cx2+0](=[O&x0+0]):[cx2+0]:[cx2+0]:1",
              "[nH]1ccc(=O)cc1",
