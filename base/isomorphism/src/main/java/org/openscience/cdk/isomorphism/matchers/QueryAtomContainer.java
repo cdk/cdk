@@ -1794,7 +1794,14 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
                 if (optset.contains(IS_IN_CHAIN) && !atom.isInRing())
                     expr.and(new Expr(IS_IN_CHAIN));
                 if (optset.contains(IMPL_H_COUNT))
-                    expr.and(new Expr(IMPL_H_COUNT));
+                    expr.and(new Expr(IMPL_H_COUNT, atom.getImplicitHydrogenCount()));
+                if (optset.contains(TOTAL_H_COUNT)) {
+                    int hcount = atom.getImplicitHydrogenCount();
+                    for (IBond bond : src.getConnectedBondsList(atom))
+                        if (bond.getOther(atom).getAtomicNumber() == AtomRef.H)
+                            hcount++;
+                    expr.and(new Expr(TOTAL_H_COUNT, hcount));
+                }
                 if (optset.contains(RING_BOND_COUNT)) {
                     int rbonds = 0;
                     for (IBond bond : src.getConnectedBondsList(atom))
