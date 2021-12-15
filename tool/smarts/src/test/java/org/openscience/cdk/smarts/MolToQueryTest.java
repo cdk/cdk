@@ -95,6 +95,18 @@ public class MolToQueryTest {
     }
 
     @Test
+    public void elementAndConnectivityAndTotHydrogenCount() throws InvalidSmilesException {
+        test("[#6X3H1]1~[#6X3H1]~[#6X3H1]~[#6X3H1]~[#7X2H0]~[#6X3H0]~1~[#6X4H3]", "c1cccnc1C",
+                Expr.Type.ELEMENT, Expr.Type.TOTAL_DEGREE, Expr.Type.TOTAL_H_COUNT);
+    }
+
+    @Test
+    public void elementAndConnectivityAndImplHydrogenCount() throws InvalidSmilesException {
+        test("[#6X3h1]1~[#6X3h1]~[#6X3h1]~[#6X3h1]~[#7X2h0]~[#6X3h0]~1~[#6X4h3]", "c1cccnc1C",
+                Expr.Type.ELEMENT, Expr.Type.TOTAL_DEGREE, Expr.Type.IMPL_H_COUNT);
+    }
+
+    @Test
     public void complexDocExample() throws InvalidSmilesException {
         test("[nx2+0]1:[cx2+0]:[cx2+0]:[cx2+0](=[O&x0+0]):[cx2+0]:[cx2+0]:1",
              "[nH]1ccc(=O)cc1",
