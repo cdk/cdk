@@ -27,7 +27,7 @@ package org.openscience.cdk.isomorphism;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import org.junit.Test;
-import org.mockito.Matchers;
+import org.mockito.ArgumentMatchers;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -104,7 +104,7 @@ public class MappingsTest {
         Iterable<String> strings = ms.map(f);
         Iterator<String> stringIt = strings.iterator();
 
-        verify(f, atMost(0)).apply(Matchers.<int[]> any());
+        verify(f, atMost(0)).apply(ArgumentMatchers.<int[]> any());
 
         assertTrue(stringIt.hasNext());
         assertThat(stringIt.next(), is("p1"));
@@ -116,7 +116,7 @@ public class MappingsTest {
         assertThat(stringIt.next(), is("p4"));
         assertFalse(stringIt.hasNext());
 
-        verify(f, atMost(4)).apply(Matchers.<int[]> any());
+        verify(f, atMost(4)).apply(ArgumentMatchers.<int[]> any());
     }
 
     @Test
