@@ -98,7 +98,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * </b>
  *
  * @author Sam Adams
- *
  * @cdk.module inchi
  * @cdk.githash
  */
@@ -123,10 +122,10 @@ public class InChIGenerator {
      * <p>Reads atoms, bonds etc from atom container and converts to format
      * InChI library requires, then calls the library.
      *
-     * @param atomContainer      AtomContainer to generate InChI for.
+     * @param atomContainer       AtomContainer to generate InChI for.
      * @param ignoreAromaticBonds if aromatic bonds should be treated as bonds of type single and double
      * @throws org.openscience.cdk.exception.CDKException if there is an
-     * error during InChI generation
+     *                                                    error during InChI generation
      */
     protected InChIGenerator(IAtomContainer atomContainer, boolean ignoreAromaticBonds) throws CDKException {
         this(atomContainer, Collections.singletonList(INCHI_OPTION.AuxNone), ignoreAromaticBonds);
@@ -138,10 +137,10 @@ public class InChIGenerator {
      * <p>Reads atoms, bonds etc from atom container and converts to format
      * InChI library requires, then calls the library.
      *
-     * @param atomContainer      AtomContainer to generate InChI for.
-     * @param options   Space delimited string of options to pass to InChI library.
-     *                  Each option may optionally be preceded by a command line
-     *                  switch (/ or -).
+     * @param atomContainer       AtomContainer to generate InChI for.
+     * @param options             Space delimited string of options to pass to InChI library.
+     *                            Each option may optionally be preceded by a command line
+     *                            switch (/ or -).
      * @param ignoreAromaticBonds if aromatic bonds should be treated as bonds of type single and double
      * @throws CDKException
      */
@@ -162,8 +161,8 @@ public class InChIGenerator {
      * <p>Reads atoms, bonds etc from atom container and converts to format
      * InChI library requires, then calls the library.
      *
-     * @param atomContainer     AtomContainer to generate InChI for.
-     * @param options           List of INCHI_OPTION.
+     * @param atomContainer       AtomContainer to generate InChI for.
+     * @param options             List of INCHI_OPTION.
      * @param ignoreAromaticBonds if aromatic bonds should be treated as bonds of type single and double
      * @throws CDKException
      */
@@ -183,7 +182,7 @@ public class InChIGenerator {
      * InChI library requires, then places call for the library to generate
      * the InChI.
      *
-     * @param atomContainer      AtomContainer to generate InChI for.
+     * @param atomContainer AtomContainer to generate InChI for.
      * @throws CDKException
      */
     private void generateInchiFromCDKAtomContainer(IAtomContainer atomContainer, boolean ignore) throws CDKException {
@@ -285,7 +284,7 @@ public class InChIGenerator {
 
             // Get bond order
             INCHI_BOND_TYPE order;
-            Order           bo = bond.getOrder();
+            Order bo = bond.getOrder();
             if (!ignore && bond.getFlag(CDKConstants.ISAROMATIC)) {
                 order = INCHI_BOND_TYPE.ALTERN;
             } else if (bo == Order.SINGLE) {
