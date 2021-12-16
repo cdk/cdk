@@ -39,7 +39,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyObject;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -183,7 +183,7 @@ public class DynamicFactoryTest {
         assertNotNull(factory.ofClass(ICDKObject.class, "empty"));
 
         // verify the modifier was invoked once
-        verify(modifier).modify(anyObject());
+        verify(modifier).modify(any());
 
     }
 
@@ -446,7 +446,7 @@ public class DynamicFactoryTest {
         assertNotNull(factory.ofClass(IAtom.class));
 
         // verify the modify method was called once
-        verify(modifier, times(1)).modify(anyObject());
+        verify(modifier, times(1)).modify(any());
 
     }
 
