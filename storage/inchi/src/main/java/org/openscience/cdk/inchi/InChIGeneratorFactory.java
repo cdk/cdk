@@ -23,8 +23,6 @@ package org.openscience.cdk.inchi;
 import java.util.List;
 
 import net.sf.jniinchi.INCHI_OPTION;
-import net.sf.jniinchi.JniInchiWrapper;
-import net.sf.jniinchi.LoadNativeLibraryException;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -80,11 +78,6 @@ public class InChIGeneratorFactory {
      * @throws CDKException if unable to load native code
      */
     private InChIGeneratorFactory() throws CDKException {
-        try {
-            JniInchiWrapper.loadLibrary();
-        } catch (LoadNativeLibraryException lnle) {
-            throw new CDKException("Unable to load native code; " + lnle.getMessage(), lnle);
-        }
     }
 
     /**

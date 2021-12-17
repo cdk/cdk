@@ -34,6 +34,7 @@ import javax.vecmath.Point3d;
 
 import net.sf.jniinchi.INCHI_OPTION;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -991,6 +992,6 @@ public class InChIGeneratorTest extends CDKTestCase {
     	InChIGenerator generator = factory.getInChIGenerator(ac);
     	
         String flagChar = System.getProperty("os.name", "").toLowerCase().startsWith("windows") ? "/" : "-";
-    	assertThat(generator.input.getOptions(), containsString(flagChar + "W5"));
+    	assertThat(generator.options.getTimeoutMilliSeconds(), is(5000));
     }
 }
