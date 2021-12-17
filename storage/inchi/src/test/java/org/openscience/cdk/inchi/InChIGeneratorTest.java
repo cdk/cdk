@@ -22,6 +22,7 @@ package org.openscience.cdk.inchi;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.anyOf;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -905,7 +906,8 @@ public class InChIGeneratorTest extends CDKTestCase {
         InChIGenerator generator = inchiFact.getInChIGenerator(mol, "W0.01");
         assertThat(generator.getReturnStatus(), is(INCHI_RET.ERROR));
         assertThat(generator.getMessage(),
-                   containsString("Time limit exceeded"));
+                anyOf(containsString("Time limit exceeded"),
+                      containsString("Structure normalization timeout")));
     }
 
     /**
