@@ -990,8 +990,6 @@ public class InChIGeneratorTest extends CDKTestCase {
         ac.addAtom(new Atom("C"));
     	InChIGeneratorFactory factory = InChIGeneratorFactory.getInstance();
     	InChIGenerator generator = factory.getInChIGenerator(ac);
-    	
-        String flagChar = System.getProperty("os.name", "").toLowerCase().startsWith("windows") ? "/" : "-";
-    	assertThat(generator.options.getTimeoutMilliSeconds(), is(5000));
+        assertThat(generator.options.getTimeoutMilliSeconds(), is(5000L));
     }
 }
