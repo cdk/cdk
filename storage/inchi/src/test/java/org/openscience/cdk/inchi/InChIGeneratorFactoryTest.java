@@ -185,7 +185,7 @@ public class InChIGeneratorFactoryTest {
     }
 
     // InChI only supports cumulenes of length 2 (CC=[C@]=CC) and 3
-    // (C/C=C=C=C=C/C) longer ones should be ignored
+    // (C/C=C=C=C/C) - longer ones should be ignored
     @Test
     public void longerExtendedTetrahedralsIgnored() throws Exception {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
