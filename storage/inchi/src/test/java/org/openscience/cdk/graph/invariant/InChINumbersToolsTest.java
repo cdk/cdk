@@ -103,7 +103,7 @@ public class InChINumbersToolsTest extends CDKTestCase {
     public void fixedH() throws Exception {
         SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = parser.parseSmiles("N1C=NC2=CC=CC=C12");
-        String auxInfo = InChINumbersTools.auxInfo(atomContainer, INCHI_OPTION.FixedH);
+        String auxInfo = InChINumbersTools.auxInfo(atomContainer, INCHI_OPTION.FixedH, INCHI_OPTION.ChiralFlagON);
         String expected = "AuxInfo=1/1/" + "N:6,7,5,8,2,4,9,3,1/" + "E:(1,2)(3,4)(6,7)(8,9)/" + "F:7,6,8,5,2,9,4,1,3/"
                 + "rA:9NCNCCCCCC/" + "rB:s1;d2;s3;d4;s5;d6;s7;s1s4d8;/" + "rC:;;;;;;;;;";
         assertThat(auxInfo, is(expected));
