@@ -906,7 +906,8 @@ public class InChIGeneratorTest extends CDKTestCase {
         InChIGeneratorFactory inchiFact = InChIGeneratorFactory.getInstance();
         InChIGenerator generator = inchiFact.getInChIGenerator(mol, "W0.01");
         assertThat(generator.getReturnStatus(), is(INCHI_RET.ERROR));
-        assertThat(generator.getLog(), containsString("Time limit exceeded"));
+        assertThat(generator.getMessage(),
+                   containsString("Time limit exceeded"));
     }
 
     /**
