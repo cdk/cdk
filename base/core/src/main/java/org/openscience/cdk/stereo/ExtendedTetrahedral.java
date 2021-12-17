@@ -192,6 +192,28 @@ public final class ExtendedTetrahedral
         return atoms;
     }
 
+    public static int getLength(IAtomContainer container, IAtom focus) {
+        int length = 0;
+        List<IBond> focusBonds = container.getConnectedBondsList(focus);
+        if (focusBonds.size() != 2)
+            throw new IllegalArgumentException("focus must have exactly 2 neighbors");
+        IAtom leftPrev  = focus;
+        IAtom rightPrev = focus;
+        IAtom left      = focusBonds.get(0).getOther(focus);
+        IAtom right     = focusBonds.get(1).getOther(focus);
+        IAtom tmp;
+        while (left != null && right != null) {
+            tmp = getOtherNbr(container, left, leftPrev);
+            leftPrev = left;
+            left     = tmp;
+            tmp = getOtherNbr(container, right, rightPrev);
+            rightPrev = right;
+            right     = tmp;
+            length++;
+        }
+        return 2*length;
+    }
+
     @Override
     protected IStereoElement<IAtom, IAtom> create(IAtom focus, List<IAtom> carriers,
                                                   int cfg) {

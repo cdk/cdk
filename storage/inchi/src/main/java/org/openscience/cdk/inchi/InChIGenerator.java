@@ -419,6 +419,10 @@ public class InChIGenerator {
                 IAtom[] terminals = extendedTetrahedral.findTerminalAtoms(atomContainer);
                 IAtom[] peripherals = extendedTetrahedral.peripherals();
 
+                // InChI only supports length 2
+                if (ExtendedTetrahedral.getLength(atomContainer, focus) > 2)
+                    continue;
+
                 // InChI API is particualar about the input, each terminal atom
                 // needs to be present in the list of neighbors and they must
                 // be at index 1 and 2 (i.e. in the middle). This is true even
