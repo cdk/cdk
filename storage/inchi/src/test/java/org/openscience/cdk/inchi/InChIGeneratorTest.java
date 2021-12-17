@@ -120,7 +120,9 @@ public class InChIGeneratorTest extends CDKTestCase {
         IAtomContainer ac = new AtomContainer();
         ac.addAtom(new Atom("Cl"));
         InChIGenerator gen = getFactory().getInChIGenerator(ac, "FixedH");
-        Assert.assertNull("Because this generation should work, I expected a null message String.", gen.getMessage());
+        Assert.assertEquals(
+                "Because this generation should work, I expected an empty message String.",
+                "", gen.getMessage());
     }
 
     @Test
