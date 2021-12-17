@@ -312,7 +312,6 @@ public class InChIGeneratorTest extends CDKTestCase {
         acE.addAtom(a4E);
 
         acE.addBond(new Bond(a1E, a2E, Order.DOUBLE));
-        acE.addBond(new Bond(a1E, a2E, Order.DOUBLE));
         acE.addBond(new Bond(a1E, a3E, Order.SINGLE));
         acE.addBond(new Bond(a2E, a4E, Order.SINGLE));
 
@@ -582,7 +581,6 @@ public class InChIGeneratorTest extends CDKTestCase {
         acE.addAtom(a3E);
         acE.addAtom(a4E);
 
-        acE.addBond(new Bond(a1E, a2E, Order.DOUBLE));
         acE.addBond(new Bond(a1E, a2E, Order.DOUBLE));
         acE.addBond(new Bond(a1E, a3E, Order.SINGLE));
         acE.addBond(new Bond(a2E, a4E, Order.SINGLE));
