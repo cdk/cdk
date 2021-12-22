@@ -12,6 +12,10 @@
 
     <artifactId>cdk-inchi</artifactId>
 
+    <properties>
+        <jna-inchi.version>1.0.1</jna-inchi.version>
+    </properties>
+
     <name>cdk-inchi</name>
     <dependencies>
         <dependency>
@@ -20,8 +24,13 @@
         </dependency>
         <dependency>
             <groupId>io.github.dan2097</groupId>
+            <artifactId>jna-inchi-api</artifactId>
+            <version>${jna-inchi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.dan2097</groupId>
             <artifactId>jna-inchi-core</artifactId>
-            <version>1.0.1</version>
+            <version>${jna-inchi.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -60,7 +69,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>cdk-io</artifactId>
+            <artifactId>cdk-atomtype</artifactId>
             <version>${project.parent.version}</version>
             <scope>test</scope>
         </dependency>
@@ -86,12 +95,6 @@
             <artifactId>cdk-data</artifactId>
             <version>${project.parent.version}</version>
             <type>test-jar</type>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>cdk-render</artifactId>
-            <version>${project.parent.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
