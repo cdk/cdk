@@ -29,16 +29,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>uk.ac.ebi.beam</groupId>
-            <artifactId>beam-core</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>uk.ac.ebi.beam</groupId>
-            <artifactId>beam-func</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>cdk-interfaces</artifactId>
             <version>${project.parent.version}</version>
@@ -75,12 +65,6 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>cdk-silent</artifactId>
-            <version>${project.parent.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>cdk-valencycheck</artifactId>
             <version>${project.parent.version}</version>
             <scope>test</scope>
         </dependency>
