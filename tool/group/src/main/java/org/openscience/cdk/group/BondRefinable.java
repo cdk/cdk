@@ -31,7 +31,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
@@ -119,7 +118,7 @@ class BondRefinable implements Refinable {
                 // doesn't matter what it is, so long as it's constant
                 boS = "1";
             } else {
-                boolean isArom = bond.getFlag(CDKConstants.ISAROMATIC);
+                boolean isArom = bond.isAromatic();
                 int orderNumber = (isArom) ? 5 : bond.getOrder().numeric();
                 boS = String.valueOf(orderNumber);
             }
@@ -168,7 +167,7 @@ class BondRefinable implements Refinable {
                 // doesn't matter what it is, so long as it's constant
                 boS = "1";
             } else {
-                boolean isArom = bond.getFlag(CDKConstants.ISAROMATIC);
+                boolean isArom = bond.isAromatic();
                 int orderNumber = (isArom) ? 5 : bond.getOrder().numeric();
                 boS = String.valueOf(orderNumber);
             }
