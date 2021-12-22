@@ -62,8 +62,14 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.openscience.cdk</groupId>
+            <artifactId>cdk-atomtype</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>cdk-io</artifactId>
+            <artifactId>cdk-core</artifactId>
             <version>${project.parent.version}</version>
             <scope>test</scope>
         </dependency>
