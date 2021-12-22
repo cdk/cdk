@@ -14,6 +14,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.openscience.cdk</groupId>
             <artifactId>cdk-fingerprint</artifactId>
             <version>${project.version}</version>

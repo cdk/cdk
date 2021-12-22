@@ -15,14 +15,14 @@
     <name>cdk-test-standard</name>
     <dependencies>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>cdk-standard</artifactId>
-            <version>${project.parent.version}</version>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-core</artifactId>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>cdk-standard</artifactId>
+            <version>${project.parent.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -141,6 +141,18 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>cdk-smarts</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>cdk-atomtype</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>cdk-formula</artifactId>
             <version>${project.parent.version}</version>
             <scope>test</scope>
         </dependency>

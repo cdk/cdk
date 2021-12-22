@@ -15,6 +15,10 @@
     <name>cdk-core</name>
     <dependencies>
         <dependency>
+            <groupId>javax.vecmath</groupId>
+            <artifactId>vecmath</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
         </dependency>
@@ -22,11 +26,6 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>cdk-interfaces</artifactId>
             <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-        	<groupId>junit</groupId>
-        	<artifactId>junit</artifactId>
-        	<scope>test</scope>
         </dependency>
     </dependencies>
 
