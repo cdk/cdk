@@ -18,27 +18,28 @@
  */
 package org.openscience.cdk.tools.diff;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.tools.diff.tree.IDifference;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
  * @cdk.module test-diff
  */
-public class SingleElectronDiffTest extends CDKTestCase {
+public class SingleElectronDiffTest {
 
     @Test
     public void testMatchAgainstItself() {
         ISingleElectron bond1 = mock(ISingleElectron.class);
         String result = SingleElectronDiff.diff(bond1, bond1);
-        assertZeroLength(result);
+        Assert.assertEquals("", result);
     }
 
     @Test
@@ -58,9 +59,9 @@ public class SingleElectronDiffTest extends CDKTestCase {
         String result = SingleElectronDiff.diff(bond1, bond2);
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
-        assertContains(result, "SingleElectronDiff");
-        assertContains(result, "AtomDiff");
-        assertContains(result, "C/O");
+        MatcherAssert.assertThat(result, containsString("SingleElectronDiff"));
+        MatcherAssert.assertThat(result, containsString("AtomDiff"));
+        MatcherAssert.assertThat(result, containsString("C/O"));
     }
 
     @Test

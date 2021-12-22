@@ -18,16 +18,15 @@
  */
 package org.openscience.cdk.tools.diff.tree;
 
-import javax.vecmath.Point2d;
-
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
+
+import javax.vecmath.Point2d;
 
 /**
  * @cdk.module test-diff
  */
-public class Point2dDifferenceTest extends CDKTestCase {
+public class Point2dDifferenceTest {
 
     @Test
     public void testDiff() {
@@ -67,6 +66,6 @@ public class Point2dDifferenceTest extends CDKTestCase {
         IDifference result = Point2dDifference.construct("Foo", null, bar);
         String diffString = result.toString();
         Assert.assertNotNull(diffString);
-        assertOneLiner(diffString);
+        StringDifferenceTest.assertOneLiner(diffString);
     }
 }

@@ -18,25 +18,26 @@
  */
 package org.openscience.cdk.tools.diff;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.tools.diff.tree.IDifference;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
  * @cdk.module test-diff
  */
-public class ElectronContainerDiffTest extends CDKTestCase {
+public class ElectronContainerDiffTest {
 
     @Test
     public void testMatchAgainstItself() {
         IElectronContainer atom1 = mock(IElectronContainer.class);
         String result = ElectronContainerDiff.diff(atom1, atom1);
-        assertZeroLength(result);
+        Assert.assertEquals("", result);
     }
 
     @Test
@@ -49,9 +50,9 @@ public class ElectronContainerDiffTest extends CDKTestCase {
         String result = ElectronContainerDiff.diff(ec1, ec2);
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
-        assertContains(result, "ElectronContainerDiff");
-        assertContains(result, "eCount");
-        assertContains(result, "2/3");
+        MatcherAssert.assertThat(result, containsString("ElectronContainerDiff"));
+        MatcherAssert.assertThat(result, containsString("eCount"));
+        MatcherAssert.assertThat(result, containsString("2/3"));
     }
 
     @Test

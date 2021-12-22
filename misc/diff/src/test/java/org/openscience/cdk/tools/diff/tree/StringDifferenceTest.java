@@ -20,12 +20,20 @@ package org.openscience.cdk.tools.diff.tree;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-diff
  */
-public class StringDifferenceTest extends CDKTestCase {
+public class StringDifferenceTest {
+
+    public static void assertOneLiner(String testString) {
+        Assert.assertNotNull("Expected a non-null String.", testString);
+        for (int i = 0; i < testString.length(); i++) {
+            char c = testString.charAt(i);
+            Assert.assertNotSame("The String must not contain newline characters", '\n', c);
+            Assert.assertNotSame("The String must not contain newline characters", '\r', c);
+        }
+    }
 
     @Test
     public void testDiff() {

@@ -18,14 +18,20 @@
  */
 package org.openscience.cdk.tools.diff.tree;
 
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
+
+import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * @cdk.module test-diff
  */
-public class IntegerDifferenceTest extends CDKTestCase {
+public class IntegerDifferenceTest {
 
     @Test
     public void testDiff() {
@@ -59,7 +65,7 @@ public class IntegerDifferenceTest extends CDKTestCase {
         IDifference result = IntegerDifference.construct("Foo", 1, 2);
         String diffString = result.toString();
         Assert.assertNotNull(diffString);
-        assertOneLiner(diffString);
+        StringDifferenceTest.assertOneLiner(diffString);
     }
 
     @Test

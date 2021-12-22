@@ -18,25 +18,26 @@
  */
 package org.openscience.cdk.tools.diff;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.tools.diff.tree.IDifference;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
  * @cdk.module test-diff
  */
-public class IsotopeDiffTest extends CDKTestCase {
+public class IsotopeDiffTest {
 
     @Test
     public void testMatchAgainstItself() {
         IIsotope element1 = mock(IIsotope.class);
         String result = IsotopeDiff.diff(element1, element1);
-        assertZeroLength(result);
+        Assert.assertEquals("", result);
     }
 
     @Test
@@ -49,8 +50,8 @@ public class IsotopeDiffTest extends CDKTestCase {
         String result = IsotopeDiff.diff(element1, element2);
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
-        assertContains(result, "IsotopeDiff");
-        assertContains(result, "H/C");
+        MatcherAssert.assertThat(result, containsString("IsotopeDiff"));
+        MatcherAssert.assertThat(result, containsString("H/C"));
     }
 
     @Test

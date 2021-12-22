@@ -20,12 +20,11 @@ package org.openscience.cdk.tools.diff.tree;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-diff
  */
-public class DoubleDifferenceTest extends CDKTestCase {
+public class DoubleDifferenceTest {
 
     @Test
     public void testDiff() {
@@ -59,6 +58,6 @@ public class DoubleDifferenceTest extends CDKTestCase {
         IDifference result = DoubleDifference.construct("Foo", 1.0, 2.0);
         String diffString = result.toString();
         Assert.assertNotNull(diffString);
-        assertOneLiner(diffString);
+        StringDifferenceTest.assertOneLiner(diffString);
     }
 }
