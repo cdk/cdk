@@ -23,6 +23,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.SlowTest;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -36,7 +37,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @cdk.module test-qsarionpot
  */
-public class IPBondLearningDescriptorTest extends BondDescriptorTest {
+public class IPBondLearningDescriptorTest extends CDKTestCase {
 
     private IPBondLearningDescriptor descriptor;
     private LonePairElectronChecker  lpcheck = new LonePairElectronChecker();
@@ -51,7 +52,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
 
     @Before
     public void setUp() throws Exception {
-        setDescriptor(IPBondLearningDescriptor.class);
+        descriptor = new IPBondLearningDescriptor();
     }
 
     /**
