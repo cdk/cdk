@@ -29,11 +29,6 @@
             <artifactId>cdk-standard</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
-        <dependency>
-        	<groupId>junit</groupId>
-        	<artifactId>junit</artifactId>
-        	<scope>test</scope>
-        </dependency>
     </dependencies>
 	<build>
     	<plugins>

@@ -19,9 +19,9 @@
             <artifactId>xom</artifactId>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+            <version>1.3.03</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -29,9 +29,16 @@
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <!-- Only used for CDK logging in tests-->
             <groupId>${project.groupId}</groupId>
             <artifactId>cdk-core</artifactId>
             <version>${project.parent.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>

@@ -35,7 +35,7 @@
             <groupId>uk.ac.ebi.beam</groupId>
             <artifactId>beam-func</artifactId>
         </dependency>
-            <dependency>
+        <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest</artifactId>
             <scope>test</scope>
