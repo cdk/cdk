@@ -22,6 +22,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.SlowTest;
 import org.openscience.cdk.interfaces.IAtom;
@@ -41,8 +42,9 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @cdk.module test-qsarionpot
  */
-public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
+public class IPMolecularLearningDescriptorTest extends CDKTestCase {
 
+    IPMolecularLearningDescriptor descriptor;
     private SmilesParser            sp      = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     private IChemObjectBuilder      builder = SilentChemObjectBuilder.getInstance();
     private LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -55,7 +57,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
 
     @Before
     public void setUp() throws Exception {
-        super.setDescriptor(IPMolecularLearningDescriptor.class);
+        descriptor = new IPMolecularLearningDescriptor();
     }
 
     @Test
