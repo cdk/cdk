@@ -17,7 +17,6 @@
         <module>core</module>
         <module>standard</module>
         <module>valencycheck</module>
-        <module>test-interfaces</module>
         <module>test-atomtype</module>
         <module>test-core</module>
         <module>test-standard</module>
