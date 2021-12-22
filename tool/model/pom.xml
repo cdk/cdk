@@ -27,7 +27,6 @@
             <groupId>org.openscience.cdk</groupId>
             <artifactId>cdk-interfaces</artifactId>
             <version>${project.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.openscience.cdk</groupId>
