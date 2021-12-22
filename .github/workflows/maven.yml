@@ -22,6 +22,6 @@ jobs:
       with:
         java-version: ${{ matrix.java }}
     - name: Build with Maven
-      run: mvn clean test -q -Pjacoco
+      run: mvn clean install -q -Pjacoco
     - name: push JaCoCo stats to codecov.io
       run: bash <(curl -s https://codecov.io/bash)
