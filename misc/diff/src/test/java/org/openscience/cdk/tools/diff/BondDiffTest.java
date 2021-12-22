@@ -18,26 +18,27 @@
  */
 package org.openscience.cdk.tools.diff;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.diff.tree.IDifference;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
  * @cdk.module test-diff
  */
-public class BondDiffTest extends CDKTestCase {
+public class BondDiffTest {
 
     @Test
     public void testMatchAgainstItself() {
         IBond bond1 = mock(IBond.class);
         String result = BondDiff.diff(bond1, bond1);
-        assertZeroLength(result);
+        Assert.assertEquals("", result);
     }
 
     @Test
@@ -69,10 +70,10 @@ public class BondDiffTest extends CDKTestCase {
         String result = BondDiff.diff(bond1, bond2);
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
-        assertContains(result, "BondDiff");
-        assertContains(result, "SINGLE/DOUBLE");
-        assertContains(result, "AtomDiff");
-        assertContains(result, "C/O");
+        MatcherAssert.assertThat(result, containsString("BondDiff"));
+        MatcherAssert.assertThat(result, containsString("SINGLE/DOUBLE"));
+        MatcherAssert.assertThat(result, containsString("AtomDiff"));
+        MatcherAssert.assertThat(result, containsString("C/O"));
     }
 
     @Test

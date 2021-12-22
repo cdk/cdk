@@ -18,14 +18,16 @@
  */
 package org.openscience.cdk.tools.diff.tree;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
+
+import static org.hamcrest.CoreMatchers.containsString;
 
 /**
  * @cdk.module test-diff
  */
-public class ChemObjectDifferenceTest extends CDKTestCase {
+public class ChemObjectDifferenceTest {
 
     @Test
     public void testToString() {
@@ -37,9 +39,9 @@ public class ChemObjectDifferenceTest extends CDKTestCase {
         diff.addChild(StringDifference.construct("Foo", "bar", "bar1"));
         diffString = diff.toString();
         Assert.assertNotNull(diffString);
-        assertOneLiner(diffString);
-        assertContains(diffString, "AtomTypeDiff");
-        assertContains(diffString, "{");
-        assertContains(diffString, "}");
+        StringDifferenceTest.assertOneLiner(diffString);
+        MatcherAssert.assertThat(diffString, containsString( "AtomTypeDiff"));
+        MatcherAssert.assertThat(diffString, containsString( "{"));
+        MatcherAssert.assertThat(diffString, containsString( "}"));
     }
 }

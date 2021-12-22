@@ -20,12 +20,11 @@ package org.openscience.cdk.tools.diff.tree;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-diff
  */
-public class AbstractDifferenceTest extends CDKTestCase {
+public class AbstractDifferenceTest {
 
     @Test
     public void testConstructor() {

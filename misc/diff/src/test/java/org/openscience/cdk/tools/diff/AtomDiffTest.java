@@ -18,29 +18,29 @@
  */
 package org.openscience.cdk.tools.diff;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import java.io.IOException;
-
-import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.tools.diff.tree.IDifference;
-
+import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.tools.diff.tree.IDifference;
+
+import java.io.IOException;
+
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * @cdk.module test-diff
  */
-public class AtomDiffTest extends CDKTestCase {
+public class AtomDiffTest {
 
     @Test
     public void testMatchAgainstItself() {
         IAtom atom1 = mock(IAtom.class);
         String result = AtomDiff.diff(atom1, atom1);
-        assertZeroLength(result);
+        Assert.assertEquals("", result);
     }
 
     @Test
@@ -53,8 +53,8 @@ public class AtomDiffTest extends CDKTestCase {
         String result = AtomDiff.diff(atom1, atom2);
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
-        assertContains(result, "AtomDiff");
-        assertContains(result, "H/C");
+        MatcherAssert.assertThat(result, containsString( "AtomDiff"));
+        MatcherAssert.assertThat(result, containsString( "H/C"));
     }
 
     @Test

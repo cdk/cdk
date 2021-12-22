@@ -18,26 +18,27 @@
  */
 package org.openscience.cdk.tools.diff;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.tools.diff.tree.IDifference;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
  * @cdk.module test-diff
  */
-public class LonePairDiffTest extends CDKTestCase {
+public class LonePairDiffTest {
 
     @Test
     public void testMatchAgainstItself() {
         ILonePair bond1 = mock(ILonePair.class);
         String result = LonePairDiff.diff(bond1, bond1);
-        assertZeroLength(result);
+        Assert.assertEquals("", result);
     }
 
     @Test
@@ -58,9 +59,9 @@ public class LonePairDiffTest extends CDKTestCase {
         String result = LonePairDiff.diff(bond1, bond2);
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
-        assertContains(result, "LonePairDiff");
-        assertContains(result, "AtomDiff");
-        assertContains(result, "C/O");
+        MatcherAssert.assertThat(result, containsString( "LonePairDiff"));
+        MatcherAssert.assertThat(result, containsString( "AtomDiff"));
+        MatcherAssert.assertThat(result, containsString( "C/O"));
     }
 
     @Test

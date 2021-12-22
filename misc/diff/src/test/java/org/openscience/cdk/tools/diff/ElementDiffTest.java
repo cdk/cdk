@@ -18,25 +18,26 @@
  */
 package org.openscience.cdk.tools.diff;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.tools.diff.tree.IDifference;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
  * @cdk.module test-diff
  */
-public class ElementDiffTest extends CDKTestCase {
+public class ElementDiffTest {
 
     @Test
     public void testMatchAgainstItself() {
         IElement element1 = mock(IElement.class);
         String result = ElementDiff.diff(element1, element1);
-        assertZeroLength(result);
+        Assert.assertEquals("", result);
     }
 
     @Test
@@ -49,8 +50,8 @@ public class ElementDiffTest extends CDKTestCase {
         String result = ElementDiff.diff(element1, element2);
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
-        assertContains(result, "ElementDiff");
-        assertContains(result, "H/C");
+        MatcherAssert.assertThat(result, containsString("ElementDiff"));
+        MatcherAssert.assertThat(result, containsString("H/C"));
     }
 
     @Test

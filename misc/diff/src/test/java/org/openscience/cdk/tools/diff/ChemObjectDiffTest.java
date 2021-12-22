@@ -18,25 +18,26 @@
  */
 package org.openscience.cdk.tools.diff;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.tools.diff.tree.IDifference;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
  * @cdk.module test-diff
  */
-public class ChemObjectDiffTest extends CDKTestCase {
+public class ChemObjectDiffTest {
 
     @Test
     public void testMatchAgainstItself() {
         IChemObject atom1 = mock(IChemObject.class);
         String result = ChemObjectDiff.diff(atom1, atom1);
-        assertZeroLength(result);
+        Assert.assertEquals("", result);
     }
 
     @Test
@@ -49,8 +50,8 @@ public class ChemObjectDiffTest extends CDKTestCase {
         String result = ChemObjectDiff.diff(atom1, atom2);
         Assert.assertNotNull(result);
         Assert.assertNotSame("Expected non-zero-length result", 0, result.length());
-        assertContains(result, "ChemObjectDiff");
-        assertContains(result, "F/T");
+        MatcherAssert.assertThat(result, containsString("ChemObjectDiff"));
+        MatcherAssert.assertThat(result, containsString("F/T"));
     }
 
     @Test
