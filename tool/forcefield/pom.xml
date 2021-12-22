@@ -15,23 +15,6 @@
     <name>cdk-forcefield</name>
     <dependencies>
         <dependency>
-            <groupId>gov.nist.math</groupId>
-            <artifactId>jama</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.vecmath</groupId>
-            <artifactId>vecmath</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>uk.ac.ebi.beam</groupId>
-            <artifactId>beam-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>uk.ac.ebi.beam</groupId>
-            <artifactId>beam-func</artifactId>
-        </dependency>
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
@@ -62,17 +45,17 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>cdk-io</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
             <artifactId>cdk-standard</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>cdk-charges</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openscience.cdk</groupId>
+            <artifactId>cdk-atomtype</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
@@ -94,19 +77,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>cdk-extra</artifactId>
-            <version>${project.parent.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>cdk-pdb</artifactId>
-            <version>${project.parent.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>cdk-valencycheck</artifactId>
+            <artifactId>cdk-isomorphism</artifactId>
             <version>${project.parent.version}</version>
             <scope>test</scope>
         </dependency>

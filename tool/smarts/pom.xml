@@ -14,20 +14,8 @@
     <name>cdk-smarts</name>
     <dependencies>
         <dependency>
-            <groupId>javax.vecmath</groupId>
-            <artifactId>vecmath</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>uk.ac.ebi.beam</groupId>
-            <artifactId>beam-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>uk.ac.ebi.beam</groupId>
-            <artifactId>beam-func</artifactId>
         </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>
@@ -61,7 +49,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>cdk-valencycheck</artifactId>
+            <artifactId>cdk-ctab</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
@@ -71,25 +59,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>cdk-data</artifactId>
-            <version>${project.parent.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
             <artifactId>cdk-silent</artifactId>
-            <version>${project.parent.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>cdk-io</artifactId>
-            <version>${project.parent.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>cdk-extra</artifactId>
             <version>${project.parent.version}</version>
             <scope>test</scope>
         </dependency>
@@ -105,13 +75,6 @@
             <version>${project.parent.version}</version>
             <type>test-jar</type>
             <scope>test</scope>            
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>cdk-data</artifactId>
-            <version>${project.parent.version}</version>
-            <type>test-jar</type>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>
