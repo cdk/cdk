@@ -19,12 +19,22 @@
  */
 package org.openscience.cdk.tools;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.core.config.ConfigurationSource;
+import org.apache.logging.log4j.core.config.Configurator;
+import org.apache.logging.log4j.core.config.xml.XmlConfiguration;
+import org.apache.logging.log4j.internal.LogManagerStatus;
+
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringReader;
-
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Useful for logging messages. Often used as a class static variable instantiated like:
@@ -88,7 +98,7 @@ public class LoggingTool implements ILoggingTool {
 
     private boolean             toSTDOUT             = false;
 
-    private Logger              log4jLogger;
+    private Logger log4jLogger;
     private static ILoggingTool logger;
     private String              classname;
 
@@ -96,6 +106,19 @@ public class LoggingTool implements ILoggingTool {
 
     /** Default number of StackTraceElements to be printed by debug(Exception). */
     public final int            DEFAULT_STACK_LENGTH = 5;
+
+    /** Log4J2 has customer levels and no longer has "TRACE_INT" etc so we can't know the values at compile
+     *  time and therefore it's not possible use a switch. */
+    private static final Map<Level, Integer> LOG4J2_LEVEL_TO_CDK_LEVEL = new HashMap<>();
+
+    static {
+        LOG4J2_LEVEL_TO_CDK_LEVEL.put(Level.TRACE, TRACE);
+        LOG4J2_LEVEL_TO_CDK_LEVEL.put(Level.DEBUG, DEBUG);
+        LOG4J2_LEVEL_TO_CDK_LEVEL.put(Level.INFO, INFO);
+        LOG4J2_LEVEL_TO_CDK_LEVEL.put(Level.WARN, WARN);
+        LOG4J2_LEVEL_TO_CDK_LEVEL.put(Level.ERROR, ERROR);
+        LOG4J2_LEVEL_TO_CDK_LEVEL.put(Level.FATAL, FATAL);
+    }
 
     /**
      * Constructs a LoggingTool which produces log lines without any special
@@ -126,7 +149,7 @@ public class LoggingTool implements ILoggingTool {
         stackLength = DEFAULT_STACK_LENGTH;
         this.classname = classInst.getName();
         try {
-            log4jLogger = Logger.getLogger(classname);
+            log4jLogger = LogManager.getLogger(classname);
         } catch (NoClassDefFoundError e) {
             toSTDOUT = true;
             logger.debug("Log4J class not found!");
@@ -149,9 +172,9 @@ public class LoggingTool implements ILoggingTool {
                 // by default debugging is set off, but it can be turned on
                 // with starting java like "java -Dcdk.debugging=true"
                 if (System.getProperty("cdk.debugging", "false").equals("true")) {
-                    log4jLogger.setLevel(Level.DEBUG);
+                    Configurator.setLevel(log4jLogger.getName(), Level.DEBUG);
                 } else {
-                    log4jLogger.setLevel(Level.WARN);
+                    Configurator.setLevel(log4jLogger.getName(), Level.WARN);
                 }
                 if (System.getProperty("cdk.debug.stdout", "false").equals("true")) {
                     toSTDOUT = true;
@@ -170,13 +193,20 @@ public class LoggingTool implements ILoggingTool {
      */
     public static void configureLog4j() {
         LoggingTool localLogger = new LoggingTool(LoggingTool.class);
-        try { // NOPMD
-            org.apache.log4j.PropertyConfigurator.configure(LoggingTool.class
-                    .getResource("/org/openscience/cdk/config/data/log4j.properties"));
+        try {
+            try (InputStream resourceAsStream = LoggingTool.class.getResourceAsStream("cdk-log4j2.xml")) {
+                if (resourceAsStream != null) {
+                    XmlConfiguration config = new XmlConfiguration(
+                            LoggerContext.getContext(true),
+                            new ConfigurationSource(resourceAsStream));
+                    Configurator.reconfigure(config);
+                }
+            }
         } catch (NullPointerException e) { // NOPMD
             localLogger.error("Properties file not found: ", e.getMessage());
             localLogger.debug(e);
         } catch (Exception e) {
+            e.printStackTrace();
             localLogger.error("Unknown error occurred: ", e.getMessage());
             localLogger.debug(e);
         }
@@ -467,22 +497,22 @@ public class LoggingTool implements ILoggingTool {
     public void setLevel(int level) {
         switch (level) {
             case TRACE:
-                log4jLogger.setLevel(Level.TRACE);
+                Configurator.setLevel(log4jLogger.getName(), Level.TRACE);
                 break;
             case DEBUG:
-                log4jLogger.setLevel(Level.DEBUG);
+                Configurator.setLevel(log4jLogger.getName(), Level.DEBUG);
                 break;
             case INFO:
-                log4jLogger.setLevel(Level.INFO);
+                Configurator.setLevel(log4jLogger.getName(), Level.INFO);
                 break;
             case WARN:
-                log4jLogger.setLevel(Level.WARN);
+                Configurator.setLevel(log4jLogger.getName(), Level.WARN);
                 break;
             case ERROR:
-                log4jLogger.setLevel(Level.ERROR);
+                Configurator.setLevel(log4jLogger.getName(), Level.ERROR);
                 break;
             case FATAL:
-                log4jLogger.setLevel(Level.FATAL);
+                Configurator.setLevel(log4jLogger.getName(), Level.FATAL);
                 break;
             default:
                 throw new IllegalArgumentException("Invalid log level: " + level);
@@ -496,22 +526,10 @@ public class LoggingTool implements ILoggingTool {
     public int getLevel() {
         Level level = log4jLogger.getLevel();
         if (level == null)
-            level = Logger.getRootLogger().getLevel();
-        switch (level.toInt()) {
-            case Level.TRACE_INT:
-                return TRACE;
-            case Level.DEBUG_INT:
-                return DEBUG;
-            case Level.INFO_INT:
-                return INFO;
-            case Level.WARN_INT:
-                return WARN;
-            case Level.ERROR_INT:
-                return ERROR;
-            case Level.FATAL_INT:
-                return FATAL;
-            default:
-                throw new IllegalArgumentException("Unsupported log4j level: " + level);
-        }
+            level = LogManager.getRootLogger().getLevel();
+        Integer res = LOG4J2_LEVEL_TO_CDK_LEVEL.get(level);
+        if (res == null)
+            throw new IllegalArgumentException("Unsupported log4j level: " + level);
+        return res;
     }
 }
