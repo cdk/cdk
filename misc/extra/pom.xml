@@ -11,6 +11,7 @@
     </parent>
 
     <artifactId>cdk-extra</artifactId>
+    <name>cdk-extra</name>
     
     <dependencies>
         <dependency>
@@ -82,8 +83,4 @@
             <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
-
-
-    <name>cdk-extra</name>
-    
 </project>
