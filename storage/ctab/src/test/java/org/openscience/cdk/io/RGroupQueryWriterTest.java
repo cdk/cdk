@@ -55,11 +55,11 @@ public class RGroupQueryWriterTest extends ChemObjectIOTest {
         setChemObjectIO(new RGroupQueryWriter());
     }
 
-    @Test
-    @Override
-    public void testAcceptsAtLeastOneChemObjectClass() {
-        new RGroupQueryWriter().accepts(RGroupQuery.class);
-    }
+//    @Test
+//    @Override
+//    public void testAcceptsAtLeastOneChemObjectClass() {
+//        new RGroupQueryWriter().accepts(RGroupQuery.class);
+//    }
 
     @Test
     public void testRgroupQueryFile_1() throws Exception {

@@ -23,13 +23,6 @@ package org.openscience.cdk.io;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.silent.AtomContainer;
-import org.openscience.cdk.silent.AtomContainerSet;
-import org.openscience.cdk.silent.ChemFile;
-import org.openscience.cdk.silent.ChemModel;
-import org.openscience.cdk.silent.Reaction;
 
 import java.io.ByteArrayOutputStream;
 import java.io.StringWriter;
@@ -48,34 +41,34 @@ public abstract class ChemObjectWriterTest extends ChemObjectIOTest {
         ChemObjectWriterTest.chemObjectIO = aChemObjectWriter;
     }
 
-    private static IChemObject[] allChemObjectsTypes = {new ChemFile(), new ChemModel(), new Reaction(),
-            new AtomContainerSet(), new AtomContainer()};
-
-    /**
-     * Unit tests that iterates over all common objects that can be
-     * serialized and tests that if it is marked as accepted with
-     * <code>accepts</code>, that it can actually be written too.
-     */
-    @Test
-    public void testAcceptsWriteConsistency() throws CDKException {
-        Assert.assertNotNull("The IChemObjectWriter is not set.", chemObjectIO);
-        for (IChemObject object : allChemObjectsTypes) {
-            if (chemObjectIO.accepts(object.getClass())) {
-                StringWriter writer = new StringWriter();
-                chemObjectIO.setWriter(writer);
-                try {
-                    chemObjectIO.write(object);
-                } catch (CDKException exception) {
-                    if (exception.getMessage().contains("Only supported")) {
-                        Assert.fail("IChemObject of type " + object.getClass().getName() + " is marked as "
-                                + "accepted, but failed to be written.");
-                    } else {
-                        throw exception;
-                    }
-                }
-            }
-        }
-    }
+//    private static IChemObject[] allChemObjectsTypes = {new ChemFile(), new ChemModel(), new Reaction(),
+//            new AtomContainerSet(), new AtomContainer()};
+//
+//    /**
+//     * Unit tests that iterates over all common objects that can be
+//     * serialized and tests that if it is marked as accepted with
+//     * <code>accepts</code>, that it can actually be written too.
+//     */
+//    @Test
+//    public void testAcceptsWriteConsistency() throws CDKException {
+//        Assert.assertNotNull("The IChemObjectWriter is not set.", chemObjectIO);
+//        for (IChemObject object : allChemObjectsTypes) {
+//            if (chemObjectIO.accepts(object.getClass())) {
+//                StringWriter writer = new StringWriter();
+//                chemObjectIO.setWriter(writer);
+//                try {
+//                    chemObjectIO.write(object);
+//                } catch (CDKException exception) {
+//                    if (exception.getMessage().contains("Only supported")) {
+//                        Assert.fail("IChemObject of type " + object.getClass().getName() + " is marked as "
+//                                + "accepted, but failed to be written.");
+//                    } else {
+//                        throw exception;
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     @Test
     public void testSetWriter_Writer() throws Exception {
