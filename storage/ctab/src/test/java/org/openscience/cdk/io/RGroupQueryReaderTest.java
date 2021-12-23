@@ -38,8 +38,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.RGroupQueryFormat;
-import org.openscience.cdk.isomorphism.matchers.RGroup;
-import org.openscience.cdk.isomorphism.matchers.RGroupList;
+import org.openscience.cdk.isomorphism.matchers.IRGroup;
+import org.openscience.cdk.isomorphism.matchers.IRGroupList;
 import org.openscience.cdk.isomorphism.matchers.RGroupQuery;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -73,19 +73,6 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertFalse(reader.accepts(AtomContainer.class));
         Assert.assertTrue(reader.accepts(RGroupQuery.class));
     }
-
-//    @Test
-//    @Override
-//    public void testAcceptsAtLeastOneChemObjectClass() {
-//        RGroupQueryReader reader = new RGroupQueryReader();
-//        Assert.assertTrue(reader.accepts(RGroupQuery.class));
-//    }
-
-//    @Override
-//    public void testAcceptsAtLeastOneDebugObject() {}
-//
-//    @Override
-//    public void testAcceptsAtLeastOneNonotifyObject() {}
 
     /**
      * Test that the format factory guesses the correct IChemFormat
@@ -138,10 +125,10 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
         Iterator<Integer> itr = rGroupQuery.getRGroupDefinitions().keySet().iterator();
         int val_1 = itr.next();
         Assert.assertEquals(val_1, 1);
-        RGroupList rList = rGroupQuery.getRGroupDefinitions().get(val_1);
+        IRGroupList rList = rGroupQuery.getRGroupDefinitions().get(val_1);
         Assert.assertEquals(rList.getOccurrence(), "0,1-3");
 
-        List<RGroup> rGroups = rList.getRGroups();
+        List<IRGroup> rGroups = rList.getRGroups();
         Assert.assertEquals(rGroups.get(0).getFirstAttachmentPoint().getSymbol(), "N");
         Assert.assertEquals(rGroups.get(1).getFirstAttachmentPoint().getSymbol(), "O");
         Assert.assertEquals(rGroups.get(2).getFirstAttachmentPoint().getSymbol(), "S");
@@ -206,16 +193,16 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
                         Assert.assertEquals(apoBonds.get(1).getOther(at).getSymbol(), "N");
                         Assert.assertTrue(apoBonds.get(2).getOther(at).getSymbol().equals("C"));
                         //Test: Oxygens are the 2nd APO's for R1
-                        RGroupList rList = rGroupQuery.getRGroupDefinitions().get(1);
+                        IRGroupList rList = rGroupQuery.getRGroupDefinitions().get(1);
                         Assert.assertEquals(rList.getRGroups().size(), 2);
-                        List<RGroup> rGroups = rList.getRGroups();
+                        List<IRGroup> rGroups = rList.getRGroups();
                         Assert.assertEquals(rGroups.get(0).getSecondAttachmentPoint().getSymbol(), "O");
                         Assert.assertEquals(rGroups.get(1).getSecondAttachmentPoint().getSymbol(), "O");
                         Assert.assertFalse(rList.isRestH());
                     }
                         break;
                     case 2: {
-                        RGroupList rList = rGroupQuery.getRGroupDefinitions().get(2);
+                        IRGroupList rList = rGroupQuery.getRGroupDefinitions().get(2);
                         Assert.assertEquals(rList.getRGroups().size(), 2);
                         Assert.assertEquals(rList.getOccurrence(), "0,2");
                         Assert.assertEquals(rList.getRequiredRGroupNumber(), 11);
@@ -223,12 +210,12 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
                     }
                         break;
                     case 11: {
-                        RGroupList rList = rGroupQuery.getRGroupDefinitions().get(11);
+                        IRGroupList rList = rGroupQuery.getRGroupDefinitions().get(11);
                         Assert.assertEquals(rList.getRGroups().size(), 1);
                         Assert.assertEquals(rList.getRequiredRGroupNumber(), 0);
                         Assert.assertTrue(rList.isRestH());
 
-                        List<RGroup> rGroups = rList.getRGroups();
+                        List<IRGroup> rGroups = rList.getRGroups();
                         Assert.assertEquals(rGroups.get(0).getFirstAttachmentPoint().getSymbol(), "Pt");
                         Assert.assertEquals(rGroups.get(0).getSecondAttachmentPoint(), null);
                     }
@@ -317,7 +304,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
 
         List<IAtom> allrGroupQueryAtoms = rGroupQuery.getAllRgroupQueryAtoms();
         Assert.assertEquals(allrGroupQueryAtoms.size(), 1);
-        RGroupList rList = rGroupQuery.getRGroupDefinitions().get(1);
+        IRGroupList rList = rGroupQuery.getRGroupDefinitions().get(1);
         Assert.assertEquals(rList.getRGroups().size(), 2);
         Assert.assertEquals(rList.getRequiredRGroupNumber(), 0);
         Assert.assertFalse(rList.isRestH());
@@ -327,7 +314,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(rGroupQuery.getAllConfigurations().size(), 2);
 
         // This query has a detached R-group, test for empty attachment points
-        List<RGroup> rGroups = rList.getRGroups();
+        List<IRGroup> rGroups = rList.getRGroups();
         Assert.assertEquals(rGroups.get(0).getFirstAttachmentPoint(), null);
         Assert.assertEquals(rGroups.get(0).getSecondAttachmentPoint(), null);
         Assert.assertEquals(rGroups.get(1).getFirstAttachmentPoint(), null);

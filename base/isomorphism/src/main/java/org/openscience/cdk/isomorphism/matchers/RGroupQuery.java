@@ -87,7 +87,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
      * Rgroup definitions, each a list of possible substitutes for the
      * given R number.
      */
-    private Map<Integer, RGroupList>        rGroupDefinitions;
+    private Map<Integer, IRGroupList>        rGroupDefinitions;
 
     /**
      * For each Rgroup Atom there may be a map containing (number,bond),
@@ -212,7 +212,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
         //                 R# group is present (1) or absent (0).
         List<Integer[]> distributions = new ArrayList<Integer[]>();
 
-        List<List<RGroup>> substitutes = new ArrayList<List<RGroup>>();
+        List<List<IRGroup>> substitutes = new ArrayList<>();
 
         //Valid occurrences for each R# group
         List<List<Integer>> occurrences = new ArrayList<List<Integer>>();
@@ -251,7 +251,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
      * for {@link #getAllConfigurations()}.
      */
     private void findConfigurationsRecursively(List<Integer> rGroupNumbers, List<List<Integer>> occurrences,
-            List<Integer> occurIndexes, List<Integer[]> distributions, List<List<RGroup>> substitutes, int level,
+            List<Integer> occurIndexes, List<Integer[]> distributions, List<List<IRGroup>> substitutes, int level,
             List<IAtomContainer> result) throws CDKException {
 
         if (level == rGroupNumbers.size()) {
@@ -273,8 +273,8 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
                 int rNum = rGroupNumbers.get(rgpIdx);
                 int pos = 0;
 
-                List<RGroup> mapped = substitutes.get(rgpIdx);
-                for (RGroup substitute : mapped) {
+                List<IRGroup> mapped = substitutes.get(rgpIdx);
+                for (IRGroup substitute : mapped) {
                     IAtom rAtom = this.getRgroupQueryAtoms(rNum).get(pos);
                     if (substitute != null) {
 
@@ -397,12 +397,12 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
                 for (Integer[] distribution : rgrpDistributions) {
                     distributions.set(level, distribution);
 
-                    RGroup[] mapping = new RGroup[distribution.length];
-                    List<List<RGroup>> mappedSubstitutes = new ArrayList<List<RGroup>>();
+                    IRGroup[] mapping = new IRGroup[distribution.length];
+                    List<List<IRGroup>> mappedSubstitutes = new ArrayList<>();
                     mapSubstitutes(this.getRGroupDefinitions().get(rGroupNumbers.get(level)), 0, distribution, mapping,
                             mappedSubstitutes);
 
-                    for (List<RGroup> mappings : mappedSubstitutes) {
+                    for (List<IRGroup> mappings : mappedSubstitutes) {
                         substitutes.set(level, mappings);
                         findConfigurationsRecursively(rGroupNumbers, occurrences, occurIndexes, distributions,
                                 substitutes, level + 1, result);
@@ -465,11 +465,11 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
      * @param mapping
      * @param result
      */
-    private void mapSubstitutes(RGroupList rgpList, int listOffset, Integer[] distribution, RGroup[] mapping,
-            List<List<RGroup>> result) {
+    private void mapSubstitutes(IRGroupList rgpList, int listOffset, Integer[] distribution, IRGroup[] mapping,
+            List<List<IRGroup>> result) {
         if (listOffset == distribution.length) {
-            List<RGroup> mapped = new ArrayList<RGroup>();
-            for (RGroup rgrp : mapping)
+            List<IRGroup> mapped = new ArrayList<>();
+            for (IRGroup rgrp : mapping)
                 mapped.add(rgrp);
             result.add(mapped);
         } else {
@@ -477,7 +477,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
                 mapping[listOffset] = null;
                 mapSubstitutes(rgpList, listOffset + 1, distribution, mapping, result);
             } else {
-                for (RGroup rgrp : rgpList.getRGroups()) {
+                for (IRGroup rgrp : rgpList.getRGroups()) {
                     mapping[listOffset] = rgrp;
                     mapSubstitutes(rgpList, listOffset + 1, distribution, mapping, result);
                 }
@@ -547,7 +547,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
                 for (int inner = 0; inner < rGroupNumbers.size(); inner++) {
                     int rgroupNum2 = rGroupNumbers.get(inner);
                     if (!allZeroArray(distributions.get(inner))) {
-                        RGroupList rgrpList = rGroupDefinitions.get(rgroupNum2);
+                        IRGroupList rgrpList = rGroupDefinitions.get(rgroupNum2);
                         if (rgrpList.getRequiredRGroupNumber() == rgroupNum) {
                             logger.info(" Rejecting >> all 0 for " + rgroupNum + " but requirement found from "
                                     + rgrpList.getRGroupNumber());
@@ -565,7 +565,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
         int retVal = 0;
         if (this.rootStructure != null) retVal++;
         for (Integer r : rGroupDefinitions.keySet()) {
-            for (RGroup rgrp : rGroupDefinitions.get(r).getRGroups()) {
+            for (IRGroup rgrp : rGroupDefinitions.get(r).getRGroups()) {
                 if (rgrp.getGroup() != null) {
                     retVal++;
                 }
@@ -578,7 +578,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
     public List<IAtomContainer> getSubstituents() {
         List<IAtomContainer> substitutes = new ArrayList<IAtomContainer>();
         for (Integer r : rGroupDefinitions.keySet()) {
-            for (RGroup rgrp : rGroupDefinitions.get(r).getRGroups()) {
+            for (IRGroup rgrp : rGroupDefinitions.get(r).getRGroups()) {
                 IAtomContainer subst = rgrp.getGroup();
                 if (subst != null) substitutes.add(subst);
             }
@@ -607,12 +607,12 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
     }
 
     @Override
-    public void setRGroupDefinitions(Map<Integer, RGroupList> rGroupDefinitions) {
+    public void setRGroupDefinitions(Map<Integer, IRGroupList> rGroupDefinitions) {
         this.rGroupDefinitions = rGroupDefinitions;
     }
 
     @Override
-    public Map<Integer, RGroupList> getRGroupDefinitions() {
+    public Map<Integer, IRGroupList> getRGroupDefinitions() {
         return rGroupDefinitions;
     }
 }

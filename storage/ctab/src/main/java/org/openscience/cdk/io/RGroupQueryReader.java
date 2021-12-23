@@ -45,6 +45,8 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.RGroupQueryFormat;
+import org.openscience.cdk.isomorphism.matchers.IRGroup;
+import org.openscience.cdk.isomorphism.matchers.IRGroupList;
 import org.openscience.cdk.isomorphism.matchers.IRGroupQuery;
 import org.openscience.cdk.isomorphism.matchers.RGroup;
 import org.openscience.cdk.isomorphism.matchers.RGroupList;
@@ -137,6 +139,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
 
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
+        if (IRGroupQuery.class.equals(classObject)) return true;
         Class<?>[] interfaces = classObject.getInterfaces();
         for (Class<?> anInterface : interfaces) {
             if (IRGroupQuery.class.equals(anInterface)) return true;
@@ -311,7 +314,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
             //__________________________________________________________________
 
             //Set up the RgroupLists, one for each unique R# (# = 1..32 max)
-            Map<Integer, RGroupList> rGroupDefinitions = new HashMap<Integer, RGroupList>();
+            Map<Integer, IRGroupList> rGroupDefinitions = new HashMap<Integer, IRGroupList>();
 
             for (IAtom atom : root.atoms()) {
                 if (atom instanceof IPseudoAtom) {
@@ -331,7 +334,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                                 rgroupList.setOccurrence(">0");
                                 rgroupList.setRequiredRGroupNumber(0);
                             }
-                            rgroupList.setRGroups(new ArrayList<RGroup>());
+                            rgroupList.setRGroups(new ArrayList<>());
                             rGroupDefinitions.put(rgroupNum, rgroupList);
                         }
                     }
@@ -398,7 +401,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                             }
                         }
                     }
-                    RGroupList rList = rGroupDefinitions.get(rgroupNum);
+                    IRGroupList rList = rGroupDefinitions.get(rgroupNum);
                     if (rList == null) {
                         throw new CDKException("R" + rgroupNum + " not defined but referenced in $RGP.");
                     } else {

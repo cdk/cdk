@@ -41,6 +41,8 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.RGroupQueryFormat;
+import org.openscience.cdk.isomorphism.matchers.IRGroup;
+import org.openscience.cdk.isomorphism.matchers.IRGroupList;
 import org.openscience.cdk.isomorphism.matchers.IRGroupQuery;
 import org.openscience.cdk.isomorphism.matchers.RGroup;
 import org.openscience.cdk.isomorphism.matchers.RGroupList;
@@ -95,6 +97,7 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
     @SuppressWarnings("unchecked")
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
+        if (IRGroupQuery.class.equals(classObject)) return true;
         Class<?>[] interfaces = classObject.getInterfaces();
         for (Class<?> anInterface : interfaces) {
             if (IRGroupQuery.class.equals(anInterface)) return true;
@@ -192,7 +195,7 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
 
             //Write the root's LOG lines
             for (Integer rgrpNum : rGroupQuery.getRGroupDefinitions().keySet()) {
-                RGroupList rgList = rGroupQuery.getRGroupDefinitions().get(rgrpNum);
+                IRGroupList rgList = rGroupQuery.getRGroupDefinitions().get(rgrpNum);
                 int restH = rgList.isRestH() ? 1 : 0;
                 String logLine = "M  LOG" + MDLV2000Writer.formatMDLInt(1, 3) + MDLV2000Writer.formatMDLInt(rgrpNum, 4)
                         + MDLV2000Writer.formatMDLInt(rgList.getRequiredRGroupNumber(), 4)
@@ -251,12 +254,12 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
             //Construct each R-group block
             StringBuffer rgpBlock = new StringBuffer();
             for (Integer rgrpNum : rGroupQuery.getRGroupDefinitions().keySet()) {
-                List<RGroup> rgrpList = rGroupQuery.getRGroupDefinitions().get(rgrpNum).getRGroups();
+                List<IRGroup> rgrpList = rGroupQuery.getRGroupDefinitions().get(rgrpNum).getRGroups();
                 if (rgrpList != null && rgrpList.size() != 0) {
                     rgpBlock.append("$RGP").append(LSEP);;
                     rgpBlock.append(MDLV2000Writer.formatMDLInt(rgrpNum, 4)).append(LSEP);
 
-                    for (RGroup rgroup : rgrpList) {
+                    for (IRGroup rgroup : rgrpList) {
                         //CTAB block
                         rgpBlock.append("$CTAB").append(LSEP);
                         String ctab = getCTAB(rgroup.getGroup());

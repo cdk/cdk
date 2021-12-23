@@ -79,14 +79,14 @@ public interface IRGroupQuery extends IChemObject {
      * @see #getRGroupDefinitions
      * @param rGroupDefinitions map with an Integer and an RGroupList (substituent list), the Integer being the R-Group number (1..32).
      */
-    public void setRGroupDefinitions(Map<Integer, RGroupList> rGroupDefinitions);
+    public void setRGroupDefinitions(Map<Integer, IRGroupList> rGroupDefinitions);
 
     /**
      * Getter for the R-group definitions (substituents).
      * @see #setRGroupDefinitions
      * @return rGroupDefinitions Map with an Integer and an RGroupList (substituent list), the Integer being the R-Group number (1..32).
      */
-    public Map<Integer, RGroupList> getRGroupDefinitions();
+    public Map<Integer, IRGroupList> getRGroupDefinitions();
 
     /**
      * Return the total number of atom containers (count the root plus all substituents).

@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @cdk.keyword R-group
  * @author Mark Rijnbeek
  */
-public class RGroup {
+public class RGroup implements IRGroup {
 
     /**
      * Standard label/title to be used for the root atom container.
@@ -66,6 +66,7 @@ public class RGroup {
         this.firstAttachmentPoint = firstAttachmentPoint;
     }
 
+    @Override
     public IAtom getFirstAttachmentPoint() {
         return firstAttachmentPoint;
     }
@@ -74,6 +75,7 @@ public class RGroup {
         this.secondAttachmentPoint = secondAttachmentPoint;
     }
 
+    @Override
     public IAtom getSecondAttachmentPoint() {
         return secondAttachmentPoint;
     }
@@ -82,6 +84,7 @@ public class RGroup {
         this.group = group;
     }
 
+    @Override
     public IAtomContainer getGroup() {
         return group;
     }
