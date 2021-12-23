@@ -24,10 +24,19 @@ package org.openscience.cdk.io;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.listener.IChemObjectIOListener;
 import org.openscience.cdk.io.setting.IOSetting;
+import org.openscience.cdk.isomorphism.matchers.IRGroupQuery;
+
+import static org.mockito.Mockito.mock;
 
 /**
  * TestCase for CDK IO classes.
@@ -53,54 +62,29 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
         Assert.assertNotNull("The IChemObjectIO.getFormat method returned null.", format);
     }
 
-    /*
-    private static IChemObject[] acceptableNNChemObjects = {new ChemFile(), new ChemModel(), new AtomContainer(),
-            new Reaction()                               };
-
-    @Test
-    public void testAcceptsAtLeastOneNonotifyObject() {
-        boolean oneAccepted = false;
-        for (IChemObject object : acceptableNNChemObjects) {
-            if (chemObjectIO.accepts(object.getClass())) {
-                oneAccepted = true;
-            }
-        }
-        Assert.assertTrue(
-                "At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IAtomContainer, IReaction",
-                oneAccepted);
-    }
-
-    private static IChemObject[] acceptableDebugChemObjects = {new DebugChemFile(), new DebugChemModel(),
-            new DebugAtomContainer(), new DebugReaction()   };
-
-    @Test
-    public void testAcceptsAtLeastOneDebugObject() {
-        boolean oneAccepted = false;
-        for (IChemObject object : acceptableDebugChemObjects) {
-            if (chemObjectIO.accepts(object.getClass())) {
-                oneAccepted = true;
-            }
-        }
-        Assert.assertTrue(
-                "At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IAtomContainer, IReaction",
-                oneAccepted);
-    }
-
-    // static objects, shared between tests - difficult to locate bugs.
-    @Deprecated
-    protected static IChemObject[] acceptableChemObjects = {new ChemFile(), new ChemModel(), new AtomContainer(),
-            new Reaction(), new RGroupQuery(DefaultChemObjectBuilder.getInstance())};
+    // FIXME add IRgroupQuery.class
+    protected static Class<?>[] acceptableChemObjectClasses = {
+            IChemFile.class,
+            IChemModel.class,
+            IAtomContainer.class,
+            IReaction.class,
+            IRGroupQuery.class};
 
     protected static IChemObject[] acceptableChemObjects() {
-        return new IChemObject[]{new ChemFile(), new ChemModel(), new AtomContainer(), new Reaction(),
-                new RGroupQuery(DefaultChemObjectBuilder.getInstance())};
+        return new IChemObject[]{
+                mock(IChemFile.class),
+                mock(IChemModel.class),
+                mock(IAtomContainer.class),
+                mock(IReaction.class),
+                mock(IRGroupQuery.class)
+        };
     }
 
     @Test
     public void testAcceptsAtLeastOneChemObject() {
         boolean oneAccepted = false;
-        for (IChemObject object : acceptableChemObjects) {
-            if (chemObjectIO.accepts(object.getClass())) {
+        for (IChemObject obj : acceptableChemObjects()) {
+            if (chemObjectIO.accepts(obj.getClass())) {
                 oneAccepted = true;
             }
         }
@@ -109,17 +93,13 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
                 oneAccepted);
     }
 
-    @SuppressWarnings("rawtypes")
-    protected static Class[] acceptableChemObjectClasses = {IChemFile.class, IChemModel.class, IAtomContainer.class,
-            IReaction.class, IRGroupQuery.class          };
-
-    // @cdk.bug 3553780
-    @SuppressWarnings("unchecked")
+    /** @cdk.bug 3553780 */
     @Test
+    @SuppressWarnings("unchecked")
     public void testAcceptsAtLeastOneChemObjectClass() {
         boolean oneAccepted = false;
-        for (Class<? extends IChemObject> clazz : acceptableChemObjectClasses) {
-            if (chemObjectIO.accepts(clazz)) {
+        for (Class<?> cls : acceptableChemObjectClasses) {
+            if (chemObjectIO.accepts((Class<? extends IChemObject>)cls)) {
                 oneAccepted = true;
             }
         }
@@ -127,7 +107,6 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
                 "At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IAtomContainer, IReaction, IRGroupQuery",
                 oneAccepted);
     }
-    */
 
     @Test
     public void testClose() throws Exception {
