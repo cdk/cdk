@@ -44,7 +44,7 @@ import org.openscience.cdk.exception.CDKException;
  * @cdk.keyword R-group
  * @author Mark Rijnbeek
  */
-public class RGroupList {
+public class RGroupList implements IRGroupList {
 
     /**
      * Default value for occurrence field.
@@ -79,7 +79,7 @@ public class RGroupList {
     /**
      * List of substitute structures.
      */
-    private List<RGroup>       rGroups;
+    private List<IRGroup>       rGroups;
 
     /**
      * The rGroup (say B) that is required when this one (say A) exists.<p>
@@ -126,6 +126,7 @@ public class RGroupList {
         this.rGroupNumber = rGroupNumber;
     }
 
+    @Override
     public int getRGroupNumber() {
         return rGroupNumber;
     }
@@ -134,6 +135,7 @@ public class RGroupList {
         this.restH = restH;
     }
 
+    @Override
     public boolean isRestH() {
         return restH;
     }
@@ -142,15 +144,17 @@ public class RGroupList {
         this.requiredRGroupNumber = rGroupNumberImplicated;
     }
 
+    @Override
     public int getRequiredRGroupNumber() {
         return requiredRGroupNumber;
     }
 
-    public void setRGroups(List<RGroup> rGroups) {
+    public void setRGroups(List<IRGroup> rGroups) {
         this.rGroups = rGroups;
     }
 
-    public List<RGroup> getRGroups() {
+    @Override
+    public List<IRGroup> getRGroups() {
         return rGroups;
     }
 
@@ -158,6 +162,7 @@ public class RGroupList {
      * Returns the occurrence value.
      * @return occurrence
      */
+    @Override
     public String getOccurrence() {
         return occurrence;
     }
@@ -259,6 +264,7 @@ public class RGroupList {
      * @param maxAttachments number of attachments
      * @return valid values by combining a max for R# with the occurrence cond.
      */
+    @Override
     public List<Integer> matchOccurence(int maxAttachments) {
 
         List<Integer> validValues = new ArrayList<Integer>();

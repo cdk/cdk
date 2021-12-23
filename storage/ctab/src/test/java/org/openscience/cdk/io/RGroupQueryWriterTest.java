@@ -55,12 +55,6 @@ public class RGroupQueryWriterTest extends ChemObjectIOTest {
         setChemObjectIO(new RGroupQueryWriter());
     }
 
-//    @Test
-//    @Override
-//    public void testAcceptsAtLeastOneChemObjectClass() {
-//        new RGroupQueryWriter().accepts(RGroupQuery.class);
-//    }
-
     @Test
     public void testRgroupQueryFile_1() throws Exception {
         String rgFile = recreate("data/mdl/rgfile.1.mol");
@@ -139,12 +133,6 @@ public class RGroupQueryWriterTest extends ChemObjectIOTest {
             count++;
         return count;
     }
-
-//    @Override
-//    public void testAcceptsAtLeastOneDebugObject() {}
-//
-//    @Override
-//    public void testAcceptsAtLeastOneNonotifyObject() {}
 
     private String recreate(String file) throws CDKException {
         StringWriter sw = new StringWriter();
