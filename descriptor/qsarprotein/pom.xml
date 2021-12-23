@@ -71,13 +71,6 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>cdk-qsar</artifactId>
-            <version>${project.parent.version}</version>
-            <type>test-jar</type>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
             <artifactId>cdk-testdata</artifactId>
             <version>${project.parent.version}</version>
             <type>test-jar</type>
@@ -88,7 +81,7 @@
             <artifactId>cdk-qsarmolecular</artifactId>
             <version>${project.parent.version}</version>
             <type>test-jar</type>
-            <scope>test</scope>            
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

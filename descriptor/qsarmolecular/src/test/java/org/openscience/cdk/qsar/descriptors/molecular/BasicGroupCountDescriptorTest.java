@@ -22,6 +22,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -38,7 +39,8 @@ public class BasicGroupCountDescriptorTest extends MolecularDescriptorTest {
 
     @Before
     public void setUp() throws Exception {
-        setDescriptor(BasicGroupCountDescriptor.class);
+        setDescriptor(BasicGroupCountDescriptor.class,
+                      DefaultChemObjectBuilder.getInstance());
     }
 
     @Test
