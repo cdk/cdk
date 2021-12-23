@@ -69,7 +69,7 @@ public class XMLIsotopeFactoryTest extends CDKTestCase {
 
     static {
         try {
-            InputStream in = AtomTypeFactoryTest.class.getClassLoader().getResourceAsStream(
+            InputStream in = XMLIsotopeFactory.class.getClassLoader().getResourceAsStream(
                     "org/openscience/cdk/io/cml/data/cml25b1.xsd");
             tmpCMLSchema = copyFileToTmp("cml2.5.b1", ".xsd", in, null, null);
         } catch (IOException e) {
