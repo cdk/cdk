@@ -64,6 +64,12 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>cdk-dict</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>cdk-test</artifactId>
             <version>${project.parent.version}</version>
             <type>test-jar</type>
@@ -75,13 +81,6 @@
             <version>${project.parent.version}</version>
             <type>test-jar</type>
             <scope>test</scope>            
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>cdk-qsarmolecular</artifactId>
-            <version>${project.parent.version}</version>
-            <type>test-jar</type>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 
