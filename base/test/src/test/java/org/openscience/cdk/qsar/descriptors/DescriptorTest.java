@@ -23,8 +23,8 @@ import java.lang.reflect.Constructor;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.IImplementationSpecification;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.qsar.IDescriptor;
 
 /**
@@ -42,7 +42,15 @@ public abstract class DescriptorTest<T extends IDescriptor> extends CDKTestCase 
         if (descriptor == null) {
             Constructor<? extends T> defaultConstructor = descriptorClass.getConstructor();
             this.descriptor = defaultConstructor.newInstance();
-            this.descriptor.initialise(DefaultChemObjectBuilder.getInstance());
+        }
+    }
+
+    public void setDescriptor(Class<? extends T> descriptorClass,
+                              IChemObjectBuilder builder) throws Exception {
+        if (descriptor == null) {
+            Constructor<? extends T> defaultConstructor = descriptorClass.getConstructor();
+            this.descriptor = defaultConstructor.newInstance();
+            this.descriptor.initialise(builder);
         }
     }
 
