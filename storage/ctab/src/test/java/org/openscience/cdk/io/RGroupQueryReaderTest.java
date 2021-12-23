@@ -81,11 +81,11 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
 //        Assert.assertTrue(reader.accepts(RGroupQuery.class));
 //    }
 
-    @Override
-    public void testAcceptsAtLeastOneDebugObject() {}
-
-    @Override
-    public void testAcceptsAtLeastOneNonotifyObject() {}
+//    @Override
+//    public void testAcceptsAtLeastOneDebugObject() {}
+//
+//    @Override
+//    public void testAcceptsAtLeastOneNonotifyObject() {}
 
     /**
      * Test that the format factory guesses the correct IChemFormat
