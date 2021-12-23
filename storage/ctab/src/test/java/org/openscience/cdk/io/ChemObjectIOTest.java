@@ -25,25 +25,9 @@ package org.openscience.cdk.io;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Reaction;
-import org.openscience.cdk.debug.DebugAtomContainer;
-import org.openscience.cdk.debug.DebugChemFile;
-import org.openscience.cdk.debug.DebugChemModel;
-import org.openscience.cdk.debug.DebugReaction;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.listener.IChemObjectIOListener;
 import org.openscience.cdk.io.setting.IOSetting;
-import org.openscience.cdk.isomorphism.matchers.IRGroupQuery;
-import org.openscience.cdk.isomorphism.matchers.RGroupQuery;
-import org.openscience.cdk.silent.AtomContainer;
 
 /**
  * TestCase for CDK IO classes.
@@ -69,6 +53,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
         Assert.assertNotNull("The IChemObjectIO.getFormat method returned null.", format);
     }
 
+    /*
     private static IChemObject[] acceptableNNChemObjects = {new ChemFile(), new ChemModel(), new AtomContainer(),
             new Reaction()                               };
 
@@ -101,7 +86,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
                 oneAccepted);
     }
 
-    /** static objects, shared between tests - difficult to locate bugs. */
+    // static objects, shared between tests - difficult to locate bugs.
     @Deprecated
     protected static IChemObject[] acceptableChemObjects = {new ChemFile(), new ChemModel(), new AtomContainer(),
             new Reaction(), new RGroupQuery(DefaultChemObjectBuilder.getInstance())};
@@ -128,9 +113,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
     protected static Class[] acceptableChemObjectClasses = {IChemFile.class, IChemModel.class, IAtomContainer.class,
             IReaction.class, IRGroupQuery.class          };
 
-    /**
-     * @cdk.bug 3553780
-     */
+    // @cdk.bug 3553780
     @SuppressWarnings("unchecked")
     @Test
     public void testAcceptsAtLeastOneChemObjectClass() {
@@ -144,6 +127,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
                 "At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IAtomContainer, IReaction, IRGroupQuery",
                 oneAccepted);
     }
+    */
 
     @Test
     public void testClose() throws Exception {

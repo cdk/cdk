@@ -74,12 +74,12 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertTrue(reader.accepts(RGroupQuery.class));
     }
 
-    @Test
-    @Override
-    public void testAcceptsAtLeastOneChemObjectClass() {
-        RGroupQueryReader reader = new RGroupQueryReader();
-        Assert.assertTrue(reader.accepts(RGroupQuery.class));
-    }
+//    @Test
+//    @Override
+//    public void testAcceptsAtLeastOneChemObjectClass() {
+//        RGroupQueryReader reader = new RGroupQueryReader();
+//        Assert.assertTrue(reader.accepts(RGroupQuery.class));
+//    }
 
     @Override
     public void testAcceptsAtLeastOneDebugObject() {}
