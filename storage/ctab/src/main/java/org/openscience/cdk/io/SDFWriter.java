@@ -53,6 +53,7 @@ import org.openscience.cdk.smiles.InvPair;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
  * Writes MDL SD files ({@cdk.cite DAL92}). A MDL SD file contains one or more molecules,
@@ -219,11 +220,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
                 writeChemFile((IChemFile) object);
                 return;
             } else if (object instanceof IChemModel) {
-                IChemFile file = object.getBuilder().newInstance(IChemFile.class);
-                IChemSequence sequence = object.getBuilder().newInstance(IChemSequence.class);
-                sequence.addChemModel((IChemModel) object);
-                file.addChemSequence(sequence);
-                writeChemFile((IChemFile) file);
+                writeChemModel((IChemModel) object);
                 return;
             } else if (object instanceof IAtomContainer) {
                 writeMolecule((IAtomContainer) object);
@@ -251,6 +248,12 @@ public class SDFWriter extends DefaultChemObjectWriter {
 
     private void writeChemFile(IChemFile file) throws Exception {
         for (IAtomContainer container : ChemFileManipulator.getAllAtomContainers(file)) {
+            writeMolecule(container);
+        }
+    }
+
+    private void writeChemModel(IChemModel model) throws Exception {
+        for (IAtomContainer container : ChemModelManipulator.getAllAtomContainers(model)) {
             writeMolecule(container);
         }
     }

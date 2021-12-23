@@ -261,18 +261,24 @@ public class ChemModelManipulator {
         return reaction;
     }
 
+    /** Local helper to add an IAtomContainerSet to a list */
+    private static void addAll(List<IAtomContainer> acList, IAtomContainerSet acSet) {
+        for (IAtomContainer ac : acSet.atomContainers())
+            acList.add(ac);
+    }
+
     /**
      * Returns all the AtomContainer's of a ChemModel.
      */
     public static List<IAtomContainer> getAllAtomContainers(IChemModel chemModel) {
-        IAtomContainerSet moleculeSet = chemModel.getBuilder().newInstance(IAtomContainerSet.class);
+        List<IAtomContainer> res = new ArrayList<>();
         if (chemModel.getMoleculeSet() != null) {
-            moleculeSet.add(chemModel.getMoleculeSet());
+            addAll(res, chemModel.getMoleculeSet());
         }
         if (chemModel.getReactionSet() != null) {
-            moleculeSet.add(ReactionSetManipulator.getAllMolecules(chemModel.getReactionSet()));
+            addAll(res, ReactionSetManipulator.getAllMolecules(chemModel.getReactionSet()));
         }
-        return MoleculeSetManipulator.getAllAtomContainers(moleculeSet);
+        return res;
     }
 
     /**
