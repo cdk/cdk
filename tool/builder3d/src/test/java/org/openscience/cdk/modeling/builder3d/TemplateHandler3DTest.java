@@ -75,8 +75,8 @@ public class TemplateHandler3DTest extends CDKTestCase {
             parseBitSet("{3, 18, 26, 32, 33, 43, 140, 155, 188, 189, 226, 238, 262, 267, 287, 315, 319, 326, 375, 450, 577, 629, 644, 690, 719, 732, 745, 746, 751, 775, 847, 850, 881, 959, 971, 995, 1015, 1019}"),
             parseBitSet("{3, 18, 29, 33, 90, 105, 125, 272, 280, 301, 433, 521, 590, 618, 651, 672, 696, 698, 745, 760, 829, 844, 876, 890, 899, 924, 1013}")};
 
-        String filename = "data/mdl/fingerprints_from_modelbuilder3d.sdf";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "fingerprints_from_modelbuilder3d.sdf";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         List<IBitFingerprint> data = new TemplateExtractor().makeFingerprintsFromSdf(true, false,
                 new HashMap<String, Integer>(), new BufferedReader(new InputStreamReader(ins)), 10);
         QueryChemObject obj = new QueryChemObject(DefaultChemObjectBuilder.getInstance());
@@ -101,8 +101,8 @@ public class TemplateHandler3DTest extends CDKTestCase {
             parseBitSet("{148, 206, 392, 542, 637, 742, 752, 830}"),
             parseBitSet("{148, 206, 392, 542, 637, 742, 752, 830}")};
 
-        String filename = "data/mdl/fingerprints_from_modelbuilder3d.sdf";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "fingerprints_from_modelbuilder3d.sdf";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         List<IBitFingerprint> data = new TemplateExtractor().makeFingerprintsFromSdf(true, true,
                                                                                      new HashMap<String, Integer>(), new BufferedReader(new InputStreamReader(ins)), 10);
         QueryChemObject obj = new QueryChemObject(DefaultChemObjectBuilder.getInstance());
