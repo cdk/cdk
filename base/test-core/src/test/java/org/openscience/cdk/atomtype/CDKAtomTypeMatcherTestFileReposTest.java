@@ -96,6 +96,8 @@ public class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
         Assert.assertEquals("Could not match all atom types!", tested, (tested - failed));
     }
 
+    // this test is a bit of a "defeat device" for modularising testdata, hey ho, let's just dupe
+    // them all locally for now and perhaps replace with an SDF
     @Test
     public void testMDLMolfiles() throws Exception {
         final String DIRNAME = "data/mdl/";
@@ -106,7 +108,7 @@ public class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
                 "bug716259.mol", "bug771485-1.mol", "bug771485-2.mol", "bug853254-1.mol", "bug853254-2.mol",
                 "bug931608-1.mol", "bug931608-2.mol", "bug934819-1.mol", "bug934819-2.mol", "Butane-TestFF.mol",
                 "Butane-TestFF-output.mol", "butanoic_acid.mol", "C12308.mol", "carbocations.mol", "choloylcoa.mol",
-                "clorobenzene.mol", "cyclooctadien.mol", "cyclooctan.mol", "cycloocten.mol", "cyclopropane.mol",
+                "chlorobenzene.mol", "cyclooctadien.mol", "cyclooctan.mol", "cycloocten.mol", "cyclopropane.mol",
                 "d-ala.mol", "decalin.mol", "D+-glucose.mol", "D-mannose.mol", "Ethane-TestFF.mol",
                 "Ethane-TestFF-output.mol", "figueras-test-buried.mol", "figueras-test-inring.mol",
                 "figueras-test-sep3D.mol", "four-ring-5x10.mol", "heptane_almost_cyclic.mol",
