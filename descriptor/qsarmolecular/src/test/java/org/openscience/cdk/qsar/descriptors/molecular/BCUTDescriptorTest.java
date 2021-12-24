@@ -56,8 +56,8 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
 
     @Test
     public void testBCUT() throws Exception {
-        String filename = "data/hin/gravindex.hin";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "gravindex.hin";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);
         ChemFile content = (ChemFile) reader.read((ChemObject) new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
@@ -105,8 +105,8 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
 
     @Test
     public void testExtraEigenvalues() throws Exception {
-        String filename = "data/hin/gravindex.hin";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "gravindex.hin";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);
         ChemFile content = (ChemFile) reader.read((ChemObject) new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);

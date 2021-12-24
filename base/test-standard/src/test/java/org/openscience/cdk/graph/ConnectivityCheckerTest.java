@@ -198,7 +198,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
     */
     @Test
     public void testIsConnectedFromSDFile() throws Exception {
-        String filename = "data/mdl/mdeotest.sdf";
+        String filename = "mdeotest.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
         ChemFile content = (ChemFile) reader.read((ChemObject) new ChemFile());

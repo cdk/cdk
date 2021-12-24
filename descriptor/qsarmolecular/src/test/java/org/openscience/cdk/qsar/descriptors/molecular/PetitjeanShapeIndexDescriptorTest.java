@@ -54,8 +54,8 @@ public class PetitjeanShapeIndexDescriptorTest extends MolecularDescriptorTest {
     @Test
     public void testPetitjeanShapeIndexDescriptor() throws ClassNotFoundException, CDKException, Exception {
         // first molecule is nbutane, second is naphthalene
-        String filename = "data/mdl/petitejean.sdf";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "petitejean.sdf";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
         ChemFile content = (ChemFile) reader.read((ChemObject) new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
