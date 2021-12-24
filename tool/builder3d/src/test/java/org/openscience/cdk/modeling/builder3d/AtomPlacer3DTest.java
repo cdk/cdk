@@ -146,8 +146,8 @@ public class AtomPlacer3DTest extends CDKTestCase {
 
     @Test
     public void testFindHeavyAtomsInChain_IAtomContainer_IAtomContainer() throws Exception {
-        String filename = "data/mdl/allmol232.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "allmol232.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         // TODO: shk3-cleanuptests: best to use the STRICT IO mode here
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
