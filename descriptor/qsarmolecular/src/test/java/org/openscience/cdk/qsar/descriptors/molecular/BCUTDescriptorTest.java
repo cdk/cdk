@@ -173,8 +173,8 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
      */
     @Test
     public void testUndefinedValues() throws Exception {
-        String filename = "data/mdl/burden_undefined.sdf";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "burden_undefined.sdf";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
         ChemFile content = reader.read(new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);

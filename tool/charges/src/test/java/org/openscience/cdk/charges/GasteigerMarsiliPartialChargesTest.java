@@ -235,8 +235,8 @@ public class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
 
     @Test(expected = CDKException.class)
     public void testUndefinedPartialCharge() throws Exception {
-        String filename = "data/mdl/burden_undefined.sdf";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "burden_undefined.sdf";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
         ChemFile content = reader.read(new ChemFile());
         reader.close();
