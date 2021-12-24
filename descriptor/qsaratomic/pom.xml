@@ -99,13 +99,6 @@
             <version>${project.parent.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>cdk-testdata</artifactId>
-            <version>${project.parent.version}</version>
-            <type>test-jar</type>
-            <scope>test</scope>
-        </dependency>
 	</dependencies>
 
 </project>
