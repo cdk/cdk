@@ -1148,8 +1148,8 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
      */
     @Test
     public void testFromMol() throws Exception {
-        String filename = "data/mdl/formulatest.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "formulatest.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
