@@ -39,8 +39,8 @@ public class RDFProtonDescriptor_GHRTest extends AtomicDescriptorTest {
     @Test
     public void testExample1() throws Exception {
         //firstly read file to molecule
-        String filename = "data/mdl/hydroxyamino.mol" + "";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "hydroxyamino.mol" + "";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         IChemSequence seq = chemFile.getChemSequence(0);

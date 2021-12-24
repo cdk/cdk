@@ -292,9 +292,9 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testHydrozyamino() throws Exception {
-        String filename = "data/mdl/hydroxyamino.mol";
+        String filename = "hydroxyamino.mol";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
