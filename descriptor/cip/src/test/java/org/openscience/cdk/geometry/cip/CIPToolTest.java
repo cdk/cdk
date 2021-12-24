@@ -297,8 +297,8 @@ public class CIPToolTest extends CDKTestCase {
 
     @Test
     public void testOla28() throws Exception {
-        String filename = "data/cml/mol28.cml";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "mol28.cml";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile file = reader.read(new ChemFile());
         reader.close();
