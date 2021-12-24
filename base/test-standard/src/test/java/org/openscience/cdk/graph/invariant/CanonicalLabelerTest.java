@@ -142,7 +142,7 @@ public class CanonicalLabelerTest extends CDKTestCase {
         while (atoms1.hasNext()) {
             IAtom atom1 = atoms1.next();
             IAtom atom2 = atoms2.next();
-            Assert.assertEquals(atom1.getProperty(InvPair.CANONICAL_LABEL), atom2.getProperty(InvPair.CANONICAL_LABEL));
+            Assert.assertEquals(atom1.<Long>getProperty(InvPair.CANONICAL_LABEL), atom2.<Long>getProperty(InvPair.CANONICAL_LABEL));
         }
     }
 
