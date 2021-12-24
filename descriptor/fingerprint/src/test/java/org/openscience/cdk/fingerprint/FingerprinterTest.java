@@ -160,9 +160,9 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
      */
     @Test
     public void testBug1851202() throws Exception {
-        String filename1 = "data/mdl/0002.stg01.rxn";
+        String filename1 = "0002.stg01.rxn";
         logger.info("Testing: " + filename1);
-        InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename1);
+        InputStream ins1 = this.getClass().getResourceAsStream(filename1);
         MDLRXNV2000Reader reader = new MDLRXNV2000Reader(ins1, Mode.STRICT);
         IReaction reaction = (IReaction) reader.read(new Reaction());
         Assert.assertNotNull(reaction);
@@ -178,9 +178,9 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
     @Test(expected = CDKException.class)
     @Category(SlowTest.class)
     public void testbug2917084() throws Exception {
-        String filename1 = "data/mdl/boronBuckyBall.mol";
+        String filename1 = "boronBuckyBall.mol";
         logger.info("Testing: " + filename1);
-        InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename1);
+        InputStream ins1 = this.getClass().getResourceAsStream(filename1);
         MDLV2000Reader reader = new MDLV2000Reader(ins1, Mode.STRICT);
         IChemFile chemFile = reader.read(new ChemFile());
         Assert.assertNotNull(chemFile);

@@ -86,13 +86,13 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
     @Test
     public void testBug853254() throws Exception {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-        String filename = "data/mdl/bug853254-2.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "bug853254-2.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer superstructure = reader.read(builder.newAtomContainer());
 
-        filename = "data/mdl/bug853254-1.mol";
-        ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        filename = "bug853254-1.mol";
+        ins = this.getClass().getResourceAsStream(filename);
         reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer substructure = reader.read(builder.newAtomContainer());
 
@@ -143,13 +143,13 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
     @Test
     public void testBug771485() throws Exception {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-        String filename = "data/mdl/bug771485-1.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "bug771485-1.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer structure1 = (IAtomContainer) reader.read(builder.newAtomContainer());
 
-        filename = "data/mdl/bug771485-2.mol";
-        ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        filename = "bug771485-2.mol";
+        ins = this.getClass().getResourceAsStream(filename);
         reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer structure2 = (IAtomContainer) reader.read(builder.newAtomContainer());
 
@@ -188,13 +188,13 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
     @Test
     public void testBug931608() throws Exception {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-        String filename = "data/mdl/bug931608-1.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "bug931608-1.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer structure1 = reader.read(builder.newAtomContainer());
 
-        filename = "data/mdl/bug931608-2.mol";
-        ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        filename = "bug931608-2.mol";
+        ins = this.getClass().getResourceAsStream(filename);
         reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer structure2 = reader.read(builder.newAtomContainer());
 
