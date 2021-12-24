@@ -69,8 +69,8 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
             //logger.debug("**** START ATOMTYPE TEST ******");
             AtomTypeTools att = new AtomTypeTools();
             MMFF94AtomTypeMatcher atm = new MMFF94AtomTypeMatcher();
-            InputStream ins = MMFF94AtomTypeMatcherTest.class.getClassLoader().getResourceAsStream(
-                    "data/mdl/mmff94AtomTypeTest_molecule.mol");
+            InputStream ins = MMFF94AtomTypeMatcherTest.class.getResourceAsStream(
+                    "mmff94AtomTypeTest_molecule.mol");
             MDLV2000Reader mdl = new MDLV2000Reader(new InputStreamReader(ins));
             testMolecule = mdl.read(new AtomContainer());
 

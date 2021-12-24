@@ -109,8 +109,8 @@ public class GeometryToolsTest extends CDKTestCase {
      */
     @Test
     public void testHas2DCoordinates_With000() throws CDKException {
-        String filenameMol = "data/mdl/with000coordinate.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filenameMol);
+        String filenameMol = "with000coordinate.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filenameMol);
         IAtomContainer molOne = null;
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         molOne = (IAtomContainer) reader.read(new AtomContainer());
@@ -209,17 +209,17 @@ public class GeometryToolsTest extends CDKTestCase {
 
     @Test
     public void testMapAtomsOfAlignedStructures() throws Exception {
-        String filenameMolOne = "data/mdl/murckoTest6_3d_2.mol";
-        String filenameMolTwo = "data/mdl/murckoTest6_3d.mol";
+        String filenameMolOne = "murckoTest6_3d_2.mol";
+        String filenameMolTwo = "murckoTest6_3d.mol";
         //String filenameMolTwo = "data/mdl/murckoTest6_3d_2.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filenameMolOne);
+        InputStream ins = this.getClass().getResourceAsStream(filenameMolOne);
         IAtomContainer molOne;
         IAtomContainer molTwo;
         Map<Integer, Integer> mappedAtoms = new HashMap<Integer, Integer>();
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         molOne = reader.read(new AtomContainer());
 
-        ins = this.getClass().getClassLoader().getResourceAsStream(filenameMolTwo);
+        ins = this.getClass().getResourceAsStream(filenameMolTwo);
         reader = new MDLV2000Reader(ins, Mode.STRICT);
         molTwo = reader.read(new AtomContainer());
 

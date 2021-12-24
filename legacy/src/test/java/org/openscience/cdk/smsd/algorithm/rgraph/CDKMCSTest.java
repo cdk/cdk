@@ -195,8 +195,8 @@ public class CDKMCSTest extends CDKTestCase {
 
     @Test
     public void testGetSubgraphMap_IAtomContainer_IAtomContainer() throws Exception {
-        String molfile = "data/mdl/decalin.mol";
-        String queryfile = "data/mdl/decalin.mol";
+        String molfile = "org/openscience/cdk/smsd/algorithm/decalin.mol";
+        String queryfile = "org/openscience/cdk/smsd/algorithm/decalin.mol";
         IAtomContainer mol = new AtomContainer();
         IAtomContainer temp = new AtomContainer();
         QueryAtomContainer query1 = null;
@@ -228,8 +228,8 @@ public class CDKMCSTest extends CDKTestCase {
      */
     @Test
     public void testGetOverlaps_IAtomContainer_IAtomContainer() throws Exception {
-        String file1 = "data/mdl/5SD.mol";
-        String file2 = "data/mdl/ADN.mol";
+        String file1 = "org/openscience/cdk/smsd/algorithm/5SD.mol";
+        String file2 = "org/openscience/cdk/smsd/algorithm/ADN.mol";
         IAtomContainer mol1 = new AtomContainer();
         IAtomContainer mol2 = new AtomContainer();
 
@@ -263,8 +263,8 @@ public class CDKMCSTest extends CDKTestCase {
      */
     @Test
     public void testSFBug999330() throws Exception {
-        String file1 = "data/mdl/5SD.mol";
-        String file2 = "data/mdl/ADN.mol";
+        String file1 = "org/openscience/cdk/smsd/algorithm/5SD.mol";
+        String file2 = "org/openscience/cdk/smsd/algorithm/ADN.mol";
         IAtomContainer mol1 = new AtomContainer();
         IAtomContainer mol2 = new AtomContainer();
 

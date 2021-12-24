@@ -138,8 +138,8 @@ public class SSSRFinderTest extends CDKTestCase {
     public void testProblem1() throws Exception {
         IAtomContainer molecule = null;
         IRing ring = null;
-        String filename = "data/mdl/figueras-test-sep3D.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "figueras-test-sep3D.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         molecule = (IAtomContainer) reader.read((IChemObject) new AtomContainer());
         reader.close();
@@ -156,8 +156,8 @@ public class SSSRFinderTest extends CDKTestCase {
 
     @Test
     public void testLoopProblem() throws Exception {
-        String filename = "data/mdl/ring_03419.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "ring_03419.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer molecule = (IAtomContainer) reader.read((IChemObject) new AtomContainer());
         reader.close();
@@ -176,8 +176,8 @@ public class SSSRFinderTest extends CDKTestCase {
     public void testProblem2() throws Exception {
         IAtomContainer molecule = null;
         IRing ring = null;
-        String filename = "data/mdl/figueras-test-buried.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "figueras-test-buried.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         molecule = (IAtomContainer) reader.read((IChemObject) new AtomContainer());
         reader.close();
@@ -196,8 +196,8 @@ public class SSSRFinderTest extends CDKTestCase {
     public void testProblem3() throws Exception {
         IAtomContainer molecule = null;
         IRing ring = null;
-        String filename = "data/mdl/figueras-test-inring.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "figueras-test-inring.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         molecule = (IAtomContainer) reader.read((IChemObject) new AtomContainer());
         reader.close();
@@ -218,8 +218,8 @@ public class SSSRFinderTest extends CDKTestCase {
     @Test
     public void testBug891021() throws Exception {
         IAtomContainer molecule = null;
-        String filename = "data/mdl/too.many.rings.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "too.many.rings.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         molecule = (IAtomContainer) reader.read((IChemObject) new AtomContainer());
         reader.close();
@@ -296,8 +296,8 @@ public class SSSRFinderTest extends CDKTestCase {
      */
     private IAtomContainer createBuckyBall() throws Exception {
         IAtomContainer molecule = null;
-        String filename = "data/mdl/buckyball.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "buckyball.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         molecule = (IAtomContainer) reader.read(new AtomContainer());
         reader.close();

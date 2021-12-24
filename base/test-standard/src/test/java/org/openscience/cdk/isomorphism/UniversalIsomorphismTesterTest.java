@@ -177,17 +177,17 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase {
 
     @Test
     public void testGetSubgraphMap_IAtomContainer_IAtomContainer() throws Exception {
-        String molfile = "data/mdl/decalin.mol";
-        String queryfile = "data/mdl/decalin.mol";
+        String molfile = "decalin.mol";
+        String queryfile = "decalin.mol";
         IAtomContainer mol = new AtomContainer();
         IAtomContainer temp = new AtomContainer();
         QueryAtomContainer query1 = null;
         QueryAtomContainer query2 = null;
 
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(molfile);
+        InputStream ins = this.getClass().getResourceAsStream(molfile);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         reader.read(mol);
-        ins = this.getClass().getClassLoader().getResourceAsStream(queryfile);
+        ins = this.getClass().getResourceAsStream(queryfile);
         reader = new MDLV2000Reader(ins, Mode.STRICT);
         reader.read(temp);
         query1 = QueryAtomContainerCreator.createBasicQueryContainer(temp);
@@ -209,14 +209,14 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase {
      */
     @Test
     public void testGetOverlaps_IAtomContainer_IAtomContainer() throws Exception {
-        String file1 = "data/mdl/5SD.mol";
-        String file2 = "data/mdl/ADN.mol";
+        String file1 = "5SD.mol";
+        String file2 = "ADN.mol";
         IAtomContainer mol1 = new AtomContainer();
         IAtomContainer mol2 = new AtomContainer();
 
-        InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(file1);
+        InputStream ins1 = this.getClass().getResourceAsStream(file1);
         new MDLV2000Reader(ins1, Mode.STRICT).read(mol1);
-        InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(file2);
+        InputStream ins2 = this.getClass().getResourceAsStream(file2);
         new MDLV2000Reader(ins2, Mode.STRICT).read(mol2);
 
         List<IAtomContainer> list = uiTester.getOverlaps(mol1, mol2);
@@ -371,14 +371,14 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase {
      */
     @Test
     public void testSFBug999330() throws Exception {
-        String file1 = "data/mdl/5SD.mol";
-        String file2 = "data/mdl/ADN.mol";
+        String file1 = "5SD.mol";
+        String file2 = "ADN.mol";
         IAtomContainer mol1 = new AtomContainer();
         IAtomContainer mol2 = new AtomContainer();
 
-        InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(file1);
+        InputStream ins1 = this.getClass().getResourceAsStream(file1);
         new MDLV2000Reader(ins1, Mode.STRICT).read(mol1);
-        InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(file2);
+        InputStream ins2 = this.getClass().getResourceAsStream(file2);
         new MDLV2000Reader(ins2, Mode.STRICT).read(mol2);
         AtomContainerAtomPermutor permutor = new AtomContainerAtomPermutor(mol2);
         mol2 = new AtomContainer((AtomContainer) permutor.next());

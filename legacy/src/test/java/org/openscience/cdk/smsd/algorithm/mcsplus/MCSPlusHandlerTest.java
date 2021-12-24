@@ -107,8 +107,8 @@ public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
      */
     @Test
     public void testSet_String_String() throws CDKException, IOException {
-        String molfile = "data/mdl/decalin.mol";
-        String queryfile = "data/mdl/decalin.mol";
+        String molfile = "org/openscience/cdk/smsd/algorithm/decalin.mol";
+        String queryfile = "org/openscience/cdk/smsd/algorithm/decalin.mol";
         IAtomContainer query = new AtomContainer();
         IAtomContainer target = new AtomContainer();
 
