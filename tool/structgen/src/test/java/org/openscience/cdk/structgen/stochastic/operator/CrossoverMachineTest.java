@@ -44,8 +44,8 @@ public class CrossoverMachineTest extends CDKTestCase {
 
     @Test
     public void testdoCrossover_IAtomContainer() throws Exception {
-        String filename = "data/smiles/c10h16isomers.smi";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "c10h16isomers.smi";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         SMILESReader reader = new SMILESReader(ins);
         IAtomContainerSet som = reader.read(new AtomContainerSet());
         Assert.assertEquals("We must have read 99 structures", 99, som.getAtomContainerCount());
