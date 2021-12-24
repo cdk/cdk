@@ -100,9 +100,9 @@ public class MDLRXNV2000ReaderTest extends SimpleChemObjectReaderTest {
      */
     @Test
     public void testBug1851202() throws Exception {
-        String filename1 = "data/mdl/0002.stg01.rxn";
+        String filename1 = "0002.stg01.rxn";
         logger.info("Testing: " + filename1);
-        InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename1);
+        InputStream ins1 = this.getClass().getResourceAsStream(filename1);
         MDLRXNV2000Reader reader1 = new MDLRXNV2000Reader(ins1, Mode.STRICT);
         IReaction reaction1 = new Reaction();
         reaction1 = (IReaction) reader1.read(reaction1);

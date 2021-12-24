@@ -253,7 +253,7 @@ public class CyclesTest {
 
     // load a boron fullerene
     private IAtomContainer fullerene() throws Exception {
-        String path = "/data/mdl/boronBuckyBall.mol";
+        String path = "boronBuckyBall.mol";
         MDLV2000Reader mdl = new MDLV2000Reader(getClass().getResourceAsStream(path));
         try {
             return mdl.read(new AtomContainer());
