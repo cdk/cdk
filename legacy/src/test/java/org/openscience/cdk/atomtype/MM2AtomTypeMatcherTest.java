@@ -70,8 +70,8 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
             AtomTypeTools att = new AtomTypeTools();
             MM2AtomTypeMatcher atm = new MM2AtomTypeMatcher();
             logger.debug("**** reading MOL file ******");
-            InputStream ins = MM2AtomTypeMatcher.class.getClassLoader().getResourceAsStream(
-                    "data/mdl/mmff94AtomTypeTest_molecule.mol");
+            InputStream ins = MM2AtomTypeMatcher.class.getResourceAsStream(
+                    "mmff94AtomTypeTest_molecule.mol");
             ISimpleChemObjectReader mdl = new MDLV2000Reader(ins);
             testMolecule = mdl.read(new AtomContainer());
             logger.debug("Molecule load:" + testMolecule.getAtomCount());

@@ -882,8 +882,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
      */
     @Test
     public void testHas2DCoordinates_With000() throws Exception {
-        String filenameMol = "data/mdl/with000coordinate.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filenameMol);
+        String filenameMol = "with000coordinate.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filenameMol);
         IAtomContainer molOne = null;
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         molOne = reader.read(new AtomContainer());

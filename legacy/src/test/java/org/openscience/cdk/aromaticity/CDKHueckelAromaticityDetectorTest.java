@@ -374,8 +374,8 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
                 true, false, true, true, false, false, true, true, false, false, false, true, true, false, false,
                 false, true, true, false, false, false, false, true, true, true, true, false, false, false};
 
-        String filename = "data/mdl/porphyrin.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "porphyrin.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IAtomContainer molecule = (IAtomContainer) reader.read(DefaultChemObjectBuilder.getInstance().newInstance(
                 IAtomContainer.class));
@@ -400,8 +400,8 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         boolean[] testResults = {true, true, true, true, true, true, false, false, false, false, false, false, false,
                 false, false, false, false, false};
 
-        String filename = "data/mdl/bug698152.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "bug698152.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IAtomContainer molecule = (IAtomContainer) reader.read(DefaultChemObjectBuilder.getInstance().newInstance(
                 IAtomContainer.class));
@@ -427,8 +427,8 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         boolean[] testResults = {true, true, true, true, true, true, true, true, true, true, false, false, false,
                 false, false, false, false, false, false};
 
-        String filename = "data/mdl/bug716259.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "bug716259.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         molecule = (IAtomContainer) reader.read(DefaultChemObjectBuilder.getInstance()
                 .newInstance(IAtomContainer.class));
@@ -463,8 +463,8 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
      */
     @Test
     public void testBug1328739() throws Exception {
-        String filename = "data/mdl/bug1328739.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "bug1328739.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IAtomContainer molecule = (IAtomContainer) reader.read(DefaultChemObjectBuilder.getInstance().newInstance(
                 IAtomContainer.class));

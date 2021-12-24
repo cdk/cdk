@@ -42,11 +42,9 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.isomorphism.AtomMappingTools;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.diff.AtomContainerDiff;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -55,7 +53,6 @@ import java.io.InputStream;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -121,8 +118,8 @@ public class GeometryUtilTest extends CDKTestCase {
      */
     @Test
     public void testHas2DCoordinates_With000() throws CDKException {
-        String filenameMol = "data/mdl/with000coordinate.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filenameMol);
+        String filenameMol = "with000coordinate.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filenameMol);
         IAtomContainer molOne = null;
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         molOne = (IAtomContainer) reader.read(new AtomContainer());
@@ -221,17 +218,16 @@ public class GeometryUtilTest extends CDKTestCase {
 
     @Test
     public void testMapAtomsOfAlignedStructures() throws Exception {
-        String filenameMolOne = "data/mdl/murckoTest6_3d_2.mol";
-        String filenameMolTwo = "data/mdl/murckoTest6_3d.mol";
-        //String filenameMolTwo = "data/mdl/murckoTest6_3d_2.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filenameMolOne);
+        String filenameMolOne = "murckoTest6_3d_2.mol";
+        String filenameMolTwo = "murckoTest6_3d.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filenameMolOne);
         IAtomContainer molOne;
         IAtomContainer molTwo;
         Map<Integer, Integer> mappedAtoms = new HashMap<Integer, Integer>();
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         molOne = reader.read(new AtomContainer());
 
-        ins = this.getClass().getClassLoader().getResourceAsStream(filenameMolTwo);
+        ins = this.getClass().getResourceAsStream(filenameMolTwo);
         reader = new MDLV2000Reader(ins, Mode.STRICT);
         molTwo = reader.read(new AtomContainer());
 

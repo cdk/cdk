@@ -137,8 +137,8 @@ public class AllRingsFinderTest extends CDKTestCase {
         IRingSet ringSet = null;
         AllRingsFinder arf = new AllRingsFinder();
 
-        String filename = "data/mdl/porphyrin.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "porphyrin.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         IChemSequence seq = chemFile.getChemSequence(0);
@@ -156,8 +156,8 @@ public class AllRingsFinderTest extends CDKTestCase {
         IRingSet ringSet = null;
         AllRingsFinder arf = AllRingsFinder.usingThreshold(PubChem_994);
 
-        String filename = "data/mdl/ring_03419.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "ring_03419.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
         IChemSequence seq = chemFile.getChemSequence(0);
@@ -309,8 +309,8 @@ public class AllRingsFinderTest extends CDKTestCase {
     public void testBigRingSystem_MaxRingSize6_03419() throws Exception {
         IRingSet ringSet = null;
         AllRingsFinder arf = new AllRingsFinder();
-        String filename = "data/mdl/ring_03419.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "ring_03419.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
         IChemSequence seq = chemFile.getChemSequence(0);
