@@ -61,8 +61,8 @@ public class OverlapResolverTest extends CDKTestCase {
     @Test
     public void testResolveOverlap1() throws Exception {
         logger.debug("Test case with atom clash");
-        String filename = "data/cml/overlaptest.cml";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "overlaptest.cml";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
         IAtomContainer atomContainer = (IAtomContainer) ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
@@ -88,8 +88,8 @@ public class OverlapResolverTest extends CDKTestCase {
     @Test
     public void testResolveOverlap2() throws Exception {
         logger.debug("Test case with neither bond nor atom overlap");
-        String filename = "data/cml/overlaptest2.cml";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "overlaptest2.cml";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
         IAtomContainer atomContainer = (IAtomContainer) ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
@@ -108,8 +108,8 @@ public class OverlapResolverTest extends CDKTestCase {
     @Test
     public void testResolveOverlap3() throws Exception {
         logger.debug("Test case with bond overlap");
-        String filename = "data/cml/overlaptest3.cml";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "overlaptest3.cml";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
         IAtomContainer atomContainer = (IAtomContainer) ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
@@ -129,8 +129,8 @@ public class OverlapResolverTest extends CDKTestCase {
     public void testResolveOverlap4() throws Exception {
         double overlapScore = 0;
         logger.debug("Test case with atom clash");
-        String filename = "data/cml/overlaptest.cml";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "overlaptest.cml";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
         IAtomContainer atomContainer = (IAtomContainer) ChemFileManipulator.getAllAtomContainers(chemFile).get(0);

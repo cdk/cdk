@@ -316,10 +316,10 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
      */
     @Test(timeout = 5000)
     public void testBug1572062() throws Exception {
-        String filename = "data/mdl/sdg_test.mol";
+        String filename = "sdg_test.mol";
 
         //		set up molecule reader
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader molReader = new MDLV2000Reader(ins, Mode.STRICT);
 
         //		read molecule
@@ -669,8 +669,8 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
     @Test(timeout = 5000)
     public void testNPEWithBridgedRingsBug1772609() throws Exception {
         // set up molecule reader
-        String filename = "data/mdl/bug1772609.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "bug1772609.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader molReader = new MDLV2000Reader(ins, Mode.STRICT);
 
         // read molecule
@@ -700,8 +700,8 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
     @Test(timeout = 5000)
     public void testBug1784850InfiniteLoop() throws Exception {
         // set up molecule reader
-        String filename = "data/mdl/bug1784850.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "bug1784850.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader molReader = new MDLV2000Reader(ins, Mode.STRICT);
 
         // read molecule
