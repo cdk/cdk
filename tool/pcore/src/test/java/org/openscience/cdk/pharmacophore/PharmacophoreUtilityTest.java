@@ -45,8 +45,8 @@ public class PharmacophoreUtilityTest {
 
     @BeforeClass
     public static void loadConformerData() {
-        String filename = "data/mdl/pcoretest1.sdf";
-        InputStream ins = PharmacophoreUtilityTest.class.getClassLoader().getResourceAsStream(filename);
+        String filename = "pcoretest1.sdf";
+        InputStream ins = PharmacophoreUtilityTest.class.getResourceAsStream(filename);
         IteratingMDLConformerReader reader = new IteratingMDLConformerReader(ins,
                 DefaultChemObjectBuilder.getInstance());
         if (reader.hasNext()) PharmacophoreUtilityTest.conformers = (ConformerContainer) reader.next();
@@ -54,8 +54,8 @@ public class PharmacophoreUtilityTest {
 
     @Test
     public void testReadPcoreDef() throws Exception {
-        String filename = "data/pcore/pcore.xml";
-        InputStream ins = PharmacophoreUtilityTest.class.getClassLoader().getResourceAsStream(filename);
+        String filename = "pcore.xml";
+        InputStream ins = PharmacophoreUtilityTest.class.getResourceAsStream(filename);
         List<PharmacophoreQuery> defs = PharmacophoreUtils.readPharmacophoreDefinitions(ins);
 
         Assert.assertEquals(2, defs.size());
@@ -87,8 +87,8 @@ public class PharmacophoreUtilityTest {
 
     @Test
     public void testReadPcoreAngleDef() throws Exception {
-        String filename = "data/pcore/pcoreangle.xml";
-        InputStream ins = PharmacophoreUtilityTest.class.getClassLoader().getResourceAsStream(filename);
+        String filename = "pcoreangle.xml";
+        InputStream ins = PharmacophoreUtilityTest.class.getResourceAsStream(filename);
         List<PharmacophoreQuery> defs = PharmacophoreUtils.readPharmacophoreDefinitions(ins);
 
         Assert.assertEquals(1, defs.size());
@@ -126,15 +126,15 @@ public class PharmacophoreUtilityTest {
 
     @Test(expected = CDKException.class)
     public void testInvalidPcoreXML() throws IOException, CDKException {
-        String filename = "data/pcore/invalid1.xml";
-        InputStream ins = PharmacophoreUtilityTest.class.getClassLoader().getResourceAsStream(filename);
+        String filename = "invalid1.xml";
+        InputStream ins = PharmacophoreUtilityTest.class.getResourceAsStream(filename);
         PharmacophoreUtils.readPharmacophoreDefinitions(ins);
     }
 
     @Test
     public void testPCoreWrite() throws Exception {
-        String filename = "data/pcore/pcore.xml";
-        InputStream ins = PharmacophoreUtilityTest.class.getClassLoader().getResourceAsStream(filename);
+        String filename = "pcore.xml";
+        InputStream ins = PharmacophoreUtilityTest.class.getResourceAsStream(filename);
         List<PharmacophoreQuery> defs = PharmacophoreUtils.readPharmacophoreDefinitions(ins);
 
         PharmacophoreQuery[] defarray = defs.toArray(new PharmacophoreQuery[]{});

@@ -53,8 +53,8 @@ public class PharmacophoreMatcherTest {
 
     @BeforeClass
     public static void loadConformerData() {
-        String filename = "data/mdl/pcoretest1.sdf";
-        InputStream ins = PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
+        String filename = "pcoretest1.sdf";
+        InputStream ins = PharmacophoreMatcherTest.class.getResourceAsStream(filename);
         IteratingMDLConformerReader reader = new IteratingMDLConformerReader(ins,
                 SilentChemObjectBuilder.getInstance());
         if (reader.hasNext()) conformers = (ConformerContainer) reader.next();
@@ -216,8 +216,8 @@ public class PharmacophoreMatcherTest {
 
     @Test
     public void testCNSPcore() throws CDKException, IOException {
-        String filename = "data/mdl/cnssmarts.sdf";
-        InputStream ins = PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
+        String filename = "cnssmarts.sdf";
+        InputStream ins = PharmacophoreMatcherTest.class.getResourceAsStream(filename);
         IteratingSDFReader reader = new IteratingSDFReader(ins, SilentChemObjectBuilder.getInstance());
 
         PharmacophoreQuery query = new PharmacophoreQuery();
@@ -245,8 +245,8 @@ public class PharmacophoreMatcherTest {
 
     @Test
     public void testMatchingBonds() throws CDKException, IOException {
-        String filename = "data/mdl/cnssmarts.sdf";
-        InputStream ins = PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
+        String filename = "cnssmarts.sdf";
+        InputStream ins = PharmacophoreMatcherTest.class.getResourceAsStream(filename);
         IteratingSDFReader reader = new IteratingSDFReader(ins, SilentChemObjectBuilder.getInstance());
 
         PharmacophoreQuery query = new PharmacophoreQuery();
@@ -281,8 +281,8 @@ public class PharmacophoreMatcherTest {
 
     @Test
     public void testAngleMatch1() throws Exception {
-        String filename = "data/mdl/cnssmarts.sdf";
-        InputStream ins = PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
+        String filename = "cnssmarts.sdf";
+        InputStream ins = PharmacophoreMatcherTest.class.getResourceAsStream(filename);
         IteratingSDFReader reader = new IteratingSDFReader(ins, SilentChemObjectBuilder.getInstance());
 
         PharmacophoreQuery query = new PharmacophoreQuery();
@@ -306,8 +306,8 @@ public class PharmacophoreMatcherTest {
 
     @Test
     public void testAngleMatch2() throws Exception {
-        String filename = "data/mdl/cnssmarts.sdf";
-        InputStream ins = PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
+        String filename = "cnssmarts.sdf";
+        InputStream ins = PharmacophoreMatcherTest.class.getResourceAsStream(filename);
         IteratingSDFReader reader = new IteratingSDFReader(ins, SilentChemObjectBuilder.getInstance());
 
         PharmacophoreQuery query = new PharmacophoreQuery();
@@ -404,8 +404,8 @@ public class PharmacophoreMatcherTest {
         PharmacophoreMatcher matcher = new PharmacophoreMatcher();
         matcher.setPharmacophoreQuery(query);
 
-        String filename = "data/pcore/multismartpcore.sdf";
-        InputStream ins = PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
+        String filename = "multismartpcore.sdf";
+        InputStream ins = PharmacophoreMatcherTest.class.getResourceAsStream(filename);
         IteratingSDFReader reader = new IteratingSDFReader(ins, SilentChemObjectBuilder.getInstance());
 
         IAtomContainer mol = (IAtomContainer) reader.next();
