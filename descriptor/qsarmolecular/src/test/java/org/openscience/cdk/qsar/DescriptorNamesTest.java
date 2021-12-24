@@ -55,8 +55,8 @@ public class DescriptorNamesTest extends CDKTestCase {
         List<IImplementationSpecification> specs = engine.getDescriptorSpecifications();
 
         // we work with a simple molecule with 3D coordinates
-        String filename = "data/mdl/lobtest2.sdf";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "descriptors/molecular/lobtest2.sdf";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
         ChemFile content = (ChemFile) reader.read(new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);

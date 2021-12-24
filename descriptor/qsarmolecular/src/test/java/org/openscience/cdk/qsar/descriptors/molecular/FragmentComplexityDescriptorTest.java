@@ -30,9 +30,9 @@ public class FragmentComplexityDescriptorTest extends MolecularDescriptorTest {
     @Test
     public void test1FragmentComplexityDescriptor() throws Exception {
         IMolecularDescriptor descriptor = new FragmentComplexityDescriptor();
-        String filename = "data/mdl/murckoTest1.mol";
+        String filename = "murckoTest1.mol";
         //System.out.println("\nFragmentComplexityTest: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MurckoFragmenter gf = new MurckoFragmenter();
         double Complexity = 0;
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
@@ -50,8 +50,8 @@ public class FragmentComplexityDescriptorTest extends MolecularDescriptorTest {
     @Test
     public void test2FragmentComplexityDescriptor() throws Exception {
         IMolecularDescriptor descriptor = new FragmentComplexityDescriptor();
-        String filename = "data/mdl/murckoTest10.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "murckoTest10.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MurckoFragmenter gf = new MurckoFragmenter();
         double Complexity = 0;
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);

@@ -31,8 +31,8 @@ public class KabschAlignmentTest extends CDKTestCase {
     @Test
     public void testAlign() throws java.lang.Exception {
         IAtomContainer ac;
-        String filename = "data/hin/gravindex.hin";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "gravindex.hin";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);
         ChemFile content = (ChemFile) reader.read((ChemObject) new ChemFile());
         List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);

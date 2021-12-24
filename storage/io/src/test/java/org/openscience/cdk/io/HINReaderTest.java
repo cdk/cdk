@@ -52,7 +52,7 @@ public class HINReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass
     public static void setup() {
-        setSimpleChemObjectReader(new HINReader(), "data/hin/benzene.hin");
+        setSimpleChemObjectReader(new HINReader(), "org/openscience/cdk/io/benzene.hin");
     }
 
     @Test
@@ -62,9 +62,9 @@ public class HINReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testBenzene() throws Exception {
-        String filename = "data/hin/benzene.hin";
+        String filename = "benzene.hin";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         HINReader reader = new HINReader(ins);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();

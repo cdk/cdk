@@ -31,8 +31,8 @@ public class MDEDescriptorTest extends MolecularDescriptorTest {
 
     @Test
     public void testMDE1() throws ClassNotFoundException, CDKException, Exception {
-        String filename = "data/mdl/mdeotest.sdf";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "mdeotest.sdf";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
         ChemFile content = (ChemFile) reader.read(new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);

@@ -27,8 +27,8 @@ public class AutocorrelationDescriptorChargeTest extends MolecularDescriptorTest
 
     @Test
     public void test1() throws Exception {
-        String filename = "data/mdl/clorobenzene.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "chlorobenzene.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IAtomContainer container = reader.read(new AtomContainer());
         DescriptorValue count = descriptor.calculate(container);

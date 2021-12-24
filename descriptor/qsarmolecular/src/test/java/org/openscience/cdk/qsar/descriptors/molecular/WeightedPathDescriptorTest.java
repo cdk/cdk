@@ -67,8 +67,8 @@ public class WeightedPathDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(0.0, result.get(3), 0.000001);
         Assert.assertEquals(0.0, result.get(4), 0.000001);
 
-        String filename = "data/mdl/wpo.sdf";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "wpo.sdf";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
         IChemFile content = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
@@ -83,8 +83,8 @@ public class WeightedPathDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(13.45733, result.get(3), 0.00001);
         Assert.assertEquals(0, result.get(4), 0.00001);
 
-        filename = "data/mdl/wpn.sdf";
-        ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        filename = "wpn.sdf";
+        ins = this.getClass().getResourceAsStream(filename);
         reader = new MDLV2000Reader(ins);
         content = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         cList = ChemFileManipulator.getAllAtomContainers(content);

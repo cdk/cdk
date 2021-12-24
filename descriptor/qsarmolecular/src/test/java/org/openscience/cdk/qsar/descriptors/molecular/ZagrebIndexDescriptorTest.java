@@ -69,8 +69,8 @@ public class ZagrebIndexDescriptorTest extends MolecularDescriptorTest {
 
         double value2D = ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue();
 
-        String filename = "data/mdl/cpsa-uncharged.sdf";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "cpsa-uncharged.sdf";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
         ChemFile content = (ChemFile) reader.read((ChemObject) new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
