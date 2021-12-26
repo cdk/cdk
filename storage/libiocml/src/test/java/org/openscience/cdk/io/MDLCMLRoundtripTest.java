@@ -50,8 +50,8 @@ public class MDLCMLRoundtripTest {
     @Test
     public void testBug1649526() throws Exception {
         //Read the original
-        String filename = "data/mdl/bug-1649526.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "bug-1649526.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLReader reader = new MDLReader(ins);
         IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
