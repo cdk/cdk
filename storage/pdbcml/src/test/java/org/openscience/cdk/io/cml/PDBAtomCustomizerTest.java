@@ -57,8 +57,8 @@ public class PDBAtomCustomizerTest extends CDKTestCase {
      */
     @Test
     public void testSFBug1085912_1() throws Exception {
-        String filename_pdb = "data/pdb/1CKV.pdb";
-        InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename_pdb);
+        String filename_pdb = "1CKV.pdb";
+        InputStream ins1 = this.getClass().getResourceAsStream(filename_pdb);
 
         ISimpleChemObjectReader reader = new PDBReader(ins1);
         IChemFile chemFile1 = (IChemFile) reader.read(new ChemFile());

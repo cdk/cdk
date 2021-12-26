@@ -61,7 +61,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass
     public static void setup() throws Exception {
-        setSimpleChemObjectReader(new PDBReader(), "data/pdb/coffeine.pdb");
+        setSimpleChemObjectReader(new PDBReader(), "org/openscience/cdk/io/coffeine.pdb");
     }
 
     /**
@@ -129,8 +129,8 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testPDBFileCoffein() throws Exception {
-        String filename = "data/pdb/coffeine.pdb";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "coffeine.pdb";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
 
         ISimpleChemObjectReader oReader = new PDBReader(ins);
         Assert.assertNotNull(oReader);
@@ -196,8 +196,8 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
      */
     @Test
     public void testProtein() throws Exception {
-        String filename = "data/pdb/Test-1crn.pdb";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "Test-1crn.pdb";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
 
         ISimpleChemObjectReader reader = new PDBReader(ins);
         Assert.assertNotNull(reader);
@@ -255,7 +255,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
     }
 
     public IChemFile getChemFile(String filename, boolean useRebond) throws Exception {
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         return getChemFile(new PDBReader(ins), useRebond);
     }
 
@@ -304,8 +304,8 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void test114D() throws Exception {
-        String filename = "data/pdb/114D.pdb";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "114D.pdb";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
 
         ISimpleChemObjectReader reader = new PDBReader(ins);
         Assert.assertNotNull(reader);
@@ -363,7 +363,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testUnk() throws Exception {
-        String filename = "data/pdb/unk.pdb";
+        String filename = "unk.pdb";
         IChemFile chemFile = getChemFile(filename);
         IAtomContainer atomContainer = getFirstAtomContainer(chemFile, 1, 1, 1);
         Assert.assertEquals(5, atomContainer.getAtomCount());
@@ -374,7 +374,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testHetatmOnly() throws Exception {
-        String filename = "data/pdb/hetatm_only.pdb";
+        String filename = "hetatm_only.pdb";
         IChemFile chemFile = getChemFile(filename, true);
         IAtomContainer atomContainer = getFirstAtomContainer(chemFile, 1, 1, 1);
         Assert.assertTrue(atomContainer instanceof IAtomContainer);
@@ -384,35 +384,35 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void test1SPX() throws Exception {
-        String filename = "data/pdb/1SPX.pdb";
+        String filename = "1SPX.pdb";
         IChemFile chemFile = getChemFile(filename);
         testObjectCountsChemFile(chemFile, 1, 1, 1, 1904, 1, 237, 19);
     }
 
     @Test
     public void test1XKQ() throws Exception {
-        String filename = "data/pdb/1XKQ.pdb";
+        String filename = "1XKQ.pdb";
         IChemFile chemFile = getChemFile(filename);
         testObjectCountsChemFile(chemFile, 1, 1, 1, 8955, 4, 1085, 90);
     }
 
     @Test
     public void test1A00() throws Exception {
-        String filename = "data/pdb/1A00.pdb";
+        String filename = "1A00.pdb";
         IChemFile chemFile = getChemFile(filename);
         testObjectCountsChemFile(chemFile, 1, 1, 1, 4770, 4, 574, 35);
     }
 
     @Test
     public void test1BOQ() throws Exception {
-        String filename = "data/pdb/1BOQ.pdb";
+        String filename = "1BOQ.pdb";
         IChemFile chemFile = getChemFile(filename);
         testObjectCountsChemFile(chemFile, 1, 1, 1, 1538, 1, 198, 21);
     }
 
     @Test
     public void test1TOH() throws Exception {
-        String filename = "data/pdb/1TOH.pdb";
+        String filename = "1TOH.pdb";
         IChemFile chemFile = getChemFile(filename);
         testObjectCountsChemFile(chemFile, 1, 1, 1, 2804, 1, 325, 23);
     }
@@ -420,15 +420,15 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
     @Category(SlowTest.class)
     @Test
     public void test1CKV() throws Exception {
-        String filename = "data/pdb/1CKV.pdb";
+        String filename = "1CKV.pdb";
         IChemFile chemFile = getChemFile(filename);
         testObjectCountsChemFile(chemFile, 1, 14, 1, 31066, 1, 141, 9);
     }
 
     @Test
     public void test1D66() throws Exception {
-        String filename = "data/pdb/1D66.pdb";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "1D66.pdb";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
 
         ISimpleChemObjectReader reader = new PDBReader(ins);
         Assert.assertNotNull(reader);
