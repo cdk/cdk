@@ -759,7 +759,7 @@ public class InChIGeneratorTest extends CDKTestCase {
      */
     @Test
     public void bug1295() throws Exception {
-        MDLV2000Reader reader = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/bug1295.mol"));
+        MDLV2000Reader reader = new MDLV2000Reader(getClass().getResourceAsStream("bug1295.mol"));
         try {
             IAtomContainer container = reader.read(new AtomContainer());
             InChIGenerator generator = getFactory().getInChIGenerator(container);
