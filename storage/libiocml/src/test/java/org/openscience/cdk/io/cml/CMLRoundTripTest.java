@@ -706,8 +706,8 @@ public class CMLRoundTripTest extends CDKTestCase {
      */
     @Test
     public void testAtomProperties() throws Exception {
-        String filename = "data/cml/custompropertiestest.cml";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "custompropertiestest.cml";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         ChemFile chemFile = (ChemFile) reader.read((ChemFile) new ChemFile());
         reader.close();

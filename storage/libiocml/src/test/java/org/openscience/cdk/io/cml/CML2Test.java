@@ -56,8 +56,8 @@ public class CML2Test extends CDKTestCase {
 
     @Test
     public void testFile3() throws Exception {
-        String filename = "data/cml/3.cml";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "3.cml";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
         reader.close();
@@ -81,8 +81,8 @@ public class CML2Test extends CDKTestCase {
      */
     @Test
     public void testCMLTestCase() throws Exception {
-        String filename = "data/cml/olaCmlAtomType.cml";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "olaCmlAtomType.cml";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = new ChemFile();
         chemFile = (IChemFile) reader.read(chemFile);
@@ -95,9 +95,9 @@ public class CML2Test extends CDKTestCase {
 
     @Test
     public void testCOONa() throws Exception {
-        String filename = "data/cml/COONa.cml";
+        String filename = "COONa.cml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
@@ -129,9 +129,9 @@ public class CML2Test extends CDKTestCase {
 
     @Test
     public void testNitrate() throws Exception {
-        String filename = "data/cml/nitrate.cml";
+        String filename = "nitrate.cml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
@@ -163,9 +163,9 @@ public class CML2Test extends CDKTestCase {
 
     @Test
     public void testCMLOK1() throws Exception {
-        String filename = "data/cml/cs2a.cml";
+        String filename = "cs2a.cml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
@@ -191,9 +191,9 @@ public class CML2Test extends CDKTestCase {
 
     @Test
     public void testCMLOK2() throws Exception {
-        String filename = "data/cml/cs2a.mol.cml";
+        String filename = "cs2a.mol.cml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
@@ -219,9 +219,9 @@ public class CML2Test extends CDKTestCase {
 
     @Test
     public void testCMLOK3() throws Exception {
-        String filename = "data/cml/nsc2dmol.1.cml";
+        String filename = "nsc2dmol.1.cml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
@@ -247,9 +247,9 @@ public class CML2Test extends CDKTestCase {
 
     @Test
     public void testCMLOK4() throws Exception {
-        String filename = "data/cml/nsc2dmol.2.cml";
+        String filename = "nsc2dmol.2.cml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
@@ -275,9 +275,9 @@ public class CML2Test extends CDKTestCase {
 
     @Test
     public void testCMLOK5() throws Exception {
-        String filename = "data/cml/nsc2dmol.a1.cml";
+        String filename = "nsc2dmol.a1.cml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
@@ -303,9 +303,9 @@ public class CML2Test extends CDKTestCase {
 
     @Test
     public void testCMLOK6() throws Exception {
-        String filename = "data/cml/nsc2dmol.a2.cml";
+        String filename = "nsc2dmol.a2.cml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
@@ -331,9 +331,9 @@ public class CML2Test extends CDKTestCase {
 
     @Test
     public void testCMLOK7() throws Exception {
-        String filename = "data/cml/nsc3dcml.xml";
+        String filename = "nsc3dcml.xml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
@@ -359,9 +359,9 @@ public class CML2Test extends CDKTestCase {
 
     @Test
     public void testCMLOK8() throws Exception {
-        String filename = "data/cml/nsc2dcml.xml";
+        String filename = "nsc2dcml.xml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
@@ -387,9 +387,9 @@ public class CML2Test extends CDKTestCase {
 
     @Test
     public void testCMLOK9() throws Exception {
-        String filename = "data/cml/nsc3dmol.1.cml";
+        String filename = "nsc3dmol.1.cml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
@@ -415,9 +415,9 @@ public class CML2Test extends CDKTestCase {
 
     @Test
     public void testCMLOK10() throws Exception {
-        String filename = "data/cml/nsc3dmol.2.cml";
+        String filename = "nsc3dmol.2.cml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
@@ -443,9 +443,9 @@ public class CML2Test extends CDKTestCase {
 
     @Test
     public void testCMLOK11() throws Exception {
-        String filename = "data/cml/nsc3dmol.a1.cml";
+        String filename = "nsc3dmol.a1.cml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
@@ -471,9 +471,9 @@ public class CML2Test extends CDKTestCase {
 
     @Test
     public void testCMLOK12() throws Exception {
-        String filename = "data/cml/nsc3dmol.a2.cml";
+        String filename = "nsc3dmol.a2.cml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
@@ -503,9 +503,9 @@ public class CML2Test extends CDKTestCase {
      */
     @Test
     public void testCMLSpectMolExtraction() throws Exception {
-        String filename = "data/cml/molAndspect.cml";
+        String filename = "molAndspect.cml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
@@ -535,9 +535,9 @@ public class CML2Test extends CDKTestCase {
      */
     @Test
     public void testCMLReaction() throws Exception {
-        String filename = "data/cml/reaction.2.cml";
+        String filename = "reaction.2.cml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
@@ -568,9 +568,9 @@ public class CML2Test extends CDKTestCase {
      */
     @Test
     public void testCMLReactionWithAgents() throws Exception {
-        String filename = "data/cml/reaction.1.cml";
+        String filename = "reaction.1.cml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
@@ -602,9 +602,9 @@ public class CML2Test extends CDKTestCase {
      */
     @Test
     public void testCMLReactionList() throws Exception {
-        String filename = "data/cml/reactionList.1.cml";
+        String filename = "reactionList.1.cml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
@@ -634,9 +634,9 @@ public class CML2Test extends CDKTestCase {
      */
     @Test
     public void testCMLWithFormula() throws Exception {
-        String filename = "data/cml/cmlWithFormula.cml";
+        String filename = "cmlWithFormula.cml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
         reader.close();
@@ -663,9 +663,9 @@ public class CML2Test extends CDKTestCase {
      */
     @Test
     public void testCMLConciseFormula() throws Exception {
-        String filename = "data/cml/cmlConciseFormula.cml";
+        String filename = "cmlConciseFormula.cml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
         reader.close();
@@ -691,9 +691,9 @@ public class CML2Test extends CDKTestCase {
      */
     @Test
     public void testCMLConciseFormula2() throws Exception {
-        String filename = "data/cml/cmlConciseFormula2.cml";
+        String filename = "cmlConciseFormula2.cml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
         reader.close();
@@ -720,9 +720,9 @@ public class CML2Test extends CDKTestCase {
      */
     @Test
     public void testCMLScheme1() throws Exception {
-        String filename = "data/cml/reactionScheme.1.cml";
+        String filename = "reactionScheme.1.cml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
@@ -759,9 +759,9 @@ public class CML2Test extends CDKTestCase {
      */
     @Test
     public void testCMLScheme2() throws Exception {
-        String filename = "data/cml/reactionScheme.2.cml";
+        String filename = "reactionScheme.2.cml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
@@ -798,9 +798,9 @@ public class CML2Test extends CDKTestCase {
      */
     @Test
     public void testCMLSchemeStepList1() throws Exception {
-        String filename = "data/cml/reactionSchemeStepList.1.cml";
+        String filename = "reactionSchemeStepList.1.cml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
@@ -838,9 +838,9 @@ public class CML2Test extends CDKTestCase {
      */
     @Test
     public void testCMLStepList() throws Exception {
-        String filename = "data/cml/reactionStepList.1.cml";
+        String filename = "reactionStepList.1.cml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
@@ -878,9 +878,9 @@ public class CML2Test extends CDKTestCase {
      */
     @Test
     public void testCMLSchemeMoleculeSet() throws Exception {
-        String filename = "data/cml/reactionSchemeMoleculeSet.cml";
+        String filename = "reactionSchemeMoleculeSet.cml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
@@ -920,8 +920,8 @@ public class CML2Test extends CDKTestCase {
      */
     @Test
     public void testReadReactionWithPointersToMoleculeSet() throws Exception {
-        String filename = "data/cml/AlanineTree.cml";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "AlanineTree.cml";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = new ChemFile();
         chemFile = (IChemFile) reader.read(chemFile);
@@ -935,8 +935,8 @@ public class CML2Test extends CDKTestCase {
      */
     @Test
     public void testBug2697568() throws Exception {
-        String filename = "data/cml/AlanineTreeReverse.cml";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "AlanineTreeReverse.cml";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = new ChemFile();
         chemFile = (IChemFile) reader.read(chemFile);
@@ -949,8 +949,8 @@ public class CML2Test extends CDKTestCase {
      */
     @Test
     public void testReactionProperties() throws Exception {
-        String filename = "data/cml/reaction.2.cml";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "reaction.2.cml";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = new ChemFile();
         chemFile = (IChemFile) reader.read(chemFile);
