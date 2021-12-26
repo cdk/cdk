@@ -127,7 +127,7 @@ public class ReaderFactoryTest extends AbstractReaderFactoryTest {
     
     @Ignore("test moved to cdk-test-pdb/PDBReaderFactoryTest")
     public void testPDB() throws Exception {
-        expectReader("data/pdb/coffeine.pdb", PDBFormat.getInstance(), -1, -1);
+        expectReader("org/openscience/cdk/io/coffeine.pdb", PDBFormat.getInstance(), -1, -1);
     }
 
     @Test

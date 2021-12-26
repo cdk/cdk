@@ -177,7 +177,7 @@ public class FormatFactoryTest extends CDKTestCase {
 
     @Test
     public void testPDB() throws Exception {
-        expectFormat("data/pdb/coffeine.pdb", PDBFormat.getInstance());
+        expectFormat("org/openscience/cdk/io/coffeine.pdb", PDBFormat.getInstance());
     }
 
     @Test

@@ -72,6 +72,6 @@ public class PDBReaderFactoryTest {
 
     @Test
     public void testPDB() throws Exception {
-        expectReader("data/pdb/coffeine.pdb", PDBFormat.getInstance());
+        expectReader("org/openscience/cdk/io/coffeine.pdb", PDBFormat.getInstance());
     }
 }
