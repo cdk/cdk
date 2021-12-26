@@ -43,7 +43,7 @@ public class CDKOWLReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass
     public static void setup() {
-        setSimpleChemObjectReader(new CDKOWLReader(), "data/owl/molecule.n3");
+        setSimpleChemObjectReader(new CDKOWLReader(), "org/openscience/cdk/io/rdf/molecule.n3");
     }
 
     @Test
@@ -53,9 +53,9 @@ public class CDKOWLReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testMolecule() throws Exception {
-        String filename = "data/owl/molecule.n3";
+        String filename = "molecule.n3";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CDKOWLReader reader = new CDKOWLReader(new InputStreamReader(ins));
         IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
