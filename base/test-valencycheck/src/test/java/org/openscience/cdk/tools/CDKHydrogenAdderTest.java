@@ -645,8 +645,8 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     @Test
     public void testBug1727373() throws Exception {
         IAtomContainer molecule = null;
-        String filename = "data/mdl/carbocations.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "carbocations.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         molecule = reader.read(new AtomContainer());
         findAndConfigureAtomTypesForAllAtoms(molecule);
@@ -662,8 +662,8 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
      */
     @Test
     public void testBug1575269() throws Exception {
-        String filename = "data/mdl/furan.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "furan.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IAtomContainer molecule = reader.read(new AtomContainer());
         findAndConfigureAtomTypesForAllAtoms(molecule);
@@ -676,8 +676,8 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
 
     @Test
     public void testImpHByAtom() throws Exception {
-        String filename = "data/mdl/furan.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "furan.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IAtomContainer molecule = reader.read(new AtomContainer());
         findAndConfigureAtomTypesForAllAtoms(molecule);
@@ -723,8 +723,8 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
      */
     @Test
     public void testSulfurCompound_ImplicitHydrogens() throws Exception {
-        String filename = "data/mdl/sulfurCompound.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "sulfurCompound.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
