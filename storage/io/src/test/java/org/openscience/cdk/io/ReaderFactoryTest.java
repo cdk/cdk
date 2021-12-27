@@ -97,7 +97,7 @@ public class ReaderFactoryTest extends AbstractReaderFactoryTest {
 
     @Test
     public void testMDLMol() throws Exception {
-        expectReader("data/mdl/bug1014344-1.mol", MDLFormat.getInstance(), 21, 21);
+        expectReader("org/openscience/cdk/io/bug1014344-1.mol", MDLFormat.getInstance(), 21, 21);
     }
 
     @Test

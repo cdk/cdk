@@ -53,9 +53,9 @@ public class JChemPaintTest extends CDKTestCase {
      */
     @Test
     public void testSalt() throws Exception {
-        String filename = "data/cml/COONa.cml";
+        String filename = "COONa.cml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();

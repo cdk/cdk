@@ -45,8 +45,8 @@ public class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
 
     @Test
     public void testFile3() throws Exception {
-        String filename = "data/cml/3.cml";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "3.cml";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
 

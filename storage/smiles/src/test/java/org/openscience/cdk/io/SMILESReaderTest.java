@@ -57,7 +57,7 @@ public class SMILESReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass
     public static void setup() throws Exception {
-        setSimpleChemObjectReader(new SMILESReader(), "data/smiles/smiles.smi");
+        setSimpleChemObjectReader(new SMILESReader(), "org/openscience/cdk/io/smiles.smi");
     }
 
     @Test
@@ -69,9 +69,9 @@ public class SMILESReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testReading() throws Exception {
-        String filename = "data/smiles/smiles.smi";
+        String filename = "smiles.smi";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         SMILESReader reader = new SMILESReader(ins);
         IAtomContainerSet som = reader.read(new AtomContainerSet());
         Assert.assertEquals(8, som.getAtomContainerCount());
@@ -79,9 +79,9 @@ public class SMILESReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testReadingSmiFile_1() throws Exception {
-        String filename = "data/smiles/smiles.smi";
+        String filename = "smiles.smi";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         SMILESReader reader = new SMILESReader(ins);
         IAtomContainerSet som = reader.read(new AtomContainerSet());
         String name = null;
@@ -92,9 +92,9 @@ public class SMILESReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testReadingSmiFile_2() throws Exception {
-        String filename = "data/smiles/smiles.smi";
+        String filename = "smiles.smi";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         SMILESReader reader = new SMILESReader(ins);
         IAtomContainerSet som = reader.read(new AtomContainerSet());
         IAtomContainer thisMol = som.getAtomContainer(1);
@@ -103,9 +103,9 @@ public class SMILESReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testReadingSmiFile_3() throws Exception {
-        String filename = "data/smiles/test3.smi";
+        String filename = "test3.smi";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         SMILESReader reader = new SMILESReader(ins);
         IAtomContainerSet som = reader.read(new AtomContainerSet());
         Assert.assertEquals(5, som.getAtomContainerCount());

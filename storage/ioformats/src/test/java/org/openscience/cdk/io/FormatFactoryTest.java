@@ -157,7 +157,7 @@ public class FormatFactoryTest extends CDKTestCase {
 
     @Test
     public void testMDLMol() throws Exception {
-        expectFormat("data/mdl/bug1014344-1.mol", MDLFormat.getInstance());
+        expectFormat("org/openscience/cdk/io/bug1014344-1.mol", MDLFormat.getInstance());
     }
 
     @Test

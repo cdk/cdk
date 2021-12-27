@@ -122,8 +122,8 @@ public class CanonicalLabelerTest extends CDKTestCase {
      */
     @Test
     public void testStabilityAfterRoundtrip() throws Exception {
-        String filename = "data/mdl/bug1014344-1.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "bug1014344-1.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLReader reader = new MDLReader(ins, Mode.STRICT);
         IAtomContainer mol1 = reader.read(new AtomContainer());
         addImplicitHydrogens(mol1);
