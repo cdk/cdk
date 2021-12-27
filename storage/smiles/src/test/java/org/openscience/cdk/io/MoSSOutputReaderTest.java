@@ -37,7 +37,7 @@ public class MoSSOutputReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass
     public static void setup() {
-        setSimpleChemObjectReader(new MoSSOutputReader(), "data/moss/TKO.mossoutput");
+        setSimpleChemObjectReader(new MoSSOutputReader(), "org/openscience/cdk/io/TKO.mossoutput");
     }
 
     @Test
@@ -48,8 +48,8 @@ public class MoSSOutputReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testExampleFile_MolReading() throws Exception {
-        String filename = "data/moss/TKO.mossoutput";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "TKO.mossoutput";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MoSSOutputReader reader = new MoSSOutputReader(ins);
         IAtomContainerSet moleculeSet = new AtomContainerSet();
         moleculeSet = reader.read(moleculeSet);
@@ -62,8 +62,8 @@ public class MoSSOutputReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testExampleFile_SupportColumns() throws Exception {
-        String filename = "data/moss/TKO.mossoutput";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "TKO.mossoutput";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MoSSOutputReader reader = new MoSSOutputReader(ins);
         IAtomContainerSet moleculeSet = new AtomContainerSet();
         moleculeSet = reader.read(moleculeSet);

@@ -50,7 +50,7 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass
     public static void setup() {
-        setSimpleChemObjectReader(new CMLReader(), "data/cml/3.cml");
+        setSimpleChemObjectReader(new CMLReader(), "org/openscience/cdk/io/3.cml");
     }
 
     @Test

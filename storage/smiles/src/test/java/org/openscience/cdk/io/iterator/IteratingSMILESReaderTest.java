@@ -56,9 +56,9 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
 
     @Test
     public void testSMILESFileWithNames() throws Exception {
-        String filename = "data/smiles/test.smi";
+        String filename = "test.smi";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         IteratingSMILESReader reader = new IteratingSMILESReader(ins, DefaultChemObjectBuilder.getInstance());
 
         int molCount = 0;
@@ -76,9 +76,9 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
 
     @Test
     public void testSMILESFileWithSpacesAndTabs() throws Exception {
-        String filename = "data/smiles/tabs.smi";
+        String filename = "tabs.smi";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         IteratingSMILESReader reader = new IteratingSMILESReader(ins, DefaultChemObjectBuilder.getInstance());
 
         int molCount = 0;
@@ -96,9 +96,9 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
 
     @Test
     public void testSMILESTitles() throws Exception {
-        String filename = "data/smiles/tabs.smi";
+        String filename = "tabs.smi";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         IteratingSMILESReader reader = new IteratingSMILESReader(ins, DefaultChemObjectBuilder.getInstance());
 
         while (reader.hasNext()) {
@@ -112,9 +112,9 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
 
     @Test
     public void testSMILESFile() {
-        String filename = "data/smiles/test2.smi";
+        String filename = "test2.smi";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         IteratingSMILESReader reader = new IteratingSMILESReader(ins, DefaultChemObjectBuilder.getInstance());
 
         int molCount = 0;
@@ -130,9 +130,9 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
 
     @Test
     public void testGetFormat() {
-        String filename = "data/smiles/test2.smi";
+        String filename = "test2.smi";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         IteratingSMILESReader reader = new IteratingSMILESReader(ins, DefaultChemObjectBuilder.getInstance());
         IResourceFormat format = reader.getFormat();
         assertTrue(format instanceof SMILESFormat);
@@ -140,16 +140,16 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
 
     @Test
     public void testSetReader1() {
-        String filename = "data/smiles/test2.smi";
-        InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "test2.smi";
+        InputStream ins1 = this.getClass().getResourceAsStream(filename);
         IteratingSMILESReader reader = new IteratingSMILESReader(ins1, DefaultChemObjectBuilder.getInstance());
         int molCount = 0;
         while (reader.hasNext()) {
             reader.next();
             molCount++;
         }
-        filename = "data/smiles/tabs.smi";
-        InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename);
+        filename = "tabs.smi";
+        InputStream ins2 = this.getClass().getResourceAsStream(filename);
         reader.setReader(ins2);
         molCount = 0;
         while (reader.hasNext()) {
@@ -161,8 +161,8 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
 
     @Test(expected = UnsupportedOperationException.class)
     public void testRemove() {
-        String filename = "data/smiles/test2.smi";
-        InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "test2.smi";
+        InputStream ins1 = this.getClass().getResourceAsStream(filename);
         IteratingSMILESReader reader = new IteratingSMILESReader(ins1, DefaultChemObjectBuilder.getInstance());
         int molCount = 0;
         while (reader.hasNext()) {

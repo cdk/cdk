@@ -683,12 +683,12 @@ public class SmilesGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testAlaSMILES() throws Exception {
-        String filename = "data/mdl/l-ala.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "l-ala.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer mol1 = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
-        filename = "data/mdl/d-ala.mol";
-        ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        filename = "d-ala.mol";
+        ins = this.getClass().getResourceAsStream(filename);
         reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer mol2 = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
         SmilesGenerator sg = SmilesGenerator.isomeric();
@@ -706,12 +706,12 @@ public class SmilesGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testSugarSMILES() throws Exception {
-        String filename = "data/mdl/D-mannose.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "D-mannose.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer mol1 = reader.read(new AtomContainer());
-        filename = "data/mdl/D+-glucose.mol";
-        ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        filename = "D+-glucose.mol";
+        ins = this.getClass().getResourceAsStream(filename);
         reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer mol2 = reader.read(new AtomContainer());
         SmilesGenerator sg = SmilesGenerator.isomeric();
@@ -731,8 +731,8 @@ public class SmilesGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testCycloOctan() throws Exception {
-        String filename = "data/mdl/cyclooctan.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "cyclooctan.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer mol1 = reader.read(new AtomContainer());
         SmilesGenerator sg = new SmilesGenerator();
@@ -745,8 +745,8 @@ public class SmilesGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testCycloOcten() throws Exception {
-        String filename = "data/mdl/cycloocten.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "cycloocten.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer mol1 = reader.read(new AtomContainer());
         SmilesGenerator sg = new SmilesGenerator();
@@ -759,8 +759,8 @@ public class SmilesGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testCycloOctadien() throws Exception {
-        String filename = "data/mdl/cyclooctadien.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "cyclooctadien.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer mol1 = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
         SmilesGenerator sg = new SmilesGenerator();
@@ -773,8 +773,8 @@ public class SmilesGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testSFBug1089770_1() throws Exception {
-        String filename = "data/mdl/bug1089770-1.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "bug1089770-1.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer mol1 = reader.read(new AtomContainer());
         SmilesGenerator sg = new SmilesGenerator();
@@ -789,8 +789,8 @@ public class SmilesGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testSFBug1089770_2() throws Exception {
-        String filename = "data/mdl/bug1089770-2.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "bug1089770-2.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer mol1 = reader.read(new AtomContainer());
         SmilesGenerator sg = new SmilesGenerator();
@@ -806,8 +806,8 @@ public class SmilesGeneratorTest extends CDKTestCase {
     // MDL -> CML (slow) -> SMILES round tripping
     @Test
     public void testSFBug1014344() throws Exception {
-        String filename = "data/mdl/bug1014344-1.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "bug1014344-1.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLReader reader = new MDLReader(ins, Mode.STRICT);
         IAtomContainer mol1 = reader.read(new AtomContainer());
         addImplicitHydrogens(mol1);
@@ -829,10 +829,10 @@ public class SmilesGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testTest() throws Exception {
-        String filename_cml = "data/mdl/9554-with-exp-hyd.mol";
-        String filename_mol = "data/mdl/9553-with-exp-hyd.mol";
-        InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename_cml);
-        InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename_mol);
+        String filename_cml = "9554-with-exp-hyd.mol";
+        String filename_mol = "9553-with-exp-hyd.mol";
+        InputStream ins1 = this.getClass().getResourceAsStream(filename_cml);
+        InputStream ins2 = this.getClass().getResourceAsStream(filename_mol);
         MDLV2000Reader reader1 = new MDLV2000Reader(ins1, Mode.STRICT);
         IAtomContainer mol1 = reader1.read(new AtomContainer());
 
@@ -856,8 +856,8 @@ public class SmilesGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testSFBug1535055() throws Exception {
-        String filename_cml = "data/cml/test1.cml";
-        InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename_cml);
+        String filename_cml = "test1.cml";
+        InputStream ins1 = this.getClass().getResourceAsStream(filename_cml);
         CMLReader reader1 = new CMLReader(ins1);
         IChemFile chemFile = (IChemFile) reader1.read(new ChemFile());
         Assert.assertNotNull(chemFile);
@@ -883,10 +883,10 @@ public class SmilesGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testSFBug1014344_1() throws Exception {
-        String filename_cml = "data/cml/bug1014344-1.cml";
-        String filename_mol = "data/mdl/bug1014344-1.mol";
-        InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename_cml);
-        InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename_mol);
+        String filename_cml = "bug1014344-1.cml";
+        String filename_mol = "bug1014344-1.mol";
+        InputStream ins1 = this.getClass().getResourceAsStream(filename_cml);
+        InputStream ins2 = this.getClass().getResourceAsStream(filename_mol);
         CMLReader reader1 = new CMLReader(ins1);
         IChemFile chemFile = (IChemFile) reader1.read(new ChemFile());
         IChemSequence seq = chemFile.getChemSequence(0);
@@ -984,8 +984,8 @@ public class SmilesGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testTimeOut() throws Exception {
-        String filename = "data/mdl/24763.sdf";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "24763.sdf";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
