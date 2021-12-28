@@ -57,7 +57,7 @@ public class MDLRXNV2000ReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass
     public static void setup() throws Exception {
-        setSimpleChemObjectReader(new MDLRXNV2000Reader(), "data/mdl/0024.stg02.rxn");
+        setSimpleChemObjectReader(new MDLRXNV2000Reader(), "0024.stg02.rxn");
     }
 
     @Test
@@ -73,9 +73,9 @@ public class MDLRXNV2000ReaderTest extends SimpleChemObjectReaderTest {
      */
     @Test
     public void testReadReactions1() throws Exception {
-        String filename1 = "data/mdl/0024.stg02.rxn";
+        String filename1 = "0024.stg02.rxn";
         logger.info("Testing: " + filename1);
-        InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename1);
+        InputStream ins1 = this.getClass().getResourceAsStream(filename1);
         MDLRXNV2000Reader reader1 = new MDLRXNV2000Reader(ins1, Mode.STRICT);
         IReaction reaction1 = new Reaction();
         reaction1 = (IReaction) reader1.read(reaction1);
@@ -124,9 +124,9 @@ public class MDLRXNV2000ReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testReadMapping() throws Exception {
-        String filename2 = "data/mdl/mappingTest.rxn";
+        String filename2 = "mappingTest.rxn";
         logger.info("Testing: " + filename2);
-        InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename2);
+        InputStream ins2 = this.getClass().getResourceAsStream(filename2);
         MDLRXNV2000Reader reader2 = new MDLRXNV2000Reader(ins2);
         IReaction reaction2 = new Reaction();
         reaction2 = (IReaction) reader2.read(reaction2);

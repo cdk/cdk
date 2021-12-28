@@ -55,9 +55,9 @@ public class IteratingSDFReaderTest extends CDKTestCase {
 
     @Test
     public void testSDF() throws Exception {
-        String filename = "data/mdl/test2.sdf";
+        String filename = "test2.sdf";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         IteratingSDFReader reader = new IteratingSDFReader(ins, DefaultChemObjectBuilder.getInstance());
 
         int molCount = 0;
@@ -76,9 +76,9 @@ public class IteratingSDFReaderTest extends CDKTestCase {
 
     @Test
     public void testSDF_broken_stream() throws Exception {
-        String filename = "data/mdl/test2.sdf";
+        String filename = "test2.sdf";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         InputStreamReader streamReader = new InputStreamReader(ins) {
 
             @Override
@@ -105,9 +105,9 @@ public class IteratingSDFReaderTest extends CDKTestCase {
 
     @Test
     public void testReadTitle() throws Exception {
-        String filename = "data/mdl/test.sdf";
+        String filename = "test.sdf";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         IteratingSDFReader reader = new IteratingSDFReader(ins, DefaultChemObjectBuilder.getInstance());
 
         //int molCount = 0;
@@ -122,9 +122,9 @@ public class IteratingSDFReaderTest extends CDKTestCase {
 
     @Test
     public void testReadDataItems() throws Exception {
-        String filename = "data/mdl/test.sdf";
+        String filename = "test.sdf";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         IteratingSDFReader reader = new IteratingSDFReader(ins, DefaultChemObjectBuilder.getInstance());
 
         //int molCount = 0;
@@ -140,8 +140,8 @@ public class IteratingSDFReaderTest extends CDKTestCase {
 
     @Test
     public void testMultipleEntryFields() throws Exception {
-        String filename = "data/mdl/test.sdf";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "test.sdf";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         IteratingSDFReader reader = new IteratingSDFReader(ins, DefaultChemObjectBuilder.getInstance());
 
         IAtomContainer m = (IAtomContainer) reader.next();
@@ -153,9 +153,9 @@ public class IteratingSDFReaderTest extends CDKTestCase {
 
     @Test
     public void testOnMDLMolfile() throws Exception {
-        String filename = "data/mdl/bug682233.mol";
+        String filename = "bug682233.mol";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         IteratingSDFReader reader = new IteratingSDFReader(ins, DefaultChemObjectBuilder.getInstance());
 
         int molCount = 0;
@@ -172,9 +172,9 @@ public class IteratingSDFReaderTest extends CDKTestCase {
 
     @Test
     public void testOnSingleEntrySDFile() throws Exception {
-        String filename = "data/mdl/singleMol.sdf";
+        String filename = "singleMol.sdf";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         IteratingSDFReader reader = new IteratingSDFReader(ins, DefaultChemObjectBuilder.getInstance());
 
         int molCount = 0;
@@ -191,9 +191,9 @@ public class IteratingSDFReaderTest extends CDKTestCase {
 
     @Test
     public void testEmptyEntryIteratingReader() throws IOException {
-        String filename = "data/mdl/emptyStructures.sdf";
+        String filename = "emptyStructures.sdf";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         IteratingSDFReader reader = new IteratingSDFReader(ins, DefaultChemObjectBuilder.getInstance());
         int molCount = 0;
         while (reader.hasNext()) {
@@ -218,9 +218,9 @@ public class IteratingSDFReaderTest extends CDKTestCase {
      */
     @Test
     public void testZeroZCoordinates() throws Exception {
-        String filename = "data/mdl/nozcoord.sdf";
+        String filename = "nozcoord.sdf";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         Properties prop = new Properties();
         prop.setProperty("ForceReadAs3DCoordinates", "true");
         PropertiesListener listener = new PropertiesListener(prop);
@@ -243,9 +243,9 @@ public class IteratingSDFReaderTest extends CDKTestCase {
     @Test
     public void testNo3DCoordsButForcedAs() throws IOException {
         // First test unforced 3D coordinates
-        String filename = "data/mdl/no3dStructures.sdf";
+        String filename = "no3dStructures.sdf";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         IteratingSDFReader reader = new IteratingSDFReader(ins, DefaultChemObjectBuilder.getInstance());
         int molCount = 0;
         IAtomContainer mol = null;
@@ -264,7 +264,7 @@ public class IteratingSDFReaderTest extends CDKTestCase {
 
         // Now test forced 3D coordinates
         logger.info("Testing: " + filename);
-        ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        ins = this.getClass().getResourceAsStream(filename);
         reader = new IteratingSDFReader(ins, DefaultChemObjectBuilder.getInstance());
         reader.addChemObjectIOListener(new MyListener());
         reader.customizeJob();
@@ -306,8 +306,8 @@ public class IteratingSDFReaderTest extends CDKTestCase {
     @Test
     public void testBrokenSDF() throws IOException, CDKException {
 
-        String path = "data/mdl/bug3488307.sdf";
-        InputStream in = getClass().getClassLoader().getResourceAsStream(path);
+        String path = "bug3488307.sdf";
+        InputStream in = getClass().getResourceAsStream(path);
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IteratingSDFReader reader = new IteratingSDFReader(in, builder);
 
@@ -329,8 +329,8 @@ public class IteratingSDFReaderTest extends CDKTestCase {
     @Test
     public void testV3000MolfileFormat() throws IOException, CDKException {
 
-        String path = "data/mdl/molV3000.mol";
-        InputStream in = getClass().getClassLoader().getResourceAsStream(path);
+        String path = "molV3000.mol";
+        InputStream in = getClass().getResourceAsStream(path);
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IteratingSDFReader reader = new IteratingSDFReader(in, builder);
 

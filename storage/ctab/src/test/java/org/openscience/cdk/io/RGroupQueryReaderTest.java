@@ -64,7 +64,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass
     public static void setup() {
-        setSimpleChemObjectReader(new RGroupQueryReader(), "data/mdl/rgfile.1.mol");
+        setSimpleChemObjectReader(new RGroupQueryReader(), "rgfile.1.mol");
     }
 
     @Test
@@ -82,8 +82,8 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
      */
     @Test
     public void testRGFileFormat() throws Exception {
-        String filename = "data/mdl/rgfile.1.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "rgfile.1.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         IChemFormat format = new FormatFactory().guessFormat(new BufferedInputStream(ins));
         Assert.assertEquals(format.getClass(), RGroupQueryFormat.class);
     }
@@ -94,9 +94,9 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
      */
     @Test
     public void testRgroupQueryFile1() throws Exception {
-        String filename = "data/mdl/rgfile.1.mol";
+        String filename = "rgfile.1.mol";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         RGroupQueryReader reader = new RGroupQueryReader(ins);
         RGroupQuery rGroupQuery = (RGroupQuery) reader.read(new RGroupQuery(DefaultChemObjectBuilder.getInstance()));
         reader.close();
@@ -162,9 +162,9 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
      */
     @Test
     public void testRgroupQueryFile2() throws Exception {
-        String filename = "data/mdl/rgfile.2.mol";
+        String filename = "rgfile.2.mol";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         RGroupQueryReader reader = new RGroupQueryReader(ins);
         RGroupQuery rGroupQuery = (RGroupQuery) reader.read(new RGroupQuery(DefaultChemObjectBuilder.getInstance()));
         reader.close();
@@ -250,9 +250,9 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
      */
     @Test
     public void testRgroupQueryFile3() throws Exception {
-        String filename = "data/mdl/rgfile.3.mol";
+        String filename = "rgfile.3.mol";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         RGroupQueryReader reader = new RGroupQueryReader(ins);
         RGroupQuery rGroupQuery = (RGroupQuery) reader.read(new RGroupQuery(DefaultChemObjectBuilder.getInstance()));
         reader.close();
@@ -292,9 +292,9 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
      */
     @Test
     public void testRgroupQueryFile4() throws Exception {
-        String filename = "data/mdl/rgfile.4.mol";
+        String filename = "rgfile.4.mol";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         RGroupQueryReader reader = new RGroupQueryReader(ins);
         RGroupQuery rGroupQuery = (RGroupQuery) reader.read(new RGroupQuery(DefaultChemObjectBuilder.getInstance()));
         reader.close();
@@ -329,9 +329,9 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
     @Test
     @Category(SlowTest.class)
     public void testRgroupQueryFile5() throws Exception {
-        String filename = "data/mdl/rgfile.5.mol";
+        String filename = "rgfile.5.mol";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         RGroupQueryReader reader = new RGroupQueryReader(ins);
         RGroupQuery rGroupQuery = (RGroupQuery) reader.read(new RGroupQuery(DefaultChemObjectBuilder.getInstance()));
         reader.close();
@@ -349,9 +349,9 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
      */
     @Test(expected = CDKException.class)
     public void testRgroupQueryFile6() throws Exception {
-        String filename = "data/mdl/rgfile.6.mol";
+        String filename = "rgfile.6.mol";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         RGroupQueryReader reader = new RGroupQueryReader(ins);
         RGroupQuery rGroupQuery = (RGroupQuery) reader.read(new RGroupQuery(DefaultChemObjectBuilder.getInstance()));
         reader.close();
@@ -377,9 +377,9 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
      */
     @Test
     public void testRgroupQueryFile7() throws Exception {
-        String filename = "data/mdl/rgfile.7.mol";
+        String filename = "rgfile.7.mol";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         RGroupQueryReader reader = new RGroupQueryReader(ins);
         RGroupQuery rGroupQuery = (RGroupQuery) reader.read(new RGroupQuery(DefaultChemObjectBuilder.getInstance()));
         reader.close();

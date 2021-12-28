@@ -324,8 +324,8 @@ public class AllRingsFinderTest extends CDKTestCase {
     public void testBigRingSystem_MaxRingSize4_fourRing5x10() throws Exception {
         IRingSet ringSet = null;
         AllRingsFinder arf = new AllRingsFinder();
-        String filename = "data/mdl/four-ring-5x10.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "four-ring-5x10.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
         IChemSequence seq = chemFile.getChemSequence(0);
@@ -340,8 +340,8 @@ public class AllRingsFinderTest extends CDKTestCase {
     public void testBigRingSystem_MaxRingSize6_fourRing5x10() throws Exception {
         IRingSet ringSet = null;
         AllRingsFinder arf = new AllRingsFinder();
-        String filename = "data/mdl/four-ring-5x10.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "four-ring-5x10.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
         IChemSequence seq = chemFile.getChemSequence(0);

@@ -250,9 +250,8 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
      */
     @Test
     public void testPseudoAtoms() throws Exception {
-        String filename = "data/mdl/pseudoatoms.sdf";
-
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "pseudoatoms.sdf";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         mol = reader.read(mol);

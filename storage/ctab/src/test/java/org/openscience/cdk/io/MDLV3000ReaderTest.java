@@ -65,7 +65,7 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass
     public static void setup() throws Exception {
-        setSimpleChemObjectReader(new MDLV3000Reader(), "data/mdl/molV3000.mol");
+        setSimpleChemObjectReader(new MDLV3000Reader(), "org/openscience/cdk/io/iterator/molV3000.mol");
     }
 
     @Test
@@ -79,9 +79,9 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
      */
     @Test
     public void testBug1571207() throws Exception {
-        String filename = "data/mdl/molV3000.mol";
+        String filename = "iterator/molV3000.mol";
         logger.info("Testing: " + filename);
-        try (InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try (InputStream ins = this.getClass().getResourceAsStream(filename);
              MDLV3000Reader reader = new MDLV3000Reader(ins);) {
             IAtomContainer m = reader.read(new AtomContainer());
             reader.close();
@@ -111,7 +111,7 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testPseudoAtomLabels() throws Exception {
-        try (InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/pseudoatomsv3000.mol");
+        try (InputStream in = getClass().getResourceAsStream("pseudoatomsv3000.mol");
         MDLV3000Reader reader = new MDLV3000Reader(in);) {
             IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
             molecule = reader.read(molecule);

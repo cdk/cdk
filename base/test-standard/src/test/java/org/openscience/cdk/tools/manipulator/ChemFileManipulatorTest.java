@@ -112,9 +112,9 @@ public class ChemFileManipulatorTest extends CDKTestCase {
 
     @Test
     public void testGetAllAtomContainers_IChemFile() throws Exception {
-        String filename = "data/mdl/prev2000.sd";
+        String filename = "prev2000.sd";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
 
         MDLReader reader = new MDLReader(ins, Mode.STRICT);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());

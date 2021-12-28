@@ -47,7 +47,7 @@ public class RandomAccessTest extends CDKTestCase {
 
     @Test
     public void test() throws Exception {
-        String path = "/data/mdl/test2.sdf";
+        String path = "test2.sdf";
         logger.info("Testing: " + path);
         InputStream in = getClass().getResourceAsStream(path);
         File f = File.createTempFile("tmp", "sdf");

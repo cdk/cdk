@@ -120,8 +120,8 @@ public class PathToolsTest extends CDKTestCase {
 
     @Test
     public void testGetShortestPath_Middle() throws Exception {
-        String filename = "data/mdl/shortest_path_test.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "shortest_path_test.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IAtomContainer testMolecule = new AtomContainer();
         reader.read(testMolecule);
