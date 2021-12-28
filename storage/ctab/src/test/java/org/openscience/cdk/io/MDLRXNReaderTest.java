@@ -59,7 +59,7 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass
     public static void setup() {
-        setSimpleChemObjectReader(new MDLRXNReader(), "data/mdl/reaction-1.rxn");
+        setSimpleChemObjectReader(new MDLRXNReader(), "reaction-1.rxn");
     }
 
     @Test
@@ -75,9 +75,9 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testReadReactions1() throws Exception {
-        String filename1 = "data/mdl/reaction-1.rxn";
+        String filename1 = "reaction-1.rxn";
         logger.info("Testing: " + filename1);
-        InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename1);
+        InputStream ins1 = this.getClass().getResourceAsStream(filename1);
         MDLRXNReader reader1 = new MDLRXNReader(ins1);
         IReaction reaction1 = new Reaction();
         reaction1 = (IReaction) reader1.read(reaction1);
@@ -109,9 +109,9 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testReadReactions2() throws Exception {
-        String filename2 = "data/mdl/reaction-2.rxn";
+        String filename2 = "reaction-2.rxn";
         logger.info("Testing: " + filename2);
-        InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename2);
+        InputStream ins2 = this.getClass().getResourceAsStream(filename2);
         MDLRXNReader reader2 = new MDLRXNReader(ins2);
         IReaction reaction2 = new Reaction();
         reaction2 = (IReaction) reader2.read(reaction2);
@@ -124,9 +124,9 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testReadMapping() throws Exception {
-        String filename2 = "data/mdl/mappingTest.rxn";
+        String filename2 = "mappingTest.rxn";
         logger.info("Testing: " + filename2);
-        InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename2);
+        InputStream ins2 = this.getClass().getResourceAsStream(filename2);
         MDLRXNReader reader2 = new MDLRXNReader(ins2);
         IReaction reaction2 = new Reaction();
         reaction2 = (IReaction) reader2.read(reaction2);
@@ -143,9 +143,9 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
      */
     @Test
     public void testRDFChemFile() throws Exception {
-        String filename = "data/mdl/qsar-reaction-test.rdf";
+        String filename = "qsar-reaction-test.rdf";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLRXNReader reader = new MDLRXNReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
         reader.close();
@@ -181,9 +181,9 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
      */
     @Test
     public void testRDFModel() throws Exception {
-        String filename = "data/mdl/qsar-reaction-test.rdf";
+        String filename = "qsar-reaction-test.rdf";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLRXNReader reader = new MDLRXNReader(ins);
         IChemModel chemModel = (IChemModel) reader.read(new ChemModel());
         reader.close();
@@ -215,9 +215,9 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
      */
     @Test
     public void testRDFReactioniSet() throws Exception {
-        String filename = "data/mdl/qsar-reaction-test.rdf";
+        String filename = "qsar-reaction-test.rdf";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLRXNReader reader = new MDLRXNReader(ins);
         IReactionSet reactionSet = (IReactionSet) reader.read(new ReactionSet());
         reader.close();
@@ -242,15 +242,15 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
      */
     @Test
     public void testAsadExamples() throws Exception {
-        String filename = "data/mdl/output.rxn";
+        String filename = "output.rxn";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLRXNReader reader = new MDLRXNReader(ins);
         IReactionSet reactionSet = (IReactionSet) reader.read(new ReactionSet());
         reader.close();
-        filename = "data/mdl/output_Cleaned.rxn";
+        filename = "output_Cleaned.rxn";
         logger.info("Testing: " + filename);
-        ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        ins = this.getClass().getResourceAsStream(filename);
         reader = new MDLRXNReader(ins);
         IReactionSet reactionSet2 = (IReactionSet) reader.read(new ReactionSet());
         reader.close();

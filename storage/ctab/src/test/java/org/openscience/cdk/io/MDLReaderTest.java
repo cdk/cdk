@@ -63,7 +63,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass
     public static void setup() {
-        setSimpleChemObjectReader(new MDLReader(), "data/mdl/Strychnine_nichtOK.mol");
+        setSimpleChemObjectReader(new MDLReader(), "Strychnine_nichtOK.mol");
     }
 
     @Test
@@ -126,9 +126,9 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
      */
     @Test
     public void testBug1542467() throws Exception {
-        String filename = "data/mdl/Strychnine_nichtOK.mol";
+        String filename = "Strychnine_nichtOK.mol";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLReader reader = new MDLReader(ins, Mode.STRICT);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
@@ -158,9 +158,9 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
      */
     @Test
     public void testSDF() throws Exception {
-        String filename = "data/mdl/prev2000.sd";
+        String filename = "prev2000.sd";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLReader reader = new MDLReader(ins, Mode.STRICT);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
@@ -179,9 +179,9 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
      */
     @Test
     public void testStereoReadZeroDefault() throws Exception {
-        String filename = "data/mdl/prev2000.sd";
+        String filename = "prev2000.sd";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLReader reader = new MDLReader(ins, Mode.STRICT);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
@@ -203,9 +203,9 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testUndefinedStereo() throws Exception {
-        String filename = "data/mdl/ChEBI_26120.mol";
+        String filename = "ChEBI_26120.mol";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLReader reader = new MDLReader(ins, Mode.RELAXED);
         IAtomContainer mol = (IAtomContainer) reader.read(new AtomContainer());
         reader.close();
@@ -217,9 +217,9 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testReadAtomAtomMapping() throws Exception {
-        String filename = "data/mdl/a-pinene-with-atom-atom-mapping.mol";
+        String filename = "a-pinene-with-atom-atom-mapping.mol";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
 
         IAtomContainer mol = reader.read(new AtomContainer());
@@ -246,7 +246,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
      */
     @Test
     public void testMissingAtomProperties() throws Exception {
-        InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/bug3485634.mol");
+        InputStream in = getClass().getResourceAsStream("bug3485634.mol");
         MDLReader reader = new MDLReader(in);
         IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
@@ -259,7 +259,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
      */
     @Test
     public void properties() throws Exception {
-        InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/bug1356.sdf");
+        InputStream in = getClass().getResourceAsStream("bug1356.sdf");
         MDLReader reader = new MDLReader(in);
         IChemFile chemfile = DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class);
         chemfile = reader.read(chemfile);
@@ -272,7 +272,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
 
     @Test(expected=CDKException.class)
     public void wrongFormat() throws CDKException {
-        InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/bug1356.sdf");
+        InputStream in = getClass().getResourceAsStream("bug1356.sdf");
         MDLReader reader = new MDLReader(in, Mode.STRICT);
         IChemFile chemfile = DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class);
         chemfile = reader.read(chemfile);

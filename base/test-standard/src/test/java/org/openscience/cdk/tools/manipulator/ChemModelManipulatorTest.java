@@ -102,9 +102,9 @@ public class ChemModelManipulatorTest extends CDKTestCase {
 
     @Test
     public void testGetAllAtomContainers_IChemModel() throws Exception {
-        String filename = "data/mdl/a-pinene.mol";
+        String filename = "a-pinene.mol";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
 
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemModel chemFile = (ChemModel) reader.read((ChemObject) new ChemModel());
@@ -115,9 +115,9 @@ public class ChemModelManipulatorTest extends CDKTestCase {
 
     @Test
     public void testGetAllAtomContainers_IChemModel_WithReactions() throws Exception {
-        String filename = "data/mdl/0024.stg02.rxn";
+        String filename = "0024.stg02.rxn";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
 
         MDLRXNV2000Reader reader = new MDLRXNV2000Reader(ins, Mode.STRICT);
         ChemModel chemFile = (ChemModel) reader.read((ChemObject) new ChemModel());

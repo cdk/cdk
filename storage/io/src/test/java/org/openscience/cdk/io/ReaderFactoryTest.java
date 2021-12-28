@@ -102,27 +102,27 @@ public class ReaderFactoryTest extends AbstractReaderFactoryTest {
 
     @Test
     public void testMDLMolV2000() throws Exception {
-        expectReader("data/mdl/methylbenzol.mol", MDLV2000Format.getInstance(), 15, 15);
+        expectReader("org/openscience/cdk/io/methylbenzol.mol", MDLV2000Format.getInstance(), 15, 15);
     }
 
     @Test
     public void testDetection() throws Exception {
-        expectReader("data/mdl/withcharges.mol", MDLV2000Format.getInstance(), 9, 9);
+        expectReader("org/openscience/cdk/io/withcharges.mol", MDLV2000Format.getInstance(), 9, 9);
     }
 
     @Test
     public void testMDLMolV3000() throws Exception {
-        expectReader("data/mdl/molV3000.mol", MDLV3000Format.getInstance(), -1, -1);
+        expectReader("org/openscience/cdk/io/molV3000.mol", MDLV3000Format.getInstance(), -1, -1);
     }
 
     @Test
     public void testMDLRxnV2000() throws Exception {
-        expectReader("data/mdl/reaction-1.rxn", MDLRXNV2000Format.getInstance(), -1, -1);
+        expectReader("org/openscience/cdk/io/reaction-1.rxn", MDLRXNV2000Format.getInstance(), -1, -1);
     }
     
     @Test
     public void testMDLRxnV3000() throws Exception {
-        expectReader("data/mdl/reaction_v3.rxn", MDLRXNV3000Format.getInstance(), -1, -1);
+        expectReader("org/openscience/cdk/io/reaction_v3.rxn", MDLRXNV3000Format.getInstance(), -1, -1);
     }
     
     @Ignore("test moved to cdk-test-pdb/PDBReaderFactoryTest")

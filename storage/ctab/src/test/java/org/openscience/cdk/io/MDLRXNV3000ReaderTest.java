@@ -54,7 +54,7 @@ public class MDLRXNV3000ReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass
     public static void setup() {
-        setSimpleChemObjectReader(new MDLRXNV3000Reader(), "data/mdl/reaction_v3.rxn");
+        setSimpleChemObjectReader(new MDLRXNV3000Reader(), "reaction_v3.rxn");
     }
 
     @Test
@@ -69,9 +69,9 @@ public class MDLRXNV3000ReaderTest extends SimpleChemObjectReaderTest {
      */
     @Test
     public void testReadReactions1() throws Exception {
-        String filename1 = "data/mdl/reaction_v3.rxn";
+        String filename1 = "reaction_v3.rxn";
         logger.info("Testing: " + filename1);
-        InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename1);
+        InputStream ins1 = this.getClass().getResourceAsStream(filename1);
         MDLRXNV3000Reader reader1 = new MDLRXNV3000Reader(ins1, Mode.STRICT);
         IReaction reaction1 = new Reaction();
         reaction1 = (IReaction) reader1.read(reaction1);

@@ -444,7 +444,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
     @Test
     public void testAtomParity() throws CDKException, IOException {
 
-        InputStream    in       = ClassLoader.getSystemResourceAsStream("data/mdl/mol_testAtomParity.mol");
+        InputStream    in       = getClass().getResourceAsStream("mol_testAtomParity.mol");
         MDLV2000Reader reader   = new MDLV2000Reader(in);
         IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
@@ -462,7 +462,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
 
     @Test
     public void testWritePseudoAtoms() throws Exception {
-        InputStream    in       = ClassLoader.getSystemResourceAsStream("data/mdl/pseudoatoms.sdf");
+        InputStream    in       = getClass().getResourceAsStream("pseudoatoms.sdf");
         MDLV2000Reader reader   = new MDLV2000Reader(in);
         IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
@@ -584,7 +584,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
     @Test
     public void testSingleSingletRadical() throws Exception {
 
-        InputStream    in       = ClassLoader.getSystemResourceAsStream("data/mdl/singleSingletRadical.mol");
+        InputStream    in       = getClass().getResourceAsStream("singleSingletRadical.mol");
         MDLV2000Reader reader   = new MDLV2000Reader(in);
         IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
@@ -604,7 +604,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
     @Test
     public void testSingleDoubletRadical() throws Exception {
 
-        InputStream    in       = ClassLoader.getSystemResourceAsStream("data/mdl/singleDoubletRadical.mol");
+        InputStream    in       = getClass().getResourceAsStream("singleDoubletRadical.mol");
         MDLV2000Reader reader   = new MDLV2000Reader(in);
         IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
@@ -625,7 +625,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
     @Test
     public void testSingleTripletRadical() throws Exception {
 
-        InputStream    in       = ClassLoader.getSystemResourceAsStream("data/mdl/singleTripletRadical.mol");
+        InputStream    in       = getClass().getResourceAsStream("singleTripletRadical.mol");
         MDLV2000Reader reader   = new MDLV2000Reader(in);
         IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
@@ -645,7 +645,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
     @Test
     public void testMultipleRadicals() throws Exception {
 
-        InputStream    in       = ClassLoader.getSystemResourceAsStream("data/mdl/multipleRadicals.mol");
+        InputStream    in       = getClass().getResourceAsStream("multipleRadicals.mol");
         MDLV2000Reader reader   = new MDLV2000Reader(in);
         IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
@@ -687,7 +687,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
     @Test
     public void sgroupRepeatUnitRoundTrip() throws Exception {
         StringWriter sw = new StringWriter();
-        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/sgroup-sru.mol"));
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-sru.mol"));
              MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
             mdlw.write(mdlr.read(new AtomContainer()));
             String output = sw.toString();
@@ -700,7 +700,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
     @Test
     public void sgroupBracketStylesRoundTrip() throws Exception {
         StringWriter sw = new StringWriter();
-        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/sgroup-sru-bracketstyles.mol"));
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-sru-bracketstyles.mol"));
              MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
             mdlw.write(mdlr.read(new AtomContainer()));
             String output = sw.toString();
@@ -712,7 +712,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
     @Test
     public void sgroupUnorderedMixtureRoundTrip() throws Exception {
         StringWriter sw = new StringWriter();
-        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/sgroup-unord-mixture.mol"));
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-unord-mixture.mol"));
              MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
             mdlw.write(mdlr.read(new AtomContainer()));
             String output = sw.toString();
@@ -724,7 +724,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
     @Test
     public void sgroupCopolymerRoundTrip() throws Exception {
         StringWriter sw = new StringWriter();
-        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/sgroup-ran-copolymer.mol"));
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-ran-copolymer.mol"));
              MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
             mdlw.write(mdlr.read(new AtomContainer()));
             String output = sw.toString();
@@ -736,7 +736,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
     @Test
     public void sgroupExpandedAbbreviationRoundTrip() throws Exception {
         StringWriter sw = new StringWriter();
-        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/triphenyl-phosphate-expanded.mol"));
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("triphenyl-phosphate-expanded.mol"));
              MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
             mdlw.write(mdlr.read(new AtomContainer()));
             String output = sw.toString();
@@ -748,7 +748,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
     @Test
     public void sgroupParentAtomListRoundTrip() throws Exception {
         StringWriter sw = new StringWriter();
-        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/ChEBI_81539.mol"));
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("ChEBI_81539.mol"));
              MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
             mdlw.write(mdlr.read(new AtomContainer()));
             String output = sw.toString();
@@ -760,7 +760,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
     @Test
     public void sgroupOrderedMixtureRoundTrip() throws Exception {
         StringWriter sw = new StringWriter();
-        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/sgroup-ord-mixture.mol"));
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-ord-mixture.mol"));
              MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
             mdlw.write(mdlr.read(new AtomContainer()));
             String output = sw.toString();
@@ -773,7 +773,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
     @Test
     public void roundtripAtomParityExpH() throws Exception {
         StringWriter sw = new StringWriter();
-        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/tetrahedral-parity-withExpH.mol"));
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("tetrahedral-parity-withExpH.mol"));
              MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
             mdlw.write(mdlr.read(new AtomContainer()));
             String output = sw.toString();
@@ -784,7 +784,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
     @Test
     public void roundtripAtomParityImplH() throws Exception {
         StringWriter sw = new StringWriter();
-        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/tetrahedral-parity-withImplH.mol"));
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("tetrahedral-parity-withImplH.mol"));
              MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
             mdlw.write(mdlr.read(new AtomContainer()));
             String output = sw.toString();
@@ -795,7 +795,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
     @Test
     public void roundtripAtomParityImplModified() throws Exception {
         StringWriter sw = new StringWriter();
-        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/tetrahedral-parity-withImplH.mol"));
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("tetrahedral-parity-withImplH.mol"));
              MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
             AtomContainer         mol = mdlr.read(new AtomContainer());
             ITetrahedralChirality tc  = (ITetrahedralChirality) mol.stereoElements().iterator().next();
@@ -948,7 +948,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
     @Test
     public void skipDefaultProps() throws Exception {
         StringWriter sw = new StringWriter();
-        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/tetrahedral-parity-withImplH.mol"));
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("tetrahedral-parity-withImplH.mol"));
              MDLV2000Writer mdlw = new MDLV2000Writer(sw)) {
             mdlw.getSetting(MDLV2000Writer.OptWriteDefaultProperties)
                 .setSetting("false");
@@ -1054,7 +1054,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
 
     @Test
     public void dataSgroupRoundTrip() {
-      String path = "/data/mdl/hbr_acoh_mix.mol";
+      String path = "hbr_acoh_mix.mol";
       try (InputStream in = getClass().getResourceAsStream(path)) {
         MDLV2000Reader     mdlr    = new MDLV2000Reader(in);
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();

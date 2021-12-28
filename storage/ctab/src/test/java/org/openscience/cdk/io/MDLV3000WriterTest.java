@@ -373,7 +373,7 @@ public class MDLV3000WriterTest {
 
     @Test
     public void roundTripSRU() throws IOException, CDKException {
-        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/sgroup-sru-bracketstyles.mol"))) {
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-sru-bracketstyles.mol"))) {
             IAtomContainer mol = mdlr.read(new AtomContainer(0, 0, 0, 0));
             String res = writeToStr(mol);
             assertThat(res, CoreMatchers.containsString("M  V30 1 SRU 0 ATOMS=(1 2) XBONDS=(2 1 2) LABEL=n CONNECT=HT BRKXYZ=(9 -2.5742-\n"
@@ -387,7 +387,7 @@ public class MDLV3000WriterTest {
 
     @Test
     public void roundTripExpandedAbbrv() throws IOException, CDKException {
-        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/triphenyl-phosphate-expanded.mol"))) {
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("triphenyl-phosphate-expanded.mol"))) {
             IAtomContainer mol = mdlr.read(new AtomContainer(0, 0, 0, 0));
             String res = writeToStr(mol);
             assertThat(res, CoreMatchers.containsString("M  V30 1 SUP 0 ATOMS=(6 6 19 20 21 22 23) XBONDS=(1 5) ESTATE=E LABEL=Ph\n"
@@ -398,7 +398,7 @@ public class MDLV3000WriterTest {
 
     @Test
     public void roundTripOrderMixtures() throws IOException, CDKException {
-        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/sgroup-ord-mixture.mol"))) {
+        try (MDLV2000Reader mdlr = new MDLV2000Reader(getClass().getResourceAsStream("sgroup-ord-mixture.mol"))) {
             IAtomContainer mol = mdlr.read(new AtomContainer(0, 0, 0, 0));
             String res = writeToStr(mol);
             assertThat(res, CoreMatchers.containsString("M  V30 1 FOR 0 ATOMS=(24 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21-\n"

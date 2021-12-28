@@ -162,17 +162,17 @@ public class FormatFactoryTest extends CDKTestCase {
 
     @Test
     public void testMDLMolV2000() throws Exception {
-        expectFormat("data/mdl/methylbenzol.mol", MDLV2000Format.getInstance());
+        expectFormat("org/openscience/cdk/io/methylbenzol.mol", MDLV2000Format.getInstance());
     }
 
     @Test
     public void testDetection() throws Exception {
-        expectFormat("data/mdl/withcharges.mol", MDLV2000Format.getInstance());
+        expectFormat("org/openscience/cdk/io/withcharges.mol", MDLV2000Format.getInstance());
     }
 
     @Test
     public void testMDLMolV3000() throws Exception {
-        expectFormat("data/mdl/molV3000.mol", MDLV3000Format.getInstance());
+        expectFormat("org/openscience/cdk/io/molV3000.mol", MDLV3000Format.getInstance());
     }
 
     @Test
