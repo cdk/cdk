@@ -183,8 +183,8 @@ public class ConnectivityCheckerTest extends CDKTestCase {
      */
     @Test
     public void testIsConnectedFromHINFile() throws Exception {
-        String filename = "data/hin/connectivity1.hin";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "connectivity1.hin";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);
         ChemFile content = (ChemFile) reader.read((ChemObject) new ChemFile());
         List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);

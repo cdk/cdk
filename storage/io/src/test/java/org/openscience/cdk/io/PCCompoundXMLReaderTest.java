@@ -84,9 +84,9 @@ public class PCCompoundXMLReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testReading3DCoords() throws Exception {
-        String filename = "data/asn/pubchem/cid176.xml";
+        String filename = "cid176.xml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         PCCompoundXMLReader reader = new PCCompoundXMLReader(ins);
         IAtomContainer molecule = (IAtomContainer) reader.read(new AtomContainer());
         reader.close();

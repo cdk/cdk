@@ -84,9 +84,9 @@ public class JChemPaintTest extends CDKTestCase {
      */
     @Test
     public void testWWMMOutput() throws Exception {
-        String filename = "data/cml/keggtest.cml";
+        String filename = "keggtest.cml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();

@@ -157,7 +157,7 @@ public class ReaderFactoryTest extends AbstractReaderFactoryTest {
 
     @Test
     public void testSmiles() throws Exception {
-        InputStream is = this.getClass().getClassLoader().getResourceAsStream("data/smiles/drugs.smi");
+        InputStream is = this.getClass().getResourceAsStream("drugs.smi");
         Object reader = factory.createReader(is);
         Assert.assertNull(reader);
     }

@@ -58,9 +58,9 @@ public class JumboTest extends CDKTestCase {
      */
     @Test
     public void testCuran() throws Exception {
-        String filename = "data/cml/curan.xml";
+        String filename = "curan.xml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
@@ -91,9 +91,9 @@ public class JumboTest extends CDKTestCase {
      */
     @Test
     public void testCephNS() throws Exception {
-        String filename = "data/cml/ceph-ns.xml";
+        String filename = "ceph-ns.xml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
@@ -125,9 +125,9 @@ public class JumboTest extends CDKTestCase {
      */
     @Test
     public void testNucleustest() throws Exception {
-        String filename = "data/cml/nucleustest.xml";
+        String filename = "nucleustest.xml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();

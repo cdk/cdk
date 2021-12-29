@@ -25,7 +25,7 @@ public class Gaussian98ReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass
     public static void setup() {
-        setSimpleChemObjectReader(new Gaussian98Reader(), "data/gaussian/g98ReaderNMRTest.log");
+        setSimpleChemObjectReader(new Gaussian98Reader(), "g98ReaderNMRTest.log");
     }
 
     @Test
@@ -40,8 +40,8 @@ public class Gaussian98ReaderTest extends SimpleChemObjectReaderTest {
         //Double shielding = null;
         Object object = null;
         int shieldingCounter = 0;
-        String filename = "data/gaussian/g98ReaderNMRTest.log";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "g98ReaderNMRTest.log";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         BufferedReader inputReader = new BufferedReader(new InputStreamReader(ins));
         Gaussian98Reader g98Reader = new Gaussian98Reader(inputReader);
         ChemFile chemFile = (ChemFile) g98Reader.read(new ChemFile());
