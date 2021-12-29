@@ -43,7 +43,7 @@ public class IteratingPCCompoundXMLReaderTest extends CDKTestCase {
 
     @Test
     public void testList() throws Exception {
-        String filename = "data/asn/pubchem/aceticAcids38.xml";
+        String filename = "org/openscience/cdk/io/aceticAcids38.xml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         IteratingPCCompoundXMLReader reader = new IteratingPCCompoundXMLReader(new InputStreamReader(ins),

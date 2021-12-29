@@ -64,7 +64,7 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass
     public static void setup() {
-        setSimpleChemObjectReader(new Mol2Reader(), "data/mol2/fromWebsite.mol2");
+        setSimpleChemObjectReader(new Mol2Reader(), "fromWebsite.mol2");
     }
 
     @Test
@@ -81,9 +81,9 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
      */
     @Test
     public void testExampleFromWebsite() throws Exception {
-        String filename = "data/mol2/fromWebsite.mol2";
+        String filename = "fromWebsite.mol2";
         logger.info("Testing: ", filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         Mol2Reader reader = new Mol2Reader(ins);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
@@ -112,8 +112,8 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testReadingIDs() throws Exception {
-        String filename = "data/mol2/fromWebsite.mol2";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "fromWebsite.mol2";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         Mol2Reader reader = new Mol2Reader(ins);
         IAtomContainer molecule = (IAtomContainer) reader.read(new AtomContainer());
         reader.close();
@@ -167,9 +167,9 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
     @Test
     public void testMultiMolButSingle() throws Exception {
         Assume.assumeTrue(runSlowTests());
-        String filename = "data/mol2/fromWebsite.mol2";
+        String filename = "fromWebsite.mol2";
         logger.info("Testing: ", filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         Mol2Reader reader = new Mol2Reader(ins);
         IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
@@ -181,8 +181,8 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testIAtomContainer() throws Exception {
-        String filename = "data/mol2/fromWebsite.mol2";
-        InputStream in = Mol2ReaderTest.class.getClassLoader().getResourceAsStream(filename);
+        String filename = "fromWebsite.mol2";
+        InputStream in = Mol2ReaderTest.class.getResourceAsStream(filename);
         Mol2Reader reader = new Mol2Reader(in);
         IAtomContainer mol = (IAtomContainer) reader.read(new AtomContainer());
         reader.close();

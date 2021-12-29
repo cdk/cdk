@@ -48,6 +48,8 @@ public abstract class ChemObjectReaderTest extends ChemObjectIOTest {
     public void testSetReader_InputStream() throws Exception {
         Assert.assertNotNull("No test file has been set!", testFile);
         InputStream ins = ChemObjectReaderTest.class.getClassLoader().getResourceAsStream(testFile);
+        if (ins == null)
+            ins = chemObjectIO.getClass().getResourceAsStream(testFile);
         chemObjectIO.setReader(ins);
     }
 
@@ -55,6 +57,8 @@ public abstract class ChemObjectReaderTest extends ChemObjectIOTest {
     public void testSetReader_Reader() throws Exception {
         Assert.assertNotNull("No test file has been set!", testFile);
         InputStream ins = ChemObjectReaderTest.class.getClassLoader().getResourceAsStream(testFile);
+        if (ins == null)
+            ins = chemObjectIO.getClass().getResourceAsStream(testFile);
         chemObjectIO.setReader(new InputStreamReader(ins));
     }
 

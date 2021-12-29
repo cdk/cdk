@@ -45,7 +45,7 @@ public class PCCompoundASNReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass
     public static void setup() throws Exception {
-        setSimpleChemObjectReader(new PCCompoundASNReader(), "data/asn/pubchem/cid1.asn");
+        setSimpleChemObjectReader(new PCCompoundASNReader(), "cid1.asn");
     }
 
     @Test
@@ -56,9 +56,9 @@ public class PCCompoundASNReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testReading() throws Exception {
-        String filename = "data/asn/pubchem/cid1.asn";
+        String filename = "cid1.asn";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         PCCompoundASNReader reader = new PCCompoundASNReader(ins);
         IChemFile cFile = (IChemFile) reader.read(new ChemFile());
         reader.close();

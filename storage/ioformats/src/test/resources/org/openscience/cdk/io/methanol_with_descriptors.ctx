@@ -1,0 +1,983 @@
+ /IDENT        1    1
+Petra
+ /NAME         1    1
+CH4O
+ /HISTORY      2    2
+PETRA       2.6  006 08.05.1998   somebody   05.07.2006 12:40:54 Linux-zabib
+all2ctx.tc  3.262 000 09/27/2004   wwwrun      7/05/2006 12:40:54 i686-zabib
+ /MOLECULS     1    1
+    1     1    6
+ /VALENCE      1    1
+    1
+ /ATOMS        6    6
+    1    1  0    1    1
+    2    6  0    2    5
+    3    1  0    6    6
+    4    1  0    7    7
+    5    8  4    8    9
+    6    1  0   10   10
+ /BONDS       10   10
+      1     1     2     1
+      2     2     1     1
+      3     2     3     1
+      4     2     4     1
+      5     2     5     1
+      6     3     2     1
+      7     4     2     1
+      8     5     2     1
+      9     5     6     1
+     10     6     5     1
+ /ENSPROP      0    4
+E_LEVEL
+ 
+Ensemble level
+I
+ /ELEVEL       1    1
+0
+ /ATOPROP      0    4
+A_FORMAL_CHARGE
+[E]
+Nominal atom charge
+I
+ /ACHARGE      6    6
+0
+0
+0
+0
+0
+0
+ /ENSPROP      1    4
+EAROMAT
+[NUMBER OF ATOMS]
+Number of aromatic atoms
+I
+ /EAROMAT      1    1
+ 0
+ /ENSPROP      1    4
+ECHARGE
+[E]
+Charge of molecule  [e]
+I
+ /ECHARGE      1    1
+ 0
+ /ENSPROP      1    4
+EDELTAHF
+[KJ/MOL] (ENSEMBLE)
+Standard heat of formation  [kJ/mol]
+R
+ /EDELTAHF     1    1
+ -198.82
+ /ENSPROP      1    4
+ENATOMS
+[NUMBER OF]
+Number of atoms
+I
+ /ENATOMS      1    1
+ 6
+ /ENSPROP      1    4
+ENFREEEL
+[NUMBER OF]
+Number of free electrons
+I
+ /ENFREEEL     1    1
+ 4
+ /ENSPROP      1    4
+ENEGCHARGE
+[E]
+Sum of formal negative charges  [e]
+I
+ /ENEGCHAR     1    1
+ 0
+ /ENSPROP      1    4
+EPICENTERS
+[NUMBER OF]
+Number of pi centers
+I
+ /EPICENTE     1    1
+ 0
+ /ENSPROP      1    4
+EPOLARIZABILITY
+[ANGSTROM ** 3]
+Molecular polarizability  [Angstrom**3]
+R
+ /EPOLARIZ     1    1
+ 3.2720
+ /ENSPROP      1    4
+EPOSCHARGE
+[E]
+Sum of formal positive charges  [e]
+I
+ /EPOSCHAR     1    1
+ 0
+ /ENSPROP      1    4
+ERADICAL
+[NUMBER OF]
+Number of lone electrons
+I
+ /ERADICAL     1    1
+ 0
+ /ENSPROP      1    4
+ESTABIL
+[KJ/MOL]
+Aromatic delocalization energy  [kJ/mol]
+R
+ /ESTABIL      1    1
+ .0000
+ /ENSPROP      1    4
+ESTRAIN
+[KJ/MOL]
+Ring strain energy  [kJ/mol]
+R
+ /ESTRAIN      1    1
+ .0000
+ /MOLPROP      1    4
+AROMAT
+[NUMBER OF ATOMS]
+Number of aromatic atoms
+I
+ /AROMAT       1    1
+ 0
+ /MOLPROP      1    4
+CHARGE
+[E]
+Charge of molecule  [e]
+I
+ /CHARGE       1    1
+ 0
+ /MOLPROP      1    4
+DELTAHF
+[KJ/MOL] (ENSEMBLE)
+Standard heat of formation  [kJ/mol]
+R
+ /DELTAHF      1    1
+ -198.82
+ /MOLPROP      1    4
+NATOMS
+[NUMBER OF]
+Number of atoms
+I
+ /NATOMS       1    1
+ 6
+ /MOLPROP      1    4
+NFREEEL
+[NUMBER OF]
+Number of free electrons
+I
+ /NFREEEL      1    1
+ 4
+ /MOLPROP      1    4
+NEGCHARGE
+[E]
+Sum of formal negative charges  [e]
+I
+ /NEGCHARG     1    1
+ 0
+ /MOLPROP      1    4
+PICENTERS
+[NUMBER OF]
+Number of pi centers
+I
+ /PICENTER     1    1
+ 0
+ /MOLPROP      1    4
+POLARIZABILITY
+[ANGSTROM ** 3]
+Molecular polarizability  [Angstrom**3]
+R
+ /POLARIZA     1    1
+ 3.2720
+ /MOLPROP      1    4
+POSCHARGE
+[E]
+Sum of formal positive charges  [e]
+I
+ /POSCHARG     1    1
+ 0
+ /MOLPROP      1    4
+RADICAL
+[NUMBER OF]
+Number of lone electrons
+I
+ /RADICAL      1    1
+ 0
+ /MOLPROP      1    4
+STABIL
+[KJ/MOL]
+Aromatic delocalization energy  [kJ/mol]
+R
+ /STABIL       1    1
+ .0000
+ /MOLPROP      1    4
+STRAIN
+[KJ/MOL]
+Ring strain energy  [kJ/mol]
+R
+ /STRAIN       1    1
+ .0000
+ /ATOPROP      1    4
+AAROMATIC
+[1=TRUE, 0=FALSE]
+Atom belongs to an aromatic ring  [0 = false, 1 = true]
+L
+ /AAROMATI     6    6
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ /ATOPROP      1    4
+ACHARGE
+[E]
+Formal charge  [e]
+I
+ /ACHARGE      6    6
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ /ATOPROP      1    4
+APICENTER
+[NUMBER OF]
+Atom belongs to a pi system  [0 = false, 1 = true]
+I
+ /APICENTE     6    6
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ /ATOPROP      1    4
+APOLARIZABILITY
+[ANGSTROM ** 3]
+Effective atom polarizability  [Angstrom**3]
+R
+ /APOLARIZ     6    6
+ 2.2645
+ 3.0790
+ 2.2645
+ 2.2645
+ 2.6930
+ 1.8715
+ /ATOPROP      1    4
+ARINGSIZE
+[NUMBER OF]
+Size of the smallest ring the atom belongs to
+I
+ /ARINGSIZ     6    6
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ /ATOPROP      1    4
+ATOMICID
+[ATOMIC NUMBER]
+Atomic number
+I
+ /ATOMICID     6    6
+ 1
+ 6
+ 1
+ 1
+ 8
+ 1
+ /ATOPROP      1    4
+ENLP
+[EV]
+Lone pair electronegativity  [eV]
+R
+ /ENLP         6    6
+ .0000
+ .0000
+ .0000
+ .0000
+ 3.1138
+ .0000
+ /ATOPROP      1    4
+ENPI
+[EV]
+Pi electronegativity  [eV]
+R
+ /ENPI         6    6
+ .0000
+ .0000
+ .0000
+ .0000
+ 3.1138
+ .0000
+ /ATOPROP      1    4
+ENSIG
+[EV]
+Sigma electronegativity  [eV]
+R
+ /ENSIG        6    6
+ 7.4931
+ 8.2850
+ 7.4931
+ 7.4931
+ 9.2553
+ 8.4508
+ /ATOPROP      1    4
+FREEEL
+[NUMBER OF]
+Number of free electrons
+I
+ /FREEEL       6    6
+ 0
+ 0
+ 0
+ 0
+ 4
+ 0
+ /ATOPROP      1    4
+GROUP
+[NEW IUPAC NO.]
+IUPAC group number in the PSE
+I
+ /GROUP        6    6
+ 1
+ 14
+ 1
+ 1
+ 16
+ 1
+ /ATOPROP      1    4
+LPSTAB
+[MICROSALLER]
+Mesomeric stabilization by lone pairs
+R
+ /LPSTAB       6    6
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ /ATOPROP      1    4
+NEIGHBOR
+[NUMBER OF]
+Number of neighbor atoms
+I
+ /NEIGHBOR     6    6
+ 1
+ 4
+ 1
+ 1
+ 2
+ 1
+ /ATOPROP      1    4
+NONHNEIGHBOR
+[NUMBER OF]
+Number of nonhydrogen neighbor atoms
+I
+ /NONHNEIG     6    6
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ /ATOPROP      1    4
+QPI
+[E]
+Pi charge  [e]
+R
+ /QPI          6    6
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ /ATOPROP      1    4
+QSIG
+[E]
+Sigma charge  [e]
+R
+ /QSIG         6    6
+ .52019E-01
+ .33483E-01
+ .52019E-01
+ .52019E-01
+ -.39873
+ .20919
+ /ATOPROP      1    4
+QTOT
+[E]
+Total charge  [e]
+R
+ /QTOT         6    6
+ .52019E-01
+ .33483E-01
+ .52019E-01
+ .52019E-01
+ -.39873
+ .20919
+ /ATOPROP      1    4
+B1D0
+[1=TRUE, 0=FALSE]
+Atom can form a kation in heterolytic bond cleavages  [0 = false, 1 = true]
+L
+ /B1D0         6    6
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ /ATOPROP      1    4
+B1D2
+[1=TRUE, 0=FALSE]
+Atom can form an anion in heterolytic bond cleavages  [0 = false, 1 = true]
+L
+ /B1D2         6    6
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ /ATOPROP      1    4
+B2D2
+[1=TRUE, 0=FALSE]
+Atom can be the center of an alpha elimination  [0 = false, 1 = true]
+L
+ /B2D2         6    6
+ 0
+ 1
+ 0
+ 0
+ 0
+ 0
+ /ATOPROP      1    4
+M1D0
+[1=TRUE, 0=FALSE]
+Acceptor atom  [0 = false, 1 = true]
+L
+ /M1D0         6    6
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ /ATOPROP      1    4
+M1D2
+[1=TRUE, 0=FALSE]
+Donor atom  [0 = false, 1 = true]
+L
+ /M1D2         6    6
+ 0
+ 0
+ 0
+ 0
+ 1
+ 0
+ /ATOPROP      1    4
+M2D2
+[1=TRUE, 0=FALSE]
+Donor atom which can form two new bonds
+L
+ /M2D2         6    6
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ /ATOPROP      1    4
+M1D1
+[1=TRUE, 0=FALSE]
+Donor atom for one electron [0 = FALSE, 1 = TRUE]
+L
+ /M1D1         6    6
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ /ATOPROP      1    4
+B1D1
+[1=TRUE, 0=FALSE]
+Acceptor atom for one electron [0 = FALSE, 1 = TRUE]
+L
+ /B1D1         6    6
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ /ATOPROP      1    4
+ARADICAL
+[1=TRUE, 0=FALSE]
+Atom has one lone electron [0 = FALSE, 1 = TRUE]
+L
+ /ARADICAL     6    6
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ /BONPROP      1    4
+BAROMATIC
+[1=TRUE, 0=FALSE]
+Bond belongs to an aromatic ring  [0 = false, 1 = true]
+L
+ /BAROMATI    10   10
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ /BONPROP      1    4
+BDE
+[KJ/MOL]
+Bond dissociation energy  [kJ/mol]
+R
+ /BDE         10   10
+ 393.29
+ 393.29
+ 393.29
+ 393.29
+ 290.90
+ 393.29
+ 393.29
+ 290.90
+ 317.19
+ 317.19
+ /BONPROP      1    4
+BOORD
+ 
+Bond order
+I
+ /BOORD       10   10
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ /BONPROP      1    4
+BPOLARIZABILITY
+[ANGSTROM ** 3]
+Mean of effective atom polarizability  [Angstrom**3]
+R
+ /BPOLARIZ    10   10
+ 2.6718
+ 2.6718
+ 2.6718
+ 2.6718
+ 2.8860
+ 2.6718
+ 2.6718
+ 2.8860
+ 2.2823
+ 2.2823
+ /BONPROP      1    4
+BRINGSIZE
+[NUMBER OF ATOMS]
+Size of the smallest ring the bond belongs to
+I
+ /BRINGSIZ    10   10
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ /BONPROP      1    4
+DENPI
+[EV]
+Difference in pi electronegativity  [eV]
+R
+ /DENPI       10   10
+ .0000
+ .0000
+ .0000
+ .0000
+ -3.1138
+ .0000
+ .0000
+ 3.1138
+ 3.1138
+ -3.1138
+ /BONPROP      1    4
+DENSIG
+[EV]
+Difference in sigma electronegativity  [eV]
+R
+ /DENSIG      10   10
+ -.79194
+ .79194
+ .79194
+ .79194
+ -.97027
+ -.79194
+ -.79194
+ .97027
+ .80448
+ -.80448
+ /BONPROP      1    4
+DQPI
+[E]
+Difference in pi charge  [e]
+R
+ /DQPI        10   10
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ /BONPROP      1    4
+DQSIG
+[E]
+Difference in sigma charge  [e]
+R
+ /DQSIG       10   10
+ .18537E-01
+ -.18537E-01
+ -.18537E-01
+ -.18537E-01
+ .43221
+ .18537E-01
+ .18537E-01
+ -.43221
+ -.60791
+ .60791
+ /BONPROP      1    4
+DQTOT
+[E]
+Difference in total charge  [e]
+R
+ /DQTOT       10   10
+ .18537E-01
+ -.18537E-01
+ -.18537E-01
+ -.18537E-01
+ .43221
+ .18537E-01
+ .18537E-01
+ -.43221
+ -.60791
+ .60791
+ /BONPROP      1    4
+EXNSTAB
+[MICROSALLER]
+Resonance stabilization of a negative charge by an aromat
+R
+ /EXNSTAB     10   10
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ /BONPROP      1    4
+EXPSTAB
+[MICROSALLER]
+Resonance stabilization of a positive charge by an aromat
+R
+ /EXPSTAB     10   10
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ /BONPROP      1    4
+HYBRIDD
+[FRACTION]
+d-Hybrid fraction
+R
+ /HYBRIDD     10   10
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ /BONPROP      1    4
+HYBRIDP
+[FRACTION]
+p-Hybrid fraction
+R
+ /HYBRIDP     10   10
+ .0000
+ .75000
+ .75000
+ .75000
+ .75000
+ .0000
+ .0000
+ .75000
+ .75000
+ .0000
+ /BONPROP      1    4
+HYBRIDS
+[FRACTION]
+s-Hybrid fraction
+R
+ /HYBRIDS     10   10
+ 1.0000
+ .25000
+ .25000
+ .25000
+ .25000
+ 1.0000
+ 1.0000
+ .25000
+ .25000
+ 1.0000
+ /BONPROP      1    4
+NSTAB
+[MICROSALLER]
+Resonance stabilization of a negative charge
+R
+ /NSTAB       10   10
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ /BONPROP      1    4
+PSTAB
+[MICROSALLER]
+Resonance stabilization of a positive charge
+R
+ /PSTAB       10   10
+ .0000
+ 8.5843
+ 8.5843
+ 8.5843
+ .0000
+ .0000
+ .0000
+ .0000
+ 3.5719
+ .0000
+ /BONPROP      1    4
+RINGDI
+[KJ]
+Ring strain energy released by bond cleavage  [kJ/mol]
+R
+ /RINGDI      10   10
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ /BONPROP      1    4
+SQIT
+[E]
+Sum of sigma charges shifted over all iterations  [e]
+R
+ /SQIT        10   10
+ .10404
+ -.10404
+ -.10404
+ -.10404
+ .37908
+ .10404
+ .10404
+ -.37908
+ -.41837
+ .41837
+ /BONPROP      1    4
+STABRES
+[MICROSALLER]
+Resonance stabilization
+R
+ /STABRES     10   10
+ .0000
+ 8.5843
+ 8.5843
+ 8.5843
+ .0000
+ .0000
+ .0000
+ .0000
+ 3.5719
+ .0000
+ /BONPROP      1    4
+TBDE
+[KJ/MOL]
+Total BDE for breaking s/p bonds [kJ/mol]
+R
+ /TBDE        10   10
+ 393.29
+ 393.29
+ 393.29
+ 393.29
+ 290.90
+ 393.29
+ 393.29
+ 290.90
+ 317.19
+ 317.19
+ /BONPROP      1    4
+PDELOC
+[eV]
+delocalization stabilization of a positive charge
+R
+ /PDELOC      10   10
+ .0000
+ 25.710
+ 25.710
+ 25.710
+ .0000
+ .0000
+ .0000
+ .0000
+ 36.362
+ .0000
+ /BONPROP      1    4
+NDELOC
+[eV]
+delocalization stabilization of a negative charge
+R
+ /NDELOC      10   10
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ .0000
+ /BONPROP      1    4
+SDELOC
+[eV]
+delocalization stabilization
+R
+ /SDELOC      10   10
+ .0000
+ 25.710
+ 25.710
+ 25.710
+ .0000
+ .0000
+ .0000
+ .0000
+ 36.362
+ .0000
+ /ENSPROP      1    4
+NHASHMOL
+ 
+Number of different molecule hash codes
+I (true)
+ /NHASHMOL     1    1
+ 1
+ /ENSPROP      1    4
+NHASHATO
+ 
+Number of different atom hash codes
+I (true)
+ /NHASHATO     1    1
+ 4
+ /ENSPROP      1    4
+NHASHBON
+ 
+Number of different bond hash codes
+I (true)
+ /NHASHBON     1    1
+ 6
+ /ENSPROP      1    4
+ENSHASH
+ 
+Ensemble hash code
+I (true)
+ /ENSHASH      1    1
+ 789609137
+ /MOLPROP      1    4
+MOLHASH
+ 
+Molecule hash code
+I (true)
+ /MOLHASH      1    1
+ 789609137
+ /MOLPROP      1    4
+MHASHGRP
+ 
+Molecule hash group
+I (true)
+ /MHASHGRP     1    1
+ 1
+ /ATOPROP      1    4
+AHASHGRP
+ 
+Atom hash group
+I (true)
+ /AHASHGRP     6    6
+ 1
+ 2
+ 1
+ 1
+ 3
+ 4
+ /BONPROP      1    4
+BHASHGRP
+ 
+Bond hash group
+I (true)
+ /BHASHGRP    10   10
+ 1
+ 2
+ 2
+ 2
+ 3
+ 1
+ 1
+ 4
+ 5
+ 6
+ /END          0    0

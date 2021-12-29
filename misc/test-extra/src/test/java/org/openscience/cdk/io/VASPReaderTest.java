@@ -40,7 +40,7 @@ public class VASPReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass
     public static void setup() throws Exception {
-        setSimpleChemObjectReader(new VASPReader(), "data/vasp/LiMoS2_optimisation_ISIF3.vasp");
+        setSimpleChemObjectReader(new VASPReader(), "LiMoS2_optimisation_ISIF3.vasp");
     }
 
     @Test
@@ -51,9 +51,9 @@ public class VASPReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testReading() throws Exception {
-        String filename = "data/vasp/LiMoS2_optimisation_ISIF3.vasp";
+        String filename = "LiMoS2_optimisation_ISIF3.vasp";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         VASPReader reader = new VASPReader(ins);
         ChemFile chemFile = (ChemFile) reader.read(new ChemFile());
         Assert.assertNotNull(chemFile);

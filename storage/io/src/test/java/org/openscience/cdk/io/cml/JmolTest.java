@@ -62,9 +62,9 @@ public class JmolTest extends CDKTestCase {
      */
     @Test
     public void testEstron() throws Exception {
-        String filename = "data/cml/estron.cml";
+        String filename = "/org/openscience/cdk/io/estron.cml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
