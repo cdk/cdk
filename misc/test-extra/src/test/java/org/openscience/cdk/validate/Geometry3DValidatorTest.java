@@ -35,8 +35,8 @@ public class Geometry3DValidatorTest extends CDKTestCase {
 
     @Test
     public void testEthane() throws Exception {
-        String filename = "data/mdl/Heptane-TestFF-output.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "Heptane-TestFF-output.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         ValidatorEngine engine = new ValidatorEngine();

@@ -91,8 +91,8 @@ public class BremserPredictorTest extends CDKTestCase {
                 28.5, 25.7, 25.7, 13.3, 14.4, 14.4, 8.9, 14.8, 14.8, 13.3, 13.3, 13.3, 14.4, 14.4, 13.3, 14.4, 14.4,
                 8.9, 14.8, 14.8, 13.3, 13.3, 13.3, 14.4, 14.4, 13.3};
         IAtomContainer molecule = null;
-        String filename = "data/mdl/BremserPredictionTest.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "BremserPredictionTest.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         molecule = reader.read(new AtomContainer());
         double prediction;

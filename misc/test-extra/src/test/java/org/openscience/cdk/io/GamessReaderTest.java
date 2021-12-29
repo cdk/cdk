@@ -58,8 +58,8 @@ public class GamessReaderTest extends SimpleChemObjectReaderTest {
      */
     @Before
     public void setUp() throws Exception {
-        String filename = "data/gamess/Cl2O.log";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "Cl2O.log";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         this.inputReader = new BufferedReader(new InputStreamReader(ins));
         this.gamessReaderUnderTest = new GamessReader(this.inputReader);
         setSimpleChemObjectReader(this.gamessReaderUnderTest, filename);
