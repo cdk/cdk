@@ -228,8 +228,8 @@ public class ConnectivityCheckerTest extends CDKTestCase {
 
     @Test
     public void copySgroups() throws Exception {
-        String filename = "data/mdl/sgroup-split.mol";
-        try(InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "sgroup-split.mol";
+        try(InputStream ins = this.getClass().getResourceAsStream(filename);
             ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
         ){
             ChemFile content = (ChemFile) reader.read((ChemObject) new ChemFile());

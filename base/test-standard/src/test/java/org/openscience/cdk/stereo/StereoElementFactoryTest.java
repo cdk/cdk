@@ -623,7 +623,7 @@ public class StereoElementFactoryTest {
     public void inverse_style_downbond_dopachrome() throws Exception {
         MDLV2000Reader mdl = null;
         try {
-            mdl = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/CPD-7272.mol"));
+            mdl = new MDLV2000Reader(getClass().getResourceAsStream("CPD-7272.mol"));
             IAtomContainer ac = mdl.read(new AtomContainer());
 
             // MDL reader currently adds stereo automatically

@@ -551,8 +551,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase {
     @Test
     public void testUITTimeoutFix() throws Exception {
         // Load molecules
-        String filename = "data/mdl/UITTimeout.sdf";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "UITTimeout.sdf";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
         ChemFile content = (ChemFile) reader.read(new ChemFile());
         List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
