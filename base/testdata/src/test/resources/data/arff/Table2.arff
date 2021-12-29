@@ -1,6 +1,0 @@
-@relation 'table2' 
-@attribute 'x1' real 
-@attribute 'x2' real 
-@attribute 'y3' real
-@data 2, 2 ,0
- 5,5,0

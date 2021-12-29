@@ -28,7 +28,6 @@
         <module>dict</module>
         <module>reaction</module>
         <module>test</module>
-        <module>testdata</module>
     </modules>
     <packaging>pom</packaging>
     <artifactId>cdk-base</artifactId>
