@@ -48,7 +48,7 @@ public class CrystClustReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass
     public static void setup() {
-        setSimpleChemObjectReader(new CrystClustReader(), "data/crystclust/estron.crystclust");
+        setSimpleChemObjectReader(new CrystClustReader(), "estron.crystclust");
     }
 
     @Test
@@ -59,9 +59,9 @@ public class CrystClustReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testEstrone() throws Exception {
-        String filename = "data/crystclust/estron.crystclust";
+        String filename = "estron.crystclust";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CrystClustReader reader = new CrystClustReader(ins);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
 

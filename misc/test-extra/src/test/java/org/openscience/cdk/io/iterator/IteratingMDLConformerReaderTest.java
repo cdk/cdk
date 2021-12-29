@@ -23,9 +23,9 @@ public class IteratingMDLConformerReaderTest extends CDKTestCase {
 
     @Test
     public void testSDF() throws Exception {
-        String filename = "data/mdl/iterconftest.sdf";
+        String filename = "iterconftest.sdf";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         IteratingMDLConformerReader reader = new IteratingMDLConformerReader(ins,
                 DefaultChemObjectBuilder.getInstance());
 
@@ -48,9 +48,9 @@ public class IteratingMDLConformerReaderTest extends CDKTestCase {
 
     @Test(expected = UnsupportedOperationException.class)
     public void testRemove() {
-        String filename = "data/mdl/iterconftest.sdf";
+        String filename = "iterconftest.sdf";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         IteratingMDLConformerReader reader = new IteratingMDLConformerReader(ins,
                 DefaultChemObjectBuilder.getInstance());
 
