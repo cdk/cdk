@@ -35,7 +35,7 @@ public class Mopac7ReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass
     public static void setup() {
-        setSimpleChemObjectReader(new Mopac7Reader(), "data/mopac/ethylene.dat.out");
+        setSimpleChemObjectReader(new Mopac7Reader(), "ethylene.dat.out");
     }
 
     @Test

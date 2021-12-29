@@ -74,7 +74,7 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
     @Test
     public void testBug1248() throws IOException, CDKException {
 
-        InputStream in = getClass().getResourceAsStream("/data/cml/(1R)-1-aminoethan-1-ol.cml");
+        InputStream in = getClass().getResourceAsStream("(1R)-1-aminoethan-1-ol.cml");
         CMLReader reader = new CMLReader(in);
         try {
             IChemFile cfile = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
@@ -109,7 +109,7 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
     @Test
     public void testBug1245() throws IOException, CDKException {
 
-        InputStream in = getClass().getResourceAsStream("/data/cml/(1R)-1-aminoethan-1-ol.cml");
+        InputStream in = getClass().getResourceAsStream("(1R)-1-aminoethan-1-ol.cml");
         CMLReader reader = new CMLReader(in);
         try {
             IChemFile cfile = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
@@ -163,7 +163,7 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
     @Test
     public void testBug1274() throws CDKException, IOException {
 
-        InputStream in = getClass().getResourceAsStream("/data/cml/(1R)-1-aminoethan-1-ol-multipleBondStereo.cml");
+        InputStream in = getClass().getResourceAsStream("(1R)-1-aminoethan-1-ol-multipleBondStereo.cml");
         CMLReader reader = new CMLReader(in);
         try {
             IChemFile cfile = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
@@ -197,7 +197,7 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
     @Test
     public void testBug1275() throws CDKException, IOException {
 
-        InputStream in = getClass().getResourceAsStream("/data/cml/(1R)-1-aminoethan-1-ol-malformedDictRef.cml");
+        InputStream in = getClass().getResourceAsStream("(1R)-1-aminoethan-1-ol-malformedDictRef.cml");
         CMLReader reader = new CMLReader(in);
         try {
             IChemFile cfile = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
@@ -225,7 +225,7 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testWedgeBondParsing() throws CDKException, IOException {
-        InputStream in = getClass().getResourceAsStream("/data/cml/AZD5423.xml");
+        InputStream in = getClass().getResourceAsStream("AZD5423.xml");
         CMLReader reader = new CMLReader(in);
         try {
             IChemFile cfile = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));

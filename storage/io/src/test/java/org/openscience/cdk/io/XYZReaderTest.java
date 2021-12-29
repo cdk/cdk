@@ -47,7 +47,7 @@ public class XYZReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass
     public static void setup() throws Exception {
-        setSimpleChemObjectReader(new XYZReader(), "data/xyz/viagra.xyz");
+        setSimpleChemObjectReader(new XYZReader(), "viagra.xyz");
     }
 
     @Test
@@ -58,9 +58,9 @@ public class XYZReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testViagra() throws Exception {
-        String filename = "data/xyz/viagra.xyz";
+        String filename = "viagra.xyz";
         logger.info("Testing: ", filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         XYZReader reader = new XYZReader(ins);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
@@ -90,9 +90,9 @@ public class XYZReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testComment() throws Exception {
-        String filename = "data/xyz/viagra_withComment.xyz";
+        String filename = "viagra_withComment.xyz";
         logger.info("Testing: ", filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         XYZReader reader = new XYZReader(ins);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();

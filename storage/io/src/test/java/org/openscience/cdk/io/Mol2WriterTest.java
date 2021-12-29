@@ -129,8 +129,8 @@ public class Mol2WriterTest extends ChemObjectIOTest {
      */
     @Test
     public void testMissingAtomType() throws Exception {
-        String filename = "data/mdl/ligand-1a0i.sdf";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "ligand-1a0i.sdf";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IChemFile fileContents = (IChemFile) reader.read(new ChemFile());
         reader.close();

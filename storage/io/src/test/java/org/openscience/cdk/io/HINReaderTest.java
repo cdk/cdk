@@ -88,9 +88,9 @@ public class HINReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testMoleculeTwo() throws Exception {
-        String filename = "data/hin/molecule2.hin";
+        String filename = "molecule2.hin";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         HINReader reader = new HINReader(ins);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
@@ -114,9 +114,9 @@ public class HINReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testMultiple() throws Exception {
-        String filename = "data/hin/multiple.hin";
+        String filename = "multiple.hin";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         HINReader reader = new HINReader(ins);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
@@ -136,8 +136,8 @@ public class HINReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testIsConnectedFromHINFile() throws Exception {
-        String filename = "data/hin/connectivity1.hin";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "connectivity1.hin";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);
         IChemFile content = reader.read(new ChemFile());
         reader.close();
@@ -153,8 +153,8 @@ public class HINReaderTest extends SimpleChemObjectReaderTest {
      */
     @Test
     public void testAromaticRingsLine() throws Exception {
-        String filename = "data/hin/bug2984581.hin";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "bug2984581.hin";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);
         IChemFile content = reader.read(new ChemFile());
         reader.close();
@@ -168,8 +168,8 @@ public class HINReaderTest extends SimpleChemObjectReaderTest {
      */
     @Test
     public void testReadAromaticRingsKeyword() throws Exception {
-        String filename = "data/hin/arorings.hin";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "arorings.hin";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);
         IChemFile content = reader.read(new ChemFile());
         reader.close();

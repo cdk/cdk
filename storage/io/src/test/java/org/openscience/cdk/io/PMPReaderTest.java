@@ -44,7 +44,7 @@ public class PMPReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass
     public static void setup() throws Exception {
-        setSimpleChemObjectReader(new PMPReader(), "data/pmp/aceticacid.pmp");
+        setSimpleChemObjectReader(new PMPReader(), "aceticacid.pmp");
     }
 
     @Test
@@ -55,8 +55,8 @@ public class PMPReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testAceticAcid() throws Exception {
-        String filename = "data/pmp/aceticacid.pmp";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "aceticacid.pmp";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         PMPReader reader = new PMPReader(ins);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
@@ -82,8 +82,8 @@ public class PMPReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testTwoAceticAcid() throws Exception {
-        String filename = "data/pmp/two_aceticacid.pmp";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "two_aceticacid.pmp";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         PMPReader reader = new PMPReader(ins);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();

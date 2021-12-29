@@ -98,8 +98,8 @@ public class BondToolsTest extends CDKTestCase {
      */
     @Test
     public void testCloseEnoughToBond_IAtom_IAtom_double() throws Exception {
-        String filename = "data/xyz/viagra.xyz";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "viagra.xyz";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         XYZReader reader = new XYZReader(ins);
         AtomTypeFactory atf = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt",
                 SilentChemObjectBuilder.getInstance());

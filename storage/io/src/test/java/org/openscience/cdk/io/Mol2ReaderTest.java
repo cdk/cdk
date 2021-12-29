@@ -132,8 +132,8 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
     public void testNCIfeb03_2D() throws Exception {
         Assume.assumeTrue(runSlowTests());
 
-        String filename = "data/mol2/NCI_feb03_2D.mol2.gz";
-        InputStream in = new GZIPInputStream(Mol2ReaderTest.class.getClassLoader().getResourceAsStream(filename));
+        String filename = "NCI_feb03_2D.mol2.gz";
+        InputStream in = new GZIPInputStream(Mol2ReaderTest.class.getResourceAsStream(filename));
         BufferedReader br = new BufferedReader(new InputStreamReader(in));
         StringBuilder buf = new StringBuilder();
         String line;
@@ -152,9 +152,9 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
     @Test
     public void testMultiMol() throws Exception {
         Assume.assumeTrue(runSlowTests());
-        String filename = "data/mol2/actives.mol2";
+        String filename = "actives.mol2";
         logger.info("Testing: ", filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         Mol2Reader reader = new Mol2Reader(ins);
         IChemFile chemFile = reader.read(new ChemFile());
         reader.close();

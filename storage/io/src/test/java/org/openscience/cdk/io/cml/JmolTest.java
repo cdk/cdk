@@ -129,9 +129,9 @@ public class JmolTest extends CDKTestCase {
      */
     @Test
     public void testMethanolTwo() throws Exception {
-        String filename = "data/cml/methanol2.cml";
+        String filename = "methanol2.cml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
@@ -160,9 +160,9 @@ public class JmolTest extends CDKTestCase {
      */
     @Test
     public void testMethanolOne() throws Exception {
-        String filename = "data/cml/methanol1.cml";
+        String filename = "methanol1.cml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
