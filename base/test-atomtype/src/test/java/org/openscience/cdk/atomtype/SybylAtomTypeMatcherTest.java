@@ -89,8 +89,8 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 
     @Test
     public void testFindMatchingAtomType_IAtomContainer() throws Exception {
-        String filename = "data/mol2/atomtyping.mol2";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "atomtyping.mol2";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         Mol2Reader reader = new Mol2Reader(ins);
         IAtomContainer mol = (IAtomContainer) reader.read(new AtomContainer());
 
@@ -105,8 +105,8 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 
     @Test
     public void testAtomTyping() throws Exception {
-        String filename = "data/mol2/atomtyping.mol2";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "atomtyping.mol2";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         Mol2Reader reader = new Mol2Reader(ins);
         IAtomContainer molecule = (IAtomContainer) reader.read(new AtomContainer());
         Assert.assertNotNull(molecule);
@@ -166,8 +166,8 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 
     @Test
     public void testAtomTyping4() throws Exception {
-        String filename = "data/mol2/atomtyping4.mol2";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "atomtyping4.mol2";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         Mol2Reader reader = new Mol2Reader(ins);
         IAtomContainer molecule = (IAtomContainer) reader.read(new AtomContainer());
         Assert.assertNotNull(molecule);
@@ -201,8 +201,8 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 
     @Test
     public void testAtomTyping2() throws Exception {
-        String filename = "data/mol2/atomtyping2.mol2";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "atomtyping2.mol2";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         Mol2Reader reader = new Mol2Reader(ins);
         IAtomContainer molecule = (IAtomContainer) reader.read(new AtomContainer());
         Assert.assertNotNull(molecule);
@@ -222,8 +222,8 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 
     @Test
     public void testAtomTyping3() throws Exception {
-        String filename = "data/mol2/atomtyping3.mol2";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "atomtyping3.mol2";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         Mol2Reader reader = new Mol2Reader(ins);
         IAtomContainer molecule = (IAtomContainer) reader.read(new AtomContainer());
         Assert.assertNotNull(molecule);
