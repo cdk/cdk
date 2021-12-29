@@ -78,8 +78,8 @@ public class MorganNumbersToolsTest extends CDKTestCase {
      */
     @Test
     public void testBug2846213() throws CDKException {
-        String filename = "data/mdl/bug2846213.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "bug2846213.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         IAtomContainer ac = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);

@@ -174,8 +174,8 @@ public class AllRingsFinderTest extends CDKTestCase {
         IRingSet ringSet = null;
         AllRingsFinder arf = new AllRingsFinder();
 
-        String filename = "data/mdl/choloylcoa.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "choloylcoa.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         IChemSequence seq = chemFile.getChemSequence(0);
@@ -191,8 +191,8 @@ public class AllRingsFinderTest extends CDKTestCase {
         IRingSet ringSet = null;
         AllRingsFinder arf = new AllRingsFinder();
 
-        String filename = "data/mdl/azulene.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "azulene.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         IChemSequence seq = chemFile.getChemSequence(0);
@@ -211,8 +211,8 @@ public class AllRingsFinderTest extends CDKTestCase {
         IRingSet ringSet = null;
         AllRingsFinder arf = new AllRingsFinder();
 
-        String filename = "data/cml/isolated_ringsystems.cml";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "isolated_ringsystems.cml";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
 
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
@@ -250,10 +250,10 @@ public class AllRingsFinderTest extends CDKTestCase {
         Assume.assumeTrue(runSlowTests());
 
         //String filename = "data/Bug646.cml";
-        String filename = "data/cml/testBug777488-1-AllRingsFinder.cml";
+        String filename = "testBug777488-1-AllRingsFinder.cml";
         //String filename = "data/NCI_diversity_528.mol.cml";
         //String filename = "data/NCI_diversity_978.mol.cml";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         IChemSequence seq = chemFile.getChemSequence(0);

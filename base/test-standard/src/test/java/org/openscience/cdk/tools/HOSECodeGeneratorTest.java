@@ -58,8 +58,8 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
      */
     @Test
     public void test968852() throws Exception {
-        String filename = "data/mdl/2,5-dimethyl-furan.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "2,5-dimethyl-furan.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer mol1 = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
@@ -75,13 +75,13 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testSecondSphere() throws Exception {
-        String filename = "data/mdl/isopropylacetate.mol";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "isopropylacetate.mol";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer mol1 = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
         String code1 = new HOSECodeGenerator().getHOSECode(mol1, mol1.getAtom(0), 6);
-        filename = "data/mdl/testisopropylacetate.mol";
-        InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename);
+        filename = "testisopropylacetate.mol";
+        InputStream ins2 = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader2 = new MDLV2000Reader(ins2, Mode.STRICT);
         IAtomContainer mol2 = reader2.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
         String code2 = new HOSECodeGenerator().getHOSECode(mol2, mol2.getAtom(2), 6);

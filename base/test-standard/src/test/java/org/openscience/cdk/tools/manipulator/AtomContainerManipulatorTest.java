@@ -1088,8 +1088,8 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
      */
     @Test
     public void testOverWriteConfig() throws Exception {
-        String filename = "data/mdl/lobtest2.sdf";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "lobtest2.sdf";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
         ChemFile content = (ChemFile) reader.read(new ChemFile());
         List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
