@@ -52,8 +52,8 @@ public class SpanningTreeTest extends CDKTestCase {
     public void setUp() throws Exception {
         if (azulene == null) {
             // load azulene
-            String filename = "data/mdl/azulene.mol";
-            InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+            String filename = "azulene.mol";
+            InputStream ins = this.getClass().getResourceAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
             IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
             IChemSequence seq = chemFile.getChemSequence(0);

@@ -64,8 +64,8 @@ public class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
      */
     @Test
     public void testBug3141611() throws Exception {
-        String filename = "data/mdl/error.sdf";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "error.sdf";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
 
@@ -100,16 +100,16 @@ public class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
         CDKAtomTypeMatcher atomTypeMatcher = CDKAtomTypeMatcher.getInstance(SilentChemObjectBuilder.getInstance());
 
         // Read the first file
-        String filename = "data/cml/smiles1.cml";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "smiles1.cml";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
         Assert.assertNotNull(chemFile);
         IAtomContainer mol1 = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
 
         // Read the second file
-        filename = "data/cml/smiles2.cml";
-        ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        filename = "smiles2.cml";
+        ins = this.getClass().getResourceAsStream(filename);
         reader = new CMLReader(ins);
         chemFile = (IChemFile) reader.read(new ChemFile());
         Assert.assertNotNull(chemFile);
