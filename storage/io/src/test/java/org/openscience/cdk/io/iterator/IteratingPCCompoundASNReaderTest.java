@@ -41,7 +41,7 @@ public class IteratingPCCompoundASNReaderTest extends CDKTestCase {
 
     @Test
     public void testList() throws Exception {
-        String filename = "data/asn/pubchem/list.asn";
+        String filename = "org/openscience/cdk/io/list.asn";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         IteratingPCCompoundASNReader reader = new IteratingPCCompoundASNReader(ins,

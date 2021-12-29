@@ -50,6 +50,8 @@ public abstract class SimpleChemObjectReaderTest extends ChemObjectReaderTest {
         for (IChemObject object : acceptableChemObjects()) {
             if (chemObjectIO.accepts(object.getClass())) {
                 InputStream ins = SimpleChemObjectReaderTest.class.getClassLoader().getResourceAsStream(testFile);
+                if (ins == null)
+                    ins = chemObjectIO.getClass().getResourceAsStream(testFile);
                 chemObjectIO.setReader(ins);
                 IChemObject readObject = chemObjectIO.read(object);
                 chemObjectIO.close();

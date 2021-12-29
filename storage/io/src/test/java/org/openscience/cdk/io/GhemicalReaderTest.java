@@ -45,7 +45,7 @@ public class GhemicalReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass
     public static void setup() {
-        setSimpleChemObjectReader(new GhemicalMMReader(), "data/ghemical/ethene.mm1gp");
+        setSimpleChemObjectReader(new GhemicalMMReader(), "ethene.mm1gp");
     }
 
     @Test
@@ -87,8 +87,8 @@ public class GhemicalReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testEthene() throws Exception {
-        String filename = "data/ghemical/ethene.mm1gp";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "ethene.mm1gp";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         GhemicalMMReader reader = new GhemicalMMReader(ins);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();

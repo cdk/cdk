@@ -44,7 +44,7 @@ public class IteratingPCSubstancesXMLReaderTest extends CDKTestCase {
 
     @Test
     public void testTaxols() throws Exception {
-        String filename = "data/asn/pubchem/taxols.xml";
+        String filename = "org/openscience/cdk/io/taxols.xml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         IteratingPCSubstancesXMLReader reader = new IteratingPCSubstancesXMLReader(new InputStreamReader(ins),

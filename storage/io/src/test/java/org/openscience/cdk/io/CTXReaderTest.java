@@ -51,7 +51,7 @@ public class CTXReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass
     public static void setup() {
-        setSimpleChemObjectReader(new CTXReader(), "data/ctx/methanol_with_descriptors.ctx");
+        setSimpleChemObjectReader(new CTXReader(), "methanol_with_descriptors.ctx");
     }
 
     @Test
@@ -62,9 +62,9 @@ public class CTXReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testMethanol() throws Exception {
-        String filename = "data/ctx/methanol_with_descriptors.ctx";
+        String filename = "methanol_with_descriptors.ctx";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         CTXReader reader = new CTXReader(ins);
         IChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();

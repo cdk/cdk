@@ -76,22 +76,22 @@ public class ExtraReaderFactoryTest {
 
     @Test
     public void testINChI() throws Exception {
-        expectReader("data/inchi/guanine.inchi.xml", INChIFormat.getInstance());
+        expectReader("org/openscience/cdk/io/guanine.inchi.xml", INChIFormat.getInstance());
     }
 
     @Test
     public void testINChIPlainText() throws Exception {
-        expectReader("data/inchi/guanine.inchi", INChIPlainTextFormat.getInstance());
+        expectReader("org/openscience/cdk/io/guanine.inchi", INChIPlainTextFormat.getInstance());
     }
 
     @Test
     public void testVASP() throws Exception {
-        expectReader("data/vasp/LiMoS2_optimisation_ISIF3.vasp", VASPFormat.getInstance());
+        expectReader("org/openscience/cdk/io/LiMoS2_optimisation_ISIF3.vasp", VASPFormat.getInstance());
     }
 
     @Test
     public void testGamess() throws Exception {
-        expectReader("data/gamess/ch3oh_gam.out", GamessFormat.getInstance());
+        expectReader("org/openscience/cdk/io/ch3oh_gam.out", GamessFormat.getInstance());
     }
 
 }

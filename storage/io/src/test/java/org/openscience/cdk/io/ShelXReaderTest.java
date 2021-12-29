@@ -42,7 +42,7 @@ public class ShelXReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass
     public static void setup() throws Exception {
-        setSimpleChemObjectReader(new ShelXReader(), "data/shelx/frame_1.res");
+        setSimpleChemObjectReader(new ShelXReader(), "frame_1.res");
     }
 
     @Test
@@ -54,9 +54,9 @@ public class ShelXReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testReading() throws Exception {
-        String filename = "data/shelx/frame_1.res";
+        String filename = "frame_1.res";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         ShelXReader reader = new ShelXReader(ins);
         Crystal crystal = (Crystal) reader.read(new Crystal());
         reader.close();

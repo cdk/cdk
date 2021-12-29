@@ -49,7 +49,7 @@ public class INChIReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass
     public static void setup() {
-        setSimpleChemObjectReader(new INChIReader(), "data/inchi/guanine.inchi.xml");
+        setSimpleChemObjectReader(new INChIReader(), "guanine.inchi.xml");
     }
 
     @Test
@@ -63,9 +63,9 @@ public class INChIReaderTest extends SimpleChemObjectReaderTest {
      */
     @Test
     public void testGuanine() throws Exception {
-        String filename = "data/inchi/guanine.inchi.xml";
+        String filename = "guanine.inchi.xml";
         logger.info("Testing: ", filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         INChIReader reader = new INChIReader(ins);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
 

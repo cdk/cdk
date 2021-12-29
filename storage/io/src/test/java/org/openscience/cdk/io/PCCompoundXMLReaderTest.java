@@ -44,7 +44,7 @@ public class PCCompoundXMLReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass
     public static void setup() throws Exception {
-        setSimpleChemObjectReader(new PCCompoundXMLReader(), "data/asn/pubchem/cid1145.xml");
+        setSimpleChemObjectReader(new PCCompoundXMLReader(), "cid1145.xml");
     }
 
     @Test
@@ -55,9 +55,9 @@ public class PCCompoundXMLReaderTest extends SimpleChemObjectReaderTest {
 
     @Test
     public void testReading() throws Exception {
-        String filename = "data/asn/pubchem/cid1145.xml";
+        String filename = "cid1145.xml";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         PCCompoundXMLReader reader = new PCCompoundXMLReader(ins);
         IAtomContainer molecule = (IAtomContainer) reader.read(new AtomContainer());
         reader.close();
