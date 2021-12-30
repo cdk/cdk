@@ -22,10 +22,8 @@ package org.openscience.cdk.silent;
 import java.io.Serializable;
 
 import com.google.common.base.Objects;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
  * Implements the idea of an element in the periodic table.
