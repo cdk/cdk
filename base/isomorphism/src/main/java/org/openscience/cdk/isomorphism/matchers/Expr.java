@@ -23,10 +23,6 @@
 
 package org.openscience.cdk.isomorphism.matchers;
 
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
-import com.google.common.cache.Weigher;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ReactionRole;
 import org.openscience.cdk.config.Elements;
@@ -41,6 +37,7 @@ import static org.openscience.cdk.isomorphism.matchers.Expr.Type.*;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Deque;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -704,9 +701,6 @@ public final class Expr {
         return query;
     }
 
-    /* Property Caches */
-    private static LoadingCache<IAtomContainer, int[]> cacheRCounts;
-
     private static int[] getRingCounts(IAtomContainer mol) {
         int[] rcounts = new int[mol.getAtomCount()];
         for (int[] path : Cycles.mcb(mol).paths()) {
@@ -719,24 +713,10 @@ public final class Expr {
 
     private static int getRingCount(IAtom atom) {
         final IAtomContainer mol = atom.getContainer();
-        if (cacheRCounts == null) {
-            cacheRCounts = CacheBuilder.newBuilder()
-                                       .maximumWeight(1000) // 4KB
-                                       .weigher(new Weigher<IAtomContainer, int[]>() {
-                                           @Override
-                                           public int weigh(IAtomContainer key,
-                                                            int[] value) {
-                                               return value.length;
-                                           }
-                                       })
-                                       .build(new CacheLoader<IAtomContainer, int[]>() {
-                                           @Override
-                                           public int[] load(IAtomContainer key) throws Exception {
-                                               return getRingCounts(key);
-                                           }
-                                       });
-        }
-        return cacheRCounts.getUnchecked(mol)[atom.getIndex()];
+        // we used to have a cache here but this would be incorrect if
+        // an IAtomContainer was reused - better would be if we did the
+        // matching in the pattern
+        return getRingCounts(mol)[atom.getIndex()];
     }
 
     /**
