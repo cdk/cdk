@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.smiles;
 
-import com.google.common.base.Joiner;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -139,7 +138,7 @@ public class AbsoluteSMILESTest {
         for (String input : inputs)
             output.add(sg.create(sp.parseSmiles(input)));
 
-        org.hamcrest.MatcherAssert.assertThat(Joiner.on(".").join(inputs) + " were not canonicalised, outputs were " + output,
+        org.hamcrest.MatcherAssert.assertThat(String.join(".", inputs) + " were not canonicalised, outputs were " + output,
                 output.size(), is(1));
 
     }

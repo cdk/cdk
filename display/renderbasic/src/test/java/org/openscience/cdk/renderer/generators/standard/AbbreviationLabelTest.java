@@ -23,7 +23,6 @@
 
 package org.openscience.cdk.renderer.generators.standard;
 
-import com.google.common.base.Joiner;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -145,7 +144,7 @@ public class AbbreviationLabelTest {
         List<String> tokens = new ArrayList<>();
         assertTrue(AbbreviationLabel.parse("N(CH2CH2O)CH2", tokens));
         AbbreviationLabel.reverse(tokens);
-        assertThat(Joiner.on("").join(tokens), is("H2C(OH2CH2C)N"));
+        assertThat(String.join("", tokens), is("H2C(OH2CH2C)N"));
     }
 
     @Test
@@ -154,7 +153,7 @@ public class AbbreviationLabelTest {
         assertTrue(AbbreviationLabel.parse("PO(OH)OEt", tokens));
         AbbreviationLabel.reverse(tokens);
         AbbreviationLabel.format(tokens);
-        assertThat(Joiner.on("").join(tokens), is("EtO(HO)OP"));
+        assertThat(String.join("", tokens), is("EtO(HO)OP"));
     }
 
     @Test
@@ -162,7 +161,7 @@ public class AbbreviationLabelTest {
         List<String> tokens = new ArrayList<>();
         assertTrue(AbbreviationLabel.parse("B(OH)2", tokens));
         AbbreviationLabel.reverse(tokens);
-        assertThat(Joiner.on("").join(tokens), is("(HO)2B"));
+        assertThat(String.join("", tokens), is("(HO)2B"));
     }
 
     @Test
