@@ -53,7 +53,6 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static org.openscience.cdk.CDKConstants.ATOM_ATOM_MAPPING;
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.TOGETHER;
 import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKWISE;
@@ -112,7 +111,7 @@ final class CDKToBeam {
 
     Edge toBeamEdge(IBond b, Map<IAtom, Integer> indices) throws CDKException {
 
-        checkArgument(b.getAtomCount() == 2, "Invalid number of atoms on bond");
+        if (b.getAtomCount() != 2) throw new IllegalArgumentException("Invalid number of atoms on bond");
 
         int u = indices.get(b.getBegin());
         int v = indices.get(b.getEnd());
@@ -253,7 +252,7 @@ final class CDKToBeam {
      */
     static Edge toBeamEdge(IBond b, int flavour, Map<IAtom, Integer> indices) throws CDKException {
 
-        checkArgument(b.getAtomCount() == 2, "Invalid number of atoms on bond");
+        if (b.getAtomCount() != 2) throw new IllegalArgumentException("Invalid number of atoms on bond");
 
         int u = indices.get(b.getBegin());
         int v = indices.get(b.getEnd());
