@@ -23,7 +23,6 @@
 
 package org.openscience.cdk.depict;
 
-import com.google.common.base.Joiner;
 import com.google.common.xml.XmlEscapers;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.Bounds;
@@ -356,7 +355,7 @@ final class SvgDrawVisitor implements IDrawVisitor {
     private void visit(MarkedElement elem) {
         String id = elem.getId();
         List<String> classes = elem.getClasses();
-        String cls = classes.isEmpty() ? null : Joiner.on(" ").join(classes);
+        String cls = classes.isEmpty() ? null : String.join(" ", classes);
 
         IRenderingElement marked = elem.element();
 
