@@ -37,8 +37,8 @@ import org.openscience.cdk.ringsearch.RingSearch;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Objects;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 import static org.openscience.cdk.interfaces.IAtomType.Hybridization;
 
 /**
@@ -98,7 +98,7 @@ final class AtomTypeModel extends ElectronDonation {
 
             Hybridization hyb = atom.getHybridization();
 
-            checkNotNull(atom.getAtomTypeName(), "atom has unset atom type");
+            Objects.requireNonNull(atom.getAtomTypeName(), "atom has unset atom type");
 
             // atom has been assigned an atom type but we don't know the hybrid state,
             // typically for atom type 'X' (unknown)

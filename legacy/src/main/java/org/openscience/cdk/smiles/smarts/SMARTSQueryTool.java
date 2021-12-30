@@ -46,10 +46,10 @@ import java.util.BitSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * This class provides a easy to use wrapper around SMARTS matching functionality.  User code that wants to do
@@ -284,7 +284,7 @@ public class SMARTSQueryTool {
      * @see Cycles
      */
     public void setAromaticity(Aromaticity aromaticity) {
-        this.aromaticity = checkNotNull(aromaticity, "aromaticity was not provided");
+        this.aromaticity = Objects.requireNonNull(aromaticity, "aromaticity was not provided");
     }
 
     /**

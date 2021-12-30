@@ -35,9 +35,9 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.ringsearch.RingSearch;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Set;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 import static org.openscience.cdk.CDKConstants.ISAROMATIC;
 import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 
@@ -151,8 +151,8 @@ public final class Aromaticity {
      * @see org.openscience.cdk.graph.Cycles
      */
     public Aromaticity(ElectronDonation model, CycleFinder cycles) {
-        this.model = checkNotNull(model);
-        this.cycles = checkNotNull(cycles);
+        this.model = Objects.requireNonNull(model);
+        this.cycles = Objects.requireNonNull(cycles);
     }
 
     /**

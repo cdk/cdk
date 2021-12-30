@@ -29,8 +29,8 @@ import java.util.BitSet;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 import static org.openscience.cdk.graph.InitialCycles.Cycle;
 
 /**
@@ -94,8 +94,8 @@ public final class EssentialCycles {
      * @param initial a molecule graph
      */
     EssentialCycles(final RelevantCycles relevant, final InitialCycles initial) {
-        checkNotNull(relevant, "No RelevantCycles provided");
-        this.initial = checkNotNull(initial, "No InitialCycles provided");
+        Objects.requireNonNull(relevant, "No RelevantCycles provided");
+        this.initial = Objects.requireNonNull(initial, "No InitialCycles provided");
         this.basis = new GreedyBasis(initial.numberOfCycles(), initial.numberOfEdges());
         this.essential = new ArrayList<Cycle>();
 

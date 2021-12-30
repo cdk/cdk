@@ -34,9 +34,9 @@ import org.openscience.cdk.ringsearch.RingSearch;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Set;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 
 /**
@@ -290,7 +290,7 @@ final class SMARTSAtomInvariants {
 
             IAtom atom = container.getAtom(v);
 
-            int implHCount = checkNotNull(atom.getImplicitHydrogenCount(), "Implicit hydrogen count was not set.");
+            int implHCount = Objects.requireNonNull(atom.getImplicitHydrogenCount(), "Implicit hydrogen count was not set.");
 
             int totalHCount = implHCount;
             int valence = implHCount;

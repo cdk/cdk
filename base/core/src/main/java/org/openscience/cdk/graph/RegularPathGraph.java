@@ -28,9 +28,9 @@ import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * A path graph (<b>P-Graph</b>) for graphs with less than 64 vertices - the
@@ -77,8 +77,8 @@ final class RegularPathGraph extends PathGraph {
     @SuppressWarnings("unchecked")
     RegularPathGraph(final int[][] mGraph, final int[] rank, final int limit) {
 
-        checkNotNull(mGraph, "no molecule graph");
-        checkNotNull(rank, "no rank provided");
+        Objects.requireNonNull(mGraph, "no molecule graph");
+        Objects.requireNonNull(rank, "no rank provided");
 
         this.graph = new List[mGraph.length];
         this.rank = rank;
