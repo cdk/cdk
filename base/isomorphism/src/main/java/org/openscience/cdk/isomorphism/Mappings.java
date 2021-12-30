@@ -27,7 +27,6 @@ package org.openscience.cdk.isomorphism;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Iterators;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -40,6 +39,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.StreamSupport;
 
 /**
  * A fluent interface for handling (sub)-graph mappings from a query to a target
@@ -282,7 +282,8 @@ public final class Mappings implements Iterable<int[]> {
 
             @Override
             public Iterator<int[]> iterator() {
-                return Iterators.filter(iterable.iterator(), new UniqueAtomMatches()::test);
+                return StreamSupport.stream(iterable.spliterator(), false)
+                        .filter(new UniqueAtomMatches()).iterator();
             }
         });
     }
@@ -302,7 +303,8 @@ public final class Mappings implements Iterable<int[]> {
 
             @Override
             public Iterator<int[]> iterator() {
-                return Iterators.filter(iterable.iterator(), new UniqueBondMatches(g)::test);
+                return StreamSupport.stream(iterable.spliterator(), false)
+                                    .filter(new UniqueBondMatches(g)).iterator();
             }
         });
     }
