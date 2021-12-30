@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Set;
 
 import com.google.common.collect.FluentIterable;
-import com.google.common.primitives.Ints;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Ignore;
@@ -2226,7 +2225,7 @@ public class SmilesParserTest extends CDKTestCase {
 
             @Override
             public int compare(IStereoElement o1, IStereoElement o2) {
-                return Ints.compare(mol.indexOf(((ITetrahedralChirality) o1).getChiralAtom()),
+                return Integer.compare(mol.indexOf(((ITetrahedralChirality) o1).getChiralAtom()),
                         mol.indexOf(((ITetrahedralChirality) o2).getChiralAtom()));
             }
         });
