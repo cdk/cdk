@@ -18,25 +18,9 @@
  */
 package org.openscience.cdk.pharmacophore;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-
-import javax.vecmath.Point3d;
-
-import com.google.common.collect.HashBiMap;
 import org.openscience.cdk.AtomRef;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.aromaticity.Aromaticity;
-import org.openscience.cdk.aromaticity.ElectronDonation;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryUtil;
-import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -47,6 +31,16 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.smarts.SmartsPattern;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
+import javax.vecmath.Point3d;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * Identifies atoms whose 3D arrangement matches a specified pharmacophore query.
@@ -280,7 +274,10 @@ public class PharmacophoreMatcher {
         // query -> target so need to inverse the mapping
         // XXX: re-subsearching the query
         for (Map<IBond,IBond> map : mappings.toBondMap()) {
-            bondMap.add(new HashMap<>(HashBiMap.create(map).inverse()));
+            HashMap<IBond, IBond> inv = new HashMap<>();
+            for (Map.Entry<IBond, IBond> e : map.entrySet())
+                inv.put(e.getValue(), e.getKey());
+            bondMap.add(inv);
         }
         
         return bondMap;

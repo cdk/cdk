@@ -23,13 +23,13 @@
  */
 package org.openscience.cdk.graph;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.TreeMultimap;
 
 import java.util.BitSet;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import static java.util.Arrays.copyOf;
@@ -57,7 +57,8 @@ final class InitialCycles {
     private final Multimap<Integer, Cycle> cycles         = TreeMultimap.create();
 
     /** Index of edges in the graph */
-    private final BiMap<Edge, Integer>     edges;
+    private final Map<Edge, Integer> edgeToIndex;
+    private final Edge[] edges;
 
     /**
      * Initial array size for 'ordering()'. This method sorts vertices by degree
@@ -123,16 +124,19 @@ final class InitialCycles {
         // - edge representation: binary vector indicates whether an edge
         //                        is present or
         // - path representation: sequential list vertices forming the cycle
-        edges = HashBiMap.create(graph.length);
+        edgeToIndex = new HashMap<>(2*graph.length);
         int n = graph.length;
         for (int v = 0; v < n; v++) {
             for (int w : graph[v]) {
                 if (w > v) {
                     Edge edge = new Edge(v, w);
-                    edges.put(edge, edges.size());
+                    edgeToIndex.put(edge, edgeToIndex.size());
                 }
             }
         }
+        edges = new Edge[edgeToIndex.size()];
+        for (Map.Entry<Edge,Integer> e : edgeToIndex.entrySet())
+            edges[e.getValue()] = e.getKey();
 
         // compute the initial set of cycles
         compute();
@@ -192,7 +196,7 @@ final class InitialCycles {
      * @return number of edges
      */
     int numberOfEdges() {
-        return edges.size();
+        return edgeToIndex.size();
     }
 
     /**
@@ -202,7 +206,7 @@ final class InitialCycles {
      * @return the edge at the given index
      */
     Edge edge(int i) {
-        return edges.inverse().get(i);
+        return edges[i];
     }
 
     /**
@@ -214,7 +218,7 @@ final class InitialCycles {
      * @return the index of the edge
      */
     int indexOfEdge(final int u, final int v) {
-        return edges.get(new Edge(u, v));
+        return edgeToIndex.get(new Edge(u, v));
     }
 
     /**
@@ -226,7 +230,7 @@ final class InitialCycles {
      * @see #indexOfEdge(int, int)
      */
     BitSet toEdgeVector(final int[] path) {
-        final BitSet incidence = new BitSet(edges.size());
+        final BitSet incidence = new BitSet(edgeToIndex.size());
         int len = path.length - 1;
         for (int i = 0; i < len; i++) {
             incidence.set(indexOfEdge(path[i], path[i + 1]));
