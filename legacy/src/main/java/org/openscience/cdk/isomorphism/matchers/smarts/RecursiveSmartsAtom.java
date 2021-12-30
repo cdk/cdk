@@ -18,16 +18,10 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.isomorphism.Pattern;
+import org.openscience.cdk.isomorphism.DfPattern;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
-
-import java.util.BitSet;
 
 /**
  * This matches recursive smarts atoms.
@@ -42,8 +36,7 @@ public final class RecursiveSmartsAtom extends SMARTSAtom {
     /** The IQueryAtomContainer created by parsing the recursive smarts */
     private final IQueryAtomContainer                  query;
 
-    /** Query cache. */
-    private final LoadingCache<IAtomContainer, BitSet> cache;
+    private final DfPattern ptrn;
 
     /**
      * Creates a new instance
@@ -53,19 +46,7 @@ public final class RecursiveSmartsAtom extends SMARTSAtom {
     public RecursiveSmartsAtom(final IQueryAtomContainer query) {
         super(query.getBuilder());
         this.query = query;
-        this.cache = CacheBuilder.newBuilder().maximumSize(42).weakKeys()
-                .build(new CacheLoader<IAtomContainer, BitSet>() {
-
-                    @Override
-                    public BitSet load(IAtomContainer target) throws Exception {
-                        BitSet hits = new BitSet();
-                        for (int[] mapping : Pattern.findSubstructure(query)
-                                                    .matchAll(target)) {
-                            hits.set(mapping[0]);
-                        }
-                        return hits;
-                    }
-                });
+        this.ptrn = DfPattern.findSubstructure(query);
     }
 
     /*
@@ -76,13 +57,8 @@ public final class RecursiveSmartsAtom extends SMARTSAtom {
      */
     @Override
     public boolean matches(IAtom atom) {
-
         if (!((IQueryAtom) query.getAtom(0)).matches(atom)) return false;
-
         if (query.getAtomCount() == 1) return true;
-
-        IAtomContainer target = invariants(atom).target();
-
-        return cache.getUnchecked(target).get(target.indexOf(atom));
+        return ptrn.matchesRoot(atom);
     }
 }

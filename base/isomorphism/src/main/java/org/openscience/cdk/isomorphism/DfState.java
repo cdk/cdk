@@ -109,8 +109,7 @@ final class DfState implements Iterable<int[]> {
                                                    "has a IChemObjectBuilder set!");
         }
 
-        IAtomContainer tmp = builder.newAtomContainer();
-        tmp.add(query);
+        IAtomContainer tmp = builder.newInstance(IAtomContainer.class, query);
         this.qbonds = new IQueryBond[tmp.getBondCount()];
         this.amap = new int[query.getAtomCount()];
 
