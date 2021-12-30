@@ -23,7 +23,6 @@
  */
 package org.openscience.cdk.graph;
 
-import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -90,7 +89,7 @@ final class RegularPathGraph extends PathGraph {
         if (ord >= 64) throw new IllegalArgumentException("graph has 64 or more atoms, use JumboPathGraph");
 
         for (int v = 0; v < ord; v++)
-            graph[v] = Lists.newArrayList();
+            graph[v] = new ArrayList<>();
 
         // construct the path-graph
         for (int v = 0; v < ord; v++) {

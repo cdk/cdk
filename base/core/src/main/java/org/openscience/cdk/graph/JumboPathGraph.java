@@ -23,7 +23,6 @@
  */
 package org.openscience.cdk.graph;
 
-import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 import java.util.BitSet;
@@ -89,7 +88,7 @@ final class JumboPathGraph extends PathGraph {
         if (limit < 3 || limit > ord) throw new IllegalArgumentException("limit should be from 3 to |V|");
 
         for (int v = 0; v < ord; v++)
-            graph[v] = Lists.newArrayList();
+            graph[v] = new ArrayList<>();
 
         // construct the path-graph
         for (int v = 0; v < ord; v++) {

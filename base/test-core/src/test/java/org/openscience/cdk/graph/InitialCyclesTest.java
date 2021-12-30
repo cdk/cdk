@@ -23,10 +23,10 @@
  */
 package org.openscience.cdk.graph;
 
-import com.google.common.collect.Lists;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -34,8 +34,8 @@ import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertFalse;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -137,7 +137,7 @@ public class InitialCyclesTest {
     @Test
     public void cycles_naphthalene() throws IOException {
         InitialCycles initial = new InitialCycles(naphthalene());
-        List<InitialCycles.Cycle> cycles = Lists.newArrayList(initial.cycles());
+        List<InitialCycles.Cycle> cycles = new ArrayList<>(initial.cycles());
         assertThat(cycles.size(), is(2));
         assertThat(cycles.get(0).path(), is(new int[]{5, 0, 1, 2, 3, 4, 5}));
         assertThat(cycles.get(1).path(), is(new int[]{5, 4, 7, 8, 9, 6, 5}));
@@ -151,7 +151,7 @@ public class InitialCyclesTest {
     @Test
     public void cycles_anthracene() throws IOException {
         InitialCycles initial = new InitialCycles(anthracene());
-        List<InitialCycles.Cycle> cycles = Lists.newArrayList(initial.cycles());
+        List<InitialCycles.Cycle> cycles = new ArrayList<>(initial.cycles());
         assertThat(cycles.size(), is(3));
         assertThat(cycles.get(0).path(), is(new int[]{5, 0, 1, 2, 3, 4, 5}));
         assertThat(cycles.get(1).path(), is(new int[]{9, 6, 5, 4, 7, 8, 9}));
@@ -166,7 +166,7 @@ public class InitialCyclesTest {
     @Test
     public void cycles_bicyclo() throws IOException {
         InitialCycles initial = new InitialCycles(bicyclo());
-        List<InitialCycles.Cycle> cycles = Lists.newArrayList(initial.cycles());
+        List<InitialCycles.Cycle> cycles = new ArrayList<>(initial.cycles());
         assertThat(cycles.size(), is(3));
         assertThat(cycles.get(0).path(), is(new int[]{5, 0, 1, 2, 3, 4, 5}));
         assertThat(cycles.get(1).path(), is(new int[]{5, 0, 1, 2, 7, 6, 5}));
@@ -186,7 +186,7 @@ public class InitialCyclesTest {
     @Test
     public void cycles_cyclophane() throws IOException {
         InitialCycles initial = new InitialCycles(cyclophane_odd());
-        List<InitialCycles.Cycle> cycles = Lists.newArrayList(initial.cycles());
+        List<InitialCycles.Cycle> cycles = new ArrayList<>(initial.cycles());
         assertThat(cycles.size(), is(2));
         assertThat(cycles.get(0).path(), is(new int[]{3, 2, 1, 0, 5, 4, 3}));
         assertThat(cycles.get(1).path(), is(new int[]{3, 2, 1, 0, 10, 9, 8, 7, 6, 3}));
@@ -195,14 +195,14 @@ public class InitialCyclesTest {
     @Test
     public void cycles_cyclophane_odd_limit_5() throws IOException {
         InitialCycles initial = new InitialCycles(cyclophane_odd(), 5);
-        List<InitialCycles.Cycle> cycles = Lists.newArrayList(initial.cycles());
+        List<InitialCycles.Cycle> cycles = new ArrayList<>(initial.cycles());
         assertThat(cycles.size(), is(0));
     }
 
     @Test
     public void cycles_cyclophane_odd_limit_6() throws IOException {
         InitialCycles initial = new InitialCycles(cyclophane_odd(), 6);
-        List<InitialCycles.Cycle> cycles = Lists.newArrayList(initial.cycles());
+        List<InitialCycles.Cycle> cycles = new ArrayList<>(initial.cycles());
         assertThat(cycles.size(), is(1));
         assertThat(cycles.get(0).path(), is(new int[]{3, 2, 1, 0, 5, 4, 3}));
     }
@@ -210,7 +210,7 @@ public class InitialCyclesTest {
     @Test
     public void cycles_cyclophane_odd_limit_7() throws IOException {
         InitialCycles initial = new InitialCycles(cyclophane_odd(), 7);
-        List<InitialCycles.Cycle> cycles = Lists.newArrayList(initial.cycles());
+        List<InitialCycles.Cycle> cycles = new ArrayList<>(initial.cycles());
         assertThat(cycles.size(), is(1));
         assertThat(cycles.get(0).path(), is(new int[]{3, 2, 1, 0, 5, 4, 3}));
     }
@@ -218,7 +218,7 @@ public class InitialCyclesTest {
     @Test
     public void cycles_family_odd() {
         InitialCycles initial = new InitialCycles(cyclophane_odd());
-        List<InitialCycles.Cycle> cycles = Lists.newArrayList(initial.cycles());
+        List<InitialCycles.Cycle> cycles = new ArrayList<>(initial.cycles());
         assertThat(cycles.get(1).path(), is(new int[]{3, 2, 1, 0, 10, 9, 8, 7, 6, 3}));
         int[][] family = cycles.get(1).family();
         assertThat(family.length, is(2));
@@ -229,7 +229,7 @@ public class InitialCyclesTest {
     @Test
     public void cycles_family_even() {
         InitialCycles initial = new InitialCycles(cyclophane_even());
-        List<InitialCycles.Cycle> cycles = Lists.newArrayList(initial.cycles());
+        List<InitialCycles.Cycle> cycles = new ArrayList<>(initial.cycles());
         assertThat(cycles.get(1).path(), is(new int[]{3, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3}));
         int[][] family = cycles.get(1).family();
         assertThat(family.length, is(2));
