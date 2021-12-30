@@ -27,12 +27,12 @@
  */
 package org.openscience.cdk;
 
-import com.google.common.base.Objects;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElement;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * The base class for atom types. Atom types are typically used to describe the
@@ -318,8 +318,8 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
             return false;
         }
         AtomType type = (AtomType) object;
-        return Objects.equal(getAtomTypeName(), type.getAtomTypeName())
-                && Objects.equal(maxBondOrder, type.maxBondOrder) && Objects.equal(bondOrderSum, type.bondOrderSum);
+        return Objects.equals(getAtomTypeName(), type.getAtomTypeName())
+                && Objects.equals(maxBondOrder, type.maxBondOrder) && Objects.equals(bondOrderSum, type.bondOrderSum);
     }
 
     /**
