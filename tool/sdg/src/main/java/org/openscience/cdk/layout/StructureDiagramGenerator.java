@@ -24,8 +24,6 @@
 package org.openscience.cdk.layout;
 
 import com.google.common.collect.FluentIterable;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
@@ -77,6 +75,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import static java.util.Comparator.comparingInt;
 
 /**
  * Generates 2D coordinates for a molecule.
@@ -212,7 +212,7 @@ public class StructureDiagramGenerator {
         if (alignMappedReaction) {
             final Set<IBond> mapped = ReactionManipulator.findMappedBonds(reaction);
 
-            Multimap<Integer, Map<Integer, IAtom>> refmap = HashMultimap.create();
+            Map<Integer, List<Map<Integer, IAtom>>> refmap = new HashMap<>();
 
             for (IAtomContainer mol : reaction.getProducts().atomContainers()) {
                 Cycles.markRingAtomsAndBonds(mol);
@@ -227,7 +227,7 @@ public class StructureDiagramGenerator {
                         // safe as substructure should only be mapped bonds and therefore atoms!
                         int idx = atom.getProperty(CDKConstants.ATOM_ATOM_MAPPING);
                         if (map.put(idx, atom) == null)
-                            refmap.put(idx, map);
+                            refmap.computeIfAbsent(idx, k -> new ArrayList<>()).add(map);
                     }
                 }
             }
@@ -257,7 +257,7 @@ public class StructureDiagramGenerator {
                     int idx = largest.getAtom(0).getProperty(CDKConstants.ATOM_ATOM_MAPPING);
 
                     // select the largest and use those coordinates
-                    Map<Integer, IAtom> reference = select(refmap.get(idx));
+                    Map<Integer, IAtom> reference = select(refmap.getOrDefault(idx, Collections.emptyList()));
                     for (IAtom atom : largest.atoms()) {
                         idx = atom.getProperty(CDKConstants.ATOM_ATOM_MAPPING);
                         final IAtom src = reference.get(idx);
@@ -1759,13 +1759,14 @@ public class StructureDiagramGenerator {
      */
     private IRingSet getRingSetCore(IRingSet rs) {
 
-        Multimap<IBond, IRing> ringlookup = HashMultimap.create();
+        Map<IBond, List<IRing>> ringlookup = new HashMap<>();
         Set<IRing> ringsystem = new LinkedHashSet<>();
 
         for (IAtomContainer ring : rs.atomContainers()) {
             ringsystem.add((IRing) ring);
             for (IBond bond : ring.bonds())
-                ringlookup.put(bond, (IRing) ring);
+                ringlookup.computeIfAbsent(bond, k -> new ArrayList<>())
+                          .add((IRing) ring);
         }
 
         // iteratively reduce ring system by removing ring that only share one bond
@@ -1775,7 +1776,7 @@ public class StructureDiagramGenerator {
             for (IRing ring : ringsystem) {
                 int numAttach = 0;
                 for (IBond bond : ring.bonds()) {
-                    for (IRing attached : ringlookup.get(bond)) {
+                    for (IRing attached : ringlookup.getOrDefault(bond, Collections.emptyList())) {
                         if (attached != ring && ringsystem.contains(attached)) {
                             numAttach++;
                             break;
@@ -2444,7 +2445,7 @@ public class StructureDiagramGenerator {
         if (sgroups == null)
             return;
 
-        Multimap<Set<IAtom>, IAtom> mapping = aggregateMulticenterSgroups(sgroups);
+        Map<Set<IAtom>, List<IAtom>> mapping = aggregateMulticenterSgroups(sgroups);
 
         if (mapping.isEmpty())
             return;
@@ -2456,7 +2457,7 @@ public class StructureDiagramGenerator {
         for (IAtom atom : mol.atoms())
             idxs.put(atom, idxs.size());
 
-        for (Map.Entry<Set<IAtom>,Collection<IAtom>> e : mapping.asMap().entrySet()) {
+        for (Map.Entry<Set<IAtom>,List<IAtom>> e : mapping.entrySet()) {
             List<IBond> bonds = new ArrayList<>();
 
             IAtomContainer shared = mol.getBuilder().newInstance(IAtomContainer.class);
@@ -2557,16 +2558,18 @@ public class StructureDiagramGenerator {
                             IAtom visitedAtom = mol.getAtom(idx);
                             if (e.getKey().contains(visitedAtom) || e.getValue().contains(visitedAtom))
                                 continue;
-                            for (Map.Entry<Set<IAtom>, IAtom> e2 : mapping.entries()) {
-                                if (e2.getKey().contains(visitedAtom)) {
-                                    int other = idxs.get(e2.getValue());
-                                    if (!visited.contains(other) && newvisit.add(other)) {
-                                        visit(newvisit, adjlist, other);
-                                    }
-                                } else if (e2.getValue().equals(visitedAtom)) {
-                                    int other = idxs.get(e2.getKey().iterator().next());
-                                    if (!visited.contains(other) && newvisit.add(other)) {
-                                        visit(newvisit, adjlist, other);
+                            for (Map.Entry<Set<IAtom>, List<IAtom>> e2 : mapping.entrySet()) {
+                                for (IAtom val : e2.getValue()) {
+                                    if (e2.getKey().contains(visitedAtom)) {
+                                        int other = idxs.get(val);
+                                        if (!visited.contains(other) && newvisit.add(other)) {
+                                            visit(newvisit, adjlist, other);
+                                        }
+                                    } else if (val.equals(visitedAtom)) {
+                                        int other = idxs.get(e2.getKey().iterator().next());
+                                        if (!visited.contains(other) && newvisit.add(other)) {
+                                            visit(newvisit, adjlist, other);
+                                        }
                                     }
                                 }
                             }
@@ -2611,8 +2614,8 @@ public class StructureDiagramGenerator {
         }
     }
 
-    private static Multimap<Set<IAtom>, IAtom> aggregateMulticenterSgroups(List<Sgroup> sgroups) {
-        Multimap<Set<IAtom>,IAtom> mapping = HashMultimap.create();
+    private static Map<Set<IAtom>, List<IAtom>> aggregateMulticenterSgroups(List<Sgroup> sgroups) {
+        Map<Set<IAtom>,List<IAtom>> mapping = new HashMap<>();
         for (Sgroup sgroup : sgroups) {
             if (sgroup.getType() != SgroupType.ExtMulticenter)
                 continue;
@@ -2635,8 +2638,9 @@ public class StructureDiagramGenerator {
             if (beg == null || ends.isEmpty())
                 continue;
 
-            mapping.put(ends, beg);
-        } return mapping;
+            mapping.computeIfAbsent(ends, k -> new ArrayList<>()).add(beg);
+        }
+        return mapping;
     }
 
 
@@ -2666,28 +2670,22 @@ public class StructureDiagramGenerator {
         if (sgroups == null) return;
 
         // index all crossing bonds
-        final Multimap<IBond,Sgroup> bondMap = HashMultimap.create();
-        final Multimap<Sgroup,Sgroup> childMap = HashMultimap.create();
+        final Map<IBond,List<Sgroup>> bondMap = new HashMap<>();
+        final Map<Sgroup,List<Sgroup>> childMap = new HashMap<>();
         final Map<IBond,Integer> counter = new HashMap<>();
         for (Sgroup sgroup : sgroups) {
             if (!hasBrackets(sgroup))
                 continue;
             for (IBond bond : sgroup.getBonds()) {
-                bondMap.put(bond, sgroup);
+                bondMap.computeIfAbsent(bond, k -> new ArrayList<>()).add(sgroup);
                 counter.put(bond, 0);
             }
             for (Sgroup parent : sgroup.getParents())
-                childMap.put(parent, sgroup);
+                childMap.computeIfAbsent(parent, k -> new ArrayList<>()).add(sgroup);
         }
         sgroups = new ArrayList<>(sgroups);
         // place child sgroups first, or those with less total children
-        Collections.sort(sgroups,
-                         new Comparator<Sgroup>() {
-                             @Override
-                             public int compare(Sgroup o1, Sgroup o2) {
-                                 return Integer.compare(childMap.get(o1).size(), childMap.get(o2).size());
-                             }
-                         });
+        sgroups.sort(comparingInt(o -> childMap.getOrDefault(o, Collections.emptyList()).size()));
 
         for (Sgroup sgroup : sgroups) {
             if (!hasBrackets(sgroup))
@@ -2727,7 +2725,7 @@ public class StructureDiagramGenerator {
 
                 // if a child Sgroup also has brackets, account for that in our
                 // bounds calculation
-                for (Sgroup child : childMap.get(sgroup)) {
+                for (Sgroup child : childMap.getOrDefault(sgroup, Collections.emptyList())) {
                     List<SgroupBracket> brackets = child.getValue(SgroupKey.CtabBracket);
                     if (brackets != null) {
                         for (SgroupBracket bracket : brackets) {
@@ -2762,7 +2760,7 @@ public class StructureDiagramGenerator {
      * @param vert vertical align bonds
      * @return the new bracket
      */
-    private SgroupBracket newCrossingBracket(IBond bond, Multimap<IBond,Sgroup> bonds, Map<IBond,Integer> counter, boolean vert) {
+    private SgroupBracket newCrossingBracket(IBond bond, Map<IBond,List<Sgroup>> bonds, Map<IBond,Integer> counter, boolean vert) {
         final IAtom beg = bond.getBegin();
         final IAtom end = bond.getEnd();
         final Point2d begXy = beg.getPoint2d();
@@ -2773,7 +2771,7 @@ public class StructureDiagramGenerator {
         bndCrossVec.normalize();
         bndCrossVec.scale(((0.9 * bondLength)) / 2);
 
-        final List<Sgroup> sgroups = new ArrayList<>(bonds.get(bond));
+        final List<Sgroup> sgroups = new ArrayList<>(bonds.getOrDefault(bond, Collections.emptyList()));
 
         // bond in sgroup, place it in the middle of the bond
         if (sgroups.size() == 1) {

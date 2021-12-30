@@ -23,8 +23,6 @@
 
 package org.openscience.cdk.renderer.generators.standard;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
@@ -78,8 +76,8 @@ final class StandardSgroupGenerator {
     private final double                labelScale;
     private final StandardAtomGenerator atomGenerator;
     private final RendererModel         parameters;
-    private final Multimap<Sgroup,Sgroup> children = HashMultimap.create();
-    private final Map<Sgroup,Bounds>      boundsMap = new HashMap<>();
+    private final Map<Sgroup,List<Sgroup>> children = new HashMap<>();
+    private final Map<Sgroup,Bounds>    boundsMap = new HashMap<>();
 
     private StandardSgroupGenerator(RendererModel parameters, StandardAtomGenerator atomGenerator, double stroke,
                                     Font font, Color foreground) {
@@ -283,9 +281,9 @@ final class StandardSgroupGenerator {
         }
     }
 
-    int getTotalChildCount(Multimap<Sgroup,Sgroup> map, Sgroup key) {
+    int getTotalChildCount(Map<Sgroup,List<Sgroup>> map, Sgroup key) {
         int count = 0;
-        Deque<Sgroup> deque = new ArrayDeque<>(map.get(key));
+        Deque<Sgroup> deque = new ArrayDeque<>(map.getOrDefault(key, Collections.emptyList()));
         while (!deque.isEmpty()) {
             Sgroup sgroup = deque.poll();
             deque.addAll(map.get(sgroup));
@@ -315,7 +313,7 @@ final class StandardSgroupGenerator {
         }
         for (Sgroup sgroup : sgroups) {
             for (Sgroup parent : sgroup.getParents()) {
-                children.put(parent, sgroup);
+                children.computeIfAbsent(parent, k -> new ArrayList<>()).add(sgroup);
             }
         }
 
@@ -815,7 +813,7 @@ final class StandardSgroupGenerator {
                     bounds.add(atom.getPoint2d().x, atom.getPoint2d().y);
                 }
             }
-            for (Sgroup child : children.get(sgroup)) {
+            for (Sgroup child : children.getOrDefault(sgroup, Collections.emptyList())) {
                 Bounds childBounds = boundsMap.get(child);
                 if (childBounds != null)
                     bounds.add(childBounds);

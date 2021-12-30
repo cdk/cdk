@@ -23,8 +23,6 @@
  */
 package org.openscience.cdk.smiles;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.ConnectivityChecker;
@@ -570,7 +568,7 @@ public final class SmilesParser {
             }
         }
 
-        Multimap<IAtomContainer, Sgroup> sgroupMap = HashMultimap.create();
+        Map<IAtomContainer, List<Sgroup>> sgroupMap = new HashMap<>();
         Map<CxSmilesState.CxSgroup, Sgroup> sgroupRemap = new HashMap<>();
 
         // positional-variation
@@ -587,7 +585,8 @@ public final class SmilesParser {
                 sgroup.addBond(bonds.get(0));
                 for (Integer endpt : e.getValue())
                     sgroup.addAtom(atoms.get(endpt));
-                sgroupMap.put(mol, sgroup);
+                sgroupMap.computeIfAbsent(mol, k -> new ArrayList<>())
+                         .add(sgroup);
             }
         }
 
@@ -610,7 +609,8 @@ public final class SmilesParser {
                         throw new InvalidSmilesException("CXSMILES LO: defined ordering to non-existant bond");
                     sgroup.addBond(bond);
                 }
-                sgroupMap.put(mol, sgroup);
+                sgroupMap.computeIfAbsent(mol, k -> new ArrayList<>())
+                         .add(sgroup);
             }
         }
 
@@ -705,7 +705,8 @@ public final class SmilesParser {
                         break;
                 }
 
-                sgroupMap.put(mol, sgroup);
+                sgroupMap.computeIfAbsent(mol, k -> new ArrayList<>())
+                         .add(sgroup);
                 // CxState Sgroup => CDK Sgroup lookup
                 sgroupRemap.put(psgroup, sgroup);
             }
@@ -748,9 +749,11 @@ public final class SmilesParser {
                     cdkSgroup.putValue(SgroupKey.Data, dsgroup.value);
                     sgroupRemap.put(dsgroup, cdkSgroup);
                     if (mol != null)
-                        sgroupMap.put(mol, cdkSgroup);
+                        sgroupMap.computeIfAbsent(mol, k -> new ArrayList<>())
+                                 .add(cdkSgroup);
                     else if (chemObj instanceof IAtomContainer)
-                        sgroupMap.put((IAtomContainer) chemObj, cdkSgroup);
+                        sgroupMap.computeIfAbsent((IAtomContainer) chemObj, k -> new ArrayList<>())
+                                 .add(cdkSgroup);
                 }
             }
         }
@@ -806,7 +809,7 @@ public final class SmilesParser {
         }
 
         // assign Sgroups
-        for (Map.Entry<IAtomContainer, Collection<Sgroup>> e : sgroupMap.asMap().entrySet())
+        for (Map.Entry<IAtomContainer, List<Sgroup>> e : sgroupMap.entrySet())
             e.getKey().setProperty(CDKConstants.CTAB_SGROUPS, new ArrayList<>(e.getValue()));
     }
 
