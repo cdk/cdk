@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.isomorphism;
 
-import com.google.common.base.Predicate;
 import com.google.common.collect.Maps;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -35,6 +34,7 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.function.Predicate;
 
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.TOGETHER;
@@ -109,7 +109,7 @@ final class StereoMatch implements Predicate<int[]> {
      * @return the stereo chemistry is value
      */
     @Override
-    public boolean apply(final int[] mapping) {
+    public boolean test(final int[] mapping) {
 
         // n.b. not true for unspecified queries e.g. [C@?H](*)(*)*
         if (queryStereoIndices.length > targetStereoIndices.length) return false;
@@ -129,6 +129,16 @@ final class StereoMatch implements Predicate<int[]> {
             }
         }
         return true;
+    }
+
+    /**
+     * Backwards compatible method from when we used GUAVA predicates.
+     * @param ints atom index bijection
+     * @return true/false
+     * @see #test(int[])
+     */
+    public boolean apply(int[] ints) {
+        return test(ints);
     }
 
     /**

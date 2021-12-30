@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.isomorphism;
 
-import com.google.common.base.Function;
-import com.google.common.base.Predicate;
 import org.junit.Test;
 import org.mockito.ArgumentMatchers;
 import org.openscience.cdk.interfaces.*;
@@ -34,6 +32,8 @@ import org.openscience.cdk.smiles.SmilesParser;
 
 import java.util.Iterator;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -70,10 +70,10 @@ public class MappingsTest {
         Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
 
         Predicate<int[]> f = mock(Predicate.class);
-        when(f.apply(p1)).thenReturn(false);
-        when(f.apply(p2)).thenReturn(true);
-        when(f.apply(p3)).thenReturn(false);
-        when(f.apply(p4)).thenReturn(true);
+        when(f.test(p1)).thenReturn(false);
+        when(f.test(p2)).thenReturn(true);
+        when(f.test(p3)).thenReturn(false);
+        when(f.test(p4)).thenReturn(true);
 
         assertThat(ms.filter(f).toArray(), is(new int[][]{p2, p4}));
     }

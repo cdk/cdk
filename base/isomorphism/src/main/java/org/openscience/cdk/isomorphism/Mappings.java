@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.isomorphism;
 
-import com.google.common.base.Function;
-import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
@@ -40,6 +38,8 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * A fluent interface for handling (sub)-graph mappings from a query to a target
@@ -202,7 +202,7 @@ public final class Mappings implements Iterable<int[]> {
      * @return fluent-api reference
      */
     public Mappings filter(final Predicate<int[]> predicate) {
-        return new Mappings(query, target, Iterables.filter(iterable, predicate));
+        return new Mappings(query, target, Iterables.filter(iterable, predicate::test));
     }
 
     /**
@@ -238,7 +238,7 @@ public final class Mappings implements Iterable<int[]> {
      * @return iterable of the transformed type
      */
     public <T> Iterable<T> map(final Function<int[], T> f) {
-        return Iterables.transform(iterable, f);
+        return Iterables.transform(iterable, f::apply);
     }
 
     /**
@@ -282,7 +282,7 @@ public final class Mappings implements Iterable<int[]> {
 
             @Override
             public Iterator<int[]> iterator() {
-                return Iterators.filter(iterable.iterator(), new UniqueAtomMatches());
+                return Iterators.filter(iterable.iterator(), new UniqueAtomMatches()::test);
             }
         });
     }
@@ -302,7 +302,7 @@ public final class Mappings implements Iterable<int[]> {
 
             @Override
             public Iterator<int[]> iterator() {
-                return Iterators.filter(iterable.iterator(), new UniqueBondMatches(g));
+                return Iterators.filter(iterable.iterator(), new UniqueBondMatches(g)::test);
             }
         });
     }
@@ -435,12 +435,7 @@ public final class Mappings implements Iterable<int[]> {
      */
     public Iterable<IChemObject> toChemObjects() {
         return FluentIterable.from(map(new ToAtomBondMap(query, target)))
-                             .transformAndConcat(new Function<Map<IChemObject, IChemObject>, Iterable<? extends IChemObject>>() {
-            @Override
-            public Iterable<? extends IChemObject> apply(Map<IChemObject, IChemObject> map) {
-                return map.values();
-            }
-        });
+                             .transformAndConcat(map -> map.values());
     }
 
     /**
@@ -462,9 +457,7 @@ public final class Mappings implements Iterable<int[]> {
      */
     public Iterable<IAtomContainer> toSubstructures() {
         return FluentIterable.from(map(new ToAtomBondMap(query, target)))
-                             .transform(new Function<Map<IChemObject, IChemObject>, IAtomContainer>() {
-                                 @Override
-                                 public IAtomContainer apply(Map<IChemObject, IChemObject> map) {
+                             .transform(map -> {
                                      final IAtomContainer submol = target.getBuilder()
                                                                          .newInstance(IAtomContainer.class,
                                                                                       query.getAtomCount(), target.getBondCount(), 0, 0);
@@ -473,7 +466,6 @@ public final class Mappings implements Iterable<int[]> {
                                      for (IBond bond : query.bonds())
                                          submol.addBond((IBond)map.get(bond));
                                      return submol;
-                                 }
                              });
     }
 

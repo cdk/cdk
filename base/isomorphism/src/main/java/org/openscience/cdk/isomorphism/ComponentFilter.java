@@ -25,13 +25,13 @@
 
 package org.openscience.cdk.isomorphism;
 
-import com.google.common.base.Predicate;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.graph.ConnectedComponents;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 import java.util.Arrays;
+import java.util.function.Predicate;
 
 /**
  * A predicate for verifying component level grouping in query/target structure
@@ -135,7 +135,7 @@ final class ComponentFilter implements Predicate<int[]> {
      * @return the mapping preserves the specified grouping
      */
     @Override
-    public boolean apply(final int[] mapping) {
+    public boolean test(final int[] mapping) {
 
         // no grouping required
         if (queryComponents == null) return true;
@@ -167,5 +167,15 @@ final class ComponentFilter implements Predicate<int[]> {
         }
 
         return true;
+    }
+
+    /**
+     * Backwards compatible method from when we used GUAVA predicates.
+     * @param ints atom index bijection
+     * @return true/false
+     * @see #test(int[])
+     */
+    public boolean apply(int[] ints) {
+        return test(ints);
     }
 }
