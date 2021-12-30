@@ -27,7 +27,6 @@ package org.openscience.cdk;
 import com.google.common.base.Objects;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 import java.io.Serializable;
 
