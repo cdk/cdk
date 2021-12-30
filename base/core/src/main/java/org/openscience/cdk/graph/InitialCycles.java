@@ -23,14 +23,15 @@
  */
 package org.openscience.cdk.graph;
 
-import com.google.common.collect.Multimap;
-import com.google.common.collect.TreeMultimap;
-
 import java.util.BitSet;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import static java.util.Arrays.copyOf;
 
@@ -54,7 +55,7 @@ final class InitialCycles {
     private final int[]                    ordering;
 
     /** Cycle prototypes indexed by their length. */
-    private final Multimap<Integer, Cycle> cycles         = TreeMultimap.create();
+    private final Map<Integer, Set<Cycle>> cycles = new TreeMap<>();
 
     /** Index of edges in the graph */
     private final Map<Edge, Integer> edgeToIndex;
@@ -169,7 +170,7 @@ final class InitialCycles {
      * @see #lengths()
      */
     Collection<Cycle> cyclesOfLength(int length) {
-        return cycles.get(length);
+        return Collections.unmodifiableSet(cycles.getOrDefault(length, Collections.emptySet()));
     }
 
     /**
@@ -178,7 +179,10 @@ final class InitialCycles {
      * @return list of cycles
      */
     Collection<Cycle> cycles() {
-        return cycles.values();
+        Set<Cycle> res = new TreeSet<>();
+        for (Set<Cycle> val : cycles.values())
+            res.addAll(val);
+        return Collections.unmodifiableSet(res);
     }
 
     /**
@@ -187,7 +191,10 @@ final class InitialCycles {
      * @return number of cycles
      */
     int numberOfCycles() {
-        return cycles.size();
+        int count = 0;
+        for (Set<Cycle> val : cycles.values())
+            count += val.size();
+        return count;
     }
 
     /**
@@ -363,7 +370,9 @@ final class InitialCycles {
      * @param cycle the cycle to add
      */
     private void add(Cycle cycle) {
-        if (cycle.length() <= limit) cycles.put(cycle.length(), cycle);
+        if (cycle.length() <= limit)
+            cycles.computeIfAbsent(cycle.length(), k -> new TreeSet<>())
+                  .add(cycle);
     }
 
     /**
@@ -545,14 +554,15 @@ final class InitialCycles {
 
         @Override
         public int compareTo(Cycle that) {
-            int len = Math.min(this.path.length, that.path.length);
-            for (int i = 0; i < len; i++) {
-                int result = Integer.compare(this.path[i], that.path[i]);
-                if (result != 0) {
-                    return result;
-                }
+            int cmp = this.path.length - that.path.length;
+            if (cmp != 0)
+                return cmp;
+            for (int i = 0; i < this.path.length; i++) {
+                cmp = Integer.compare(this.path[i], that.path[i]);
+                if (cmp != 0)
+                    return cmp;
             }
-            return this.path.length - that.path.length;
+            return 0;
         }
     }
 

@@ -23,8 +23,6 @@
 
 package org.openscience.cdk.depict;
 
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
@@ -400,7 +398,7 @@ public class Abbreviations implements Iterable<String> {
         }
 
         List<IAtomContainer> fragments = generateFragments(mol);
-        Multimap<IAtom, Sgroup> sgroupAdjs = ArrayListMultimap.create();
+        Map<IAtom, List<Sgroup>> sgroupAdjs = new HashMap<>();
 
         for (IAtomContainer frag : fragments) {
             try {
@@ -445,7 +443,8 @@ public class Abbreviations implements Iterable<String> {
                 }
 
                 if (attachAtom != null)
-                    sgroupAdjs.put(attachAtom, sgroup);
+                    sgroupAdjs.computeIfAbsent(attachAtom, k -> new ArrayList<>())
+                              .add(sgroup);
                 newSgroups.add(sgroup);
 
              } catch (CDKException e) {
@@ -477,7 +476,7 @@ public class Abbreviations implements Iterable<String> {
 
             List<String> nbrSymbols = new ArrayList<>();
             Set<Sgroup> todelete = new HashSet<>();
-            for (Sgroup sgroup : sgroupAdjs.get(attach)) {
+            for (Sgroup sgroup : sgroupAdjs.getOrDefault(attach, Collections.emptyList())) {
                 if (containsChargeChar(sgroup.getSubscript()))
                     continue;
                 if (sgroup.getBonds().size() != 1)
