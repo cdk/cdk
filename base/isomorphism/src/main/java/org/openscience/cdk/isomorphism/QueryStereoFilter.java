@@ -25,7 +25,6 @@
 
 package org.openscience.cdk.isomorphism;
 
-import com.google.common.base.Predicate;
 import com.google.common.collect.Maps;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -40,6 +39,7 @@ import org.openscience.cdk.isomorphism.matchers.QueryBond;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.function.Predicate;
 
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.TOGETHER;
@@ -115,7 +115,7 @@ final class QueryStereoFilter implements Predicate<int[]> {
      * @return the stereo chemistry is value
      */
     @Override
-    public boolean apply(final int[] mapping) {
+    public boolean test(final int[] mapping) {
 
         // reset augment group config if it was initialised
         if (groupConfigAdjust != null)
@@ -430,6 +430,16 @@ final class QueryStereoFilter implements Predicate<int[]> {
      */
     private int parity(Conformation conformation) {
         return conformation == TOGETHER ? 1 : -1;
+    }
+
+    /**
+     * Backwards compatible method from when we used GUAVA predicates.
+     * @param ints atom index bijection
+     * @return true/false
+     * @see #test(int[])
+     */
+    public boolean apply(int[] ints) {
+        return test(ints);
     }
 
     // could be moved into the IStereoElement to allow faster introspection

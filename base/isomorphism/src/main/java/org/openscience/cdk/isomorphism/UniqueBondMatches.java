@@ -24,11 +24,11 @@
 
 package org.openscience.cdk.isomorphism;
 
-import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Predicate;
 
 /**
  * A predicate for filtering atom-mapping results for those which cover unique
@@ -70,8 +70,18 @@ final class UniqueBondMatches implements Predicate<int[]> {
 
     /**{@inheritDoc} */
     @Override
-    public boolean apply(int[] input) {
+    public boolean test(int[] input) {
         return unique.add(toEdgeSet(input));
+    }
+
+    /**
+     * Backwards compatible method from when we used GUAVA predicates.
+     * @param ints atom index bijection
+     * @return true/false
+     * @see #test(int[])
+     */
+    public boolean apply(int[] ints) {
+        return test(ints);
     }
 
     /**

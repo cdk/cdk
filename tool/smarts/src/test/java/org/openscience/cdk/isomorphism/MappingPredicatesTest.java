@@ -61,10 +61,10 @@ public class MappingPredicatesTest {
         Iterable<int[]> mappings = VentoFoggia.findSubstructure(query).matchAll(target);
 
         // using unique atoms we may think we only found 1 mapping
-        assertThat(Iterables.size(Iterables.filter(mappings, new UniqueAtomMatches())), is(1));
+        assertThat(Iterables.size(Iterables.filter(mappings, new UniqueAtomMatches()::test)), is(1));
 
         // when in fact we found 4 different mappings
-        assertThat(Iterables.size(Iterables.filter(mappings, new UniqueBondMatches(GraphUtil.toAdjList(query)))), is(3));
+        assertThat(Iterables.size(Iterables.filter(mappings, new UniqueBondMatches(GraphUtil.toAdjList(query))::test)), is(3));
     }
 
     @Test
