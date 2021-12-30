@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.aromaticity;
 
-import com.google.common.collect.Sets;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.CycleFinder;
 import org.openscience.cdk.graph.Cycles;
@@ -35,6 +34,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.ringsearch.RingSearch;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -186,7 +186,7 @@ public final class Aromaticity {
         final RingSearch ringSearch = new RingSearch(molecule, graph);
         final int[] electrons = model.contribution(molecule, ringSearch);
 
-        final Set<IBond> bonds = Sets.newHashSetWithExpectedSize(molecule.getBondCount());
+        final Set<IBond> bonds = new HashSet<>(2*molecule.getBondCount());
 
         // obtain the subset of electron contributions which are >= 0 (i.e.
         // allowed to be aromatic) - we then find the cycles in this subgraph

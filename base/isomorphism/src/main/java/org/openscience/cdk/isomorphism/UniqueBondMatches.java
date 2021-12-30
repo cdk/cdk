@@ -24,8 +24,6 @@
 
 package org.openscience.cdk.isomorphism;
 
-import com.google.common.collect.Sets;
-
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -59,7 +57,7 @@ final class UniqueBondMatches implements Predicate<int[]> {
      * @param expectedHits expected number of unique matches
      */
     private UniqueBondMatches(int[][] g, int expectedHits) {
-        this.unique = Sets.newHashSetWithExpectedSize(expectedHits);
+        this.unique = new HashSet<>(2*expectedHits);
         this.g = g;
     }
 
