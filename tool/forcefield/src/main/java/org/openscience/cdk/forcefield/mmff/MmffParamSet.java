@@ -23,13 +23,12 @@
 
 package org.openscience.cdk.forcefield.mmff;
 
-import com.google.common.base.Charsets;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -186,7 +185,7 @@ enum MmffParamSet {
     }
 
     private static void parseMMFFCHARGE(InputStream in, Map<BondKey, BigDecimal> map) throws IOException {
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(in, Charsets.UTF_8))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
             String line;
             while ((line = br.readLine()) != null) {
                 if (line.isEmpty() || line.charAt(0) == '*')
@@ -205,7 +204,7 @@ enum MmffParamSet {
     }
 
     private static void parseMMFFPBCI(InputStream in, MmffProp[] props) throws IOException {
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(in, Charsets.UTF_8))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
             String line;
             while ((line = br.readLine()) != null) {
                 if (line.isEmpty() || line.charAt(0) == '*')
@@ -221,7 +220,7 @@ enum MmffParamSet {
     }
 
     private static void parseMMFFPPROP(InputStream in, MmffProp[] props) throws IOException {
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(in, Charsets.UTF_8))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
             String line;
             while ((line = br.readLine()) != null) {
                 if (line.isEmpty() || line.charAt(0) == '*')
@@ -243,7 +242,7 @@ enum MmffParamSet {
     }
 
     private static void parseMMFFTypeMap(InputStream in, Map<String, Integer> types) throws IOException {
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(in, Charsets.UTF_8))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
             String line = br.readLine(); // header
             while ((line = br.readLine()) != null) {
                 if (line.isEmpty() || line.charAt(0) == '*')
@@ -257,7 +256,7 @@ enum MmffParamSet {
     }
 
     private static void parseMMFFFORMCHG(InputStream in, Map<String, BigDecimal> fcharges) throws IOException {
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(in, Charsets.UTF_8))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
             String line = br.readLine(); // header
             while ((line = br.readLine()) != null) {
                 if (line.isEmpty() || line.charAt(0) == '*')
