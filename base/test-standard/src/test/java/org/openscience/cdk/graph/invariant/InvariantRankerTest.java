@@ -24,12 +24,9 @@
 
 package org.openscience.cdk.graph.invariant;
 
-import com.google.common.primitives.Longs;
 import org.junit.Test;
 
-import java.util.HashSet;
 import java.util.Random;
-import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -115,11 +112,9 @@ public class InvariantRankerTest {
 
         // random (unique) values in random order
         Random rnd = new Random();
-        Set<Long> values = new HashSet<Long>();
-        while (values.size() < n)
-            values.add(rnd.nextLong());
-
-        long[] prev = Longs.toArray(values);
+        long[] prev = new long[n];
+        for (int i=0; i<n; i++)
+            prev[i] = rnd.nextLong();
 
         // ident array
         int[] vs = new int[n];
@@ -141,11 +136,9 @@ public class InvariantRankerTest {
 
         // random (unique) values in random order
         Random rnd = new Random();
-        Set<Long> values = new HashSet<Long>();
-        while (values.size() < n)
-            values.add(rnd.nextLong());
-
-        long[] prev = Longs.toArray(values);
+        long[] prev = new long[n];
+        for (int i=0; i<n; i++)
+            prev[i] = rnd.nextLong();
 
         // ident array
         int[] vs = new int[n];
