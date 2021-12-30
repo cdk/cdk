@@ -24,7 +24,6 @@
 package org.openscience.cdk.smiles;
 
 import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.InvalidSmilesException;
@@ -316,7 +315,7 @@ public final class SmilesParser {
                 // set the correct title
                 mol.setTitle(title.substring(pos));
 
-                final Map<IAtom, IAtomContainer> atomToMol = Maps.newHashMapWithExpectedSize(mol.getAtomCount());
+                final Map<IAtom, IAtomContainer> atomToMol = new HashMap<>(2*mol.getAtomCount());
                 final List<IAtom> atoms = new ArrayList<>(mol.getAtomCount());
 
                 for (IAtom atom : mol.atoms()) {

@@ -25,7 +25,6 @@
 package org.openscience.cdk.layout;
 
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Maps;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -37,6 +36,7 @@ import org.openscience.cdk.stereo.ExtendedCisTrans;
 
 import javax.vecmath.Point2d;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -103,7 +103,7 @@ final class CorrectGeometricConfiguration {
         this.container = container;
         this.graph = graph;
         this.visited = new boolean[graph.length];
-        this.atomToIndex = Maps.newHashMapWithExpectedSize(container.getAtomCount());
+        this.atomToIndex = new HashMap<>(2*container.getAtomCount());
         this.ringSearch = new RingSearch(container, graph);
 
         for (int i = 0; i < container.getAtomCount(); i++) {

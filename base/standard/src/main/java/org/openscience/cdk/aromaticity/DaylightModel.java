@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.aromaticity;
 
-import com.google.common.collect.Maps;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -32,6 +31,7 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.ringsearch.RingSearch;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -93,7 +93,7 @@ final class DaylightModel extends ElectronDonation {
         Arrays.fill(exocyclicPiBond, -1);
 
         // index atoms and set the degree to the number of implicit hydrogens
-        Map<IAtom, Integer> atomIndex = Maps.newHashMapWithExpectedSize(n);
+        Map<IAtom, Integer> atomIndex = new HashMap<>(2*n);
         for (int i = 0; i < n; i++) {
             IAtom a = container.getAtom(i);
             atomIndex.put(a, i);

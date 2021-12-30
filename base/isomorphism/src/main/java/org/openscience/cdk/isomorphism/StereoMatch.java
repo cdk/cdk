@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.isomorphism;
 
-import com.google.common.collect.Maps;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -33,6 +32,7 @@ import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
@@ -342,7 +342,7 @@ final class StereoMatch implements Predicate<int[]> {
      * @return the index/lookup of atoms to the index they appear
      */
     private static Map<IAtom, Integer> indexAtoms(IAtomContainer container) {
-        Map<IAtom, Integer> map = Maps.newHashMapWithExpectedSize(container.getAtomCount());
+        Map<IAtom, Integer> map = new HashMap<>(2*container.getAtomCount());
         for (int i = 0; i < container.getAtomCount(); i++)
             map.put(container.getAtom(i), i);
         return map;

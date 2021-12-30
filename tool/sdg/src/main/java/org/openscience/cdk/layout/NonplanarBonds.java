@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.layout;
 
-import com.google.common.collect.Maps;
 import com.google.common.primitives.Ints;
 import org.openscience.cdk.BondRef;
 import org.openscience.cdk.CDKConstants;
@@ -132,7 +131,7 @@ final class NonplanarBonds {
         this.tetrahedralElements = new ITetrahedralChirality[container.getAtomCount()];
         this.doubleBondElements = new IDoubleBondStereochemistry[container.getAtomCount()];
         this.graph = g;
-        this.atomToIndex = Maps.newHashMapWithExpectedSize(container.getAtomCount());
+        this.atomToIndex = new HashMap<>(2*container.getAtomCount());
         this.edgeToBond = edgeToBond;
         this.ringSearch = new RingSearch(container, graph);
 
