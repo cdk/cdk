@@ -24,7 +24,6 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
-import com.google.common.collect.Maps;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.Elements;
@@ -615,7 +614,7 @@ public class AtomContainerManipulator {
         List<IBond> newBonds = new ArrayList<IBond>();
 
         // store a single explicit hydrogen of each original neighbor
-        Map<IAtom, IAtom> hNeighbor = Maps.newHashMapWithExpectedSize(atomContainer.getAtomCount());
+        Map<IAtom, IAtom> hNeighbor = new HashMap<>(2*atomContainer.getAtomCount());
 
         for (IAtom atom : atomContainer.atoms()) {
             if (!"H".equals(atom.getSymbol())) {

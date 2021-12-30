@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.smiles;
 
-import com.google.common.collect.Maps;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Isotopes;
@@ -50,6 +49,7 @@ import uk.ac.ebi.beam.Edge;
 import uk.ac.ebi.beam.GraphBuilder;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -132,7 +132,7 @@ final class CDKToBeam {
         int order = ac.getAtomCount();
 
         GraphBuilder gb = GraphBuilder.create(order);
-        Map<IAtom, Integer> indices = Maps.newHashMapWithExpectedSize(order);
+        Map<IAtom, Integer> indices = new HashMap<>(2*order);
 
         for (IAtom a : ac.atoms()) {
             indices.put(a, indices.size());

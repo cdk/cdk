@@ -25,7 +25,6 @@
 package org.openscience.cdk.aromaticity;
 
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.NoSuchAtomTypeException;
@@ -36,6 +35,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.ringsearch.RingSearch;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -86,7 +86,7 @@ final class AtomTypeModel extends ElectronDonation {
 
         Arrays.fill(electrons, -1);
 
-        final Map<IAtom, Integer> indexMap = Maps.newHashMapWithExpectedSize(nAtoms);
+        final Map<IAtom, Integer> indexMap = new HashMap<>(2*nAtoms);
 
         for (int i = 0; i < nAtoms; i++) {
 

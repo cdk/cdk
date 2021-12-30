@@ -32,11 +32,11 @@
 
 package org.openscience.cdk.io;
 
-import com.google.common.collect.Maps;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -63,7 +63,7 @@ final class MDLValence {
 
         int[] valences = new int[n];
 
-        Map<IAtom, Integer> atomToIndex = Maps.newHashMapWithExpectedSize(n);
+        Map<IAtom, Integer> atomToIndex = new HashMap<>(2*n);
         for (IAtom atom : container.atoms())
             atomToIndex.put(atom, atomToIndex.size());
 
