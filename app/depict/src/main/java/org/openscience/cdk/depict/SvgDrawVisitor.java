@@ -23,7 +23,6 @@
 
 package org.openscience.cdk.depict;
 
-import com.google.common.xml.XmlEscapers;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.Bounds;
 import org.openscience.cdk.renderer.elements.ElementGroup;
@@ -432,6 +431,29 @@ final class SvgDrawVisitor implements IDrawVisitor {
         sb.append("/>\n");
     }
 
+    private void appendEscaped(StringBuilder sb, String text)
+    {
+        for (int i=0; i<text.length(); i++) {
+            char ch = text.charAt(i);
+            switch (ch) {
+                case '\n':
+                case '\r':
+                case '\t': sb.append(ch); break;
+                case '<':  sb.append("&lt;"); break;
+                case '>':  sb.append("&gt;"); break;
+                case '&':  sb.append("&amp;"); break;
+                default:
+                    if (ch < 0x1f)
+                        sb.append("\uFFFD"); // control chars
+                    else if (ch > 0xFFFD)
+                        sb.append("\uFFFD");
+                    else
+                        sb.append(ch);
+                    break;
+            }
+        }
+    }
+
     private void visit(TextElement elem) {
         appendIdent();
         double[] points = new double[]{elem.xCoord, elem.yCoord};
@@ -443,7 +465,7 @@ final class SvgDrawVisitor implements IDrawVisitor {
         sb.append(" text-anchor='middle'");
         // todo need font manager for scaling...
         sb.append(">");
-        sb.append(XmlEscapers.xmlContentEscaper().escape(elem.text));
+        appendEscaped(sb, elem.text);
         sb.append("</text>\n");
     }
 
