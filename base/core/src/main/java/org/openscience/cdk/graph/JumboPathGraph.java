@@ -31,8 +31,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
 /**
  * A path graph (<b>P-Graph</b>) for graphs with more than 64 vertices - the
  * P-Graph provides efficient generation of all simple cycles in a graph
@@ -87,8 +85,8 @@ final class JumboPathGraph extends PathGraph {
         int ord = graph.length;
 
         // check configuration
-        checkArgument(ord > 2, "graph was acyclic");
-        checkArgument(limit >= 3 && limit <= ord, "limit should be from 3 to |V|");
+        if (ord <= 2) throw new IllegalArgumentException("graph was acyclic");
+        if (limit < 3 || limit > ord) throw new IllegalArgumentException("limit should be from 3 to |V|");
 
         for (int v = 0; v < ord; v++)
             graph[v] = Lists.newArrayList();
