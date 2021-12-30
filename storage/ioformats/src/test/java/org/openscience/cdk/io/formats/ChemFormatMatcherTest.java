@@ -27,8 +27,8 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.stream.Collectors;
 
-import com.google.common.io.CharStreams;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -51,7 +51,7 @@ abstract public class ChemFormatMatcherTest extends ChemFormatTest {
 
     protected boolean matches(String header) throws IOException {
         BufferedReader reader = new BufferedReader(new StringReader(header));
-        return matcher.matches(CharStreams.readLines(reader)).matched();
+        return matcher.matches(reader.lines().collect(Collectors.toList())).matched();
     }
 
     @Test
