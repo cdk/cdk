@@ -24,7 +24,6 @@
  */
 package org.openscience.cdk.io;
 
-import com.google.common.collect.ImmutableSet;
 import org.openscience.cdk.AtomRef;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Elements;
@@ -74,6 +73,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -137,17 +137,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     /** Delimits Structure-Data (SD) Files. */
     private static final String      RECORD_DELIMITER = "$$$$";
 
-    /** 
-     *  @deprecated  Incorrect spelling
-    */
-    private static final Set<String> PSUEDO_LABELS    = ImmutableSet.<String> builder().add("*").add("A").add("Q")
-                                                              .add("L").add("LP").add("R") // XXX: not in spec
-                                                              .add("R#").build();
-
     /** Valid pseudo labels. */
-    private static final Set<String> PSEUDO_LABELS    = ImmutableSet.<String> builder().add("*").add("A").add("Q")
-                                                              .add("L").add("LP").add("R") // XXX: not in spec
-                                                              .add("R#").build();
+    private static final Set<String> PSEUDO_LABELS    = Collections.unmodifiableSet(new HashSet<>(Arrays.asList("*","A","Q","L","LP","R","R#")));
     
     public MDLV2000Reader() {
         this(new StringReader(""));
