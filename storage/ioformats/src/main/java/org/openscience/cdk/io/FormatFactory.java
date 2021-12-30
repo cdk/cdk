@@ -19,20 +19,6 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.BufferedReader;
-import java.io.CharArrayReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.ServiceLoader;
-import java.util.Set;
-import java.util.StringTokenizer;
-import java.util.TreeSet;
-
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IChemFormatMatcher;
 import org.openscience.cdk.io.formats.IChemFormatMatcher.MatchResult;
@@ -40,7 +26,19 @@ import org.openscience.cdk.io.formats.XYZFormat;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-import com.google.common.io.CharStreams;
+import java.io.BufferedReader;
+import java.io.CharArrayReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ServiceLoader;
+import java.util.Set;
+import java.util.StringTokenizer;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 /**
  * A factory for recognizing chemical file formats. Formats
@@ -177,7 +175,7 @@ public class FormatFactory {
   
     private  IChemFormat getMatchResult( BufferedReader buffer) throws IOException{
     	 /* Search file for a line containing an identifying keyword */
-        List<String> lines = Collections.unmodifiableList(CharStreams.readLines(buffer));
+        List<String> lines = buffer.lines().collect(Collectors.toList());
         Set<MatchResult> results = new TreeSet<MatchResult>();
 
         for (IChemFormatMatcher format : formats) {

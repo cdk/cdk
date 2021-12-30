@@ -18,10 +18,11 @@
  */
 package org.openscience.cdk.smiles.smarts.parser;
 
+import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.stream.Collectors;
 
-import com.google.common.io.CharStreams;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -456,7 +457,8 @@ public class RecursiveTest extends CDKTestCase {
 
         int nmatch = 0;
         int nmol = 0;
-        for (String smi : CharStreams.readLines(new InputStreamReader(ins))) {
+        for (String smi : new BufferedReader(new InputStreamReader(ins)).lines()
+                                                                        .collect(Collectors.toList())) {
             IAtomContainer container = sp.parseSmiles(smi.split("\t")[0]);
             if (sqt.matches(container)) {
                 nmatch++;
