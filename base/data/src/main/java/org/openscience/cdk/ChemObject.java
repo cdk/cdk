@@ -23,7 +23,6 @@
  */
 package org.openscience.cdk;
 
-import com.google.common.base.Objects;
 import org.openscience.cdk.event.ChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -37,6 +36,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  *  The base class for all chemical objects in this cdk. It provides methods for
@@ -333,7 +333,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
             return false;
         }
         ChemObject chemObj = (ChemObject) object;
-        return Objects.equal(identifier, chemObj.identifier);
+        return Objects.equals(identifier, chemObj.identifier);
     }
 
     /**

@@ -24,11 +24,11 @@
  */
 package org.openscience.cdk;
 
-import com.google.common.base.Objects;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IElement;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Implements the idea of an element in the periodic table.
@@ -212,6 +212,6 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
             return false;
         }
         Element elem = (Element) object;
-        return Objects.equal(atomicNumber, elem.atomicNumber);
+        return Objects.equals(atomicNumber, elem.atomicNumber);
     }
 }
