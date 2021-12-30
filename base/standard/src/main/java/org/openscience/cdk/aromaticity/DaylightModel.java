@@ -33,8 +33,7 @@ import org.openscience.cdk.ringsearch.RingSearch;
 
 import java.util.Arrays;
 import java.util.Map;
-
-import static com.google.common.base.Preconditions.checkNotNull;
+import java.util.Objects;
 
 /**
  * Electron donation model closely mirroring the Daylight model for use in
@@ -98,8 +97,8 @@ final class DaylightModel extends ElectronDonation {
         for (int i = 0; i < n; i++) {
             IAtom a = container.getAtom(i);
             atomIndex.put(a, i);
-            int implH = checkNotNull(a.getImplicitHydrogenCount(),
-                                     "Aromaticity model requires implicit hydrogen count is set.");
+            int implH = Objects.requireNonNull(a.getImplicitHydrogenCount(),
+                                      "Aromaticity model requires implicit hydrogen count is set.");
             degree[i] = implH;
             valence[i] = implH;
         }
@@ -114,7 +113,7 @@ final class DaylightModel extends ElectronDonation {
             degree[u]++;
             degree[v]++;
 
-            IBond.Order order = checkNotNull(bond.getOrder(), "Aromaticity model requires that bond orders must be set");
+            IBond.Order order = Objects.requireNonNull(bond.getOrder(), "Aromaticity model requires that bond orders must be set");
 
             switch (order) {
                 case UNSET:

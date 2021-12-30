@@ -31,8 +31,8 @@ import com.google.common.primitives.Ints;
 
 import java.util.BitSet;
 import java.util.Collection;
+import java.util.Objects;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 import static java.util.Arrays.copyOf;
 
 /**
@@ -113,7 +113,7 @@ final class InitialCycles {
      * @throws NullPointerException the graph was null
      */
     private InitialCycles(final int[][] graph, final int limit, boolean biconnected) {
-        this.graph = checkNotNull(graph, "no graph provided");
+        this.graph = Objects.requireNonNull(graph, "no graph provided");
 
         // ordering ensures the number of initial cycles is polynomial
         this.biconnected = biconnected;

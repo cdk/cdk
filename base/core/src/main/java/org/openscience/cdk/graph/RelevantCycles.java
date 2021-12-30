@@ -27,8 +27,8 @@ package org.openscience.cdk.graph;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 import static org.openscience.cdk.graph.InitialCycles.Cycle;
 
 /**
@@ -111,7 +111,7 @@ public final class RelevantCycles {
      */
     RelevantCycles(final InitialCycles initial) {
 
-        checkNotNull(initial, "No InitialCycles provided");
+        Objects.requireNonNull(initial, "No InitialCycles provided");
 
         this.basis = new GreedyBasis(initial.numberOfCycles(), initial.numberOfEdges());
 

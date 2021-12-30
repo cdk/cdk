@@ -50,11 +50,10 @@ import uk.ac.ebi.beam.Edge;
 import uk.ac.ebi.beam.GraphBuilder;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Map;
+import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
 import static org.openscience.cdk.CDKConstants.ATOM_ATOM_MAPPING;
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.TOGETHER;
 import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKWISE;
@@ -209,7 +208,7 @@ final class CDKToBeam {
 
         final boolean aromatic = SmiFlavor.isSet(flavour, SmiFlavor.UseAromaticSymbols) && a.getFlag(CDKConstants.ISAROMATIC);
         final Integer charge = a.getFormalCharge();
-        final String symbol = checkNotNull(a.getSymbol(), "An atom had an undefined symbol");
+        final String symbol = Objects.requireNonNull(a.getSymbol(), "An atom had an undefined symbol");
 
         Element element = Element.ofSymbol(symbol);
         if (element == null) element = Element.Unknown;
@@ -221,7 +220,7 @@ final class CDKToBeam {
         if (element == Element.Unknown) {
             ab.hydrogens(hCount != null ? hCount : 0);
         } else {
-            ab.hydrogens(checkNotNull(hCount, "One or more atoms had an undefined number of implicit hydrogens"));
+            ab.hydrogens(Objects.requireNonNull(hCount, "One or more atoms had an undefined number of implicit hydrogens"));
         }
 
         if (charge != null) ab.charge(charge);
