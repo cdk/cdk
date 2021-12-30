@@ -25,7 +25,6 @@ package org.openscience.cdk.smiles.smarts;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
-import com.google.common.primitives.Ints;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ReactionRole;
 import org.openscience.cdk.interfaces.IAtom;
@@ -99,8 +98,8 @@ final class SmartsAtomAtomMapFilter implements Predicate<int[]> {
 
         if (reactInvMap != null && prodInvMap != null) {
             for (Map.Entry<Integer, Collection<Integer>> e : reactInvMap.asMap().entrySet()) {
-                int[] reacMaps = Ints.toArray(e.getValue());
-                int[] prodMaps = Ints.toArray(prodInvMap.get(e.getKey()));
+                int[] reacMaps = e.getValue().stream().mapToInt(i->i).toArray();
+                int[] prodMaps = prodInvMap.get(e.getKey()).stream().mapToInt(i->i).toArray();
                 if (prodMaps.length == 0)
                     continue; // unpaired
                 mapped.add(new MappedPairs(reacMaps, prodMaps));

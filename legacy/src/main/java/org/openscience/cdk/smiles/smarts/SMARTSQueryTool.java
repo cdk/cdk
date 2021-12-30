@@ -19,7 +19,6 @@
 package org.openscience.cdk.smiles.smarts;
 
 import com.google.common.collect.FluentIterable;
-import com.google.common.primitives.Ints;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.aromaticity.ElectronDonation;
 import org.openscience.cdk.exception.CDKException;
@@ -49,6 +48,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 
 /**
@@ -383,6 +384,10 @@ public class SMARTSQueryTool {
         return mappings.size();
     }
 
+    private static List<Integer> toList(int[] values) {
+        return IntStream.of(values).boxed().collect(Collectors.toList());
+    }
+
     /**
      * Get the atoms in the target molecule that match the query pattern.  Since there may be multiple matches, the
      * return value is a List of List objects. Each List object contains the indices of the atoms in the target
@@ -393,7 +398,7 @@ public class SMARTSQueryTool {
     public List<List<Integer>> getMatchingAtoms() {
         List<List<Integer>> matched = new ArrayList<List<Integer>>(mappings.size());
         for (int[] mapping : mappings)
-            matched.add(Ints.asList(mapping));
+            matched.add(toList(mapping));
         return matched;
     }
 
@@ -411,7 +416,8 @@ public class SMARTSQueryTool {
             BitSet atomSet = new BitSet();
             for (int x : mapping)
                 atomSet.set(x);
-            if (atomSets.add(atomSet)) matched.add(Ints.asList(mapping));
+            if (atomSets.add(atomSet))
+                matched.add(toList(mapping));
         }
         return matched;
     }

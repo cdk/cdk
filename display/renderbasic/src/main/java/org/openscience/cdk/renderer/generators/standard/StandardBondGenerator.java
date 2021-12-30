@@ -25,9 +25,7 @@
 
 package org.openscience.cdk.renderer.generators.standard;
 
-import com.google.common.primitives.Ints;
 import org.openscience.cdk.config.Elements;
-import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -1724,12 +1722,12 @@ final class StandardBondGenerator {
             }
 
             // order by size 6,5,7,4,3,rest
-            int sizeCmp = Ints.compare(sizePreference(ringa.getAtomCount()),
+            int sizeCmp = Integer.compare(sizePreference(ringa.getAtomCount()),
                     sizePreference(ringb.getAtomCount()));
             if (sizeCmp != 0) return sizeCmp;
 
             // now order by number of double bonds
-            int piBondCmp = Ints.compare(nDoubleBonds(ringa), nDoubleBonds(ringb));
+            int piBondCmp = Integer.compare(nDoubleBonds(ringa), nDoubleBonds(ringb));
             if (piBondCmp != 0) return -piBondCmp;
 
             // order by element frequencies, all carbon rings are preferred
@@ -1738,7 +1736,7 @@ final class StandardBondGenerator {
 
             for (Elements element : Arrays.asList(Elements.Carbon, Elements.Nitrogen, Elements.Oxygen, Elements.Sulfur,
                     Elements.Phosphorus)) {
-                int elemCmp = Ints.compare(freqA[element.number()], freqB[element.number()]);
+                int elemCmp = Integer.compare(freqA[element.number()], freqB[element.number()]);
                 if (elemCmp != 0) return -elemCmp;
             }
 

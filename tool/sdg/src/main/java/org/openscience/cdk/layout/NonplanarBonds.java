@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.layout;
 
-import com.google.common.primitives.Ints;
 import org.openscience.cdk.BondRef;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.geometry.GeometryUtil;
@@ -177,7 +176,7 @@ final class NonplanarBonds {
 
             @Override
             public int compare(Integer i, Integer j) {
-                return -Ints.compare(nAdjacentCentres(i), nAdjacentCentres(j));
+                return -Integer.compare(nAdjacentCentres(i), nAdjacentCentres(j));
             }
         });
 

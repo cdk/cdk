@@ -19,9 +19,10 @@
  */
 package org.openscience.cdk.graph.invariant;
 
-import com.google.common.primitives.Ints;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+
+import java.util.Arrays;
 
 /**
  * Compute the extended connectivity values (Morgan Numbers) {@cdk.cite MOR65}.
@@ -75,8 +76,8 @@ public class MorganNumbersTools {
         for (IBond bond : molecule.bonds()) {
             int u = molecule.indexOf(bond.getBegin());
             int v = molecule.indexOf(bond.getEnd());
-            graph[u] = Ints.ensureCapacity(graph[u], degree[u] + 1, INITIAL_DEGREE);
-            graph[v] = Ints.ensureCapacity(graph[v], degree[v] + 1, INITIAL_DEGREE);
+            graph[u] = ensureCapacity(graph[u], degree[u] + 1);
+            graph[v] = ensureCapacity(graph[v], degree[v] + 1);
             graph[u][degree[u]++] = v;
             graph[v][degree[v]++] = u;
             currentInvariants[u] += nonHydrogens[v];
@@ -99,6 +100,10 @@ public class MorganNumbersTools {
             }
         }
         return currentInvariants;
+    }
+
+    private static int[] ensureCapacity(int[] arr, int cap) {
+        return cap < arr.length ? arr : Arrays.copyOf(arr, cap);
     }
 
     /**

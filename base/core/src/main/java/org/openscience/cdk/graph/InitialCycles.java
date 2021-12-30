@@ -27,7 +27,6 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.TreeMultimap;
-import com.google.common.primitives.Ints;
 
 import java.util.BitSet;
 import java.util.Collection;
@@ -542,7 +541,14 @@ final class InitialCycles {
 
         @Override
         public int compareTo(Cycle that) {
-            return Ints.lexicographicalComparator().compare(this.path, that.path);
+            int len = Math.min(this.path.length, that.path.length);
+            for (int i = 0; i < len; i++) {
+                int result = Integer.compare(this.path[i], that.path[i]);
+                if (result != 0) {
+                    return result;
+                }
+            }
+            return this.path.length - that.path.length;
         }
     }
 
