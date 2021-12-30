@@ -24,9 +24,8 @@
 
 package org.openscience.cdk.isomorphism;
 
-import com.google.common.collect.Sets;
-
 import java.util.BitSet;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -56,7 +55,7 @@ final class UniqueAtomMatches implements Predicate<int[]> {
      * @param expectedHits expected number of unique matches
      */
     private UniqueAtomMatches(int expectedHits) {
-        this.unique = Sets.newHashSetWithExpectedSize(expectedHits);
+        this.unique = new HashSet<>(2*expectedHits);
     }
 
     /**

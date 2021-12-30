@@ -19,7 +19,6 @@
 package org.openscience.cdk.smiles.smarts;
 
 import com.google.common.collect.FluentIterable;
-import com.google.common.collect.Sets;
 import com.google.common.primitives.Ints;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.aromaticity.ElectronDonation;
@@ -43,6 +42,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -406,7 +406,7 @@ public class SMARTSQueryTool {
      */
     public List<List<Integer>> getUniqueMatchingAtoms() {
         List<List<Integer>> matched = new ArrayList<List<Integer>>(mappings.size());
-        Set<BitSet> atomSets = Sets.newHashSetWithExpectedSize(mappings.size());
+        Set<BitSet> atomSets = new HashSet<>(2*mappings.size());
         for (int[] mapping : mappings) {
             BitSet atomSet = new BitSet();
             for (int x : mapping)
