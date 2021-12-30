@@ -130,12 +130,6 @@
         </dependency>
         <dependency>
             <groupId>org.openscience.cdk</groupId>
-            <artifactId>cdk-qsar</artifactId>
-            <version>${project.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.openscience.cdk</groupId>
             <artifactId>cdk-charges</artifactId>
             <version>${project.version}</version>
         </dependency>
