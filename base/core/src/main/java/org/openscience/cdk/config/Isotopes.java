@@ -30,10 +30,8 @@ import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import com.google.common.collect.FluentIterable;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IIsotope;
@@ -132,19 +130,22 @@ public class Isotopes extends IsotopeFactory {
      * @param formula the formula
      */
     public static void clearMajorIsotopes(IMolecularFormula formula) {
-        for (IIsotope iso : FluentIterable.from(formula.isotopes()).toList())
-            if (isMajor(iso)) {
-                int count = formula.getIsotopeCount(iso);
-                formula.removeIsotope(iso);
-                iso.setMassNumber(null);
-                // may be immutable
-                if (iso.getMassNumber() != null) {
-                    iso = formula.getBuilder().newInstance(IIsotope.class, iso.getSymbol());
-                    iso.setAtomicNumber(iso.getAtomicNumber());
-                }
-                iso.setExactMass(null);
-                iso.setNaturalAbundance(null);
-                formula.addIsotope(iso, count);
+        List<IIsotope> majorIsotopes = new ArrayList<>();
+        formula.isotopes().forEach(i -> {
+            if (isMajor(i)) majorIsotopes.add(i);
+        });
+        for (IIsotope iso : majorIsotopes) {
+            int count = formula.getIsotopeCount(iso);
+            formula.removeIsotope(iso);
+            iso.setMassNumber(null);
+            // may be immutable
+            if (iso.getMassNumber() != null) {
+                iso = formula.getBuilder().newInstance(IIsotope.class, iso.getSymbol());
+                iso.setAtomicNumber(iso.getAtomicNumber());
             }
+            iso.setExactMass(null);
+            iso.setNaturalAbundance(null);
+            formula.addIsotope(iso, count);
+        }
     }
 }

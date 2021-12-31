@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.smiles;
 
-import com.google.common.collect.FluentIterable;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
@@ -45,6 +44,9 @@ import uk.ac.ebi.beam.Functions;
 
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
@@ -271,7 +273,7 @@ public class BeamToCDKTest {
     public void _2R_butan_2_ol() throws Exception {
         IAtomContainer ac = convert("CC[C@@](C)(O)[H]");
 
-        IStereoElement se = FluentIterable.from(ac.stereoElements()).first().get();
+        IStereoElement se = getFirstStereoElement(ac);
 
         assertThat(se, is(instanceOf(ITetrahedralChirality.class)));
 
@@ -283,6 +285,12 @@ public class BeamToCDKTest {
         assertThat(tc.getStereo(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
     }
 
+    private IStereoElement getFirstStereoElement(IAtomContainer ac) {
+        for (IStereoElement se : ac.stereoElements())
+            return se;
+        return null;
+    }
+
     /**
      * (2S)-butan-2-ol
      *
@@ -292,7 +300,7 @@ public class BeamToCDKTest {
     public void _2S_butan_2_ol() throws Exception {
         IAtomContainer ac = convert("CC[C@](C)(O)[H]");
 
-        IStereoElement se = FluentIterable.from(ac.stereoElements()).first().get();
+        IStereoElement se = getFirstStereoElement(ac);
 
         assertThat(se, is(instanceOf(ITetrahedralChirality.class)));
 
@@ -312,14 +320,14 @@ public class BeamToCDKTest {
     public void tetrahedralRingClosure() throws Exception {
         IAtomContainer ac = convert("O[C@]12CCCC[C@@]1(O)CCCC2");
 
-        IStereoElement[] ses = FluentIterable.from(ac.stereoElements()).toArray(IStereoElement.class);
+        List<IStereoElement> ses = StreamSupport.stream(ac.stereoElements().spliterator(), false).collect(Collectors.toList());
 
-        assertThat(ses.length, is(2));
-        assertThat(ses[0], is(instanceOf(ITetrahedralChirality.class)));
-        assertThat(ses[1], is(instanceOf(ITetrahedralChirality.class)));
+        assertThat(ses.size(), is(2));
+        assertThat(ses.get(0), is(instanceOf(ITetrahedralChirality.class)));
+        assertThat(ses.get(1), is(instanceOf(ITetrahedralChirality.class)));
 
-        ITetrahedralChirality tc1 = (ITetrahedralChirality) ses[0];
-        ITetrahedralChirality tc2 = (ITetrahedralChirality) ses[1];
+        ITetrahedralChirality tc1 = (ITetrahedralChirality) ses.get(0);
+        ITetrahedralChirality tc2 = (ITetrahedralChirality) ses.get(1);
 
         // we want the second atom stereo as tc1
         if (ac.indexOf(tc1.getChiralAtom()) > ac.indexOf(tc2.getChiralAtom())) {
@@ -353,7 +361,7 @@ public class BeamToCDKTest {
 
         IAtomContainer ac = convert("F/C=C/F");
 
-        IStereoElement se = FluentIterable.from(ac.stereoElements()).first().get();
+        IStereoElement se = getFirstStereoElement(ac);
 
         assertThat(se, is(instanceOf(IDoubleBondStereochemistry.class)));
 
@@ -374,7 +382,7 @@ public class BeamToCDKTest {
 
         IAtomContainer ac = convert("F/C=C\\F");
 
-        IStereoElement se = FluentIterable.from(ac.stereoElements()).first().get();
+        IStereoElement se = getFirstStereoElement(ac);
 
         assertThat(se, is(instanceOf(IDoubleBondStereochemistry.class)));
 
@@ -395,7 +403,7 @@ public class BeamToCDKTest {
 
         IAtomContainer ac = convert("F/C([H])=C(\\[H])F");
 
-        IStereoElement se = FluentIterable.from(ac.stereoElements()).first().get();
+        IStereoElement se = getFirstStereoElement(ac);
 
         assertThat(se, is(instanceOf(IDoubleBondStereochemistry.class)));
 
@@ -417,7 +425,7 @@ public class BeamToCDKTest {
 
         IAtomContainer ac = convert("FC(\\[H])=C([H])/F");
 
-        IStereoElement se = FluentIterable.from(ac.stereoElements()).first().get();
+        IStereoElement se = getFirstStereoElement(ac);
 
         assertThat(se, is(instanceOf(IDoubleBondStereochemistry.class)));
 

@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.isomorphism;
 
-import com.google.common.collect.FluentIterable;
 import org.junit.Test;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
@@ -44,9 +43,8 @@ public class UllmannTest {
         int[] match = Ullmann.findSubstructure(TestMoleculeFactory.makeBenzene()).match(
                 TestMoleculeFactory.makeNaphthalene());
         assertThat(match, is(new int[]{2, 7, 6, 5, 4, 3}));
-        int count = FluentIterable.from(
-                Ullmann.findSubstructure(TestMoleculeFactory.makeBenzene()).matchAll(
-                        TestMoleculeFactory.makeNaphthalene())).size();
+        int count = Ullmann.findSubstructure(TestMoleculeFactory.makeBenzene())
+                           .matchAll(TestMoleculeFactory.makeNaphthalene()).count();
         assertThat(count, is(6)); // note: aromatic one would be 24
     }
 
@@ -55,9 +53,8 @@ public class UllmannTest {
         int[] match = Ullmann.findSubstructure(TestMoleculeFactory.makeNaphthalene()).match(
                 TestMoleculeFactory.makeBenzene());
         assertThat(match, is(new int[0]));
-        int count = FluentIterable.from(
-                Ullmann.findSubstructure(TestMoleculeFactory.makeNaphthalene()).matchAll(
-                        TestMoleculeFactory.makeBenzene())).size();
+        int count = Ullmann.findSubstructure(TestMoleculeFactory.makeNaphthalene())
+                           .matchAll(TestMoleculeFactory.makeBenzene()).count();
         assertThat(count, is(0));
     }
 }

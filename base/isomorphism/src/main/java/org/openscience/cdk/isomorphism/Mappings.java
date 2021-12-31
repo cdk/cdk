@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.isomorphism;
 
-import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
 import org.openscience.cdk.graph.GraphUtil;
@@ -39,6 +38,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 /**
@@ -278,14 +279,7 @@ public final class Mappings implements Iterable<int[]> {
     public Mappings uniqueAtoms() {
         // we need the unique predicate to be reset for each new iterator -
         // otherwise multiple iterations are always filtered (seen before)
-        return new Mappings(query, target, new Iterable<int[]>() {
-
-            @Override
-            public Iterator<int[]> iterator() {
-                return StreamSupport.stream(iterable.spliterator(), false)
-                        .filter(new UniqueAtomMatches()).iterator();
-            }
-        });
+        return new Mappings(query, target, () -> stream().filter(new UniqueAtomMatches()).iterator());
     }
 
     /**
@@ -299,14 +293,7 @@ public final class Mappings implements Iterable<int[]> {
         // we need the unique predicate to be reset for each new iterator -
         // otherwise multiple iterations are always filtered (seen before)
         final int[][] g = GraphUtil.toAdjList(query);
-        return new Mappings(query, target, new Iterable<int[]>() {
-
-            @Override
-            public Iterator<int[]> iterator() {
-                return StreamSupport.stream(iterable.spliterator(), false)
-                                    .filter(new UniqueBondMatches(g)).iterator();
-            }
-        });
+        return new Mappings(query, target, () -> stream().filter(new UniqueBondMatches(g)).iterator());
     }
 
     /**
@@ -423,6 +410,18 @@ public final class Mappings implements Iterable<int[]> {
     }
 
     /**
+     * Convert the Mappings to a Java 8 {@link java.util.stream.Stream}. The Stream API was written after
+     * this class and provides much of the functionality (e.g. {@link #map} is {@link
+     * Stream#map(java.util.function.Function)} etc. Unlike an Iterable, a stream cannot be traversed more
+     * than once.
+     *
+     * @return the stream
+     */
+    public Stream<int[]> stream() {
+        return StreamSupport.stream(this.spliterator(), false);
+    }
+
+    /**
      * Obtain the chem objects (atoms and bonds) that have 'hit' in the target molecule.
      *
      * <blockquote><pre>
@@ -433,11 +432,13 @@ public final class Mappings implements Iterable<int[]> {
      * }
      * </pre></blockquote>
      *
-     * @return lazy iterable of chem objects
+     * @return non-lazy iterable of chem objects
      */
     public Iterable<IChemObject> toChemObjects() {
-        return FluentIterable.from(map(new ToAtomBondMap(query, target)))
-                             .transformAndConcat(map -> map.values());
+        return stream()
+                .map(new ToAtomBondMap(query, target))
+                .flatMap(map -> map.values().stream())
+                .collect(Collectors.toList());
     }
 
     /**
@@ -455,20 +456,43 @@ public final class Mappings implements Iterable<int[]> {
      * }
      * </pre></blockquote>
      *
-     * @return lazy iterable of molecules
+     * @return lazy stream iterable of molecules
+     */
+    public Stream<IAtomContainer> toSubstructuresStream() {
+        return stream()
+                .map(new ToAtomBondMap(query, target))
+                .map(map -> {
+                    final IAtomContainer submol = target.getBuilder()
+                            .newInstance(IAtomContainer.class,
+                                    query.getAtomCount(), target.getBondCount(), 0, 0);
+                    for (IAtom atom : query.atoms())
+                        submol.addAtom((IAtom)map.get(atom));
+                    for (IBond bond : query.bonds())
+                        submol.addBond((IBond)map.get(bond));
+                    return submol;
+                });
+
+    }
+
+    /**
+     * Obtain the mapped substructures (atoms/bonds) of the target compound. The atoms
+     * and bonds are the same as in the target molecule but there may be less of them.
+     *
+     * <blockquote><pre>
+     * IAtomContainer query, target
+     * Mappings mappings = ...;
+     * for (IAtomContainer mol : mol.toSubstructures()) {
+     *    for (IAtom atom : mol.atoms())
+     *      target.contains(atom); // always true
+     *    for (IAtom atom : target.atoms())
+     *      mol.contains(atom): // not always true
+     * }
+     * </pre></blockquote>
+     *
+     * @return non-lazy iterable of molecules
      */
     public Iterable<IAtomContainer> toSubstructures() {
-        return FluentIterable.from(map(new ToAtomBondMap(query, target)))
-                             .transform(map -> {
-                                     final IAtomContainer submol = target.getBuilder()
-                                                                         .newInstance(IAtomContainer.class,
-                                                                                      query.getAtomCount(), target.getBondCount(), 0, 0);
-                                     for (IAtom atom : query.atoms())
-                                         submol.addAtom((IAtom)map.get(atom));
-                                     for (IBond bond : query.bonds())
-                                         submol.addBond((IBond)map.get(bond));
-                                     return submol;
-                             });
+        return toSubstructuresStream().collect(Collectors.toList());
     }
 
     /**

@@ -23,7 +23,6 @@
  */
 package org.openscience.cdk.layout;
 
-import com.google.common.collect.FluentIterable;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
@@ -75,6 +74,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.StreamSupport;
 
 import static java.util.Comparator.comparingInt;
 
@@ -1564,7 +1564,9 @@ public class StructureDiagramGenerator {
      * @return list of fragments
      */
     private List<IAtomContainer> toList(IAtomContainerSet frags) {
-        return new ArrayList<>(FluentIterable.from(frags.atomContainers()).toList());
+        List<IAtomContainer> res = new ArrayList<>(frags.getAtomContainerCount());
+        frags.atomContainers().forEach(res::add);
+        return res;
     }
 
     /**

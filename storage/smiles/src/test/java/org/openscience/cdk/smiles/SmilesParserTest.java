@@ -26,7 +26,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import com.google.common.collect.FluentIterable;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Ignore;
@@ -2218,8 +2217,8 @@ public class SmilesParserTest extends CDKTestCase {
     public void testNeighboringChirality() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         final IAtomContainer mol = sp.parseSmiles("C[C@H](O)[C@H](O)C");
-        List<IStereoElement> stereoElements = new ArrayList<IStereoElement>(FluentIterable.from(mol.stereoElements())
-                .toList());
+        List<IStereoElement<?,?>> stereoElements = new ArrayList<>();
+        mol.stereoElements().forEach(stereoElements::add);
 
         Collections.sort(stereoElements, new Comparator<IStereoElement>() {
 

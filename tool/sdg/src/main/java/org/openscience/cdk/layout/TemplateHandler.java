@@ -26,7 +26,6 @@
  */
 package org.openscience.cdk.layout;
 
-import com.google.common.collect.FluentIterable;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryUtil;
@@ -293,8 +292,8 @@ public final class TemplateHandler {
 
                 // only add if the atoms/bonds of this match don't overlap existing
                 if (!overlaps) {
-                    matchedChemObjs.addAll(FluentIterable.from(matched.atoms()).toList());
-                    matchedChemObjs.addAll(FluentIterable.from(matched.bonds()).toList());
+                    matched.atoms().forEach(matchedChemObjs::add);
+                    matched.bonds().forEach(matchedChemObjs::add);
                     matchedSubstructures.addAtomContainer(matched);
                 }
             }
