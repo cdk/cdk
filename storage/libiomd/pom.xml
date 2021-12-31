@@ -17,7 +17,7 @@
         <dependency>
             <groupId>org.blueobelisk</groupId>
             <artifactId>cmlxom</artifactId>
-            <version>3.3</version>
+            <version>3.5</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.apache.logging.log4j</groupId>
