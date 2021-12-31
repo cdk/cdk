@@ -534,7 +534,12 @@ public final class Mappings implements Iterable<int[]> {
      * @return number of matches
      */
     public int count() {
-        return Iterables.size(iterable);
+        // Note: doesn't work when mocked due to forEachRemaining
+        // return (int)stream().count();
+        int count = 0;
+        for (int[] m : iterable)
+            count++;
+        return count;
     }
 
     /**
