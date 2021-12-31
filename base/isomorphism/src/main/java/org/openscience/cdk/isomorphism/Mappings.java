@@ -25,7 +25,6 @@
 package org.openscience.cdk.isomorphism;
 
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Iterables;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -203,7 +202,7 @@ public final class Mappings implements Iterable<int[]> {
      * @return fluent-api reference
      */
     public Mappings filter(final Predicate<int[]> predicate) {
-        return new Mappings(query, target, Iterables.filter(iterable, predicate::test));
+        return new Mappings(query, target, () -> stream().filter(predicate).iterator());
     }
 
     /**
@@ -239,7 +238,7 @@ public final class Mappings implements Iterable<int[]> {
      * @return iterable of the transformed type
      */
     public <T> Iterable<T> map(final Function<int[], T> f) {
-        return Iterables.transform(iterable, f::apply);
+        return () -> stream().map(f).iterator();
     }
 
     /**
@@ -250,7 +249,7 @@ public final class Mappings implements Iterable<int[]> {
      * @return fluent-api instance
      */
     public Mappings limit(int limit) {
-        return new Mappings(query, target, Iterables.limit(iterable, limit));
+        return new Mappings(query, target, () -> stream().limit(limit).iterator());
     }
 
     /**
@@ -523,7 +522,7 @@ public final class Mappings implements Iterable<int[]> {
      * @return first match
      */
     public int[] first() {
-        return Iterables.getFirst(iterable, new int[0]);
+        return stream().findFirst().orElseGet(() -> new int[0]);
     }
 
     /**

@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.layout;
 
-import com.google.common.collect.Iterables;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -78,7 +77,8 @@ final class CorrectGeometricConfiguration {
      * @throws IllegalArgumentException an atom had unset coordinates
      */
     public static IAtomContainer correct(IAtomContainer container) {
-        if (!Iterables.isEmpty(container.stereoElements())) new CorrectGeometricConfiguration(container);
+        if (container.stereoElements().iterator().hasNext())
+            new CorrectGeometricConfiguration(container);
         return container;
     }
 
