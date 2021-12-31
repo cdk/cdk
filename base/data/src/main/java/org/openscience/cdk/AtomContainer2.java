@@ -880,6 +880,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
                 addAtom(atom);
             }
         }
+        /* FIXME!!! */
         for (IBond bond : that.bonds()) {
             if (!bond.getFlag(CDKConstants.VISITED)) {
                 bond.setFlag(CDKConstants.VISITED, true);

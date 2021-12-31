@@ -19,10 +19,6 @@
             <artifactId>vecmath</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-        </dependency>
-        <dependency>
             <groupId>uk.ac.ebi.beam</groupId>
             <artifactId>beam-core</artifactId>
         </dependency>
