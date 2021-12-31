@@ -32,6 +32,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 
 import java.util.Iterator;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -42,6 +43,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.atMost;
+import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -293,7 +295,8 @@ public class MappingsTest {
         Iterator<int[]> iterator = mock(Iterator.class);
         when(iterable.iterator()).thenReturn(iterator);
         when(iterator.hasNext()).thenReturn(true, true, true, true, true, false);
-        when(iterator.next()).thenReturn(new int[0]);
+        doCallRealMethod().when(iterator)
+                          .forEachRemaining(ArgumentMatchers.any(Consumer.class));
 
         Mappings ms = new Mappings(mock(IAtomContainer.class), mock(IAtomContainer.class), iterable);
         assertThat(ms.count(), is(5));
@@ -306,6 +309,8 @@ public class MappingsTest {
         Iterator<int[]> iterator = mock(Iterator.class);
         when(iterable.iterator()).thenReturn(iterator);
         when(iterator.hasNext()).thenReturn(true, true, true, true, false);
+        doCallRealMethod().when(iterator)
+                .forEachRemaining(ArgumentMatchers.any(Consumer.class));
 
         int[] p1 = {0, 1, 2};
         int[] p2 = {0, 2, 1};
