@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.isomorphism;
 
-import com.google.common.collect.ImmutableMap;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -33,7 +32,10 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -578,10 +580,10 @@ public final class Mappings implements Iterable<int[]> {
         /**{@inheritDoc} */
         @Override
         public Map<IAtom, IAtom> apply(int[] mapping) {
-            ImmutableMap.Builder<IAtom, IAtom> map = ImmutableMap.builder();
+            Map<IAtom, IAtom> map = new HashMap<>();
             for (int i = 0; i < mapping.length; i++)
                 map.put(query.getAtom(i), target.getAtom(mapping[i]));
-            return map.build();
+            return Collections.unmodifiableMap(map);
         }
     }
 
@@ -610,7 +612,7 @@ public final class Mappings implements Iterable<int[]> {
         /**{@inheritDoc} */
         @Override
         public Map<IBond, IBond> apply(int[] mapping) {
-            ImmutableMap.Builder<IBond, IBond> map = ImmutableMap.builder();
+            Map<IBond, IBond> map = new LinkedHashMap<>();
             for (int u = 0; u < g1.length; u++) {
                 for (int v : g1[u]) {
                     if (v > u) {
@@ -618,7 +620,7 @@ public final class Mappings implements Iterable<int[]> {
                     }
                 }
             }
-            return map.build();
+            return Collections.unmodifiableMap(map);
         }
     }
 
@@ -647,7 +649,7 @@ public final class Mappings implements Iterable<int[]> {
         /**{@inheritDoc} */
         @Override
         public Map<IChemObject, IChemObject> apply(int[] mapping) {
-            ImmutableMap.Builder<IChemObject, IChemObject> map = ImmutableMap.builder();
+            Map<IChemObject, IChemObject> map = new LinkedHashMap<>();
             for (int u = 0; u < g1.length; u++) {
                 map.put(query.getAtom(u), target.getAtom(mapping[u]));
                 for (int v : g1[u]) {
@@ -656,7 +658,7 @@ public final class Mappings implements Iterable<int[]> {
                     }
                 }
             }
-            return map.build();
+            return Collections.unmodifiableMap(map);
         }
     }
 }

@@ -28,12 +28,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 
 import javax.vecmath.Point3d;
 
-import com.google.common.collect.ImmutableMap;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.Elements;
@@ -74,21 +75,29 @@ public class Mol2Reader extends DefaultChemObjectReader {
     private static ILoggingTool              logger              = LoggingToolFactory
                                                                          .createLoggingTool(Mol2Reader.class);
 
+    // helper function for immutable map of String -> String, JDK 9+ has Map.of()
+    private static Map<String,String> immutableMap(String ... strs) {
+        if ((strs.length & 0x1) != 0)
+            throw new IllegalArgumentException();
+        Map<String,String> map = new HashMap<>(2*strs.length);
+        for (int i=0; i<strs.length; i+=2)
+            map.put(strs[i],strs[i+1]);
+        return Collections.unmodifiableMap(map);
+    }
+
     /**
      * Dictionary of known atom type aliases. If the key is seen on input, it
      * is repleaced with the specified value. Bugs /openbabel/bug/214 and /cdk/bug/1346
      */
-    private static final Map<String, String> ATOM_TYPE_ALIASES   = ImmutableMap
-                                                                         .<String, String> builder()
-                                                                         // previously produced by Open Babel
-                                                                         .put("S.o2", "S.O2")
-                                                                         .put("S.o", "S.O")
-                                                                         // seen in MMFF94 validation suite
-                                                                         .put("CL", "Cl").put("CU", "Cu")
-                                                                         .put("FE", "Fe").put("BR", "Br")
-                                                                         .put("NA", "Na").put("SI", "Si")
-                                                                         .put("CA", "Ca").put("ZN", "Zn")
-                                                                         .put("LI", "Li").put("MG", "Mg").build();
+    private static final Map<String, String> ATOM_TYPE_ALIASES = immutableMap("S.o2", "S.O2", // previously produced by Open Babel
+                                                                              "S.o", "S.O",
+                                                                              // seen in MMFF94 validation suite
+                                                                              "CL", "Cl",
+                                                                              "CU", "Cu",
+                                                                              "FE", "Fe", "BR", "Br",
+                                                                              "NA", "Na", "SI", "Si",
+                                                                              "CA", "Ca", "ZN", "Zn",
+                                                                              "LI", "Li", "MG", "Mg");
 
     /**
      * Constructs a new MDLReader that can read Molecule from a given Reader.

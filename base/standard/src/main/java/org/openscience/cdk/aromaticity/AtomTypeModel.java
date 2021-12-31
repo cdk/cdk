@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.aromaticity;
 
-import com.google.common.collect.ImmutableMap;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.NoSuchAtomTypeException;
@@ -35,6 +34,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.ringsearch.RingSearch;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -55,12 +55,23 @@ import static org.openscience.cdk.interfaces.IAtomType.Hybridization;
 // mores tests in - org.openscience.cdk.aromaticity.ExocyclicAtomTypeModelTest
 final class AtomTypeModel extends ElectronDonation {
 
+    // JDK 9+ has Map.of() which is more concise
+    private static Map<String, Integer> typeToElectronContribMap() {
+        Map<String,Integer> map = new HashMap<>();
+        map.put("N.planar3", 2);
+        map.put("N.minus.planar3", 2);
+        map.put("N.amide", 2);
+        map.put("S.2", 2);
+        map.put("S.planar3", 2);
+        map.put("C.minus.planar", 2);
+        map.put("O.planar3", 2);
+        map.put("N.sp2.3", 1);
+        map.put("C.sp2", 1);
+        return Collections.unmodifiableMap(map);
+    }
+
     /** Predefined electron contribution for several atom types. */
-    private final static Map<String, Integer> TYPES = ImmutableMap.<String, Integer> builder().put("N.planar3", 2)
-                                                            .put("N.minus.planar3", 2).put("N.amide", 2).put("S.2", 2)
-                                                            .put("S.planar3", 2).put("C.minus.planar", 2)
-                                                            .put("O.planar3", 2).put("N.sp2.3", 1).put("C.sp2", 1)
-                                                            .build();
+    private final static Map<String, Integer> TYPES = typeToElectronContribMap();
 
     /** Allow exocyclic pi bonds. */
     private final boolean                     exocyclic;

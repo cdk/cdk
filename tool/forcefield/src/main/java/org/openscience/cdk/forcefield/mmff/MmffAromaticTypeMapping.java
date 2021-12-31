@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.forcefield.mmff;
 
-import com.google.common.collect.ImmutableMap;
 import org.openscience.cdk.exception.Intractable;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -32,6 +31,8 @@ import org.openscience.cdk.interfaces.IBond;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -427,36 +428,72 @@ final class MmffAromaticTypeMapping {
         }
     }
 
+    // helper function for immutable map of String -> String, JDK 9+ has Map.of()
+    private static Map<String,String> immutableMap(String ... strs) {
+        if ((strs.length & 0x1) != 0)
+            throw new IllegalArgumentException();
+        Map<String,String> map = new HashMap<>(2*strs.length);
+        for (int i=0; i<strs.length; i+=2)
+            map.put(strs[i],strs[i+1]);
+        return Collections.unmodifiableMap(map);
+    }
+
     /**
      * Mapping of preliminary atom MMFF symbolic types to aromatic types for atoms that contribute a
      * lone pair.
      */
-    private final Map<String, String> hetroTypes = ImmutableMap.<String, String>builder().put("S", STHI)
-                                                               .put("-O-", OFUR).put("OC=C", OFUR).put("OC=N", OFUR)
-                                                               .put(NCN_PLUS, NIM_PLUS).put(NGD_PLUS, NIM_PLUS)
-                                                               .put("NM", N5M).put("NC=C", NPYL).put("NC=N", NPYL).put("NN=N", NPYL)
-                                                               .put("NC=O", NPYL).put("NC=S", NPYL).put("NSO2", NPYL)
-                                                               .put("NR", NPYL).build();
+    private final Map<String, String> hetroTypes = immutableMap("S", STHI,
+                                                                "-O-", OFUR,
+                                                                "OC=C", OFUR,
+                                                                "OC=N", OFUR,
+                                                                NCN_PLUS, NIM_PLUS,
+                                                                NGD_PLUS, NIM_PLUS,
+                                                                "NM", N5M,
+                                                                "NC=C", NPYL,
+                                                                "NC=N", NPYL,
+                                                                "NN=N", NPYL,
+                                                                "NC=O", NPYL,
+                                                                "NC=S", NPYL,
+                                                                "NSO2", NPYL,
+                                                                "NR", NPYL);
     /**
      * Mapping of preliminary atom MMFF symbolic types to aromatic types for atoms that contribute
      * one electron and are alpha to an atom that contributes a lone pair.
      */
-    private final Map<String, String> alphaTypes = ImmutableMap.<String, String> builder().put("CNN+", CIM_PLUS)
-                                                         .put("CGD+", CIM_PLUS).put("C=C", C5A).put("C=N", C5A)
-                                                         .put("CGD", C5A).put("CB", C5A).put(C5B, C5).put("N2OX", N5AX)
-                                                         .put(NCN_PLUS, NIM_PLUS).put(NGD_PLUS, NIM_PLUS)
-                                                         .put("N+=C", N5A_PLUS).put("N+=N", N5A_PLUS)
-                                                         .put("NPD+", N5A_PLUS).put("N=C", N5A).put("N=N", N5A).build();
+    private final Map<String, String> alphaTypes = immutableMap("CNN+", CIM_PLUS,
+                                                                "CGD+", CIM_PLUS,
+                                                                "C=C", C5A,
+                                                                "C=N", C5A,
+                                                                "CGD", C5A,
+                                                                "CB", C5A,
+                                                                C5B, C5,
+                                                                "N2OX", N5AX,
+                                                                NCN_PLUS, NIM_PLUS,
+                                                                NGD_PLUS, NIM_PLUS,
+                                                                "N+=C", N5A_PLUS,
+                                                                "N+=N", N5A_PLUS,
+                                                                "NPD+", N5A_PLUS,
+                                                                "N=C", N5A,
+                                                                "N=N", N5A);
     /**
      * Mapping of preliminary atom MMFF symbolic types to aromatic types for atoms that contribute
      * one electron and are beta to an atom that contributes a lone pair.
      */
-    private final Map<String, String> betaTypes  = ImmutableMap.<String, String> builder().put("CNN+", CIM_PLUS)
-                                                         .put("CGD+", CIM_PLUS).put("C=C", C5B).put("C=N", C5B)
-                                                         .put("CGD", C5B).put("CB", C5B).put(C5A, C5).put("N2OX", N5BX)
-                                                         .put(NCN_PLUS, NIM_PLUS).put(NGD_PLUS, NIM_PLUS)
-                                                         .put("N+=C", N5B_PLUS).put("N+=N", N5B_PLUS)
-                                                         .put("NPD+", N5B_PLUS).put("N=C", N5B).put("N=N", N5B).build();
+    private final Map<String, String> betaTypes  = immutableMap("CNN+", CIM_PLUS,
+                                                                "CGD+", CIM_PLUS,
+                                                                "C=C", C5B,
+                                                                "C=N", C5B,
+                                                                "CGD", C5B,
+                                                                "CB", C5B,
+                                                                C5A, C5,
+                                                                "N2OX", N5BX,
+                                                                NCN_PLUS, NIM_PLUS,
+                                                                NGD_PLUS, NIM_PLUS,
+                                                                "N+=C", N5B_PLUS,
+                                                                "N+=N", N5B_PLUS,
+                                                                "NPD+", N5B_PLUS,
+                                                                "N=C", N5B,
+                                                                "N=N", N5B);
 
     @SuppressWarnings("PMD.ShortVariable")
     // C5 is intended
