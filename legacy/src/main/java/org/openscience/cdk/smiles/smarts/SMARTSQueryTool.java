@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.smiles.smarts;
 
-import com.google.common.collect.FluentIterable;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.aromaticity.ElectronDonation;
 import org.openscience.cdk.exception.CDKException;
@@ -50,6 +49,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.StreamSupport;
 
 
 /**
@@ -365,10 +365,10 @@ public class SMARTSQueryTool {
                 }
             }
         } else {
-            mappings = FluentIterable.from(VentoFoggia.findSubstructure(query)
-                                                      .matchAll(atomContainer)
-                                                      .filter(new SmartsStereoMatch(query, atomContainer)))
-                                     .toList();
+            mappings = StreamSupport.stream(VentoFoggia.findSubstructure(query)
+                                                       .matchAll(atomContainer)
+                                                       .filter(new SmartsStereoMatch(query, atomContainer)).spliterator(), false)
+                                    .collect(Collectors.toList());
         }
 
         return !mappings.isEmpty();

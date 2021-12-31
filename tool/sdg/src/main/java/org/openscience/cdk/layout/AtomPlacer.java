@@ -23,7 +23,6 @@
  */
 package org.openscience.cdk.layout;
 
-import com.google.common.collect.FluentIterable;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
@@ -47,6 +46,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  *  Methods for generating coordinates for atoms in various situations. They can
@@ -203,7 +204,8 @@ public class AtomPlacer {
                     startAngle = d1;
                 }
                 sweep /= (1 + unplacedNeighbours.getAtomCount());
-                populatePolygonCorners(FluentIterable.from(unplacedNeighbours.atoms()).toList(),
+                populatePolygonCorners(StreamSupport.stream(unplacedNeighbours.atoms().spliterator(), false)
+                                                    .collect(Collectors.toList()),
                                        atom.getPoint2d(), startAngle, sweep, bondLength);
 
                 markPlaced(unplacedNeighbours);
@@ -970,7 +972,7 @@ public class AtomPlacer {
     static boolean isColinear(IAtom atom, Iterable<IBond> bonds) {
 
         if (Elements.isMetal(atom)) {
-            return FluentIterable.from(bonds).size() == 2;
+            return StreamSupport.stream(bonds.spliterator(), false).count() == 2L;
         }
 
         int numSgl = atom.getImplicitHydrogenCount() == null ? 0 : atom.getImplicitHydrogenCount();

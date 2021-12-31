@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.depict;
 
-import com.google.common.collect.FluentIterable;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryUtil;
@@ -61,6 +60,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.StreamSupport;
 
 /**
  * A high-level API for depicting molecules and reactions.
@@ -321,8 +321,8 @@ public final class DepictionGenerator {
      * @see #depict(Iterable, int, int)
      */
     public Depiction depict(Iterable<IAtomContainer> mols) throws CDKException {
-        int nMols = FluentIterable.from(mols).size();
-        Dimension grid = Dimensions.determineGrid(nMols);
+        int count = (int) StreamSupport.stream(mols.spliterator(), false).count();
+        Dimension grid = Dimensions.determineGrid(count);
         return depict(mols, grid.height, grid.width);
     }
 
@@ -358,7 +358,8 @@ public final class DepictionGenerator {
             e.getKey().setProperty(StandardGenerator.HIGHLIGHT_COLOR, e.getValue());
 
         // setup the model scale
-        List<IAtomContainer> molList = FluentIterable.from(mols).toList();
+        List<IAtomContainer> molList = new ArrayList<>();
+        mols.forEach(molList::add);
         DepictionGenerator copy = this.withParam(BasicSceneGenerator.Scale.class,
                                                  caclModelScale(molList));
 
@@ -603,7 +604,9 @@ public final class DepictionGenerator {
     }
 
     private List<IAtomContainer> toList(IAtomContainerSet set) {
-        return FluentIterable.from(set.atomContainers()).toList();
+        List<IAtomContainer> mols = new ArrayList<>();
+        set.atomContainers().forEach(mols::add);
+        return mols;
     }
 
     private IRenderingElement generate(IAtomContainer molecule, RendererModel model, int atomNum) throws CDKException {
