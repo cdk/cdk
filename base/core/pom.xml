@@ -19,10 +19,6 @@
             <artifactId>vecmath</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-        </dependency>
-        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>cdk-interfaces</artifactId>
             <version>${project.parent.version}</version>
