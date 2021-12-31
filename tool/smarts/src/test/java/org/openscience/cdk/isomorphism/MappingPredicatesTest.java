@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.isomorphism;
 
-import com.google.common.collect.Iterables;
 import org.junit.Test;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -58,13 +57,13 @@ public class MappingPredicatesTest {
         IAtomContainer query = smi("C1CCC1");
         IAtomContainer target = smi("C12C3C1C23");
 
-        Iterable<int[]> mappings = VentoFoggia.findSubstructure(query).matchAll(target);
+        Mappings mappings = VentoFoggia.findSubstructure(query).matchAll(target);
 
         // using unique atoms we may think we only found 1 mapping
-        assertThat(Iterables.size(Iterables.filter(mappings, new UniqueAtomMatches()::test)), is(1));
+        assertThat(mappings.stream().filter(new UniqueAtomMatches()).count(), is(1L));
 
-        // when in fact we found 4 different mappings
-        assertThat(Iterables.size(Iterables.filter(mappings, new UniqueBondMatches(GraphUtil.toAdjList(query))::test)), is(3));
+        // when in fact we found 3 different mappings
+        assertThat(mappings.stream().filter(new UniqueBondMatches(GraphUtil.toAdjList(query))).count(), is(3L));
     }
 
     @Test

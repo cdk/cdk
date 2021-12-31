@@ -24,9 +24,7 @@
 
 package org.openscience.cdk.stereo;
 
-import com.google.common.collect.Iterables;
 import org.junit.Test;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -627,10 +625,11 @@ public class StereoElementFactoryTest {
             IAtomContainer ac = mdl.read(new AtomContainer());
 
             // MDL reader currently adds stereo automatically
-            IStereoElement[] ses = Iterables.toArray(ac.stereoElements(), IStereoElement.class);
+            List<IStereoElement> ses = new ArrayList<>();
+            ac.stereoElements().forEach(ses::add);
 
-            assertThat(ses.length, is(1));
-            assertNotNull(ses[0]);
+            assertThat(ses.size(), is(1));
+            assertNotNull(ses.get(0));
         } finally {
             if (mdl != null) mdl.close();
         }
