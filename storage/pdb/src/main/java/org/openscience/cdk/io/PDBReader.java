@@ -751,6 +751,8 @@ public class PDBReader extends DefaultChemObjectReader {
             while ((line = bufferedReader.readLine()) != null) {
                 int colonIndex = line.indexOf(':');
                 if (colonIndex == -1) continue;
+                if (line.startsWith("#"))
+                    continue; // comment
                 String typeKey = line.substring(0, colonIndex);
                 String typeValue = line.substring(colonIndex + 1);
                 if (typeValue.equals("null")) {
