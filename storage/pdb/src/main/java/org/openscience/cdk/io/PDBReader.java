@@ -31,9 +31,11 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.vecmath.Point3d;
 
@@ -108,6 +110,7 @@ public class PDBReader extends DefaultChemObjectReader {
      * names; for example "RFB.N13" maps to "N.planar3".
      */
     private Map<String, String>    hetDictionary;
+    private Set<String>            hetResidues;
 
     private AtomTypeFactory        cdkAtomTypeFactory;
 
@@ -630,7 +633,7 @@ public class PDBReader extends DefaultChemObjectReader {
             throw new RuntimeException("PDBReader error during readAtom(): line too short");
         }
 
-        boolean isHetatm = cLine.substring(0, 6).equals("HETATM");
+        boolean isHetatm = cLine.startsWith("HETATM");
         String  atomName = cLine.substring(12, 16).trim();
         String  resName  = cLine.substring(17, 20).trim();
         String  symbol   = parseAtomSymbol(cLine);
@@ -723,10 +726,18 @@ public class PDBReader extends DefaultChemObjectReader {
             cdkAtomTypeFactory = AtomTypeFactory.getInstance("org/openscience/cdk/dict/data/cdk-atom-types.owl",
                     DefaultChemObjectBuilder.getInstance());
         }
+
+        // lookup the atom type using the residue and name, if the atom is a hydrogen
+        // or carbon and is a known residue we default to the common H and C.sp2 cases
         String key = resName + "." + atomName;
-        if (hetDictionary.containsKey(key)) {
-            return hetDictionary.get(key);
-        }
+        String type = hetDictionary.get(key);
+        if (type != null)
+            return type;
+        else if (atomName.startsWith("H"))
+            return hetResidues.contains(resName) ? "H" : null;
+        else if (hetResidues.contains(resName) && atomName.startsWith("C"))
+            return hetResidues.contains(resName) ? "C.sp2" : null;
+
         return null;
     }
 
@@ -734,7 +745,8 @@ public class PDBReader extends DefaultChemObjectReader {
         try {
             InputStream ins = getClass().getResourceAsStream(hetDictionaryPath);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(ins));
-            hetDictionary = new HashMap<String, String>();
+            hetDictionary = new HashMap<>();
+            hetResidues = new HashSet<>();
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 int colonIndex = line.indexOf(':');
@@ -746,6 +758,7 @@ public class PDBReader extends DefaultChemObjectReader {
                 } else {
                     hetDictionary.put(typeKey, typeValue);
                 }
+                hetResidues.add(typeKey.split("\\.")[0]);
             }
             bufferedReader.close();
         } catch (IOException ioe) {
