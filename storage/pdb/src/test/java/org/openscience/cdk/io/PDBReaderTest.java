@@ -24,8 +24,10 @@ package org.openscience.cdk.io;
 
 import java.io.InputStream;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -251,18 +253,24 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
     }
 
     public IChemFile getChemFile(ISimpleChemObjectReader reader) throws Exception {
-        return getChemFile(reader, false);
+        return getChemFile(reader, false, false);
     }
 
     public IChemFile getChemFile(String filename, boolean useRebond) throws Exception {
         InputStream ins = this.getClass().getResourceAsStream(filename);
-        return getChemFile(new PDBReader(ins), useRebond);
+        return getChemFile(new PDBReader(ins), useRebond, false);
     }
 
-    public IChemFile getChemFile(ISimpleChemObjectReader reader, boolean useRebond) throws Exception {
+    public IChemFile getChemFile(String filename, boolean useRebond, boolean useHetAtmDict) throws Exception {
+        InputStream ins = this.getClass().getResourceAsStream(filename);
+        return getChemFile(new PDBReader(ins), useRebond, useHetAtmDict);
+    }
+
+    public IChemFile getChemFile(ISimpleChemObjectReader reader, boolean useRebond, boolean useHetAtmDict) throws Exception {
         Assert.assertNotNull(reader);
 
         reader.getSetting("UseRebondTool").setSetting(String.valueOf(useRebond));
+        reader.getSetting("UseHetDictionary").setSetting(String.valueOf(useHetAtmDict));
 
         IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
         Assert.assertNotNull(chemFile);
@@ -415,6 +423,32 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
         String filename = "1TOH.pdb";
         IChemFile chemFile = getChemFile(filename);
         testObjectCountsChemFile(chemFile, 1, 1, 1, 2804, 1, 325, 23);
+    }
+
+    public void assertHetAtmTypes(IChemFile chemFile,
+                                  String resName,
+                                  String ... expected)
+    {
+        List<String> actual = new ArrayList<>();
+        for (IAtomContainer mol : ChemFileManipulator.getAllAtomContainers(chemFile)) {
+            for (IAtom atom : mol.atoms()) {
+                if (((IPDBAtom)atom).getResName().equals(resName))
+                    actual.add(atom.getAtomTypeName());
+            }
+        }
+        Assert.assertArrayEquals("Unexpected HETATOM types for res=" + resName + " was=" + actual,
+                expected, actual.toArray(new String[0]));
+    }
+
+    @Test
+    public void test3PTY() throws Exception {
+        String filename = "3PTY.pdb";
+        IChemFile chemFile = getChemFile(filename, false, true);
+        testObjectCountsChemFile(chemFile, 1, 1, 1, 2258, 1, 284, 32);
+        assertHetAtmTypes(chemFile,
+                          "AFO",
+                          "C.sp3", "O.sp3", "C.sp3", "O.sp3", "C.sp3", "O.sp3", "C.sp3", "O.sp3", "C.sp3", "O.sp3",
+                          "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3");
     }
 
     @Category(SlowTest.class)
