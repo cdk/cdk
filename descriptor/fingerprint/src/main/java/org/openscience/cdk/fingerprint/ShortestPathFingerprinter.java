@@ -273,7 +273,7 @@ public class ShortestPathFingerprinter extends AbstractFingerprinter implements 
      *      random number generators</a>
      */
     private int getRandomNumber(long seed) {
-        // XORSHIFT PRNG
+        // these shifts generate a large period (how often we see a repeat)
         seed = seed ^ seed << 21;
         seed = seed ^ seed >>> 35;
         seed = seed ^ seed << 4;
