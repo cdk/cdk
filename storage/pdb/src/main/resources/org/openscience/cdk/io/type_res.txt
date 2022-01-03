@@ -1,0 +1,7 @@
+# These residues are composed entirely of C.sp2 and H sod don't appear in
+# type_map.txt
+AN3
+BNL
+BNZ
+NPY
+PEY
