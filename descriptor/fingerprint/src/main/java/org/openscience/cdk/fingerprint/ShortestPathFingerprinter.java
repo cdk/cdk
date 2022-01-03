@@ -98,8 +98,6 @@ public class ShortestPathFingerprinter extends AbstractFingerprinter implements 
     private static ILoggingTool logger           = LoggingToolFactory
                                                          .createLoggingTool(ShortestPathFingerprinter.class);
 
-    private final RandomNumber rand = new RandomNumber();
-
     /**
      * Creates a fingerprint generator of length
      * <code>DEFAULT_SIZE</code>
@@ -266,10 +264,19 @@ public class ShortestPathFingerprinter extends AbstractFingerprinter implements 
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    /*
-     * Returns a random number for a given object
+    /**
+     * Randomise (distribute/rotate) a hash code seed. A fast pseudorandom
+     * number generator based on feedback shift registers.
+     * 
+     * @see <a href="http://en.wikipedia.org/wiki/Xorshift">Xorshift</a>
+     * @see <a href="http://www.javamex.com/tutorials/random_numbers/xorshift.shtml">Xorshift
+     *      random number generators</a>
      */
-    private int getRandomNumber(Integer hashValue) {
-        return rand.generateMersenneTwisterRandomNumber(fingerprintLength, hashValue);
+    private int getRandomNumber(long seed) {
+        // XORSHIFT PRNG
+        seed = seed ^ seed << 21;
+        seed = seed ^ seed >>> 35;
+        seed = seed ^ seed << 4;
+        return (int)(Math.abs(seed) % fingerprintLength);
     }
 }

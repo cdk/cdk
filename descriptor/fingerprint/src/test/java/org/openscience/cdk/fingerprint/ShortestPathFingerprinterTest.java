@@ -100,7 +100,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         ShortestPathFingerprinter fingerprint = new ShortestPathFingerprinter(1024);
         BitSet fingerprint1;
         fingerprint1 = fingerprint.getBitFingerprint(molecule).asBitSet();
-        org.junit.Assert.assertEquals(125, fingerprint1.cardinality());
+        org.junit.Assert.assertEquals(134, fingerprint1.cardinality());
         org.junit.Assert.assertEquals(1024, fingerprint1.size());
     }
 
@@ -264,7 +264,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         IAtomContainer mol = TestMoleculeFactory.makeIndole();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
-        Assert.assertEquals(1024, bs.length()); // highest set bit
+        Assert.assertEquals(1022, bs.length()); // highest set bit
         Assert.assertEquals(1024, bs.size()); // actual bit set size
     }
 
