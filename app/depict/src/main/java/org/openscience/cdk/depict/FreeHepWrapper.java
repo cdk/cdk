@@ -24,7 +24,6 @@
 package org.openscience.cdk.depict;
 
 import org.freehep.graphicsio.pdf.PDFGraphics2D;
-import org.freehep.graphicsio.svg.SVGGraphics2D;
 import org.freehep.graphicsio.ps.PSGraphics2D;
 
 import java.awt.Dimension;
@@ -66,11 +65,6 @@ final class FreeHepWrapper {
 
     private static Graphics2D createGraphics2d(String fmt, OutputStream out, Dimension dim) throws IOException {
         switch (fmt) {
-            case Depiction.SVG_FMT:
-                SVGGraphics2D svg = new SVGGraphics2D(out, dim);
-                svg.setCreator("Chemistry Development Kit (http://www.github.com/cdk/)");
-                svg.writeHeader();
-                return svg;
             case Depiction.PDF_FMT:
                 PDFGraphics2D pdf = new PDFGraphics2D(out, dim);
                 pdf.setCreator("Chemistry Development Kit (http://www.github.com/cdk/)");
@@ -107,10 +101,6 @@ final class FreeHepWrapper {
     public void dispose() {
         try {
             switch (fmt) {
-                case Depiction.SVG_FMT:
-                    ((SVGGraphics2D) g2).writeTrailer();
-                    ((SVGGraphics2D) g2).closeStream();
-                    break;
                 case Depiction.PDF_FMT:
                     ((PDFGraphics2D) g2).writeTrailer();
                     ((PDFGraphics2D) g2).closeStream();
