@@ -19,13 +19,9 @@
             <artifactId>vecmath</artifactId>
         </dependency>
         <dependency>
-            <groupId>xom</groupId>
-            <artifactId>xom</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.blueobelisk</groupId>
             <artifactId>cmlxom</artifactId>
-            <version>3.5</version>
+            <version>4.0</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.apache.logging.log4j</groupId>
