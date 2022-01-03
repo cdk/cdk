@@ -50,7 +50,7 @@ public abstract class AbstractFingerprinter implements IFingerprinter {
         sb.append("CDK-")
           .append(getClass().getSimpleName())
           .append("/")
-          .append(CDK.getVersion()); // could version fingerprints separetely
+          .append(CDK.getVersion()); // could version fingerprints separately
         for (Map.Entry<String,String> param : getParameters()) {
             sb.append(' ').append(param.getKey()).append('=').append(param.getValue());
         }
