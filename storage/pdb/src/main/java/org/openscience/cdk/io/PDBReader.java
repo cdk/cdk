@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -115,6 +116,7 @@ public class PDBReader extends DefaultChemObjectReader {
     private AtomTypeFactory        cdkAtomTypeFactory;
 
     private static final String    hetDictionaryPath = "type_map.txt";
+    private static final String    resDictionaryPath = "type_res.txt";
 
     /**
      *
@@ -742,11 +744,10 @@ public class PDBReader extends DefaultChemObjectReader {
     }
 
     private void readHetDictionary() {
-        try {
-            InputStream ins = getClass().getResourceAsStream(hetDictionaryPath);
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(ins));
-            hetDictionary = new HashMap<>();
-            hetResidues = new HashSet<>();
+        hetDictionary = new HashMap<>();
+        hetResidues = new HashSet<>();
+        try (InputStream ins = getClass().getResourceAsStream(hetDictionaryPath);
+             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(ins, StandardCharsets.UTF_8))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 int colonIndex = line.indexOf(':');
@@ -763,6 +764,15 @@ public class PDBReader extends DefaultChemObjectReader {
                 hetResidues.add(typeKey.split("\\.")[0]);
             }
             bufferedReader.close();
+        } catch (IOException ioe) {
+            logger.error(ioe.getMessage());
+        }
+
+        // additional residue names where all atom types are C.sp2/H
+        try (InputStream ins = getClass().getResourceAsStream(resDictionaryPath);
+             BufferedReader brdr = new BufferedReader(new InputStreamReader(ins, StandardCharsets.UTF_8))) {
+            brdr.lines().filter(l -> !l.startsWith("#"))
+                .forEach(hetResidues::add);
         } catch (IOException ioe) {
             logger.error(ioe.getMessage());
         }
