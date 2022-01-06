@@ -75,7 +75,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testStructureResonanceGenerator() {
@@ -86,7 +86,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testStructureResonanceGenerator_boolean() {
@@ -97,7 +97,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetReactions() {
@@ -108,7 +108,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testSetDefaultReactions() {
@@ -172,7 +172,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      * @throws Exception Thrown to indicate the failure of this unit test
      */
     @Test
@@ -358,7 +358,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      * A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] <=> C-[C+]-C=C-C-C=C-[C+] +
      * C-C=C-[C+]-C-[C+]-C=C + C-[C+]-C=C-C-[C+]-C=C
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetStructures_IAtomContainer() throws Exception {
@@ -392,7 +392,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] <=> C-[C+]-C=C-C-C=C-[C+]
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Category(SlowTest.class)
@@ -466,7 +466,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit: Resonance C-C=C-[C-] <=> C=C-[C-]-C
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testtestGetStructures2() throws Exception {
@@ -508,7 +508,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      *
      *  @cdk.inchi InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)/f/h2H
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testFormicAcid() throws Exception {
@@ -552,7 +552,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      *
      *  @cdk.inchi InChI=1/C2H3F/c1-2-3/h2H,1H2
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testFluoroethene() throws Exception {
@@ -592,7 +592,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      *
      * @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Category(SlowTest.class)
@@ -679,7 +679,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      *
      * @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Category(SlowTest.class)
@@ -717,7 +717,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      *
      * @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Category(SlowTest.class)
@@ -804,7 +804,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      *
      * @cdk.inchi InChI=1/C6H7N/c7-6-4-2-1-3-5-6/h1-5H,7H2
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Category(SlowTest.class)
@@ -839,7 +839,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      *
      * @cdk.inchi InChI=1/C6H7N/c7-6-4-2-1-3-5-6/h1-5H,7H2
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testAniline_Symm() throws Exception {
@@ -1004,7 +1004,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      * @cdk.inchi InChI=1/C8H10/c1-7-5-3-4-6-8(7)2/h3-6H,1-2H3
      *
      *
-     * @return    The test suite
+     *
      * @throws    Exception
      */
     @Test
@@ -1052,7 +1052,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      *
      * @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testPreservingAromaticity() throws Exception {
@@ -1190,7 +1190,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] <=> C-[C+]-C=C-C-C=C-[C+]
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetContainers2Groups() throws Exception {
@@ -1237,7 +1237,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] <=> C-[C+]-C=C-C-C=C-[C+]
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Category(SlowTest.class)
@@ -1285,7 +1285,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] <=> C-[C+]-C=C-C-C=C-[C+]
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Category(SlowTest.class)
@@ -1333,7 +1333,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] <=> C-[C+]-C=C-C-C=C-[C+]
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Category(SlowTest.class)
@@ -1393,7 +1393,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      *
      * @cdk.inchi  InChI=1/C7H7F/c1-6-4-2-3-5-7(6)8/h2-5H,1H3
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Category(SlowTest.class)
@@ -1441,7 +1441,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      *
      * @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Category(SlowTest.class)
@@ -1487,7 +1487,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      *
      *  @cdk.inchi InChI=1/C3H5Cl/c1-3(2)4/h1H2,2H3
      *
-     * @return    The test suite
+     *
      */
     @Test
 
@@ -1517,7 +1517,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      *
      *  @cdk.inchi InChI=1/C7H7BrO/c1-9-7-4-2-6(8)3-5-7/h2-5H,1H3
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Category(SlowTest.class)
@@ -1556,7 +1556,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      *
      *  @cdk.inchi InChI=1/C7H7BrO/c1-9-7-4-2-6(8)3-5-7/h2-5H,1H3
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testBenzene1bromo4methoxy_with() throws Exception {
@@ -1593,7 +1593,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
 
     /**
      * A unit test suite for JUnit
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetMaximalStructures() throws Exception {
@@ -1604,7 +1604,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
 
     /**
      * A unit test suite for JUnit
-     * @return    The test suite
+     *
      */
     @Test
     @Category(SlowTest.class)
@@ -1621,7 +1621,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      *
      *  @cdk.inchi InChI=1/C7H9N/c8-6-7-4-2-1-3-5-7/h1-5H,6,8H2
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testBenzylamine() throws Exception {
@@ -1661,7 +1661,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      *  @cdk.inchi InChI=1/C7H9N/c8-6-7-4-2-1-3-5-7/h1-5H,6,8H2
      *  @cdk.bug 2014515
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testBenzylamine_Aromatic() throws Exception {
@@ -1703,7 +1703,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
      *
      *  @cdk.inchi InChI=1/C7H9N/c8-6-7-4-2-1-3-5-7/h1-5H,6,8H2
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testBenzylamine_Aromatic_lookingSymmetry() throws Exception {

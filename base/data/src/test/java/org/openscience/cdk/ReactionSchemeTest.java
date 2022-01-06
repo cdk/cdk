@@ -50,7 +50,7 @@ public class ReactionSchemeTest extends AbstractReactionSchemeTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testReactionScheme() {

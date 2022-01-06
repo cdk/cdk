@@ -45,7 +45,7 @@ public abstract class AbstractMolecularFormulaSetTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testSize() {
@@ -57,7 +57,7 @@ public abstract class AbstractMolecularFormulaSetTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testAdd_IMolecularFormula() {
@@ -72,7 +72,7 @@ public abstract class AbstractMolecularFormulaSetTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testIterator() {
@@ -97,7 +97,7 @@ public abstract class AbstractMolecularFormulaSetTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testMolecularFormulas() {
@@ -118,7 +118,7 @@ public abstract class AbstractMolecularFormulaSetTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testAdd_IMolecularFormulaSet() {
@@ -136,7 +136,7 @@ public abstract class AbstractMolecularFormulaSetTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetMolecularFormula_int() {
@@ -152,7 +152,7 @@ public abstract class AbstractMolecularFormulaSetTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testAddMolecularFormula_IMolecularFormula() {
@@ -175,7 +175,7 @@ public abstract class AbstractMolecularFormulaSetTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetMolecularFormulas() {
@@ -196,7 +196,7 @@ public abstract class AbstractMolecularFormulaSetTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testContains_IMolecularFormula() {
@@ -219,7 +219,7 @@ public abstract class AbstractMolecularFormulaSetTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testClone() throws Exception {
@@ -232,7 +232,7 @@ public abstract class AbstractMolecularFormulaSetTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testClone_IMolecualrFormula() throws Exception {
@@ -268,7 +268,7 @@ public abstract class AbstractMolecularFormulaSetTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testRemoveMolecularFormula_IMolecularFormula() {
@@ -285,7 +285,7 @@ public abstract class AbstractMolecularFormulaSetTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testRemoveAllMolecularFormulas() {
@@ -303,7 +303,7 @@ public abstract class AbstractMolecularFormulaSetTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testRemoveMolecularFormula_int() {
@@ -320,7 +320,7 @@ public abstract class AbstractMolecularFormulaSetTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testReplaceMolecularFormula_int_IMolecularFormula() {

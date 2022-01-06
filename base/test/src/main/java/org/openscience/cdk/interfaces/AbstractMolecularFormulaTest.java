@@ -46,7 +46,7 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetIsotopeCount0() {
@@ -59,7 +59,7 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetIsotopeCount() {
@@ -77,7 +77,7 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testAddIsotope_IIsotope() {
@@ -96,7 +96,7 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetIsotopeCount_IIsotope() {
@@ -122,7 +122,7 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetIsotopeCount_IIsotope2() {
@@ -146,7 +146,7 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testAddIsotope_IIsotope_int() {
@@ -172,7 +172,7 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetIsotope_Number_Clone() throws Exception {
@@ -202,7 +202,7 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetIsotopeCount_IIsotope_Occurr() {
@@ -224,7 +224,7 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testAdd_IMolecularFormula() {
@@ -256,7 +256,7 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testIsotopes() {
@@ -278,7 +278,7 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testContains_IIsotope() {
@@ -300,7 +300,7 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testInstance_IIsotope() {
@@ -337,7 +337,7 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetCharge() {
@@ -356,7 +356,7 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testSetCharge_Double() {
@@ -387,7 +387,7 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testCharge_rest() {
@@ -407,7 +407,7 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testRemoveIsotope_IIsotope() {
@@ -430,7 +430,7 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testRemoveAllIsotopes() {
@@ -453,7 +453,7 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
      * A unit test suite for JUnit. Only test whether the
      * MolecularFormula are correctly cloned.
      *
-     * @return    The test suite
+     *
     */
     @Test
     public void testClone() throws Exception {

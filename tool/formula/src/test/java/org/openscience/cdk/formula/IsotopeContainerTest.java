@@ -27,7 +27,7 @@ public class IsotopeContainerTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testIsotopeContainer() {
@@ -38,7 +38,7 @@ public class IsotopeContainerTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testIsotopeContainer_IMolecularFormula_double() {
@@ -54,7 +54,7 @@ public class IsotopeContainerTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testIsotopeContainer_double_double() {
@@ -70,7 +70,7 @@ public class IsotopeContainerTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testSetFormula_IMolecularFormula() {
@@ -83,7 +83,7 @@ public class IsotopeContainerTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testSetMass_double() {
@@ -95,7 +95,7 @@ public class IsotopeContainerTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testSetIntensity_double() {
@@ -107,7 +107,7 @@ public class IsotopeContainerTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetFormula() {
@@ -120,7 +120,7 @@ public class IsotopeContainerTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetMass() {
@@ -134,7 +134,7 @@ public class IsotopeContainerTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetIntensity() {
@@ -147,7 +147,7 @@ public class IsotopeContainerTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testClone() throws Exception {

@@ -72,7 +72,7 @@ public class RadicalSiteRrGammaReactionTest extends ReactionProcessTest {
      * A unit test suite for JUnit. Reaction:
      * Manually put of the center active.
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Override
@@ -201,7 +201,7 @@ public class RadicalSiteRrGammaReactionTest extends ReactionProcessTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testCDKConstants_REACTIVE_CENTER() throws Exception {
@@ -241,7 +241,7 @@ public class RadicalSiteRrGammaReactionTest extends ReactionProcessTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testMapping() throws Exception {

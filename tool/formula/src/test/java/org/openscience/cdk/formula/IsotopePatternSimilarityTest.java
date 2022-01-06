@@ -24,7 +24,7 @@ public class IsotopePatternSimilarityTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testIsotopePatternSimilarity() {
@@ -35,7 +35,7 @@ public class IsotopePatternSimilarityTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testSeTolerance_double() {
@@ -47,7 +47,7 @@ public class IsotopePatternSimilarityTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetTolerance() {

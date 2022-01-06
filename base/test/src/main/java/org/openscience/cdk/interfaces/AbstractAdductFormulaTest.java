@@ -34,7 +34,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Override
@@ -46,7 +46,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testAddIMolecularFormula() {
@@ -61,7 +61,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Override
@@ -79,7 +79,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Override
@@ -105,7 +105,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Override
@@ -127,7 +127,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testAdd_IAdductFormula() {
@@ -145,7 +145,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Override
@@ -161,7 +161,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Override
@@ -185,7 +185,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetMolecularFormulas_int() {
@@ -206,7 +206,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testContains_IIsotope() {
@@ -231,7 +231,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Override
@@ -255,7 +255,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetCharge() {
@@ -272,7 +272,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testSetCharge_Integer() {
@@ -283,7 +283,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Override
@@ -297,7 +297,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Override
@@ -315,7 +315,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Override
@@ -334,7 +334,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Override
@@ -352,7 +352,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Override
@@ -372,7 +372,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetIsotopeCount() {
@@ -392,7 +392,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testIsotopes() {
@@ -420,7 +420,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetIsotopeCount_Sum() {
@@ -444,7 +444,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetIsotopeCount_IIsotope() {
@@ -469,7 +469,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetIsotopeCount_Sum_Isotope() {

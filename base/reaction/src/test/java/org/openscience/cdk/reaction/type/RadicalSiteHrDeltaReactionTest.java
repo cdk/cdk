@@ -75,7 +75,7 @@ public class RadicalSiteHrDeltaReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi InChI=1/C6H12O/c1-3-5-6(7)4-2/h3-5H2,1-2H3
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Override
@@ -107,7 +107,7 @@ public class RadicalSiteHrDeltaReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi InChI=1/C6H12O/c1-3-5-6(7)4-2/h3-5H2,1-2H3
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testManuallyCentreActive() throws Exception {
@@ -221,7 +221,7 @@ public class RadicalSiteHrDeltaReactionTest extends ReactionProcessTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testCDKConstants_REACTIVE_CENTER() throws Exception {
@@ -259,7 +259,7 @@ public class RadicalSiteHrDeltaReactionTest extends ReactionProcessTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testMapping() throws Exception {

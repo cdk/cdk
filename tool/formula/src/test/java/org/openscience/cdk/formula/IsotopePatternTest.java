@@ -18,7 +18,7 @@ public class IsotopePatternTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testIsotopePattern() {
@@ -29,7 +29,7 @@ public class IsotopePatternTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testSetMonoIsotope_IsotopeContainer() {
@@ -42,7 +42,7 @@ public class IsotopePatternTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testAddIsotope_IsotopeContainer() {
@@ -54,7 +54,7 @@ public class IsotopePatternTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetMonoIsotope() {
@@ -67,7 +67,7 @@ public class IsotopePatternTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetIsotopes() {
@@ -84,7 +84,7 @@ public class IsotopePatternTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetIsotope_int() {
@@ -101,7 +101,7 @@ public class IsotopePatternTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetNumberOfIsotopes() {
@@ -116,7 +116,7 @@ public class IsotopePatternTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testSetCharge_double() {
@@ -129,7 +129,7 @@ public class IsotopePatternTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetCharge() {
@@ -141,7 +141,7 @@ public class IsotopePatternTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testClone() throws Exception {

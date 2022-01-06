@@ -46,7 +46,7 @@ public class ToleranceRangeRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testToleranceRangeRule() throws Exception {
@@ -59,7 +59,7 @@ public class ToleranceRangeRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testDefault() throws Exception {
@@ -78,7 +78,7 @@ public class ToleranceRangeRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testSetParameters() throws Exception {
@@ -104,7 +104,7 @@ public class ToleranceRangeRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testDefaultValidFalse() throws Exception {
@@ -125,7 +125,7 @@ public class ToleranceRangeRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testDefaultValidFalse_SetParam() throws Exception {
@@ -151,7 +151,7 @@ public class ToleranceRangeRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testDefaultValidTrue() throws Exception {

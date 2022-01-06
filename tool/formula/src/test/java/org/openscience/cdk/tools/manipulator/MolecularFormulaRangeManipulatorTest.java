@@ -51,7 +51,7 @@ public class MolecularFormulaRangeManipulatorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetRange_IMolecularFormulaSet() {
@@ -96,7 +96,7 @@ public class MolecularFormulaRangeManipulatorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetMaximalFormula_MolecularFormulaRange_IChemObjectBuilder() {
@@ -142,7 +142,7 @@ public class MolecularFormulaRangeManipulatorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetMinimalFormula_MolecularFormulaRange_IChemObjectBuilder() {

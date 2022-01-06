@@ -69,7 +69,7 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
      * A unit test suite for JUnit. Reaction: [O+*]C([H])([H])C([H])([H])([H]) => [O+]=C([H])([H]) +[C*]([H])([H])([H])
      * Automatic search of the center active.
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Override
@@ -106,7 +106,7 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testCDKConstants_REACTIVE_CENTER() throws Exception {
@@ -147,7 +147,7 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testMapping() throws Exception {

@@ -107,7 +107,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi  InChI=1/C3H6O/c1-2-3-4/h2-4H,1H3
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Override
@@ -144,7 +144,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi  InChI=1/C3H6O/c1-2-3-4/h2-4H,1H3
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testManuallyCentreActive() throws Exception {
@@ -186,7 +186,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testCDKConstants_REACTIVE_CENTER() throws Exception {
@@ -227,7 +227,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testMapping() throws Exception {
@@ -370,7 +370,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
      *
      * InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testFluorobenzene() throws Exception {

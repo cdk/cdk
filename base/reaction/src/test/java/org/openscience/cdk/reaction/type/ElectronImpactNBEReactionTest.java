@@ -189,7 +189,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi  InChI=1/CH5N/c1-2/h2H2,1H3
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testNsp3SingleB() throws Exception {
@@ -262,7 +262,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi  InChI=1/CH3N/c1-2/h2H,1H2
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testNsp2SingleB() throws Exception {
@@ -329,7 +329,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
      * @cdk.inchi InChI=1/CH3F/c1-2/h1H3
      *
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testFspSingleB() throws Exception {
@@ -395,7 +395,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi InChI=1/CH2O/c1-2/h1H2
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testCDKConstants_REACTIVE_CENTER() throws Exception {
@@ -429,7 +429,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi InChI=1/CH2O/c1-2/h1H2
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testMapping() throws Exception {

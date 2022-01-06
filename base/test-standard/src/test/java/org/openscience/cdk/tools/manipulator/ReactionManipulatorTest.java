@@ -110,7 +110,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit. Test of mapped IAtoms
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetMappedChemObject_IReaction_IAtom() throws Exception {
@@ -139,7 +139,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit. Test of mapped IBond
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetMappedChemObject_IReaction_IBond() throws ClassNotFoundException, CDKException,

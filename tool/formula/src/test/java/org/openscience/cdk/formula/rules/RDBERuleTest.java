@@ -48,7 +48,7 @@ public class RDBERuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testRDBERule() throws ClassNotFoundException, CDKException, Exception {
@@ -61,7 +61,7 @@ public class RDBERuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testDefault() throws ClassNotFoundException, CDKException, Exception {
@@ -80,7 +80,7 @@ public class RDBERuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testSetParameters() throws ClassNotFoundException, CDKException, Exception {
@@ -105,7 +105,7 @@ public class RDBERuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testDefaultValidFalse() throws ClassNotFoundException, CDKException, Exception {
@@ -120,7 +120,7 @@ public class RDBERuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.C2H11N4O4
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testDefaultValidFalse_SetParam() throws ClassNotFoundException, CDKException, Exception {
@@ -144,7 +144,7 @@ public class RDBERuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testDefaultValidTrue() throws ClassNotFoundException, CDKException, Exception {
@@ -160,7 +160,7 @@ public class RDBERuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetRDBEValue_IMolecularFormula() throws ClassNotFoundException, CDKException, Exception {
@@ -175,7 +175,7 @@ public class RDBERuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testValidate_IMolecularFormula_double() throws ClassNotFoundException, CDKException, Exception {
@@ -190,7 +190,7 @@ public class RDBERuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.C3H8O3S2
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void test1() throws ClassNotFoundException, CDKException, Exception {
@@ -208,7 +208,7 @@ public class RDBERuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.C4H8O3S1
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void test2() throws ClassNotFoundException, CDKException, Exception {
@@ -223,7 +223,7 @@ public class RDBERuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.NH4+
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testAnticipatedIonState_1() throws ClassNotFoundException, CDKException, Exception {
@@ -239,7 +239,7 @@ public class RDBERuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.NH4+
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testAnticipatedIonState_2() throws ClassNotFoundException, CDKException, Exception {
@@ -256,7 +256,7 @@ public class RDBERuleTest extends FormulaRuleTest {
      *
      * @cdk.bug 2322906
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testPCCharged() throws ClassNotFoundException, CDKException, Exception {
@@ -272,7 +272,7 @@ public class RDBERuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit for B.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testB() throws ClassNotFoundException, CDKException, Exception {

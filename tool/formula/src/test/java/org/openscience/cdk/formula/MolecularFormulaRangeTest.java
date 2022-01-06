@@ -50,7 +50,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testMolecularFormulaRange() {
@@ -63,7 +63,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetIsotopeCount() {
@@ -76,7 +76,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testAddIsotope_IIsotope_int_int() {
@@ -91,7 +91,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testAddIsotope2() {
@@ -110,7 +110,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetIsotopeCountMax_IIsotope() {
@@ -129,7 +129,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetIsotopeCountMin_IIsotope() {
@@ -150,7 +150,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetIsotopeCountMin_IIsotope2() {
@@ -173,7 +173,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetIsotopeCountMin_IIsotope3() {
@@ -202,7 +202,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetIsotopeCountMin_IIsotope4() {
@@ -233,7 +233,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testIsotopes() {
@@ -254,7 +254,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testContains_IIsotope() {
@@ -278,7 +278,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     public void testRemoveIsotope_IIsotope() {
 
@@ -302,7 +302,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testRemoveAllIsotopes() {
@@ -328,7 +328,7 @@ public class MolecularFormulaRangeTest extends CDKTestCase {
      * A unit test suite for JUnit. Only test whether the
      * MolecularFormula are correctly cloned.
      *
-     * @return    The test suite
+     *
     */
     @Test
     public void testClone() throws Exception {

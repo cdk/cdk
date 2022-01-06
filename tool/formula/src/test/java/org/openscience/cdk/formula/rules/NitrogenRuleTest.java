@@ -46,7 +46,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testNitrogenRule() throws ClassNotFoundException, CDKException, Exception {
@@ -59,7 +59,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testDefault() throws ClassNotFoundException, CDKException, Exception {
@@ -73,7 +73,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testSetParameters() throws ClassNotFoundException, CDKException, Exception {
@@ -89,7 +89,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testDefaultValidFalse() throws ClassNotFoundException, CDKException, Exception {
@@ -104,7 +104,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.C2H11N4O4
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testDefaultValidFalse_SetParam() throws ClassNotFoundException, CDKException, Exception {
@@ -120,7 +120,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testDefaultValidTrue() throws ClassNotFoundException, CDKException, Exception {
@@ -136,7 +136,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testC45H75NO15() throws ClassNotFoundException, CDKException, Exception {
@@ -152,7 +152,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testC45H71N7O10() throws ClassNotFoundException, CDKException, Exception {
@@ -168,7 +168,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testC49H75NO12() throws ClassNotFoundException, CDKException, Exception {
@@ -184,7 +184,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testC50H95NO10() throws ClassNotFoundException, CDKException, Exception {
@@ -200,7 +200,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testC47H75N5O10() throws ClassNotFoundException, CDKException, Exception {
@@ -216,7 +216,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testC36H42N2O23() throws ClassNotFoundException, CDKException, Exception {
@@ -232,7 +232,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testN() throws ClassNotFoundException, CDKException, Exception {
@@ -248,7 +248,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testNPlus() throws ClassNotFoundException, CDKException, Exception {
@@ -264,7 +264,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testNominalMass() throws ClassNotFoundException, CDKException, Exception {
@@ -280,7 +280,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testDoubleCharge() throws ClassNotFoundException, CDKException, Exception {
@@ -296,7 +296,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit. Compounds like Fe, Co, Hg, Pt, As.C40H46FeN6O8S2
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testWithFe() throws ClassNotFoundException, CDKException, Exception {
@@ -312,7 +312,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit. Compounds like Fe, Co, Hg, Pt, As.C40H46FeN6O8S2
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testWithCo() throws ClassNotFoundException, CDKException, Exception {

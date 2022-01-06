@@ -73,7 +73,7 @@ public class RadicalSiteHrGammaReactionTest extends ReactionProcessTest {
      * A unit test suite for JUnit. Reaction: [A*]-C1-C2-C3[H] => A([H])-C1-C2-[C3*]
      * Automatic search of the center active.
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Override
@@ -186,7 +186,7 @@ public class RadicalSiteHrGammaReactionTest extends ReactionProcessTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testCDKConstants_REACTIVE_CENTER() throws Exception {
@@ -223,7 +223,7 @@ public class RadicalSiteHrGammaReactionTest extends ReactionProcessTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testMapping() throws Exception {

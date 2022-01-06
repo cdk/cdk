@@ -46,7 +46,7 @@ public class MMElementRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testMMElementRule() throws Exception {
@@ -59,7 +59,7 @@ public class MMElementRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testDefault() throws Exception {
@@ -75,7 +75,7 @@ public class MMElementRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testSetParameters() throws Exception {
@@ -97,7 +97,7 @@ public class MMElementRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testDefaultValidFalse() throws Exception {
@@ -114,7 +114,7 @@ public class MMElementRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testDefaultValidTrue() throws Exception {

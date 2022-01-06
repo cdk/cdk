@@ -61,7 +61,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testMolecularFormulaChecker_List() {
@@ -72,7 +72,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetRules() {
@@ -85,7 +85,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testIsValidSum_IMolecularFormula() {
@@ -106,7 +106,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testIsValid_NOT() {
@@ -131,7 +131,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testIsValid_IMolecularFormula() {
@@ -154,7 +154,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testIsValid_NOT_2Rules() {
@@ -180,7 +180,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testIsValidSum_True_2Rules() {
@@ -203,7 +203,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testIsValid_True_2Rules() {

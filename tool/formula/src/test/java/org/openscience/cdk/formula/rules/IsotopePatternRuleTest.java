@@ -52,7 +52,7 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testIsotopePatternRule() throws Exception {
@@ -65,7 +65,7 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testDefault() throws Exception {
@@ -79,7 +79,7 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testSetParameters() throws Exception {
@@ -101,7 +101,7 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testValid_Bromine() throws Exception {
@@ -128,7 +128,7 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testValidate_IMolecularFormula() throws Exception {
