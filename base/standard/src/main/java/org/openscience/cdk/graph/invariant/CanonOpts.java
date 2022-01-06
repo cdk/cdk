@@ -25,7 +25,7 @@ package org.openscience.cdk.graph.invariant;
 
 /**
  * Basic flavor options to tweak canonical invariants, note these deliberately mirror some fields
- * from the {@link SmiFlavor} settings.
+ * from the {@link org.openscience.cdk.smiles.SmiFlavor} settings.
  */
 public class CanonOpts {
     /**

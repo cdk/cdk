@@ -43,7 +43,6 @@ import java.util.List;
  * from ADAPT).
  * 
  *
- * <center>
  * <table border=1>
  * <caption>Table 1 - Description of the different MDE descriptors generated</caption>
  * <tr>
@@ -72,7 +71,7 @@ import java.util.List;
  * 
  * <td>MDEN-33</td><td> molecular distance edge between all tertiary nitrogens</td></tr>
  * </table>
- * </center>
+ *
  * 
  *
  * @author Rajarshi Guha

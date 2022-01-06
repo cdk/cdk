@@ -70,7 +70,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *  relevant manner. Each comparison can be made with or without using the bond
  *  sensitive mode and with implicit or explicit hydrogens.</p>
  *
- *  <p>If you are using <font color="#FF0000">Isomorphism, please cite Rahman <i>et.al. 2009</i></font>
+ *  <p>If you are using <span style="color: #FF0000">Isomorphism, please cite Rahman <i>et.al. 2009</i></span>
  *  {@cdk.cite SMSD2009}. The Isomorphism algorithm is described in this paper.
  *  </p>
  *

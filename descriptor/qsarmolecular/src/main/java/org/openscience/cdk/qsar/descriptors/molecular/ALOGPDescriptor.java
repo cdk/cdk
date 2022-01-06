@@ -2064,7 +2064,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
      *
      * TODO Ideally we should explicit H addition should be cached
      *
-     * @param atomContainer the molecule to calculate on
+     * @param container the molecule to calculate on
      * @return the result of the calculation
      */
     @Override

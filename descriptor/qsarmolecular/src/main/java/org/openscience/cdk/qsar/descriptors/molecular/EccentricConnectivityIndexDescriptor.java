@@ -39,9 +39,9 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * <p>
  * The eccentric connectivity index for a hydrogen supressed molecular graph is given by the
  * expression
- * <center>
+ * <div style="border: 1px;">
  * \xi^{c} = \sum_{i = 1}{n} E(i) V(i)
- * </center>
+ * </div>
  * where E(i) is the eccentricity of the i<sup>th</sup> atom (path length from the
  * i<sup>th</sup> atom to the atom farthest from it) and V(i) is the vertex degree of the
  * i<sup>th</sup> atom.

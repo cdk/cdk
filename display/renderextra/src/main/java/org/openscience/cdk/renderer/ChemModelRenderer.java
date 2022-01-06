@@ -87,8 +87,8 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  * defined by the {@link RendererModel} parameter bondLength.<p>
  *
  * There are two numbers used to transform the model so that it fits on screen.
- * The first is <tt>scale</tt>, which is used to map model coordinates to
- * screen coordinates. The second is <tt>zoom</tt> which is used to, well,
+ * The first is <code>scale</code>, which is used to map model coordinates to
+ * screen coordinates. The second is <code>zoom</code> which is used to, well,
  * zoom the on screen coordinates. If the diagram is fit-to-screen, then the
  * ratio of the bounds when drawn using bondLength and the bounds of
  * the screen is used as the zoom.<p>

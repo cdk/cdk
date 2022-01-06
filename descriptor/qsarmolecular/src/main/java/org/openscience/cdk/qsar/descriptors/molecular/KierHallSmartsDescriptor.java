@@ -50,7 +50,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * here</a> for the corresponding chemical groups).
  * 
  * 
- * <table border=1 cellpadding=5>
+ * <table border=1 style="padding: 5px;">
  * <caption>SMARTS patterns used by the descriptor</caption>
  * <thead>
  * <tr>
