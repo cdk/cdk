@@ -251,7 +251,7 @@ public class CDKTestCase {
     /**
      * Asserts that the given String has zero length.
      *
-     * @param String String to test the length of.
+     * @param testString String to test the length of.
      */
     public void assertZeroLength(String testString) {
         Assert.assertNotNull("Expected a non-null String.", testString);
@@ -262,7 +262,7 @@ public class CDKTestCase {
      * Asserts that the given String consists of a single line, and thus
      * does not contain any '\r' and/or '\n' characters.
      *
-     * @param String String to test.
+     * @param testString String to test.
      */
     public void assertOneLiner(String testString) {
         Assert.assertNotNull("Expected a non-null String.", testString);
@@ -274,8 +274,8 @@ public class CDKTestCase {
     }
 
     /**
-     * This test allows people to use the {@link TestMethod} annotation for
-     * methods that are testing in other classes than identified with {@link TestClass}.
+     * This test allows people to use the {@code TestMethod} annotation for
+     * methods that are testing in other classes than identified with {@code TestClass}.
      * Bit of a workaround for the current set up, but useful in situations where
      * a methods is rather untestable, such as SAXHandler's endElement() methods.
      *

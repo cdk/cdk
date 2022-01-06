@@ -142,7 +142,7 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
      * Test for bug #1778479 "MDLWriter writes empty PseudoAtom label string".
      * We decided to let the pseudo atoms have a default label of '*'.
      *
-     * Author: Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
+     * Author: Andreas Schueller &lt;a.schueller@chemie.uni-frankfurt.de&gt;
      *
      * @cdk.bug 1778479
      */
