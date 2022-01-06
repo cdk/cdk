@@ -79,7 +79,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
      * C[O+]!-!C =>  CO + [C+]
      *
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Override
@@ -118,7 +118,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
      * C[O+]!-!C =>  CO + [C+]
      * Manually put of the center active.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testManuallyCentreActive() throws Exception {
@@ -158,7 +158,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testCDKConstants_REACTIVE_CENTER() throws Exception {
@@ -193,7 +193,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testMapping() throws Exception {
@@ -357,7 +357,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
      * A unit test suite for JUnit. Reaction:.
      * C[N+]!-!C => CN + [C+]
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testNsp3ChargeSingleB() throws Exception {
@@ -452,7 +452,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
      * C=[N+]!-!C => C=N + [C+]
      *
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testNsp2ChargeSingleB() throws Exception {
@@ -538,7 +538,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
      * A unit test suite for JUnit. Reaction:.
      * [F+]!-!C => F + [C+]
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testFspChargeSingleB() throws Exception {

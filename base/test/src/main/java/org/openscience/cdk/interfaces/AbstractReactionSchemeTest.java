@@ -34,7 +34,7 @@ public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetReactionSchemeCount() {
@@ -46,7 +46,7 @@ public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Override
@@ -60,7 +60,7 @@ public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testReactionSchemes() {
@@ -81,7 +81,7 @@ public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Override
@@ -103,7 +103,7 @@ public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testAdd_IReactionScheme() {
@@ -121,7 +121,7 @@ public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testAdd_IReaction() {
@@ -140,7 +140,7 @@ public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Override
@@ -154,7 +154,7 @@ public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testRemoveReactionScheme_IReactionScheme() {
@@ -170,7 +170,7 @@ public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testRemoveAllReactionSchemes() {

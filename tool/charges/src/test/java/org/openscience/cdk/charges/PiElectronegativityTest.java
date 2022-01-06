@@ -49,7 +49,7 @@ public class PiElectronegativityTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testPiElectronegativity() {
@@ -60,7 +60,7 @@ public class PiElectronegativityTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testPiElectronegativity_Int_Int() {
@@ -73,7 +73,7 @@ public class PiElectronegativityTest extends CDKTestCase {
      *
      *  @cdk.inchi InChI=1/C4H8/c1-3-4-2/h3H,1,4H2,2H3
      *
-     * @return    The test suite
+     *
      * @throws Exception
      */
     @Test
@@ -104,7 +104,7 @@ public class PiElectronegativityTest extends CDKTestCase {
      *
      *  @cdk.inchi InChI=1/C4H8/c1-3-4-2/h3H,1,4H2,2H3
      *
-     * @return    The test suite
+     *
      * @throws Exception
      */
     @Test
@@ -133,7 +133,7 @@ public class PiElectronegativityTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      * @throws Exception
      */
     @Test
@@ -146,7 +146,7 @@ public class PiElectronegativityTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      * @throws Exception
      */
     @Test
@@ -159,7 +159,7 @@ public class PiElectronegativityTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      * @throws Exception
      */
     @Test
@@ -174,7 +174,7 @@ public class PiElectronegativityTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      * @throws Exception
      */
     @Test

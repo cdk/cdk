@@ -71,7 +71,7 @@ public class RadicalSiteHrBetaReactionTest extends ReactionProcessTest {
     /**
      * A unit test suite for JUnit. Reaction:
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Override
@@ -181,7 +181,7 @@ public class RadicalSiteHrBetaReactionTest extends ReactionProcessTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testCDKConstants_REACTIVE_CENTER() throws Exception {
@@ -219,7 +219,7 @@ public class RadicalSiteHrBetaReactionTest extends ReactionProcessTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testMapping() throws Exception {

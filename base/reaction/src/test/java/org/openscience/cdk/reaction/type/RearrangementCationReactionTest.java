@@ -72,7 +72,7 @@ public class RearrangementCationReactionTest extends ReactionProcessTest {
      * A unit test suite for JUnit. Reaction: [C+]-C=C-C => C=C-[C+]-C
      * Automatic search of the center active.
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Override
@@ -106,7 +106,7 @@ public class RearrangementCationReactionTest extends ReactionProcessTest {
      * A unit test suite for JUnit. Reaction: [C+]-C=C-C => C=C-[C+]-C
      * Manually put of the center active.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testManuallyCentreActive() throws Exception {
@@ -146,7 +146,7 @@ public class RearrangementCationReactionTest extends ReactionProcessTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testCDKConstants_REACTIVE_CENTER() throws Exception {
@@ -187,7 +187,7 @@ public class RearrangementCationReactionTest extends ReactionProcessTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testMapping() throws Exception {

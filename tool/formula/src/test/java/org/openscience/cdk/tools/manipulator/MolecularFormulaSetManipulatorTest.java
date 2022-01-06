@@ -51,7 +51,7 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetMaxOccurrenceElements_IMolecularFormulaSet() {
@@ -93,7 +93,7 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetMinOccurrenceElements_IMolecularFormulaSet() {
@@ -135,7 +135,7 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testRemove_IMolecularFormulaSet_IMolecularFormula_IMolecularFormula() {
@@ -167,7 +167,7 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testRemove_1() {
@@ -224,7 +224,7 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testRemove_2() {
@@ -264,7 +264,7 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testRemove_3() {
@@ -305,7 +305,7 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testRemove_IMolecularFormulaSet_MolecularFormulaRange() {
@@ -338,7 +338,7 @@ public class MolecularFormulaSetManipulatorTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testContains_IMolecularFormulaSet_IMolecularFormula() {

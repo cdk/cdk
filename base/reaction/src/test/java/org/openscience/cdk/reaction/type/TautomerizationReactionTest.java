@@ -76,7 +76,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Override
@@ -127,7 +127,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testManuallyCentreActive() throws Exception {
@@ -191,7 +191,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testCDKConstants_REACTIVE_CENTER() throws Exception {
@@ -240,7 +240,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testMapping() throws Exception {

@@ -44,7 +44,7 @@ public class MolecularFormulaSetTest extends AbstractMolecularFormulaSetTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testMolecularFormulaSet() {
@@ -55,7 +55,7 @@ public class MolecularFormulaSetTest extends AbstractMolecularFormulaSetTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testMolecularFormulaSet_IMolecularFormula() {

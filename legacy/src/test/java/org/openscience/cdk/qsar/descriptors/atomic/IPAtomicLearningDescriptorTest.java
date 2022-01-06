@@ -559,7 +559,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
      *
      * @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
      *
-     * @return    The test suite
+     *
      */
     @Ignore("IonizationPotentialTool now deprecated due to bugs")
     public void testFluorobenzene() throws Exception {

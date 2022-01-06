@@ -86,7 +86,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi InChI=1/C3H6/c1-3-2/h3H,1H2,2H3
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Override
@@ -176,7 +176,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
      * C[C+]!=!C => C[C+][C-]
      *           C[C-][C+]
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testCspChargeDoubleB() throws Exception {
@@ -190,7 +190,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi InChI=1/C3H4/c1-3-2/h1-2H2
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testCspDoubleB() throws Exception {
@@ -272,7 +272,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi InChI=1/C3H4/c1-3-2/h1H,2H3
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testCspTripleB() throws Exception {
@@ -352,7 +352,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi InChI=1/C2H5N/c1-3-2/h1H2,2H3
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testNsp2DoubleB() throws Exception {
@@ -429,7 +429,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi InChI=1/CHN/c1-2/h1H
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testNspTripleB() throws Exception {
@@ -486,7 +486,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi  InChI=1/CH2O/c1-2/h1H2
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testOspDoubleB() throws Exception {
@@ -547,7 +547,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi InChI=1/CH2O/c1-2/h1H2
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testCDKConstants_REACTIVE_CENTER() throws Exception {
@@ -599,7 +599,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi InChI=1/CH2O/c1-2/h1H2
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testMapping() throws Exception {

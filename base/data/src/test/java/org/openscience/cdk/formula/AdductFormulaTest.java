@@ -44,7 +44,7 @@ public class AdductFormulaTest extends AbstractAdductFormulaTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testAdductFormula() {
@@ -55,7 +55,7 @@ public class AdductFormulaTest extends AbstractAdductFormulaTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testAdductFormula_IMolecularFormula() {

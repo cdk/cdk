@@ -261,7 +261,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
     /**
      * Test reactive center parameter
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testCentreActive() throws Exception {
@@ -285,7 +285,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
      * Test extracting a reaction as example.
      *
      * TODO: REACT: One example for each reaction should be set in owl dictionary.
-     * @return    The test suite
+     *
      */
     @Test
     public void testGetExampleReaction() throws Exception {
@@ -316,7 +316,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
      *
      * TODO: REACT: How to comparing two reaction?
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testInitiate_IAtomContainerSet_IAtomContainerSet() throws Exception {

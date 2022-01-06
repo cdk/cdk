@@ -78,7 +78,7 @@ public class AdductionProtonPBReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi InChI=1/C2H4/c1-2/h1-2H2
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Override
@@ -115,7 +115,7 @@ public class AdductionProtonPBReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi InChI=1/C2H4/c1-2/h1-2H2
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testManuallyCentreActive() throws Exception {
@@ -191,7 +191,7 @@ public class AdductionProtonPBReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi InChI=1/C2H4/c1-2/h1-2H2
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testMapping() throws Exception {

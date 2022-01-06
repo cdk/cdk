@@ -242,7 +242,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi InChI=1/C3H6/c1-3-2/h3H,1H2,2H3
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testCDKConstants_REACTIVE_CENTER() throws Exception {
@@ -284,7 +284,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi InChI=1/C3H6/c1-3-2/h3H,1H2,2H3
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testMapping() throws Exception {

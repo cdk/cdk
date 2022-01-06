@@ -46,7 +46,7 @@ public class MolecularFormulaTest extends AbstractMolecularFormulaTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testMolecularFormula() {

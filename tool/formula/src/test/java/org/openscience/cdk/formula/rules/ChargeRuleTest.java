@@ -47,7 +47,7 @@ public class ChargeRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testChargeRule() throws ClassNotFoundException, CDKException, Exception {
@@ -60,7 +60,7 @@ public class ChargeRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testDefault() throws ClassNotFoundException, CDKException, Exception {
@@ -77,7 +77,7 @@ public class ChargeRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testSetParameters() throws ClassNotFoundException, CDKException, Exception {
@@ -100,7 +100,7 @@ public class ChargeRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testDefaultValidFalse() throws ClassNotFoundException, CDKException, Exception {
@@ -118,7 +118,7 @@ public class ChargeRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testDefaultValidFalse_SetParam() throws ClassNotFoundException, CDKException, Exception {
@@ -140,7 +140,7 @@ public class ChargeRuleTest extends FormulaRuleTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testDefaultValidTrue() throws ClassNotFoundException, CDKException, Exception {

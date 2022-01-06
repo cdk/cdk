@@ -49,7 +49,7 @@ public class ElectronegativityTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testElectronegativity() {
@@ -60,7 +60,7 @@ public class ElectronegativityTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testElectronegativity_Int_Int() {
@@ -73,7 +73,7 @@ public class ElectronegativityTest extends CDKTestCase {
      *
      *  @cdk.inchi InChI=1/CH3F/c1-2/h1H3
      *
-     * @return    The test suite
+     *
      * @throws Exception
      */
     @Test
@@ -100,7 +100,7 @@ public class ElectronegativityTest extends CDKTestCase {
      *
      *  @cdk.inchi InChI=1/CH3F/c1-2/h1H3
      *
-     * @return    The test suite
+     *
      * @throws Exception
      */
     @Test
@@ -127,7 +127,7 @@ public class ElectronegativityTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      * @throws Exception
      */
     @Test
@@ -140,7 +140,7 @@ public class ElectronegativityTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      * @throws Exception
      */
     @Test
@@ -153,7 +153,7 @@ public class ElectronegativityTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      * @throws Exception
      */
     @Test
@@ -168,7 +168,7 @@ public class ElectronegativityTest extends CDKTestCase {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      * @throws Exception
      */
     @Test

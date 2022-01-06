@@ -89,7 +89,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi InChI=1/C3H8/c1-3-2/h3H2,1-2H3
      *
-     * @return    The test suite
+     *
      */
     @Test
     @Override
@@ -185,7 +185,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi  InChI=1/C3H6/c1-3-2/h3H,1H2,2H3
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testCsp2SingleB() throws Exception {
@@ -273,7 +273,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi InChI=1/C3H4/c1-3-2/h1H,2H3
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testCspSingleB() throws Exception {
@@ -352,7 +352,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi InChI=1/C3H6/c1-3-2/h3H,1H2,2H3
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testCsp2DoubleB() throws Exception {
@@ -433,7 +433,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi InChI=1/C3H4/c1-3-2/h1-2H2
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testCspDoubleB() throws Exception {
@@ -506,7 +506,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi InChI=1/C3H4/c1-3-2/h1H,2H3
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testCspTripleB() throws Exception {
@@ -578,7 +578,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi  InChI=1/C2H7N/c1-3-2/h3H,1-2H3
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testNsp3SingleB() throws Exception {
@@ -668,7 +668,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      * A unit test suite for JUnit. Reaction:.
      * C[N+]!-!C => C[N*+] + [C*]
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testNsp3ChargeSingleB() throws Exception {
@@ -726,7 +726,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi InChI=1/C2H5N/c1-3-2/h1H2,2H3
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testNsp2SingleB() throws Exception {
@@ -808,7 +808,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      * A unit test suite for JUnit. Reaction:.
      * C=[N+]!-!C => C=[N*+] + [C*]
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testNsp2ChargeSingleB() throws Exception {
@@ -862,7 +862,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi InChI=1/C2H5N/c1-3-2/h1H2,2H3
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testNsp2DoubleB() throws Exception {
@@ -937,7 +937,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      * A unit test suite for JUnit. Reaction: .
      * C[N+]!=!C => C[N*+]-[C*]
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testNsp2ChargeDoubleB() throws Exception {
@@ -991,7 +991,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi InChI=1/CHN/c1-2/h1H
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testNspTripleB() throws Exception {
@@ -1046,7 +1046,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      * A unit test suite for JUnit. Reaction:.
      * [N+]!#!C => [N*+]=[C*]
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testNspChargeTripleB() throws Exception {
@@ -1090,7 +1090,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi InChI=1/C2H6O/c1-3-2/h1-2H3
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testOsp2SingleB() throws Exception {
@@ -1177,7 +1177,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi InChI=1/C2H6O/c1-3-2/h1-2H3
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testOsp2ChargeSingleB() throws Exception {
@@ -1233,7 +1233,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi  InChI=1/CH2O/c1-2/h1H2
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testOspDoubleB() throws Exception {
@@ -1292,7 +1292,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      * A unit test suite for JUnit. Reaction: .
      * [O+]!=!C => [O*][C*+]
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testOspChargeDoubleB() throws Exception {
@@ -1337,7 +1337,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi InChI=1/CH3F/c1-2/h1H3
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testFspSingleB() throws Exception {
@@ -1403,7 +1403,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testCDKConstants_REACTIVE_CENTER() throws Exception {
@@ -1440,7 +1440,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
     /**
      * A unit test suite for JUnit.
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testMapping() throws Exception {
@@ -1479,7 +1479,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      *
      * @cdk.inchi InChI=1/C9H10O/c1-2-8-3-5-9(7-10)6-4-8/h3-7H,2H2,1H3
      *
-     * @return    The test suite
+     *
      */
     @Test
     public void testEthylbenzaldehydeManual() throws Exception {
@@ -1635,7 +1635,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
      * @cdk.inchi InChI=1/C9H10O/c1-2-8-3-5-9(7-10)6-4-8/h3-7H,2H2,1H3
      *
      * @see       #testEthylbenzaldehydeManual()
-     * @return    The test suite
+     *
      */
     @Test
     public void testEthylbenzaldehydeMapping() throws Exception {
