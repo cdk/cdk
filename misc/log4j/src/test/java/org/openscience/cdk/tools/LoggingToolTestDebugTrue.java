@@ -21,6 +21,7 @@ package org.openscience.cdk.tools;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.test.tools.AbstractLoggingToolTest;
 
 /**
  * @cdk.module test-log4j

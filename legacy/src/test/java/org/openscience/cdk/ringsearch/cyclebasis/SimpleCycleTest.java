@@ -21,7 +21,7 @@ package org.openscience.cdk.ringsearch.cyclebasis;
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.test.CDKTestCase;
 
 import java.util.ArrayList;
 import java.util.HashSet;

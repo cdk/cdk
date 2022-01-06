@@ -47,6 +47,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.templates.TestMoleculeFactory;
+import org.openscience.cdk.test.io.ChemObjectIOTest;
 
 /**
  * TestCase for the PDBWriter class.

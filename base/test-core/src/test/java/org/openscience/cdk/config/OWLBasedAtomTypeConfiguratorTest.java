@@ -23,7 +23,7 @@ import java.io.InputStream;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.silent.ChemObject;
 
 /**

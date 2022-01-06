@@ -21,7 +21,7 @@ package org.openscience.cdk.tools.periodictable;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @cdk.module test-core

@@ -20,8 +20,7 @@ package org.openscience.cdk.geometry;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.geometry.CrystalGeometryTools;
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.test.CDKTestCase;
 
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;

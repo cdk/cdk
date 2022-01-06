@@ -25,6 +25,7 @@ package org.openscience.cdk.io;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.test.io.ChemObjectReaderTest;
 
 import java.io.InputStream;
 
@@ -33,7 +34,7 @@ import java.io.InputStream;
  *
  * @cdk.module test-io
  */
-public abstract class SimpleChemObjectReaderTest extends ChemObjectReaderTest {
+public abstract class SimpleChemObjectReaderTest extends org.openscience.cdk.test.io.ChemObjectReaderTest {
 
     protected static ISimpleChemObjectReader chemObjectIO;
 
@@ -49,7 +50,7 @@ public abstract class SimpleChemObjectReaderTest extends ChemObjectReaderTest {
         boolean read = false;
         for (IChemObject object : acceptableChemObjects()) {
             if (chemObjectIO.accepts(object.getClass())) {
-                InputStream ins = SimpleChemObjectReaderTest.class.getClassLoader().getResourceAsStream(testFile);
+                InputStream ins = org.openscience.cdk.test.io.SimpleChemObjectReaderTest.class.getClassLoader().getResourceAsStream(testFile);
                 if (ins == null)
                     ins = chemObjectIO.getClass().getResourceAsStream(testFile);
                 chemObjectIO.setReader(ins);

@@ -21,11 +21,8 @@ package org.openscience.cdk.smiles.smarts.parser;
 import java.io.StringReader;
 
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.smiles.smarts.parser.ASTStart;
-import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
-import org.openscience.cdk.smiles.smarts.parser.SmartsQueryVisitor;
 
 /**
  * JUnit testing routine for SmartsQueryVisitor

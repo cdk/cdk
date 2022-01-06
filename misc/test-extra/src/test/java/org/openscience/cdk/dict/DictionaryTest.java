@@ -18,11 +18,9 @@
  */
 package org.openscience.cdk.dict;
 
-import java.util.Iterator;
-
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Checks the functionality of the DefaultHanlder class.

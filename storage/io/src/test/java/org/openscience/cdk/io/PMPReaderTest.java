@@ -32,6 +32,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
+import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
 
 /**
  * TestCase for the reading Cerius<sup>2</sup> Polymorph Predictor files using a test file.

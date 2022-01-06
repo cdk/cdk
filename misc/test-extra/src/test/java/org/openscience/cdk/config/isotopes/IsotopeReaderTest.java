@@ -21,7 +21,7 @@ package org.openscience.cdk.config.isotopes;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IIsotope;
 

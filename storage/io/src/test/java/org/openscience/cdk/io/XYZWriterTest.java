@@ -36,6 +36,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.test.io.ChemObjectIOTest;
 
 /**
  * TestCase for the writer XYZ files using one test file.

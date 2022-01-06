@@ -24,8 +24,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.AbstractElementTest;
-import org.openscience.cdk.interfaces.ITestObjectBuilder;
+import org.openscience.cdk.test.interfaces.AbstractElementTest;
+import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 
 import static org.hamcrest.CoreMatchers.is;
 

@@ -34,7 +34,7 @@ import java.util.zip.GZIPInputStream;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.io.formats.ABINITFormat;
 import org.openscience.cdk.io.formats.ADFFormat;
 import org.openscience.cdk.io.formats.Aces2Format;

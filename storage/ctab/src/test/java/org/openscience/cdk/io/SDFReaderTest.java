@@ -33,6 +33,7 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
 
 import java.io.InputStream;
 

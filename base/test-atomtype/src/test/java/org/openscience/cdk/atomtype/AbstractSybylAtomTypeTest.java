@@ -27,6 +27,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.test.atomtype.AbstractAtomTypeTest;
 
 /**
  * Helper class that all atom type matcher test classes must implement.

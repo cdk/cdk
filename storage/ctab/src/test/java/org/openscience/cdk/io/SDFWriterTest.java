@@ -49,6 +49,7 @@ import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.InvPair;
 import org.openscience.cdk.templates.TestMoleculeFactory;
+import org.openscience.cdk.test.io.ChemObjectWriterTest;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.not;

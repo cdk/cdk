@@ -29,8 +29,8 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IStrand;
-import org.openscience.cdk.interfaces.AbstractStrandTest;
-import org.openscience.cdk.interfaces.ITestObjectBuilder;
+import org.openscience.cdk.test.interfaces.AbstractStrandTest;
+import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 
 /**
  * TODO To change the template for this generated type comment go to

@@ -27,8 +27,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMonomer;
-import org.openscience.cdk.interfaces.AbstractMonomerTest;
-import org.openscience.cdk.interfaces.ITestObjectBuilder;
+import org.openscience.cdk.test.interfaces.AbstractMonomerTest;
+import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 
 /**
  * TestCase for the Monomer class.

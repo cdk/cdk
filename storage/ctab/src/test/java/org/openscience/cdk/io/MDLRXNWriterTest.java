@@ -38,6 +38,7 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.silent.ReactionSet;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.test.io.ChemObjectIOTest;
 
 import java.io.IOException;
 import java.io.StringReader;

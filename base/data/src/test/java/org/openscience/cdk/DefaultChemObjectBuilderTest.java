@@ -22,6 +22,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.test.AbstractChemObjectBuilderTest;
 
 /**
  * Checks the functionality of the {@link IChemObjectBuilder}

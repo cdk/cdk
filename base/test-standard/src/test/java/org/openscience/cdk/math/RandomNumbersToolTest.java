@@ -21,10 +21,7 @@ package org.openscience.cdk.math;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import org.openscience.cdk.SlowTest;
-import org.openscience.cdk.math.RandomNumbersTool;
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.test.CDKTestCase;
 
 import java.util.Random;
 

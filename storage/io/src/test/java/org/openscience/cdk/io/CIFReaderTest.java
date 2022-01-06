@@ -29,6 +29,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.silent.ChemFile;
+import org.openscience.cdk.test.io.ChemObjectIOTest;
 
 import java.io.IOException;
 import java.io.InputStream;

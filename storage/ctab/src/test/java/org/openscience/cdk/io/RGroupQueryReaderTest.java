@@ -31,7 +31,7 @@ import org.junit.experimental.categories.Category;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.PseudoAtom;
-import org.openscience.cdk.SlowTest;
+import org.openscience.cdk.test.SlowTest;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -42,6 +42,7 @@ import org.openscience.cdk.isomorphism.matchers.IRGroup;
 import org.openscience.cdk.isomorphism.matchers.IRGroupList;
 import org.openscience.cdk.isomorphism.matchers.RGroupQuery;
 import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 

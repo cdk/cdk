@@ -23,7 +23,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IPDBStructure;
-import org.openscience.cdk.interfaces.AbstractPDBStructureTest;
+import org.openscience.cdk.test.interfaces.AbstractPDBStructureTest;
 
 /**
  * Checks the functionality of the {@link DebugPDBStructure}.

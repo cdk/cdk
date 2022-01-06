@@ -24,8 +24,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.AbstractChemSequenceTest;
-import org.openscience.cdk.interfaces.ITestObjectBuilder;
+import org.openscience.cdk.test.interfaces.AbstractChemSequenceTest;
+import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link ChemSequence}.

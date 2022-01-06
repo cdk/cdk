@@ -23,7 +23,7 @@
 package org.openscience.cdk.fingerprint;
 
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.fingerprint.CircularFingerprinter.FP;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;

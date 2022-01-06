@@ -29,8 +29,7 @@ import org.openscience.cdk.Ring;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.tools.manipulator.RingManipulator;
+import org.openscience.cdk.test.CDKTestCase;
 
 import java.util.Iterator;
 

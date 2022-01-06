@@ -25,7 +25,7 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Checks the functionality of the {@link OWLAtomTypeMappingReader}.

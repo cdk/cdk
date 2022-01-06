@@ -21,10 +21,10 @@ package org.openscience.cdk;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Included so that CoreCoverageTest won't complain. The class does not have

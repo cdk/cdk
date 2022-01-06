@@ -27,7 +27,7 @@ import java.io.ByteArrayInputStream;
 import nu.xom.Element;
 
 import org.junit.Assert;
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;

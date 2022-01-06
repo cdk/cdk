@@ -2,10 +2,7 @@ package org.openscience.cdk.smiles.smarts.parser;
 
 import java.io.StringReader;
 
-import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.smiles.smarts.parser.ASTStart;
-import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
-import org.openscience.cdk.smiles.smarts.parser.SmartsDumpVisitor;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Junit testing routine for SmartsDumpVisitor

@@ -24,15 +24,14 @@ package org.openscience.cdk.silent;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.AbstractAtomContainerTest;
+import org.openscience.cdk.test.interfaces.AbstractAtomContainerTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ILonePair;
-import org.openscience.cdk.interfaces.ITestObjectBuilder;
+import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNull;

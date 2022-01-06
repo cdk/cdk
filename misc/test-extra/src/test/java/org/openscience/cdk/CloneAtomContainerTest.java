@@ -26,6 +26,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.templates.TestMoleculeFactory;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestCase for the AtomContainer class.

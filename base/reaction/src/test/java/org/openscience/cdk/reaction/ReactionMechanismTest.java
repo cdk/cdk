@@ -21,7 +21,7 @@ package org.openscience.cdk.reaction;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Tests for IReactionProcess implementations.

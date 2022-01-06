@@ -21,7 +21,7 @@ package org.openscience.cdk.exception;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Checks the functionality of the NoSuchAtomTypeException class.

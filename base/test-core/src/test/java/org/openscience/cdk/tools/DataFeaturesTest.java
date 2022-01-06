@@ -21,8 +21,7 @@ package org.openscience.cdk.tools;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.tools.DataFeatures;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Included so that CoreCoverageTest won't complain. The class does not have
