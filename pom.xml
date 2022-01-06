@@ -555,7 +555,7 @@
                         <!-- format tests do not work (cyclic dependency) -->
                         <exclude>**/io/formats/*FormatTest.java</exclude>
                     </excludes>
-                    <excludedGroups>org.openscience.cdk.SlowTest</excludedGroups>
+                    <excludedGroups>org.openscience.cdk.test.SlowTest</excludedGroups>
                 </configuration>
             </plugin>
             <plugin>
@@ -652,6 +652,7 @@
                         <version>1.0.2.8</version>
                     </tagletArtifact>
                     <failOnError>false</failOnError>
+                    <excludePackageNames>org.openscience.cdk.test,org.openscience.cdk.test.*</excludePackageNames>
                     <doctitle>Chemistry Development Kit ${project.version} API</doctitle>
                     <stylesheetfile>${basedir}/doc/javadoc/stylesheet.css</stylesheetfile>
                 </configuration>
@@ -814,7 +815,7 @@
                                 <!-- not a test class -->
                                 <exclude>**/TestMoleculeFactory.java</exclude>
                             </excludes>
-                            <groups>org.openscience.cdk.SlowTest</groups>
+                            <groups>org.openscience.cdk.test.SlowTest</groups>
                         </configuration>
                     </plugin>
                 </plugins>
