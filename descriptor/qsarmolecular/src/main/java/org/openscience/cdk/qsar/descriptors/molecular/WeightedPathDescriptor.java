@@ -46,9 +46,9 @@ import java.util.List;
  * The class returns a <code>DoubleArrayResult</code> containing the five
  * descriptors in the order described below.
  * 
- * <center>
+ * <div>
  * <table border=1>
- * <caption><a name="dmwp">DMWP</a></caption>
+ * <caption><span id="dmwp">DMWP</span></caption>
  * <tr>
  * <td>WTPT1</td><td>molecular ID</td></tr><tr>
  * <td>WTPT2</td><td> molecular ID / number of atoms</td></tr><tr>
@@ -60,7 +60,7 @@ import java.util.List;
  * <td>WTPT5</td><td> sum of path lengths starting
  * from nitrogens</td></tr>
  * </table>
- * </center>
+ * </div>
  *
  * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>

@@ -100,7 +100,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  *  boolean isSubstructure = graphContainer.isSubgraph(atomContainer, query);
  *  </pre>
  *
- *  <p><font color="#FF0000">WARNING</font>:
+ *  <p><span style="color: #FF0000;">WARNING</span>:
  *    As atom result of the adjacency perception used in this algorithm
  *    there is atom single limitation : cyclopropane and isobutane are seen as isomorph
  *    This is due to the fact that these two compounds are the only ones where

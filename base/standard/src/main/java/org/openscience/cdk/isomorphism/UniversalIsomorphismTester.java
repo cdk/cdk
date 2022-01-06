@@ -75,7 +75,7 @@ import java.util.Map;
  *  boolean isSubstructure = UniversalIsomorphismTester.isSubgraph(atomContainer, query);
  *  </pre>
  *
- *  <p><font color="#FF0000">WARNING</font>:
+ *  <p><span style="color: #FF0000;">WARNING</span>:
  *    As a result of the adjacency perception used in this algorithm
  *    there is a single limitation: cyclopropane and isobutane are seen as isomorph.
  *    This is due to the fact that these two compounds are the only ones where

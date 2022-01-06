@@ -38,10 +38,10 @@ import org.openscience.cdk.smsd.helper.BinaryTree;
  * Class which reports MCS solutions based on the McGregor algorithm
  * published in 1982.
  *
- *  <p>The SMSD algorithm is described in this paper.
- * <font color="#FF0000">please refer Rahman <i>et.al. 2009</i></font>
- *  {@cdk.cite SMSD2009}.
- *  </p>
+ * <p>The SMSD algorithm is described in this paper.
+ * <span style="color: #FF0000">please refer Rahman <i>et.al. 2009</i></span>
+ * {@cdk.cite SMSD2009}.
+ * </p>
  *
  * @cdk.module smsd
  * @cdk.githash

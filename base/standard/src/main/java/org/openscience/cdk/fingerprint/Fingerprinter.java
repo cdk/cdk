@@ -68,21 +68,21 @@ import java.util.Set;
  *  number is taken as one more than the last element currently supported in
  *  {@link org.openscience.cdk.tools.periodictable.PeriodicTable}.
  *
- *  <font color="#FF0000">Warning: The aromaticity detection for this
+ *  <span style="color: #FF0000;">Warning: The aromaticity detection for this
  *  FingerPrinter relies on AllRingsFinder, which is known to take very long
  *  for some molecules with many cycles or special cyclic topologies. Thus,
  *  the AllRingsFinder has a built-in timeout of 5 seconds after which it
  *  aborts and throws an Exception. If you want your SMILES generated at any
  *  expense, you need to create your own AllRingsFinder, set the timeout to a
  *  higher value, and assign it to this FingerPrinter. In the vast majority of
- *  cases, however, the defaults will be fine. </font> <p>
+ *  cases, however, the defaults will be fine. </span> <p>
  *
- *  <font color="#FF0000">Another Warning : The daylight manual says:
+ *  <span style="color: #FF0000;">Another Warning : The daylight manual says:
  *  "Fingerprints are not so definite: if a fingerprint indicates a pattern is
  *  missing then it certainly is, but it can only indicate a pattern's presence
  *  with some probability." In the case of very small molecules, the
  *  probability that you get the same fingerprint for different molecules is
- *  high. </font>
+ *  high. </span>
  *  </p>
  *
  * @author         steinbeck

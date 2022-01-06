@@ -111,7 +111,7 @@ import java.util.Set;
  * }
  * </pre>
  *
- * <h3>Extensions to SMARTS</h3>
+ * <b>Extensions to SMARTS</b><br/>
  *
  * The pharmacophore supports some extentions to the SMARTS language that lead
  * to flexible pharmacophore definitions  Note that these extensions are specific to

@@ -43,8 +43,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * of the individual descriptors are presented in the following table. This class
  * returns a <code>DoubleArrayResult</code> containing the 29 descriptors in the order
  * described in the table.
- * <table border=1 cellpadding=2>
- * <caption><a name="cpsa">A Summary of the 29 CPSA Descriptors</a></caption>
+ * <table border=1 style="padding: 2px;">
+ * <caption><span id="cpsa">A Summary of the 29 CPSA Descriptors</span></caption>
  * <thead>
  * <tr>
  * <th>IDescriptor</th><th>Meaning</th>

@@ -66,7 +66,7 @@ import java.util.Map;
  * <p><i>Spin multiplicities and some aspects of stereochemistry are not
  * currently handled completely.</i>
  *
- * <h3>Example usage</h3>
+ * <b>Example usage</b><br/>
  *
  * <code>// Generate factory - throws CDKException if native code does not load</code><br>
  * <code>InChIGeneratorFactory factory = new InChIGeneratorFactory();</code><br>

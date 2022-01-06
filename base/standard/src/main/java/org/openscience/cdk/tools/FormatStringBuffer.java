@@ -41,9 +41,9 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 /**
- * A class for formatting output similar to the C <tt>printf</tt> command.
+ * A class for formatting output similar to the C <code>printf</code> command.
  *
- * <P>Some features provided by ANSI C-standard conformant <tt>printfs</tt>
+ * <P>Some features provided by ANSI C-standard conformant <code>printfs</code>
  * are not supported because of language constraints.
  *
  * <P>Supported conversion specifiers are: 'c', 'd', 'e', 'E', 'f', 'g'
@@ -122,7 +122,7 @@ public class FormatStringBuffer {
     // ==================================================================== //
 
     /**
-     * Create a new <tt>FormatStringBuffer</tt>.
+     * Create a new <code>FormatStringBuffer</code>.
      *
      * @param format the format string.
      */
@@ -131,7 +131,7 @@ public class FormatStringBuffer {
     }
 
     /**
-     * Reset this <tt>FormatStringBuffer</tt>.
+     * Reset this <code>FormatStringBuffer</code>.
      *
      * @param format the format string.
      */
@@ -142,9 +142,9 @@ public class FormatStringBuffer {
     }
 
     /**
-     * Reset this <tt>FormatStringBuffer</tt> with the format string
-     * given in the constructor or last call to <tt>reset(String)</tt>.
-     * This is automatically called after <tt>toString()</tt>.
+     * Reset this <code>FormatStringBuffer</code> with the format string
+     * given in the constructor or last call to <code>reset(String)</code>.
+     * This is automatically called after <code>toString()</code>.
      */
     public FormatStringBuffer reset() {
         this.buffer = new StringBuffer();
@@ -156,8 +156,8 @@ public class FormatStringBuffer {
 
     /**
      * Get the next format token from the format string. Copy every
-     * character from <tt>format</tt> to <tt>buffer</tt> between
-     * <tt>index</tt> and the next format token.
+     * character from <code>format</code> to <tt>buffer</tt> between
+     * <code>index</code> and the next format token.
      */
     private Format getFormat() {
 
@@ -298,7 +298,7 @@ public class FormatStringBuffer {
     // ==================================================================== //
 
     /**
-     * Format a <tt>char</tt>.
+     * Format a <code>char</code>.
      */
     public FormatStringBuffer format(char ch) {
 
@@ -316,7 +316,7 @@ public class FormatStringBuffer {
     }
 
     /**
-     * Format a <tt>float</tt>.
+     * Format a <code>float</code>.
      */
     public FormatStringBuffer format(float flt) {
 
@@ -325,7 +325,7 @@ public class FormatStringBuffer {
     }
 
     /**
-     * Format a <tt>double</tt>.
+     * Format a <code>double</code>.
      */
     public FormatStringBuffer format(double dbl) {
 
@@ -367,7 +367,7 @@ public class FormatStringBuffer {
     }
 
     /**
-     * Format a <tt>float</tt>.
+     * Format a <code>float</code>.
      */
     public FormatStringBuffer format(int i) {
 
@@ -376,7 +376,7 @@ public class FormatStringBuffer {
     }
 
     /**
-     * Format a <tt>float</tt>.
+     * Format a <code>float</code>.
      */
     public FormatStringBuffer format(long l) {
 
@@ -458,7 +458,7 @@ public class FormatStringBuffer {
     }
 
     /**
-     * Format a <tt>String</tt>.
+     * Format a <code>String</code>.
      */
     public FormatStringBuffer format(String str) {
 
@@ -486,7 +486,7 @@ public class FormatStringBuffer {
     // ==================================================================== //
 
     /**
-     * Get the result of the formatting. <tt>reset()</tt> is automatically
+     * Get the result of the formatting. <code>reset()</code> is automatically
      * called from this method.
      */
     @Override
