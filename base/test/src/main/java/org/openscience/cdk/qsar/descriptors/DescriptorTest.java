@@ -57,16 +57,15 @@ public abstract class DescriptorTest<T extends IDescriptor> extends CDKTestCase 
     /**
      * Makes sure that the extending class has set the super.descriptor.
      * Each extending class should have this bit of code (JUnit3 formalism):
-     * <pre>
+     * <pre>{@code
      * @Test public void setUp() {
      *   // Pass a Class, not an Object!
      *   setDescriptor(SomeDescriptor.class);
-     * }
+     * }}
+     * </pre>
      *
      * <p>The unit tests in the extending class may use this instance, but
      * are not required.
-     *
-     * </pre>
      */
     @Test
     public void testHasSetSuperDotDescriptor() {

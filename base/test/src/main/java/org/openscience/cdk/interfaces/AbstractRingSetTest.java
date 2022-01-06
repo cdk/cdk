@@ -312,7 +312,7 @@ public abstract class AbstractRingSetTest extends AbstractAtomContainerSetTest {
      * Test for RingSetTest bug #1772613.
      * When using method getConnectedRings(...) of RingSet.java fused or bridged rings
      * returned a list of connected rings that contained duplicates.
-     * Bug fix by Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
+     * Bug fix by Andreas Schueller &lt;a.schueller@chemie.uni-frankfurt.de&gt;
      * @cdk.bug 1772613
      */
     @Test
