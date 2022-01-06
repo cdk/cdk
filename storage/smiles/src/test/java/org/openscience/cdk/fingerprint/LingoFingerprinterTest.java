@@ -24,11 +24,11 @@
 package org.openscience.cdk.fingerprint;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.test.fingerprint.AbstractFingerprinterTest;
 
 import java.util.Map;
 

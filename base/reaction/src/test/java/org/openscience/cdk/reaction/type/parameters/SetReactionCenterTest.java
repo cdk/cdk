@@ -20,7 +20,7 @@ package org.openscience.cdk.reaction.type.parameters;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Tests for SetReactionCenter implementations.

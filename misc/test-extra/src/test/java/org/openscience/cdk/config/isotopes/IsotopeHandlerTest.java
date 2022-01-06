@@ -22,8 +22,7 @@ package org.openscience.cdk.config.isotopes;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.config.isotopes.IsotopeHandler;
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Checks the functionality of the IsotopeFactory

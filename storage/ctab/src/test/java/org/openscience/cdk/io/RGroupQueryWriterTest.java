@@ -35,6 +35,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.isomorphism.matchers.RGroupQuery;
+import org.openscience.cdk.test.io.ChemObjectIOTest;
 
 /**
  * JUnit tests for {@link org.openscience.cdk.io.RGroupQueryWriter}.

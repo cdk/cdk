@@ -22,8 +22,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.validate.ProblemMarker;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @cdk.module test-standard

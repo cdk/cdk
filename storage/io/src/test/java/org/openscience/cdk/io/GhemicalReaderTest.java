@@ -33,6 +33,7 @@ import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
 
 /**
  * TestCase for the reading Ghemical molecular dynamics files using one test file.

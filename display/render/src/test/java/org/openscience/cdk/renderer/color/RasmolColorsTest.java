@@ -26,7 +26,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.interfaces.IAtom;
 

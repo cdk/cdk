@@ -20,7 +20,7 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;

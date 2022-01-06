@@ -29,6 +29,7 @@ import org.junit.Test;
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
 
 /**
  * @cdk.module test-smiles

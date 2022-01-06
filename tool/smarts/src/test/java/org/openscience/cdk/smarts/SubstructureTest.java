@@ -26,7 +26,7 @@ package org.openscience.cdk.smarts;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.openscience.cdk.SlowTest;
+import org.openscience.cdk.test.SlowTest;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.Pattern;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
@@ -39,7 +39,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.openscience.cdk.CDKConstants.TITLE;
 
 /**
  * A collection of substructure integration tests. These give a high-level view

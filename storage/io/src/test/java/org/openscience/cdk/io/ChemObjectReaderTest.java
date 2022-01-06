@@ -27,27 +27,28 @@ import java.io.InputStreamReader;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.test.io.ChemObjectIOTest;
 
 /**
  * TestCase for CDK IO classes.
  *
  * @cdk.module test-io
  */
-public abstract class ChemObjectReaderTest extends ChemObjectIOTest {
+public abstract class ChemObjectReaderTest extends org.openscience.cdk.test.io.ChemObjectIOTest {
 
     protected static IChemObjectReader chemObjectIO;
     protected static String            testFile;
 
     public static void setChemObjectReader(IChemObjectReader aChemObjectReader, String testFile) {
         ChemObjectIOTest.setChemObjectIO(aChemObjectReader);
-        ChemObjectReaderTest.chemObjectIO = aChemObjectReader;
-        ChemObjectReaderTest.testFile = testFile;
+        org.openscience.cdk.io.ChemObjectReaderTest.chemObjectIO = aChemObjectReader;
+        org.openscience.cdk.io.ChemObjectReaderTest.testFile = testFile;
     }
 
     @Test
     public void testSetReader_InputStream() throws Exception {
         Assert.assertNotNull("No test file has been set!", testFile);
-        InputStream ins = ChemObjectReaderTest.class.getClassLoader().getResourceAsStream(testFile);
+        InputStream ins = org.openscience.cdk.test.io.ChemObjectReaderTest.class.getClassLoader().getResourceAsStream(testFile);
         if (ins == null)
             ins = chemObjectIO.getClass().getResourceAsStream(testFile);
         chemObjectIO.setReader(ins);
@@ -56,7 +57,7 @@ public abstract class ChemObjectReaderTest extends ChemObjectIOTest {
     @Test
     public void testSetReader_Reader() throws Exception {
         Assert.assertNotNull("No test file has been set!", testFile);
-        InputStream ins = ChemObjectReaderTest.class.getClassLoader().getResourceAsStream(testFile);
+        InputStream ins = org.openscience.cdk.test.io.ChemObjectReaderTest.class.getClassLoader().getResourceAsStream(testFile);
         if (ins == null)
             ins = chemObjectIO.getClass().getResourceAsStream(testFile);
         chemObjectIO.setReader(new InputStreamReader(ins));

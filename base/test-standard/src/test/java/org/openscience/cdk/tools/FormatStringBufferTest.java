@@ -25,8 +25,7 @@ package org.openscience.cdk.tools;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.tools.FormatStringBuffer;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @author     egonw

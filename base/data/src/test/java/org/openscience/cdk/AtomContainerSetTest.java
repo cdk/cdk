@@ -22,9 +22,9 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.AbstractAtomContainerSetTest;
+import org.openscience.cdk.test.interfaces.AbstractAtomContainerSetTest;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.ITestObjectBuilder;
+import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the MoleculeSet class.

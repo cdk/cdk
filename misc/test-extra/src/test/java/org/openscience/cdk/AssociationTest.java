@@ -22,6 +22,7 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * Checks the functionality of the Association class.

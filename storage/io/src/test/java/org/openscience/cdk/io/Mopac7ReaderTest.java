@@ -27,6 +27,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
 
 /**
  * @cdk.module test-io

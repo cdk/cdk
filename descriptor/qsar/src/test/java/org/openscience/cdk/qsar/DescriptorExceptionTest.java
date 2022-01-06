@@ -20,7 +20,7 @@ package org.openscience.cdk.qsar;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestSuite that runs all tests for the DescriptorEngine.

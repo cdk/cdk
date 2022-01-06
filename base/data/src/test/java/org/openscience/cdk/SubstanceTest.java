@@ -19,9 +19,9 @@
 package org.openscience.cdk;
 
 import org.junit.BeforeClass;
-import org.openscience.cdk.interfaces.AbstractSubstanceTest;
+import org.openscience.cdk.test.interfaces.AbstractSubstanceTest;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.ITestObjectBuilder;
+import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link Substance} class.

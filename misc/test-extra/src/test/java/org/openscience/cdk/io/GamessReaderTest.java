@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
 
 /**
  * A Test case for the "GamessReader" class.

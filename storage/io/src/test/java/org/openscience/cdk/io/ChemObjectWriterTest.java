@@ -30,6 +30,7 @@ import org.openscience.cdk.silent.AtomContainerSet;
 import org.openscience.cdk.silent.ChemFile;
 import org.openscience.cdk.silent.ChemModel;
 import org.openscience.cdk.silent.Reaction;
+import org.openscience.cdk.test.io.ChemObjectIOTest;
 
 import java.io.ByteArrayOutputStream;
 import java.io.StringWriter;
@@ -39,7 +40,7 @@ import java.io.StringWriter;
  *
  * @cdk.module test-io
  */
-public abstract class ChemObjectWriterTest extends ChemObjectIOTest {
+public abstract class ChemObjectWriterTest extends org.openscience.cdk.test.io.ChemObjectIOTest {
 
     protected static IChemObjectWriter chemObjectIO;
 

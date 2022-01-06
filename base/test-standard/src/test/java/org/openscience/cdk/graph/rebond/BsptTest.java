@@ -20,8 +20,7 @@ package org.openscience.cdk.graph.rebond;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.graph.rebond.Bspt;
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @cdk.module test-standard

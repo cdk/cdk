@@ -20,7 +20,7 @@ package org.openscience.cdk.atomtype.mapper;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * This class tests the mapper that maps CDK atom types to other atom type

@@ -22,6 +22,8 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import org.openscience.cdk.test.fingerprint.AbstractFingerprinterTest;
+
 /**
  * @cdk.module test-standard
  */

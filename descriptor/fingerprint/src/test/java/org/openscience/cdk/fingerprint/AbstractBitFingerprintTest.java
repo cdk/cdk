@@ -25,7 +25,7 @@ package org.openscience.cdk.fingerprint;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.test.CDKTestCase;
 
 import org.junit.Test;
 

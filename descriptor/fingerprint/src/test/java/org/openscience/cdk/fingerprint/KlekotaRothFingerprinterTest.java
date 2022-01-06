@@ -29,6 +29,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.test.fingerprint.AbstractFingerprinterTest;
 
 /**
  * @cdk.module test-fingerprint
