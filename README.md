@@ -40,8 +40,8 @@ You can also download a pre-built library JAR from [releases](https://github.com
 Include the main JAR on the Java classpath when compiling and running your code:
 
 ```bash
-$ javac -cp cdk-2.5.jar MyClass.java
-$ java -cp cdk-2.5.jar:. MyClass
+$ javac -cp cdk-2.7.jar MyClass.java
+$ java -cp cdk-2.7.jar:. MyClass
 ```
 
 If you are using Maven, you can use the **uber** ``cdk-bundle``, note it is much more efficient to use include
@@ -51,7 +51,7 @@ the modules you need:
 <dependency>
   <artifactId>cdk-bundle</artifactId>
   <groupId>org.openscience.cdk</groupId>
-  <version>2.5</version>
+  <version>2.7</version>
 </dependency>
 ```
 
