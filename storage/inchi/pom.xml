@@ -23,6 +23,12 @@
             <artifactId>vecmath</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.openscience.cdk</groupId>
+            <artifactId>cdk-jniinchi-support</artifactId>
+            <version>${project.parent.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
             <groupId>io.github.dan2097</groupId>
             <artifactId>jna-inchi-api</artifactId>
             <version>${jna-inchi.version}</version>

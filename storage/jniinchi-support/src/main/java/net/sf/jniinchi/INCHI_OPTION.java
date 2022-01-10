@@ -20,29 +20,32 @@
 
 package net.sf.jniinchi;
 
-import io.github.dan2097.jnainchi.InchiStatus;
-
 /**
- * This class provides backwards compatibility of JNA-INCHI with JNI-INCHI, this enum was exposed in the CDK API.
+ * This class provides backwards compatibility of JNA-INCHI with JNI-INCHI,
+ * this enum was exposed in the CDK API.
  * @author John Mayfield
  */
-public enum INCHI_RET {
-    SKIP,
-    EOF,
-    OKAY,
-    WARNING,
-    ERROR,
-    FATAL,
-    UNKNOWN,
-    BUSY;
-
-    public static INCHI_RET wrap(InchiStatus status) {
-        switch (status) {
-            case SUCCESS: return INCHI_RET.OKAY;
-            case WARNING: return INCHI_RET.WARNING;
-            case ERROR:   return INCHI_RET.ERROR;
-            default:
-                throw new IllegalArgumentException("Unexpected status!");
-        }
-    }
+public enum INCHI_OPTION {
+    SUCF,
+    ChiralFlagON,
+    ChiralFlagOFF,
+    SNon,
+    SAbs,
+    SRel,
+    SRac,
+    SUU,
+    NEWPS,
+    RecMet,
+    FixedH,
+    AuxNone,
+    NoADP,
+    Compress,
+    DoNotAddH,
+    Wnumber,
+    OutputSDF,
+    WarnOnEmptyStructure,
+    FixSp3Bug,
+    FB,
+    SPXYZ,
+    SAsXYZ;
 }
