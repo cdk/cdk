@@ -262,6 +262,11 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>cdk-jniinchi-support</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>cdk-group</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
