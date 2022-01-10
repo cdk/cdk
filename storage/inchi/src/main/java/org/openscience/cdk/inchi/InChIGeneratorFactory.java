@@ -22,6 +22,8 @@ package org.openscience.cdk.inchi;
 
 import java.util.List;
 
+import io.github.dan2097.jnainchi.InchiFlag;
+import io.github.dan2097.jnainchi.InchiOptions;
 import net.sf.jniinchi.INCHI_OPTION;
 
 import org.openscience.cdk.exception.CDKException;
@@ -158,9 +160,42 @@ public class InChIGeneratorFactory {
      * @param options   List of options (net.sf.jniinchi.INCHI_OPTION) for InChI generation.
      * @return the InChI generator object
      * @throws CDKException if the generator cannot be instantiated
+     * @deprecated use {@link #getInChIGenerator(org.openscience.cdk.interfaces.IAtomContainer, io.github.dan2097.jnainchi.InchiOptions)}
      */
+    @Deprecated
     public InChIGenerator getInChIGenerator(IAtomContainer container, List<INCHI_OPTION> options) throws CDKException {
         if (options == null) throw new IllegalArgumentException("Null options");
+        return (new InChIGenerator(container, options, ignoreAromaticBonds));
+    }
+
+    /**
+     * Get an InChI generator providing flags to customise the generation. If you
+     * need to provide a timeout the method that accepts an {@link io.github.dan2097.jnainchi.InchiOptions}
+     * should be used.
+     * 
+     * @param container the molecule
+     * @param flags the option flags
+     * @return the InChI generator
+     * @throws CDKException something went wrong
+     * @see #getInChIGenerator(org.openscience.cdk.interfaces.IAtomContainer, io.github.dan2097.jnainchi.InchiOptions)
+     */
+    public InChIGenerator getInChIGenerator(IAtomContainer container, InchiFlag ... flags) throws CDKException {
+        if (flags == null) throw new IllegalArgumentException("Null flags");
+        InchiOptions options = new InchiOptions.InchiOptionsBuilder()
+                                               .withFlag(flags)
+                                               .build();
+        return getInChIGenerator(container, options);
+    }
+
+    /**
+     * Get an InChI generator providing flags to customise the generation.
+     * @param container the molecule
+     * @param options the inchi option flags
+     * @return the InChI generator
+     * @throws CDKException something went wrong
+     */
+    public InChIGenerator getInChIGenerator(IAtomContainer container, InchiOptions options) throws CDKException {
+        if (options == null) throw new IllegalArgumentException("Null flags");
         return (new InChIGenerator(container, options, ignoreAromaticBonds));
     }
 
