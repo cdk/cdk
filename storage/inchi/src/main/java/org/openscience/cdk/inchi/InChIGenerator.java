@@ -165,7 +165,7 @@ public class InChIGenerator {
     private static InchiOptions convertJniToJnaOpts(List<INCHI_OPTION> jniOpts) {
         InchiOptions.InchiOptionsBuilder builder = new InchiOptions.InchiOptionsBuilder();
         for (INCHI_OPTION jniOpt : jniOpts) {
-            InchiFlag flag = INCHI_OPTION.wrap(jniOpt);
+            InchiFlag flag = JniInchiSupport.toJnaOption(jniOpt);
             if (flag != null)
                 builder.withFlag(flag);
         }
@@ -507,7 +507,7 @@ public class InChIGenerator {
      * has failed.
      */
     public INCHI_RET getReturnStatus() {
-        return INCHI_RET.wrap(output.getStatus());
+        return JniInchiSupport.toJniStatus(output.getStatus());
     }
 
     /**

@@ -26,7 +26,6 @@ import io.github.dan2097.jnainchi.InchiInput;
 import io.github.dan2097.jnainchi.InchiStereo;
 import io.github.dan2097.jnainchi.InchiStereoParity;
 import io.github.dan2097.jnainchi.InchiStereoType;
-import net.sf.jniinchi.INCHI_OPTION;
 import net.sf.jniinchi.INCHI_RET;
 import io.github.dan2097.jnainchi.InchiInputFromInchiOutput;
 import io.github.dan2097.jnainchi.InchiOptions;
@@ -427,7 +426,7 @@ public class InChIToStructure {
      * has failed.
      */
     public INCHI_RET getReturnStatus() {
-        return INCHI_RET.wrap(output.getStatus());
+        return JniInchiSupport.toJniStatus(output.getStatus());
     }
 
     /**

@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2021  John Mayfield
+/* Copyright (C) 2006-2007  Sam Adams <sea36@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -18,58 +17,32 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package net.sf.jniinchi;
+package org.openscience.cdk.inchi;
 
 import io.github.dan2097.jnainchi.InchiFlag;
+import io.github.dan2097.jnainchi.InchiStatus;
+import net.sf.jniinchi.INCHI_OPTION;
+import net.sf.jniinchi.INCHI_RET;
 
 /**
- * This class provides backwards compatibility of JNA-INCHI with JNI-INCHI, this enum was exposed in the CDK API.
- * @author John Mayfield
+ * This class provides conversion from JNI InChI enum options to JNA (input) and
+ * from JNA return status to JNI status (output).
  */
-public enum INCHI_OPTION {
-    SUCF,
-    ChiralFlagON,
-    ChiralFlagOFF,
-    SNon,
-    SAbs,
-    SRel,
-    SRac,
-    SUU,
-    NEWPS,
-    RecMet,
-    FixedH,
-    AuxNone,
-    NoADP,
-    Compress,
-    DoNotAddH,
-    Wnumber,
-    OutputSDF,
-    WarnOnEmptyStructure,
-    FixSp3Bug,
-    FB,
-    SPXYZ,
-    SAsXYZ;
+final class JniInchiSupport {
 
-    public static INCHI_OPTION wrap(InchiFlag flag) {
-        switch (flag) {
-            case SUCF: return SUCF;
-            case ChiralFlagON: return ChiralFlagON;
-            case ChiralFlagOFF: return ChiralFlagOFF;
-            case SNon: return SNon;
-            case SRel: return SRel;
-            case SRac: return SRac;
-            case SUU: return SUU;
-            case RecMet: return RecMet;
-            case FixedH: return FixedH;
-            case AuxNone: return AuxNone;
-            case DoNotAddH: return DoNotAddH;
-            case WarnOnEmptyStructure: return WarnOnEmptyStructure;
+    private JniInchiSupport() {}
 
-            default: throw new IllegalArgumentException(flag + " not supported?");
+    static INCHI_RET toJniStatus(InchiStatus status) {
+        switch (status) {
+            case SUCCESS: return INCHI_RET.OKAY;
+            case WARNING: return INCHI_RET.WARNING;
+            case ERROR:   return INCHI_RET.ERROR;
+            default:
+                throw new IllegalArgumentException("Unexpected status!");
         }
     }
 
-    public static InchiFlag wrap(INCHI_OPTION flag) {
+    static InchiFlag toJnaOption(INCHI_OPTION flag) {
         switch (flag) {
             case SUCF: return InchiFlag.SUCF;
             case ChiralFlagON: return InchiFlag.ChiralFlagON;

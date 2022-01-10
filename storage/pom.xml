@@ -20,6 +20,7 @@
         <module>pdb</module>
         <module>pdbcml</module>
         <module>inchi</module>
+        <module>jniinchi-support</module>
         <module>smiles</module>
     </modules>
     <packaging>pom</packaging>
