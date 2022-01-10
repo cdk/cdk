@@ -23,6 +23,7 @@ import io.github.dan2097.jnainchi.InchiBond;
 import io.github.dan2097.jnainchi.InchiBondStereo;
 import io.github.dan2097.jnainchi.InchiBondType;
 import io.github.dan2097.jnainchi.InchiInput;
+import io.github.dan2097.jnainchi.InchiStatus;
 import io.github.dan2097.jnainchi.InchiStereo;
 import io.github.dan2097.jnainchi.InchiStereoParity;
 import io.github.dan2097.jnainchi.InchiStereoType;
@@ -423,10 +424,22 @@ public class InChIToStructure {
     /**
      * Gets return status from InChI process.  OKAY and WARNING indicate
      * InChI has been generated, in all other cases InChI generation
-     * has failed.
+     * has failed. This returns the JNI INCHI enum and requires the optional
+     * "cdk-jniinchi-support" module to be loaded (or the full JNI InChI lib
+     * to be on the class path).
+     * @deprecated use getStatus
      */
+    @Deprecated
     public INCHI_RET getReturnStatus() {
         return JniInchiSupport.toJniStatus(output.getStatus());
+    }
+
+    /**
+     * Access the status of the InChI output.
+     * @return the status
+     */
+    public InchiStatus getStatus() {
+        return output.getStatus();
     }
 
     /**
