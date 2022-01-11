@@ -22,11 +22,16 @@ import net.sf.jniinchi.INCHI_RET;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
+import org.openscience.cdk.interfaces.IStereoElement;
+import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
 
@@ -278,7 +283,6 @@ public class InChIToStructureTest extends CDKTestCase {
         Assert.assertEquals(1, nExtendedCisTrans);
     }
 
-
     /**
      * Make sure the IBond{beg,end} storage order is correct for the
      * IStereoElement
@@ -288,8 +292,8 @@ public class InChIToStructureTest extends CDKTestCase {
     @SuppressWarnings("unchecked")
     public void ensureBondStorageOrder() throws Exception {
         IAtomContainer mol = InChIGeneratorFactory.getInstance()
-                .getInChIToStructure("InChI=1S/C16H25NO/c1-14(2)8-6-9-15(3)10-7-11-16(18)17-12-4-5-13-17/h7-8,10-11H,4-6,9,12-13H2,1-3H3/b11-7+,15-10+",
-                        SilentChemObjectBuilder.getInstance()).getAtomContainer();
+                                                  .getInChIToStructure("InChI=1S/C16H25NO/c1-14(2)8-6-9-15(3)10-7-11-16(18)17-12-4-5-13-17/h7-8,10-11H,4-6,9,12-13H2,1-3H3/b11-7+,15-10+",
+                                                          SilentChemObjectBuilder.getInstance()).getAtomContainer();
         assertNotNull(mol);
         int nCisTrans = 0;
         for (IStereoElement<?,?> se : mol.stereoElements()) {
