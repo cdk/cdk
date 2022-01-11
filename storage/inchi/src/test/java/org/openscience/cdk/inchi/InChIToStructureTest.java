@@ -22,6 +22,7 @@ import net.sf.jniinchi.INCHI_RET;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -35,6 +36,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
 
 import java.util.Iterator;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
@@ -272,12 +274,39 @@ public class InChIToStructureTest extends CDKTestCase {
                         SilentChemObjectBuilder.getInstance()).getAtomContainer();
         assertNotNull(mol);
         int nExtendedCisTrans = 0;
-        for (IStereoElement se : mol.stereoElements()) {
-            if (se.getConfig() != IStereoElement.CU)
+        for (IStereoElement<?,?> se : mol.stereoElements()) {
+            if (se.getConfigClass() == IStereoElement.CU)
                 nExtendedCisTrans++;
             else
                 Assert.fail("Expected onl extended cis/trans");
         }
         Assert.assertEquals(1, nExtendedCisTrans);
+    }
+
+    /**
+     * Make sure the IBond{beg,end} storage order is correct for the
+     * IStereoElement
+     * @throws Exception
+     */
+    @Test
+    @SuppressWarnings("unchecked")
+    public void ensureBondStorageOrder() throws Exception {
+        IAtomContainer mol = InChIGeneratorFactory.getInstance()
+                                                  .getInChIToStructure("InChI=1S/C16H25NO/c1-14(2)8-6-9-15(3)10-7-11-16(18)17-12-4-5-13-17/h7-8,10-11H,4-6,9,12-13H2,1-3H3/b11-7+,15-10+",
+                                                          SilentChemObjectBuilder.getInstance()).getAtomContainer();
+        assertNotNull(mol);
+        int nCisTrans = 0;
+        for (IStereoElement<?,?> se : mol.stereoElements()) {
+            if (se.getConfigClass() == IStereoElement.CisTrans) {
+                nCisTrans++;
+                IStereoElement<IBond,IBond> ctse = (IStereoElement<IBond,IBond>)se;
+                IBond bond = ctse.getFocus();
+                List<IBond> carriers = ctse.getCarriers();
+                Assert.assertEquals(2, carriers.size());
+                Assert.assertTrue(carriers.get(0).contains(bond.getBegin()));
+                Assert.assertTrue(carriers.get(1).contains(bond.getEnd()));
+            }
+        }
+        Assert.assertEquals(2, nCisTrans);
     }
 }
