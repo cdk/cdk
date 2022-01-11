@@ -86,8 +86,8 @@ org.openscience.cdk.io.program
 org.openscience.cdk.io.rdf
 org.openscience.cdk.libio.jena
 org.openscience.cdk.libio.md
-net.sf.jniinchi
 org.openscience.cdk.inchi
+net.sf.jniinchi
 org.openscience.cdk.modeling.builder3d
 org.openscience.cdk.charges
 org.openscience.cdk.forcefield.mmff
