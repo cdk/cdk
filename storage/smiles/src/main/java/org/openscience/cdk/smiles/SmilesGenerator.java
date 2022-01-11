@@ -54,7 +54,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -716,7 +715,7 @@ public final class SmilesGenerator {
             return (long[]) method.invoke(c, container);
         } catch (ClassNotFoundException e) {
             throw new CDKException("The cdk-inchi module is not loaded,"
-                    + " this module is need when generating absolute SMILES.");
+                    + " this module is needed when generating absolute SMILES.");
         } catch (NoSuchMethodException e) {
             throw new CDKException("The method " + mname + " was not found", e);
         } catch (InvocationTargetException e) {
