@@ -18,9 +18,10 @@
  */
 package org.openscience.cdk.graph.invariant;
 
-import net.sf.jniinchi.INCHI_OPTION;
-import net.sf.jniinchi.INCHI_RET;
 
+
+import io.github.dan2097.jnainchi.InchiFlag;
+import io.github.dan2097.jnainchi.InchiStatus;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.inchi.InChIGenerator;
 import org.openscience.cdk.inchi.InChIGeneratorFactory;
@@ -79,7 +80,7 @@ public class InChINumbersTools {
      * @throws CDKException
      */
     public static long[] getUSmilesNumbers(IAtomContainer container) throws CDKException {
-        String aux = auxInfo(container, INCHI_OPTION.RecMet, INCHI_OPTION.FixedH);
+        String aux = auxInfo(container, InchiFlag.RecMet, InchiFlag.FixedH);
         return parseUSmilesNumbers(aux, container);
     }
 
@@ -229,13 +230,13 @@ public class InChINumbersTools {
      * @return auxiliary info
      * @throws CDKException the inchi could not be generated
      */
-    static String auxInfo(IAtomContainer container, INCHI_OPTION... options) throws CDKException {
+    static String auxInfo(IAtomContainer container, InchiFlag... options) throws CDKException {
         InChIGeneratorFactory factory = InChIGeneratorFactory.getInstance();
         boolean org = factory.getIgnoreAromaticBonds();
         factory.setIgnoreAromaticBonds(true);
-        InChIGenerator gen = factory.getInChIGenerator(container, Arrays.asList(options));
+        InChIGenerator gen = factory.getInChIGenerator(container, options);
         factory.setIgnoreAromaticBonds(org); // an option on the singleton so we should reset for others
-        if (gen.getReturnStatus() != INCHI_RET.OKAY && gen.getReturnStatus() != INCHI_RET.WARNING)
+        if (gen.getStatus() != InchiStatus.SUCCESS && gen.getStatus() != InchiStatus.WARNING)
             throw new CDKException("Could not generate InChI Numbers: " + gen.getMessage());
         return gen.getAuxInfo();
     }

@@ -158,6 +158,8 @@ public class InChIGeneratorFactoryTest {
         Assert.assertNotNull(parser);
     }
 
+
+
     @Test
     public void testSMILESConversion_TopologicalCentre() throws CDKException {
 
