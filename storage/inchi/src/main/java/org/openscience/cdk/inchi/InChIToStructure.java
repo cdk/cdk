@@ -362,7 +362,8 @@ public class InChIToStructure {
                     if (ends[0] != a)
                         flip(stereoBond);
                 } else {
-                    flip(stereoBond);
+                    if (!stereoBond.getBegin().equals(a))
+                        flip(stereoBond);
                 }
 
                 int config = IStereoElement.TOGETHER;
