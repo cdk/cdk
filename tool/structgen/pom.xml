@@ -22,7 +22,6 @@
         <dependency>
             <groupId>javax.vecmath</groupId>
             <artifactId>vecmath</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -53,7 +52,6 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>cdk-data</artifactId>
             <version>${project.parent.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -65,7 +63,6 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>cdk-smiles</artifactId>
             <version>${project.parent.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -77,7 +74,21 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>cdk-sdg</artifactId>
             <version>${project.parent.version}</version>
-            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.openscience.cdk</groupId>
+            <artifactId>cdk-group</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-cli</groupId>
+            <artifactId>commons-cli</artifactId>
+            <version>[1.5.0,)</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openscience.cdk</groupId>
+            <artifactId>cdk-ctab</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
 
