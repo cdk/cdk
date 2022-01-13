@@ -46,6 +46,7 @@ Dmitry Katsubo
 Danny Katzel
 Jules Kerssemakers
 Joos Kiener
+Valentyn Kolesnikov
 Anatoli Krassavine
 Stefan Kuhn
 Uli Köhler
