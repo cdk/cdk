@@ -600,7 +600,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     public void testHisotopes_Strict() throws Exception {
         String filename = "hisotopes.mol";
         logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         try (MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT)){
             reader.read(new ChemFile());
         }
