@@ -26,7 +26,7 @@ jobs:
     - name: push JaCoCo stats to codecov.io
       run: bash <(curl -s https://codecov.io/bash)
 
-build-sonarcloud:
+  build-sonarcloud:
     name: Build sonarcloud
     runs-on: ubuntu-latest
     steps:
