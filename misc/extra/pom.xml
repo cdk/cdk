@@ -23,14 +23,6 @@
             <artifactId>vecmath</artifactId>
         </dependency>
         <dependency>
-            <groupId>xml-apis</groupId>
-            <artifactId>xml-apis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>xerces</groupId>
-            <artifactId>xercesImpl</artifactId>
-        </dependency>
-        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>cdk-data</artifactId>
             <version>${project.parent.version}</version>
