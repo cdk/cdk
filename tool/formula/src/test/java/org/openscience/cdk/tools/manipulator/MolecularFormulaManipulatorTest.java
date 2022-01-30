@@ -87,7 +87,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 
         Assert.assertEquals(2, formula.getIsotopeCount());
 
-        Assert.assertEquals(4, MolecularFormulaManipulator.getAtomCount(formula));
+        Assert.assertEquals(4, getAtomCount(formula));
     }
 
     /**
@@ -106,7 +106,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         formula.addIsotope(h1, 3);
         formula.addIsotope(h2, 4);
 
-        Assert.assertEquals(10, MolecularFormulaManipulator.getAtomCount(formula));
+        Assert.assertEquals(10, getAtomCount(formula));
         Assert.assertEquals(4, formula.getIsotopeCount());
         Assert.assertEquals(3, formula.getIsotopeCount(h1));
         Assert.assertEquals(4, formula.getIsotopeCount(h2));
@@ -273,7 +273,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
     public void testGetMolecularFormula_String_IChemObjectBuilder() {
         IMolecularFormula molecularFormula = MolecularFormulaManipulator.getMolecularFormula("C10H16", builder);
 
-        Assert.assertEquals(26, MolecularFormulaManipulator.getAtomCount(molecularFormula));
+        Assert.assertEquals(26, getAtomCount(molecularFormula));
         Assert.assertEquals(2, molecularFormula.getIsotopeCount());
 
     }
@@ -286,12 +286,12 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         mf1.addIsotope(builder.newInstance(IIsotope.class, "C"), 10);
         mf1.addIsotope(builder.newInstance(IIsotope.class, "H"), 16);
 
-        Assert.assertEquals(26, MolecularFormulaManipulator.getAtomCount(mf1));
+        Assert.assertEquals(26, getAtomCount(mf1));
         Assert.assertEquals(2, mf1.getIsotopeCount());
 
         IMolecularFormula mf2 = MolecularFormulaManipulator.getMolecularFormula("C11H17", mf1);
 
-        Assert.assertEquals(54, MolecularFormulaManipulator.getAtomCount(mf2));
+        Assert.assertEquals(54, getAtomCount(mf2));
         Assert.assertEquals(2, mf2.getIsotopeCount());
     }
 
@@ -300,7 +300,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
     public void testGetMajorIsotopeMolecularFormula_String_IChemObjectBuilder() throws Exception {
         IMolecularFormula mf2 = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C11H17", builder);
 
-        Assert.assertEquals(28, MolecularFormulaManipulator.getAtomCount(mf2));
+        Assert.assertEquals(28, getAtomCount(mf2));
         Assert.assertEquals(2, mf2.getIsotopeCount());
         IIsotope carbon = Isotopes.getInstance().getMajorIsotope("C");
         IIsotope hydrogen = Isotopes.getInstance().getMajorIsotope("H");
@@ -327,11 +327,11 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         formula = MolecularFormulaManipulator.removeElement(formula, builder.newInstance(IElement.class, "F"));
 
         Assert.assertEquals(3, formula.getIsotopeCount());
-        Assert.assertEquals(4, MolecularFormulaManipulator.getAtomCount(formula));
+        Assert.assertEquals(4, getAtomCount(formula));
 
         formula = MolecularFormulaManipulator.removeElement(formula, builder.newInstance(IElement.class, "H"));
 
-        Assert.assertEquals(1, MolecularFormulaManipulator.getAtomCount(formula));
+        Assert.assertEquals(1, getAtomCount(formula));
         Assert.assertEquals(1, formula.getIsotopeCount());
 
     }
@@ -643,8 +643,8 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         mf2.addIsotope(builder.newInstance(IIsotope.class, "C"), 2);
         mf2.addIsotope(builder.newInstance(IIsotope.class, "H"), 4);
 
-        Assert.assertEquals(MolecularFormulaManipulator.getAtomCount(mf2),
-                MolecularFormulaManipulator.getAtomCount(mf1));
+        Assert.assertEquals(getAtomCount(mf2),
+                getAtomCount(mf1));
         Assert.assertEquals(mf2.getIsotopeCount(), mf1.getIsotopeCount());
         IElement elemC = builder.newInstance(IElement.class, "C");
         IElement elemH = builder.newInstance(IElement.class, "H");
@@ -705,8 +705,8 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         mf2.addIsotope(builder.newInstance(IIsotope.class, "C"), 2);
         mf2.addIsotope(builder.newInstance(IIsotope.class, "H"), 4);
 
-        Assert.assertEquals(MolecularFormulaManipulator.getAtomCount(mf2),
-                MolecularFormulaManipulator.getAtomCount(mf1));
+        Assert.assertEquals(getAtomCount(mf2),
+                getAtomCount(mf1));
         Assert.assertEquals(mf2.getIsotopeCount(), mf1.getIsotopeCount());
         IElement elemC = builder.newInstance(IElement.class, "C");
         IElement elemH = builder.newInstance(IElement.class, "H");
@@ -741,8 +741,8 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         mf2.addIsotope(builder.newInstance(IIsotope.class, "C"), 4);
         mf2.addIsotope(builder.newInstance(IIsotope.class, "H"), 9);
 
-        Assert.assertEquals(MolecularFormulaManipulator.getAtomCount(mf2),
-                MolecularFormulaManipulator.getAtomCount(mf1));
+        Assert.assertEquals(getAtomCount(mf2),
+                getAtomCount(mf1));
         Assert.assertEquals(mf2.getIsotopeCount(), mf1.getIsotopeCount());
         IElement elemC = builder.newInstance(IElement.class, "C");
         IElement elemH = builder.newInstance(IElement.class, "H");
@@ -853,7 +853,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 
         List<IElement> elements = MolecularFormulaManipulator.elements(formula);
 
-        Assert.assertEquals(5, MolecularFormulaManipulator.getAtomCount(formula));
+        Assert.assertEquals(5, getAtomCount(formula));
         Assert.assertEquals(3, elements.size());
     }
 
@@ -1341,6 +1341,20 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 
         assertThat(MolecularFormulaManipulator.getString(mf, false, false), is("C7H3Br2O3"));
         assertThat(MolecularFormulaManipulator.getString(mf, false, true), is("C7H3Br[81]BrO3"));
+    }
+
+    @Test
+    public void largeNumberOfAtoms() {
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        assertThat(getAtomCount(getMolecularFormula("C2147483647", builder)),
+                is(2147483647));
+    }
+
+    @Test(expected = NumberFormatException.class)
+    public void tooLargeNumberOfAtoms() {
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        assertThat(getAtomCount(getMolecularFormula("C2147483648", builder)),
+                is(2147483647));
     }
 
     @Test

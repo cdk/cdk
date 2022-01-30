@@ -652,8 +652,12 @@ public class MolecularFormulaManipulator {
                 return -1;
             }
             int res = c - '0';
-            while (isDigit(c = next()))
+            while (isDigit(c = next())) {
                 res = (10 * res) + (c - '0');
+                if (res <= 0) {
+                    throw new NumberFormatException("Integer too large, overflowed");
+                }
+            }
             if (c != '\0')
                 pos--;
             return res;
