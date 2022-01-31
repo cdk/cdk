@@ -52,8 +52,6 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.lang3.StringUtils;
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.group.Permutation;
 import org.openscience.cdk.interfaces.IAtom;
@@ -63,6 +61,7 @@ import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.SDFWriter;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -126,7 +125,7 @@ public class Maygen {
     private int oxygen = 0;
     private int sulfur = 0;
     private String[] symbolArray;
-    private final IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+    private final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
     private final SmilesGenerator smilesGenerator = new SmilesGenerator(SmiFlavor.Unique);
     private IAtomContainer atomContainer = builder.newInstance(IAtomContainer.class);
 
@@ -3727,7 +3726,9 @@ public class Maygen {
     public void initSingleAC() {
         atomContainer = builder.newInstance(IAtomContainer.class);
         for (int i = 0; i < symbolArray.length; i++) {
-            atomContainer.addAtom(new Atom(symbolArray[i]));
+            IAtom atom = builder.newAtom();
+            atom.setSymbol(symbolArray[i]);
+            atomContainer.addAtom(atom);
         }
         for (IAtom atom : atomContainer.atoms()) {
             atom.setImplicitHydrogenCount(0);
@@ -3755,7 +3756,9 @@ public class Maygen {
         }
         atomContainer = builder.newInstance(IAtomContainer.class);
         for (String s : symbolList) {
-            atomContainer.addAtom(new Atom(s));
+            IAtom atom = builder.newAtom();
+            atom.setSymbol(s);
+            atomContainer.addAtom(atom);
         }
         for (IAtom atom : atomContainer.atoms()) {
             atom.setImplicitHydrogenCount(0);
@@ -3771,7 +3774,9 @@ public class Maygen {
      */
     public IAtomContainer initAC(IAtomContainer ac, String[] symbolArrayCopy) {
         for (int i = 0; i < symbolArrayCopy.length; i++) {
-            ac.addAtom(new Atom(symbolArrayCopy[i].split(NUMBERS_FROM_0_TO_9)[0]));
+            IAtom atom = builder.newAtom();
+            atom.setSymbol(symbolArrayCopy[i].split(NUMBERS_FROM_0_TO_9)[0]);
+            ac.addAtom(atom);
         }
         for (IAtom atom : ac.atoms()) {
             atom.setImplicitHydrogenCount(0);
@@ -3787,7 +3792,9 @@ public class Maygen {
     public void initAC(String symbol) {
         atomContainer = builder.newInstance(IAtomContainer.class);
         for (int i = 0; i < matrixSize; i++) {
-            atomContainer.addAtom(new Atom(symbol));
+            IAtom atom = builder.newAtom();
+            atom.setSymbol(symbol);
+            atomContainer.addAtom(atom);
         }
 
         for (IAtom atom : atomContainer.atoms()) {
@@ -3877,7 +3884,9 @@ public class Maygen {
         String symbol = null;
         for (String s : symbols) {
             symbol = s.split(NUMBERS_FROM_0_TO_9)[0];
-            ac.addAtom(new Atom(symbol));
+            IAtom atom = builder.newAtom();
+            atom.setSymbol(symbol);
+            ac.addAtom(atom);
         }
         for (IAtom atom : ac.atoms()) {
             atom.setImplicitHydrogenCount(0);
