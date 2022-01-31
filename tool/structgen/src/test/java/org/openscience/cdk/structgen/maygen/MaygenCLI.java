@@ -28,7 +28,6 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.apache.commons.lang3.StringUtils;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 

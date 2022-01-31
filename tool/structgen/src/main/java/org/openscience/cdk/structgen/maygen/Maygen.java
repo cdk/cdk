@@ -45,7 +45,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.commons.lang3.StringUtils;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.group.Permutation;
 import org.openscience.cdk.interfaces.IAtom;
@@ -693,23 +692,51 @@ public class Maygen {
         }
     }
 
+    /** Replace each sub-string in from[] with it's normalisation in to[]. Since
+     *  this is only used for formula validating and normalizing a parser would
+     *  be better. */
+    private static String replaceEach(String str, String[] from, String[] to) {
+        if (from.length != to.length)
+            throw new IllegalArgumentException();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < str.length(); ) {
+            int best = -1;
+            int bestLen = -1;
+            for (int j = 0; j < from.length; j++) {
+                int len = from[j].length();
+                if (len > bestLen && str.regionMatches(i, from[j], 0, len)) {
+                    best = j;
+                    bestLen = len;
+                }
+            }
+            if (best < 0) {
+                sb.append(str.charAt(i));
+                i++;
+            } else {
+                sb.append(to[best]);
+                i += bestLen;
+            }
+        }
+        return sb.toString();
+    }
+
     public String normalizeFormula(String formula) {
         String[] from = {"cl", "CL", "c", "n", "o", "s", "p", "f", "i", "br", "BR", "h"};
         String[] to = {"Cl", "Cl", "C", "N", "O", "S", "P", "F", "I", "Br", "Br", "H"};
-        return StringUtils.replaceEach(formula, from, to);
+        return replaceEach(formula, from, to);
     }
 
     public String[] validateFormula(String formula) {
         String[] from = {"Cl", "C", "N", "O", "S", "P", "F", "I", "Br", "H"};
         String[] to = {"", "", "", "", "", "", "", "", "", ""};
-        String result = StringUtils.replaceEach(formula.replaceAll("[0-9]", ""), from, to);
+        String result = replaceEach(formula.replaceAll("[0-9]", ""), from, to);
         return result.isEmpty() ? new String[0] : result.split("");
     }
 
     public String[] validateFuzzyFormula(String formula) {
         String[] from = {"Cl", "C", "N", "O", "S", "P", "F", "I", "Br", "H", "[", "]", "-"};
         String[] to = {"", "", "", "", "", "", "", "", "", "", "", "", ""};
-        String result = StringUtils.replaceEach(formula.replaceAll("[0-9]", ""), from, to);
+        String result = replaceEach(formula.replaceAll("[0-9]", ""), from, to);
         return result.isEmpty() ? new String[0] : result.split("");
     }
 
