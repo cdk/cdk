@@ -3746,7 +3746,7 @@ public class Maygen {
 
     /** Setting the initial atom container of a molecular formula with a single heavy atom */
     public void initSingleAC() {
-        atomContainer = builder.newInstance(IAtomContainer.class);
+        atomContainer = builder.newAtomContainer();
         for (int i = 0; i < symbolArray.length; i++) {
             IAtom atom = builder.newAtom();
             atom.setSymbol(symbolArray[i]);
@@ -3776,7 +3776,7 @@ public class Maygen {
                 symbolList.add(symbol);
             }
         }
-        atomContainer = builder.newInstance(IAtomContainer.class);
+        atomContainer = builder.newAtomContainer();
         for (String s : symbolList) {
             IAtom atom = builder.newAtom();
             atom.setSymbol(s);
@@ -3812,7 +3812,7 @@ public class Maygen {
      * @param symbol String symbol
      */
     public void initAC(String symbol) {
-        atomContainer = builder.newInstance(IAtomContainer.class);
+        atomContainer = builder.newAtomContainer();
         for (int i = 0; i < matrixSize; i++) {
             IAtom atom = builder.newAtom();
             atom.setSymbol(symbol);
