@@ -55,7 +55,6 @@ import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.SDFWriter;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
-import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -118,11 +117,14 @@ public class Maygen {
     private int oxygen = 0;
     private int sulfur = 0;
     private String[] symbolArray;
-    private final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    private final IChemObjectBuilder builder;
     private final SmilesGenerator smilesGenerator = new SmilesGenerator(SmiFlavor.Unique);
-    private IAtomContainer atomContainer = builder.newInstance(IAtomContainer.class);
+    private IAtomContainer atomContainer;
 
-    public Maygen() {
+    public Maygen(IChemObjectBuilder builder) {
+        this.builder = builder;
+        this.atomContainer = builder.newAtomContainer();
+
         // The atom valences from CDK.
         valences = new HashMap<>();
 
