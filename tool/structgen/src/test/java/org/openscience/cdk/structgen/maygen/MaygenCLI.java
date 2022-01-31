@@ -1,6 +1,6 @@
 /*
  * =====================================
- *  Copyright (c) 2021 NextMove Software
+ *  Copyright (c) 2022 NextMove Software
  * =====================================
  */
 
@@ -15,6 +15,7 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.lang3.StringUtils;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -28,7 +29,7 @@ public class MaygenCLI {
     private static final String OUTPUT_FILE = "outputFile";
     private static final String SDF_COORD = "sdfCoord";
 
-    private Maygen maygen = new Maygen();
+    private Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
 
     public boolean parseArgs(String[] args) throws ParseException {
         Options options = setupOptions();
