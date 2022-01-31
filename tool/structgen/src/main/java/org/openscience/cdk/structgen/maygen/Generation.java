@@ -49,7 +49,7 @@ class Generation {
      * @param degree int[] the list of node degrees ( the atom valences )
      */
     public void run(int[] degree) {
-        IAtomContainer atomContainer = maygen.getBuilder().newInstance(IAtomContainer.class);
+        IAtomContainer atomContainer = maygen.getBuilder().newAtomContainer();
         int[] partSize = new int[] {0};
         int[] r = new int[] {0};
         int[] y = new int[] {0};
