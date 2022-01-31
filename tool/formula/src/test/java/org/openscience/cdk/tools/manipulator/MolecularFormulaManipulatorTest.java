@@ -1346,14 +1346,14 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
     @Test
     public void largeNumberOfAtoms() {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-        assertThat(getAtomCount(getMolecularFormula("C2147483647", builder)),
-                is(2147483647));
+        assertThat(getAtomCount(getMolecularFormula("C9999999", builder)),
+                is(9999999));
     }
 
     @Test(expected = NumberFormatException.class)
     public void tooLargeNumberOfAtoms() {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-        assertThat(getAtomCount(getMolecularFormula("C2147483648", builder)),
+        assertThat(getAtomCount(getMolecularFormula("C10000000", builder)),
                 is(2147483647));
     }
 
