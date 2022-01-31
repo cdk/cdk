@@ -644,7 +644,9 @@ public class MolecularFormulaManipulator {
             return pos == str.length() ? '\0' : str.charAt(pos++);
         }
 
+        // maximum of 6 digits
         int nextUInt() {
+            int mark = pos;
             char c = next();
             if (!isDigit(c)) {
                 if (c != '\0')
@@ -654,10 +656,9 @@ public class MolecularFormulaManipulator {
             int res = c - '0';
             while (isDigit(c = next())) {
                 res = (10 * res) + (c - '0');
-                if (res <= 0) {
-                    throw new NumberFormatException("Integer too large, overflowed");
-                }
             }
+            if (pos - mark > 7)
+                throw new NumberFormatException("Value too large, 7 digits max!");
             if (c != '\0')
                 pos--;
             return res;
