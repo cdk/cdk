@@ -44,13 +44,7 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Option;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
+
 import org.apache.commons.lang3.StringUtils;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.group.Permutation;
@@ -75,37 +69,36 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.module structgen
  */
 public class Maygen {
-    public static final String VERSION = "1.8";
     private static final String NUMBERS_FROM_0_TO_9 = "(?=[0-9])";
     private static final String LETTERS_FROM_A_TO_Z = "(?=[A-Z])";
-    private static final String FORMULA_TEXT = "formula";
-    private static final String OUTPUT_FILE = "outputFile";
-    private static final String SDF_COORD = "sdfCoord";
+
     private static final String THE_INPUT_FORMULA = "The input formula, ";
     private static final String DOES_NOT_REPRESENT_ANY_MOLECULE =
             ", does not represent any molecule.";
     private final Map<String, Integer> valences;
     private int size = 0;
     private int total = 0;
-    private boolean tsvoutput = false;
-    private boolean setElement = false;
-    private boolean boundary = false;
-    private boolean writeSDF = false;
-    private boolean coordinates = false;
     private SDFWriter sdfOut;
     private Writer smilesOut;
-    private boolean writeSMILES = false;
-    private boolean printSDF = false;
-    private boolean printSMILES = false;
-    private boolean multiThread = false;
+
+    boolean tsvoutput = false;
+    boolean setElement = false;
+    boolean boundary = false;
+    boolean writeSDF = false;
+    boolean coordinates = false;
+    boolean writeSMILES = false;
+    boolean printSDF = false;
+    boolean printSMILES = false;
+    boolean multiThread = false;
+    boolean verbose = false;
+    String formula;
+    String fuzzyFormula;
+    String filedir = ".";
+
     private int hIndex = 0;
     private final AtomicInteger count = new AtomicInteger();
     private int fuzzyCount = 0;
     private int matrixSize = 0;
-    private boolean verbose = false;
-    private String formula;
-    private String fuzzyFormula;
-    private String filedir = ".";
     private List<String> symbols = new ArrayList<>();
     private int[] occurrences;
     private int[] nodeLabels;
@@ -4232,188 +4225,5 @@ public class Maygen {
         nodeLabels[0] = 0;
         intAC(localFormula);
         distributeSymbols(oxygen, sulfur, 1, 1, 0, 0, 0, false);
-    }
-
-    public boolean parseArgs(String[] args) throws ParseException {
-        Options options = setupOptions();
-        CommandLineParser parser = new DefaultParser();
-        boolean helpIsPresent = false;
-        try {
-            CommandLine cmd = parser.parse(options, args);
-            this.formula = cmd.getOptionValue(FORMULA_TEXT);
-            if (!cmd.hasOption(FORMULA_TEXT)) {
-                this.fuzzyFormula = cmd.getOptionValue("fuzzyFormula");
-            }
-            if (cmd.hasOption("help")
-                    || (Objects.isNull(this.formula) && Objects.isNull(this.fuzzyFormula))) {
-                displayHelpMessage(options);
-                helpIsPresent = true;
-            } else {
-                if (cmd.hasOption(OUTPUT_FILE)) {
-                    checkSmiAndSdf(cmd);
-                } else {
-                    if (cmd.hasOption("smi") && !cmd.hasOption("sdf")) {
-                        this.printSMILES = true;
-                    }
-                    if (cmd.hasOption("sdf")) {
-                        this.printSDF = true;
-                    } else if (cmd.hasOption(SDF_COORD)) {
-                        this.printSDF = true;
-                        this.coordinates = true;
-                    }
-                }
-                if (cmd.hasOption("verbose")) this.verbose = true;
-                if (cmd.hasOption("boundaryConditions")) this.boundary = true;
-                if (cmd.hasOption("settingElements")) this.setElement = true;
-                if (cmd.hasOption("tsvoutput")) this.tsvoutput = true;
-                if (cmd.hasOption("multithread")) this.multiThread = true;
-            }
-        } catch (ParseException e) {
-            displayHelpMessage(options);
-            throw new ParseException("Problem parsing command line");
-        }
-        return helpIsPresent;
-    }
-
-    public void checkSmiAndSdf(CommandLine cmd) {
-        String localFiledir = cmd.getOptionValue(OUTPUT_FILE);
-        this.filedir = Objects.isNull(localFiledir) ? "." : localFiledir;
-        if (cmd.hasOption("smi")) {
-            this.writeSMILES = true;
-        }
-        if (cmd.hasOption("sdf")) {
-            this.writeSDF = true;
-        } else if (cmd.hasOption(SDF_COORD)) {
-            this.writeSDF = true;
-            this.coordinates = true;
-        }
-        if (!cmd.hasOption("smi") && !cmd.hasOption("sdf")) {
-            this.writeSDF = true;
-        }
-    }
-
-    public void displayHelpMessage(Options options) {
-        HelpFormatter formatter = new HelpFormatter();
-        formatter.setOptionComparator(null);
-        String header =
-                "\nGenerates molecular structures for a given molecular formula."
-                        + "\nThe input is a molecular formula string."
-                        + "\n\nFor example 'C2OH4'."
-                        + "\n\nIf user wants to store output file in a specific directory, that is needed to be specified."
-                        + " It is also possible to generate SMILES instead of an SDF file, but it slows down"
-                        + " the generation time. For this, use the '-smi' option."
-                        + "\n\n";
-        String footer = "\nPlease report issues at https://github.com/MehmetAzizYirik/MAYGEN";
-        formatter.printHelp("java -jar MAYGEN-" + VERSION + ".jar", header, options, footer, true);
-    }
-
-    public Options setupOptions() {
-        Options options = new Options();
-        Option formulaOption =
-                Option.builder("f")
-                        .required(false)
-                        .hasArg()
-                        .longOpt(FORMULA_TEXT)
-                        .desc(FORMULA_TEXT)
-                        .build();
-        options.addOption(formulaOption);
-        Option fuzzyFormulaOption =
-                Option.builder("fuzzy")
-                        .required(false)
-                        .hasArg()
-                        .longOpt("fuzzyFormula")
-                        .desc("fuzzy formula")
-                        .build();
-        options.addOption(fuzzyFormulaOption);
-        Option settingElements =
-                Option.builder("setElements")
-                        .required(false)
-                        .longOpt("settingElements")
-                        .desc("User defined valences")
-                        .build();
-        options.addOption(settingElements);
-        Option verboseOption =
-                Option.builder("v")
-                        .required(false)
-                        .longOpt("verbose")
-                        .desc("print message")
-                        .build();
-        options.addOption(verboseOption);
-        Option tvsoutput =
-                Option.builder("t")
-                        .required(false)
-                        .longOpt("tsvoutput")
-                        .desc(
-                                "Output formula, number of structures and execution time in CSV format."
-                                        + " In multithread, the 4th column in the output is the number of threads.")
-                        .build();
-        options.addOption(tvsoutput);
-        Option fileDirectory =
-                Option.builder("o")
-                        .required(false)
-                        .hasArg()
-                        .optionalArg(true)
-                        .longOpt(OUTPUT_FILE)
-                        .desc("Store output file")
-                        .build();
-        options.addOption(fileDirectory);
-        Option boundaryConditions =
-                Option.builder("b")
-                        .required(false)
-                        .longOpt("boundaryConditions")
-                        .desc("Setting the boundary conditions option")
-                        .build();
-        options.addOption(boundaryConditions);
-        Option multithread =
-                Option.builder("m")
-                        .required(false)
-                        .longOpt("multithread")
-                        .desc("Use multi thread")
-                        .build();
-        options.addOption(multithread);
-        Option smiles =
-                Option.builder("smi")
-                        .required(false)
-                        .longOpt("SMILES")
-                        .desc("Output in SMILES format")
-                        .build();
-        options.addOption(smiles);
-        Option sdf =
-                Option.builder("sdf")
-                        .required(false)
-                        .longOpt("SDF")
-                        .desc("Output in SDF format")
-                        .build();
-        options.addOption(sdf);
-        Option coordinateOption =
-                Option.builder(SDF_COORD)
-                        .required(false)
-                        .longOpt("coordinates")
-                        .desc("Output in SDF format with atom coordinates")
-                        .build();
-        options.addOption(coordinateOption);
-        Option help =
-                Option.builder("h")
-                        .required(false)
-                        .longOpt("help")
-                        .desc("Displays help message")
-                        .build();
-        options.addOption(help);
-        return options;
-    }
-
-    public static void main(String[] args) {
-        Maygen gen = new Maygen();
-        try {
-            if (!gen.parseArgs(args)) {
-                gen.run();
-            }
-        } catch (Exception ex) {
-            if (gen.verbose) {
-                String localFormula = Objects.nonNull(gen.formula) ? gen.formula : gen.fuzzyFormula;
-                Logger.getLogger(Maygen.class.getName())
-                        .log(Level.SEVERE, ex, () -> "Formula " + localFormula);
-            }
-        }
     }
 }
