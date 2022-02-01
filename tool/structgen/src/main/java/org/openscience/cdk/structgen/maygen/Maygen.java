@@ -695,22 +695,23 @@ public class Maygen {
         if (from.length != to.length)
             throw new IllegalArgumentException();
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < str.length(); ) {
+        int pos = 0;
+        while (pos < str.length()) {
             int best = -1;
             int bestLen = -1;
             for (int j = 0; j < from.length; j++) {
                 int len = from[j].length();
-                if (len > bestLen && str.regionMatches(i, from[j], 0, len)) {
+                if (len > bestLen && str.regionMatches(pos, from[j], 0, len)) {
                     best = j;
                     bestLen = len;
                 }
             }
             if (best < 0) {
-                sb.append(str.charAt(i));
-                i++;
+                sb.append(str.charAt(pos));
+                pos++;
             } else {
                 sb.append(to[best]);
-                i += bestLen;
+                pos += bestLen;
             }
         }
         return sb.toString();
