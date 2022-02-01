@@ -3843,7 +3843,7 @@ public class Maygen {
                 }
             }
         }
-        return AtomContainerManipulator.removeHydrogens(atomContainer);
+        return AtomContainerManipulator.suppressHydrogens(atomContainer);
     }
 
     /**
@@ -3868,7 +3868,7 @@ public class Maygen {
                 }
             }
         }
-        return AtomContainerManipulator.removeHydrogens(ac2);
+        return AtomContainerManipulator.suppressHydrogens(ac2);
     }
 
     /**
@@ -3891,7 +3891,7 @@ public class Maygen {
                 }
             }
         }
-        return AtomContainerManipulator.removeHydrogens(ac2);
+        return AtomContainerManipulator.suppressHydrogens(ac2);
     }
 
     /**
