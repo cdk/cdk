@@ -39,11 +39,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.group.Permutation;
@@ -2594,21 +2590,8 @@ public class Maygen {
         List<int[]> newDegrees = distributeHydrogens();
 
         if (multiThread) {
-            try {
-                new ForkJoinPool(size)
-                        .submit(
-                                () ->
-                                        newDegrees
-                                                .parallelStream()
-                                                .forEach(new Generation(this)::run))
-                        .get();
-            } catch (InterruptedException | ExecutionException ex) {
-                if (verbose) {
-                    Logger.getLogger(Maygen.class.getName())
-                            .log(Level.SEVERE, ex, () -> "Formula " + localFormula);
-                }
-                Thread.currentThread().interrupt();
-            }
+            newDegrees.parallelStream()
+                      .forEach(new Generation(this)::run);
         } else {
             newDegrees.forEach(new Generation(this)::run);
         }
