@@ -2020,15 +2020,11 @@ public class Maygen {
                                 learningFromCanonicalTest)) {
                     if (connectivityTest(a, connectivityIndices, learningFromConnectivity)) {
                         count.incrementAndGet();
-                        if (writeSDF || printSDF) {
-                            IAtomContainer ac2 =
-                                    buildContainer4SDF(ac, addHydrogens(a, hIndex, hydrogens));
-                            if (coordinates)
-                                new StructureDiagramGenerator().generateCoordinates(ac2);
-                            sdfOut.write(ac2);
-                        }
-                        if (writeSMILES || printSMILES) {
-                            write2smiles(addHydrogens(a, hIndex, hydrogens), ac);
+                        if (ac.getAtomCount() != 0 ) {
+                            IAtomContainer mol = buildAtomContainerFromMatrix(
+                                    addHydrogens(a, hIndex, hydrogens),
+                                    ac.clone());
+                            emit(mol);
                         }
                         callForward[0] = false;
                     } else {
@@ -2565,14 +2561,7 @@ public class Maygen {
             throws IOException, CDKException, CloneNotSupportedException {
         int[][] a = new int[matrixSize][matrixSize];
         count.incrementAndGet();
-        if (writeSDF || printSDF) {
-            IAtomContainer ac = buildContainer4SDF(addHydrogens(a, hIndex, hydrogens));
-            if (coordinates) new StructureDiagramGenerator().generateCoordinates(ac);
-            sdfOut.write(ac);
-        }
-        if (writeSMILES || printSMILES) {
-            write2smiles(addHydrogens(a, hIndex, hydrogens), atomContainer);
-        }
+        emit(buildContainer4SDF(atomContainer, addHydrogens(a, hIndex, hydrogens)));
     }
 
     /**
@@ -3713,35 +3702,20 @@ public class Maygen {
     }
 
     /**
-     * Writing the SMILES of a molecule into the output file
-     *
-     * @param mat int[][] adjacency matrices
-     * @param ac IAtomContainer molecule's atom container
-     * @throws IOException in case of IOException
-     * @throws CloneNotSupportedException in case of CloneNotSupportedException
-     * @throws CDKException in case of CDKException
+     * Emits a molecule to whomever is listening.
+     * @param mol molecule to emit
+     * @throws CDKException a CDK exception occurred
+     * @throws IOException an IO exception occurred
      */
-    public void write2smiles(int[][] mat, IAtomContainer ac)
-            throws IOException, CloneNotSupportedException, CDKException {
-        IAtomContainer ac2 = ac.clone();
-        ac2 = buildAtomContainerFromMatrix(mat, ac2);
-        String smilesString = smilesGenerator.create(ac2);
-        smilesOut.write(smilesString + "\n");
-    }
-
-    /**
-     * Writing the SMILES of a molecule into the output file
-     *
-     * @param symbols String[] atom symbols
-     * @throws IOException in case of IOException
-     * @throws CloneNotSupportedException in case of CloneNotSupportedException
-     * @throws CDKException in case of CDKException
-     */
-    public void write2smiles(String[] symbols)
-            throws IOException, CloneNotSupportedException, CDKException {
-        IAtomContainer ac = buildContainer4SDF(symbols);
-        String smilesString = smilesGenerator.create(ac);
-        smilesOut.write(smilesString + "\n");
+    public void emit(IAtomContainer mol) throws CDKException, IOException {
+        if (writeSDF || printSDF) {
+            if (coordinates)
+                new StructureDiagramGenerator().generateCoordinates(mol);
+            sdfOut.write(mol);
+        } else if (writeSMILES || printSMILES) {
+            String smilesString = smilesGenerator.create(mol);
+            smilesOut.write(smilesString + "\n");
+        }
     }
 
     /** Setting the initial atom container of a molecular formula with a single heavy atom */
@@ -4227,14 +4201,7 @@ public class Maygen {
             throws CloneNotSupportedException, CDKException, IOException {
         if (!reversalIsSmaller && (graphSize % currentSize) == 0) {
             count.incrementAndGet();
-            if (writeSDF || printSDF) {
-                IAtomContainer ac = buildContainer4SDF(buildSymbolArray());
-                if (coordinates) new StructureDiagramGenerator().generateCoordinates(ac);
-                sdfOut.write(ac);
-            }
-            if (writeSMILES || printSMILES) {
-                write2smiles(buildSymbolArray());
-            }
+            emit(buildContainer4SDF(buildSymbolArray()));
         }
     }
 
