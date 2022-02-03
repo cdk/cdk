@@ -19,23 +19,23 @@
  */
 package org.openscience.cdk.graph;
 
-import java.util.*;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStereoElement;
-import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupKey;
-import org.openscience.cdk.stereo.ExtendedTetrahedral;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Tool class for checking whether the (sub)structure in an
@@ -91,7 +91,7 @@ public class ConnectivityChecker {
     private static IAtomContainer getComponent(Map<IAtom, IAtomContainer> cmap,
                                                IChemObject cobj) {
         if (cobj instanceof IAtom)
-            return cmap.get((IAtom) cobj);
+            return cmap.get(cobj);
         else if (cobj instanceof IBond) {
             IAtomContainer begMol = cmap.get(((IBond) cobj).getBegin());
             IAtomContainer endMol = cmap.get(((IBond) cobj).getEnd());
