@@ -27,6 +27,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.ISingleElectron;
@@ -87,6 +88,47 @@ public class ConnectivityChecker {
         return partitionIntoMolecules(container, cc.components());
     }
 
+    private static IAtomContainer getComponent(Map<IAtom, IAtomContainer> cmap,
+                                               IChemObject cobj) {
+        if (cobj instanceof IAtom)
+            return cmap.get((IAtom) cobj);
+        else if (cobj instanceof IBond) {
+            IAtomContainer begMol = cmap.get(((IBond) cobj).getBegin());
+            IAtomContainer endMol = cmap.get(((IBond) cobj).getEnd());
+            return begMol == endMol ? begMol : null;
+        }
+        return null;
+    }
+
+    /**
+     * Given a component mapping atom -> molecule, provide the atom container
+     * to add the stereochemistry to. If the stereo is split across two
+     * molecules (components) null is returned.
+     *
+     * @param cmap component map
+     * @param se stereo element
+     * @return the molecule (or null if inconsistent)
+     */
+    private static IAtomContainer getComponent(Map<IAtom, IAtomContainer> cmap,
+                                               IStereoElement<?, ?> se) {
+        IAtomContainer mol = getComponent(cmap, se.getFocus());
+        for (IChemObject cobj : se.getCarriers()) {
+            IAtomContainer tmp = getComponent(cmap, cobj);
+            if (tmp != mol)
+                return null; // inconsistent
+        }
+        return mol;
+    }
+
+    /**
+     * Split a molecule based on the provided component array. Note this function
+     * can also be used to split a single molecule, breaking bonds and distributing
+     * stereochemistry as needed.
+     *
+     * @param container the container
+     * @param components the components
+     * @return the partitioned set
+     */
     public static IAtomContainerSet partitionIntoMolecules(IAtomContainer container, int[] components) {
 
         int maxComponentIndex = 0;
@@ -98,7 +140,6 @@ public class ConnectivityChecker {
         Map<IAtom, IAtomContainer> componentsMap = new HashMap<>(2 * container.getAtomCount());
         Map<IAtom, IAtom> componentAtomMap = new HashMap<>(2 * container.getAtomCount());
         Map<IBond, IBond> componentBondMap = new HashMap<>(2 * container.getBondCount());
-
 
         for (int i = 1; i < containers.length; i++)
             containers[i] = container.getBuilder().newInstance(IAtomContainer.class);
@@ -130,21 +171,15 @@ public class ConnectivityChecker {
         for (ILonePair lonePair : container.lonePairs())
             componentsMap.get(lonePair.getAtom()).addLonePair(lonePair);
 
-        for (IStereoElement stereo : container.stereoElements()) {
-            IChemObject focus = stereo.getFocus();
-            if (focus instanceof IAtom) {
-                if (componentsMap.containsKey(focus))
-                    componentsMap.get(focus).addStereoElement(stereo);
-            } else if (focus instanceof IBond) {
-                if (componentsMap.containsKey(((IBond) focus).getBegin()))
-                    componentsMap.get(((IBond) focus).getBegin()).addStereoElement(stereo);
-            } else {
-                throw new IllegalStateException("New stereo element not using an atom/bond for focus?");
-            }
+        for (IStereoElement<?,?>stereo : container.stereoElements()) {
+            IAtomContainer mol = getComponent(componentsMap, stereo);
+            if (mol != null)
+                mol.addStereoElement(stereo);
         }
         //add SGroups
         List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
 
+        // FIXME: we should do a consistent check as well!
         if(sgroups !=null){
             Map<Sgroup, Sgroup> old2NewSgroupMap = new HashMap<>();
             List<Sgroup>[] newSgroups = new List[containers.length];
