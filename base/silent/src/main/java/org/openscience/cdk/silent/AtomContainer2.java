@@ -22,6 +22,8 @@
  */
 package org.openscience.cdk.silent;
 
+import org.openscience.cdk.AtomRef;
+import org.openscience.cdk.BondRef;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.exception.NoSuchBondException;
@@ -39,13 +41,8 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
-import org.openscience.cdk.AtomRef;
-import org.openscience.cdk.BondRef;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.sgroup.Sgroup;
-import org.openscience.cdk.stereo.DoubleBondStereochemistry;
-import org.openscience.cdk.stereo.ExtendedTetrahedral;
-import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.tools.manipulator.SgroupManipulator;
 
 import java.util.ArrayList;
@@ -286,7 +283,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
     @Override
     public void setStereoElements(List<IStereoElement> elements) {
         this.stereo.clear();
-        for (IStereoElement se : elements) {
+        for (IStereoElement<?,?> se : elements) {
             addStereoElement(se);
         }
     }
@@ -874,9 +871,9 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
 
         // Determine which stereo elements are new (unvisited)
         List<IStereoElement<?,?>> newStereo = new ArrayList<>();
-        for (IStereoElement<?,?> stereo : that.stereoElements()) {
-            if (!stereo.getFocus().getFlag(CDKConstants.VISITED))
-                newStereo.add(stereo);
+        for (IStereoElement<?,?> se : that.stereoElements()) {
+            if (!se.getFocus().getFlag(CDKConstants.VISITED))
+                newStereo.add(se);
         }
 
         // append atoms/bonds not visited
