@@ -497,7 +497,18 @@ public final class SmilesParser {
                     continue;
 
                 IAtom old = atoms.get(e.getKey());
-                IPseudoAtom pseudo = bldr.newInstance(IPseudoAtom.class);
+                IPseudoAtom pseudo;
+                if (old instanceof IPseudoAtom) {
+                    pseudo = (IPseudoAtom) old;
+                } else {
+                    // possibly a warning, is "CCO |$R$|" valid?
+                    pseudo = bldr.newInstance(IPseudoAtom.class);
+                    IAtomContainer mol = atomToMol.get(old);
+                    AtomContainerManipulator.replaceAtomByAtom(mol, old, pseudo);
+                    atomToMol.put(pseudo, mol);
+                    atoms.set(e.getKey(), mol.getAtom(old.getIndex()));
+                }
+
                 String val = e.getValue();
 
                 // specialised label handling
@@ -509,10 +520,6 @@ public final class SmilesParser {
                 pseudo.setLabel(val);
                 pseudo.setAtomicNumber(0);
                 pseudo.setImplicitHydrogenCount(0);
-                IAtomContainer mol = atomToMol.get(old);
-                AtomContainerManipulator.replaceAtomByAtom(mol, old, pseudo);
-                atomToMol.put(pseudo, mol);
-                atoms.set(e.getKey(), mol.getAtom(old.getIndex()));
             }
         }
 
