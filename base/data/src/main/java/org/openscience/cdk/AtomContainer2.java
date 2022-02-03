@@ -23,6 +23,7 @@
 package org.openscience.cdk;
 
 import org.openscience.cdk.exception.NoSuchAtomException;
+import org.openscience.cdk.exception.NoSuchBondException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -213,6 +214,23 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         return null;
     }
 
+
+    private BondRef getBondRef(IBond bond) {
+        BondRef ref = getBondRefUnsafe(bond);
+        if (ref == null)
+            throw new NoSuchBondException("Atom is not a member of this AtomContainer");
+        return ref;
+    }
+
+    private IChemObject getRef(IChemObject cobj) {
+        if (cobj instanceof IAtom)
+            return getAtomRef((IAtom)cobj);
+        else if (cobj instanceof IBond)
+            return getBondRef((IBond)cobj);
+        else
+            throw new IllegalArgumentException("Atom or Bond must be provided");
+    }
+
     private BaseBondRef newBondRef(IBond bond) {
         BaseAtomRef beg = bond.getBegin() == null ? null : getAtomRef(bond.getBegin());
         BaseAtomRef end = bond.getEnd() == null ? null : getAtomRef(bond.getEnd());
@@ -251,7 +269,12 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
      */
     @Override
     public void addStereoElement(IStereoElement element) {
-        stereo.add(element);
+        // important! we need to re-wrap any Atom/Bond refs with "our" own ones
+        Map<IChemObject,IChemObject> remap = new HashMap<>();
+        remap.put(element.getFocus(), getRef(element.getFocus()));
+        for (Object cobj : element.getCarriers())
+            remap.put((IChemObject) cobj, getRef((IChemObject)cobj));
+        stereo.add(element.map(remap));
         notifyChanged();
     }
 
@@ -261,7 +284,9 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
     @Override
     public void setStereoElements(List<IStereoElement> elements) {
         this.stereo.clear();
-        this.stereo.addAll(elements);
+        for (IStereoElement se : elements) {
+            addStereoElement(se);
+        }
         notifyChanged();
     }
 
@@ -859,18 +884,11 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         for (IBond bond : this.bonds())
             bond.setFlag(CDKConstants.VISITED, true);
 
-        // do stereo elements first
-        for (IStereoElement se : that.stereoElements()) {
-            if (se instanceof TetrahedralChirality &&
-                !((TetrahedralChirality) se).getChiralAtom().getFlag(CDKConstants.VISITED)) {
-                this.addStereoElement(se);
-            } else if (se instanceof DoubleBondStereochemistry &&
-                       !((DoubleBondStereochemistry) se).getStereoBond().getFlag(CDKConstants.VISITED)) {
-                this.addStereoElement(se);
-            } else if (se instanceof ExtendedTetrahedral &&
-                       !((ExtendedTetrahedral) se).focus().getFlag(CDKConstants.VISITED)) {
-                this.addStereoElement(se);
-            }
+        // Determine which stereo elements are new (unvisited)
+        List<IStereoElement<?,?>> newStereo = new ArrayList<>();
+        for (IStereoElement<?,?> stereo : that.stereoElements()) {
+            if (!stereo.getFocus().getFlag(CDKConstants.VISITED))
+                newStereo.add(stereo);
         }
 
         // append atoms/bonds not visited
@@ -896,6 +914,10 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         for (ILonePair lp : that.lonePairs()) {
             if (this.indexOf(lp) < 0)
                 addLonePair(lp);
+        }
+        // now add the new stereo elements last (needs atom/bond remap)
+        for (IStereoElement<?,?> se : newStereo) {
+            this.addStereoElement(se);
         }
 
         notifyChanged();

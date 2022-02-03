@@ -23,6 +23,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -63,6 +64,7 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
 import javax.vecmath.Point2d;
 import java.io.ByteArrayInputStream;
@@ -1299,6 +1301,42 @@ public class SmilesGeneratorTest extends CDKTestCase {
         IAtomContainer mol2    = smipar.parseSmiles("[*:3]C(CC[*:1])[*:2]");
         assertThat(new SmilesGenerator(SmiFlavor.Canonical|SmiFlavor.AtomAtomMapRenumber).create(mol2),
                    is("[*:1]CCC([*:2])[*:3]"));
+    }
+
+    @Test
+    public void stereoElementRemap_Silent() throws CDKException {
+        SmilesParser   smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IReaction      rxn    = smipar.parseReactionSmiles("*/C=C/C>> |$R$|");
+        String         res    = null;
+        for (IAtomContainer reactant : ReactionManipulator.getAllReactants(rxn).atomContainers())
+            res = new SmilesGenerator(SmiFlavor.Default).create(reactant);
+        Assert.assertEquals("*/C=C/C |$R$|", res);
+    }
+
+    @Test
+    public void stereoElementRemap_Default() throws CDKException {
+        SmilesParser   smipar = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IReaction      rxn    = smipar.parseReactionSmiles("*/C=C/C>> |$R$|");
+        String         res    = null;
+        for (IAtomContainer reactant : ReactionManipulator.getAllReactants(rxn).atomContainers())
+            res = new SmilesGenerator(SmiFlavor.Default).create(reactant);
+        Assert.assertEquals("*/C=C/C |$R$|", res);
+    }
+
+    @Test
+    public void stereoElementRemapRxn_Silent() throws CDKException {
+        SmilesParser   smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IReaction      rxn    = smipar.parseReactionSmiles("*/C=C/C>> |$R$|");
+        String         res    = null;
+        Assert.assertEquals("*/C=C/C>> |$R$|", new SmilesGenerator(SmiFlavor.Default).create(rxn));
+    }
+
+    @Test
+    public void stereoElementRemapRxn_Default() throws CDKException {
+        SmilesParser   smipar = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IReaction      rxn    = smipar.parseReactionSmiles("*/C=C/C>> |$R$|");
+        String         res    = null;
+        Assert.assertEquals("*/C=C/C>> |$R$|", new SmilesGenerator(SmiFlavor.Default).create(rxn));
     }
 
     static ITetrahedralChirality anticlockwise(IAtomContainer container, int central, int a1, int a2, int a3, int a4) {
