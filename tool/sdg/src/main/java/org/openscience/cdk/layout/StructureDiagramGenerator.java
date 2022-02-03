@@ -74,7 +74,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.StreamSupport;
 
 import static java.util.Comparator.comparingInt;
 
@@ -1156,17 +1155,12 @@ public class StructureDiagramGenerator {
     private void generateFragmentCoordinates(IAtomContainer mol, List<IAtomContainer> frags) throws CDKException {
         final List<IBond> ionicBonds = makeIonicBonds(frags);
 
+        // add tmp bonds and re-fragment
+        int rollback = mol.getBondCount();
         if (!ionicBonds.isEmpty()) {
-            // add tmp bonds and re-fragment
-            int rollback = mol.getBondCount();
             for (IBond bond : ionicBonds)
                 mol.addBond(bond);
             frags = toList(ConnectivityChecker.partitionIntoMolecules(mol));
-
-            // rollback temporary bonds
-            int numBonds = mol.getBondCount();
-            while (numBonds-- > rollback)
-                mol.removeBond(numBonds);
         }
 
         List<double[]> limits = new ArrayList<>();
@@ -1268,6 +1262,11 @@ public class StructureDiagramGenerator {
         // finalize
         assignStereochem(mol);
         finalizeLayout(mol);
+
+        // rollback temporary ionic bonds
+        int numBonds = mol.getBondCount();
+        while (numBonds-- > rollback)
+            mol.removeBond(numBonds);
     }
 
     private void lengthenIonicBonds(List<IBond> ionicBonds, IAtomContainer fragment) {

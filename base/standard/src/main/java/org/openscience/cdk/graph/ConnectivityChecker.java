@@ -25,6 +25,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStereoElement;
@@ -85,7 +86,22 @@ public class ConnectivityChecker {
      */
     public static IAtomContainerSet partitionIntoMolecules(IAtomContainer container) {
         ConnectedComponents cc = new ConnectedComponents(GraphUtil.toAdjList(container));
+        if (cc.nComponents() == 1) {
+            return singleton(container);
+        }
         return partitionIntoMolecules(container, cc.components());
+    }
+
+    private static IAtomContainerSet singleton(IAtomContainer container) {
+        IChemObjectBuilder bldr = container.getBuilder();
+        IAtomContainerSet acSet = bldr.newInstance(IAtomContainerSet.class);
+        acSet.addAtomContainer(container);
+        return acSet;
+    }
+
+    private static IAtomContainerSet empty(IAtomContainer container) {
+        IChemObjectBuilder bldr = container.getBuilder();
+        return bldr.newInstance(IAtomContainerSet.class);
     }
 
     private static IAtomContainer getComponent(Map<IAtom, IAtomContainer> cmap,
@@ -131,10 +147,19 @@ public class ConnectivityChecker {
      */
     public static IAtomContainerSet partitionIntoMolecules(IAtomContainer container, int[] components) {
 
+        int minComponentIndex = Integer.MAX_VALUE;
         int maxComponentIndex = 0;
-        for (int component : components)
-            if (component > maxComponentIndex)
-                maxComponentIndex = component;
+        for (int component : components) {
+            minComponentIndex = Math.min(component, minComponentIndex);
+            maxComponentIndex = Math.max(component, maxComponentIndex);
+        }
+
+        if (minComponentIndex == maxComponentIndex) {
+            if (maxComponentIndex == 0)
+                return empty(container);
+            else
+                return singleton(container);
+        }
 
         IAtomContainer[] containers = new IAtomContainer[maxComponentIndex + 1];
         Map<IAtom, IAtomContainer> componentsMap = new HashMap<>(2 * container.getAtomCount());
