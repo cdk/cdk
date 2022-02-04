@@ -19,19 +19,24 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
@@ -51,52 +56,44 @@ public class WeightedPathDescriptorTest extends MolecularDescriptorTest {
         setDescriptor(WeightedPathDescriptor.class);
     }
 
+    private void assertWeights(IAtomContainer mol, double ... expected) {
+        DescriptorValue value = descriptor.calculate(mol);
+        DoubleArrayResult actual = (DoubleArrayResult) value.getValue();
+        Assert.assertEquals(expected[0], actual.get(0), 0.00001);
+        Assert.assertEquals(expected[1], actual.get(1), 0.00001);
+        Assert.assertEquals(expected[2], actual.get(2), 0.00001);
+        Assert.assertEquals(expected[3], actual.get(3), 0.00001);
+        Assert.assertEquals(expected[4], actual.get(4), 0.00001);
+    }
+
     @Test
-    public void testWeightedPathDescriptor() throws ClassNotFoundException, CDKException, Exception {
-        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer mol = null;
-        DescriptorValue value = null;
-        DoubleArrayResult result = null;
+    public void testButane() throws Exception {
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("CCCC");
+        assertWeights(mol, 6.871320, 1.717830, 0.0, 0.0, 0.0);
+    }
 
-        mol = sp.parseSmiles("CCCC");
-        value = descriptor.calculate(mol);
-        result = (DoubleArrayResult) value.getValue();
-        Assert.assertEquals(6.871320, result.get(0), 0.000001);
-        Assert.assertEquals(1.717830, result.get(1), 0.000001);
-        Assert.assertEquals(0.0, result.get(2), 0.000001);
-        Assert.assertEquals(0.0, result.get(3), 0.000001);
-        Assert.assertEquals(0.0, result.get(4), 0.000001);
+    @Test
+    public void testWpo() throws ClassNotFoundException, CDKException, Exception {
+        try (InputStream ins = this.getClass().getResourceAsStream("wpo.sdf");
+             MDLV2000Reader reader = new MDLV2000Reader(ins)) {
+            IChemFile content = reader.read(new org.openscience.cdk.ChemFile());
+            List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
+            IAtomContainer mol = cList.get(0);
+            AtomContainerManipulator.suppressHydrogens(mol);
+            assertWeights(mol, 18.42026, 1.842026, 13.45733, 13.45733, 0);
+        }
+    }
 
-        String filename = "wpo.sdf";
-        InputStream ins = this.getClass().getResourceAsStream(filename);
-        ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
-        IChemFile content = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
-        List cList = ChemFileManipulator.getAllAtomContainers(content);
-        mol = (IAtomContainer) cList.get(0);
-        mol = AtomContainerManipulator.removeHydrogens(mol);
-
-        value = descriptor.calculate(mol);
-        result = (DoubleArrayResult) value.getValue();
-        Assert.assertEquals(18.42026, result.get(0), 0.00001);
-        Assert.assertEquals(1.842026, result.get(1), 0.00001);
-        Assert.assertEquals(13.45733, result.get(2), 0.00001);
-        Assert.assertEquals(13.45733, result.get(3), 0.00001);
-        Assert.assertEquals(0, result.get(4), 0.00001);
-
-        filename = "wpn.sdf";
-        ins = this.getClass().getResourceAsStream(filename);
-        reader = new MDLV2000Reader(ins);
-        content = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
-        cList = ChemFileManipulator.getAllAtomContainers(content);
-        mol = (IAtomContainer) cList.get(0);
-        mol = AtomContainerManipulator.removeHydrogens(mol);
-        value = descriptor.calculate(mol);
-        result = (DoubleArrayResult) value.getValue();
-        Assert.assertEquals(26.14844, result.get(0), 0.00001);
-        Assert.assertEquals(1.867746, result.get(1), 0.00001);
-        Assert.assertEquals(19.02049, result.get(2), 0.00001);
-        Assert.assertEquals(0, result.get(3), 0.000001);
-        Assert.assertEquals(19.02049, result.get(4), 0.00001);
-
+    @Test
+    public void testWPN() throws ClassNotFoundException, CDKException, Exception {
+        try (InputStream ins = this.getClass().getResourceAsStream("wpn.sdf");
+             MDLV2000Reader reader = new MDLV2000Reader(ins)) {
+            IChemFile content = reader.read(new org.openscience.cdk.ChemFile());
+            List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
+            IAtomContainer mol = cList.get(0);
+            AtomContainerManipulator.suppressHydrogens(mol);
+            assertWeights(mol, 26.14843, 1.867746, 19.02049, 0, 19.02049);
+        }
     }
 }
