@@ -38,14 +38,14 @@ import java.util.List;
 
 /**
  * Evaluates the weighted path descriptors.
- * 
+ *
  * These decsriptors were described  by Randic ({@cdk.cite RAN84}) and characterize molecular
  * branching. Five descriptors are calculated, based on the implementation in the ADAPT
  * software package. Note that the descriptor is based on identifying <b>all</b> paths between pairs of
  * atoms and so is NP-hard. This means that it can take some time for large, complex molecules.
  * The class returns a <code>DoubleArrayResult</code> containing the five
  * descriptors in the order described below.
- * 
+ *
  * <div>
  * <table border=1>
  * <caption><span id="dmwp">DMWP</span></caption>
@@ -54,7 +54,7 @@ import java.util.List;
  * <td>WTPT2</td><td> molecular ID / number of atoms</td></tr><tr>
  * <td>WTPT3</td><td> sum of path lengths starting
  * from heteroatoms</td></tr><tr>
- * 
+ *
  * <td>WTPT4</td><td> sum of path lengths starting
  * from oxygens</td></tr><tr>
  * <td>WTPT5</td><td> sum of path lengths starting
@@ -150,17 +150,14 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
      * @param container Parameter is the atom container.
      * @return A DoubleArrayResult value representing the weighted path values
      */
-
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
         IAtomContainer local = AtomContainerManipulator.removeHydrogens(container);
         int natom = local.getAtomCount();
         DoubleArrayResult retval = new DoubleArrayResult();
-        
-
-        ArrayList<List<?>> pathList = new ArrayList<List<?>>();
 
         // unique paths
+        List<List<IAtom>> pathList = new ArrayList<>();
         for (int i = 0; i < natom - 1; i++) {
             IAtom a = local.getAtom(i);
             for (int j = i + 1; j < natom; j++) {
@@ -170,12 +167,7 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
         }
 
         // heteroatoms
-        double[] pathWts = getPathWeights(pathList, local);
-        double mid = 0.0;
-        for (double pathWt3 : pathWts)
-            mid += pathWt3;
-        mid += natom; // since we don't calculate paths of length 0 above
-
+        double mid = calcWeight(pathList, local, natom);
         retval.add(mid);
         retval.add(mid / (double) natom);
 
@@ -191,12 +183,7 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
                 pathList.addAll(PathTools.getAllPaths(local, a, b));
             }
         }
-        pathWts = getPathWeights(pathList, local);
-        mid = 0.0;
-        for (double pathWt2 : pathWts)
-            mid += pathWt2;
-        mid += count;
-        retval.add(mid);
+        retval.add(calcWeight(pathList, local, count));
 
         // oxygens
         pathList.clear();
@@ -211,12 +198,7 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
                 pathList.addAll(PathTools.getAllPaths(local, a, b));
             }
         }
-        pathWts = getPathWeights(pathList, local);
-        mid = 0.0;
-        for (double pathWt1 : pathWts)
-            mid += pathWt1;
-        mid += count;
-        retval.add(mid);
+        retval.add(calcWeight(pathList, local, count));
 
         // nitrogens
         pathList.clear();
@@ -231,20 +213,18 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
                 pathList.addAll(PathTools.getAllPaths(local, a, b));
             }
         }
-        pathWts = getPathWeights(pathList, local);
-        mid = 0.0;
-        for (double pathWt : pathWts)
-            mid += pathWt;
-        mid += count;
-        retval.add(mid);
+        retval.add(calcWeight(pathList, local, count));
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval,
-                getDescriptorNames());
+        return new DescriptorValue(getSpecification(),
+                                   getParameterNames(),
+                                   getParameters(),
+                                   retval,
+                                   getDescriptorNames());
     }
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * 
+     *
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
@@ -258,20 +238,22 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
         return new DoubleArrayResultType(5);
     }
 
-    private double[] getPathWeights(List<List<?>> pathList, IAtomContainer atomContainer) {
-        double[] pathWts = new double[pathList.size()];
-        for (int i = 0; i < pathList.size(); i++) {
-            List<?> p = pathList.get(i);
-            pathWts[i] = 1.0;
+    private double calcWeight(List<List<IAtom>> pathList,
+                              IAtomContainer atomContainer,
+                              int natom) {
+        double result = 0.0;
+        for (List<IAtom> p : pathList) {
+            double val = 1.0;
             for (int j = 0; j < p.size() - 1; j++) {
-                IAtom a = (IAtom) p.get(j);
-                IAtom b = (IAtom) p.get(j + 1);
-                int n1 = atomContainer.getConnectedAtomsList(a).size();
-                int n2 = atomContainer.getConnectedAtomsList(b).size();
-                pathWts[i] /= Math.sqrt(n1 * n2);
+                IAtom a = p.get(j);
+                IAtom b = p.get(j + 1);
+                int n1 = a.getBondCount();
+                int n2 = b.getBondCount();
+                val /= Math.sqrt(n1 * n2);
             }
+            result += val;
         }
-        return pathWts;
+        result += natom; // since we don't calculate paths of length 0 above
+        return result;
     }
-
 }
