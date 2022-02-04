@@ -23,6 +23,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -149,6 +150,26 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
         return path.get(0).getIndex() < path.get(path.size()-1).getIndex();
     }
 
+    private void collectPaths(boolean[] visit,
+                              List<List<IAtom>> paths,
+                              List<IAtom> path,
+                              IAtom atom,
+                              IBond prev) {
+        visit[atom.getIndex()] = true;
+        path.add(atom);
+        if (path.size() > 1)
+            paths.add(new ArrayList<>(path));
+        for (IBond bond : atom.bonds()) {
+            if (bond == prev)
+                continue;
+            IAtom nbor = bond.getOther(atom);
+            if (!visit[nbor.getIndex()])
+                collectPaths(visit, paths, path, nbor, prev);
+        }
+        visit[atom.getIndex()] = false;
+        path.remove(path.size()-1);
+    }
+
     /**
      * Calculates the weighted path descriptors.
      *
@@ -163,12 +184,9 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
 
         // unique paths
         List<List<IAtom>> pathList = new ArrayList<>();
+        boolean[] visit = new boolean[local.getAtomCount()];
         for (IAtom a : local.atoms()) {
-            List<List<IAtom>> paths = new ArrayList<>();
-            for (IAtom b : local.atoms()) {
-                if (!a.equals(b))
-                    pathList.addAll(PathTools.getAllPaths(local, a, b));
-            }
+            collectPaths(visit, pathList, new ArrayList<>(), a, null);
         }
 
         int numAtoms = local.getAtomCount();
