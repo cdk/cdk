@@ -154,6 +154,8 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
         private double oxygenWeight;
         private double nitrogenWeight;
 
+        private double[] bondWeights;
+
         public Consumer(IAtomContainer mol) {
             uniqWeight = mol.getAtomCount();
             heteroWeight = 0;
@@ -167,25 +169,26 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
                     default:      heteroWeight++; break;
                 }
             }
+            bondWeights = new double[mol.getBondCount()];
+            for (IBond bond : mol.bonds()) {
+                int begDeg = bond.getBegin().getBondCount();
+                int endDeg = bond.getEnd().getBondCount();
+                bondWeights[bond.getIndex()] = Math.sqrt(begDeg * endDeg);
+            }
         }
 
-        private double weight(List<IAtom> p) {
+        private double weight(List<IBond> bonds) {
             double val = 1.0;
-            for (int j = 0; j < p.size() - 1; j++) {
-                IAtom a = p.get(j);
-                IAtom b = p.get(j + 1);
-                int n1 = a.getBondCount();
-                int n2 = b.getBondCount();
-                val /= Math.sqrt(n1 * n2);
-            }
+            for (IBond bond : bonds)
+                val /= bondWeights[bond.getIndex()];
             return val;
         }
 
-        void consume(List<IAtom> p) {
-            double val = weight(p);
-            if (unique(p))
+        void consume(List<IAtom> apath, List<IBond> bpath) {
+            double val = weight(bpath);
+            if (unique(apath))
                 uniqWeight += val;
-            int elem = p.get(0).getAtomicNumber();
+            int elem = apath.get(0).getAtomicNumber();
             if (elem != IAtom.C) {
                 heteroWeight += val;
                 if (elem == IAtom.O)
@@ -199,21 +202,26 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
     private void traverseAllPaths(boolean[] visit,
                                   Consumer consumer,
                                   List<IAtom> apath,
+                                  List<IBond> bpath,
                                   IAtom atom,
                                   IBond prev) {
         visit[atom.getIndex()] = true;
         apath.add(atom);
-        if (prev != null)
-            consumer.consume(apath);
+        if (prev != null) {
+            bpath.add(prev);
+            consumer.consume(apath, bpath);
+        }
         for (IBond bond : atom.bonds()) {
             if (bond == prev)
                 continue;
             IAtom nbor = bond.getOther(atom);
             if (!visit[nbor.getIndex()])
-                traverseAllPaths(visit, consumer, apath, nbor, bond);
+                traverseAllPaths(visit, consumer, apath, bpath, nbor, bond);
         }
         visit[atom.getIndex()] = false;
         apath.remove(apath.size()-1);
+        if (prev != null)
+            bpath.remove(bpath.size()-1);
     }
 
     /**
@@ -229,11 +237,9 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
         DoubleArrayResult retval = new DoubleArrayResult();
 
         Consumer consumer = new Consumer(local);
-        // unique paths
-        List<List<IAtom>> pathList = new ArrayList<>();
         boolean[] visit = new boolean[local.getAtomCount()];
         for (IAtom a : local.atoms()) {
-            traverseAllPaths(visit, consumer, new ArrayList<>(), a, null);
+            traverseAllPaths(visit, consumer, new ArrayList<>(), new ArrayList<>(), a, null);
         }
 
         retval.add(consumer.uniqWeight);
