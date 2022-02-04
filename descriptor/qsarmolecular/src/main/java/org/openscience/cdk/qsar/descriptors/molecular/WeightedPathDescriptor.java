@@ -23,6 +23,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -163,9 +164,9 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
             nitrogenWeight = 0;
             for (IAtom a : mol.atoms()) {
                 switch ((byte)a.getAtomicNumber().intValue()) {
-                    case IAtom.C: break;
-                    case IAtom.N: nitrogenWeight++; heteroWeight++; break;
-                    case IAtom.O: oxygenWeight++; heteroWeight++; break;
+                    case IElement.C: break;
+                    case IElement.N: nitrogenWeight++; heteroWeight++; break;
+                    case IElement.O: oxygenWeight++; heteroWeight++; break;
                     default:      heteroWeight++; break;
                 }
             }
@@ -173,7 +174,7 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
             for (IBond bond : mol.bonds()) {
                 int begDeg = bond.getBegin().getBondCount();
                 int endDeg = bond.getEnd().getBondCount();
-                bondWeights[bond.getIndex()] = Math.sqrt(begDeg * endDeg);
+                bondWeights[bond.getIndex()] = Math.sqrt((double)begDeg*endDeg);
             }
         }
 
@@ -181,11 +182,11 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
             if (unique(apath))
                 uniqWeight += val;
             int elem = apath.get(0).getAtomicNumber();
-            if (elem != IAtom.C) {
+            if (elem != IElement.C) {
                 heteroWeight += val;
-                if (elem == IAtom.O)
+                if (elem == IElement.O)
                     oxygenWeight += val;
-                else if (elem == IAtom.N)
+                else if (elem == IElement.N)
                     nitrogenWeight += val;
             }
         }
@@ -233,7 +234,7 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
         }
 
         retval.add(consumer.uniqWeight);
-        retval.add(consumer.uniqWeight / (double) local.getAtomCount());
+        retval.add(consumer.uniqWeight / local.getAtomCount());
         retval.add(consumer.heteroWeight);
         retval.add(consumer.oxygenWeight);
         retval.add(consumer.nitrogenWeight);
