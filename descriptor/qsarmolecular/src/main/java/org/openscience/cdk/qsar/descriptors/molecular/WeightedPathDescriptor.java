@@ -177,15 +177,7 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
             }
         }
 
-        private double weight(List<IBond> bonds) {
-            double val = 1.0;
-            for (IBond bond : bonds)
-                val /= bondWeights[bond.getIndex()];
-            return val;
-        }
-
-        void consume(List<IAtom> apath, List<IBond> bpath) {
-            double val = weight(bpath);
+        void consume(List<IAtom> apath, double val) {
             if (unique(apath))
                 uniqWeight += val;
             int elem = apath.get(0).getAtomicNumber();
@@ -202,26 +194,24 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
     private void traverseAllPaths(boolean[] visit,
                                   Consumer consumer,
                                   List<IAtom> apath,
-                                  List<IBond> bpath,
+                                  double weight,
                                   IAtom atom,
                                   IBond prev) {
         visit[atom.getIndex()] = true;
         apath.add(atom);
         if (prev != null) {
-            bpath.add(prev);
-            consumer.consume(apath, bpath);
+            weight /= consumer.bondWeights[prev.getIndex()];
+            consumer.consume(apath, weight);
         }
         for (IBond bond : atom.bonds()) {
             if (bond == prev)
                 continue;
             IAtom nbor = bond.getOther(atom);
             if (!visit[nbor.getIndex()])
-                traverseAllPaths(visit, consumer, apath, bpath, nbor, bond);
+                traverseAllPaths(visit, consumer, apath, weight, nbor, bond);
         }
         visit[atom.getIndex()] = false;
         apath.remove(apath.size()-1);
-        if (prev != null)
-            bpath.remove(bpath.size()-1);
     }
 
     /**
@@ -239,7 +229,7 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
         Consumer consumer = new Consumer(local);
         boolean[] visit = new boolean[local.getAtomCount()];
         for (IAtom a : local.atoms()) {
-            traverseAllPaths(visit, consumer, new ArrayList<>(), new ArrayList<>(), a, null);
+            traverseAllPaths(visit, consumer, new ArrayList<>(), 1.0, a, null);
         }
 
         retval.add(consumer.uniqWeight);
