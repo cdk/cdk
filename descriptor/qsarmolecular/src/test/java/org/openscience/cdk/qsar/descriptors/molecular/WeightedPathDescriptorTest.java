@@ -74,6 +74,34 @@ public class WeightedPathDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
+    public void testPyrrole() throws Exception {
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("[nH]1cccc1");
+        assertWeights(mol, 9.6875,1.9375,2.875,0.0,2.875);
+    }
+
+    @Test
+    public void testFuran() throws Exception {
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("o1cccc1");
+        assertWeights(mol, 9.6875,1.9375,2.875,2.875,0.0);
+    }
+
+    @Test
+    public void testIndole() throws Exception {
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("[nH]1ccc2c1cccc2");
+        assertWeights(mol, 18.55905,2.06211,3.05042,0.0,3.05042);
+    }
+
+    @Test
+    public void testAbilify() throws Exception {
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("C1CC(=O)NC2=C1C=CC(=C2)OCCCCN3CCN(CC3)C4=C(C(=CC=C4)Cl)Cl");
+        assertWeights(mol, 61.78692,2.05956,20.71642,5.6356,10.01866);
+    }
+
+    @Test
     public void testWpo() throws ClassNotFoundException, CDKException, Exception {
         try (InputStream ins = this.getClass().getResourceAsStream("wpo.sdf");
              MDLV2000Reader reader = new MDLV2000Reader(ins)) {
