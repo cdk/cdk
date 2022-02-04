@@ -20,11 +20,9 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -36,7 +34,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 /**
  * Evaluates the weighted path descriptors.
@@ -150,24 +147,73 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
         return path.get(0).getIndex() < path.get(path.size()-1).getIndex();
     }
 
-    private void collectPaths(boolean[] visit,
-                              List<List<IAtom>> paths,
-                              List<IAtom> path,
-                              IAtom atom,
-                              IBond prev) {
+    private static final class Consumer {
+
+        private double uniqWeight;
+        private double heteroWeight;
+        private double oxygenWeight;
+        private double nitrogenWeight;
+
+        public Consumer(IAtomContainer mol) {
+            uniqWeight = mol.getAtomCount();
+            heteroWeight = 0;
+            oxygenWeight = 0;
+            nitrogenWeight = 0;
+            for (IAtom a : mol.atoms()) {
+                switch ((byte)a.getAtomicNumber().intValue()) {
+                    case IAtom.C: break;
+                    case IAtom.N: nitrogenWeight++; heteroWeight++; break;
+                    case IAtom.O: oxygenWeight++; heteroWeight++; break;
+                    default:      heteroWeight++; break;
+                }
+            }
+        }
+
+        private double weight(List<IAtom> p) {
+            double val = 1.0;
+            for (int j = 0; j < p.size() - 1; j++) {
+                IAtom a = p.get(j);
+                IAtom b = p.get(j + 1);
+                int n1 = a.getBondCount();
+                int n2 = b.getBondCount();
+                val /= Math.sqrt(n1 * n2);
+            }
+            return val;
+        }
+
+        void consume(List<IAtom> p) {
+            double val = weight(p);
+            if (unique(p))
+                uniqWeight += val;
+            int elem = p.get(0).getAtomicNumber();
+            if (elem != IAtom.C) {
+                heteroWeight += val;
+                if (elem == IAtom.O)
+                    oxygenWeight += val;
+                else if (elem == IAtom.N)
+                    nitrogenWeight += val;
+            }
+        }
+    }
+
+    private void traverseAllPaths(boolean[] visit,
+                                  Consumer consumer,
+                                  List<IAtom> apath,
+                                  IAtom atom,
+                                  IBond prev) {
         visit[atom.getIndex()] = true;
-        path.add(atom);
-        if (path.size() > 1)
-            paths.add(new ArrayList<>(path));
+        apath.add(atom);
+        if (prev != null)
+            consumer.consume(apath);
         for (IBond bond : atom.bonds()) {
             if (bond == prev)
                 continue;
             IAtom nbor = bond.getOther(atom);
             if (!visit[nbor.getIndex()])
-                collectPaths(visit, paths, path, nbor, prev);
+                traverseAllPaths(visit, consumer, apath, nbor, bond);
         }
         visit[atom.getIndex()] = false;
-        path.remove(path.size()-1);
+        apath.remove(apath.size()-1);
     }
 
     /**
@@ -182,36 +228,19 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
 
         DoubleArrayResult retval = new DoubleArrayResult();
 
+        Consumer consumer = new Consumer(local);
         // unique paths
         List<List<IAtom>> pathList = new ArrayList<>();
         boolean[] visit = new boolean[local.getAtomCount()];
         for (IAtom a : local.atoms()) {
-            collectPaths(visit, pathList, new ArrayList<>(), a, null);
+            traverseAllPaths(visit, consumer, new ArrayList<>(), a, null);
         }
 
-        int numAtoms = local.getAtomCount();
-        int numHetero = 0;
-        int numOxygen = 0;
-        int numNitrogen = 0;
-        for (IAtom a : local.atoms()) {
-            switch ((byte)a.getAtomicNumber().intValue()) {
-                case IAtom.C: break;
-                case IAtom.N: numNitrogen++; numHetero++; break;
-                case IAtom.O: numOxygen++; numHetero++; break;
-                default:      numHetero++; break;
-            }
-        }
-
-        double mid = calcWeight(pathList, local, numAtoms,
-                WeightedPathDescriptor::unique);
-        retval.add(mid);
-        retval.add(mid / (double) numAtoms);
-        retval.add(calcWeight(pathList, local, numHetero,
-                p -> p.get(0).getAtomicNumber() != IAtom.C));
-        retval.add(calcWeight(pathList, local, numOxygen,
-                p -> p.get(0).getAtomicNumber() == IAtom.O));
-        retval.add(calcWeight(pathList, local, numNitrogen,
-                p -> p.get(0).getAtomicNumber() == IAtom.N));
+        retval.add(consumer.uniqWeight);
+        retval.add(consumer.uniqWeight / (double) local.getAtomCount());
+        retval.add(consumer.heteroWeight);
+        retval.add(consumer.oxygenWeight);
+        retval.add(consumer.nitrogenWeight);
 
         return new DescriptorValue(getSpecification(),
                                    getParameterNames(),
@@ -234,27 +263,5 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(5);
-    }
-
-    private double calcWeight(List<List<IAtom>> pathList,
-                              IAtomContainer atomContainer,
-                              int natom,
-                              Predicate<List<IAtom>> pred) {
-        double result = 0.0;
-        for (List<IAtom> p : pathList) {
-            if (!pred.test(p))
-                continue;
-            double val = 1.0;
-            for (int j = 0; j < p.size() - 1; j++) {
-                IAtom a = p.get(j);
-                IAtom b = p.get(j + 1);
-                int n1 = a.getBondCount();
-                int n2 = b.getBondCount();
-                val /= Math.sqrt(n1 * n2);
-            }
-            result += val;
-        }
-        result += natom; // since we don't calculate paths of length 0 above
-        return result;
     }
 }
