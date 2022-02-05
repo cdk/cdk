@@ -8,9 +8,10 @@ package org.openscience.cdk.structgen.maygen;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.io.SDFWriter;
 import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -23,7 +24,9 @@ import java.nio.charset.StandardCharsets;
 
 final class SmiOutputConsumer implements Maygen.Consumer {
 
-    private SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
+    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(SmiOutputConsumer.class);
+
+    private final SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
     private final File dir;
     private BufferedWriter wtr;
 
@@ -48,14 +51,14 @@ final class SmiOutputConsumer implements Maygen.Consumer {
                 try {
                     wtr.close();
                 } catch (IOException e) {
-                    System.err.println("ERROR: " + e.getMessage());
+                    logger.error(e);
                 }
             }
             try {
                 wtr = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(dir, name + ".smi")),
                         StandardCharsets.UTF_8));
             } catch (FileNotFoundException e) {
-                System.err.println("ERROR: " + e.getMessage());
+                logger.error(e);
             }
         }
     }
@@ -66,7 +69,7 @@ final class SmiOutputConsumer implements Maygen.Consumer {
             String smi = smigen.create(mol);
             wtr.write(smi + "\n");
         } catch (CDKException | IOException e) {
-            System.err.println("ERROR: " + e.getMessage());
+            logger.error(e);
         }
     }
 

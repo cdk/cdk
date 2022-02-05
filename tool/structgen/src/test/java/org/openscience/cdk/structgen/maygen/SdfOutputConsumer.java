@@ -11,6 +11,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.io.SDFWriter;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,6 +21,8 @@ import java.io.IOException;
 import java.io.Writer;
 
 final class SdfOutputConsumer implements Maygen.Consumer {
+
+    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(SdfOutputConsumer.class);
 
     private SDFWriter sdfw;
     private final File dir;
@@ -46,14 +50,14 @@ final class SdfOutputConsumer implements Maygen.Consumer {
                 try {
                     sdfw.close();
                 } catch (IOException e) {
-                    System.err.println("ERROR: " + e.getMessage());
+                    logger.error(e.getMessage());
                 }
             }
             try {
                 sdfw = new SDFWriter(new FileOutputStream(new File(dir, name + ".sdf")));
                 setupOptions();
             } catch (FileNotFoundException e) {
-                System.err.println("ERROR: " + e.getMessage());
+                logger.error(e.getMessage());
             }
         }
     }
@@ -67,6 +71,7 @@ final class SdfOutputConsumer implements Maygen.Consumer {
             sdfw.getSetting(MDLV2000Writer.OptWriteDefaultProperties)
                 .setSetting("false");
         } catch (CDKException e) {
+            logger.error(e);
         }
     }
 
@@ -77,7 +82,7 @@ final class SdfOutputConsumer implements Maygen.Consumer {
                 new StructureDiagramGenerator().generateCoordinates(mol);
             sdfw.write(mol);
         } catch (CDKException e) {
-            System.err.println("ERROR: " + e.getMessage());
+            logger.error(e);
         }
     }
 
