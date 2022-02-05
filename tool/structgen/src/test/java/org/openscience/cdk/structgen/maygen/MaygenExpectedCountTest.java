@@ -93,7 +93,11 @@ public class MaygenExpectedCountTest {
                 {"C3N3O2H7", 45626},
                 {"C5N3H9", 46125},
                 {"C3O6PH5", 51323},
-                {"C5H5POBr2", 62886}});
+                {"C5H5POBr2", 62886},
+                {"C[1-2]H[3-8]", 3},
+                {"C[1-6]Cl2H[4-8]", 4141},
+                {"C(val=4)6H(val=1)6", 217} // user defined
+        });
     }
 
 
@@ -108,20 +112,38 @@ public class MaygenExpectedCountTest {
     @Test
     public void testExpectedCountMultithreaded() throws CDKException, IOException, CloneNotSupportedException {
         Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
-        maygen.setFormula(formula);
+        if (formula.contains("val="))
+            maygen.setSetElement(true);
+        boolean fuzzy = formula.contains("[");
+        if (fuzzy)
+            maygen.setFuzzyFormula(formula);
+        else
+            maygen.setFormula(formula);
         maygen.setMultiThread(true);
         maygen.run();
-        Assert.assertEquals(expectedCount, maygen.getCount());
+        if (fuzzy)
+            Assert.assertEquals(expectedCount, maygen.getFuzzyCount());
+        else
+            Assert.assertEquals(expectedCount, maygen.getCount());
     }
 
-    @Ignore
+    @Test
     @Category(SlowTest.class)
     public void testExpectedCount() throws CDKException, IOException, CloneNotSupportedException {
         Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
-        maygen.setFormula(formula);
+        if (formula.contains("val="))
+            maygen.setSetElement(true);
+        boolean fuzzy = formula.contains("[");
+        if (fuzzy)
+            maygen.setFuzzyFormula(formula);
+        else
+            maygen.setFormula(formula);
         maygen.setMultiThread(false);
         maygen.run();
-        Assert.assertEquals(expectedCount, maygen.getCount());
+        if (fuzzy)
+            Assert.assertEquals(expectedCount, maygen.getFuzzyCount());
+        else
+            Assert.assertEquals(expectedCount, maygen.getCount());
     }
 
 }

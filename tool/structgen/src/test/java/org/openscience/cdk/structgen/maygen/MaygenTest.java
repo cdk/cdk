@@ -44,29 +44,6 @@ import static org.junit.Assert.assertTrue;
 public class MaygenTest {
 
     @Test
-    public void test_C_1_6_Cl2_H_4_8()
-            throws IOException, CDKException, CloneNotSupportedException {
-        Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
-        maygen.setFuzzyFormula("C[1-6]Cl2H[4-8]");
-        maygen.run();
-        assertEquals(4141, maygen.getFuzzyCount());
-        maygen.setMultiThread(true);
-        maygen.run();
-        assertEquals(4141, maygen.getFuzzyCount());
-    }
-
-    @Test
-    public void test_C_1_2_H_3_8() throws IOException, CDKException, CloneNotSupportedException {
-        Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
-        maygen.setFuzzyFormula("C[1-2]H[3-8]");
-        maygen.run();
-        assertEquals(3, maygen.getFuzzyCount());
-        maygen.setMultiThread(true);
-        maygen.run();
-        assertEquals(3, maygen.getFuzzyCount());
-    }
-
-    @Test
     public void test_gettersAndSetters() {
         Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
         maygen.setTsvoutput(true);
@@ -212,17 +189,5 @@ public class MaygenTest {
         maygen.setMultiThread(true);
         maygen.run();
         assertEquals(0, maygen.getFuzzyCount());
-    }
-
-    @Test
-    public void test_userDefined() throws IOException, CDKException, CloneNotSupportedException {
-        Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
-        maygen.setSetElement(true);
-        maygen.setFormula("C(val=4)6H(val=1)6");
-        maygen.run();
-        assertEquals(217, maygen.getCount());
-        maygen.setMultiThread(true);
-        maygen.run();
-        assertEquals(217, maygen.getCount());
     }
 }
