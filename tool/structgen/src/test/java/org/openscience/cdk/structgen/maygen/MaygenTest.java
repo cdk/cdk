@@ -21,13 +21,18 @@
 
 package org.openscience.cdk.structgen.maygen;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.io.IOException;
 import org.junit.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+
+import java.io.IOException;
+import java.io.StringWriter;
+
+import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * <p>
@@ -37,9 +42,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  * </p>
  *
  * @author MehmetAzizYirik <mehmetazizyirik@outlook.com> <0000-0001-7520-7215@orcid.org>
- * 
  * @cdk.module structgen
- *
  */
 public class MaygenTest {
 
@@ -86,87 +89,120 @@ public class MaygenTest {
     }
 
     @Test
-    public void test_C3Cl2H4_writeSdfAndSmiles()
+    public void test_C3Cl2H4_writeSmiles()
             throws IOException, CDKException, CloneNotSupportedException {
         Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
         maygen.setFormula("C3Cl2H4");
-//        maygen.setWriteSDF(true);
-//        maygen.setWriteSMILES(true);
+        StringWriter sw = new StringWriter();
+        maygen.setConsumer(new SmiOutputConsumer(sw));
         maygen.run();
         assertEquals(7, maygen.getCount());
-        maygen.setMultiThread(true);
-        maygen.run();
-        assertEquals(7, maygen.getCount());
+        assertEquals("C1(Cl)(Cl)CC1\n" +
+                        "C(Cl)(=C)CCl\n" +
+                        "C(=CCl)(C)Cl\n" +
+                        "C(=CC)(Cl)Cl\n" +
+                        "C(Cl)C=CCl\n" +
+                        "C=CC(Cl)Cl\n" +
+                        "C1C(Cl)C1Cl\n",
+                sw.toString());
     }
 
+    @Test
+    public void test_C3Cl2H4_writeSdf()
+            throws IOException, CDKException, CloneNotSupportedException {
+        Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
+        maygen.setFormula("C3Cl2H4");
+        StringWriter sw = new StringWriter();
+        maygen.setConsumer(new SdfOutputConsumer(sw));
+        maygen.run();
+        assertEquals(7, maygen.getCount());
+        String res = sw.toString();
+        assertThat(res,
+                containsString("  5  5  0  0  0  0  0  0  0  0999 V2000\n" +
+                        "    0.0000    0.0000    0.0000 C   0  0\n" +
+                        "    0.0000    0.0000    0.0000 Cl  0  0\n" +
+                        "    0.0000    0.0000    0.0000 Cl  0  0\n" +
+                        "    0.0000    0.0000    0.0000 C   0  0\n" +
+                        "    0.0000    0.0000    0.0000 C   0  0\n" +
+                        "  1  2  1  0\n" +
+                        "  1  3  1  0\n" +
+                        "  1  4  1  0\n" +
+                        "  1  5  1  0\n" +
+                        "  4  5  1  0\n" +
+                        "M  END\n"));
+        assertThat(res,
+                containsString("  5  4  0  0  0  0  0  0  0  0999 V2000\n" +
+                        "    0.0000    0.0000    0.0000 C   0  0\n" +
+                        "    0.0000    0.0000    0.0000 Cl  0  0\n" +
+                        "    0.0000    0.0000    0.0000 Cl  0  0\n" +
+                        "    0.0000    0.0000    0.0000 C   0  0\n" +
+                        "    0.0000    0.0000    0.0000 C   0  0\n" +
+                        "  1  2  1  0\n" +
+                        "  1  4  2  0\n" +
+                        "  1  5  1  0\n" +
+                        "  3  5  1  0\n" +
+                        "M  END\n"));
+    }
+
+    // important! SDG changes may affect this test!
     @Test
     public void test_C3Cl2H4_sdfCoordinates()
             throws IOException, CDKException, CloneNotSupportedException {
         Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
         maygen.setFormula("C3Cl2H4");
-//        maygen.setWriteSDF(true);
-//        maygen.setCoordinates(true);
+        StringWriter sw = new StringWriter();
+        SdfOutputConsumer consumer = new SdfOutputConsumer(sw);
+        consumer.setCoordinates(true);
+        maygen.setConsumer(consumer);
         maygen.run();
-        assertEquals(7, maygen.getCount());
-        maygen.setMultiThread(true);
-        maygen.run();
-        assertEquals(7, maygen.getCount());
+        String res = sw.toString();
+        assertThat(res,
+                containsString("  5  5  0  0  0  0  0  0  0  0999 V2000\n" +
+                        "   -0.7883   -0.4645    0.0000 C   0  0\n" +
+                        "   -2.2654   -0.7252    0.0000 Cl  0  0\n" +
+                        "   -0.2751   -1.8739    0.0000 Cl  0  0\n" +
+                        "   -0.7887    1.0364    0.0000 C   0  0\n" +
+                        "    0.5108    0.2855    0.0000 C   0  0\n" +
+                        "  1  2  1  0\n" +
+                        "  1  3  1  0\n" +
+                        "  1  4  1  0\n" +
+                        "  1  5  1  0\n" +
+                        "  4  5  1  0\n" +
+                        "M  END"));
+        assertThat(res,
+                containsString("  5  4  0  0  0  0  0  0  0  0999 V2000\n" +
+                        "    0.0000    1.5000    0.0000 C   0  0\n" +
+                        "   -1.2990    2.2500    0.0000 C   0  0\n" +
+                        "    0.0000    0.0000    0.0000 C   0  0\n" +
+                        "    1.2990    2.2500    0.0000 Cl  0  0\n" +
+                        "   -1.2990    3.7500    0.0000 Cl  0  0\n" +
+                        "  1  2  2  0\n" +
+                        "  1  3  1  0\n" +
+                        "  1  4  1  4\n" +
+                        "  2  5  1  0\n" +
+                        "M  END"));
     }
 
     @Test
-    public void test_O13S7_writeSdfAndSmiles()
-            throws IOException, CDKException, CloneNotSupportedException {
-        Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
-        maygen.setFormula("O13S7");
-//        maygen.setWriteSDF(true);
-//        maygen.setWriteSMILES(true);
-        maygen.run();
-        assertEquals(1980, maygen.getCount());
-        maygen.setMultiThread(true);
-        maygen.run();
-        assertEquals(1980, maygen.getCount());
-    }
-
-    @Test
-    public void test_C_1_6_Cl2_H_4_8_writeSdfAndSmiles()
+    public void test_C_1_6_Cl2_H_4_8_writeSmiles()
             throws IOException, CDKException, CloneNotSupportedException {
         Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
         maygen.setFuzzyFormula("C[1-6]Cl2H[4-8]");
-//        maygen.setWriteSDF(true);
-//        maygen.setWriteSMILES(true);
+        StringWriter sw = new StringWriter();
+        maygen.setConsumer(new SmiOutputConsumer(sw));
         maygen.run();
         assertEquals(4141, maygen.getFuzzyCount());
-        maygen.setMultiThread(true);
-        maygen.run();
-        assertEquals(4141, maygen.getFuzzyCount());
-    }
-
-    @Test
-    public void test_C_1_2_H_3_8_writeSdfAndSmiles()
-            throws IOException, CDKException, CloneNotSupportedException {
-        Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
-        maygen.setFuzzyFormula("C[1-2]H[3-8]");
-//        maygen.setWriteSDF(true);
-//        maygen.setWriteSMILES(true);
-        maygen.run();
-        assertEquals(3, maygen.getFuzzyCount());
-        maygen.setMultiThread(true);
-        maygen.run();
-        assertEquals(3, maygen.getFuzzyCount());
-    }
-
-    @Test
-    public void test_C_1_2_O_H_3_8_writeSdfAndSmiles()
-            throws IOException, CDKException, CloneNotSupportedException {
-        Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
-        maygen.setFuzzyFormula("C[1-2]OH[3-8]");
-//        maygen.setWriteSDF(true);
-//        maygen.setWriteSMILES(true);
-        maygen.run();
-        assertEquals(6, maygen.getFuzzyCount());
-        maygen.setMultiThread(true);
-        maygen.run();
-        assertEquals(6, maygen.getFuzzyCount());
+        assertThat(sw.toString(),
+                allOf(containsString("C12CC(=C1C)C2(Cl)Cl\n"),
+                        containsString("C12CC3(Cl)C1(C)C23Cl\n"),
+                        containsString("C12CC(Cl)(Cl)C1=C2C\n"),
+                        containsString("C12CC(C)=C1C2(Cl)Cl\n"),
+                        containsString("C12CC3(C)C1(Cl)C23Cl\n"),
+                        containsString("C12CC(C)(Cl)C1=C2Cl\n"),
+                        containsString("C1(CC(C)(Cl)Cl)C#C1\n"),
+                        containsString("C(C)(Cl)C1(CCl)C#C1\n"),
+                        containsString("C(C)(Cl)C=1C(CCl)=C1\n"),
+                        containsString("C(C)(Cl)C(=C)C#CCl\n")));
     }
 
     @Test
