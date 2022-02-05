@@ -45,7 +45,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The main class of the MAYGEN package. The basic input is the molecular formula. For a molecular
@@ -2497,8 +2501,20 @@ public class Maygen {
         List<int[]> newDegrees = distributeHydrogens();
 
         if (multiThread) {
-            newDegrees.parallelStream()
-                      .forEach(new Generation(this)::run);
+            /* This idiom uses undocumented JDK behaviour that we can control the
+               parallelization level by calling parallelStream inside a
+               ForkJoinPool. */
+            try {
+                new ForkJoinPool(size).submit(() -> newDegrees.parallelStream()
+                                                              .forEach(new Generation(this)::run)).get();
+            } catch (InterruptedException | ExecutionException ex) {
+                if (verbose) {
+                    Logger.getLogger(Maygen.class.getName())
+                          .log(Level.SEVERE, ex, () -> "Formula " + localFormula);
+                }
+                Thread.currentThread().interrupt();
+
+            }
         } else {
             newDegrees.forEach(new Generation(this)::run);
         }
