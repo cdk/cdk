@@ -23,6 +23,7 @@ package org.openscience.cdk.structgen.maygen;
 
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
@@ -116,7 +117,7 @@ public class MaygenExpectedCountTest {
         Assert.assertEquals(expectedCount, maygen.getCount());
     }
 
-    @Test
+    @Ignore
     @Category(SlowTest.class)
     public void testExpectedCount() throws CDKException, IOException, CloneNotSupportedException {
         Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());

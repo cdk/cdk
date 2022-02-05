@@ -28,6 +28,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.io.Closeable;
@@ -48,8 +50,6 @@ import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * The main class of the MAYGEN package. The basic input is the molecular formula. For a molecular
@@ -60,6 +60,8 @@ import java.util.logging.Logger;
  * @cdk.module structgen
  */
 public class Maygen {
+
+    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(Maygen.class);
 
     public interface Consumer extends Closeable {
 
@@ -248,6 +250,7 @@ public class Maygen {
 
     public void setVerbose(boolean verbose) {
         this.verbose = verbose;
+        this.logger.setLevel(ILoggingTool.INFO);
     }
 
     /* Basic functions */
@@ -2237,13 +2240,13 @@ public class Maygen {
             }
             consumer.configure(fuzzyFormula);
             if (verbose)
-                System.out.println("MAYGEN is generating isomers of " + fuzzyFormula + "...");
+                logger.info("MAYGEN is generating isomers of ", fuzzyFormula, "...");
             long startTime = System.nanoTime();
             fuzzyCount = 0;
             List<String> formulae = getFormulaList(fuzzyFormula);
             if (formulae.size() == 0) {
                 if (verbose)
-                    System.out.println(
+                    logger.info(
                             THE_INPUT_FORMULA + fuzzyFormula + DOES_NOT_REPRESENT_ANY_MOLECULE);
             } else {
                 for (String fuzzyFormulaItem : formulae) {
@@ -2265,8 +2268,8 @@ public class Maygen {
             double seconds = endTime / 1000000000.0;
             DecimalFormat d = new DecimalFormat(".###");
             d.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.ENGLISH));
-            System.out.println("The number of structures is: " + fuzzyCount);
-            System.out.println("Time: " + d.format(seconds) + " seconds");
+            logger.info("The number of structures is: " + fuzzyCount);
+            logger.info("Time: " + d.format(seconds) + " seconds");
         }
     }
 
@@ -2278,14 +2281,14 @@ public class Maygen {
         checkFormula = checkFormula.replace(")", "");
         String[] unsupportedSymbols = validateFormula(checkFormula);
         if (unsupportedSymbols.length > 0 && verbose) {
-            System.out.println(
+            logger.info(
                     "The input formula consists user defined element types: "
                             + String.join(", ", unsupportedSymbols));
         } else {
             long startTime = System.nanoTime();
             if (Objects.isNull(fuzzyFormula)) {
                 if (verbose)
-                    System.out.println(
+                    logger.info(
                             "MAYGEN is generating isomers of " + normalizedLocalFormula + "...");
                 consumer.configure(normalizedLocalFormula);
             }
@@ -2312,7 +2315,7 @@ public class Maygen {
             }
         } else {
             if (verbose)
-                System.out.println(
+                logger.info(
                         THE_INPUT_FORMULA
                                 + normalizedLocalFormula
                                 + DOES_NOT_REPRESENT_ANY_MOLECULE);
@@ -2336,7 +2339,7 @@ public class Maygen {
                 displayStatistic(startTime, normalizedLocalFormula);
             } else {
                 if (Objects.isNull(fuzzyFormula) && verbose)
-                    System.out.println(
+                    logger.info(
                             THE_INPUT_FORMULA
                                     + normalizedLocalFormula
                                     + DOES_NOT_REPRESENT_ANY_MOLECULE);
@@ -2351,8 +2354,8 @@ public class Maygen {
         d.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.ENGLISH));
 
         if (Objects.isNull(fuzzyFormula) && verbose) {
-            System.out.println("The number of structures is: " + count);
-            System.out.println("Time: " + d.format(seconds) + " seconds");
+            logger.info("The number of structures is: " + count);
+            logger.info("Time: " + d.format(seconds) + " seconds");
         }
 
         if (tsvoutput) {
@@ -2508,12 +2511,9 @@ public class Maygen {
                 new ForkJoinPool(size).submit(() -> newDegrees.parallelStream()
                                                               .forEach(new Generation(this)::run)).get();
             } catch (InterruptedException | ExecutionException ex) {
-                if (verbose) {
-                    Logger.getLogger(Maygen.class.getName())
-                          .log(Level.SEVERE, ex, () -> "Formula " + localFormula);
-                }
                 Thread.currentThread().interrupt();
-
+                if (verbose)
+                    logger.error("Failed during parallel generation: " + localFormula, ex);
             }
         } else {
             newDegrees.forEach(new Generation(this)::run);
@@ -3588,7 +3588,7 @@ public class Maygen {
         }
         if (unsupportedSymbols != null && unsupportedSymbols.length > 0) {
             if (verbose)
-                System.out.println(
+                logger.info(
                         "The input fuzzyFormula consists user defined element types: "
                                 + String.join(", ", unsupportedSymbols));
         } else {

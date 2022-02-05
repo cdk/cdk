@@ -30,12 +30,12 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class MaygenCLI {
 
@@ -79,7 +79,9 @@ public class MaygenCLI {
                     maygen.setConsumer(sdfout);
                 }
 
-                if (cmd.hasOption("verbose")) maygen.setVerbose(true);
+                if (cmd.hasOption("verbose")) {
+                    maygen.setVerbose(true);
+                }
                 if (cmd.hasOption("boundaryConditions")) maygen.setBoundary(true);
                 if (cmd.hasOption("settingElements")) maygen.setSetElement(true);
                 if (cmd.hasOption("tsvoutput")) maygen.setTsvoutput(true);
@@ -213,11 +215,9 @@ public class MaygenCLI {
                 cli.run();
             }
         } catch (Exception ex) {
-            if (cli.maygen.getVerbose()) {
-                String localFormula = Objects.nonNull(cli.maygen.getFormula()) ? cli.maygen.getFormula() : cli.maygen.getFuzzyFormula();
-                Logger.getLogger(Maygen.class.getName())
-                        .log(Level.SEVERE, ex, () -> "Formula " + localFormula);
-            }
+            String localFormula = Objects.nonNull(cli.maygen.getFormula()) ? cli.maygen.getFormula() : cli.maygen.getFuzzyFormula();
+            System.err.println("ERROR: could not parse options for " +
+                    localFormula + ": " + ex.getMessage());
         }
     }
 }
