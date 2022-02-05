@@ -69,16 +69,6 @@ public class MaygenTest {
     @Test
     public void test_gettersAndSetters() {
         Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
-        maygen.setWriteSDF(true);
-        assertTrue(maygen.isWriteSDF());
-        maygen.setWriteSMILES(true);
-        assertTrue(maygen.isWriteSMILES());
-        maygen.setPrintSDF(true);
-        assertTrue(maygen.isPrintSDF());
-        maygen.setPrintSMILES(true);
-        assertTrue(maygen.isPrintSMILES());
-        maygen.setCoordinates(true);
-        assertTrue(maygen.isCoordinates());
         maygen.setTsvoutput(true);
         assertTrue(maygen.isTsvoutput());
         maygen.isMultiThread();
@@ -90,8 +80,6 @@ public class MaygenTest {
         maygen.getOxygenSulfur();
         maygen.getTotalHydrogen();
         maygen.isOnSm();
-        maygen.setFiledir(".");
-        maygen.getFiledir();
         maygen.setVerbose(true);
         maygen.getVerbose();
         maygen.isSetElement();
@@ -102,8 +90,8 @@ public class MaygenTest {
             throws IOException, CDKException, CloneNotSupportedException {
         Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
         maygen.setFormula("C3Cl2H4");
-        maygen.setWriteSDF(true);
-        maygen.setWriteSMILES(true);
+//        maygen.setWriteSDF(true);
+//        maygen.setWriteSMILES(true);
         maygen.run();
         assertEquals(7, maygen.getCount());
         maygen.setMultiThread(true);
@@ -116,8 +104,8 @@ public class MaygenTest {
             throws IOException, CDKException, CloneNotSupportedException {
         Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
         maygen.setFormula("C3Cl2H4");
-        maygen.setWriteSDF(true);
-        maygen.setCoordinates(true);
+//        maygen.setWriteSDF(true);
+//        maygen.setCoordinates(true);
         maygen.run();
         assertEquals(7, maygen.getCount());
         maygen.setMultiThread(true);
@@ -130,8 +118,8 @@ public class MaygenTest {
             throws IOException, CDKException, CloneNotSupportedException {
         Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
         maygen.setFormula("O13S7");
-        maygen.setWriteSDF(true);
-        maygen.setWriteSMILES(true);
+//        maygen.setWriteSDF(true);
+//        maygen.setWriteSMILES(true);
         maygen.run();
         assertEquals(1980, maygen.getCount());
         maygen.setMultiThread(true);
@@ -144,8 +132,8 @@ public class MaygenTest {
             throws IOException, CDKException, CloneNotSupportedException {
         Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
         maygen.setFuzzyFormula("C[1-6]Cl2H[4-8]");
-        maygen.setWriteSDF(true);
-        maygen.setWriteSMILES(true);
+//        maygen.setWriteSDF(true);
+//        maygen.setWriteSMILES(true);
         maygen.run();
         assertEquals(4141, maygen.getFuzzyCount());
         maygen.setMultiThread(true);
@@ -158,8 +146,8 @@ public class MaygenTest {
             throws IOException, CDKException, CloneNotSupportedException {
         Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
         maygen.setFuzzyFormula("C[1-2]H[3-8]");
-        maygen.setWriteSDF(true);
-        maygen.setWriteSMILES(true);
+//        maygen.setWriteSDF(true);
+//        maygen.setWriteSMILES(true);
         maygen.run();
         assertEquals(3, maygen.getFuzzyCount());
         maygen.setMultiThread(true);
@@ -172,8 +160,8 @@ public class MaygenTest {
             throws IOException, CDKException, CloneNotSupportedException {
         Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
         maygen.setFuzzyFormula("C[1-2]OH[3-8]");
-        maygen.setWriteSDF(true);
-        maygen.setWriteSMILES(true);
+//        maygen.setWriteSDF(true);
+//        maygen.setWriteSMILES(true);
         maygen.run();
         assertEquals(6, maygen.getFuzzyCount());
         maygen.setMultiThread(true);
