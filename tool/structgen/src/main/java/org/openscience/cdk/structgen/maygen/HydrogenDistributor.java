@@ -18,9 +18,10 @@
 
 package org.openscience.cdk.structgen.maygen;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
+import java.util.Deque;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -149,10 +150,10 @@ class HydrogenDistributor {
     /**
      * Combining list of int arrays.
      *
-     * @param lists LinkedList<List<int[]>> lists
+     * @param lists Deque<List<int[]>> lists
      * @return List<int[]>
      */
-    public List<int[]> combineArrays(LinkedList<List<int[]>> lists) {
+    public List<int[]> combineArrays(Deque<List<int[]>> lists) {
         List<int[]> comb = new ArrayList<>(lists.removeFirst());
         while (!lists.isEmpty()) {
             List<int[]> list = lists.removeFirst();
@@ -190,7 +191,7 @@ class HydrogenDistributor {
         } else {
             List<int[]> distributions = new ArrayList<>();
             for (int[] dene : partition(totalHydrogen, isotopes, 0)) {
-                LinkedList<List<int[]>> lists = new LinkedList<>();
+                Deque<List<int[]>> lists = new ArrayDeque<>();
                 for (int i = 0; i < dene.length; i++) {
                     hydrogens2distribute = dene[i];
                     List<int[]> iarrays = new ArrayList<>();
