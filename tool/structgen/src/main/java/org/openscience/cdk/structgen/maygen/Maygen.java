@@ -471,12 +471,11 @@ public class Maygen {
 
     public void checkOxygenSulfur(String[] atoms) {
         String[] info;
-        String symbol;
         for (String atom : atoms) {
             info = atom.split("\\("); // to get the higher valence value
+            final String symbol;
             if (info.length != 1) {
-                symbol = info[0];
-                symbol += info[1].split("\\)")[0]; // to get the valence and frequency from x)y
+                symbol = info[0] + info[1].split("\\)")[0]; // to get the valence and frequency from x)y
             } else {
                 symbol = info[0].split(NUMBERS_FROM_0_TO_9)[0];
             }
@@ -2261,7 +2260,7 @@ public class Maygen {
             long startTime = System.nanoTime();
             fuzzyCount = 0;
             List<String> formulae = getFormulaList(fuzzyFormula);
-            if (formulae.size() == 0) {
+            if (formulae.isEmpty()) {
                 if (verbose)
                     logger.info(
                             THE_INPUT_FORMULA + fuzzyFormula + DOES_NOT_REPRESENT_ANY_MOLECULE);
@@ -2279,7 +2278,7 @@ public class Maygen {
         consumer.close();
     }
 
-    public void closeFilesAndDisplayStatistic(long startTime) throws IOException {
+    public void closeFilesAndDisplayStatistic(long startTime) {
         if (verbose) {
             long endTime = System.nanoTime() - startTime;
             double seconds = endTime / 1000000000.0;
@@ -2364,7 +2363,7 @@ public class Maygen {
         }
     }
 
-    public void displayStatistic(long startTime, String localFormula) throws IOException {
+    public void displayStatistic(long startTime, String localFormula) {
         long endTime = System.nanoTime() - startTime;
         double seconds = endTime / 1000000000.0;
         DecimalFormat d = new DecimalFormat(".###");
@@ -3233,7 +3232,7 @@ public class Maygen {
      */
     public List<Permutation> cycleTranspositions(int index, int[] partition) {
         List<Permutation> perms = new ArrayList<>();
-        int lValue = LValue(partition, index);
+        int lValue = lValue(partition, index);
         int[] values;
         int former;
         for (int i = 0; i < lValue; i++) {
@@ -3254,7 +3253,7 @@ public class Maygen {
      * @param degree the degree
      * @return the LValue
      */
-    public int LValue(int[] partEx, int degree) {
+    public int lValue(int[] partEx, int degree) {
         return (sum(partEx, (degree)) - (degree));
     }
 
@@ -3490,10 +3489,10 @@ public class Maygen {
         return symbolsMap;
     }
 
-    public HashMap<String, Integer[]> getFuzzyFormulaRangesWithNewElements(
+    public Map<String, Integer[]> getFuzzyFormulaRangesWithNewElements(
             String localFormula, List<String> symbolList) {
         String[] atoms = localFormula.split(LETTERS_FROM_A_TO_Z);
-        HashMap<String, Integer[]> symbolsMap = new HashMap<>();
+        Map<String, Integer[]> symbolsMap = new HashMap<>();
         String[] info;
         String[] info4;
         String symbol;
@@ -3854,7 +3853,8 @@ public class Maygen {
      */
     public void getHigherValences(String localFormula) {
         String[] atoms = localFormula.split(LETTERS_FROM_A_TO_Z);
-        String[] info, info2;
+        String[] info;
+        String[] info2;
         String valence;
         String symbol;
         for (String atom : atoms) {
