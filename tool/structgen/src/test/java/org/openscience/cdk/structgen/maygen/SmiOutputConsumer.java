@@ -8,6 +8,7 @@ package org.openscience.cdk.structgen.maygen;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.io.SDFWriter;
 import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
 
@@ -17,6 +18,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 
 final class SmiOutputConsumer implements Maygen.Consumer {
@@ -32,6 +34,11 @@ final class SmiOutputConsumer implements Maygen.Consumer {
                     StandardCharsets.UTF_8));
         else
             dir.mkdirs();
+    }
+
+    public SmiOutputConsumer(Writer writer) {
+        this.dir = null;
+        wtr = new BufferedWriter(writer);
     }
 
     @Override

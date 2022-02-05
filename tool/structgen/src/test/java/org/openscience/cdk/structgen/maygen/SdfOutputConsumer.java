@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Writer;
 
 final class SdfOutputConsumer implements Maygen.Consumer {
 
@@ -29,6 +30,12 @@ final class SdfOutputConsumer implements Maygen.Consumer {
             sdfw = new SDFWriter(System.out);
         else
             dir.mkdirs();
+        setupOptions();
+    }
+
+    public SdfOutputConsumer(Writer writer) {
+        this.dir = null;
+        sdfw = new SDFWriter(writer);
         setupOptions();
     }
 
