@@ -31,6 +31,7 @@ import org.apache.commons.cli.ParseException;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -45,62 +46,50 @@ public class MaygenCLI {
 
     private Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
 
+    private final File getFileDir(CommandLine cmd) {
+        if (cmd.hasOption(OUTPUT_FILE)) {
+            String localFiledir = cmd.getOptionValue(OUTPUT_FILE);
+            return localFiledir != null ? new File(localFiledir) : null;
+        }
+        return null;
+    }
+
     public boolean parseArgs(String[] args) throws ParseException {
         Options options = setupOptions();
         CommandLineParser parser = new DefaultParser();
         boolean helpIsPresent = false;
         try {
             CommandLine cmd = parser.parse(options, args);
-            maygen.formula = cmd.getOptionValue(FORMULA_TEXT);
+            maygen.setFormula(cmd.getOptionValue(FORMULA_TEXT));
             if (!cmd.hasOption(FORMULA_TEXT)) {
-                maygen.fuzzyFormula = cmd.getOptionValue("fuzzyFormula");
+                maygen.setFuzzyFormula(cmd.getOptionValue("fuzzyFormula"));
             }
             if (cmd.hasOption("help")
-                    || (Objects.isNull(maygen.formula) && Objects.isNull(maygen.fuzzyFormula))) {
+                    || (Objects.isNull(maygen.getFormula()) && Objects.isNull(maygen.getFuzzyFormula()))) {
                 displayHelpMessage(options);
                 helpIsPresent = true;
             } else {
-                if (cmd.hasOption(OUTPUT_FILE)) {
-                    checkSmiAndSdf(cmd);
-                } else {
-                    if (cmd.hasOption("smi") && !cmd.hasOption("sdf")) {
-                        maygen.printSMILES = true;
-                    }
-                    if (cmd.hasOption("sdf")) {
-                        maygen.printSDF = true;
-                    } else if (cmd.hasOption(SDF_COORD)) {
-                        maygen.printSDF = true;
-                        maygen.coordinates = true;
-                    }
+                if (cmd.hasOption("smi") && !cmd.hasOption("sdf")) {
+                    maygen.setConsumer(new SmiOutputConsumer(getFileDir(cmd)));
                 }
-                if (cmd.hasOption("verbose")) maygen.verbose = true;
-                if (cmd.hasOption("boundaryConditions")) maygen.boundary = true;
-                if (cmd.hasOption("settingElements")) maygen.setElement = true;
-                if (cmd.hasOption("tsvoutput")) maygen.tsvoutput = true;
-                if (cmd.hasOption("multithread")) maygen.multiThread = true;
+                if (cmd.hasOption("sdf") || cmd.hasOption(SDF_COORD)) {
+                    SdfOutputConsumer sdfout = new SdfOutputConsumer(getFileDir(cmd));
+                    if (cmd.hasOption(SDF_COORD))
+                        sdfout.setCoordinates(true);
+                    maygen.setConsumer(sdfout);
+                }
+
+                if (cmd.hasOption("verbose")) maygen.setVerbose(true);
+                if (cmd.hasOption("boundaryConditions")) maygen.setBoundary(true);
+                if (cmd.hasOption("settingElements")) maygen.setSetElement(true);
+                if (cmd.hasOption("tsvoutput")) maygen.setTsvoutput(true);
+                if (cmd.hasOption("multithread")) maygen.setMultiThread(true);
             }
         } catch (ParseException e) {
             displayHelpMessage(options);
             throw new ParseException("Problem parsing command line");
         }
         return helpIsPresent;
-    }
-
-    public void checkSmiAndSdf(CommandLine cmd) {
-        String localFiledir = cmd.getOptionValue(OUTPUT_FILE);
-        maygen.filedir = Objects.isNull(localFiledir) ? "." : localFiledir;
-        if (cmd.hasOption("smi")) {
-            maygen.writeSMILES = true;
-        }
-        if (cmd.hasOption("sdf")) {
-            maygen.writeSDF = true;
-        } else if (cmd.hasOption(SDF_COORD)) {
-            maygen.writeSDF = true;
-            maygen.coordinates = true;
-        }
-        if (!cmd.hasOption("smi") && !cmd.hasOption("sdf")) {
-            maygen.writeSDF = true;
-        }
     }
 
     public void displayHelpMessage(Options options) {
@@ -224,8 +213,8 @@ public class MaygenCLI {
                 cli.run();
             }
         } catch (Exception ex) {
-            if (cli.maygen.verbose) {
-                String localFormula = Objects.nonNull(cli.maygen.formula) ? cli.maygen.formula : cli.maygen.fuzzyFormula;
+            if (cli.maygen.getVerbose()) {
+                String localFormula = Objects.nonNull(cli.maygen.getFormula()) ? cli.maygen.getFormula() : cli.maygen.getFuzzyFormula();
                 Logger.getLogger(Maygen.class.getName())
                         .log(Level.SEVERE, ex, () -> "Formula " + localFormula);
             }

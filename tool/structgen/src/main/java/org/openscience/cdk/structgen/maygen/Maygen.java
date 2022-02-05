@@ -21,11 +21,19 @@
 
 package org.openscience.cdk.structgen.maygen;
 
-import java.io.File;
-import java.io.FileWriter;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.group.Permutation;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.smiles.SmiFlavor;
+import org.openscience.cdk.smiles.SmilesGenerator;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.io.Closeable;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.Writer;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
@@ -41,19 +49,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.group.Permutation;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.io.SDFWriter;
-import org.openscience.cdk.layout.StructureDiagramGenerator;
-import org.openscience.cdk.smiles.SmiFlavor;
-import org.openscience.cdk.smiles.SmilesGenerator;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
 /**
  * The main class of the MAYGEN package. The basic input is the molecular formula. For a molecular
  * formula, MAYGEN first distributes hydrogens, then for each distribution starting the generation
@@ -63,6 +58,25 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.module structgen
  */
 public class Maygen {
+
+    public interface Consumer extends Closeable {
+
+        void consume(IAtomContainer mol);
+
+        default void configure(String name) {
+
+        }
+
+        @Override
+        default void close() throws IOException {
+
+        }
+    }
+
+    public static final Consumer NOOP_CONSUMER = mol -> {
+
+    };
+
     private static final String NUMBERS_FROM_0_TO_9 = "(?=[0-9])";
     private static final String LETTERS_FROM_A_TO_Z = "(?=[A-Z])";
 
@@ -72,22 +86,15 @@ public class Maygen {
     private final Map<String, Integer> valences;
     private int size = 0;
     private int total = 0;
-    private SDFWriter sdfOut;
-    private Writer smilesOut;
 
-    boolean tsvoutput = false;
-    boolean setElement = false;
-    boolean boundary = false;
-    boolean writeSDF = false;
-    boolean coordinates = false;
-    boolean writeSMILES = false;
-    boolean printSDF = false;
-    boolean printSMILES = false;
-    boolean multiThread = false;
-    boolean verbose = false;
-    String formula;
-    String fuzzyFormula;
-    String filedir = ".";
+    private Consumer consumer = NOOP_CONSUMER;
+    private boolean tsvoutput = false;
+    private boolean setElement = false;
+    private boolean boundary = false;
+    private boolean multiThread = false;
+    private boolean verbose = false;
+    private String formula;
+    private String fuzzyFormula;
 
     private int hIndex = 0;
     private final AtomicInteger count = new AtomicInteger();
@@ -139,20 +146,20 @@ public class Maygen {
         return size;
     }
 
-    public boolean isWriteSDF() {
-        return writeSDF;
-    }
-
-    public void setWriteSDF(boolean writeSDF) {
-        this.writeSDF = writeSDF;
-    }
-
     public boolean isBoundary() {
         return boundary;
     }
 
     public void setBoundary(boolean boundary) {
         this.boundary = boundary;
+    }
+
+    public void setConsumer(Consumer consumer) {
+        this.consumer = consumer;
+    }
+
+    public Consumer getConsumer() {
+        return consumer;
     }
 
     public boolean isSetElement() {
@@ -163,14 +170,6 @@ public class Maygen {
         this.setElement = setElement;
     }
 
-    public boolean isCoordinates() {
-        return coordinates;
-    }
-
-    public void setCoordinates(boolean coord) {
-        this.coordinates = coord;
-    }
-
     public boolean isTsvoutput() {
         return tsvoutput;
     }
@@ -178,31 +177,6 @@ public class Maygen {
     public void setTsvoutput(boolean tsvoutput) {
         this.tsvoutput = tsvoutput;
     }
-
-    public boolean isWriteSMILES() {
-        return writeSMILES;
-    }
-
-    public void setWriteSMILES(boolean writeSMILES) {
-        this.writeSMILES = writeSMILES;
-    }
-
-    public boolean isPrintSDF() {
-        return printSDF;
-    }
-
-    public void setPrintSDF(boolean printSDF) {
-        this.printSDF = printSDF;
-    }
-
-    public boolean isPrintSMILES() {
-        return printSMILES;
-    }
-
-    public void setPrintSMILES(boolean printSMILES) {
-        this.printSMILES = printSMILES;
-    }
-
     public String[] getSymbolArray() {
         return symbolArray;
     }
@@ -265,14 +239,6 @@ public class Maygen {
 
     public boolean isOnSm() {
         return onSm;
-    }
-
-    public String getFiledir() {
-        return filedir;
-    }
-
-    public void setFiledir(String filedir) {
-        this.filedir = filedir;
     }
 
     public boolean getVerbose() {
@@ -2268,8 +2234,7 @@ public class Maygen {
             if (!setElement) {
                 fuzzyFormula = normalizeFormula(fuzzyFormula);
             }
-            configureSdf(fuzzyFormula);
-            configureSmiles(fuzzyFormula);
+            consumer.configure(fuzzyFormula);
             if (verbose)
                 System.out.println("MAYGEN is generating isomers of " + fuzzyFormula + "...");
             long startTime = System.nanoTime();
@@ -2290,27 +2255,15 @@ public class Maygen {
         } else {
             doRun(formula);
         }
+        consumer.close();
     }
 
     public void closeFilesAndDisplayStatistic(long startTime) throws IOException {
-        if (writeSDF) {
-            sdfOut.close();
-        }
-        if (printSDF) {
-            sdfOut.flush();
-        }
-        if (writeSMILES) {
-            smilesOut.close();
-        }
-        if (printSMILES) {
-            ((PrintWriter) smilesOut).flush();
-        }
         if (verbose) {
             long endTime = System.nanoTime() - startTime;
             double seconds = endTime / 1000000000.0;
             DecimalFormat d = new DecimalFormat(".###");
             d.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.ENGLISH));
-            if (printSMILES || printSDF) System.out.println();
             System.out.println("The number of structures is: " + fuzzyCount);
             System.out.println("Time: " + d.format(seconds) + " seconds");
         }
@@ -2333,8 +2286,7 @@ public class Maygen {
                 if (verbose)
                     System.out.println(
                             "MAYGEN is generating isomers of " + normalizedLocalFormula + "...");
-                configureSdf(normalizedLocalFormula);
-                configureSmiles(normalizedLocalFormula);
+                consumer.configure(normalizedLocalFormula);
             }
             processRun(normalizedLocalFormula, startTime);
         }
@@ -2391,39 +2343,13 @@ public class Maygen {
         }
     }
 
-    public void configureSmiles(String normalizedLocalFormula) throws IOException {
-        if (writeSMILES || printSMILES) {
-            if (writeSMILES) {
-                new File(filedir).mkdirs();
-                smilesOut = new FileWriter(filedir + "/" + normalizedLocalFormula + ".smi");
-            } else {
-                smilesOut = new PrintWriter(System.out);
-            }
-        }
-    }
-
-    public void configureSdf(String normalizedLocalFormula) throws IOException {
-        if (writeSDF || printSDF) {
-            if (writeSDF) {
-                new File(filedir).mkdirs();
-                sdfOut =
-                        new SDFWriter(
-                                new FileWriter(filedir + "/" + normalizedLocalFormula + ".sdf"));
-            } else {
-                sdfOut = new SDFWriter(new PrintWriter(System.out));
-            }
-        }
-    }
-
     public void displayStatistic(long startTime, String localFormula) throws IOException {
-        checkAndCloseFiles();
         long endTime = System.nanoTime() - startTime;
         double seconds = endTime / 1000000000.0;
         DecimalFormat d = new DecimalFormat(".###");
         d.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.ENGLISH));
 
         if (Objects.isNull(fuzzyFormula) && verbose) {
-            if (printSMILES || printSDF) System.out.println();
             System.out.println("The number of structures is: " + count);
             System.out.println("Time: " + d.format(seconds) + " seconds");
         }
@@ -2437,23 +2363,6 @@ public class Maygen {
                             + d.format(seconds)
                             + "\t"
                             + (multiThread ? size : 1));
-        }
-    }
-
-    public void checkAndCloseFiles() throws IOException {
-        if (Objects.isNull(fuzzyFormula)) {
-            if (writeSDF) {
-                sdfOut.close();
-            }
-            if (printSDF) {
-                sdfOut.flush();
-            }
-            if (writeSMILES) {
-                smilesOut.close();
-            }
-            if (printSMILES) {
-                ((PrintWriter) smilesOut).flush();
-            }
         }
     }
 
@@ -3692,14 +3601,7 @@ public class Maygen {
      * @throws IOException an IO exception occurred
      */
     public void emit(IAtomContainer mol) throws CDKException, IOException {
-        if (writeSDF || printSDF) {
-            if (coordinates)
-                new StructureDiagramGenerator().generateCoordinates(mol);
-            sdfOut.write(mol);
-        } else if (writeSMILES || printSMILES) {
-            String smilesString = smilesGenerator.create(mol);
-            smilesOut.write(smilesString + "\n");
-        }
+        consumer.consume(mol);
     }
 
     /** Setting the initial atom container of a molecular formula with a single heavy atom */
@@ -3912,14 +3814,7 @@ public class Maygen {
             symbol = "O";
         }
         initAC(symbol);
-        if (writeSDF || printSDF) {
-            IAtomContainer ac = buildContainer4SDF(mat);
-            if (coordinates) new StructureDiagramGenerator().generateCoordinates(ac);
-            sdfOut.write(ac);
-        }
-        if (writeSMILES || printSMILES) {
-            smilesOut.write("Formula is not supported" + "\n");
-        }
+        emit(buildContainer4SDF(mat));
     }
 
     /**

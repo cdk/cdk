@@ -21,13 +21,14 @@
 
 package org.openscience.cdk.structgen.maygen;
 
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.group.Permutation;
+import org.openscience.cdk.interfaces.IAtomContainer;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.group.Permutation;
-import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  * The generation process in maygen class is given here. Due to the parallelization, the generation
@@ -64,10 +65,7 @@ class Generation {
         int[] newPartition = maygen.getPartition(degree);
         final int[] initialPartition;
         String[] symbolArrayCopy = maygen.getSymbolArray();
-        if (maygen.isWriteSDF()
-                || maygen.isPrintSDF()
-                || maygen.isWriteSMILES()
-                || maygen.isPrintSMILES()) {
+        if (maygen.getConsumer() != Maygen.NOOP_CONSUMER) {
             symbolArrayCopy =
                     Arrays.copyOf(maygen.getSymbolArray(), maygen.getSymbolArray().length);
             initialPartition =
