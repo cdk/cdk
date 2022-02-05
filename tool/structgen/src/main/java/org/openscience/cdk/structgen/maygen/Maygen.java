@@ -28,8 +28,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.smiles.SmiFlavor;
-import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.io.Closeable;
@@ -120,7 +118,6 @@ public class Maygen {
     private int sulfur = 0;
     private String[] symbolArray;
     private final IChemObjectBuilder builder;
-    private final SmilesGenerator smilesGenerator = new SmilesGenerator(SmiFlavor.Unique);
     private IAtomContainer atomContainer;
 
     public Maygen(IChemObjectBuilder builder) {
