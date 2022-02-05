@@ -49,9 +49,29 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * The main class of the MAYGEN package. The basic input is the molecular formula. For a molecular
- * formula, MAYGEN first distributes hydrogens, then for each distribution starting the generation
- * process. The algorithm can be run in sequential or parallel mode.
+ * The main class of the MAYGEN package. The basic input is the molecular
+ * formula. For a molecular  * formula, MAYGEN first distributes hydrogens,
+ * then for each distribution starting the generation process. The algorithm
+ * can be run in sequential or parallel mode.
+ *
+ * To collect the structures you provide a {@link Maygen.Consumer} instance,
+ * here is basic usage:
+ * <pre>{@code
+ * IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+ * SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Default);
+ *
+ * Maygen maygen = new Maygen(builder);
+ * maygen.setFormula("C3Cl2H4");
+ * maygen.setConsumer(mol -> {
+ *             try {
+ *                 System.out.println(smigen.create(mol));
+ *             } catch (CDKException ignore) { }
+ *         });
+ * maygen.run();
+ * int count = maygen.getCount(); // number of structures generated
+ * }</pre>
+ *
+ *
  *
  * @author MehmetAzizYirik <mehmetazizyirik@outlook.com> <0000-0001-7520-7215@orcid.org>
  * @cdk.module structgen
