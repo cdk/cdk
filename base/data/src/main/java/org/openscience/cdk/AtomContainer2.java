@@ -416,6 +416,18 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
                 this.stereo.set(i, se.map(amap, bmap));
             }
         }
+
+        // update Sgroups
+        List<Sgroup> sgroups = getProperty(CDKConstants.CTAB_SGROUPS);
+        if (sgroups != null) {
+            for (Sgroup sgroup : sgroups) {
+                if (sgroup.getAtoms().contains(org)) {
+                    sgroup.removeAtom(org);
+                    sgroup.addAtom(rep);
+                }
+            }
+        }
+
         org.removeListener(this);
         rep.addListener(this);
         notifyChanged();
