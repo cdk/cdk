@@ -24,15 +24,23 @@
 
 package org.openscience.cdk.renderer.generators.standard;
 
+import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.layout.StructureDiagramGenerator;
+import org.openscience.cdk.renderer.RendererModel;
+import org.openscience.cdk.renderer.elements.ElementGroup;
+import org.openscience.cdk.renderer.elements.IRenderingElement;
+import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
 import javax.vecmath.Point2d;
+import java.awt.*;
 import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -209,6 +217,37 @@ public class StandardBondGeneratorTest {
 
         assertThat(new RingBondOffsetComparator().compare(furane, thiophene), is(-1));
         assertThat(new RingBondOffsetComparator().compare(thiophene, furane), is(+1));
+    }
+
+    @Test
+    public void ensureAnnotationsAreGenerator() throws CDKException {
+        IAtomContainer furane = TestMoleculeFactory.makePyrrole();
+        for (IBond bond : furane.bonds()) {
+            bond.setProperty(StandardGenerator.ANNOTATION_LABEL,
+                             1+bond.getIndex());
+        }
+        new StructureDiagramGenerator().generateCoordinates(furane);
+        ElementGroup annotations = new ElementGroup();
+        Font font = new Font("Arial", Font.PLAIN, 16);
+        RendererModel model = new RendererModel();
+        model.registerParameters(new BasicSceneGenerator());
+        model.registerParameters(new StandardGenerator(font));
+        int count = 0;
+        for (IRenderingElement child : annotations)
+            ++count;
+        Assert.assertEquals(0, count);
+        StandardBondGenerator.generateBonds(
+                furane,
+                new AtomSymbol[furane.getAtomCount()],
+                model,
+                1,
+                font,
+                annotations,
+                new StandardDonutGenerator(furane, font, model, 1));
+        count = 0;
+        for (IRenderingElement child : annotations)
+            ++count;
+        Assert.assertEquals(5, count);
     }
 
 }
