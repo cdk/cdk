@@ -27,8 +27,6 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.tools.ILoggingTool;
-import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -70,10 +68,17 @@ public class MaygenCLI {
                     maygen.setConsumer(new SmiOutputConsumer(getFileDir(cmd)));
                 }
                 if (cmd.hasOption("sdf") || cmd.hasOption(SDF_COORD)) {
-                    SdfOutputConsumer sdfout = new SdfOutputConsumer(getFileDir(cmd));
-                    if (cmd.hasOption(SDF_COORD))
-                        sdfout.setCoordinates(true);
-                    maygen.setConsumer(sdfout);
+                    if (cmd.hasOption("smi")) {
+                        SdfAndSmiOutputConsumer sdfAndSmiOut = new SdfAndSmiOutputConsumer(getFileDir(cmd));
+                        if (cmd.hasOption(SDF_COORD))
+                            sdfAndSmiOut.setCoordinates(true);
+                        maygen.setConsumer(sdfAndSmiOut);
+                    } else{
+                        SdfOutputConsumer sdfout = new SdfOutputConsumer(getFileDir(cmd));
+                        if (cmd.hasOption(SDF_COORD))
+                            sdfout.setCoordinates(true);
+                        maygen.setConsumer(sdfout);
+                    }
                 }
 
                 if (cmd.hasOption("verbose")) {
