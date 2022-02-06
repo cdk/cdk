@@ -30,12 +30,10 @@ import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.sgroup.Sgroup;
-import org.openscience.cdk.sgroup.SgroupKey;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -154,8 +152,8 @@ public class ConnectivityChecker {
     private static void addSgroup(IAtomContainer component, Sgroup sgroup) {
         List<Sgroup> sgroups = component.getProperty(CDKConstants.CTAB_SGROUPS);
         if (sgroups == null) {
-            component.setProperty(CDKConstants.CTAB_SGROUPS,
-                    sgroups = new ArrayList<>());
+            sgroups = new ArrayList<>();
+            component.setProperty(CDKConstants.CTAB_SGROUPS, sgroups);
         }
         sgroups.add(sgroup);
     }
