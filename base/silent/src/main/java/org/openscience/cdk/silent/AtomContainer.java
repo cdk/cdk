@@ -293,6 +293,17 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
             stereoElements.removeAll(oldStereo);
             stereoElements.addAll(newStereo);
         }
+
+        // update Sgroups
+        List<Sgroup> sgroups = getProperty(CDKConstants.CTAB_SGROUPS);
+        if (sgroups != null) {
+            for (Sgroup sgroup : sgroups) {
+                if (sgroup.getAtoms().contains(oldAtom)) {
+                    sgroup.removeAtom(oldAtom);
+                    sgroup.addAtom(atom);
+                }
+            }
+        }
     }
 
     /**
