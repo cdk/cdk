@@ -281,6 +281,11 @@ final class StandardBondGenerator {
      * @return bond rendering element
      */
     private IRenderingElement generateSingleBond(IBond bond, IAtom from, IAtom to) {
+
+        // add annotation label
+        String label = StandardGenerator.getAnnotationLabel(bond);
+        if (label != null) addAnnotation(from, to, label);
+
         IBond.Display display = bond.getDisplay();
         if (display == null || display == IBond.Display.Solid)
             return generatePlainSingleBond(from, to);
@@ -290,10 +295,6 @@ final class StandardBondGenerator {
 
         fromBonds.remove(bond);
         toBonds.remove(bond);
-
-        // add annotation label
-        String label = StandardGenerator.getAnnotationLabel(bond);
-        if (label != null) addAnnotation(from, to, label);
 
         switch (display) {
             case WedgedHashBegin:
