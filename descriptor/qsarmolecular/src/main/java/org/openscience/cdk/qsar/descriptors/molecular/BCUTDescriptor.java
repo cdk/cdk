@@ -264,9 +264,11 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
             /* set the off diagonal entries */
             for (int i = 0; i < natom - 1; i++) {
                 for (int j = i + 1; j < natom; j++) {
+                    boolean found = false;
                     for (int k = 0; k < local.getBondCount(); k++) {
                         IBond bond = local.getBond(k);
                         if (bond.contains(local.getAtom(i)) && bond.contains(local.getAtom(j))) {
+                            found = true;
                             if (bond.getFlag(CDKConstants.ISAROMATIC))
                                 matrix[i][j] = 0.15;
                             else if (bond.getOrder() == Order.SINGLE)
@@ -279,10 +281,12 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
                                 matrix[i][j] += 0.01;
                             }
                             matrix[j][i] = matrix[i][j];
-                        } else {
-                            matrix[i][j] = 0.001;
-                            matrix[j][i] = 0.001;
+                            break;
                         }
+                    }
+                    if (!found) {
+                        matrix[i][j] = 0.001;
+                        matrix[j][i] = 0.001;
                     }
                 }
             }
