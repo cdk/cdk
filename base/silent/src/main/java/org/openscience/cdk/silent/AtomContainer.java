@@ -1066,11 +1066,29 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
                     --i;
                 }
             }
-            List<IStereoElement> atomElements = new ArrayList<IStereoElement>(3);
-            for (IStereoElement element : stereoElements) {
-                if (element.contains(atom)) atomElements.add(element);
+
+            // consider any stereochemistry involving this atom is now invalid
+            List<IStereoElement<?,?>> stereoToRemove = new ArrayList<>();
+            for (IStereoElement<?,?> element : stereoElements) {
+                if (element.contains(atom)) stereoToRemove.add(element);
             }
-            stereoElements.removeAll(atomElements);
+            stereoElements.removeAll(stereoToRemove);
+
+            // consider any sgroups involving this atom is now invalid
+            List<Sgroup> sgroups = getProperty(CDKConstants.CTAB_SGROUPS);
+            if (sgroups != null) {
+                List<Sgroup> sgrpToRemove = new ArrayList<>();
+                for (Sgroup sgroup : sgroups) {
+                    if (sgroup.getAtoms().contains(atom))
+                        sgrpToRemove.add(sgroup);
+                }
+                if (!sgrpToRemove.isEmpty()) {
+                    sgroups = new ArrayList<>(sgroups); // ensure mutable
+                    sgroups.removeAll(sgrpToRemove);
+                    setProperty(CDKConstants.CTAB_SGROUPS, sgroups);
+                }
+            }
+
             removeAtomOnly(position);
         }
     }

@@ -1165,11 +1165,27 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
             }
             numLonePairs = newNumLonePairs;
 
-            List<IStereoElement> atomElements = new ArrayList<>();
-            for (IStereoElement element : stereo) {
-                if (element.contains(atom)) atomElements.add(element);
+            // consider any stereochemistry involving this atom is now invalid
+            List<IStereoElement<?,?>> stereoToRemove = new ArrayList<>();
+            for (IStereoElement<?,?> element : stereo) {
+                if (element.contains(atom)) stereoToRemove.add(element);
             }
-            stereo.removeAll(atomElements);
+            stereo.removeAll(stereoToRemove);
+
+            // consider any sgroups involving this atom is now invalid
+            List<Sgroup> sgroups = getProperty(CDKConstants.CTAB_SGROUPS);
+            if (sgroups != null) {
+                List<Sgroup> sgrpToRemove = new ArrayList<>();
+                for (Sgroup sgroup : sgroups) {
+                    if (sgroup.getAtoms().contains(atom))
+                        sgrpToRemove.add(sgroup);
+                }
+                if (!sgrpToRemove.isEmpty()) {
+                    sgroups = new ArrayList<>(sgroups); // ensure mutable
+                    sgroups.removeAll(sgrpToRemove);
+                    setProperty(CDKConstants.CTAB_SGROUPS, sgroups);
+                }
+            }
             
             removeAtomOnly(atomref.getIndex());
         }

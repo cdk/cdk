@@ -3293,4 +3293,35 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         mol.addBond(b2);
         assertThat(mol.getBond(a1, a1), is(nullValue()));
     }
+
+    @Test public void removeSgroupWithAtom() throws CloneNotSupportedException {
+        IAtomContainer mol = (IAtomContainer) newChemObject();
+        IAtom          a1  = mol.getBuilder().newAtom();
+        IAtom          a2  = mol.getBuilder().newAtom();
+        IAtom          a3  = mol.getBuilder().newAtom();
+        IBond          b1  = mol.getBuilder().newBond();
+        IBond          b2  = mol.getBuilder().newBond();
+        b1.setAtom(a1, 0);
+        b1.setAtom(a2, 1);
+        b2.setAtom(a2, 0);
+        b2.setAtom(a3, 1);
+        mol.addAtom(a1);
+        mol.addAtom(a2);
+        mol.addAtom(a3);
+        mol.addBond(b1);
+        mol.addBond(b2);
+        Sgroup sgroup = new Sgroup();
+        sgroup.setType(SgroupType.CtabStructureRepeatUnit);
+        sgroup.setSubscript("n");
+        sgroup.addAtom(a2);
+        sgroup.addBond(b1);
+        sgroup.addBond(b2);
+        mol.setProperty(CDKConstants.CTAB_SGROUPS,
+                        Collections.singletonList(sgroup));
+        Assert.assertEquals(1,
+                            mol.getProperty(CDKConstants.CTAB_SGROUPS, List.class).size());
+        mol.removeAtom(a2);
+        Assert.assertEquals(0,
+                mol.getProperty(CDKConstants.CTAB_SGROUPS, List.class).size());
+    }
 }
