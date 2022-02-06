@@ -33,9 +33,11 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.RingSearch;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
+import java.util.Deque;
 import java.util.List;
 
 import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
@@ -410,6 +412,153 @@ public final class Cycles {
         return or(all(), vertexShort());
     }
 
+    /**
+     * Convenience method to determine the smallest ring size of every atom in
+     * the molecule. For each atom index the smallest ring size is set in the
+     * array, if 0 the atom is acyclic. If you just need to check a single atom
+     * is more efficient to call {@link #smallRingSize(IAtom, int)}.
+     *
+     * @param mol the molecule
+     * @param rsizes the array to be filled
+     * @see #smallRingSize(IAtom, int)
+     */
+    public static void smallRingSizes(IAtomContainer mol, int[] rsizes)
+    {
+        int acount = mol.getAtomCount();
+        int marker = acount+1;
+        if (rsizes == null || acount > rsizes.length)
+            throw new IllegalArgumentException();
+        Arrays.fill(rsizes, 0, acount, marker);
+        Cycles cycles = Cycles.vertexShort(mol);
+        for (int[] path : cycles.paths()) {
+            int rsize = path.length-1;
+            for (int v : path) {
+                rsizes[v] = Math.min(rsize, rsizes[v]);
+            }
+        }
+        // replace temporary marker values with '0'
+        for (int i = 0; i < acount; i++) {
+            if (rsizes[i] == marker)
+                rsizes[i] = 0;
+        }
+    }
+
+    /**
+     * Determine the smallest ring size an atom belongs to. This method requires
+     * that {@link #markRingAtomsAndBonds(IAtomContainer)} has been called
+     * first to set the {@link IAtom#isInRing()} status of each atom/bond. If
+     * you need to check every atom in a molecule use
+     * {@link @see #smallRingSizes(IAtomContainer, int[])}.
+     *
+     * @param atom the atom
+     * @param max the max ring size
+     * @return the ring size, or 0 if the atom is not in a ring or is in a ring
+     *         larger than 'max'
+     * @see #smallRingSizes(IAtomContainer, int[])
+     */
+    public static int smallRingSize(IAtom atom, int max) {
+        if (!atom.isInRing())
+            return 0;
+        IAtomContainer mol    = atom.getContainer();
+        int[]          distTo = new int[mol.getAtomCount()];
+        Arrays.fill(distTo, 1 + distTo.length);
+        distTo[atom.getIndex()] = 0;
+        Deque<IAtom> queue = new ArrayDeque<>();
+        queue.add(atom);
+        int smallest = 1 + distTo.length;
+        while (!queue.isEmpty()) {
+            IAtom a    = queue.poll();
+            int   dist = 1 + distTo[a.getIndex()];
+            for (IBond b : a.bonds()) {
+                if (!b.isInRing())
+                    continue;
+                IAtom nbr = b.getOther(a);
+                if (dist < distTo[nbr.getIndex()]) {
+                    distTo[nbr.getIndex()] = dist;
+                    queue.add(nbr);
+                } else if (dist != 2 + distTo[nbr.getIndex()]) {
+                    int tmp = dist + distTo[nbr.getIndex()];
+                    if (tmp < smallest)
+                        smallest = tmp;
+                }
+            }
+            if (2 * dist > 1 + max)
+                break;
+        }
+        return smallest <= max ? smallest : 0;
+    }
+
+    /**
+     * Determine the smallest ring size an atom belongs to. This method requires
+     * that {@link #markRingAtomsAndBonds(IAtomContainer)} has been called
+     * first to set the {@link IAtom#isInRing()} status of each atom/bond. If
+     * you need to check every atom in a molecule use
+     * {@link @see #smallRingSizes(IAtomContainer, int[])}.
+     *
+     * @param atom the atom
+     * @return the ring size, or 0 if the atom is not in a ring
+     * @see #smallRingSizes(IAtomContainer, int[])
+     */
+    public static int smallRingSize(IAtom atom) {
+        return smallRingSize(atom, atom.getContainer().getAtomCount());
+    }
+
+    /**
+     * Determine the smallest ring size an bond belongs to. This method requires
+     * that {@link #markRingAtomsAndBonds(IAtomContainer)} has been called
+     * first to set the {@link IBond#isInRing()} status of each atom/bond.
+     *
+     * @param bond the bond
+     * @param max the max ring size
+     * @return the ring size, or 0 if the bond is not in a ring or is in a ring
+     *         larger than 'max'
+     */
+    public static int smallRingSize(IBond bond, int max) {
+        if (!bond.isInRing())
+            return 0;
+        IAtomContainer mol    = bond.getContainer();
+        int[]          distTo = new int[mol.getAtomCount()];
+        Arrays.fill(distTo, 1 + distTo.length);
+        distTo[bond.getBegin().getIndex()] = 0;
+        distTo[bond.getEnd().getIndex()] = 0;
+        Deque<IAtom> queue = new ArrayDeque<>();
+        queue.add(bond.getBegin());
+        queue.add(bond.getEnd());
+        int smallest = 1 + distTo.length;
+        while (!queue.isEmpty()) {
+            IAtom a = queue.poll();
+            int dist = 1 + distTo[a.getIndex()];
+            for (IBond b : a.bonds()) {
+                if (b == bond || !b.isInRing())
+                    continue;
+                IAtom nbr = b.getOther(a);
+                if (dist < distTo[nbr.getIndex()]) {
+                    distTo[nbr.getIndex()] = dist;
+                    queue.add(nbr);
+                } else if (dist != 2 + distTo[nbr.getIndex()]) {
+                    int tmp = 1 + dist + distTo[nbr.getIndex()];
+                    if (tmp < smallest)
+                        smallest = tmp;
+                }
+            }
+            if (2 * dist > 1 + max)
+                break;
+        }
+        return smallest <= max ? smallest : 0;
+    }
+
+    /**
+     * Determine the smallest ring size an bond belongs to. This method requires
+     * that {@link #markRingAtomsAndBonds(IAtomContainer)} has been called
+     * first to set the {@link IBond#isInRing()} status of each atom/bond.
+     *
+     * @param bond the bond
+     * @return the ring size, or 0 if the bond is not in a ring or is in a ring
+     *         larger than 'max'
+     */
+    public static int smallRingSize(IBond bond) {
+        return smallRingSize(bond, bond.getContainer().getAtomCount());
+    }
 
     /**
      * Find and mark all cyclic atoms and bonds in the provided molecule.
