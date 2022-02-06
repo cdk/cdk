@@ -32,6 +32,7 @@ import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
@@ -190,5 +191,33 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
         // make sure exception was a NPE etc.
         Assert.assertEquals("Could not calculate partial charges: Partial charge not-supported for element: 'As'.",
                 e.getMessage());
+    }
+
+    @Test
+    public void testBug735_ordering1() throws Exception {
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("C(C)(N)=O");
+        DescriptorValue val = descriptor.calculate(mol);
+        DoubleArrayResult res = (DoubleArrayResult) val.getValue();
+        Assert.assertEquals(11.8815865, res.get(0), 0.00001);
+        Assert.assertEquals(16.0059576, res.get(1), 0.00001);
+        Assert.assertEquals(-0.381844, res.get(2), 0.00001);
+        Assert.assertEquals(0.325509, res.get(3), 0.00001);
+        Assert.assertEquals(3.374638, res.get(4), 0.00001);
+        Assert.assertEquals(5.033583, res.get(5), 0.00001);
+    }
+
+    @Test
+    public void testBug735_ordering2() throws Exception {
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("CC(=O)N");
+        DescriptorValue val = descriptor.calculate(mol);
+        DoubleArrayResult res = (DoubleArrayResult) val.getValue();
+        Assert.assertEquals(11.8815865, res.get(0), 0.00001);
+        Assert.assertEquals(16.0059576, res.get(1), 0.00001);
+        Assert.assertEquals(-0.381844, res.get(2), 0.00001);
+        Assert.assertEquals(0.325509, res.get(3), 0.00001);
+        Assert.assertEquals(3.374638, res.get(4), 0.00001);
+        Assert.assertEquals(5.033583, res.get(5), 0.00001);
     }
 }
