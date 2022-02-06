@@ -52,7 +52,10 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * This class calculates G3R proton descriptors used in neural networks for H1
  * NMR shift {@cdk.cite AiresDeSousa2002}. It only applies to (explicit) hydrogen atoms,
  * requires aromaticity to be perceived (possibly done via a parameter), and
- * needs 3D coordinates for all atoms.
+ * needs 3D coordinates for all atoms. This method only calculates values for
+ * protons bonded to specific types of rings or via non-rotatable bonds.
+ * From the original manuscript: "To account for axial and equatorial positions
+ * of protons bonded to cyclohexane-like rings, g3(r) was used"
  *
  * <table border="1"><caption>Parameters for this descriptor:</caption>
  * <tr>
