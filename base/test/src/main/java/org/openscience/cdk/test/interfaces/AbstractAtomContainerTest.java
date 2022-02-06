@@ -3358,4 +3358,127 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         Assert.assertFalse(updatedSgroups.get(0).getAtoms().contains(a2));
         Assert.assertTrue(updatedSgroups.get(0).getAtoms().contains(a2new));
     }
+
+    @Test public void keepSgroups_SetAtoms() throws CloneNotSupportedException {
+        IAtomContainer mol = (IAtomContainer) newChemObject();
+        IAtom          a1  = mol.getBuilder().newAtom();
+        IAtom          a2  = mol.getBuilder().newAtom();
+        IAtom          a3  = mol.getBuilder().newAtom();
+        IBond          b1  = mol.getBuilder().newBond();
+        IBond          b2  = mol.getBuilder().newBond();
+        b1.setAtom(a1, 0);
+        b1.setAtom(a2, 1);
+        b2.setAtom(a2, 0);
+        b2.setAtom(a3, 1);
+        mol.addAtom(a1);
+        mol.addAtom(a2);
+        mol.addAtom(a3);
+        mol.addBond(b1);
+        mol.addBond(b2);
+        Sgroup sgroup = new Sgroup();
+        sgroup.setType(SgroupType.CtabStructureRepeatUnit);
+        sgroup.setSubscript("n");
+        sgroup.addAtom(a2);
+        sgroup.addBond(b1);
+        sgroup.addBond(b2);
+        mol.setProperty(CDKConstants.CTAB_SGROUPS,
+                Collections.singletonList(sgroup));
+        Assert.assertEquals(1,
+                mol.getProperty(CDKConstants.CTAB_SGROUPS, List.class).size());
+        mol.setAtoms(new IAtom[]{a3, a2, a1});
+        List<Sgroup> sgroupsAfter = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        Assert.assertEquals(1, sgroupsAfter.size());
+    }
+
+    @Test public void keepSgroups_SetBonds() throws CloneNotSupportedException {
+        IAtomContainer mol = (IAtomContainer) newChemObject();
+        IAtom          a1  = mol.getBuilder().newAtom();
+        IAtom          a2  = mol.getBuilder().newAtom();
+        IAtom          a3  = mol.getBuilder().newAtom();
+        IBond          b1  = mol.getBuilder().newBond();
+        IBond          b2  = mol.getBuilder().newBond();
+        b1.setAtom(a1, 0);
+        b1.setAtom(a2, 1);
+        b2.setAtom(a2, 0);
+        b2.setAtom(a3, 1);
+        mol.addAtom(a1);
+        mol.addAtom(a2);
+        mol.addAtom(a3);
+        mol.addBond(b1);
+        mol.addBond(b2);
+        Sgroup sgroup = new Sgroup();
+        sgroup.setType(SgroupType.CtabStructureRepeatUnit);
+        sgroup.setSubscript("n");
+        sgroup.addAtom(a2);
+        sgroup.addBond(b1);
+        sgroup.addBond(b2);
+        mol.setProperty(CDKConstants.CTAB_SGROUPS,
+                Collections.singletonList(sgroup));
+        Assert.assertEquals(1,
+                mol.getProperty(CDKConstants.CTAB_SGROUPS, List.class).size());
+        mol.setBonds(new IBond[]{b2, b1});
+        List<Sgroup> sgroupsAfter = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        Assert.assertEquals(1, sgroupsAfter.size());
+    }
+
+    @Test public void removeSgroups_SetAtoms() throws CloneNotSupportedException {
+        IAtomContainer mol = (IAtomContainer) newChemObject();
+        IAtom          a1  = mol.getBuilder().newAtom();
+        IAtom          a2  = mol.getBuilder().newAtom();
+        IAtom          a3  = mol.getBuilder().newAtom();
+        IBond          b1  = mol.getBuilder().newBond();
+        IBond          b2  = mol.getBuilder().newBond();
+        b1.setAtom(a1, 0);
+        b1.setAtom(a2, 1);
+        b2.setAtom(a2, 0);
+        b2.setAtom(a3, 1);
+        mol.addAtom(a1);
+        mol.addAtom(a2);
+        Sgroup sgroup = new Sgroup();
+        sgroup.setType(SgroupType.CtabStructureRepeatUnit);
+        sgroup.setSubscript("n");
+        sgroup.addAtom(a2);
+        mol.setProperty(CDKConstants.CTAB_SGROUPS,
+                Collections.singletonList(sgroup));
+        Assert.assertEquals(1,
+                mol.getProperty(CDKConstants.CTAB_SGROUPS, List.class).size());
+        mol.setAtoms(new IAtom[]{mol.getBuilder().newAtom(),
+                                 mol.getBuilder().newAtom(),
+                                 mol.getBuilder().newAtom()});
+        List<Sgroup> sgroupsAfter = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        Assert.assertEquals(0, sgroupsAfter.size());
+    }
+
+    @Test public void removeSgroups_SetBonds() throws CloneNotSupportedException {
+        IAtomContainer mol = (IAtomContainer) newChemObject();
+        IAtom          a1  = mol.getBuilder().newAtom();
+        IAtom          a2  = mol.getBuilder().newAtom();
+        IAtom          a3  = mol.getBuilder().newAtom();
+        IBond          b1  = mol.getBuilder().newBond();
+        IBond          b2  = mol.getBuilder().newBond();
+        b1.setAtom(a1, 0);
+        b1.setAtom(a2, 1);
+        b2.setAtom(a2, 0);
+        b2.setAtom(a3, 1);
+        mol.addAtom(a1);
+        mol.addAtom(a2);
+        mol.addAtom(a3);
+        mol.addBond(b1);
+        mol.addBond(b2);
+        Sgroup sgroup = new Sgroup();
+        sgroup.setType(SgroupType.CtabStructureRepeatUnit);
+        sgroup.setSubscript("n");
+        sgroup.addAtom(a2);
+        sgroup.addBond(b1);
+        sgroup.addBond(b2);
+        mol.setProperty(CDKConstants.CTAB_SGROUPS,
+                Collections.singletonList(sgroup));
+        Assert.assertEquals(1,
+                mol.getProperty(CDKConstants.CTAB_SGROUPS, List.class).size());
+        mol.setBonds(new IBond[]{mol.getBuilder().newBond(),
+                mol.getBuilder().newBond(),
+                mol.getBuilder().newBond()});
+        List<Sgroup> sgroupsAfter = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        Assert.assertEquals(0, sgroupsAfter.size());
+    }
 }

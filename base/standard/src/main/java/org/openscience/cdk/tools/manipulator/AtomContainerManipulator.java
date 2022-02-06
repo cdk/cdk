@@ -1142,6 +1142,7 @@ public class AtomContainerManipulator {
                 for (IBond bondToHydrogen : bondsToHydrogens)
                     sgroup.removeBond(bondToHydrogen);
             }
+            org.setProperty(CDKConstants.CTAB_SGROUPS, sgroups);
         }
 
         return org;
