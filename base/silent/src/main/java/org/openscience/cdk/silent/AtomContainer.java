@@ -220,6 +220,71 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
         return Collections.unmodifiableSet(stereoElements);
     }
 
+    private boolean isStale(IAtom atom) {
+        return indexOf(atom) < 0;
+    }
+
+    private boolean isStale(IBond bond) {
+        return indexOf(bond) < 0 ||
+                indexOf(bond.getBegin()) < 0 ||
+                indexOf(bond.getEnd()) < 0;
+    }
+
+    // helper for atom or bond
+    private boolean isStale(IChemObject cobj) {
+        if (cobj instanceof IAtom)
+            return isStale((IAtom)cobj);
+        else if (cobj instanceof IBond)
+            return isStale((IBond)cobj);
+        else return true;
+    }
+
+    // stereo is valid if all atoms/bonds are valid
+    private boolean isStale(IStereoElement<?,?> se) {
+        if (isStale(se.getFocus()))
+            return true;
+        for (IChemObject a : se.getCarriers())
+            if (isStale(a))
+                return true;
+        return false;
+    }
+
+    // Sgroup is valid if all atoms/bonds are valid
+    private boolean isStale(Sgroup sgroup) {
+        for (IAtom a : sgroup.getAtoms())
+            if (indexOf(a) < 0)
+                return true;
+        for (IBond b : sgroup.getBonds())
+            if (isStale(b))
+                return true;
+        return false;
+    }
+
+    private void validateStereoAndSgroups() {
+        // remove any Stereochemistry and Sgroups which now have "stale" atoms
+        if (!stereoElements.isEmpty()) {
+            List<IStereoElement<?, ?>> staleStereo = new ArrayList<>();
+            for (IStereoElement<?, ?> se : stereoElements) {
+                if (isStale(se))
+                    staleStereo.add(se);
+            }
+            stereoElements.removeAll(staleStereo);
+        }
+        List<Sgroup> sgroups = getProperty(CDKConstants.CTAB_SGROUPS);
+        if (sgroups != null) {
+            List<Sgroup> staleSgroups = new ArrayList<>();
+            for (Sgroup sgroup : sgroups) {
+                if (isStale(sgroup))
+                    staleSgroups.add(sgroup);
+            }
+            if (!staleSgroups.isEmpty()) {
+                sgroups = new ArrayList<>(sgroups); // ensure mutable
+                sgroups.removeAll(staleSgroups);
+                setProperty(CDKConstants.CTAB_SGROUPS, sgroups);
+            }
+        }
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -230,6 +295,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
         if (newAtoms.length < this.atoms.length)
             Arrays.fill(atoms, newAtoms.length, this.atoms.length, null);
         this.atomCount = newAtoms.length;
+        validateStereoAndSgroups();
     }
 
     /**
@@ -242,6 +308,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
         if (newBonds.length < this.bonds.length)
             Arrays.fill(bonds, newBonds.length, this.bonds.length, null);
         this.bondCount = newBonds.length;
+        validateStereoAndSgroups();
     }
 
     /**
