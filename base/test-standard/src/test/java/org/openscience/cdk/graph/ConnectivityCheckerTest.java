@@ -19,6 +19,7 @@
  */
 package org.openscience.cdk.graph;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Set;
@@ -26,16 +27,20 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.*;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.HINReader;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.sgroup.Sgroup;
 import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.smiles.SmiFlavor;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
@@ -46,12 +51,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 /**
- *  Checks the functionality of the ConnectivityChecker
+ * Checks the functionality of the ConnectivityChecker
  *
+ * @author steinbeck
  * @cdk.module test-standard
- *
- * @author     steinbeck
- * @cdk.created    2001-07-24
+ * @cdk.created 2001-07-24
  */
 public class ConnectivityCheckerTest extends CDKTestCase {
 
@@ -156,11 +160,11 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         Assert.assertTrue(moleculeSet.getAtomContainer(0).getConnectedSingleElectronsCount(
                 moleculeSet.getAtomContainer(0).getAtom(0)) == 0
                 || moleculeSet.getAtomContainer(1).getConnectedSingleElectronsCount(
-                        moleculeSet.getAtomContainer(1).getAtom(0)) == 0);
+                moleculeSet.getAtomContainer(1).getAtom(0)) == 0);
         Assert.assertTrue(moleculeSet.getAtomContainer(0).getConnectedLonePairsCount(
                 moleculeSet.getAtomContainer(0).getAtom(0)) == 0
                 || moleculeSet.getAtomContainer(1).getConnectedLonePairsCount(
-                        moleculeSet.getAtomContainer(1).getAtom(0)) == 0);
+                moleculeSet.getAtomContainer(1).getAtom(0)) == 0);
     }
 
     /**
@@ -195,8 +199,8 @@ public class ConnectivityCheckerTest extends CDKTestCase {
     }
 
     /**
-    * @cdk.bug 2126904
-    */
+     * @cdk.bug 2126904
+     */
     @Test
     public void testIsConnectedFromSDFile() throws Exception {
         String filename = "mdeotest.sdf";
@@ -230,9 +234,9 @@ public class ConnectivityCheckerTest extends CDKTestCase {
     @Test
     public void copySgroups() throws Exception {
         String filename = "sgroup-split.mol";
-        try(InputStream ins = this.getClass().getResourceAsStream(filename);
-            ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
-        ){
+        try (InputStream ins = this.getClass().getResourceAsStream(filename);
+             ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
+        ) {
             ChemFile content = (ChemFile) reader.read((ChemObject) new ChemFile());
             List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
             IAtomContainer ac = cList.get(0);
@@ -240,9 +244,9 @@ public class ConnectivityCheckerTest extends CDKTestCase {
             Assert.assertEquals(2, containerSet.getAtomContainerCount());
             IAtomContainer container1 = containerSet.getAtomContainer(0);
             IAtomContainer container2 = containerSet.getAtomContainer(1);
-            IAtomContainer h2o = container1.getAtomCount()<=3? container1 : container2;
-            Assert.assertNull( h2o.getProperty(CDKConstants.CTAB_SGROUPS));
-            IAtomContainer otherContainer = h2o == container1? container2: container1;
+            IAtomContainer h2o = container1.getAtomCount() <= 3 ? container1 : container2;
+            Assert.assertNull(h2o.getProperty(CDKConstants.CTAB_SGROUPS));
+            IAtomContainer otherContainer = h2o == container1 ? container2 : container1;
             List<Sgroup> sgroups = otherContainer.getProperty(CDKConstants.CTAB_SGROUPS);
             Assert.assertEquals(1, sgroups.size());
             Sgroup sgroup = sgroups.get(0);
@@ -250,6 +254,44 @@ public class ConnectivityCheckerTest extends CDKTestCase {
             Set<IAtom> atoms = sgroup.getAtoms();
             Assert.assertEquals(2, atoms.size());
 
+        }
+    }
+
+    @Test
+    public void splitSgroups() throws IOException, CDKException {
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        try (InputStream in = getClass().getResourceAsStream("sgroup-frags.mol");
+             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+            IAtomContainer mol = mdlr.read(builder.newAtomContainer());
+            IAtomContainerSet acset = ConnectivityChecker.partitionIntoMolecules(mol);
+            Assert.assertEquals(2, acset.getAtomContainerCount());
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxSmiles);
+            Assert.assertEquals("CCOC |Sg:n:1,2:1:|", smigen.create(acset.getAtomContainer(0)));
+            Assert.assertEquals("C(NC)C |Sg:n:0,1:1:|", smigen.create(acset.getAtomContainer(1)));
+        }
+    }
+
+    @Test
+    public void splitSgroupsParent() throws IOException, CDKException {
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        try (InputStream in = getClass().getResourceAsStream("sgroup-mix.mol");
+             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+            IAtomContainer mol = mdlr.read(builder.newAtomContainer());
+            IAtomContainerSet acset = ConnectivityChecker.partitionIntoMolecules(mol);
+            Assert.assertEquals(2, acset.getAtomContainerCount());
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxSmiles);
+            IAtomContainer part1 = acset.getAtomContainer(0);
+            IAtomContainer part2 = acset.getAtomContainer(1);
+            Assert.assertEquals("C1CCCCC1 |Sg:c:0,1,2,3,4,5::|",
+                    smigen.create(part1));
+            Assert.assertEquals("CO |Sg:c:0,1::|",
+                    smigen.create(part2));
+            List<Sgroup> sgroups1 = part1.getProperty(CDKConstants.CTAB_SGROUPS);
+            List<Sgroup> sgroups2 = part2.getProperty(CDKConstants.CTAB_SGROUPS);
+            Assert.assertEquals(1, sgroups1.size());
+            Assert.assertEquals(0, sgroups1.get(0).getParents().size());
+            Assert.assertEquals(1, sgroups2.size());
+            Assert.assertEquals(0, sgroups2.get(0).getParents().size());
         }
     }
 

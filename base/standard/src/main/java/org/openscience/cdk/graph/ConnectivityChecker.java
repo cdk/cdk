@@ -34,9 +34,11 @@ import org.openscience.cdk.sgroup.SgroupKey;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Tool class for checking whether the (sub)structure in an
@@ -136,6 +138,28 @@ public class ConnectivityChecker {
         return mol;
     }
 
+    private static IAtomContainer getComponent(Map<IAtom, IAtomContainer> cmap,
+                                               Sgroup sgroup) {
+        IAtomContainer mol = null;
+        for (IAtom atom : sgroup.getAtoms()) {
+            IAtomContainer tmp = cmap.get(atom);
+            if (mol == null)
+                mol = tmp;
+            else if (mol != tmp)
+                return null;
+        }
+        return mol;
+    }
+
+    private static void addSgroup(IAtomContainer component, Sgroup sgroup) {
+        List<Sgroup> sgroups = component.getProperty(CDKConstants.CTAB_SGROUPS);
+        if (sgroups == null) {
+            component.setProperty(CDKConstants.CTAB_SGROUPS,
+                    sgroups = new ArrayList<>());
+        }
+        sgroups.add(sgroup);
+    }
+
     /**
      * Split a molecule based on the provided component array. Note this function
      * can also be used to split a single molecule, breaking bonds and distributing
@@ -163,8 +187,6 @@ public class ConnectivityChecker {
 
         IAtomContainer[] containers = new IAtomContainer[maxComponentIndex + 1];
         Map<IAtom, IAtomContainer> componentsMap = new HashMap<>(2 * container.getAtomCount());
-        Map<IAtom, IAtom> componentAtomMap = new HashMap<>(2 * container.getAtomCount());
-        Map<IBond, IBond> componentBondMap = new HashMap<>(2 * container.getBondCount());
 
         for (int i = 1; i < containers.length; i++)
             containers[i] = container.getBuilder().newInstance(IAtomContainer.class);
@@ -176,8 +198,6 @@ public class ConnectivityChecker {
             IAtomContainer newContainer = containers[components[i]];
             componentsMap.put(origAtom, newContainer);
             newContainer.addAtom(origAtom);
-            //the atom should always be added so this should be safe
-            componentAtomMap.put(origAtom, newContainer.getAtom(newContainer.getAtomCount()-1));
         }
 
         for (IBond bond : container.bonds()) {
@@ -185,8 +205,6 @@ public class ConnectivityChecker {
             IAtomContainer endComp = componentsMap.get(bond.getEnd());
             if (begComp == endComp) {
                 begComp.addBond(bond);
-                //bond should always be added so this should be safe
-                componentBondMap.put(bond, begComp.getBond(begComp.getBondCount()-1));
             }
         }
 
@@ -196,91 +214,39 @@ public class ConnectivityChecker {
         for (ILonePair lonePair : container.lonePairs())
             componentsMap.get(lonePair.getAtom()).addLonePair(lonePair);
 
+        // split stereo chemistry, only keep if all atoms/bond in the stereo
+        // element are consistent and in the same container
         for (IStereoElement<?,?>stereo : container.stereoElements()) {
-            IAtomContainer mol = getComponent(componentsMap, stereo);
-            if (mol != null)
-                mol.addStereoElement(stereo);
+            IAtomContainer component = getComponent(componentsMap, stereo);
+            if (component != null)
+                component.addStereoElement(stereo);
         }
-        //add SGroups
+
+        // split Sgroups, only keep if all atoms/bond in the sgroup
+        // are consistent and in the same container
         List<Sgroup> sgroups = container.getProperty(CDKConstants.CTAB_SGROUPS);
-
-        // FIXME: we should do a consistent check as well!
-        if(sgroups !=null){
-            Map<Sgroup, Sgroup> old2NewSgroupMap = new HashMap<>();
-            List<Sgroup>[] newSgroups = new List[containers.length];
-            for(Sgroup sgroup : sgroups){
-                Iterator<IAtom> iter =sgroup.getAtoms().iterator();
-                if(!iter.hasNext()){
-                   continue;
-                }
-                int componentIndex = getComponentIndexFor(components, containers,iter.next());
-                boolean allMatch=componentIndex>=0;
-                while(allMatch && iter.hasNext()){
-                    //if component index for some atoms
-                    //don't match then the sgroup is split across components
-                    //so ignore it for now?
-                    allMatch = (componentIndex == getComponentIndexFor(components,containers, iter.next()));
-                }
-                if(allMatch && componentIndex >=0){
-                    Sgroup cpy = new Sgroup();
-                    List<Sgroup> newComponentSgroups = newSgroups[componentIndex];
-                    if(newComponentSgroups ==null){
-                        newComponentSgroups = newSgroups[componentIndex] = new ArrayList<>();
-                    }
-                    newComponentSgroups.add(cpy);
-                    old2NewSgroupMap.put(sgroup, cpy);
-                    for (IAtom atom : sgroup.getAtoms()) {
-                       cpy.addAtom(componentAtomMap.get(atom));
-
-                    }
-                    for (IBond bond : sgroup.getBonds()) {
-                        IBond newBond = componentBondMap.get(bond);
-                        if(newBond!=null) {
-                            cpy.addBond(newBond);
-                        }
-                    }
-
-                    for (SgroupKey key : sgroup.getAttributeKeys())
-                        cpy.putValue(key, sgroup.getValue(key));
-
+        if (sgroups != null) {
+            Map<Sgroup,IAtomContainer> sgroupMap = new HashMap<>();
+            for (Sgroup sgroup : sgroups) {
+                IAtomContainer component = getComponent(componentsMap, sgroup);
+                if (component != null) {
+                    addSgroup(component, sgroup);
                 }
             }
-            //finally update parents
-            for(Sgroup sgroup : sgroups){
-                Sgroup newSgroup = old2NewSgroupMap.get(sgroup);
-                if(newSgroup !=null){
-                    for (Sgroup parent : sgroup.getParents()){
-                        Sgroup newParent = old2NewSgroupMap.get(parent);
-                        if(newParent !=null){
-                            newSgroup.addParent(newParent);
-                        }
-                    }
+            // remove any parents that were split
+            for (Sgroup sgroup : sgroups) {
+                Set<Sgroup> toremove = new HashSet<>();
+                for (Sgroup parent : sgroup.getParents()) {
+                    if (sgroupMap.get(parent) == null)
+                        toremove.add(parent);
                 }
-            }
-            for(int i=1; i< containers.length; i++){
-                List<Sgroup> sg = newSgroups[i];
-                if(sg !=null){
-                    containers[i].setProperty(CDKConstants.CTAB_SGROUPS, sg);
-                }
+                sgroup.removeParents(toremove);
             }
         }
+
+        // create our AtomContainerSet
         for (int i = 1; i < containers.length; i++)
             containerSet.addAtomContainer(containers[i]);
-
         return containerSet;
-    }
-
-    private static int getComponentIndexFor(int[] components, IAtomContainer[] containers, IAtom atom) {
-        int aIndex = atom.getIndex();
-        if(aIndex >= 0) {
-            return components[aIndex];
-        }
-        //if index isn't known check each container
-        for (int i = 1; i < containers.length; i++){
-            if(containers[i].contains(atom)){
-                return i;
-            }
-        }
-        return -1;
     }
 }
