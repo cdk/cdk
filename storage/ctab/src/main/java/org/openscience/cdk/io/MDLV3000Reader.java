@@ -157,6 +157,8 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     private static final class ReadState {
         IAtomContainer mol;
         int dimensions = 0; // 0D (undef/no coordinates), 2D, 3D
+        boolean chiral;
+        Map<Integer,Integer> stereoflags = null;
         Map<IAtom,Integer> stereo0d = new HashMap<>();
     }
 
@@ -166,14 +168,11 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
 
     public IAtomContainer readConnectionTable(IChemObjectBuilder builder) throws CDKException {
 
-        boolean chiral = false;
-        Map<Integer,Integer> stereoflags = null;
-
-
         logger.info("Reading CTAB block");
         ReadState state = new ReadState();
         IAtomContainer readData = builder.newAtomContainer();
         state.mol = readData;
+        state.chiral = false;
 
         boolean foundEND = false;
         String lastLine = readHeader(state);
@@ -181,14 +180,13 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
             String command = readCommand(lastLine);
             logger.debug("command found: " + command);
             if ("END CTAB".equals(command)) {
-                finalizeMol(state);
                 foundEND = true;
             } else if ("BEGIN CTAB".equals(command)) {
                 // that's fine
             } else if (command.startsWith("COUNTS ")) {
                 // COUNTS <natom> <nbond> <nsgroup> <n3dquery> <chiral> [REGNO=<regno>]
                 String[] counts = command.split(" ");
-                chiral = counts.length >= 6 && counts[5].equals("1");
+                state.chiral = counts.length >= 6 && counts[5].equals("1");
             } else if ("BEGIN ATOM".equals(command)) {
                 readAtomBlock(state);
             } else if ("BEGIN BOND".equals(command)) {
@@ -196,19 +194,25 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
             } else if ("BEGIN SGROUP".equals(command)) {
                 readSGroup(readData);
             } else if ("BEGIN COLLECTION".equals(command)) {
-                if (stereoflags == null)
-                    stereoflags = new HashMap<>();
-                readCollection(readData, stereoflags);
+                readCollection(state);
             } else {
                 logger.warn("Unrecognized command: " + command);
             }
             lastLine = readLine();
         }
 
+        finalizeMol(state);
+
+        return readData;
+    }
+
+    private void finalizeMol(ReadState state) {
+        finalizeDimensions(state);
+
+        IAtomContainer readData = state.mol;
         boolean isQuery = readData instanceof IQueryAtomContainer;
 
         for (IAtom atom : readData.atoms()) {
-            // XXX: slow method is slow
             int valence = 0;
             for (IBond bond : readData.getConnectedBondsList(atom)) {
                 if (bond instanceof IQueryBond || bond.getOrder() == IBond.Order.UNSET) {
@@ -244,14 +248,14 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                                                                    .createAll());
                 }
 
-                if (stereoflags != null && !stereoflags.isEmpty()) {
+                if (state.stereoflags != null && !state.stereoflags.isEmpty()) {
 
                     // work out the next available group, if we have &1, &2, etc then we choose &3
                     // this is only needed if
                     int defaultRacGrp = 0;
-                    if (!chiral) {
+                    if (!state.chiral) {
                         int max = 0;
-                        for (Integer val : stereoflags.values()) {
+                        for (Integer val : state.stereoflags.values()) {
                             if ((val & IStereoElement.GRP_TYPE_MASK) == IStereoElement.GRP_RAC) {
                                 int num = val >>> IStereoElement.GRP_NUM_SHIFT;
                                 if (num > max)
@@ -268,13 +272,13 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                         int idx = readData.indexOf(focus);
                         if (idx < 0)
                             continue;
-                        Integer grpinfo = stereoflags.get(idx);
+                        Integer grpinfo = state.stereoflags.get(idx);
                         if (grpinfo != null)
                             se.setGroupInfo(grpinfo);
-                        else if (!chiral)
+                        else if (!state.chiral)
                             se.setGroupInfo(defaultRacGrp);
                     }
-                } else if (!chiral) {
+                } else if (!state.chiral) {
                     // chiral flag not set which means this molecule is this stereoisomer "and" the enantiomer, mark all
                     // Tetrahedral stereo as AND1 (&1)
                     for (IStereoElement<?, ?> se : readData.stereoElements()) {
@@ -285,13 +289,6 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 }
             }
         }
-
-
-        return readData;
-    }
-
-    private void finalizeMol(ReadState state) {
-        finalizeDimensions(state);
     }
 
     // the parser will read all coords as 3D, then given information
@@ -378,22 +375,23 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     /**
      * Read collection information: highlights (no currently supported) and abs, rac, rel stereo groups
      *
-     * @param flags the stereo flags
-     * @param mol the molecule
+     * @param state the read state
      * @return true if stereo group info was set - this is to override the chiral flag
      */
-    private void readCollection(IAtomContainer mol, Map<Integer,Integer> flags) throws CDKException {
+    private void readCollection(ReadState state) throws CDKException {
+        if (state.stereoflags == null)
+            state.stereoflags = new HashMap<>();
         String line;
         while ((line = readLine()) != null) {
             String command = readCommand(line);
             if (command.startsWith("END COLLECTION"))
                 break;
             else if (command.startsWith("MDLV30/STERAC")) {
-                parseStereoGroup(flags, command, IStereoElement.GRP_RAC);
+                parseStereoGroup(state.stereoflags, command, IStereoElement.GRP_RAC);
             } else if (command.startsWith("MDLV30/STEREL")) {
-                parseStereoGroup(flags, command, IStereoElement.GRP_REL);
+                parseStereoGroup(state.stereoflags, command, IStereoElement.GRP_REL);
             } else if (command.startsWith("MDLV30/STEABS")) {
-                parseStereoGroup(flags, command, IStereoElement.GRP_ABS);
+                parseStereoGroup(state.stereoflags, command, IStereoElement.GRP_ABS);
             }
         }
     }
