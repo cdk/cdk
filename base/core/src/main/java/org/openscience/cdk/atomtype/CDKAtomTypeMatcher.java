@@ -128,109 +128,160 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         if (atom instanceof IPseudoAtom || atom.getAtomicNumber() == null) {
             return factory.getAtomType("X");
         }
-        if (atom.getAtomicNumber() == IElement.C) {
-            type = perceiveCarbons(atomContainer, atom, searcher, connectedBonds);
-        } else if (atom.getAtomicNumber() == IElement.H) {
-            type = perceiveHydrogens(atomContainer, atom, connectedBonds);
-        } else if (atom.getAtomicNumber() == IElement.O) {
-            type = perceiveOxygens(atomContainer, atom, searcher, connectedBonds);
-        } else if (atom.getAtomicNumber() == IElement.N) {
-            type = perceiveNitrogens(atomContainer, atom, searcher, connectedBonds);
-        } else if (atom.getAtomicNumber() == IElement.S) {
-            type = perceiveSulphurs(atomContainer, atom, searcher, connectedBonds);
-        } else if (atom.getAtomicNumber() == IElement.P) {
-            type = perceivePhosphors(atomContainer, atom, connectedBonds);
-        } else if (atom.getAtomicNumber() == IElement.Si) {
-            type = perceiveSilicon(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Li) {
-            type = perceiveLithium(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.B) {
-            type = perceiveBorons(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Be) {
-            type = perceiveBeryllium(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Cr) {
-            type = perceiveChromium(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Se) {
-            type = perceiveSelenium(atomContainer, atom, connectedBonds);
-        } else if (atom.getAtomicNumber() == IElement.Mo) {
-            type = perceiveMolybdenum(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Rb) {
-            type = perceiveRubidium(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Te) {
-            type = perceiveTellurium(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Cu) {
-            type = perceiveCopper(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Ba) {
-            type = perceiveBarium(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Ga) {
-            type = perceiveGallium(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Ru) {
-            type = perceiveRuthenium(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Zn) {
-            type = perceiveZinc(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Al) {
-            type = perceiveAluminium(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Ni) {
-            type = perceiveNickel(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Gd) {
-            type = perceiveGadolinum(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Ge) {
-            type = perceiveGermanium(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Co) {
-            type = perceiveCobalt(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Br) {
-            type = perceiveBromine(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.V) {
-            type = perceiveVanadium(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Ti) {
-            type = perceiveTitanium(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Sr) {
-            type = perceiveStrontium(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Pb) {
-            type = perceiveLead(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Tl) {
-            type = perceiveThallium(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Sb) {
-            type = perceiveAntimony(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Pt) {
-            type = perceivePlatinum(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Hg) {
-            type = perceiveMercury(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Fe) {
-            type = perceiveIron(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Ra) {
-            type = perceiveRadium(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Au) {
-            type = perceiveGold(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Ag) {
-            type = perceiveSilver(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Cl) {
-            type = perceiveChlorine(atomContainer, atom, connectedBonds);
-        } else if (atom.getAtomicNumber() == IElement.In) {
-            type = perceiveIndium(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Pu) {
-            type = perceivePlutonium(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Th) {
-            type = perceiveThorium(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.K) {
-            type = perceivePotassium(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Mn) {
-            type = perceiveManganese(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Mg) {
-            type = perceiveMagnesium(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Na) {
-            type = perceiveSodium(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.As) {
-            type = perceiveArsenic(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Cd) {
-            type = perceiveCadmium(atomContainer, atom);
-        } else if (atom.getAtomicNumber() == IElement.Ca) {
-            type = perceiveCalcium(atomContainer, atom);
-        } else {
-            if (type == null) type = perceiveHalogens(atomContainer, atom, connectedBonds);
-            if (type == null) type = perceiveCommonSalts(atomContainer, atom);
-            if (type == null) type = perceiveOrganometallicCenters(atomContainer, atom);
-            if (type == null) type = perceiveNobelGases(atomContainer, atom);
+        switch (atom.getAtomicNumber()) {
+            case IElement.C:
+                type = perceiveCarbons(atomContainer, atom, searcher, connectedBonds);
+                break;
+            case IElement.H:
+                type = perceiveHydrogens(atomContainer, atom, connectedBonds);
+                break;
+            case IElement.O:
+                type = perceiveOxygens(atomContainer, atom, searcher, connectedBonds);
+                break;
+            case IElement.N:
+                type = perceiveNitrogens(atomContainer, atom, searcher, connectedBonds);
+                break;
+            case IElement.S:
+                type = perceiveSulphurs(atomContainer, atom, searcher, connectedBonds);
+                break;
+            case IElement.P:
+                type = perceivePhosphors(atomContainer, atom, connectedBonds);
+                break;
+            case IElement.Si:
+                type = perceiveSilicon(atomContainer, atom);
+                break;
+            case IElement.Li:
+                type = perceiveLithium(atomContainer, atom);
+                break;
+            case IElement.B:
+                type = perceiveBorons(atomContainer, atom);
+                break;
+            case IElement.Be:
+                type = perceiveBeryllium(atomContainer, atom);
+                break;
+            case IElement.Cr:
+                type = perceiveChromium(atomContainer, atom);
+                break;
+            case IElement.Se:
+                type = perceiveSelenium(atomContainer, atom, connectedBonds);
+                break;
+            case IElement.Mo:
+                type = perceiveMolybdenum(atomContainer, atom);
+                break;
+            case IElement.Rb:
+                type = perceiveRubidium(atomContainer, atom);
+                break;
+            case IElement.Te:
+                type = perceiveTellurium(atomContainer, atom);
+                break;
+            case IElement.Cu:
+                type = perceiveCopper(atomContainer, atom);
+                break;
+            case IElement.Ba:
+                type = perceiveBarium(atomContainer, atom);
+                break;
+            case IElement.Ga:
+                type = perceiveGallium(atomContainer, atom);
+                break;
+            case IElement.Ru:
+                type = perceiveRuthenium(atomContainer, atom);
+                break;
+            case IElement.Zn:
+                type = perceiveZinc(atomContainer, atom);
+                break;
+            case IElement.Al:
+                type = perceiveAluminium(atomContainer, atom);
+                break;
+            case IElement.Ni:
+                type = perceiveNickel(atomContainer, atom);
+                break;
+            case IElement.Gd:
+                type = perceiveGadolinum(atomContainer, atom);
+                break;
+            case IElement.Ge:
+                type = perceiveGermanium(atomContainer, atom);
+                break;
+            case IElement.Co:
+                type = perceiveCobalt(atomContainer, atom);
+                break;
+            case IElement.Br:
+                type = perceiveBromine(atomContainer, atom);
+                break;
+            case IElement.V:
+                type = perceiveVanadium(atomContainer, atom);
+                break;
+            case IElement.Ti:
+                type = perceiveTitanium(atomContainer, atom);
+                break;
+            case IElement.Sr:
+                type = perceiveStrontium(atomContainer, atom);
+                break;
+            case IElement.Pb:
+                type = perceiveLead(atomContainer, atom);
+                break;
+            case IElement.Tl:
+                type = perceiveThallium(atomContainer, atom);
+                break;
+            case IElement.Sb:
+                type = perceiveAntimony(atomContainer, atom);
+                break;
+            case IElement.Pt:
+                type = perceivePlatinum(atomContainer, atom);
+                break;
+            case IElement.Hg:
+                type = perceiveMercury(atomContainer, atom);
+                break;
+            case IElement.Fe:
+                type = perceiveIron(atomContainer, atom);
+                break;
+            case IElement.Ra:
+                type = perceiveRadium(atomContainer, atom);
+                break;
+            case IElement.Au:
+                type = perceiveGold(atomContainer, atom);
+                break;
+            case IElement.Ag:
+                type = perceiveSilver(atomContainer, atom);
+                break;
+            case IElement.Cl:
+                type = perceiveChlorine(atomContainer, atom, connectedBonds);
+                break;
+            case IElement.In:
+                type = perceiveIndium(atomContainer, atom);
+                break;
+            case IElement.Pu:
+                type = perceivePlutonium(atomContainer, atom);
+                break;
+            case IElement.Th:
+                type = perceiveThorium(atomContainer, atom);
+                break;
+            case IElement.K:
+                type = perceivePotassium(atomContainer, atom);
+                break;
+            case IElement.Mn:
+                type = perceiveManganese(atomContainer, atom);
+                break;
+            case IElement.Mg:
+                type = perceiveMagnesium(atomContainer, atom);
+                break;
+            case IElement.Na:
+                type = perceiveSodium(atomContainer, atom);
+                break;
+            case IElement.As:
+                type = perceiveArsenic(atomContainer, atom);
+                break;
+            case IElement.Cd:
+                type = perceiveCadmium(atomContainer, atom);
+                break;
+            case IElement.Ca:
+                type = perceiveCalcium(atomContainer, atom);
+                break;
+            default:
+                if (type == null) type = perceiveHalogens(atomContainer, atom, connectedBonds);
+                if (type == null) type = perceiveCommonSalts(atomContainer, atom);
+                if (type == null) type = perceiveOrganometallicCenters(atomContainer, atom);
+                if (type == null) type = perceiveNobelGases(atomContainer, atom);
+                break;
         }
 
         // if no atom type can be assigned we set the atom type to 'X', this flags
