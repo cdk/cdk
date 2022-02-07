@@ -154,6 +154,12 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         throw new CDKException("Only supports AtomContainer objects.");
     }
 
+    private static final class ReadState {
+        IAtomContainer mol;
+        int dimensions = 0; // 0D (undef/no coordinates), 2D, 3D
+        Map<IAtom,Integer> stereo0d = new HashMap<>();
+    }
+
     public IAtomContainer readMolecule(IChemObjectBuilder builder) throws CDKException {
         return readConnectionTable(builder);
     }
@@ -163,14 +169,19 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         boolean chiral = false;
         Map<Integer,Integer> stereoflags = null;
 
+
         logger.info("Reading CTAB block");
+        ReadState state = new ReadState();
         IAtomContainer readData = builder.newAtomContainer();
+        state.mol = readData;
+
         boolean foundEND = false;
-        String lastLine = readHeader(readData);
+        String lastLine = readHeader(state);
         while (isReady() && !foundEND) {
             String command = readCommand(lastLine);
             logger.debug("command found: " + command);
             if ("END CTAB".equals(command)) {
+                finalizeMol(state);
                 foundEND = true;
             } else if ("BEGIN CTAB".equals(command)) {
                 // that's fine
@@ -179,7 +190,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 String[] counts = command.split(" ");
                 chiral = counts.length >= 6 && counts[5].equals("1");
             } else if ("BEGIN ATOM".equals(command)) {
-                readAtomBlock(readData);
+                readAtomBlock(state);
             } else if ("BEGIN BOND".equals(command)) {
                 readBondBlock(readData);
             } else if ("BEGIN SGROUP".equals(command)) {
@@ -277,6 +288,42 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         return readData;
     }
 
+    private void finalizeMol(ReadState state) {
+        finalizeDimensions(state);
+    }
+
+    // the parser will read all coords as 3D, then given information
+    // in the header and the x,y,z values of each atom we work out
+    // whether we are 0D, 2D (Point2D) or 3D (Point3D)
+    private void finalizeDimensions(ReadState state) {
+        int dimensions = 0;
+        for (IAtom atom : state.mol.atoms()) {
+            Point3d p3d = atom.getPoint3d();
+            if (p3d.z != 0d) {
+                dimensions = 3; // 3D
+                break;
+            } else if (dimensions == 0 && p3d.x != 0 && p3d.y != 0) {
+                dimensions = 2; // 2D (if not 3D)
+            }
+        }
+        // check the global header
+        if (dimensions == 0)
+            dimensions = state.dimensions;
+
+        if (dimensions == 0) {
+            // remove all coords we set
+            for (IAtom atom : state.mol.atoms())
+                atom.setPoint3d(null);
+        } else if (dimensions == 2) {
+            // convert 3d to 2d
+            for (IAtom atom : state.mol.atoms()) {
+                Point3d p3d = atom.getPoint3d();
+                atom.setPoint2d(new Point2d(p3d.x, p3d.y));
+                atom.setPoint3d(null);
+            }
+        }
+    }
+
     boolean isDigit(char ch) {
         return ch >= '0' && ch <= '9';
     }
@@ -346,11 +393,22 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         }
     }
 
+    // read info from the info header
+    //'  CDK     09251712073D'
+    // 0123456789012345678901
+    private static int parseDimensions(String info) {
+        if (info.startsWith("2D", 20))
+            return 2;
+        if (info.startsWith("3D", 20))
+            return 3;
+        return 0;
+    }
+
     /**
      * @return Last line read
      * @throws CDKException when no file content is detected
      */
-    public String readHeader(IAtomContainer readData) throws CDKException {
+    public String readHeader(ReadState state) throws CDKException {
         // read four lines
         String line1 = readLine();
         if (line1 == null) {
@@ -361,11 +419,13 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 // no header
                 return line1;
             }
-            readData.setTitle(line1);
+            state.mol.setTitle(line1);
         }
-        readLine();
+        String infoLine = readLine();
+        state.dimensions = parseDimensions(infoLine);
         String line3 = readLine();
-        if (line3.length() > 0) readData.setProperty(CDKConstants.COMMENT, line3);
+        if (line3.length() > 0)
+            state.mol.setProperty(CDKConstants.COMMENT, line3);
         String line4 = readLine();
         if (!line4.contains("3000")) {
             throw new CDKException("This file is not a MDL V3000 molfile.");
@@ -378,7 +438,8 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
      *
      * <p>IMPORTANT: it does not support the atom list and its negation!
      */
-    public void readAtomBlock(IAtomContainer readData) throws CDKException {
+    public void readAtomBlock(ReadState state) throws CDKException {
+        IAtomContainer readData = state.mol;
         logger.info("Reading ATOM block");
         IsotopeFactory isotopeFactory;
         try {
@@ -458,7 +519,6 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                     double y = Double.parseDouble(yString);
                     double z = Double.parseDouble(zString);
                     atom.setPoint3d(new Point3d(x, y, z));
-                    atom.setPoint2d(new Point2d(x, y)); // FIXME: dirty!
                 } catch (Exception exception) {
                     String error = "Error while parsing atom coordinates";
                     logger.error(error);
@@ -474,12 +534,17 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 // the rest are key value things
                 if (command.indexOf('=') != -1) {
                     Map<String, String> options = parseOptions(exhaustStringTokenizer(tokenizer));
-                    Iterator<String> keys = options.keySet().iterator();
-                    while (keys.hasNext()) {
-                        String key = keys.next();
+                    for (String key : options.keySet()) {
                         String value = options.get(key);
                         try {
                             switch (key) {
+                                case "CFG":
+                                    int cfg = Integer.parseInt(value);
+                                    if (cfg != 0) {
+                                        atom.setStereoParity(cfg);
+                                        state.stereo0d.put(atom, cfg);
+                                    }
+                                    break;
                                 case "CHG":
                                     int charge = Integer.parseInt(value);
                                     if (charge != 0) { // zero is no charge specified
