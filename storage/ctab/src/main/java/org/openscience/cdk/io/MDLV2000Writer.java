@@ -36,6 +36,7 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IStereoElement;
@@ -473,7 +474,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 
                 // firstly check if it's a numbered R group
                 Matcher matcher = NUMERED_R_GROUP.matcher(label);
-                if (pseudoAtom.getAtomicNumber() == IElement.R && !label.isEmpty() && matcher.matches()) {
+                if (pseudoAtom.getAtomicNumber() == IElement.Wildcard && !label.isEmpty() && matcher.matches()) {
 
                     line.append("R# ");
                     if (rgroups == null) {
