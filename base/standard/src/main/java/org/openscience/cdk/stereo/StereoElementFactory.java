@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.stereo;
 
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
@@ -32,12 +33,15 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector2d;
 import javax.vecmath.Vector3d;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
@@ -46,6 +50,8 @@ import java.util.Set;
 import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 import static org.openscience.cdk.interfaces.IBond.Stereo.DOWN;
 import static org.openscience.cdk.interfaces.IBond.Stereo.DOWN_INVERTED;
+import static org.openscience.cdk.interfaces.IBond.Stereo.UP;
+import static org.openscience.cdk.interfaces.IBond.Stereo.UP_INVERTED;
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;
 import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 
@@ -94,10 +100,15 @@ public abstract class StereoElementFactory {
     
     protected final Set<Projection> projections = EnumSet.noneOf(Projection.class);
 
+    protected boolean strict;
+
+    protected final ILoggingTool logger
+            = LoggingToolFactory.createLoggingTool(StereoElementFactory.class);
+
     /**
      * Verify if created stereochemistry are actually stereo-centres.
      */
-    private boolean check = false;
+    protected boolean check = false;
 
     /**
      * Internal constructor.
@@ -474,6 +485,21 @@ public abstract class StereoElementFactory {
     }
 
     /**
+     * Enables stricter stereochemistry checking, specifically tetrahedral
+     * centres may not be created from inverse down wedges (i.e. Daylight
+     * style depictions). This also sets that all stereocentres are tested
+     * for asymmetry.
+     *
+     * @return stereo element factory.
+     */
+    public StereoElementFactory withStrictMode()
+    {
+        this.check = true;
+        this.strict = true;
+        return this;
+    }
+
+    /**
      * Create a stereo element factory for creating stereo elements using 2D
      * coordinates and depiction labels (up/down, wedge/hatch).
      *
@@ -544,6 +570,11 @@ public abstract class StereoElementFactory {
 
             if (hasUnspecifiedParity(focus)) return null;
 
+            if (check) {
+                if (!stereocenters.isStereocenter(v))
+                    return null;
+            }
+
             IAtom[] neighbors = new IAtom[4];
             int[] elevation = new int[4];
 
@@ -561,42 +592,54 @@ public abstract class StereoElementFactory {
                 neighbors[n] = container.getAtom(w);
                 elevation[n] = elevationOf(focus, bond);
 
-                if (elevation[n] != 0) nonplanar = true;
+                if (elevation[n] != 0)
+                    nonplanar = true;
 
                 n++;
             }
 
-            // too few/many neighbors
-            if (n < 3 || n > 4) return null;
+            // too few neighbors
+            if (n < 3) return null;
 
             // TODO: verify valid wedge/hatch configurations using similar procedure
             // to NonPlanarBonds in the cdk-sdg package.
-
             // no up/down bonds present - check for inverted down/hatch
-            if (!nonplanar) {
+            if (!nonplanar && !strict) {
                 int[] ws = graph[v];
                 for (int i = 0; i < ws.length; i++) {
                     int w = ws[i];
                     IBond bond = bondMap.get(v, w);
 
                     // we have already previously checked whether 'v' is at the
-                    // 'point' and so these must be inverse (fat-end @
-                    // stereocenter) ala Daylight
+                    // 'point' and so these must be inverse (fat-end of hatched
+                    // wedge is a stereocenter) ala Daylight
                     if (bond.getStereo() == DOWN || bond.getStereo() == DOWN_INVERTED) {
 
                         // we stick to the 'point' end convention but can
                         // interpret if the bond isn't connected to another
                         // stereocenter - otherwise it's ambiguous!
-                        if (stereocenters.isStereocenter(w)) continue;
+                        if (stereocenters.stereocenterType(w) != Stereocenters.Stereocenter.Non) {
+                            stereocenters.checkSymmetry();
+                            if (stereocenters.isStereocenter(w)) {
+                                logger.error("Ambiguous down wedge bond between atom indexes ", w, " and ", v);
+                                return null;
+                            }
+                        }
 
+                        logger.warn("Inverse wedge bond used for stereo at atom index ", v);
                         elevation[i] = -1;
                         nonplanar = true;
                     }
+                    // stereo at the "fat-end" of the bold wedge?
+                    else if (bond.getStereo() == UP || bond.getStereo() == UP_INVERTED) {
+                        logger.warn("Ignoring inverted up wedge bond connected to atom idx=", w);
+                        return null;
+                    }
                 }
-
-                // still no bonds to use
-                if (!nonplanar) return null;
             }
+
+            // still no bonds to use
+            if (!nonplanar) return null;
 
             int parity = parity(focus, neighbors, elevation);
 

@@ -24,30 +24,34 @@
 
 package org.openscience.cdk.stereo;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -1560,6 +1564,41 @@ public class StereoElementFactoryTest {
         	}
         }
         assertThat(flag, is(true));
+    }
+
+
+    @Test public void warnOnAmbiguousStereo() throws Exception{
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        try (InputStream in = getClass().getResourceAsStream("ambig-wedge.mol");
+             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+            mdlr.getSetting("AddStereoElements").setSetting("false");
+            IAtomContainer mol = mdlr.read(builder.newAtomContainer());
+            int numStereo = 0;
+            for (IStereoElement<?,?> se : mol.stereoElements())
+                numStereo++;
+            assertEquals(0, numStereo);
+            StereoElementFactory stereoFactory = StereoElementFactory.using2DCoordinates(mol);
+            List<IStereoElement> stereoElements = stereoFactory.createAll();
+            Assert.assertEquals(1, stereoElements.size());
+        }
+    }
+
+    @Test public void ignoreInverseWedgeWhenStrict() throws Exception{
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        try (InputStream in = getClass().getResourceAsStream("inverse-wedge.mol");
+             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+            mdlr.getSetting("AddStereoElements").setSetting("false");
+            IAtomContainer mol = mdlr.read(builder.newAtomContainer());
+            int numStereo = 0;
+            for (IStereoElement<?,?> se : mol.stereoElements())
+                numStereo++;
+            assertEquals(0, numStereo);
+            StereoElementFactory stereoFactory = StereoElementFactory.using2DCoordinates(mol);
+            stereoFactory.checkSymmetry(true);
+            Assert.assertEquals(1, stereoFactory.createAll().size());
+            stereoFactory.withStrictMode();
+            Assert.assertEquals(0, stereoFactory.createAll().size());
+        }
     }
 
     static IAtom atom(String symbol, int h, double x, double y) {
