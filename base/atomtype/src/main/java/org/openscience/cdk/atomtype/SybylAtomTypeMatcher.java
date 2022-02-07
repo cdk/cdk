@@ -112,16 +112,18 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
     @Override
     public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom) throws CDKException {
         IAtomType type = cdkMatcher.findMatchingAtomType(atomContainer, atom);
-        if (atom.getAtomicNumber() == IElement.Cr) {
-            // if only I had good descriptions of the Sybyl atom types
-            int neighbors = atomContainer.getConnectedBondsCount(atom);
-            if (neighbors > 4 && neighbors <= 6)
-                return factory.getAtomType("Cr.oh");
-            else if (neighbors > 0) return factory.getAtomType("Cr.th");
-        } else if (atom.getAtomicNumber() == IElement.Co) {
-            // if only I had good descriptions of the Sybyl atom types
-            int neibors = atomContainer.getConnectedBondsCount(atom);
-            if (neibors == 6) return factory.getAtomType("Co.oh");
+        if (atom.getAtomicNumber() != null) {
+            if (atom.getAtomicNumber() == IElement.Cr) {
+                // if only I had good descriptions of the Sybyl atom types
+                int neighbors = atomContainer.getConnectedBondsCount(atom);
+                if (neighbors > 4 && neighbors <= 6)
+                    return factory.getAtomType("Cr.oh");
+                else if (neighbors > 0) return factory.getAtomType("Cr.th");
+            } else if (atom.getAtomicNumber() == IElement.Co) {
+                // if only I had good descriptions of the Sybyl atom types
+                int neibors = atomContainer.getConnectedBondsCount(atom);
+                if (neibors == 6) return factory.getAtomType("Co.oh");
+            }
         }
         if (type == null)
             return null;
