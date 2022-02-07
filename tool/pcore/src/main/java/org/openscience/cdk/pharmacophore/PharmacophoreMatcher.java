@@ -432,9 +432,9 @@ public class PharmacophoreMatcher {
                 List<IAtom> endl = new ArrayList<IAtom>();
 
                 for (IAtom tatom : pharmacophoreMolecule.atoms()) {
-                    if (tatom.getSymbol().equals(startQAtom.getSymbol())) startl.add(tatom);
-                    if (tatom.getSymbol().equals(middleQAtom.getSymbol())) middlel.add(tatom);
-                    if (tatom.getSymbol().equals(endQAtom.getSymbol())) endl.add(tatom);
+                    if (tatom.getAtomicNumber().equals(startQAtom.getAtomicNumber())) startl.add(tatom);
+                    if (tatom.getAtomicNumber().equals(middleQAtom.getAtomicNumber())) middlel.add(tatom);
+                    if (tatom.getAtomicNumber().equals(endQAtom.getAtomicNumber())) endl.add(tatom);
                 }
 
                 // now we form the relevant angles, but we will

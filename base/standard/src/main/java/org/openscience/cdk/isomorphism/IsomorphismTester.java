@@ -105,7 +105,7 @@ public class IsomorphismTester implements java.io.Serializable {
                 if (baseTable[f] == compareTable[g]) {
                     atom1 = base.getAtom(f);
                     atom2 = compare.getAtom(g);
-                    if (!(atom1.getSymbol().equals(atom2.getSymbol()))
+                    if (!(atom1.getAtomicNumber().equals(atom2.getAtomicNumber()))
                         && Objects.equals(atom1.getImplicitHydrogenCount(), atom2.getImplicitHydrogenCount())) {
                         return false;
                     }

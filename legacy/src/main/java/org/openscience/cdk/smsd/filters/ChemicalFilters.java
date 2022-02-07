@@ -603,7 +603,7 @@ public class ChemicalFilters {
             IAtom patom1 = pBond.getBegin();
             IAtom patom2 = pBond.getEnd();
 
-            if (ratom1.getSymbol().equals(patom1.getSymbol()) && ratom1.getSymbol().equals(patom1.getSymbol())) {
+            if (ratom1.getAtomicNumber().equals(patom1.getAtomicNumber()) && ratom1.getAtomicNumber().equals(patom1.getAtomicNumber())) {
                 if ((!Objects.equals(ratom1.getFormalCharge(), patom1.getFormalCharge()))
                     || !Objects.equals(ratom2.getFormalCharge(), patom2.getFormalCharge())) {
                     if (convertBondOrder(rBond) != convertBondOrder(pBond)) {
@@ -618,7 +618,7 @@ public class ChemicalFilters {
                     && (convertBondOrder(rBond) - convertBondOrder(pBond)) == 0) {
                     score += 100;
                 }
-            } else if (ratom1.getSymbol().equals(patom2.getSymbol()) && ratom2.getSymbol().equals(patom1.getSymbol())) {
+            } else if (ratom1.getAtomicNumber().equals(patom2.getAtomicNumber()) && ratom2.getAtomicNumber().equals(patom1.getAtomicNumber())) {
                 if ((!Objects.equals(ratom1.getFormalCharge(), patom2.getFormalCharge()))
                     || !Objects.equals(ratom2.getFormalCharge(), patom1.getFormalCharge())) {
                     if (convertBondOrder(rBond) != convertBondOrder(pBond)) {

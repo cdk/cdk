@@ -389,7 +389,7 @@ public class MolecularFormula implements IMolecularFormula {
         if (exactMass1 == null) exactMass1 = -1.0;
         if (exactMass2 == null) exactMass2 = -1.0;
 
-        if (!isotopeOne.getSymbol().equals(isotopeTwo.getSymbol())) return false;
+        if (!isotopeOne.getAtomicNumber().equals(isotopeTwo.getAtomicNumber())) return false;
         if (natAbund1.doubleValue() != natAbund2) return false;
         return exactMass1.doubleValue() == exactMass2;
     }

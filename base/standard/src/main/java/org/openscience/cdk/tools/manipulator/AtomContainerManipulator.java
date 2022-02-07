@@ -537,7 +537,7 @@ public class AtomContainerManipulator {
         int hydrogens = 0;
         for (IAtom atom : container.atoms()) {
 
-            if (Elements.HYDROGEN.getSymbol().equals(atom.getSymbol())) {
+            if (Elements.HYDROGEN.getAtomicNumber().equals(atom.getAtomicNumber())) {
                 hydrogens++;
             }
 
@@ -588,7 +588,7 @@ public class AtomContainerManipulator {
             throw new IllegalArgumentException("null container or atom provided");
         int hCount = 0;
         for (IAtom connected : atomContainer.getConnectedAtomsList(atom)) {
-            if (Elements.HYDROGEN.getSymbol().equals(connected.getSymbol())) {
+            if (Elements.HYDROGEN.getAtomicNumber().equals(connected.getAtomicNumber())) {
                 hCount++;
             }
         }

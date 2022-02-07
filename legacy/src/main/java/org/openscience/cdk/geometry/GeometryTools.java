@@ -1359,7 +1359,7 @@ public class GeometryTools {
             int posSecondAtom) {
         IAtom firstAtom = firstAC.getAtom(posFirstAtom);
         IAtom secondAtom = secondAC.getAtom(posSecondAtom);
-        if (firstAtom.getSymbol().equals(secondAtom.getSymbol())
+        if (firstAtom.getAtomicNumber().equals(secondAtom.getAtomicNumber())
             && firstAC.getConnectedAtomsList(firstAtom).size() == secondAC.getConnectedAtomsList(secondAtom).size()
             && Objects.equals(firstAtom.getBondOrderSum(), secondAtom.getBondOrderSum())
             && firstAtom.getMaxBondOrder() == secondAtom.getMaxBondOrder()) {

@@ -329,7 +329,7 @@ public class UniversalIsomorphismTester {
                     IQueryAtom qAtom = (IQueryAtom) atom2;
                     if (qAtom.matches(atom)) return true;
                 } else {
-                    if (atom2.getSymbol().equals(atom.getSymbol())) return true;
+                    if (atom2.getAtomicNumber().equals(atom.getAtomicNumber())) return true;
                 }
             }
             return false;
@@ -443,7 +443,7 @@ public class UniversalIsomorphismTester {
                 }
             } else {
                 for (IAtom atom : g1.atoms()) {
-                    if (queryAtom.getSymbol().equals(atom.getSymbol())) {
+                    if (queryAtom.getAtomicNumber().equals(atom.getAtomicNumber())) {
                         List<RMap> lmap = new ArrayList<RMap>();
                         lmap.add(new RMap(g1.indexOf(atom), 0));
                         matches.add(lmap);
@@ -638,7 +638,7 @@ public class UniversalIsomorphismTester {
                     IQueryAtom qAtom = (IQueryAtom) atom2;
                     if (qAtom.matches(atom)) arrayList.add(new RMap(0, i));
                 } else {
-                    if (atom2.getSymbol().equals(atom.getSymbol())) arrayList.add(new RMap(0, i));
+                    if (atom2.getAtomicNumber().equals(atom.getAtomicNumber())) arrayList.add(new RMap(0, i));
                 }
             }
             return arrayList;

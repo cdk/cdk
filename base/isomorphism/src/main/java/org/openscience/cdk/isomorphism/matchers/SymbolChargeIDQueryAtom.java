@@ -45,7 +45,7 @@ public class SymbolChargeIDQueryAtom extends QueryAtom implements IQueryAtom {
 
     @Override
     public boolean matches(IAtom atom) {
-        return this.getSymbol().equals(atom.getSymbol()) && Objects.equals(this.getFormalCharge(), atom.getFormalCharge())
+        return this.getAtomicNumber().equals(atom.getAtomicNumber()) && Objects.equals(this.getFormalCharge(), atom.getFormalCharge())
                && this.getID().equals(atom.getID());
     };
 
