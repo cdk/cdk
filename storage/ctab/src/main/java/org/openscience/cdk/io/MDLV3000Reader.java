@@ -32,6 +32,8 @@ import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLV3000Format;
+import org.openscience.cdk.io.setting.BooleanIOSetting;
+import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.sgroup.Sgroup;
@@ -72,6 +74,11 @@ import java.util.regex.Pattern;
  * @cdk.require java1.4+
  */
 public class MDLV3000Reader extends DefaultChemObjectReader {
+
+    private BooleanIOSetting optForce3d;
+    private BooleanIOSetting optHydIso;
+    private BooleanIOSetting optStereoPerc;
+    private BooleanIOSetting optStereo0d;
 
     BufferedReader input = null;
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV3000Reader.class);
@@ -484,7 +491,8 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                                     int numElectons = spinMultiplicity.getSingleElectrons();
                                     atom.setProperty(CDKConstants.SPIN_MULTIPLICITY, spinMultiplicity);
                                     while (numElectons-- > 0) {
-                                        readData.addSingleElectron(readData.getBuilder().newInstance(ISingleElectron.class, atom));
+                                        readData.addSingleElectron(readData.getBuilder()
+                                                                           .newInstance(ISingleElectron.class, atom));
                                     }
                                     break;
                                 case "VAL":
@@ -829,6 +837,15 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     }
 
     private void initIOSettings() {
+        optForce3d = addSetting(new BooleanIOSetting("ForceReadAs3DCoordinates", IOSetting.Importance.LOW,
+                "Should coordinates always be read as 3D?", "false"));
+        optHydIso = addSetting(new BooleanIOSetting("InterpretHydrogenIsotopes",
+                IOSetting.Importance.LOW, "Should D and T be interpreted as hydrogen isotopes?", "true"));
+        optStereoPerc = addSetting(new BooleanIOSetting("AddStereoElements", IOSetting.Importance.LOW,
+                "Detect and create IStereoElements for the input.", "true"));
+        optStereo0d = addSetting(new BooleanIOSetting("AddStereo0d", IOSetting.Importance.LOW,
+                "Allow stereo created from parity value when no coordinates", "true"));
+
     }
 
     /**
