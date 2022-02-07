@@ -271,7 +271,7 @@ public final class GenerateCompatibilityGraph {
 
                 //You can also check object equal or charge, hydrogen count etc
 
-                if (atom1.getSymbol().equalsIgnoreCase(atom2.getSymbol()) && (!map.contains(i + "_" + j))) {
+                if (atom1.getAtomicNumber().equals(atom2.getAtomicNumber()) && (!map.contains(i + "_" + j))) {
                     compGraphNodesCZero.add(i);
                     compGraphNodesCZero.add(j);
                     compGraphNodesCZero.add(labelContainer.getLabelID(atom1.getSymbol())); //i.e C is label 1
