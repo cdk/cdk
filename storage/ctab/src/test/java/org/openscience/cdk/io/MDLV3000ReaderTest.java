@@ -50,6 +50,7 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -156,6 +157,28 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
         try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("issue602.mol"))) {
             IAtomContainer mol = reader.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
             assertThat(mol.getAtomCount(), CoreMatchers.is(31));
+        }
+    }
+
+    @Test public void forceReadAs3D() throws Exception {
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("issue602.mol"))) {
+            IAtomContainer mol = reader.read(builder.newAtomContainer());
+            Assert.assertEquals(31, mol.getAtomCount());
+            for (IAtom atom : mol.atoms()) {
+                assertNotNull(atom.getPoint2d());
+                assertNull(atom.getPoint3d());
+            }
+        }
+
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("issue602.mol"))) {
+            reader.getSetting("ForceReadAs3DCoordinates").setSetting("true");
+            IAtomContainer mol = reader.read(builder.newAtomContainer());
+            Assert.assertEquals(31, mol.getAtomCount());
+            for (IAtom atom : mol.atoms()) {
+                assertNull(atom.getPoint2d());
+                assertNotNull(atom.getPoint3d());
+            }
         }
     }
 
