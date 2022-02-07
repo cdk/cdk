@@ -51,7 +51,7 @@ public class SymbolQueryAtom extends QueryAtom implements IQueryAtom {
         else if (ID == null && HCount != 0) {
             return (this.getImplicitHydrogenCount() == HCount);
         } else
-            return this.getSymbol().equals(atom.getSymbol());
+            return this.getAtomicNumber().equals(atom.getAtomicNumber());
     };
 
     public void setOperator(String str) {

@@ -372,7 +372,7 @@ public class CDKMCS {
                         return true;
                     }
                 } else {
-                    if (atom2.getSymbol().equals(atom.getSymbol())) {
+                    if (atom2.getAtomicNumber().equals(atom.getAtomicNumber())) {
                         return true;
                     }
                 }
@@ -494,7 +494,7 @@ public class CDKMCS {
                 }
             } else {
                 for (IAtom atom : sourceGraph.atoms()) {
-                    if (queryAtom.getSymbol().equals(atom.getSymbol())) {
+                    if (queryAtom.getAtomicNumber().equals(atom.getAtomicNumber())) {
                         List<CDKRMap> lmap = new ArrayList<CDKRMap>();
                         lmap.add(new CDKRMap(sourceGraph.indexOf(atom), 0));
                         matches.add(lmap);
@@ -673,7 +673,7 @@ public class CDKMCS {
                         arrayList.add(new CDKRMap(0, i));
                     }
                 } else {
-                    if (atom2.getSymbol().equals(atom.getSymbol())) {
+                    if (atom2.getAtomicNumber().equals(atom.getAtomicNumber())) {
                         arrayList.add(new CDKRMap(0, i));
                     }
                 }

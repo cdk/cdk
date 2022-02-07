@@ -119,7 +119,7 @@ public class MolecularFormulaManipulator {
 
         int count = 0;
         for (IIsotope isotope : formula.isotopes()) {
-            if (isotope.getSymbol().equals(element.getSymbol())) count += formula.getIsotopeCount(isotope);
+            if (isotope.getAtomicNumber().equals(element.getAtomicNumber())) count += formula.getIsotopeCount(isotope);
         }
         return count;
     }
@@ -160,7 +160,7 @@ public class MolecularFormulaManipulator {
 
         List<IIsotope> isotopeList = new ArrayList<IIsotope>();
         for (IIsotope isotope : formula.isotopes()) {
-            if (isotope.getSymbol().equals(element.getSymbol())) isotopeList.add(isotope);
+            if (isotope.getAtomicNumber().equals(element.getAtomicNumber())) isotopeList.add(isotope);
 
         }
         return isotopeList;
@@ -197,7 +197,7 @@ public class MolecularFormulaManipulator {
     public static boolean containsElement(IMolecularFormula formula, IElement element) {
 
         for (IIsotope isotope : formula.isotopes()) {
-            if (element.getSymbol().equals(isotope.getSymbol())) return true;
+            if (element.getAtomicNumber().equals(isotope.getAtomicNumber())) return true;
         }
 
         return false;
