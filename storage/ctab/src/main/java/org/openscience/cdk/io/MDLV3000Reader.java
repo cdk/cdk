@@ -296,6 +296,9 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     // in the header and the x,y,z values of each atom we work out
     // whether we are 0D, 2D (Point2D) or 3D (Point3D)
     private void finalizeDimensions(ReadState state) {
+        // all ready done
+        if (state.dimensions == 3 || optForce3d.isSet())
+            return;
         int dimensions = 0;
         for (IAtom atom : state.mol.atoms()) {
             Point3d p3d = atom.getPoint3d();
