@@ -127,9 +127,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     BufferedReader                   input            = null;
     private static ILoggingTool      logger           = LoggingToolFactory.createLoggingTool(MDLV2000Reader.class);
 
-    private BooleanIOSetting         forceReadAs3DCoords;
-    private BooleanIOSetting         interpretHydrogenIsotopes;
-    private BooleanIOSetting         addStereoElements;
+    private BooleanIOSetting optForce3d;
+    private BooleanIOSetting optHydIso;
+    private BooleanIOSetting optStereoPerc;
+    private BooleanIOSetting optStereo0d;
 
     // Pattern to remove trailing space (String.trim() will remove leading space, which we don't want)
     private static final Pattern     TRAILING_SPACE   = Pattern.compile("\\s+$");
@@ -412,7 +413,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 // 0123456789012345678901
                 if (is3Dfile(program)) {
                     hasZ = true;
-                } else if (!forceReadAs3DCoords.isSet()) {
+                } else if (!optForce3d.isSet()) {
                     for (IAtom atomToUpdate : atoms) {
                         Point3d p3d = atomToUpdate.getPoint3d();
                         if (p3d != null) {
@@ -455,7 +456,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             }
 
             // create 0D stereochemistry
-            if (addStereoElements.isSet()) {
+            if (optStereoPerc.isSet() && optStereo0d.isSet()) {
                 Parities:
                 for (Map.Entry<IAtom, Integer> e : parities.entrySet()) {
                     int parity = e.getValue();
@@ -516,7 +517,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             // don't have a hydrogen count for atoms and stereo perception isn't
             // currently possible
             if (!(outputContainer instanceof IQueryAtomContainer) && !isQuery &&
-                addStereoElements.isSet() && hasX && hasY) {
+                optStereoPerc.isSet() && hasX && hasY) {
                 //ALS property could have changed an atom into a QueryAtom
                 for(IAtom atom : outputContainer.atoms()){
                     if (AtomRef.deref(atom) instanceof QueryAtom) {
@@ -528,7 +529,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     if (hasZ) { // has 3D coordinates
                         outputContainer.setStereoElements(StereoElementFactory.using3DCoordinates(outputContainer)
                                 .createAll());
-                    } else if (!forceReadAs3DCoords.isSet()) { // has 2D coordinates (set as 2D coordinates)
+                    } else if (!optForce3d.isSet()) { // has 2D coordinates (set as 2D coordinates)
                         outputContainer.setStereoElements(StereoElementFactory.using2DCoordinates(outputContainer)
                                 .createAll());
                     }
@@ -625,12 +626,14 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     }
 
     private void initIOSettings() {
-        forceReadAs3DCoords = addSetting(new BooleanIOSetting("ForceReadAs3DCoordinates", IOSetting.Importance.LOW,
+        optForce3d = addSetting(new BooleanIOSetting("ForceReadAs3DCoordinates", IOSetting.Importance.LOW,
                 "Should coordinates always be read as 3D?", "false"));
-        interpretHydrogenIsotopes = addSetting(new BooleanIOSetting("InterpretHydrogenIsotopes",
+        optHydIso = addSetting(new BooleanIOSetting("InterpretHydrogenIsotopes",
                 IOSetting.Importance.LOW, "Should D and T be interpreted as hydrogen isotopes?", "true"));
-        addStereoElements = addSetting(new BooleanIOSetting("AddStereoElements", IOSetting.Importance.LOW,
+        optStereoPerc = addSetting(new BooleanIOSetting("AddStereoElements", IOSetting.Importance.LOW,
                 "Detect and create IStereoElements for the input.", "true"));
+        optStereo0d = addSetting(new BooleanIOSetting("AddStereo0d", IOSetting.Importance.LOW,
+                "Allow stereo created from parity value when no coordinates", "true"));
     }
 
     public void customizeJob() {
@@ -1520,13 +1523,13 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             atom.setAtomicNumber(elem.number());
             return atom;
         }
-        if (symbol.equals("D") && interpretHydrogenIsotopes.isSet()) {
+        if (symbol.equals("D") && optHydIso.isSet()) {
             handleError("invalid symbol: " + symbol, lineNum, 31, 33);
             IAtom atom = builder.newInstance(IAtom.class, "H");
             atom.setMassNumber(2);
             return atom;
         }
-        if (symbol.equals("T") && interpretHydrogenIsotopes.isSet()) {
+        if (symbol.equals("T") && optHydIso.isSet()) {
             handleError("invalid symbol: " + symbol, lineNum, 31, 33);
             IAtom atom = builder.newInstance(IAtom.class, "H");
             atom.setMassNumber(3);
