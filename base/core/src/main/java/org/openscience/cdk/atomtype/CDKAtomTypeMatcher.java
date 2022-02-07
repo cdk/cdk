@@ -125,7 +125,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 
     private IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom, RingSearch searcher, List<IBond> connectedBonds) throws CDKException {
         IAtomType type = null;
-        if (atom instanceof IPseudoAtom) {
+        if (atom instanceof IPseudoAtom || atom.getAtomicNumber() == null) {
             return factory.getAtomType("X");
         }
         if (atom.getAtomicNumber() == IElement.C) {
