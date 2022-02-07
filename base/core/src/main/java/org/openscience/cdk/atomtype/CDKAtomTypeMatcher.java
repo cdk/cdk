@@ -664,7 +664,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         // assumes that the oxygen only has one neighbor (C=O, or C-[O-])
         if (connectedBonds.size() != 1) return false;
         IAtom carbon = connectedBonds.get(0).getOther(atom);
-        if (!"C".equals(carbon.getSymbol())) return false;
+        if (carbon.getAtomicNumber() != IElement.C) return false;
 
         List<IBond> carbonBonds = container.getConnectedBondsList(carbon);
         if (carbonBonds.size() < 2) return false;
@@ -1003,13 +1003,13 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             if (!aromatic) continue;
 
             // found a hetroatom - we're not a single hetroatom
-            if (!"C".equals(atom1.getSymbol())) return false;
+            if (atom1.getAtomicNumber() != IElement.C) return false;
 
             // check the second sphere
             for (IAtom atom2 : container.getConnectedAtomsList(atom1)) {
 
                 if (!atom2.equals(atom) && container.getBond(atom1, atom2).isAromatic()
-                        && !"C".equals(atom2.getSymbol())) {
+                        && atom2.getAtomicNumber() != IElement.C) {
                     return false;
                 }
 

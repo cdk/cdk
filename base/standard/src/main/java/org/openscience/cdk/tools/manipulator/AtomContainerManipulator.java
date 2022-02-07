@@ -617,7 +617,7 @@ public class AtomContainerManipulator {
         Map<IAtom, IAtom> hNeighbor = new HashMap<>(2*atomContainer.getAtomCount());
 
         for (IAtom atom : atomContainer.atoms()) {
-            if (!"H".equals(atom.getSymbol())) {
+            if (atom.getAtomicNumber() != IElement.H) {
                 Integer hCount = atom.getImplicitHydrogenCount();
                 if (hCount != null) {
                     for (int i = 0; i < hCount; i++) {
@@ -1174,7 +1174,7 @@ public class AtomContainerManipulator {
      */
     private static boolean suppressibleHydrogen(final IAtomContainer container, final IAtom atom) {
         // is the atom a hydrogen
-        if (!"H".equals(atom.getSymbol())) return false;
+        if (atom.getAtomicNumber() != IElement.H) return false;
         // is the hydrogen an ion?
         if (atom.getFormalCharge() != null && atom.getFormalCharge() != 0) return false;
         // is the hydrogen deuterium / tritium?
@@ -1225,7 +1225,7 @@ public class AtomContainerManipulator {
         IAtom atom = container.getAtom(v);
 
         // is the atom a hydrogen
-        if (!"H".equals(atom.getSymbol())) return false;
+        if (atom.getAtomicNumber() != IElement.H) return false;
         // is the hydrogen an ion?
         if (atom.getFormalCharge() != null && atom.getFormalCharge() != 0) return false;
         // is the hydrogen deuterium / tritium?
