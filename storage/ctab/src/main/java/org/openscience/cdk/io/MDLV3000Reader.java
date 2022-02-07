@@ -231,60 +231,67 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
             }
         }
 
-        if (!isQuery) {
+        if (!isQuery)
+            finalizeStereochemistry(state, readData);
+    }
 
-            /* Add stereo information */
-            boolean is3d = true;
-            for (IAtom atom : readData.atoms()) {
-                if (atom.getPoint3d() == null)
-                    is3d = false;
+    private void finalizeStereochemistry(ReadState state, IAtomContainer readData) {
+        if (optStereoPerc.isSet()) {
+
+            if (state.dimensions == 3) { // has 3D coordinates
+                readData.setStereoElements(StereoElementFactory.using3DCoordinates(readData)
+                                                               .createAll());
+            } else if (state.dimensions == 2) { // has 2D coordinates (set as 2D coordinates)
+                readData.setStereoElements(StereoElementFactory.using2DCoordinates(readData)
+                                                               .createAll());
+            } else if (state.dimensions == 0 && optStereo0d.isSet()) {
+                // technically if a molecule is 2D/3D and has the CFG=1 or CFG=2
+                // specified this gives us hints information but it's safer to
+                // just use the coordinates or wedge bonds
+                for (Map.Entry<IAtom, Integer> e : state.stereo0d.entrySet()) {
+                    IStereoElement<IAtom,IAtom> stereoElement
+                            = MDLV2000Reader.createStereo0d(state.mol, e.getKey(), e.getValue());
+                    if (stereoElement != null)
+                        state.mol.addStereoElement(stereoElement);
+                }
             }
-            if (optStereoPerc.isSet()) {
-                if (is3d) { // has 3D coordinates
-                    readData.setStereoElements(StereoElementFactory.using3DCoordinates(readData)
-                                                                   .createAll());
-                } else { // has 2D coordinates (set as 2D coordinates)
-                    readData.setStereoElements(StereoElementFactory.using2DCoordinates(readData)
-                                                                   .createAll());
+
+            if (state.stereoflags != null && !state.stereoflags.isEmpty()) {
+
+                // work out the next available group, if we have &1, &2, etc then we choose &3
+                // this is only needed if
+                int defaultRacGrp = 0;
+                if (!state.chiral) {
+                    int max = 0;
+                    for (Integer val : state.stereoflags.values()) {
+                        if ((val & IStereoElement.GRP_TYPE_MASK) == IStereoElement.GRP_RAC) {
+                            int num = val >>> IStereoElement.GRP_NUM_SHIFT;
+                            if (num > max)
+                                max = num;
+                        }
+                    }
+                    defaultRacGrp = IStereoElement.GRP_RAC | (((max + 1) << IStereoElement.GRP_NUM_SHIFT));
                 }
 
-                if (state.stereoflags != null && !state.stereoflags.isEmpty()) {
-
-                    // work out the next available group, if we have &1, &2, etc then we choose &3
-                    // this is only needed if
-                    int defaultRacGrp = 0;
-                    if (!state.chiral) {
-                        int max = 0;
-                        for (Integer val : state.stereoflags.values()) {
-                            if ((val & IStereoElement.GRP_TYPE_MASK) == IStereoElement.GRP_RAC) {
-                                int num = val >>> IStereoElement.GRP_NUM_SHIFT;
-                                if (num > max)
-                                    max = num;
-                            }
-                        }
-                        defaultRacGrp = IStereoElement.GRP_RAC | (((max + 1) << IStereoElement.GRP_NUM_SHIFT));
-                    }
-
-                    for (IStereoElement<?, ?> se : readData.stereoElements()) {
-                        if (se.getConfigClass() != IStereoElement.TH)
-                            continue;
-                        IAtom focus = (IAtom) se.getFocus();
-                        int idx = readData.indexOf(focus);
-                        if (idx < 0)
-                            continue;
-                        Integer grpinfo = state.stereoflags.get(idx);
-                        if (grpinfo != null)
-                            se.setGroupInfo(grpinfo);
-                        else if (!state.chiral)
-                            se.setGroupInfo(defaultRacGrp);
-                    }
-                } else if (!state.chiral) {
-                    // chiral flag not set which means this molecule is this stereoisomer "and" the enantiomer, mark all
-                    // Tetrahedral stereo as AND1 (&1)
-                    for (IStereoElement<?, ?> se : readData.stereoElements()) {
-                        if (se.getConfigClass() == IStereoElement.TH) {
-                            se.setGroupInfo(IStereoElement.GRP_RAC1);
-                        }
+                for (IStereoElement<?, ?> se : readData.stereoElements()) {
+                    if (se.getConfigClass() != IStereoElement.TH)
+                        continue;
+                    IAtom focus = (IAtom) se.getFocus();
+                    int idx = readData.indexOf(focus);
+                    if (idx < 0)
+                        continue;
+                    Integer grpinfo = state.stereoflags.get(idx);
+                    if (grpinfo != null)
+                        se.setGroupInfo(grpinfo);
+                    else if (!state.chiral)
+                        se.setGroupInfo(defaultRacGrp);
+                }
+            } else if (!state.chiral) {
+                // chiral flag not set which means this molecule is this stereoisomer "and" the enantiomer, mark all
+                // Tetrahedral stereo as AND1 (&1)
+                for (IStereoElement<?, ?> se : readData.stereoElements()) {
+                    if (se.getConfigClass() == IStereoElement.TH) {
+                        se.setGroupInfo(IStereoElement.GRP_RAC1);
                     }
                 }
             }
@@ -311,6 +318,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         // check the global header
         if (dimensions == 0)
             dimensions = state.dimensions;
+        state.dimensions = dimensions;
 
         if (dimensions == 0) {
             // remove all coords we set
