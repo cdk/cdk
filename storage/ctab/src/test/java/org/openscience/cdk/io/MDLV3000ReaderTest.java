@@ -401,4 +401,31 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
             }
         }
     }
+
+    @Test
+    public void testStereo0d() throws Exception {
+        IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+        try (InputStream in = getClass().getResourceAsStream("stereo0d.mdl3");
+             MDLV3000Reader mdlr = new MDLV3000Reader(in)) {
+            IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
+            int numTetrahedrals = 0;
+            for (IStereoElement<?,?> se : mol.stereoElements()) {
+                if (se.getConfigClass() == IStereoElement.TH)
+                    numTetrahedrals++;
+            }
+            Assert.assertEquals(2, numTetrahedrals);
+        }
+
+        try (InputStream in = getClass().getResourceAsStream("stereo0d.mdl3");
+             MDLV3000Reader mdlr = new MDLV3000Reader(in)) {
+            mdlr.getSetting("AddStereo0d").setSetting("false");
+            IAtomContainer mol = mdlr.read(bldr.newAtomContainer());
+            int numTetrahedrals = 0;
+            for (IStereoElement<?,?> se : mol.stereoElements()) {
+                if (se.getConfigClass() == IStereoElement.TH)
+                    numTetrahedrals++;
+            }
+            Assert.assertEquals(0, numTetrahedrals);
+        }
+    }
 }

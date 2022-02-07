@@ -39,6 +39,7 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.ISingleElectron;
@@ -457,39 +458,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
             // create 0D stereochemistry
             if (optStereoPerc.isSet() && optStereo0d.isSet()) {
-                Parities:
                 for (Map.Entry<IAtom, Integer> e : parities.entrySet()) {
-                    int parity = e.getValue();
-                    if (parity != 1 && parity != 2)
-                        continue; // 3=unspec
-                    int idx = 0;
-                    IAtom focus = e.getKey();
-                    IAtom[] carriers = new IAtom[4];
-                    int hidx = -1;
-                    for (IAtom nbr : outputContainer.getConnectedAtomsList(focus)) {
-                        if (idx == 4)
-                            continue Parities; // too many neighbors
-                        if (nbr.getAtomicNumber() == 1) {
-                            if (hidx >= 0)
-                                continue Parities;
-                            hidx = idx;
-                        }
-                        carriers[idx++] = nbr;
-                    }
-                    // to few neighbors, or already have a hydrogen defined
-                    if (idx < 3 || idx < 4 && hidx >= 0)
-                        continue;
-                    if (idx == 3)
-                        carriers[idx++] = focus;
-
-                    if (idx == 4) {
-                        Stereo winding = parity == 1 ? Stereo.CLOCKWISE : Stereo.ANTI_CLOCKWISE;
-                        // H is always at back, even if explicit! At least this seems to be the case.
-                        // we adjust the winding as needed
-                        if (hidx == 0 || hidx == 2)
-                            winding = winding.invert();
-                        outputContainer.addStereoElement(new TetrahedralChirality(focus, carriers, winding));
-                    }
+                    IStereoElement<IAtom,IAtom> stereoElement
+                            = createStereo0d(outputContainer, e.getKey(), e.getValue());
+                    if (stereoElement != null)
+                        molecule.addStereoElement(stereoElement);
                 }
             }
 
@@ -558,6 +531,40 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         }
 
         return outputContainer;
+    }
+
+    static IStereoElement<IAtom, IAtom> createStereo0d(IAtomContainer mol, IAtom focus, int parity) {
+        if (parity != 1 && parity != 2)
+            return null; // 3=unspec
+        int numNbrs = 0;
+        IAtom[] carriers = new IAtom[4];
+        int idxOfHyd = -1;
+        for (IAtom nbr : mol.getConnectedAtomsList(focus)) {
+            if (numNbrs == 4)
+                return null; // too many neighbors
+            if (nbr.getAtomicNumber() == IElement.H) {
+                if (idxOfHyd >= 0)
+                    return null; // too many hydrogens
+                idxOfHyd = numNbrs;
+            }
+            carriers[numNbrs++] = nbr;
+        }
+        // incorrect number of neighbours?
+        if (numNbrs < 3 || numNbrs < 4 && idxOfHyd >= 0)
+            return null;
+        // implicit neighbour (H or lone-pair)
+        if (numNbrs == 3)
+            carriers[numNbrs++] = focus;
+        if (numNbrs != 4)
+            return null;
+
+        Stereo winding = parity == 1 ? Stereo.CLOCKWISE : Stereo.ANTI_CLOCKWISE;
+        // H is always at back, even if explicit! At least this seems to be the case.
+        // we adjust the winding as needed which is when the explict H is in slot
+        // 0 or 2 (odd number of swaps to get to index 3)
+        if (idxOfHyd == 0 || idxOfHyd == 2)
+            winding = winding.invert();
+        return new TetrahedralChirality(focus, carriers, winding);
     }
 
     private boolean is3Dfile(String program) {
