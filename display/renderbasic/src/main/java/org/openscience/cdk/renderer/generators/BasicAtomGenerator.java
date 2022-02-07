@@ -239,7 +239,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
      * @return      true, if the atom is a hydrogen, and false, otherwise.
      */
     protected boolean isHydrogen(IAtom atom) {
-        return "H".equals(atom.getSymbol());
+        return atom.getAtomicNumber() == IElement.H;
     }
 
     /**
@@ -249,7 +249,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
      * @return      true, if the atom is a carbon, and false, otherwise.
      */
     private boolean isCarbon(IAtom atom) {
-        return "C".equals(atom.getSymbol());
+        return atom.getAtomicNumber() == IElement.C;
     }
 
     /**

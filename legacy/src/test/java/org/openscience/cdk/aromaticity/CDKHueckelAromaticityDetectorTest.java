@@ -711,13 +711,13 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         // double bond locations may alter. So, we can expect things like in a 'diff': "BondDiff{order:SINGLE/DOUBLE}"
         // but, we should not see aromaticity differences
         for (IAtom atom : aromaticForm.atoms()) {
-            if ("C".equals(atom.getSymbol())) {
+            if (atom.getAtomicNumber() == IElement.C) {
                 Assert.assertEquals("C.sp2", atom.getAtomTypeName());
                 Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
             }
         }
         for (IAtom atom : kekuleForm.atoms()) {
-            if ("C".equals(atom.getSymbol())) {
+            if (atom.getAtomicNumber() == IElement.C) {
                 Assert.assertEquals("C.sp2", atom.getAtomTypeName());
                 Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
             }

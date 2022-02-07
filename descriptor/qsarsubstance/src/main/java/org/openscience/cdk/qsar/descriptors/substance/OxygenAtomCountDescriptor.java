@@ -76,7 +76,7 @@ public class OxygenAtomCountDescriptor implements ISubstanceDescriptor {
         if (substance != null) {
             for (IAtomContainer container : substance.atomContainers()) {
                 for (IAtom atom : container.atoms()) {
-                    if ("O".equals(atom.getSymbol()) || 8 == atom.getAtomicNumber())
+                    if (atom.getAtomicNumber() == IElement.O || 8 == atom.getAtomicNumber())
                         count++;
                 }
             }

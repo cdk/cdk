@@ -1547,7 +1547,7 @@ public class MolecularFormulaManipulator {
         int pcount = 0;
 
         for (IIsotope iso : mf.isotopes()) {
-            if ("H".equals(iso.getSymbol())) {
+            if (iso.getAtomicNumber() == IElement.H) {
                 final int count = mf.getIsotopeCount(iso);
                 if (count < hcnt)
                     continue;

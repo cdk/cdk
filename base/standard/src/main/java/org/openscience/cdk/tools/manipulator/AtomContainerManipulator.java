@@ -747,7 +747,7 @@ public class AtomContainerManipulator {
                             if (bondStereo != null && bondStereo != IBond.Stereo.NONE) addToRemove = false;
                             IAtom neighboursNeighbour = bond.getOther(neighbour);
                             // remove in any case if the hetero atom is connected to more than one hydrogen
-                            if ("H".equals(neighboursNeighbour.getSymbol()) && !neighboursNeighbour.equals(atom)) {
+                            if (neighboursNeighbour.getAtomicNumber() == IElement.H && !neighboursNeighbour.equals(atom)) {
                                 addToRemove = true;
                                 break;
                             }
@@ -877,7 +877,7 @@ public class AtomContainerManipulator {
 
         boolean anyHydrogenPresent = false;
         for (IAtom atom : org.atoms()) {
-            if ("H".equals(atom.getSymbol())) {
+            if (atom.getAtomicNumber() == IElement.H) {
                 anyHydrogenPresent = true;
                 break;
             }

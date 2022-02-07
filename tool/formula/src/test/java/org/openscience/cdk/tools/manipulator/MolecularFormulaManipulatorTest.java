@@ -805,9 +805,9 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         Assert.assertEquals(6, ac.getAtomCount());
         Assert.assertNotNull(ac.getAtom(0).getAtomicNumber());
         for (IAtom atom : ac.atoms()) {
-            if ("C".equals(atom.getSymbol()))
+            if (atom.getAtomicNumber() == IElement.C)
                 Assert.assertEquals(6, atom.getAtomicNumber().intValue());
-            else if ("H".equals(atom.getSymbol()))
+            else if (atom.getAtomicNumber() == IElement.H)
                 Assert.assertEquals(1, atom.getAtomicNumber().intValue());
             else
                 Assert.fail("Unexcepted element: " + atom.getSymbol());

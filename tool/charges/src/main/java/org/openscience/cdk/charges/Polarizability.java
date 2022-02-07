@@ -301,7 +301,7 @@ public class Polarizability {
         int hCounter = 0;
         for (IBond bond : bonds) {
             connectedAtom = bond.getOther(atom);
-            if ("H".equals(connectedAtom.getSymbol())) {
+            if (connectedAtom.getAtomicNumber() == IElement.H) {
                 hCounter += 1;
             }
         }
