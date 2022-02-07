@@ -33,6 +33,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.sgroup.Sgroup;
@@ -179,6 +180,48 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
                 assertNull(atom.getPoint2d());
                 assertNotNull(atom.getPoint3d());
             }
+        }
+    }
+
+    @Test public void massSpecification() throws Exception {
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("(methyl-13C)-cyclohexane.mdl3"))) {
+            IAtomContainer mol = reader.read(builder.newAtomContainer());
+            IAtom atom = mol.getAtom(6);
+            Assert.assertNotNull(atom.getMassNumber());
+            Assert.assertEquals(13, (int)atom.getMassNumber());
+        }
+    }
+
+    @Test public void hydIsotopes() throws Exception {
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("cyclohexane-d6.mdl3"))) {
+            IAtomContainer mol = reader.read(builder.newAtomContainer());
+            int nDeuterium = 0;
+            for (IAtom atom : mol.atoms()) {
+                if (atom.getAtomicNumber() == IElement.H) {
+                    if (atom.getMassNumber() != null && atom.getMassNumber() == 2)
+                        nDeuterium++;
+                }
+            }
+            Assert.assertEquals(6, nDeuterium);
+        }
+    }
+
+    // InterpretHydrogenIsotopes=false means D comes in as an IPseudoAtom
+    @Test public void hydIsotopesAsPseudo() throws Exception {
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        try (MDLV3000Reader reader = new MDLV3000Reader(getClass().getResourceAsStream("cyclohexane-d6.mdl3"))) {
+            reader.getSetting("InterpretHydrogenIsotopes").setSetting("false");
+            IAtomContainer mol = reader.read(builder.newAtomContainer());
+            int nDeuterium = 0;
+            for (IAtom atom : mol.atoms()) {
+                if (atom.getAtomicNumber() == IElement.H) {
+                    if (atom.getMassNumber() != null && atom.getMassNumber() == 2)
+                        nDeuterium++;
+                }
+            }
+            Assert.assertEquals(0, nDeuterium);
         }
     }
 

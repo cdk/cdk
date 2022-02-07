@@ -19,14 +19,14 @@
 package org.openscience.cdk.io;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.config.IsotopeFactory;
-import org.openscience.cdk.config.Isotopes;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStereoElement;
@@ -444,12 +444,6 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     public void readAtomBlock(ReadState state) throws CDKException {
         IAtomContainer readData = state.mol;
         logger.info("Reading ATOM block");
-        IsotopeFactory isotopeFactory;
-        try {
-            isotopeFactory = Isotopes.getInstance();
-        } catch (IOException exception) {
-            throw new CDKException("Could not initiate the IsotopeFactory.", exception);
-        }
 
         int RGroupCounter = 1;
         int Rnumber = 0;
@@ -476,9 +470,15 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 }
                 // parse the element
                 String element = tokenizer.nextToken();
-                if (isotopeFactory.isElement(element)) {
-                    atom.setSymbol(element);
-                    isotopeFactory.configure(atom); // ?
+                Elements e = Elements.ofString(element);
+                if (e != Elements.Unknown) {
+                    atom.setAtomicNumber(e.number());
+                } else if ("D".equals(element) && optHydIso.isSet()) {
+                    atom.setMassNumber(2);
+                    atom.setAtomicNumber((int)IElement.H);
+                } else if ("T".equals(element) && optHydIso.isSet()) {
+                    atom.setMassNumber(3);
+                    atom.setAtomicNumber((int)IElement.H);
                 } else if ("A".equals(element)) {
                     atom = readData.getBuilder().newInstance(IPseudoAtom.class, element);
                 } else if ("Q".equals(element)) {
@@ -562,6 +562,9 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                                         readData.addSingleElectron(readData.getBuilder()
                                                                            .newInstance(ISingleElectron.class, atom));
                                     }
+                                    break;
+                                case "MASS":
+                                    atom.setMassNumber(Integer.parseInt(value));
                                     break;
                                 case "VAL":
                                     if (!(atom instanceof IPseudoAtom)) {
