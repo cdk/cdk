@@ -478,7 +478,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
     protected boolean bindsHydrogen(IBond bond) {
         for (int i = 0; i < bond.getAtomCount(); i++) {
             IAtom atom = bond.getAtom(i);
-            if ("H".equals(atom.getSymbol())) return true;
+            if (atom.getAtomicNumber() == IElement.H) return true;
         }
         return false;
     }

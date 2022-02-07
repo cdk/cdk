@@ -1656,7 +1656,7 @@ public class StructureDiagramGenerator {
      */
     private static boolean isHydrogen(IAtom atom) {
         if (atom.getAtomicNumber() != null) return atom.getAtomicNumber() == 1;
-        return "H".equals(atom.getSymbol());
+        return atom.getAtomicNumber() == IElement.H;
     }
 
     /**

@@ -128,103 +128,103 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         if (atom instanceof IPseudoAtom) {
             return factory.getAtomType("X");
         }
-        if ("C".equals(atom.getSymbol())) {
+        if (atom.getAtomicNumber() == IElement.C) {
             type = perceiveCarbons(atomContainer, atom, searcher, connectedBonds);
-        } else if ("H".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.H) {
             type = perceiveHydrogens(atomContainer, atom, connectedBonds);
-        } else if ("O".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.O) {
             type = perceiveOxygens(atomContainer, atom, searcher, connectedBonds);
-        } else if ("N".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.N) {
             type = perceiveNitrogens(atomContainer, atom, searcher, connectedBonds);
-        } else if ("S".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.S) {
             type = perceiveSulphurs(atomContainer, atom, searcher, connectedBonds);
-        } else if ("P".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.P) {
             type = perceivePhosphors(atomContainer, atom, connectedBonds);
-        } else if ("Si".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Si) {
             type = perceiveSilicon(atomContainer, atom);
-        } else if ("Li".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Li) {
             type = perceiveLithium(atomContainer, atom);
-        } else if ("B".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.B) {
             type = perceiveBorons(atomContainer, atom);
-        } else if ("Be".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Be) {
             type = perceiveBeryllium(atomContainer, atom);
-        } else if ("Cr".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Cr) {
             type = perceiveChromium(atomContainer, atom);
-        } else if ("Se".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Se) {
             type = perceiveSelenium(atomContainer, atom, connectedBonds);
-        } else if ("Mo".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Mo) {
             type = perceiveMolybdenum(atomContainer, atom);
-        } else if ("Rb".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Rb) {
             type = perceiveRubidium(atomContainer, atom);
-        } else if ("Te".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Te) {
             type = perceiveTellurium(atomContainer, atom);
-        } else if ("Cu".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Cu) {
             type = perceiveCopper(atomContainer, atom);
-        } else if ("Ba".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Ba) {
             type = perceiveBarium(atomContainer, atom);
-        } else if ("Ga".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Ga) {
             type = perceiveGallium(atomContainer, atom);
-        } else if ("Ru".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Ru) {
             type = perceiveRuthenium(atomContainer, atom);
-        } else if ("Zn".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Zn) {
             type = perceiveZinc(atomContainer, atom);
-        } else if ("Al".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Al) {
             type = perceiveAluminium(atomContainer, atom);
-        } else if ("Ni".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Ni) {
             type = perceiveNickel(atomContainer, atom);
-        } else if ("Gd".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Gd) {
             type = perceiveGadolinum(atomContainer, atom);
-        } else if ("Ge".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Ge) {
             type = perceiveGermanium(atomContainer, atom);
-        } else if ("Co".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Co) {
             type = perceiveCobalt(atomContainer, atom);
-        } else if ("Br".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Br) {
             type = perceiveBromine(atomContainer, atom);
-        } else if ("V".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.V) {
             type = perceiveVanadium(atomContainer, atom);
-        } else if ("Ti".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Ti) {
             type = perceiveTitanium(atomContainer, atom);
-        } else if ("Sr".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Sr) {
             type = perceiveStrontium(atomContainer, atom);
-        } else if ("Pb".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Pb) {
             type = perceiveLead(atomContainer, atom);
-        } else if ("Tl".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Tl) {
             type = perceiveThallium(atomContainer, atom);
-        } else if ("Sb".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Sb) {
             type = perceiveAntimony(atomContainer, atom);
-        } else if ("Pt".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Pt) {
             type = perceivePlatinum(atomContainer, atom);
-        } else if ("Hg".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Hg) {
             type = perceiveMercury(atomContainer, atom);
-        } else if ("Fe".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Fe) {
             type = perceiveIron(atomContainer, atom);
-        } else if ("Ra".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Ra) {
             type = perceiveRadium(atomContainer, atom);
-        } else if ("Au".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Au) {
             type = perceiveGold(atomContainer, atom);
-        } else if ("Ag".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Ag) {
             type = perceiveSilver(atomContainer, atom);
-        } else if ("Cl".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Cl) {
             type = perceiveChlorine(atomContainer, atom, connectedBonds);
-        } else if ("In".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.In) {
             type = perceiveIndium(atomContainer, atom);
-        } else if ("Pu".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Pu) {
             type = perceivePlutonium(atomContainer, atom);
-        } else if ("Th".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Th) {
             type = perceiveThorium(atomContainer, atom);
-        } else if ("K".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.K) {
             type = perceivePotassium(atomContainer, atom);
-        } else if ("Mn".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Mn) {
             type = perceiveManganese(atomContainer, atom);
-        } else if ("Mg".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Mg) {
             type = perceiveMagnesium(atomContainer, atom);
-        } else if ("Na".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Na) {
             type = perceiveSodium(atomContainer, atom);
-        } else if ("As".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.As) {
             type = perceiveArsenic(atomContainer, atom);
-        } else if ("Cd".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Cd) {
             type = perceiveCadmium(atomContainer, atom);
-        } else if ("Ca".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Ca) {
             type = perceiveCalcium(atomContainer, atom);
         } else {
             if (type == null) type = perceiveHalogens(atomContainer, atom, connectedBonds);
@@ -268,7 +268,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     private IAtomType perceiveSelenium(IAtomContainer atomContainer, IAtom atom, List<IBond> connectedBonds) throws CDKException {
-        if ("Se".equals(atom.getSymbol())) {
+        if (atom.getAtomicNumber() == IElement.Se) {
         	if (connectedBonds == null) connectedBonds = atomContainer.getConnectedBondsList(atom);
         	int doublebondcount = countAttachedDoubleBonds(connectedBonds, atom);
             if (isCharge(atom, 0)) {
@@ -673,7 +673,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         int doubleBondedOxygenCount = 0;
         for (IBond cBond : carbonBonds) {
             IAtom neighbor = cBond.getOther(carbon);
-            if ("O".equals(neighbor.getSymbol())) {
+            if (neighbor.getAtomicNumber() == IElement.O) {
                 oxygenCount++;
                 IBond.Order order = cBond.getOrder();
                 Integer charge = neighbor.getFormalCharge();
@@ -1076,7 +1076,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     private IAtomType perceiveIron(IAtomContainer atomContainer, IAtom atom) throws CDKException {
-        if ("Fe".equals(atom.getSymbol())) {
+        if (atom.getAtomicNumber() == IElement.Fe) {
             if (hasOneSingleElectron(atomContainer, atom)) {
                 // no idea how to deal with this yet
                 return null;
@@ -1156,7 +1156,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     private IAtomType perceiveMercury(IAtomContainer atomContainer, IAtom atom) throws CDKException {
-        if ("Hg".equals(atom.getSymbol())) {
+        if (atom.getAtomicNumber() == IElement.Hg) {
             if (hasOneSingleElectron(atomContainer, atom)) {
                 // no idea how to deal with this yet
                 return null;
@@ -1445,7 +1445,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 
     private IAtomType perceiveHalogens(IAtomContainer atomContainer, IAtom atom, List<IBond> connectedBonds) throws CDKException {
     	if (connectedBonds == null) connectedBonds = atomContainer.getConnectedBondsList(atom);
-        if ("F".equals(atom.getSymbol())) {
+        if (atom.getAtomicNumber() == IElement.F) {
             if (hasOneSingleElectron(atomContainer, atom)) {
                 if (connectedBonds.size() == 0) {
                     if (isCharge(atom, +1)) {
@@ -1481,7 +1481,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 IAtomType type = getAtomType("F");
                 if (isAcceptable(atom, atomContainer, type, connectedBonds)) return type;
             }
-        } else if ("I".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.I) {
             return perceiveIodine(atomContainer, atom, connectedBonds);
         }
 
@@ -1531,7 +1531,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     private IAtomType perceiveThorium(IAtomContainer atomContainer, IAtom atom) throws CDKException {
-        if ("Th".equals(atom.getSymbol())) {
+        if (atom.getAtomicNumber() == IElement.Th) {
             if (isCharge(atom, 0) && atomContainer.getConnectedBondsCount(atom) == 0) {
                 IAtomType type = getAtomType("Th");
                 if (isAcceptable(atom, atomContainer, type)) {
@@ -1560,7 +1560,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     private IAtomType perceiveCommonSalts(IAtomContainer atomContainer, IAtom atom) throws CDKException {
-        if ("Mg".equals(atom.getSymbol())) {
+        if (atom.getAtomicNumber() == IElement.Mg) {
             if (hasOneSingleElectron(atomContainer, atom)) {
                 // no idea how to deal with this yet
                 return null;
@@ -1568,7 +1568,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 IAtomType type = getAtomType("Mg.2plus");
                 if (isAcceptable(atom, atomContainer, type)) return type;
             }
-        } else if ("Co".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Co) {
             if (hasOneSingleElectron(atomContainer, atom)) {
                 // no idea how to deal with this yet
                 return null;
@@ -1582,7 +1582,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 IAtomType type = getAtomType("Co.metallic");
                 if (isAcceptable(atom, atomContainer, type)) return type;
             }
-        } else if ("W".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.W) {
             if (hasOneSingleElectron(atomContainer, atom)) {
                 // no idea how to deal with this yet
                 return null;
@@ -1711,7 +1711,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             if (isAcceptable(atom, atomContainer, type)) {
                 return type;
             }
-        } else if ("Cr".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Cr) {
             if (isCharge(atom, 3)
                     && atomContainer.getConnectedBondsCount(atom) == 0) {
                 IAtomType type = getAtomType("Cr.3plus");
@@ -1724,7 +1724,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     private IAtomType perceiveOrganometallicCenters(IAtomContainer atomContainer, IAtom atom) throws CDKException {
-        if ("Po".equals(atom.getSymbol())) {
+        if (atom.getAtomicNumber() == IElement.Po) {
             if (hasOneSingleElectron(atomContainer, atom)) {
                 // no idea how to deal with this yet
                 return null;
@@ -1732,7 +1732,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 IAtomType type = getAtomType("Po");
                 if (isAcceptable(atom, atomContainer, type)) return type;
             }
-        } else if ("Sn".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Sn) {
             if (hasOneSingleElectron(atomContainer, atom)) {
                 // no idea how to deal with this yet
                 return null;
@@ -1741,7 +1741,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 IAtomType type = getAtomType("Sn.sp3");
                 if (isAcceptable(atom, atomContainer, type)) return type;
             }
-        } else if ("Sc".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Sc) {
             if (isCharge(atom, -3)
                     && atomContainer.getConnectedBondsCount(atom) == 6) {
                 IAtomType type = getAtomType("Sc.3minus");
@@ -1783,7 +1783,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     private IAtomType perceiveNobelGases(IAtomContainer atomContainer, IAtom atom) throws CDKException {
-        if ("He".equals(atom.getSymbol())) {
+        if (atom.getAtomicNumber() == IElement.He) {
             if (hasOneSingleElectron(atomContainer, atom)) {
                 // no idea how to deal with this yet
                 return null;
@@ -1791,7 +1791,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 IAtomType type = getAtomType("He");
                 if (isAcceptable(atom, atomContainer, type)) return type;
             }
-        } else if ("Ne".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Ne) {
             if (hasOneSingleElectron(atomContainer, atom)) {
                 // no idea how to deal with this yet
                 return null;
@@ -1799,7 +1799,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 IAtomType type = getAtomType("Ne");
                 if (isAcceptable(atom, atomContainer, type)) return type;
             }
-        } else if ("Ar".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Ar) {
             if (hasOneSingleElectron(atomContainer, atom)) {
                 // no idea how to deal with this yet
                 return null;
@@ -1807,7 +1807,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 IAtomType type = getAtomType("Ar");
                 if (isAcceptable(atom, atomContainer, type)) return type;
             }
-        } else if ("Kr".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Kr) {
             if (hasOneSingleElectron(atomContainer, atom)) {
                 // no idea how to deal with this yet
                 return null;
@@ -1815,7 +1815,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 IAtomType type = getAtomType("Kr");
                 if (isAcceptable(atom, atomContainer, type)) return type;
             }
-        } else if ("Xe".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Xe) {
             if (hasOneSingleElectron(atomContainer, atom)) {
                 // no idea how to deal with this yet
                 return null;
@@ -1828,7 +1828,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                     if (isAcceptable(atom, atomContainer, type)) return type;
                 }
             }
-        } else if ("Rn".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Rn) {
             if (hasOneSingleElectron(atomContainer, atom)) {
                 // no idea how to deal with this yet
                 return null;
@@ -2149,7 +2149,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     private IAtomType perceiveCalcium(IAtomContainer atomContainer, IAtom atom) throws CDKException {
-        if ("Ca".equals(atom.getSymbol())) {
+        if (atom.getAtomicNumber() == IElement.Ca) {
             if (hasOneSingleElectron(atomContainer, atom)) {
                 // no idea how to deal with this yet
                 return null;

@@ -614,7 +614,7 @@ public class Convertor {
                     Iterator<IAtom> atoms = (bonds.next()).atoms().iterator();
                     while (atoms.hasNext()) {
                         IAtom atom = atoms.next();
-                        if ("H".equals(atom.getSymbol()) && !Objects.equals(atom, cdkAtom)) totalHydrogen++;
+                        if (atom.getAtomicNumber() == IElement.H && !Objects.equals(atom, cdkAtom)) totalHydrogen++;
                     }
                 }
             } // else: it is the implicit hydrogen count

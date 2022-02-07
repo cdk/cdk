@@ -112,13 +112,13 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
     @Override
     public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom) throws CDKException {
         IAtomType type = cdkMatcher.findMatchingAtomType(atomContainer, atom);
-        if ("Cr".equals(atom.getSymbol())) {
+        if (atom.getAtomicNumber() == IElement.Cr) {
             // if only I had good descriptions of the Sybyl atom types
             int neighbors = atomContainer.getConnectedBondsCount(atom);
             if (neighbors > 4 && neighbors <= 6)
                 return factory.getAtomType("Cr.oh");
             else if (neighbors > 0) return factory.getAtomType("Cr.th");
-        } else if ("Co".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() == IElement.Co) {
             // if only I had good descriptions of the Sybyl atom types
             int neibors = atomContainer.getConnectedBondsCount(atom);
             if (neibors == 6) return factory.getAtomType("Co.oh");
@@ -142,7 +142,7 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
         if (neighbors.size() != 1) return false;
         IBond neighbor = neighbors.get(0);
         IAtom neighborAtom = neighbor.getOther(atom);
-        if ("C".equals(neighborAtom.getSymbol())) {
+        if (neighborAtom.getAtomicNumber() == IElement.C) {
             if (neighbor.getOrder() == IBond.Order.SINGLE) {
                 if (countAttachedBonds(atomContainer, neighborAtom, IBond.Order.DOUBLE, "O") == 1) return true;
             } else if (neighbor.getOrder() == IBond.Order.DOUBLE) {
@@ -157,7 +157,7 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
         if (neighbors.size() != 3) return false;
         int oxygenCount = 0;
         for (IAtom neighbor : neighbors)
-            if ("O".equals(neighbor.getSymbol())) oxygenCount++;
+            if (neighbor.getAtomicNumber() == IElement.O) oxygenCount++;
         return (oxygenCount == 2);
     }
 

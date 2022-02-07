@@ -69,7 +69,7 @@ abstract class AtomSuppression {
             BitSet hydrogens = new BitSet();
             for (int i = 0; i < container.getAtomCount(); i++) {
                 IAtom atom = container.getAtom(i);
-                hydrogens.set(i, "H".equals(atom.getSymbol()));
+                hydrogens.set(i, atom.getAtomicNumber() == IElement.H);
             }
             return Suppressed.fromBitSet(hydrogens);
         }

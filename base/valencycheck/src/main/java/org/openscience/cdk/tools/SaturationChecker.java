@@ -611,7 +611,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
         int missingHydrogen = 0;
         if (atom instanceof IPseudoAtom) {
             // don't figure it out... it simply does not lack H's
-        } else if (atom.getAtomicNumber() != null && atom.getAtomicNumber() == 1 || "H".equals(atom.getSymbol())) {
+        } else if (atom.getAtomicNumber() != null && atom.getAtomicNumber() == 1 || atom.getAtomicNumber() == IElement.H) {
             missingHydrogen = (int) (1 - bondOrderSum - singleElectronSum - atom.getFormalCharge());
         } else {
             logger.info("Calculating number of missing hydrogen atoms");

@@ -138,7 +138,7 @@ public class HuLuIndexTool {
             }
 
             //weightArray[k] = atom.getValenceElectronsCount() - atom.getHydrogenCount(); // method unfinished
-            if ("O".equals(atom.getSymbol()))
+            if (atom.getAtomicNumber() == IElement.O)
                 weightArray[i] = 6 - atom.getImplicitHydrogenCount();
             else
                 weightArray[i] = 4 - atom.getImplicitHydrogenCount();

@@ -473,7 +473,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 
                 // firstly check if it's a numbered R group
                 Matcher matcher = NUMERED_R_GROUP.matcher(label);
-                if ("R".equals(pseudoAtom.getSymbol()) && !label.isEmpty() && matcher.matches()) {
+                if (pseudoAtom.getAtomicNumber() == IElement.R && !label.isEmpty() && matcher.matches()) {
 
                     line.append("R# ");
                     if (rgroups == null) {
