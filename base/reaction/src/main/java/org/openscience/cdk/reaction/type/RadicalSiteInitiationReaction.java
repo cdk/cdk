@@ -24,6 +24,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionProcess;
@@ -148,7 +149,7 @@ public class RadicalSiteInitiationReaction extends ReactionEngine implements IRe
                                         && bondj.getOrder() == IBond.Order.SINGLE) {
 
                                     IAtom atomk = bondj.getOther(atomj);
-                                    if (atomk.getFlag(CDKConstants.REACTIVE_CENTER) && atomk.getSymbol().equals("C")
+                                    if (atomk.getFlag(CDKConstants.REACTIVE_CENTER) && atomk.getAtomicNumber() == IElement.C
                                             && atomk.getFormalCharge() == 0) {
 
                                         ArrayList<IAtom> atomList = new ArrayList<IAtom>();
@@ -220,7 +221,7 @@ public class RadicalSiteInitiationReaction extends ReactionEngine implements IRe
                                 if (bondj.getOrder() == IBond.Order.SINGLE) {
 
                                     IAtom atomk = bondj.getOther(atomj);
-                                    if (atomk.getSymbol().equals("C") && atomk.getFormalCharge() == 0) {
+                                    if (atomk.getAtomicNumber() == IElement.C && atomk.getFormalCharge() == 0) {
                                         atomi.setFlag(CDKConstants.REACTIVE_CENTER, true);
                                         atomj.setFlag(CDKConstants.REACTIVE_CENTER, true);
                                         atomk.setFlag(CDKConstants.REACTIVE_CENTER, true);

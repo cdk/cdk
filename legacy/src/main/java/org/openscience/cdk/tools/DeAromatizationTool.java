@@ -28,6 +28,7 @@ import java.util.List;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Element;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.IAtom;
@@ -100,7 +101,7 @@ public class DeAromatizationTool {
         if (ring.getBondCount() != 5) return false;
         for (int i = 0; i < ring.getAtomCount(); i++) {
             IAtom atom = ring.getAtom(i);
-            if (atom.getSymbol().equals("N")) {
+            if (atom.getAtomicNumber() == IElement.N) {
                 int done = 0;
                 IBond bond = null;
                 int count = 0;

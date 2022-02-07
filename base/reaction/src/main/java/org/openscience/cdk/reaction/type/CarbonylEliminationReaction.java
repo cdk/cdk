@@ -24,6 +24,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionProcess;
@@ -125,7 +126,7 @@ public class CarbonylEliminationReaction extends ReactionEngine implements IReac
         Iterator<IAtom> atomis = reactant.atoms().iterator();
         while (atomis.hasNext()) {
             IAtom atomi = atomis.next();
-            if (atomi.getFlag(CDKConstants.REACTIVE_CENTER) && atomi.getSymbol().equals("O")
+            if (atomi.getFlag(CDKConstants.REACTIVE_CENTER) && atomi.getAtomicNumber() == IElement.O
                     && atomi.getFormalCharge() == 1) {
 
                 Iterator<IBond> bondis = reactant.getConnectedBondsList(atomi).iterator();
@@ -192,7 +193,7 @@ public class CarbonylEliminationReaction extends ReactionEngine implements IReac
         Iterator<IAtom> atomis = reactant.atoms().iterator();
         while (atomis.hasNext()) {
             IAtom atomi = atomis.next();
-            if (atomi.getSymbol().equals("O") && atomi.getFormalCharge() == 1) {
+            if (atomi.getAtomicNumber() == IElement.O && atomi.getFormalCharge() == 1) {
 
                 Iterator<IBond> bondis = reactant.getConnectedBondsList(atomi).iterator();
                 while (bondis.hasNext()) {

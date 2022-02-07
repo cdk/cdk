@@ -24,6 +24,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionProcess;
@@ -152,7 +153,7 @@ public class HyperconjugationReaction extends ReactionEngine implements IReactio
                                     if (atomk.getFlag(CDKConstants.REACTIVE_CENTER)
                                             && reactant.getConnectedSingleElectronsCount(atomk) == 0
                                             && (atomk.getFormalCharge() == CDKConstants.UNSET ? 0 : atomk
-                                                    .getFormalCharge()) == 0 && atomk.getSymbol().equals("H")) {
+                                                    .getFormalCharge()) == 0 && atomk.getAtomicNumber() == IElement.H) {
 
                                         ArrayList<IAtom> atomList = new ArrayList<IAtom>();
                                         atomList.add(atomi);
@@ -220,7 +221,7 @@ public class HyperconjugationReaction extends ReactionEngine implements IReactio
                                     IAtom atomk = bondj.getOther(atomj);
                                     if (reactant.getConnectedSingleElectronsCount(atomk) == 0
                                             && (atomk.getFormalCharge() == CDKConstants.UNSET ? 0 : atomk
-                                                    .getFormalCharge()) == 0 && atomk.getSymbol().equals("H")) {
+                                                    .getFormalCharge()) == 0 && atomk.getAtomicNumber() == IElement.H) {
 
                                         atomi.setFlag(CDKConstants.REACTIVE_CENTER, true);
                                         atomj.setFlag(CDKConstants.REACTIVE_CENTER, true);

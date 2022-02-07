@@ -25,6 +25,7 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
@@ -990,15 +991,15 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
         Set<IAtom> chlorines = new HashSet<>();
         Set<IAtom> oxygens = new HashSet<>();
         for (IAtom atom : mol.atoms()) {
-            if (atom.getSymbol().equals("Cl"))
+            if (atom.getAtomicNumber() == IElement.Cl)
                 chlorines.add(atom);
-            else if (atom.getSymbol().equals("O"))
+            else if (atom.getAtomicNumber() == IElement.O)
                 oxygens.add(atom);
-            else if (atom.getSymbol().equals("Al"))
+            else if (atom.getAtomicNumber() == IElement.Al)
                 aluminiums.add(atom);
-            else if (atom.getSymbol().equals("K"))
+            else if (atom.getAtomicNumber() == IElement.K)
                 potassiums.add(atom);
-            else if (atom.getSymbol().equals("Pt"))
+            else if (atom.getAtomicNumber() == IElement.Pt)
                 platinum = atom;
         }
 

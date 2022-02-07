@@ -1298,7 +1298,7 @@ public class MolecularFormulaManipulator {
     public static List<IElement> getHeavyElements(IMolecularFormula formula) {
         List<IElement> newEle = new ArrayList<IElement>();
         for (IElement element : elements(formula)) {
-            if (!element.getSymbol().equals("H")) {
+            if (element.getAtomicNumber() != IElement.H) {
                 newEle.add(element);
             }
         }

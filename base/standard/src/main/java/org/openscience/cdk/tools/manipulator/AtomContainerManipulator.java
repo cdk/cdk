@@ -768,7 +768,7 @@ public class AtomContainerManipulator {
             if (stereoElement instanceof ITetrahedralChirality) {
                 ITetrahedralChirality tetChirality = (ITetrahedralChirality) stereoElement;
                 for (IAtom atom : tetChirality.getLigands()) {
-                    if (atom.getSymbol().equals("H") && remove.contains(atom)) {
+                    if (atom.getAtomicNumber() == IElement.H && remove.contains(atom)) {
                         remove.remove(atom);
                         addClone(atom, cpy, map);
                     }

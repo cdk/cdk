@@ -28,6 +28,7 @@ import java.io.InputStream;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
@@ -159,7 +160,7 @@ public class BremserPredictorTest extends CDKTestCase {
 
         do {
             atom = ac.getAtom(f);
-            if (atom.getSymbol().equals("H")) {
+            if (atom.getAtomicNumber() == IElement.H) {
                 ac.removeAtom(atom);
             }
             f--;

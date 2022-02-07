@@ -29,6 +29,7 @@ import java.util.Iterator;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.geometry.GeometryUtil;
@@ -123,7 +124,7 @@ public class CML2Test extends CDKTestCase {
         Iterator<IAtom> atoms = mol.atoms().iterator();
         while (atoms.hasNext()) {
             org.openscience.cdk.interfaces.IAtom atom = atoms.next();
-            if (atom.getSymbol().equals("Na")) Assert.assertEquals(+1, atom.getFormalCharge().intValue());
+            if (atom.getAtomicNumber() == IElement.Na) Assert.assertEquals(+1, atom.getFormalCharge().intValue());
         }
     }
 
@@ -157,7 +158,7 @@ public class CML2Test extends CDKTestCase {
         Iterator<IAtom> atoms = mol.atoms().iterator();
         while (atoms.hasNext()) {
             org.openscience.cdk.interfaces.IAtom atom = atoms.next();
-            if (atom.getSymbol().equals("N")) Assert.assertEquals(+1, atom.getFormalCharge().intValue());
+            if (atom.getAtomicNumber() == IElement.N) Assert.assertEquals(+1, atom.getFormalCharge().intValue());
         }
     }
 

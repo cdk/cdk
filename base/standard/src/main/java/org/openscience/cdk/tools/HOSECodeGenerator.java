@@ -39,6 +39,7 @@ import org.openscience.cdk.graph.invariant.CanonicalLabeler;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -334,7 +335,7 @@ public class HOSECodeGenerator implements java.io.Serializable {
         for (int i = 0; i < conAtoms.size(); i++) {
             try {
                 atom = conAtoms.get(i);
-                if (atom.getSymbol().equals("H")) continue;
+                if (atom.getAtomicNumber() == IElement.H) continue;
                 bond = atomContainer.getBond(root, atom);
                 /*
                  * In the first sphere the atoms are labeled with their own atom
@@ -386,7 +387,7 @@ public class HOSECodeGenerator implements java.io.Serializable {
             treeNode = (TreeNode) sphereNodes.get(i);
             if (!("&;#:,".indexOf(treeNode.symbol) >= 0)) {
                 node = treeNode.atom;
-                if (node.getSymbol().equals("H")) continue;
+                if (node.getAtomicNumber() == IElement.H) continue;
 
                 conAtoms = atomContainer.getConnectedAtomsList(node);
                 if (conAtoms.size() == 1) {

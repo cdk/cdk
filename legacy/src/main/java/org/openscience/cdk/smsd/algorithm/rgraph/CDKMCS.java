@@ -61,6 +61,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
@@ -1095,21 +1096,21 @@ public class CDKMCS {
 
         for (int i = 0; i < ac1.getAtomCount(); i++) {
             atom = ac1.getAtom(i);
-            if (atom.getSymbol().equals("S")) {
+            if (atom.getAtomicNumber() == IElement.S) {
                 ac1SCount++;
-            } else if (atom.getSymbol().equals("N")) {
+            } else if (atom.getAtomicNumber() == IElement.N) {
                 ac1NCount++;
-            } else if (atom.getSymbol().equals("O")) {
+            } else if (atom.getAtomicNumber() == IElement.O) {
                 ac1OCount++;
-            } else if (atom.getSymbol().equals("F")) {
+            } else if (atom.getAtomicNumber() == IElement.F) {
                 ac1FCount++;
-            } else if (atom.getSymbol().equals("Cl")) {
+            } else if (atom.getAtomicNumber() == IElement.Cl) {
                 ac1ClCount++;
-            } else if (atom.getSymbol().equals("Br")) {
+            } else if (atom.getAtomicNumber() == IElement.Br) {
                 ac1BrCount++;
-            } else if (atom.getSymbol().equals("I")) {
+            } else if (atom.getAtomicNumber() == IElement.I) {
                 ac1ICount++;
-            } else if (atom.getSymbol().equals("C")) {
+            } else if (atom.getAtomicNumber() == IElement.C) {
                 ac1CCount++;
             }
         }
@@ -1118,21 +1119,21 @@ public class CDKMCS {
             if (atom instanceof IQueryAtom) {
                 continue;
             }
-            if (atom.getSymbol().equals("S")) {
+            if (atom.getAtomicNumber() == IElement.S) {
                 ac2SCount++;
-            } else if (atom.getSymbol().equals("N")) {
+            } else if (atom.getAtomicNumber() == IElement.N) {
                 ac2NCount++;
-            } else if (atom.getSymbol().equals("O")) {
+            } else if (atom.getAtomicNumber() == IElement.O) {
                 ac2OCount++;
-            } else if (atom.getSymbol().equals("F")) {
+            } else if (atom.getAtomicNumber() == IElement.F) {
                 ac2FCount++;
-            } else if (atom.getSymbol().equals("Cl")) {
+            } else if (atom.getAtomicNumber() == IElement.Cl) {
                 ac2ClCount++;
-            } else if (atom.getSymbol().equals("Br")) {
+            } else if (atom.getAtomicNumber() == IElement.Br) {
                 ac2BrCount++;
-            } else if (atom.getSymbol().equals("I")) {
+            } else if (atom.getAtomicNumber() == IElement.I) {
                 ac2ICount++;
-            } else if (atom.getSymbol().equals("C")) {
+            } else if (atom.getAtomicNumber() == IElement.C) {
                 ac2CCount++;
             }
         }

@@ -23,6 +23,7 @@ import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
@@ -64,7 +65,7 @@ public class CDKUtilities {
         try {
             for (int i = 0; i <= m.getAtomCount() - 1; i++) {
                 IAtom a = m.getAtom(i);
-                if (a.getSymbol().equals("N")) {
+                if (a.getAtomicNumber() == IElement.N) {
                     List<IAtom> ca = m.getConnectedAtomsList(a);
 
                     if (ca.size() == 3) {
@@ -74,7 +75,7 @@ public class CDKUtilities {
                         int count = 0;
 
                         for (int j = 0; j <= 2; j++) {
-                            if (((IAtom) ca.get(j)).getSymbol().equals("O")) {
+                            if (((IAtom) ca.get(j)).getAtomicNumber() == IElement.O) {
                                 count++;
                             }
                         }
@@ -84,7 +85,7 @@ public class CDKUtilities {
                             count = 0;
                             for (int j = 0; j <= 2; j++) {
                                 IAtom caj = (IAtom) ca.get(j);
-                                if (caj.getSymbol().equals("O")) {
+                                if (caj.getAtomicNumber() == IElement.O) {
                                     if (m.getConnectedBondsCount(caj) == 1) {// account for possibility of ONO2
                                         cao[count] = caj;
                                         count++;
@@ -124,7 +125,7 @@ public class CDKUtilities {
         try {
             for (int i = 0; i <= m.getAtomCount() - 1; i++) {
                 IAtom a = m.getAtom(i);
-                if (a.getSymbol().equals("N")) {
+                if (a.getAtomicNumber() == IElement.N) {
                     List<IAtom> ca = m.getConnectedAtomsList(a);
 
                     if (ca.size() == 3) {
@@ -135,7 +136,7 @@ public class CDKUtilities {
 
                         for (int j = 0; j <= 2; j++) {
                             IAtom caj = ca.get(j);
-                            if (caj.getSymbol().equals("O")) {
+                            if (caj.getAtomicNumber() == IElement.O) {
                                 count++;
                             }
                         }
@@ -145,7 +146,7 @@ public class CDKUtilities {
                             count = 0;
                             for (int j = 0; j <= 2; j++) {
                                 IAtom caj = (IAtom) ca.get(j);
-                                if (caj.getSymbol().equals("O")) {
+                                if (caj.getAtomicNumber() == IElement.O) {
                                     if (m.getConnectedBondsCount(caj) == 1) {// account for possibility of ONO2
                                         cao[count] = caj;
                                         count++;
@@ -246,14 +247,14 @@ public class CDKUtilities {
         for (int i = 0; i <= m.getAtomCount() - 1; i++) {
             IAtom a = m.getAtom(i);
 
-            if (a.getSymbol().equals("S")) {
+            if (a.getAtomicNumber() == IElement.S) {
                 List<IAtom> connectedAtoms = m.getConnectedAtomsList(a);
 
                 int bondOrderSum = 0;
 
                 for (int j = 0; j < connectedAtoms.size(); j++) {
                     IAtom conAtom = connectedAtoms.get(j);
-                    if (!conAtom.getSymbol().equals("H")) {
+                    if (conAtom.getAtomicNumber() != IElement.H) {
                         IBond bond = m.getBond(a, conAtom);
                         if (bond.getOrder() == IBond.Order.SINGLE) {
                             bondOrderSum += 1;
@@ -270,7 +271,7 @@ public class CDKUtilities {
                 if (bondOrderSum > 1) {
                     for (int j = 0; j < connectedAtoms.size(); j++) {
                         IAtom conAtom = (IAtom) connectedAtoms.get(j);
-                        if (conAtom.getSymbol().equals("H")) {
+                        if (conAtom.getAtomicNumber() == IElement.H) {
                             m.removeAtom(conAtom);
                         }
                     }

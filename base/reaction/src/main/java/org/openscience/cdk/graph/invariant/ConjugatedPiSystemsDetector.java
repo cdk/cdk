@@ -158,7 +158,7 @@ public class ConjugatedPiSystemsDetector {
             if (se == 1) {
                 check = 0; //// DETECTION of radicals
             } else if (ac.getConnectedLonePairsCount(currentAtom) > 0
-            /* && (currentAtom.getSymbol().equals("N") */) {
+            /* && (currentAtom.getAtomicNumber() == IElement.N */) {
                 check = 0; //// DETECTION of  lone pair
             } else {
                 int highOrderBondCount = 0;

@@ -24,6 +24,7 @@ import org.junit.experimental.categories.Category;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -631,9 +632,9 @@ public class SmilesGeneratorTest extends CDKTestCase {
             atom = mol.getAtom(f);
             bondCount = mol.getBondOrderSum(atom);
             int correction = (int) bondCount - (atom.getCharge() != null ? atom.getCharge().intValue() : 0);
-            if (atom.getSymbol().equals("C")) {
+            if (atom.getAtomicNumber() == IElement.C) {
                 atom.setImplicitHydrogenCount(4 - correction);
-            } else if (atom.getSymbol().equals("N")) {
+            } else if (atom.getAtomicNumber() == IElement.N) {
                 atom.setImplicitHydrogenCount(3 - correction);
             }
         }

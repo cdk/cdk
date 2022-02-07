@@ -20,6 +20,7 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IElement;
 
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class HydrogenAtom extends SMARTSAtom {
      */
     @Override
     public boolean matches(IAtom atom) {
-        if (!atom.getSymbol().equals("H")) {
+        if (atom.getAtomicNumber() != IElement.H) {
             return false;
         }
 
@@ -57,7 +58,7 @@ public class HydrogenAtom extends SMARTSAtom {
         // hydrogens connected to other hydrogens, e.g., molecular hydrogen
         List<IAtom> list = invariants(atom).target().getConnectedAtomsList(atom);
         for (IAtom connAtom : list) {
-            if (connAtom.getSymbol().equals("H")) {
+            if (connAtom.getAtomicNumber() == IElement.H) {
                 return true;
             }
         }

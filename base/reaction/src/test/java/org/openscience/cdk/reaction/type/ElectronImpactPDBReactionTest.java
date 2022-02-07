@@ -29,6 +29,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionProcessTest;
@@ -102,7 +103,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
             IBond bond = (IBond) bonds.next();
             IAtom atom1 = bond.getBegin();
             IAtom atom2 = bond.getEnd();
-            if (bond.getOrder() == IBond.Order.DOUBLE && atom1.getSymbol().equals("C") && atom2.getSymbol().equals("C")) {
+            if (bond.getOrder() == IBond.Order.DOUBLE && atom1.getAtomicNumber() == IElement.C && atom2.getAtomicNumber() == IElement.C) {
                 bond.setFlag(CDKConstants.REACTIVE_CENTER, true);
                 atom1.setFlag(CDKConstants.REACTIVE_CENTER, true);
                 atom2.setFlag(CDKConstants.REACTIVE_CENTER, true);

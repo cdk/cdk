@@ -44,6 +44,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IRing;
@@ -187,7 +188,7 @@ public class SMSDNormalizer extends AtomContainerManipulator {
         int hCount = 0;
         for (IAtom iAtom : atomContainer.getConnectedAtomsList(atom)) {
             IAtom connectedAtom = iAtom;
-            if (connectedAtom.getSymbol().equals("H")) {
+            if (connectedAtom.getAtomicNumber() == IElement.H) {
                 hCount++;
             }
         }
@@ -232,7 +233,7 @@ public class SMSDNormalizer extends AtomContainerManipulator {
             for (int i = 0; i < count; i++) {
                 // Clone/remove this atom?
                 IAtom atom = atomContainer.getAtom(i);
-                if (!atom.getSymbol().equals("H")) {
+                if (atom.getAtomicNumber() != IElement.H) {
                     IAtom clonedAtom = null;
                     try {
                         clonedAtom = (IAtom) atom.clone();

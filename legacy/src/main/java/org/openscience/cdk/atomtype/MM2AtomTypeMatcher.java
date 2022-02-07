@@ -29,6 +29,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.tools.AtomTypeTools;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -151,7 +152,7 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
                         }
                     }
 
-                    if (atom.getSymbol().equals("S")) {
+                    if (atom.getAtomicNumber() == IElement.S) {
                         if (atomChemicalGroupConstant == AtomTypeTools.THIOPHENE_RING) {
                             ID = "Sthi";
                         } else {

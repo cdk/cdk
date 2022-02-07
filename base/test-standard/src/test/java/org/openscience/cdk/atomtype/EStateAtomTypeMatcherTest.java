@@ -26,6 +26,7 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
@@ -364,7 +365,7 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
         Iterator<IAtom> atoms = mol.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
-            if (atom.getSymbol().equals("C")) {
+            if (atom.getAtomicNumber() == IElement.C) {
                 Assert.assertTrue(testAtom("SaaCH", atom));
             }
         }

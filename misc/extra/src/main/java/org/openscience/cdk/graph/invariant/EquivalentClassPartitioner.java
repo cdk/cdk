@@ -28,6 +28,7 @@ import org.openscience.cdk.graph.matrix.ConnectionMatrix;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -256,13 +257,13 @@ public class EquivalentClassPartitioner {
                     logger.debug("in case of a new node, " + "please report this bug to cdk-devel@lists.sf.net.");
                 }
             } else if (bonds.size() == 4) {
-                if (atom.getSymbol().equals("C"))
+                if (atom.getAtomicNumber() == IElement.C)
                     nodeSequence[i] = 7;// >C<
-                else if (atom.getSymbol().equals("N"))
+                else if (atom.getAtomicNumber() == IElement.N)
                     nodeSequence[i] = 24;// >N(=)-
-                else if (atom.getSymbol().equals("S"))
+                else if (atom.getAtomicNumber() == IElement.S)
                     nodeSequence[i] = 36;// >S(=)=
-                else if (atom.getSymbol().equals("P"))
+                else if (atom.getAtomicNumber() == IElement.P)
                     nodeSequence[i] = 41;// =P<-
                 else {
                     logger.debug("in case of a new node, " + "please report this bug to cdk-devel@lists.sf.net.");

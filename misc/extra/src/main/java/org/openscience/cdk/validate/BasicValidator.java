@@ -124,8 +124,8 @@ public class BasicValidator extends AbstractValidator {
     private ValidationReport validateCharge(IAtom atom) {
         ValidationReport report = new ValidationReport();
         ValidationTest tooCharged = new ValidationTest(atom, "Atom has an unlikely large positive or negative charge");
-        if (atom.getSymbol().equals("O") || atom.getSymbol().equals("N") || atom.getSymbol().equals("C")
-                || atom.getSymbol().equals("H")) {
+        if (atom.getAtomicNumber() == IElement.O || atom.getAtomicNumber() == IElement.N || atom.getAtomicNumber() == IElement.C
+                || atom.getAtomicNumber() == IElement.H) {
             if (atom.getFormalCharge() == 0) {
                 report.addOK(tooCharged);
             } else {

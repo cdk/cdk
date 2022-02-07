@@ -761,13 +761,13 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         int hCount = 0;
         Iterator<IAtom> neighbors = mol.getConnectedAtomsList(mol.getAtom(0)).iterator();
         while (neighbors.hasNext()) {
-            if (neighbors.next().getSymbol().equals("H")) hCount++;
+            if (neighbors.next().getAtomicNumber() == IElement.H) hCount++;
         }
         Assert.assertEquals(3, hCount);
         hCount = 0;
         neighbors = mol.getConnectedAtomsList(mol.getAtom(1)).iterator();
         while (neighbors.hasNext()) {
-            if (neighbors.next().getSymbol().equals("H")) hCount++;
+            if (neighbors.next().getAtomicNumber() == IElement.H) hCount++;
         }
         Assert.assertEquals(1, hCount);
     }
@@ -789,25 +789,25 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         int hCount = 0;
         Iterator<IAtom> neighbors = mol.getConnectedAtomsList(mol.getAtom(0)).iterator();
         while (neighbors.hasNext()) {
-            if (neighbors.next().getSymbol().equals("H")) hCount++;
+            if (neighbors.next().getAtomicNumber() == IElement.H) hCount++;
         }
         Assert.assertEquals(2, hCount);
         hCount = 0;
         neighbors = mol.getConnectedAtomsList(mol.getAtom(1)).iterator();
         while (neighbors.hasNext()) {
-            if (neighbors.next().getSymbol().equals("H")) hCount++;
+            if (neighbors.next().getAtomicNumber() == IElement.H) hCount++;
         }
         Assert.assertEquals(1, hCount);
         hCount = 0;
         neighbors = mol.getConnectedAtomsList(mol.getAtom(2)).iterator();
         while (neighbors.hasNext()) {
-            if (neighbors.next().getSymbol().equals("H")) hCount++;
+            if (neighbors.next().getAtomicNumber() == IElement.H) hCount++;
         }
         Assert.assertEquals(2, hCount);
         hCount = 0;
         neighbors = mol.getConnectedAtomsList(mol.getAtom(3)).iterator();
         while (neighbors.hasNext()) {
-            if (neighbors.next().getSymbol().equals("H")) hCount++;
+            if (neighbors.next().getAtomicNumber() == IElement.H) hCount++;
         }
         Assert.assertEquals(1, hCount);
     }

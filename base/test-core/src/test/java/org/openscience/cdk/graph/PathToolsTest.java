@@ -30,6 +30,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -289,7 +290,7 @@ public class PathToolsTest extends CDKTestCase {
         atoms = molecule.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
-            if (atom.getSymbol().equals("F")) {
+            if (atom.getAtomicNumber() == IElement.F) {
                 target = atom;
                 break;
             }
@@ -344,7 +345,7 @@ public class PathToolsTest extends CDKTestCase {
         IAtomContainer container = sp.parseSmiles("CCN(CSCP)CCCOF");
         IAtom queryAtom = null;
         for (IAtom atom : container.atoms()) {
-            if (atom.getSymbol().equals("N")) {
+            if (atom.getAtomicNumber() == IElement.N) {
                 queryAtom = atom;
                 break;
             }
