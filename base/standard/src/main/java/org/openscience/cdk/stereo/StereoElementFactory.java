@@ -24,7 +24,7 @@
 
 package org.openscience.cdk.stereo;
 
-import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
@@ -41,7 +41,6 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector2d;
 import javax.vecmath.Vector3d;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
@@ -578,13 +577,15 @@ public abstract class StereoElementFactory {
             IAtom[] neighbors = new IAtom[4];
             int[] elevation = new int[4];
 
-            neighbors[3] = focus;
+            neighbors[3] = focus; // implicit neighbour if needed
 
             boolean nonplanar = false;
             int n = 0;
 
+            List<IBond> bonds = new ArrayList<>();
             for (int w : graph[v]) {
                 IBond bond = bondMap.get(v, w);
+                bonds.add(bond);
 
                 // wavy bond
                 if (isUnspecified(bond)) return null;
@@ -601,8 +602,11 @@ public abstract class StereoElementFactory {
             // too few neighbors
             if (n < 3) return null;
 
-            // TODO: verify valid wedge/hatch configurations using similar procedure
-            // to NonPlanarBonds in the cdk-sdg package.
+            if (strict) {
+                if (!verifyWedgePattern(focus, n, bonds))
+                    return null;
+            }
+
             // no up/down bonds present - check for inverted down/hatch
             if (!nonplanar && !strict) {
                 int[] ws = graph[v];
@@ -648,6 +652,44 @@ public abstract class StereoElementFactory {
             Stereo winding = parity > 0 ? Stereo.ANTI_CLOCKWISE : Stereo.CLOCKWISE;
 
             return new TetrahedralChirality(focus, neighbors, winding);
+        }
+
+        private boolean isOkay(int a, int b) {
+            return a == 0 || b == 0 || a == b;
+        }
+
+        // check some obvious stereo chemistry errors, see the InChI
+        // technical manual "Definition of 2D drawing correctness"
+        private boolean verifyWedgePattern(IAtom focus, int n, List<IBond> bonds) {
+            if (n == 3) {
+                // no sort needed
+                int ref = 0;
+                for (IBond bond : bonds) {
+                    int curr = elevationOf(focus, bond);
+                    if (!isOkay(ref, curr)) {
+                        logger.error("Badly drawn stereochemistry with 3 neighbours, up/down bonds should not be mixed!");
+                        return false;
+                    } else
+                        ref = curr;
+                }
+            } else { // n == 4
+                bonds.sort(GeometryUtil.polarBondComparator(focus));
+                int ref = 0;
+                for (IBond bond : bonds) {
+                    int curr = elevationOf(focus, bond);
+                    if (curr != 0) {
+                        if (ref != 0 && ref != curr) {
+                            logger.error("Badly drawn stereochemistry with 4 neighbours, up/down bonds should alternate!");
+                            return false;
+                        }
+                        else {
+                            ref = curr;
+                        }
+                    }
+                    ref = -ref; // flip for next check
+                }
+            }
+            return true;
         }
 
         private static boolean isWedged(IBond bond) {
@@ -1124,9 +1166,6 @@ public abstract class StereoElementFactory {
 
             // too few/many neighbors
             if (n < 3 || n > 4) return null;
-
-            // TODO: verify valid wedge/hatch configurations using similar procedure
-            // to NonPlanarBonds in the cdk-sdg package
 
             int parity = parity(neighbors);
 

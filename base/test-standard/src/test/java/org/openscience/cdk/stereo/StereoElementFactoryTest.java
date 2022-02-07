@@ -616,6 +616,58 @@ public class StereoElementFactoryTest {
         assertNull(element);
     }
 
+    @Test
+    public void badWedgePatternWithThreeNeighbors() throws CDKException {
+        IAtomContainer m = new AtomContainer(6, 4, 0, 0);
+        m.addAtom(atom("O", 1, -0.46d, 1.98d));
+        m.addAtom(atom("C", 1, -1.28d, 1.96d));
+        m.addAtom(atom("Cl", 0, -1.71d, 2.67d));
+        m.addAtom(atom("C", 3, -1.68d, 1.24d));
+        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Stereo.DOWN); // CH-OH
+        m.addBond(1, 2, IBond.Order.SINGLE, IBond.Stereo.UP);  // CH-CH2
+        m.addBond(1, 3, IBond.Order.SINGLE); // CH-Cl
+
+        StereoElementFactory factory = StereoElementFactory.using2DCoordinates(m);
+        Assert.assertNotNull(factory.createTetrahedral(m.getAtom(1), Stereocenters.of(m)));
+        factory.withStrictMode();
+        Assert.assertNull(factory.createTetrahedral(m.getAtom(1), Stereocenters.of(m)));
+    }
+
+    @Test
+    public void okWedgePatternWithThreeNeighbors() throws CDKException {
+        IAtomContainer m = new AtomContainer(6, 4, 0, 0);
+        m.addAtom(atom("O", 1, -0.46d, 1.98d));
+        m.addAtom(atom("C", 1, -1.28d, 1.96d));
+        m.addAtom(atom("Cl", 0, -1.71d, 2.67d));
+        m.addAtom(atom("C", 3, -1.68d, 1.24d));
+        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Stereo.DOWN); // CH-OH
+        m.addBond(1, 2, IBond.Order.SINGLE);  // CH-CH2
+        m.addBond(1, 3, IBond.Order.SINGLE); // CH-Cl
+
+        StereoElementFactory factory = StereoElementFactory.using2DCoordinates(m);
+        Assert.assertNotNull(factory.createTetrahedral(m.getAtom(1), Stereocenters.of(m)));
+        factory.withStrictMode();
+        Assert.assertNotNull(factory.createTetrahedral(m.getAtom(1), Stereocenters.of(m)));
+    }
+
+    @Test
+    public void badWedgePatternWithFourNeighbors() throws Exception {
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        try (InputStream in = getClass().getResourceAsStream("bad-wedges-4nbors.mol");
+             MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
+            mdlr.getSetting("AddStereoElements").setSetting("false");
+            IAtomContainer mol = mdlr.read(builder.newAtomContainer());
+            int numStereo = 0;
+            for (IStereoElement<?,?> se : mol.stereoElements())
+                numStereo++;
+            assertEquals(0, numStereo);
+            StereoElementFactory stereoFactory = StereoElementFactory.using2DCoordinates(mol);
+            Assert.assertEquals(1, stereoFactory.createAll().size());
+            stereoFactory.withStrictMode();
+            Assert.assertEquals(0, stereoFactory.createAll().size());
+        }
+    }
+
     /**
      * MetaCyc CPD-7272 D-dopachrome
      * http://metacyc.org/META/NEW-IMAGE?type=NIL&object=CPD-7272

@@ -48,6 +48,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -1853,4 +1854,101 @@ public final class GeometryUtil {
         }
     }
 
+    private static class PolarAtomComparator implements Comparator<IAtom> {
+        private final Point2d center;
+
+        public PolarAtomComparator(Point2d center) {
+            this.center = center;
+            if (center == null)
+                throw new NullPointerException("Center point cannot be null!");
+        }
+
+        @Override
+        public int compare(IAtom aAtom, IAtom bAtom) {
+            Point2d a = aAtom.getPoint2d();
+            Point2d b = bAtom.getPoint2d();
+            if (a == null || b == null)
+                throw new IllegalArgumentException("Missing 2D coordinated!");
+
+            double deltaXa = a.x - center.x;
+            double deltaXb = b.x - center.x;
+
+            if (deltaXa >= 0 && deltaXb < 0) return -1;
+            if (deltaXa < 0 && deltaXb >= 0) return +1;
+
+            double deltaYa = a.y - center.y;
+            double deltaYb = b.y - center.y;
+
+            if (deltaXa == 0 && deltaXb == 0) {
+                if (deltaYa >= 0 || deltaYb >= 0)
+                    return a.y > b.y ? -1 : +1;
+                return b.y > a.y ? -1 : +1;
+            }
+
+            // compute the cross product of vectors (center -> a) x (center -> b)
+            double det = (deltaXa) * (deltaYb) - (deltaXb) * (deltaYa);
+            if (det < 0) return -1;
+            if (det > 0) return +1;
+
+            // points a and b are on the same line from the center
+            // check which point is closer to the center
+            double d1 = (deltaXa) * (deltaXa) + (deltaYa) * (deltaYa);
+            double d2 = (deltaXb) * (deltaXb) + (deltaYb) * (deltaYb);
+            return Double.compare(d1, d2);
+        }
+    }
+
+    private static final class PolarBondComparator implements Comparator<IBond> {
+
+        private final IAtom centerAtom;
+        private final PolarAtomComparator polarAtomCompare;
+
+        private PolarBondComparator(IAtom atom) {
+            this.centerAtom = atom;
+            if (centerAtom == null)
+                throw new NullPointerException("Central atom cannot be null!");
+            this.polarAtomCompare = new PolarAtomComparator(centerAtom.getPoint2d());
+        }
+
+        /**
+         * Returns the polar ordering of bonds a and b relative to some central
+         * point.
+         * @param a one bond
+         * @param b another bond
+         * @return -1 a is less than b, 0 a == b, +1 a is greater than b
+         * @see <a href="http://stackoverflow.com/a/6989383">Sort points in clockwise order, ciamej</a>
+         */
+        @Override
+        public int compare(IBond a, IBond b) {
+            IAtom aAtom = a.getOther(centerAtom);
+            IAtom bAtom = b.getOther(centerAtom);
+            if (aAtom == null || bAtom == null)
+                throw new IllegalArgumentException("Bond is not connected to central atom!");
+            return polarAtomCompare.compare(aAtom, bAtom);
+        }
+    }
+
+    /**
+     * Sort the bonds using polar/radial coords around a central atom in 2D.
+     * @param central the central atom
+     */
+    public static Comparator<IBond> polarBondComparator(final IAtom central) {
+        return new PolarBondComparator(central);
+    }
+
+    /**
+     * Sort the atoms using polar/radial coords around a central point in 2D.
+     * @param central the central atom
+     */
+    public static Comparator<IAtom> polarAtomComparator(final Point2d central) {
+        return new PolarAtomComparator(central);
+    }
+
+    /**
+     * Sort the atoms using polar/radial coords around a central atom in 2D.
+     * @param central the central atom
+     */
+    public static Comparator<IAtom> polarAtomComparator(final IAtom central) {
+        return polarAtomComparator(central.getPoint2d());
+    }
 }
