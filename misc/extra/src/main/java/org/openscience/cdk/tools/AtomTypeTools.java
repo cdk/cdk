@@ -26,6 +26,7 @@ import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.smiles.SmilesGenerator;
@@ -229,7 +230,7 @@ public class AtomTypeTools {
 
         int ncount = 0;
         for (int i = 0; i < ring.getAtomCount(); i++) {
-            if ("N".equals(ring.getAtom(i).getSymbol())) {
+            if (ring.getAtom(i).getAtomicNumber() == IElement.N) {
                 ncount = ncount + 1;
             }
         }

@@ -21,6 +21,7 @@ package org.openscience.cdk.graph.invariant;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
 
 import java.util.Arrays;
 
@@ -69,7 +70,7 @@ public class MorganNumbersTools {
         int[] nonHydrogens = new int[order];
 
         for (int v = 0; v < order; v++)
-            nonHydrogens[v] = "H".equals(molecule.getAtom(v).getSymbol()) ? 0 : 1;
+            nonHydrogens[v] = molecule.getAtom(v).getAtomicNumber() == IElement.H ? 0 : 1;
 
         // build the graph and initialise the current connectivity
         // value to the number of connected non-hydrogens

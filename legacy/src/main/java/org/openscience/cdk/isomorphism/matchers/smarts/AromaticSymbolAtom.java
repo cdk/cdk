@@ -39,7 +39,7 @@ public class AromaticSymbolAtom extends SMARTSAtom {
 
     @Override
     public boolean matches(IAtom atom) {
-        return atom.isAromatic() && atom.getAtomicNumber().equals(this.getAtomicNumber());
+        return atom.isAromatic() && atom.getSymbol().equals(this.getSymbol());
     }
 
     @Override
