@@ -30,6 +30,7 @@ import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.isomorphism.Pattern;
 import org.openscience.cdk.smarts.SmartsPattern;
 
@@ -186,7 +187,7 @@ final class MmffAtomTypeMatcher {
      */
     private void assignHydrogenTypes(IAtomContainer container, String[] symbs, int[][] graph) {
         for (int v = 0; v < graph.length; v++) {
-            if ("H".equals(container.getAtom(v).getSymbol()) && graph[v].length == 1) {
+            if (container.getAtom(v).getAtomicNumber() == IElement.H && graph[v].length == 1) {
                 int w = graph[v][0];
                 symbs[v] = this.hydrogenMap.get(symbs[w]);
             }

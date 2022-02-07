@@ -24,6 +24,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
 
 /**
  * <p>The calculation of the Gasteiger Marsili (PEOE) partial charges is based on
@@ -169,13 +170,13 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
                 atom2 = ac.indexOf(bond.getEnd());
 
                 if (gasteigerFactors[STEP_SIZE * atom1 + atom1 + 4] >= gasteigerFactors[STEP_SIZE * atom2 + atom2 + 4]) {
-                    if ("H".equals(ac.getAtom(atom2).getSymbol())) {
+                    if (ac.getAtom(atom2).getAtomicNumber() == IElement.H) {
                         deoc = DEOC_HYDROGEN;
                     } else {
                         deoc = gasteigerFactors[STEP_SIZE * atom2 + atom2 + 3];
                     }
                 } else {
-                    if ("H".equals(ac.getAtom(atom1).getSymbol())) {
+                    if (ac.getAtom(atom1).getAtomicNumber() == IElement.H) {
                         deoc = DEOC_HYDROGEN;
                     } else {
                         deoc = gasteigerFactors[STEP_SIZE * atom1 + atom1 + 3];

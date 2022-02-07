@@ -35,6 +35,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
@@ -448,7 +449,7 @@ public class FixBondOrdersTool {
             int j = atomsToCheck.get(i);
 
             //Put in an implicit hydrogen atom for Planar3 C- atoms in 5-membered rings (it doesn't get put in by the Smiles parser)
-            if (("C".equals(molecule.getAtom(j).getSymbol()))
+            if ((molecule.getAtom(j).getAtomicNumber() == IElement.C)
                     && (molecule.getAtom(j).getHybridization() == Hybridization.PLANAR3)) {
 
                 //Check that ring containing the atom is five-membered

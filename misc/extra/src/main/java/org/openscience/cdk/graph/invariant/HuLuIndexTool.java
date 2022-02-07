@@ -85,7 +85,7 @@ public class HuLuIndexTool {
         for (int i = 0; i < adjaMatrix.length; i++) {
             for (int j = 0; j < adjaMatrix.length; j++) {
                 if (i == j) {
-                    if ("O".equals(atomContainer.getAtom(i).getSymbol())) {
+                    if (atomContainer.getAtom(i).getAtomicNumber() == IElement.O) {
                         adjaMatrix[i][j] = Math.sqrt(0.74) / 6;
                     } else {
                         adjaMatrix[i][j] = Math.sqrt(0.74) / 6;
@@ -145,7 +145,7 @@ public class HuLuIndexTool {
                 weightArray[i] = 4 - atom.getImplicitHydrogenCount();
 
             for (int j = 0; j < apspMatrix.length; j++) {
-                if ("O".equals(atomContainer.getAtom(j).getSymbol()))
+                if (atomContainer.getAtom(j).getAtomicNumber() == IElement.O)
                     valenceSum[apspMatrix[j][i]] += 6 - atomContainer.getAtom(j).getImplicitHydrogenCount();
                 else
                     valenceSum[apspMatrix[j][i]] += 4 - atomContainer.getAtom(j).getImplicitHydrogenCount();

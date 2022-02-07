@@ -1183,7 +1183,7 @@ public class AtomContainerManipulator {
         if (atom.getImplicitHydrogenCount() != null && atom.getImplicitHydrogenCount() != 0) return false;
         // molecule hydrogen
         List<IAtom> neighbors = container.getConnectedAtomsList(atom);
-        if (neighbors.size() == 1 && ("H".equals(neighbors.get(0).getSymbol()) ||
+        if (neighbors.size() == 1 && (neighbors.get(0).getAtomicNumber() == IElement.H ||
                                       neighbors.get(0) instanceof IPseudoAtom)) return false;
         // what about bridging hydrogens?
         // hydrogens with atom-atom mapping?
@@ -1237,7 +1237,7 @@ public class AtomContainerManipulator {
 
         // okay the hydrogen has one neighbor, if that neighbor is a
         // hydrogen (i.e. molecular hydrogen) then we can not suppress it
-        if ("H".equals(container.getAtom(graph[v][0]).getSymbol()))
+        if (container.getAtom(graph[v][0]).getAtomicNumber() == IElement.H)
             return false;
         // can not nicely suppress hydrogens on pseudo atoms
         if (container.getAtom(graph[v][0]) instanceof IPseudoAtom)
@@ -1595,7 +1595,7 @@ public class AtomContainerManipulator {
     public static List<IAtom> getHeavyAtoms(IAtomContainer container) {
         List<IAtom> newAc = new ArrayList<IAtom>();
         for (int f = 0; f < container.getAtomCount(); f++) {
-            if (!"H".equals(container.getAtom(f).getSymbol())) {
+            if (container.getAtom(f).getAtomicNumber() != IElement.H) {
                 newAc.add(container.getAtom(f));
             }
         }
