@@ -235,50 +235,52 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 if (atom.getPoint3d() == null)
                     is3d = false;
             }
-            if (is3d) { // has 3D coordinates
-                readData.setStereoElements(StereoElementFactory.using3DCoordinates(readData)
-                        .createAll());
-            } else { // has 2D coordinates (set as 2D coordinates)
-                readData.setStereoElements(StereoElementFactory.using2DCoordinates(readData)
-                        .createAll());
-            }
+            if (optStereoPerc.isSet()) {
+                if (is3d) { // has 3D coordinates
+                    readData.setStereoElements(StereoElementFactory.using3DCoordinates(readData)
+                                                                   .createAll());
+                } else { // has 2D coordinates (set as 2D coordinates)
+                    readData.setStereoElements(StereoElementFactory.using2DCoordinates(readData)
+                                                                   .createAll());
+                }
 
-            if (stereoflags != null && !stereoflags.isEmpty()) {
+                if (stereoflags != null && !stereoflags.isEmpty()) {
 
-                // work out the next available group, if we have &1, &2, etc then we choose &3
-                // this is only needed if
-                int defaultRacGrp = 0;
-                if (!chiral) {
-                    int max = 0;
-                    for (Integer val : stereoflags.values()) {
-                        if ((val&IStereoElement.GRP_TYPE_MASK) == IStereoElement.GRP_RAC) {
-                            int num = val >>> IStereoElement.GRP_NUM_SHIFT;
-                            if (num > max)
-                                max = num;
+                    // work out the next available group, if we have &1, &2, etc then we choose &3
+                    // this is only needed if
+                    int defaultRacGrp = 0;
+                    if (!chiral) {
+                        int max = 0;
+                        for (Integer val : stereoflags.values()) {
+                            if ((val & IStereoElement.GRP_TYPE_MASK) == IStereoElement.GRP_RAC) {
+                                int num = val >>> IStereoElement.GRP_NUM_SHIFT;
+                                if (num > max)
+                                    max = num;
+                            }
                         }
+                        defaultRacGrp = IStereoElement.GRP_RAC | (((max + 1) << IStereoElement.GRP_NUM_SHIFT));
                     }
-                    defaultRacGrp = IStereoElement.GRP_RAC | (((max + 1) << IStereoElement.GRP_NUM_SHIFT));
-                }
 
-                for (IStereoElement<?, ?> se : readData.stereoElements()) {
-                    if (se.getConfigClass() != IStereoElement.TH)
-                        continue;
-                    IAtom focus = (IAtom) se.getFocus();
-                    int idx = readData.indexOf(focus);
-                    if (idx < 0)
-                        continue;
-                    Integer grpinfo = stereoflags.get(idx);
-                    if (grpinfo != null)
-                        se.setGroupInfo(grpinfo);
-                    else if (!chiral)
-                        se.setGroupInfo(defaultRacGrp);
-                }
-            } else if (!chiral) {
-                // chiral flag not set which means this molecule is this stereoisomer "and" the enantiomer, mark all
-                // Tetrahedral stereo as AND1 (&1)
-                for (IStereoElement<?, ?> se : readData.stereoElements()) {
-                    if (se.getConfigClass() == IStereoElement.TH) {
-                        se.setGroupInfo(IStereoElement.GRP_RAC1);
+                    for (IStereoElement<?, ?> se : readData.stereoElements()) {
+                        if (se.getConfigClass() != IStereoElement.TH)
+                            continue;
+                        IAtom focus = (IAtom) se.getFocus();
+                        int idx = readData.indexOf(focus);
+                        if (idx < 0)
+                            continue;
+                        Integer grpinfo = stereoflags.get(idx);
+                        if (grpinfo != null)
+                            se.setGroupInfo(grpinfo);
+                        else if (!chiral)
+                            se.setGroupInfo(defaultRacGrp);
+                    }
+                } else if (!chiral) {
+                    // chiral flag not set which means this molecule is this stereoisomer "and" the enantiomer, mark all
+                    // Tetrahedral stereo as AND1 (&1)
+                    for (IStereoElement<?, ?> se : readData.stereoElements()) {
+                        if (se.getConfigClass() == IStereoElement.TH) {
+                            se.setGroupInfo(IStereoElement.GRP_RAC1);
+                        }
                     }
                 }
             }
