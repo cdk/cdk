@@ -155,7 +155,7 @@ public class SingleMapping {
             if ((removeHydrogen && sourceAtom.getAtomicNumber() != IElement.H) || (!removeHydrogen)) {
                 for (IAtom targetAtom : target.atoms()) {
                     Map<IAtom, IAtom> mapAtoms = new HashMap<IAtom, IAtom>();
-                    if (sourceAtom.getSymbol().equalsIgnoreCase(targetAtom.getSymbol())) {
+                    if (sourceAtom.getAtomicNumber().equals(targetAtom.getAtomicNumber())) {
                         mapAtoms.put(sourceAtom, targetAtom);
                         List<IBond> bonds = target.getConnectedBondsList(targetAtom);
 
@@ -185,7 +185,7 @@ public class SingleMapping {
                 for (IAtom sourceAtoms : source.atoms()) {
                     Map<IAtom, IAtom> mapAtoms = new HashMap<IAtom, IAtom>();
 
-                    if (targetAtom.getSymbol().equalsIgnoreCase(sourceAtoms.getSymbol())) {
+                    if (targetAtom.getAtomicNumber().equals(sourceAtoms.getAtomicNumber())) {
                         mapAtoms.put(sourceAtoms, targetAtom);
                         List<IBond> bonds = source.getConnectedBondsList(sourceAtoms);
 
