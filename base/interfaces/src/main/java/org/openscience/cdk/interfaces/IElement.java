@@ -29,128 +29,132 @@ package org.openscience.cdk.interfaces;
  */
 public interface IElement extends IChemObject {
 
-    /**
-     * Byte enum constants for element atomic numbers
-     */
-    public static final byte Wildcard = 0;
-    public static final byte H        = 1;
-    public static final byte He       = 2;
-    public static final byte Li       = 3;
-    public static final byte Be       = 4;
-    public static final byte B        = 5;
-    public static final byte C        = 6;
-    public static final byte N        = 7;
-    public static final byte O        = 8;
-    public static final byte F        = 9;
-    public static final byte Ne       = 10;
-    public static final byte Na       = 11;
-    public static final byte Mg       = 12;
-    public static final byte Al       = 13;
-    public static final byte Si       = 14;
-    public static final byte P        = 15;
-    public static final byte S        = 16;
-    public static final byte Cl       = 17;
-    public static final byte Ar       = 18;
-    public static final byte K        = 19;
-    public static final byte Ca       = 20;
-    public static final byte Sc       = 21;
-    public static final byte Ti       = 22;
-    public static final byte V        = 23;
-    public static final byte Cr       = 24;
-    public static final byte Mn       = 25;
-    public static final byte Fe       = 26;
-    public static final byte Co       = 27;
-    public static final byte Ni       = 28;
-    public static final byte Cu       = 29;
-    public static final byte Zn       = 30;
-    public static final byte Ga       = 31;
-    public static final byte Ge       = 32;
-    public static final byte As       = 33;
-    public static final byte Se       = 34;
-    public static final byte Br       = 35;
-    public static final byte Kr       = 36;
-    public static final byte Rb       = 37;
-    public static final byte Sr       = 38;
-    public static final byte Y        = 39;
-    public static final byte Zr       = 40;
-    public static final byte Nb       = 41;
-    public static final byte Mo       = 42;
-    public static final byte Tc       = 43;
-    public static final byte Ru       = 44;
-    public static final byte Rh       = 45;
-    public static final byte Pd       = 46;
-    public static final byte Ag       = 47;
-    public static final byte Cd       = 48;
-    public static final byte In       = 49;
-    public static final byte Sn       = 50;
-    public static final byte Sb       = 51;
-    public static final byte Te       = 52;
-    public static final byte I        = 53;
-    public static final byte Xe       = 54;
-    public static final byte Cs       = 55;
-    public static final byte Ba       = 56;
-    public static final byte La       = 57;
-    public static final byte Ce       = 58;
-    public static final byte Pr       = 59;
-    public static final byte Nd       = 60;
-    public static final byte Pm       = 61;
-    public static final byte Sm       = 62;
-    public static final byte Eu       = 63;
-    public static final byte Gd       = 64;
-    public static final byte Tb       = 65;
-    public static final byte Dy       = 66;
-    public static final byte Ho       = 67;
-    public static final byte Er       = 68;
-    public static final byte Tm       = 69;
-    public static final byte Yb       = 70;
-    public static final byte Lu       = 71;
-    public static final byte Hf       = 72;
-    public static final byte Ta       = 73;
-    public static final byte W        = 74;
-    public static final byte Re       = 75;
-    public static final byte Os       = 76;
-    public static final byte Ir       = 77;
-    public static final byte Pt       = 78;
-    public static final byte Au       = 79;
-    public static final byte Hg       = 80;
-    public static final byte Tl       = 81;
-    public static final byte Pb       = 82;
-    public static final byte Bi       = 83;
-    public static final byte Po       = 84;
-    public static final byte At       = 85;
-    public static final byte Rn       = 86;
-    public static final byte Fr       = 87;
-    public static final byte Ra       = 88;
-    public static final byte Ac       = 89;
-    public static final byte Th       = 90;
-    public static final byte Pa       = 91;
-    public static final byte U        = 92;
-    public static final byte Np       = 93;
-    public static final byte Pu       = 94;
-    public static final byte Am       = 95;
-    public static final byte Cm       = 96;
-    public static final byte Bk       = 97;
-    public static final byte Cf       = 98;
-    public static final byte Es       = 99;
-    public static final byte Fm       = 100;
-    public static final byte Md       = 101;
-    public static final byte No       = 102;
-    public static final byte Lr       = 103;
-    public static final byte Rf       = 104;
-    public static final byte Db       = 105;
-    public static final byte Sg       = 106;
-    public static final byte Bh       = 107;
-    public static final byte Hs       = 108;
-    public static final byte Mt       = 109;
-    public static final byte Ds       = 110;
-    public static final byte Rg       = 111;
-    public static final byte Cn       = 112;
-    public static final byte Nh       = 113;
-    public static final byte Fl       = 114;
-    public static final byte Mc       = 115;
-    public static final byte Lv       = 116;
-    public static final byte Ts       = 117;
-    public static final byte Og       = 118;
+    // Integer enum constants for element atomic numbers
+
+    /** Wildcard atom is atomic number 0 */
+    int Wildcard = 0;
+    /** Hydrogen atomic number */
+    int H        = 1;
+    int He       = 2;
+    int Li       = 3;
+    int Be       = 4;
+    int B        = 5;
+    /** Carbon atomic number */
+    int C        = 6;
+    /** Nitrogen atomic number */
+    int N        = 7;
+    /** Oxygen atomic number */
+    int O        = 8;
+    int F        = 9;
+    int Ne       = 10;
+    int Na       = 11;
+    int Mg       = 12;
+    int Al       = 13;
+    int Si       = 14;
+    int P        = 15;
+    int S        = 16;
+    int Cl       = 17;
+    int Ar       = 18;
+    int K        = 19;
+    int Ca       = 20;
+    int Sc       = 21;
+    int Ti       = 22;
+    int V        = 23;
+    int Cr       = 24;
+    int Mn       = 25;
+    int Fe       = 26;
+    int Co       = 27;
+    int Ni       = 28;
+    int Cu       = 29;
+    int Zn       = 30;
+    int Ga       = 31;
+    int Ge       = 32;
+    int As       = 33;
+    int Se       = 34;
+    int Br       = 35;
+    int Kr       = 36;
+    int Rb       = 37;
+    int Sr       = 38;
+    int Y        = 39;
+    int Zr       = 40;
+    int Nb       = 41;
+    int Mo       = 42;
+    int Tc       = 43;
+    int Ru       = 44;
+    int Rh       = 45;
+    int Pd       = 46;
+    int Ag       = 47;
+    int Cd       = 48;
+    int In       = 49;
+    int Sn       = 50;
+    int Sb       = 51;
+    int Te       = 52;
+    int I        = 53;
+    int Xe       = 54;
+    int Cs       = 55;
+    int Ba       = 56;
+    int La       = 57;
+    int Ce       = 58;
+    int Pr       = 59;
+    int Nd       = 60;
+    int Pm       = 61;
+    int Sm       = 62;
+    int Eu       = 63;
+    int Gd       = 64;
+    int Tb       = 65;
+    int Dy       = 66;
+    int Ho       = 67;
+    int Er       = 68;
+    int Tm       = 69;
+    int Yb       = 70;
+    int Lu       = 71;
+    int Hf       = 72;
+    int Ta       = 73;
+    int W        = 74;
+    int Re       = 75;
+    int Os       = 76;
+    int Ir       = 77;
+    int Pt       = 78;
+    int Au       = 79;
+    int Hg       = 80;
+    int Tl       = 81;
+    int Pb       = 82;
+    int Bi       = 83;
+    int Po       = 84;
+    int At       = 85;
+    int Rn       = 86;
+    int Fr       = 87;
+    int Ra       = 88;
+    int Ac       = 89;
+    int Th       = 90;
+    int Pa       = 91;
+    int U        = 92;
+    int Np       = 93;
+    int Pu       = 94;
+    int Am       = 95;
+    int Cm       = 96;
+    int Bk       = 97;
+    int Cf       = 98;
+    int Es       = 99;
+    int Fm       = 100;
+    int Md       = 101;
+    int No       = 102;
+    int Lr       = 103;
+    int Rf       = 104;
+    int Db       = 105;
+    int Sg       = 106;
+    int Bh       = 107;
+    int Hs       = 108;
+    int Mt       = 109;
+    int Ds       = 110;
+    int Rg       = 111;
+    int Cn       = 112;
+    int Nh       = 113;
+    int Fl       = 114;
+    int Mc       = 115;
+    int Lv       = 116;
+    int Ts       = 117;
+    int Og       = 118;
 
     /**
      * Returns the atomic number of this element.
@@ -168,7 +172,7 @@ public interface IElement extends IChemObject {
      *
      * @see    #setAtomicNumber
      */
-    public Integer getAtomicNumber();
+    Integer getAtomicNumber();
 
     /**
      * Sets the atomic number of this element.
@@ -177,7 +181,7 @@ public interface IElement extends IChemObject {
      *
      * @see    #getAtomicNumber
      */
-    public void setAtomicNumber(Integer atomicNumber);
+    void setAtomicNumber(Integer atomicNumber);
 
     /**
      * Returns the element symbol of this element.
@@ -186,7 +190,7 @@ public interface IElement extends IChemObject {
      *
      * @see    #setSymbol
      */
-    public String getSymbol();
+    String getSymbol();
 
     /**
      * Sets the element symbol of this element.
@@ -195,6 +199,6 @@ public interface IElement extends IChemObject {
      *
      * @see    #getSymbol
      */
-    public void setSymbol(String symbol);
+    void setSymbol(String symbol);
 
 }
