@@ -232,7 +232,7 @@ public class BondTools {
                 String[] morgannumbers = MorganNumbersTools.getMorganNumbersWithElementSymbol(container);
                 if ((one != null && two == null && "N".equals(atom.getSymbol()) && Math.abs(giveAngleBothMethods(
                         parent, atom, one, true)) > Math.PI / 10)
-                        || (!"N".equals(atom.getSymbol()) && one != null && two != null && !morgannumbers[container
+                        || (atom.getAtomicNumber() != IElement.N && one != null && two != null && !morgannumbers[container
                                 .indexOf(one)].equals(morgannumbers[container.indexOf(two)]))) {
                     return (true);
                 } else {
@@ -264,7 +264,7 @@ public class BondTools {
 
         int lengthAtom = container.getConnectedAtomsList(a).size() + hcount;
 
-        if (lengthAtom != 3 && (lengthAtom != 2 && !"N".equals(a.getSymbol()))) {
+        if (lengthAtom != 3 && (lengthAtom != 2 && a.getAtomicNumber() != IElement.N)) {
             return (false);
         }
         List<IAtom> atoms = container.getConnectedAtomsList(a);
@@ -286,7 +286,7 @@ public class BondTools {
         }
         String[] morgannumbers = MorganNumbersTools.getMorganNumbersWithElementSymbol(container);
         if (one != null
-                && ((!"N".equals(a.getSymbol())
+                && ((a.getAtomicNumber() != IElement.N
                         && two != null
                         && !morgannumbers[container.indexOf(one)].equals(morgannumbers[container
                                 .indexOf(two)]) && doubleBond && doubleBondConfiguration[container.indexOf(container.getBond(
