@@ -63,6 +63,7 @@ public class AtomSuppressionTest {
 
         when(carbon.getSymbol()).thenReturn("C");
         when(hydrogen.getSymbol()).thenReturn("H");
+        when(hydrogen.getAtomicNumber()).thenReturn(1);
 
         when(container.getAtom(0)).thenReturn(carbon);
         when(container.getAtom(1)).thenReturn(hydrogen);
