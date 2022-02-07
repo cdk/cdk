@@ -29,6 +29,7 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -663,12 +664,12 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         int nNaliph = 0;
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
-            if (atom.getSymbol().equals("C")) {
+            if (atom.getAtomicNumber() == IElement.C) {
                 if (atom.getFlag(CDKConstants.ISAROMATIC))
                     nCarom++;
                 else
                     nCalip++;
-            } else if (atom.getSymbol().equals("N")) {
+            } else if (atom.getAtomicNumber() == IElement.N) {
                 if (atom.getFlag(CDKConstants.ISAROMATIC))
                     nNarom++;
                 else
@@ -765,7 +766,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue(Aromaticity.cdkLegacy().apply(mol));
         for (IAtom atom : mol.atoms()) {
-            if (atom.getSymbol().equals("O")) continue;
+            if (atom.getAtomicNumber() == IElement.O) continue;
             Assert.assertTrue(atom.getSymbol() + " was not aromatic but should have been",
                     atom.getFlag(CDKConstants.ISAROMATIC));
         }
@@ -783,7 +784,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue(Aromaticity.cdkLegacy().apply(mol));
         for (IAtom atom : mol.atoms()) {
-            if (atom.getSymbol().equals("O")) continue;
+            if (atom.getAtomicNumber() == IElement.O) continue;
             Assert.assertTrue(atom.getSymbol() + " was not aromatic but should have been",
                     atom.getFlag(CDKConstants.ISAROMATIC));
         }
@@ -833,7 +834,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue(Aromaticity.cdkLegacy().apply(mol));
         for (IAtom atom : mol.atoms()) {
-            if (atom.getSymbol().equals("N")) {
+            if (atom.getAtomicNumber() == IElement.N) {
                 Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
                 List<IBond> conbonds = mol.getConnectedBondsList(atom);
                 if (conbonds.size() == 2) {
@@ -866,7 +867,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue(Aromaticity.cdkLegacy().apply(mol));
         for (IAtom atom : mol.atoms()) {
-            if (atom.getSymbol().equals("N")) {
+            if (atom.getAtomicNumber() == IElement.N) {
                 Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
                 List<IBond> conbonds = mol.getConnectedBondsList(atom);
                 for (IBond bond : conbonds) {

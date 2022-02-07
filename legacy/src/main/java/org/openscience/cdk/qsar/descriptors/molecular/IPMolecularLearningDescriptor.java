@@ -25,6 +25,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -170,8 +171,8 @@ public class IPMolecularLearningDescriptor extends AbstractMolecularDescriptor i
         }
         for (Iterator<IBond> itB = container.bonds().iterator(); itB.hasNext();) {
             IBond bond = itB.next();
-            if (bond.getOrder() == IBond.Order.DOUBLE & bond.getBegin().getSymbol().equals("C")
-                    & bond.getEnd().getSymbol().equals("C")) {
+            if (bond.getOrder() == IBond.Order.DOUBLE & bond.getBegin().getAtomicNumber() == IElement.C
+                    & bond.getEnd().getAtomicNumber() == IElement.C) {
                 double value = IonizationPotentialTool.predictIP(container, bond);
                 if (value != 0) dar.add(value);
 

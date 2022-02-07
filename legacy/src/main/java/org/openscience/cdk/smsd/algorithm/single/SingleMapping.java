@@ -37,6 +37,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.smsd.tools.BondEnergies;
@@ -122,7 +123,7 @@ public class SingleMapping {
         BondEnergies be = BondEnergies.getInstance();
         for (IAtom sourceAtom : source.atoms()) {
             IQueryAtom smartAtom = (IQueryAtom) sourceAtom;
-            if ((removeHydrogen && !smartAtom.getSymbol().equals("H")) || (!removeHydrogen)) {
+            if ((removeHydrogen && smartAtom.getAtomicNumber() != IElement.H) || (!removeHydrogen)) {
                 for (IAtom targetAtom : target.atoms()) {
                     Map<IAtom, IAtom> mapAtoms = new HashMap<IAtom, IAtom>();
                     if (smartAtom.matches(targetAtom)) {
@@ -151,7 +152,7 @@ public class SingleMapping {
         int counter = 0;
         BondEnergies be = BondEnergies.getInstance();
         for (IAtom sourceAtom : source.atoms()) {
-            if ((removeHydrogen && !sourceAtom.getSymbol().equals("H")) || (!removeHydrogen)) {
+            if ((removeHydrogen && sourceAtom.getAtomicNumber() != IElement.H) || (!removeHydrogen)) {
                 for (IAtom targetAtom : target.atoms()) {
                     Map<IAtom, IAtom> mapAtoms = new HashMap<IAtom, IAtom>();
                     if (sourceAtom.getSymbol().equalsIgnoreCase(targetAtom.getSymbol())) {
@@ -180,7 +181,7 @@ public class SingleMapping {
         int counter = 0;
         BondEnergies be = BondEnergies.getInstance();
         for (IAtom targetAtom : target.atoms()) {
-            if ((removeHydrogen && !targetAtom.getSymbol().equals("H")) || (!removeHydrogen)) {
+            if ((removeHydrogen && targetAtom.getAtomicNumber() != IElement.H) || (!removeHydrogen)) {
                 for (IAtom sourceAtoms : source.atoms()) {
                     Map<IAtom, IAtom> mapAtoms = new HashMap<IAtom, IAtom>();
 

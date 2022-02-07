@@ -31,6 +31,7 @@ import org.junit.experimental.categories.Category;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.test.SlowTest;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -116,7 +117,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
                     if (bond.contains(at)) {
                         Assert.assertEquals(bond, apoBonds.get(1));
                         for (IAtom atInApo : bond.atoms()) {
-                            Assert.assertTrue(atInApo.getSymbol().equals("R") || atInApo.getSymbol().equals("P"));
+                            Assert.assertTrue(atInApo.getAtomicNumber() == IElement.Wildcard || atInApo.getAtomicNumber() == IElement.P);
                         }
                     }
                 }
@@ -146,7 +147,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
         for (IAtomContainer atc : configurations) {
             if (atc.getAtomCount() == 6) {
                 for (IAtom atom : atc.atoms()) {
-                    if (atom.getSymbol().equals("P")) {
+                    if (atom.getAtomicNumber() == IElement.P) {
                         Assert.assertNotNull(atom.getProperty(CDKConstants.REST_H));
                         Assert.assertEquals(atom.getProperty(CDKConstants.REST_H), true);
                         restH_Identified = true;
@@ -192,7 +193,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
                         Map<Integer, IBond> apoBonds = rootApo.get(at);
                         Assert.assertEquals(apoBonds.size(), 2);
                         Assert.assertEquals(apoBonds.get(1).getOther(at).getSymbol(), "N");
-                        Assert.assertTrue(apoBonds.get(2).getOther(at).getSymbol().equals("C"));
+                        Assert.assertTrue(apoBonds.get(2).getOther(at).getAtomicNumber() == IElement.C);
                         //Test: Oxygens are the 2nd APO's for R1
                         IRGroupList rList = rGroupQuery.getRGroupDefinitions().get(1);
                         Assert.assertEquals(rList.getRGroups().size(), 2);
@@ -235,7 +236,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
                 for (IAtom atom : atc.atoms()) {
                     if (atom.getProperty(CDKConstants.REST_H) != null) {
                         countRestHForSmallestConfigurations++;
-                        if (atom.getSymbol().equals("P"))
+                        if (atom.getAtomicNumber() == IElement.P)
                             Assert.assertEquals(atom.getProperty(CDKConstants.REST_H), true);
                     }
                 }
@@ -273,10 +274,10 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
                 Assert.assertEquals(apoBonds.size(), 2);
 
                 IAtom boundAtom1 = apoBonds.get(1).getOther(at);
-                Assert.assertTrue(boundAtom1.getSymbol().equals("Te") || boundAtom1.getSymbol().equals("S"));
+                Assert.assertTrue(boundAtom1.getAtomicNumber() == IElement.Te || boundAtom1.getAtomicNumber() == IElement.S);
 
                 IAtom boundAtom2 = apoBonds.get(2).getOther(at);
-                Assert.assertTrue(boundAtom2.getSymbol().equals("Po") || boundAtom2.getSymbol().equals("O"));
+                Assert.assertTrue(boundAtom2.getAtomicNumber() == IElement.Po || boundAtom2.getAtomicNumber() == IElement.O);
             }
         }
 

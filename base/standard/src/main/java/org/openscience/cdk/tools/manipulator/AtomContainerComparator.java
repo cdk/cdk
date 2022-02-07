@@ -30,6 +30,7 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -137,7 +138,7 @@ public class AtomContainerComparator implements Comparator<IAtomContainer> {
             final IsotopeFactory isotopeFactory = Isotopes.getInstance();
 
             for (IAtom atom : atomContainer.atoms()) {
-                if (!atom.getSymbol().equals("H")) {
+                if (atom.getAtomicNumber() != IElement.H) {
                     final IIsotope majorIsotope = isotopeFactory.getMajorIsotope(atom.getSymbol());
 
                     if (majorIsotope != null && majorIsotope.getExactMass() != null) {

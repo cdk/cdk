@@ -35,6 +35,7 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
@@ -224,11 +225,11 @@ public class DeduceBondSystemTool {
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
             IAtom ai = atomContainer.getAtom(i);
 
-            if (ai.getSymbol().equals("N") && (ai.getFormalCharge() == null || ai.getFormalCharge() == 0)) {
+            if (ai.getAtomicNumber() == IElement.N && (ai.getFormalCharge() == null || ai.getFormalCharge() == 0)) {
                 if (inRingSet(ai, ringSet)) {
                     List<IAtom> ca = atomContainer.getConnectedAtomsList(ai);
                     for (IAtom caj : ca) {
-                        if (caj.getSymbol().equals("O")
+                        if (caj.getAtomicNumber() == IElement.O
                                 && atomContainer.getBond(ai, caj).getOrder() == IBond.Order.DOUBLE) {
                             ai.setFormalCharge(1);
                             caj.setFormalCharge(-1);
@@ -237,7 +238,7 @@ public class DeduceBondSystemTool {
                     }// end for (int j=0;j<ca.size();j++)
 
                 } // end if (inRingSet(ai,ringSet)) {
-            } // end if (ai.getSymbol().equals("N") && ai.getFormalCharge()==0)
+            } // end if (ai.getAtomicNumber() == IElement.N && ai.getFormalCharge()==0)
 
         } // end for (int i=0;i<atomContainer.getAtomCount();i++)
 
@@ -503,7 +504,7 @@ public class DeduceBondSystemTool {
             if (inRingSet(atom, ringSet)) {
                 //logger.debug("in ring set");
 
-                if (atom.getSymbol().equals("N")) {
+                if (atom.getAtomicNumber() == IElement.N) {
                     if (atom.getFormalCharge() == 0) {
                         //						logger.debug(mol.getBondOrderSum(a));
                         if (atomContainer.getBondOrderSum(atom) == 4) {
@@ -531,7 +532,7 @@ public class DeduceBondSystemTool {
                             count++;
                         }
                     }
-                } else if (atom.getSymbol().equals("S")) {
+                } else if (atom.getAtomicNumber() == IElement.S) {
                     if (atomContainer.getBondOrderSum(atom) > 2) {
                         count++;
                     }
@@ -734,7 +735,7 @@ public class DeduceBondSystemTool {
                         i--; // go back
                         continue iloop;
                         //                        NonSP2Count++;
-                        //                        if (r.getAtom(j).getSymbol().equals("C")) {
+                        //                        if (r.getAtom(j).getAtomicNumber() == IElement.C) {
                         //                            rs.removeAtomContainer(i);
                         //                            i--; // go back
                         //                            continue iloop;
@@ -784,7 +785,7 @@ public class DeduceBondSystemTool {
                 if (r.getAtom(j).getHybridization() == CDKConstants.UNSET
                         || r.getAtom(j).getHybridization() != Hybridization.SP2) {
                     NonSP2Count++;
-                    if (r.getAtom(j).getSymbol().equals("C")) {
+                    if (r.getAtom(j).getAtomicNumber() == IElement.C) {
                         Check[i] = false;
                         continue iloop;
                     }

@@ -27,6 +27,7 @@ import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IElement;
 
 /**
  * Class with convenience methods that provide methods to manipulate
@@ -54,7 +55,7 @@ public class AminoAcidManipulator {
         for (IBond bond : bonds) {
             if (bond.getOrder() == Order.SINGLE) {
                 for (int j = 0; j < bond.getAtomCount(); j++) {
-                    if (bond.getAtom(j).getSymbol().equals("O")) {
+                    if (bond.getAtom(j).getAtomicNumber() == IElement.O) {
                         // yes, we found a singly bonded oxygen!
                         acid.removeAtom(bond.getAtom(j));
                     }

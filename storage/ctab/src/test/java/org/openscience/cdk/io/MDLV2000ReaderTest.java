@@ -43,6 +43,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
@@ -781,13 +782,13 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
                 partner = bond.getBegin();
                 rGroup = (IPseudoAtom) bond.getEnd();
             }
-            if (partner.getSymbol().equals("N")) {
+            if (partner.getAtomicNumber() == IElement.N) {
                 Assert.assertEquals(rGroup.getLabel(), "R4");
-            } else if (partner.getSymbol().equals("P")) {
+            } else if (partner.getAtomicNumber() == IElement.P) {
                 Assert.assertEquals(rGroup.getLabel(), "R1");
-            } else if (partner.getSymbol().equals("As")) {
+            } else if (partner.getAtomicNumber() == IElement.As) {
                 Assert.assertEquals(rGroup.getLabel(), "R4");
-            } else if (partner.getSymbol().equals("Si")) {
+            } else if (partner.getAtomicNumber() == IElement.Si) {
                 Assert.assertEquals(rGroup.getLabel(), "R");
             }
         }
@@ -899,7 +900,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainer result = reader.read(testMolecule);
         reader.close();
         IAtom oxygen = result.getAtom(0);
-        assertTrue(oxygen.getSymbol().equals("O"));
+        assertTrue(oxygen.getAtomicNumber() == IElement.O);
         Assert.assertEquals(oxygen.getProperty(CDKConstants.COMMENT), "Oxygen comment");
     }
 
@@ -920,7 +921,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         reader.close();
         int deuteriumCount = 0;
         for (IAtom atom : molecule.atoms())
-            if (atom.getSymbol().equals("H") && atom.getMassNumber() != null && atom.getMassNumber() == 2)
+            if (atom.getAtomicNumber() == IElement.H && atom.getMassNumber() != null && atom.getMassNumber() == 2)
                 deuteriumCount++;
         Assert.assertEquals(3, deuteriumCount);
     }
@@ -948,7 +949,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         reader.close();
         int tritiumCount = 0;
         for (IAtom atom : molecule.atoms())
-            if (atom.getSymbol().equals("H") && atom.getMassNumber() != null && atom.getMassNumber() == 3)
+            if (atom.getAtomicNumber() == IElement.H && atom.getMassNumber() != null && atom.getMassNumber() == 3)
                 tritiumCount++;
         Assert.assertEquals(1, tritiumCount);
     }
@@ -979,7 +980,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
         int queryBondCount = 0;
         for (IAtom atom : atc.atoms()) {
-            if (atom.getSymbol().equals("Ir")) {
+            if (atom.getAtomicNumber() == IElement.Ir) {
                 for (IBond bond : atc.getConnectedBondsList(atom)) {
                     if (bond instanceof QueryBond) {
                       if (((QueryBond) bond).getExpression().type() == Expr.Type.TRUE) {

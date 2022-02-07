@@ -13,6 +13,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -187,7 +188,7 @@ public class CDKTestCase {
         }
 
         for (IAtom atom : container.atoms()) {
-            if (atom.getSymbol().equals("H"))
+            if (atom.getAtomicNumber() == IElement.H)
                 Assert.assertFalse(atom.getSymbol() + container.indexOf(atom) + " was aromatic",
                         atom.getFlag(CDKConstants.ISAROMATIC));
             else

@@ -25,6 +25,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IRing;
@@ -154,13 +155,13 @@ public class RadicalSiteHrBetaReaction extends ReactionEngine implements IReacti
                     if (atoml != null && atoml.getFlag(CDKConstants.REACTIVE_CENTER)
                             && !atoml.getFlag(CDKConstants.ISINRING)
                             && (atoml.getFormalCharge() == CDKConstants.UNSET ? 0 : atoml.getFormalCharge()) == 0
-                            && !atoml.getSymbol().equals("H") && reactant.getMaximumBondOrder(atoml) == IBond.Order.SINGLE) {
+                            && atoml.getAtomicNumber() != IElement.H && reactant.getMaximumBondOrder(atoml) == IBond.Order.SINGLE) {
 
                         Iterator<IAtom> atomhs = reactant.getConnectedAtomsList(atoml).iterator();
                         while (atomhs.hasNext()) {
                             IAtom atomh = atomhs.next();
                             if (reactant.getBond(atomh, atoml).getFlag(CDKConstants.REACTIVE_CENTER)
-                                    && atomh.getFlag(CDKConstants.REACTIVE_CENTER) && atomh.getSymbol().equals("H")) {
+                                    && atomh.getFlag(CDKConstants.REACTIVE_CENTER) && atomh.getAtomicNumber() == IElement.H) {
 
                                 ArrayList<IAtom> atomList = new ArrayList<IAtom>();
                                 atomList.add(atomh);
@@ -213,12 +214,12 @@ public class RadicalSiteHrBetaReaction extends ReactionEngine implements IReacti
                     IAtom atoml = atomls.next();
                     if (atoml != null && !atoml.getFlag(CDKConstants.ISINRING)
                             && (atoml.getFormalCharge() == CDKConstants.UNSET ? 0 : atoml.getFormalCharge()) == 0
-                            && !atoml.getSymbol().equals("H") && reactant.getMaximumBondOrder(atoml) == IBond.Order.SINGLE) {
+                            && atoml.getAtomicNumber() != IElement.H && reactant.getMaximumBondOrder(atoml) == IBond.Order.SINGLE) {
 
                         Iterator<IAtom> atomhs = reactant.getConnectedAtomsList(atoml).iterator();
                         while (atomhs.hasNext()) {
                             IAtom atomh = atomhs.next();
-                            if (atomh.getSymbol().equals("H")) {
+                            if (atomh.getAtomicNumber() == IElement.H) {
                                 atomi.setFlag(CDKConstants.REACTIVE_CENTER, true);
                                 atoml.setFlag(CDKConstants.REACTIVE_CENTER, true);
                                 atomh.setFlag(CDKConstants.REACTIVE_CENTER, true);

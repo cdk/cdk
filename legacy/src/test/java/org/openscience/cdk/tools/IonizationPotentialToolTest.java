@@ -20,6 +20,7 @@ package org.openscience.cdk.tools;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
@@ -73,7 +74,7 @@ public class IonizationPotentialToolTest extends CDKTestCase {
         Iterator<IAtom> atoms = molecule.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
-            if (atom.getSymbol().equals("H")) continue;
+            if (atom.getAtomicNumber() == IElement.H) continue;
             carbonIPs.add(IonizationPotentialTool.predictIP(molecule, atom));
         }
 

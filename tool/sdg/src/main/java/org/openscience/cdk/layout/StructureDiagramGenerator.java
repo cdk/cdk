@@ -36,6 +36,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IRing;
@@ -576,7 +577,7 @@ public class StructureDiagramGenerator {
         // delete single-bonded H's from
         //IAtom[] atoms = shallowCopy.getAtoms();
         for (IAtom curAtom : shallowCopy.atoms()) {
-            if (curAtom.getSymbol().equals("H")) {
+            if (curAtom.getAtomicNumber() == IElement.H) {
                 if (shallowCopy.getConnectedBondsCount(curAtom) < 2) {
                     shallowCopy.removeAtom(curAtom);
                     curAtom.setPoint2d(null);

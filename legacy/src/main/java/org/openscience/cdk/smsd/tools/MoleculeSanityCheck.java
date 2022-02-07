@@ -31,6 +31,7 @@ import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
@@ -56,7 +57,7 @@ public class MoleculeSanityCheck {
     public static IAtomContainer checkAndCleanMolecule(IAtomContainer molecule) {
         boolean isMarkush = false;
         for (IAtom atom : molecule.atoms()) {
-            if (atom.getSymbol().equals("R")) {
+            if (atom.getAtomicNumber() == IElement.Wildcard) {
                 isMarkush = true;
                 break;
             }

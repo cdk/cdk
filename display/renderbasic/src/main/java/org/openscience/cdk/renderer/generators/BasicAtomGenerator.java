@@ -27,6 +27,7 @@ import javax.vecmath.Point2d;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.color.CDK2DAtomColors;
@@ -320,7 +321,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
             return this.generateCompactElement(atom, model);
         } else {
             int alignment = 0;
-            if (atom.getSymbol().equals("C")) {
+            if (atom.getAtomicNumber() == IElement.C) {
                 alignment = GeometryUtil.getBestAlignmentForLabel(atomContainer, atom);
             } else {
                 alignment = GeometryUtil.getBestAlignmentForLabelXY(atomContainer, atom);

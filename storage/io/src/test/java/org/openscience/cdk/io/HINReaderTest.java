@@ -35,6 +35,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.test.io.SimpleChemObjectReaderTest;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -194,7 +195,7 @@ public class HINReaderTest extends SimpleChemObjectReaderTest {
 
         // make sure that only the phenyl C's were marked as aromatic
         for (IAtom atom : mol.atoms()) {
-            if (atom.getSymbol().equals("C"))
+            if (atom.getAtomicNumber() == IElement.C)
                 Assert.assertTrue(atom.getSymbol() + " (index " + mol.indexOf(atom)
                         + ") was wrongly marked as aromatic", atom.getFlag(CDKConstants.ISAROMATIC));
         }

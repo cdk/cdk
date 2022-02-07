@@ -31,6 +31,7 @@ import org.junit.Assume;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
@@ -176,7 +177,7 @@ public class SmilesParserTest extends CDKTestCase {
         assertTrue(Aromaticity.cdkLegacy().apply(mol));
         Assert.assertEquals("N", mol.getAtom(6).getSymbol());
         for (IAtom atom : mol.atoms()) {
-            if (atom.getSymbol().equals("C")) {
+            if (atom.getAtomicNumber() == IElement.C) {
                 Assert.assertEquals(IAtomType.Hybridization.SP2, atom.getHybridization());
             } else {
                 Assert.assertEquals(IAtomType.Hybridization.PLANAR3, atom.getHybridization());
@@ -208,9 +209,9 @@ public class SmilesParserTest extends CDKTestCase {
         assertTrue(Aromaticity.cdkLegacy().apply(mol));
         for (int i = 1; i < 13; i++) { // first atom is not aromatic
             IAtom atom = mol.getAtom(i);
-            if (atom.getSymbol().equals("C"))
+            if (atom.getAtomicNumber() == IElement.C)
                 Assert.assertEquals(IAtomType.Hybridization.SP2, atom.getHybridization());
-            if (atom.getSymbol().equals("N") || atom.getSymbol().equals("S")) {
+            if (atom.getAtomicNumber() == IElement.N || atom.getAtomicNumber() == IElement.S) {
                 assertTrue(IAtomType.Hybridization.SP2 == atom.getHybridization()
                         || IAtomType.Hybridization.PLANAR3 == atom.getHybridization());
             }
@@ -859,7 +860,7 @@ public class SmilesParserTest extends CDKTestCase {
         String smiles = "c1ccc[NH]1";
         IAtomContainer mol = sp.parseSmiles(smiles);
         for (int i = 0; i < mol.getAtomCount(); i++) {
-            if (mol.getAtom(i).getSymbol().equals("N")) {
+            if (mol.getAtom(i).getAtomicNumber() == IElement.N) {
                 Assert.assertEquals(IBond.Order.SINGLE,
                         ((IBond) mol.getConnectedBondsList(mol.getAtom(i)).get(0)).getOrder());
                 Assert.assertEquals(IBond.Order.SINGLE,
@@ -1262,8 +1263,8 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals(17, mol.getBondCount());
         for (int i = 0; i < 17; i++) {
             IBond bond = mol.getBond(i);
-            if (bond.getBegin().getSymbol().equals("H") || bond.getBegin().getSymbol().equals("Br")
-                || bond.getEnd().getSymbol().equals("H") || bond.getEnd().getSymbol().equals("Br")) {
+            if (bond.getBegin().getAtomicNumber() == IElement.H || bond.getBegin().getAtomicNumber() == IElement.Br
+                || bond.getEnd().getAtomicNumber() == IElement.H || bond.getEnd().getAtomicNumber() == IElement.Br) {
                 assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
             } else {
                 assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
@@ -1313,7 +1314,7 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals(7, mol.getBondCount());
         for (int i = 0; i < 7; i++) {
             IBond bond = mol.getBond(i);
-            if (bond.getBegin().getSymbol().equals("O") || bond.getEnd().getSymbol().equals("O")) {
+            if (bond.getBegin().getAtomicNumber() == IElement.O || bond.getEnd().getAtomicNumber() == IElement.O) {
                 assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
             } else {
                 assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));

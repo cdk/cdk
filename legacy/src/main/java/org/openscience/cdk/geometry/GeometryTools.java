@@ -44,6 +44,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -1574,7 +1575,7 @@ public class GeometryTools {
             secondAtomNumber = mappedAtoms.get(firstAtomNumber);
             IAtom firstAtom = firstAtomContainer.getAtom(firstAtomNumber);
             if (hetAtomOnly) {
-                if (!firstAtom.getSymbol().equals("H") && !firstAtom.getSymbol().equals("C")) {
+                if (firstAtom.getAtomicNumber() != IElement.H && firstAtom.getAtomicNumber() != IElement.C) {
                     if (Coords3d) {
                         sum = sum
                                 + Math.pow(
@@ -1590,7 +1591,7 @@ public class GeometryTools {
                     }
                 }
             } else {
-                if (!firstAtom.getSymbol().equals("H")) {
+                if (firstAtom.getAtomicNumber() != IElement.H) {
                     if (Coords3d) {
                         sum = sum
                                 + Math.pow(

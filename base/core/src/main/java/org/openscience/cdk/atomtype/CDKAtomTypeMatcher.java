@@ -38,6 +38,7 @@ import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.ringsearch.RingSearch;
@@ -1029,7 +1030,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	if (connectedBonds.size() < 1) return false;
         for (IBond bond : connectedBonds) {
         	IAtom neighbor = bond.getOther(atom);
-            if (neighbor.getSymbol().equals("C")) {
+            if (neighbor.getAtomicNumber() == IElement.C) {
                 if (countAttachedDoubleBonds(atomContainer.getConnectedBondsList(neighbor), neighbor, "O") == 1) return true;
             }
         }
@@ -1040,7 +1041,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	if (connectedBonds.size() < 1) return false;
         for (IBond bond : connectedBonds) {
         	IAtom neighbor = bond.getOther(atom);
-            if (neighbor.getSymbol().equals("C")) {
+            if (neighbor.getAtomicNumber() == IElement.C) {
                 if (countAttachedDoubleBonds(atomContainer.getConnectedBondsList(neighbor), neighbor, "S") == 1) return true;
             }
         }
@@ -1051,7 +1052,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         int count = 0;
         for (IBond bond : connectedBonds) {
         	IAtom aAtom = bond.getOther(atom);
-            if (aAtom.getSymbol().equals("H")) {
+            if (aAtom.getAtomicNumber() == IElement.H) {
                 count++;
             }
         }
@@ -1067,7 +1068,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     private List<IBond> heavyBonds(final List<IBond> bonds) {
         final List<IBond> heavy = new ArrayList<IBond>(bonds.size());
         for (final IBond bond : bonds) {
-            if (!(bond.getBegin().getSymbol().equals("H") && bond.getEnd().getSymbol().equals("H"))) {
+            if (!(bond.getBegin().getAtomicNumber() == IElement.H && bond.getEnd().getAtomicNumber() == IElement.H)) {
                 heavy.add(bond);
             }
         }
