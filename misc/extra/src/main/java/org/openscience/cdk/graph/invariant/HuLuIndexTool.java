@@ -21,8 +21,6 @@
  */
 package org.openscience.cdk.graph.invariant;
 
-import java.util.Iterator;
-
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.invariant.exception.BadMatrixFormatException;
@@ -35,6 +33,8 @@ import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
+import java.util.Iterator;
+
 /**
  * Collection of methods for the calculation of topological indices of a
  * molecular graph.
@@ -44,6 +44,33 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class HuLuIndexTool {
 
     private final static ILoggingTool logger = LoggingToolFactory.createLoggingTool(HuLuIndexTool.class);
+
+    // Figure 1. in paper, could precompute the sqrt but hopefully the compiler
+    // does that for us
+    public static double getSqrtRadii(IAtom atom) {
+        if (atom.getAtomicNumber() == null)
+            throw new NullPointerException("Atomic Number not set");
+        switch (atom.getAtomicNumber()) {
+            case IElement.H:  return Math.sqrt(0.37);
+            case IElement.Li: return Math.sqrt(1.225);
+            case IElement.Be: return Math.sqrt(0.889);
+            case IElement.B:  return Math.sqrt(0.80);
+            case IElement.C:  // fallthrough
+            case IElement.N:  // fallthrough
+            case IElement.O:  return Math.sqrt(0.74);
+            case IElement.F:  return Math.sqrt(0.72);
+            case IElement.Na: return Math.sqrt(1.572);
+            case IElement.Mg: return Math.sqrt(1.364);
+            case IElement.Al: return Math.sqrt(1.248);
+            case IElement.Si: return Math.sqrt(1.173);
+            case IElement.P:  return Math.sqrt(1.10);
+            case IElement.S:  return Math.sqrt(1.04);
+            case IElement.Cl: return Math.sqrt(0.994);
+            case IElement.Br: return Math.sqrt(1.142);
+            case IElement.I:  return Math.sqrt(1.334);
+            default: throw new IllegalArgumentException("Unsupported element: " + atom.getSymbol());
+        }
+    }
 
     /**
     * Calculates the extended adjacency matrix index.
@@ -85,11 +112,7 @@ public class HuLuIndexTool {
         for (int i = 0; i < adjaMatrix.length; i++) {
             for (int j = 0; j < adjaMatrix.length; j++) {
                 if (i == j) {
-                    if (atomContainer.getAtom(i).getAtomicNumber() == IElement.O) {
-                        adjaMatrix[i][j] = Math.sqrt(0.74) / 6;
-                    } else {
-                        adjaMatrix[i][j] = Math.sqrt(0.74) / 6;
-                    }
+                    adjaMatrix[i][j] = getSqrtRadii(atomContainer.getAtom(i)) / 6;
                 } else {
                     adjaMatrix[i][j] = (Math.sqrt(atomWeights[i] / atomWeights[j]) + Math.sqrt(atomWeights[j]
                             / atomWeights[i]))
