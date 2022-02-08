@@ -30,55 +30,245 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.tools.ILoggingTool;
-import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Collection of methods for the calculation of topological indices of a
- * molecular graph.
+ * molecular graph as described in {@cdk.cite HU96}.
  *
  * @cdk.githash
+ * @author Mark Vine
+ * @author John Mayfield
  */
 public class HuLuIndexTool {
 
-    private final static ILoggingTool logger = LoggingToolFactory.createLoggingTool(HuLuIndexTool.class);
-
     // Figure 1. in paper, could precompute the sqrt but hopefully the compiler
-    // does that for us
+    // does that for us, https://en.wikipedia.org/wiki/Covalent_radius provides
+    // a more accurate list but this tool was for generating "unique" indexes.
+    // based on the example in the paper it appears they use 0.7709 for the covalent
+    // radius of C rather than 0.74 - this allows us to exactly match the proposed
+    // numbers
     public static double getSqrtRadii(IAtom atom) {
         if (atom.getAtomicNumber() == null)
             throw new NullPointerException("Atomic Number not set");
         switch (atom.getAtomicNumber()) {
-            case IElement.H:  return Math.sqrt(0.37);
-            case IElement.Li: return Math.sqrt(1.225);
-            case IElement.Be: return Math.sqrt(0.889);
-            case IElement.B:  return Math.sqrt(0.80);
-            case IElement.C:  // fallthrough
-            case IElement.N:  // fallthrough
-            case IElement.O:  return Math.sqrt(0.74);
-            case IElement.F:  return Math.sqrt(0.72);
-            case IElement.Na: return Math.sqrt(1.572);
-            case IElement.Mg: return Math.sqrt(1.364);
-            case IElement.Al: return Math.sqrt(1.248);
-            case IElement.Si: return Math.sqrt(1.173);
-            case IElement.P:  return Math.sqrt(1.10);
-            case IElement.S:  return Math.sqrt(1.04);
-            case IElement.Cl: return Math.sqrt(0.994);
-            case IElement.Br: return Math.sqrt(1.142);
-            case IElement.I:  return Math.sqrt(1.334);
-            default: throw new IllegalArgumentException("Unsupported element: " + atom.getSymbol());
+            case IElement.H:
+                return Math.sqrt(0.37);
+            case IElement.Li:
+                return Math.sqrt(1.225);
+            case IElement.Be:
+                return Math.sqrt(0.889);
+            case IElement.B:
+                return Math.sqrt(0.80);
+            case IElement.C:
+                return Math.sqrt(0.7709999); // 0.74 in fig. 1
+            case IElement.N:
+                return Math.sqrt(0.74);
+            case IElement.O:
+                return Math.sqrt(0.74);
+            case IElement.F:
+                return Math.sqrt(0.72);
+            case IElement.Na:
+                return Math.sqrt(1.572);
+            case IElement.Mg:
+                return Math.sqrt(1.364);
+            case IElement.Al:
+                return Math.sqrt(1.248);
+            case IElement.Si:
+                return Math.sqrt(1.173);
+            case IElement.P:
+                return Math.sqrt(1.10);
+            case IElement.S:
+                return Math.sqrt(1.04);
+            case IElement.Cl:
+                return Math.sqrt(0.994);
+            case IElement.Br:
+                return Math.sqrt(1.142);
+            case IElement.I:
+                return Math.sqrt(1.334);
+            default:
+                throw new IllegalArgumentException("Unsupported element: " + atom.getSymbol());
         }
     }
 
+    private static double sigma(IAtomContainer mol, IAtom atom) {
+        int hcnt = atom.getImplicitHydrogenCount();
+        for (IBond bond : mol.getConnectedBondsList(atom)) {
+            IAtom nbor = bond.getOther(atom);
+            if (nbor.getAtomicNumber() == IElement.H)
+                hcnt++;
+        }
+        switch (atom.getAtomicNumber()) {
+            case IElement.Li:
+                return 1 - hcnt;
+            case IElement.Na:
+                return 1 - hcnt;
+            case IElement.Be:
+                return 2 - hcnt;
+            case IElement.Mg:
+                return 2 - hcnt;
+            case IElement.B:
+                return 3 - hcnt;
+            case IElement.Al:
+                return 3 - hcnt;
+            case IElement.C:
+                return 4 - hcnt;
+            case IElement.N:
+                return 5 - hcnt;
+            case IElement.P:
+                return 5 - hcnt;
+            case IElement.O:
+                return 6 - hcnt;
+            case IElement.S:
+                return 6 - hcnt;
+            case IElement.F:
+                return 7 - hcnt;
+            case IElement.Cl:
+                return 7 - hcnt;
+            case IElement.Br:
+                return 7 - hcnt;
+            case IElement.I:
+                return 7 - hcnt;
+            default:
+                throw new IllegalArgumentException("Unsupported atom: " + atom.getAtomicNumber());
+        }
+    }
+
+    private static double getWeight(IBond bond) {
+        if (bond.isAromatic())
+            return 1.5d;
+        switch (bond.getOrder()) {
+            case SINGLE:
+                return 1;
+            case DOUBLE:
+                return 2;
+            case TRIPLE:
+                return 3;
+        }
+        throw new IllegalArgumentException("Unsupported bond type: " + bond);
+    }
+
+    // like ConnectionMatrix.getMatrix but need 1.5 for aromatic
+    private static double[][] getAdjacencyMatrix(IAtomContainer mol) {
+        int acount = mol.getAtomCount();
+        double[][] adjMat = new double[acount][acount];
+        for (IBond bond : mol.bonds()) {
+            int i = bond.getBegin().getIndex();
+            int j = bond.getEnd().getIndex();
+            adjMat[i][j] = adjMat[j][i] = getWeight(bond);
+        }
+        return adjMat;
+    }
+
+    static double[] getAtomWeights(IAtomContainer mol) {
+
+        //int k = 0;
+        double[] weightArray = new double[mol.getAtomCount()];
+        double[][] adjaMatrix = ConnectionMatrix.getMatrix(mol);
+
+        int[][] apspMatrix = PathTools.computeFloydAPSP(adjaMatrix);
+        int[] atomLayers = getAtomLayers(apspMatrix);
+
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            IAtom atom = mol.getAtom(i);
+
+            if (atomLayers[i] > mol.getAtomCount())
+                continue;
+
+            int[] cvm = new int[atomLayers[i]];
+            int[] interLayerBondSum = new int[atomLayers[i] - 1];
+
+            weightArray[i] = sigma(mol, atom);
+            for (int j = 0; j < apspMatrix.length; j++) {
+                if (apspMatrix[j][i] <= mol.getAtomCount())
+                    cvm[apspMatrix[j][i]] += sigma(mol, mol.getAtom(j));
+            }
+
+            for (IBond bond : mol.bonds()) {
+                IAtom headAtom = bond.getBegin();
+                IAtom endAtom = bond.getEnd();
+
+                int headAtomPosition = mol.indexOf(headAtom);
+                int endAtomPosition = mol.indexOf(endAtom);
+
+                if (Math.abs(apspMatrix[i][headAtomPosition] - apspMatrix[i][endAtomPosition]) == 1) {
+                    int min = Math.min(apspMatrix[i][headAtomPosition],
+                            apspMatrix[i][endAtomPosition]);
+                    interLayerBondSum[min] += getWeight(bond);
+                }
+            }
+
+            for (int j = 0; j < interLayerBondSum.length; j++) {
+                weightArray[i] += interLayerBondSum[j] * cvm[j + 1] * Math.pow(10, -(j + 1));
+            }
+        }
+
+        return weightArray;
+    }
+
+    static double[][] getWeightMatrix(IAtomContainer mol) {
+        int acount = mol.getAtomCount();
+        double[][] matrix = new double[acount][acount];
+        double[] weights = getAtomWeights(mol);
+        for (int i = 0; i < acount; i++) {
+            for (int j = i + 1; j < acount; j++) {
+                // Wij = sqrt(s[i]/s[j]) + sqrt(s[j]/s[i])
+                matrix[i][j] = matrix[j][i]
+                        = Math.sqrt(weights[i] / weights[j]) +
+                        Math.sqrt(weights[j] / weights[i]);
+            }
+        }
+        return matrix;
+    }
+
     /**
-    * Calculates the extended adjacency matrix index.
-    * An implementation of the algorithm published in {@cdk.cite HU96}.
-    *
-    * @cdk.keyword EAID number
-    */
+     * Compute the extended adjacency matrix as described in {@cdk.cite HU96}.
+     *
+     * @param mol the molecule
+     * @return extended adjacency matrix
+     */
+    public static double[][] getExtendedAdjacencyMatrix(IAtomContainer mol) {
+
+        int acount = mol.getAtomCount();
+        double[][] extAdjMat = new double[acount][acount];
+        double[][] adjMat = getAdjacencyMatrix(mol);
+        double[][] wgtMat = getWeightMatrix(mol);
+
+        for (int i = 0; i < acount; i++) {
+            extAdjMat[i][i] = getSqrtRadii(mol.getAtom(i)) / 6;
+            for (int j = i + 1; j < acount; j++) {
+                extAdjMat[j][i] = extAdjMat[i][j] =
+                        (Math.sqrt(adjMat[i][j]) * wgtMat[i][j]) / 6;
+            }
+        }
+
+        return extAdjMat;
+    }
+
+    public static int[] getAtomLayers(int[][] apspMatrix) {
+        int[] atomLayers = new int[apspMatrix.length];
+        for (int i = 0; i < apspMatrix.length; i++) {
+            atomLayers[i] = 0;
+            for (int[] matrix : apspMatrix) {
+                // 999999 used for not connected
+                if (matrix[i] > apspMatrix.length)
+                    continue;
+                if (atomLayers[i] < 1 + matrix[i])
+                    atomLayers[i] = 1 + matrix[i];
+            }
+
+        }
+        return atomLayers;
+    }
+
+    /**
+     * Calculates the extended adjacency matrix index.
+     * An implementation of the algorithm published in {@cdk.cite HU96}.
+     *
+     * @cdk.keyword EAID number
+     */
     public static double getEAIDNumber(IAtomContainer atomContainer) throws NoSuchAtomException,
-                                                                            BadMatrixFormatException, IndexOutOfBoundsException {
-        GIMatrix matrix = new GIMatrix(getExtendedAdjacenyMatrix(atomContainer));
+            BadMatrixFormatException, IndexOutOfBoundsException {
+        GIMatrix matrix = new GIMatrix(getExtendedAdjacencyMatrix(atomContainer));
 
         GIMatrix tempMatrix = matrix;
         GIMatrix fixedMatrix = matrix;
@@ -90,170 +280,6 @@ public class HuLuIndexTool {
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
             matrix.setValueAt(i, i, matrix.getValueAt(i, i) + 1);
         }
-        double eaid = matrix.trace();
-
-        logger.debug("final matrix - the sum of the powers of EA matrix: ");
-        displayMatrix(matrix.getArrayValue());
-        logger.debug("eaid number: " + eaid);
-
-        return eaid;
+        return matrix.trace();
     }
-
-    public static double[][] getExtendedAdjacenyMatrix(IAtomContainer atomContainer) throws NoSuchAtomException {
-        double[][] adjaMatrix = ConnectionMatrix.getMatrix(atomContainer);
-
-        logger.debug("adjacency matrix: ");
-        displayMatrix(adjaMatrix);
-
-        double[] atomWeights = getAtomWeights(atomContainer);
-
-        for (int i = 0; i < adjaMatrix.length; i++) {
-            for (int j = 0; j < adjaMatrix.length; j++) {
-                if (i == j) {
-                    adjaMatrix[i][j] = getSqrtRadii(atomContainer.getAtom(i)) / 6;
-                } else {
-                    adjaMatrix[i][j] = (Math.sqrt(atomWeights[i] / atomWeights[j]) + Math.sqrt(atomWeights[j]
-                            / atomWeights[i]))
-                            * Math.sqrt(adjaMatrix[i][j]) / 6;
-                }
-            }
-        }
-
-        logger.debug("extended adjacency matrix: ");
-        displayMatrix(adjaMatrix);
-
-        return adjaMatrix;
-    }
-
-    public static double[] getAtomWeights(IAtomContainer atomContainer) throws NoSuchAtomException {
-        IAtom atom, headAtom, endAtom;
-        int headAtomPosition, endAtomPosition;
-
-        //int k = 0;
-        double[] weightArray = new double[atomContainer.getAtomCount()];
-        double[][] adjaMatrix = ConnectionMatrix.getMatrix(atomContainer);
-
-        int[][] apspMatrix = PathTools.computeFloydAPSP(adjaMatrix);
-        int[] atomLayers = getAtomLayers(apspMatrix);
-
-        int[] valenceSum;
-        int[] interLayerBondSum;
-
-        logger.debug("adjacency matrix: ");
-        displayMatrix(adjaMatrix);
-        logger.debug("all-pairs-shortest-path matrix: ");
-        displayMatrix(apspMatrix);
-        logger.debug("atom layers: ");
-        displayArray(atomLayers);
-
-        for (int i = 0; i < atomContainer.getAtomCount(); i++) {
-            atom = atomContainer.getAtom(i);
-
-            valenceSum = new int[atomLayers[i]];
-            for (int v = 0; v < valenceSum.length; v++) {
-                valenceSum[v] = 0;
-            }
-
-            interLayerBondSum = new int[atomLayers[i] - 1];
-            for (int v = 0; v < interLayerBondSum.length; v++) {
-                interLayerBondSum[v] = 0;
-            }
-
-            //weightArray[k] = atom.getValenceElectronsCount() - atom.getHydrogenCount(); // method unfinished
-            if (atom.getAtomicNumber() == IElement.O)
-                weightArray[i] = 6 - atom.getImplicitHydrogenCount();
-            else
-                weightArray[i] = 4 - atom.getImplicitHydrogenCount();
-
-            for (int j = 0; j < apspMatrix.length; j++) {
-                if (atomContainer.getAtom(j).getAtomicNumber() == IElement.O)
-                    valenceSum[apspMatrix[j][i]] += 6 - atomContainer.getAtom(j).getImplicitHydrogenCount();
-                else
-                    valenceSum[apspMatrix[j][i]] += 4 - atomContainer.getAtom(j).getImplicitHydrogenCount();
-            }
-
-            for (IBond bond : atomContainer.bonds()) {
-                headAtom = bond.getBegin();
-                endAtom = bond.getEnd();
-
-                headAtomPosition = atomContainer.indexOf(headAtom);
-                endAtomPosition = atomContainer.indexOf(endAtom);
-
-                if (Math.abs(apspMatrix[i][headAtomPosition] - apspMatrix[i][endAtomPosition]) == 1) {
-                    int min = Math.min(apspMatrix[i][headAtomPosition], apspMatrix[i][endAtomPosition]);
-                    IBond.Order order = bond.getOrder();
-                    interLayerBondSum[min] += order == null ? 0 : order.numeric();
-                }
-            }
-
-            for (int j = 0; j < interLayerBondSum.length; j++) {
-                weightArray[i] += interLayerBondSum[j] * valenceSum[j + 1] * Math.pow(10, -(j + 1));
-            }
-
-            logger.debug("valence sum: ");
-            displayArray(valenceSum);
-            logger.debug("inter-layer bond sum: ");
-            displayArray(interLayerBondSum);
-        }
-
-        logger.debug("weight array: ");
-        displayArray(weightArray);
-
-        return weightArray;
-    }
-
-    public static int[] getAtomLayers(int[][] apspMatrix) {
-        int[] atomLayers = new int[apspMatrix.length];
-        for (int i = 0; i < apspMatrix.length; i++) {
-            atomLayers[i] = 0;
-            for (int[] matrix : apspMatrix) {
-                if (atomLayers[i] < 1 + matrix[i]) atomLayers[i] = 1 + matrix[i];
-            }
-
-        }
-        return atomLayers;
-    }
-
-    /** Lists a 2D double matrix to the System console. */
-    public static void displayMatrix(double[][] matrix) {
-        String line;
-        for (int f = 0; f < matrix.length; f++) {
-            line = "";
-            for (double[] doubles : matrix) {
-                line += doubles[f] + " | ";
-            }
-            logger.debug(line);
-        }
-    }
-
-    /** Lists a 2D int matrix to the System console. */
-    public static void displayMatrix(int[][] matrix) {
-        String line;
-        for (int f = 0; f < matrix.length; f++) {
-            line = "";
-            for (int[] ints : matrix) {
-                line += ints[f] + " | ";
-            }
-            logger.debug(line);
-        }
-    }
-
-    /** Lists a 1D array to the System console. */
-    public static void displayArray(int[] array) {
-        String line = "";
-        for (int i : array) {
-            line += i + " | ";
-        }
-        logger.debug(line);
-    }
-
-    /** Lists a 1D array to the System console. */
-    public static void displayArray(double[] array) {
-        String line = "";
-        for (double v : array) {
-            line += v + " | ";
-        }
-        logger.debug(line);
-    }
-
 }
