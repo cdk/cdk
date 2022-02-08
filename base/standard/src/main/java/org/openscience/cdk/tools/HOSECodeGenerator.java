@@ -24,15 +24,9 @@
  */
 package org.openscience.cdk.tools;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.graph.invariant.CanonicalLabeler;
@@ -43,6 +37,12 @@ import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.smiles.InvPair;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Generates HOSE codes {@cdk.cite BRE78}.
@@ -430,41 +430,37 @@ public class HOSECodeGenerator implements java.io.Serializable {
      *@exception  org.openscience.cdk.exception.CDKException  Thrown if something goes wrong
      */
     private void createCode() throws CDKException {
-        List<TreeNode> sphereNodes = null;
-        TreeNode tn = null;
+
         for (int f = 0; f < atomContainer.getAtomCount(); f++) {
             atomContainer.getAtom(f).setFlag(CDKConstants.VISITED, false);
         }
 
         for (int f = 0; f < maxSphere; f++) {
-            sphereNodes = spheres[maxSphere - f];
+            List<TreeNode> sphereNodes = spheres[maxSphere - f];
             for (int g = 0; g < sphereNodes.size(); g++) {
-                tn = sphereNodes.get(g);
+                TreeNode tn = sphereNodes.get(g);
                 if (tn.source != null) {
                     tn.source.ranking += tn.degree;
                 }
-
             }
         }
 
         for (int f = 0; f < maxSphere; f++) {
-            sphereNodes = spheres[f];
+            List<TreeNode> sphereNodes = spheres[f];
             calculateNodeScores(sphereNodes);
-            sortNodesByScore(sphereNodes);
+            // sortNodesByScore(sphereNodes); // does nothing
         }
 
         for (int f = 0; f < maxSphere; f++) {
             sphereNodes = spheres[f];
-            for (int g = 0; g < sphereNodes.size(); g++) {
-                tn = (TreeNode) sphereNodes.get(g);
+            for (TreeNode tn : sphereNodes) {
                 tn.score += tn.ranking;
             }
-            sortNodesByScore(sphereNodes);
+            // sortNodesByScore(sphereNodes); // does nothing
         }
         for (int f = 0; f < maxSphere; f++) {
             sphereNodes = spheres[f];
-            for (int g = 0; g < sphereNodes.size(); g++) {
-                tn = (TreeNode) sphereNodes.get(g);
+            for (TreeNode tn : sphereNodes) {
                 String localscore = tn.score + "";
                 while (localscore.length() < 6) {
                     localscore = "0" + localscore;
