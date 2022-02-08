@@ -37,7 +37,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * This class checks if two atoms have pi-contact (this is true when there is
  * one and the same conjugated pi-system which contains both atoms, or directly
- * linked neighbours of the atoms).
+ * linked neighbours of the atoms). Only conjugated systems with more than 2
+ * atoms are considered.
  *
  * <table border="1"><caption>Parameters for this descriptor:</caption>
  *   <tr>
