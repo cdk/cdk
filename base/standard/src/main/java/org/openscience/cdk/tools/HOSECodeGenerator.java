@@ -436,9 +436,7 @@ public class HOSECodeGenerator implements java.io.Serializable {
         }
 
         for (int f = 0; f < maxSphere; f++) {
-            List<TreeNode> sphereNodes = spheres[maxSphere - f];
-            for (int g = 0; g < sphereNodes.size(); g++) {
-                TreeNode tn = sphereNodes.get(g);
+            for (TreeNode tn : spheres[maxSphere - f]) {
                 if (tn.source != null) {
                     tn.source.ranking += tn.degree;
                 }
@@ -446,34 +444,30 @@ public class HOSECodeGenerator implements java.io.Serializable {
         }
 
         for (int f = 0; f < maxSphere; f++) {
-            List<TreeNode> sphereNodes = spheres[f];
-            calculateNodeScores(sphereNodes);
-            // sortNodesByScore(sphereNodes); // does nothing
+            calculateNodeScores(spheres[f]);
+            // sortNodesByScore(spheres[f]); // does nothing
         }
 
         for (int f = 0; f < maxSphere; f++) {
-            sphereNodes = spheres[f];
-            for (TreeNode tn : sphereNodes) {
+            for (TreeNode tn : spheres[f]) {
                 tn.score += tn.ranking;
             }
-            // sortNodesByScore(sphereNodes); // does nothing
+            // sortNodesByScore(spheres[f]); // does nothing
         }
         for (int f = 0; f < maxSphere; f++) {
-            sphereNodes = spheres[f];
-            for (TreeNode tn : sphereNodes) {
+            for (TreeNode tn : spheres[f]) {
                 String localscore = tn.score + "";
                 while (localscore.length() < 6) {
                     localscore = "0" + localscore;
                 }
                 tn.stringscore = tn.source.stringscore + "" + localscore;
             }
-            sortNodesByScore(sphereNodes);
+            sortNodesByScore(spheres[f]);
         }
         HOSECode.append(centerCode);
         for (int f = 0; f < maxSphere; f++) {
             sphere = f + 1;
-            sphereNodes = spheres[f];
-            String s = getSphereCode(sphereNodes);
+            String s = getSphereCode(spheres[f]);
             HOSECode.append(s);
         }
     }
