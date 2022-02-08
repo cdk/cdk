@@ -90,7 +90,7 @@ public class HuLuIndexTool {
         }
     }
 
-    private static double sigma(IAtomContainer mol, IAtom atom) {
+    private static int sigma(IAtomContainer mol, IAtom atom) {
         int hcnt = atom.getImplicitHydrogenCount();
         for (IBond bond : mol.getConnectedBondsList(atom)) {
             IAtom nbor = bond.getOther(atom);
@@ -143,8 +143,9 @@ public class HuLuIndexTool {
                 return 2;
             case TRIPLE:
                 return 3;
+            default:
+                throw new IllegalArgumentException("Unsupported bond type: " + bond);
         }
-        throw new IllegalArgumentException("Unsupported bond type: " + bond);
     }
 
     // like ConnectionMatrix.getMatrix but need 1.5 for aromatic
