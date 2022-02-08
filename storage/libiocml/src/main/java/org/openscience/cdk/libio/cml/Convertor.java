@@ -24,7 +24,9 @@
 package org.openscience.cdk.libio.cml;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -122,47 +124,56 @@ public class Convertor {
 
         if (!customizers.containsKey(customizer.getClass().getName())) {
             customizers.put(customizer.getClass().getName(), customizer);
-            logger.info("Loaded Customizer: ", customizer.getClass().getName());
+            logger.info("Registered Customizer: ", customizer.getClass().getName());
         } else {
             logger.warn("Duplicate attempt to register a customizer");
         }
     }
 
     private void setupCustomizers() {
-        if (customizers == null) customizers = new HashMap<String, ICMLCustomizer>();
+        if (customizers == null) customizers = new HashMap<>();
 
-        try {
+        try (InputStream in = this.getClass().getResourceAsStream(CUSTOMIZERS_LIST);
+             InputStreamReader rdr = new InputStreamReader(Objects.requireNonNull(in));
+             BufferedReader brdr = new BufferedReader(rdr)) {
             logger.debug("Starting loading Customizers...");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader()
-                    .getResourceAsStream(CUSTOMIZERS_LIST)));
-            int customizerCount = 0;
-            while (reader.ready()) {
+
+            int numLoaded = 0;
+            String customizerName;
+            while ((customizerName = brdr.readLine()) != null) {
                 // load them one by one
-                String customizerName = reader.readLine();
-                customizerCount++;
                 if (!customizers.containsKey(customizerName)) {
-                    try {
-                        ICMLCustomizer customizer = (ICMLCustomizer) this.getClass().getClassLoader()
-                                .loadClass(customizerName).newInstance();
-                        customizers.put(customizer.getClass().getName(), customizer);
-                        logger.info("Loaded Customizer: ", customizer.getClass().getName());
-                    } catch (ClassNotFoundException exception) {
-                        logger.info("Could not find this Customizer: ", customizerName);
-                        logger.debug(exception);
-                    } catch (InstantiationException | IllegalAccessException exception) {
-                        logger.warn("Could not load this Customizer: ", customizerName);
-                        logger.warn(exception.getMessage());
-                        logger.debug(exception);
-                    }
+                    if (loadCustomizer(customizerName))
+                        numLoaded++;
                 } else {
-                    logger.warn("Duplicate attempt to register a customizer");
+                    logger.warn("Duplicate attempt to load a customizer");
                 }
             }
-            logger.info("Number of loaded customizers: ", customizerCount);
+            logger.info("Number of loaded customizers: ", numLoaded);
         } catch (Exception exception) {
             logger.error("Could not load this list: ", CUSTOMIZERS_LIST);
             logger.debug(exception);
         }
+    }
+
+    private boolean loadCustomizer(String customizerName) {
+        try {
+            ICMLCustomizer customizer = (ICMLCustomizer) Class.forName(customizerName)
+                                                              .getDeclaredConstructor()
+                                                              .newInstance();
+            customizers.put(customizer.getClass().getName(), customizer);
+            logger.info("Loaded Customizer: ", customizer.getClass().getName());
+            return true;
+        } catch (ClassNotFoundException exception) {
+            logger.info("Could not find this Customizer: ", customizerName);
+            logger.debug(exception);
+        } catch (InstantiationException | IllegalAccessException |
+                 InvocationTargetException | NoSuchMethodException exception) {
+            logger.warn("Could not load this Customizer: ", customizerName);
+            logger.warn(exception.getMessage());
+            logger.debug(exception);
+        }
+        return false;
     }
 
     public CMLCml cdkChemFileToCMLList(IChemFile file) {
