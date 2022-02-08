@@ -430,11 +430,9 @@ public class HOSECodeGenerator implements java.io.Serializable {
      *@exception  org.openscience.cdk.exception.CDKException  Thrown if something goes wrong
      */
     private void createCode() throws CDKException {
-
         for (int f = 0; f < atomContainer.getAtomCount(); f++) {
             atomContainer.getAtom(f).setFlag(CDKConstants.VISITED, false);
         }
-
         for (int f = 0; f < maxSphere; f++) {
             for (TreeNode tn : spheres[maxSphere - f]) {
                 if (tn.source != null) {
@@ -442,26 +440,10 @@ public class HOSECodeGenerator implements java.io.Serializable {
                 }
             }
         }
-
         for (int f = 0; f < maxSphere; f++) {
             calculateNodeScores(spheres[f]);
-            // sortNodesByScore(spheres[f]); // does nothing
-        }
-
-        for (int f = 0; f < maxSphere; f++) {
-            for (TreeNode tn : spheres[f]) {
+            for (TreeNode tn : spheres[f])
                 tn.score += tn.ranking;
-            }
-            // sortNodesByScore(spheres[f]); // does nothing
-        }
-        for (int f = 0; f < maxSphere; f++) {
-            for (TreeNode tn : spheres[f]) {
-                String localscore = tn.score + "";
-                while (localscore.length() < 6) {
-                    localscore = "0" + localscore;
-                }
-                tn.stringscore = tn.source.stringscore + "" + localscore;
-            }
             sortNodesByScore(spheres[f]);
         }
         HOSECode.append(centerCode);
@@ -595,7 +577,7 @@ public class HOSECodeGenerator implements java.io.Serializable {
             // compare the parent node (source) first then the child string score
             int cmp = Integer.compare(b.source.sortOrder, a.source.sortOrder);
             if (cmp != 0) return cmp;
-            return b.stringscore.compareTo(a.stringscore);
+            return Long.compare(b.score, a.score);
         });
         /* Having sorted a sphere, we label the nodes with their sort order */
         for (int i = 0; i < sphereNodes.size(); i++) {
@@ -666,7 +648,6 @@ public class HOSECodeGenerator implements java.io.Serializable {
         List<TreeNode> childs      = null;
         String         hSymbol     = null;
         boolean        stopper     = false;
-        String         stringscore = "";
 
         /**
          *  Constructor for the TreeNode object.
