@@ -171,8 +171,8 @@ public class IPMolecularLearningDescriptor extends AbstractMolecularDescriptor i
         }
         for (Iterator<IBond> itB = container.bonds().iterator(); itB.hasNext();) {
             IBond bond = itB.next();
-            if (bond.getOrder() == IBond.Order.DOUBLE & bond.getBegin().getAtomicNumber() == IElement.C
-                    & bond.getEnd().getAtomicNumber() == IElement.C) {
+            if (bond.getOrder() == IBond.Order.DOUBLE && bond.getBegin().getAtomicNumber() == IElement.C
+                    && bond.getEnd().getAtomicNumber() == IElement.C) {
                 double value = IonizationPotentialTool.predictIP(container, bond);
                 if (value != 0) dar.add(value);
 

@@ -900,7 +900,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainer result = reader.read(testMolecule);
         reader.close();
         IAtom oxygen = result.getAtom(0);
-        assertTrue(oxygen.getAtomicNumber() == IElement.O);
+        Assert.assertEquals(IElement.O, (int) oxygen.getAtomicNumber());
         Assert.assertEquals(oxygen.getProperty(CDKConstants.COMMENT), "Oxygen comment");
     }
 

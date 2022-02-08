@@ -75,7 +75,7 @@ public class CDKUtilities {
                         int count = 0;
 
                         for (int j = 0; j <= 2; j++) {
-                            if (((IAtom) ca.get(j)).getAtomicNumber() == IElement.O) {
+                            if (ca.get(j).getAtomicNumber() == IElement.O) {
                                 count++;
                             }
                         }
