@@ -61,7 +61,8 @@ public class QSARCMLRoundTripTest {
     @BeforeClass
     public static void setup() {
         convertor = new Convertor(false, "");
-        convertor.registerCustomizer(new QSARCustomizer());
+        // not needed QSARCustomizer is on by default
+        // convertor.registerCustomizer(new QSARCustomizer());
     }
 
     // See also CMLRoundTripTool
@@ -127,7 +128,8 @@ public class QSARCMLRoundTripTest {
         IMolecularDescriptor descriptor = new WeightDescriptor();
 
         CMLWriter cmlWriter = new CMLWriter(writer);
-        cmlWriter.registerCustomizer(new QSARCustomizer());
+        // not needed QSARCustomizer is on by default
+        // convertor.registerCustomizer(new QSARCustomizer());
         DescriptorValue value = descriptor.calculate(molecule);
         molecule.setProperty(value.getSpecification(), value);
 

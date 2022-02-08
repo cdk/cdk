@@ -140,7 +140,7 @@ public class Convertor {
                 // load them one by one
                 String customizerName = reader.readLine();
                 customizerCount++;
-                if (customizers.containsKey(customizerName)) {
+                if (!customizers.containsKey(customizerName)) {
                     try {
                         ICMLCustomizer customizer = (ICMLCustomizer) this.getClass().getClassLoader()
                                 .loadClass(customizerName).newInstance();
