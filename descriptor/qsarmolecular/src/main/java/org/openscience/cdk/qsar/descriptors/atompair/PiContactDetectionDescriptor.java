@@ -149,7 +149,7 @@ public class PiContactDetectionDescriptor extends AbstractAtomPairDescriptor imp
             return getDummyDescriptorValue(e);
         }
         IAtom clonedFirst = ac.getAtom(atomContainer.indexOf(first));
-        IAtom clonedSecond = ac.getAtom(atomContainer.indexOf(first));
+        IAtom clonedSecond = ac.getAtom(atomContainer.indexOf(second));
 
         IAtomContainer mol = ac.getBuilder().newInstance(IAtomContainer.class, ac);
         if (checkAromaticity) {
