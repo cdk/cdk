@@ -193,7 +193,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
                         Map<Integer, IBond> apoBonds = rootApo.get(at);
                         Assert.assertEquals(apoBonds.size(), 2);
                         Assert.assertEquals(apoBonds.get(1).getOther(at).getSymbol(), "N");
-                        Assert.assertTrue(apoBonds.get(2).getOther(at).getAtomicNumber() == IElement.C);
+                        Assert.assertEquals(IElement.C, (int) apoBonds.get(2).getOther(at).getAtomicNumber());
                         //Test: Oxygens are the 2nd APO's for R1
                         IRGroupList rList = rGroupQuery.getRGroupDefinitions().get(1);
                         Assert.assertEquals(rList.getRGroups().size(), 2);

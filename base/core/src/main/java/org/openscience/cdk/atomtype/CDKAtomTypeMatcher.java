@@ -277,7 +277,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 type = perceiveCalcium(atomContainer, atom);
                 break;
             default:
-                if (type == null) type = perceiveHalogens(atomContainer, atom, connectedBonds);
+                type = perceiveHalogens(atomContainer, atom, connectedBonds);
                 if (type == null) type = perceiveCommonSalts(atomContainer, atom);
                 if (type == null) type = perceiveOrganometallicCenters(atomContainer, atom);
                 if (type == null) type = perceiveNobelGases(atomContainer, atom);
@@ -1495,7 +1495,11 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     private IAtomType perceiveHalogens(IAtomContainer atomContainer, IAtom atom, List<IBond> connectedBonds) throws CDKException {
-    	if (connectedBonds == null) connectedBonds = atomContainer.getConnectedBondsList(atom);
+
+        if (connectedBonds == null) {
+            connectedBonds = atomContainer.getConnectedBondsList(atom);
+        }
+
         if (atom.getAtomicNumber() == IElement.F) {
             if (hasOneSingleElectron(atomContainer, atom)) {
                 if (connectedBonds.size() == 0) {
@@ -1535,7 +1539,6 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         } else if (atom.getAtomicNumber() == IElement.I) {
             return perceiveIodine(atomContainer, atom, connectedBonds);
         }
-
         return null;
     }
 

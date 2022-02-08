@@ -152,38 +152,38 @@ public class ATASaturationCheckerTest extends CDKTestCase {
 
         atasc.decideBondOrder(mol, true);
 
-        Assert.assertTrue(mol.getAtom(1).getHybridization() == IAtomType.Hybridization.SP2);
+        Assert.assertSame(mol.getAtom(1).getHybridization(), IAtomType.Hybridization.SP2);
 
-        Assert.assertTrue(mol.getBond(0).getEnd().getAtomicNumber() == IElement.C);
-        Assert.assertTrue(mol.getBond(0).getBegin().getAtomicNumber() == IElement.O);
+        Assert.assertEquals(IElement.C, (int) mol.getBond(0).getEnd().getAtomicNumber());
+        Assert.assertEquals(IElement.O, (int) mol.getBond(0).getBegin().getAtomicNumber());
         Assert.assertEquals(mol.getBond(0).getOrder(), IBond.Order.DOUBLE);
 
-        Assert.assertTrue(mol.getBond(1).getBegin().getAtomicNumber() == IElement.C);
-        Assert.assertTrue(mol.getBond(1).getEnd().getAtomicNumber() == IElement.C);
+        Assert.assertEquals(IElement.C, (int) mol.getBond(1).getBegin().getAtomicNumber());
+        Assert.assertEquals(IElement.C, (int) mol.getBond(1).getEnd().getAtomicNumber());
         Assert.assertEquals(mol.getBond(1).getOrder(), IBond.Order.SINGLE);
 
-        Assert.assertTrue(mol.getBond(2).getBegin().getAtomicNumber() == IElement.C);
-        Assert.assertTrue(mol.getBond(2).getEnd().getAtomicNumber() == IElement.C);
+        Assert.assertEquals(IElement.C, (int) mol.getBond(2).getBegin().getAtomicNumber());
+        Assert.assertEquals(IElement.C, (int) mol.getBond(2).getEnd().getAtomicNumber());
         Assert.assertEquals(mol.getBond(2).getOrder(), IBond.Order.DOUBLE);
 
-        Assert.assertTrue(mol.getBond(3).getBegin().getAtomicNumber() == IElement.C);
-        Assert.assertTrue(mol.getBond(3).getEnd().getAtomicNumber() == IElement.C);
+        Assert.assertEquals(IElement.C, (int) mol.getBond(3).getBegin().getAtomicNumber());
+        Assert.assertEquals(IElement.C, (int) mol.getBond(3).getEnd().getAtomicNumber());
         Assert.assertEquals(mol.getBond(3).getOrder(), IBond.Order.SINGLE);
 
-        Assert.assertTrue(mol.getBond(4).getEnd().getAtomicNumber() == IElement.O);
-        Assert.assertTrue(mol.getBond(4).getBegin().getAtomicNumber() == IElement.C);
+        Assert.assertEquals(IElement.O, (int) mol.getBond(4).getEnd().getAtomicNumber());
+        Assert.assertEquals(IElement.C, (int) mol.getBond(4).getBegin().getAtomicNumber());
         Assert.assertEquals(mol.getBond(4).getOrder(), IBond.Order.DOUBLE);
 
-        Assert.assertTrue(mol.getBond(5).getBegin().getAtomicNumber() == IElement.C);
-        Assert.assertTrue(mol.getBond(5).getEnd().getAtomicNumber() == IElement.C);
-        Assert.assertTrue(mol.getBond(5).getOrder() == IBond.Order.SINGLE);
+        Assert.assertEquals(IElement.C, (int) mol.getBond(5).getBegin().getAtomicNumber());
+        Assert.assertEquals(IElement.C, (int) mol.getBond(5).getEnd().getAtomicNumber());
+        Assert.assertSame(mol.getBond(5).getOrder(), Order.SINGLE);
 
-        Assert.assertTrue(mol.getBond(6).getBegin().getAtomicNumber() == IElement.C);
-        Assert.assertTrue(mol.getBond(6).getEnd().getAtomicNumber() == IElement.C);
+        Assert.assertEquals(IElement.C, (int) mol.getBond(6).getBegin().getAtomicNumber());
+        Assert.assertEquals(IElement.C, (int) mol.getBond(6).getEnd().getAtomicNumber());
         Assert.assertEquals(mol.getBond(6).getOrder(), IBond.Order.DOUBLE);
 
-        Assert.assertTrue(mol.getBond(7).getBegin().getAtomicNumber() == IElement.C);
-        Assert.assertTrue(mol.getBond(7).getEnd().getAtomicNumber() == IElement.C);
+        Assert.assertEquals(IElement.C, (int) mol.getBond(7).getBegin().getAtomicNumber());
+        Assert.assertEquals(IElement.C, (int) mol.getBond(7).getEnd().getAtomicNumber());
         Assert.assertEquals(mol.getBond(7).getOrder(), IBond.Order.SINGLE);
 
         Assert.assertEquals(mol.getBond(0).getEnd(), mol.getBond(7).getBegin());
