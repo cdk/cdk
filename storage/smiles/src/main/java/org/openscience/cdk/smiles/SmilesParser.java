@@ -654,11 +654,13 @@ public final class SmilesParser {
                             boolean crossing = true;
 
                             // check for variable attachments see https://github.com/cdk/depict/issues/36
-                            List<Integer> ends = cxstate.positionVar.get(mol.indexOf(nbor));
-                            if (ends != null) {
-                                for (Integer end : ends) {
-                                    if (atomset.contains(mol.getAtom(end)))
-                                        crossing = false;
+                            if (cxstate.positionVar != null) {
+                                List<Integer> ends = cxstate.positionVar.get(mol.indexOf(nbor));
+                                if (ends != null) {
+                                    for (Integer end : ends) {
+                                        if (atomset.contains(mol.getAtom(end)))
+                                            crossing = false;
+                                    }
                                 }
                             }
 
