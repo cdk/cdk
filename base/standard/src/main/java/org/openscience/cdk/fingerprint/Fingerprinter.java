@@ -313,13 +313,31 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
             //      different bit
             fp.set(rand.nextInt(fpsize));
         }
+
+        /**
+         * Optimisation - determine if the path if lexicographically smaller
+         * forwards rather than backwards. When we come to actually hash the
+         * path we hash it forwards and backwards and store the lowest so only
+         * need to do that more expensive encoding once.
+         * We can do this a couple of ways for example atom index - but since
+         * that may be a linear time lookup (at least in the old IAtomContainer
+         * implementation) we use the identity hash code (memory address).
+         *
+         * @return true - do encode/false - skip encoding
+         */
+        public boolean isOrderedPath() {
+            return apath.size() == 1 ||
+                    System.identityHashCode(apath.get(0)) <
+                    System.identityHashCode(apath.get(apath.size()-1));
+        }
     }
 
     private void traversePaths(State state, IAtom beg, IBond prev) throws CDKException {
         if (!hashPseudoAtoms && isPseudo(beg))
             return;
         state.push(beg, prev);
-        state.addHash(encodeUniquePath(state.apath, state.bpath, state.buffer));
+        if (state.isOrderedPath())
+            state.addHash(encodeUniquePath(state.apath, state.bpath, state.buffer));
         if (state.numPaths > pathLimit)
             throw new CDKException("Too many paths! Structure is likely a cage, reduce path length or increase path limit");
         if (state.apath.size() < state.maxDepth) {
@@ -395,6 +413,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
                                  StringBuilder buffer) {
         if (path.size() == 1)
             return getAtomSymbol(path.get(0)).hashCode();
+
         String forward = encodePath(container, path, buffer);
         Collections.reverse(path);
         String reverse = encodePath(container, path, buffer);
