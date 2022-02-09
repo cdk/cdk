@@ -312,7 +312,6 @@ public class RingPlacer {
      * @param bondLength the default bond length (used to determine radius)
      */
     private void makeRingConvex(IRing ring, List<IAtom> unplaced, double bondLength) {
-        int numPlaced = ring.getAtomCount() - unplaced.size();
         unplaced.clear();
         for (IAtom atom : ring.atoms())
             unplaced.add(atom);
