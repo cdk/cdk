@@ -25,20 +25,21 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryUtil;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
@@ -54,6 +55,8 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.stereo.StereoElementFactory;
 import org.openscience.cdk.templates.TestMoleculeFactory;
+import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
 import javax.vecmath.Point2d;
@@ -1300,5 +1303,28 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
         sdg.generateCoordinates(reaction);
         for (IAtom atom : ReactionManipulator.toMolecule(reaction).atoms())
             assertNotNull(atom.getPoint2d());
+    }
+
+    // check if a ring is convex by inspecting the angles between the bonds
+    private void assertConvex(IAtom[] atoms) {
+        int ref = RingPlacer.winding(atoms[0], atoms[1], atoms[2]);
+        for (int i = 3; i < atoms.length; i++) {
+            if (ref != RingPlacer.winding(atoms[i-2], atoms[i-1], atoms[i]))
+                Assert.fail("Ring is not convex!");
+        }
+    }
+
+    @Test
+    public void testFixConcaveRingsInMacroCycles() throws CDKException {
+        String smiles = "c12c(C=Cc(ccc3)cc3Oc4ccc(cc4)C=Cc(cc5O1)ccc5)cccc2";
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles(smiles);
+        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+        sdg.generateCoordinates(mol);
+        IRingSet rset = Cycles.all(6).find(mol).toRingSet();
+        Assert.assertEquals(4, rset.getAtomContainerCount());
+        for (IAtomContainer ring : rset.atomContainers()) {
+            assertConvex(AtomContainerManipulator.getAtomArray(ring));
+        }
     }
 }

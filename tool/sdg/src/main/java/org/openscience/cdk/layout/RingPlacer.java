@@ -234,6 +234,119 @@ public class RingPlacer {
         return det(a.x, a.y, b.x, b.y, c.x, c.y);
     }
 
+    // determine the CCW/CW winding of three points (determinant)
+    static int winding(Point2d a, Point2d b, Point2d c) {
+        return (int) Math.signum(det(a, b, c));
+    }
+
+    static int winding(IAtom a, IAtom b, IAtom c) {
+        return winding(a.getPoint2d(), b.getPoint2d(), c.getPoint2d());
+    }
+
+    static Vector2d toVec2d(IAtom beg, IAtom end)
+    {
+        return toVec2d(beg.getPoint2d(), end.getPoint2d());
+    }
+
+    static Vector2d toVec2d(Point2d beg, Point2d end)
+    {
+        return new Vector2d(end.x - beg.x, end.y - beg.y);
+    }
+
+    /**
+     * A ring is concave if the winding sign (matrix determinant) of any three
+     * consecutive points is inconsistent. In other words "all right-hand turns"
+     * or "all left-hand turns".
+     *
+     * @param atoms the atoms
+     * @return the ring is concave
+     */
+    private boolean isConcaveRing(List<IAtom> atoms) {
+        if (atoms.size() < 4 || atoms.size() > 6)
+            return false;
+        for (IAtom atom : atoms) {
+            if (atom.getProperty(MacroCycleLayout.MACROCYCLE_ATOM_HINT) == null)
+                return false;
+        }
+        int ref = winding(atoms.get(0), atoms.get(1), atoms.get(2));
+        for (int i = 3; i < atoms.size(); i++) {
+            if (ref != winding(atoms.get(i-2), atoms.get(i-1), atoms.get(i)))
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * Number of placed neighbours
+     * @param ring the molecule
+     * @param atom the atom
+     * @return the number of neighbours
+     */
+    private int getPlacedCount(IAtomContainer ring, IAtom atom) {
+        int count = 0;
+        for (IAtom nbor : ring.getConnectedAtomsList(atom))
+            if (nbor.getFlag(CDKConstants.ISPLACED))
+                count++;
+        return count;
+    }
+
+    /**
+     * Rotate an array such that the item in index r is in the first position
+     * @param atoms the atoms input
+     * @param r the index to rotate to
+     * @return the rotated array
+     */
+    private List<IAtom> rotate(List<IAtom> atoms, int r) {
+        // can do inplace but hard to see what's happening
+        List<IAtom> res = new ArrayList<>();
+        for (int i = 0; i < atoms.size(); i++) {
+            res.add(atoms.get((i+r)%atoms.size()));
+        }
+        return res;
+    }
+
+    /**
+     * Make a bridged ring that is partially placed from a macrocycle.
+     * @param ring the ring
+     * @param unplaced the unplaced atoms (modified)
+     * @param bondLength the default bond length (used to determine radius)
+     */
+    private void makeRingConvex(IRing ring, List<IAtom> unplaced, double bondLength) {
+        int numPlaced = ring.getAtomCount() - unplaced.size();
+        unplaced.clear();
+        for (IAtom atom : ring.atoms())
+            unplaced.add(atom);
+        List<IAtom> attach = getRingAttach(ring);
+        assert attach.size() == 2;
+        // make sure an attachment is in first position
+        unplaced = rotate(unplaced, unplaced.indexOf(attach.get(0)));
+        Point2d ringCenter = GeometryUtil.get2DCenter(attach);
+        Vector2d vec = toVec2d(ringCenter, attach.get(0).getPoint2d());
+        double tStep = (2*Math.PI) / unplaced.size();
+        double startAngle = Math.atan2(vec.y, vec.x) - tStep;
+        double radius = bondLength / (2 * Math.sin((Math.PI) / unplaced.size()));
+        atomPlacer.populatePolygonCorners(unplaced, ringCenter, startAngle, tStep, radius);
+    }
+
+    /**
+     * Get the attachment points of a partially placed ring. These are atoms
+     * with exactly one "placed" neighbour.
+     *
+     * @param ring the ring
+     * @return the attachments.
+     */
+    private List<IAtom> getRingAttach(IRing ring) {
+        List<IAtom> pivots = new ArrayList<>(2);
+        for (IAtom atom : ring.atoms()) {
+            if (!atom.getFlag(CDKConstants.ISPLACED))
+                continue;
+            int count = getPlacedCount(ring, atom);
+            if (count == 1)
+                pivots.add(atom);
+        }
+        return pivots;
+    }
+
     /**
      * Generated coordinates for a given ring, which is connected to another ring a bridged ring,
      * i.e. it shares more than two atoms with another ring.
@@ -316,20 +429,28 @@ public class RingPlacer {
         IAtom currentAtom = bondAtom1;
         IBond currentBond = sharedAtoms.getConnectedBondsList(currentAtom).get(0);
 
-        List<IAtom> atoms = new ArrayList<>();
+        List<IAtom> placed = new ArrayList<>();
+        List<IAtom> unplaced = new ArrayList<>();
         for (int i = 0; i < ring.getBondCount(); i++) {
             currentBond = ring.getNextBond(currentBond, currentAtom);
             currentAtom = currentBond.getOther(currentAtom);
             if (!sharedAtoms.contains(currentAtom)) {
-                atoms.add(currentAtom);
+                unplaced.add(currentAtom);
+            } else {
+                placed.add(currentAtom);
             }
         }
 
-        logger.debug("placeBridgedRing->atomsToPlace: " + AtomPlacer.listNumbers(molecule, atoms));
-        logger.debug("placeBridgedRing->startAngle: " + Math.toDegrees(startAngle));
-        logger.debug("placeBridgedRing->tStep: " + Math.toDegrees(tStep));
-
-        atomPlacer.populatePolygonCorners(atoms, ringCenter, startAngle, -tStep, radius);
+        // if the macrocycle layout didn't manage to get the atoms angles correct
+        // we "reinflate" and make it convex
+        if (isConcaveRing(placed)) {
+            makeRingConvex(ring, unplaced, bondLength);
+        } else {
+            logger.debug("placeBridgedRing->atomsToPlace: " + AtomPlacer.listNumbers(molecule, unplaced));
+            logger.debug("placeBridgedRing->startAngle: " + Math.toDegrees(startAngle));
+            logger.debug("placeBridgedRing->tStep: " + Math.toDegrees(tStep));
+            atomPlacer.populatePolygonCorners(unplaced, ringCenter, startAngle, -tStep, radius);
+        }
     }
 
     /**
