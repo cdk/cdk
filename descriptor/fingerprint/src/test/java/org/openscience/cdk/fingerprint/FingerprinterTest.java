@@ -357,23 +357,6 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
         return mol;
     }
 
-    public static void main(String[] args) throws Exception {
-        BigInteger bi = new BigInteger("0");
-        bi = bi.add(BigInteger.valueOf((long) Math.pow(2, 63)));
-        System.err.println(bi.toString());
-        bi = bi.add(BigInteger.valueOf((long) Math.pow(2, 0)));
-        System.err.println(bi.toString());
-        FingerprinterTest fpt = new FingerprinterTest();
-        fpt.standAlone = true;
-        //fpt.testFingerprinter();
-        //fpt.testFingerprinterArguments();
-        //fpt.testBug706786();
-        //fpt.testBug771485();
-        //fpt.testBug853254();
-        //fpt.testBug931608();
-        fpt.testBug934819();
-    }
-
     @Test public void pseudoAtomFingerprint() throws CDKException {
         final SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         final String query  = "*1CCCC1";
