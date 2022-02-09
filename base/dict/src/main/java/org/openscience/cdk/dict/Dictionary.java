@@ -34,7 +34,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.XMLReaderFactory;
+
+import javax.xml.parsers.SAXParserFactory;
 
 /**
  * Dictionary with entries.
@@ -62,7 +63,9 @@ public class Dictionary {
         DictionaryHandler handler = new DictionaryHandler();
         XMLReader parser = null;
         try {
-            parser = XMLReaderFactory.createXMLReader();
+            SAXParserFactory parserFactory = SAXParserFactory.newInstance();
+            parserFactory.setFeature("http://xml.org/sax/features/external-general-entities", false);
+            parser = parserFactory.newSAXParser().getXMLReader();
             logger.debug("Using " + parser);
         } catch (Exception e) {
             logger.error("Could not instantiate any JAXP parser!");
