@@ -26,7 +26,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
 import java.util.BitSet;
-import java.util.Random;
 
 /**
  * Specialized version of the {@link Fingerprinter} which does not take bond orders

@@ -23,8 +23,13 @@
 package org.openscience.cdk.fingerprint;
 
 import java.io.InputStream;
-import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
@@ -400,5 +405,233 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
         String expected = "CDK-Fingerprinter/" + CDK.getVersion() + " searchDepth=7 pathLimit=2000 hashPseudoAtoms=true";
         assertThat(fpr.getVersionDescription(),
                    CoreMatchers.is(expected));
+    }
+
+    // manually review once generated
+    static void makeTest(Map<String,Integer> map) {
+        List<Map.Entry<String, Integer>> entries = new ArrayList<>(map.entrySet());
+        entries.sort(Comparator.comparingInt(o -> o.getKey().length()));
+        System.err.println("Map<String,Integer> expected = new HashMap<>();");
+        for (Map.Entry<String,Integer> e : entries) {
+            System.err.println("expected.put(\"" + e.getKey() + "\", " + e.getValue() + ");");
+        }
+        System.err.println("Assert.assertEquals(expected, actual);");
+    }
+
+    @Test public void rawFpTestLinear() throws CDKException {
+        final SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        Fingerprinter fpr = new Fingerprinter(1024, 7);
+        fpr.setPathLimit(2000);
+        final String smi  = "CCC=O";
+        IAtomContainer mol  = smipar.parseSmiles(smi);
+        Map<String,Integer> actual = fpr.getRawFingerprint(mol);
+        Map<String,Integer> expected = new HashMap<>();
+        expected.put("C", 3);
+        expected.put("O", 1);
+        expected.put("O=C", 1);
+        expected.put("C-C", 2);
+        expected.put("C-C-C", 1);
+        expected.put("O=C-C", 1);
+        expected.put("O=C-C-C", 1);
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test public void rawFpTestBranching() throws CDKException {
+        final SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        Fingerprinter fpr = new Fingerprinter(1024, 7);
+        fpr.setPathLimit(2000);
+        final String smi  = "CCC(O)=O";
+        IAtomContainer mol  = smipar.parseSmiles(smi);
+        Map<String,Integer> actual = fpr.getRawFingerprint(mol);
+        Map<String,Integer> expected = new HashMap<>();
+        expected.put("C", 3);
+        expected.put("O", 2);
+        expected.put("O=C", 1);
+        expected.put("O-C", 1);
+        expected.put("C-C", 2);
+        expected.put("O=C-O", 1);
+        expected.put("O-C-C", 1);
+        expected.put("C-C-C", 1);
+        expected.put("O=C-C", 1);
+        expected.put("O=C-C-C", 1);
+        expected.put("O-C-C-C", 1);
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test public void rawFpTestBranching2() throws CDKException {
+        final SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        Fingerprinter fpr = new Fingerprinter(1024, 7);
+        fpr.setPathLimit(2000);
+        final String smi  = "C(Cl)CC(O)=O";
+        IAtomContainer mol  = smipar.parseSmiles(smi);
+        Map<String,Integer> actual = fpr.getRawFingerprint(mol);
+        Map<String,Integer> expected = new HashMap<>();
+        expected.put("C", 3);
+        expected.put("O", 2);
+        expected.put("X", 1);
+        expected.put("O-C", 1);
+        expected.put("X-C", 1);
+        expected.put("O=C", 1);
+        expected.put("C-C", 2);
+        expected.put("O=C-O", 1);
+        expected.put("X-C-C", 1);
+        expected.put("C-C-C", 1);
+        expected.put("O-C-C", 1);
+        expected.put("O=C-C", 1);
+        expected.put("O=C-C-C", 1);
+        expected.put("O-C-C-C", 1);
+        expected.put("X-C-C-C", 1);
+        expected.put("X-C-C-C=O", 1);
+        expected.put("X-C-C-C-O", 1);
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test public void rawFpTestRings() throws CDKException {
+        final SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        Fingerprinter fpr = new Fingerprinter(1024, 7);
+        fpr.setPathLimit(2000);
+        final String smi  = "c1cc(Cl)c(C)cc1";
+        IAtomContainer mol  = smipar.parseSmiles(smi);
+        Map<String,Integer> actual = fpr.getRawFingerprint(mol);
+        Map<String,Integer> expected = new HashMap<>();
+        expected.put("C", 7);
+        expected.put("X", 1);
+        expected.put("C:C", 6);
+        expected.put("X-C", 1);
+        expected.put("C-C", 1);
+        expected.put("C:C-C", 2);
+        expected.put("X-C:C", 2);
+        expected.put("C:C:C", 6);
+        expected.put("C:C:C-C", 2);
+        expected.put("X-C:C-C", 1);
+        expected.put("C:C:C:C", 6);
+        expected.put("X-C:C:C", 2);
+        expected.put("C:C:C:C-C", 2);
+        expected.put("X-C:C:C:C", 2);
+        expected.put("C:C:C:C:C", 6);
+        expected.put("C:C:C:C:C:C", 6);
+        expected.put("X-C:C:C:C:C", 2);
+        expected.put("C:C:C:C:C-C", 2);
+        expected.put("X-C:C:C:C:C:C", 2);
+        expected.put("C:C:C:C:C:C-C", 2);
+        expected.put("X-C:C:C:C:C:C-C", 1);
+    }
+
+    @Test public void rawFpTestDepth() throws CDKException {
+        final SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        Fingerprinter fpr = new Fingerprinter(1024, 7); // 7 bonds
+        fpr.setPathLimit(2000);
+        final String smi  = "CCCCCCCCCC";
+        IAtomContainer mol  = smipar.parseSmiles(smi);
+        Map<String,Integer> actual = fpr.getRawFingerprint(mol);
+        Map<String,Integer> expected = new HashMap<>();
+        expected.put("C", 10);
+        expected.put("C-C", 9);
+        expected.put("C-C-C", 8);
+        expected.put("C-C-C-C", 7);
+        expected.put("C-C-C-C-C", 6);
+        expected.put("C-C-C-C-C-C", 5);
+        expected.put("C-C-C-C-C-C-C", 4);
+        expected.put("C-C-C-C-C-C-C-C", 3);
+        Assert.assertEquals(8, actual.size());
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test public void testGetRawFingerprint() throws CDKException {
+        final SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        Fingerprinter fpr = new Fingerprinter(1024, 7); // 7 bonds
+        fpr.setPathLimit(2000);
+        final String smi  = "CC(=O)OC1=CC=CC=C1C(=O)O";
+        IAtomContainer mol  = smipar.parseSmiles(smi);
+        Map<String,Integer> actual = fpr.getRawFingerprint(mol);
+        Map<String,Integer> expected = new HashMap<>();
+        expected.put("C", 9);
+        expected.put("O", 4);
+        expected.put("O=C", 2);
+        expected.put("C-C", 2);
+        expected.put("O-C", 3);
+        expected.put("C:C", 6);
+        expected.put("O-C:C", 2);
+        expected.put("O=C-O", 2);
+        expected.put("C:C-C", 2);
+        expected.put("O-C-C", 2);
+        expected.put("C:C:C", 6);
+        expected.put("O=C-C", 2);
+        expected.put("C-O-C", 1);
+        expected.put("C:C:C-C", 2);
+        expected.put("C:C:C:C", 6);
+        expected.put("O-C:C-C", 1);
+        expected.put("O-C:C:C", 2);
+        expected.put("C:C-O-C", 2);
+        expected.put("O=C-O-C", 1);
+        expected.put("C-O-C-C", 1);
+        expected.put("O=C-C:C", 2);
+        expected.put("O-C-C:C", 2);
+        expected.put("O-C-C:C:C", 2);
+        expected.put("C:C:C:C:C", 6);
+        expected.put("O-C:C:C:C", 2);
+        expected.put("C:C-O-C-C", 2);
+        expected.put("C:C:C:C-C", 2);
+        expected.put("O=C-C:C:C", 2);
+        expected.put("C:C:C-O-C", 2);
+        expected.put("C-O-C:C-C", 1);
+        expected.put("O=C-C:C-O", 1);
+        expected.put("O-C:C-C-O", 1);
+        expected.put("O=C-O-C:C", 2);
+        expected.put("C:C:C:C:C:C", 6);
+        expected.put("O-C:C:C:C:C", 2);
+        expected.put("O=C-C:C:C:C", 2);
+        expected.put("O-C-C:C:C:C", 2);
+        expected.put("C:C:C:C:C-C", 2);
+        expected.put("O=C-C:C-O-C", 1);
+        expected.put("O-C-C:C-O-C", 1);
+        expected.put("O=C-O-C:C:C", 2);
+        expected.put("C-C:C-O-C-C", 1);
+        expected.put("O=C-O-C:C-C", 1);
+        expected.put("C:C:C-O-C-C", 2);
+        expected.put("C:C:C:C-O-C", 2);
+        expected.put("O=C-C:C-O-C-C", 1);
+        expected.put("O=C-O-C:C-C-O", 1);
+        expected.put("O=C-O-C:C-C=O", 1);
+        expected.put("O-C-C:C-O-C-C", 1);
+        expected.put("C:C:C:C:C-O-C", 2);
+        expected.put("O=C-C:C:C:C:C", 2);
+        expected.put("C:C:C:C-O-C-C", 2);
+        expected.put("O-C-C:C:C:C:C", 2);
+        expected.put("O=C-O-C:C:C:C", 2);
+        expected.put("C:C:C:C:C:C-C", 2);
+        expected.put("O-C:C:C:C:C:C", 2);
+        expected.put("O-C:C:C:C:C:C-C", 1);
+        expected.put("O-C-C:C:C:C:C:C", 2);
+        expected.put("C:C:C:C:C-O-C-C", 2);
+        expected.put("C:C:C:C:C:C-O-C", 2);
+        expected.put("O=C-O-C:C:C:C:C", 2);
+        expected.put("O=C-C:C:C:C:C:C", 2);
+        Assert.assertEquals(expected, actual);
+    }
+
+    private BitSet foldFp(ICountFingerprint fp, int size) {
+        BitSet bs = new BitSet();
+        Random rand = new Random();
+        for (int i = 0; i < fp.numOfPopulatedbins(); i++) {
+            int hash = fp.getHash(i);
+            rand.setSeed(hash);
+            int hashFolded = rand.nextInt(1024);
+            bs.set(hashFolded);
+        }
+        return bs;
+    }
+
+    @Test public void testGetCountFingerprint() throws CDKException {
+        final SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        Fingerprinter fpr = new Fingerprinter(1024, 7); // 7 bonds
+        fpr.setPathLimit(2000);
+        final String smi  = "CC(=O)OC1=CC=CC=C1C(=O)O";
+        IAtomContainer mol  = smipar.parseSmiles(smi);
+        ICountFingerprint cntFp = fpr.getCountFingerprint(mol);
+        IBitFingerprint expBitset = fpr.getBitFingerprint(mol);
+        Assert.assertEquals(62, cntFp.numOfPopulatedbins());
+        BitSet actBitset = foldFp(cntFp, 1024);
+        Assert.assertEquals(expBitset.asBitSet(), actBitset);
     }
 }

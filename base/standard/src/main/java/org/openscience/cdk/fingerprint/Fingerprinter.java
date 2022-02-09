@@ -40,7 +40,6 @@ import java.util.BitSet;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -189,8 +188,27 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
 
     /** {@inheritDoc} */
     @Override
-    public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
-        throw new UnsupportedOperationException();
+    public Map<String, Integer> getRawFingerprint(IAtomContainer container) throws CDKException {
+        if (!hasPseudoAtom(container.atoms())) {
+            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+            Aromaticity.cdkLegacy().apply(container);
+        }
+        Map<String,Integer> rawFp = new HashMap<>();
+        BitSet bitSet = new BitSet(size);
+        State state = new State(container, bitSet, size, searchDepth+1);
+        state.setFeatureMap(rawFp);
+        for (IAtom atom : container.atoms()) {
+            state.numPaths = 0;
+            state.visit(atom);
+            traversePaths(state, atom, null);
+            state.unvisit(atom);
+        }
+        return rawFp;
+    }
+
+    @Override
+    public ICountFingerprint getCountFingerprint(IAtomContainer container) throws CDKException {
+        return new IntArrayCountFingerprint(getRawFingerprint(container));
     }
 
     private IBond findBond(List<IBond> bonds, IAtom beg, IAtom end) {
@@ -224,6 +242,23 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         for (int i = 1; i < apath.size(); i++) {
             final IAtom next  = apath.get(i);
             final IBond bond  = bpath.get(i-1);
+            buffer.append(getBondSymbol(bond));
+            buffer.append(getAtomSymbol(next));
+        }
+        return buffer.toString();
+    }
+
+    private String encodeRevPath(List<IAtom> apath, List<IBond> bpath, StringBuilder buffer) {
+        // atoms=[0, 1, 2, 3], bonds=[0, 1, 2]
+        // len=4 a0 | b0 a1 b1 a2 b2 a3 (fwd)
+        // len=4 a3 | b2 a2 b1 a1 b0 a0 (rev)
+        buffer.setLength(0);
+        int len = apath.size();
+        IAtom prev = apath.get(len-1);
+        buffer.append(getAtomSymbol(prev));
+        for (int i = len-2; i >= 0; i--) {
+            final IAtom next  = apath.get(i);
+            final IBond bond  = bpath.get(i);
             buffer.append(getBondSymbol(bond));
             buffer.append(getAtomSymbol(next));
         }
@@ -266,6 +301,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         private int    numPaths = 0;
         private Random rand     = new Random();
         private BitSet fp;
+        private Map<String,Integer> feats;
         private IAtomContainer mol;
         private Set<IAtom> visited = new HashSet<>();
         private List<IAtom> apath = new ArrayList<>();
@@ -279,6 +315,10 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
             this.fp  = fp;
             this.fpsize = fpsize;
             this.maxDepth = maxDepth;
+        }
+
+        public void setFeatureMap(Map<String,Integer> feats) {
+            this.feats = feats;
         }
 
         List<IBond> getBonds(IAtom atom) {
@@ -314,6 +354,26 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
             fp.set(rand.nextInt(fpsize));
         }
 
+        private void storeFeat(String path) {
+            if (feats == null)
+                return;
+            feats.compute(path, (k, v) -> v == null ? 1 : v+1);
+        }
+
+        private void storeForward() {
+            addHash(hashPath(apath, bpath));
+            if (feats != null) {
+                storeFeat(encodePath(apath, bpath, buffer));
+            }
+        }
+
+        private void storeReverse() {
+            addHash(hashRevPath(apath, bpath));
+            if (feats != null) {
+                storeFeat(encodeRevPath(apath, bpath, buffer));
+            }
+        }
+
         /**
          * Optimisation - determine if the path if lexicographically smaller
          * forwards rather than backwards. When we come to actually hash the
@@ -333,14 +393,15 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         public void storePath() {
             if (bpath.size() == 0) {
                 addHash(getAtomSymbol(apath.get(0)).hashCode());
+                storeFeat(getAtomSymbol(apath.get(0)));
             } else {
                 if (!isOrderedPath())
                     return;
                 final int x;
                 if (compare(apath, bpath) >= 0) {
-                    addHash(hashPath(apath, bpath));
+                    storeForward();
                 } else {
-                    addHash(hashRevPath(apath, bpath));
+                    storeReverse();
                 }
             }
         }
@@ -575,10 +636,4 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
     public int getSize() {
         return size;
     }
-
-    @Override
-    public ICountFingerprint getCountFingerprint(IAtomContainer container) throws CDKException {
-        throw new UnsupportedOperationException();
-    }
-
 }
