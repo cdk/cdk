@@ -652,8 +652,22 @@ public final class SmilesParser {
 
                 for (IAtom atom : atomset) {
                     for (IBond bond : mol.getConnectedBondsList(atom)) {
-                        if (!atomset.contains(bond.getOther(atom)))
-                            sgroup.addBond(bond);
+                        IAtom nbor = bond.getOther(atom);
+                        if (!atomset.contains(nbor)) {
+                            boolean crossing = true;
+
+                            // check for variable attachments see https://github.com/cdk/depict/issues/36
+                            List<Integer> ends = cxstate.positionVar.get(mol.indexOf(nbor));
+                            if (ends != null) {
+                                for (Integer end : ends) {
+                                    if (atomset.contains(mol.getAtom(end)))
+                                        crossing = false;
+                                }
+                            }
+
+                            if (crossing)
+                                sgroup.addBond(bond);
+                        }
                     }
                     sgroup.addAtom(atom);
                 }

@@ -25,7 +25,9 @@ package org.openscience.cdk.smiles;
 
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
+import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -33,6 +35,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IStereoElement;
+import org.openscience.cdk.sgroup.Sgroup;
+import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
@@ -369,6 +373,23 @@ public class CxSmilesParserTest {
         assertThat(((IPseudoAtom)mols.get(1).getAtom(0)).getLabel(),
                 is("R1"));
     }
+
+    @Test public void variableAttachCrossingBonds() throws CDKException {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer mol = smipar.parseSmiles("[H]OCCO.C* |lp:1:2,4:2,m:6:3.2,Sg:n:1,2,3,5::ht|");
+        List<Sgroup> sgroups = mol.getProperty(CDKConstants.CTAB_SGROUPS);
+        Sgroup sru = null;
+        for (Sgroup sgroup : sgroups) {
+            if (sgroup.getType() == SgroupType.CtabStructureRepeatUnit) {
+                sru = sgroup;
+                break;
+            }
+        }
+        Assert.assertNotNull(sru);
+        Assert.assertEquals(4, sru.getAtoms().size());
+        Assert.assertEquals(2, sru.getBonds().size());
+    }
+
 
     /**
      * Custom matcher for checking an array of doubles closely matches (epsilon=0.01)
