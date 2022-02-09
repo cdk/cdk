@@ -510,6 +510,8 @@ public final class GeometryUtil {
                 length++;
             }
         }
+        if (length == 0)
+            return new Point2d(0,0);
         return new Point2d(xsum / (double) length, ysum / (double) length);
     }
 
@@ -534,6 +536,8 @@ public final class GeometryUtil {
             }
             ++length;
         }
+        if (length == 0)
+            return new Point2d(0,0);
         return new Point2d(xsum / (double) length, ysum / (double) length);
     }
 
@@ -580,7 +584,8 @@ public final class GeometryUtil {
             xsum += mass * a.getPoint2d().x;
             ysum += mass * a.getPoint2d().y;
         }
-
+        if (totalmass == 0)
+            return new Point2d(0,0);
         return new Point2d(xsum / totalmass, ysum / totalmass);
     }
 
@@ -603,6 +608,8 @@ public final class GeometryUtil {
                 counter++;
             }
         }
+        if (counter == 0)
+            return new Point2d(0,0);
         return new Point2d(centerX / (counter), centerY / (counter));
     }
 
@@ -659,7 +666,8 @@ public final class GeometryUtil {
             ysum += mass * a.getPoint3d().y;
             zsum += mass * a.getPoint3d().z;
         }
-
+        if (totalmass == 0)
+            return new Point3d(0,0,0);
         return new Point3d(xsum / totalmass, ysum / totalmass, zsum / totalmass);
     }
 
@@ -684,6 +692,8 @@ public final class GeometryUtil {
                 counter++;
             }
         }
+        if (counter == 0)
+            return new Point3d(0,0,0);
         return new Point3d(centerX / (counter), centerY / (counter), centerZ / (counter));
     }
 
@@ -1019,6 +1029,8 @@ public final class GeometryUtil {
                 bondLengthSum += getLength2D(bond);
             }
         }
+        if (bondCounter == 0)
+            return 0;
         return bondLengthSum / bondCounter;
     }
 
@@ -1274,6 +1286,8 @@ public final class GeometryUtil {
                         + Math.pow(atom1.getPoint2d().y - atom2.getPoint2d().y, 2));
             }
         }
+        if (counter == 0)
+            return 1;
         bondlength = bondlength / counter;
         ratio = desiredBondLength / bondlength;
         return ratio;
@@ -1494,6 +1508,8 @@ public final class GeometryUtil {
         }
         setVisitedFlagsToFalse(firstAtomContainer);
         setVisitedFlagsToFalse(secondAtomContainer);
+        if (n == 0)
+            return 0;
         return Math.sqrt(sum / n);
     }
 
@@ -1543,6 +1559,8 @@ public final class GeometryUtil {
                 }
             }//if
         }
+        if (n == 0)
+            return 0;
         return Math.sqrt(sum / n);
     }
 
@@ -1585,7 +1603,7 @@ public final class GeometryUtil {
             Map<Integer, Integer> mappedAtoms, boolean Coords3d) throws CDKException {
         //logger.debug("**** GT getAllAtomRMSD ****");
         double sum = 0;
-        double RMSD;
+        double rmsd;
         Iterator<Integer> firstAtoms = mappedAtoms.keySet().iterator();
         int firstAtomNumber;
         int secondAtomNumber;
@@ -1612,8 +1630,11 @@ public final class GeometryUtil {
                 throw new CDKException(ex.getMessage(), ex);
             }
         }
-        RMSD = Math.sqrt(sum / n);
-        return RMSD;
+        if (n == 0)
+            rmsd = 0;
+        else
+            rmsd = Math.sqrt(sum / n);
+        return rmsd;
     }
 
     /**
@@ -1631,7 +1652,7 @@ public final class GeometryUtil {
             Map<Integer, Integer> mappedAtoms, boolean hetAtomOnly, boolean Coords3d) {
         //logger.debug("**** GT getAllAtomRMSD ****");
         double sum = 0;
-        double RMSD;
+        double rmsd;
         Iterator<Integer> firstAtoms = mappedAtoms.keySet().iterator();
         int firstAtomNumber;
         int secondAtomNumber;
@@ -1675,8 +1696,8 @@ public final class GeometryUtil {
             }
 
         }
-        RMSD = Math.sqrt(sum / n);
-        return RMSD;
+        rmsd = n == 0 ? 0 : Math.sqrt(sum / n);
+        return rmsd;
     }
 
     /**
@@ -1697,6 +1718,8 @@ public final class GeometryUtil {
                 bondLengthSum += atom1.getPoint3d().distance(atom2.getPoint3d());
             }
         }
+        if (bondCounter == 0)
+            return bondLengthSum;
         return bondLengthSum / bondCounter;
     }
 
@@ -1753,6 +1776,8 @@ public final class GeometryUtil {
             containercount++;
             bondlenghtsum += getBondLengthAverage(container);
         }
+        if (containercount == 0)
+            return 0;
         return bondlenghtsum / containercount;
     }
 
