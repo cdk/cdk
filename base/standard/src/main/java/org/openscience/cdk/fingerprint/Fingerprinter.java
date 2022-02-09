@@ -200,19 +200,13 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         return null;
     }
 
-    private String encodePath(IAtomContainer mol, Map<IAtom, List<IBond>> cache, List<IAtom> path, StringBuilder buffer) {
+    private String encodePath(IAtomContainer mol, List<IAtom> path, StringBuilder buffer) {
         buffer.setLength(0);
         IAtom prev = path.get(0);
         buffer.append(getAtomSymbol(prev));
         for (int i = 1; i < path.size(); i++) {
             final IAtom next  = path.get(i);
-            List<IBond> bonds = cache.get(prev);
-
-            if (bonds == null) {
-                bonds = mol.getConnectedBondsList(prev);
-                cache.put(prev, bonds);
-            }
-
+            List<IBond> bonds = mol.getConnectedBondsList(prev);
             IBond bond = findBond(bonds, next, prev);
             if (bond == null)
                 throw new IllegalStateException("FATAL - Atoms in patch were connected?");
@@ -278,7 +272,6 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         private List<IBond> bpath = new ArrayList<>();
         private final int maxDepth;
         private final int fpsize;
-        private Map<IAtom,List<IBond>> cache = new IdentityHashMap<>();
         public StringBuilder buffer = new StringBuilder();
 
         public State(IAtomContainer mol, BitSet fp, int fpsize, int maxDepth) {
@@ -289,12 +282,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         }
 
         List<IBond> getBonds(IAtom atom) {
-            List<IBond> bonds = cache.get(atom);
-            if (bonds == null) {
-                bonds = mol.getConnectedBondsList(atom);
-                cache.put(atom, bonds);
-            }
-            return bonds;
+            return mol.getConnectedBondsList(atom);
         }
 
         boolean visit(IAtom a) {
@@ -364,13 +352,12 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
 
         Set<Integer> hashes = new HashSet<>();
 
-        Map<IAtom, List<IBond>> cache = new HashMap<>();
         StringBuilder buffer = new StringBuilder();
         for (IAtom startAtom : container.atoms()) {
             List<List<IAtom>> p = PathTools.getLimitedPathsOfLengthUpto(container, startAtom, searchDepth, pathLimit);
             for (List<IAtom> path : p) {
                 if (hashPseudoAtoms || !hasPseudoAtom(path))
-                    hashes.add(encodeUniquePath(container, cache, path, buffer));
+                    hashes.add(encodeUniquePath(container, path, buffer));
             }
         }
 
@@ -403,12 +390,14 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         return false;
     }
 
-    private int encodeUniquePath(IAtomContainer container, Map<IAtom, List<IBond>> cache, List<IAtom> path, StringBuilder buffer) {
+    private int encodeUniquePath(IAtomContainer container,
+                                 List<IAtom> path,
+                                 StringBuilder buffer) {
         if (path.size() == 1)
             return getAtomSymbol(path.get(0)).hashCode();
-        String forward = encodePath(container, cache, path, buffer);
+        String forward = encodePath(container, path, buffer);
         Collections.reverse(path);
-        String reverse = encodePath(container, cache, path, buffer);
+        String reverse = encodePath(container, path, buffer);
         Collections.reverse(path);
 
         final int x;
