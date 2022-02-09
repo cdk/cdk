@@ -36,6 +36,9 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
 
 /**
  * Dictionary with entries.
@@ -63,7 +66,10 @@ public class Dictionary {
         DictionaryHandler handler = new DictionaryHandler();
         XMLReader parser = null;
         try {
-            parser = XMLReaderFactory.createXMLReader();
+            SAXParserFactory factor = SAXParserFactory.newInstance();
+            factor.setNamespaceAware(true);
+            factor.setFeature("http://xml.org/sax/features/external-general-entities", false);
+            parser = factor.newSAXParser().getXMLReader();
             logger.debug("Using " + parser);
         } catch (Exception e) {
             logger.error("Could not instantiate any JAXP parser!");
@@ -76,7 +82,7 @@ public class Dictionary {
                 return null;
             }
             parser.setFeature("http://xml.org/sax/features/validation", false);
-            parser.setFeature("http://xml.org/sax/features/external-general-entities", false);
+
             logger.debug("Deactivated validation");
         } catch (SAXException e) {
             logger.warn("Cannot deactivate validation.");
