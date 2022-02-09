@@ -75,22 +75,27 @@ public class Isotopes extends IsotopeFactory {
     private Isotopes() throws IOException {
         String configFile = "org/openscience/cdk/config/data/isotopes.dat";
         try (InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile)) {
-            int streamSize = ins.available();
-            ReadableByteChannel fcIn = Channels.newChannel(ins);
-            ByteBuffer bin = ByteBuffer.allocate(streamSize);
-            fcIn.read(bin);
-            fcIn.close();
-            ins.close();
-            ((Buffer) bin).position(0);
-            int isotopeCount = bin.getInt();
-            for (int i = 0; i < isotopeCount; i++) {
-                int atomicNum = bin.get();
-                int massNum = bin.getShort();
-                double exactMass = bin.getDouble();
-                double natAbund = bin.get() == 1 ? bin.getDouble() : 0.0;
-                IIsotope isotope = new BODRIsotope(PeriodicTable.getSymbol(atomicNum), atomicNum, massNum, exactMass,
-                        natAbund);
-                add(isotope);
+            if (ins == null) {
+                throw new IllegalStateException("Could not load isotope data");
+            } else {
+                int streamSize = ins.available();
+                try (ReadableByteChannel fcIn = Channels.newChannel(ins)) {
+                    ByteBuffer bin = ByteBuffer.allocate(streamSize);
+                    fcIn.read(bin);
+                    fcIn.close();
+                    ins.close();
+                    ((Buffer) bin).position(0);
+                    int isotopeCount = bin.getInt();
+                    for (int i = 0; i < isotopeCount; i++) {
+                        int atomicNum = bin.get();
+                        int massNum = bin.getShort();
+                        double exactMass = bin.getDouble();
+                        double natAbund = bin.get() == 1 ? bin.getDouble() : 0.0;
+                        IIsotope isotope = new BODRIsotope(PeriodicTable.getSymbol(atomicNum), atomicNum, massNum, exactMass,
+                                natAbund);
+                        add(isotope);
+                    }
+                }
             }
         }
     }
