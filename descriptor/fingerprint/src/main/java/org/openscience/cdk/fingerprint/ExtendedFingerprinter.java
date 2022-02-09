@@ -107,7 +107,6 @@ public class ExtendedFingerprinter implements IFingerprinter {
     @Override
     public Map<String, Integer> getRawFingerprint(IAtomContainer container) throws CDKException {
         Map<String,Integer> fp = fingerprinter.getRawFingerprint(container);
-        int size = this.getSize();
         double weight = AtomContainerManipulator.getMass(container);
         for (int i = 1; i < 11; i++) {
             if (weight > (100 * i))
