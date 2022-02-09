@@ -230,7 +230,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         return buffer.toString();
     }
 
-    private int appendHash(int hash, String str) {
+    private static int appendHash(int hash, String str) {
         int len = str.length();
         for (int i = 0; i < len; i++)
             hash = 31 * hash + str.charAt(0);
@@ -262,7 +262,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         return hash;
     }
 
-    private static final class State {
+    private final class State {
         private int    numPaths = 0;
         private Random rand     = new Random();
         private BitSet fp;
@@ -326,9 +326,23 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
          * @return true - do encode/false - skip encoding
          */
         public boolean isOrderedPath() {
-            return apath.size() == 1 ||
-                    System.identityHashCode(apath.get(0)) <
+            return System.identityHashCode(apath.get(0)) <
                     System.identityHashCode(apath.get(apath.size()-1));
+        }
+
+        public void storePath() {
+            if (bpath.size() == 0) {
+                addHash(getAtomSymbol(apath.get(0)).hashCode());
+            } else {
+                if (!isOrderedPath())
+                    return;
+                final int x;
+                if (compare(apath, bpath) >= 0) {
+                    addHash(hashPath(apath, bpath));
+                } else {
+                    addHash(hashRevPath(apath, bpath));
+                }
+            }
         }
     }
 
@@ -336,8 +350,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         if (!hashPseudoAtoms && isPseudo(beg))
             return;
         state.push(beg, prev);
-        if (state.isOrderedPath())
-            state.addHash(encodeUniquePath(state.apath, state.bpath, state.buffer));
+        state.storePath();
         if (state.numPaths > pathLimit)
             throw new CDKException("Too many paths! Structure is likely a cage, reduce path length or increase path limit");
         if (state.apath.size() < state.maxDepth) {
@@ -433,7 +446,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
      * @param b atom b
      * @return comparison &lt;0 a is less than b, &gt;0 a is more than b
      */
-    private int compare(IAtom a, IAtom b) {
+    private static int compare(IAtom a, IAtom b) {
         final int elemA = getElem(a);
         final int elemB = getElem(b);
         if (elemA == elemB)
@@ -478,18 +491,6 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         return 0;
     }
 
-    private int encodeUniquePath(List<IAtom> apath, List<IBond> bpath, StringBuilder buffer) {
-        if (bpath.size() == 0)
-            return getAtomSymbol(apath.get(0)).hashCode();
-        final int x;
-        if (compare(apath, bpath) >= 0) {
-            x = hashPath(apath, bpath);
-        } else {
-            x = hashRevPath(apath, bpath);
-        }
-        return x;
-    }
-
     private static int getElem(IAtom atom) {
         Integer elem = atom.getAtomicNumber();
         if (elem == null)
@@ -497,7 +498,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         return elem;
     }
 
-    private String getAtomSymbol(IAtom atom) {
+    private static String getAtomSymbol(IAtom atom) {
         // XXX: backwards compatibility
         // This is completely random, I believe the intention is because
         // paths were reversed with string manipulation to de-duplicate
