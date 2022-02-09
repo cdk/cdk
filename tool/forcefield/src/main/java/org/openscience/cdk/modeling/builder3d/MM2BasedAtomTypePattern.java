@@ -139,7 +139,7 @@ public class MM2BasedAtomTypePattern {
         //nsp3 ammonium
         atomTypePatterns.add(Pattern.compile("N-[2-3];H?+CC.[^(=O)].*+"));
         //nsp2pyrrole (40)
-        atomTypePatterns.add(Pattern.compile("O-2;CC.=C.*+&.*+&.*+"));
+        atomTypePatterns.add(Pattern.compile("O-2;CC.=C.+&.+&.*+"));
         //osp2furan
         atomTypePatterns.add(Pattern.compile("S-2;CC.*+"));
         //s sp2 thiophene
