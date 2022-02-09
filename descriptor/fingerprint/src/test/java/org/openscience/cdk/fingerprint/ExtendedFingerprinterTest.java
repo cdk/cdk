@@ -24,7 +24,9 @@ package org.openscience.cdk.fingerprint;
 
 import java.io.InputStream;
 import java.util.BitSet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.vecmath.Point2d;
 
@@ -42,6 +44,8 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.ringsearch.RingPartitioner;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.diff.AtomContainerDiff;
 
@@ -435,5 +439,91 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
 
         String diff2 = AtomContainerDiff.diff(mol, clone);
         Assert.assertTrue("There was a difference\n" + diff2, diff2.equals(""));
+    }
+
+    @Test public void testGetRawFingerprint() throws CDKException {
+        final SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        ExtendedFingerprinter fpr = new ExtendedFingerprinter(1024, 7); // 7 bonds
+        fpr.setPathLimit(2000);
+        final String smi  = "CC(=O)OC1=CC=CC=C1C(=O)O";
+        IAtomContainer mol  = smipar.parseSmiles(smi);
+        Map<String,Integer> actual = fpr.getRawFingerprint(mol);
+        Map<String,Integer> expected = new HashMap<>();
+        expected.put("RNCT:1", 1);
+        expected.put("RCNT_MAX:1", 1);
+        expected.put("MASS_RANGE:1", 1);
+        expected.put("C", 9);
+        expected.put("O", 4);
+        expected.put("O=C", 2);
+        expected.put("C-C", 2);
+        expected.put("O-C", 3);
+        expected.put("C:C", 6);
+        expected.put("O-C:C", 2);
+        expected.put("O=C-O", 2);
+        expected.put("C:C-C", 2);
+        expected.put("O-C-C", 2);
+        expected.put("C:C:C", 6);
+        expected.put("O=C-C", 2);
+        expected.put("C-O-C", 1);
+        expected.put("C:C:C-C", 2);
+        expected.put("C:C:C:C", 6);
+        expected.put("O-C:C-C", 1);
+        expected.put("O-C:C:C", 2);
+        expected.put("O=C-O-C", 1);
+        expected.put("C:C-O-C", 2);
+        expected.put("C-O-C-C", 1);
+        expected.put("O=C-C:C", 2);
+        expected.put("O-C-C:C", 2);
+        expected.put("O-C-C:C:C", 2);
+        expected.put("C:C:C:C:C", 6);
+        expected.put("O-C:C:C:C", 2);
+        expected.put("C:C-O-C-C", 2);
+        expected.put("C:C:C:C-C", 2);
+        expected.put("O=C-C:C:C", 2);
+        expected.put("C:C:C-O-C", 2);
+        expected.put("C-O-C:C-C", 1);
+        expected.put("O=C-C:C-O", 1);
+        expected.put("O-C:C-C-O", 1);
+        expected.put("O=C-O-C:C", 2);
+        expected.put("C:C:C:C:C:C", 6);
+        expected.put("O-C:C:C:C:C", 2);
+        expected.put("O=C-C:C:C:C", 2);
+        expected.put("O-C-C:C:C:C", 2);
+        expected.put("C:C:C:C:C-C", 2);
+        expected.put("O=C-C:C-O-C", 1);
+        expected.put("O-C-C:C-O-C", 1);
+        expected.put("O=C-O-C:C:C", 2);
+        expected.put("C-C:C-O-C-C", 1);
+        expected.put("O=C-O-C:C-C", 1);
+        expected.put("C:C:C-O-C-C", 2);
+        expected.put("C:C:C:C-O-C", 2);
+        expected.put("O=C-C:C-O-C-C", 1);
+        expected.put("O=C-O-C:C-C-O", 1);
+        expected.put("O=C-O-C:C-C=O", 1);
+        expected.put("O-C-C:C-O-C-C", 1);
+        expected.put("C:C:C:C:C-O-C", 2);
+        expected.put("O=C-C:C:C:C:C", 2);
+        expected.put("C:C:C:C-O-C-C", 2);
+        expected.put("O-C-C:C:C:C:C", 2);
+        expected.put("O=C-O-C:C:C:C", 2);
+        expected.put("C:C:C:C:C:C-C", 2);
+        expected.put("O-C:C:C:C:C:C", 2);
+        expected.put("O-C:C:C:C:C:C-C", 1);
+        expected.put("O-C-C:C:C:C:C:C", 2);
+        expected.put("C:C:C:C:C-O-C-C", 2);
+        expected.put("C:C:C:C:C:C-O-C", 2);
+        expected.put("O=C-O-C:C:C:C:C", 2);
+        expected.put("O=C-C:C:C:C:C:C", 2);
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test public void testGetCountFingerprint() throws CDKException {
+        final SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        ExtendedFingerprinter fpr = new ExtendedFingerprinter(1024, 7); // 7 bonds
+        fpr.setPathLimit(2000);
+        final String smi  = "CC(=O)OC1=CC=CC=C1C(=O)O";
+        IAtomContainer mol  = smipar.parseSmiles(smi);
+        ICountFingerprint actual = fpr.getCountFingerprint(mol);
+        Assert.assertEquals(65, actual.numOfPopulatedbins());
     }
 }

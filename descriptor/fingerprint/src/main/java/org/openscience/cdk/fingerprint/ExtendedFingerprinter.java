@@ -28,6 +28,7 @@ import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.RingPartitioner;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 import java.util.BitSet;
@@ -104,8 +105,30 @@ public class ExtendedFingerprinter implements IFingerprinter {
      * {@inheritDoc}
      */
     @Override
-    public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
-        throw new UnsupportedOperationException();
+    public Map<String, Integer> getRawFingerprint(IAtomContainer container) throws CDKException {
+        Map<String,Integer> fp = fingerprinter.getRawFingerprint(container);
+        int size = this.getSize();
+        double weight = AtomContainerManipulator.getMass(container);
+        for (int i = 1; i < 11; i++) {
+            if (weight > (100 * i))
+                fp.put("MASS_RANGE:" + i, 1);
+        }
+        // set the ring bits - this a little odd
+        IRingSet ringSet = Cycles.sssr(container).toRingSet();
+        List<IRingSet> rslist = RingPartitioner.partitionRings(ringSet);
+        for (int i = 0; i < 7; i++) {
+            if (ringSet.getAtomContainerCount() > i)
+                fp.compute("RNCT:" + (i+1), (k,v) -> v != null ? v+1 : 1);
+        }
+        int maxrcnt = 0;
+        for (IRingSet rs : rslist) {
+            if (rs.getAtomContainerCount() > maxrcnt)
+                maxrcnt = rs.getAtomContainerCount();
+        }
+        for (int i = 0; i < maxrcnt && i < 9; i++) {
+            fp.put("RCNT_MAX:" + (i+1), 1);
+        }
+        return fp;
     }
 
     /**
@@ -148,15 +171,15 @@ public class ExtendedFingerprinter implements IFingerprinter {
             rslist = RingPartitioner.partitionRings(ringSet);
         }
         for (int i = 0; i < 7; i++) {
-            if (ringSet.getAtomContainerCount() > i) fingerprint.set(size - 15 + i); // 15 := RESERVED_BITS+1+10 mass bits
+            if (ringSet.getAtomContainerCount() > i)
+                fingerprint.set(size - 15 + i); // 15 := RESERVED_BITS+1+10 mass bits
         }
-        int maximumringsystemsize = 0;
-        for (int i = 0; i < rslist.size(); i++) {
-            if (((IRingSet) rslist.get(i)).getAtomContainerCount() > maximumringsystemsize)
-
-                maximumringsystemsize = ((IRingSet) rslist.get(i)).getAtomContainerCount();
+        int maxrcnt = 0;
+        for (IRingSet iRingSet : rslist) {
+            if (iRingSet.getAtomContainerCount() > maxrcnt)
+                maxrcnt = iRingSet.getAtomContainerCount();
         }
-        for (int i = 0; i < maximumringsystemsize && i < 9; i++) {
+        for (int i = 0; i < maxrcnt && i < 9; i++) {
             fingerprint.set(size - 8 + i - 3);
         }
         return fingerprint;
@@ -175,7 +198,7 @@ public class ExtendedFingerprinter implements IFingerprinter {
      */
     @Override
     public ICountFingerprint getCountFingerprint(IAtomContainer container) throws CDKException {
-        throw new UnsupportedOperationException();
+        return new IntArrayCountFingerprint(getRawFingerprint(container));
     }
 
     @Override

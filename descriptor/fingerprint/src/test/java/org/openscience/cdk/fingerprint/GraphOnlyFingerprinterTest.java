@@ -39,6 +39,9 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.BitSet;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 /**
  * @cdk.module test-standard
@@ -112,4 +115,74 @@ public class GraphOnlyFingerprinterTest extends AbstractFixedLengthFingerprinter
         return structure;
     }
 
+    @Test public void testGetRawFingerprint() throws CDKException {
+        final SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        GraphOnlyFingerprinter fpr = new GraphOnlyFingerprinter(1024, 7); // 7 bonds
+        fpr.setPathLimit(2000);
+        final String smi  = "CC(=O)OC1=CC=CC=C1C(=O)O";
+        IAtomContainer mol  = smipar.parseSmiles(smi);
+        Map<String,Integer> actual = fpr.getRawFingerprint(mol);
+        Map<String,Integer> expected = new HashMap<>();
+        expected.put("C", 9);
+        expected.put("O", 4);
+        expected.put("OC", 5);
+        expected.put("CC", 8);
+        expected.put("COC", 1);
+        expected.put("CCC", 8);
+        expected.put("OCC", 6);
+        expected.put("OCO", 2);
+        expected.put("OCOC", 1);
+        expected.put("OCCC", 7);
+        expected.put("COCC", 3);
+        expected.put("CCCC", 8);
+        expected.put("CCOCC", 2);
+        expected.put("CCCCC", 8);
+        expected.put("COCCC", 3);
+        expected.put("OCOCC", 2);
+        expected.put("OCCCO", 2);
+        expected.put("OCCCC", 6);
+        expected.put("CCCCCC", 8);
+        expected.put("OCCCCC", 6);
+        expected.put("OCCCOC", 2);
+        expected.put("COCCCC", 2);
+        expected.put("OCOCCC", 3);
+        expected.put("CCOCCC", 3);
+        expected.put("CCCCCCC", 2);
+        expected.put("COCCCCC", 2);
+        expected.put("OCCCOCC", 2);
+        expected.put("OCOCCCO", 2);
+        expected.put("OCCCCCC", 6);
+        expected.put("CCOCCCC", 2);
+        expected.put("OCOCCCC", 2);
+        expected.put("COCCCCCC", 2);
+        expected.put("OCCCCCCC", 5);
+        expected.put("OCOCCCCC", 2);
+        expected.put("CCOCCCCC", 2);
+        Assert.assertEquals(expected, actual);
+    }
+
+    private BitSet foldFp(ICountFingerprint fp, int size) {
+        BitSet bs = new BitSet();
+        Random rand = new Random();
+        for (int i = 0; i < fp.numOfPopulatedbins(); i++) {
+            int hash = fp.getHash(i);
+            rand.setSeed(hash);
+            int hashFolded = rand.nextInt(1024);
+            bs.set(hashFolded);
+        }
+        return bs;
+    }
+
+    @Test public void testGetCountFingerprint() throws CDKException {
+        final SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        GraphOnlyFingerprinter fpr = new GraphOnlyFingerprinter(1024, 7); // 7 bonds
+        fpr.setPathLimit(2000);
+        final String smi  = "CC(=O)OC1=CC=CC=C1C(=O)O";
+        IAtomContainer mol  = smipar.parseSmiles(smi);
+        ICountFingerprint cntFp = fpr.getCountFingerprint(mol);
+        IBitFingerprint expBitset = fpr.getBitFingerprint(mol);
+        Assert.assertEquals(35, cntFp.numOfPopulatedbins());
+        BitSet actBitset = foldFp(cntFp, 1024);
+        Assert.assertEquals(expBitset.asBitSet(), actBitset);
+    }
 }
