@@ -159,13 +159,15 @@ public class KabschAlignment {
         double x = 0.;
         double y = 0.;
         double z = 0.;
-        double totalmass = 0.;
+        double totalmass = 0d;
         for (int i = 0; i < p.length; i++) {
             x += atwt[i] * p[i].x;
             y += atwt[i] * p[i].y;
             z += atwt[i] * p[i].z;
             totalmass += atwt[i];
         }
+        if (totalmass == 0d)
+            return new Point3d(0,0,0);
         return (new Point3d(x / totalmass, y / totalmass, z / totalmass));
     }
 

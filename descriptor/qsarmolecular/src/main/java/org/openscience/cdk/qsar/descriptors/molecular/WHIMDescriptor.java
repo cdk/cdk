@@ -415,6 +415,8 @@ public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMole
         sum = 0.0;
         for (int i = 0; i < 3; i++)
             sum += lambda[i];
+        if (sum == 0.0)
+            return getDummyDescriptorValue(new ArithmeticException("Lambda sum was 0, cannot divide by 0!"));
         for (int i = 0; i < 3; i++)
             k = (lambda[i] / sum) - (1.0 / 3.0);
         k = k / (4.0 / 3.0);

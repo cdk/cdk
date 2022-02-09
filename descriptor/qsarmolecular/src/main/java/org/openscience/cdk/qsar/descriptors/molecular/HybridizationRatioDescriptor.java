@@ -128,6 +128,8 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
                     nsp2++;
                 else if (atom.getHybridization() == Hybridization.SP3) nsp3++;
             }
+            if (nsp2+nsp3 == 0)
+                return getDummyDescriptorValue(new ArithmeticException("Cannot divide by 0"));
             double ratio = nsp3 / (double) (nsp2 + nsp3);
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                     new DoubleResult(ratio), getDescriptorNames());
