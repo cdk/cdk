@@ -65,6 +65,8 @@ import java.util.TreeSet;
 // see also SignatureFingerprintTanimotoTest
 public class Tanimoto {
 
+    public static final String EMPTY_FINGERPRINTS_PROVIDED = "Cannot compute Tanimoto of two empty fingerprints!";
+
     private Tanimoto() {}
 
     /**
@@ -137,7 +139,7 @@ public class Tanimoto {
         }
         double union = a2 + b2 - ab;
         if (union == 0.0)
-            throw new IllegalArgumentException("Empty fingerprints provided!");
+            throw new IllegalArgumentException(EMPTY_FINGERPRINTS_PROVIDED);
         return (float) ab / (float) union;
     }
 
@@ -168,7 +170,7 @@ public class Tanimoto {
         }
         double union = x + y - xy;
         if (union == 0.0)
-            throw new IllegalArgumentException("Empty fingerprints provided!");
+            throw new IllegalArgumentException(EMPTY_FINGERPRINTS_PROVIDED);
         return (float) (xy / union);
     }
 
@@ -214,7 +216,7 @@ public class Tanimoto {
         }
         long union = x + y - xy;
         if (union == 0)
-            throw new IllegalArgumentException("Empty fingerprints provided!");
+            throw new IllegalArgumentException(EMPTY_FINGERPRINTS_PROVIDED);
         return ((double) xy / union);
     }
 

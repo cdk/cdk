@@ -54,7 +54,7 @@ public class LingoSimilarity {
     public static float calculate(Map<String, Integer> features1, Map<String, Integer> features2) {
         TreeSet<String> keys = new TreeSet<>(features1.keySet());
         keys.addAll(features2.keySet());
-        if (keys.size() == 0)
+        if (keys.isEmpty())
             return 1.0f;
         double res = 0.0f;
         for (String key : keys) {

@@ -82,8 +82,6 @@ public class Isotopes extends IsotopeFactory {
                 try (ReadableByteChannel fcIn = Channels.newChannel(ins)) {
                     ByteBuffer bin = ByteBuffer.allocate(streamSize);
                     fcIn.read(bin);
-                    fcIn.close();
-                    ins.close();
                     ((Buffer) bin).position(0);
                     int isotopeCount = bin.getInt();
                     for (int i = 0; i < isotopeCount; i++) {

@@ -61,7 +61,7 @@ public class MM2BasedAtomTypePattern {
     private void createPattern() {
         atomTypePatterns.add(Pattern.compile("[CSP]-[0-4][-]?+;[A-Za-z+-]{0,6}[(].*+"));
         //Csp3
-        atomTypePatterns.add(Pattern.compile("[CS]-[0-3];[H]{0,2}+[A-Za-z]*+=[A-Z]{1,2}+.*+"));
+        atomTypePatterns.add(Pattern.compile("[CS]-[0-3];[H]{0,2}+=[A-Z]{1,2}+.*+"));
         //Csp2
         atomTypePatterns.add(Pattern.compile("C-[0-3];=O.*+"));
         //C carbonyl
