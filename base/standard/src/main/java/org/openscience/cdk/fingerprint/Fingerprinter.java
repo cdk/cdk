@@ -391,13 +391,12 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
         }
 
         public void storePath() {
-            if (bpath.size() == 0) {
+            if (bpath.isEmpty()) {
                 addHash(getAtomSymbol(apath.get(0)).hashCode());
                 storeFeat(getAtomSymbol(apath.get(0)));
             } else {
                 if (!isOrderedPath())
                     return;
-                final int x;
                 if (compare(apath, bpath) >= 0) {
                     storeForward();
                 } else {

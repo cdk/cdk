@@ -515,6 +515,7 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
         expected.put("X-C:C:C:C:C:C", 2);
         expected.put("C:C:C:C:C:C-C", 2);
         expected.put("X-C:C:C:C:C:C-C", 1);
+        Assert.assertEquals(expected, actual);
     }
 
     @Test public void rawFpTestDepth() throws CDKException {
