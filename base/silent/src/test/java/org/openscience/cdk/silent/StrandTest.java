@@ -48,11 +48,11 @@ public class StrandTest extends AbstractStrandTest {
         Assert.assertEquals(oStrand.getMonomerCount(), 0);
 
         IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
-        oMono1.setMonomerName(new String("TRP279"));
+        oMono1.setMonomerName("TRP279");
         IMonomer oMono2 = oStrand.getBuilder().newInstance(IMonomer.class);
-        oMono2.setMonomerName(new String("HOH"));
+        oMono2.setMonomerName("HOH");
         IMonomer oMono3 = oStrand.getBuilder().newInstance(IMonomer.class);
-        oMono3.setMonomerName(new String("GLYA16"));
+        oMono3.setMonomerName("GLYA16");
         IAtom oAtom1 = oStrand.getBuilder().newInstance(IAtom.class, "C");
         IAtom oAtom2 = oStrand.getBuilder().newInstance(IAtom.class, "C");
         IAtom oAtom3 = oStrand.getBuilder().newInstance(IAtom.class, "C");

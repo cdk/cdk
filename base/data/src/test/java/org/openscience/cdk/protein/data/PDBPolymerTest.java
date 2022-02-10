@@ -57,11 +57,11 @@ public class PDBPolymerTest extends AbstractPDBPolymerTest {
         IStrand oStrand2 = pdbPolymer.getBuilder().newInstance(IStrand.class);
         oStrand2.setStrandName("B");
         IMonomer oMono1 = pdbPolymer.getBuilder().newInstance(IMonomer.class);
-        oMono1.setMonomerName(new String("TRP279"));
+        oMono1.setMonomerName("TRP279");
         IMonomer oMono2 = pdbPolymer.getBuilder().newInstance(IMonomer.class);
-        oMono2.setMonomerName(new String("HOH"));
+        oMono2.setMonomerName("HOH");
         IMonomer oMono3 = pdbPolymer.getBuilder().newInstance(IMonomer.class);
-        oMono3.setMonomerName(new String("GLYA16"));
+        oMono3.setMonomerName("GLYA16");
         IPDBAtom oPDBAtom1 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C");
         IPDBAtom oPDBAtom2 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C");
         IPDBAtom oPDBAtom3 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class, "C");

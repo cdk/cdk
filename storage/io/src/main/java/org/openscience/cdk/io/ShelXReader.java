@@ -176,7 +176,7 @@ public class ShelXReader extends DefaultChemObjectReader {
             /* determine ShelX command */
             String command;
             try {
-                command = new String(line.substring(0, 4));
+                command = line.substring(0, 4);
             } catch (StringIndexOutOfBoundsException sioobe) {
                 // disregard this line
                 break;

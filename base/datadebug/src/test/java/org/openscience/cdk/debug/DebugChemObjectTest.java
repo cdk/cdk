@@ -55,8 +55,8 @@ public class DebugChemObjectTest extends AbstractChemObjectTest {
     public void compare() {
         DebugChemObject co1 = new DebugChemObject();
         DebugChemObject co2 = new DebugChemObject();
-        co1.setID(new String("a1"));
-        co2.setID(new String("a1"));
+        co1.setID("a1");
+        co2.setID("a1");
         Assert.assertTrue(co1.compare(co2));
     }
 
@@ -64,8 +64,8 @@ public class DebugChemObjectTest extends AbstractChemObjectTest {
     public void compareDifferent() {
         DebugChemObject co1 = new DebugChemObject();
         DebugChemObject co2 = new DebugChemObject();
-        co1.setID(new String("a1"));
-        co2.setID(new String("a2"));
+        co1.setID("a1");
+        co2.setID("a2");
         Assert.assertFalse(co1.compare(co2));
     }
 }

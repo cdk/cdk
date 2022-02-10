@@ -22,8 +22,8 @@ public abstract class AbstractMonomerTest extends AbstractAtomContainerTest {
     @Test
     public void testSetMonomerName_String() {
         IMonomer m = (IMonomer) newChemObject();
-        m.setMonomerName(new String("TRP279"));
-        Assert.assertEquals(new String("TRP279"), m.getMonomerName());
+        m.setMonomerName("TRP279");
+        Assert.assertEquals("TRP279", m.getMonomerName());
     }
 
     @Test
@@ -34,8 +34,8 @@ public abstract class AbstractMonomerTest extends AbstractAtomContainerTest {
     @Test
     public void testSetMonomerType_String() {
         IMonomer oMonomer = (IMonomer) newChemObject();
-        oMonomer.setMonomerType(new String("TRP"));
-        Assert.assertEquals(new String("TRP"), oMonomer.getMonomerType());
+        oMonomer.setMonomerType("TRP");
+        Assert.assertEquals("TRP", oMonomer.getMonomerType());
     }
 
     @Test
@@ -50,7 +50,7 @@ public abstract class AbstractMonomerTest extends AbstractAtomContainerTest {
     @Override
     public void testToString() {
         IMonomer oMonomer = (IMonomer) newChemObject();
-        oMonomer.setMonomerType(new String("TRP"));
+        oMonomer.setMonomerType("TRP");
         String description = oMonomer.toString();
         for (int i = 0; i < description.length(); i++) {
             Assert.assertTrue('\n' != description.charAt(i));

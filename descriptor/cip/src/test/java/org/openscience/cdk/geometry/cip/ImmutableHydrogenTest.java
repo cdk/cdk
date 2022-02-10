@@ -111,8 +111,8 @@ public class ImmutableHydrogenTest extends CDKTestCase {
         Assert.assertFalse(hydrogen.getFlag(CDKConstants.ISPLACED));
         Assert.assertNull(hydrogen.getID());
         Assert.assertNull(hydrogen.getProperties());
-        Assert.assertNull(hydrogen.getProperty(new String()));
-        Assert.assertNull(hydrogen.getProperty(new String(), String.class));
+        Assert.assertNull(hydrogen.getProperty(""));
+        Assert.assertNull(hydrogen.getProperty("", String.class));
         Assert.assertNull(hydrogen.getBuilder());
     }
 
@@ -142,8 +142,8 @@ public class ImmutableHydrogenTest extends CDKTestCase {
         hydrogen.setID("Me");
         hydrogen.addProperties(new Properties());
         hydrogen.setProperties(new Properties());
-        hydrogen.setProperty(new String(), new String());
-        hydrogen.removeProperty(new String());
+        hydrogen.setProperty("", "");
+        hydrogen.removeProperty("");
         Assert.assertTrue(true); // to indicate we made it
     }
 

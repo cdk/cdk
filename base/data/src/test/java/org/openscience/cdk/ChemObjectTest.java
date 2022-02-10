@@ -60,8 +60,8 @@ public class ChemObjectTest extends AbstractChemObjectTest {
     public void compare() {
         ChemObject co1 = new ChemObject();
         ChemObject co2 = new ChemObject();
-        co1.setID(new String("a1"));
-        co2.setID(new String("a1"));
+        co1.setID("a1");
+        co2.setID("a1");
         Assert.assertTrue(co1.compare(co2));
     }
 
@@ -69,8 +69,8 @@ public class ChemObjectTest extends AbstractChemObjectTest {
     public void compareDifferent() {
         ChemObject co1 = new ChemObject();
         ChemObject co2 = new ChemObject();
-        co1.setID(new String("a1"));
-        co2.setID(new String("a2"));
+        co1.setID("a1");
+        co2.setID("a2");
         Assert.assertFalse(co1.compare(co2));
     }
 }

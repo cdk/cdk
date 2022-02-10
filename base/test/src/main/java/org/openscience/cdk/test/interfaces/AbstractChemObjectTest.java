@@ -29,8 +29,8 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
     @Test
     public void testSetProperty_Object_Object() {
         IChemObject chemObject = newChemObject();
-        String cDescription = new String("description");
-        String cProperty = new String("property");
+        String cDescription = "description";
+        String cProperty = "property";
         chemObject.setProperty(cDescription, cProperty);
         Assert.assertEquals(cProperty, chemObject.getProperty(cDescription));
     }
@@ -50,8 +50,8 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
     public void testAddProperties_Map() {
         IChemObject chemObject = newChemObject();
         Map<Object, Object> props = new Hashtable<>();
-        String cDescription = new String("description");
-        String cProperty = new String("property");
+        String cDescription = "description";
+        String cProperty = "property";
         props.put(cDescription, cProperty);
         chemObject.addProperties(props);
         Assert.assertEquals(cProperty, chemObject.getProperty(cDescription));
@@ -94,8 +94,8 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
     @Test
     public void testRemoveProperty_Object() {
         IChemObject chemObject = newChemObject();
-        String cDescription = new String("description");
-        String cProperty = new String("property");
+        String cDescription = "description";
+        String cProperty = "property";
         chemObject.setProperty(cDescription, cProperty);
         Assert.assertNotNull(chemObject.getProperty(cDescription));
         chemObject.removeProperty(cDescription);

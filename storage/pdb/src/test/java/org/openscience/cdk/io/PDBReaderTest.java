@@ -161,7 +161,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertNotNull(nAtom);
         Assert.assertTrue(nAtom instanceof IPDBAtom);
         IPDBAtom oAtom = (IPDBAtom) nAtom;
-        Assert.assertEquals(new String("C"), oAtom.getSymbol());
+        Assert.assertEquals("C", oAtom.getSymbol());
         Assert.assertEquals(1, oAtom.getSerial().intValue());
         Assert.assertEquals("C1", oAtom.getName());
         Assert.assertEquals("MOL", oAtom.getResName());

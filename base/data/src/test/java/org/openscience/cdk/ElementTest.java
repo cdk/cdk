@@ -81,8 +81,8 @@ public class ElementTest extends AbstractElementTest {
 
     @Test
     public void compareSymbol() {
-        Element e1 = new Element(new String("H"), 1);
-        Element e2 = new Element(new String("H"), 1);
+        Element e1 = new Element("H", 1);
+        Element e2 = new Element("H", 1);
         Assert.assertTrue(e1.compare(e2));
     }
 
@@ -95,8 +95,8 @@ public class ElementTest extends AbstractElementTest {
 
     @Test
     public void compareDiffSymbol() {
-        Element e1 = new Element(new String("H"), 1);
-        Element e2 = new Element(new String("C"), 12);
+        Element e1 = new Element("H", 1);
+        Element e2 = new Element("C", 12);
         Assert.assertFalse(e1.compare(e2));
     }
 

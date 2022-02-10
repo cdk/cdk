@@ -136,7 +136,7 @@ public class MMFF94BasedParameterSetReader {
             data.add(well);
             data.add(apol);
             data.add(Neff);
-            data.add(new String(sDA));
+            data.add(sDA);
             data.add(fcadj);
             data.add(new Double(spbci));
             data.add(a);

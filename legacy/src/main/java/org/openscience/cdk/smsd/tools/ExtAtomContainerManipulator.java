@@ -377,7 +377,7 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
             IBond.Stereo stereo = container.getBond(index).getStereo();
             bonds[index] = new Bond(atom1, atom2, order, stereo);
             if (container.getBond(index).getID() != null) {
-                bonds[index].setID(new String(container.getBond(index).getID()));
+                bonds[index].setID(container.getBond(index).getID());
             }
             newAtomContainer.addBond(bonds[index]);
 

@@ -77,8 +77,8 @@ public class DebugElementTest extends AbstractElementTest {
 
     @Test
     public void compareSymbol() {
-        DebugElement e1 = new DebugElement(new String("H"), 1);
-        DebugElement e2 = new DebugElement(new String("H"), 1);
+        DebugElement e1 = new DebugElement("H", 1);
+        DebugElement e2 = new DebugElement("H", 1);
         Assert.assertTrue(e1.compare(e2));
     }
 
@@ -91,15 +91,15 @@ public class DebugElementTest extends AbstractElementTest {
 
     @Test
     public void compareDiffSymbol() {
-        DebugElement e1 = new DebugElement(new String("H"), 1);
-        DebugElement e2 = new DebugElement(new String("C"), 12);
+        DebugElement e1 = new DebugElement("H", 1);
+        DebugElement e2 = new DebugElement("C", 12);
         Assert.assertFalse(e1.compare(e2));
     }
 
     @Test
     public void compareDiffAtomicNumber() {
-        DebugElement e1 = new DebugElement(new String("H"), 1);
-        DebugElement e2 = new DebugElement(new String("H"), 0);
+        DebugElement e1 = new DebugElement("H", 1);
+        DebugElement e2 = new DebugElement("H", 0);
         Assert.assertFalse(e1.compare(e2));
     }
 }
