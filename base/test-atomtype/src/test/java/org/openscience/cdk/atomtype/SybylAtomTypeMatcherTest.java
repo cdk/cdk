@@ -52,7 +52,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  */
 public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 
-    private static Map<String, Integer> testedAtomTypes = new HashMap<String, Integer>();
+    private static final Map<String, Integer> testedAtomTypes = new HashMap<>();
 
     static {
         // do not complain about a few non-tested atom types
@@ -92,7 +92,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         String filename = "atomtyping.mol2";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         Mol2Reader reader = new Mol2Reader(ins);
-        IAtomContainer mol = (IAtomContainer) reader.read(new AtomContainer());
+        IAtomContainer mol = reader.read(new AtomContainer());
 
         // just check consistency; other methods do perception testing
         SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
@@ -108,9 +108,9 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         String filename = "atomtyping.mol2";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         Mol2Reader reader = new Mol2Reader(ins);
-        IAtomContainer molecule = (IAtomContainer) reader.read(new AtomContainer());
+        IAtomContainer molecule = reader.read(new AtomContainer());
         Assert.assertNotNull(molecule);
-        IAtomContainer reference = (IAtomContainer) molecule.clone();
+        IAtomContainer reference = molecule.clone();
 
         // test if the perceived atom types match that
         percieveAtomTypesAndConfigureAtoms(molecule);
@@ -169,9 +169,9 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         String filename = "atomtyping4.mol2";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         Mol2Reader reader = new Mol2Reader(ins);
-        IAtomContainer molecule = (IAtomContainer) reader.read(new AtomContainer());
+        IAtomContainer molecule = reader.read(new AtomContainer());
         Assert.assertNotNull(molecule);
-        IAtomContainer reference = (IAtomContainer) molecule.clone();
+        IAtomContainer reference = molecule.clone();
 
         // test if the perceived atom types match that
         percieveAtomTypesAndConfigureAtoms(molecule);
@@ -204,9 +204,9 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         String filename = "atomtyping2.mol2";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         Mol2Reader reader = new Mol2Reader(ins);
-        IAtomContainer molecule = (IAtomContainer) reader.read(new AtomContainer());
+        IAtomContainer molecule = reader.read(new AtomContainer());
         Assert.assertNotNull(molecule);
-        IAtomContainer reference = (IAtomContainer) molecule.clone();
+        IAtomContainer reference = molecule.clone();
 
         // test if the perceived atom types match that
         percieveAtomTypesAndConfigureAtoms(molecule);
@@ -225,9 +225,9 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         String filename = "atomtyping3.mol2";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         Mol2Reader reader = new Mol2Reader(ins);
-        IAtomContainer molecule = (IAtomContainer) reader.read(new AtomContainer());
+        IAtomContainer molecule = reader.read(new AtomContainer());
         Assert.assertNotNull(molecule);
-        IAtomContainer reference = (IAtomContainer) molecule.clone();
+        IAtomContainer reference = molecule.clone();
 
         // test if the perceived atom types match that
         percieveAtomTypesAndConfigureAtoms(molecule);
@@ -243,9 +243,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 
     private void percieveAtomTypesAndConfigureAtoms(IAtomContainer container) throws Exception {
         SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(container.getBuilder());
-        Iterator<IAtom> atoms = container.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : container.atoms()) {
             atom.setAtomTypeName(null);
             IAtomType matched = matcher.findMatchingAtomType(container, atom);
             if (matched != null) AtomTypeManipulator.configure(atom, matched);

@@ -61,7 +61,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class XYZReader extends DefaultChemObjectReader {
 
     private BufferedReader      input;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(XYZReader.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(XYZReader.class);
 
     /**
      * Construct a new reader from a Reader type object.
@@ -103,8 +103,8 @@ public class XYZReader extends DefaultChemObjectReader {
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IChemFile.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IChemFile.class.equals(anInterface)) return true;
         }
         Class superClass = classObject.getSuperclass();
         if (superClass != null) return this.accepts(superClass);
@@ -139,7 +139,7 @@ public class XYZReader extends DefaultChemObjectReader {
     private IChemFile readChemFile(IChemFile file) {
         IChemSequence chemSequence = file.getBuilder().newInstance(IChemSequence.class);
 
-        int number_of_atoms = 0;
+        int number_of_atoms;
         StringTokenizer tokenizer;
 
         try {
@@ -166,12 +166,12 @@ public class XYZReader extends DefaultChemObjectReader {
                         if (comment == null) {
                             comment = "";
                         }
-                        comment = comment.toString() + line.substring(1).trim();
+                        comment = comment + line.substring(1).trim();
                         m.setProperty(CDKConstants.COMMENT, comment);
                         logger.debug("Found and set comment: ", comment);
                         i--; // a comment line does not count as an atom
                     } else {
-                        double x = 0.0f, y = 0.0f, z = 0.0f;
+                        double x, y, z;
                         double charge = 0.0f;
                         tokenizer = new StringTokenizer(line, "\t ,;");
                         int fields = tokenizer.countTokens();
@@ -180,11 +180,11 @@ public class XYZReader extends DefaultChemObjectReader {
                             // this is an error but cannot throw exception
                         } else {
                             String atomtype = tokenizer.nextToken();
-                            x = (new Double(tokenizer.nextToken())).doubleValue();
-                            y = (new Double(tokenizer.nextToken())).doubleValue();
-                            z = (new Double(tokenizer.nextToken())).doubleValue();
+                            x = new Double(tokenizer.nextToken());
+                            y = new Double(tokenizer.nextToken());
+                            z = new Double(tokenizer.nextToken());
 
-                            if (fields == 8) charge = (new Double(tokenizer.nextToken())).doubleValue();
+                            if (fields == 8) charge = new Double(tokenizer.nextToken());
 
                             IAtom atom = file.getBuilder().newInstance(IAtom.class, atomtype, new Point3d(x, y, z));
                             atom.setCharge(charge);

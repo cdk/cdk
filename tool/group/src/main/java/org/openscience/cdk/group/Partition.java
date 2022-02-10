@@ -24,7 +24,6 @@ package org.openscience.cdk.group;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.SortedSet;
@@ -44,13 +43,13 @@ public class Partition {
     /**
      * The subsets of the partition, known as cells.
      */
-    private List<SortedSet<Integer>> cells;
+    private final List<SortedSet<Integer>> cells;
 
     /**
      * Creates a new, empty partition with no cells.
      */
     public Partition() {
-        this.cells = new ArrayList<SortedSet<Integer>>();
+        this.cells = new ArrayList<>();
     }
 
     /**
@@ -61,7 +60,7 @@ public class Partition {
     public Partition(Partition other) {
         this();
         for (SortedSet<Integer> block : other.cells) {
-            this.cells.add(new TreeSet<Integer>(block));
+            this.cells.add(new TreeSet<>(block));
         }
     }
 
@@ -86,7 +85,7 @@ public class Partition {
      */
     public static Partition unit(int size) {
         Partition unit = new Partition();
-        unit.cells.add(new TreeSet<Integer>());
+        unit.cells.add(new TreeSet<>());
         for (int i = 0; i < size; i++) {
             unit.cells.get(0).add(i);
         }
@@ -313,7 +312,7 @@ public class Partition {
      * @param element the element to add in its own cell
      */
     public void addSingletonCell(int element) {
-        SortedSet<Integer> cell = new TreeSet<Integer>();
+        SortedSet<Integer> cell = new TreeSet<>();
         cell.add(element);
         this.cells.add(cell);
     }
@@ -333,7 +332,7 @@ public class Partition {
      * @param elements the elements to add in a new cell
      */
     public void addCell(int... elements) {
-        SortedSet<Integer> cell = new TreeSet<Integer>();
+        SortedSet<Integer> cell = new TreeSet<>();
         for (int element : elements) {
             cell.add(element);
         }
@@ -346,7 +345,7 @@ public class Partition {
      * @param elements the collection of elements to put in the cell
      */
     public void addCell(Collection<Integer> elements) {
-        cells.add(new TreeSet<Integer>(elements));
+        cells.add(new TreeSet<>(elements));
     }
 
     /**
@@ -380,14 +379,14 @@ public class Partition {
      * @return the copy of the cell
      */
     public SortedSet<Integer> copyBlock(int cellIndex) {
-        return new TreeSet<Integer>(this.cells.get(cellIndex));
+        return new TreeSet<>(this.cells.get(cellIndex));
     }
 
     /**
      * Sort the cells in increasing order.
      */
     public void order() {
-        Collections.sort(cells, new Comparator<SortedSet<Integer>>() {
+        cells.sort(new Comparator<SortedSet<Integer>>() {
 
             @Override
             public int compare(SortedSet<Integer> cellA, SortedSet<Integer> cellB) {

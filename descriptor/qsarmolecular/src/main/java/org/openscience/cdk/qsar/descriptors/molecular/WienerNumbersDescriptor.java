@@ -149,9 +149,9 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
         int[][] distances = PathTools.computeFloydAPSP(matr);
 
         int partial;
-        for (int i = 0; i < distances.length; i++) {
+        for (int[] distance : distances) {
             for (int j = 0; j < distances.length; j++) {
-                partial = distances[i][j];
+                partial = distance[j];
                 wienerPathNumber += partial;
                 if (partial == 3) {
                     wienerPolarityNumber += 1;

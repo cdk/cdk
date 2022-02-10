@@ -16,7 +16,7 @@ import org.openscience.cdk.interfaces.IBond;
 @Deprecated
 public class AtomContainerAtomPermutor extends Permutor implements Iterator<IAtomContainer> {
 
-    private IAtomContainer original;
+    private final IAtomContainer original;
 
     public AtomContainerAtomPermutor(IAtomContainer atomContainer) {
         super(atomContainer.getAtomCount());
@@ -45,12 +45,12 @@ public class AtomContainerAtomPermutor extends Permutor implements Iterator<IAto
         IAtomContainer permutedContainer = null;
         try {
             permutedContainer = atomContainer.getBuilder().newInstance(IAtomContainer.class);
-            for (int i = 0; i < p.length; i++) {
-                IAtom atom = atomContainer.getAtom(p[i]);
-                permutedContainer.addAtom((IAtom) atom.clone());
+            for (int j : p) {
+                IAtom atom = atomContainer.getAtom(j);
+                permutedContainer.addAtom(atom.clone());
             }
             for (IBond bond : atomContainer.bonds()) {
-                IBond clonedBond = (IBond) bond.clone();
+                IBond clonedBond = bond.clone();
                 clonedBond.setAtoms(new IAtom[clonedBond.getAtomCount()]);
                 int i = 0;
                 for (IAtom atom : bond.atoms()) {
@@ -72,7 +72,7 @@ public class AtomContainerAtomPermutor extends Permutor implements Iterator<IAto
     private static IAtomContainer permuteB(int[] p, IAtomContainer atomContainer) {
         IAtomContainer permutedContainer = null;
         try {
-            permutedContainer = (IAtomContainer) atomContainer.clone();
+            permutedContainer = atomContainer.clone();
             int n = atomContainer.getAtomCount();
             IAtom[] permutedAtoms = new IAtom[n];
             for (int originalIndex = 0; originalIndex < n; originalIndex++) {

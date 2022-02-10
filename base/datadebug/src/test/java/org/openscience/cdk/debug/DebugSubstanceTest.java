@@ -20,8 +20,6 @@ package org.openscience.cdk.debug;
 
 import org.junit.BeforeClass;
 import org.openscience.cdk.test.interfaces.AbstractSubstanceTest;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link DebugSubstance}.
@@ -32,12 +30,6 @@ public class DebugSubstanceTest extends AbstractSubstanceTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new DebugSubstance();
-            }
-        });
+        setTestObjectBuilder(DebugSubstance::new);
     }
 }

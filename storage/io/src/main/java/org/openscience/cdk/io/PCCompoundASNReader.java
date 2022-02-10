@@ -60,7 +60,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class PCCompoundASNReader extends DefaultChemObjectReader {
 
     private BufferedReader      input;
-    private static ILoggingTool logger   = LoggingToolFactory.createLoggingTool(PCCompoundASNReader.class);
+    private static final ILoggingTool logger   = LoggingToolFactory.createLoggingTool(PCCompoundASNReader.class);
 
     IAtomContainer              molecule = null;
     Map<String, IAtom>          atomIDs  = null;
@@ -105,8 +105,8 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IChemFile.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IChemFile.class.equals(anInterface)) return true;
         }
         Class superClass = classObject.getSuperclass();
         if (superClass != null) return this.accepts(superClass);
@@ -142,7 +142,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         IChemModel chemModel = file.getBuilder().newInstance(IChemModel.class);
         IAtomContainerSet moleculeSet = file.getBuilder().newInstance(IAtomContainerSet.class);
         molecule = file.getBuilder().newInstance(IAtomContainer.class);
-        atomIDs = new HashMap<String, IAtom>();
+        atomIDs = new HashMap<>();
 
         String line = input.readLine();
         while (input.ready() && line != null) {
@@ -201,11 +201,11 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         String line = input.readLine();
         URN urn = null;
         while (input.ready() && line != null) {
-            if (line.indexOf("urn") != -1) {
+            if (line.contains("urn")) {
                 urn = extractURN();
-            } else if (line.indexOf("value") != -1) {
+            } else if (line.contains("value")) {
                 logger.debug("Found a prop value line: " + line);
-                if (line.indexOf(" sval") != -1) {
+                if (line.contains(" sval")) {
                     logger.debug("Label: " + urn.label);
                     logger.debug("Name: " + urn.name);
                     if ("InChI".equals(urn.label)) {
@@ -229,9 +229,9 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         URN urn = new URN();
         String line = input.readLine();
         while (input.ready() && line != null) {
-            if (line.indexOf("name") != -1) {
+            if (line.contains("name")) {
                 urn.name = getQuotedValue(line.substring(line.indexOf("name") + 4));
-            } else if (line.indexOf("label") != -1) {
+            } else if (line.contains("label")) {
                 urn.label = getQuotedValue(line.substring(line.indexOf("label") + 4));
             } else if (line.indexOf('}') != -1 && line.indexOf('\"') == -1) {
                 // ok, don't return if it also has a "
@@ -350,7 +350,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
                 //        		logger.debug("  index: " + atomIndex);
                 IBond bond = getBond(bondIndex);
                 String id = getValue(line);
-                IAtom atom = (IAtom) atomIDs.get(id);
+                IAtom atom = atomIDs.get(id);
                 if (atom == null) {
                     throw new CDKException("File is corrupt: atom ID does not exist " + id);
                 }
@@ -402,7 +402,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
     }
 
     private String getCommand(String line) {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         int i = 0;
         boolean foundBracket = false;
         while (i < line.length() && !foundBracket) {
@@ -418,7 +418,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
     }
 
     private String getValue(String line) {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         int i = 0;
         boolean foundComma = false;
         boolean preWS = true;
@@ -438,7 +438,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
     }
 
     private String getQuotedValue(String line) throws Exception {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         int i = 0;
         //    	logger.debug("QV line: " + line);
         boolean startQuoteFound = false;

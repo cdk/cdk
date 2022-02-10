@@ -40,27 +40,27 @@ public interface IDifferenceList extends IDifference {
      *
      * @param childDiff child {@link IDifference} to add to this {@link IDifference}
      */
-    public void addChild(IDifference childDiff);
+    void addChild(IDifference childDiff);
 
     /**
      * Adds multiple {@link IDifference}s as child to this tree.
      *
      * @param children a {@link List} of {@link IDifference}s to add to this {@link IDifference}
      */
-    public void addChildren(List<IDifference> children);
+    void addChildren(List<IDifference> children);
 
     /**
      * Returns an {@link Iterable} of {@link IDifference} for all childs of this {@link IDifference}.
      *
      * @return an {@link Iterable} implementation with all children
      */
-    public Iterable<IDifference> getChildren();
+    Iterable<IDifference> getChildren();
 
     /**
      * Returns the number of children of this {@link IDifference}.
      *
      * @return an int reflecting the number of children
      */
-    public int childCount();
+    int childCount();
 
 }

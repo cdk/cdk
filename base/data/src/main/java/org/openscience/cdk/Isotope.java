@@ -257,7 +257,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
      */
     @Override
     public String toString() {
-        StringBuffer resultString = new StringBuffer(32);
+        StringBuilder resultString = new StringBuilder(32);
         resultString.append("Isotope(").append(hashCode());
         if (massNumber != null) {
             resultString.append(", MN:").append(massNumber);
@@ -294,13 +294,13 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
                 && isotope.getMassNumber().intValue() != this.getMassNumber().intValue()) return false;
         if (isotope.getMassNumber() == null && massNumber != null) return false;
         if (isotope.getExactMass() != null && exactMass != null) {
-            double diff = Math.abs(isotope.getExactMass().doubleValue() - this.getExactMass().doubleValue());
+            double diff = Math.abs(isotope.getExactMass() - this.getExactMass());
             if (diff > 0.0000001) return false;
         }
         if (isotope.getExactMass() == null && exactMass != null) return false;
         if (isotope.getNaturalAbundance() != null && naturalAbundance != null) {
-            double diff = Math.abs(isotope.getNaturalAbundance().doubleValue()
-                    - this.getNaturalAbundance().doubleValue());
+            double diff = Math.abs(isotope.getNaturalAbundance()
+                    - this.getNaturalAbundance());
             if (diff > 0.0000001) return false;
         }
         if (isotope.getNaturalAbundance() == null && naturalAbundance != null) return false;

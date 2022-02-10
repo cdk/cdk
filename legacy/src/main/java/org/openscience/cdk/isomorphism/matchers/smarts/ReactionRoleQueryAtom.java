@@ -75,6 +75,6 @@ public class ReactionRoleQueryAtom extends SMARTSAtom {
             sb.append("Agent");
         if ((role & ROLE_PRODUCT) != 0)
             sb.append("Product");
-        return "ReactionRole(" + sb.toString() + ")";
+        return "ReactionRole(" + sb + ")";
     }
 }

@@ -73,7 +73,7 @@ public class INChIReader extends DefaultChemObjectReader {
     private XMLReader           parser;
     private InputStream         input;
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(INChIReader.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(INChIReader.class);
 
     /**
      * Construct a INChI reader from a InputStream object.
@@ -160,8 +160,8 @@ public class INChIReader extends DefaultChemObjectReader {
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IChemFile.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IChemFile.class.equals(anInterface)) return true;
         }
         Class superClass = classObject.getSuperclass();
         if (superClass != null) return this.accepts(superClass);
@@ -221,15 +221,15 @@ public class INChIReader extends DefaultChemObjectReader {
 
     private static final class INChIHandler extends DefaultHandler {
 
-        private static ILoggingTool       logger = LoggingToolFactory.createLoggingTool(INChIHandler.class);
-        private INChIContentProcessorTool inchiTool;
+        private static final ILoggingTool       logger = LoggingToolFactory.createLoggingTool(INChIHandler.class);
+        private final INChIContentProcessorTool inchiTool;
 
         private IChemFile         chemFile;
         private IChemSequence     chemSequence;
         private IChemModel        chemModel;
         private IAtomContainerSet setOfMolecules;
         private IAtomContainer    tautomer;
-        private IChemObjectBuilder builder;
+        private final IChemObjectBuilder builder;
 
         /** Used to store all chars between two tags */
         private String                    currentChars;
@@ -252,8 +252,8 @@ public class INChIReader extends DefaultChemObjectReader {
         public void startDocument() {
             chemFile = builder.newInstance(IChemFile.class);
             chemSequence = builder.newInstance(IChemSequence.class);
-            chemModel = builder.newInstance(IChemModel.class);;
-            setOfMolecules = builder.newInstance(IAtomContainerSet.class);;
+            chemModel = builder.newInstance(IChemModel.class);
+            setOfMolecules = builder.newInstance(IAtomContainerSet.class);
         }
 
         @Override
@@ -325,7 +325,7 @@ public class INChIReader extends DefaultChemObjectReader {
          * @param ch        characters to handle
          */
         @Override
-        public void characters(char ch[], int start, int length) {
+        public void characters(char[] ch, int start, int length) {
             logger.debug("character data");
             currentChars += new String(ch, start, length);
         }

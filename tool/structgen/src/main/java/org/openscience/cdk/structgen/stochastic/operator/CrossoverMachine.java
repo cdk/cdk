@@ -40,12 +40,12 @@ import org.openscience.cdk.tools.SaturationChecker;
  */
 public class CrossoverMachine {
 
-    PartialFilledStructureMerger pfsm;
+    final PartialFilledStructureMerger pfsm;
 
     /** selects a partitioning mode*/
-    int                          splitMode                = 2;
+    final int                          splitMode                = 2;
     /** selects a partitioning scale*/
-    int                          numatoms                 = 5;
+    final int                          numatoms                 = 5;
     /** Indicates that <code>crossover</code> is using SPLIT_MODE_RADNDOM mode. */
     public static final int      SPLIT_MODE_RADNDOM       = 0;
     /** Indicates that <code>crossover</code> is using SPLIT_MODE_DEPTH_FIRST mode. */
@@ -77,8 +77,8 @@ public class CrossoverMachine {
             IAtomContainer[] redChild = new IAtomContainer[2];
             IAtomContainer[] blueChild = new IAtomContainer[2];
 
-            List<Integer> redAtoms = new ArrayList<Integer>();
-            List<Integer> blueAtoms = new ArrayList<Integer>();
+            List<Integer> redAtoms = new ArrayList<>();
+            List<Integer> blueAtoms = new ArrayList<>();
 
             /* *randomly divide atoms into two parts: redAtoms and blueAtoms.** */
             if (splitMode == SPLIT_MODE_RADNDOM) {
@@ -87,11 +87,11 @@ public class CrossoverMachine {
                  * and blueAtoms.
                  */
                 for (int i = 0; i < dim; i++)
-                    redAtoms.add(Integer.valueOf(i));
+                    redAtoms.add(i);
                 for (int i = 0; i < (dim - numatoms); i++) {
                     int ranInt = RandomNumbersTool.randomInt(0, redAtoms.size() - 1);
                     redAtoms.remove(Integer.valueOf(ranInt));
-                    blueAtoms.add(Integer.valueOf(ranInt));
+                    blueAtoms.add(ranInt);
                 }
 
             } else {
@@ -106,7 +106,7 @@ public class CrossoverMachine {
                 }
 
                 for (int i = 0; i < dim; i++) {
-                    Integer element = Integer.valueOf(i);
+                    Integer element = i;
                     if (!(redAtoms.contains(element))) {
                         blueAtoms.add(element);
                     }
@@ -118,33 +118,33 @@ public class CrossoverMachine {
             redChild[1] = dad.getBuilder().newInstance(IAtomContainer.class, mom);
             blueChild[1] = dad.getBuilder().newInstance(IAtomContainer.class, mom);
 
-            List<IAtom> blueAtomsInRedChild0 = new ArrayList<IAtom>();
-            for (int j = 0; j < blueAtoms.size(); j++) {
-                blueAtomsInRedChild0.add(redChild[0].getAtom((Integer) blueAtoms.get(j)));
+            List<IAtom> blueAtomsInRedChild0 = new ArrayList<>();
+            for (Integer blueAtom1 : blueAtoms) {
+                blueAtomsInRedChild0.add(redChild[0].getAtom(blueAtom1));
             }
-            for (int j = 0; j < blueAtomsInRedChild0.size(); j++) {
-                redChild[0].removeAtom(blueAtomsInRedChild0.get(j));
+            for (IAtom element : blueAtomsInRedChild0) {
+                redChild[0].removeAtom(element);
             }
-            List<IAtom> blueAtomsInRedChild1 = new ArrayList<IAtom>();
-            for (int j = 0; j < blueAtoms.size(); j++) {
-                blueAtomsInRedChild1.add(redChild[1].getAtom((Integer) blueAtoms.get(j)));
+            List<IAtom> blueAtomsInRedChild1 = new ArrayList<>();
+            for (Integer blueAtom : blueAtoms) {
+                blueAtomsInRedChild1.add(redChild[1].getAtom(blueAtom));
             }
-            for (int j = 0; j < blueAtomsInRedChild1.size(); j++) {
-                redChild[1].removeAtom(blueAtomsInRedChild1.get(j));
+            for (IAtom item : blueAtomsInRedChild1) {
+                redChild[1].removeAtom(item);
             }
-            List<IAtom> redAtomsInBlueChild0 = new ArrayList<IAtom>();
-            for (int j = 0; j < redAtoms.size(); j++) {
-                redAtomsInBlueChild0.add(blueChild[0].getAtom((Integer) redAtoms.get(j)));
+            List<IAtom> redAtomsInBlueChild0 = new ArrayList<>();
+            for (Integer integer : redAtoms) {
+                redAtomsInBlueChild0.add(blueChild[0].getAtom(integer));
             }
-            for (int j = 0; j < redAtomsInBlueChild0.size(); j++) {
-                blueChild[0].removeAtom(redAtomsInBlueChild0.get(j));
+            for (IAtom value : redAtomsInBlueChild0) {
+                blueChild[0].removeAtom(value);
             }
-            List<IAtom> redAtomsInBlueChild1 = new ArrayList<IAtom>();
-            for (int j = 0; j < redAtoms.size(); j++) {
-                redAtomsInBlueChild1.add(blueChild[1].getAtom((Integer) redAtoms.get(j)));
+            List<IAtom> redAtomsInBlueChild1 = new ArrayList<>();
+            for (Integer redAtom : redAtoms) {
+                redAtomsInBlueChild1.add(blueChild[1].getAtom(redAtom));
             }
-            for (int j = 0; j < redAtomsInBlueChild1.size(); j++) {
-                blueChild[1].removeAtom(redAtomsInBlueChild1.get(j));
+            for (IAtom iAtom : redAtomsInBlueChild1) {
+                blueChild[1].removeAtom(iAtom);
             }
             //if the two fragments of one and only one parent have an uneven number
             //of attachment points, we need to rearrange them
@@ -192,7 +192,7 @@ public class CrossoverMachine {
                 newstrucs[1].add(ConnectivityChecker.partitionIntoMolecules(blueChild[0]));
 
                 //and merge
-                List<IAtomContainer> children = new ArrayList<IAtomContainer>(2);
+                List<IAtomContainer> children = new ArrayList<>(2);
                 for (int f = 0; f < 2; f++) {
                     try {
                         children.add(f, pfsm.generate(newstrucs[f]));

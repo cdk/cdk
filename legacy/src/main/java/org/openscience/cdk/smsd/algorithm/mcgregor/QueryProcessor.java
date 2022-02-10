@@ -39,16 +39,16 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 @Deprecated
 public class QueryProcessor {
 
-    private List<String>  cTab1Copy;
-    private List<String>  cTab2Copy;
-    private String[]      signs;
-    private int           neighborBondNumA = 0; //number of remaining molecule A bonds after the clique search, which are neighbors of the MCS_1
-    private int           setBondNumA      = 0; //number of remaining molecule A bonds after the clique search, which aren't neighbors
-    private List<Integer> iBondNeighborsA;
-    private List<String>  cBondNeighborsA;
-    private int           newNeighborNumA;
-    private List<Integer> newINeighborsA;
-    private List<String>  newCNeighborsA;
+    private final List<String>  cTab1Copy;
+    private final List<String>  cTab2Copy;
+    private final String[]      signs;
+    private int           neighborBondNumA; //number of remaining molecule A bonds after the clique search, which are neighbors of the MCS_1
+    private int           setBondNumA; //number of remaining molecule A bonds after the clique search, which aren't neighbors
+    private final List<Integer> iBondNeighborsA;
+    private final List<String>  cBondNeighborsA;
+    private final int           newNeighborNumA;
+    private final List<Integer> newINeighborsA;
+    private final List<String>  newCNeighborsA;
 
     /**
      * Query molecule
@@ -103,18 +103,18 @@ public class QueryProcessor {
             Integer order = query.getBond(atomIndex).getOrder().numeric();
 
             //            System.out.println(AtomI + "= , =" + AtomJ );
-            for (Integer unMappedAtomIndex = 0; unMappedAtomIndex < unmappedNumA; unMappedAtomIndex++) {
+            for (Integer integer : unmappedAtomsMolA) {
 
-                if (unmappedAtomsMolA.get(unMappedAtomIndex).equals(indexI)) {
+                if (integer.equals(indexI)) {
                     normalBond = unMappedAtomsEqualsIndexJ(query, target, atomIndex, counter, mappedAtoms, indexI,
                             indexJ, order);
                     bondConsidered = true;
                 } else //Does a ungemaptes atom at second position in the connection occur?
-                if (unmappedAtomsMolA.get(unMappedAtomIndex).equals(indexJ)) {
-                    normalBond = unMappedAtomsEqualsIndexI(query, target, atomIndex, counter, mappedAtoms, indexI,
-                            indexJ, order);
-                    bondConsidered = true;
-                }
+                    if (integer.equals(indexJ)) {
+                        normalBond = unMappedAtomsEqualsIndexI(query, target, atomIndex, counter, mappedAtoms, indexI,
+                                indexJ, order);
+                        bondConsidered = true;
+                    }
                 if (normalBond && bondConsidered) {
                     markNormalBonds(atomIndex, indexI, indexJ, order);
                     normalBond = true;
@@ -151,18 +151,18 @@ public class QueryProcessor {
             }
 
             //            System.out.println(AtomI + "= , =" + AtomJ );
-            for (Integer unMappedAtomIndex = 0; unMappedAtomIndex < unmappedNumA; unMappedAtomIndex++) {
+            for (Integer integer : unmappedAtomsMolA) {
 
-                if (unmappedAtomsMolA.get(unMappedAtomIndex).equals(indexI)) {
+                if (integer.equals(indexI)) {
                     normalBond = unMappedAtomsEqualsIndexJ(query, target, atomIndex, counter, mappedAtoms, indexI,
                             indexJ, order);
                     bondConsidered = true;
                 } else //Does a ungemaptes atom at second position in the connection occur?
-                if (unmappedAtomsMolA.get(unMappedAtomIndex).equals(indexJ)) {
-                    normalBond = unMappedAtomsEqualsIndexI(query, target, atomIndex, counter, mappedAtoms, indexI,
-                            indexJ, order);
-                    bondConsidered = true;
-                }
+                    if (integer.equals(indexJ)) {
+                        normalBond = unMappedAtomsEqualsIndexI(query, target, atomIndex, counter, mappedAtoms, indexI,
+                                indexJ, order);
+                        bondConsidered = true;
+                    }
                 if (normalBond && bondConsidered) {
                     markNormalBonds(atomIndex, indexI, indexJ, order);
                     normalBond = true;
@@ -222,14 +222,14 @@ public class QueryProcessor {
     private int searchCorrespondingAtom(int mappedAtomsSize, int atomFromOtherMolecule, int molecule,
             List<Integer> mappedAtomsOrg) {
 
-        List<Integer> mappedAtoms = new ArrayList<Integer>(mappedAtomsOrg);
+        List<Integer> mappedAtoms = new ArrayList<>(mappedAtomsOrg);
 
         int correspondingAtom = 0;
         for (int a = 0; a < mappedAtomsSize; a++) {
-            if ((molecule == 1) && (mappedAtoms.get(a * 2 + 0).intValue() == atomFromOtherMolecule)) {
+            if ((molecule == 1) && (mappedAtoms.get(a * 2 + 0) == atomFromOtherMolecule)) {
                 correspondingAtom = mappedAtoms.get(a * 2 + 1);
             }
-            if ((molecule == 2) && (mappedAtoms.get(a * 2 + 1).intValue() == atomFromOtherMolecule)) {
+            if ((molecule == 2) && (mappedAtoms.get(a * 2 + 1) == atomFromOtherMolecule)) {
                 correspondingAtom = mappedAtoms.get(a * 2 + 0);
             }
         }

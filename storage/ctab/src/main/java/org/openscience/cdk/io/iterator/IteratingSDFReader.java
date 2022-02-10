@@ -86,14 +86,14 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomContainer> {
 
     private BufferedReader                                  input;
-    private static ILoggingTool                             logger               = LoggingToolFactory
+    private static final ILoggingTool                             logger               = LoggingToolFactory
                                                                                          .createLoggingTool(IteratingSDFReader.class);
     private String                                          currentLine;
     private IChemFormat                                     currentFormat;
 
     private boolean                                         nextAvailableIsKnown;
     private boolean                                         hasNext;
-    private IChemObjectBuilder                              builder;
+    private final IChemObjectBuilder                              builder;
     private IAtomContainer                                  nextMolecule;
 
     private BooleanIOSetting                                forceReadAs3DCoords;
@@ -102,19 +102,19 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
     private boolean                                         skip                 = false;
 
     // buffer to store pre-read Mol records in
-    private StringBuilder                                   buffer               = new StringBuilder(10000);
+    private final StringBuilder                                   buffer               = new StringBuilder(10000);
 
     private static final String                             LINE_SEPARATOR       = "\n";
 
     // patterns to match
-    private static Pattern MDL_VERSION          = Pattern.compile("[vV](2000|3000)");
-    private static String  M_END                = "M  END";
-    private static String  SDF_RECORD_SEPARATOR = "$$$$";
-    private static String  SDF_DATA_HEADER      = "> ";
+    private static final Pattern MDL_VERSION          = Pattern.compile("[vV](2000|3000)");
+    private static final String  M_END                = "M  END";
+    private static final String  SDF_RECORD_SEPARATOR = "$$$$";
+    private static final String  SDF_DATA_HEADER      = "> ";
 
     // map of MDL formats to their readers
-    private final Map<IChemFormat, ISimpleChemObjectReader> readerMap            = new HashMap<IChemFormat, ISimpleChemObjectReader>(
-                                                                                         5);
+    private final Map<IChemFormat, ISimpleChemObjectReader> readerMap            = new HashMap<>(
+            5);
 
     /**
      * Constructs a new IteratingMDLReader that can read Molecule from a given Reader.
@@ -304,7 +304,7 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
     }
 
     private void readDataBlockInto(IAtomContainer m) throws IOException {
-        String dataHeader = null;
+        String dataHeader;
         StringBuilder sb = new StringBuilder();
         currentLine = input.readLine();
         while (currentLine != null) {

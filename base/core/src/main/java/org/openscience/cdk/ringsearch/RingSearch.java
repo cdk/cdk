@@ -332,7 +332,7 @@ public final class RingSearch {
         int n = vertices.length;
 
         IAtom[] atoms = new IAtom[n];
-        List<IBond> bonds = new ArrayList<IBond>();
+        List<IBond> bonds = new ArrayList<>();
 
         for (int i = 0; i < vertices.length; i++) {
             atoms[i] = container.getAtom(vertices[i]);
@@ -411,7 +411,7 @@ public final class RingSearch {
      * @see #isolatedRingFragments()
      */
     private List<IAtomContainer> toFragments(int[][] verticesList) {
-        List<IAtomContainer> fragments = new ArrayList<IAtomContainer>();
+        List<IAtomContainer> fragments = new ArrayList<>();
         for (int[] vertices : verticesList) {
             fragments.add(toFragment(vertices));
         }
@@ -429,8 +429,8 @@ public final class RingSearch {
 
         int n = vertices.length;
 
-        Set<IAtom> atoms = new HashSet<IAtom>(n > 3 ? n + 1 + n / 3 : n);
-        List<IBond> bonds = new ArrayList<IBond>();
+        Set<IAtom> atoms = new HashSet<>(n > 3 ? n + 1 + n / 3 : n);
+        List<IBond> bonds = new ArrayList<>();
 
         // fill the atom set
         for (int v : vertices) {

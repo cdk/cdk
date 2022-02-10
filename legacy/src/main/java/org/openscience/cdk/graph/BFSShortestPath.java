@@ -62,7 +62,7 @@ public final class BFSShortestPath {
     }
 
     private static List<Edge> createPath(MyBreadthFirstIterator iter, Object endVertex) {
-        List<Edge> path = new ArrayList<Edge>();
+        List<Edge> path = new ArrayList<>();
 
         while (true) {
             Edge edge = iter.getSpanningTreeEdge(endVertex);

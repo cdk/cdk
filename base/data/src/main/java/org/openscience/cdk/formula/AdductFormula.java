@@ -58,7 +58,7 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
     private static final long       serialVersionUID = -811384981700039389L;
 
     /**  Internal List of IMolecularFormula. */
-    private List<IMolecularFormula> components;
+    private final List<IMolecularFormula> components;
 
     /**
      *  Constructs an empty AdductFormula.
@@ -66,7 +66,7 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
      *  @see #AdductFormula(IMolecularFormula)
      */
     public AdductFormula() {
-        components = new ArrayList<IMolecularFormula>();
+        components = new ArrayList<>();
     }
 
     /**
@@ -78,7 +78,7 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
      *  @see             #AdductFormula()
      */
     public AdductFormula(IMolecularFormula formula) {
-        components = new ArrayList<IMolecularFormula>();
+        components = new ArrayList<>();
         components.add(0, formula);
     }
 
@@ -118,8 +118,7 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
      */
     @Override
     public boolean contains(IIsotope isotope) {
-        for (Iterator<IIsotope> it = isotopes().iterator(); it.hasNext();) {
-            IIsotope thisIsotope = it.next();
+        for (IIsotope thisIsotope : isotopes()) {
             if (isTheSame(thisIsotope, isotope)) {
                 return true;
             }
@@ -138,9 +137,8 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
     @Override
     public Integer getCharge() {
         Integer charge = 0;
-        Iterator<IMolecularFormula> componentIterator = components.iterator();
-        while (componentIterator.hasNext()) {
-            charge += componentIterator.next().getCharge();
+        for (IMolecularFormula component : components) {
+            charge += component.getCharge();
         }
         return charge;
     }
@@ -156,9 +154,8 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
     @Override
     public int getIsotopeCount(IIsotope isotope) {
         int count = 0;
-        Iterator<IMolecularFormula> componentIterator = components.iterator();
-        while (componentIterator.hasNext()) {
-            count += componentIterator.next().getIsotopeCount(isotope);
+        for (IMolecularFormula component : components) {
+            count += component.getIsotopeCount(isotope);
         }
         return count;
     }
@@ -197,12 +194,9 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
      * @return    A List with the isotopes in this adduct formula
      */
     private List<IIsotope> isotopesList() {
-        List<IIsotope> isotopes = new ArrayList<IIsotope>();
-        Iterator<IMolecularFormula> componentIterator = components.iterator();
-        while (componentIterator.hasNext()) {
-            Iterator<IIsotope> compIsotopes = componentIterator.next().isotopes().iterator();
-            while (compIsotopes.hasNext()) {
-                IIsotope isotope = compIsotopes.next();
+        List<IIsotope> isotopes = new ArrayList<>();
+        for (IMolecularFormula component : components) {
+            for (IIsotope isotope : component.isotopes()) {
                 if (!isotopes.contains(isotope)) {
                     isotopes.add(isotope);
                 }

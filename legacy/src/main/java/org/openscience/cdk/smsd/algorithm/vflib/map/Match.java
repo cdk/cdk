@@ -60,8 +60,8 @@ import org.openscience.cdk.smsd.algorithm.vflib.interfaces.INode;
 @Deprecated
 public class Match {
 
-    private INode query;
-    private IAtom target;
+    private final INode query;
+    private final IAtom target;
 
     /**
      * Constructor

@@ -69,7 +69,7 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 public class INChIPlainTextReader extends DefaultChemObjectReader {
 
     private BufferedReader            input;
-    private INChIContentProcessorTool inchiTool;
+    private final INChIContentProcessorTool inchiTool;
 
     /**
      * Construct a INChI reader from a Reader object.
@@ -118,8 +118,8 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IChemFile.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IChemFile.class.equals(anInterface)) return true;
         }
         Class superClass = classObject.getSuperclass();
         if (superClass != null) return this.accepts(superClass);
@@ -152,7 +152,7 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
     private IChemFile readChemFile(IChemFile cf) throws CDKException {
         // have to do stuff here
         try {
-            String line = null;
+            String line;
             while ((line = input.readLine()) != null) {
                 if (line.startsWith("INChI=") || line.startsWith("InChI=")) {
                     // ok, the fun starts

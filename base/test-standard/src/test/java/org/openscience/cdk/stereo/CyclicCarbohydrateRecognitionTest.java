@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.stereo;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.graph.GraphUtil;

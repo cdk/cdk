@@ -128,7 +128,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     private final static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV2000Writer.class);
 
     // regular expression to capture R groups with attached numbers
-    private Pattern NUMERED_R_GROUP = Pattern.compile("R(\\d+)");
+    private final Pattern NUMERED_R_GROUP = Pattern.compile("R(\\d+)");
 
     /**
      * Enumeration of all valid radical values.
@@ -145,7 +145,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         // the corresponding number of single electrons
         private final int singleElectrons;
 
-        private SPIN_MULTIPLICITY(int value, int singleElectrons) {
+        SPIN_MULTIPLICITY(int value, int singleElectrons) {
             this.value = value;
             this.singleElectrons = singleElectrons;
         }
@@ -279,10 +279,10 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IAtomContainer.class.equals(interfaces[i])) return true;
-            if (IChemFile.class.equals(interfaces[i])) return true;
-            if (IChemModel.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IAtomContainer.class.equals(anInterface)) return true;
+            if (IChemFile.class.equals(anInterface)) return true;
+            if (IChemModel.class.equals(anInterface)) return true;
         }
         if (IAtomContainer.class.equals(classObject)) return true;
         if (IChemFile.class.equals(classObject)) return true;
@@ -312,7 +312,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 IChemSequence sequence = object.getBuilder().newInstance(IChemSequence.class);
                 sequence.addChemModel((IChemModel) object);
                 file.addChemSequence(sequence);
-                writeChemFile((IChemFile) file);
+                writeChemFile(file);
                 return;
             } else if (object instanceof IAtomContainer) {
                 writeMolecule((IAtomContainer) object);
@@ -396,7 +396,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         }
         writer.write('\n');
 
-        String comment = (String) container.getProperty(CDKConstants.REMARK);
+        String comment = container.getProperty(CDKConstants.REMARK);
         if (comment == null) comment = "";
         if (comment.length() > 80) comment = comment.substring(0, 80);
         writer.write(comment);
@@ -479,7 +479,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                     line.append("R# ");
                     if (rgroups == null) {
                         // we use a tree map to ensure the output order is always the same
-                        rgroups = new TreeMap<Integer, Integer>();
+                        rgroups = new TreeMap<>();
                     }
                     rgroups.put(f + 1, Integer.parseInt(matcher.group(1)));
 
@@ -495,7 +495,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                     // to use an alias.
                     if (label.length() > 3) {
 
-                        if (aliases == null) aliases = new TreeMap<Integer, String>();
+                        if (aliases == null) aliases = new TreeMap<>();
 
                         aliases.put(f + 1, label); // atom index to alias
 
@@ -692,7 +692,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 
         // write radical information
         if (container.getSingleElectronCount() > 0) {
-            Map<Integer, SPIN_MULTIPLICITY> atomIndexSpinMap = new LinkedHashMap<Integer, SPIN_MULTIPLICITY>();
+            Map<Integer, SPIN_MULTIPLICITY> atomIndexSpinMap = new LinkedHashMap<>();
             for (int i = 0; i < container.getAtomCount(); i++) {
                 IAtom atom = container.getAtom(i);
                 int eCount = container.getConnectedSingleElectronsCount(atom);
@@ -1182,7 +1182,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                         writer.write(' ');
                         writer.write(formatMDLInt(id, 3));
                         writer.write(' ');
-                        writer.write(formatMDLInt((int)sgroup.getValue(key), 3));
+                        writer.write(formatMDLInt(sgroup.getValue(key), 3));
                         writer.write('\n');
                         break;
                     case CtabConnectivity:
@@ -1288,7 +1288,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 
     private <T> List<List<T>> wrap(Collection<T> set, int lim) {
         List<List<T>> wrapped = new ArrayList<>();
-        List<T> list = new ArrayList<T>(set);
+        List<T> list = new ArrayList<>(set);
         if (set.size() <= lim) {
             if (!list.isEmpty())
              wrapped.add(list);
@@ -1353,7 +1353,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
      * @return The String to be written into the connectiontable
      */
     protected static String formatMDLFloat(float fl) {
-        String s = "", fs = "";
+        String s, fs = "";
         int l;
         NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
         nf.setMinimumIntegerDigits(1);

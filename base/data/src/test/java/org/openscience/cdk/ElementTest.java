@@ -24,7 +24,6 @@ import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.test.interfaces.AbstractElementTest;
-import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 
 import static org.hamcrest.CoreMatchers.is;
 
@@ -39,13 +38,7 @@ public class ElementTest extends AbstractElementTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new Element();
-            }
-        });
+        setTestObjectBuilder(Element::new);
     }
 
     // test constructors
@@ -87,22 +80,22 @@ public class ElementTest extends AbstractElementTest {
 
     @Test
     public void compareSymbol() {
-        Element e1 = new Element(new String("H"), 1);
-        Element e2 = new Element(new String("H"), 1);
+        Element e1 = new Element("H", 1);
+        Element e2 = new Element("H", 1);
         Assert.assertTrue(e1.compare(e2));
     }
 
     @Test
     public void compareAtomicNumber() {
-        Element e1 = new Element("H", new Integer(1));
-        Element e2 = new Element("H", new Integer(1));
+        Element e1 = new Element("H", 1);
+        Element e2 = new Element("H", 1);
         Assert.assertTrue(e1.compare(e2));
     }
 
     @Test
     public void compareDiffSymbol() {
-        Element e1 = new Element(new String("H"), 1);
-        Element e2 = new Element(new String("C"), 12);
+        Element e1 = new Element("H", 1);
+        Element e2 = new Element("C", 12);
         Assert.assertFalse(e1.compare(e2));
     }
 

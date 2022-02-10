@@ -23,8 +23,6 @@
 package org.openscience.cdk.tools.manipulator;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.openscience.cdk.interfaces.IAtom;
@@ -61,9 +59,8 @@ public class RingSetManipulator {
      */
     public static IAtomContainer getAllInOneContainer(IRingSet ringSet) {
         IAtomContainer resultContainer = ringSet.getBuilder().newInstance(IAtomContainer.class);
-        Iterator<IAtomContainer> containers = RingSetManipulator.getAllAtomContainers(ringSet).iterator();
-        while (containers.hasNext()) {
-            resultContainer.add(containers.next());
+        for (IAtomContainer container : RingSetManipulator.getAllAtomContainers(ringSet)) {
+            resultContainer.add(container);
         }
         return resultContainer;
     }
@@ -77,12 +74,12 @@ public class RingSetManipulator {
     public static IRingSet getLargestRingSet(List<IRingSet> ringSystems) {
         IRingSet largestRingSet = null;
         int atomNumber = 0;
-        IAtomContainer container = null;
-        for (int i = 0; i < ringSystems.size(); i++) {
-            container = RingSetManipulator.getAllInOneContainer(ringSystems.get(i));
+        IAtomContainer container;
+        for (IRingSet ringSystem : ringSystems) {
+            container = RingSetManipulator.getAllInOneContainer(ringSystem);
             if (atomNumber < container.getAtomCount()) {
                 atomNumber = container.getAtomCount();
-                largestRingSet = ringSystems.get(i);
+                largestRingSet = ringSystem;
             }
         }
         return largestRingSet;
@@ -108,7 +105,7 @@ public class RingSetManipulator {
      * @return A list of IAtomContainer objects corresponding to individual rings
      */
     public static List<IAtomContainer> getAllAtomContainers(IRingSet set) {
-        List<IAtomContainer> atomContainerList = new ArrayList<IAtomContainer>();
+        List<IAtomContainer> atomContainerList = new ArrayList<>();
         for (IAtomContainer atomContainer : set.atomContainers()) {
             atomContainerList.add(atomContainer);
         }
@@ -121,11 +118,11 @@ public class RingSetManipulator {
      * @param ringSet The collection of rings
      */
     public static void sort(IRingSet ringSet) {
-        List<IRing> ringList = new ArrayList<IRing>();
+        List<IRing> ringList = new ArrayList<>();
         for (IAtomContainer atomContainer : ringSet.atomContainers()) {
             ringList.add((IRing) atomContainer);
         }
-        Collections.sort(ringList, new RingSizeComparator(RingSizeComparator.SMALL_FIRST));
+        ringList.sort(new RingSizeComparator(RingSizeComparator.SMALL_FIRST));
         ringSet.removeAllAtomContainers();
         for (IAtomContainer aRingList : ringList)
             ringSet.addAtomContainer(aRingList);

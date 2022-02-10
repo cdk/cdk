@@ -20,7 +20,6 @@ package org.openscience.cdk.formula;
 
 import java.util.*;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
@@ -55,7 +54,7 @@ public class MolecularFormula implements IMolecularFormula {
      */
     private static final long      serialVersionUID = -2011407700837295287L;
 
-    private Map<IIsotope, Integer> isotopes;
+    private final Map<IIsotope, Integer> isotopes;
     /**
      *  The partial charge of the molecularFormula. The default value is Double.NaN.
      */
@@ -70,7 +69,7 @@ public class MolecularFormula implements IMolecularFormula {
      *  Constructs an empty MolecularFormula.
      */
     public MolecularFormula() {
-        isotopes = new HashMap<IIsotope, Integer>();
+        isotopes = new HashMap<>();
     }
 
     /**
@@ -269,7 +268,7 @@ public class MolecularFormula implements IMolecularFormula {
      */
     private Map<Object, Object> lazyProperties() {
         if (properties == null) {
-            properties = new Hashtable<Object, Object>();
+            properties = new Hashtable<>();
         }
         return properties;
     }
@@ -361,9 +360,7 @@ public class MolecularFormula implements IMolecularFormula {
     @Override
     public void setProperties(Map<Object, Object> properties) {
 
-        Iterator<Object> keys = properties.keySet().iterator();
-        while (keys.hasNext()) {
-            Object key = keys.next();
+        for (Object key : properties.keySet()) {
             lazyProperties().put(key, properties.get(key));
         }
     }

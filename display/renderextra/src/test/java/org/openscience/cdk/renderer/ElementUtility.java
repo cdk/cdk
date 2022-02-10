@@ -45,7 +45,7 @@ import java.util.List;
  */
 public class ElementUtility implements IDrawVisitor {
 
-    private List<IRenderingElement> elements         = new ArrayList<IRenderingElement>();
+    private final List<IRenderingElement> elements         = new ArrayList<>();
 
     private AffineTransform         transform;
 
@@ -86,7 +86,7 @@ public class ElementUtility implements IDrawVisitor {
         elements.clear();
         getElementGroups = false;
         root.accept(this);
-        return new ArrayList<IRenderingElement>(elements);
+        return new ArrayList<>(elements);
     }
 
     public int[] transformPoint(double x, double y) {

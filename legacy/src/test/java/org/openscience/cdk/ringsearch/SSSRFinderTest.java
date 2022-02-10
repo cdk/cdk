@@ -21,7 +21,6 @@ package org.openscience.cdk.ringsearch;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Assert;
@@ -92,9 +91,7 @@ public class SSSRFinderTest extends CDKTestCase {
         new SSSRFinder(molecule).findSSSR();
 
         int count = 0;
-        Iterator atoms = molecule.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = (IAtom) atoms.next();
+        for (IAtom atom : molecule.atoms()) {
             if (atom.getFlag(CDKConstants.ISINRING)) count++;
         }
         Assert.assertEquals("All atoms in benzene were not marked as being in a ring", 6, count);
@@ -107,9 +104,7 @@ public class SSSRFinderTest extends CDKTestCase {
         new SSSRFinder(molecule).findSSSR();
 
         int count = 0;
-        Iterator atoms = molecule.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = (IAtom) atoms.next();
+        for (IAtom atom : molecule.atoms()) {
             if (atom.getFlag(CDKConstants.ISINRING)) count++;
         }
         Assert.assertEquals("All ring atoms in 2-ethyl cyclopentane were not marked as being in a ring", 5, count);
@@ -136,8 +131,8 @@ public class SSSRFinderTest extends CDKTestCase {
 
     @Test
     public void testProblem1() throws Exception {
-        IAtomContainer molecule = null;
-        IRing ring = null;
+        IAtomContainer molecule;
+        IRing ring;
         String filename = "figueras-test-sep3D.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
@@ -174,8 +169,8 @@ public class SSSRFinderTest extends CDKTestCase {
 
     @Test
     public void testProblem2() throws Exception {
-        IAtomContainer molecule = null;
-        IRing ring = null;
+        IAtomContainer molecule;
+        IRing ring;
         String filename = "figueras-test-buried.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
@@ -194,8 +189,8 @@ public class SSSRFinderTest extends CDKTestCase {
 
     @Test
     public void testProblem3() throws Exception {
-        IAtomContainer molecule = null;
-        IRing ring = null;
+        IAtomContainer molecule;
+        IRing ring;
         String filename = "figueras-test-inring.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
@@ -217,7 +212,7 @@ public class SSSRFinderTest extends CDKTestCase {
      */
     @Test
     public void testBug891021() throws Exception {
-        IAtomContainer molecule = null;
+        IAtomContainer molecule;
         String filename = "too.many.rings.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
@@ -295,11 +290,11 @@ public class SSSRFinderTest extends CDKTestCase {
      * @return bucky ball molecule
      */
     private IAtomContainer createBuckyBall() throws Exception {
-        IAtomContainer molecule = null;
+        IAtomContainer molecule;
         String filename = "buckyball.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        molecule = (IAtomContainer) reader.read(new AtomContainer());
+        molecule = reader.read(new AtomContainer());
         reader.close();
         Assert.assertTrue("Atom count is 60 ", molecule.getAtomCount() == 60);
         Assert.assertTrue("Bond count is 90 ", molecule.getBondCount() == 90);
@@ -329,7 +324,7 @@ public class SSSRFinderTest extends CDKTestCase {
      */
     static boolean checkForDuplicateRingsInSet(IRingSet ringset) {
         // Make a list of rings
-        List<IAtomContainer> ringList = new ArrayList<IAtomContainer>();
+        List<IAtomContainer> ringList = new ArrayList<>();
         for (IAtomContainer atCont : ringset.atomContainers()) {
             ringList.add(atCont);
         }

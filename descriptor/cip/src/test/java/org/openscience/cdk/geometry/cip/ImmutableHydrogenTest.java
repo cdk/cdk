@@ -81,13 +81,7 @@ public class ImmutableHydrogenTest extends CDKTestCase {
         Assert.assertEquals(0, hydrogen.getListenerCount());
 
         hydrogen.notifyChanged();
-        hydrogen.notifyChanged(new IChemObjectChangeEvent() {
-
-            @Override
-            public Object getSource() {
-                return new String();
-            }
-        });
+        hydrogen.notifyChanged(String::new);
 
         Assert.assertFalse(hydrogen.getNotification());
         hydrogen.setNotification(true);
@@ -117,8 +111,8 @@ public class ImmutableHydrogenTest extends CDKTestCase {
         Assert.assertFalse(hydrogen.getFlag(CDKConstants.ISPLACED));
         Assert.assertNull(hydrogen.getID());
         Assert.assertNull(hydrogen.getProperties());
-        Assert.assertNull(hydrogen.getProperty(new String()));
-        Assert.assertNull(hydrogen.getProperty(new String(), String.class));
+        Assert.assertNull(hydrogen.getProperty(""));
+        Assert.assertNull(hydrogen.getProperty("", String.class));
         Assert.assertNull(hydrogen.getBuilder());
     }
 
@@ -148,8 +142,8 @@ public class ImmutableHydrogenTest extends CDKTestCase {
         hydrogen.setID("Me");
         hydrogen.addProperties(new Properties());
         hydrogen.setProperties(new Properties());
-        hydrogen.setProperty(new String(), new String());
-        hydrogen.removeProperty(new String());
+        hydrogen.setProperty("", "");
+        hydrogen.removeProperty("");
         Assert.assertTrue(true); // to indicate we made it
     }
 

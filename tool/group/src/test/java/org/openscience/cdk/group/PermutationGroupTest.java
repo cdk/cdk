@@ -63,7 +63,7 @@ public class PermutationGroupTest extends CDKTestCase {
         // the group of the cube
         Permutation p1 = new Permutation(1, 3, 5, 7, 0, 2, 4, 6);
         Permutation p2 = new Permutation(1, 3, 0, 2, 5, 7, 4, 6);
-        List<Permutation> generators = new ArrayList<Permutation>();
+        List<Permutation> generators = new ArrayList<>();
         generators.add(p1);
         generators.add(p2);
         return new PermutationGroup(size, generators);
@@ -94,7 +94,7 @@ public class PermutationGroupTest extends CDKTestCase {
         int size = 4;
         Permutation p1 = new Permutation(1, 0, 2, 3);
         Permutation p2 = new Permutation(1, 2, 3, 0);
-        List<Permutation> generators = new ArrayList<Permutation>();
+        List<Permutation> generators = new ArrayList<>();
         generators.add(p1);
         generators.add(p2);
         PermutationGroup group = new PermutationGroup(size, generators);
@@ -131,7 +131,7 @@ public class PermutationGroupTest extends CDKTestCase {
         // p1 = a flip across the vertical, p2 = flip across the horizontal
         Permutation p1 = new Permutation(0, 5, 4, 3, 2, 1);
         Permutation p2 = new Permutation(3, 2, 1, 0, 5, 4);
-        List<Permutation> generators = new ArrayList<Permutation>();
+        List<Permutation> generators = new ArrayList<>();
         generators.add(p1);
         generators.add(p2);
         PermutationGroup group = new PermutationGroup(size, generators);
@@ -166,7 +166,7 @@ public class PermutationGroupTest extends CDKTestCase {
         // Aut(G) : make the automorphism group for a graph
         Permutation p1 = new Permutation(2, 1, 0, 3);
         Permutation p2 = new Permutation(0, 3, 2, 1);
-        List<Permutation> generators = new ArrayList<Permutation>();
+        List<Permutation> generators = new ArrayList<>();
         generators.add(p1);
         generators.add(p2);
         PermutationGroup subgroup = new PermutationGroup(size, generators);
@@ -185,7 +185,7 @@ public class PermutationGroupTest extends CDKTestCase {
 
     @Test
     public void applyTest() {
-        final List<Permutation> all = new ArrayList<Permutation>();
+        final List<Permutation> all = new ArrayList<>();
         int size = 4;
         PermutationGroup group = PermutationGroup.makeSymN(size);
         group.apply(new PermutationGroup.Backtracker() {
@@ -205,7 +205,7 @@ public class PermutationGroupTest extends CDKTestCase {
 
     @Test
     public void apply_FinishEarlyTest() {
-        final List<Permutation> all = new ArrayList<Permutation>();
+        final List<Permutation> all = new ArrayList<>();
         final int max = 5; // stop after this many seen
         int size = 4;
         PermutationGroup group = PermutationGroup.makeSymN(size);

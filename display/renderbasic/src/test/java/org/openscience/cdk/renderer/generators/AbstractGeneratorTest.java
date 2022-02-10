@@ -48,7 +48,7 @@ import org.openscience.cdk.renderer.elements.OvalElement;
  */
 public abstract class AbstractGeneratorTest {
 
-    protected IChemObjectBuilder  builder = SilentChemObjectBuilder.getInstance();
+    protected final IChemObjectBuilder  builder = SilentChemObjectBuilder.getInstance();
 
     protected RendererModel       model;
 

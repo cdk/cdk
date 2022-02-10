@@ -74,15 +74,15 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
     private int                 STEP_SIZE     = 5;
     private AtomTypeFactory     factory;
     /** Flag is set if the formal charge of a chemobject is changed due to resonance.*/
-    private static int          ISCHANGEDFC   = 0x1;
+    private static final int          ISCHANGEDFC   = 0x1;
 
     /** Corresponds an empirical influence between the electrostatic potential and
      * the neighbours.*/
-    private double              fE            = 1.1;                                                                     /* 1.1 */
+    private final double              fE            = 1.1;                                                                     /* 1.1 */
     /** Scale factor which makes same heavy for all structures*/
-    private double              fS            = 0.37;
+    private final double              fS            = 0.37;
 
-    private static ILoggingTool logger        = LoggingToolFactory.createLoggingTool(GasteigerPEPEPartialCharges.class);
+    private static final ILoggingTool logger        = LoggingToolFactory.createLoggingTool(GasteigerPEPEPartialCharges.class);
 
     /**
      *  Constructor for the GasteigerPEPEPartialCharges object.
@@ -147,7 +147,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
         for (int i = 0; i < ac.getBondCount(); i++)
             oldBondAromaticity[i] = ac.getBond(i).getFlag(CDKConstants.ISAROMATIC);
 
-        IAtomContainerSet setHI = null;
+        IAtomContainerSet setHI;
 
         /* 0: remove charge, and possible flag ac */
         for (int j = 0; j < ac.getAtomCount(); j++) {
@@ -171,7 +171,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
                                                                              * bonding
                                                                              */
         List<IReactionProcess> reactionList1 = gR1.getReactions();
-        List<IParameterReact> paramList1 = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList1 = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList1.add(param);
@@ -198,7 +198,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
                                                                              */
         gR2.setMaximalStructures(MX_RESON);
         List<IReactionProcess> reactionList2 = gR2.getReactions();
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact paramA = new SetReactionCenter();
         paramA.setParameter(Boolean.TRUE);
         paramList.add(paramA);
@@ -229,8 +229,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
         IAtomContainerSet iSet = ac.getBuilder().newInstance(IAtomContainerSet.class);
         iSet.addAtomContainer(ac);
 
-        if (acSet != null) for (Iterator<IAtomContainer> it = acSet.atomContainers().iterator(); it.hasNext();) {
-            IAtomContainer container = it.next();
+        if (acSet != null) for (IAtomContainer container : acSet.atomContainers()) {
             ac = setFlags(container, ac, true);
 
             // Aromatic don't break its double bond homolytically
@@ -252,7 +251,8 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
                 IAtomContainer aa = setAntiFlags(container, ac, number, true);
                 if (aa != null) {
                     IAtomContainerSet ab = gR2.getStructures(aa);
-                    if (ab.getAtomContainerCount() > 1) for (int j = 1; j < ab.getAtomContainerCount(); j++) { // the first is already added
+                    if (ab.getAtomContainerCount() > 1)
+                        for (int j = 1; j < ab.getAtomContainerCount(); j++) { // the first is already added
                             iSet.addAtomContainer(ab.getAtomContainer(j));
                         }
                     ac = setAntiFlags(container, aa, number, false);
@@ -298,7 +298,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
         }
 
         /* 3: set sigma charge (PEOE). Initial start point */
-        GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();;
+        GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
         peoe.setMaxGasteigerIters(6);
         IAtomContainer acCloned;
 
@@ -310,7 +310,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
             Wt[i - 1] = getTopologicalFactors(iSet.getAtomContainer(i), ac);
             logger.debug(", W:" + Wt[i - 1]);
             try {
-                acCloned = (IAtomContainer) iSet.getAtomContainer(i).clone();
+                acCloned = iSet.getAtomContainer(i).clone();
 
                 acCloned = peoe.assignGasteigerMarsiliSigmaPartialCharges(acCloned, true);
                 for (int j = 0; j < acCloned.getAtomCount(); j++)
@@ -363,7 +363,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
                 /* difference of electronegativity 1 lower */
                 double max1 = Math.max(electronegativity[0], electronegativity[1]);
                 double min1 = Math.min(electronegativity[0], electronegativity[1]);
-                double DX = 1.0;
+                double DX;
                 if (electronegativity[0] < electronegativity[1])
                     DX = gasteigerFactors[k][STEP_SIZE * atom1 + atom1 + 3];
                 else
@@ -418,7 +418,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
                 for (int i = 0; i < ac.getAtomCount(); i++)
                     if (iSet.getAtomContainer(k).getAtom(i).getFlag(ISCHANGEDFC)) {
                         double charge = ac.getAtom(i).getCharge();
-                        double chargeT = 0.0;
+                        double chargeT;
                         chargeT = charge + gasteigerFactors[k][STEP_SIZE * i + i + 5];
                         logger.debug("i<|" + ac.getAtom(i).getSymbol() + ", " + chargeT + "=c:" + charge + "+g: "
                                 + gasteigerFactors[k][STEP_SIZE * i + i + 5]);
@@ -456,12 +456,8 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
      * @return   The IAtomContainer with the flags removed
      */
     private IAtomContainer removingFlagsAromaticity(IAtomContainer ac) {
-        Iterator<IAtom> atoms = ac.atoms().iterator();
-        while (atoms.hasNext())
-            atoms.next().setFlag(CDKConstants.ISAROMATIC, false);
-        Iterator<IBond> bonds = ac.bonds().iterator();
-        while (bonds.hasNext())
-            bonds.next().setFlag(CDKConstants.ISAROMATIC, false);
+        for (IAtom iAtom : ac.atoms()) iAtom.setFlag(CDKConstants.ISAROMATIC, false);
+        for (IBond iBond : ac.bonds()) iBond.setFlag(CDKConstants.ISAROMATIC, false);
         return ac;
     }
 
@@ -474,12 +470,12 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
      * @return          Container with added flags
      */
     private IAtomContainer setFlags(IAtomContainer container, IAtomContainer ac, boolean b) {
-        for (Iterator<IAtom> it = container.atoms().iterator(); it.hasNext();) {
-            int positionA = ac.indexOf(it.next());
+        for (IAtom iAtom : container.atoms()) {
+            int positionA = ac.indexOf(iAtom);
             ac.getAtom(positionA).setFlag(CDKConstants.REACTIVE_CENTER, b);
         }
-        for (Iterator<IBond> it = container.bonds().iterator(); it.hasNext();) {
-            int positionB = ac.indexOf(it.next());
+        for (IBond iBond : container.bonds()) {
+            int positionB = ac.indexOf(iBond);
             ac.getBond(positionB).setFlag(CDKConstants.REACTIVE_CENTER, b);
 
         }
@@ -551,7 +547,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 
         setOfReactants.addAtomContainer(ac);
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -567,7 +563,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
                 mol.getBond(k).getEnd().setFlag(CDKConstants.REACTIVE_CENTER, false);
             }
             setOfM2.addAtomContainer(mol);
-            List<IParameterReact> paramList2 = new ArrayList<IParameterReact>();
+            List<IParameterReact> paramList2 = new ArrayList<>();
             IParameterReact param2 = new SetReactionCenter();
             param2.setParameter(Boolean.FALSE);
             paramList2.add(param);
@@ -604,7 +600,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 
             List<IAtom> atoms = ac.getConnectedAtomsList(ac.getAtom(atom1));
             for (IAtom atom : atoms) {
-                double covalentradius = 0;
+                double covalentradius;
                 String symbol = atom.getSymbol();
                 IAtomType type = factory.getAtomType(symbol);
                 covalentradius = type.getCovalentRadius();
@@ -700,7 +696,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
         //a,b,c,denom,chi,q
         double[][] gasteigerFactors = new double[setAc.getAtomContainerCount()][(setAc.getAtomContainer(0)
                 .getAtomCount() * (STEP_SIZE + 1))];
-        String AtomSymbol = "";
+        String AtomSymbol;
         double[] factors = new double[]{0.0, 0.0, 0.0};
         for (int k = 1; k < setAc.getAtomContainerCount(); k++) {
             IAtomContainer ac = setAc.getAtomContainer(k);
@@ -795,7 +791,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
         //a,b,c,denom,chi,q
         double[][] gasteigerFactors = new double[setAc.getAtomContainerCount()][(setAc.getAtomContainer(0)
                 .getAtomCount() * (STEP_SIZE + 1))];
-        String AtomSymbol = "";
+        String AtomSymbol;
         double[] factors = new double[]{0.0, 0.0, 0.0};
         for (int k = 1; k < setAc.getAtomContainerCount(); k++) {
             IAtomContainer ac = setAc.getAtomContainer(k);

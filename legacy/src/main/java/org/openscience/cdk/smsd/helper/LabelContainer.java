@@ -38,14 +38,14 @@ import java.util.List;
  */
 public class LabelContainer {
 
-    private List<String>          labelMap     = null;
+    private List<String>          labelMap;
     private int                   labelCounter = 0;
     private static LabelContainer instance     = null;
 
     protected LabelContainer() {
 
         // System.err.println("List Initialized");
-        labelMap = new ArrayList<String>();
+        labelMap = new ArrayList<>();
         labelMap.add(labelCounter++, "X");
         labelMap.add(labelCounter++, "R");
     }

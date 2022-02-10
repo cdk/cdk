@@ -24,7 +24,7 @@ public interface IAtomTypeTest {
      *
      * @return a String of the name.
      */
-    public String getAtomTypeListName();
+    String getAtomTypeListName();
 
     /**
      * Returns an {@link AtomTypeFactory} instance for the atom type scheme
@@ -33,7 +33,7 @@ public interface IAtomTypeTest {
      *
      * @return an {@link AtomTypeFactory} instance
      */
-    public AtomTypeFactory getFactory();
+    AtomTypeFactory getFactory();
 
     /**
      * The {@link org.openscience.cdk.atomtype.IAtomTypeMatcher} being tested.
@@ -41,6 +41,6 @@ public interface IAtomTypeTest {
      * @param builder the {@link IChemObjectBuilder} used to create atom types.
      * @return return an {@link org.openscience.cdk.atomtype.IAtomTypeMatcher} instance
      */
-    public IAtomTypeMatcher getAtomTypeMatcher(IChemObjectBuilder builder);
+    IAtomTypeMatcher getAtomTypeMatcher(IChemObjectBuilder builder);
 
 }

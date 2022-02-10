@@ -67,35 +67,35 @@ public interface INode {
      * Returns Neighbors count.
      * @return Neighbors count.
      */
-    public int countNeighbors();
+    int countNeighbors();
 
     /**
      * Returns neighbors.
      * @return Iterable INode.
      */
-    public Iterable<INode> neighbors();
+    Iterable<INode> neighbors();
 
     /**
      * Returns Query Atom.
      * @return Query Atom.
      */
-    public VFAtomMatcher getAtomMatcher();
+    VFAtomMatcher getAtomMatcher();
 
     /**
      * Returns List of Edges.
      * @return edges.
      */
-    public List<IEdge> getEdges();
+    List<IEdge> getEdges();
 
     /**
      * Adds edge to the edge list.
      * @param edge add an edge.
      */
-    public void addEdge(EdgeBuilder edge);
+    void addEdge(EdgeBuilder edge);
 
     /**
      * Adds neighbor to the Neighbors List.
      * @param node add a node.
      */
-    public void addNeighbor(NodeBuilder node);
+    void addNeighbor(NodeBuilder node);
 }

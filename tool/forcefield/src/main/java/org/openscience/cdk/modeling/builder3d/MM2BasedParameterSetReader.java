@@ -55,10 +55,10 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  */
 public class MM2BasedParameterSetReader {
 
-    private String              configFile = "org/openscience/cdk/modeling/forcefield/data/mm2.prm";
+    private final String              configFile = "org/openscience/cdk/modeling/forcefield/data/mm2.prm";
     private InputStream         ins        = null;
-    private Map<String, Object> parameterSet;
-    private List<IAtomType>     atomTypes;
+    private final Map<String, Object> parameterSet;
+    private final List<IAtomType>     atomTypes;
     private StringTokenizer     st;
     private String              key        = "";
 
@@ -66,8 +66,8 @@ public class MM2BasedParameterSetReader {
      * Constructor for the MM2BasedParameterSetReader object.
      */
     public MM2BasedParameterSetReader() {
-        parameterSet = new Hashtable<String, Object>();
-        atomTypes = new ArrayList<IAtomType>();
+        parameterSet = new Hashtable<>();
+        atomTypes = new ArrayList<>();
     }
 
     public Map<String, Object> getParamterSet() {
@@ -97,72 +97,72 @@ public class MM2BasedParameterSetReader {
         String svalue = st.nextToken();
         if (sid.equals(">bontunit")) {
             try {
-                double value1 = new Double(svalue).doubleValue();
+                double value1 = new Double(svalue);
                 key = sid.substring(1);
-                parameterSet.put(key, new Double(value1));
+                parameterSet.put(key, value1);
             } catch (NumberFormatException nfe) {
                 throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
             }
         } else if (sid.equals(">bond-cubic")) {
             try {
-                double value1 = new Double(svalue).doubleValue();
+                double value1 = new Double(svalue);
                 key = sid.substring(1);
                 //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
-                parameterSet.put(key, new Double(value1));
+                parameterSet.put(key, value1);
             } catch (NumberFormatException nfe) {
                 throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
             }
         } else if (sid.equals(">bond-quartic")) {
             try {
-                double value1 = new Double(svalue).doubleValue();
+                double value1 = new Double(svalue);
                 key = sid.substring(1);
                 //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
-                parameterSet.put(key, new Double(value1));
+                parameterSet.put(key, value1);
             } catch (NumberFormatException nfe) {
                 throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
             }
         } else if (sid.equals(">angleunit")) {
             try {
-                double value1 = new Double(svalue).doubleValue();
+                double value1 = new Double(svalue);
                 key = sid.substring(1);
                 //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
-                parameterSet.put(key, new Double(value1));
+                parameterSet.put(key, value1);
             } catch (NumberFormatException nfe) {
                 throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
             }
         } else if (sid.equals(">angle-sextic")) {
             try {
-                double value1 = new Double(svalue).doubleValue();
+                double value1 = new Double(svalue);
                 key = sid.substring(1);
                 //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
-                parameterSet.put(key, new Double(value1));
+                parameterSet.put(key, value1);
             } catch (NumberFormatException nfe) {
                 throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
             }
         } else if (sid.equals(">strbndunit")) {
             try {
-                double value1 = new Double(svalue).doubleValue();
+                double value1 = new Double(svalue);
                 key = sid.substring(1);
                 //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
-                parameterSet.put(key, new Double(value1));
+                parameterSet.put(key, value1);
             } catch (NumberFormatException nfe) {
                 throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
             }
         } else if (sid.equals(">opbendunit")) {
             try {
-                double value1 = new Double(svalue).doubleValue();
+                double value1 = new Double(svalue);
                 key = sid.substring(1);
                 //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
-                parameterSet.put(key, new Double(value1));
+                parameterSet.put(key, value1);
             } catch (NumberFormatException nfe) {
                 throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
             }
         } else if (sid.equals(">torsionunit")) {
             try {
-                double value1 = new Double(svalue).doubleValue();
+                double value1 = new Double(svalue);
                 key = sid.substring(1);
                 //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
-                parameterSet.put(key, new Double(value1));
+                parameterSet.put(key, value1);
             } catch (NumberFormatException nfe) {
                 throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
             }
@@ -204,37 +204,37 @@ public class MM2BasedParameterSetReader {
             }
         } else if (sid.equals(">c-expterm")) {
             try {
-                double value1 = new Double(svalue).doubleValue();
+                double value1 = new Double(svalue);
                 key = sid.substring(1);
                 //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
-                parameterSet.put(key, new Double(value1));
+                parameterSet.put(key, value1);
             } catch (NumberFormatException nfe) {
                 throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
             }
         } else if (sid.equals(">vdw-14-scale")) {
             try {
-                double value1 = new Double(svalue).doubleValue();
+                double value1 = new Double(svalue);
                 key = sid.substring(1);
                 //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
-                parameterSet.put(key, new Double(value1));
+                parameterSet.put(key, value1);
             } catch (NumberFormatException nfe) {
                 throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
             }
         } else if (sid.equals(">chg-14-scale")) {
             try {
-                double value1 = new Double(svalue).doubleValue();
+                double value1 = new Double(svalue);
                 key = sid.substring(1);
                 //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
-                parameterSet.put(key, new Double(value1));
+                parameterSet.put(key, value1);
             } catch (NumberFormatException nfe) {
                 throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
             }
         } else if (sid.equals(">dielectric")) {
             try {
-                double value1 = new Double(svalue).doubleValue();
+                double value1 = new Double(svalue);
                 key = sid.substring(1);
                 //if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
-                parameterSet.put(key, new Double(value1));
+                parameterSet.put(key, value1);
             } catch (NumberFormatException nfe) {
                 throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
             }
@@ -248,15 +248,15 @@ public class MM2BasedParameterSetReader {
      * @exception  Exception  Description of the Exception
      */
     private void setAtomTypes(IChemObjectBuilder builder) throws Exception {
-        String name = "";
-        String rootType = "";
-        int an = 0;
+        String name;
+        String rootType;
+        int an;
         int rl = 255;
         int gl = 20;
         int bl = 147;
-        int maxbond = 0;
+        int maxbond;
 
-        double mass = 0.0;
+        double mass;
         st.nextToken();
         String sid = st.nextToken();
         rootType = st.nextToken();
@@ -266,7 +266,7 @@ public class MM2BasedParameterSetReader {
         String smaxbond = st.nextToken();
 
         try {
-            mass = new Double(sam).doubleValue();
+            mass = new Double(sam);
             an = Integer.parseInt(san);
             maxbond = Integer.parseInt(smaxbond);
 
@@ -298,10 +298,10 @@ public class MM2BasedParameterSetReader {
         String sradius = st.nextToken();
         String sepsi = st.nextToken();
         try {
-            double epsi = new Double(sepsi).doubleValue();
-            double radius = new Double(sradius).doubleValue();
-            data.add(new Double(radius));
-            data.add(new Double(epsi));
+            double epsi = new Double(sepsi);
+            double radius = new Double(sradius);
+            data.add(radius);
+            data.add(epsi);
 
         } catch (NumberFormatException nfe) {
             throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
@@ -324,13 +324,13 @@ public class MM2BasedParameterSetReader {
         String value1 = st.nextToken();
         String value2 = st.nextToken();
         try {
-            double va1 = new Double(value1).doubleValue();
-            double va2 = new Double(value2).doubleValue();
-            data.add(new Double(va1));
-            data.add(new Double(va2));
+            double va1 = new Double(value1);
+            double va2 = new Double(value2);
+            data.add(va1);
+            data.add(va2);
 
         } catch (NumberFormatException nfe) {
-            throw new IOException("VdWaalsTable.ReadvdWaalsPR:Malformed Number due to" + nfe.toString());
+            throw new IOException("VdWaalsTable.ReadvdWaalsPR:Malformed Number due to" + nfe);
         }
         key = "vdwpr" + sid1 + ";" + sid2;
         parameterSet.put(key, data);
@@ -350,10 +350,10 @@ public class MM2BasedParameterSetReader {
         String value2 = st.nextToken();
 
         try {
-            double va1 = new Double(value1).doubleValue();
-            double va2 = new Double(value2).doubleValue();
-            data.add(new Double(va1));
-            data.add(new Double(va2));
+            double va1 = new Double(value1);
+            double va2 = new Double(value2);
+            data.add(va1);
+            data.add(va2);
 
         } catch (NumberFormatException nfe) {
             throw new IOException("setBond: Malformed Number");
@@ -376,10 +376,10 @@ public class MM2BasedParameterSetReader {
         String value2 = st.nextToken();
 
         try {
-            double va1 = new Double(value1).doubleValue();
-            double va2 = new Double(value2).doubleValue();
-            data.add(new Double(va1));
-            data.add(new Double(va2));
+            double va1 = new Double(value1);
+            double va2 = new Double(value2);
+            data.add(va1);
+            data.add(va2);
 
         } catch (NumberFormatException nfe) {
             throw new IOException("setBond3: Malformed Number");
@@ -402,10 +402,10 @@ public class MM2BasedParameterSetReader {
         String value2 = st.nextToken();
 
         try {
-            double va1 = new Double(value1).doubleValue();
-            double va2 = new Double(value2).doubleValue();
-            data.add(new Double(va1));
-            data.add(new Double(va2));
+            double va1 = new Double(value1);
+            double va2 = new Double(value2);
+            data.add(va1);
+            data.add(va2);
 
         } catch (NumberFormatException nfe) {
             throw new IOException("setBond4: Malformed Number");
@@ -431,22 +431,22 @@ public class MM2BasedParameterSetReader {
         String value4 = st.nextToken();
 
         try {
-            double va1 = new Double(value1).doubleValue();
-            double va2 = new Double(value2).doubleValue();
-            double va3 = new Double(value3).doubleValue();
-            double va4 = new Double(value4).doubleValue();
-            data.add(new Double(va1));
-            data.add(new Double(va2));
-            data.add(new Double(va3));
-            data.add(new Double(va4));
+            double va1 = new Double(value1);
+            double va2 = new Double(value2);
+            double va3 = new Double(value3);
+            double va4 = new Double(value4);
+            data.add(va1);
+            data.add(va2);
+            data.add(va3);
+            data.add(va4);
 
             key = "angle" + sid1 + ";" + sid2 + ";" + sid3;
             if (parameterSet.containsKey(key)) {
                 data = (Vector) parameterSet.get(key);
-                data.add(new Double(va1));
-                data.add(new Double(va2));
-                data.add(new Double(va3));
-                data.add(new Double(va4));
+                data.add(va1);
+                data.add(va2);
+                data.add(va3);
+                data.add(va4);
             }
             parameterSet.put(key, data);
 
@@ -473,14 +473,14 @@ public class MM2BasedParameterSetReader {
         String value4 = st.nextToken();
 
         try {
-            double va1 = new Double(value1).doubleValue();
-            double va2 = new Double(value2).doubleValue();
-            double va3 = new Double(value3).doubleValue();
-            double va4 = new Double(value4).doubleValue();
-            data.add(new Double(va1));
-            data.add(new Double(va2));
-            data.add(new Double(va3));
-            data.add(new Double(va4));
+            double va1 = new Double(value1);
+            double va2 = new Double(value2);
+            double va3 = new Double(value3);
+            double va4 = new Double(value4);
+            data.add(va1);
+            data.add(va2);
+            data.add(va3);
+            data.add(va4);
 
         } catch (NumberFormatException nfe) {
             throw new IOException("setAngle3: Malformed Number");
@@ -506,14 +506,14 @@ public class MM2BasedParameterSetReader {
         String value4 = st.nextToken();
 
         try {
-            double va1 = new Double(value1).doubleValue();
-            double va2 = new Double(value2).doubleValue();
-            double va3 = new Double(value3).doubleValue();
-            double va4 = new Double(value4).doubleValue();
-            data.add(new Double(va1));
-            data.add(new Double(va2));
-            data.add(new Double(va3));
-            data.add(new Double(va4));
+            double va1 = new Double(value1);
+            double va2 = new Double(value2);
+            double va3 = new Double(value3);
+            double va4 = new Double(value4);
+            data.add(va1);
+            data.add(va2);
+            data.add(va3);
+            data.add(va4);
 
         } catch (NumberFormatException nfe) {
             throw new IOException("setAngle4: Malformed Number");
@@ -534,8 +534,8 @@ public class MM2BasedParameterSetReader {
         String value1 = st.nextToken();
 
         try {
-            double va1 = new Double(value1).doubleValue();
-            data.add(new Double(va1));
+            double va1 = new Double(value1);
+            data.add(va1);
         } catch (NumberFormatException nfe) {
             throw new IOException("setStrBnd: Malformed Number");
         }
@@ -556,13 +556,13 @@ public class MM2BasedParameterSetReader {
         String value1 = st.nextToken();
 
         try {
-            double va1 = new Double(value1).doubleValue();
-            data.add(new Double(va1));
+            double va1 = new Double(value1);
+            data.add(va1);
             key = "opbend" + sid1 + ";" + sid2;
             if (parameterSet.containsKey(key)) {
                 //logger.debug("KeyError: hasKey "+key);
                 data = (Vector) parameterSet.get(key);
-                data.add(new Double(va1));
+                data.add(va1);
             }
             parameterSet.put(key, data);
 
@@ -595,19 +595,19 @@ public class MM2BasedParameterSetReader {
         st.nextToken();
 
         try {
-            double va1 = new Double(value1).doubleValue();
-            double va2 = new Double(value2).doubleValue();
-            double va3 = new Double(value3).doubleValue();
-            data.add(new Double(va1));
-            data.add(new Double(va2));
-            data.add(new Double(va3));
+            double va1 = new Double(value1);
+            double va2 = new Double(value2);
+            double va3 = new Double(value3);
+            data.add(va1);
+            data.add(va2);
+            data.add(va3);
 
             key = "torsion" + sid1 + ";" + sid2 + ";" + sid3 + ";" + sid4;
             if (parameterSet.containsKey(key)) {
                 data = (Vector) parameterSet.get(key);
-                data.add(new Double(va1));
-                data.add(new Double(va2));
-                data.add(new Double(va3));
+                data.add(va1);
+                data.add(va2);
+                data.add(va3);
             }
             parameterSet.put(key, data);
         } catch (NumberFormatException nfe) {
@@ -639,12 +639,12 @@ public class MM2BasedParameterSetReader {
         st.nextToken();
 
         try {
-            double va1 = new Double(value1).doubleValue();
-            double va2 = new Double(value2).doubleValue();
-            double va3 = new Double(value3).doubleValue();
-            data.add(new Double(va1));
-            data.add(new Double(va2));
-            data.add(new Double(va3));
+            double va1 = new Double(value1);
+            double va2 = new Double(value2);
+            double va3 = new Double(value3);
+            data.add(va1);
+            data.add(va2);
+            data.add(va3);
 
         } catch (NumberFormatException nfe) {
             throw new IOException("setTorsion4: Malformed Number");
@@ -665,10 +665,10 @@ public class MM2BasedParameterSetReader {
         String value1 = st.nextToken();
 
         try {
-            double va1 = new Double(value1).doubleValue();
-            data.add(new Double(va1));
+            double va1 = new Double(value1);
+            data.add(va1);
         } catch (NumberFormatException nfe) {
-            throw new IOException("setCharge: Malformed Number due to " + nfe.toString());
+            throw new IOException("setCharge: Malformed Number due to " + nfe);
         }
         key = "charge" + sid1;
         parameterSet.put(key, data);
@@ -688,10 +688,10 @@ public class MM2BasedParameterSetReader {
         String value2 = st.nextToken();
 
         try {
-            double va1 = new Double(value1).doubleValue();
-            double va2 = new Double(value2).doubleValue();
-            data.add(new Double(va1));
-            data.add(new Double(va2));
+            double va1 = new Double(value1);
+            double va2 = new Double(value2);
+            data.add(va1);
+            data.add(va2);
 
         } catch (NumberFormatException nfe) {
             throw new IOException("setDipole: " + "Malformed Number");
@@ -714,10 +714,10 @@ public class MM2BasedParameterSetReader {
         String value2 = st.nextToken();
 
         try {
-            double va1 = new Double(value1).doubleValue();
-            double va2 = new Double(value2).doubleValue();
-            data.add(new Double(va1));
-            data.add(new Double(va2));
+            double va1 = new Double(value1);
+            double va2 = new Double(value2);
+            data.add(va1);
+            data.add(va2);
 
         } catch (NumberFormatException nfe) {
             throw new IOException("setDipole3: " + "Malformed Number");
@@ -740,12 +740,12 @@ public class MM2BasedParameterSetReader {
         String value3 = st.nextToken();
 
         try {
-            double va1 = new Double(value1).doubleValue();
-            double va2 = new Double(value2).doubleValue();
-            double va3 = new Double(value3).doubleValue();
-            data.add(new Double(va1));
-            data.add(new Double(va2));
-            data.add(new Double(va3));
+            double va1 = new Double(value1);
+            double va2 = new Double(value2);
+            double va3 = new Double(value3);
+            data.add(va1);
+            data.add(va2);
+            data.add(va3);
 
         } catch (NumberFormatException nfe) {
             throw new IOException("setPiAtom: " + "Malformed Number");
@@ -768,10 +768,10 @@ public class MM2BasedParameterSetReader {
         String value2 = st.nextToken();
 
         try {
-            double va1 = new Double(value1).doubleValue();
-            double va2 = new Double(value2).doubleValue();
-            data.add(new Double(va1));
-            data.add(new Double(va2));
+            double va1 = new Double(value1);
+            double va2 = new Double(value2);
+            data.add(va1);
+            data.add(va2);
 
         } catch (NumberFormatException nfe) {
             throw new IOException("setPiBond: " + "Malformed Number");
@@ -871,7 +871,7 @@ public class MM2BasedParameterSetReader {
             }// end while
             ins.close();
         } catch (IOException e) {
-            throw new IOException("There was a problem parsing the mm2 forcefield due to:" + e.toString());
+            throw new IOException("There was a problem parsing the mm2 forcefield due to:" + e);
         }
     }
 

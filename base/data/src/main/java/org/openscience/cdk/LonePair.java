@@ -126,7 +126,7 @@ public class LonePair extends ElectronContainer implements Serializable, ILonePa
         LonePair clone = (LonePair) super.clone();
         // clone the Atom
         if (atom != null) {
-            clone.atom = (IAtom) ((IAtom) atom).clone();
+            clone.atom = atom.clone();
         }
         return clone;
     }
@@ -139,11 +139,11 @@ public class LonePair extends ElectronContainer implements Serializable, ILonePa
      */
     @Override
     public String toString() {
-        StringBuffer resultString = new StringBuffer();
+        StringBuilder resultString = new StringBuilder();
         resultString.append("LonePair(");
         resultString.append(this.hashCode());
         if (atom != null) {
-            resultString.append(", ").append(atom.toString());
+            resultString.append(", ").append(atom);
         }
         resultString.append(')');
         return resultString.toString();

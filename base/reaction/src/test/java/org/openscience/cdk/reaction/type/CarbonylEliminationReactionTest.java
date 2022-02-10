@@ -54,7 +54,7 @@ import java.util.List;
 public class CarbonylEliminationReactionTest extends ReactionProcessTest {
 
     private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-    private IChemObjectBuilder            builder = SilentChemObjectBuilder.getInstance();
+    private final IChemObjectBuilder            builder = SilentChemObjectBuilder.getInstance();
 
     /**
      *  The JUnit setup method
@@ -87,7 +87,7 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
         IAtomContainerSet setOfReactants = getExampleReactants();
 
         /* initiate */
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);
@@ -129,7 +129,7 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
         molecule.getBond(3).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(4).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -164,7 +164,7 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
 
         /* initiate */
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);

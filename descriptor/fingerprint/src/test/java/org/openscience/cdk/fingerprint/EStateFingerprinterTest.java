@@ -28,8 +28,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.smarts.SmartsPattern;
-import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -43,7 +41,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class EStateFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(EStateFingerprinterTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(EStateFingerprinterTest.class);
 
     @Override
     public IFingerprinter getBitFingerprinter() {

@@ -132,8 +132,8 @@ public class StructureDiagramGenerator {
     private IRingSet       sssr;
     private final double bondLength = DEFAULT_BOND_LENGTH;
     private Vector2d firstBondVector;
-    private RingPlacer       ringPlacer          = new RingPlacer();
-    private AtomPlacer       atomPlacer          = new AtomPlacer();
+    private final RingPlacer       ringPlacer          = new RingPlacer();
+    private final AtomPlacer       atomPlacer          = new AtomPlacer();
     private MacroCycleLayout macroPlacer         = null;
     private List<IRingSet>   ringSystems         = null;
     private Set<IAtom>       afix                = null;
@@ -350,8 +350,8 @@ public class StructureDiagramGenerator {
                             int bestSize = 0;
                             for (int part = 1; part <= numParts; part++) {
                                 int size = 0;
-                                for (int i = 0; i < parts2.length; i++) {
-                                    if (parts2[i] == part)
+                                for (int j : parts2) {
+                                    if (j == part)
                                         ++size;
                                 }
                                 if (size > bestSize) {
@@ -403,7 +403,7 @@ public class StructureDiagramGenerator {
     }
 
     public void setMolecule(IAtomContainer mol, boolean clone) {
-        setMolecule(mol, clone, Collections.<IAtom>emptySet(), Collections.<IBond>emptySet());
+        setMolecule(mol, clone, Collections.emptySet(), Collections.emptySet());
     }
 
     /**
@@ -422,7 +422,7 @@ public class StructureDiagramGenerator {
             if (!afix.isEmpty() || !bfix.isEmpty())
                 throw new IllegalArgumentException("Laying out a cloned molecule, can't fix atom or bonds.");
             try {
-                this.molecule = (IAtomContainer) mol.clone();
+                this.molecule = mol.clone();
             } catch (CloneNotSupportedException e) {
                 logger.error("Should clone, but exception occurred: ", e.getMessage());
                 logger.debug(e);
@@ -653,7 +653,7 @@ public class StructureDiagramGenerator {
 
                 // large => small (e.g. salt will appear on the right)
                 List<IAtomContainer> fragList = toList(frags);
-                Collections.sort(fragList, LARGEST_FIRST_COMPARATOR);
+                fragList.sort(LARGEST_FIRST_COMPARATOR);
                 generateFragmentCoordinates(molecule, fragList);
 
                 // don't call set molecule as it wipes x,y coordinates!
@@ -781,7 +781,7 @@ public class StructureDiagramGenerator {
             // We got our ring systems now choose the best one based on size and
             // number of heteroatoms
             RingPlacer.countHetero(ringSystems);
-            Collections.sort(ringSystems, RingPlacer.RING_COMPARATOR);
+            ringSystems.sort(RingPlacer.RING_COMPARATOR);
 
             int respect = layoutRingSet(firstBondVector, ringSystems.get(0));
 
@@ -1509,8 +1509,8 @@ public class StructureDiagramGenerator {
             };
 
             // greedy selection
-            Collections.sort(posFrags, comparator);
-            Collections.sort(negFrags, comparator);
+            posFrags.sort(comparator);
+            negFrags.sort(comparator);
 
             for (IAtomContainer posFrag : posFrags)
                 cations.addAll(selectIons(posFrag, +1));
@@ -1837,13 +1837,13 @@ public class StructureDiagramGenerator {
         logger.debug("Start of handleAliphatics");
 
         int safetyCounter = 0;
-        IAtomContainer unplacedAtoms = null;
-        IAtomContainer placedAtoms = null;
-        IAtomContainer longestUnplacedChain = null;
-        IAtom atom = null;
+        IAtomContainer unplacedAtoms;
+        IAtomContainer placedAtoms;
+        IAtomContainer longestUnplacedChain;
+        IAtom atom;
 
-        Vector2d direction = null;
-        Vector2d startVector = null;
+        Vector2d direction;
+        Vector2d startVector;
         boolean done;
         do {
             safetyCounter++;
@@ -2020,8 +2020,8 @@ public class StructureDiagramGenerator {
         IAtomContainer unplacedAtoms = atom.getBuilder().newInstance(IAtomContainer.class);
         List bonds = molecule.getConnectedBondsList(atom);
         IAtom connectedAtom;
-        for (int f = 0; f < bonds.size(); f++) {
-            connectedAtom = ((IBond) bonds.get(f)).getOther(atom);
+        for (Object bond : bonds) {
+            connectedAtom = ((IBond) bond).getOther(atom);
             if (!connectedAtom.getFlag(CDKConstants.ISPLACED)) {
                 unplacedAtoms.addAtom(connectedAtom);
             }
@@ -2041,8 +2041,8 @@ public class StructureDiagramGenerator {
         IAtomContainer placedAtoms = atom.getBuilder().newInstance(IAtomContainer.class);
         List bonds = molecule.getConnectedBondsList(atom);
         IAtom connectedAtom;
-        for (int f = 0; f < bonds.size(); f++) {
-            connectedAtom = ((IBond) bonds.get(f)).getOther(atom);
+        for (Object bond : bonds) {
+            connectedAtom = ((IBond) bond).getOther(atom);
             if (connectedAtom.getFlag(CDKConstants.ISPLACED)) {
                 placedAtoms.addAtom(connectedAtom);
             }
@@ -2102,7 +2102,7 @@ public class StructureDiagramGenerator {
      * @return an IAtomContainer with the atoms of the bond and the bond itself
      */
     private IAtomContainer placeFirstBond(IBond bond, Vector2d bondVector) {
-        IAtomContainer sharedAtoms = null;
+        IAtomContainer sharedAtoms;
 
         bondVector.normalize();
         logger.debug("placeFirstBondOfFirstRing->bondVector.length():" + bondVector.length());
@@ -2142,7 +2142,7 @@ public class StructureDiagramGenerator {
      */
     private boolean allPlaced(IRingSet rings) {
         for (int f = 0; f < rings.getAtomContainerCount(); f++) {
-            if (!((IRing) rings.getAtomContainer(f)).getFlag(CDKConstants.ISPLACED)) {
+            if (!rings.getAtomContainer(f).getFlag(CDKConstants.ISPLACED)) {
                 logger.debug("allPlaced->Ring " + f + " not placed");
                 return false;
             }
@@ -2174,9 +2174,9 @@ public class StructureDiagramGenerator {
      * @return the ring system the given atom is part of
      */
     private IRingSet getRingSystemOfAtom(List ringSystems, IAtom ringAtom) {
-        IRingSet ringSet = null;
-        for (int f = 0; f < ringSystems.size(); f++) {
-            ringSet = (IRingSet) ringSystems.get(f);
+        IRingSet ringSet;
+        for (Object ringSystem : ringSystems) {
+            ringSet = (IRingSet) ringSystem;
             if (ringSet.contains(ringAtom)) {
                 return ringSet;
             }
@@ -2188,7 +2188,7 @@ public class StructureDiagramGenerator {
      * Set all the atoms in unplaced rings to be unplaced
      */
     private void resetUnplacedRings() {
-        IRing ring = null;
+        IRing ring;
         if (sssr == null) {
             return;
         }
@@ -2474,15 +2474,15 @@ public class StructureDiagramGenerator {
                 }
             }
 
-            Collections.sort(bonds, new Comparator<IBond>() {
+            bonds.sort(new Comparator<IBond>() {
                 @Override
                 public int compare(IBond a, IBond b) {
                     int atype = getPositionalRingBondPref(a, mol);
                     int btype = getPositionalRingBondPref(b, mol);
                     if (atype != btype)
                         return Integer.compare(atype, btype);
-                    int aord  = a.getOrder().numeric();
-                    int bord  = b.getOrder().numeric();
+                    int aord = a.getOrder().numeric();
+                    int bord = b.getOrder().numeric();
                     if (aord > 0 && bord > 0) {
                         return Integer.compare(aord, bord);
                     }

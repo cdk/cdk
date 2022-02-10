@@ -128,9 +128,7 @@ public class CDKTestCase {
      */
     public void assertAtomTypesPerceived(IAtomContainer container) throws Exception {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
-        Iterator<IAtom> atoms = container.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : container.atoms()) {
             IAtomType type = matcher.findMatchingAtomType(container, atom);
             Assert.assertNotNull("Could not perceive atom type for: " + atom, type);
         }

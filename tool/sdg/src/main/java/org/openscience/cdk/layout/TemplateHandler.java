@@ -118,7 +118,7 @@ public final class TemplateHandler {
      * template filename to org/openscience/cdk/layout/templates/template.list
      */
     public void loadTemplates(IChemObjectBuilder builder) {
-        String line = null;
+        String line;
         try {
             InputStream ins = this.getClass().getClassLoader()
                                   .getResourceAsStream("org/openscience/cdk/layout/templates/templates.list");
@@ -130,10 +130,9 @@ public final class TemplateHandler {
                 try {
                     CMLReader structureReader = new CMLReader(this.getClass().getClassLoader()
                                                                   .getResourceAsStream(line));
-                    IChemFile file = (IChemFile) structureReader.read(builder.newInstance(IChemFile.class));
+                    IChemFile file = structureReader.read(builder.newInstance(IChemFile.class));
                     List<IAtomContainer> files = ChemFileManipulator.getAllAtomContainers(file);
-                    for (int i = 0; i < files.size(); i++)
-                        addMolecule(files.get(i));
+                    for (IAtomContainer container : files) addMolecule(container);
                     LOGGER.debug("Successfully read template ", line);
                 } catch (CDKException | IllegalArgumentException e) {
                     LOGGER.warn("Could not read template ", line, ", reason: ", e.getMessage());

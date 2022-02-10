@@ -36,9 +36,9 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class DictionaryValidator extends AbstractValidator {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(DictionaryValidator.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(DictionaryValidator.class);
 
-    private DictionaryDatabase  db;
+    private final DictionaryDatabase  db;
 
     public DictionaryValidator(DictionaryDatabase db) {
         this.db = db;

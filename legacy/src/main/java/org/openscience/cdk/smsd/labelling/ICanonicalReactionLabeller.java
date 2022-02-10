@@ -19,6 +19,6 @@ public interface ICanonicalReactionLabeller {
      * @param  reaction the {@link IReaction} to be processed
      * @return          the canonical {@link IReaction}
      */
-    public IReaction getCanonicalReaction(IReaction reaction);
+    IReaction getCanonicalReaction(IReaction reaction);
 
 }

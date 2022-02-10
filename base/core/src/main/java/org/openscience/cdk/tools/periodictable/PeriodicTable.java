@@ -261,7 +261,7 @@ public final class PeriodicTable {
 
     /** Obtain the CAS ID Mapping. */
     private static Map<Elements, String> initCasIds() {
-        Map<Elements, String> ids = new EnumMap<Elements, String>(Elements.class);
+        Map<Elements, String> ids = new EnumMap<>(Elements.class);
         ids.put(Unknown, "");
         ids.put(Hydrogen, "1333-74-0");
         ids.put(Helium, "7440-59-7");

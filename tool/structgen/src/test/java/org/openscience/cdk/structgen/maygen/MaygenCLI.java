@@ -39,7 +39,7 @@ public class MaygenCLI {
     private static final String OUTPUT_FILE = "outputFile";
     private static final String SDF_COORD = "sdfCoord";
 
-    private Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
+    private final Maygen maygen = new Maygen(SilentChemObjectBuilder.getInstance());
 
     private final File getFileDir(CommandLine cmd) {
         if (cmd.hasOption(OUTPUT_FILE)) {

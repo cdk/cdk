@@ -40,7 +40,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  */
 public class IteratingPCSubstancesXMLReaderTest extends CDKTestCase {
 
-    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingPCSubstancesXMLReaderTest.class);
+    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingPCSubstancesXMLReaderTest.class);
 
     @Test
     public void testTaxols() throws Exception {

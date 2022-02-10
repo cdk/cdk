@@ -47,7 +47,7 @@ public class CDKValencyChecker implements IValencyChecker {
     private AtomTypeFactory                       atomTypeList;
     private final static String                   ATOM_TYPE_LIST = "org/openscience/cdk/dict/data/cdk-atom-types.owl";
 
-    private static Map<String, CDKValencyChecker> tables         = new Hashtable<String, CDKValencyChecker>(3);
+    private static final Map<String, CDKValencyChecker> tables         = new Hashtable<>(3);
 
     private CDKValencyChecker(IChemObjectBuilder builder) {
         if (atomTypeList == null) atomTypeList = AtomTypeFactory.getInstance(ATOM_TYPE_LIST, builder);
@@ -86,8 +86,8 @@ public class CDKValencyChecker implements IValencyChecker {
         IBond.Order maxBondOrder = container.getMaximumBondOrder(atom);
         Integer hcount = atom.getImplicitHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getImplicitHydrogenCount();
 
-        int piBondCount = ((Integer) type.getProperty(CDKConstants.PI_BOND_COUNT)).intValue();
-        int formalNeighborCount = type.getFormalNeighbourCount().intValue();
+        int piBondCount = (Integer) type.getProperty(CDKConstants.PI_BOND_COUNT);
+        int formalNeighborCount = type.getFormalNeighbourCount();
 
         int typeMaxBondOrder = piBondCount + 1;
         int typeBondOrderSum = formalNeighborCount + piBondCount;

@@ -36,7 +36,6 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * <p>IReactionProcess which a bond is broken displacing the electron to one of the
@@ -78,7 +77,7 @@ import java.util.Iterator;
  **/
 public class HeterolyticCleavageSBReaction extends ReactionEngine implements IReactionProcess {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(HeterolyticCleavageSBReaction.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(HeterolyticCleavageSBReaction.class);
 
     /**
      * Constructor of the HeterolyticCleavageSBReaction object.
@@ -131,9 +130,7 @@ public class HeterolyticCleavageSBReaction extends ReactionEngine implements IRe
         IParameterReact ipr = super.getParameterClass(SetReactionCenter.class);
         if (ipr != null && !ipr.isSetParameter()) setActiveCenters(reactant);
 
-        Iterator<IBond> bondis = reactant.bonds().iterator();
-        while (bondis.hasNext()) {
-            IBond bondi = bondis.next();
+        for (IBond bondi : reactant.bonds()) {
             IAtom atom1 = bondi.getBegin();
             IAtom atom2 = bondi.getEnd();
             if (bondi.getFlag(CDKConstants.REACTIVE_CENTER) && bondi.getOrder() == IBond.Order.SINGLE
@@ -146,7 +143,7 @@ public class HeterolyticCleavageSBReaction extends ReactionEngine implements IRe
                 /**/
                 for (int j = 0; j < 2; j++) {
 
-                    ArrayList<IAtom> atomList = new ArrayList<IAtom>();
+                    ArrayList<IAtom> atomList = new ArrayList<>();
                     if (j == 0) {
                         atomList.add(atom1);
                         atomList.add(atom2);
@@ -154,7 +151,7 @@ public class HeterolyticCleavageSBReaction extends ReactionEngine implements IRe
                         atomList.add(atom2);
                         atomList.add(atom1);
                     }
-                    ArrayList<IBond> bondList = new ArrayList<IBond>();
+                    ArrayList<IBond> bondList = new ArrayList<>();
                     bondList.add(bondi);
 
                     IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(IAtomContainerSet.class);
@@ -184,9 +181,7 @@ public class HeterolyticCleavageSBReaction extends ReactionEngine implements IRe
      * @throws CDKException
      */
     private void setActiveCenters(IAtomContainer reactant) throws CDKException {
-        Iterator<IBond> bonds = reactant.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond bond = bonds.next();
+        for (IBond bond : reactant.bonds()) {
             IAtom atom1 = bond.getBegin();
             IAtom atom2 = bond.getEnd();
             if (bond.getOrder() == IBond.Order.SINGLE

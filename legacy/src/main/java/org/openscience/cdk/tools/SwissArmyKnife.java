@@ -58,7 +58,7 @@ public class SwissArmyKnife {
     public static String getDuration(long diff) {
         GregorianCalendar calendar = new GregorianCalendar();
         calendar.setTime(new Date(diff));
-        StringBuffer s = new StringBuffer();
+        StringBuilder s = new StringBuilder();
         if (calendar.get(Calendar.HOUR) > 1) {
             s.append("hours: " + (calendar.get(Calendar.HOUR) - 1) + ", ");
         }
@@ -82,9 +82,9 @@ public class SwissArmyKnife {
      */
     public static String printInt2D(int[][] contab) {
         String line = "";
-        for (int f = 0; f < contab.length; f++) {
+        for (int[] ints : contab) {
             for (int g = 0; g < contab.length; g++) {
-                line += contab[f][g] + " ";
+                line += ints[g] + " ";
             }
             line += "\n";
         }

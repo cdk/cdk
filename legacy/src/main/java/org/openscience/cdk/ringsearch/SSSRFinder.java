@@ -34,7 +34,6 @@ import org.openscience.cdk.ringsearch.cyclebasis.SimpleCycle;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -59,7 +58,7 @@ import java.util.List;
 @Deprecated
 public class SSSRFinder {
 
-    private IAtomContainer atomContainer;
+    private final IAtomContainer atomContainer;
     private CycleBasis     cycleBasis;
 
     /**
@@ -131,7 +130,7 @@ public class SSSRFinder {
             return null;
         }
 
-        List<IRingSet> equivalenceClasses = new ArrayList<IRingSet>();
+        List<IRingSet> equivalenceClasses = new ArrayList<>();
         for (Object o : cycleBasis().equivalenceClasses()) {
             equivalenceClasses.add(toRingSet(atomContainer, (Collection) o));
         }
@@ -176,10 +175,8 @@ public class SSSRFinder {
 
         IRingSet ringSet = container.getBuilder().newInstance(IRingSet.class);
 
-        Iterator cycleIterator = cycles.iterator();
-
-        while (cycleIterator.hasNext()) {
-            SimpleCycle cycle = (SimpleCycle) cycleIterator.next();
+        for (Object o : cycles) {
+            SimpleCycle cycle = (SimpleCycle) o;
 
             IRing ring = container.getBuilder().newInstance(IRing.class);
 

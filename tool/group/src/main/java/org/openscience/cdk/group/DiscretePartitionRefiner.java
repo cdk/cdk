@@ -13,34 +13,34 @@ public interface DiscretePartitionRefiner {
      *
      * @return the permutation that gives the maximal half-matrix string
      */
-    public Permutation getBest();
+    Permutation getBest();
     
     /**
      * The automorphism partition is a partition of the elements of the group.
      *
      * @return a partition of the elements of group
      */
-    public Partition getAutomorphismPartition();
+    Partition getAutomorphismPartition();
     
     /**
      * Get the automorphism group used to prune the search.
      *
      * @return the automorphism group
      */
-    public PermutationGroup getAutomorphismGroup();
+    PermutationGroup getAutomorphismGroup();
     
     /**
      * Get the first permutation reached by the search.
      *
      * @return the first permutation reached
      */
-    public Permutation getFirst();
+    Permutation getFirst();
     
     /**
      * Check that the first refined partition is the identity.
      *
      * @return true if the first is the identity permutation
      */
-    public boolean firstIsIdentity();
+    boolean firstIsIdentity();
 
 }

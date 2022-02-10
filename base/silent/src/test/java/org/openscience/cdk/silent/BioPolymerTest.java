@@ -25,10 +25,8 @@ import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBioPolymer;
 import org.openscience.cdk.test.interfaces.AbstractBioPolymerTest;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IStrand;
-import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link BioPolymer}.
@@ -39,13 +37,7 @@ public class BioPolymerTest extends AbstractBioPolymerTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new BioPolymer();
-            }
-        });
+        setTestObjectBuilder(BioPolymer::new);
     }
 
     @Test
@@ -59,11 +51,11 @@ public class BioPolymerTest extends AbstractBioPolymerTest {
         IStrand oStrand2 = oBioPolymer.getBuilder().newInstance(IStrand.class);
         oStrand2.setStrandName("B");
         IMonomer oMono1 = oBioPolymer.getBuilder().newInstance(IMonomer.class);
-        oMono1.setMonomerName(new String("TRP279"));
+        oMono1.setMonomerName("TRP279");
         IMonomer oMono2 = oBioPolymer.getBuilder().newInstance(IMonomer.class);
-        oMono2.setMonomerName(new String("HOH"));
+        oMono2.setMonomerName("HOH");
         IMonomer oMono3 = oBioPolymer.getBuilder().newInstance(IMonomer.class);
-        oMono3.setMonomerName(new String("GLYA16"));
+        oMono3.setMonomerName("GLYA16");
         IAtom oAtom1 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
         IAtom oAtom2 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
         IAtom oAtom3 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");

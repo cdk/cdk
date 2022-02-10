@@ -66,7 +66,7 @@ public class AtomContainerBondPermutor extends AtomContainerPermutor {
     @Override
     public IAtomContainer containerFromPermutation(int[] permutation) {
         try {
-            IAtomContainer permutedContainer = (IAtomContainer) super.atomContainer.clone();
+            IAtomContainer permutedContainer = super.atomContainer.clone();
             int n = permutedContainer.getBondCount();
             IBond[] permutedBonds = new IBond[n];
             for (int i = 0; i < n; i++) {

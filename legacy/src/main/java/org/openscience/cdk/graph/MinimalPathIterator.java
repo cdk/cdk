@@ -52,8 +52,9 @@ import org._3pq.jgrapht.traverse.BreadthFirstIterator;
 @Deprecated
 public class MinimalPathIterator implements Iterator {
 
-    private Object        sourceVertex, targetVertex;
-    private Graph         g;
+    private final Object        sourceVertex;
+    private final Object targetVertex;
+    private final Graph         g;
     private DirectedGraph shortestPathGraph;
 
     private Stack         edgeIteratorStack;
@@ -112,13 +113,13 @@ public class MinimalPathIterator implements Iterator {
             shortestPathGraph.addVertex(vertex);
 
             int distance = iter.level;
-            distanceMap.put(vertex, Integer.valueOf(distance));
+            distanceMap.put(vertex, distance);
 
-            for (Iterator edges = g.edgesOf(vertex).iterator(); edges.hasNext();) {
-                Edge edge = (Edge) edges.next();
+            for (Object o : g.edgesOf(vertex)) {
+                Edge edge = (Edge) o;
                 Object opposite = edge.oppositeVertex(vertex);
                 if (distanceMap.get(opposite) != null) {
-                    if (((Integer) distanceMap.get(opposite)).intValue() + 1 == distance) {
+                    if ((Integer) distanceMap.get(opposite) + 1 == distance) {
                         shortestPathGraph.addVertex(opposite);
                         shortestPathGraph.addEdge(vertex, opposite);
                     }

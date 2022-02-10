@@ -29,9 +29,7 @@ import org.openscience.cdk.test.interfaces.AbstractAtomContainerTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ILonePair;
-import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNull;
@@ -46,13 +44,7 @@ public class AtomContainer2Test extends AbstractAtomContainerTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new AtomContainer2();
-            }
-        });
+        setTestObjectBuilder(AtomContainer2::new);
     }
 
     @Test

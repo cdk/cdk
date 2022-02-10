@@ -58,8 +58,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class MDLRXNV3000Reader extends DefaultChemObjectReader {
 
-    BufferedReader              input  = null;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNV3000Reader.class);
+    BufferedReader              input;
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNV3000Reader.class);
 
     public MDLRXNV3000Reader(Reader in) {
         this(in, Mode.RELAXED);
@@ -111,9 +111,9 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
         if (IChemModel.class.equals(classObject)) return true;
         if (IReaction.class.equals(classObject)) return true;
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IChemModel.class.equals(interfaces[i])) return true;
-            if (IReaction.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IChemModel.class.equals(anInterface)) return true;
+            if (IReaction.class.equals(anInterface)) return true;
         }
         Class superClass = classObject.getSuperclass();
         if (superClass != null) return this.accepts(superClass);
@@ -157,7 +157,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
     }
 
     private String readLine() throws CDKException {
-        String line = null;
+        String line;
         try {
             line = input.readLine();
             logger.debug("read line: " + line);
@@ -187,12 +187,12 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
                 StringTokenizer tokenizer = new StringTokenizer(command);
                 try {
                     tokenizer.nextToken();
-                    reactantCount = Integer.valueOf(tokenizer.nextToken()).intValue();
+                    reactantCount = Integer.parseInt(tokenizer.nextToken());
                     logger.info("Expecting " + reactantCount + " reactants in file");
-                    productCount = Integer.valueOf(tokenizer.nextToken()).intValue();
+                    productCount = Integer.parseInt(tokenizer.nextToken());
                     logger.info("Expecting " + productCount + " products in file");
                     if (tokenizer.hasMoreTokens()) {
-                        agentCount = Integer.valueOf(tokenizer.nextToken()).intValue();
+                        agentCount = Integer.parseInt(tokenizer.nextToken());
                         logger.info("Expecting " + agentCount + " products in file");
                         if (mode == Mode.STRICT && agentCount > 0)
                             throw new CDKException("RXN files uses agent count extension");
@@ -232,7 +232,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
                 logger.error(error);
                 throw new CDKException(error);
             }
-            String molFileLine = "";
+            String molFileLine;
             while ((molFileLine = readLine()) != null) {
                 molFile.append(molFileLine).append('\n');
                 if (molFileLine.endsWith("END CTAB"))

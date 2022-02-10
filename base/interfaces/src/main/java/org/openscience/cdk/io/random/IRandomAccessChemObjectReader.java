@@ -37,9 +37,9 @@ public interface IRandomAccessChemObjectReader<T> extends ListIterator<T> {
 
     T readRecord(int record) throws Exception;
 
-    public T first();
+    T first();
 
-    public T last();
+    T last();
 
-    public int size();
+    int size();
 }

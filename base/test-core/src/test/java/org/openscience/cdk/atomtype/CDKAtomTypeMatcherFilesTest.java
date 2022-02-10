@@ -41,14 +41,14 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  */
 public class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
 
-    private static Map<String, Integer> testedAtomTypes = new HashMap<String, Integer>();
+    private static final Map<String, Integer> testedAtomTypes = new HashMap<>();
 
     @Test
     public void testFile3() throws Exception {
         String filename = "3.cml";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
 
         // test the resulting ChemFile content
         Assert.assertNotNull(chemFile);
@@ -67,7 +67,7 @@ public class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
         String filename = "error.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
 
         // test the resulting ChemFile content
         Assert.assertNotNull(chemFile);
@@ -83,7 +83,7 @@ public class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
         String filename = "mol28.cml";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
 
         // test the resulting ChemFile content
         Assert.assertNotNull(chemFile);
@@ -103,7 +103,7 @@ public class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
         String filename = "smiles1.cml";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         Assert.assertNotNull(chemFile);
         IAtomContainer mol1 = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
 
@@ -111,7 +111,7 @@ public class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
         filename = "smiles2.cml";
         ins = this.getClass().getResourceAsStream(filename);
         reader = new CMLReader(ins);
-        chemFile = (IChemFile) reader.read(new ChemFile());
+        chemFile = reader.read(new ChemFile());
         Assert.assertNotNull(chemFile);
         IAtomContainer mol2 = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
 

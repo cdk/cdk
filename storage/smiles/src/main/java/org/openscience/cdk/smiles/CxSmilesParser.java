@@ -82,7 +82,7 @@ final class CxSmilesParser {
             } else {
                 iter.pos--; // push back
                 int beg = iter.pos;
-                int rollback = beg;
+                int rollback;
                 while (iter.hasNext()) {
 
                     if (iter.pos == beg && iter.curr() == '_' &&
@@ -133,7 +133,7 @@ final class CxSmilesParser {
         double fracPart = 0;
         int divisor = 1;
 
-        intPart = (double) processUnsignedInt(iter);
+        intPart = processUnsignedInt(iter);
         if (intPart < 0) intPart = 0;
         iter.nextIf('.');
 

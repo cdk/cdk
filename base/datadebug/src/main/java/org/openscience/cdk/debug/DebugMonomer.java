@@ -48,7 +48,7 @@ public class DebugMonomer extends Monomer implements IMonomer {
 
     private static final long serialVersionUID = -7312839949399572435L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugAtomContainer.class);
+    final ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugAtomContainer.class);
 
     /** {@inheritDoc} */
     @Override
@@ -694,7 +694,7 @@ public class DebugMonomer extends Monomer implements IMonomer {
     public IMonomer clone() throws CloneNotSupportedException {
         IMonomer clone = null;
         try {
-            clone = (IMonomer) super.clone();
+            clone = super.clone();
         } catch (Exception exception) {
             logger.error("Could not clone DebugAtom: " + exception.getMessage(), exception);
             logger.debug(exception);

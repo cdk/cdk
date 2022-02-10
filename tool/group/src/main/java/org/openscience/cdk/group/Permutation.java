@@ -157,7 +157,7 @@ public final class Permutation {
      * @return the list of elements reachable in this permutation
      */
     public List<Integer> getOrbit(int element) {
-        List<Integer> orbit = new ArrayList<Integer>();
+        List<Integer> orbit = new ArrayList<>();
         orbit.add(element);
         int i = values[element];
         while (i != element && orbit.size() < values.length) {
@@ -233,7 +233,7 @@ public final class Permutation {
         Arrays.fill(p, true);
 
         StringBuilder sb = new StringBuilder();
-        int j = 0;
+        int j;
         for (int i = 0; i < n; i++) {
             if (p[i]) {
                 sb.append('(');

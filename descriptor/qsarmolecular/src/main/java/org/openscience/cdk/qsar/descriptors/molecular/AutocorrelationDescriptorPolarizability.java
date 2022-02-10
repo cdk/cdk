@@ -40,8 +40,6 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
-import java.util.Iterator;
-
 /**
  * This class calculates ATS autocorrelation descriptor, where the weight equal
  * to the charges.
@@ -67,7 +65,7 @@ public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDe
             try {
                 polars[i] = polar.calculateGHEffectiveAtomPolarizability(container, atom, false, dmat);
             } catch (Exception ex1) {
-                throw new CDKException("Problems with assign Polarizability due to " + ex1.toString(), ex1);
+                throw new CDKException("Problems with assign Polarizability due to " + ex1, ex1);
             }
         }
 
@@ -81,7 +79,7 @@ public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDe
     public DescriptorValue calculate(IAtomContainer container) {
         IAtomContainer molecule;
         try {
-            molecule = (IAtomContainer) container.clone();
+            molecule = container.clone();
         } catch (CloneNotSupportedException e) {
             return getDummyDescriptorValue(new CDKException("Error occurred during clone " + e));
         }
@@ -89,9 +87,7 @@ public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDe
         // add H's in case they're not present
         try {
             CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
-            Iterator<IAtom> atoms = molecule.atoms().iterator();
-            while (atoms.hasNext()) {
-                IAtom atom = atoms.next();
+            for (IAtom atom : molecule.atoms()) {
                 IAtomType type = matcher.findMatchingAtomType(molecule, atom);
                 AtomTypeManipulator.configure(atom, type);
             }

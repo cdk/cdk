@@ -80,11 +80,11 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     private BooleanIOSetting optStereoPerc;
     private BooleanIOSetting optStereo0d;
 
-    BufferedReader input = null;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV3000Reader.class);
+    BufferedReader input;
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV3000Reader.class);
 
-    private Pattern keyValueTuple;
-    private Pattern keyValueTuple2;
+    private final Pattern keyValueTuple;
+    private final Pattern keyValueTuple2;
 
     private int lineNumber;
 
@@ -137,8 +137,8 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IAtomContainer.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IAtomContainer.class.equals(anInterface)) return true;
         }
         if (IAtomContainer.class.equals(classObject)) return true;
         Class superClass = classObject.getSuperclass();
@@ -159,7 +159,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         int dimensions = 0; // 0D (undef/no coordinates), 2D, 3D
         boolean chiral;
         Map<Integer,Integer> stereoflags = null;
-        Map<IAtom,Integer> stereo0d = new HashMap<>();
+        final Map<IAtom,Integer> stereo0d = new HashMap<>();
     }
 
     public IAtomContainer readMolecule(IChemObjectBuilder builder) throws CDKException {
@@ -454,8 +454,8 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         logger.info("Reading ATOM block");
 
         int RGroupCounter = 1;
-        int Rnumber = 0;
-        String[] rGroup = null;
+        int Rnumber;
+        String[] rGroup;
 
         boolean foundEND = false;
         while (isReady() && !foundEND) {
@@ -483,10 +483,10 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                     atom.setAtomicNumber(e.number());
                 } else if ("D".equals(element) && optHydIso.isSet()) {
                     atom.setMassNumber(2);
-                    atom.setAtomicNumber((int)IElement.H);
+                    atom.setAtomicNumber(IElement.H);
                 } else if ("T".equals(element) && optHydIso.isSet()) {
                     atom.setMassNumber(3);
-                    atom.setAtomicNumber((int)IElement.H);
+                    atom.setAtomicNumber(IElement.H);
                 } else if ("A".equals(element)) {
                     atom = readData.getBuilder().newInstance(IPseudoAtom.class, element);
                 } else if ("Q".equals(element)) {
@@ -503,7 +503,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                     rGroup = element.split("^R");
                     if (rGroup.length > 1) {
                         try {
-                            Rnumber = Integer.valueOf(rGroup[(rGroup.length - 1)]).intValue();
+                            Rnumber = Integer.parseInt(rGroup[(rGroup.length - 1)]);
                             RGroupCounter = Rnumber;
                         } catch (Exception ex) {
                             Rnumber = RGroupCounter;
@@ -645,7 +645,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                         bond.setOrder(IBond.Order.UNSET);
                         logger.warn("Query order types are not supported (yet). File a bug if you need it");
                     } else {
-                        bond.setOrder(BondManipulator.createBondOrder((double) order));
+                        bond.setOrder(BondManipulator.createBondOrder(order));
                     }
                 } catch (Exception exception) {
                     String error = "Error while parsing bond index";
@@ -769,7 +769,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 logger.warn("Skipping external index: " + externalIndexString);
 
                 // the rest are key=value fields
-                Map<String, String> options = new Hashtable<String, String>();
+                Map<String, String> options = new Hashtable<>();
                 if (command.indexOf('=') != -1) {
                     options = parseOptions(exhaustStringTokenizer(tokenizer));
                 }
@@ -845,7 +845,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     }
 
     private Map<String, String> parseOptions(String string) throws CDKException {
-        Map<String, String> keyValueTuples = new Hashtable<String, String>();
+        Map<String, String> keyValueTuples = new Hashtable<>();
         while (string.length() >= 3) {
             logger.debug("Matching remaining option string: " + string);
             Matcher tuple1Matcher = keyValueTuple2.matcher(string);
@@ -875,7 +875,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     }
 
     public String exhaustStringTokenizer(StringTokenizer tokenizer) {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         buffer.append(' ');
         while (tokenizer.hasMoreTokens()) {
             buffer.append(tokenizer.nextToken());
@@ -885,7 +885,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     }
 
     public String readLine() throws CDKException {
-        String line = null;
+        String line;
         try {
             line = input.readLine();
             lineNumber++;

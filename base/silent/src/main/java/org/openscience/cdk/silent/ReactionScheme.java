@@ -20,7 +20,6 @@ package org.openscience.cdk.silent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -39,7 +38,7 @@ import org.openscience.cdk.interfaces.IReactionScheme;
 public class ReactionScheme extends ReactionSet implements IReactionScheme {
 
     /** A List of reaction schemes*/
-    private List<IReactionScheme> reactionScheme;
+    private final List<IReactionScheme> reactionScheme;
     /**
      * Determines if a de-serialized object is compatible with this class.
      *
@@ -53,7 +52,7 @@ public class ReactionScheme extends ReactionSet implements IReactionScheme {
     /**  Constructs an empty ReactionScheme.
      */
     public ReactionScheme() {
-        reactionScheme = new ArrayList<IReactionScheme>();
+        reactionScheme = new ArrayList<>();
     }
 
     /**
@@ -124,10 +123,8 @@ public class ReactionScheme extends ReactionSet implements IReactionScheme {
         // clone the properties
         if (getProperties() != null) {
             Map<Object, Object> properties = getProperties();
-            Map<Object, Object> clonedHashtable = new HashMap<Object, Object>();
-            Iterator<Object> keys = properties.keySet().iterator();
-            while (keys.hasNext()) {
-                Object key = keys.next();
+            Map<Object, Object> clonedHashtable = new HashMap<>();
+            for (Object key : properties.keySet()) {
                 Object value = properties.get(key);
                 clonedHashtable.put(key, value);
             }

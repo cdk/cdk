@@ -39,7 +39,7 @@ public class VABCDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testIronChloride() throws InvalidSmilesException, CDKException {
+    public void testIronChloride() throws CDKException {
         IAtomContainer ironChloride = new SmilesParser(SilentChemObjectBuilder.getInstance()).parseSmiles("Cl[Fe]Cl");
         Assert.assertEquals(Double.NaN, ((DoubleResult) descriptor.calculate(ironChloride).getValue()).doubleValue(),
                 0.01);

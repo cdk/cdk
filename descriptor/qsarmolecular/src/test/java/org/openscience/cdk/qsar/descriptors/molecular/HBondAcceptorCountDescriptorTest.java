@@ -50,8 +50,8 @@ public class HBondAcceptorCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testHBondAcceptorCountDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(true)};
+    public void testHBondAcceptorCountDescriptor() throws java.lang.Exception {
+        Object[] params = {Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         // original molecule O=N(=O)c1cccc2cn[nH]c12 - correct kekulisation will give
@@ -117,7 +117,7 @@ public class HBondAcceptorCountDescriptorTest extends MolecularDescriptorTest {
         IBond b8 = builder.newInstance(IBond.class, a5, a8, IBond.Order.SINGLE);
         mol.addBond(b8);
 
-        Object[] params = {new Boolean(true)};
+        Object[] params = {Boolean.TRUE};
         descriptor.setParameters(params);
         Assert.assertEquals(2, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
@@ -137,7 +137,7 @@ public class HBondAcceptorCountDescriptorTest extends MolecularDescriptorTest {
 
     @Test
     public void testPhenol() throws CDKException {
-        Object[] params = {new Boolean(true)};
+        Object[] params = {Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         // original molecule O=N(=O)c1cccc2cn[nH]c12 - correct kekulisation will give

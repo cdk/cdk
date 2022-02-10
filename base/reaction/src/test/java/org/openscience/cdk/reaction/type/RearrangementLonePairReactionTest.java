@@ -83,7 +83,7 @@ import java.util.List;
 public class RearrangementLonePairReactionTest extends ReactionProcessTest {
 
     private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-    private IChemObjectBuilder            builder = SilentChemObjectBuilder.getInstance();
+    private final IChemObjectBuilder            builder = SilentChemObjectBuilder.getInstance();
 
     /**
      *  The JUnit setup method
@@ -119,7 +119,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
 
         /* initiate */
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);
@@ -162,7 +162,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
         molecule.getBond(2).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getAtom(3).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -202,7 +202,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
         molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -238,7 +238,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
         molecule.addLonePair(new LonePair(molecule.getAtom(0)));
 
         /* automatic search of the center active */
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);
@@ -401,7 +401,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
         IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         setOfReactants.addAtomContainer(molecule);
         /* automatic search of the center active */
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);

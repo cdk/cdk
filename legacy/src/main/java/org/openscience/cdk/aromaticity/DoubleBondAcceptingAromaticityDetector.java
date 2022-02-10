@@ -73,18 +73,12 @@ public class DoubleBondAcceptingAromaticityDetector {
             if (!atomIsPotentiallyAromatic(atom)) ringSystems.removeAtom(atom);
 
         // FIXME: should not really mark them here
-        Iterator<IAtom> atoms = ringSystems.atoms().iterator();
-        while (atoms.hasNext())
-            atoms.next().setFlag(CDKConstants.ISINRING, true);
-        Iterator<IBond> bonds = ringSystems.bonds().iterator();
-        while (bonds.hasNext())
-            bonds.next().setFlag(CDKConstants.ISINRING, true);
+        for (IAtom iAtom : ringSystems.atoms()) iAtom.setFlag(CDKConstants.ISINRING, true);
+        for (IBond iBond : ringSystems.bonds()) iBond.setFlag(CDKConstants.ISINRING, true);
 
         boolean foundSomeAromaticity = false;
-        Iterator<IAtomContainer> isolatedRingSystems = ConnectivityChecker.partitionIntoMolecules(ringSystems)
-                .atomContainers().iterator();
-        while (isolatedRingSystems.hasNext()) {
-            IAtomContainer isolatedSystem = isolatedRingSystems.next();
+        for (IAtomContainer isolatedSystem : ConnectivityChecker.partitionIntoMolecules(ringSystems)
+                                                                .atomContainers()) {
             IRingSet singleRings = Cycles.sssr(isolatedSystem).toRingSet();
             Iterator<IAtomContainer> singleRingsIterator = singleRings.atomContainers().iterator();
             int maxRingSize = 20;
@@ -102,12 +96,10 @@ public class DoubleBondAcceptingAromaticityDetector {
             // OK, what about the one larger ring (if no aromaticity found in SSSR)?
             if (!allRingsAreAromatic && singleRings.getAtomContainerCount() <= 3) {
                 // every ring system consisting of more than two rings is too difficult
-                Iterator<IAtomContainer> allRingsIterator = new AllRingsFinder()
-                        .findAllRingsInIsolatedRingSystem(isolatedSystem).atomContainers().iterator();
-                while (allRingsIterator.hasNext()) {
+                for (IAtomContainer ring : new AllRingsFinder()
+                        .findAllRingsInIsolatedRingSystem(isolatedSystem).atomContainers()) {
                     // there should be exactly three rings, of which only one has a size larger
                     // than the two previous ones
-                    IAtomContainer ring = allRingsIterator.next();
                     if (ring.getAtomCount() <= maxRingSize) {
                         // possibly aromatic
                         boolean ringIsAromatic = isHueckelValid(ring);
@@ -157,7 +149,7 @@ public class DoubleBondAcceptingAromaticityDetector {
                     IAtomType type = factory.getAtomType(ringAtom.getAtomTypeName());
                     Object property = type.getProperty(CDKConstants.PI_BOND_COUNT);
                     if (property != null && property instanceof Integer) {
-                        electronCount += ((Integer) property).intValue();
+                        electronCount += (Integer) property;
                     }
                 }
             } else if (ringAtom.getHybridization() != null && ringAtom.getHybridization() == Hybridization.SP3
@@ -177,7 +169,7 @@ public class DoubleBondAcceptingAromaticityDetector {
     }
 
     private static int getLonePairCount(IAtom atom) {
-        Integer count = (Integer) atom.getProperty(CDKConstants.LONE_PAIR_COUNT);
+        Integer count = atom.getProperty(CDKConstants.LONE_PAIR_COUNT);
         if (count == null) {
             return 0;
         } else {

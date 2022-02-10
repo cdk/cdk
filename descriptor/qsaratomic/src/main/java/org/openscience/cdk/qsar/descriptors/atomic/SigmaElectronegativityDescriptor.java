@@ -62,7 +62,7 @@ public class SigmaElectronegativityDescriptor extends AbstractAtomicDescriptor i
 
     private static final String[] NAMES = {"elecSigmA"};
 
-    private Electronegativity     electronegativity;
+    private final Electronegativity     electronegativity;
 
     /**
      *  Constructor for the SigmaElectronegativityDescriptor object
@@ -136,13 +136,10 @@ public class SigmaElectronegativityDescriptor extends AbstractAtomicDescriptor i
         IAtomContainer clone;
         IAtom localAtom;
         try {
-            clone = (IAtomContainer) ac.clone();
+            clone = ac.clone();
             localAtom = clone.getAtom(ac.indexOf(atom));
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(clone);
-        } catch (CDKException e) {
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                    Double.NaN), NAMES, e);
-        } catch (CloneNotSupportedException e) {
+        } catch (CDKException | CloneNotSupportedException e) {
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
                     Double.NaN), NAMES, e);
         }

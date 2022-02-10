@@ -39,7 +39,7 @@ public class TextGroupElement extends TextElement {
      */
     public enum Position {
         NW, SW, SE, NE, S, N, W, E
-    };
+    }
 
     /**
      * A string of text that should be shown around the parent.
@@ -105,7 +105,7 @@ public class TextGroupElement extends TextElement {
      */
     public TextGroupElement(double x, double y, String text, Color color) {
         super(x, y, text, color);
-        this.children = new ArrayList<Child>();
+        this.children = new ArrayList<>();
     }
 
     /**

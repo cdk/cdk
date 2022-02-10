@@ -400,9 +400,7 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
         add.addMolecularFormula(formula2);
 
         int count = 0;
-        Iterator<IIsotope> it = add.isotopes().iterator();
-        while (it.hasNext()) {
-            it.next();
+        for (IIsotope iIsotope : add.isotopes()) {
             ++count;
         }
         Assert.assertEquals(3, count);

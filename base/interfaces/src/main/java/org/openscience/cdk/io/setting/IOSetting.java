@@ -36,9 +36,9 @@ public abstract class IOSetting implements ISetting {
         HIGH, MEDIUM, LOW
     }
 
-    protected Importance level;
-    protected String     name;
-    protected String     question;
+    protected final Importance level;
+    protected final String     name;
+    protected final String     question;
     protected String     setting;
 
     /**

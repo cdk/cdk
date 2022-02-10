@@ -44,7 +44,7 @@ public class AtomCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testCarbonCount() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testCarbonCount() throws java.lang.Exception {
         Object[] params = {"C"};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

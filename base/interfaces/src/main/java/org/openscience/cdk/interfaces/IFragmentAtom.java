@@ -39,27 +39,27 @@ public interface IFragmentAtom extends IPseudoAtom {
      *
      * @return true, if it should be considered in expended form
      */
-    public boolean isExpanded();
+    boolean isExpanded();
 
     /**
      * Sets whether this atom is to be fully drawn and not just in the abbreviated form.
      *
      * @param bool true if the full structure should be drawn
      */
-    public void setExpanded(boolean bool);
+    void setExpanded(boolean bool);
 
     /**
      * Returns the fully expended form of the IFragmentAtom.
      *
      * @return the fully expanded form as an IAtomContainer object
      */
-    public IAtomContainer getFragment();
+    IAtomContainer getFragment();
 
     /**
      * Sets the fully expended form of the IFragmentAtom.
      *
      * @param fragment The fragment
      */
-    public void setFragment(IAtomContainer fragment);
+    void setFragment(IAtomContainer fragment);
 
 }

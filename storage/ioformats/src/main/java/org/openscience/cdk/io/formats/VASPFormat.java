@@ -74,7 +74,7 @@ public class VASPFormat extends SimpleChemFormatMatcher implements IChemFormatMa
     /** {@inheritDoc} */
     @Override
     public boolean matches(int lineNumber, String line) {
-        if (line.indexOf("NCLASS=") >= 0) {
+        if (line.contains("NCLASS=")) {
             return true;
         }
         return false;

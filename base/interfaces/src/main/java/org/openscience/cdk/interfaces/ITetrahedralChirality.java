@@ -119,6 +119,6 @@ public interface ITetrahedralChirality extends IStereoElement<IAtom, IAtom> {
      *{@inheritDoc}
      */
     @Override
-    public ITetrahedralChirality map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds);
+    ITetrahedralChirality map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds);
 
 }

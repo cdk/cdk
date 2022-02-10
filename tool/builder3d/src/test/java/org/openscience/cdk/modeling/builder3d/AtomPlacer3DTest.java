@@ -246,7 +246,7 @@ public class AtomPlacer3DTest extends CDKTestCase {
         IAtom hydrogen = ac.getAtom(1);
         AtomPlacer3D placer = new AtomPlacer3D();
 
-        boolean result = false;
+        boolean result;
         result = placer.isUnplacedHeavyAtom(carbon);
         Assert.assertTrue(result);
         result = placer.isUnplacedHeavyAtom(hydrogen);
@@ -268,7 +268,7 @@ public class AtomPlacer3DTest extends CDKTestCase {
         IAtom hydrogen = ac.getAtom(1);
         AtomPlacer3D placer = new AtomPlacer3D();
 
-        boolean result = false;
+        boolean result;
         result = placer.isPlacedHeavyAtom(carbon);
         Assert.assertFalse(result);
         result = placer.isPlacedHeavyAtom(hydrogen);
@@ -290,7 +290,7 @@ public class AtomPlacer3DTest extends CDKTestCase {
         IAtom hydrogen = ac.getAtom(1);
         AtomPlacer3D placer = new AtomPlacer3D();
 
-        boolean result = false;
+        boolean result;
         result = placer.isAliphaticHeavyAtom(carbon);
         Assert.assertFalse(result);
         result = placer.isAliphaticHeavyAtom(hydrogen);
@@ -312,7 +312,7 @@ public class AtomPlacer3DTest extends CDKTestCase {
         IAtom hydrogen = ac.getAtom(1);
         AtomPlacer3D placer = new AtomPlacer3D();
 
-        boolean result = false;
+        boolean result;
         result = placer.isRingHeavyAtom(carbon);
         Assert.assertFalse(result);
         result = placer.isRingHeavyAtom(hydrogen);
@@ -334,7 +334,7 @@ public class AtomPlacer3DTest extends CDKTestCase {
         IAtom hydrogen = ac.getAtom(1);
         AtomPlacer3D placer = new AtomPlacer3D();
 
-        boolean result = false;
+        boolean result;
         result = placer.isHeavyAtom(carbon);
         Assert.assertTrue(result);
         result = placer.isHeavyAtom(hydrogen);

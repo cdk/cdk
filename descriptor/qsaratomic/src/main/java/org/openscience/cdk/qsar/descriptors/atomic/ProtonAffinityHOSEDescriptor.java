@@ -66,9 +66,9 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
     private static final String[] NAMES = {"protonAffiHOSE"};
 
     /** Maximum spheres to use by the HoseCode model.*/
-    int                           maxSpheresToUse = 10;
+    final int                           maxSpheresToUse = 10;
 
-    private Affinitydb            db              = new Affinitydb();
+    private final Affinitydb            db              = new Affinitydb();
 
     /**
      *  Constructor for the ProtonAffinityDescriptor object.

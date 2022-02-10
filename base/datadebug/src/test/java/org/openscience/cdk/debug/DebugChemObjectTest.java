@@ -24,7 +24,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.test.interfaces.AbstractChemObjectTest;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link DebugChemObject}.
@@ -35,13 +34,7 @@ public class DebugChemObjectTest extends AbstractChemObjectTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new DebugChemObject();
-            }
-        });
+        setTestObjectBuilder(DebugChemObject::new);
     }
 
     @Test
@@ -61,8 +54,8 @@ public class DebugChemObjectTest extends AbstractChemObjectTest {
     public void compare() {
         DebugChemObject co1 = new DebugChemObject();
         DebugChemObject co2 = new DebugChemObject();
-        co1.setID(new String("a1"));
-        co2.setID(new String("a1"));
+        co1.setID("a1");
+        co2.setID("a1");
         Assert.assertTrue(co1.compare(co2));
     }
 
@@ -70,8 +63,8 @@ public class DebugChemObjectTest extends AbstractChemObjectTest {
     public void compareDifferent() {
         DebugChemObject co1 = new DebugChemObject();
         DebugChemObject co2 = new DebugChemObject();
-        co1.setID(new String("a1"));
-        co2.setID(new String("a2"));
+        co1.setID("a1");
+        co2.setID("a2");
         Assert.assertFalse(co1.compare(co2));
     }
 }

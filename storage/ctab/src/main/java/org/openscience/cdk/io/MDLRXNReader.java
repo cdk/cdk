@@ -65,8 +65,8 @@ import java.util.StringTokenizer;
 @Deprecated
 public class MDLRXNReader extends DefaultChemObjectReader {
 
-    BufferedReader              input  = null;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNReader.class);
+    BufferedReader              input;
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNReader.class);
 
     /**
      * Constructs a new MDLReader that can read Molecule from a given Reader.
@@ -124,11 +124,11 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         if (IReaction.class.equals(classObject)) return true;
         if (IReactionSet.class.equals(classObject)) return true;
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IChemModel.class.equals(interfaces[i])) return true;
-            if (IChemFile.class.equals(interfaces[i])) return true;
-            if (IReaction.class.equals(interfaces[i])) return true;
-            if (IReactionSet.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IChemModel.class.equals(anInterface)) return true;
+            if (IChemFile.class.equals(anInterface)) return true;
+            if (IReaction.class.equals(anInterface)) return true;
+            if (IReactionSet.class.equals(anInterface)) return true;
         }
         Class superClass = classObject.getSuperclass();
         if (superClass != null) return this.accepts(superClass);
@@ -301,8 +301,8 @@ public class MDLRXNReader extends DefaultChemObjectReader {
             throw new CDKException("Error while reading header of RXN file", exception);
         }
 
-        int reactantCount = 0;
-        int productCount = 0;
+        int reactantCount;
+        int productCount;
         int agentCount = 0; // optional
         try {
             String countsLine = input.readLine();
@@ -336,7 +336,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
             for (int i = 1; i <= reactantCount; i++) {
                 StringBuilder molFile = new StringBuilder();
                 input.readLine(); // announceMDLFileLine
-                String molFileLine = "";
+                String molFileLine;
                 do {
                     molFileLine = input.readLine();
                     molFile.append(molFileLine);
@@ -345,7 +345,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
 
                 // read MDL molfile content
                 MDLReader reader = new MDLReader(new StringReader(molFile.toString()));
-                IAtomContainer reactant = (IAtomContainer) reader.read(builder.newInstance(IAtomContainer.class));
+                IAtomContainer reactant = reader.read(builder.newInstance(IAtomContainer.class));
                 reader.close();
 
                 // add reactant
@@ -364,7 +364,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
             for (int i = 1; i <= productCount; i++) {
                 StringBuilder molFile = new StringBuilder();
                 input.readLine(); // String announceMDLFileLine =
-                String molFileLine = "";
+                String molFileLine;
                 do {
                     molFileLine = input.readLine();
                     molFile.append(molFileLine);
@@ -373,7 +373,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
 
                 // read MDL molfile content
                 MDLReader reader = new MDLReader(new StringReader(molFile.toString()), super.mode);
-                IAtomContainer product = (IAtomContainer) reader.read(builder.newInstance(IAtomContainer.class));
+                IAtomContainer product = reader.read(builder.newInstance(IAtomContainer.class));
                 reader.close();
 
                 // add reactant
@@ -392,7 +392,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
             for (int i = 1; i <= agentCount; i++) {
                 StringBuilder molFile = new StringBuilder();
                 input.readLine(); // String announceMDLFileLine =
-                String molFileLine = "";
+                String molFileLine;
                 do {
                     molFileLine = input.readLine();
                     molFile.append(molFileLine);
@@ -401,7 +401,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
 
                 // read MDL molfile content
                 MDLReader reader = new MDLReader(new StringReader(molFile.toString()), super.mode);
-                IAtomContainer agent = (IAtomContainer) reader.read(builder.newInstance(IAtomContainer.class));
+                IAtomContainer agent = reader.read(builder.newInstance(IAtomContainer.class));
                 reader.close();
 
                 // add reactant

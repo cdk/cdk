@@ -58,7 +58,7 @@ import java.util.List;
 public class HeterolyticCleavageSBReactionTest extends ReactionProcessTest {
 
     private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-    private IChemObjectBuilder            builder = SilentChemObjectBuilder.getInstance();
+    private final IChemObjectBuilder            builder = SilentChemObjectBuilder.getInstance();
     private UniversalIsomorphismTester    uiTester;
 
     @Before
@@ -127,7 +127,7 @@ public class HeterolyticCleavageSBReactionTest extends ReactionProcessTest {
         setOfReactants.addAtomContainer(molecule);
 
         IReactionProcess type = new HeterolyticCleavageSBReaction();
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -155,7 +155,7 @@ public class HeterolyticCleavageSBReactionTest extends ReactionProcessTest {
         expected1.addBond(0, 3, IBond.Order.SINGLE);
         expected1.addBond(0, 4, IBond.Order.SINGLE);
         expected1.addBond(1, 5, IBond.Order.SINGLE);
-        expected1.addBond(1, 6, IBond.Order.SINGLE);;
+        expected1.addBond(1, 6, IBond.Order.SINGLE);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
@@ -244,7 +244,7 @@ public class HeterolyticCleavageSBReactionTest extends ReactionProcessTest {
         setOfReactants.addAtomContainer(molecule);
 
         IReactionProcess type = new HeterolyticCleavageSBReaction();
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -356,7 +356,7 @@ public class HeterolyticCleavageSBReactionTest extends ReactionProcessTest {
         setOfReactants.addAtomContainer(molecule);
 
         IReactionProcess type = new HeterolyticCleavageSBReaction();
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -457,7 +457,7 @@ public class HeterolyticCleavageSBReactionTest extends ReactionProcessTest {
         setOfReactants.addAtomContainer(molecule);
 
         IReactionProcess type = new HeterolyticCleavageSBReaction();
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -545,7 +545,7 @@ public class HeterolyticCleavageSBReactionTest extends ReactionProcessTest {
         setOfReactants.addAtomContainer(molecule);
 
         IReactionProcess type = new HeterolyticCleavageSBReaction();
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -631,7 +631,7 @@ public class HeterolyticCleavageSBReactionTest extends ReactionProcessTest {
         setOfReactants.addAtomContainer(molecule);
 
         IReactionProcess type = new HeterolyticCleavageSBReaction();
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -710,7 +710,7 @@ public class HeterolyticCleavageSBReactionTest extends ReactionProcessTest {
         setOfReactants.addAtomContainer(molecule);
 
         IReactionProcess type = new HeterolyticCleavageSBReaction();
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -766,7 +766,7 @@ public class HeterolyticCleavageSBReactionTest extends ReactionProcessTest {
         molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -802,7 +802,7 @@ public class HeterolyticCleavageSBReactionTest extends ReactionProcessTest {
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
 
         /* automatic search of the center active */
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);

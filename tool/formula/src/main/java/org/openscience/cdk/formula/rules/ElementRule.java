@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.formula.rules;
 
-import java.util.Iterator;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.formula.MolecularFormulaRange;
 import org.openscience.cdk.interfaces.IElement;
@@ -57,7 +55,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  */
 public class ElementRule implements IRule {
 
-    private static ILoggingTool   logger = LoggingToolFactory.createLoggingTool(ElementRule.class);
+    private static final ILoggingTool   logger = LoggingToolFactory.createLoggingTool(ElementRule.class);
 
     private MolecularFormulaRange mfRange;
 
@@ -111,9 +109,7 @@ public class ElementRule implements IRule {
         ensureDefaultOccurElements(formula.getBuilder());
 
         double isValid = 1.0;
-        Iterator<IElement> itElem = MolecularFormulaManipulator.elements(formula).iterator();
-        while (itElem.hasNext()) {
-            IElement element = itElem.next();
+        for (IElement element : MolecularFormulaManipulator.elements(formula)) {
             int occur = MolecularFormulaManipulator.getElementCount(formula, element);
             IIsotope elemIsotope = formula.getBuilder().newInstance(IIsotope.class, element.getSymbol());
             if ((occur < mfRange.getIsotopeCountMin(elemIsotope)) || (occur > mfRange.getIsotopeCountMax(elemIsotope))) {
@@ -139,8 +135,7 @@ public class ElementRule implements IRule {
                     "Li", "Tl", "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac", "Th", "Pa", "U", "Np", "Pu"};
 
             mfRange = new MolecularFormulaRange();
-            for (int i = 0; i < elements.length; i++)
-                mfRange.addIsotope(builder.newInstance(IIsotope.class, elements[i]), 0, 50);
+            for (String element : elements) mfRange.addIsotope(builder.newInstance(IIsotope.class, element), 0, 50);
         }
     }
 }

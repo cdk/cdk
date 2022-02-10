@@ -40,7 +40,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class AbbreviationsTest {
 
-    private static SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+    private static final SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
 
     static IAtomContainer smi(String smi) throws Exception {
         return smipar.parseSmiles(smi);

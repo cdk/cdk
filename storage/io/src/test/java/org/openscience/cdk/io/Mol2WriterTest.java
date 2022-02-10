@@ -133,7 +133,7 @@ public class Mol2WriterTest extends ChemObjectIOTest {
         String filename = "ligand-1a0i.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        IChemFile fileContents = (IChemFile) reader.read(new ChemFile());
+        IChemFile fileContents = reader.read(new ChemFile());
         reader.close();
         List<IAtomContainer> molecules = ChemFileManipulator.getAllAtomContainers(fileContents);
         IAtomContainer mol = molecules.get(0);

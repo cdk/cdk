@@ -893,7 +893,7 @@ public class SmartsExprReadTest {
     @Test
     public void ringOpenCloseInconsistency() {
         assertFalse(Smarts.parse(new QueryAtomContainer(null), "C=1CC-,=1"));
-        assertFalse(Smarts.parse(new QueryAtomContainer(null), "C=1CC-1"));;
+        assertFalse(Smarts.parse(new QueryAtomContainer(null), "C=1CC-1"));
     }
 
     @Test

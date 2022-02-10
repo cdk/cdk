@@ -33,9 +33,9 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
         IStrand oStrand2 = oBioPolymer.getBuilder().newInstance(IStrand.class);
         oStrand2.setStrandName("B");
         IMonomer oMono1 = oBioPolymer.getBuilder().newInstance(IMonomer.class);
-        oMono1.setMonomerName(new String("TRP279"));
+        oMono1.setMonomerName("TRP279");
         IMonomer oMono2 = oBioPolymer.getBuilder().newInstance(IMonomer.class);
-        oMono2.setMonomerName(new String("HOH"));
+        oMono2.setMonomerName("HOH");
         IAtom oAtom1 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
         IAtom oAtom2 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
         IAtom oAtom3 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
@@ -63,9 +63,9 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
         IStrand oStrand2 = oBioPolymer.getBuilder().newInstance(IStrand.class);
         oStrand2.setStrandName("B");
         IMonomer oMono1 = oBioPolymer.getBuilder().newInstance(IMonomer.class);
-        oMono1.setMonomerName(new String("TRP279"));
+        oMono1.setMonomerName("TRP279");
         IMonomer oMono2 = oBioPolymer.getBuilder().newInstance(IMonomer.class);
-        oMono2.setMonomerName(new String("HOH"));
+        oMono2.setMonomerName("HOH");
         IAtom oAtom1 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
         IAtom oAtom2 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
         IAtom oAtom3 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
@@ -93,9 +93,9 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
         IStrand oStrand2 = oBioPolymer.getBuilder().newInstance(IStrand.class);
         oStrand2.setStrandName("B");
         IMonomer oMono1 = oBioPolymer.getBuilder().newInstance(IMonomer.class);
-        oMono1.setMonomerName(new String("TRP279"));
+        oMono1.setMonomerName("TRP279");
         IMonomer oMono2 = oBioPolymer.getBuilder().newInstance(IMonomer.class);
-        oMono2.setMonomerName(new String("HOH"));
+        oMono2.setMonomerName("HOH");
         IAtom oAtom1 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
         IAtom oAtom2 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
         IAtom oAtom3 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
@@ -126,7 +126,7 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
         IStrand oStrand1 = oBioPolymer.getBuilder().newInstance(IStrand.class);
         oStrand1.setStrandName("A");
         IMonomer oMono1 = oBioPolymer.getBuilder().newInstance(IMonomer.class);
-        oMono1.setMonomerName(new String("TRP279"));
+        oMono1.setMonomerName("TRP279");
         IAtom oAtom1 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
         IAtom oAtom2 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
         IAtom oAtom3 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
@@ -145,7 +145,7 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
         IStrand oStrand1 = oBioPolymer.getBuilder().newInstance(IStrand.class);
         oStrand1.setStrandName("A");
         IMonomer oMono1 = oBioPolymer.getBuilder().newInstance(IMonomer.class);
-        oMono1.setMonomerName(new String("TRP279"));
+        oMono1.setMonomerName("TRP279");
         IAtom oAtom1 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
         IAtom oAtom2 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
         oBioPolymer.addAtom(oAtom1, oMono1, oStrand1);
@@ -162,7 +162,7 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
         IStrand oStrand1 = oBioPolymer.getBuilder().newInstance(IStrand.class);
         oStrand1.setStrandName("A");
         IMonomer oMono1 = oBioPolymer.getBuilder().newInstance(IMonomer.class);
-        oMono1.setMonomerName(new String("TRP279"));
+        oMono1.setMonomerName("TRP279");
         IAtom oAtom1 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
         oBioPolymer.addAtom(oAtom1, oMono1, oStrand1);
 
@@ -175,7 +175,7 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
         IStrand oStrand1 = oBioPolymer.getBuilder().newInstance(IStrand.class);
         oStrand1.setStrandName("A");
         IMonomer oMono1 = oBioPolymer.getBuilder().newInstance(IMonomer.class);
-        oMono1.setMonomerName(new String("TRP279"));
+        oMono1.setMonomerName("TRP279");
         IAtom oAtom1 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
         oBioPolymer.addAtom(oAtom1, oMono1, oStrand1);
 
@@ -190,14 +190,14 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
         oStrand1.setStrandName("A");
         oStrand2.setStrandName("B");
         IMonomer oMono1 = oBioPolymer.getBuilder().newInstance(IMonomer.class);
-        oMono1.setMonomerName(new String("TRP279"));
+        oMono1.setMonomerName("TRP279");
         IMonomer oMono2 = oBioPolymer.getBuilder().newInstance(IMonomer.class);
-        oMono2.setMonomerName(new String("GLY123"));
+        oMono2.setMonomerName("GLY123");
         IAtom oAtom1 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
         IAtom oAtom2 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
         oBioPolymer.addAtom(oAtom1, oMono1, oStrand1);
         oBioPolymer.addAtom(oAtom2, oMono2, oStrand2);
-        Map<String, IStrand> strands = new Hashtable<String, IStrand>();
+        Map<String, IStrand> strands = new Hashtable<>();
         strands.put("A", oStrand1);
         strands.put("B", oStrand2);
 
@@ -210,7 +210,7 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
         IStrand oStrand1 = oBioPolymer.getBuilder().newInstance(IStrand.class);
         oStrand1.setStrandName("A");
         IMonomer oMono1 = oBioPolymer.getBuilder().newInstance(IMonomer.class);
-        oMono1.setMonomerName(new String("TRP279"));
+        oMono1.setMonomerName("TRP279");
         IAtom oAtom1 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
         oBioPolymer.addAtom(oAtom1, oMono1, oStrand1);
 
@@ -229,14 +229,14 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
         oStrand1.setStrandName("A");
         oStrand2.setStrandName("B");
         IMonomer oMono1 = oBioPolymer.getBuilder().newInstance(IMonomer.class);
-        oMono1.setMonomerName(new String("TRP279"));
+        oMono1.setMonomerName("TRP279");
         IMonomer oMono2 = oBioPolymer.getBuilder().newInstance(IMonomer.class);
-        oMono2.setMonomerName(new String("GLY123"));
+        oMono2.setMonomerName("GLY123");
         IAtom oAtom1 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
         IAtom oAtom2 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C");
         oBioPolymer.addAtom(oAtom1, oMono1, oStrand1);
         oBioPolymer.addAtom(oAtom2, oMono2, oStrand2);
-        Map<String, IStrand> strands = new Hashtable<String, IStrand>();
+        Map<String, IStrand> strands = new Hashtable<>();
         strands.put("A", oStrand1);
         strands.put("B", oStrand2);
 

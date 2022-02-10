@@ -35,7 +35,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class DebugMolecularFormula extends MolecularFormula implements IMolecularFormula {
 
-    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(DebugMolecularFormula.class);
+    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(DebugMolecularFormula.class);
 
     /** {@inheritDoc} */
     @Override

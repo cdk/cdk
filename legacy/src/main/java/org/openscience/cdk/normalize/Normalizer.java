@@ -37,7 +37,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -68,7 +67,7 @@ public class Normalizer {
      * @return                             Did a replacement take place?
      * @exception  InvalidSmilesException  doc contains an invalid smiles.
      */
-    public static boolean normalize(IAtomContainer ac, Document doc) throws InvalidSmilesException, CDKException {
+    public static boolean normalize(IAtomContainer ac, Document doc) throws CDKException {
         NodeList nl = doc.getElementsByTagName("replace-set");
         SmilesParser sp = new SmilesParser(ac.getBuilder());
         boolean change = false;
@@ -88,21 +87,17 @@ public class Normalizer {
                     replacestring = replace.getFirstChild().getNextSibling().getNodeValue();
                 }
                 IAtomContainer replaceStructure = sp.parseSmiles(replacestring);
-                List<RMap> l = null;
+                List<RMap> l;
                 UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
                 while ((l = universalIsomorphismTester.getSubgraphMap(ac, replaceStructure)) != null) {
                     List<RMap> l2 = universalIsomorphismTester.makeAtomsMapOfBondsMap(l, ac, replaceStructure);
-                    Iterator<RMap> bondit = l.iterator();
-                    while (bondit.hasNext()) {
-                        RMap rmap = bondit.next();
+                    for (RMap rmap : l) {
                         IBond acbond = ac.getBond(rmap.getId1());
                         IBond replacebond = replacementStructure.getBond(rmap.getId2());
                         acbond.setOrder(replacebond.getOrder());
                         change = true;
                     }
-                    Iterator<RMap> atomit = l2.iterator();
-                    while (atomit.hasNext()) {
-                        RMap rmap = atomit.next();
+                    for (RMap rmap : l2) {
                         IAtom acatom = ac.getAtom(rmap.getId1());
                         IAtom replaceatom = replacementStructure.getAtom(rmap.getId2());
                         acatom.setFormalCharge(replaceatom.getFormalCharge());

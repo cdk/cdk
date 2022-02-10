@@ -124,10 +124,10 @@ public final class Stereocenters {
     private final EdgeToBondMap   bondMap;
 
     /** the type of stereo center - indexed by atom. */
-    private Stereocenter[]  stereocenters;
+    private final Stereocenter[]  stereocenters;
 
     /** the stereo elements - indexed by atom. */
-    private StereoElement[] elements;
+    private final StereoElement[] elements;
 
     /** basic cycle information (i.e. is atom/bond cyclic) and cycle systems. */
     private final RingSearch      ringSearch;
@@ -413,8 +413,8 @@ public final class Stereocenters {
 
         for (int[] isolated : ringSearch.isolated()) {
 
-            List<StereoElement> potential = new ArrayList<StereoElement>();
-            List<StereoElement> trueCentres = new ArrayList<StereoElement>();
+            List<StereoElement> potential = new ArrayList<>();
+            List<StereoElement> trueCentres = new ArrayList<>();
             BitSet cyclic = new BitSet();
 
             for (int v : isolated) {
@@ -432,7 +432,7 @@ public final class Stereocenters {
                 continue;
             }
 
-            List<StereoElement> paraElements = new ArrayList<StereoElement>();
+            List<StereoElement> paraElements = new ArrayList<>();
             for (StereoElement element : potential) {
                 if (element.type == Type.Tetracoordinate) {
 
@@ -890,8 +890,8 @@ public final class Stereocenters {
 
             // remove the other neighbor from neighbors when checking
             // equivalence
-            for (int i = 0; i < neighbors.length; i++) {
-                if (neighbors[i] != other) this.neighbors[n++] = neighbors[i];
+            for (int neighbor : neighbors) {
+                if (neighbor != other) this.neighbors[n++] = neighbor;
             }
         }
     }

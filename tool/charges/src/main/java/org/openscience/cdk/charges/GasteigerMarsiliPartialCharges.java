@@ -18,8 +18,6 @@
  */
 package org.openscience.cdk.charges;
 
-import java.util.Iterator;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -138,8 +136,8 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
         double deoc;
 
         IAtom[] atoms = null;
-        int atom1 = 0;
-        int atom2 = 0;
+        int atom1;
+        int atom2;
 
         double[] q_old = new double[ac.getAtomCount()];
         for (int i = 0; i < q_old.length; i++)
@@ -162,10 +160,7 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
             break out;
 
             //            bonds = ac.getBonds();
-            Iterator<IBond> bonds = ac.bonds().iterator();
-            while (bonds.hasNext()) {
-                IBond bond = (IBond) bonds.next();
-
+            for (IBond bond : ac.bonds()) {
                 atom1 = ac.indexOf(bond.getBegin());
                 atom2 = ac.indexOf(bond.getEnd());
 

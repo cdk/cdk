@@ -47,7 +47,7 @@ import java.util.List;
  */
 public abstract class AbstractGeneratorTest {
 
-    protected IChemObjectBuilder  builder = SilentChemObjectBuilder.getInstance();
+    protected final IChemObjectBuilder  builder = SilentChemObjectBuilder.getInstance();
 
     protected RendererModel       model;
 

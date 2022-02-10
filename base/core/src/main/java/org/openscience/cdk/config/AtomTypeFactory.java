@@ -92,10 +92,10 @@ public class AtomTypeFactory {
     private final static String                 XML_EXTENSION         = "xml";
     private final static String                 OWL_EXTENSION         = "owl";
 
-    private static ILoggingTool                 logger                = LoggingToolFactory
+    private static final ILoggingTool                 logger                = LoggingToolFactory
                                                                               .createLoggingTool(AtomTypeFactory.class);
     private static Map<String, AtomTypeFactory> tables                = null;
-    private Map<String,IAtomType>               atomTypes             = null;
+    private Map<String,IAtomType>               atomTypes;
 
     /**
      * Private constructor for the AtomTypeFactory singleton.
@@ -103,7 +103,7 @@ public class AtomTypeFactory {
      *
      */
     private AtomTypeFactory(String configFile, IChemObjectBuilder builder) {
-        atomTypes = new HashMap<String,IAtomType>(100);
+        atomTypes = new HashMap<>(100);
         readConfiguration(configFile, builder);
     }
 
@@ -112,7 +112,7 @@ public class AtomTypeFactory {
      *
      */
     private AtomTypeFactory(InputStream ins, String format, IChemObjectBuilder builder) {
-        atomTypes = new HashMap<String,IAtomType>(100);
+        atomTypes = new HashMap<>(100);
         readConfiguration(ins, format, builder);
     }
 
@@ -159,7 +159,7 @@ public class AtomTypeFactory {
      */
     public static AtomTypeFactory getInstance(String configFile, IChemObjectBuilder builder) {
         if (tables == null) {
-            tables = new Hashtable<String, AtomTypeFactory>();
+            tables = new Hashtable<>();
         }
         if (!(tables.containsKey(configFile))) {
             tables.put(configFile, new AtomTypeFactory(configFile, builder));
@@ -243,7 +243,7 @@ public class AtomTypeFactory {
             }
         } else {
             logger.debug("AtomTypeConfigurator was null!");
-            atomTypes = new HashMap<String,IAtomType>();
+            atomTypes = new HashMap<>();
         }
     }
 
@@ -279,13 +279,13 @@ public class AtomTypeFactory {
      */
     public IAtomType[] getAtomTypes(String symbol) {
         logger.debug("Request for atomtype for symbol ", symbol);
-        List<IAtomType> atomList = new ArrayList<IAtomType>();
+        List<IAtomType> atomList = new ArrayList<>();
         for (IAtomType atomType : atomTypes.values()) {
             if (Objects.equals(atomType.getSymbol(), symbol)) {
                 atomList.add(atomType);
             }
         }
-        IAtomType[] atomTypes = (IAtomType[]) atomList.toArray(new IAtomType[atomList.size()]);
+        IAtomType[] atomTypes = atomList.toArray(new IAtomType[atomList.size()]);
         if (atomTypes.length > 0)
             logger.debug("Atomtype for symbol ", symbol, " has this number of types: " + atomTypes.length);
         else
@@ -300,7 +300,7 @@ public class AtomTypeFactory {
      */
     public IAtomType[] getAllAtomTypes() {
         logger.debug("Returning list of size: ", getSize());
-        return (IAtomType[]) atomTypes.values().toArray(new IAtomType[atomTypes.size()]);
+        return atomTypes.values().toArray(new IAtomType[atomTypes.size()]);
     }
 
     /**
@@ -328,7 +328,7 @@ public class AtomTypeFactory {
                     logger.warn("Taking first atom type, but other may exist");
                     atomType = types[0];
                 } else {
-                    String message = "Could not configure atom with unknown ID: " + atom.toString() + " + (id="
+                    String message = "Could not configure atom with unknown ID: " + atom + " + (id="
                             + atom.getAtomTypeName() + ")";
                     logger.warn(message);
                     throw new CDKException(message);

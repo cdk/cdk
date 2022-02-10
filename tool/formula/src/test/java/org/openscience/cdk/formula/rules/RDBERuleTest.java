@@ -51,7 +51,7 @@ public class RDBERuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testRDBERule() throws ClassNotFoundException, CDKException, Exception {
+    public void testRDBERule() throws Exception {
 
         IRule rule = new RDBERule();
         Assert.assertNotNull(rule);
@@ -64,7 +64,7 @@ public class RDBERuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testDefault() throws ClassNotFoundException, CDKException, Exception {
+    public void testDefault() throws Exception {
 
         IRule rule = new RDBERule();
         Object[] objects = rule.getParameters();
@@ -83,7 +83,7 @@ public class RDBERuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testSetParameters() throws ClassNotFoundException, CDKException, Exception {
+    public void testSetParameters() throws Exception {
 
         IRule rule = new RDBERule();
         Object[] params = new Object[2];
@@ -108,7 +108,7 @@ public class RDBERuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testDefaultValidFalse() throws ClassNotFoundException, CDKException, Exception {
+    public void testDefaultValidFalse() throws Exception {
 
         IRule rule = new RDBERule();
 
@@ -123,7 +123,7 @@ public class RDBERuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testDefaultValidFalse_SetParam() throws ClassNotFoundException, CDKException, Exception {
+    public void testDefaultValidFalse_SetParam() throws Exception {
 
         RDBERule rule = new RDBERule();
 
@@ -147,7 +147,7 @@ public class RDBERuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testDefaultValidTrue() throws ClassNotFoundException, CDKException, Exception {
+    public void testDefaultValidTrue() throws Exception {
 
         IRule rule = new RDBERule();
 
@@ -163,7 +163,7 @@ public class RDBERuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testGetRDBEValue_IMolecularFormula() throws ClassNotFoundException, CDKException, Exception {
+    public void testGetRDBEValue_IMolecularFormula() throws Exception {
 
         RDBERule rule = new RDBERule();
 
@@ -178,7 +178,7 @@ public class RDBERuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testValidate_IMolecularFormula_double() throws ClassNotFoundException, CDKException, Exception {
+    public void testValidate_IMolecularFormula_double() throws Exception {
 
         RDBERule rule = new RDBERule();
 
@@ -193,7 +193,7 @@ public class RDBERuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void test1() throws ClassNotFoundException, CDKException, Exception {
+    public void test1() throws Exception {
 
         RDBERule rule = new RDBERule();
 
@@ -211,7 +211,7 @@ public class RDBERuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void test2() throws ClassNotFoundException, CDKException, Exception {
+    public void test2() throws Exception {
 
         RDBERule rule = new RDBERule();
 
@@ -226,7 +226,7 @@ public class RDBERuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testAnticipatedIonState_1() throws ClassNotFoundException, CDKException, Exception {
+    public void testAnticipatedIonState_1() throws Exception {
 
         RDBERule rule = new RDBERule();
 
@@ -242,7 +242,7 @@ public class RDBERuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testAnticipatedIonState_2() throws ClassNotFoundException, CDKException, Exception {
+    public void testAnticipatedIonState_2() throws Exception {
 
         RDBERule rule = new RDBERule();
 
@@ -259,7 +259,7 @@ public class RDBERuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testPCCharged() throws ClassNotFoundException, CDKException, Exception {
+    public void testPCCharged() throws Exception {
 
         RDBERule rule = new RDBERule();
 
@@ -275,7 +275,7 @@ public class RDBERuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testB() throws ClassNotFoundException, CDKException, Exception {
+    public void testB() throws Exception {
 
         RDBERule rule = new RDBERule();
 

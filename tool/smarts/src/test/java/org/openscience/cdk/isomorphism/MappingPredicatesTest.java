@@ -84,8 +84,8 @@ public class MappingPredicatesTest {
         assertThat(mappings.uniqueBonds().count(), is(1)); // re-iteration
     }
 
-    IChemObjectBuilder bldr   = SilentChemObjectBuilder.getInstance();
-    SmilesParser       smipar = new SmilesParser(bldr);
+    final IChemObjectBuilder bldr   = SilentChemObjectBuilder.getInstance();
+    final SmilesParser       smipar = new SmilesParser(bldr);
 
     IAtomContainer smi(String smi) throws Exception {
         return smipar.parseSmiles(smi);

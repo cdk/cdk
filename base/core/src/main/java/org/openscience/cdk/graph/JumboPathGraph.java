@@ -143,7 +143,7 @@ final class JumboPathGraph extends PathGraph {
     private List<PathEdge> combine(final List<PathEdge> edges, final int x) {
 
         final int n = edges.size();
-        final List<PathEdge> reduced = new ArrayList<PathEdge>(n);
+        final List<PathEdge> reduced = new ArrayList<>(n);
 
         for (int i = 0; i < n; i++) {
             PathEdge e = edges.get(i);

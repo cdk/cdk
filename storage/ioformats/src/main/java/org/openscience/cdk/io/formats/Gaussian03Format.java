@@ -76,7 +76,7 @@ public class Gaussian03Format extends SimpleChemFormatMatcher implements IChemFo
     /** {@inheritDoc} */
     @Override
     public boolean matches(int lineNumber, String line) {
-        if (line.indexOf("Gaussian(R) 03") >= 0) {
+        if (line.contains("Gaussian(R) 03")) {
             return true;
         }
         return false;

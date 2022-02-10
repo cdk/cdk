@@ -61,7 +61,7 @@ import java.util.List;
  */
 public class AminoAcidCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private IAtomContainerSet substructureSet;
+    private final IAtomContainerSet substructureSet;
 
     private static String[]   names;
 

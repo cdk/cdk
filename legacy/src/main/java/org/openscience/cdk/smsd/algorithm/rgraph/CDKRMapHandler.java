@@ -108,7 +108,7 @@ public class CDKRMapHandler {
         setSource(molecule1);
         setTarget(molecule2);
 
-        setMappings(new ArrayList<Map<Integer, Integer>>());
+        setMappings(new ArrayList<>());
 
         if ((getSource().getAtomCount() == 1) || (getTarget().getAtomCount() == 1)) {
             List<CDKRMap> overlaps = CDKMCS.checkSingleAtomCases(getSource(), getTarget());
@@ -158,7 +158,7 @@ public class CDKRMapHandler {
         setSource(molecule1);
         setTarget(molecule2);
 
-        setMappings(new ArrayList<Map<Integer, Integer>>());
+        setMappings(new ArrayList<>());
 
         //System.out.println("Searching: ");
         //List overlaps = UniversalIsomorphismTesterBondTypeInSensitive.getSubgraphAtomsMap(source, target);
@@ -205,7 +205,7 @@ public class CDKRMapHandler {
         setSource(molecule1);
         setTarget(molecule2);
 
-        setMappings(new ArrayList<Map<Integer, Integer>>());
+        setMappings(new ArrayList<>());
 
         //System.out.println("Searching: ");
         //List overlaps = UniversalIsomorphismTesterBondTypeInSensitive.getSubgraphAtomsMap(source, target);
@@ -251,7 +251,7 @@ public class CDKRMapHandler {
         setSource(molecule1);
         setTarget(molecule2);
 
-        setMappings(new ArrayList<Map<Integer, Integer>>());
+        setMappings(new ArrayList<>());
 
         //System.out.println("Searching: ");
         //List overlaps = UniversalIsomorphismTesterBondTypeInSensitive.getSubgraphAtomsMap(source, target);
@@ -289,7 +289,7 @@ public class CDKRMapHandler {
      */
     protected List<List<CDKRMap>> removeSubGraph(List<List<CDKRMap>> overlaps) {
 
-        List<List<CDKRMap>> reducedList = new ArrayList<List<CDKRMap>>(overlaps);
+        List<List<CDKRMap>> reducedList = new ArrayList<>(overlaps);
 
         for (int i = 0; i < overlaps.size(); i++) {
             List<CDKRMap> graphI = overlaps.get(i);
@@ -318,7 +318,7 @@ public class CDKRMapHandler {
      * @return
      */
     protected List<CDKRMap> removeRedundantMappingsForSingleAtomCase(List<CDKRMap> overlaps) {
-        List<CDKRMap> reducedList = new ArrayList<CDKRMap>();
+        List<CDKRMap> reducedList = new ArrayList<>();
         reducedList.add(overlaps.get(0));
         //reducedList.add(overlaps.get(1));
         return reducedList;
@@ -337,11 +337,11 @@ public class CDKRMapHandler {
         if (rMapList == null) {
             return (null);
         }
-        List<List<CDKRMap>> result = null;
+        List<List<CDKRMap>> result;
         if (rMapList.size() == 1) {
             result = makeAtomsMapOfBondsMapSingleBond(rMapList, graph1, graph2);
         } else {
-            List<CDKRMap> resultLocal = new ArrayList<CDKRMap>();
+            List<CDKRMap> resultLocal = new ArrayList<>();
             for (int i = 0; i < rMapList.size(); i++) {
                 IBond qBond = graph1.getBond(rMapList.get(i).getId1());
                 IBond tBond = graph2.getBond(rMapList.get(i).getId2());
@@ -349,13 +349,13 @@ public class CDKRMapHandler {
                 IAtom[] tAtoms = BondManipulator.getAtomArray(tBond);
                 for (int j = 0; j < 2; j++) {
                     List<IBond> bondsConnectedToAtom1j = graph1.getConnectedBondsList(qAtoms[j]);
-                    for (int k = 0; k < bondsConnectedToAtom1j.size(); k++) {
-                        if (!bondsConnectedToAtom1j.get(k).equals(qBond)) {
-                            IBond testBond = bondsConnectedToAtom1j.get(k);
-                            for (int m = 0; m < rMapList.size(); m++) {
+                    for (IBond iBond : bondsConnectedToAtom1j) {
+                        if (!iBond.equals(qBond)) {
+                            IBond testBond = iBond;
+                            for (CDKRMap cdkrMap : rMapList) {
                                 IBond testBond2;
-                                if ((rMapList.get(m)).getId1() == graph1.indexOf(testBond)) {
-                                    testBond2 = graph2.getBond((rMapList.get(m)).getId2());
+                                if (cdkrMap.getId1() == graph1.indexOf(testBond)) {
+                                    testBond2 = graph2.getBond(cdkrMap.getId2());
                                     for (int n = 0; n < 2; n++) {
                                         List<IBond> bondsToTest = graph2.getConnectedBondsList(tAtoms[n]);
                                         if (bondsToTest.contains(testBond2)) {
@@ -389,7 +389,7 @@ public class CDKRMapHandler {
                     }
                 }
             }
-            result = new ArrayList<List<CDKRMap>>();
+            result = new ArrayList<>();
             result.add(resultLocal);
         }
         return result;
@@ -408,7 +408,7 @@ public class CDKRMapHandler {
         if (list == null) {
             return null;
         }
-        Map<IBond, IBond> bondMap = new HashMap<IBond, IBond>(list.size());
+        Map<IBond, IBond> bondMap = new HashMap<>(list.size());
         for (CDKRMap solBondMap : list) {
             int id1 = solBondMap.getId1();
             int id2 = solBondMap.getId2();
@@ -416,15 +416,15 @@ public class CDKRMapHandler {
             IBond tBond = targetGraph.getBond(id2);
             bondMap.put(qBond, tBond);
         }
-        List<CDKRMap> result1 = new ArrayList<CDKRMap>();
-        List<CDKRMap> result2 = new ArrayList<CDKRMap>();
+        List<CDKRMap> result1 = new ArrayList<>();
+        List<CDKRMap> result2 = new ArrayList<>();
         for (IBond qbond : sourceGraph.bonds()) {
             if (bondMap.containsKey(qbond)) {
                 IBond tbond = bondMap.get(qbond);
-                CDKRMap map00 = null;
-                CDKRMap map01 = null;
-                CDKRMap map10 = null;
-                CDKRMap map11 = null;
+                CDKRMap map00;
+                CDKRMap map01;
+                CDKRMap map10;
+                CDKRMap map11;
 
                 if ((qbond.getBegin().getSymbol().equals(tbond.getBegin().getSymbol()))
                         && (qbond.getEnd().getSymbol().equals(tbond.getEnd().getSymbol()))) {
@@ -454,7 +454,7 @@ public class CDKRMapHandler {
                 }
             }
         }
-        List<List<CDKRMap>> result = new ArrayList<List<CDKRMap>>();
+        List<List<CDKRMap>> result = new ArrayList<>();
         if (result1.size() == result2.size()) {
             result.add(result1);
             result.add(result2);
@@ -501,18 +501,18 @@ public class CDKRMapHandler {
 
             if (arrayList.size() > count) {
 
-                List<CDKRMap> list = new ArrayList<CDKRMap>(arrayList);
+                List<CDKRMap> list = new ArrayList<>(arrayList);
                 count = arrayList.size();
 
                 //System.out.println("List size" + list.size());
 
                 //Collection threadSafeList = Collections.synchronizedCollection( list );
-                allMaximumMappings = new Stack<List<CDKRMap>>();
+                allMaximumMappings = new Stack<>();
                 //allMaximumMappings.clear();
                 allMaximumMappings.push(list);
             } else if (arrayList.size() == count) {
 
-                List<CDKRMap> list = new ArrayList<CDKRMap>(arrayList);
+                List<CDKRMap> list = new ArrayList<>(arrayList);
                 count = arrayList.size();
                 allMaximumMappings.push(list);
             }
@@ -529,8 +529,8 @@ public class CDKRMapHandler {
      */
     protected void identifyMatchedParts(List<List<CDKRMap>> list, IAtomContainer source, IAtomContainer target) {
 
-        List<IAtom> array1 = new ArrayList<IAtom>();
-        List<IAtom> array2 = new ArrayList<IAtom>();
+        List<IAtom> array1 = new ArrayList<>();
+        List<IAtom> array2 = new ArrayList<>();
 
         /*
          * We have serial numbers of the bonds/Atoms to delete Now we will
@@ -538,7 +538,7 @@ public class CDKRMapHandler {
          * RonP flag check whether reactant is mapped on product or Vise Versa
          */
         for (List<CDKRMap> rMap : list) {
-            Map<Integer, Integer> atomNumbersFromContainer = new TreeMap<Integer, Integer>();
+            Map<Integer, Integer> atomNumbersFromContainer = new TreeMap<>();
             for (CDKRMap rmap : rMap) {
                 IAtom sourceAtom = source.getAtom(rmap.getId1());
                 IAtom targetAtom = target.getAtom(rmap.getId2());
@@ -566,8 +566,8 @@ public class CDKRMapHandler {
      */
     protected void identifySingleAtomsMatchedParts(List<CDKRMap> list, IAtomContainer source, IAtomContainer target) {
 
-        List<IAtom> array1 = new ArrayList<IAtom>();
-        List<IAtom> array2 = new ArrayList<IAtom>();
+        List<IAtom> array1 = new ArrayList<>();
+        List<IAtom> array2 = new ArrayList<>();
 
         /*
          * We have serial numbers of the bonds/Atoms to delete Now we will
@@ -575,7 +575,7 @@ public class CDKRMapHandler {
          * RonP flag check whether reactant is mapped on product or Vise Versa
          */
 
-        TreeMap<Integer, Integer> atomNumbersFromContainer = new TreeMap<Integer, Integer>();
+        TreeMap<Integer, Integer> atomNumbersFromContainer = new TreeMap<>();
 
         for (CDKRMap rmap : list) {
             //System.err.print("Map " + o.getClass());

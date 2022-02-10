@@ -71,7 +71,7 @@ final class SvgDrawVisitor implements IDrawVisitor {
     private int             indentLvl     = 0;
     private AffineTransform transform     = null;
     private RendererModel   model         = null;
-    private NumberFormat    decimalFormat = new DecimalFormat(".##", new DecimalFormatSymbols(Locale.ROOT));
+    private final NumberFormat    decimalFormat = new DecimalFormat(".##", new DecimalFormatSymbols(Locale.ROOT));
 
     private boolean defaultsWritten    = false;
     private Color   defaultStroke      = null;
@@ -528,8 +528,8 @@ final class SvgDrawVisitor implements IDrawVisitor {
     @Override
     public String toString() {
         if (defaultsWritten)
-            return sb.toString() + "  </g>\n</svg>\n";
-        return sb.toString() + "</svg>\n";
+            return sb + "  </g>\n</svg>\n";
+        return sb + "</svg>\n";
     }
 
     private static final class Counter {
@@ -537,7 +537,7 @@ final class SvgDrawVisitor implements IDrawVisitor {
     }
 
     private static final class FreqMap<T> {
-        Map<T, Counter> map = new HashMap<>();
+        final Map<T, Counter> map = new HashMap<>();
 
         public FreqMap() {
         }

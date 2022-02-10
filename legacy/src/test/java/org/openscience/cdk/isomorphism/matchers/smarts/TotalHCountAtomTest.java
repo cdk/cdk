@@ -25,7 +25,7 @@ public class TotalHCountAtomTest {
         IAtom atom = mock(IAtom.class);
         when(atom.getProperty(SMARTSAtomInvariants.KEY))
                 .thenReturn(
-                        new SMARTSAtomInvariants(mock(IAtomContainer.class), 0, 0, Collections.<Integer> emptySet(), 0,
+                        new SMARTSAtomInvariants(mock(IAtomContainer.class), 0, 0, Collections.emptySet(), 0,
                                 0, 0, 4));
         assertTrue(matcher.matches(atom));
     }

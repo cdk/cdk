@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
 public class StructGenAtomTypeGuesser implements IAtomTypeGuesser {
 
     private static AtomTypeFactory factory = null;
-    private static ILoggingTool    logger  = LoggingToolFactory.createLoggingTool(StructGenAtomTypeGuesser.class);
+    private static final ILoggingTool    logger  = LoggingToolFactory.createLoggingTool(StructGenAtomTypeGuesser.class);
 
     /**
      * Constructor for the StructGenMatcher object.
@@ -81,7 +81,7 @@ public class StructGenAtomTypeGuesser implements IAtomTypeGuesser {
         int charge = atom.getFormalCharge();
         int hcount = atom.getImplicitHydrogenCount();
 
-        List<IAtomType> matchingTypes = new ArrayList<IAtomType>();
+        List<IAtomType> matchingTypes = new ArrayList<>();
         IAtomType[] types = factory.getAtomTypes(atom.getSymbol());
         for (IAtomType type : types) {
             logger.debug("   ... matching atom ", atom, " vs ", type);

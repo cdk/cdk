@@ -58,12 +58,12 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectReader implements
         IRandomAccessChemObjectReader<IChemObject> {
 
-    protected static ILoggingTool     logger        = LoggingToolFactory.createLoggingTool(RandomAccessReader.class);
+    protected static final ILoggingTool     logger        = LoggingToolFactory.createLoggingTool(RandomAccessReader.class);
     protected RandomAccessFile        raFile;
     protected IOSetting[]             headerOptions = null;
     private final String              filename;
     protected ISimpleChemObjectReader chemObjectReader;
-    protected int                     indexVersion  = 1;
+    protected final int                     indexVersion  = 1;
     /*
      * index[record][0] - record offset in file index[record][1] - record length
      * index[record][2] - number of atoms (if available)
@@ -72,7 +72,7 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
     protected int                     records;
     protected int                     currentRecord = 0;
     protected byte[]                  b;
-    protected IChemObjectBuilder      builder;
+    protected final IChemObjectBuilder      builder;
     protected boolean                 indexCreated  = false;
 
     /**
@@ -290,13 +290,13 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
         indexCreated = false;
         long now = System.currentTimeMillis();
         int recordLength = 1000;
-        int maxRecords = 1;
+        int maxRecords;
         int maxRecordLength = 0;
         maxRecords = (int) raFile.length() / recordLength;
         if (maxRecords == 0) maxRecords = 1;
         index = new long[maxRecords][3];
 
-        String s = null;
+        String s;
         long start = 0;
         long end = 0;
         raFile.seek(0);
@@ -507,7 +507,7 @@ class RecordReaderEvent extends ReaderEvent {
      *
      */
     private static final long serialVersionUID = 572155905623474487L;
-    protected int             record           = 0;
+    protected int             record;
 
     public RecordReaderEvent(Object source, int record) {
         super(source);

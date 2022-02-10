@@ -23,7 +23,6 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
-import org.openscience.cdk.CDK;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.Elements;
@@ -158,7 +157,7 @@ public class MolecularFormulaManipulator {
      */
     public static List<IIsotope> getIsotopes(IMolecularFormula formula, IElement element) {
 
-        List<IIsotope> isotopeList = new ArrayList<IIsotope>();
+        List<IIsotope> isotopeList = new ArrayList<>();
         for (IIsotope isotope : formula.isotopes()) {
             if (isotope.getAtomicNumber().equals(element.getAtomicNumber())) isotopeList.add(isotope);
 
@@ -175,8 +174,8 @@ public class MolecularFormulaManipulator {
      */
     public static List<IElement> elements(IMolecularFormula formula) {
 
-        List<IElement> elementList = new ArrayList<IElement>();
-        List<String> stringList = new ArrayList<String>();
+        List<IElement> elementList = new ArrayList<>();
+        List<String> stringList = new ArrayList<>();
         for (IIsotope isotope : formula.isotopes()) {
             if (!stringList.contains(isotope.getSymbol())) {
                 elementList.add(isotope);
@@ -391,25 +390,24 @@ public class MolecularFormulaManipulator {
     }
 
     public static List<IIsotope> putInOrder(String[] orderElements, IMolecularFormula formula) {
-        List<IIsotope> isotopesList = new ArrayList<IIsotope>();
+        List<IIsotope> isotopesList = new ArrayList<>();
         for (String orderElement : orderElements) {
             IElement element = formula.getBuilder().newInstance(IElement.class, orderElement);
             if (containsElement(formula, element)) {
                 List<IIsotope> isotopes = getIsotopes(formula, element);
-                Collections.sort(isotopes,
-                                 new Comparator<IIsotope>() {
-                                     @Override
-                                     public int compare(IIsotope a,
-                                                        IIsotope b) {
-                                         Integer aMass = a.getMassNumber();
-                                         Integer bMass = b.getMassNumber();
-                                         if (aMass == null)
-                                             return -1;
-                                         if (bMass == null)
-                                             return +1;
-                                         return aMass.compareTo(bMass);
-                                     }
-                                 });
+                isotopes.sort(new Comparator<IIsotope>() {
+                    @Override
+                    public int compare(IIsotope a,
+                                       IIsotope b) {
+                        Integer aMass = a.getMassNumber();
+                        Integer bMass = b.getMassNumber();
+                        if (aMass == null)
+                            return -1;
+                        if (bMass == null)
+                            return +1;
+                        return aMass.compareTo(bMass);
+                    }
+                });
                 isotopesList.addAll(isotopes);
             }
         }
@@ -421,9 +419,9 @@ public class MolecularFormulaManipulator {
      */
     @Deprecated
     public static String getHillString(IMolecularFormula formula) {
-        StringBuffer hillString = new StringBuffer();
+        StringBuilder hillString = new StringBuilder();
 
-        Map<String, Integer> hillMap = new TreeMap<String, Integer>();
+        Map<String, Integer> hillMap = new TreeMap<>();
         for (IIsotope isotope : formula.isotopes()) {
             String symbol = isotope.getSymbol();
             if (hillMap.containsKey(symbol))
@@ -694,7 +692,7 @@ public class MolecularFormulaManipulator {
                                         boolean setMajor) {
         Elements elem = null;
         int mass = 0;
-        int count = 0;
+        int count;
         if (iter.nextIf('[')) {
             mass = iter.nextUInt();
             if (mass < 0)
@@ -1047,7 +1045,7 @@ public class MolecularFormulaManipulator {
      * @cdk.keyword double bond equivalent
      */
     public static double getDBE(IMolecularFormula formula) throws CDKException {
-        int valencies[] = new int[5];
+        int[] valencies = new int[5];
         IAtomContainer ac = getAtomContainer(formula);
         AtomTypeFactory factory = AtomTypeFactory.getInstance(
                 "org/openscience/cdk/config/data/structgen_atomtypes.xml", ac.getBuilder());
@@ -1296,7 +1294,7 @@ public class MolecularFormulaManipulator {
      * @cdk.keyword    hydrogen, removal
      */
     public static List<IElement> getHeavyElements(IMolecularFormula formula) {
-        List<IElement> newEle = new ArrayList<IElement>();
+        List<IElement> newEle = new ArrayList<>();
         for (IElement element : elements(formula)) {
             if (element.getAtomicNumber() != IElement.H) {
                 newEle.add(element);
@@ -1322,7 +1320,7 @@ public class MolecularFormulaManipulator {
         }
         if (!formula.contains(".")) return breakExtractor(formula);
 
-        List<String> listMF = new ArrayList<String>();
+        List<String> listMF = new ArrayList<>();
         while (newFormula.contains(".")) {
             int pos = newFormula.indexOf('.');
             String thisFormula = newFormula.substring(0, pos);
@@ -1349,10 +1347,9 @@ public class MolecularFormulaManipulator {
         String recentElementSymbol = "";
         String recentElementCountString = "0";
 
-        List<String> eleSymb = new ArrayList<String>();
-        List<Integer> eleCount = new ArrayList<Integer>();
-        for (int i = 0; i < listMF.size(); i++) {
-            String thisFormula = listMF.get(i);
+        List<String> eleSymb = new ArrayList<>();
+        List<Integer> eleCount = new ArrayList<>();
+        for (String thisFormula : listMF) {
             for (int f = 0; f < thisFormula.length(); f++) {
                 thisChar = thisFormula.charAt(f);
                 if (f < thisFormula.length()) {
@@ -1370,12 +1367,12 @@ public class MolecularFormulaManipulator {
                 if (f == thisFormula.length() - 1
                         || (thisFormula.charAt(f + 1) >= 'A' && thisFormula.charAt(f + 1) <= 'Z')) {
                     int posit = eleSymb.indexOf(recentElementSymbol);
-                    int count = Integer.valueOf(recentElementCountString);
+                    int count = Integer.parseInt(recentElementCountString);
                     if (posit == -1) {
                         eleSymb.add(recentElementSymbol);
                         eleCount.add(count);
                     } else {
-                        int countP = Integer.valueOf(recentElementCountString);
+                        int countP = Integer.parseInt(recentElementCountString);
                         if (countP == 0) countP = 1;
                         int countA = eleCount.get(posit);
                         if (countA == 0) countA = 1;
@@ -1437,7 +1434,7 @@ public class MolecularFormulaManipulator {
                     multipliedformula += thisChar;
         	}
         }
-        finalformula += muliplier(multipliedformula, multiple.isEmpty() ? 1:Integer.valueOf(multiple)) + formulaEnd;
+        finalformula += muliplier(multipliedformula, multiple.isEmpty() ? 1:Integer.parseInt(multiple)) + formulaEnd;
 
         if (finalformula.contains("("))
         	return breakExtractor(finalformula);
@@ -1470,7 +1467,7 @@ public class MolecularFormulaManipulator {
                 recentCompound += thisChar;
             }
         }
-        return muliplier(recentCompound, Integer.valueOf(recentCompoundCount));
+        return muliplier(recentCompound, Integer.parseInt(recentCompoundCount));
     }
 
     /**

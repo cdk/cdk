@@ -15,7 +15,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  */
 public class AtomPermutationTests extends CDKTestCase {
 
-    public static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    public static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
     /**
      * This test is checking all permutations of an atom container to see

@@ -476,14 +476,12 @@ public class GeometricTetrahedralEncoderFactoryTest {
 
     private static Point2d[] coords2D(GeometricParity parity) {
         if (parity instanceof Tetrahedral2DParity) {
-            Field field = null;
+            Field field;
             try {
                 field = parity.getClass().getDeclaredField("coordinates");
                 field.setAccessible(true);
                 return (Point2d[]) field.get(parity);
-            } catch (NoSuchFieldException e) {
-                System.err.println(e.getMessage());
-            } catch (IllegalAccessException e) {
+            } catch (NoSuchFieldException | IllegalAccessException e) {
                 System.err.println(e.getMessage());
             }
         }
@@ -492,14 +490,12 @@ public class GeometricTetrahedralEncoderFactoryTest {
 
     private static Point3d[] coords3D(GeometricParity parity) {
         if (parity instanceof Tetrahedral3DParity) {
-            Field field = null;
+            Field field;
             try {
                 field = parity.getClass().getDeclaredField("coordinates");
                 field.setAccessible(true);
                 return (Point3d[]) field.get(parity);
-            } catch (NoSuchFieldException e) {
-                System.err.println(e.getMessage());
-            } catch (IllegalAccessException e) {
+            } catch (NoSuchFieldException | IllegalAccessException e) {
                 System.err.println(e.getMessage());
             }
         }
@@ -508,14 +504,12 @@ public class GeometricTetrahedralEncoderFactoryTest {
 
     private static GeometricParity getGeometricParity(StereoEncoder encoder) {
         if (encoder instanceof GeometryEncoder) {
-            Field field = null;
+            Field field;
             try {
                 field = encoder.getClass().getDeclaredField("geometric");
                 field.setAccessible(true);
                 return (GeometricParity) field.get(encoder);
-            } catch (NoSuchFieldException e) {
-                System.err.println(e.getMessage());
-            } catch (IllegalAccessException e) {
+            } catch (NoSuchFieldException | IllegalAccessException e) {
                 System.err.println(e.getMessage());
             }
         }
@@ -524,14 +518,12 @@ public class GeometricTetrahedralEncoderFactoryTest {
 
     private static List<StereoEncoder> extractEncoders(StereoEncoder encoder) {
         if (encoder instanceof MultiStereoEncoder) {
-            Field field = null;
+            Field field;
             try {
                 field = encoder.getClass().getDeclaredField("encoders");
                 field.setAccessible(true);
                 return (List<StereoEncoder>) field.get(encoder);
-            } catch (NoSuchFieldException e) {
-                System.err.println(e.getMessage());
-            } catch (IllegalAccessException e) {
+            } catch (NoSuchFieldException | IllegalAccessException e) {
                 System.err.println(e.getMessage());
             }
         }

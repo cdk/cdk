@@ -52,7 +52,6 @@ import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -63,7 +62,7 @@ import java.util.List;
 public class StructureResonanceGeneratorTest extends CDKTestCase {
 
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-    LonePairElectronChecker                 lpcheck = new LonePairElectronChecker();
+    final LonePairElectronChecker                 lpcheck = new LonePairElectronChecker();
 
     /**
      * Constructor of the StructureResonanceGeneratorTest.
@@ -122,49 +121,43 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         SharingLonePairReaction slReaction = (SharingLonePairReaction) reactionList.get(0);
         Assert.assertEquals(1, slReaction.getParameterList().size());
         List<IParameterReact> objects = slReaction.getParameterList();
-        for (Iterator<IParameterReact> it = objects.iterator(); it.hasNext();) {
-            IParameterReact object = it.next();
-            if (object instanceof SetReactionCenter) Assert.assertFalse((Boolean) object.isSetParameter());
+        for (IParameterReact object : objects) {
+            if (object instanceof SetReactionCenter) Assert.assertFalse(object.isSetParameter());
         }
 
         PiBondingMovementReaction pBReaction = (PiBondingMovementReaction) reactionList.get(1);
         Assert.assertEquals(1, pBReaction.getParameterList().size());
         objects = pBReaction.getParameterList();
-        for (Iterator<IParameterReact> it = objects.iterator(); it.hasNext();) {
-            IParameterReact object = it.next();
-            if (object instanceof SetReactionCenter) Assert.assertFalse((Boolean) object.isSetParameter());
+        for (IParameterReact object : objects) {
+            if (object instanceof SetReactionCenter) Assert.assertFalse(object.isSetParameter());
         }
 
         RearrangementAnionReaction raReaction = (RearrangementAnionReaction) reactionList.get(2);
         Assert.assertEquals(1, raReaction.getParameterList().size());
         objects = raReaction.getParameterList();
-        for (Iterator<IParameterReact> it = objects.iterator(); it.hasNext();) {
-            IParameterReact object = it.next();
-            if (object instanceof SetReactionCenter) Assert.assertFalse((Boolean) object.isSetParameter());
+        for (IParameterReact object : objects) {
+            if (object instanceof SetReactionCenter) Assert.assertFalse(object.isSetParameter());
         }
 
         RearrangementCationReaction rcReaction = (RearrangementCationReaction) reactionList.get(3);
         Assert.assertEquals(1, rcReaction.getParameterList().size());
         objects = rcReaction.getParameterList();
-        for (Iterator<IParameterReact> it = objects.iterator(); it.hasNext();) {
-            IParameterReact object = it.next();
-            if (object instanceof SetReactionCenter) Assert.assertFalse((Boolean) object.isSetParameter());
+        for (IParameterReact object : objects) {
+            if (object instanceof SetReactionCenter) Assert.assertFalse(object.isSetParameter());
         }
 
         RearrangementLonePairReaction lnReaction = (RearrangementLonePairReaction) reactionList.get(4);
         Assert.assertEquals(1, lnReaction.getParameterList().size());
         objects = lnReaction.getParameterList();
-        for (Iterator<IParameterReact> it = objects.iterator(); it.hasNext();) {
-            IParameterReact object = it.next();
-            if (object instanceof SetReactionCenter) Assert.assertFalse((Boolean) object.isSetParameter());
+        for (IParameterReact object : objects) {
+            if (object instanceof SetReactionCenter) Assert.assertFalse(object.isSetParameter());
         }
 
         RearrangementRadicalReaction rrReaction = (RearrangementRadicalReaction) reactionList.get(5);
         Assert.assertEquals(1, rrReaction.getParameterList().size());
         objects = rrReaction.getParameterList();
-        for (Iterator<IParameterReact> it = objects.iterator(); it.hasNext();) {
-            IParameterReact object = it.next();
-            if (object instanceof SetReactionCenter) Assert.assertFalse((Boolean) object.isSetParameter());
+        for (IParameterReact object : objects) {
+            if (object instanceof SetReactionCenter) Assert.assertFalse(object.isSetParameter());
         }
 
     }
@@ -185,7 +178,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         Assert.assertEquals(6, reactionList.size());
 
         // put only one reaction more.
-        List<IReactionProcess> newReactionList = new ArrayList<IReactionProcess>();
+        List<IReactionProcess> newReactionList = new ArrayList<>();
 
         IReactionProcess reaction = new HyperconjugationReaction();
         newReactionList.add(reaction);
@@ -423,15 +416,13 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         molecule.getBond(2).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getAtom(3).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
 
         StructureResonanceGenerator sRG = new StructureResonanceGenerator();
-        Iterator<IReactionProcess> itReaction = sRG.getReactions().iterator();
-        while (itReaction.hasNext()) {
-            IReactionProcess reaction = itReaction.next();
+        for (IReactionProcess reaction : sRG.getReactions()) {
             reaction.setParameterList(paramList);
         }
 
@@ -1036,7 +1027,7 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
 
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
         // put only one reaction more.
-        List<IReactionProcess> newReactionList = new ArrayList<IReactionProcess>();
+        List<IReactionProcess> newReactionList = new ArrayList<>();
         IReactionProcess reaction = new PiBondingMovementReaction();
         newReactionList.add(reaction);
 

@@ -50,7 +50,7 @@ public class MMFF94ParametersCall {
            * DEFAULT_BOND_LENGTH); return DEFAULT_BOND_LENGTH; }
            */
         //logger.debug("dkey = " + dkey);
-        return (List) pSet.get(dkey);
+        return pSet.get(dkey);
     }
 
     /**
@@ -76,7 +76,7 @@ public class MMFF94ParametersCall {
            * (Vector)[DEFAULT_ANGLE,0,0]; }
            */
         //logger.debug("angle key : " + akey);
-        return (List) pSet.get(akey);
+        return pSet.get(akey);
     }
 
     /**
@@ -109,7 +109,7 @@ public class MMFF94ParametersCall {
            * DEFAULT_ANGLE); return (Vector)[DEFAULT_ANGLE,0,0]; }
            */
         //logger.debug("akey : " + akey);
-        return (List) pSet.get(akey);
+        return pSet.get(akey);
     }
 
     /**
@@ -131,7 +131,7 @@ public class MMFF94ParametersCall {
            * + iR + " ; " + jR + " ; " + kR); }
            */
         //logger.debug("dfsbkey : " + dfsbkey);
-        return (List) pSet.get(dfsbkey);
+        return pSet.get(dfsbkey);
     }
 
     /**
@@ -164,7 +164,7 @@ public class MMFF94ParametersCall {
            * DEFAULT_TORSION_ANGLE; }
            */
         //logger.debug("dkey = " + dkey);
-        return (List) pSet.get(dkey);
+        return pSet.get(dkey);
     }
 
 }

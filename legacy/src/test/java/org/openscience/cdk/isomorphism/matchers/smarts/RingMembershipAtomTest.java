@@ -48,7 +48,7 @@ public class RingMembershipAtomTest {
         IAtom atom = mock(IAtom.class);
         when(atom.getProperty(SMARTSAtomInvariants.KEY))
                 .thenReturn(
-                        new SMARTSAtomInvariants(mock(IAtomContainer.class), 0, 2, Collections.<Integer> emptySet(), 0,
+                        new SMARTSAtomInvariants(mock(IAtomContainer.class), 0, 2, Collections.emptySet(), 0,
                                 0, 0, 0));
         assertTrue(matcher.matches(atom));
     }
@@ -59,7 +59,7 @@ public class RingMembershipAtomTest {
         IAtom atom = mock(IAtom.class);
         when(atom.getProperty(SMARTSAtomInvariants.KEY))
                 .thenReturn(
-                        new SMARTSAtomInvariants(mock(IAtomContainer.class), 0, 1, Collections.<Integer> emptySet(), 0,
+                        new SMARTSAtomInvariants(mock(IAtomContainer.class), 0, 1, Collections.emptySet(), 0,
                                 0, 0, 0));
         assertFalse(matcher.matches(atom));
     }
@@ -70,7 +70,7 @@ public class RingMembershipAtomTest {
         IAtom atom = mock(IAtom.class);
         when(atom.getProperty(SMARTSAtomInvariants.KEY))
                 .thenReturn(
-                        new SMARTSAtomInvariants(mock(IAtomContainer.class), 0, 0, Collections.<Integer> emptySet(), 0,
+                        new SMARTSAtomInvariants(mock(IAtomContainer.class), 0, 0, Collections.emptySet(), 0,
                                 0, 0, 0));
         assertTrue(matcher.matches(atom));
     }
@@ -81,7 +81,7 @@ public class RingMembershipAtomTest {
         IAtom atom = mock(IAtom.class);
         when(atom.getProperty(SMARTSAtomInvariants.KEY))
                 .thenReturn(
-                        new SMARTSAtomInvariants(mock(IAtomContainer.class), 0, 5, Collections.<Integer> emptySet(), 2,
+                        new SMARTSAtomInvariants(mock(IAtomContainer.class), 0, 5, Collections.emptySet(), 2,
                                 0, 0, 0));
         assertTrue(matcher.matches(atom));
     }

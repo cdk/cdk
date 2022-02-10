@@ -56,7 +56,7 @@ class EquitablePartitionRefiner {
      */
     public enum SplitOrder {
         FORWARD, REVERSE
-    };
+    }
 
     /**
      * The bias in splitting cells when refining
@@ -96,7 +96,7 @@ class EquitablePartitionRefiner {
         Partition finer = new Partition(coarser);
 
         // start the queue with the blocks of a in reverse order
-        blocksToRefine = new LinkedList<Set<Integer>>();
+        blocksToRefine = new LinkedList<>();
         for (int i = 0; i < finer.size(); i++) {
             blocksToRefine.add(finer.copyBlock(i));
         }
@@ -136,13 +136,13 @@ class EquitablePartitionRefiner {
      * @return a map of set intersection invariants to elements
      */
     private Map<Invariant, SortedSet<Integer>> getInvariants(Partition partition, Set<Integer> targetBlock) {
-        Map<Invariant, SortedSet<Integer>> setList = new HashMap<Invariant, SortedSet<Integer>>();
+        Map<Invariant, SortedSet<Integer>> setList = new HashMap<>();
         for (int u : partition.getCell(currentBlockIndex)) {
             Invariant h = refinable.neighboursInBlock(targetBlock, u);
             if (setList.containsKey(h)) {
                 setList.get(h).add(u);
             } else {
-                SortedSet<Integer> set = new TreeSet<Integer>();
+                SortedSet<Integer> set = new TreeSet<>();
                 set.add(u);
                 setList.put(h, set);
             }
@@ -159,14 +159,14 @@ class EquitablePartitionRefiner {
     private void split(Map<Invariant, SortedSet<Integer>> invariants, Partition partition) {
         int nonEmptyInvariants = invariants.keySet().size();
         if (nonEmptyInvariants > 1) {
-            List<Invariant> invariantKeys = 
-                    new ArrayList<Invariant>(invariants.keySet());
+            List<Invariant> invariantKeys =
+                    new ArrayList<>(invariants.keySet());
             partition.removeCell(currentBlockIndex);
             int k = currentBlockIndex;
             if (splitOrder == SplitOrder.REVERSE) {
                 Collections.sort(invariantKeys);
             } else {
-                Collections.sort(invariantKeys, Collections.reverseOrder());
+                invariantKeys.sort(Collections.reverseOrder());
             }
             for (Invariant h : invariantKeys) {
                 SortedSet<Integer> setH = invariants.get(h);

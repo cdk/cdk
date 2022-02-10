@@ -73,7 +73,7 @@ public class FragmentUtilsTest extends CDKTestCase {
         }
         List<IAtomContainer> frags = FragmentUtils.splitMolecule(mol, splitBond);
         SmilesGenerator sg = new SmilesGenerator();
-        Set<String> uniqueFrags = new HashSet<String>();
+        Set<String> uniqueFrags = new HashSet<>();
         for (IAtomContainer frag : frags) {
             uniqueFrags.add(sg.create(frag));
         }
@@ -130,7 +130,7 @@ public class FragmentUtilsTest extends CDKTestCase {
         m.setAtoms(atoms);
         m.setBonds(bonds);
 
-        List<IBond> accumulator = new ArrayList<IBond>();
+        List<IBond> accumulator = new ArrayList<>();
 
         // traverse from one end
         FragmentUtils.traverse(m, atoms[0], accumulator);

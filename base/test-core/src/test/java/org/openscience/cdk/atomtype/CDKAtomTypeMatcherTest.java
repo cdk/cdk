@@ -23,7 +23,6 @@
 package org.openscience.cdk.atomtype;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.junit.AfterClass;
@@ -64,7 +63,7 @@ import static org.hamcrest.CoreMatchers.is;
  */
 public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
 
-    private static Map<String, Integer> testedAtomTypes = new HashMap<String, Integer>();
+    private static final Map<String, Integer> testedAtomTypes = new HashMap<>();
 
     @Test
     public void testGetInstance_IChemObjectBuilder() throws Exception {
@@ -2449,9 +2448,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     public void testPyridineOxideCharged_SP2() throws Exception {
         String[] expectedTypes = {"C.sp2", "N.plus.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "O.minus"};
         IAtomContainer molecule = TestMoleculeFactory.makePyridineOxide();
-        Iterator<IBond> bonds = molecule.bonds().iterator();
-        while (bonds.hasNext())
-            bonds.next().setOrder(Order.SINGLE);
+        for (IBond iBond : molecule.bonds()) iBond.setOrder(Order.SINGLE);
         for (int i = 0; i < 6; i++) {
             molecule.getAtom(i).setHybridization(IAtomType.Hybridization.SP2);
         }
@@ -3680,7 +3677,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         String[] expectedTypes = {"O.minus"};
 
         // option one: Integer.valueOf()
-        atom.setFormalCharge(Integer.valueOf(-1));
+        atom.setFormalCharge(-1);
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
         // option one: autoboxing
@@ -3688,7 +3685,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
         // option one: new Integer()
-        atom.setFormalCharge(new Integer(-1));
+        atom.setFormalCharge(-1);
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -3716,7 +3713,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
 
         IAtomContainer ac = atomP.getBuilder().newInstance(IAtomContainer.class);
         ac.addAtom(atomP);
-        IAtomType type = null;
+        IAtomType type;
         for (IAtom atom : ac.atoms()) {
             type = CDKAtomTypeMatcher.getInstance(ac.getBuilder()).findMatchingAtomType(ac, atom);
             Assert.assertNotNull(type);

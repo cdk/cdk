@@ -49,7 +49,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class CMLRoundTripTool extends CDKTestCase {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CMLRoundTripTool.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(CMLRoundTripTool.class);
 
     /**
      * Convert a Molecule to CML and back to a Molecule again.
@@ -59,15 +59,15 @@ public class CMLRoundTripTool extends CDKTestCase {
      * @see org.openscience.cdk.CMLFragmentsTest
      */
     public static IAtomContainer roundTripMolecule(Convertor convertor, IAtomContainer mol) throws Exception {
-        String cmlString = "<!-- failed -->";
+        String cmlString;
         Element cmlDOM = convertor.cdkAtomContainerToCMLMolecule(mol);
         cmlString = cmlDOM.toXML();
 
-        IAtomContainer roundTrippedMol = null;
+        IAtomContainer roundTrippedMol;
         logger.debug("CML string: ", cmlString);
         CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
 
-        IChemFile file = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile file = reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
         Assert.assertNotNull(file);
         Assert.assertEquals(1, file.getChemSequenceCount());
@@ -86,7 +86,7 @@ public class CMLRoundTripTool extends CDKTestCase {
     }
 
     public static IChemModel roundTripChemModel(Convertor convertor, IChemModel model) throws Exception {
-        String cmlString = "<!-- failed -->";
+        String cmlString;
         Element cmlDOM = convertor.cdkChemModelToCMLList(model);
         cmlString = cmlDOM.toXML();
 
@@ -94,7 +94,7 @@ public class CMLRoundTripTool extends CDKTestCase {
         CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
         reader.close();
 
-        IChemFile file = (IChemFile) reader.read(model.getBuilder().newInstance(IChemFile.class));
+        IChemFile file = reader.read(model.getBuilder().newInstance(IChemFile.class));
         Assert.assertNotNull(file);
         Assert.assertEquals(1, file.getChemSequenceCount());
         IChemSequence sequence = file.getChemSequence(0);
@@ -107,15 +107,15 @@ public class CMLRoundTripTool extends CDKTestCase {
     }
 
     public static IReaction roundTripReaction(Convertor convertor, IReaction reaction) throws Exception {
-        String cmlString = "<!-- failed -->";
+        String cmlString;
         Element cmlDOM = convertor.cdkReactionToCMLReaction(reaction);
         cmlString = cmlDOM.toXML();
 
-        IReaction roundTrippedReaction = null;
+        IReaction roundTrippedReaction;
         logger.debug("CML string: ", cmlString);
         CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
 
-        IChemFile file = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile file = reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
         Assert.assertNotNull(file);
         Assert.assertEquals(1, file.getChemSequenceCount());

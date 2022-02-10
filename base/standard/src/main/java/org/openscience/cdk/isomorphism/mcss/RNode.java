@@ -44,13 +44,13 @@ import java.util.BitSet;
 public class RNode {
 
     // G1/G2 mapping
-    RMap   rMap      = null;
+    RMap   rMap;
 
     // set of neighbour nodes in the RGraph
-    BitSet extension = null;
+    BitSet extension;
 
     // set of incompatible nodes in the RGraph
-    BitSet forbidden = null;
+    BitSet forbidden;
 
     /**
      *  Constructor for the RNode object.

@@ -58,14 +58,14 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
         int n = container.getAtomCount();
         BondMap map = new BondMap(n);
 
-        List<StereoEncoder> encoders = new ArrayList<StereoEncoder>(1);
+        List<StereoEncoder> encoders = new ArrayList<>(1);
 
         // index double bonds by their atoms
         for (IBond bond : container.bonds()) {
             if (isDoubleBond(bond)) map.add(bond);
         }
 
-        Set<IAtom> visited = new HashSet<IAtom>(n);
+        Set<IAtom> visited = new HashSet<>(n);
 
         // find atoms which are connected between two double bonds
         for (IAtom a : map.atoms()) {
@@ -379,7 +379,7 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
      */
     private static class BondMap {
 
-        private Map<IAtom, List<IBond>> bonds;
+        private final Map<IAtom, List<IBond>> bonds;
 
         /**
          * Create new bond map for the specified number of atoms.
@@ -387,7 +387,7 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
          * @param n atom count
          */
         BondMap(int n) {
-            bonds = new HashMap<IAtom, List<IBond>>(n > 3 ? n + (n / 3) : n);
+            bonds = new HashMap<>(n > 3 ? n + (n / 3) : n);
         }
 
         /**
@@ -398,7 +398,7 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
          */
         public List<IBond> bonds(IAtom a) {
             List<IBond> bs = bonds.get(a);
-            return bs != null ? bs : Collections.<IBond> emptyList();
+            return bs != null ? bs : Collections.emptyList();
         }
 
         /**
@@ -430,7 +430,7 @@ public class GeometricCumulativeDoubleBondFactory implements StereoEncoderFactor
          */
         private void add(IAtom a, IBond b) {
             if (bonds(a).isEmpty()) {
-                bonds.put(a, new ArrayList<IBond>(2));
+                bonds.put(a, new ArrayList<>(2));
             }
             bonds.get(a).add(b);
         }

@@ -27,8 +27,6 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleResult;
 
-import java.util.Iterator;
-
 /**
  *  The calculation of bond-sigma Partial charge is calculated
  *  determining the difference the Partial Sigma Charge on atoms
@@ -57,7 +55,7 @@ import java.util.Iterator;
  */
 public class BondPartialSigmaChargeDescriptor extends AbstractBondDescriptor {
 
-    private GasteigerMarsiliPartialCharges peoe = null;
+    private GasteigerMarsiliPartialCharges peoe;
     /**Number of maximum iterations*/
     private int maxIterations;
 
@@ -107,7 +105,7 @@ public class BondPartialSigmaChargeDescriptor extends AbstractBondDescriptor {
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
-        params[0] = (Integer) maxIterations;
+        params[0] = maxIterations;
         return params;
     }
 
@@ -138,8 +136,7 @@ public class BondPartialSigmaChargeDescriptor extends AbstractBondDescriptor {
             if (maxIterations != 0) peoe.setMaxGasteigerIters(maxIterations);
             try {
                 peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);
-                for (Iterator<IBond> it = ac.bonds().iterator(); it.hasNext();) {
-                    IBond bondi = it.next();
+                for (IBond bondi : ac.bonds()) {
                     double result = Math.abs(bondi.getBegin().getCharge() - bondi.getEnd().getCharge());
                     cacheDescriptorValue(bondi, ac, new DoubleResult(result));
                 }

@@ -31,8 +31,6 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.util.Iterator;
-
 /**
  * This Class contains a method that returns the number of aromatic atoms in an AtomContainer.
  *
@@ -145,7 +143,7 @@ public class AromaticBondsCountDescriptor extends AbstractMolecularDescriptor im
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer ac;
         try {
-            ac = (IAtomContainer) atomContainer.clone();
+            ac = atomContainer.clone();
         } catch (CloneNotSupportedException e) {
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
                     (int) Double.NaN), getDescriptorNames(), new CDKException("Error during clone"));
@@ -167,9 +165,7 @@ public class AromaticBondsCountDescriptor extends AbstractMolecularDescriptor im
                         "Error during aromaticity detection: " + e.getMessage()));
             }
         }
-        Iterator bonds = ac.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond bond = (IBond) bonds.next();
+        for (IBond bond : ac.bonds()) {
             if (bond.getFlag(CDKConstants.ISAROMATIC)) {
                 aromaticBondsCount += 1;
             }

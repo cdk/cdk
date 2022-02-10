@@ -63,7 +63,7 @@ abstract public class ChemFormatMatcherTest extends ChemFormatTest {
 
     @Test
     public void testNoLines() {
-        Assert.assertFalse(matcher.matches(Collections.<String> emptyList()).matched());
+        Assert.assertFalse(matcher.matches(Collections.emptyList()).matched());
     }
 
     @Test

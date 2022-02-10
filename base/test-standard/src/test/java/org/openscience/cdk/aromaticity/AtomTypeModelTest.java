@@ -45,7 +45,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class AtomTypeModelTest {
 
-    private static ElectronDonation model = ElectronDonation.cdk();
+    private static final ElectronDonation model = ElectronDonation.cdk();
 
     @Test
     public void benzene() throws Exception {

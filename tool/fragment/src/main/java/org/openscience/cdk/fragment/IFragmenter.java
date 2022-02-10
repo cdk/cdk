@@ -41,19 +41,19 @@ public interface IFragmenter {
      * @param atomContainer The input molecule
      * @throws org.openscience.cdk.exception.CDKException if ring detection fails
      */
-    public void generateFragments(IAtomContainer atomContainer) throws CDKException;
+    void generateFragments(IAtomContainer atomContainer) throws CDKException;
 
     /**
      * Get the fragments generated as SMILES strings.
      *
      * @return a String[] of the fragments.
      */
-    public String[] getFragments();
+    String[] getFragments();
 
     /**
      * Get fragments generated as {@link IAtomContainer} objects.
      *
      * @return an IAtomContainer[] of fragments
      */
-    public IAtomContainer[] getFragmentsAsContainers();
+    IAtomContainer[] getFragmentsAsContainers();
 }

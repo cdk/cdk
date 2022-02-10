@@ -45,7 +45,7 @@ public class FinalMappings implements IFinalMapping {
     private static FinalMappings               instance = null;
 
     protected FinalMappings() {
-        mappings = new ArrayList<Map<Integer, Integer>>();
+        mappings = new ArrayList<>();
     }
 
     /**

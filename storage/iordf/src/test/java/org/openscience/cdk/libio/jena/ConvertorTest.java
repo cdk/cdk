@@ -45,7 +45,7 @@ import com.hp.hpl.jena.rdf.model.Model;
  */
 public class ConvertorTest extends CDKTestCase {
 
-    private static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    private static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
     @Test
     public void roundtripMolecule() {

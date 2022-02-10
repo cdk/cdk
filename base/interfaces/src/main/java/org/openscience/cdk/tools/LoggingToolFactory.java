@@ -94,9 +94,7 @@ public class LoggingToolFactory {
             if (ILoggingTool.class.isAssignableFrom(possibleLoggingToolClass)) {
                 return instantiateWithCreateMethod(sourceClass, possibleLoggingToolClass);
             }
-        } catch (ClassNotFoundException e) {
-        } catch (SecurityException e) {
-        } catch (IllegalArgumentException e) {
+        } catch (ClassNotFoundException | IllegalArgumentException | SecurityException e) {
         }
         return null;
     }
@@ -111,11 +109,7 @@ public class LoggingToolFactory {
             } else {
                 System.out.println("Expected ILoggingTool, but found a:" + createdLoggingTool.getClass().getName());
             }
-        } catch (SecurityException e) {
-        } catch (NoSuchMethodException e) {
-        } catch (IllegalArgumentException e) {
-        } catch (IllegalAccessException e) {
-        } catch (InvocationTargetException e) {
+        } catch (SecurityException | InvocationTargetException | IllegalAccessException | IllegalArgumentException | NoSuchMethodException e) {
         }
         return null;
     }

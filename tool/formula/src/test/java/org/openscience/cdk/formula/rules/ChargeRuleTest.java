@@ -50,7 +50,7 @@ public class ChargeRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testChargeRule() throws ClassNotFoundException, CDKException, Exception {
+    public void testChargeRule() throws Exception {
 
         IRule rule = new ChargeRule();
         Assert.assertNotNull(rule);
@@ -63,7 +63,7 @@ public class ChargeRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testDefault() throws ClassNotFoundException, CDKException, Exception {
+    public void testDefault() throws Exception {
 
         IRule rule = new ChargeRule();
         Object[] objects = rule.getParameters();
@@ -80,7 +80,7 @@ public class ChargeRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testSetParameters() throws ClassNotFoundException, CDKException, Exception {
+    public void testSetParameters() throws Exception {
 
         IRule rule = new ChargeRule();
 
@@ -103,7 +103,7 @@ public class ChargeRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testDefaultValidFalse() throws ClassNotFoundException, CDKException, Exception {
+    public void testDefaultValidFalse() throws Exception {
 
         IRule rule = new ChargeRule();
 
@@ -121,7 +121,7 @@ public class ChargeRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testDefaultValidFalse_SetParam() throws ClassNotFoundException, CDKException, Exception {
+    public void testDefaultValidFalse_SetParam() throws Exception {
 
         IRule rule = new ChargeRule();
 
@@ -143,7 +143,7 @@ public class ChargeRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testDefaultValidTrue() throws ClassNotFoundException, CDKException, Exception {
+    public void testDefaultValidTrue() throws Exception {
 
         IRule rule = new ChargeRule();
 

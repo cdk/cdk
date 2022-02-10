@@ -12,7 +12,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 @Deprecated
 public interface ICanonicalMoleculeLabeller {
 
-    public IAtomContainer getCanonicalMolecule(IAtomContainer container);
+    IAtomContainer getCanonicalMolecule(IAtomContainer container);
 
-    public int[] getCanonicalPermutation(IAtomContainer container);
+    int[] getCanonicalPermutation(IAtomContainer container);
 }

@@ -42,7 +42,7 @@ public class SymbolSetQueryAtom extends QueryAtom implements IQueryAtom {
 
     private static final long serialVersionUID = 7539577277779603551L;
 
-    private Set<String>       symbols          = new HashSet<String>();
+    private final Set<String>       symbols          = new HashSet<>();
 
     /**
      *  Constructor for the SymbolSetQueryAtom object
@@ -111,7 +111,7 @@ public class SymbolSetQueryAtom extends QueryAtom implements IQueryAtom {
         StringBuilder s = new StringBuilder();
         s.append("SymbolSetQueryAtom(");
         s.append(this.hashCode() + ", ");
-        s.append(symbols.toString());
+        s.append(symbols);
         s.append(')');
         return s.toString();
     }

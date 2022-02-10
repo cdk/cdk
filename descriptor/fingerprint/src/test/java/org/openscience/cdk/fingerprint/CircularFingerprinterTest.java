@@ -74,7 +74,7 @@ import javax.vecmath.Point3d;
  */
 public class CircularFingerprinterTest extends CDKTestCase {
 
-    private static ILoggingTool   logger     = LoggingToolFactory.createLoggingTool(CircularFingerprinterTest.class);
+    private static final ILoggingTool   logger     = LoggingToolFactory.createLoggingTool(CircularFingerprinterTest.class);
 
     private static IAtomContainer trivialMol = null;
     static {
@@ -190,7 +190,7 @@ public class CircularFingerprinterTest extends CDKTestCase {
         ZipInputStream zip = new ZipInputStream(in);
 
         // stream the contents form the zipfile: these are all short
-        HashMap<String, byte[]> content = new HashMap<String, byte[]>();
+        HashMap<String, byte[]> content = new HashMap<>();
         while (true) {
             ZipEntry ze = zip.getNextEntry();
             if (ze == null) break;
@@ -232,7 +232,7 @@ public class CircularFingerprinterTest extends CDKTestCase {
     private CircularFingerprinter.FP[] parseValidation(byte[] raw) throws Exception {
         InputStream in = new ByteArrayInputStream(raw);
         BufferedReader rdr = new BufferedReader(new InputStreamReader(in));
-        ArrayList<CircularFingerprinter.FP> list = new ArrayList<CircularFingerprinter.FP>();
+        ArrayList<CircularFingerprinter.FP> list = new ArrayList<>();
 
         while (true) {
             String line = rdr.readLine();
@@ -270,8 +270,8 @@ public class CircularFingerprinterTest extends CDKTestCase {
         boolean same = obtained.length == validate.length;
         for (int i = 0; i < obtained.length && same; i++) {
             boolean hit = false;
-            for (int j = 0; j < validate.length; j++)
-                if (equalFingerprints(obtained[i], validate[j])) {
+            for (CircularFingerprinter.FP fp : validate)
+                if (equalFingerprints(obtained[i], fp)) {
                     hit = true;
                     break;
                 }
@@ -279,8 +279,8 @@ public class CircularFingerprinterTest extends CDKTestCase {
         }
         for (int i = 0; i < validate.length && same; i++) {
             boolean hit = false;
-            for (int j = 0; j < obtained.length; j++)
-                if (equalFingerprints(validate[i], obtained[j])) {
+            for (CircularFingerprinter.FP fp : obtained)
+                if (equalFingerprints(validate[i], fp)) {
                     hit = true;
                     break;
                 }
@@ -388,11 +388,11 @@ public class CircularFingerprinterTest extends CDKTestCase {
 	    CircularFingerprinter circ = new CircularFingerprinter(CircularFingerprinter.CLASS_ECFP6);
 	    circ.setPerceiveStereo(true);
 	    IBitFingerprint fp0 = circ.getBitFingerprint(mol);
-	    
-	    for (int i = 0; i < atoms.length; i++) {
-	        Point3d p = atoms[i].getPoint3d();
-	        atoms[i].setPoint3d(new Point3d(p.x, p.y, p.z + 20));
-	    }
+
+        for (Atom atom : atoms) {
+            Point3d p = atom.getPoint3d();
+            atom.setPoint3d(new Point3d(p.x, p.y, p.z + 20));
+        }
 	
 	    IBitFingerprint fp1 = circ.getBitFingerprint(mol);
 	    

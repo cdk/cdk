@@ -114,13 +114,7 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable, ICh
      */
     @Override
     public Iterable<IChemSequence> chemSequences() {
-        return new Iterable<IChemSequence>() {
-
-            @Override
-            public Iterator<IChemSequence> iterator() {
-                return new ChemSequenceIterator();
-            }
-        };
+        return ChemSequenceIterator::new;
     }
 
     /**
@@ -190,7 +184,7 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable, ICh
      */
     @Override
     public String toString() {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         buffer.append("ChemFile(#S=");
         buffer.append(chemSequenceCount);
         if (chemSequenceCount > 0) {
@@ -215,7 +209,7 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable, ICh
         clone.chemSequenceCount = getChemSequenceCount();
         clone.chemSequences = new ChemSequence[clone.chemSequenceCount];
         for (int f = 0; f < clone.chemSequenceCount; f++) {
-            clone.chemSequences[f] = (ChemSequence) ((ChemSequence) chemSequences[f]).clone();
+            clone.chemSequences[f] = (ChemSequence) chemSequences[f].clone();
         }
         return clone;
     }

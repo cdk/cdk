@@ -36,6 +36,6 @@ public interface IChemObjectChangeEvent {
      *
      * @return the source of the event
      */
-    public Object getSource();
+    Object getSource();
 
 }

@@ -48,7 +48,7 @@ public class DebugAminoAcid extends AminoAcid implements IAminoAcid {
 
     private static final long serialVersionUID = 4092864536013855890L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugAtomContainer.class);
+    final ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugAtomContainer.class);
 
     /** {@inheritDoc} */
     @Override

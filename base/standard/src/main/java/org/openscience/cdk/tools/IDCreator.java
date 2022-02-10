@@ -23,7 +23,6 @@
  */
 package org.openscience.cdk.tools;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.openscience.cdk.interfaces.IAtom;
@@ -206,17 +205,13 @@ public abstract class IDCreator {
             internalTabuList = tabuList;
         }
 
-        Iterator<IAtom> atoms = container.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : container.atoms()) {
             if (null == atom.getID()) {
                 atomCount = setID(ATOM_PREFIX, atomCount, atom, internalTabuList);
             }
         }
 
-        Iterator<IBond> bonds = container.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond bond = bonds.next();
+        for (IBond bond : container.bonds()) {
             if (null == bond.getID()) {
                 bondCount = setID(BOND_PREFIX, bondCount, bond, internalTabuList);
             }
@@ -242,9 +237,8 @@ public abstract class IDCreator {
             bondCount = 0;
         }
 
-        Iterator<IAtomContainer> acs = containerSet.atomContainers().iterator();
-        while (acs.hasNext()) {
-            createIDsForAtomContainer((IAtomContainer) acs.next(), tabuList);
+        for (IAtomContainer container : containerSet.atomContainers()) {
+            createIDsForAtomContainer(container, tabuList);
         }
     }
 
@@ -272,9 +266,8 @@ public abstract class IDCreator {
         for (IAtomContainer product : reaction.getReactants().atomContainers()) {
             createIDsForAtomContainer(product, tabuList);
         }
-        Iterator<IAtomContainer> agents = reaction.getAgents().atomContainers().iterator();
-        while (agents.hasNext()) {
-            createIDsForAtomContainer((IAtomContainer) agents.next(), tabuList);
+        for (IAtomContainer container : reaction.getAgents().atomContainers()) {
+            createIDsForAtomContainer(container, tabuList);
         }
     }
 
@@ -286,8 +279,8 @@ public abstract class IDCreator {
             reactionSetCount = setID(REACTIONSET_PREFIX, reactionSetCount, reactionSet, tabuList);
         }
 
-        for (Iterator<IReaction> reaction = reactionSet.reactions().iterator(); reaction.hasNext();) {
-            createIDsForReaction(reaction.next(), tabuList);
+        for (IReaction iReaction : reactionSet.reactions()) {
+            createIDsForReaction(iReaction, tabuList);
         }
     }
 

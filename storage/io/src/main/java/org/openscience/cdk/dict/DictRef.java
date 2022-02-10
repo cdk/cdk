@@ -37,8 +37,8 @@ public class DictRef implements java.io.Serializable, Cloneable {
 
     private static final long serialVersionUID = -3691244168587563625L;
 
-    String                    type;
-    String                    reference;
+    final String                    type;
+    final String                    reference;
 
     public DictRef(String type, String dictRef) {
         this.type = type;

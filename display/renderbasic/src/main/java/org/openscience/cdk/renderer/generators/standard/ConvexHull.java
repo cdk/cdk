@@ -132,7 +132,7 @@ final class ConvexHull {
      * @return list of point
      */
     static List<Point2D> pointsOf(final Shape shape) {
-        final List<Point2D> points = new ArrayList<Point2D>();
+        final List<Point2D> points = new ArrayList<>();
         final double[] coordinates = new double[6];
         for (PathIterator i = shape.getPathIterator(null); !i.isDone(); i.next()) {
             switch (i.currentSegment(coordinates)) {
@@ -169,12 +169,12 @@ final class ConvexHull {
      */
     static List<Point2D> grahamScan(final List<Point2D> points) {
 
-        if (points.size() <= 3) return new ArrayList<Point2D>(points);
+        if (points.size() <= 3) return new ArrayList<>(points);
 
-        Collections.sort(points, new CompareYThenX());
-        Collections.sort(points, new PolarComparator(points.get(0)));
+        points.sort(new CompareYThenX());
+        points.sort(new PolarComparator(points.get(0)));
 
-        Deque<Point2D> hull = new ArrayDeque<Point2D>();
+        Deque<Point2D> hull = new ArrayDeque<>();
 
         hull.push(points.get(0));
         hull.push(points.get(1));
@@ -189,7 +189,7 @@ final class ConvexHull {
             hull.push(points.get(i));
         }
 
-        return new ArrayList<Point2D>(hull);
+        return new ArrayList<>(hull);
     }
 
     /**
@@ -271,7 +271,7 @@ final class ConvexHull {
      */
     static final class PolarComparator implements Comparator<Point2D> {
 
-        private Point2D reference;
+        private final Point2D reference;
 
         PolarComparator(Point2D reference) {
             this.reference = reference;

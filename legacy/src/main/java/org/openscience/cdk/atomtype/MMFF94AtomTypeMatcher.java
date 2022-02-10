@@ -49,13 +49,13 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @Deprecated
 public class MMFF94AtomTypeMatcher implements IAtomTypeMatcher {
 
-    private static ILoggingTool logger        = LoggingToolFactory.createLoggingTool(MMFF94AtomTypeMatcher.class);
+    private static final ILoggingTool logger        = LoggingToolFactory.createLoggingTool(MMFF94AtomTypeMatcher.class);
 
     IBond.Order                 maxBondOrder  = IBond.Order.SINGLE;
     private AtomTypeFactory     factory       = null;
-    AtomTypeTools               atomTypeTools = null;
+    AtomTypeTools               atomTypeTools;
 
-    String[]                    atomTypeIds   = {"C", "Csp2", "C=", "Csp", "CO2M", "CNN+", "C%", "CIM+", "CR4R",
+    final String[]                    atomTypeIds   = {"C", "Csp2", "C=", "Csp", "CO2M", "CNN+", "C%", "CIM+", "CR4R",
             "CR3R", "CE4R", "Car", "C5A", "C5B", "C5", "HC", "HO", "HN", "HOCO", "HN=C", "HN2", "HOCC", "HOH", "HOS",
             "HN+", "HO+", "HO=+", "HP", "O", "O=", "OX", "OM", "O+", "O=+", "OH2", "Oar", "N", "N=C", "NC=C", "NSP",
             "=N=", "NAZT", "N+", "N2OX", "N3OX", "NC#N", "NO3", "N=O", "NC=O", "NSO", "N+=", "NCN+", "NGD+", "NR%",
@@ -71,7 +71,7 @@ public class MMFF94AtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     private String getSphericalMatcher(IAtomType type) throws CDKException {//NOPMD
-        return (String) type.getProperty(CDKConstants.SPHERICAL_MATCHER);
+        return type.getProperty(CDKConstants.SPHERICAL_MATCHER);
     }
 
     private String getSphericalMatcher(String type) throws CDKException {//NOPMD
@@ -122,21 +122,21 @@ public class MMFF94AtomTypeMatcher implements IAtomTypeMatcher {
         if (atom instanceof IPseudoAtom) {
             return factory.getAtomTypes("DU")[0];
         }
-        Pattern p1 = null;
-        Pattern p2 = null;
+        Pattern p1;
+        Pattern p2;
         String ID = "";
         boolean atomTypeFlag = false;
-        Matcher mat1 = null;
-        Matcher mat2 = null;
+        Matcher mat1;
+        Matcher mat2;
         IBond.Order tmpMaxBondOrder;
         maxBondOrder = atomContainer.getMaximumBondOrder(atom);
         for (int j = 0; j < atomTypeIds.length; j++) {
             tmpMaxBondOrder = factory.getAtomType(atomTypeIds[j]).getMaxBondOrder();
-            String atomSphericalMatcher = (String) factory.getAtomType(atomTypeIds[j]).getProperty(
+            String atomSphericalMatcher = factory.getAtomType(atomTypeIds[j]).getProperty(
                     CDKConstants.SPHERICAL_MATCHER);
             logger.debug(j + " ATOM TYPE " + tmpMaxBondOrder + " " + atomSphericalMatcher);
             p1 = Pattern.compile(atomSphericalMatcher);
-            mat1 = p1.matcher((String) atom.getProperty(CDKConstants.SPHERICAL_MATCHER));
+            mat1 = p1.matcher(atom.getProperty(CDKConstants.SPHERICAL_MATCHER));
             if (mat1.matches()) {
                 ID = atomTypeIds[j];
                 Object property = atom.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT);
@@ -321,7 +321,7 @@ public class MMFF94AtomTypeMatcher implements IAtomTypeMatcher {
                     }
                 } else if (atomTypeIds[j].equals("HC")) {
                     p1 = Pattern.compile(getSphericalMatcher("HP"));
-                    mat1 = p1.matcher((String) atom.getProperty(CDKConstants.SPHERICAL_MATCHER));
+                    mat1 = p1.matcher(atom.getProperty(CDKConstants.SPHERICAL_MATCHER));
                     if (mat1.matches()) {
                         ID = "HP";
                     }

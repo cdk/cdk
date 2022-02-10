@@ -50,7 +50,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class IteratingSDFReaderTest extends CDKTestCase {
 
-    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingSDFReaderTest.class);
+    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingSDFReaderTest.class);
 
     @Test
     public void testSDF() throws Exception {
@@ -143,7 +143,7 @@ public class IteratingSDFReaderTest extends CDKTestCase {
         InputStream ins = this.getClass().getResourceAsStream(filename);
         IteratingSDFReader reader = new IteratingSDFReader(ins, DefaultChemObjectBuilder.getInstance());
 
-        IAtomContainer m = (IAtomContainer) reader.next();
+        IAtomContainer m = reader.next();
         Assert.assertEquals("553-97-9", m.getProperty("E_CAS"));
         m = reader.next();
         Assert.assertEquals("120-78-5", m.getProperty("E_CAS"));
@@ -203,7 +203,7 @@ public class IteratingSDFReaderTest extends CDKTestCase {
 
             if (molCount == 2) {
                 IAtomContainer mol = (IAtomContainer) object;
-                String s = (String) mol.getProperty("Species");
+                String s = mol.getProperty("Species");
                 Assert.assertEquals("rat", s);
             }
         }

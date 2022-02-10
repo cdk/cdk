@@ -57,7 +57,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
      */
     private static final long    serialVersionUID = -5001873073769634393L;
 
-    private Map<String, IStrand> strands;                                 // the list of all the contained Strands.
+    private final Map<String, IStrand> strands;                                 // the list of all the contained Strands.
 
     /**
      * Constructs a new Polymer to store the Strands.
@@ -65,7 +65,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
     public BioPolymer() {
         super();
         // Strand stuff
-        strands = new Hashtable<String, IStrand>();
+        strands = new Hashtable<>();
     }
 
     /**
@@ -165,7 +165,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
         Strand strand = (Strand) strands.get(strandName);
 
         if (strand != null) {
-            return (Monomer) strand.getMonomer(monName);
+            return strand.getMonomer(monName);
         } else {
             return null;
         }
@@ -190,7 +190,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
     @Override
     public Collection<String> getMonomerNames() {
         Iterator<String> keys = strands.keySet().iterator();
-        Map<String, IMonomer> monomers = new Hashtable<String, IMonomer>();
+        Map<String, IMonomer> monomers = new Hashtable<>();
 
         if (!keys.hasNext()) // no strands
             return super.getMonomerNames();
@@ -224,7 +224,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
      */
     @Override
     public IStrand getStrand(String cName) {
-        return (Strand) strands.get(cName);
+        return strands.get(cName);
     }
 
     /**
@@ -262,7 +262,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
 
     @Override
     public String toString() {
-        StringBuffer stringContent = new StringBuffer();
+        StringBuilder stringContent = new StringBuilder();
         stringContent.append("BioPolymer(");
         stringContent.append(this.hashCode()).append(", ");
         stringContent.append(super.toString());
@@ -274,13 +274,12 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
     public IBioPolymer clone() throws CloneNotSupportedException {
         BioPolymer clone = (BioPolymer) super.clone();
         clone.strands.clear();
-        for (Iterator<String> strands = clone.getStrandNames().iterator(); strands.hasNext();) {
-            Strand strand = (Strand) clone.getStrand(strands.next().toString()).clone();
-            for (Iterator<String> iter = strand.getMonomerNames().iterator(); iter.hasNext();) {
-                IMonomer monomer = strand.getMonomer(iter.next().toString());
-                Iterator<IAtom> atoms = monomer.atoms().iterator();
-                while (atoms.hasNext()) {
-                    clone.addAtom((IAtom) atoms.next(), monomer, strand);
+        for (String value : clone.getStrandNames()) {
+            Strand strand = (Strand) clone.getStrand(value.toString()).clone();
+            for (String s : strand.getMonomerNames()) {
+                IMonomer monomer = strand.getMonomer(s.toString());
+                for (IAtom iAtom : monomer.atoms()) {
+                    clone.addAtom(iAtom, monomer, strand);
                 }
             }
         }

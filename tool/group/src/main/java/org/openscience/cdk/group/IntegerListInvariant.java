@@ -30,7 +30,7 @@ import java.util.Arrays;
  */
 class IntegerListInvariant implements Invariant {
     
-    private int[] values;
+    private final int[] values;
     
     public IntegerListInvariant(int[] values) {
         this.values = values;

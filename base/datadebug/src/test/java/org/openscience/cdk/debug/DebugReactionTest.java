@@ -23,9 +23,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.test.interfaces.AbstractReactionTest;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link DebugReaction}.
@@ -36,13 +34,7 @@ public class DebugReactionTest extends AbstractReactionTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new DebugReaction();
-            }
-        });
+        setTestObjectBuilder(DebugReaction::new);
     }
 
     @Test

@@ -33,5 +33,5 @@ public enum INCHI_RET {
     ERROR,
     FATAL,
     UNKNOWN,
-    BUSY;
+    BUSY
 }

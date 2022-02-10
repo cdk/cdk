@@ -51,7 +51,7 @@ public class AtomContainerSetManipulatorTest extends CDKTestCase {
     IAtom             atomInMol1 = null;
     IBond             bondInMol1 = null;
     IAtom             atomInMol2 = null;
-    IAtomContainerSet som        = new AtomContainerSet();
+    final IAtomContainerSet som        = new AtomContainerSet();
 
     public AtomContainerSetManipulatorTest() {
         super();

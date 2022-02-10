@@ -41,17 +41,17 @@ public class Orbit implements Iterable<Integer>, Cloneable {
     /**
      * The atom indices in this orbit
      */
-    private List<Integer> atomIndices;
+    private final List<Integer> atomIndices;
 
     /**
      * The label that all the atoms in the orbit share
      */
-    private String        label;
+    private final String        label;
 
     /**
      * The maximum height of the signature string
      */
-    private int           height;
+    private final int           height;
 
     /**
      * @param label
@@ -59,7 +59,7 @@ public class Orbit implements Iterable<Integer>, Cloneable {
      */
     public Orbit(String label, int height) {
         this.label = label;
-        this.atomIndices = new ArrayList<Integer>();
+        this.atomIndices = new ArrayList<>();
         this.height = height;
     }
 

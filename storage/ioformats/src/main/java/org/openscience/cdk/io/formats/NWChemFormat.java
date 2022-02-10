@@ -76,7 +76,7 @@ public class NWChemFormat extends SimpleChemFormatMatcher implements IChemFormat
     /** {@inheritDoc} */
     @Override
     public boolean matches(int lineNumber, String line) {
-        if (line.indexOf("Northwest Computational Chemistry Package") >= 0) {
+        if (line.contains("Northwest Computational Chemistry Package")) {
             return true;
         }
         return false;

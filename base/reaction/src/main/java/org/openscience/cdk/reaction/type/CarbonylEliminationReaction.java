@@ -37,7 +37,6 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * <p>IReactionProcess which participate mass spectrum process.
@@ -73,7 +72,7 @@ import java.util.Iterator;
  **/
 public class CarbonylEliminationReaction extends ReactionEngine implements IReactionProcess {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CarbonylEliminationReaction.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(CarbonylEliminationReaction.class);
 
     /**
      * Constructor of the CarbonylEliminationReaction object.
@@ -123,23 +122,15 @@ public class CarbonylEliminationReaction extends ReactionEngine implements IReac
         IParameterReact ipr = super.getParameterClass(SetReactionCenter.class);
         if (ipr != null && !ipr.isSetParameter()) setActiveCenters(reactant);
 
-        Iterator<IAtom> atomis = reactant.atoms().iterator();
-        while (atomis.hasNext()) {
-            IAtom atomi = atomis.next();
+        for (IAtom atomi : reactant.atoms()) {
             if (atomi.getFlag(CDKConstants.REACTIVE_CENTER) && atomi.getAtomicNumber() == IElement.O
                     && atomi.getFormalCharge() == 1) {
 
-                Iterator<IBond> bondis = reactant.getConnectedBondsList(atomi).iterator();
-                while (bondis.hasNext()) {
-                    IBond bondi = bondis.next();
-
+                for (IBond bondi : reactant.getConnectedBondsList(atomi)) {
                     if (bondi.getFlag(CDKConstants.REACTIVE_CENTER) && bondi.getOrder() == IBond.Order.TRIPLE) {
                         IAtom atomj = bondi.getOther(atomi);
                         if (atomj.getFlag(CDKConstants.REACTIVE_CENTER)) {
-                            Iterator<IBond> bondjs = reactant.getConnectedBondsList(atomj).iterator();
-                            while (bondjs.hasNext()) {
-                                IBond bondj = bondjs.next();
-
+                            for (IBond bondj : reactant.getConnectedBondsList(atomj)) {
                                 if (bondj.equals(bondi)) continue;
 
                                 if (bondj.getFlag(CDKConstants.REACTIVE_CENTER)
@@ -148,10 +139,10 @@ public class CarbonylEliminationReaction extends ReactionEngine implements IReac
                                     IAtom atomk = bondj.getOther(atomj);
                                     if (atomk.getFlag(CDKConstants.REACTIVE_CENTER) && atomk.getFormalCharge() == 0) {
 
-                                        ArrayList<IAtom> atomList = new ArrayList<IAtom>();
+                                        ArrayList<IAtom> atomList = new ArrayList<>();
                                         atomList.add(atomk);
                                         atomList.add(atomj);
-                                        ArrayList<IBond> bondList = new ArrayList<IBond>();
+                                        ArrayList<IBond> bondList = new ArrayList<>();
                                         bondList.add(bondj);
 
                                         IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(
@@ -190,21 +181,13 @@ public class CarbonylEliminationReaction extends ReactionEngine implements IReac
      * @throws CDKException
      */
     private void setActiveCenters(IAtomContainer reactant) throws CDKException {
-        Iterator<IAtom> atomis = reactant.atoms().iterator();
-        while (atomis.hasNext()) {
-            IAtom atomi = atomis.next();
+        for (IAtom atomi : reactant.atoms()) {
             if (atomi.getAtomicNumber() == IElement.O && atomi.getFormalCharge() == 1) {
 
-                Iterator<IBond> bondis = reactant.getConnectedBondsList(atomi).iterator();
-                while (bondis.hasNext()) {
-                    IBond bondi = bondis.next();
-
+                for (IBond bondi : reactant.getConnectedBondsList(atomi)) {
                     if (bondi.getOrder() == IBond.Order.TRIPLE) {
                         IAtom atomj = bondi.getOther(atomi);
-                        Iterator<IBond> bondjs = reactant.getConnectedBondsList(atomj).iterator();
-                        while (bondjs.hasNext()) {
-                            IBond bondj = bondjs.next();
-
+                        for (IBond bondj : reactant.getConnectedBondsList(atomj)) {
                             if (bondj.equals(bondi)) continue;
 
                             if (bondj.getOrder() == IBond.Order.SINGLE) {

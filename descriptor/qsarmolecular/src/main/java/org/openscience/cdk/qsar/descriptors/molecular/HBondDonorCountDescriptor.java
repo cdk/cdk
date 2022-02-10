@@ -131,7 +131,7 @@ public class HBondDonorCountDescriptor extends AbstractMolecularDescriptor imple
 
         IAtomContainer ac;
         try {
-            ac = (IAtomContainer) atomContainer.clone();
+            ac = atomContainer.clone();
         } catch (CloneNotSupportedException e) {
             return getDummyDescriptorValue(e);
         }
@@ -139,7 +139,7 @@ public class HBondDonorCountDescriptor extends AbstractMolecularDescriptor imple
         //org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
         // iterate over all atoms of this AtomContainer; use label atomloop to allow for labelled continue
         atomloop: for (int atomIndex = 0; atomIndex < ac.getAtomCount(); atomIndex++) {
-            IAtom atom = (IAtom) ac.getAtom(atomIndex);
+            IAtom atom = ac.getAtom(atomIndex);
             // checking for O and N atoms where the formal charge is >= 0
             if ((atom.getAtomicNumber() == IElement.O || atom.getAtomicNumber() == IElement.N) && atom.getFormalCharge() >= 0) {
                 // implicit hydrogens

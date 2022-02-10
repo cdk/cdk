@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
 public class StructGenMatcher implements IAtomTypeMatcher {
 
     private static AtomTypeFactory factory = null;
-    private static ILoggingTool    logger  = LoggingToolFactory.createLoggingTool(StructGenMatcher.class);
+    private static final ILoggingTool    logger  = LoggingToolFactory.createLoggingTool(StructGenMatcher.class);
 
     /**
      * Constructor for the StructGenMatcher object.

@@ -45,7 +45,7 @@ import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
  */
 public class MmffAtomTypeMatcherTest {
 
-    static MmffAtomTypeMatcher INSTANCE = new MmffAtomTypeMatcher();
+    static final MmffAtomTypeMatcher INSTANCE = new MmffAtomTypeMatcher();
 
     @Test(expected = IllegalArgumentException.class)
     public void hydrogenCountMustBeDefined() {

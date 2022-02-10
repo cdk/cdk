@@ -130,7 +130,7 @@ public class IsProtonInConjugatedPiSystemDescriptor extends AbstractAtomicDescri
     public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer) {
         IAtomContainer clonedAtomContainer;
         try {
-            clonedAtomContainer = (IAtomContainer) atomContainer.clone();
+            clonedAtomContainer = atomContainer.clone();
         } catch (CloneNotSupportedException e) {
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new BooleanResult(
                     false), NAMES, e);

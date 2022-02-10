@@ -156,7 +156,7 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
         C40C3V.addBond(31, 35, IBond.Order.SINGLE); // 59
         C40C3V.addBond(32, 38, IBond.Order.SINGLE); // 60
         EquivalentClassPartitioner it = new EquivalentClassPartitioner(C40C3V);
-        int equivalentClass[] = it.getTopoEquivClassbyHuXu(C40C3V);
+        int[] equivalentClass = it.getTopoEquivClassbyHuXu(C40C3V);
         char[] arrEquivalent = new char[39];
         for (int i = 1; i < equivalentClass.length - 1; i++)
             arrEquivalent[i - 1] = Integer.toString(equivalentClass[i]).charAt(0);
@@ -233,7 +233,7 @@ public class EquivalentClassPartitionerTest extends CDKTestCase {
         C24D6D.addBond(22, 23, IBond.Order.SINGLE); // 36
 
         EquivalentClassPartitioner it = new EquivalentClassPartitioner(C24D6D);
-        int equivalentClass[] = it.getTopoEquivClassbyHuXu(C24D6D);
+        int[] equivalentClass = it.getTopoEquivClassbyHuXu(C24D6D);
         char[] arrEquivalent = new char[24];
         for (int i = 1; i < equivalentClass.length; i++)
             arrEquivalent[i - 1] = Integer.toString(equivalentClass[i]).charAt(0);

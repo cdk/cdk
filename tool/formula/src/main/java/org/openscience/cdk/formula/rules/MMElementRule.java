@@ -19,7 +19,6 @@
 package org.openscience.cdk.formula.rules;
 
 import java.util.HashMap;
-import java.util.Iterator;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IElement;
@@ -70,11 +69,11 @@ public class MMElementRule implements IRule {
 
     private HashMap<String, Integer> hashMap;
 
-    private static ILoggingTool      logger        = LoggingToolFactory.createLoggingTool(MMElementRule.class);
+    private static final ILoggingTool      logger        = LoggingToolFactory.createLoggingTool(MMElementRule.class);
 
     /** A enumeration of the possible mass range
      * according the rules. */
-    public static enum RangeMass {
+    public enum RangeMass {
         /** IMolecularFormula from a metabolite with a mass lower than 500 Da. */
         Minus500,
         /** IMolecularFormula from a metabolite with a mass lower than 1000 Da. */
@@ -87,7 +86,7 @@ public class MMElementRule implements IRule {
 
     /** A enumeration of the possible databases
      * according the rules. */
-    public static enum Database {
+    public enum Database {
         /** Wiley mass spectral database. */
         WILEY,
         /** Dictionary of Natural Products Online mass spectral database. */
@@ -168,9 +167,7 @@ public class MMElementRule implements IRule {
     public double validate(IMolecularFormula formula) throws CDKException {
         logger.info("Start validation of ", formula);
         double isValid = 1.0;
-        Iterator<IElement> itElem = MolecularFormulaManipulator.elements(formula).iterator();
-        while (itElem.hasNext()) {
-            IElement element = itElem.next();
+        for (IElement element : MolecularFormulaManipulator.elements(formula)) {
             int occur = MolecularFormulaManipulator.getElementCount(formula, element);
             if (occur > hashMap.get(element.getSymbol())) {
                 isValid = 0.0;
@@ -188,7 +185,7 @@ public class MMElementRule implements IRule {
      * @return The HashMap of the symbol linked with the maximum occurrence
      */
     private HashMap<String, Integer> getDNP_500() {
-        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        HashMap<String, Integer> map = new HashMap<>();
 
         map.put("C", 29);
         map.put("H", 72);
@@ -210,7 +207,7 @@ public class MMElementRule implements IRule {
      * @return The HashMap of the symbol linked with the maximum occurrence
      */
     private HashMap<String, Integer> getDNP_1000() {
-        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        HashMap<String, Integer> map = new HashMap<>();
 
         map.put("C", 66);
         map.put("H", 126);
@@ -232,7 +229,7 @@ public class MMElementRule implements IRule {
      * @return The HashMap of the symbol linked with the maximum occurrence
      */
     private HashMap<String, Integer> getDNP_2000() {
-        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        HashMap<String, Integer> map = new HashMap<>();
 
         map.put("C", 115);
         map.put("H", 236);
@@ -254,7 +251,7 @@ public class MMElementRule implements IRule {
      * @return The HashMap of the symbol linked with the maximum occurrence
      */
     private HashMap<String, Integer> getDNP_3000() {
-        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        HashMap<String, Integer> map = new HashMap<>();
 
         map.put("C", 162);
         map.put("H", 208);
@@ -276,7 +273,7 @@ public class MMElementRule implements IRule {
      * @return The HashMap of the symbol linked with the maximum occurrence
      */
     private HashMap<String, Integer> getWisley_500() {
-        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        HashMap<String, Integer> map = new HashMap<>();
 
         map.put("C", 39);
         map.put("H", 72);
@@ -299,7 +296,7 @@ public class MMElementRule implements IRule {
      * @return The HashMap of the symbol linked with the maximum occurrence
      */
     private HashMap<String, Integer> getWisley_1000() {
-        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        HashMap<String, Integer> map = new HashMap<>();
 
         map.put("C", 78);
         map.put("H", 126);
@@ -322,7 +319,7 @@ public class MMElementRule implements IRule {
      * @return The HashMap of the symbol linked with the maximum occurrence
      */
     private HashMap<String, Integer> getWisley_2000() {
-        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        HashMap<String, Integer> map = new HashMap<>();
 
         map.put("C", 156);
         map.put("H", 180);

@@ -63,7 +63,7 @@ final class UllmannState extends State {
     private final BondMatcher   bondMatcher;
 
     /** Indicates a vertex is unmapped. */
-    private static int          UNMAPPED = -1;
+    private static final int          UNMAPPED = -1;
 
     /**
      * Create a state for matching subgraphs using the Ullmann refinement

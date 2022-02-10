@@ -219,7 +219,7 @@ public abstract class StereoElementFactory {
             centers.checkSymmetry();
         }
 
-        List<IStereoElement> elements = new ArrayList<IStereoElement>();
+        List<IStereoElement> elements = new ArrayList<>();
 
         // projection recognition (note no action in constructors)
         FischerRecognition fischerRecon = new FischerRecognition(container, graph, bondMap, centers);
@@ -920,7 +920,7 @@ public abstract class StereoElementFactory {
 
             IBond   focus    = dbs.get(dbs.size()/2);
             IBond[] carriers = new IBond[2];
-            int     config   = 0;
+            int     config;
 
             IAtom begAtom = dbs.get(0).getOther(getShared(dbs.get(0), dbs.get(1)));
             IAtom endAtom = dbs.get(dbs.size()-1).getOther(getShared(dbs.get(dbs.size()-1), dbs.get(dbs.size()-2)));
@@ -1343,7 +1343,7 @@ public abstract class StereoElementFactory {
 
             IBond   focus    = dbs.get(dbs.size()/2);
             IBond[] carriers = new IBond[2];
-            int     config   = 0;
+            int     config;
 
             IAtom begAtom = dbs.get(0).getOther(getShared(dbs.get(0),
                                                           dbs.get(1)));

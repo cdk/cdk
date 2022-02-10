@@ -20,7 +20,6 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.vecmath.Point3d;
@@ -172,7 +171,7 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
 
         IAtomContainer varAtomContainer;
         try {
-            varAtomContainer = (IAtomContainer) atomContainer.clone();
+            varAtomContainer = atomContainer.clone();
         } catch (CloneNotSupportedException e) {
             return getDummyDescriptorValue(e);
         }
@@ -223,9 +222,7 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
         // SET ISINRING FLAGS FOR BONDS
         //		org.openscience.cdk.interfaces.IBond[] bondsInContainer = varAtomContainer.getBonds();
 
-        Iterator<IBond> bondsInContainer = varAtomContainer.bonds().iterator();
-        while (bondsInContainer.hasNext()) {
-            IBond bond = bondsInContainer.next();
+        for (IBond bond : varAtomContainer.bonds()) {
             ringsWithThisBond = varRingSet.getRings(bond);
             if (ringsWithThisBond.getAtomContainerCount() > 0) {
                 bond.setFlag(CDKConstants.ISINRING, true);
@@ -257,13 +254,13 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
 
         // SOME LISTS ARE CREATED FOR STORING OF INTERESTING ATOMS AND BONDS
         // DURING DETECTION
-        ArrayList<Integer> singles = new ArrayList<Integer>(); // list of any bond not
+        ArrayList<Integer> singles = new ArrayList<>(); // list of any bond not
         // rotatable
-        ArrayList<Integer> doubles = new ArrayList<Integer>(); // list with only double bonds
-        ArrayList<Integer> atoms = new ArrayList<Integer>(); // list with all the atoms in
+        ArrayList<Integer> doubles = new ArrayList<>(); // list with only double bonds
+        ArrayList<Integer> atoms = new ArrayList<>(); // list with all the atoms in
         // spheres
         // atoms.add( Integer.valueOf( mol.indexOf(neighboors[0]) ) );
-        ArrayList<Integer> bondsInCycloex = new ArrayList<Integer>(); // list for bonds in
+        ArrayList<Integer> bondsInCycloex = new ArrayList<>(); // list for bonds in
         // cycloexane-like rings
 
         // 2', 3', 4', 5', 6', and 7' bonds up to the target are detected:
@@ -404,7 +401,7 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
 
         // Variables
         double sum;
-        double smooth = -20;
+        double smooth;
         double partial;
         int position;
         double limitInf;
@@ -418,7 +415,7 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
         Vector3d aB = new Vector3d();
         Vector3d bA = new Vector3d();
         Vector3d bB = new Vector3d();
-        double angle = 0;
+        double angle;
 
         if (bondsInCycloex.size() > 0) {
             IAtom cycloexBondAtom0;
@@ -429,7 +426,7 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
             position = 0;
             smooth = -2.86;
             angle = 0;
-            int yaCounter = 0;
+            int yaCounter;
             List<IAtom> connAtoms;
             for (int c = 0; c < G3R_DESC_LENGTH; c++) {
             	double g3r = limitSup * ((double)c / G3R_DESC_LENGTH);
@@ -544,19 +541,19 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
     private void checkAndStore(int bondToStore, IBond.Order bondOrder, ArrayList<Integer> singleVec,
             ArrayList<Integer> doubleVec, ArrayList<Integer> cycloexVec, int a1, ArrayList<Integer> atomVec,
             int sphere, boolean isBondInCycloex) {
-        if (!atomVec.contains(Integer.valueOf(a1))) {
+        if (!atomVec.contains(a1)) {
             if (sphere < 6) atomVec.add(a1);
         }
-        if (!cycloexVec.contains(Integer.valueOf(bondToStore))) {
+        if (!cycloexVec.contains(bondToStore)) {
             if (isBondInCycloex) {
                 cycloexVec.add(bondToStore);
             }
         }
         if (bondOrder == IBond.Order.DOUBLE) {
-            if (!doubleVec.contains(Integer.valueOf(bondToStore))) doubleVec.add(bondToStore);
+            if (!doubleVec.contains(bondToStore)) doubleVec.add(bondToStore);
         }
         if (bondOrder == IBond.Order.SINGLE) {
-            if (!singleVec.contains(Integer.valueOf(bondToStore))) singleVec.add(bondToStore);
+            if (!singleVec.contains(bondToStore)) singleVec.add(bondToStore);
         }
     }
 

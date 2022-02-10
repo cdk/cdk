@@ -57,8 +57,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class GhemicalMMReader extends DefaultChemObjectReader {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(GhemicalMMReader.class);
-    private BufferedReader      input  = null;
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(GhemicalMMReader.class);
+    private BufferedReader      input;
 
     public GhemicalMMReader(Reader input) {
         this.input = new BufferedReader(input);
@@ -105,9 +105,9 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
         if (IChemFile.class.equals(classObject)) return true;
         if (IChemModel.class.equals(classObject)) return true;
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IChemModel.class.equals(interfaces[i])) return true;
-            if (IChemFile.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IChemModel.class.equals(anInterface)) return true;
+            if (IChemFile.class.equals(anInterface)) return true;
         }
         Class superClass = classObject.getSuperclass();
         if (superClass != null) return this.accepts(superClass);
@@ -120,7 +120,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
             return (T) readChemModel((IChemModel) object);
         } else if (object instanceof IChemFile) {
             IChemSequence sequence = object.getBuilder().newInstance(IChemSequence.class);
-            sequence.addChemModel((IChemModel) this.readChemModel(object.getBuilder().newInstance(IChemModel.class)));
+            sequence.addChemModel(this.readChemModel(object.getBuilder().newInstance(IChemModel.class)));
             ((IChemFile) object).addChemSequence(sequence);
             return object;
         } else {
@@ -212,9 +212,9 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
                             line = input.readLine();
                             StringTokenizer atomInfoFields = new StringTokenizer(line);
                             int atomID = Integer.parseInt(atomInfoFields.nextToken());
-                            double x = Double.valueOf(atomInfoFields.nextToken()).doubleValue();
-                            double y = Double.valueOf(atomInfoFields.nextToken()).doubleValue();
-                            double z = Double.valueOf(atomInfoFields.nextToken()).doubleValue();
+                            double x = Double.valueOf(atomInfoFields.nextToken());
+                            double y = Double.valueOf(atomInfoFields.nextToken());
+                            double z = Double.valueOf(atomInfoFields.nextToken());
                             atomxs[atomID] = x;
                             atomys[atomID] = y;
                             atomzs[atomID] = z;
@@ -230,7 +230,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
                             line = input.readLine();
                             StringTokenizer atomInfoFields = new StringTokenizer(line);
                             int atomID = Integer.parseInt(atomInfoFields.nextToken());
-                            double charge = Double.valueOf(atomInfoFields.nextToken()).doubleValue();
+                            double charge = Double.valueOf(atomInfoFields.nextToken());
                             atomcharges[atomID] = charge;
                         }
                     } catch (IOException | NumberFormatException exception) {

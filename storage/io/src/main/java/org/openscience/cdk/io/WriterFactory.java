@@ -49,7 +49,7 @@ public class WriterFactory {
 
     private final static String                          IO_FORMATS_LIST = "io-formats.set";
 
-    private static ILoggingTool                          logger          = LoggingToolFactory
+    private static final ILoggingTool                          logger          = LoggingToolFactory
                                                                                  .createLoggingTool(WriterFactory.class);
 
     private static List<IChemFormat>                     formats         = null;
@@ -60,7 +60,7 @@ public class WriterFactory {
      * Constructs a ChemObjectIOInstantionTests.
      */
     public WriterFactory() {
-        registeredReaders = new HashMap<String, Class<IChemObjectWriter>>();
+        registeredReaders = new HashMap<>();
     }
 
     public void registerWriter(Class<?> writer) {
@@ -83,13 +83,13 @@ public class WriterFactory {
         if (formats == null) loadFormats();
 
         Iterator<IChemFormat> iter = formats.iterator();
-        List<IChemFormat> matches = new ArrayList<IChemFormat>();
+        List<IChemFormat> matches = new ArrayList<>();
         while (iter.hasNext()) {
-            IChemFormat format = (IChemFormat) iter.next();
+            IChemFormat format = iter.next();
             if ((format.getSupportedDataFeatures() & features) == features) matches.add(format);
         }
 
-        return (IChemFormat[]) matches.toArray(new IChemFormat[matches.size()]);
+        return matches.toArray(new IChemFormat[matches.size()]);
     }
 
     public int formatCount() {
@@ -100,7 +100,7 @@ public class WriterFactory {
 
     private void loadFormats() {
         if (formats == null) {
-            formats = new ArrayList<IChemFormat>();
+            formats = new ArrayList<>();
             try {
                 logger.debug("Starting loading Formats...");
                 BufferedReader reader = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader()

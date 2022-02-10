@@ -56,7 +56,7 @@ import java.util.Iterator;
  */
 public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNReaderTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNReaderTest.class);
 
     @BeforeClass
     public static void setup() {
@@ -81,7 +81,7 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins1 = this.getClass().getResourceAsStream(filename1);
         MDLRXNReader reader1 = new MDLRXNReader(ins1);
         IReaction reaction1 = new Reaction();
-        reaction1 = (IReaction) reader1.read(reaction1);
+        reaction1 = reader1.read(reaction1);
         reader1.close();
 
         Assert.assertNotNull(reaction1);
@@ -115,7 +115,7 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins2 = this.getClass().getResourceAsStream(filename2);
         MDLRXNReader reader2 = new MDLRXNReader(ins2);
         IReaction reaction2 = new Reaction();
-        reaction2 = (IReaction) reader2.read(reaction2);
+        reaction2 = reader2.read(reaction2);
         reader2.close();
 
         Assert.assertNotNull(reaction2);
@@ -130,7 +130,7 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins2 = this.getClass().getResourceAsStream(filename2);
         MDLRXNReader reader2 = new MDLRXNReader(ins2);
         IReaction reaction2 = new Reaction();
-        reaction2 = (IReaction) reader2.read(reaction2);
+        reaction2 = reader2.read(reaction2);
         reader2.close();
 
         Assert.assertNotNull(reaction2);
@@ -148,7 +148,7 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLRXNReader reader = new MDLRXNReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
         Assert.assertNotNull(chemFile);
 
@@ -186,7 +186,7 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLRXNReader reader = new MDLRXNReader(ins);
-        IChemModel chemModel = (IChemModel) reader.read(new ChemModel());
+        IChemModel chemModel = reader.read(new ChemModel());
         reader.close();
         Assert.assertNotNull(chemModel);
 
@@ -220,7 +220,7 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLRXNReader reader = new MDLRXNReader(ins);
-        IReactionSet reactionSet = (IReactionSet) reader.read(new ReactionSet());
+        IReactionSet reactionSet = reader.read(new ReactionSet());
         reader.close();
         Assert.assertNotNull(reactionSet);
 
@@ -247,13 +247,13 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLRXNReader reader = new MDLRXNReader(ins);
-        IReactionSet reactionSet = (IReactionSet) reader.read(new ReactionSet());
+        IReactionSet reactionSet = reader.read(new ReactionSet());
         reader.close();
         filename = "output_Cleaned.rxn";
         logger.info("Testing: " + filename);
         ins = this.getClass().getResourceAsStream(filename);
         reader = new MDLRXNReader(ins);
-        IReactionSet reactionSet2 = (IReactionSet) reader.read(new ReactionSet());
+        IReactionSet reactionSet2 = reader.read(new ReactionSet());
         reader.close();
         Assert.assertEquals(reactionSet.getReaction(0).getMappingCount(), reactionSet2.getReaction(0).getMappingCount());
         for (int i = 0; i < reactionSet.getReaction(0).getMappingCount(); i++) {

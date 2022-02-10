@@ -47,9 +47,9 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  */
 public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTool {
 
-    private String                atomTypeList = null;
+    private String                atomTypeList;
     protected AtomTypeFactory     structgenATF;
-    protected static ILoggingTool logger       = LoggingToolFactory.createLoggingTool(SmilesValencyChecker.class);
+    protected static final ILoggingTool logger       = LoggingToolFactory.createLoggingTool(SmilesValencyChecker.class);
 
     public SmilesValencyChecker() {
         this("org/openscience/cdk/dict/data/cdk-atom-types.owl");
@@ -88,7 +88,7 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
      */
     public boolean saturate(IBond[] bonds, IAtomContainer atomContainer) throws CDKException {
         logger.debug("Saturating bond set of size: ", bonds.length);
-        boolean bondsAreFullySaturated = false;
+        boolean bondsAreFullySaturated;
         if (bonds.length > 0) {
             IBond bond = bonds[0];
 
@@ -168,15 +168,13 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
         logger.debug("  saturating bond: ", atom.getSymbol(), "-", partner.getSymbol());
         IAtomType[] atomTypes1 = getAtomTypeFactory(bond.getBuilder()).getAtomTypes(atom.getSymbol());
         IAtomType[] atomTypes2 = getAtomTypeFactory(bond.getBuilder()).getAtomTypes(partner.getSymbol());
-        for (int atCounter1 = 0; atCounter1 < atomTypes1.length; atCounter1++) {
-            IAtomType aType1 = atomTypes1[atCounter1];
+        for (IAtomType aType1 : atomTypes1) {
             logger.debug("  condidering atom type: ", aType1);
             if (couldMatchAtomType(atomContainer, atom, aType1)) {
                 logger.debug("  trying atom type: ", aType1);
-                for (int atCounter2 = 0; atCounter2 < atomTypes2.length; atCounter2++) {
-                    IAtomType aType2 = atomTypes2[atCounter2];
+                for (IAtomType aType2 : atomTypes2) {
                     logger.debug("  condidering partner type: ", aType1);
-                    if (couldMatchAtomType(atomContainer, partner, atomTypes2[atCounter2])) {
+                    if (couldMatchAtomType(atomContainer, partner, aType2)) {
                         logger.debug("    with atom type: ", aType2);
                         if (BondManipulator.isLowerOrder(bond.getOrder(), aType2.getMaxBondOrder())
                                 && BondManipulator.isLowerOrder(bond.getOrder(), aType1.getMaxBondOrder())) {
@@ -278,8 +276,7 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
         }
 
         logger.debug("Found atomtypes: ", atomTypes.length);
-        for (int f = 0; f < atomTypes.length; f++) {
-            IAtomType type = atomTypes[f];
+        for (IAtomType type : atomTypes) {
             if (couldMatchAtomType(atom, bondOrderSum, maxBondOrder, type)) {
                 logger.debug("This type matches: ", type);
                 int formalNeighbourCount = type.getFormalNeighbourCount();
@@ -330,8 +327,7 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
         logger.debug("charge: ", charge);
 
         boolean elementPlusChargeMatches = false;
-        for (int f = 0; f < atomTypes.length; f++) {
-            IAtomType type = atomTypes[f];
+        for (IAtomType type : atomTypes) {
             if (couldMatchAtomType(atom, bondOrderSum, maxBondOrder, type)) {
                 if (bondOrderSum + hcount == type.getBondOrderSum()
                         && !BondManipulator.isHigherOrder(maxBondOrder, type.getMaxBondOrder())) {

@@ -130,7 +130,7 @@ abstract public class AbstractAtomTypeTest extends CDKTestCase implements IAtomT
 
     private void addTestedAtomType(Map<String, Integer> testedAtomTypes, String expectedID) {
         if (testedAtomTypes == null) {
-            testedAtomTypes = new HashMap<String, Integer>();
+            testedAtomTypes = new HashMap<>();
         }
 
         try {
@@ -151,10 +151,10 @@ abstract public class AbstractAtomTypeTest extends CDKTestCase implements IAtomT
 
     public void testForDuplicateDefinitions() {
         IAtomType[] expectedTypesArray = getFactory().getAllAtomTypes();
-        Set<String> alreadyDefinedTypes = new HashSet<String>();
+        Set<String> alreadyDefinedTypes = new HashSet<>();
 
-        for (int i = 0; i < expectedTypesArray.length; i++) {
-            String definedType = expectedTypesArray[i].getAtomTypeName();
+        for (IAtomType iAtomType : expectedTypesArray) {
+            String definedType = iAtomType.getAtomTypeName();
             if (alreadyDefinedTypes.contains(definedType)) {
                 Assert.fail("Duplicate atom type definition in XML: " + definedType);
             }
@@ -163,13 +163,13 @@ abstract public class AbstractAtomTypeTest extends CDKTestCase implements IAtomT
     }
 
     public static void countTestedAtomTypes(Map<String, Integer> testedAtomTypesMap, AtomTypeFactory factory) {
-        Set<String> testedAtomTypes = new HashSet<String>();
+        Set<String> testedAtomTypes = new HashSet<>();
         testedAtomTypes.addAll(testedAtomTypesMap.keySet());
 
-        Set<String> definedTypes = new HashSet<String>();
+        Set<String> definedTypes = new HashSet<>();
         IAtomType[] expectedTypesArray = factory.getAllAtomTypes();
-        for (int i = 0; i < expectedTypesArray.length; i++) {
-            definedTypes.add(expectedTypesArray[i].getAtomTypeName());
+        for (IAtomType iAtomType : expectedTypesArray) {
+            definedTypes.add(iAtomType.getAtomTypeName());
         }
 
         if (definedTypes.size() == testedAtomTypes.size() && definedTypes.containsAll(testedAtomTypes)) {

@@ -130,7 +130,7 @@ public class GeneralPath implements IRenderingElement {
      * @return a new general path
      */
     public static GeneralPath shapeOf(Shape shape, Color color) {
-        List<PathElement> elements = new ArrayList<PathElement>();
+        List<PathElement> elements = new ArrayList<>();
         PathIterator pathIt = shape.getPathIterator(new AffineTransform());
         double[] data = new double[6];
         while (!pathIt.isDone()) {
@@ -164,7 +164,7 @@ public class GeneralPath implements IRenderingElement {
      * @return a new general path
      */
     public static GeneralPath outlineOf(Shape shape, double stroke, Color color) {
-        List<PathElement> elements = new ArrayList<PathElement>();
+        List<PathElement> elements = new ArrayList<>();
         PathIterator pathIt = shape.getPathIterator(new AffineTransform());
         double[] data = new double[6];
         while (!pathIt.isDone()) {

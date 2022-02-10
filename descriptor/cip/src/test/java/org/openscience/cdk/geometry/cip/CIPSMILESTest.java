@@ -47,7 +47,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class CIPSMILESTest extends CDKTestCase {
 
-    static SmilesParser smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
+    static final SmilesParser smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
 
     @Test
     public void test() throws Exception {
@@ -258,7 +258,7 @@ public class CIPSMILESTest extends CDKTestCase {
      */
     CIP_CHIRALITY label(IAtomContainer container) {
 
-        List<IStereoElement> elements = new ArrayList<IStereoElement>();
+        List<IStereoElement> elements = new ArrayList<>();
 
         for (IStereoElement element : container.stereoElements()) {
             elements.add(element);

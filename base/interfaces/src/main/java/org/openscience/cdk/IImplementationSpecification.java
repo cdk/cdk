@@ -33,7 +33,7 @@ public interface IImplementationSpecification {
      *
      * @return the URN pointing to a (virtual) dictionary or ontology.
      */
-    public String getSpecificationReference();
+    String getSpecificationReference();
 
     /**
      * Human-readable name for the implementation for the algorithm
@@ -41,7 +41,7 @@ public interface IImplementationSpecification {
      *
      * @return the name of this implementation
      */
-    public String getImplementationTitle();
+    String getImplementationTitle();
 
     /**
      * Identifier for this implementation which must include
@@ -49,7 +49,7 @@ public interface IImplementationSpecification {
      *
      * @return a free format identifier for this implementation
      */
-    public String getImplementationIdentifier();
+    String getImplementationIdentifier();
 
     /**
      * Human-readable name for the vendor that holds copyright for this
@@ -57,6 +57,6 @@ public interface IImplementationSpecification {
      *
      * @return the copyright holder of the implementation
      */
-    public String getImplementationVendor();
+    String getImplementationVendor();
 
 }

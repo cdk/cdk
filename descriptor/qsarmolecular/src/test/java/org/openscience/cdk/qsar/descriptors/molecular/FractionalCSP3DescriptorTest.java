@@ -43,8 +43,8 @@ public class FractionalCSP3DescriptorTest extends MolecularDescriptorTest {
             this.smiles = smiles;
             this.value = value;
         }
-        public String smiles;
-        public double value;
+        public final String smiles;
+        public final double value;
     }
     
     private static final SmilesValue[] table = new SmilesValue[] {

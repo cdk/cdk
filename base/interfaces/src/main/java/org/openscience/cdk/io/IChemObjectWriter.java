@@ -48,18 +48,18 @@ public interface IChemObjectWriter extends IChemObjectIO {
      * @exception CDKException is thrown if the output
      *            does not support the data in the object
      */
-    public void write(IChemObject object) throws CDKException;
+    void write(IChemObject object) throws CDKException;
 
     /**
      * Sets the Writer from which this ChemObjectWriter should write
      * the contents.
      */
-    public void setWriter(Writer writer) throws CDKException;
+    void setWriter(Writer writer) throws CDKException;
 
     /**
      * Sets the OutputStream from which this ChemObjectWriter should write
      * the contents.
      */
-    public void setWriter(OutputStream writer) throws CDKException;
+    void setWriter(OutputStream writer) throws CDKException;
 
 }

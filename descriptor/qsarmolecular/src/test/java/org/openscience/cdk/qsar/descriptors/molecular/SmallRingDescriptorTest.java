@@ -58,7 +58,7 @@ import org.junit.Test;
 
 public class SmallRingDescriptorTest extends MolecularDescriptorTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(SmallRingDescriptorTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(SmallRingDescriptorTest.class);
 
     public SmallRingDescriptorTest() {}
 
@@ -89,7 +89,7 @@ public class SmallRingDescriptorTest extends MolecularDescriptorTest {
         ZipInputStream zip = new ZipInputStream(in);
 
         // stream the contents form the zipfile: these are all short
-        HashMap<String, byte[]> content = new HashMap<String, byte[]>();
+        HashMap<String, byte[]> content = new HashMap<>();
         while (true) {
             ZipEntry ze = zip.getNextEntry();
             if (ze == null) break;
@@ -161,7 +161,7 @@ public class SmallRingDescriptorTest extends MolecularDescriptorTest {
                 MDLV2000Writer wtr = new MDLV2000Writer(str);
                 wtr.write(mol);
                 wtr.close();
-                error += "\nMolecule:\n" + str.toString();
+                error += "\nMolecule:\n" + str;
                 throw new CDKException(error);
             }
         }

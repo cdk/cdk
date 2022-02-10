@@ -82,7 +82,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(GravitationalIndexDescriptor.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(GravitationalIndexDescriptor.class);
 
     private class pair {
 
@@ -241,7 +241,7 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
         }
 
         // all pairs
-        ArrayList<Integer> x = new ArrayList<Integer>();
+        ArrayList<Integer> x = new ArrayList<>();
         for (int i = 0; i < container.getAtomCount(); i++) {
             if (container.getAtom(i).getAtomicNumber() != IElement.H) x.add(i);
         }

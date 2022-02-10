@@ -51,7 +51,7 @@ import java.util.List;
  */
 public class RadicalSiteInitiationReactionTest extends ReactionProcessTest {
 
-    private IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    private final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
     /**
      *  The JUnit setup method
@@ -83,7 +83,7 @@ public class RadicalSiteInitiationReactionTest extends ReactionProcessTest {
 
         /* initiate */
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);
@@ -126,7 +126,7 @@ public class RadicalSiteInitiationReactionTest extends ReactionProcessTest {
         molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -165,7 +165,7 @@ public class RadicalSiteInitiationReactionTest extends ReactionProcessTest {
         molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);

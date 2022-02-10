@@ -72,11 +72,11 @@ import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
  */
 public class StructureResonanceGenerator {
 
-    private ILoggingTool           logger        = LoggingToolFactory
+    private final ILoggingTool           logger        = LoggingToolFactory
                                                          .createLoggingTool(StructureResonanceGenerator.class);
-    private List<IReactionProcess> reactionsList = new ArrayList<IReactionProcess>();
+    private List<IReactionProcess> reactionsList = new ArrayList<>();
     /**Generate resonance structure without looking at the symmetry*/
-    private boolean                lookingSymmetry;
+    private final boolean                lookingSymmetry;
     /** TODO: REACT: some time takes too much time. At the moment fixed to 50 structures*/
     private int                    maxStructures = 50;
 
@@ -159,7 +159,7 @@ public class StructureResonanceGenerator {
     }
 
     private void callDefaultReactions() {
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);
@@ -173,7 +173,7 @@ public class StructureResonanceGenerator {
         reactionsList.add(type);
 
         type = new PiBondingMovementReaction();
-        List<IParameterReact> paramList2 = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList2 = new ArrayList<>();
         IParameterReact param2 = new SetReactionCenter();
         param2.setParameter(Boolean.FALSE);
         paramList2.add(param2);
@@ -270,7 +270,7 @@ public class StructureResonanceGenerator {
         if (setOfMol.getAtomContainerCount() == 0) return setOfCont;
 
         /* extraction of all bonds which has been produced a changes of order */
-        List<IBond> bondList = new ArrayList<IBond>();
+        List<IBond> bondList = new ArrayList<>();
         for (int i = 1; i < setOfMol.getAtomContainerCount(); i++) {
             IAtomContainer mol = setOfMol.getAtomContainer(i);
             for (int j = 0; j < mol.getBondCount(); j++) {
@@ -290,7 +290,7 @@ public class StructureResonanceGenerator {
         int maxGroup = 1;
 
         /* Analysis if the bond are linked together */
-        List<IBond> newBondList = new ArrayList<IBond>();
+        List<IBond> newBondList = new ArrayList<>();
         newBondList.add(bondList.get(0));
 
         int pos = 0;
@@ -309,8 +309,7 @@ public class StructureResonanceGenerator {
             for (int ato = 0; ato < 2; ato++) {
                 IAtom atomA1 = bondA.getAtom(ato);
                 List<IBond> bondA1s = molecule.getConnectedBondsList(atomA1);
-                for (int j = 0; j < bondA1s.size(); j++) {
-                    IBond bondB = bondA1s.get(j);
+                for (IBond bondB : bondA1s) {
                     if (!newBondList.contains(bondB)) for (int k = 0; k < bondList.size(); k++)
                         if (bondList.get(k).equals(bondB)) if (flagBelonging[k] == 0) {
                             flagBelonging[k] = maxGroup;
@@ -398,7 +397,7 @@ public class StructureResonanceGenerator {
 
         IAtomContainer acClone = null;
         try {
-            acClone = (IAtomContainer) atomContainer.clone();
+            acClone = atomContainer.clone();
             if (!lookingSymmetry) { /* remove all aromatic flags */
                 for (IAtom atom : acClone.atoms())
                     atom.setFlag(CDKConstants.ISAROMATIC, false);

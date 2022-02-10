@@ -57,7 +57,7 @@ public class ReactionSchemeManipulator {
                         break;
                     }
                 }
-                if (!contain) molSet.addAtomContainer((IAtomContainer) (ac));
+                if (!contain) molSet.addAtomContainer(ac);
             }
         }
         for (IReaction reaction : scheme.reactions()) {
@@ -95,7 +95,7 @@ public class ReactionSchemeManipulator {
      * @return        A List with all ID
      */
     public static List<String> getAllIDs(IReactionScheme scheme) {
-        List<String> IDlist = new ArrayList<String>();
+        List<String> IDlist = new ArrayList<>();
         if (scheme.getID() != null) IDlist.add(scheme.getID());
         for (IReaction reaction : scheme.reactions()) {
             IDlist.addAll(ReactionManipulator.getAllIDs(reaction));
@@ -136,7 +136,7 @@ public class ReactionSchemeManipulator {
         IReactionScheme reactionScheme = reactionSet.getBuilder().newInstance(IReactionScheme.class);
 
         // Looking for those reactants which doesn't have any precursor. They are the top.
-        ArrayList<IReaction> listTopR = new ArrayList<IReaction>();
+        ArrayList<IReaction> listTopR = new ArrayList<>();
         for (IReaction reaction : reactionSet.reactions()) {
             if (extractPrecursorReaction(reaction, reactionSet).getReactionCount() == 0) listTopR.add(reaction);
         }
@@ -254,7 +254,7 @@ public class ReactionSchemeManipulator {
      */
     public static ArrayList<IAtomContainerSet> getAtomContainerSet(IAtomContainer origenMol, IAtomContainer finalMol,
             IReactionScheme reactionScheme) {
-        ArrayList<IAtomContainerSet> listPath = new ArrayList<IAtomContainerSet>();
+        ArrayList<IAtomContainerSet> listPath = new ArrayList<>();
         IReactionSet reactionSet = getAllReactions(reactionScheme);
 
         // down search

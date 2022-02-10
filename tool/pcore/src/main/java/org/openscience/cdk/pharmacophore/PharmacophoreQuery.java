@@ -41,12 +41,12 @@ import java.util.List;
  */
 public class PharmacophoreQuery extends QueryAtomContainer {
 
-    private List<Object> exclusionVolumes;
+    private final List<Object> exclusionVolumes;
 
     public PharmacophoreQuery() {
         // builder should be injected but this is difficult as this class is create in static methods
         super(DefaultChemObjectBuilder.getInstance());
-        exclusionVolumes = new ArrayList<Object>();
+        exclusionVolumes = new ArrayList<>();
     }
 
     /**

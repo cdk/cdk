@@ -33,7 +33,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -51,7 +50,7 @@ import java.util.List;
  */
 public class Polarizability {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(Polarizability.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(Polarizability.class);
 
     /**
      * Constructor for the Polarizability object.

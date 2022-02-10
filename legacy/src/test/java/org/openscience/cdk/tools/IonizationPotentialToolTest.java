@@ -30,7 +30,6 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -40,7 +39,7 @@ import java.util.List;
  */
 public class IonizationPotentialToolTest extends CDKTestCase {
 
-    LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+    final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
     /**
      * Constructor of the IonizationPotentialToolTest.
@@ -70,10 +69,8 @@ public class IonizationPotentialToolTest extends CDKTestCase {
         Aromaticity.cdkLegacy().apply(molecule);
         lpcheck.saturate(molecule);
 
-        List<Double> carbonIPs = new ArrayList<Double>();
-        Iterator<IAtom> atoms = molecule.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        List<Double> carbonIPs = new ArrayList<>();
+        for (IAtom atom : molecule.atoms()) {
             if (atom.getAtomicNumber() == IElement.H) continue;
             carbonIPs.add(IonizationPotentialTool.predictIP(molecule, atom));
         }

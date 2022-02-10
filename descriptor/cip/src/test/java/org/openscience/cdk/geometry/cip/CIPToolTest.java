@@ -64,7 +64,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class CIPToolTest extends CDKTestCase {
 
-    static SmilesParser   smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
+    static final SmilesParser   smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
     static IAtomContainer molecule;
     static ILigand[]      ligands;
 
@@ -118,11 +118,11 @@ public class CIPToolTest extends CDKTestCase {
 
     @Test
     public void testGetCIPChirality_ILigancyFourChirality() {
-        List<IAtom> ligandAtoms = new ArrayList<IAtom>();
+        List<IAtom> ligandAtoms = new ArrayList<>();
         for (ILigand ligand : ligands)
             ligandAtoms.add(ligand.getLigandAtom());
         ITetrahedralChirality chirality = new TetrahedralChirality(molecule.getAtom(1),
-                (IAtom[]) ligandAtoms.toArray(new IAtom[]{}), Stereo.CLOCKWISE);
+                ligandAtoms.toArray(new IAtom[]{}), Stereo.CLOCKWISE);
         CIP_CHIRALITY rsChirality = CIPTool.getCIPChirality(molecule, chirality);
         Assert.assertEquals(CIP_CHIRALITY.S, rsChirality);
     }
@@ -130,12 +130,12 @@ public class CIPToolTest extends CDKTestCase {
     @Test
     public void testGetCIPChirality_Anti_ILigancyFourChirality() {
         ILigand[] antiLigands = new ILigand[]{ligands[0], ligands[1], ligands[3], ligands[2]};
-        List<IAtom> ligandAtoms = new ArrayList<IAtom>();
+        List<IAtom> ligandAtoms = new ArrayList<>();
         for (ILigand ligand : antiLigands)
             ligandAtoms.add(ligand.getLigandAtom());
 
         ITetrahedralChirality chirality = new TetrahedralChirality(molecule.getAtom(1),
-                (IAtom[]) ligandAtoms.toArray(new IAtom[]{}), Stereo.ANTI_CLOCKWISE);
+                ligandAtoms.toArray(new IAtom[]{}), Stereo.ANTI_CLOCKWISE);
         CIP_CHIRALITY rsChirality = CIPTool.getCIPChirality(molecule, chirality);
         Assert.assertEquals(CIP_CHIRALITY.S, rsChirality);
     }

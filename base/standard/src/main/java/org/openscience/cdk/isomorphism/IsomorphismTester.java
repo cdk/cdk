@@ -90,8 +90,8 @@ public class IsomorphismTester implements java.io.Serializable {
      */
     public boolean isIsomorphic(IAtomContainer mol2) {
         boolean found;
-        IAtom atom1 = null;
-        IAtom atom2 = null;
+        IAtom atom1;
+        IAtom atom2;
         setCompareTable(mol2);
         for (int f = 0; f < sortedBaseTable.length; f++) {
             if (sortedBaseTable[f] != sortedCompareTable[f]) {

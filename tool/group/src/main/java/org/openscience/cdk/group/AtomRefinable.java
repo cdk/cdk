@@ -59,13 +59,13 @@ class AtomRefinable implements Refinable {
     /**
      * Ignore the elements when creating the initial partition.
      */
-    private boolean ignoreElements;
+    private final boolean ignoreElements;
     
     /**
      * Specialised option to allow generating automorphisms
      * that ignore the bond order.
      */
-    private boolean ignoreBondOrders;
+    private final boolean ignoreBondOrders;
     
     private int maxBondOrder;
     
@@ -179,7 +179,7 @@ class AtomRefinable implements Refinable {
             return Partition.unit(n);
         }
 
-        Map<String, SortedSet<Integer>> cellMap = new HashMap<String, SortedSet<Integer>>();
+        Map<String, SortedSet<Integer>> cellMap = new HashMap<>();
         int numberOfAtoms = atomContainer.getAtomCount();
         for (int atomIndex = 0; atomIndex < numberOfAtoms; atomIndex++) {
             String symbol = atomContainer.getAtom(atomIndex).getSymbol();
@@ -187,13 +187,13 @@ class AtomRefinable implements Refinable {
             if (cellMap.containsKey(symbol)) {
                 cell = cellMap.get(symbol);
             } else {
-                cell = new TreeSet<Integer>();
+                cell = new TreeSet<>();
                 cellMap.put(symbol, cell);
             }
             cell.add(atomIndex);
         }
 
-        List<String> atomSymbols = new ArrayList<String>(cellMap.keySet());
+        List<String> atomSymbols = new ArrayList<>(cellMap.keySet());
         Collections.sort(atomSymbols);
 
         Partition elementPartition = new Partition();

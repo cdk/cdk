@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -105,9 +104,9 @@ public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implemen
      */
     @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
-        IAtomContainer ac = null;
+        IAtomContainer ac;
         try {
-            ac = (IAtomContainer) atomContainer.clone();
+            ac = atomContainer.clone();
         } catch (CloneNotSupportedException e) {
             return getDummyDescriptorValue(e);
         }

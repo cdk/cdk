@@ -26,7 +26,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.util.Iterator;
 
 import javax.vecmath.Point3d;
 
@@ -53,8 +52,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class XYZWriter extends DefaultChemObjectWriter {
 
     private BufferedWriter      writer;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(XYZWriter.class);
-    private FormatStringBuffer  fsb;
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(XYZWriter.class);
+    private final FormatStringBuffer  fsb;
 
     /**
     * Constructor.
@@ -112,8 +111,8 @@ public class XYZWriter extends DefaultChemObjectWriter {
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IAtomContainer.class.equals(classObject)) return true;
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IAtomContainer.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IAtomContainer.class.equals(anInterface)) return true;
         }
         Class superClass = classObject.getSuperclass();
         if (superClass != null) return this.accepts(superClass);
@@ -139,7 +138,7 @@ public class XYZWriter extends DefaultChemObjectWriter {
     */
     public void writeMolecule(IAtomContainer mol) throws IOException {
 
-        String st = "";
+        String st;
         boolean writecharge = true;
 
         try {
@@ -155,9 +154,7 @@ public class XYZWriter extends DefaultChemObjectWriter {
             writer.write('\n');
 
             // Loop through the atoms and write them out:
-            Iterator<IAtom> atoms = mol.atoms().iterator();
-            while (atoms.hasNext()) {
-                IAtom a = atoms.next();
+            for (IAtom a : mol.atoms()) {
                 st = a.getSymbol();
 
                 Point3d p3 = a.getPoint3d();

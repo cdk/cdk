@@ -54,12 +54,12 @@ import org.openscience.cdk.io.formats.MOPAC7Format;
  */
 public class Mopac7Reader extends DefaultChemObjectReader {
 
-    BufferedReader          input        = null;
-    private static String[] parameters   = {"NO. OF FILLED LEVELS", "TOTAL ENERGY", "FINAL HEAT OF FORMATION",
+    BufferedReader          input;
+    private static final String[] parameters   = {"NO. OF FILLED LEVELS", "TOTAL ENERGY", "FINAL HEAT OF FORMATION",
             "IONIZATION POTENTIAL", "ELECTRONIC ENERGY", "CORE-CORE REPULSION", "MOLECULAR WEIGHT", "EHOMO", "ELUMO"};
-    private static String[] units        = {"", "EV", "KJ", "", "EV", "EV", "", "EV", "EV"};
-    private static String   eigenvalues  = "EIGENVALUES";
-    private static String   filledLevels = "NO. OF FILLED LEVELS";
+    private static final String[] units        = {"", "EV", "KJ", "", "EV", "EV", "", "EV", "EV"};
+    private static final String   eigenvalues  = "EIGENVALUES";
+    private static final String   filledLevels = "NO. OF FILLED LEVELS";
 
     /**
      * Constructs a new Mopac7reader that can read a molecule from a given {@link Reader}.
@@ -102,14 +102,14 @@ public class Mopac7Reader extends DefaultChemObjectReader {
     /** {@inheritDoc} */
     public <T extends IChemObject> T read(T object) throws CDKException {
         final String[] expected_columns = {"NO.", "ATOM", "X", "Y", "Z"};
-        StringBuffer eigenvalues = new StringBuffer();
+        StringBuilder eigenvalues = new StringBuilder();
         if (object instanceof IAtomContainer) {
             IAtomContainer container = (IAtomContainer) object;
             try {
                 String line = input.readLine();
                 while (line != null) {
-                    if (line.indexOf("****  MAX. NUMBER OF ATOMS ALLOWED") > -1) throw new CDKException(line);
-                    if (line.indexOf("TO CONTINUE CALCULATION SPECIFY \"GEO-OK\"") > -1) throw new CDKException(line);
+                    if (line.contains("****  MAX. NUMBER OF ATOMS ALLOWED")) throw new CDKException(line);
+                    if (line.contains("TO CONTINUE CALCULATION SPECIFY \"GEO-OK\"")) throw new CDKException(line);
                     if ("CARTESIAN COORDINATES".equals(line.trim())) {
 
                         IAtomContainer atomcontainer = ((IAtomContainer) object);
@@ -171,7 +171,7 @@ public class Mopac7Reader extends DefaultChemObjectReader {
 
                         }
 
-                    } else if (line.indexOf(Mopac7Reader.eigenvalues) >= 0) {
+                    } else if (line.contains(Mopac7Reader.eigenvalues)) {
                         line = input.readLine();
                         line = input.readLine();
                         while (!line.trim().equals("")) {
@@ -181,7 +181,7 @@ public class Mopac7Reader extends DefaultChemObjectReader {
                         container.setProperty(Mopac7Reader.eigenvalues, eigenvalues.toString());
                     } else
                         for (int i = 0; i < parameters.length; i++)
-                            if (line.indexOf(parameters[i]) >= 0) {
+                            if (line.contains(parameters[i])) {
                                 String value = line.substring(line.lastIndexOf('=') + 1).trim();
 
                                 /*
@@ -213,7 +213,7 @@ public class Mopac7Reader extends DefaultChemObjectReader {
         Object filledLevelsProp = mol.getProperty(filledLevels);
         //mol.getProperties().remove(filledLevels);
         if (filledLevelsProp == null) return;
-        int nFilledLevels = 0;
+        int nFilledLevels;
         try {
             nFilledLevels = Integer.parseInt(filledLevelsProp.toString());
         } catch (NumberFormatException exception) {
@@ -221,18 +221,18 @@ public class Mopac7Reader extends DefaultChemObjectReader {
         }
         String[] eigenVals = eigenProp.toString().split("\\s");
         int levelCounter = 0;
-        for (int i = 0; i < eigenVals.length; i++) {
-            if (eigenVals[i].trim().isEmpty())
+        for (String eigenVal : eigenVals) {
+            if (eigenVal.trim().isEmpty())
                 continue;
             else
                 try {
                     // check if the value is an proper double:
-                    Double.parseDouble(eigenVals[i]);
+                    Double.parseDouble(eigenVal);
                     levelCounter++;
                     if (levelCounter == nFilledLevels) {
-                        mol.setProperty("EHOMO", eigenVals[i]);
+                        mol.setProperty("EHOMO", eigenVal);
                     } else if (levelCounter == (nFilledLevels + 1)) {
-                        mol.setProperty("ELUMO", eigenVals[i]);
+                        mol.setProperty("ELUMO", eigenVal);
                     }
                 } catch (NumberFormatException exception) {
                     return;
@@ -267,8 +267,8 @@ public class Mopac7Reader extends DefaultChemObjectReader {
     /** {@inheritDoc} */
     public boolean accepts(Class<? extends IChemObject> classObject) {
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IAtomContainer.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IAtomContainer.class.equals(anInterface)) return true;
         }
         if (IAtomContainer.class.equals(classObject)) return true;
         Class superClass = classObject.getSuperclass();

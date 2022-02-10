@@ -252,7 +252,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
 
     @Test
     public void testCrystal() throws Exception {
-        StringBuffer cmlStringB = new StringBuffer("  <molecule id=\"m1\">\n");
+        StringBuilder cmlStringB = new StringBuilder("  <molecule id=\"m1\">\n");
         cmlStringB.append("    <crystal z=\"4\">\n");
         cmlStringB
                 .append("      <scalar id=\"sc1\" title=\"a\" errorValue=\"0.001\" units=\"units:angstrom\">4.500</scalar>\n");
@@ -303,9 +303,9 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
     }
 
     private IChemFile parseCMLString(String cmlString) throws Exception {
-        IChemFile chemFile = null;
+        IChemFile chemFile;
         CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
-        chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        chemFile = reader.read(new org.openscience.cdk.ChemFile());
         return chemFile;
     }
 

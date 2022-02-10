@@ -74,7 +74,7 @@ public class ADFFormat extends SimpleChemFormatMatcher implements IChemFormatMat
     /** {@inheritDoc} */
     @Override
     public boolean matches(int lineNumber, String line) {
-        if (line.indexOf("Amsterdam Density Functional") >= 0) {
+        if (line.contains("Amsterdam Density Functional")) {
             return true;
         }
         return false;

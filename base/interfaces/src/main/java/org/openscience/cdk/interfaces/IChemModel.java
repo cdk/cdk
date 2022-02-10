@@ -34,7 +34,7 @@ public interface IChemModel extends IChemObject {
      * @return   The {@link IAtomContainerSet} of this ChemModel
      * @see      #setMoleculeSet
      */
-    public IAtomContainerSet getMoleculeSet();
+    IAtomContainerSet getMoleculeSet();
 
     /**
      * Sets the IAtomContainerSet of this ChemModel.
@@ -42,7 +42,7 @@ public interface IChemModel extends IChemObject {
      * @param   setOfMolecules  the content of this model
      * @see      #getMoleculeSet
      */
-    public void setMoleculeSet(IAtomContainerSet setOfMolecules);
+    void setMoleculeSet(IAtomContainerSet setOfMolecules);
 
     /**
      * Returns the RingSet of this ChemModel.
@@ -50,7 +50,7 @@ public interface IChemModel extends IChemObject {
      * @return the ringset of this model
      * @see      #setRingSet
      */
-    public IRingSet getRingSet();
+    IRingSet getRingSet();
 
     /**
      * Sets the RingSet of this ChemModel.
@@ -58,7 +58,7 @@ public interface IChemModel extends IChemObject {
      * @param   ringSet         the content of this model
      * @see      #getRingSet
      */
-    public void setRingSet(IRingSet ringSet);
+    void setRingSet(IRingSet ringSet);
 
     /**
      * Gets the Crystal contained in this ChemModel.
@@ -66,7 +66,7 @@ public interface IChemModel extends IChemObject {
      * @return The crystal in this model
      * @see      #setCrystal
      */
-    public ICrystal getCrystal();
+    ICrystal getCrystal();
 
     /**
      * Sets the Crystal contained in this ChemModel.
@@ -74,7 +74,7 @@ public interface IChemModel extends IChemObject {
      * @param   crystal  the Crystal to store in this model
      * @see      #getCrystal
      */
-    public void setCrystal(ICrystal crystal);
+    void setCrystal(ICrystal crystal);
 
     /**
      * Gets the ReactionSet contained in this ChemModel.
@@ -82,7 +82,7 @@ public interface IChemModel extends IChemObject {
      * @return The ReactionSet in this model
      * @see      #setReactionSet
      */
-    public IReactionSet getReactionSet();
+    IReactionSet getReactionSet();
 
     /**
      * Sets the ReactionSet contained in this ChemModel.
@@ -90,13 +90,13 @@ public interface IChemModel extends IChemObject {
      * @param sor the ReactionSet to store in this model
      * @see       #getReactionSet
      */
-    public void setReactionSet(IReactionSet sor);
+    void setReactionSet(IReactionSet sor);
 
     /**
      * Returns true if this ChemModel is empty.
      *
      * @return a boolean indicating if this model has no content
      */
-    public boolean isEmpty();
+    boolean isEmpty();
 
 }

@@ -81,7 +81,7 @@ public class SettingManager<T extends ISetting> {
     /**
      * Settings are stored in a map of name -> instance.
      */
-    private Map<String, T>       settings    = new HashMap<String, T>(3);
+    private final Map<String, T>       settings    = new HashMap<>(3);
 
     /**
      * Generate a simple key for the given name. This method normalises the name by
@@ -206,7 +206,7 @@ public class SettingManager<T extends ISetting> {
      * @see #get(String)
      */
     public <S extends T> S get(String name, Class<S> c) {
-        return (S) get(name);
+        return get(name);
     }
 
     /**
@@ -246,7 +246,7 @@ public class SettingManager<T extends ISetting> {
      * @see #getSettings()
      */
     public T[] toArray(T[] c) {
-        return (T[]) getSettings().toArray(c);
+        return getSettings().toArray(c);
     }
 
 }

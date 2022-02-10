@@ -43,7 +43,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -79,7 +78,7 @@ import java.util.List;
  **/
 public class RadicalSiteRrBetaReaction extends ReactionEngine implements IReactionProcess {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(RadicalSiteRrBetaReaction.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(RadicalSiteRrBetaReaction.class);
 
     /**
      * Constructor of the RadicalSiteRrBetaReaction object
@@ -144,36 +143,30 @@ public class RadicalSiteRrBetaReaction extends ReactionEngine implements IReacti
         if (ipr != null && !ipr.isSetParameter()) setActiveCenters(reactant);
 
         HOSECodeGenerator hcg = new HOSECodeGenerator();
-        Iterator<IAtom> atomis = reactant.atoms().iterator();
-        while (atomis.hasNext()) {
-            IAtom atomi = atomis.next();
+        for (IAtom atomi : reactant.atoms()) {
             if (atomi.getFlag(CDKConstants.REACTIVE_CENTER) && reactant.getConnectedSingleElectronsCount(atomi) == 1) {
 
                 hcg.getSpheres(reactant, atomi, 2, true);
                 List<IAtom> atom1s = hcg.getNodesInSphere(2);
 
                 hcg.getSpheres(reactant, atomi, 3, true);
-                Iterator<IAtom> atomls = hcg.getNodesInSphere(3).iterator();
-                while (atomls.hasNext()) {
-                    IAtom atoml = atomls.next();
+                for (IAtom atoml : hcg.getNodesInSphere(3)) {
                     if (atoml != null && atoml.getFlag(CDKConstants.REACTIVE_CENTER)
                             && !atoml.getFlag(CDKConstants.ISINRING)
                             && (atoml.getFormalCharge() == CDKConstants.UNSET ? 0 : atoml.getFormalCharge()) == 0
                             && atoml.getAtomicNumber() != IElement.H && reactant.getMaximumBondOrder(atoml) == IBond.Order.SINGLE) {
 
-                        Iterator<IAtom> atomRs = reactant.getConnectedAtomsList(atoml).iterator();
-                        while (atomRs.hasNext()) {
-                            IAtom atomR = atomRs.next();
+                        for (IAtom atomR : reactant.getConnectedAtomsList(atoml)) {
                             if (atom1s.contains(atomR)) continue;
                             if (reactant.getBond(atomR, atoml).getFlag(CDKConstants.REACTIVE_CENTER)
                                     && atomR.getFlag(CDKConstants.REACTIVE_CENTER)
                                     && (atomR.getFormalCharge() == CDKConstants.UNSET ? 0 : atomR.getFormalCharge()) == 0) {
 
-                                ArrayList<IAtom> atomList = new ArrayList<IAtom>();
+                                ArrayList<IAtom> atomList = new ArrayList<>();
                                 atomList.add(atomR);
                                 atomList.add(atomi);
                                 atomList.add(atoml);
-                                ArrayList<IBond> bondList = new ArrayList<IBond>();
+                                ArrayList<IBond> bondList = new ArrayList<>();
                                 bondList.add(reactant.getBond(atomR, atoml));
 
                                 IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(
@@ -209,25 +202,19 @@ public class RadicalSiteRrBetaReaction extends ReactionEngine implements IReacti
      */
     private void setActiveCenters(IAtomContainer reactant) throws CDKException {
         HOSECodeGenerator hcg = new HOSECodeGenerator();
-        Iterator<IAtom> atomis = reactant.atoms().iterator();
-        while (atomis.hasNext()) {
-            IAtom atomi = atomis.next();
+        for (IAtom atomi : reactant.atoms()) {
             if (reactant.getConnectedSingleElectronsCount(atomi) == 1) {
 
                 hcg.getSpheres(reactant, atomi, 2, true);
                 List<IAtom> atom1s = hcg.getNodesInSphere(2);
 
                 hcg.getSpheres(reactant, atomi, 3, true);
-                Iterator<IAtom> atomls = hcg.getNodesInSphere(3).iterator();
-                while (atomls.hasNext()) {
-                    IAtom atoml = atomls.next();
+                for (IAtom atoml : hcg.getNodesInSphere(3)) {
                     if (atoml != null && !atoml.getFlag(CDKConstants.ISINRING)
                             && (atoml.getFormalCharge() == CDKConstants.UNSET ? 0 : atoml.getFormalCharge()) == 0
                             && atoml.getAtomicNumber() != IElement.H && reactant.getMaximumBondOrder(atoml) == IBond.Order.SINGLE) {
 
-                        Iterator<IAtom> atomRs = reactant.getConnectedAtomsList(atoml).iterator();
-                        while (atomRs.hasNext()) {
-                            IAtom atomR = atomRs.next();
+                        for (IAtom atomR : reactant.getConnectedAtomsList(atoml)) {
                             if (atom1s.contains(atomR)) continue;
                             if ((atomR.getFormalCharge() == CDKConstants.UNSET ? 0 : atomR.getFormalCharge()) == 0) {
 

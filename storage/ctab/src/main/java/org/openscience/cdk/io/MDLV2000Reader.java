@@ -125,8 +125,8 @@ import static org.openscience.cdk.io.MDLV2000Writer.SPIN_MULTIPLICITY;
  */
 public class MDLV2000Reader extends DefaultChemObjectReader {
 
-    BufferedReader                   input            = null;
-    private static ILoggingTool      logger           = LoggingToolFactory.createLoggingTool(MDLV2000Reader.class);
+    BufferedReader                   input;
+    private static final ILoggingTool      logger           = LoggingToolFactory.createLoggingTool(MDLV2000Reader.class);
 
     private BooleanIOSetting optForce3d;
     private BooleanIOSetting optHydIso;
@@ -315,7 +315,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
         int linecount = 0;
         String title = null;
-        String program = null;
+        String program;
         String remark = null;
         String line = "";
 
@@ -659,7 +659,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     }
 
     IAtom readAtomFast(String line, IChemObjectBuilder builder, int lineNum) throws CDKException, IOException {
-        return readAtomFast(line, builder, Collections.<IAtom,Integer>emptyMap(), lineNum, false);
+        return readAtomFast(line, builder, Collections.emptyMap(), lineNum, false);
     }
 
     /**
@@ -874,7 +874,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
         if (isQuery && bond.getClass() != QueryBond.class) {
             IBond.Order order = bond.getOrder();
-            Expr expr = null;
+            Expr expr;
             if (bond.isAromatic()) {
                 expr = new Expr(Expr.Type.IS_AROMATIC);
             } else {
@@ -1326,7 +1326,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     count  = readMolfileInt(line, 10);
                     Collection<IAtom> parentAtomList = sgroup.getValue(SgroupKey.CtabParentAtomList);
                     if (parentAtomList == null) {
-                        sgroup.putValue(SgroupKey.CtabParentAtomList, parentAtomList = new HashSet<IAtom>());
+                        sgroup.putValue(SgroupKey.CtabParentAtomList, parentAtomList = new HashSet<>());
                     }
                     for (int i = 0, st = 14; i < count && st + 3 <= length; i++, st += 4) {
                         index = readMolfileInt(line, st) - 1;
@@ -1434,8 +1434,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             // load Sgroups into molecule, first we downcast
             List<Sgroup> sgroupOrgList = new ArrayList<>(sgroups.values());
             List<Sgroup> sgroupCpyList = new ArrayList<>(sgroupOrgList.size());
-            for (int i = 0; i < sgroupOrgList.size(); i++) {
-                Sgroup cpy = sgroupOrgList.get(i).downcast();
+            for (Sgroup sgroup : sgroupOrgList) {
+                Sgroup cpy = sgroup.downcast();
                 sgroupCpyList.add(cpy);
             }
             // update replaced parents
@@ -2163,7 +2163,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     for (int i = 1; i <= infoCount; i++) {
                         int atomNumber = Integer.parseInt(st.nextToken().trim());
                         int rad = Integer.parseInt(st.nextToken().trim());
-                        MDLV2000Writer.SPIN_MULTIPLICITY spin = MDLV2000Writer.SPIN_MULTIPLICITY.None;
+                        MDLV2000Writer.SPIN_MULTIPLICITY spin;
                         if (rad > 0) {
                             IAtom radical = container.getAtom(atomNumber - 1);
                             spin = MDLV2000Writer.SPIN_MULTIPLICITY.ofValue(rad);
@@ -2198,7 +2198,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     }
                     AtomContainerManipulator.replaceAtomByAtom(container, prevAtom, pseudoAtom);
                 } catch (NumberFormatException exception) {
-                    String error = "Error (" + exception.toString() + ") while parsing line " + linecount + ": " + line
+                    String error = "Error (" + exception + ") while parsing line " + linecount + ": " + line
                             + " in property block.";
                     logger.error(error);
                     handleError("NumberFormatException in group information", linecount, 4, 7, exception);
@@ -2212,7 +2212,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 //Process the R group numbers as defined in RGP line.
                 while (st.hasMoreTokens()) {
                     Integer position = Integer.valueOf(st.nextToken());
-                    int rNumber = Integer.valueOf(st.nextToken());
+                    int rNumber = Integer.parseInt(st.nextToken());
                     // the container may have already had atoms before the new atoms were read
                     int index = container.getAtomCount() - nAtoms + position - 1;
                     IPseudoAtom pseudoAtom = (IPseudoAtom) container.getAtom(index);
@@ -2453,9 +2453,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         LEGACY_ATOM_LIST;
 
         /** Index of 'M XXX' properties for quick lookup. */
-        private static final Map<String, PropertyKey> mSuffix = new HashMap<String, PropertyKey>(60);
+        private static final Map<String, PropertyKey> mSuffix = new HashMap<>(60);
 
-        private static Pattern LEGACY_ATOM_LIST_PATTERN = Pattern.compile("^[0-9 ][0-9 ][0-9 ] [T|F]");
+        private static final Pattern LEGACY_ATOM_LIST_PATTERN = Pattern.compile("^[0-9 ][0-9 ][0-9 ] [T|F]");
         static {
             for (PropertyKey p : values()) {
                 if (p.name().charAt(0) == 'M') mSuffix.put(p.name().substring(2, 5), p);

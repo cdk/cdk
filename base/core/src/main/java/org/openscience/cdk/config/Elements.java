@@ -199,7 +199,7 @@ public enum Elements {
     /**
      * Lookup elements by symbol / name.
      */
-    static final Map<String, Elements> SYMBOL_MAP = new HashMap<String, Elements>(400);
+    static final Map<String, Elements> SYMBOL_MAP = new HashMap<>(400);
 
     static {
         // index elements
@@ -243,7 +243,7 @@ public enum Elements {
      * @param rW                van der Waals radius
      * @param electronegativity pauling electronegativity
      */
-    private Elements(int number, String symbol, int period, int group, Double rCov, Double rW, Double electronegativity) {
+    Elements(int number, String symbol, int period, int group, Double rCov, Double rW, Double electronegativity) {
         this.number = number;
         this.period = period;
         this.group = group;

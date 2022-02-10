@@ -68,7 +68,7 @@ import static org.junit.Assert.assertTrue;
 public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
     boolean                     standAlone = false;
-    private static ILoggingTool logger     = LoggingToolFactory.createLoggingTool(FingerprinterTest.class);
+    private static final ILoggingTool logger     = LoggingToolFactory.createLoggingTool(FingerprinterTest.class);
 
     @Override
     public IFingerprinter getBitFingerprinter() {
@@ -169,7 +169,7 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
         logger.info("Testing: " + filename1);
         InputStream ins1 = this.getClass().getResourceAsStream(filename1);
         MDLRXNV2000Reader reader = new MDLRXNV2000Reader(ins1, Mode.STRICT);
-        IReaction reaction = (IReaction) reader.read(new Reaction());
+        IReaction reaction = reader.read(new Reaction());
         Assert.assertNotNull(reaction);
 
         IAtomContainer reactant = reaction.getReactants().getAtomContainer(0);

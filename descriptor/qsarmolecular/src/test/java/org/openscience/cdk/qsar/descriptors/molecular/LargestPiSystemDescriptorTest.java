@@ -25,8 +25,8 @@ public class LargestPiSystemDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test1LargestPiSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(false)};
+    public void test1LargestPiSystemDescriptor() throws java.lang.Exception {
+        Object[] params = {Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("c1ccccc1"); // benzol
@@ -34,8 +34,8 @@ public class LargestPiSystemDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test2LargestPiSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(false)};
+    public void test2LargestPiSystemDescriptor() throws java.lang.Exception {
+        Object[] params = {Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C=CC=Cc1ccccc1");
@@ -44,8 +44,8 @@ public class LargestPiSystemDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test3LargestPiSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(false)};
+    public void test3LargestPiSystemDescriptor() throws java.lang.Exception {
+        Object[] params = {Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C=CC=CCc2ccc(Cc1ccncc1C=C)cc2");
@@ -54,8 +54,8 @@ public class LargestPiSystemDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test4LargestPiSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(false)};
+    public void test4LargestPiSystemDescriptor() throws java.lang.Exception {
+        Object[] params = {Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CC=CNCC");
@@ -64,8 +64,8 @@ public class LargestPiSystemDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test5LargestPiSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(false)};
+    public void test5LargestPiSystemDescriptor() throws java.lang.Exception {
+        Object[] params = {Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C=C[NH2+]CC");
@@ -74,8 +74,8 @@ public class LargestPiSystemDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test6LargestPiSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(false)};
+    public void test6LargestPiSystemDescriptor() throws java.lang.Exception {
+        Object[] params = {Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCNOC");
@@ -84,8 +84,8 @@ public class LargestPiSystemDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test7LargestPiSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(false)};
+    public void test7LargestPiSystemDescriptor() throws java.lang.Exception {
+        Object[] params = {Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CC=CC(C)=O");

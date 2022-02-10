@@ -57,16 +57,16 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class IsotopePatternRule implements IRule {
 
-    private static ILoggingTool      logger        = LoggingToolFactory.createLoggingTool(IsotopePatternRule.class);
+    private static final ILoggingTool      logger        = LoggingToolFactory.createLoggingTool(IsotopePatternRule.class);
 
     /** Accuracy on the mass measuring isotope pattern*/
-    private double                   toleranceMass = 0.001;
+    private final double                   toleranceMass = 0.001;
 
     private IsotopePattern           pattern;
 
-    IsotopePatternGenerator          isotopeGe;
+    final IsotopePatternGenerator          isotopeGe;
 
-    private IsotopePatternSimilarity is;
+    private final IsotopePatternSimilarity is;
 
     /**
      *  Constructor for the IsotopePatternRule object.
@@ -114,7 +114,7 @@ public class IsotopePatternRule implements IRule {
         if (pattern == null)
             params[0] = null;
         else {
-            List<double[]> params0 = new ArrayList<double[]>();
+            List<double[]> params0 = new ArrayList<>();
             for (IsotopeContainer isotope : pattern.getIsotopes()) {
                 params0.add(new double[] { isotope.getMass(), isotope.getIntensity() });
             }

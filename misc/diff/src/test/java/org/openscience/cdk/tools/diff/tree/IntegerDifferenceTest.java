@@ -18,15 +18,8 @@
  */
 package org.openscience.cdk.tools.diff.tree;
 
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
 import org.junit.Test;
-
-import static org.hamcrest.CoreMatchers.allOf;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * @cdk.module test-diff
@@ -70,8 +63,8 @@ public class IntegerDifferenceTest {
 
     @Test
     public void testRefs() {
-        Integer x = new Integer(1);
-        Integer y = new Integer(1);
+        Integer x = 1;
+        Integer y = 1;
         IDifference diff = IntegerDifference.construct("foo", x, y);
         Assert.assertNull(diff);
     }

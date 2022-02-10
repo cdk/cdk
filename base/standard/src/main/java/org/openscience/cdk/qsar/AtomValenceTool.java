@@ -39,7 +39,7 @@ public class AtomValenceTool {
 
     public static int getValence(IAtom atom) {
         if (valencesTable == null) {
-            valencesTable = new HashMap<String, Integer>();
+            valencesTable = new HashMap<>();
             valencesTable.put("H", 1);
             valencesTable.put("He", 8);
             valencesTable.put("Ne", 8);

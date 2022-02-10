@@ -164,7 +164,7 @@ public class VecmathUtilTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetNearestVectorComplainsWhenNoVectorsProvided() throws Exception {
-        VecmathUtil.getNearestVector(new Vector2d(1, 0), Collections.<Vector2d> emptyList());
+        VecmathUtil.getNearestVector(new Vector2d(1, 0), Collections.emptyList());
     }
 
     @Test

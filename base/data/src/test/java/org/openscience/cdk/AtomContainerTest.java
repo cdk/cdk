@@ -25,9 +25,7 @@ import org.openscience.cdk.test.interfaces.AbstractAtomContainerTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ILonePair;
-import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the AtomContainer.
@@ -38,13 +36,7 @@ public class AtomContainerTest extends AbstractAtomContainerTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new AtomContainer();
-            }
-        });
+        setTestObjectBuilder(AtomContainer::new);
     }
 
     @Test

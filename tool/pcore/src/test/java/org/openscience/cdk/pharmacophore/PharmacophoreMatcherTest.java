@@ -229,7 +229,7 @@ public class PharmacophoreMatcherTest {
         query.addBond(b1);
 
         reader.hasNext();
-        IAtomContainer mol = (IAtomContainer) reader.next();
+        IAtomContainer mol = reader.next();
         reader.close();
 
         PharmacophoreMatcher matcher = new PharmacophoreMatcher(query);
@@ -258,7 +258,7 @@ public class PharmacophoreMatcherTest {
         query.addBond(b1);
 
         reader.hasNext();
-        IAtomContainer mol = (IAtomContainer) reader.next();
+        IAtomContainer mol = reader.next();
         reader.close();
 
         PharmacophoreMatcher matcher = new PharmacophoreMatcher(query);
@@ -296,7 +296,7 @@ public class PharmacophoreMatcherTest {
         query.addBond(b1);
 
         reader.hasNext();
-        IAtomContainer mol = (IAtomContainer) reader.next();
+        IAtomContainer mol = reader.next();
         reader.close();
 
         PharmacophoreMatcher matcher = new PharmacophoreMatcher(query);
@@ -321,7 +321,7 @@ public class PharmacophoreMatcherTest {
         query.addBond(b1);
 
         reader.hasNext();
-        IAtomContainer mol = (IAtomContainer) reader.next();
+        IAtomContainer mol = reader.next();
         reader.close();
 
         PharmacophoreMatcher matcher = new PharmacophoreMatcher(query);
@@ -408,18 +408,18 @@ public class PharmacophoreMatcherTest {
         InputStream ins = PharmacophoreMatcherTest.class.getResourceAsStream(filename);
         IteratingSDFReader reader = new IteratingSDFReader(ins, SilentChemObjectBuilder.getInstance());
 
-        IAtomContainer mol = (IAtomContainer) reader.next();
+        IAtomContainer mol = reader.next();
         Assert.assertTrue(matcher.matches(mol));
         Assert.assertEquals(1, matcher.getUniqueMatchingPharmacophoreAtoms().size());
         Assert.assertEquals(2, matcher.getUniqueMatchingPharmacophoreAtoms().get(0).size());
 
-        mol = (IAtomContainer) reader.next();
+        mol = reader.next();
         Assert.assertTrue(matcher.matches(mol));
         Assert.assertEquals(2, matcher.getUniqueMatchingPharmacophoreAtoms().size());
         Assert.assertEquals(2, matcher.getUniqueMatchingPharmacophoreAtoms().get(0).size());
         Assert.assertEquals(2, matcher.getUniqueMatchingPharmacophoreAtoms().get(1).size());
 
-        mol = (IAtomContainer) reader.next();
+        mol = reader.next();
         reader.close();
         Assert.assertFalse(matcher.matches(mol));
     }

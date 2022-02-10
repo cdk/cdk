@@ -71,7 +71,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
 public class Gaussian03Reader extends DefaultChemObjectReader {
 
     private BufferedReader      input;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(Gaussian03Reader.class); ;
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(Gaussian03Reader.class);
 
     public Gaussian03Reader(Reader reader) {
         input = new BufferedReader(reader);
@@ -103,9 +103,9 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IChemFile.class.equals(interfaces[i])) return true;
-            if (IChemSequence.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IChemFile.class.equals(anInterface)) return true;
+            if (IChemSequence.class.equals(anInterface)) return true;
         }
         return false;
     }
@@ -141,14 +141,14 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
 
             // Find first set of coordinates
             while (input.ready() && (line != null)) {
-                if (line.indexOf("Standard orientation:") >= 0) {
+                if (line.contains("Standard orientation:")) {
 
                     // Found a set of coordinates
                     model = sequence.getBuilder().newInstance(IChemModel.class);
                     try {
                         readCoordinates(model);
                     } catch (IOException exception) {
-                        throw new CDKException("Error while reading coordinates: " + exception.toString(), exception);
+                        throw new CDKException("Error while reading coordinates: " + exception, exception);
                     }
                     break;
                 }
@@ -158,33 +158,33 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
                 // Read all other data
                 line = input.readLine();
                 while (input.ready() && (line != null)) {
-                    if (line.indexOf("Standard orientation:") >= 0) {
+                    if (line.contains("Standard orientation:")) {
                         // Found a set of coordinates
                         // Add current frame to file and create a new one.
                         sequence.addChemModel(model);
                         fireFrameRead();
                         model = sequence.getBuilder().newInstance(IChemModel.class);
                         readCoordinates(model);
-                    } else if (line.indexOf("SCF Done:") >= 0) {
+                    } else if (line.contains("SCF Done:")) {
                         // Found an energy
                         model.setProperty("org.openscience.cdk.io.Gaussian03Reaer:SCF Done", line.trim());
-                    } else if (line.indexOf("Harmonic frequencies") >= 0) {
+                    } else if (line.contains("Harmonic frequencies")) {
                         // Found a set of vibrations
                         //                        try {
                         //                            readFrequencies(model);
                         //                        } catch (IOException exception) {
                         //                            throw new CDKException("Error while reading frequencies: " + exception.toString(), exception);
                         //                        }
-                    } else if (line.indexOf("Mulliken atomic charges") >= 0) {
+                    } else if (line.contains("Mulliken atomic charges")) {
                         readPartialCharges(model);
-                    } else if (line.indexOf("Magnetic shielding") >= 0) {
+                    } else if (line.contains("Magnetic shielding")) {
                         // Found NMR data
                         //                        try {
                         //                            readNMRData(model, line);
                         //                        } catch (IOException exception) {
                         //                            throw new CDKException("Error while reading NMR data: " + exception.toString(), exception);
                         //                        }
-                    } else if (line.indexOf("GINC") >= 0) {
+                    } else if (line.contains("GINC")) {
                         // Found calculation level of theory
                         //levelOfTheory = parseLevelOfTheory(line);
                         // FIXME: is doing anything with it?
@@ -197,7 +197,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
                 fireFrameRead();
             }
         } catch (IOException exception) {
-            throw new CDKException("Error while reading general structure: " + exception.toString(), exception);
+            throw new CDKException("Error while reading general structure: " + exception, exception);
         }
         return sequence;
     }
@@ -216,10 +216,10 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
         line = input.readLine();
         while (input.ready()) {
             line = input.readLine();
-            if ((line == null) || (line.indexOf("-----") >= 0)) {
+            if ((line == null) || (line.contains("-----"))) {
                 break;
             }
-            int atomicNumber = 0;
+            int atomicNumber;
             StringReader sr = new StringReader(line);
             StreamTokenizer token = new StreamTokenizer(sr);
             token.nextToken();
@@ -241,9 +241,9 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
             token.nextToken();
 
             // ignore third token
-            double x = 0.0;
-            double y = 0.0;
-            double z = 0.0;
+            double x;
+            double y;
+            double z;
             if (token.nextToken() == StreamTokenizer.TT_NUMBER) {
                 x = token.nval;
             } else {
@@ -259,7 +259,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
             } else {
                 throw new IOException("Error reading coordinates");
             }
-            String symbol = "Du";
+            String symbol;
             symbol = PeriodicTable.getSymbol(atomicNumber);
             IAtom atom = model.getBuilder().newInstance(IAtom.class, symbol);
             atom.setPoint3d(new Point3d(x, y, z));
@@ -281,7 +281,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
         while (input.ready()) {
             line = input.readLine();
             logger.debug("Read charge block line: " + line);
-            if ((line == null) || (line.indexOf("Sum of Mulliken charges") >= 0)) {
+            if ((line == null) || (line.contains("Sum of Mulliken charges"))) {
                 logger.debug("End of charge block found");
                 break;
             }
@@ -292,9 +292,9 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
 
                 tokenizer.nextToken(); // ignore the symbol
 
-                double charge = 0.0;
+                double charge;
                 if (tokenizer.nextToken() == StreamTokenizer.TT_NUMBER) {
-                    charge = (double) tokenizer.nval;
+                    charge = tokenizer.nval;
                     logger.debug("Found charge for atom " + atomCounter + ": " + charge);
                 } else {
                     throw new CDKException("Error while reading charge: expected double.");

@@ -861,7 +861,7 @@ public final class Cycles {
     }
 
     /** Interbank enumeration of cycle finders. */
-    private static enum CycleComputation implements CycleFinder {
+    private enum CycleComputation implements CycleFinder {
         MCB {
 
             /** {@inheritDoc} */
@@ -987,7 +987,7 @@ public final class Cycles {
             int[][] graph = GraphUtil.toAdjList(molecule, bondMap);
             RingSearch ringSearch = new RingSearch(molecule, graph);
 
-            List<int[]> walks = new ArrayList<int[]>(6);
+            List<int[]> walks = new ArrayList<>(6);
 
             // all isolated cycles are relevant - all we need to do is walk around
             // the vertices in the subset 'isolated'
@@ -1015,7 +1015,7 @@ public final class Cycles {
 
             RingSearch ringSearch = new RingSearch(molecule, graph);
 
-            List<int[]> walks = new ArrayList<int[]>(6);
+            List<int[]> walks = new ArrayList<>(6);
 
             // all isolated cycles are relevant - all we need to do is walk around
             // the vertices in the subset 'isolated'
@@ -1153,7 +1153,7 @@ public final class Cycles {
 
             if (this.predefinedLength < length) length = this.predefinedLength;
 
-            List<int[]> walks = new ArrayList<int[]>(6);
+            List<int[]> walks = new ArrayList<>(6);
 
             // all isolated cycles are relevant - all we need to do is walk around
             // the vertices in the subset 'isolated'
@@ -1198,7 +1198,8 @@ public final class Cycles {
      */
     private static final class Fallback implements CycleFinder {
 
-        private CycleFinder primary, auxiliary;
+        private final CycleFinder primary;
+        private final CycleFinder auxiliary;
 
         /**
          * Create a fallback for two cycle finders.
@@ -1240,7 +1241,7 @@ public final class Cycles {
      */
     private static final class Unchorded implements CycleFinder {
 
-        private CycleFinder primary;
+        private final CycleFinder primary;
 
         /**
          * Filter any cycles produced by the {@code primary} cycle finder and

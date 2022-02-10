@@ -42,7 +42,7 @@ abstract class AbstractDiscretePartitionRefiner implements DiscretePartitionRefi
      */
     enum Result {
         WORSE, EQUAL, BETTER
-    };
+    }
 
     /**
      * If true, then at least one partition has been refined
@@ -131,7 +131,7 @@ abstract class AbstractDiscretePartitionRefiner implements DiscretePartitionRefi
         final DisjointSetForest forest = new DisjointSetForest(n);
         group.apply(new PermutationGroup.Backtracker() {
 
-            boolean[]       inOrbit      = new boolean[n];
+            final boolean[]       inOrbit      = new boolean[n];
             private int     inOrbitCount = 0;
             private boolean isFinished;
 

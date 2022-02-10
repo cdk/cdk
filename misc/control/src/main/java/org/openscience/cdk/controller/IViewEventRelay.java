@@ -28,6 +28,6 @@ package org.openscience.cdk.controller;
  */
 public interface IViewEventRelay {
 
-    public abstract void updateView();
+    void updateView();
 
 }

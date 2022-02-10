@@ -76,12 +76,12 @@ import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IState;
 @Deprecated
 public class VFState implements IState {
 
-    private List<Match>       candidates;
-    private IQuery            query;
-    private TargetProperties  target;
-    private List<INode>       queryPath;
-    private List<IAtom>       targetPath;
-    private Map<INode, IAtom> map;
+    private final List<Match>       candidates;
+    private final IQuery            query;
+    private final TargetProperties  target;
+    private final List<INode>       queryPath;
+    private final List<IAtom>       targetPath;
+    private final Map<INode, IAtom> map;
 
     /**
      * Initialise the VFState with query and target
@@ -89,21 +89,21 @@ public class VFState implements IState {
      * @param target
      */
     public VFState(IQuery query, TargetProperties target) {
-        this.map = new HashMap<INode, IAtom>();
-        this.queryPath = new ArrayList<INode>();
-        this.targetPath = new ArrayList<IAtom>();
+        this.map = new HashMap<>();
+        this.queryPath = new ArrayList<>();
+        this.targetPath = new ArrayList<>();
 
         this.query = query;
         this.target = target;
-        this.candidates = new ArrayList<Match>();
+        this.candidates = new ArrayList<>();
         loadRootCandidates();
 
     }
 
     private VFState(VFState state, Match match) {
-        this.candidates = new ArrayList<Match>();
-        this.queryPath = new ArrayList<INode>(state.queryPath);
-        this.targetPath = new ArrayList<IAtom>(state.targetPath);
+        this.candidates = new ArrayList<>();
+        this.queryPath = new ArrayList<>(state.queryPath);
+        this.targetPath = new ArrayList<>(state.targetPath);
 
         this.map = state.map;
         this.query = state.query;
@@ -134,7 +134,7 @@ public class VFState implements IState {
     /** {@inheritDoc} */
     @Override
     public Map<INode, IAtom> getMap() {
-        return new HashMap<INode, IAtom>(map);
+        return new HashMap<>(map);
     }
 
     /** {@inheritDoc} */

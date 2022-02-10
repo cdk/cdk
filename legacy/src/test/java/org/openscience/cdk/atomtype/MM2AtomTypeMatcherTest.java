@@ -54,11 +54,11 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 @Category(SlowTest.class)
 public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
 
-    private static ILoggingTool         logger          = LoggingToolFactory
+    private static final ILoggingTool         logger          = LoggingToolFactory
                                                                 .createLoggingTool(MM2AtomTypeMatcherTest.class);
     private static IAtomContainer       testMolecule    = null;
 
-    private static Map<String, Integer> testedAtomTypes = new HashMap<String, Integer>();
+    private static final Map<String, Integer> testedAtomTypes = new HashMap<>();
 
     @BeforeClass
     public static void setUp() throws Exception {
@@ -75,7 +75,7 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
             att.assignAtomTypePropertiesToAtom(testMolecule);
             for (int i = 0; i < testMolecule.getAtomCount(); i++) {
                 logger.debug("atomNr:" + i);
-                IAtomType matched = null;
+                IAtomType matched;
                 matched = atm.findMatchingAtomType(testMolecule, testMolecule.getAtom(i));
                 logger.debug("Found AtomType: ", matched);
                 AtomTypeManipulator.configure(testMolecule.getAtom(i), matched);
@@ -166,9 +166,9 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
         IAtomType[] expectedTypes = factory.getAllAtomTypes();
         if (expectedTypes.length != testedAtomTypes.size()) {
             String errorMessage = "Atom types not tested:";
-            for (int i = 0; i < expectedTypes.length; i++) {
-                if (!testedAtomTypes.containsKey(expectedTypes[i].getAtomTypeName()))
-                    errorMessage += " " + expectedTypes[i].getAtomTypeName();
+            for (IAtomType expectedType : expectedTypes) {
+                if (!testedAtomTypes.containsKey(expectedType.getAtomTypeName()))
+                    errorMessage += " " + expectedType.getAtomTypeName();
             }
             Assert.assertEquals(errorMessage, factory.getAllAtomTypes().length, testedAtomTypes.size());
         }

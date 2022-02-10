@@ -77,7 +77,7 @@ final class ConjugatedAtomEncoder implements AtomEncoder {
     public ConjugatedAtomEncoder(List<AtomEncoder> encoders) {
         if (encoders == null) throw new NullPointerException("null list of encoders");
         if (encoders.isEmpty()) throw new IllegalArgumentException("no encoders provided");
-        this.encoders = Collections.unmodifiableList(new ArrayList<AtomEncoder>(encoders));
+        this.encoders = Collections.unmodifiableList(new ArrayList<>(encoders));
     }
 
     /**
@@ -108,7 +108,7 @@ final class ConjugatedAtomEncoder implements AtomEncoder {
      */
     public static AtomEncoder create(AtomEncoder encoder, AtomEncoder... encoders) {
         if (encoder == null || encoders == null) throw new NullPointerException("null encoders provided");
-        List<AtomEncoder> tmp = new ArrayList<AtomEncoder>(encoders.length + 1);
+        List<AtomEncoder> tmp = new ArrayList<>(encoders.length + 1);
         tmp.add(encoder);
         for (AtomEncoder e : encoders)
             tmp.add(e);

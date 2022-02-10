@@ -26,7 +26,6 @@ import org.openscience.cdk.test.interfaces.AbstractBondTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link Bond}.
@@ -37,13 +36,7 @@ public class BondTest extends AbstractBondTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new Bond();
-            }
-        });
+        setTestObjectBuilder(Bond::new);
     }
 
     @Test

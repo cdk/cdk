@@ -38,14 +38,14 @@ public interface IChemObject extends ICDKObject {
      * @param  col  the ChemObjectListener
      * @see         #removeListener
      */
-    public void addListener(IChemObjectListener col);
+    void addListener(IChemObjectListener col);
 
     /**
      * Returns the number of ChemObjectListeners registered with this object.
      *
      * @return    the number of registered listeners.
      */
-    public int getListenerCount();
+    int getListenerCount();
 
     /**
      * Use this to remove a ChemObjectListener from the ListenerList of this
@@ -54,7 +54,7 @@ public interface IChemObject extends ICDKObject {
      * @param  col  The ChemObjectListener to be removed
      * @see         #addListener
      */
-    public void removeListener(IChemObjectListener col);
+    void removeListener(IChemObjectListener col);
 
     /**
      * Set a flag to use or not use notification. By default it should be set
@@ -63,7 +63,7 @@ public interface IChemObject extends ICDKObject {
      * @param bool if true, then notification messages are sent.
      * @see        #getNotification()
      */
-    public void setNotification(boolean bool);
+    void setNotification(boolean bool);
 
     /**
      * Returns the flag that indicates whether notification messages are sent around.
@@ -71,13 +71,13 @@ public interface IChemObject extends ICDKObject {
      * @return true if messages are sent.
      * @see    #setNotification(boolean)
      */
-    public boolean getNotification();
+    boolean getNotification();
 
     /**
      * This should be triggered by an method that changes the content of an object
      * to that the registered listeners can react to it.
      */
-    public void notifyChanged();
+    void notifyChanged();
 
     /**
      * This should be triggered by an method that changes the content of an object
@@ -88,7 +88,7 @@ public interface IChemObject extends ICDKObject {
      * @param  evt  A ChemObjectChangeEvent pointing to the source of where
      *		        the change happend
      */
-    public void notifyChanged(IChemObjectChangeEvent evt);
+    void notifyChanged(IChemObjectChangeEvent evt);
 
     /**
      * Sets a property for a IChemObject.
@@ -99,7 +99,7 @@ public interface IChemObject extends ICDKObject {
      * @see                 #getProperty
      * @see                 #removeProperty
      */
-    public void setProperty(Object description, Object property);
+    void setProperty(Object description, Object property);
 
     /**
      * Removes a property for a IChemObject.
@@ -109,7 +109,7 @@ public interface IChemObject extends ICDKObject {
      * @see                 #setProperty
      * @see                 #getProperty
      */
-    public void removeProperty(Object description);
+    void removeProperty(Object description);
 
     /**
      * Returns a property for the IChemObject - the object is automatically
@@ -145,7 +145,7 @@ public interface IChemObject extends ICDKObject {
      * @see                 #getProperty(Object, Class)
      * @see                 #removeProperty
      */
-    public <T> T getProperty(Object description);
+    <T> T getProperty(Object description);
 
     /**
      * Access a property of the given description and cast the specified class.
@@ -176,7 +176,7 @@ public interface IChemObject extends ICDKObject {
      * @see #getProperty(Object)
      * @see #addProperties(java.util.Map)
      */
-    public <T> T getProperty(Object description, Class<T> c);
+    <T> T getProperty(Object description, Class<T> c);
 
     /**
      *  Returns a Map with the IChemObject's properties.
@@ -184,7 +184,7 @@ public interface IChemObject extends ICDKObject {
      *@return    The object's properties as an Map
      *@see       #addProperties
      */
-    public Map<Object, Object> getProperties();
+    Map<Object, Object> getProperties();
 
     /**
      * Returns the identifier (ID) of this object.
@@ -192,7 +192,7 @@ public interface IChemObject extends ICDKObject {
      * @return    a String representing the ID value
      * @see       #setID
      */
-    public String getID();
+    String getID();
 
     /**
      * Sets the identifier (ID) of this object.
@@ -200,7 +200,7 @@ public interface IChemObject extends ICDKObject {
      * @param  identifier  a String representing the ID value
      * @see                #getID
      */
-    public void setID(String identifier);
+    void setID(String identifier);
 
     /**
      * Sets the value of some flag. The flag is a mask from a given
@@ -222,7 +222,7 @@ public interface IChemObject extends ICDKObject {
      * @see           #getFlag
      * @see           org.openscience.cdk.CDKConstants
      */
-    public void setFlag(int mask, boolean value);
+    void setFlag(int mask, boolean value);
 
     /**
      * Returns the value of a given flag. The flag is a mask from a given
@@ -239,7 +239,7 @@ public interface IChemObject extends ICDKObject {
      * @see          #setFlag
      * @see          org.openscience.cdk.CDKConstants
      */
-    public boolean getFlag(int mask);
+    boolean getFlag(int mask);
 
     /**
      * Set the properties of this object to the provided map (shallow copy). Any
@@ -247,7 +247,7 @@ public interface IChemObject extends ICDKObject {
      *
      * @param properties map key-value pairs
      */
-    public void setProperties(Map<Object, Object> properties);
+    void setProperties(Map<Object, Object> properties);
 
     /**
      * Add properties to this object, duplicate keys will replace any existing
@@ -256,7 +256,7 @@ public interface IChemObject extends ICDKObject {
      * @param  properties  a Map specifying the property values
      * @see                #getProperties
      */
-    public void addProperties(Map<Object, Object> properties);
+    void addProperties(Map<Object, Object> properties);
 
     /**
      * Sets the whole set of flags. This set will iteratively invoke
@@ -269,7 +269,7 @@ public interface IChemObject extends ICDKObject {
      * @see                #setFlag(int, boolean)
      * @see                #getFlags
      */
-    public void setFlags(boolean[] newFlags);
+    void setFlags(boolean[] newFlags);
 
     /**
      * Returns the whole set of flags. This method will create a new array on
@@ -281,7 +281,7 @@ public interface IChemObject extends ICDKObject {
      * @see       #getFlag(int)
      * @see       #getFlagValue()
      */
-    public boolean[] getFlags();
+    boolean[] getFlags();
 
     /**
      * Access the internal value used to store the flags. The flags are stored
@@ -289,7 +289,7 @@ public interface IChemObject extends ICDKObject {
      *
      * @return numeric representation of the flags
      */
-    public Number getFlagValue();
+    Number getFlagValue();
 
     /**
      * Returns a one line description of this IChemObject.
@@ -297,7 +297,7 @@ public interface IChemObject extends ICDKObject {
      * @return a String representation of this object
      */
     @Override
-    public String toString();
+    String toString();
 
     /**
      * Returns a deep clone of this IChemObject.
@@ -305,6 +305,6 @@ public interface IChemObject extends ICDKObject {
      * @return Object the clone of this IChemObject.
      * @throws CloneNotSupportedException if the IChemObject cannot be cloned
      */
-    public Object clone() throws CloneNotSupportedException;
+    Object clone() throws CloneNotSupportedException;
 
 }

@@ -125,7 +125,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     /**
      * Internal list of atom parities.
      */
-    protected List<IStereoElement> stereoElements;
+    protected final List<IStereoElement> stereoElements;
 
     /**
      *  Constructs an empty AtomContainer.
@@ -152,7 +152,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
         this.lonePairs = new ILonePair[this.lonePairCount];
         this.singleElectrons = new ISingleElectron[this.singleElectronCount];
 
-        stereoElements = new ArrayList<IStereoElement>(atomCount / 2);
+        stereoElements = new ArrayList<>(atomCount / 2);
 
         for (int f = 0; f < container.getAtomCount(); f++) {
             atoms[f] = container.getAtom(f);
@@ -193,7 +193,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
         bonds = new IBond[bondCount];
         lonePairs = new ILonePair[lpCount];
         singleElectrons = new ISingleElectron[seCount];
-        stereoElements = new ArrayList<IStereoElement>(atomCount / 2);
+        stereoElements = new ArrayList<>(atomCount / 2);
     }
 
     /** {@inheritDoc} */
@@ -348,13 +348,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      */
     @Override
     public Iterable<IAtom> atoms() {
-        return new Iterable<IAtom>() {
-
-            @Override
-            public Iterator<IAtom> iterator() {
-                return new AtomIterator();
-            }
-        };
+        return AtomIterator::new;
     }
 
     /**
@@ -389,13 +383,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      */
     @Override
     public Iterable<IBond> bonds() {
-        return new Iterable<IBond>() {
-
-            @Override
-            public Iterator<IBond> iterator() {
-                return new BondIterator();
-            }
-        };
+        return BondIterator::new;
     }
 
     /**
@@ -430,13 +418,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      */
     @Override
     public Iterable<ILonePair> lonePairs() {
-        return new Iterable<ILonePair>() {
-
-            @Override
-            public Iterator<ILonePair> iterator() {
-                return new LonePairIterator();
-            }
-        };
+        return LonePairIterator::new;
     }
 
     /**
@@ -471,13 +453,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      */
     @Override
     public Iterable<ISingleElectron> singleElectrons() {
-        return new Iterable<ISingleElectron>() {
-
-            @Override
-            public Iterator<ISingleElectron> iterator() {
-                return new SingleElectronIterator();
-            }
-        };
+        return SingleElectronIterator::new;
     }
 
     /**
@@ -512,13 +488,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      */
     @Override
     public Iterable<IElectronContainer> electronContainers() {
-        return new Iterable<IElectronContainer>() {
-
-            @Override
-            public Iterator<IElectronContainer> iterator() {
-                return new ElectronContainerIterator();
-            }
-        };
+        return ElectronContainerIterator::new;
     }
 
     /**
@@ -574,7 +544,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      */
     @Override
     public IAtom getLastAtom() {
-        return getAtomCount() > 0 ? (IAtom) atoms[getAtomCount() - 1] : null;
+        return getAtomCount() > 0 ? atoms[getAtomCount() - 1] : null;
     }
 
     /**
@@ -763,7 +733,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      */
     @Override
     public List<IAtom> getConnectedAtomsList(IAtom atom) {
-        List<IAtom> atomsList = new ArrayList<IAtom>();
+        List<IAtom> atomsList = new ArrayList<>();
         for (int i = 0; i < bondCount; i++) {
             if (bonds[i].contains(atom)) atomsList.add(bonds[i].getOther(atom));
         }
@@ -778,7 +748,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      */
     @Override
     public List<IBond> getConnectedBondsList(IAtom atom) {
-        List<IBond> bondsList = new ArrayList<IBond>();
+        List<IBond> bondsList = new ArrayList<>();
         for (int i = 0; i < bondCount; i++) {
             if (bonds[i].contains(atom)) bondsList.add(bonds[i]);
         }
@@ -796,7 +766,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      */
     @Override
     public List<ILonePair> getConnectedLonePairsList(IAtom atom) {
-        List<ILonePair> lps = new ArrayList<ILonePair>();
+        List<ILonePair> lps = new ArrayList<>();
         for (int i = 0; i < lonePairCount; i++) {
             if (lonePairs[i].contains(atom)) lps.add(lonePairs[i]);
         }
@@ -811,7 +781,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      */
     @Override
     public List<ISingleElectron> getConnectedSingleElectronsList(IAtom atom) {
-        List<ISingleElectron> lps = new ArrayList<ISingleElectron>();
+        List<ISingleElectron> lps = new ArrayList<>();
         for (int i = 0; i < singleElectronCount; i++) {
             if (singleElectrons[i].contains(atom)) lps.add(singleElectrons[i]);
         }
@@ -826,7 +796,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      */
     @Override
     public List<IElectronContainer> getConnectedElectronContainersList(IAtom atom) {
-        List<IElectronContainer> lps = new ArrayList<IElectronContainer>();
+        List<IElectronContainer> lps = new ArrayList<>();
         for (int i = 0; i < bondCount; i++) {
             if (bonds[i].contains(atom)) lps.add(bonds[i]);
         }
@@ -1522,14 +1492,14 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
         clone.removeAllElements();
         // clone all atoms
         for (int f = 0; f < getAtomCount(); f++) {
-            clone.addAtom((IAtom) getAtom(f).clone());
+            clone.addAtom(getAtom(f).clone());
         }
         // clone bonds
         IBond bond;
         IBond newBond;
         for (int i = 0; i < getBondCount(); ++i) {
             bond = getBond(i);
-            newBond = (IBond) bond.clone();
+            newBond = bond.clone();
             newAtoms = new IAtom[bond.getAtomCount()];
             for (int j = 0; j < bond.getAtomCount(); ++j) {
                 newAtoms[j] = clone.getAtom(getAtomNumber(bond.getAtom(j)));

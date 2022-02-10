@@ -25,7 +25,6 @@ import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.vecmath.Point3d;
@@ -200,9 +199,7 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
 
         // then come all the atoms.
         // Loop through the atoms and write them out:
-        Iterator<IAtom> atoms = mol.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom a = atoms.next();
+        for (IAtom a : mol.atoms()) {
             String st = a.getSymbol();
 
             // export Eucledian coordinates (indicated by the 0)
@@ -211,8 +208,8 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
             // export the 3D coordinates
             Point3d p3 = a.getPoint3d();
             if (p3 != null) {
-                st = st + new Double(p3.x).toString() + " " + new Double(p3.y).toString() + " "
-                        + new Double(p3.z).toString();
+                st = st + new Double(p3.x) + " " + new Double(p3.y) + " "
+                        + new Double(p3.z);
             }
 
             writer.write(st, 0, st.length());
@@ -224,7 +221,7 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
     }
 
     private void initIOSettings() {
-        List<String> basisOptions = new ArrayList<String>();
+        List<String> basisOptions = new ArrayList<>();
         basisOptions.add("6-31g");
         basisOptions.add("6-31g*");
         basisOptions.add("6-31g(d)");
@@ -233,14 +230,14 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         basis = new OptionIOSetting("Basis", IOSetting.Importance.MEDIUM, "Which basis set do you want to use?",
                 basisOptions, "6-31g");
 
-        List<String> methodOptions = new ArrayList<String>();
+        List<String> methodOptions = new ArrayList<>();
         methodOptions.add("rb3lyp");
         methodOptions.add("b3lyp");
         methodOptions.add("rhf");
         method = new OptionIOSetting("Method", IOSetting.Importance.MEDIUM, "Which method do you want to use?",
                 methodOptions, "b3lyp");
 
-        List<String> commandOptions = new ArrayList<String>();
+        List<String> commandOptions = new ArrayList<>();
         commandOptions.add("energy calculation");
         commandOptions.add("geometry optimization");
         commandOptions.add("IR frequency calculation");

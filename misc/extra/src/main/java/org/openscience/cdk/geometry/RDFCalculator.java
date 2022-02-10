@@ -23,8 +23,6 @@
  */
 package org.openscience.cdk.geometry;
 
-import java.util.Iterator;
-
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.interfaces.IAtom;
@@ -63,14 +61,14 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class RDFCalculator {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(RDFCalculator.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(RDFCalculator.class);
 
-    private double              startCutoff;
-    private double              cutoff;
-    private double              resolution;
-    private double              peakWidth;
+    private final double              startCutoff;
+    private final double              cutoff;
+    private final double              resolution;
+    private final double              peakWidth;
 
-    private IRDFWeightFunction  weightFunction;
+    private final IRDFWeightFunction  weightFunction;
 
     /**
      * Constructs a RDF calculator that calculates a unweighted, digitized
@@ -134,13 +132,11 @@ public class RDFCalculator {
 
         // this we need always
         double[] rdf = new double[length];
-        double distance = 0.0;
-        int index = 0;
+        double distance;
+        int index;
 
         Point3d atomPoint = atom.getPoint3d();
-        Iterator<IAtom> atomsInContainer = container.atoms().iterator();
-        while (atomsInContainer.hasNext()) {
-            IAtom atomInContainer = (IAtom) atomsInContainer.next();
+        for (IAtom atomInContainer : container.atoms()) {
             if (atomInContainer.equals(atom)) continue; // don't include the central atom
             distance = atomPoint.distance(atomInContainer.getPoint3d());
             index = (int) ((distance - startCutoff) / this.resolution);

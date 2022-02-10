@@ -33,10 +33,10 @@ public class DescriptorSpecification implements Serializable, IImplementationSpe
 
     private static final long serialVersionUID = 7044545275802343828L;
 
-    private String            specificationReference;
-    private String            implementationTitle;
-    private String            implementationIdentifier;
-    private String            implementationVendor;
+    private final String            specificationReference;
+    private final String            implementationTitle;
+    private final String            implementationIdentifier;
+    private final String            implementationVendor;
 
     /**
      * Container for specifying the type of descriptor.

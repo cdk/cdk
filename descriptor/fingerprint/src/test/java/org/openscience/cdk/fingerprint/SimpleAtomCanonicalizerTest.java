@@ -27,7 +27,7 @@ public class SimpleAtomCanonicalizerTest {
 
         Collection<IAtom> atoms = new SimpleAtomCanonicalizer().canonicalizeAtoms(container);
 
-        List<IAtom> mutable = new ArrayList<IAtom>(atoms);
+        List<IAtom> mutable = new ArrayList<>(atoms);
         for (IAtom atom : mutable.subList(0, 5)) {
             Assert.assertEquals("expect sp2 carbons in first 4 entries", "C", atom.getSymbol());
             Assert.assertEquals("expect sp2 carbons in first 4 entries", IAtomType.Hybridization.SP2,

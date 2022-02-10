@@ -22,9 +22,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.test.interfaces.AbstractFragmentAtomTest;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IFragmentAtom;
-import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the FragmentAtom.
@@ -35,13 +33,7 @@ public class FragmentAtomTest extends AbstractFragmentAtomTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new FragmentAtom();
-            }
-        });
+        setTestObjectBuilder(FragmentAtom::new);
     }
 
     @Test

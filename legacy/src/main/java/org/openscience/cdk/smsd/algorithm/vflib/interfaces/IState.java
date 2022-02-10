@@ -68,7 +68,7 @@ public interface IState {
      *
      * @return the current mapping of query atoms onto target atoms
      */
-    public Map<INode, IAtom> getMap();
+    Map<INode, IAtom> getMap();
 
     /**
      * Returns true if another candidate match can be found or
@@ -77,14 +77,14 @@ public interface IState {
      * @return true if another candidate mapping can be found or
      * false otherwise.
      */
-    public boolean hasNextCandidate();
+    boolean hasNextCandidate();
 
     /**
      * Returns the next candidate match.
      *
      * @return the next candidate match.
      */
-    public Match nextCandidate();
+    Match nextCandidate();
 
     /**
      * Returns true if the given match will work with the current
@@ -94,7 +94,7 @@ public interface IState {
      * @return true if the given match will work with the current
      * map, or false otherwise.
      */
-    public boolean isMatchFeasible(Match match);
+    boolean isMatchFeasible(Match match);
 
     /**
      * Returns true if all atoms in the query molecule have been
@@ -103,14 +103,14 @@ public interface IState {
      * @return true if all atoms in the query molecule have been
      * mapped.
      */
-    public boolean isGoal();
+    boolean isGoal();
 
     /**
      * Returns true if no match will come from this IState.
      *
      * @return true if no match will come from this IState
      */
-    public boolean isDead();
+    boolean isDead();
 
     /**
      * Returns a state in which the atoms in match have been
@@ -120,10 +120,10 @@ public interface IState {
      * @return  a state in which the atoms in match have been
      * added to the current mapping.
      */
-    public IState nextState(Match match);
+    IState nextState(Match match);
 
     /**
      * Returns this IState's atom map to its original condition.
      */
-    public void backTrack();
+    void backTrack();
 }

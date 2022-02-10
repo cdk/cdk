@@ -39,7 +39,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class AtomMappingTools {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(AtomMappingTools.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(AtomMappingTools.class);
 
     /**
      * Returns a Map with the AtomNumbers, the first number corresponds to the first (or the largest
@@ -66,21 +66,21 @@ public class AtomMappingTools {
         try {
             list = new UniversalIsomorphismTester().getSubgraphAtomsMap(firstAtomContainer, secondAtomContainer);
             //logger.debug("ListSize:"+list.size());
-            for (int i = 0; i < list.size(); i++) {
-                map = list.get(i);
+            for (RMap rMap : list) {
+                map = rMap;
                 atom1 = firstAtomContainer.getAtom(map.getId1());
                 atom2 = secondAtomContainer.getAtom(map.getId2());
                 if (checkAtomMapping(firstAtomContainer, secondAtomContainer, firstAtomContainer.indexOf(atom1),
                         secondAtomContainer.indexOf(atom2))) {
-                    mappedAtoms.put(Integer.valueOf(firstAtomContainer.indexOf(atom1)),
-                            Integer.valueOf(secondAtomContainer.indexOf(atom2)));
+                    mappedAtoms.put(firstAtomContainer.indexOf(atom1),
+                            secondAtomContainer.indexOf(atom2));
                     //                    logger.debug("#:"+countMappedAtoms+" Atom:"+firstAtomContainer.indexOf(atom1)+" is mapped to Atom:"+secondAtomContainer.indexOf(atom2));
                 } else {
                     logger.error("Error: Atoms are not similar !!");
                 }
             }
         } catch (CDKException e) {
-            throw new CDKException("Error in UniversalIsomorphismTester due to:" + e.toString(), e);
+            throw new CDKException("Error in UniversalIsomorphismTester due to:" + e, e);
         }
         return mappedAtoms;
     }

@@ -51,7 +51,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class MDLRXNV3000ReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNV3000ReaderTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNV3000ReaderTest.class);
 
     @BeforeClass
     public static void setup() {
@@ -75,7 +75,7 @@ public class MDLRXNV3000ReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins1 = this.getClass().getResourceAsStream(filename1);
         MDLRXNV3000Reader reader1 = new MDLRXNV3000Reader(ins1, Mode.STRICT);
         IReaction reaction1 = new Reaction();
-        reaction1 = (IReaction) reader1.read(reaction1);
+        reaction1 = reader1.read(reaction1);
         reader1.close();
 
         Assert.assertNotNull(reaction1);

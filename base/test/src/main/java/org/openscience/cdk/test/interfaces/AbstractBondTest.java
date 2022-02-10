@@ -354,7 +354,7 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
         IAtom atom1 = object.getBuilder().newInstance(IAtom.class, "C");
         IAtom atom2 = object.getBuilder().newInstance(IAtom.class, "O");
         IBond bond = object.getBuilder().newInstance(IBond.class, atom1, atom2);
-        IBond clone = (IBond) bond.clone();
+        IBond clone = bond.clone();
 
         // test cloning of atoms
         Assert.assertNotSame(atom1, clone.getBegin());
@@ -367,7 +367,7 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
         IAtom atom1 = object.getBuilder().newInstance(IAtom.class, "C");
         IAtom atom2 = object.getBuilder().newInstance(IAtom.class, "O");
         IBond bond = object.getBuilder().newInstance(IBond.class, atom1, atom2, IBond.Order.SINGLE);
-        IBond clone = (IBond) bond.clone();
+        IBond clone = bond.clone();
 
         // test cloning of bond order
         bond.setOrder(IBond.Order.DOUBLE);
@@ -380,7 +380,7 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
         IAtom atom1 = object.getBuilder().newInstance(IAtom.class, "C");
         IAtom atom2 = object.getBuilder().newInstance(IAtom.class, "O");
         IBond bond = object.getBuilder().newInstance(IBond.class, atom1, atom2, IBond.Order.SINGLE, IBond.Stereo.UP);
-        IBond clone = (IBond) bond.clone();
+        IBond clone = bond.clone();
 
         // test cloning of bond order
         bond.setStereo(IBond.Stereo.UP_INVERTED);

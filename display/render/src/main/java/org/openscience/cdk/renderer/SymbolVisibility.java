@@ -25,14 +25,11 @@
 package org.openscience.cdk.renderer;
 
 import org.openscience.cdk.config.Elements;
-import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IIsotope;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -97,7 +94,7 @@ public abstract class SymbolVisibility {
      */
     private static final class IupacVisibility extends SymbolVisibility {
 
-        private boolean terminal = false;
+        private boolean terminal;
 
         private IupacVisibility(boolean terminal) {
             this.terminal = terminal;

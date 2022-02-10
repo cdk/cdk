@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk;
 
-import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 

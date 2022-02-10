@@ -48,8 +48,8 @@ import org.xml.sax.XMLReader;
 public class OWLAtomTypeReader {
 
     private XMLReader           parser;
-    private Reader              input;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(OWLAtomTypeReader.class);
+    private final Reader              input;
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(OWLAtomTypeReader.class);
 
     /**
      * Instantiates the XML based AtomTypeReader.
@@ -101,7 +101,7 @@ public class OWLAtomTypeReader {
      * @return         a List with atom types. Is empty if some reading error occurred.
      */
     public List<IAtomType> readAtomTypes(IChemObjectBuilder builder) {
-        List<IAtomType> isotopes = new ArrayList<IAtomType>();
+        List<IAtomType> isotopes = new ArrayList<>();
         try {
             parser.setFeature("http://xml.org/sax/features/validation", false);
             logger.info("Deactivated validation");

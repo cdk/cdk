@@ -85,59 +85,59 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
      */
     public TPSADescriptor() {
         if (map == null) {
-            map = new HashMap<String,Double>();
+            map = new HashMap<>();
             // contributions:
             // every contribution is given by an atom profile;
             // positions in atom profile strings are: symbol, max-bond-order, bond-order-sum,
             // number-of-neighbours, Hcount, formal charge, aromatic-bonds, is-in-3-membered-ring,
             // single-bonds, double-bonds, triple-bonds.
 
-            map.put("N+1.0+3.0+3+0+0+0+0+3+0+0", new Double(3.24)); // 1
-            map.put("N+2.0+3.0+2+0+0+0+0+1+1+0", new Double(12.36)); // 2
-            map.put("N+3.0+3.0+1+0+0+0+0+0+0+1", new Double(23.79)); // 3
-            map.put("N+2.0+5.0+3+0+0+0+0+1+2+0", new Double(11.68)); // 4
-            map.put("N+3.0+5.0+2+0+0+0+0+0+1+1", new Double(13.6)); // 5
-            map.put("N+1.0+3.0+3+0+0+0+1+3+0+0", new Double(3.01)); // 6
-            map.put("N+1.0+3.0+3+1+0+0+0+3+0+0", new Double(12.03)); // 7
-            map.put("N+1.0+3.0+3+1+0+0+1+3+0+0", new Double(21.94)); // 8
-            map.put("N+2.0+3.0+2+1+0+0+0+1+1+0", new Double(23.85)); //9
-            map.put("N+1.0+3.0+3+2+0+0+0+3+0+0", new Double(26.02)); // 10
-            map.put("N+1.0+4.0+4+0+1+0+0+4+0+0", new Double(0.0)); //11
-            map.put("N+2.0+4.0+3+0+1+0+0+2+1+0", new Double(3.01)); //12
-            map.put("N+3.0+4.0+2+0+1+0+0+1+0+1", new Double(4.36)); //13
-            map.put("N+1.0+4.0+4+1+1+0+0+4+0+0", new Double(4.44)); //14
-            map.put("N+2.0+4.0+3+1+1+0+0+2+1+0", new Double(13.97)); //15
-            map.put("N+1.0+4.0+4+2+1+0+0+4+0+0", new Double(16.61)); //16
-            map.put("N+2.0+4.0+3+2+1+0+0+2+1+0", new Double(25.59)); //17
-            map.put("N+1.0+4.0+4+3+1+0+0+4+0+0", new Double(27.64)); //18
-            map.put("N+1.5+3.0+2+0+0+2+0+0+0+0", new Double(12.89)); //19
-            map.put("N+1.5+4.5+3+0+0+3+0+0+0+0", new Double(4.41)); //20
-            map.put("N+1.5+4.0+3+0+0+2+0+1+0+0", new Double(4.93)); //21
-            map.put("N+2.0+5.0+3+0+0+2+0+0+1+0", new Double(8.39)); //22
-            map.put("N+1.5+4.0+3+1+0+2+0+1+0+0", new Double(15.79)); //23
-            map.put("N+1.5+4.5+3+0+1+3+0+0+0+0", new Double(4.1)); //24
-            map.put("N+1.5+4.0+3+0+1+2+0+1+0+0", new Double(3.88)); //25
-            map.put("N+1.5+4.0+3+1+1+2+0+1+0+0", new Double(14.14)); //26
+            map.put("N+1.0+3.0+3+0+0+0+0+3+0+0", 3.24); // 1
+            map.put("N+2.0+3.0+2+0+0+0+0+1+1+0", 12.36); // 2
+            map.put("N+3.0+3.0+1+0+0+0+0+0+0+1", 23.79); // 3
+            map.put("N+2.0+5.0+3+0+0+0+0+1+2+0", 11.68); // 4
+            map.put("N+3.0+5.0+2+0+0+0+0+0+1+1", 13.6); // 5
+            map.put("N+1.0+3.0+3+0+0+0+1+3+0+0", 3.01); // 6
+            map.put("N+1.0+3.0+3+1+0+0+0+3+0+0", 12.03); // 7
+            map.put("N+1.0+3.0+3+1+0+0+1+3+0+0", 21.94); // 8
+            map.put("N+2.0+3.0+2+1+0+0+0+1+1+0", 23.85); //9
+            map.put("N+1.0+3.0+3+2+0+0+0+3+0+0", 26.02); // 10
+            map.put("N+1.0+4.0+4+0+1+0+0+4+0+0", 0.0); //11
+            map.put("N+2.0+4.0+3+0+1+0+0+2+1+0", 3.01); //12
+            map.put("N+3.0+4.0+2+0+1+0+0+1+0+1", 4.36); //13
+            map.put("N+1.0+4.0+4+1+1+0+0+4+0+0", 4.44); //14
+            map.put("N+2.0+4.0+3+1+1+0+0+2+1+0", 13.97); //15
+            map.put("N+1.0+4.0+4+2+1+0+0+4+0+0", 16.61); //16
+            map.put("N+2.0+4.0+3+2+1+0+0+2+1+0", 25.59); //17
+            map.put("N+1.0+4.0+4+3+1+0+0+4+0+0", 27.64); //18
+            map.put("N+1.5+3.0+2+0+0+2+0+0+0+0", 12.89); //19
+            map.put("N+1.5+4.5+3+0+0+3+0+0+0+0", 4.41); //20
+            map.put("N+1.5+4.0+3+0+0+2+0+1+0+0", 4.93); //21
+            map.put("N+2.0+5.0+3+0+0+2+0+0+1+0", 8.39); //22
+            map.put("N+1.5+4.0+3+1+0+2+0+1+0+0", 15.79); //23
+            map.put("N+1.5+4.5+3+0+1+3+0+0+0+0", 4.1); //24
+            map.put("N+1.5+4.0+3+0+1+2+0+1+0+0", 3.88); //25
+            map.put("N+1.5+4.0+3+1+1+2+0+1+0+0", 14.14); //26
 
-            map.put("O+1.0+2.0+2+0+0+0+0+2+0+0", new Double(9.23)); //27
-            map.put("O+1.0+2.0+2+0+0+0+1+2+0+0", new Double(12.53)); //28
-            map.put("O+2.0+2.0+1+0+0+0+0+0+1+0", new Double(17.07)); //29
-            map.put("O+1.0+1.0+1+0+-1+0+0+1+0+0", new Double(23.06)); //30
-            map.put("O+1.0+2.0+2+1+0+0+0+2+0+0", new Double(20.23)); //31
-            map.put("O+1.5+3.0+2+0+0+2+0+0+0+0", new Double(13.14)); //32
+            map.put("O+1.0+2.0+2+0+0+0+0+2+0+0", 9.23); //27
+            map.put("O+1.0+2.0+2+0+0+0+1+2+0+0", 12.53); //28
+            map.put("O+2.0+2.0+1+0+0+0+0+0+1+0", 17.07); //29
+            map.put("O+1.0+1.0+1+0+-1+0+0+1+0+0", 23.06); //30
+            map.put("O+1.0+2.0+2+1+0+0+0+2+0+0", 20.23); //31
+            map.put("O+1.5+3.0+2+0+0+2+0+0+0+0", 13.14); //32
 
-            map.put("S+1.0+2.0+2+0+0+0+0+2+0+0", new Double(25.3)); //33
-            map.put("S+2.0+2.0+1+0+0+0+0+0+1+0", new Double(32.09)); //34
-            map.put("S+2.0+4.0+3+0+0+0+0+2+1+0", new Double(19.21)); //35
-            map.put("S+2.0+6.0+4+0+0+0+0+2+2+0", new Double(8.38)); //36
-            map.put("S+1.0+2.0+2+1+0+0+0+2+0+0", new Double(38.8)); //37
-            map.put("S+1.5+3.0+2+0+0+2+0+0+0+0", new Double(28.24)); //38
-            map.put("S+2.0+5.0+3+0+0+2+0+0+1+0", new Double(21.7)); //39
+            map.put("S+1.0+2.0+2+0+0+0+0+2+0+0", 25.3); //33
+            map.put("S+2.0+2.0+1+0+0+0+0+0+1+0", 32.09); //34
+            map.put("S+2.0+4.0+3+0+0+0+0+2+1+0", 19.21); //35
+            map.put("S+2.0+6.0+4+0+0+0+0+2+2+0", 8.38); //36
+            map.put("S+1.0+2.0+2+1+0+0+0+2+0+0", 38.8); //37
+            map.put("S+1.5+3.0+2+0+0+2+0+0+0+0", 28.24); //38
+            map.put("S+2.0+5.0+3+0+0+2+0+0+1+0", 21.7); //39
 
-            map.put("P+1.0+3.0+3+0+0+0+0+3+0+0", new Double(13.59)); //40
-            map.put("P+2.0+3.0+3+0+0+0+0+1+1+0", new Double(34.14)); //41
-            map.put("P+2.0+5.0+4+0+0+0+0+3+1+0", new Double(9.81)); //42
-            map.put("P+2.0+5.0+4+1+0+0+0+3+1+0", new Double(23.47)); //43
+            map.put("P+1.0+3.0+3+0+0+0+0+3+0+0", 13.59); //40
+            map.put("P+2.0+3.0+3+0+0+0+0+1+1+0", 34.14); //41
+            map.put("P+2.0+5.0+4+0+0+0+0+3+1+0", 9.81); //42
+            map.put("P+2.0+5.0+4+1+0+0+0+3+1+0", 23.47); //43
         }
     }
 
@@ -220,11 +220,11 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer ac;
         try {
-            ac = (IAtomContainer) atomContainer.clone();
+            ac = atomContainer.clone();
         } catch (CloneNotSupportedException e) {
             return getDummyDescriptorValue(e);
         }
-        List<String> profiles = new ArrayList<String>();
+        List<String> profiles = new ArrayList<>();
 
         // calculate the set of all rings
         IRingSet rs;
@@ -273,7 +273,7 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
 
                 // EXPLICIT hydrogens: count the number of hydrogen atoms
                 for (int neighbourIndex = 0; neighbourIndex < numberOfNeighbours; neighbourIndex++)
-                    if (((IAtom) connectedAtoms.get(neighbourIndex)).getAtomicNumber() == IElement.H) hCount++;
+                    if (connectedAtoms.get(neighbourIndex).getAtomicNumber() == IElement.H) hCount++;
                 // IMPLICIT hydrogens: count the number of hydrogen atoms and adjust other atom profile properties
                 Integer implicitHAtoms = atom.getImplicitHydrogenCount();
                 if (implicitHAtoms == CDKConstants.UNSET) {
@@ -315,9 +315,9 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
         // END OF ATOM LOOP
         // calculate the tpsa for the AtomContainer ac
         double tpsa = 0;
-        for (int profileIndex = 0; profileIndex < profiles.size(); profileIndex++) {
-            if (map.containsKey(profiles.get(profileIndex))) {
-                tpsa += (Double) map.get(profiles.get(profileIndex));
+        for (String profile : profiles) {
+            if (map.containsKey(profile)) {
+                tpsa += map.get(profile);
                 //logger.debug("tpsa contribs: " + profiles.elementAt(profileIndex) + "\t" + ((Double)map.get(profiles.elementAt(profileIndex))).doubleValue());
             }
         }

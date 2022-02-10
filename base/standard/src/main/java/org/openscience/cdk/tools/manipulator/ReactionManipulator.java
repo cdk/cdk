@@ -231,7 +231,7 @@ public class ReactionManipulator {
     }
 
     public static List<String> getAllIDs(IReaction reaction) {
-        List<String> idList = new ArrayList<String>();
+        List<String> idList = new ArrayList<>();
         if (reaction.getID() != null) idList.add(reaction.getID());
         IAtomContainerSet reactants = reaction.getReactants();
         for (int i = 0; i < reactants.getAtomContainerCount(); i++) {
@@ -274,7 +274,7 @@ public class ReactionManipulator {
     }
 
     public static List<IChemObject> getAllChemObjects(IReaction reaction) {
-        ArrayList<IChemObject> list = new ArrayList<IChemObject>();
+        ArrayList<IChemObject> list = new ArrayList<>();
         list.add(reaction);
         IAtomContainerSet reactants = reaction.getReactants();
         for (int i = 0; i < reactants.getAtomContainerCount(); i++) {

@@ -29,9 +29,9 @@ import org.openscience.cdk.interfaces.IBond;
  */
 public class BondOrderDifference implements IDifference {
 
-    private String      name;
-    private IBond.Order first;
-    private IBond.Order second;
+    private final String      name;
+    private final IBond.Order first;
+    private final IBond.Order second;
 
     private BondOrderDifference(String name, IBond.Order first, IBond.Order second) {
         this.name = name;

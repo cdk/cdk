@@ -453,7 +453,7 @@ public class MoleculeSignatureTest extends CDKTestCase {
 
         MoleculeSignature molSig = new MoleculeSignature(napthalene);
         int height = 2;
-        Map<String, Orbit> orbits = new HashMap<String, Orbit>();
+        Map<String, Orbit> orbits = new HashMap<>();
         for (int i = 0; i < napthalene.getAtomCount(); i++) {
             String signatureString = molSig.signatureStringForVertex(i, height);
             Orbit orbit;

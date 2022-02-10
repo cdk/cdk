@@ -91,7 +91,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  */
 public class PDBReader extends DefaultChemObjectReader {
 
-    private static ILoggingTool    logger            = LoggingToolFactory.createLoggingTool(PDBReader.class);
+    private static final ILoggingTool    logger            = LoggingToolFactory.createLoggingTool(PDBReader.class);
     private BufferedReader         _oInput;                                                                  // The internal used BufferedReader
     private BooleanIOSetting       useRebondTool;
     private BooleanIOSetting       readConnect;
@@ -171,8 +171,8 @@ public class PDBReader extends DefaultChemObjectReader {
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IChemFile.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IChemFile.class.equals(anInterface)) return true;
         }
         if (IChemFile.class.equals(classObject)) return true;
         Class superClass = classObject.getSuperclass();
@@ -230,13 +230,13 @@ public class PDBReader extends DefaultChemObjectReader {
         String cRead = "";
         char chain = 'A'; // To ensure stringent name giving of monomers
         IStrand oStrand;
-        int lineLength = 0;
+        int lineLength;
 
         boolean isProteinStructure = false;
 
-        atomNumberMap = new Hashtable<Integer, IAtom>();
+        atomNumberMap = new Hashtable<>();
         if (readConnect.isSet()) {
-            bondsFromConnectRecords = new ArrayList<IBond>();
+            bondsFromConnectRecords = new ArrayList<>();
         }
 
         // do the reading of the Input
@@ -269,7 +269,7 @@ public class PDBReader extends DefaultChemObjectReader {
                             oObj = oAtom.getChainID();
                             if (oObj != null) {
                                 // cResidue = cResidue.append(((String)oObj).trim());
-                                cResidue = cResidue.append(String.valueOf(chain));
+                                cResidue = cResidue.append(chain);
                             }
                             oObj = oAtom.getResSeq();
                             if (oObj != null) {
@@ -387,7 +387,7 @@ public class PDBReader extends DefaultChemObjectReader {
                             comment = "";
                         }
                         if (lineLength > 12) {
-                            comment = comment.toString() + cRead.substring(11).trim()
+                            comment = comment + cRead.substring(11).trim()
                                     + "\n";
                             oFile.setProperty(CDKConstants.COMMENT, comment);
                         } else {
@@ -410,7 +410,7 @@ public class PDBReader extends DefaultChemObjectReader {
                         } else {
                             int lineIndex = 6;
                             int atomFromNumber = -1;
-                            int atomToNumber = -1;
+                            int atomToNumber;
                             IAtomContainer molecule = (isProteinStructure) ? oBP : molecularStructure;
                             while (lineIndex + 5 <= cRead.length()) {
                                 String part = cRead.substring(lineIndex, lineIndex + 5).trim();
@@ -507,8 +507,8 @@ public class PDBReader extends DefaultChemObjectReader {
             logger.error("Could not find bond target atom in map with serial id: ", bondAtomNo);
         }
         IBond bond = firstAtom.getBuilder().newInstance(IBond.class, firstAtom, secondAtom, IBond.Order.SINGLE);
-        for (int i = 0; i < bondsFromConnectRecords.size(); i++) {
-            IBond existingBond = (IBond) bondsFromConnectRecords.get(i);
+        for (IBond bondsFromConnectRecord : bondsFromConnectRecords) {
+            IBond existingBond = bondsFromConnectRecord;
             IAtom a = existingBond.getBegin();
             IAtom b = existingBond.getEnd();
             if ((a.equals(firstAtom) && b.equals(secondAtom)) || (b.equals(firstAtom) && a.equals(secondAtom))) {

@@ -73,7 +73,7 @@ import java.util.TreeMap;
  */
 public final class GeometryUtil {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(GeometryUtil.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(GeometryUtil.class);
 
     /**
      * Provides the coverage of coordinates for this molecule.
@@ -81,7 +81,7 @@ public final class GeometryUtil {
      * @see GeometryUtil#get2DCoordinateCoverage(org.openscience.cdk.interfaces.IAtomContainer)
      * @see GeometryUtil#get3DCoordinateCoverage(org.openscience.cdk.interfaces.IAtomContainer)
      */
-    public static enum CoordinateCoverage {
+    public enum CoordinateCoverage {
 
         /**
          * All atoms have coordinates.
@@ -153,8 +153,8 @@ public final class GeometryUtil {
      */
     public static void scaleMolecule(IAtomContainer atomCon, double[] areaDim, double fillFactor) {
         double[] molDim = get2DDimension(atomCon);
-        double widthFactor = (double) areaDim[0] / (double) molDim[0];
-        double heightFactor = (double) areaDim[1] / (double) molDim[1];
+        double widthFactor = areaDim[0] / molDim[0];
+        double heightFactor = areaDim[1] / molDim[1];
         double scaleFactor = Math.min(widthFactor, heightFactor) * fillFactor;
         scaleMolecule(atomCon, scaleFactor);
     }
@@ -1345,7 +1345,7 @@ public final class GeometryUtil {
         if (originalPoint == null) {
             throw new CDKException("No point3d, but findClosestInSpace is working on point3ds");
         }
-        Map<Double, IAtom> atomsByDistance = new TreeMap<Double, IAtom>();
+        Map<Double, IAtom> atomsByDistance = new TreeMap<>();
         for (IAtom atom : container.atoms()) {
             if (!atom.equals(startAtom)) {
                 if (atom.getPoint3d() == null) {
@@ -1358,7 +1358,7 @@ public final class GeometryUtil {
         // FIXME: should there not be some sort here??
         Set<Double> keySet = atomsByDistance.keySet();
         Iterator<Double> keyIter = keySet.iterator();
-        List<IAtom> returnValue = new ArrayList<IAtom>();
+        List<IAtom> returnValue = new ArrayList<>();
         int i = 0;
         while (keyIter.hasNext() && i < max) {
             returnValue.add(atomsByDistance.get(keyIter.next()));
@@ -1461,8 +1461,8 @@ public final class GeometryUtil {
         List<IAtom> connectedAtoms;
         double sum = 0;
         double n = 0;
-        double distance1 = 0;
-        double distance2 = 0;
+        double distance1;
+        double distance2;
         setVisitedFlagsToFalse(firstAtomContainer);
         setVisitedFlagsToFalse(secondAtomContainer);
         while (firstAtoms.hasNext()) {
@@ -1471,15 +1471,14 @@ public final class GeometryUtil {
             centerAtomSecondMolecule = secondAtomContainer.getAtom(mappedAtoms.get(firstAtomContainer
                     .indexOf(centerAtomFirstMolecule)));
             connectedAtoms = firstAtomContainer.getConnectedAtomsList(centerAtomFirstMolecule);
-            for (int i = 0; i < connectedAtoms.size(); i++) {
-                IAtom conAtom = connectedAtoms.get(i);
+            for (IAtom conAtom : connectedAtoms) {
                 //this step is built to know if the program has already calculate a bond length (so as not to have duplicate values)
                 if (!conAtom.getFlag(CDKConstants.VISITED)) {
                     if (Coords3d) {
                         distance1 = centerAtomFirstMolecule.getPoint3d().distance(conAtom.getPoint3d());
                         distance2 = centerAtomSecondMolecule.getPoint3d().distance(
                                 secondAtomContainer.getAtom(mappedAtoms.get(firstAtomContainer.indexOf(conAtom)))
-                                        .getPoint3d());
+                                                   .getPoint3d());
                         sum = sum + Math.pow((distance1 - distance2), 2);
                         n++;
                     } else {

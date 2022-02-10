@@ -43,7 +43,7 @@ public class DebugBond extends Bond implements IBond {
 
     private static final long serialVersionUID = -2330398179697796261L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugBond.class);
+    final ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugBond.class);
 
     public DebugBond() {
         super();

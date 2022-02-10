@@ -51,14 +51,14 @@ public interface IRenderer<T extends IChemObject> {
      * @param obj the IChemObject to generate a diagram for
      * @return a tree of rendering elements
      */
-    public IRenderingElement generateDiagram(T obj);
+    IRenderingElement generateDiagram(T obj);
 
     /**
      * Returns the drawing model, giving access to drawing parameters.
      *
      * @return the rendering model
      */
-    public RendererModel getRenderer2DModel();
+    RendererModel getRenderer2DModel();
 
     /**
      * Converts screen coordinates into model (or world) coordinates.
@@ -69,7 +69,7 @@ public interface IRenderer<T extends IChemObject> {
      *
      * @see #toScreenCoordinates(double, double)
      */
-    public Point2d toModelCoordinates(double screenXTo, double screenYTo);
+    Point2d toModelCoordinates(double screenXTo, double screenYTo);
 
     /**
      * Converts model (or world) coordinates into screen coordinates.
@@ -80,14 +80,14 @@ public interface IRenderer<T extends IChemObject> {
      *
      * @see #toModelCoordinates(double, double)
      */
-    public Point2d toScreenCoordinates(double screenXTo, double screenYTo);
+    Point2d toScreenCoordinates(double screenXTo, double screenYTo);
 
     /**
      * Set a new zoom factor.
      *
      * @param zoomFactor the new zoom factor
      */
-    public void setZoom(double zoomFactor);
+    void setZoom(double zoomFactor);
 
     /**
      * Set a new drawing center in screen coordinates.
@@ -95,7 +95,7 @@ public interface IRenderer<T extends IChemObject> {
      * @param screenX the x screen coordinate of the drawing center
      * @param screenY the y screen coordinate of the drawing center
      */
-    public void shiftDrawCenter(double screenX, double screenY);
+    void shiftDrawCenter(double screenX, double screenY);
 
     /**
      * Paint an IChemObject.
@@ -104,7 +104,7 @@ public interface IRenderer<T extends IChemObject> {
      * @param drawVisitor the class that visits the generated elements
      * @return the rectangular area where was drawn
      */
-    public Rectangle paint(T object, IDrawVisitor drawVisitor);
+    Rectangle paint(T object, IDrawVisitor drawVisitor);
 
     /**
      * Paint the chem object within the specified bounds.
@@ -114,7 +114,7 @@ public interface IRenderer<T extends IChemObject> {
      * @param bounds       the screen bounds between which to draw
      * @param resetCenter  a boolean indicating the the drawing center needs to be reset
      */
-    public void paint(T object, IDrawVisitor drawVisitor, Rectangle2D bounds, boolean resetCenter);
+    void paint(T object, IDrawVisitor drawVisitor, Rectangle2D bounds, boolean resetCenter);
 
     /**
      * Setup the transformations necessary to draw the {@link IChemObject}
@@ -123,7 +123,7 @@ public interface IRenderer<T extends IChemObject> {
      * @param object {@link IChemObject} to be drawn
      * @param screen {@link Rectangle} to draw the object to
      */
-    public void setup(T object, Rectangle screen);
+    void setup(T object, Rectangle screen);
 
     /**
      * Set the scale for an {@link IChemObject}. It calculates the average bond
@@ -132,7 +132,7 @@ public interface IRenderer<T extends IChemObject> {
      *
      * @param  object the {@link IChemObject} to draw.
      */
-    public void setScale(T object);
+    void setScale(T object);
 
     /**
      * Given a {@link IChemObject}, calculates the bounding rectangle in screen
@@ -141,12 +141,12 @@ public interface IRenderer<T extends IChemObject> {
      * @param  object the {@link IChemObject} to draw.
      * @return        a rectangle in screen space.
      */
-    public Rectangle calculateDiagramBounds(T object);
+    Rectangle calculateDiagramBounds(T object);
 
     /**
      * Returns a {@link List} of {@link IGenerator}s for this renderer.
      *
      * @return the list of generators for this renderer.
      */
-    public List<IGenerator<T>> getGenerators();
+    List<IGenerator<T>> getGenerators();
 }

@@ -47,19 +47,19 @@ public class SymbolVisibilityTest {
 
     @Test
     public void iupacOxygen() {
-        assertTrue(SymbolVisibility.iupacRecommendations().visible(new Atom("O"), Collections.<IBond> emptyList(),
+        assertTrue(SymbolVisibility.iupacRecommendations().visible(new Atom("O"), Collections.emptyList(),
                 new RendererModel()));
     }
 
     @Test
     public void iupacNitrogen() {
-        assertTrue(SymbolVisibility.iupacRecommendations().visible(new Atom("N"), Collections.<IBond> emptyList(),
+        assertTrue(SymbolVisibility.iupacRecommendations().visible(new Atom("N"), Collections.emptyList(),
                 new RendererModel()));
     }
 
     @Test
     public void iupacMethane() {
-        assertTrue(SymbolVisibility.iupacRecommendations().visible(new Atom("C"), Collections.<IBond> emptyList(),
+        assertTrue(SymbolVisibility.iupacRecommendations().visible(new Atom("C"), Collections.emptyList(),
                 new RendererModel()));
     }
 

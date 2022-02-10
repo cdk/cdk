@@ -34,7 +34,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.RingSearch;
 import org.openscience.cdk.smiles.SmilesGenerator;
@@ -80,15 +79,15 @@ public class MurckoFragmenter implements IFragmenter {
     private static final String IS_LINKER_ATOM       = "linker";
     private static final String IS_CONNECTED_TO_RING = "rcon";
 
-    MoleculeHashGenerator       generator;
-    SmilesGenerator             smigen;
+    final MoleculeHashGenerator       generator;
+    final SmilesGenerator             smigen;
 
-    Map<Long, IAtomContainer>   frameMap             = new HashMap<Long, IAtomContainer>();
-    Map<Long, IAtomContainer>   ringMap              = new HashMap<Long, IAtomContainer>();
+    final Map<Long, IAtomContainer>   frameMap             = new HashMap<>();
+    final Map<Long, IAtomContainer>   ringMap              = new HashMap<>();
 
-    boolean                     singleFrameworkOnly  = false;
+    boolean                     singleFrameworkOnly;
     boolean                     ringFragments        = true;
-    int                         minimumFragmentSize  = 5;
+    int                         minimumFragmentSize;
 
     /**
      * Instantiate Murcko fragmenter.
@@ -147,7 +146,7 @@ public class MurckoFragmenter implements IFragmenter {
      */
     @Override
     public void generateFragments(IAtomContainer atomContainer) throws CDKException {
-        Set<Long> fragmentSet = new HashSet<Long>();
+        Set<Long> fragmentSet = new HashSet<>();
         frameMap.clear();
         ringMap.clear();
         run(atomContainer, fragmentSet);
@@ -263,11 +262,11 @@ public class MurckoFragmenter implements IFragmenter {
 
         // need to keep the side chains somewhere
         IAtomContainer clone = removeSideChains(atomContainer);
-        clone.setStereoElements(new ArrayList<IStereoElement>());
+        clone.setStereoElements(new ArrayList<>());
 
         IAtomContainer currentFramework; // needed for recursion
         try {
-            currentFramework = (IAtomContainer) clone.clone();
+            currentFramework = clone.clone();
         } catch (CloneNotSupportedException exception) {
             throw new CDKException(exception.getMessage(), exception);
         }
@@ -291,14 +290,14 @@ public class MurckoFragmenter implements IFragmenter {
 
         // extract ring systems - we also delete pseudo linker bonds as described by
         // Murcko (since he notes that biphenyl has two separate ring systems)
-        List<IAtom> atomsToDelete = new ArrayList<IAtom>();
+        List<IAtom> atomsToDelete = new ArrayList<>();
         for (IAtom atom : clone.atoms()) {
             if (islinker(atom)) atomsToDelete.add(atom);
         }
         for (IAtom atom : atomsToDelete)
             clone.removeAtom(atom);
 
-        List<IBond> bondsToDelete = new ArrayList<IBond>();
+        List<IBond> bondsToDelete = new ArrayList<>();
         for (IBond bond : clone.bonds()) {
             if (isZeroAtomLinker(bond)) bondsToDelete.add(bond);
         }
@@ -353,9 +352,9 @@ public class MurckoFragmenter implements IFragmenter {
         try {
             clone = atomContainer.clone();
         } catch (CloneNotSupportedException exception) {
-            throw new CDKException("Error in clone" + exception.toString(), exception);
+            throw new CDKException("Error in clone" + exception, exception);
         }
-        List<IAtom> atomsToDelete = new ArrayList<IAtom>();
+        List<IAtom> atomsToDelete = new ArrayList<>();
         for (IAtom atom : clone.atoms()) {
             if (issidechain(atom)) atomsToDelete.add(atom);
         }
@@ -421,7 +420,7 @@ public class MurckoFragmenter implements IFragmenter {
     }
 
     private List<String> getSmilesFromAtomContainers(Collection<IAtomContainer> mols) {
-        List<String> smis = new ArrayList<String>();
+        List<String> smis = new ArrayList<>();
         for (IAtomContainer mol : mols) {
             try {
                 AtomContainerManipulator.clearAtomConfigurations(mol);
@@ -452,7 +451,7 @@ public class MurckoFragmenter implements IFragmenter {
      */
     @Override
     public String[] getFragments() {
-        List<String> allfrags = new ArrayList<String>();
+        List<String> allfrags = new ArrayList<>();
         allfrags.addAll(getSmilesFromAtomContainers(frameMap.values()));
         allfrags.addAll(getSmilesFromAtomContainers(ringMap.values()));
         return allfrags.toArray(new String[]{});
@@ -465,7 +464,7 @@ public class MurckoFragmenter implements IFragmenter {
      */
     @Override
     public IAtomContainer[] getFragmentsAsContainers() {
-        List<IAtomContainer> allfrags = new ArrayList<IAtomContainer>();
+        List<IAtomContainer> allfrags = new ArrayList<>();
         allfrags.addAll(frameMap.values());
         allfrags.addAll(ringMap.values());
         return allfrags.toArray(new IAtomContainer[0]);
@@ -512,12 +511,12 @@ public class MurckoFragmenter implements IFragmenter {
     }
 
     private boolean islinker(IAtom atom) {
-        Boolean o = (Boolean) atom.getProperty(IS_LINKER_ATOM);
+        Boolean o = atom.getProperty(IS_LINKER_ATOM);
         return o != null && o;
     }
 
     private boolean issidechain(IAtom atom) {
-        Boolean o = (Boolean) atom.getProperty(IS_SIDECHAIN_ATOM);
+        Boolean o = atom.getProperty(IS_SIDECHAIN_ATOM);
         return o != null && o;
     }
 

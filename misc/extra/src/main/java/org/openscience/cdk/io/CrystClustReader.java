@@ -49,7 +49,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class CrystClustReader extends DefaultChemObjectReader {
 
     private BufferedReader      input;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CrystClustReader.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(CrystClustReader.class);
 
     public CrystClustReader() {}
 
@@ -89,8 +89,8 @@ public class CrystClustReader extends DefaultChemObjectReader {
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IChemFile.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IChemFile.class.equals(anInterface)) return true;
         }
         Class superClass = classObject.getSuperclass();
         if (superClass != null) return this.accepts(superClass);
@@ -110,7 +110,7 @@ public class CrystClustReader extends DefaultChemObjectReader {
     private IChemFile readChemFile(IChemFile file) throws CDKException {
         IChemSequence seq = file.getBuilder().newInstance(IChemSequence.class);
         IChemModel model = file.getBuilder().newInstance(IChemModel.class);
-        ICrystal crystal = null;
+        ICrystal crystal;
 
         int lineNumber = 0;
         Vector3d a, b, c;

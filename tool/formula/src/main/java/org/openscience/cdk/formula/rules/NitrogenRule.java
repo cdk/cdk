@@ -53,7 +53,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  */
 public class NitrogenRule implements IRule {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(NitrogenRule.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(NitrogenRule.class);
 
     /**
      *  Constructor for the NitrogenRule object.
@@ -130,9 +130,9 @@ public class NitrogenRule implements IRule {
     private int getOthers(IMolecularFormula formula) {
         int number = 0;
         String[] elements = {"Co", "Hg", "Pt", "As"};
-        for (int i = 0; i < elements.length; i++)
+        for (String element : elements)
             number += MolecularFormulaManipulator.getElementCount(formula,
-                    formula.getBuilder().newInstance(IElement.class, elements[i]));
+                    formula.getBuilder().newInstance(IElement.class, element));
 
         return number;
     }

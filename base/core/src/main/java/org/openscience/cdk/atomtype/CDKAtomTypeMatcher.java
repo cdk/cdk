@@ -60,12 +60,12 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     public final static int                                                  REQUIRE_NOTHING            = 1;
     public final static int                                                  REQUIRE_EXPLICIT_HYDROGENS = 2;
 
-    private AtomTypeFactory                                                  factory;
-    private int                                                              mode;
+    private final AtomTypeFactory                                                  factory;
+    private final int                                                              mode;
     
     private final static Object                                              LOCK                       = new Object();
 
-    private static Map<Integer, Map<IChemObjectBuilder, CDKAtomTypeMatcher>> factories                  = new ConcurrentHashMap<>(5);
+    private static final Map<Integer, Map<IChemObjectBuilder, CDKAtomTypeMatcher>> factories                  = new ConcurrentHashMap<>(5);
 
     private CDKAtomTypeMatcher(IChemObjectBuilder builder, int mode) {
         factory = AtomTypeFactory.getInstance("org/openscience/cdk/dict/data/cdk-atom-types.owl", builder);
@@ -79,7 +79,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     public static CDKAtomTypeMatcher getInstance(IChemObjectBuilder builder, int mode) {
         synchronized (LOCK) {
             if (!factories.containsKey(mode))
-                factories.put(mode, new Hashtable<IChemObjectBuilder, CDKAtomTypeMatcher>(1));
+                factories.put(mode, new Hashtable<>(1));
             if (!factories.get(mode).containsKey(builder))
                 factories.get(mode).put(builder, new CDKAtomTypeMatcher(builder, mode));
             return factories.get(mode).get(builder);
@@ -96,7 +96,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	// cache the ring information
     	if (searcher == null) searcher = new RingSearch(atomContainer);
     	// cache atom bonds
-    	Map<IAtom, List<IBond>> connectedBonds = new HashMap<IAtom,List<IBond>>(atomContainer.getAtomCount());
+    	Map<IAtom, List<IBond>> connectedBonds = new HashMap<>(atomContainer.getAtomCount());
     	for (IBond bond : atomContainer.bonds()) {
     		for (IAtom atom : bond.atoms()) {
     			List<IBond> atomBonds = connectedBonds.get(atom);
@@ -124,7 +124,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     private IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom, RingSearch searcher, List<IBond> connectedBonds) throws CDKException {
-        IAtomType type = null;
+        IAtomType type;
         if (atom instanceof IPseudoAtom || atom.getAtomicNumber() == null) {
             return factory.getAtomType("X");
         }
@@ -561,9 +561,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 
     private boolean hasOneSingleElectron(IAtomContainer atomContainer, IAtom atom) {
     	if (atomContainer.getSingleElectronCount() == 0) return false;
-        Iterator<ISingleElectron> singleElectrons = atomContainer.singleElectrons().iterator();
-        while (singleElectrons.hasNext()) {
-            if (singleElectrons.next().contains(atom)) return true;
+        for (ISingleElectron iSingleElectron : atomContainer.singleElectrons()) {
+            if (iSingleElectron.contains(atom)) return true;
         }
         return false;
     }
@@ -1117,7 +1116,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
      * @return the bond list only with heavy bonds
      */
     private List<IBond> heavyBonds(final List<IBond> bonds) {
-        final List<IBond> heavy = new ArrayList<IBond>(bonds.size());
+        final List<IBond> heavy = new ArrayList<>(bonds.size());
         for (final IBond bond : bonds) {
             if (!(bond.getBegin().getAtomicNumber() == IElement.H && bond.getEnd().getAtomicNumber() == IElement.H)) {
                 heavy.add(bond);
@@ -2587,7 +2586,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         // confirm single electron count
         if (type.getProperty(CDKConstants.SINGLE_ELECTRON_COUNT) != null) {
             int count = countSingleElectrons(container, atom);
-            if (count != type.getProperty(CDKConstants.SINGLE_ELECTRON_COUNT, Integer.class).intValue())
+            if (count != type.getProperty(CDKConstants.SINGLE_ELECTRON_COUNT, Integer.class))
                 return false;
         }
 

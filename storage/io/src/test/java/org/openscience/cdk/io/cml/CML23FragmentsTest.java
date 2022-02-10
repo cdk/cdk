@@ -129,7 +129,7 @@ public class CML23FragmentsTest extends CDKTestCase {
         Assert.assertEquals(1, mol.getAtomCount());
         IAtom atom = mol.getAtom(0);
         Assert.assertEquals("C", atom.getSymbol());
-        Assert.assertEquals(12.0, atom.getExactMass().doubleValue(), 0.01);
+        Assert.assertEquals(12.0, atom.getExactMass(), 0.01);
     }
 
     @Test
@@ -500,7 +500,7 @@ public class CML23FragmentsTest extends CDKTestCase {
 
         Assert.assertNotNull(mol.getProperty(key));
         Assert.assertTrue(mol.getProperty(key) instanceof DescriptorValue);
-        DescriptorValue value = (DescriptorValue) mol.getProperty(key);
+        DescriptorValue value = mol.getProperty(key);
         IDescriptorResult result = value.getValue();
         Assert.assertNotNull(result);
         Assert.assertTrue(result instanceof DoubleResult);
@@ -508,9 +508,9 @@ public class CML23FragmentsTest extends CDKTestCase {
     }
 
     private IChemFile parseCMLString(String cmlString) throws Exception {
-        IChemFile chemFile = null;
+        IChemFile chemFile;
         CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
-        chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        chemFile = reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
         return chemFile;
     }

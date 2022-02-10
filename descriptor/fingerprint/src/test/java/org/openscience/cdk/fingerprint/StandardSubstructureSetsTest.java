@@ -33,7 +33,7 @@ public class StandardSubstructureSetsTest extends CDKTestCase {
 
     @Test
     public void testGetFunctionalGroupSubstructureSet() throws Exception {
-        String[] smarts = null;
+        String[] smarts;
         smarts = StandardSubstructureSets.getFunctionalGroupSMARTS();
         Assert.assertNotNull(smarts);
         Assert.assertEquals(307, smarts.length);
@@ -41,7 +41,7 @@ public class StandardSubstructureSetsTest extends CDKTestCase {
 
     @Test
     public void testGetCountableMACCSSMARTSSubstructureSet() throws Exception {
-        String[] smarts = null;
+        String[] smarts;
         smarts = StandardSubstructureSets.getCountableMACCSSMARTS();
         Assert.assertNotNull(smarts);
         Assert.assertEquals(142, smarts.length); // currently fragment pattern is ignored

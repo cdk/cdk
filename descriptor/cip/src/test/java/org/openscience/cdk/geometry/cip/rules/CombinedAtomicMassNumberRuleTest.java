@@ -23,7 +23,6 @@
 package org.openscience.cdk.geometry.cip.rules;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
@@ -42,7 +41,7 @@ import org.openscience.cdk.smiles.SmilesParser;
  */
 public class CombinedAtomicMassNumberRuleTest extends CDKTestCase {
 
-    static SmilesParser   smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
+    static final SmilesParser   smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
     static IAtomContainer molecule;
 
     @BeforeClass
@@ -72,13 +71,13 @@ public class CombinedAtomicMassNumberRuleTest extends CDKTestCase {
         ILigand ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(3));
         ILigand ligand3 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(2));
         ILigand ligand4 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0));
-        List<ILigand> ligands = new ArrayList<ILigand>();
+        List<ILigand> ligands = new ArrayList<>();
         ligands.add(ligand1);
         ligands.add(ligand2);
         ligands.add(ligand3);
         ligands.add(ligand4);
 
-        Collections.sort(ligands, new CombinedAtomicMassNumberRule());
+        ligands.sort(new CombinedAtomicMassNumberRule());
         Assert.assertEquals("H", ligands.get(0).getLigandAtom().getSymbol());
         Assert.assertEquals("C", ligands.get(1).getLigandAtom().getSymbol());
         Assert.assertEquals("C", ligands.get(2).getLigandAtom().getSymbol());

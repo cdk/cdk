@@ -5,8 +5,6 @@
  */
 package org.openscience.cdk.test.interfaces;
 
-import java.util.Iterator;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IReaction;
@@ -81,8 +79,7 @@ public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest
 
         Assert.assertEquals(3, scheme.getReactionCount());
         int count = 0;
-        for (Iterator<IReaction> it = scheme.reactions().iterator(); it.hasNext();) {
-            it.next();
+        for (IReaction iReaction : scheme.reactions()) {
             ++count;
         }
         Assert.assertEquals(3, count);

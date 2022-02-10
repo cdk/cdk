@@ -89,7 +89,7 @@ public class PDBWriterTest extends ChemObjectIOTest {
         Assert.assertTrue(output.length() > 0);
 
         PDBReader reader = new PDBReader();
-        ChemFile chemFile = (ChemFile) reader.read(new ChemFile());
+        ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
         Assert.assertNotNull(chemFile);
@@ -125,7 +125,7 @@ public class PDBWriterTest extends ChemObjectIOTest {
         Assert.assertTrue(output.length() > 0);
 
         PDBReader reader = new PDBReader();
-        ChemFile chemFile = (ChemFile) reader.read(new ChemFile());
+        ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
         Assert.assertNotNull(chemFile);
@@ -187,7 +187,7 @@ public class PDBWriterTest extends ChemObjectIOTest {
         writer.writeMolecule(mol);
         writer.close();
         String asString = stringWriter.toString();
-        Assert.assertTrue(asString.indexOf("HETATM") != -1);
+        Assert.assertTrue(asString.contains("HETATM"));
     }
 
     @Test
@@ -199,25 +199,25 @@ public class PDBWriterTest extends ChemObjectIOTest {
         writer.writeMolecule(mol);
         writer.close();
         String asString = stringWriter.toString();
-        Assert.assertTrue(asString.indexOf("ATOM") != -1);
+        Assert.assertTrue(asString.contains("ATOM"));
     }
 
     @Test
     public void writeMolID() throws CDKException, IOException {
         IAtomContainer mol = singleAtomMolecule("ZZZ");
-        Assert.assertTrue(getAsString(mol).indexOf("ZZZ") != -1);
+        Assert.assertTrue(getAsString(mol).contains("ZZZ"));
     }
 
     @Test
     public void writeNullMolID() throws CDKException, IOException {
         IAtomContainer mol = singleAtomMolecule(null);
-        Assert.assertTrue(getAsString(mol).indexOf("MOL") != -1);
+        Assert.assertTrue(getAsString(mol).contains("MOL"));
     }
 
     @Test
     public void writeEmptyStringMolID() throws CDKException, IOException {
         IAtomContainer mol = singleAtomMolecule("");
-        Assert.assertTrue(getAsString(mol).indexOf("MOL") != -1);
+        Assert.assertTrue(getAsString(mol).contains("MOL"));
     }
 
     @Test
@@ -253,7 +253,7 @@ public class PDBWriterTest extends ChemObjectIOTest {
         writer.close();
         String output = stringWriter.toString();
         PDBReader reader = new PDBReader(new StringReader(output));
-        IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
         IAtomContainer reconstructed = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
         Assert.assertEquals(original.getAtomCount(), reconstructed.getAtomCount());

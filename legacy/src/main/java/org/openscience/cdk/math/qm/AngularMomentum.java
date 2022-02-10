@@ -38,9 +38,9 @@ import org.openscience.cdk.math.Vector;
  */
 public class AngularMomentum {
 
-    private double J;
-    private int    size;
-    private Matrix basis;
+    private final double J;
+    private final int    size;
+    private final Matrix basis;
 
     public AngularMomentum(double J) {
         this.J = J;

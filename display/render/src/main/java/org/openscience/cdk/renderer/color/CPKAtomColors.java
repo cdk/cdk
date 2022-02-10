@@ -60,8 +60,8 @@ public class CPKAtomColors implements IAtomColorer, java.io.Serializable {
     private static final Color               FOREST_GREEN        = new Color(0x228B22);
 
     // The atom color look-up table.
-    private static final Map<Integer, Color> ATOM_COLORS_MASSNUM = new HashMap<Integer, Color>();
-    private static final Map<String, Color>  ATOM_COLORS_SYMBOL  = new HashMap<String, Color>();
+    private static final Map<Integer, Color> ATOM_COLORS_MASSNUM = new HashMap<>();
+    private static final Map<String, Color>  ATOM_COLORS_SYMBOL  = new HashMap<>();
 
     // Build table.
     static {
@@ -96,35 +96,35 @@ public class CPKAtomColors implements IAtomColorer, java.io.Serializable {
         ATOM_COLORS_SYMBOL.put("AU", GOLDEN_ROD);
 
         // Colors keyed on atomic number.
-        ATOM_COLORS_MASSNUM.put(Integer.valueOf(1), ATOM_COLORS_SYMBOL.get("H"));
-        ATOM_COLORS_MASSNUM.put(Integer.valueOf(2), ATOM_COLORS_SYMBOL.get("HE"));
-        ATOM_COLORS_MASSNUM.put(Integer.valueOf(3), ATOM_COLORS_SYMBOL.get("LI"));
-        ATOM_COLORS_MASSNUM.put(Integer.valueOf(5), ATOM_COLORS_SYMBOL.get("B"));
-        ATOM_COLORS_MASSNUM.put(Integer.valueOf(6), ATOM_COLORS_SYMBOL.get("C"));
-        ATOM_COLORS_MASSNUM.put(Integer.valueOf(7), ATOM_COLORS_SYMBOL.get("N"));
-        ATOM_COLORS_MASSNUM.put(Integer.valueOf(8), ATOM_COLORS_SYMBOL.get("O"));
-        ATOM_COLORS_MASSNUM.put(Integer.valueOf(9), ATOM_COLORS_SYMBOL.get("F"));
-        ATOM_COLORS_MASSNUM.put(Integer.valueOf(11), ATOM_COLORS_SYMBOL.get("NA"));
-        ATOM_COLORS_MASSNUM.put(Integer.valueOf(12), ATOM_COLORS_SYMBOL.get("MG"));
-        ATOM_COLORS_MASSNUM.put(Integer.valueOf(13), ATOM_COLORS_SYMBOL.get("AL"));
-        ATOM_COLORS_MASSNUM.put(Integer.valueOf(14), ATOM_COLORS_SYMBOL.get("SI"));
-        ATOM_COLORS_MASSNUM.put(Integer.valueOf(15), ATOM_COLORS_SYMBOL.get("P"));
-        ATOM_COLORS_MASSNUM.put(Integer.valueOf(16), ATOM_COLORS_SYMBOL.get("S"));
-        ATOM_COLORS_MASSNUM.put(Integer.valueOf(17), ATOM_COLORS_SYMBOL.get("CL"));
-        ATOM_COLORS_MASSNUM.put(Integer.valueOf(20), ATOM_COLORS_SYMBOL.get("CA"));
-        ATOM_COLORS_MASSNUM.put(Integer.valueOf(22), ATOM_COLORS_SYMBOL.get("TI"));
-        ATOM_COLORS_MASSNUM.put(Integer.valueOf(24), ATOM_COLORS_SYMBOL.get("CR"));
-        ATOM_COLORS_MASSNUM.put(Integer.valueOf(25), ATOM_COLORS_SYMBOL.get("MN"));
-        ATOM_COLORS_MASSNUM.put(Integer.valueOf(26), ATOM_COLORS_SYMBOL.get("FE"));
-        ATOM_COLORS_MASSNUM.put(Integer.valueOf(28), ATOM_COLORS_SYMBOL.get("NI"));
-        ATOM_COLORS_MASSNUM.put(Integer.valueOf(29), ATOM_COLORS_SYMBOL.get("CU"));
-        ATOM_COLORS_MASSNUM.put(Integer.valueOf(30), ATOM_COLORS_SYMBOL.get("ZN"));
-        ATOM_COLORS_MASSNUM.put(Integer.valueOf(35), ATOM_COLORS_SYMBOL.get("BR"));
-        ATOM_COLORS_MASSNUM.put(Integer.valueOf(47), ATOM_COLORS_SYMBOL.get("AG"));
-        ATOM_COLORS_MASSNUM.put(Integer.valueOf(53), ATOM_COLORS_SYMBOL.get("I"));
-        ATOM_COLORS_MASSNUM.put(Integer.valueOf(56), ATOM_COLORS_SYMBOL.get("BA"));
-        ATOM_COLORS_MASSNUM.put(Integer.valueOf(79), ATOM_COLORS_SYMBOL.get("AU"));
-    };
+        ATOM_COLORS_MASSNUM.put(1, ATOM_COLORS_SYMBOL.get("H"));
+        ATOM_COLORS_MASSNUM.put(2, ATOM_COLORS_SYMBOL.get("HE"));
+        ATOM_COLORS_MASSNUM.put(3, ATOM_COLORS_SYMBOL.get("LI"));
+        ATOM_COLORS_MASSNUM.put(5, ATOM_COLORS_SYMBOL.get("B"));
+        ATOM_COLORS_MASSNUM.put(6, ATOM_COLORS_SYMBOL.get("C"));
+        ATOM_COLORS_MASSNUM.put(7, ATOM_COLORS_SYMBOL.get("N"));
+        ATOM_COLORS_MASSNUM.put(8, ATOM_COLORS_SYMBOL.get("O"));
+        ATOM_COLORS_MASSNUM.put(9, ATOM_COLORS_SYMBOL.get("F"));
+        ATOM_COLORS_MASSNUM.put(11, ATOM_COLORS_SYMBOL.get("NA"));
+        ATOM_COLORS_MASSNUM.put(12, ATOM_COLORS_SYMBOL.get("MG"));
+        ATOM_COLORS_MASSNUM.put(13, ATOM_COLORS_SYMBOL.get("AL"));
+        ATOM_COLORS_MASSNUM.put(14, ATOM_COLORS_SYMBOL.get("SI"));
+        ATOM_COLORS_MASSNUM.put(15, ATOM_COLORS_SYMBOL.get("P"));
+        ATOM_COLORS_MASSNUM.put(16, ATOM_COLORS_SYMBOL.get("S"));
+        ATOM_COLORS_MASSNUM.put(17, ATOM_COLORS_SYMBOL.get("CL"));
+        ATOM_COLORS_MASSNUM.put(20, ATOM_COLORS_SYMBOL.get("CA"));
+        ATOM_COLORS_MASSNUM.put(22, ATOM_COLORS_SYMBOL.get("TI"));
+        ATOM_COLORS_MASSNUM.put(24, ATOM_COLORS_SYMBOL.get("CR"));
+        ATOM_COLORS_MASSNUM.put(25, ATOM_COLORS_SYMBOL.get("MN"));
+        ATOM_COLORS_MASSNUM.put(26, ATOM_COLORS_SYMBOL.get("FE"));
+        ATOM_COLORS_MASSNUM.put(28, ATOM_COLORS_SYMBOL.get("NI"));
+        ATOM_COLORS_MASSNUM.put(29, ATOM_COLORS_SYMBOL.get("CU"));
+        ATOM_COLORS_MASSNUM.put(30, ATOM_COLORS_SYMBOL.get("ZN"));
+        ATOM_COLORS_MASSNUM.put(35, ATOM_COLORS_SYMBOL.get("BR"));
+        ATOM_COLORS_MASSNUM.put(47, ATOM_COLORS_SYMBOL.get("AG"));
+        ATOM_COLORS_MASSNUM.put(53, ATOM_COLORS_SYMBOL.get("I"));
+        ATOM_COLORS_MASSNUM.put(56, ATOM_COLORS_SYMBOL.get("BA"));
+        ATOM_COLORS_MASSNUM.put(79, ATOM_COLORS_SYMBOL.get("AU"));
+    }
 
     //////////
     // METHODS

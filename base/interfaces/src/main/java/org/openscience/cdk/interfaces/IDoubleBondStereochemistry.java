@@ -42,7 +42,7 @@ public interface IDoubleBondStereochemistry extends IStereoElement<IBond,IBond> 
     /**
      * Enumeration that defines the two possible values for this stereochemistry type.
      */
-    public enum Conformation {
+    enum Conformation {
         TOGETHER, //  as in Z-but-2-ene
         OPPOSITE; //  as in E-but-2-ene
 
@@ -90,25 +90,25 @@ public interface IDoubleBondStereochemistry extends IStereoElement<IBond,IBond> 
      *
      * @return an array of two {@link IBond}s.
      */
-    public IBond[] getBonds();
+    IBond[] getBonds();
 
     /**
      * {@link IBond} that is the stereo center.
      *
      * @return the double {@link IBond}.
      */
-    public IBond getStereoBond();
+    IBond getStereoBond();
 
     /**
      * Defines the stereochemistry around the double bond.
      *
      * @return the {@link Conformation} for this stereo element.
      */
-    public Conformation getStereo();
+    Conformation getStereo();
 
     /**
      *{@inheritDoc}
      */
     @Override
-    public IDoubleBondStereochemistry map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds);
+    IDoubleBondStereochemistry map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds);
 }

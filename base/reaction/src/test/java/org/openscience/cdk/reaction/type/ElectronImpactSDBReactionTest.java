@@ -49,7 +49,7 @@ import java.util.List;
 
 public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
 
-    private IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    private final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
     /**
      *  The JUnit setup method
@@ -82,9 +82,7 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
         IAtomContainerSet setOfReactants = getExampleReactants();
         IAtomContainer reactant = setOfReactants.getAtomContainer(0);
 
-        Iterator<IBond> bonds = reactant.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond bond = (IBond) bonds.next();
+        for (IBond bond : reactant.bonds()) {
             IAtom atom1 = bond.getBegin();
             IAtom atom2 = bond.getEnd();
             if (bond.getOrder() == IBond.Order.SINGLE && atom1.getAtomicNumber() == IElement.C && atom2.getAtomicNumber() == IElement.C) {
@@ -98,7 +96,7 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
 
         /* initiate */
         IReactionProcess type = new ElectronImpactSDBReaction();
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);

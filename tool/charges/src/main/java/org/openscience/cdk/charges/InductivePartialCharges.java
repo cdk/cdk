@@ -19,7 +19,6 @@
 package org.openscience.cdk.charges;
 
 import java.io.IOException;
-import java.util.Iterator;
 
 import javax.vecmath.Point3d;
 
@@ -53,7 +52,7 @@ public class InductivePartialCharges implements IChargeCalculator {
     private static double[]     pauling;
     private IsotopeFactory      ifac    = null;
     private AtomTypeFactory     factory = null;
-    private static ILoggingTool logger  = LoggingToolFactory.createLoggingTool(InductivePartialCharges.class);
+    private static final ILoggingTool logger  = LoggingToolFactory.createLoggingTool(InductivePartialCharges.class);
 
     /**
      *  Constructor for the InductivePartialCharges object.
@@ -104,8 +103,8 @@ public class InductivePartialCharges implements IChargeCalculator {
                 ElEn[a + (s * atoms.length)] = ElEn[a + ((s - 1) * atoms.length)]
                         + (pChInch[a + (s * atoms.length)] / getAtomicSoftnessCore(ac, a));
                 if (s == 9) {
-                    atoms[a].setProperty("InductivePartialCharge", new Double(pCh[a + (s * atoms.length)]));
-                    atoms[a].setProperty("EffectiveAtomicElectronegativity", new Double(ElEn[a + (s * atoms.length)]));
+                    atoms[a].setProperty("InductivePartialCharge", pCh[a + (s * atoms.length)]);
+                    atoms[a].setProperty("EffectiveAtomicElectronegativity", ElEn[a + (s * atoms.length)]);
                 }
                 //tmp1 = pCh[a + (s * atoms.length)];
                 //tmp2 = ElEn[a + (s * atoms.length)];
@@ -135,9 +134,9 @@ public class InductivePartialCharges implements IChargeCalculator {
      */
     public double[] getPaulingElectronegativities(IAtomContainer ac, boolean modified) throws CDKException {
         double[] paulingElectronegativities = new double[ac.getAtomCount()];
-        IElement element = null;
-        String symbol = null;
-        int atomicNumber = 0;
+        IElement element;
+        String symbol;
+        int atomicNumber;
         try {
             ifac = Isotopes.getInstance();
             for (int i = 0; i < ac.getAtomCount(); i++) {
@@ -186,7 +185,7 @@ public class InductivePartialCharges implements IChargeCalculator {
             return paulingElectronegativities;
         } catch (Exception ex1) {
             logger.debug(ex1);
-            throw new CDKException("Problems with IsotopeFactory due to " + ex1.toString(), ex1);
+            throw new CDKException("Problems with IsotopeFactory due to " + ex1, ex1);
         }
     }
 
@@ -206,14 +205,14 @@ public class InductivePartialCharges implements IChargeCalculator {
             factory = AtomTypeFactory
                     .getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt", ac.getBuilder());
         }
-        IAtom target = null;
+        IAtom target;
         double core = 0;
-        double radiusTarget = 0;
+        double radiusTarget;
         target = ac.getAtom(atomPosition);
-        double partial = 0;
-        double radius = 0;
-        String symbol = null;
-        IAtomType type = null;
+        double partial;
+        double radius;
+        String symbol;
+        IAtomType type;
         try {
             symbol = ac.getAtom(atomPosition).getSymbol();
             type = factory.getAtomType(symbol);
@@ -228,9 +227,7 @@ public class InductivePartialCharges implements IChargeCalculator {
             throw new CDKException("Problems with AtomTypeFactory due to " + ex1.getMessage(), ex1);
         }
 
-        Iterator<IAtom> atoms = ac.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : ac.atoms()) {
             if (!target.equals(atom)) {
                 symbol = atom.getSymbol();
                 partial = 0;
@@ -270,17 +267,17 @@ public class InductivePartialCharges implements IChargeCalculator {
      */
     private double getAtomicChargeIncrement(IAtomContainer ac, int atomPosition, double[] ElEn, int as)
             throws CDKException {
-        IAtom[] allAtoms = null;
-        IAtom target = null;
+        IAtom[] allAtoms;
+        IAtom target;
         double incrementedCharge = 0;
-        double radiusTarget = 0;
+        double radiusTarget;
         target = ac.getAtom(atomPosition);
         //logger.debug("ATOM "+target.getSymbol()+" AT POSITION "+atomPosition);
         allAtoms = AtomContainerManipulator.getAtomArray(ac);
-        double tmp = 0;
-        double radius = 0;
-        String symbol = null;
-        IAtomType type = null;
+        double tmp;
+        double radius;
+        String symbol;
+        IAtomType type;
         try {
             symbol = target.getSymbol();
             type = factory.getAtomType(symbol);
@@ -377,8 +374,8 @@ public class InductivePartialCharges implements IChargeCalculator {
      *@return        squared distance between the 2 atoms
      */
     private double calculateSquaredDistanceBetweenTwoAtoms(IAtom atom1, IAtom atom2) {
-        double distance = 0;
-        double tmp = 0;
+        double distance;
+        double tmp;
         Point3d firstPoint = atom1.getPoint3d();
         Point3d secondPoint = atom2.getPoint3d();
         tmp = firstPoint.distance(secondPoint);

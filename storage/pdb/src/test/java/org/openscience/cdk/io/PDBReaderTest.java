@@ -138,7 +138,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
         ISimpleChemObjectReader oReader = new PDBReader(ins);
         Assert.assertNotNull(oReader);
 
-        IChemFile oChemFile = (IChemFile) oReader.read(new ChemFile());
+        IChemFile oChemFile = oReader.read(new ChemFile());
         Assert.assertNotNull(oChemFile);
         Assert.assertEquals(oChemFile.getChemSequenceCount(), 1);
 
@@ -153,7 +153,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainer container = oModel.getMoleculeSet().getAtomContainer(0);
         Assert.assertFalse(container instanceof IBioPolymer);
         Assert.assertTrue(container instanceof IAtomContainer);
-        IAtomContainer oMol = (IAtomContainer) container;
+        IAtomContainer oMol = container;
         Assert.assertNotNull(oMol);
         Assert.assertEquals(oMol.getAtomCount(), 14);
 
@@ -161,7 +161,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertNotNull(nAtom);
         Assert.assertTrue(nAtom instanceof IPDBAtom);
         IPDBAtom oAtom = (IPDBAtom) nAtom;
-        Assert.assertEquals(new String("C"), oAtom.getSymbol());
+        Assert.assertEquals("C", oAtom.getSymbol());
         Assert.assertEquals(1, oAtom.getSerial().intValue());
         Assert.assertEquals("C1", oAtom.getName());
         Assert.assertEquals("MOL", oAtom.getResName());
@@ -205,7 +205,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
         ISimpleChemObjectReader reader = new PDBReader(ins);
         Assert.assertNotNull(reader);
 
-        ChemFile chemFile = (ChemFile) reader.read(new ChemFile());
+        ChemFile chemFile = reader.read(new ChemFile());
         Assert.assertNotNull(chemFile);
         Assert.assertEquals(1, chemFile.getChemSequenceCount());
 
@@ -273,7 +273,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
         reader.getSetting("UseRebondTool").setSetting(String.valueOf(useRebond));
         reader.getSetting("UseHetDictionary").setSetting(String.valueOf(useHetAtmDict));
 
-        IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         Assert.assertNotNull(chemFile);
         return chemFile;
     }
@@ -319,7 +319,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
         ISimpleChemObjectReader reader = new PDBReader(ins);
         Assert.assertNotNull(reader);
 
-        IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         Assert.assertNotNull(chemFile);
         Assert.assertEquals(1, chemFile.getChemSequenceCount());
 
@@ -468,7 +468,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
         ISimpleChemObjectReader reader = new PDBReader(ins);
         Assert.assertNotNull(reader);
 
-        IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         Assert.assertNotNull(chemFile);
         Assert.assertEquals(1, chemFile.getChemSequenceCount());
 

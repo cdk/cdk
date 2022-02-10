@@ -34,7 +34,7 @@ public interface IGeneratorParameter<T> {
      *
      * @param value the new parameter value
      */
-    public void setValue(T value);
+    void setValue(T value);
 
     /**
      * Gets the value for this parameter. It must provide a reasonable
@@ -42,7 +42,7 @@ public interface IGeneratorParameter<T> {
      *
      * @return the current parameter value
      */
-    public T getValue();
+    T getValue();
 
     /**
      * Gets the default value for this parameter. This value is set by the
@@ -50,6 +50,6 @@ public interface IGeneratorParameter<T> {
      *
      * @return the default value for this parameter
      */
-    public T getDefault();
+    T getDefault();
 
 }

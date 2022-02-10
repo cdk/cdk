@@ -168,7 +168,7 @@ public class InChIToStructure {
         //molecule = new AtomContainer();
         molecule = builder.newInstance(IAtomContainer.class);
 
-        Map<InchiAtom, IAtom> inchiCdkAtomMap = new HashMap<InchiAtom, IAtom>();
+        Map<InchiAtom, IAtom> inchiCdkAtomMap = new HashMap<>();
 
         List<InchiAtom> atoms = input.getAtoms();
         for (int i = 0; i < atoms.size(); i++) {
@@ -209,8 +209,7 @@ public class InChIToStructure {
         }
 
         List<InchiBond> bonds = input.getBonds();
-        for (int i = 0; i < bonds.size(); i++) {
-            InchiBond iBo = bonds.get(i);
+        for (InchiBond iBo : bonds) {
             IBond cBo = builder.newInstance(IBond.class);
 
             IAtom atO = inchiCdkAtomMap.get(iBo.getStart());
@@ -265,8 +264,7 @@ public class InChIToStructure {
         }
 
         List<InchiStereo> stereos = input.getStereos();
-        for (int i = 0; i < stereos.size(); i++) {
-            InchiStereo stereo0d = stereos.get(i);
+        for (InchiStereo stereo0d : stereos) {
             if (stereo0d.getType() == InchiStereoType.Tetrahedral
                     || stereo0d.getType() == InchiStereoType.Allene) {
                 InchiAtom central = stereo0d.getCentralAtom();
@@ -373,11 +371,11 @@ public class InChIToStructure {
                 if (extended) {
                     molecule.addStereoElement(new ExtendedCisTrans(stereoBond,
                             new IBond[]{molecule.getBond(x, a),
-                                        molecule.getBond(b, y)}, config));
+                                    molecule.getBond(b, y)}, config));
                 } else {
                     molecule.addStereoElement(new DoubleBondStereochemistry(stereoBond,
                             new IBond[]{molecule.getBond(x, a),
-                                        molecule.getBond(b, y)}, config));
+                                    molecule.getBond(b, y)}, config));
                 }
             }
         }

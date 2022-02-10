@@ -35,13 +35,13 @@ public interface IDescriptorResult extends Serializable {
      * @return A string representation.
      */
     @Override
-    public String toString();
+    String toString();
 
     /**
      * Returns the length of this descriptor.
      *
      * @return the length of the array of return values.
      */
-    public int length();
+    int length();
 
 }

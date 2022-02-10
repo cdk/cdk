@@ -114,7 +114,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
     private BooleanIOSetting     indent;
     private BooleanIOSetting     xmlDeclaration;
 
-    private static ILoggingTool  logger      = LoggingToolFactory.createLoggingTool(CMLWriter.class);
+    private static final ILoggingTool  logger      = LoggingToolFactory.createLoggingTool(CMLWriter.class);
 
     private List<ICMLCustomizer> customizers = null;
 
@@ -155,7 +155,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
     }
 
     public void registerCustomizer(ICMLCustomizer customizer) {
-        if (customizers == null) customizers = new ArrayList<ICMLCustomizer>();
+        if (customizers == null) customizers = new ArrayList<>();
 
         customizers.add(customizer);
         logger.info("Loaded Customizer: ", customizer.getClass().getName());
@@ -197,16 +197,16 @@ public class CMLWriter extends DefaultChemObjectWriter {
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IAtom.class.equals(interfaces[i])) return true;
-            if (IBond.class.equals(interfaces[i])) return true;
-            if (ICrystal.class.equals(interfaces[i])) return true;
-            if (IChemModel.class.equals(interfaces[i])) return true;
-            if (IChemFile.class.equals(interfaces[i])) return true;
-            if (IChemSequence.class.equals(interfaces[i])) return true;
-            if (IAtomContainerSet.class.equals(interfaces[i])) return true;
-            if (IReactionSet.class.equals(interfaces[i])) return true;
-            if (IReaction.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IAtom.class.equals(anInterface)) return true;
+            if (IBond.class.equals(anInterface)) return true;
+            if (ICrystal.class.equals(anInterface)) return true;
+            if (IChemModel.class.equals(anInterface)) return true;
+            if (IChemFile.class.equals(anInterface)) return true;
+            if (IChemSequence.class.equals(anInterface)) return true;
+            if (IAtomContainerSet.class.equals(anInterface)) return true;
+            if (IReactionSet.class.equals(anInterface)) return true;
+            if (IReaction.class.equals(anInterface)) return true;
         }
         return false;
     }
@@ -270,7 +270,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
 
         Document doc = new Document(root);
         try {
-            Serializer serializer = null;
+            Serializer serializer;
             if (xmlDeclaration.isSet()) {
                 serializer = new Serializer(output, "ISO-8859-1");
             } else {

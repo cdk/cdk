@@ -80,7 +80,7 @@ public class FixBondOrdersToolTest extends CDKTestCase {
         molecule = fbot.kekuliseAromaticRings(molecule);
         Assert.assertNotNull(molecule);
 
-        molecule = (IAtomContainer) AtomContainerManipulator.removeHydrogens(molecule);
+        molecule = AtomContainerManipulator.removeHydrogens(molecule);
         int doubleBondCount = 0;
         for (int i = 0; i < molecule.getBondCount(); i++) {
             IBond bond = molecule.getBond(i);
@@ -101,7 +101,7 @@ public class FixBondOrdersToolTest extends CDKTestCase {
 
         molecule = fbot.kekuliseAromaticRings(molecule);
         Assert.assertNotNull(molecule);
-        molecule = (IAtomContainer) AtomContainerManipulator.removeHydrogens(molecule);
+        molecule = AtomContainerManipulator.removeHydrogens(molecule);
         int doubleBondCount = 0;
         for (int i = 0; i < molecule.getBondCount(); i++) {
             IBond bond = molecule.getBond(i);
@@ -120,7 +120,7 @@ public class FixBondOrdersToolTest extends CDKTestCase {
         molecule = fbot.kekuliseAromaticRings(molecule);
         Assert.assertNotNull(molecule);
 
-        molecule = (IAtomContainer) AtomContainerManipulator.removeHydrogens(molecule);
+        molecule = AtomContainerManipulator.removeHydrogens(molecule);
         Assert.assertEquals(34, molecule.getAtomCount());
 
         // we should have 14 double bonds
@@ -144,7 +144,7 @@ public class FixBondOrdersToolTest extends CDKTestCase {
         molecule = fbot.kekuliseAromaticRings(molecule);
         Assert.assertNotNull(molecule);
 
-        molecule = (IAtomContainer) AtomContainerManipulator.removeHydrogens(molecule);
+        molecule = AtomContainerManipulator.removeHydrogens(molecule);
         Assert.assertEquals(40, molecule.getAtomCount());
 
         // we should have 14 double bonds
@@ -203,11 +203,11 @@ public class FixBondOrdersToolTest extends CDKTestCase {
         //Assert.assertTrue(fbot.isOK(enol));
 
         // now check whether it did the right thing
-        Assert.assertEquals(Order.DOUBLE, enol.getBond(0).getOrder());;
-        Assert.assertEquals(Order.SINGLE, enol.getBond(1).getOrder());;
-        Assert.assertEquals(Order.DOUBLE, enol.getBond(2).getOrder());;
-        Assert.assertEquals(Order.SINGLE, enol.getBond(3).getOrder());;
-        Assert.assertEquals(Order.SINGLE, enol.getBond(4).getOrder());;
+        Assert.assertEquals(Order.DOUBLE, enol.getBond(0).getOrder());
+        Assert.assertEquals(Order.SINGLE, enol.getBond(1).getOrder());
+        Assert.assertEquals(Order.DOUBLE, enol.getBond(2).getOrder());
+        Assert.assertEquals(Order.SINGLE, enol.getBond(3).getOrder());
+        Assert.assertEquals(Order.SINGLE, enol.getBond(4).getOrder());
     }
 
     @Test

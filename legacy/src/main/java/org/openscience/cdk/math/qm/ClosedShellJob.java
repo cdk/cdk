@@ -39,12 +39,12 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class ClosedShellJob {
 
-    private Orbitals            orbitals;
+    private final Orbitals            orbitals;
     private Vector              E;
 
-    private static ILoggingTool log        = LoggingToolFactory.createLoggingTool(ClosedShellJob.class);
+    private static final ILoggingTool log        = LoggingToolFactory.createLoggingTool(ClosedShellJob.class);
 
-    private int                 iterations = 0;
+    private final int                 iterations = 0;
 
     public ClosedShellJob(Orbitals orbitals) {
         this.orbitals = orbitals;

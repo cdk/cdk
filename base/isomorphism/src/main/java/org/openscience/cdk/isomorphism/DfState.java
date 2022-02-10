@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
-import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 
 import java.lang.reflect.Method;
@@ -97,7 +96,7 @@ final class DfState implements Iterable<int[]> {
     }
 
     private int          sptr;
-    private StackFrame[] stack;
+    private final StackFrame[] stack;
 
     DfState(IAtomContainer query) {
 

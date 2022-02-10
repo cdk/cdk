@@ -41,7 +41,7 @@ public interface IRule {
      * @throws       CDKException if invalid number of type of parameters are passed to it
      * @see          #getParameters
      */
-    public void setParameters(Object[] params) throws CDKException;
+    void setParameters(Object[] params) throws CDKException;
 
     /**
      * Returns the current parameter values.
@@ -49,7 +49,7 @@ public interface IRule {
      * @return An array of Object containing the parameter values
      * @see    #setParameters
      * */
-    public Object[] getParameters();
+    Object[] getParameters();
 
     /**
      * Analyze the validity for the given IMolecularFormula.
@@ -61,6 +61,6 @@ public interface IRule {
      * @throws CDKException if an error occurs during the validation. See
      *                      documentation for individual rules
      */
-    public double validate(IMolecularFormula formula) throws CDKException;
+    double validate(IMolecularFormula formula) throws CDKException;
 
 }

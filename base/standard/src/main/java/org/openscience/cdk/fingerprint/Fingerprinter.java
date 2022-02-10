@@ -101,8 +101,8 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
     /** The default search depth used to create the fingerprints. */
     public final static int                  DEFAULT_SEARCH_DEPTH = 7;
 
-    private int                              size;
-    private int                              searchDepth;
+    private final int                              size;
+    private final int                              searchDepth;
     private int                              pathLimit = DEFAULT_PATH_LIMIT;
 
     private boolean                          hashPseudoAtoms = false;
@@ -110,7 +110,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
     static int                               debugCounter         = 0;
 
 
-    private static ILoggingTool              logger               = LoggingToolFactory
+    private static final ILoggingTool              logger               = LoggingToolFactory
                                                                           .createLoggingTool(Fingerprinter.class);
 
 
@@ -143,7 +143,7 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
 
     @Override
     protected List<Map.Entry<String, String>> getParameters() {
-        return Arrays.<Map.Entry<String,String>>asList(
+        return Arrays.asList(
             new SimpleImmutableEntry<>("searchDepth", Integer.toString(searchDepth)),
             new SimpleImmutableEntry<>("pathLimit", Integer.toString(pathLimit)),
             new SimpleImmutableEntry<>("hashPseudoAtoms", Boolean.toString(hashPseudoAtoms))
@@ -299,16 +299,16 @@ public class Fingerprinter extends AbstractFingerprinter implements IFingerprint
 
     private final class State {
         private int    numPaths = 0;
-        private Random rand     = new Random();
-        private BitSet fp;
+        private final Random rand     = new Random();
+        private final BitSet fp;
         private Map<String,Integer> feats;
-        private IAtomContainer mol;
-        private Set<IAtom> visited = new HashSet<>();
-        private List<IAtom> apath = new ArrayList<>();
-        private List<IBond> bpath = new ArrayList<>();
+        private final IAtomContainer mol;
+        private final Set<IAtom> visited = new HashSet<>();
+        private final List<IAtom> apath = new ArrayList<>();
+        private final List<IBond> bpath = new ArrayList<>();
         private final int maxDepth;
         private final int fpsize;
-        public StringBuilder buffer = new StringBuilder();
+        public final StringBuilder buffer = new StringBuilder();
 
         public State(IAtomContainer mol, BitSet fp, int fpsize, int maxDepth) {
             this.mol = mol;

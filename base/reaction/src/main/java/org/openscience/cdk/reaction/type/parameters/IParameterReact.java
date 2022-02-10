@@ -33,26 +33,26 @@ public interface IParameterReact {
      *
      * @param set True, if the parameter needs to take account
      */
-    public void setParameter(boolean set);
+    void setParameter(boolean set);
 
     /**
      * Get if this parameter needs to take account.
      *
      * @return True, if the parameter needs to take account
      */
-    public boolean isSetParameter();
+    boolean isSetParameter();
 
     /**
      * Set the value of the parameter.
      *
      * @param value The value of the parameter
      */
-    public void setValue(Object value);
+    void setValue(Object value);
 
     /**
      * Get the value of the parameter.
      *
      * @return The value of the parameter
      */
-    public Object getValue();
+    Object getValue();
 }

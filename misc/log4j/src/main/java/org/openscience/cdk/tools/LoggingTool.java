@@ -26,13 +26,11 @@ import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.config.ConfigurationSource;
 import org.apache.logging.log4j.core.config.Configurator;
 import org.apache.logging.log4j.core.config.xml.XmlConfiguration;
-import org.apache.logging.log4j.internal.LogManagerStatus;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringReader;
-import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -100,7 +98,7 @@ public class LoggingTool implements ILoggingTool {
 
     private Logger log4jLogger;
     private static ILoggingTool logger;
-    private String              classname;
+    private final String              classname;
 
     private int                 stackLength;                 // NOPMD
 
@@ -290,7 +288,7 @@ public class LoggingTool implements ILoggingTool {
                 if (obj == null) {
                     result.append("null");
                 } else {
-                    result.append(obj.toString());
+                    result.append(obj);
                 }
             }
             debugString(result.toString());

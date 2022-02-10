@@ -57,7 +57,7 @@ public class AtomTypeHandler extends DefaultHandler {
     private final int                 SCALAR_PIBONDCOUNT           = 13;
     private final int                 SCALAR_LONEPAIRCOUNT         = 14;
 
-    private static ILoggingTool       logger                       = LoggingToolFactory
+    private static final ILoggingTool       logger                       = LoggingToolFactory
                                                                            .createLoggingTool(AtomTypeHandler.class);
     private String                    currentChars;
     private List<IAtomType>           atomTypes;
@@ -97,7 +97,7 @@ public class AtomTypeHandler extends DefaultHandler {
     /** {@inheritDoc} */
     @Override
     public void startDocument() {
-        atomTypes = new ArrayList<IAtomType>();
+        atomTypes = new ArrayList<>();
         scalarType = SCALAR_UNSET;
         atomType = null;
     }
@@ -257,7 +257,7 @@ public class AtomTypeHandler extends DefaultHandler {
 
     /** {@inheritDoc} */
     @Override
-    public void characters(char chars[], int start, int length) {
+    public void characters(char[] chars, int start, int length) {
         logger.debug("character data");
         currentChars += new String(chars, start, length);
     }

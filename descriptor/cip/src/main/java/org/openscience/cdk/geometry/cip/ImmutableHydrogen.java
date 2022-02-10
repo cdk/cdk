@@ -27,7 +27,6 @@ import java.util.Map;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -338,7 +337,7 @@ class ImmutableHydrogen implements IAtom {
      */
     @Override
     public Integer getMassNumber() {
-        return Integer.valueOf(1);
+        return 1;
     }
 
     /**
@@ -385,7 +384,7 @@ class ImmutableHydrogen implements IAtom {
      */
     @Override
     public Integer getAtomicNumber() {
-        return Integer.valueOf(1);
+        return 1;
     }
 
     /**

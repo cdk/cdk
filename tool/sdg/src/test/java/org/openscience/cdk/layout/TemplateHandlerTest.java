@@ -51,7 +51,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class TemplateHandlerTest extends CDKTestCase {
 
     public boolean                           standAlone = false;
-    private static ILoggingTool              logger     = LoggingToolFactory
+    private static final ILoggingTool              logger     = LoggingToolFactory
                                                                 .createLoggingTool(TemplateHandlerTest.class);
 
     private static SmilesParser              sp         = null;
@@ -91,7 +91,7 @@ public class TemplateHandlerTest extends CDKTestCase {
      */
     @Test
     public void testOtherElements() throws Exception {
-        boolean itIsInThere = false;
+        boolean itIsInThere;
         TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = TestMoleculeFactory.makeSteran();
         itIsInThere = th.mapTemplates(mol);
@@ -106,7 +106,7 @@ public class TemplateHandlerTest extends CDKTestCase {
      */
     @Test
     public void testOtherBondOrder() throws Exception {
-        boolean itIsInThere = false;
+        boolean itIsInThere;
         TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = TestMoleculeFactory.makeSteran();
         itIsInThere = th.mapTemplates(mol);
@@ -119,7 +119,7 @@ public class TemplateHandlerTest extends CDKTestCase {
     @Test
     public void testAddMolecule() throws Exception {
         logger.debug("***TestAddMolecule***");
-        boolean itIsInThere = false;
+        boolean itIsInThere;
         TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = TestMoleculeFactory.makeAlphaPinene();
         sdg.setMolecule(mol);
@@ -141,7 +141,7 @@ public class TemplateHandlerTest extends CDKTestCase {
     @Test
     public void testRemoveMolecule() throws Exception {
         logger.debug("***TestRemoveMolecule***");
-        boolean itIsInThere = false;
+        boolean itIsInThere;
         TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = TestMoleculeFactory.makeAlphaPinene();
         sdg.setMolecule(mol);
@@ -177,7 +177,7 @@ public class TemplateHandlerTest extends CDKTestCase {
         ISimpleChemObjectReader molReader = new MDLReader(ins, Mode.STRICT);
 
         // Read molecule
-        IAtomContainer molecule = (IAtomContainer) molReader.read(DefaultChemObjectBuilder.getInstance().newInstance(
+        IAtomContainer molecule = molReader.read(DefaultChemObjectBuilder.getInstance().newInstance(
                 IAtomContainer.class));
 
         // Map templates

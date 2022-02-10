@@ -378,7 +378,7 @@ public final class AllRingsFinder {
 
         private final int value;
 
-        private Threshold(int value) {
+        Threshold(int value) {
             this.value = value;
         }
     }

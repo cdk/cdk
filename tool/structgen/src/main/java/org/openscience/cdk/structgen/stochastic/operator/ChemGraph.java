@@ -36,7 +36,7 @@ import org.openscience.cdk.math.RandomNumbersTool;
 public class ChemGraph {
 
     /* Number of atoms in this structure */
-    protected int           dim;
+    protected final int           dim;
     /* Number of atoms needed to form subgraph */
     protected int           numAtoms;
     protected double[][]    contab;
@@ -49,7 +49,7 @@ public class ChemGraph {
 
     public ChemGraph(IAtomContainer chrom) {
         dim = chrom.getAtomCount();
-        numAtoms = (int) (dim / 2);
+        numAtoms = dim / 2;
         contab = new double[dim][dim];
         contab = ConnectionMatrix.getMatrix(chrom);
     }
@@ -58,7 +58,7 @@ public class ChemGraph {
         //depth first search from a randomly selected atom
 
         travIndex = 0;
-        subGraph = new ArrayList<Integer>();
+        subGraph = new ArrayList<>();
         visited = new boolean[dim];
         for (int atom = 0; atom < dim; atom++)
             visited[atom] = false;
@@ -70,21 +70,21 @@ public class ChemGraph {
 
     private void recursiveDFT(int atom) {
         if ((travIndex < numAtoms) && (!visited[atom])) {
-            subGraph.add(Integer.valueOf(atom));
+            subGraph.add(atom);
             travIndex++;
             visited[atom] = true;
 
             //			for (int nextAtom = 0; nextAtom < dim; nextAtom++) //not generalized
             //				if (contab[atom][nextAtom] != 0) recursiveDFT(nextAtom);
-            List<Integer> adjSet = new ArrayList<Integer>();
+            List<Integer> adjSet = new ArrayList<>();
             for (int nextAtom = 0; nextAtom < dim; nextAtom++) {
                 if ((int) contab[atom][nextAtom] != 0) {
-                    adjSet.add(Integer.valueOf(nextAtom));
+                    adjSet.add(nextAtom);
                 }
             }
             while (adjSet.size() > 0) {
                 int adjIndex = RandomNumbersTool.randomInt(0, adjSet.size() - 1);
-                recursiveDFT(((Integer) adjSet.get(adjIndex)).intValue());
+                recursiveDFT((Integer) adjSet.get(adjIndex));
                 adjSet.remove(adjIndex);
             }
 
@@ -95,32 +95,32 @@ public class ChemGraph {
         //breadth first search from a randomly selected atom
 
         travIndex = 0;
-        subGraph = new ArrayList<Integer>();
+        subGraph = new ArrayList<>();
         visited = new boolean[dim];
         for (int atom = 0; atom < dim; atom++)
             visited[atom] = false;
         int seedAtom = RandomNumbersTool.randomInt(0, dim - 1);
 
-        List<Integer> atomQueue = new ArrayList<Integer>();
-        atomQueue.add(Integer.valueOf(seedAtom));
+        List<Integer> atomQueue = new ArrayList<>();
+        atomQueue.add(seedAtom);
         visited[seedAtom] = true;
 
         while (!atomQueue.isEmpty() && (subGraph.size() < numAtoms)) {
-            int foreAtom = ((Integer) atomQueue.get(0)).intValue();
-            subGraph.add(Integer.valueOf(foreAtom));
+            int foreAtom = (Integer) atomQueue.get(0);
+            subGraph.add(foreAtom);
             atomQueue.remove(0);
             travIndex++;
 
-            List<Integer> adjSet = new ArrayList<Integer>();
+            List<Integer> adjSet = new ArrayList<>();
             for (int nextAtom = 0; nextAtom < dim; nextAtom++) {
                 if (((int) contab[foreAtom][nextAtom] != 0) && (!visited[nextAtom])) {
-                    adjSet.add(Integer.valueOf(nextAtom));
+                    adjSet.add(nextAtom);
                 }
             }
             while (adjSet.size() > 0) {
                 int adjIndex = RandomNumbersTool.randomInt(0, adjSet.size() - 1);
-                atomQueue.add((Integer) adjSet.get(adjIndex));
-                visited[((Integer) adjSet.get(adjIndex)).intValue()] = true;
+                atomQueue.add(adjSet.get(adjIndex));
+                visited[(Integer) adjSet.get(adjIndex)] = true;
                 adjSet.remove(adjIndex);
             }
 

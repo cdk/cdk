@@ -26,7 +26,7 @@ public class DistanceMomentTest extends CDKTestCase {
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-        return (IAtomContainer) containersList.get(0);
+        return containersList.get(0);
     }
 
     @Test

@@ -34,7 +34,7 @@ public class DebugPDBMonomer extends PDBMonomer implements IPDBMonomer {
 
     private static final long serialVersionUID = -5156111560946745699L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugAtomContainer.class);
+    final ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugAtomContainer.class);
 
     /** {@inheritDoc} */
     @Override

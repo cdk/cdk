@@ -556,22 +556,21 @@ public final class MDLV3000Writer extends DefaultChemObjectWriter {
         // first, this sort is good for three levels of nesting. Not perfect
         // but really tools should be able to handle output of order parents
         // when reading (we do).
-        Collections.sort(sgroups,
-                         new Comparator<Sgroup>() {
-                             @Override
-                             public int compare(Sgroup o1, Sgroup o2) {
-                                 // empty parents come first
-                                 int cmp = -Boolean.compare(o1.getParents().isEmpty(), o2.getParents().isEmpty());
-                                 if (cmp != 0 || o1.getParents().isEmpty()) return cmp;
-                                 // non-empty parents, if one contains the other we have an ordering
-                                 if (o1.getParents().contains(o2))
-                                     return +1;
-                                 else if (o2.getParents().contains(o1))
-                                     return -1;
-                                 else
-                                     return 0;
-                             }
-                         });
+        sgroups.sort(new Comparator<Sgroup>() {
+            @Override
+            public int compare(Sgroup o1, Sgroup o2) {
+                // empty parents come first
+                int cmp = -Boolean.compare(o1.getParents().isEmpty(), o2.getParents().isEmpty());
+                if (cmp != 0 || o1.getParents().isEmpty()) return cmp;
+                // non-empty parents, if one contains the other we have an ordering
+                if (o1.getParents().contains(o2))
+                    return +1;
+                else if (o2.getParents().contains(o1))
+                    return -1;
+                else
+                    return 0;
+            }
+        });
 
         int sgroupIdx = 0;
         for (Sgroup sgroup : sgroups) {

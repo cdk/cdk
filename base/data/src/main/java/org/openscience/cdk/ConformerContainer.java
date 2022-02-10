@@ -61,7 +61,7 @@ public class ConformerContainer implements List<IAtomContainer> {
 
     private IAtomContainer  atomContainer = null;
     private String          title         = null;
-    private List<Point3d[]> coordinates;
+    private final List<Point3d[]> coordinates;
 
     private Point3d[] getCoordinateList(IAtomContainer atomContainer) {
 
@@ -75,7 +75,7 @@ public class ConformerContainer implements List<IAtomContainer> {
     }
 
     public ConformerContainer() {
-        coordinates = new ArrayList<Point3d[]>();
+        coordinates = new ArrayList<>();
     }
 
     /**
@@ -93,8 +93,8 @@ public class ConformerContainer implements List<IAtomContainer> {
      */
     public ConformerContainer(IAtomContainer atomContainer) {
         this.atomContainer = atomContainer;
-        title = (String) atomContainer.getTitle();
-        coordinates = new ArrayList<Point3d[]>();
+        title = atomContainer.getTitle();
+        coordinates = new ArrayList<>();
         coordinates.add(getCoordinateList(atomContainer));
     }
 
@@ -119,7 +119,7 @@ public class ConformerContainer implements List<IAtomContainer> {
         }
 
         this.atomContainer = atomContainers[0];
-        coordinates = new ArrayList<Point3d[]>();
+        coordinates = new ArrayList<>();
         for (IAtomContainer container : atomContainers) {
             coordinates.add(getCoordinateList(container));
         }
@@ -199,7 +199,7 @@ public class ConformerContainer implements List<IAtomContainer> {
         int index = 0;
         for (Point3d[] coords : coordinates) {
             try {
-                IAtomContainer conf = (IAtomContainer) atomContainer.clone();
+                IAtomContainer conf = atomContainer.clone();
                 for (int i = 0; i < coords.length; i++) {
                     IAtom atom = conf.getAtom(i);
                     atom.setPoint3d(coords[i]);
@@ -235,7 +235,7 @@ public class ConformerContainer implements List<IAtomContainer> {
     public boolean add(IAtomContainer atomContainer) {
         if (this.atomContainer == null) {
             this.atomContainer = atomContainer;
-            title = (String) atomContainer.getTitle();
+            title = atomContainer.getTitle();
         }
         if (title == null) {
             throw new IllegalArgumentException("At least one of the input molecules does not have a title");

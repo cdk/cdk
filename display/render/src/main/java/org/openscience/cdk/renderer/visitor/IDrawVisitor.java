@@ -36,13 +36,13 @@ public interface IDrawVisitor extends IRenderingVisitor {
      *
      * @param fontManager the {@link IFontManager} to be used
      */
-    public void setFontManager(IFontManager fontManager);
+    void setFontManager(IFontManager fontManager);
 
     /**
      * Sets the {@link RendererModel} this {@link IDrawVisitor} should use.
      *
      * @param rendererModel the {@link RendererModel} to be used
      */
-    public void setRendererModel(RendererModel rendererModel);
+    void setRendererModel(RendererModel rendererModel);
 
 }

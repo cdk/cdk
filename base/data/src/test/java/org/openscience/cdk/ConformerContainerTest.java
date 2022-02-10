@@ -21,10 +21,10 @@ public class ConformerContainerTest extends CDKTestCase {
     private IAtomContainer   base;
     private IAtomContainer[] confs;
 
-    private static int       natom  = 10;
-    private static int       nconfs = 20;
+    private static final int       natom  = 10;
+    private static final int       nconfs = 20;
 
-    private static Random    rnd    = new Random();
+    private static final Random    rnd    = new Random();
 
     private static IAtomContainer getBaseAtomContainer(int natom, String title) {
         IAtomContainer container = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
@@ -59,7 +59,7 @@ public class ConformerContainerTest extends CDKTestCase {
                 p.z = rnd.nextDouble();
                 base.getAtom(j).setPoint3d(p);
             }
-            ret[i] = (IAtomContainer) base.clone();
+            ret[i] = base.clone();
         }
         return ret;
     }

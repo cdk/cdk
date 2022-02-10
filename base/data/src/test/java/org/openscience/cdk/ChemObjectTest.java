@@ -27,7 +27,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.test.interfaces.AbstractChemObjectTest;
-import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 
 /**
  * TestCase for the IChemObject class.
@@ -40,13 +39,7 @@ public class ChemObjectTest extends AbstractChemObjectTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new ChemObject();
-            }
-        });
+        setTestObjectBuilder(ChemObject::new);
     }
 
     @Test
@@ -66,8 +59,8 @@ public class ChemObjectTest extends AbstractChemObjectTest {
     public void compare() {
         ChemObject co1 = new ChemObject();
         ChemObject co2 = new ChemObject();
-        co1.setID(new String("a1"));
-        co2.setID(new String("a1"));
+        co1.setID("a1");
+        co2.setID("a1");
         Assert.assertTrue(co1.compare(co2));
     }
 
@@ -75,8 +68,8 @@ public class ChemObjectTest extends AbstractChemObjectTest {
     public void compareDifferent() {
         ChemObject co1 = new ChemObject();
         ChemObject co2 = new ChemObject();
-        co1.setID(new String("a1"));
-        co2.setID(new String("a2"));
+        co1.setID("a1");
+        co2.setID("a2");
         Assert.assertFalse(co1.compare(co2));
     }
 }

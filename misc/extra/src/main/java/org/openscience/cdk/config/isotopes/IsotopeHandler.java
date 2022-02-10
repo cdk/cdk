@@ -50,7 +50,7 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class IsotopeHandler extends DefaultHandler {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(IsotopeHandler.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(IsotopeHandler.class);
     private String              currentChars;
     private List<IIsotope>      isotopes;
 
@@ -58,7 +58,7 @@ public class IsotopeHandler extends DefaultHandler {
     private String              currentElement;
     private String              dictRef;
 
-    private IChemObjectBuilder  builder;
+    private final IChemObjectBuilder  builder;
 
     /**
      * Constructs an IsotopeHandler used by the IsotopeReader.
@@ -83,7 +83,7 @@ public class IsotopeHandler extends DefaultHandler {
     /** {@inheritDoc} */
     @Override
     public void startDocument() {
-        isotopes = new ArrayList<IIsotope>();
+        isotopes = new ArrayList<>();
     }
 
     /** {@inheritDoc} */
@@ -135,7 +135,7 @@ public class IsotopeHandler extends DefaultHandler {
 
     /** {@inheritDoc} */
     @Override
-    public void characters(char chars[], int start, int length) {
+    public void characters(char[] chars, int start, int length) {
         currentChars += new String(chars, start, length);
     }
 

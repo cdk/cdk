@@ -43,7 +43,7 @@ public class InverseSymbolSetQueryAtom extends QueryAtom implements IQueryAtom {
 
     private static final long serialVersionUID = -6570190504347822438L;
 
-    private Set<String>       symbols          = new HashSet<String>();
+    private final Set<String>       symbols          = new HashSet<>();
 
     /**
      *  Constructor for the InverseSymbolSetQueryAtom object
@@ -112,7 +112,7 @@ public class InverseSymbolSetQueryAtom extends QueryAtom implements IQueryAtom {
         StringBuilder s = new StringBuilder();
         s.append("InverseSymbolSetQueryAtom(");
         s.append(this.hashCode() + ", ");
-        s.append(symbols.toString());
+        s.append(symbols);
         s.append(')');
         return s.toString();
     }

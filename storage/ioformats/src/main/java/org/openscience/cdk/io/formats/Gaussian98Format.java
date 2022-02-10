@@ -74,7 +74,7 @@ public class Gaussian98Format extends SimpleChemFormatMatcher implements IChemFo
     /** {@inheritDoc} */
     @Override
     public boolean matches(int lineNumber, String line) {
-        if (line.indexOf("Gaussian(R) 98") >= 0 || line.indexOf("Gaussian 98") >= 0) {
+        if (line.contains("Gaussian(R) 98") || line.contains("Gaussian 98")) {
             return true;
         }
         return false;

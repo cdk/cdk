@@ -24,8 +24,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.test.interfaces.AbstractChemModelTest;
 import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link DebugChemModel}.
@@ -36,13 +34,7 @@ public class DebugChemModelTest extends AbstractChemModelTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new DebugChemModel();
-            }
-        });
+        setTestObjectBuilder(DebugChemModel::new);
     }
 
     @Test

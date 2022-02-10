@@ -66,8 +66,8 @@ import java.util.StringTokenizer;
  */
 public class MDLRXNV2000Reader extends DefaultChemObjectReader {
 
-    BufferedReader              input  = null;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNV2000Reader.class);
+    BufferedReader              input;
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNV2000Reader.class);
 
     /**
      * Constructs a new MDLReader that can read Molecule from a given Reader.
@@ -124,10 +124,10 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
         if (IChemModel.class.equals(classObject)) return true;
         if (IReaction.class.equals(classObject)) return true;
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IChemModel.class.equals(interfaces[i])) return true;
-            if (IChemFile.class.equals(interfaces[i])) return true;
-            if (IReaction.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IChemModel.class.equals(anInterface)) return true;
+            if (IChemFile.class.equals(anInterface)) return true;
+            if (IReaction.class.equals(anInterface)) return true;
         }
         Class superClass = classObject.getSuperclass();
         if (superClass != null) return this.accepts(superClass);
@@ -161,7 +161,7 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
         } else if (object instanceof IChemFile) {
             IChemFile chemFile = object.getBuilder().newInstance(IChemFile.class);
             IChemSequence sequence = object.getBuilder().newInstance(IChemSequence.class);
-            sequence.addChemModel((IChemModel) read(object.getBuilder().newInstance(IChemModel.class)));
+            sequence.addChemModel(read(object.getBuilder().newInstance(IChemModel.class)));
             chemFile.addChemSequence(sequence);
             return (T) chemFile;
         } else {
@@ -200,20 +200,20 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
             throw new CDKException("Error while reading header of RXN file", exception);
         }
 
-        int numReactans = 0;
-        int numProducts = 0;
-        int agentCount = 0;
+        int numReactans;
+        int numProducts;
+        int agentCount;
         try {
             String countsLine = input.readLine();
             /*
              * this line contains the number of reactants and products
              */
             StringTokenizer tokenizer = new StringTokenizer(countsLine);
-            numReactans = Integer.valueOf(tokenizer.nextToken());
+            numReactans = Integer.parseInt(tokenizer.nextToken());
             logger.info("Expecting " + numReactans + " reactants in file");
-            numProducts = Integer.valueOf(tokenizer.nextToken());
+            numProducts = Integer.parseInt(tokenizer.nextToken());
             if (tokenizer.hasMoreTokens()) {
-                agentCount = Integer.valueOf(tokenizer.nextToken());
+                agentCount = Integer.parseInt(tokenizer.nextToken());
                 // ChemAxon extension, technically BIOVIA now support this but
                 // not documented yet
                 if (mode == Mode.STRICT && agentCount > 0)

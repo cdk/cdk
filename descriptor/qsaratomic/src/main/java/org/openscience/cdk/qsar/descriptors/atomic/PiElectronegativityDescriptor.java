@@ -66,7 +66,7 @@ public class PiElectronegativityDescriptor extends AbstractAtomicDescriptor impl
     private boolean               lpeChecker      = true;
 
     private static final String[] NAMES = {"elecPiA"};
-    private PiElectronegativity   electronegativity;
+    private final PiElectronegativity   electronegativity;
 
     /**
      *  Constructor for the PiElectronegativityDescriptor object
@@ -147,17 +147,14 @@ public class PiElectronegativityDescriptor extends AbstractAtomicDescriptor impl
         IAtomContainer clone;
         IAtom localAtom;
         try {
-            clone = (IAtomContainer) atomContainer.clone();
+            clone = atomContainer.clone();
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(clone);
             if (lpeChecker) {
                 LonePairElectronChecker lpcheck = new LonePairElectronChecker();
                 lpcheck.saturate(atomContainer);
             }
             localAtom = clone.getAtom(atomContainer.indexOf(atom));
-        } catch (CloneNotSupportedException e) {
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                    Double.NaN), NAMES, null);
-        } catch (CDKException e) {
+        } catch (CloneNotSupportedException | CDKException e) {
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
                     Double.NaN), NAMES, null);
         }

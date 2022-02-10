@@ -37,7 +37,7 @@ public class DebugPDBPolymer extends PDBPolymer implements IBioPolymer {
 
     private static final long serialVersionUID = -8485559594520919850L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugAtomContainer.class);
+    final ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugAtomContainer.class);
 
     /** {@inheritDoc} */
     @Override

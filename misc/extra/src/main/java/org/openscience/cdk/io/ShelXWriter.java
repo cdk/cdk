@@ -26,13 +26,11 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -116,8 +114,8 @@ public class ShelXWriter extends DefaultChemObjectWriter {
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (ICrystal.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (ICrystal.class.equals(anInterface)) return true;
         }
         return false;
     }
@@ -134,7 +132,7 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         } else {
             throw new CDKException("Only Crystal objects can be read.");
         }
-    };
+    }
 
     // Private procedures
 
@@ -179,9 +177,7 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         String elemCounts = "";
         IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula(crystal);
         List<IElement> asortedElements = MolecularFormulaManipulator.elements(formula);
-        Iterator<IElement> elements = asortedElements.iterator();
-        while (elements.hasNext()) {
-            IElement element = elements.next();
+        for (IElement element : asortedElements) {
             String symbol = element.getSymbol();
             elemNames += symbol + "    ".substring(symbol.length());
             String countS = Integer.valueOf(MolecularFormulaManipulator.getElementCount(formula, element)).toString();
@@ -222,7 +218,7 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         try {
             writer.write(s);
         } catch (IOException e) {
-            System.err.println("CMLWriter IOException while printing \"" + s + "\":" + e.toString());
+            System.err.println("CMLWriter IOException while printing \"" + s + "\":" + e);
         }
     }
 
@@ -231,7 +227,7 @@ public class ShelXWriter extends DefaultChemObjectWriter {
             writer.write(s);
             writer.write('\n');
         } catch (IOException e) {
-            System.err.println("CMLWriter IOException while printing \"" + s + "\":" + e.toString());
+            System.err.println("CMLWriter IOException while printing \"" + s + "\":" + e);
         }
     }
 

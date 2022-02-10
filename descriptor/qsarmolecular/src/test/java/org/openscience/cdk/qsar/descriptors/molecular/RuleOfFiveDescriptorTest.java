@@ -45,7 +45,7 @@ public class RuleOfFiveDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testRuleOfFiveDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testRuleOfFiveDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

@@ -69,7 +69,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
         Assert.assertNotNull("The IChemObjectIO.getFormat method returned null.", format);
     }
 
-    private static IChemObject[] acceptableNNChemObjects = {new ChemFile(), new ChemModel(), new AtomContainer(),
+    private static final IChemObject[] acceptableNNChemObjects = {new ChemFile(), new ChemModel(), new AtomContainer(),
             new Reaction()                               };
 
     @Test
@@ -85,7 +85,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
                 oneAccepted);
     }
 
-    private static IChemObject[] acceptableDebugChemObjects = {new DebugChemFile(), new DebugChemModel(),
+    private static final IChemObject[] acceptableDebugChemObjects = {new DebugChemFile(), new DebugChemModel(),
             new DebugAtomContainer(), new DebugReaction()   };
 
     @Test
@@ -103,7 +103,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
 
     /** static objects, shared between tests - difficult to locate bugs. */
     @Deprecated
-    protected static IChemObject[] acceptableChemObjects = {new ChemFile(), new ChemModel(), new AtomContainer(),
+    protected static final IChemObject[] acceptableChemObjects = {new ChemFile(), new ChemModel(), new AtomContainer(),
             new Reaction(), new RGroupQuery(DefaultChemObjectBuilder.getInstance())};
 
     protected static IChemObject[] acceptableChemObjects() {
@@ -125,7 +125,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
     }
 
     @SuppressWarnings("rawtypes")
-    protected static Class[] acceptableChemObjectClasses = {IChemFile.class, IChemModel.class, IAtomContainer.class,
+    protected static final Class[] acceptableChemObjectClasses = {IChemFile.class, IChemModel.class, IAtomContainer.class,
             IReaction.class, IRGroupQuery.class          };
 
     /**

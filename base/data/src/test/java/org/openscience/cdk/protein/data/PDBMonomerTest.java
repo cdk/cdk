@@ -23,9 +23,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.test.interfaces.AbstractPDBMonomerTest;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IPDBMonomer;
-import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the PDBMonomer class.
@@ -38,13 +36,7 @@ public class PDBMonomerTest extends AbstractPDBMonomerTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new PDBMonomer();
-            }
-        });
+        setTestObjectBuilder(PDBMonomer::new);
     }
 
     @Test

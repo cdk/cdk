@@ -46,14 +46,14 @@ public class PDBStrand extends Strand {
 
     private static final long serialVersionUID = 8278569309787734236L;
 
-    List<String>              sequentialListOfMonomers;
+    final List<String>              sequentialListOfMonomers;
 
     /**
      * Constructs a new Polymer to store the Monomers.
      */
     public PDBStrand() {
         super();
-        sequentialListOfMonomers = new ArrayList<String>();
+        sequentialListOfMonomers = new ArrayList<>();
     }
 
     /**
@@ -77,7 +77,7 @@ public class PDBStrand extends Strand {
      */
     public Collection<String> getMonomerNamesInSequentialOrder() {
         // don't return the original
-        return new ArrayList<String>(sequentialListOfMonomers);
+        return new ArrayList<>(sequentialListOfMonomers);
     }
 
     @Override

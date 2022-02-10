@@ -34,7 +34,7 @@ public interface IRingSet extends IAtomContainerSet {
      * @param   bond  The bond to be checked
      * @return   A vector of all rings that this bond is part of
      */
-    public IRingSet getRings(IBond bond);
+    IRingSet getRings(IBond bond);
 
     /**
      * Returns a vector of all rings that this atom is part of.
@@ -42,7 +42,7 @@ public interface IRingSet extends IAtomContainerSet {
      * @param   atom  The atom to be checked
      * @return   A vector of all rings that this bond is part of
      */
-    public IRingSet getRings(IAtom atom);
+    IRingSet getRings(IAtom atom);
 
     /**
      * Returns all the rings in the RingSet that share
@@ -51,7 +51,7 @@ public interface IRingSet extends IAtomContainerSet {
      * @param   ring  A ring with which all return rings must share one or more atoms
      * @return  All the rings that share one or more atoms with a given ring.
      */
-    public IRingSet getConnectedRings(IRing ring);
+    IRingSet getConnectedRings(IRing ring);
 
     /**
      * Adds all rings of another RingSet if they are not allready part of this ring set.
@@ -60,7 +60,7 @@ public interface IRingSet extends IAtomContainerSet {
      *
      * @param   ringSet  the ring set to be united with this one.
      */
-    public void add(IRingSet ringSet);
+    void add(IRingSet ringSet);
 
     /**
      * True, if at least one of the rings in the ringset contains
@@ -69,7 +69,7 @@ public interface IRingSet extends IAtomContainerSet {
      * @param  atom IAtom to check
      * @return      true, if the ringset contains the atom
      */
-    public boolean contains(IAtom atom);
+    boolean contains(IAtom atom);
 
     /**
      * True, if this set contains the IAtomContainer.
@@ -77,7 +77,7 @@ public interface IRingSet extends IAtomContainerSet {
      * @param  container IAtomContainer to check
      * @return           true, if the ringset contains the container
      */
-    public boolean contains(IAtomContainer container);
+    boolean contains(IAtomContainer container);
 
     /**
      * Returns true if this IRingSet has no atoms.
@@ -85,5 +85,5 @@ public interface IRingSet extends IAtomContainerSet {
      * @return a boolean indicating if this ring set no atoms
      */
     @Override
-    public boolean isEmpty();
+    boolean isEmpty();
 }

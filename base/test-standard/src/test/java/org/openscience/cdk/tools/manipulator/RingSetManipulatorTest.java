@@ -237,7 +237,7 @@ public class RingSetManipulatorTest extends CDKTestCase {
 
     @Test
     public void testGetLargestRingSet_List_IRingSet() throws Exception {
-        List<IRingSet> list = new Vector<IRingSet>();
+        List<IRingSet> list = new Vector<>();
         list.add(ringset);
         IAtomContainer mol = TestMoleculeFactory.makeBiphenyl();
 

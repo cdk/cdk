@@ -34,7 +34,7 @@ public interface IReactionScheme extends IReactionSet {
      *
      * @param reactScheme The IReactionScheme to include
      */
-    public void add(IReactionScheme reactScheme);
+    void add(IReactionScheme reactScheme);
 
     /**
      *  Returns an Iterable for looping over all IMolecularScheme
@@ -42,26 +42,26 @@ public interface IReactionScheme extends IReactionSet {
      *
      * @return    An Iterable with the IMolecularScheme in this ReactionScheme
      */
-    public Iterable<IReactionScheme> reactionSchemes();
+    Iterable<IReactionScheme> reactionSchemes();
 
     /**
      * Returns the number of ReactionScheme in this Scheme.
      *
      * @return     The number of ReactionScheme in this Scheme
      */
-    public int getReactionSchemeCount();
+    int getReactionSchemeCount();
 
     /**
      * Removes all IReactionScheme from this chemObject.
      */
-    public void removeAllReactionSchemes();
+    void removeAllReactionSchemes();
 
     /**
      * Removes an IReactionScheme from this chemObject.
      *
      * @param  scheme  The IReactionScheme to be removed from this chemObject
      */
-    public void removeReactionScheme(IReactionScheme scheme);
+    void removeReactionScheme(IReactionScheme scheme);
 
     /**
      * Clones this IReactionScheme object and its content.
@@ -69,5 +69,5 @@ public interface IReactionScheme extends IReactionSet {
      * @return    The cloned object
      */
     @Override
-    public Object clone() throws CloneNotSupportedException;
+    Object clone() throws CloneNotSupportedException;
 }

@@ -36,7 +36,6 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.libio.cml.Convertor;
-import org.openscience.cdk.libio.cml.QSARCustomizer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -54,7 +53,7 @@ import java.io.StringWriter;
  */
 public class QSARCMLRoundTripTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(QSARCMLRoundTripTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(QSARCMLRoundTripTest.class);
 
     private static Convertor    convertor;
 
@@ -67,15 +66,15 @@ public class QSARCMLRoundTripTest {
 
     // See also CMLRoundTripTool
     public static IAtomContainer roundTripMolecule(Convertor convertor, IAtomContainer mol) throws Exception {
-        String cmlString = "<!-- failed -->";
+        String cmlString;
         Element cmlDOM = convertor.cdkAtomContainerToCMLMolecule(mol);
         cmlString = cmlDOM.toXML();
 
-        IAtomContainer roundTrippedMol = null;
+        IAtomContainer roundTrippedMol;
         logger.debug("CML string: ", cmlString);
         CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
 
-        IChemFile file = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile file = reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
         Assert.assertNotNull(file);
         Assert.assertEquals(1, file.getChemSequenceCount());
@@ -98,7 +97,7 @@ public class QSARCMLRoundTripTest {
         IAtomContainer molecule = TestMoleculeFactory.makeBenzene();
         IMolecularDescriptor descriptor = new WeightDescriptor();
 
-        DescriptorValue originalValue = null;
+        DescriptorValue originalValue;
         originalValue = descriptor.calculate(molecule);
         molecule.setProperty(originalValue.getSpecification(), originalValue);
         IAtomContainer roundTrippedMol = roundTripMolecule(convertor, molecule);
@@ -138,8 +137,8 @@ public class QSARCMLRoundTripTest {
         logger.debug("****************************** testQSARCustomization()");
         logger.debug(cmlContent);
         logger.debug("******************************");
-        Assert.assertTrue(cmlContent.indexOf("<property") != -1 && cmlContent.indexOf("xmlns:qsar") != -1);
-        Assert.assertTrue(cmlContent.indexOf("#weight\"") != -1);
+        Assert.assertTrue(cmlContent.contains("<property") && cmlContent.contains("xmlns:qsar"));
+        Assert.assertTrue(cmlContent.contains("#weight\""));
     }
 
 }

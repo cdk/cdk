@@ -41,7 +41,7 @@ public class VdWRadiusDescriptorTest extends AtomicDescriptorTest {
     }
 
     @Test
-    public void testVdWRadiusDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testVdWRadiusDescriptor() throws java.lang.Exception {
         double[] testResult = {1.7};
         IAtomicDescriptor descriptor = new VdWRadiusDescriptor();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

@@ -118,7 +118,7 @@ public class SMSDTest {
         try {
             SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
             sp.kekulise(false);
-            IAtomContainer target = null;
+            IAtomContainer target;
             target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(target);
             IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");

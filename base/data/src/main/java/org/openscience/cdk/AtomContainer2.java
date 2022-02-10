@@ -478,7 +478,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
         for (int i = 0; i < this.stereo.size(); i++) {
             IStereoElement se = stereo.get(i);
             if (se.contains(org)) {
-                Map<IAtom, IAtom> amap = Collections.<IAtom,IAtom>singletonMap(org, rep);
+                Map<IAtom, IAtom> amap = Collections.singletonMap(org, rep);
                 Map<IBond, IBond> bmap = Collections.emptyMap();
                 this.stereo.set(i, se.map(amap, bmap));
             }
@@ -545,13 +545,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
      */
     @Override
     public Iterable<IAtom> atoms() {
-        return new Iterable<IAtom>() {
-
-            @Override
-            public Iterator<IAtom> iterator() {
-                return new AtomIterator();
-            }
-        };
+        return AtomIterator::new;
     }
 
     /**
@@ -559,13 +553,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
      */
     @Override
     public Iterable<IBond> bonds() {
-        return new Iterable<IBond>() {
-
-            @Override
-            public Iterator<IBond> iterator() {
-                return new BondIterator();
-            }
-        };
+        return BondIterator::new;
     }
 
     /**
@@ -573,13 +561,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
      */
     @Override
     public Iterable<ILonePair> lonePairs() {
-        return new Iterable<ILonePair>() {
-
-            @Override
-            public Iterator<ILonePair> iterator() {
-                return new LonePairIterator();
-            }
-        };
+        return LonePairIterator::new;
     }
 
     /**
@@ -587,12 +569,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
      */
     @Override
     public Iterable<ISingleElectron> singleElectrons() {
-        return new Iterable<ISingleElectron>() {
-            @Override
-            public Iterator<ISingleElectron> iterator() {
-                return new SingleElectronIterator();
-            }
-        };
+        return SingleElectronIterator::new;
     }
 
     /**
@@ -600,12 +577,7 @@ final class AtomContainer2 extends ChemObject implements IAtomContainer {
      */
     @Override
     public Iterable<IElectronContainer> electronContainers() {
-        return new Iterable<IElectronContainer>() {
-            @Override
-            public Iterator<IElectronContainer> iterator() {
-                return new ElectronContainerIterator();
-            }
-        };
+        return ElectronContainerIterator::new;
     }
 
     /**

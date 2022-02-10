@@ -140,7 +140,7 @@ public class CPSADescriptor extends AbstractMolecularDescriptor implements IMole
             "DPSA-2", "DPSA-3", "FPSA-1", "FPSA-2", "FPSA-3", "FNSA-1", "FNSA-2", "FNSA-3", "WPSA-1", "WPSA-2",
             "WPSA-3", "WNSA-1", "WNSA-2", "WNSA-3", "RPCG", "RNCG", "RPCS", "RNCS", "THSA", "TPSA", "RHSA", "RPSA"};
 
-    private static ILoggingTool   logger = LoggingToolFactory.createLoggingTool(CPSADescriptor.class);
+    private static final ILoggingTool   logger = LoggingToolFactory.createLoggingTool(CPSADescriptor.class);
 
     public CPSADescriptor() {}
 
@@ -221,7 +221,7 @@ public class CPSADescriptor extends AbstractMolecularDescriptor implements IMole
 
         IAtomContainer container;
         try {
-            container = (IAtomContainer) atomContainer.clone();
+            container = atomContainer.clone();
         } catch (CloneNotSupportedException e) {
             logger.debug("Error during clone");
             for (int i = 0; i < 29; i++)

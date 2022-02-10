@@ -25,7 +25,6 @@ package org.openscience.cdk.fingerprint;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import org.openscience.cdk.interfaces.IAtom;
@@ -51,11 +50,11 @@ public class SimpleAtomCanonicalizer {
      */
     public Collection<IAtom> canonicalizeAtoms(IAtomContainer container) {
 
-        List<IAtom> canonicalizedVertexList = new ArrayList<IAtom>();
+        List<IAtom> canonicalizedVertexList = new ArrayList<>();
         for (IAtom atom : container.atoms()) {
             canonicalizedVertexList.add(atom);
         }
-        Collections.sort(canonicalizedVertexList, new SimpleAtomComparator());
+        canonicalizedVertexList.sort(new SimpleAtomComparator());
         return canonicalizedVertexList;
     }
 }

@@ -52,7 +52,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class Mol2Writer extends DefaultChemObjectWriter {
 
     private BufferedWriter       writer;
-    private static ILoggingTool  logger = LoggingToolFactory.createLoggingTool(Mol2Writer.class);
+    private static final ILoggingTool  logger = LoggingToolFactory.createLoggingTool(Mol2Writer.class);
     private SybylAtomTypeMatcher matcher;
 
     public Mol2Writer() {

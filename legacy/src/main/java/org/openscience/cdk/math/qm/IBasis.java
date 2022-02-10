@@ -39,49 +39,49 @@ public interface IBasis {
     /**
      * Gets the number of base vectors
      */
-    public int getSize();
+    int getSize();
 
     /**
      * Gets the dimension of the volume, which describes the base.
      */
-    public double getMinX();
+    double getMinX();
 
     /**
      * Gets the dimension of the volume, which describes the base.
      */
-    public double getMaxX();
+    double getMaxX();
 
     /**
      * Gets the dimension of the volume, which describes the base.
      */
-    public double getMinY();
+    double getMinY();
 
     /**
      * Gets the dimension of the volume, which describes the base.
      */
-    public double getMaxY();
+    double getMaxY();
 
     /**
      * Gets the dimension of the volume, which describes the base.
      */
-    public double getMinZ();
+    double getMinZ();
 
     /**
      * Gets the dimension of the volume, which describes the base.
      */
-    public double getMaxZ();
+    double getMaxZ();
 
     /**
      * Calculates the function value an (x,y,z).
      * @param index The number of the base
      */
-    public double getValue(int index, double x, double y, double z);
+    double getValue(int index, double x, double y, double z);
 
     /**
      * Calculates the function values.
      * @param index The number of the base
      */
-    public Vector getValues(int index, Matrix x);
+    Vector getValues(int index, Matrix x);
 
     /**
      * Calculate the overlap integral S = &lt;phi_i|phi_j&gt;.
@@ -89,7 +89,7 @@ public interface IBasis {
      * @param i Index of the first base
      * @param j Index of the second base
      */
-    public double calcS(int i, int j);
+    double calcS(int i, int j);
 
     /**
      * Calculates the impulse J = -&lt;d/dr chi_i | d/dr chi_j&gt;.
@@ -97,7 +97,7 @@ public interface IBasis {
      * @param i Index of the first base
      * @param j Index of the second base
      */
-    public double calcJ(int i, int j);
+    double calcJ(int i, int j);
 
     /**
      * Calculates the potential V = &lt;chi_i | 1/r | chi_j&gt;.
@@ -105,7 +105,7 @@ public interface IBasis {
      * @param i Index of the first base
      * @param j Index of the second base
      */
-    public double calcV(int i, int j);
+    double calcV(int i, int j);
 
     /**
      * Calculates a two eletron fout center integral
@@ -116,5 +116,5 @@ public interface IBasis {
      * @param k Index of the third base
      * @param l Index of the fourth base
      */
-    public double calcI(int i, int j, int k, int l);
+    double calcI(int i, int j, int k, int l);
 }

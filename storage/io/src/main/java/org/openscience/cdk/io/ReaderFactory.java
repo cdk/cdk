@@ -51,9 +51,9 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class ReaderFactory {
 
-    private static ILoggingTool logger        = LoggingToolFactory.createLoggingTool(ReaderFactory.class);
-    private FormatFactory       formatFactory = null;
-    private int                 headerLength  = 8192;
+    private static final ILoggingTool logger        = LoggingToolFactory.createLoggingTool(ReaderFactory.class);
+    private FormatFactory       formatFactory;
+    private int                 headerLength;
 
     /**
      * Constructs a ReaderFactory which tries to detect the format in the
@@ -95,8 +95,8 @@ public class ReaderFactory {
      * @see #createReader(Reader)
      */
     public ISimpleChemObjectReader createReader(InputStream input) throws IOException {
-        IChemFormat format = null;
-        ISimpleChemObjectReader reader = null;
+        IChemFormat format;
+        ISimpleChemObjectReader reader;
         if (input instanceof GZIPInputStream) {
             format = formatFactory.guessFormat(input);
             reader = createReader(format);
@@ -113,7 +113,7 @@ public class ReaderFactory {
             BufferedInputStream bistream = new BufferedInputStream(input, headerLength);
             InputStream istreamToRead = bistream; // if gzip test fails, then take default
             bistream.mark(5);
-            int countRead = 0;
+            int countRead;
             byte[] abMagic = new byte[4];
             countRead = bistream.read(abMagic, 0, 4);
             bistream.reset();
@@ -178,7 +178,7 @@ public class ReaderFactory {
         if (!(input instanceof BufferedReader)) {
             input = new BufferedReader(input);
         }
-        IChemFormat chemFormat = formatFactory.guessFormat((BufferedReader) input);
+        IChemFormat chemFormat = formatFactory.guessFormat(input);
         ISimpleChemObjectReader coReader = createReader(chemFormat);
         try {
             coReader.setReader(input);

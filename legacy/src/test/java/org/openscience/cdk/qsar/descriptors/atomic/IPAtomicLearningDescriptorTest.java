@@ -46,9 +46,9 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class IPAtomicLearningDescriptorTest extends CDKTestCase {
 
     IPAtomicLearningDescriptor      descriptor;
-    private SmilesParser            sp      = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-    private IChemObjectBuilder      builder = SilentChemObjectBuilder.getInstance();
-    private LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+    private final SmilesParser            sp      = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+    private final IChemObjectBuilder      builder = SilentChemObjectBuilder.getInstance();
+    private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
     /**
      *  Constructor for the IPAtomicLearningDescriptorTest object
@@ -78,7 +78,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
      *  @cdk.inchi InChI=1/C6H14/c1-5(2)6(3)4/h5-6H,1-4H3
      */
     @Test
-    public void testIPDescriptor0() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testIPDescriptor0() throws java.lang.Exception {
 
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         mol.addAtom(builder.newInstance(IAtom.class, "C"));
@@ -137,7 +137,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
      */
     @Test
     @Category(SlowTest.class)
-    public void testIPDescriptor2() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testIPDescriptor2() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("CC(CC)Cl"); // not in db
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -156,7 +156,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
      *  @cdk.inchi InChI=1/C3H5Cl/c1-2-3-4/h2H,1,3H2
      */
     @Ignore("IonizationPotentialTool now deprecated due to bugs")
-    public void testNotDB() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testNotDB() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("C=CCCl"); // not in db
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -176,7 +176,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
      */
     @Test
     @Category(SlowTest.class)
-    public void testIPDescriptor_1() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testIPDescriptor_1() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-Cl");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -195,7 +195,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
      */
     @Test
     @Category(SlowTest.class)
-    public void testIPDescriptor_2() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testIPDescriptor_2() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-C-Br");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -213,7 +213,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
      *
      */
     @Ignore("IonizationPotentialTool now deprecated due to bugs")
-    public void testIPDescriptor_3() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testIPDescriptor_3() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-C-C-I");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -233,7 +233,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
      */
     @Test
     @Category(SlowTest.class)
-    public void testIPDescriptor_4() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testIPDescriptor_4() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-C-O");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -252,7 +252,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
      */
     @Test
     @Category(SlowTest.class)
-    public void testIPDescriptor_5() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testIPDescriptor_5() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("N1(C)CCC(C)(C)CC1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -274,7 +274,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
      */
     @Test
     @Category(SlowTest.class)
-    public void testIPDescriptor_6() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testIPDescriptor_6() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-N-C");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -296,7 +296,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
      */
     @Test
     @Category(SlowTest.class)
-    public void testIPDescriptor_7() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testIPDescriptor_7() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-C-N");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -318,7 +318,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
      */
     @Test
     @Category(SlowTest.class)
-    public void testIPDescriptor_8() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testIPDescriptor_8() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("C-C-P-C-C");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -340,7 +340,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
      */
     @Test
     @Category(SlowTest.class)
-    public void testIPDescriptor_9() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testIPDescriptor_9() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("O=C(C)CC(C)C");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -360,7 +360,7 @@ public class IPAtomicLearningDescriptorTest extends CDKTestCase {
      */
     @Test
     @Category(SlowTest.class)
-    public void testIPDescriptor_10() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testIPDescriptor_10() throws java.lang.Exception {
 
         IAtomContainer mol = sp.parseSmiles("O=C1C2CCC1CC2");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);

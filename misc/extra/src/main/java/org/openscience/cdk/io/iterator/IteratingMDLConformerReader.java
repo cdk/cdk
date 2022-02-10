@@ -5,7 +5,6 @@ import java.io.Reader;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ConformerContainer;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -48,7 +47,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  */
 public class IteratingMDLConformerReader implements Iterator {
 
-    private IteratingSDFReader imdlr;
+    private final IteratingSDFReader imdlr;
     private ConformerContainer container;
     private IAtomContainer     lastMol     = null;
 
@@ -74,7 +73,7 @@ public class IteratingMDLConformerReader implements Iterator {
         if (!nextIsKnown) {
             while (imdlr.hasNext()) {
                 slurpedConformers = true;
-                IAtomContainer mol = (IAtomContainer) imdlr.next();
+                IAtomContainer mol = imdlr.next();
                 if (container.size() == 0)
                     container.add(mol);
                 else {

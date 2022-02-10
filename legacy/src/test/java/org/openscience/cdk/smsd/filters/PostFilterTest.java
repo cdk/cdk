@@ -62,7 +62,7 @@ public class PostFilterTest {
     @Test
     public void testFilter() {
 
-        List<Integer> l1 = new ArrayList<Integer>(6);
+        List<Integer> l1 = new ArrayList<>(6);
         l1.add(1);
         l1.add(2);
         l1.add(3);
@@ -70,7 +70,7 @@ public class PostFilterTest {
         l1.add(5);
         l1.add(6);
 
-        List<Integer> l2 = new ArrayList<Integer>(6);
+        List<Integer> l2 = new ArrayList<>(6);
         l2.add(1);
         l2.add(2);
         l2.add(3);
@@ -78,7 +78,7 @@ public class PostFilterTest {
         l2.add(5);
         l2.add(6);
 
-        List<Integer> l3 = new ArrayList<Integer>(6);
+        List<Integer> l3 = new ArrayList<>(6);
         l3.add(1);
         l3.add(2);
         l3.add(5);
@@ -86,7 +86,7 @@ public class PostFilterTest {
         l3.add(3);
         l3.add(6);
 
-        List<List<Integer>> mappings = new ArrayList<List<Integer>>(3);
+        List<List<Integer>> mappings = new ArrayList<>(3);
         mappings.add(l1);
         mappings.add(l2);
         mappings.add(l3);

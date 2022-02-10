@@ -39,7 +39,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class ShelXReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(ShelXReaderTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(ShelXReaderTest.class);
 
     @BeforeClass
     public static void setup() throws Exception {
@@ -59,11 +59,11 @@ public class ShelXReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ShelXReader reader = new ShelXReader(ins);
-        Crystal crystal = (Crystal) reader.read(new Crystal());
+        Crystal crystal = reader.read(new Crystal());
         reader.close();
         Assert.assertNotNull(crystal);
         Assert.assertEquals(42, crystal.getAtomCount());
-        double notional[] = CrystalGeometryTools.cartesianToNotional(crystal.getA(), crystal.getB(), crystal.getC());
+        double[] notional = CrystalGeometryTools.cartesianToNotional(crystal.getA(), crystal.getB(), crystal.getC());
         Assert.assertEquals(7.97103, notional[0], 0.001);
         Assert.assertEquals(18.77220, notional[1], 0.001);
         Assert.assertEquals(10.26222, notional[2], 0.001);

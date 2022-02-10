@@ -72,7 +72,7 @@ public class Convertor {
         Model model = createCDKModel();
         Resource subject = model.createResource(createIdentifier(model, molecule));
         model.add(subject, RDF.type, CDK.MOLECULE);
-        Map<IAtom, Resource> cdkToRDFAtomMap = new HashMap<IAtom, Resource>();
+        Map<IAtom, Resource> cdkToRDFAtomMap = new HashMap<>();
         for (IAtom atom : molecule.atoms()) {
             Resource rdfAtom = model.createResource(createIdentifier(model, atom));
             cdkToRDFAtomMap.put(atom, rdfAtom);
@@ -233,7 +233,7 @@ public class Convertor {
         }
         Statement order = rdfObject.getProperty(CDK.HASMAXBONDORDER);
         if (order != null) {
-            Resource maxOrder = (Resource) order.getResource();
+            Resource maxOrder = order.getResource();
             element.setMaxBondOrder(resource2Order(maxOrder));
         }
         Statement formalCharge = rdfObject.getProperty(CDK.HASFORMALCHARGE);
@@ -316,7 +316,7 @@ public class Convertor {
         if (mols.hasNext()) {
             Resource rdfMol = mols.next();
             mol = builder.newInstance(IAtomContainer.class);
-            Map<Resource, IAtom> rdfToCDKAtomMap = new HashMap<Resource, IAtom>();
+            Map<Resource, IAtom> rdfToCDKAtomMap = new HashMap<>();
             StmtIterator atoms = rdfMol.listProperties(CDK.HASATOM);
             while (atoms.hasNext()) {
                 Resource rdfAtom = atoms.nextStatement().getResource();

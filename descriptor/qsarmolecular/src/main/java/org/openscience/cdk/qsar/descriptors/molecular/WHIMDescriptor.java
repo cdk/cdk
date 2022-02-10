@@ -117,99 +117,102 @@ import Jama.Matrix;
  */
 public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    static ILoggingTool logger = LoggingToolFactory.createLoggingTool(WHIMDescriptor.class);
-    String              type   = "";
-    Map<String, Double> hashatwt, hashvdw, hasheneg, hashpol;
+    static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(WHIMDescriptor.class);
+    String              type;
+    final Map<String, Double> hashatwt;
+    final Map<String, Double> hashvdw;
+    final Map<String, Double> hasheneg;
+    final Map<String, Double> hashpol;
 
     public WHIMDescriptor() {
         this.type = "unity"; // default weighting scheme
 
         // set up the values from TOD98
 
-        this.hashatwt = new HashMap<String, Double>();
-        this.hashvdw = new HashMap<String, Double>();
-        this.hasheneg = new HashMap<String, Double>();
-        this.hashpol = new HashMap<String, Double>();
+        this.hashatwt = new HashMap<>();
+        this.hashvdw = new HashMap<>();
+        this.hasheneg = new HashMap<>();
+        this.hashpol = new HashMap<>();
 
-        this.hashatwt.put("H", new Double(0.084));
-        this.hashatwt.put("B", new Double(0.900));
-        this.hashatwt.put("C", new Double(1.000));
-        this.hashatwt.put("N", new Double(1.166));
-        this.hashatwt.put("O", new Double(1.332));
-        this.hashatwt.put("F", new Double(1.582));
-        this.hashatwt.put("Al", new Double(2.246));
-        this.hashatwt.put("Si", new Double(2.339));
-        this.hashatwt.put("P", new Double(2.579));
-        this.hashatwt.put("S", new Double(2.670));
-        this.hashatwt.put("Cl", new Double(2.952));
-        this.hashatwt.put("Fe", new Double(4.650));
-        this.hashatwt.put("Co", new Double(4.907));
-        this.hashatwt.put("Ni", new Double(4.887));
-        this.hashatwt.put("Cu", new Double(5.291));
-        this.hashatwt.put("Zn", new Double(5.445));
-        this.hashatwt.put("Br", new Double(6.653));
-        this.hashatwt.put("Sn", new Double(9.884));
-        this.hashatwt.put("I", new Double(10.566));
+        this.hashatwt.put("H", 0.084);
+        this.hashatwt.put("B", 0.900);
+        this.hashatwt.put("C", 1.000);
+        this.hashatwt.put("N", 1.166);
+        this.hashatwt.put("O", 1.332);
+        this.hashatwt.put("F", 1.582);
+        this.hashatwt.put("Al", 2.246);
+        this.hashatwt.put("Si", 2.339);
+        this.hashatwt.put("P", 2.579);
+        this.hashatwt.put("S", 2.670);
+        this.hashatwt.put("Cl", 2.952);
+        this.hashatwt.put("Fe", 4.650);
+        this.hashatwt.put("Co", 4.907);
+        this.hashatwt.put("Ni", 4.887);
+        this.hashatwt.put("Cu", 5.291);
+        this.hashatwt.put("Zn", 5.445);
+        this.hashatwt.put("Br", 6.653);
+        this.hashatwt.put("Sn", 9.884);
+        this.hashatwt.put("I", 10.566);
 
-        this.hashvdw.put("H", new Double(0.299));
-        this.hashvdw.put("B", new Double(0.796));
-        this.hashvdw.put("C", new Double(1.000));
-        this.hashvdw.put("N", new Double(0.695));
-        this.hashvdw.put("O", new Double(0.512));
-        this.hashvdw.put("F", new Double(0.410));
-        this.hashvdw.put("Al", new Double(1.626));
-        this.hashvdw.put("Si", new Double(1.424));
-        this.hashvdw.put("P", new Double(1.181));
-        this.hashvdw.put("S", new Double(1.088));
-        this.hashvdw.put("Cl", new Double(1.035));
-        this.hashvdw.put("Fe", new Double(1.829));
-        this.hashvdw.put("Co", new Double(1.561));
-        this.hashvdw.put("Ni", new Double(0.764));
-        this.hashvdw.put("Cu", new Double(0.512));
-        this.hashvdw.put("Zn", new Double(1.708));
-        this.hashvdw.put("Br", new Double(1.384));
-        this.hashvdw.put("Sn", new Double(2.042));
-        this.hashvdw.put("I", new Double(1.728));
+        this.hashvdw.put("H", 0.299);
+        this.hashvdw.put("B", 0.796);
+        this.hashvdw.put("C", 1.000);
+        this.hashvdw.put("N", 0.695);
+        this.hashvdw.put("O", 0.512);
+        this.hashvdw.put("F", 0.410);
+        this.hashvdw.put("Al", 1.626);
+        this.hashvdw.put("Si", 1.424);
+        this.hashvdw.put("P", 1.181);
+        this.hashvdw.put("S", 1.088);
+        this.hashvdw.put("Cl", 1.035);
+        this.hashvdw.put("Fe", 1.829);
+        this.hashvdw.put("Co", 1.561);
+        this.hashvdw.put("Ni", 0.764);
+        this.hashvdw.put("Cu", 0.512);
+        this.hashvdw.put("Zn", 1.708);
+        this.hashvdw.put("Br", 1.384);
+        this.hashvdw.put("Sn", 2.042);
+        this.hashvdw.put("I", 1.728);
 
-        this.hasheneg.put("H", new Double(0.944));
-        this.hasheneg.put("B", new Double(0.828));
-        this.hasheneg.put("C", new Double(1.000));
-        this.hasheneg.put("N", new Double(1.163));
-        this.hasheneg.put("O", new Double(1.331));
-        this.hasheneg.put("F", new Double(1.457));
-        this.hasheneg.put("Al", new Double(0.624));
-        this.hasheneg.put("Si", new Double(0.779));
-        this.hasheneg.put("P", new Double(0.916));
-        this.hasheneg.put("S", new Double(1.077));
-        this.hasheneg.put("Cl", new Double(1.265));
-        this.hasheneg.put("Fe", new Double(0.728));
-        this.hasheneg.put("Co", new Double(0.728));
-        this.hasheneg.put("Ni", new Double(0.728));
-        this.hasheneg.put("Cu", new Double(0.740));
-        this.hasheneg.put("Zn", new Double(0.810));
-        this.hasheneg.put("Br", new Double(1.172));
-        this.hasheneg.put("Sn", new Double(0.837));
-        this.hasheneg.put("I", new Double(1.012));
+        this.hasheneg.put("H", 0.944);
+        this.hasheneg.put("B", 0.828);
+        this.hasheneg.put("C", 1.000);
+        this.hasheneg.put("N", 1.163);
+        this.hasheneg.put("O", 1.331);
+        this.hasheneg.put("F", 1.457);
+        this.hasheneg.put("Al", 0.624);
+        this.hasheneg.put("Si", 0.779);
+        this.hasheneg.put("P", 0.916);
+        this.hasheneg.put("S", 1.077);
+        this.hasheneg.put("Cl", 1.265);
+        this.hasheneg.put("Fe", 0.728);
+        this.hasheneg.put("Co", 0.728);
+        this.hasheneg.put("Ni", 0.728);
+        this.hasheneg.put("Cu", 0.740);
+        this.hasheneg.put("Zn", 0.810);
+        this.hasheneg.put("Br", 1.172);
+        this.hasheneg.put("Sn", 0.837);
+        this.hasheneg.put("I", 1.012);
 
-        this.hashpol.put("H", new Double(0.379));
-        this.hashpol.put("B", new Double(1.722));
-        this.hashpol.put("C", new Double(1.000));
-        this.hashpol.put("N", new Double(0.625));
-        this.hashpol.put("O", new Double(0.456));
-        this.hashpol.put("F", new Double(0.316));
-        this.hashpol.put("Al", new Double(3.864));
-        this.hashpol.put("Si", new Double(3.057));
-        this.hashpol.put("P", new Double(2.063));
-        this.hashpol.put("S", new Double(1.648));
-        this.hashpol.put("Cl", new Double(1.239));
-        this.hashpol.put("Fe", new Double(4.773));
-        this.hashpol.put("Co", new Double(4.261));
-        this.hashpol.put("Ni", new Double(3.864));
-        this.hashpol.put("Cu", new Double(3.466));
-        this.hashpol.put("Zn", new Double(4.034));
-        this.hashpol.put("Br", new Double(1.733));
-        this.hashpol.put("Sn", new Double(4.375));
-        this.hashpol.put("I", new Double(3.040));
+        this.hashpol.put("H", 0.379);
+        this.hashpol.put("B", 1.722);
+        this.hashpol.put("C", 1.000);
+        this.hashpol.put("N", 0.625);
+        this.hashpol.put("O", 0.456);
+        this.hashpol.put("F", 0.316);
+        this.hashpol.put("Al", 3.864);
+        this.hashpol.put("Si", 3.057);
+        this.hashpol.put("P", 2.063);
+        this.hashpol.put("S", 1.648);
+        this.hashpol.put("Cl", 1.239);
+        this.hashpol.put("Fe", 4.773);
+        this.hashpol.put("Co", 4.261);
+        this.hashpol.put("Ni", 3.864);
+        this.hashpol.put("Cu", 3.466);
+        this.hashpol.put("Zn", 4.034);
+        this.hashpol.put("Br", 1.733);
+        this.hashpol.put("Sn", 4.375);
+        this.hashpol.put("I", 3.040);
     }
 
     @Override
@@ -217,8 +220,6 @@ public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMole
         return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#WHIM",
                 this.getClass().getName(), "The Chemistry Development Kit");
     }
-
-    ;
 
     /**
      * Sets the parameters attribute of the WHIMDescriptor object.
@@ -314,7 +315,7 @@ public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMole
         IAtomContainer ac;
 
         try {
-            ac = (IAtomContainer) container.clone();
+            ac = container.clone();
         } catch (CloneNotSupportedException e) {
             return getDummyDescriptorValue(e);
         }
@@ -351,7 +352,7 @@ public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMole
             }
             for (int i = 0; i < ac.getAtomCount(); i++) {
                 String sym = ac.getAtom(i).getSymbol();
-                wt[i] = (Double) hash.get(sym);
+                wt[i] = hash.get(sym);
             }
         }
 
@@ -398,7 +399,7 @@ public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMole
                 }
                 if (!foundmatch) na++;
             }
-            double n = (double) ac.getAtomCount();
+            double n = ac.getAtomCount();
             gamma[i] = -1.0
                     * ((ns / n) * Math.log(ns / n) / Math.log(2.0) + (na / n) * Math.log(1.0 / n) / Math.log(2.0));
             gamma[i] = 1.0 / (1.0 + gamma[i]);
@@ -501,8 +502,7 @@ public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMole
             // get the covariance matrix
             double[][] covmat = new double[ncol][ncol];
             double sumwt = 0.;
-            for (int i = 0; i < nrow; i++)
-                sumwt += wt[i];
+            for (double v : wt) sumwt += v;
             for (int i = 0; i < ncol; i++) {
                 double meanx = 0;
                 for (int k = 0; k < nrow; k++)

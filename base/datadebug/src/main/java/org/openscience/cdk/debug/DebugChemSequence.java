@@ -40,7 +40,7 @@ public class DebugChemSequence extends ChemSequence implements IChemSequence {
 
     private static final long serialVersionUID = -628120469241907704L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugChemSequence.class);
+    final ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugChemSequence.class);
 
     /** {@inheritDoc} */
     @Override

@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 public final class ExplicitConnectionAtom extends SMARTSAtom {
 
     /** Number of explicit connections. */
-    private int degree;
+    private final int degree;
 
     /**
      * Create a query atom for matching the degree of an atom. The degree is the

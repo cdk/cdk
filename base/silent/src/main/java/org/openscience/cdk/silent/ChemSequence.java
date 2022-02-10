@@ -64,7 +64,7 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
      *  Amount by which the chemModels array grows when elements are added and
      *  the array is not large enough for that.
      */
-    protected int             growArraySize    = 4;
+    protected final int             growArraySize    = 4;
 
     /**
      *  Constructs an empty ChemSequence.
@@ -112,13 +112,7 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
      */
     @Override
     public Iterable<IChemModel> chemModels() {
-        return new Iterable<IChemModel>() {
-
-            @Override
-            public Iterator<IChemModel> iterator() {
-                return new ChemModelIterator();
-            }
-        };
+        return ChemModelIterator::new;
     }
 
     /**
@@ -184,7 +178,7 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
 
     @Override
     public String toString() {
-        StringBuffer buffer = new StringBuffer(32);
+        StringBuilder buffer = new StringBuilder(32);
         buffer.append("ChemSequence(#M=");
         buffer.append(chemModelCount);
         if (chemModelCount > 0) {
@@ -204,7 +198,7 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
         clone.chemModelCount = getChemModelCount();
         clone.chemModels = new ChemModel[clone.chemModelCount];
         for (int f = 0; f < clone.chemModelCount; f++) {
-            clone.chemModels[f] = (ChemModel) ((ChemModel) chemModels[f]).clone();
+            clone.chemModels[f] = (ChemModel) chemModels[f].clone();
         }
         return clone;
     }

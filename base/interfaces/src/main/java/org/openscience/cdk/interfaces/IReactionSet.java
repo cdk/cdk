@@ -33,14 +33,14 @@ public interface IReactionSet extends IChemObject {
      *
      * @param  reaction  The reaction to be added to this container
      */
-    public void addReaction(IReaction reaction);
+    void addReaction(IReaction reaction);
 
     /**
          * Remove a reaction from this set.
          *
          * @param  pos  The position of the reaction to be removed.
          */
-    public void removeReaction(int pos);
+    void removeReaction(int pos);
 
     /**
     * Returns the Reaction at position <code>number</code> in the
@@ -49,38 +49,38 @@ public interface IReactionSet extends IChemObject {
     * @param  number  The position of the Reaction to be returned
     * @return         The Reaction at position <code>number</code>
     */
-    public IReaction getReaction(int number);
+    IReaction getReaction(int number);
 
     /**
      * Returns the {@link Iterable} over Reactions of this container.
      *
      * @return    The {@link Iterable} over Reactions of this container
      */
-    public Iterable<IReaction> reactions();
+    Iterable<IReaction> reactions();
 
     /**
      * Returns the number of Reactions in this Container.
      *
      * @return     The number of Reactions in this Container
      */
-    public int getReactionCount();
+    int getReactionCount();
 
     /**
      * Removes all reactions from this set.
      */
-    public void removeAllReactions();
+    void removeAllReactions();
 
     /**
      * Removes all instances of a reaction from this IReactionSet.
      *
      * @param relevantReaction the reaction to remove
      */
-    public void removeReaction(IReaction relevantReaction);
+    void removeReaction(IReaction relevantReaction);
 
     /**
      * Returns true if this IReactionSet is empty.
      *
      * @return a boolean indicating if this ring set no reactions
      */
-    public boolean isEmpty();
+    boolean isEmpty();
 }

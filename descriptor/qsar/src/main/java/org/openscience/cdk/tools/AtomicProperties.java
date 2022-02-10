@@ -40,10 +40,10 @@ public class AtomicProperties {
 
     private static AtomicProperties ap                  = null;
 
-    private Map<String, Double>     htMass              = new Hashtable<String, Double>();
-    private Map<String, Double>     htVdWVolume         = new Hashtable<String, Double>();
-    private Map<String, Double>     htElectronegativity = new Hashtable<String, Double>();
-    private Map<String, Double>     htPolarizability    = new Hashtable<String, Double>();
+    private final Map<String, Double>     htMass              = new Hashtable<>();
+    private final Map<String, Double>     htVdWVolume         = new Hashtable<>();
+    private final Map<String, Double>     htElectronegativity = new Hashtable<>();
+    private final Map<String, Double>     htPolarizability    = new Hashtable<>();
 
     private AtomicProperties() throws IOException {
 

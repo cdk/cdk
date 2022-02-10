@@ -50,7 +50,7 @@ public class EccentricConnectivityIndexDescriptorTest extends MolecularDescripto
     }
 
     @Test
-    public void testEccentricConnectivityIndex() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testEccentricConnectivityIndex() throws java.lang.Exception {
         String filename = "gravindex.hin";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);

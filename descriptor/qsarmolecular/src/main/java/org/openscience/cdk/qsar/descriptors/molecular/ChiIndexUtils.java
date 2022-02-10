@@ -63,7 +63,7 @@ class ChiIndexUtils {
      */
     public static List<List<Integer>> getFragments(IAtomContainer atomContainer, QueryAtomContainer[] queries) {
         UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
-        List<List<Integer>> uniqueSubgraphs = new ArrayList<List<Integer>>();
+        List<List<Integer>> uniqueSubgraphs = new ArrayList<>();
         for (QueryAtomContainer query : queries) {
             List<List<RMap>> subgraphMaps = null;
             try {
@@ -86,7 +86,7 @@ class ChiIndexUtils {
         // will have number of atoms equal to the number of bonds+1. So we need to check
         // fragment size against all unique query sizes - I get lazy and don't check
         // unique query sizes, but the size of each query
-        List<List<Integer>> retValue = new ArrayList<List<Integer>>();
+        List<List<Integer>> retValue = new ArrayList<>();
         for (List<Integer> fragment : uniqueSubgraphs) {
             for (QueryAtomContainer query : queries) {
                 if (fragment.size() == query.getAtomCount()) {
@@ -255,12 +255,12 @@ class ChiIndexUtils {
      * @return A unique <code>List</code> of atom paths
      */
     private static List<List<Integer>> getUniqueBondSubgraphs(List<List<RMap>> subgraphs, IAtomContainer ac) {
-        List<List<Integer>> bondList = new ArrayList<List<Integer>>();
+        List<List<Integer>> bondList = new ArrayList<>();
         for (List<RMap> subgraph : subgraphs) {
             List<RMap> current = subgraph;
-            List<Integer> ids = new ArrayList<Integer>();
+            List<Integer> ids = new ArrayList<>();
             for (RMap aCurrent : current) {
-                RMap rmap = (RMap) aCurrent;
+                RMap rmap = aCurrent;
                 ids.add(rmap.getId1());
             }
             Collections.sort(ids);
@@ -268,13 +268,13 @@ class ChiIndexUtils {
         }
 
         // get the unique set of bonds
-        HashSet<List<Integer>> hs = new HashSet<List<Integer>>(bondList);
-        bondList = new ArrayList<List<Integer>>(hs);
+        HashSet<List<Integer>> hs = new HashSet<>(bondList);
+        bondList = new ArrayList<>(hs);
 
-        List<List<Integer>> paths = new ArrayList<List<Integer>>();
+        List<List<Integer>> paths = new ArrayList<>();
         for (List<Integer> aBondList1 : bondList) {
             List<Integer> aBondList = aBondList1;
-            List<Integer> tmp = new ArrayList<Integer>();
+            List<Integer> tmp = new ArrayList<>();
             for (Object anABondList : aBondList) {
                 int bondNumber = (Integer) anABondList;
                 for (IAtom atom : ac.getBond(bondNumber).atoms()) {

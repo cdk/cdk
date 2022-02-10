@@ -51,7 +51,7 @@ public interface IChemObjectIO extends Closeable {
     /**
      * Returns the {@link IResourceFormat} class for this IO class.
      */
-    public IResourceFormat getFormat();
+    IResourceFormat getFormat();
 
     /**
      * Returns whether the given {@link IChemObject} can be read or written.
@@ -59,7 +59,7 @@ public interface IChemObjectIO extends Closeable {
      * @param classObject {@link IChemObject} of which is tested if it can be handled.
      * @return true, if the {@link IChemObject} can be handled.
      */
-    public boolean accepts(Class<? extends IChemObject> classObject);
+    boolean accepts(Class<? extends IChemObject> classObject);
 
     /**
      * Closes this IChemObjectIO's resources.
@@ -67,28 +67,28 @@ public interface IChemObjectIO extends Closeable {
      * @throws IOException when the wrapper IO class cannot be closed.
      */
     @Override
-    public void close() throws IOException;
+    void close() throws IOException;
 
     /**
      * Returns an array of {@link IOSetting}s defined by this IChemObjectIO class.
      *
      * @return the {@link IOSetting}s for this class.
      */
-    public IOSetting[] getIOSettings();
+    IOSetting[] getIOSettings();
 
     /**
      * Adds a {@link IChemObjectIOListener} to this IChemObjectIO.
      *
      * @param listener the reader listener to add.
      */
-    public void addChemObjectIOListener(IChemObjectIOListener listener);
+    void addChemObjectIOListener(IChemObjectIOListener listener);
 
     /**
      * Removes a {@link IChemObjectIOListener} from this IChemObjectIO.
      *
      * @param listener the listener to be removed.
      */
-    public void removeChemObjectIOListener(IChemObjectIOListener listener);
+    void removeChemObjectIOListener(IChemObjectIOListener listener);
 
     /**
      * Access all the listeners for this ChemObject Reader or Writer. This will
@@ -98,7 +98,7 @@ public interface IChemObjectIO extends Closeable {
      *
      * @return all listeners managed by this IO object
      */
-    public Collection<IChemObjectIOListener> getListeners();
+    Collection<IChemObjectIOListener> getListeners();
 
     /**
      * Add an IOSetting to the reader/writer. If the name clashes with
@@ -121,7 +121,7 @@ public interface IChemObjectIO extends Closeable {
      *
      * @see org.openscience.cdk.io.setting.SettingManager#add(org.openscience.cdk.interfaces.ISetting)
      */
-    public <S extends IOSetting> S addSetting(IOSetting setting);
+    <S extends IOSetting> S addSetting(IOSetting setting);
 
     /**
      * Adds a collection of {@link IOSetting}s to the reader/writer. This
@@ -146,7 +146,7 @@ public interface IChemObjectIO extends Closeable {
      * @param settings collection of settings to add
      * @see #getSettings()
      */
-    public void addSettings(Collection<IOSetting> settings);
+    void addSettings(Collection<IOSetting> settings);
 
     /**
      * Determine whether this reader/writer has a setting of the
@@ -158,7 +158,7 @@ public interface IChemObjectIO extends Closeable {
      *
      * @see org.openscience.cdk.io.setting.SettingManager#has(String)
      */
-    public boolean hasSetting(String name);
+    boolean hasSetting(String name);
 
     /**
      * Access a named setting managed by this reader/writer.
@@ -172,7 +172,7 @@ public interface IChemObjectIO extends Closeable {
      * @see #getSetting(String, Class)
      * @see org.openscience.cdk.io.setting.SettingManager#get(String)
      */
-    public <S extends IOSetting> S getSetting(String name);
+    <S extends IOSetting> S getSetting(String name);
 
     /**
      * Access a named setting managed by this reader/writer.
@@ -188,13 +188,13 @@ public interface IChemObjectIO extends Closeable {
      * @see #getSetting(String)
      * @see org.openscience.cdk.io.setting.SettingManager#get(String, Class)
      */
-    public <S extends IOSetting> S getSetting(String name, Class<S> c);
+    <S extends IOSetting> S getSetting(String name, Class<S> c);
 
     /**
      * Access a collection of {@link IOSetting}s for this reader/writer.
      * @return collection of IOSetting's
      * @see #addSettings(java.util.Collection)
      */
-    public Collection<IOSetting> getSettings();
+    Collection<IOSetting> getSettings();
 
 }

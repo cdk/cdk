@@ -31,6 +31,6 @@ public interface IRenderingElement {
      *
      * @param visitor Toolkit specific widget factory.
      */
-    public void accept(IRenderingVisitor visitor);
+    void accept(IRenderingVisitor visitor);
 
 }

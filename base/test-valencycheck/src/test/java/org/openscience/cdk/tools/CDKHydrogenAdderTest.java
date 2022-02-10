@@ -644,7 +644,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
      */
     @Test
     public void testBug1727373() throws Exception {
-        IAtomContainer molecule = null;
+        IAtomContainer molecule;
         String filename = "carbocations.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -726,11 +726,11 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         String filename = "sulfurCompound.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
         Assert.assertEquals(1, containersList.size());
 
-        IAtomContainer atomContainer_0 = (IAtomContainer) containersList.get(0);
+        IAtomContainer atomContainer_0 = containersList.get(0);
         Assert.assertEquals(10, atomContainer_0.getAtomCount());
         IAtom sulfur = atomContainer_0.getAtom(1);
         findAndConfigureAtomTypesForAllAtoms(atomContainer_0);
@@ -839,9 +839,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     }
 
     private void findAndConfigureAtomTypesForAllAtoms(IAtomContainer container) throws Exception {
-        Iterator<IAtom> atoms = container.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : container.atoms()) {
             IAtomType type = matcher.findMatchingAtomType(container, atom);
             Assert.assertNotNull(type);
             AtomTypeManipulator.configure(atom, type);

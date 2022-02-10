@@ -47,5 +47,5 @@ public enum INCHI_OPTION {
     FixSp3Bug,
     FB,
     SPXYZ,
-    SAsXYZ;
+    SAsXYZ
 }

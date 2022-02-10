@@ -85,7 +85,7 @@ final class AtomSymbol {
     AtomSymbol(TextOutline element, List<TextOutline> adjuncts) {
         this.element = element;
         this.adjuncts = adjuncts;
-        this.annotationAdjuncts = new ArrayList<TextOutline>();
+        this.annotationAdjuncts = new ArrayList<>();
         this.alignment = SymbolAlignment.Center;
         this.hull = ConvexHull.ofShapes(getOutlines());
     }
@@ -125,7 +125,7 @@ final class AtomSymbol {
      * @return a new AtomSymbol instance including the annotation adjunct
      */
     AtomSymbol addAnnotation(TextOutline annotation) {
-        List<TextOutline> newAnnotations = new ArrayList<TextOutline>(annotationAdjuncts);
+        List<TextOutline> newAnnotations = new ArrayList<>(annotationAdjuncts);
         newAnnotations.add(annotation);
         return new AtomSymbol(element, adjuncts, newAnnotations, alignment, hull);
     }
@@ -169,7 +169,7 @@ final class AtomSymbol {
      * @return shapes
      */
     List<Shape> getOutlines() {
-        List<Shape> shapes = new ArrayList<Shape>();
+        List<Shape> shapes = new ArrayList<>();
         shapes.add(element.getOutline());
         for (TextOutline adjunct : adjuncts)
             shapes.add(adjunct.getOutline());
@@ -182,7 +182,7 @@ final class AtomSymbol {
      * @return annotation outlines
      */
     List<Shape> getAnnotationOutlines() {
-        List<Shape> shapes = new ArrayList<Shape>();
+        List<Shape> shapes = new ArrayList<>();
         for (TextOutline adjunct : annotationAdjuncts)
             shapes.add(adjunct.getOutline());
         return shapes;
@@ -204,10 +204,10 @@ final class AtomSymbol {
      * @return the transformed symbol (new instance)
      */
     AtomSymbol transform(AffineTransform transform) {
-        List<TextOutline> transformedAdjuncts = new ArrayList<TextOutline>(adjuncts.size());
+        List<TextOutline> transformedAdjuncts = new ArrayList<>(adjuncts.size());
         for (TextOutline adjunct : adjuncts)
             transformedAdjuncts.add(adjunct.transform(transform));
-        List<TextOutline> transformedAnnAdjuncts = new ArrayList<TextOutline>(adjuncts.size());
+        List<TextOutline> transformedAnnAdjuncts = new ArrayList<>(adjuncts.size());
         for (TextOutline adjunct : annotationAdjuncts)
             transformedAnnAdjuncts.add(adjunct.transform(transform));
         return new AtomSymbol(element.transform(transform), transformedAdjuncts, transformedAnnAdjuncts, alignment,

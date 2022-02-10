@@ -40,6 +40,6 @@ public interface MoleculeHashGenerator {
      * @param container a molecule
      * @return hash code for the molecule
      */
-    public long generate(IAtomContainer container);
+    long generate(IAtomContainer container);
 
 }

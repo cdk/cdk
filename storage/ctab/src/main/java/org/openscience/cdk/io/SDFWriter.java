@@ -41,7 +41,6 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.SDFFormat;
@@ -186,11 +185,11 @@ public class SDFWriter extends DefaultChemObjectWriter {
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IAtomContainer.class.equals(interfaces[i])) return true;
-            if (IChemFile.class.equals(interfaces[i])) return true;
-            if (IChemModel.class.equals(interfaces[i])) return true;
-            if (IAtomContainerSet.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IAtomContainer.class.equals(anInterface)) return true;
+            if (IChemFile.class.equals(anInterface)) return true;
+            if (IChemModel.class.equals(anInterface)) return true;
+            if (IAtomContainerSet.class.equals(anInterface)) return true;
         }
         if (IAtomContainer.class.equals(classObject)) return true;
         if (IChemFile.class.equals(classObject)) return true;
@@ -380,7 +379,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
      * A list of properties used by CDK algorithms which must never be
      * serialized into the SD file format.
      */
-    private static List<String> cdkInternalProperties = new ArrayList<String>();
+    private static final List<String> cdkInternalProperties = new ArrayList<>();
 
     static {
         cdkInternalProperties.add(InvPair.CANONICAL_LABEL);

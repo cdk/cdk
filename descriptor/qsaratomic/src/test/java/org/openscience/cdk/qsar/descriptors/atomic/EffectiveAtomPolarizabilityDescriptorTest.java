@@ -46,7 +46,7 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorT
      *  A unit test for JUnit with 2-(dimethylamino)ethyl)amino
      */
     @Test
-    public void testEffectivePolarizabilityDescriptor() throws ClassNotFoundException, CDKException,
+    public void testEffectivePolarizabilityDescriptor() throws
             java.lang.Exception {
         double[] testResult = {4.7253, 6.1345, 6.763, 6.925, 5.41, 5.41};
         IAtomicDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();

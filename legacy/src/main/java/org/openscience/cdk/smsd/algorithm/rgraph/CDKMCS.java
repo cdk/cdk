@@ -53,7 +53,6 @@ package org.openscience.cdk.smsd.algorithm.rgraph;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import org.openscience.cdk.CDKConstants;
@@ -309,7 +308,7 @@ public class CDKMCS {
             return makeAtomsMapsOfBondsMaps(CDKMCS.getSubgraphMaps(sourceGraph, targetGraph, shouldMatchBonds),
                     sourceGraph, targetGraph);
         } else {
-            List<List<CDKRMap>> atomsMap = new ArrayList<List<CDKRMap>>();
+            List<List<CDKRMap>> atomsMap = new ArrayList<>();
             atomsMap.add(list);
             return atomsMap;
         }
@@ -479,7 +478,7 @@ public class CDKMCS {
 
         // handle single query atom case separately
         if (targetGraph.getAtomCount() == 1) {
-            List<List<CDKRMap>> matches = new ArrayList<List<CDKRMap>>();
+            List<List<CDKRMap>> matches = new ArrayList<>();
             IAtom queryAtom = targetGraph.getAtom(0);
 
             // we can have a IQueryAtomContainer *or* an IAtomContainer
@@ -487,7 +486,7 @@ public class CDKMCS {
                 IQueryAtom qAtom = (IQueryAtom) queryAtom;
                 for (IAtom atom : sourceGraph.atoms()) {
                     if (qAtom.matches(atom)) {
-                        List<CDKRMap> lmap = new ArrayList<CDKRMap>();
+                        List<CDKRMap> lmap = new ArrayList<>();
                         lmap.add(new CDKRMap(sourceGraph.indexOf(atom), 0));
                         matches.add(lmap);
                     }
@@ -495,7 +494,7 @@ public class CDKMCS {
             } else {
                 for (IAtom atom : sourceGraph.atoms()) {
                     if (queryAtom.getAtomicNumber().equals(atom.getAtomicNumber())) {
-                        List<CDKRMap> lmap = new ArrayList<CDKRMap>();
+                        List<CDKRMap> lmap = new ArrayList<>();
                         lmap.add(new CDKRMap(sourceGraph.indexOf(atom), 0));
                         matches.add(lmap);
                     }
@@ -505,7 +504,7 @@ public class CDKMCS {
         }
 
         // reset result
-        List<List<CDKRMap>> rMapsList = new ArrayList<List<CDKRMap>>();
+        List<List<CDKRMap>> rMapsList = new ArrayList<>();
         // build the CDKRGraph corresponding to this problem
         CDKRGraph rGraph = buildRGraph(sourceGraph, targetGraph, shouldMatchBonds);
         setTimeManager(new TimeManager());
@@ -534,14 +533,13 @@ public class CDKMCS {
     public static IAtomContainer project(List<CDKRMap> rMapList, IAtomContainer graph, int key) {
         IAtomContainer atomContainer = graph.getBuilder().newInstance(IAtomContainer.class);
 
-        Map<IAtom, IAtom> table = new HashMap<IAtom, IAtom>();
+        Map<IAtom, IAtom> table = new HashMap<>();
         IAtom atom1;
         IAtom atom2;
         IAtom atom;
         IBond bond;
 
-        for (Iterator<CDKRMap> i = rMapList.iterator(); i.hasNext();) {
-            CDKRMap rMap = i.next();
+        for (CDKRMap rMap : rMapList) {
             if (key == CDKMCS.ID1) {
                 bond = graph.getBond(rMap.getId1());
             } else {
@@ -553,7 +551,7 @@ public class CDKMCS {
 
             if (atom1 == null) {
                 try {
-                    atom1 = (IAtom) atom.clone();
+                    atom1 = atom.clone();
                 } catch (CloneNotSupportedException e) {
                     e.printStackTrace();
                 }
@@ -566,7 +564,7 @@ public class CDKMCS {
 
             if (atom2 == null) {
                 try {
-                    atom2 = (IAtom) atom.clone();
+                    atom2 = atom.clone();
                 } catch (CloneNotSupportedException e) {
                     e.printStackTrace();
                 }
@@ -589,7 +587,7 @@ public class CDKMCS {
      * @return            atom list of AtomContainer
      */
     public static ArrayList<IAtomContainer> projectList(List<List<CDKRMap>> rMapsList, IAtomContainer graph, int key) {
-        ArrayList<IAtomContainer> graphList = new ArrayList<IAtomContainer>();
+        ArrayList<IAtomContainer> graphList = new ArrayList<>();
 
         for (List<CDKRMap> rMapList : rMapsList) {
             IAtomContainer atomContainer = project(rMapList, graph, key);
@@ -644,7 +642,7 @@ public class CDKMCS {
         }
 
         if (targetGraph.getAtomCount() == 1) {
-            List<CDKRMap> arrayList = new ArrayList<CDKRMap>();
+            List<CDKRMap> arrayList = new ArrayList<>();
             IAtom atom = targetGraph.getAtom(0);
             if (atom instanceof IQueryAtom) {
                 IQueryAtom qAtom = (IQueryAtom) atom;
@@ -663,7 +661,7 @@ public class CDKMCS {
             }
             return arrayList;
         } else if (sourceGraph.getAtomCount() == 1) {
-            List<CDKRMap> arrayList = new ArrayList<CDKRMap>();
+            List<CDKRMap> arrayList = new ArrayList<>();
             IAtom atom = sourceGraph.getAtom(0);
             for (int i = 0; i < targetGraph.getAtomCount(); i++) {
                 IAtom atom2 = targetGraph.getAtom(i);
@@ -700,7 +698,7 @@ public class CDKMCS {
         if (targetGraph.getAtomCount() == 1) {
             return list; // since the RMap is already an atom-atom mapping
         }
-        List<List<CDKRMap>> result = new ArrayList<List<CDKRMap>>();
+        List<List<CDKRMap>> result = new ArrayList<>();
         for (List<CDKRMap> l2 : list) {
             result.add(makeAtomsMapOfBondsMap(l2, sourceGraph, targetGraph));
         }
@@ -720,7 +718,7 @@ public class CDKMCS {
         if (list == null) {
             return (list);
         }
-        List<CDKRMap> result = new ArrayList<CDKRMap>();
+        List<CDKRMap> result = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             IBond bond1 = sourceGraph.getBond(list.get(i).getId1());
             IBond bond2 = targetGraph.getBond(list.get(i).getId2());
@@ -728,13 +726,13 @@ public class CDKMCS {
             IAtom[] atom2 = BondManipulator.getAtomArray(bond2);
             for (int j = 0; j < 2; j++) {
                 List<IBond> bondsConnectedToAtom1j = sourceGraph.getConnectedBondsList(atom1[j]);
-                for (int k = 0; k < bondsConnectedToAtom1j.size(); k++) {
-                    if (!bondsConnectedToAtom1j.get(k).equals(bond1)) {
-                        IBond testBond = bondsConnectedToAtom1j.get(k);
-                        for (int m = 0; m < list.size(); m++) {
+                for (IBond iBond : bondsConnectedToAtom1j) {
+                    if (!iBond.equals(bond1)) {
+                        IBond testBond = iBond;
+                        for (CDKRMap cdkrMap : list) {
                             IBond testBond2;
-                            if ((list.get(m)).getId1() == sourceGraph.indexOf(testBond)) {
-                                testBond2 = targetGraph.getBond((list.get(m)).getId2());
+                            if (cdkrMap.getId1() == sourceGraph.indexOf(testBond)) {
+                                testBond2 = targetGraph.getBond(cdkrMap.getId2());
                                 for (int n = 0; n < 2; n++) {
                                     List<IBond> bondsToTest = targetGraph.getConnectedBondsList(atom2[n]);
                                     if (bondsToTest.contains(testBond2)) {

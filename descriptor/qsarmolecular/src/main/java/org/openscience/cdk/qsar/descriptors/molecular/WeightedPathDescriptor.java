@@ -155,7 +155,7 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
         private double oxygenWeight;
         private double nitrogenWeight;
 
-        private double[] bondWeights;
+        private final double[] bondWeights;
 
         public Consumer(IAtomContainer mol) {
             uniqWeight = mol.getAtomCount();

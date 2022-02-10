@@ -23,14 +23,12 @@ package org.openscience.cdk.modeling.builder3d;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -90,7 +88,7 @@ public class TemplateExtractor {
                 System.out.println("...");
             }
             IAtomContainer m = builder.newInstance(IAtomContainer.class);
-            m = (IAtomContainer) imdl.next();
+            m = imdl.next();
             if (m.getAtomCount() > 2) {
                 if (m.getAtom(0).getPoint3d() != null) {
                     som.addAtomContainer(m);
@@ -119,7 +117,7 @@ public class TemplateExtractor {
         }
         System.out.println("READY");
         while (imdl.hasNext()) {
-            som.addAtomContainer((IAtomContainer) imdl.next());
+            som.addAtomContainer(imdl.next());
         }
         try {
             imdl.close();
@@ -131,11 +129,11 @@ public class TemplateExtractor {
 
     public void PartitionRingsFromComplexRing(String dataFile) {
         IAtomContainerSet som = builder.newInstance(IAtomContainerSet.class);
-        IAtomContainer m = null;
+        IAtomContainer m;
         try (BufferedReader fin = new BufferedReader(new FileReader(dataFile));
              IteratingSDFReader imdl = new IteratingSDFReader(fin, builder)) {
             while (imdl.hasNext()) {
-                m = (IAtomContainer) imdl.next();
+                m = imdl.next();
                 System.out.println("Atoms:" + m.getAtomCount());
                 IRingSet ringSetM = Cycles.sssr(m).toRingSet();
                 // som.addAtomContainer(m);
@@ -153,19 +151,19 @@ public class TemplateExtractor {
     public void extractUniqueRingSystemsFromFile(String dataFile) {
         System.out.println("****** EXTRACT UNIQUE RING SYSTEMS ******");
         System.out.println("From file:" + dataFile);
-        IAtomContainer m = null;
+        IAtomContainer m;
         // RingPartitioner ringPartitioner=new RingPartitioner();
-        List<IRingSet> ringSystems = null;
+        List<IRingSet> ringSystems;
 
-        HashMap<String, String> hashRingSystems = new HashMap<String, String>();
+        HashMap<String, String> hashRingSystems = new HashMap<>();
         SmilesGenerator smilesGenerator = new SmilesGenerator();
 
         int counterRings = 0;
         int counterMolecules = 0;
         int counterUniqueRings = 0;
-        IRingSet ringSet = null;
-        String key = "";
-        IAtomContainer ac = null;
+        IRingSet ringSet;
+        String key;
+        IAtomContainer ac;
 
         String molfile = dataFile + "_UniqueRings";
 
@@ -175,7 +173,7 @@ public class TemplateExtractor {
              BufferedReader fin = new BufferedReader(new FileReader(dataFile));
              IteratingSDFReader imdl = new IteratingSDFReader(fin, builder)) {
             while (imdl.hasNext()) {
-                m = (IAtomContainer) imdl.next();
+                m = imdl.next();
                 counterMolecules = counterMolecules + 1;
                 /*
                  * try{ HueckelAromaticityDetector.detectAromaticity(m);
@@ -191,12 +189,11 @@ public class TemplateExtractor {
                 if (ringSetM.getAtomContainerCount() > 0) {
                     ringSystems = RingPartitioner.partitionRings(ringSetM);
 
-                    for (int i = 0; i < ringSystems.size(); i++) {
-                        ringSet = (IRingSet) ringSystems.get(i);
+                    for (IRingSet ringSystem : ringSystems) {
+                        ringSet = ringSystem;
                         ac = builder.newInstance(IAtomContainer.class);
-                        Iterator<IAtomContainer> containers = RingSetManipulator.getAllAtomContainers(ringSet).iterator();
-                        while (containers.hasNext()) {
-                            ac.add((IAtomContainer) containers.next());
+                        for (IAtomContainer container : RingSetManipulator.getAllAtomContainers(ringSet)) {
+                            ac.add(container);
                         }
                         counterRings = counterRings + 1;
                         // Only connection is important
@@ -270,16 +267,16 @@ public class TemplateExtractor {
               MDLV2000Writer mdlw = new MDLV2000Writer(fout)) {
             mdlw.write(som);
         } catch (CDKException | IOException ex2) {
-            System.out.println("IOError:cannot write file due to:" + ex2.toString());
+            System.out.println("IOError:cannot write file due to:" + ex2);
         }
     }
 
     public void makeCanonicalSmileFromRingSystems(String dataFileIn, String dataFileOut) {
         System.out.println("Start make SMILES...");
-        IAtomContainer m = null;
+        IAtomContainer m;
         IteratingSDFReader imdl = null;
         // QueryAtomContainer query=null;
-        List<String> data = new ArrayList<String>();
+        List<String> data = new ArrayList<>();
         SmilesGenerator smiles = new SmilesGenerator();
         try {
             System.out.println("Start...");
@@ -291,7 +288,7 @@ public class TemplateExtractor {
             System.out.println("Could not read Molecules from file " + dataFileIn + " due to: " + exc.getMessage());
         }
         while (imdl.hasNext()) {
-            m = (IAtomContainer) imdl.next();
+            m = imdl.next();
             /*
              * try{ HueckelAromaticityDetector.detectAromaticity(m);
              * }catch(Exception ex1){ System.out.println("Could not find
@@ -302,7 +299,7 @@ public class TemplateExtractor {
             // Molecule(m)));
             try {
 
-                data.add((String) smiles.create(builder.newInstance(IAtomContainer.class, m)));
+                data.add(smiles.create(builder.newInstance(IAtomContainer.class, m)));
             } catch (IllegalArgumentException | CDKException exc1) {
                 System.out.println("Could not create smile due to: " + exc1.getMessage());
             }
@@ -319,11 +316,11 @@ public class TemplateExtractor {
         } catch (Exception exc3) {
             System.out.println("Could not write smile in file " + dataFileOut + " due to: " + exc3.getMessage());
         }
-        for (int i = 0; i < data.size(); i++) {
+        for (String datum : data) {
             // System.out.println("write:"+(String)data.get(i));
             try {
 
-                fout.write(((String) data.get(i)));
+                fout.write(datum);
                 fout.write('\n');
             } catch (Exception exc4) {
             }
@@ -342,11 +339,11 @@ public class TemplateExtractor {
         HybridizationFingerprinter fingerPrinter = new HybridizationFingerprinter(HybridizationFingerprinter.DEFAULT_SIZE,
                 HybridizationFingerprinter.DEFAULT_SEARCH_DEPTH);
         fingerPrinter.setHashPseudoAtoms(true);
-        IAtomContainer m = null;
+        IAtomContainer m;
         IteratingSDFReader imdl = null;
         //QueryAtomContainer query=null;
-        IAtomContainer query = null;
-        List<IBitFingerprint> data = new ArrayList<IBitFingerprint>();
+        IAtomContainer query;
+        List<IBitFingerprint> data = new ArrayList<>();
         ILoggingTool logger = LoggingToolFactory.createLoggingTool(getClass());
         try {
             logger.info("Read data file in ...");
@@ -360,7 +357,7 @@ public class TemplateExtractor {
         int fingerprintCounter = 0;
         logger.info("Generated Fingerprints: " + fingerprintCounter + "    ");
         while (imdl.hasNext() && (moleculeCounter < limit || limit == -1)) {
-            m = (IAtomContainer) imdl.next();
+            m = imdl.next();
             moleculeCounter++;
             if (anyAtom && !anyAtomAnyBond) {
                 query = QueryAtomContainerCreator.createAnyAtomContainer(m, false);
@@ -383,7 +380,7 @@ public class TemplateExtractor {
                 if (timings.containsKey(bin)) {
                     timings.put(bin, (timings.get(bin)) + 1);
                 } else {
-                    timings.put(bin, Integer.valueOf(1));
+                    timings.put(bin, 1);
                 }
             } catch (Exception exc1) {
                 logger.info("QueryFingerprintError: from molecule:" + moleculeCounter + " due to:"
@@ -423,7 +420,7 @@ public class TemplateExtractor {
 
     public void makeFingerprintFromRingSystems(String dataFileIn, String dataFileOut, boolean anyAtom,
             boolean anyAtomAnyBond) throws Exception {
-        Map<String, Integer> timings = new HashMap<String, Integer>();
+        Map<String, Integer> timings = new HashMap<>();
 
         System.out.println("Start make fingerprint from file:" + dataFileIn + " ...");
         BufferedReader fin = new BufferedReader(new FileReader(dataFileIn));
@@ -434,15 +431,15 @@ public class TemplateExtractor {
         } catch (Exception exc3) {
             System.out.println("Could not write Fingerprint in file " + dataFileOut + " due to: " + exc3.getMessage());
         }
-        for (int i = 0; i < data.size(); i++) {
+        for (IBitFingerprint datum : data) {
             try {
-                fout.write(data.get(i).toString());
+                fout.write(datum.toString());
                 fout.write('\n');
             } catch (Exception exc4) {
             }
         }
         System.out.println("\nFingerprints:" + data.size() + " are written...ready");
-        System.out.println("\nComputing time statistics:\n" + timings.toString());
+        System.out.println("\nComputing time statistics:\n" + timings);
         try {
             fout.close();
         } catch (Exception exc5) {
@@ -462,7 +459,7 @@ public class TemplateExtractor {
     }
 
     public IAtomContainer createAnyAtomAtomContainer(IAtomContainer atomContainer) throws Exception {
-        IAtomContainer query = (IAtomContainer) atomContainer.clone();
+        IAtomContainer query = atomContainer.clone();
         // System.out.println("createAnyAtomAtomContainer");
         for (int i = 0; i < query.getAtomCount(); i++) {
             // System.out.print(" "+i);

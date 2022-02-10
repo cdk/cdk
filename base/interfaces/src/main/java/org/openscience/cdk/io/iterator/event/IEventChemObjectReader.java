@@ -40,6 +40,6 @@ import org.openscience.cdk.io.IChemObjectIO;
  */
 public interface IEventChemObjectReader extends IChemObjectIO {
 
-    public IAtomContainer getAtomContainer();
+    IAtomContainer getAtomContainer();
 
 }

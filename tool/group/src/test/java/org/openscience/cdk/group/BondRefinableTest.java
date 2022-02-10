@@ -38,7 +38,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  */
 public class BondRefinableTest {
     
-    public static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    public static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
     
     @Test
     public void getVertexCount() {
@@ -61,7 +61,7 @@ public class BondRefinableTest {
     public void neighboursInBlock() {
         String acpString = "C0C1C2C3 0:1(1),0:3(1),1:2(1),2:3(1)";
         BondRefinable bondRefinable = refinable(acpString);
-        Set<Integer> block = new HashSet<Integer>();
+        Set<Integer> block = new HashSet<>();
         block.add(1);
         block.add(3);
         assertEquals(new IntegerInvariant(1), bondRefinable.neighboursInBlock(block, 0));

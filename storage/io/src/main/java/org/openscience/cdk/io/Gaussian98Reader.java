@@ -74,7 +74,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
 public class Gaussian98Reader extends DefaultChemObjectReader {
 
     private BufferedReader      input;
-    private static ILoggingTool logger    = LoggingToolFactory.createLoggingTool(Gaussian98Reader.class); ;
+    private static final ILoggingTool logger    = LoggingToolFactory.createLoggingTool(Gaussian98Reader.class);
     private int                 atomCount = 0;
     private String              lastRoute = "";
 
@@ -137,8 +137,8 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IChemFile.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IChemFile.class.equals(anInterface)) return true;
         }
         Class superClass = classObject.getSuperclass();
         if (superClass != null) return this.accepts(superClass);
@@ -154,7 +154,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
             try {
                 file = readChemFile(file);
             } catch (IOException exception) {
-                throw new CDKException("Error while reading file: " + exception.toString(), exception);
+                throw new CDKException("Error while reading file: " + exception, exception);
             }
             return (T) file;
         } else {
@@ -185,7 +185,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
 
         // Find first set of coordinates by skipping all before "Standard orientation"
         while (input.ready() && (line != null)) {
-            if (line.indexOf("Standard orientation:") >= 0) {
+            if (line.contains("Standard orientation:")) {
 
                 // Found a set of coordinates
                 model = chemFile.getBuilder().newInstance(IChemModel.class);
@@ -205,7 +205,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
                     lastRoute = line;
                     modelCounter = 0;
 
-                } else if (line.indexOf("Standard orientation:") >= 0) {
+                } else if (line.contains("Standard orientation:")) {
 
                     // Found a set of coordinates
                     // Add current frame to file and create a new one.
@@ -218,22 +218,22 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
                     model = chemFile.getBuilder().newInstance(IChemModel.class);
                     modelCounter++;
                     readCoordinates(model);
-                } else if (line.indexOf("SCF Done:") >= 0) {
+                } else if (line.contains("SCF Done:")) {
 
                     // Found an energy
                     model.setProperty(CDKConstants.REMARK, line.trim());
-                } else if (line.indexOf("Harmonic frequencies") >= 0) {
+                } else if (line.contains("Harmonic frequencies")) {
 
                     // Found a set of vibrations
                     // readFrequencies(frame);
-                } else if (line.indexOf("Total atomic charges") >= 0) {
+                } else if (line.contains("Total atomic charges")) {
                     readPartialCharges(model);
-                } else if (line.indexOf("Magnetic shielding") >= 0) {
+                } else if (line.contains("Magnetic shielding")) {
 
                     // Found NMR data
                     readNMRData(model, line);
 
-                } else if (line.indexOf("GINC") >= 0) {
+                } else if (line.contains("GINC")) {
 
                     // Found calculation level of theory
                     levelOfTheory = parseLevelOfTheory(line);
@@ -271,7 +271,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         line = input.readLine();
         while (input.ready()) {
             line = input.readLine();
-            if ((line == null) || (line.indexOf("-----") >= 0)) {
+            if ((line == null) || (line.contains("-----"))) {
                 break;
             }
             int atomicNumber;
@@ -314,7 +314,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
             } else {
                 throw new IOException("Error reading z coordinate");
             }
-            String symbol = "Du";
+            String symbol;
             symbol = PeriodicTable.getSymbol(atomicNumber);
             IAtom atom = model.getBuilder().newInstance(IAtom.class, symbol);
             atom.setPoint3d(new Point3d(x, y, z));
@@ -345,7 +345,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         while (input.ready()) {
             line = input.readLine();
             logger.debug("Read charge block line: " + line);
-            if ((line == null) || (line.indexOf("Sum of Mulliken charges") >= 0)) {
+            if ((line == null) || (line.contains("Sum of Mulliken charges"))) {
                 logger.debug("End of charge block found");
                 break;
             }
@@ -420,9 +420,9 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         IAtomContainer ac = containers.get(0);
         // Determine label for properties
         String label;
-        if (labelLine.indexOf("Diamagnetic") >= 0) {
+        if (labelLine.contains("Diamagnetic")) {
             label = "Diamagnetic Magnetic shielding (Isotropic)";
-        } else if (labelLine.indexOf("Paramagnetic") >= 0) {
+        } else if (labelLine.contains("Paramagnetic")) {
             label = "Paramagnetic Magnetic shielding (Isotropic)";
         } else {
             label = "Magnetic shielding (Isotropic)";
@@ -431,7 +431,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         for (int i = 0; i < atomCount; ++i) {
             try {
                 String line = input.readLine().trim();
-                while (line.indexOf("Isotropic") < 0) {
+                while (!line.contains("Isotropic")) {
                     if (line == null) {
                         return;
                     }
@@ -450,9 +450,9 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
                 while (st1.hasMoreTokens()) {
                     if (st1.nextToken().equals("=")) break;
                 }
-                double shielding = Double.valueOf(st1.nextToken()).doubleValue();
+                double shielding = Double.valueOf(st1.nextToken());
                 logger.info("Type of shielding: " + label);
-                ac.getAtom(atomIndex).setProperty(CDKConstants.ISOTROPIC_SHIELDING, new Double(shielding));
+                ac.getAtom(atomIndex).setProperty(CDKConstants.ISOTROPIC_SHIELDING, shielding);
                 ++atomIndex;
             } catch (IOException | NumberFormatException exc) {
                 logger.debug("failed to read line from gaussian98 file where I expected one.");
@@ -467,7 +467,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
      * @return Description of the Return Value
      */
     private String parseLevelOfTheory(String line) {
-        StringBuffer summary = new StringBuffer();
+        StringBuilder summary = new StringBuilder();
         summary.append(line);
         try {
 
@@ -479,7 +479,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
             logger.debug("syntax problem while parsing summary of g98 section: ");
             logger.debug(exc);
         }
-        logger.debug("parseLoT(): " + summary.toString());
+        logger.debug("parseLoT(): " + summary);
         StringTokenizer st1 = new StringTokenizer(summary.toString(), "\\");
 
         // Must contain at least 6 tokens

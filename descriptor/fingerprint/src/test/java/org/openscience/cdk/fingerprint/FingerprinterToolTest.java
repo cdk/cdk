@@ -93,7 +93,7 @@ public class FingerprinterToolTest extends CDKTestCase {
     
     @Test 
     public void makeBitFingerprint() {
-        Map<String,Integer> features = new HashMap<String,Integer>();
+        Map<String,Integer> features = new HashMap<>();
         features.put("CCO", 1);
         features.put("CC", 1);
         features.put("C", 1);
@@ -106,7 +106,7 @@ public class FingerprinterToolTest extends CDKTestCase {
     
     @Test 
     public void makeCountFingerprint() {
-        Map<String,Integer> features = new HashMap<String,Integer>();
+        Map<String,Integer> features = new HashMap<>();
         features.put("CCO", 1);
         features.put("CC", 2);
         features.put("C", 2);

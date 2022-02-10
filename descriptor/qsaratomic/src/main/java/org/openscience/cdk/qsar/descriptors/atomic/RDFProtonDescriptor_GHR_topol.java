@@ -20,7 +20,6 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.vecmath.Point3d;
@@ -159,9 +158,9 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
     }
 
     public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer, IRingSet precalculatedringset) {
-        IAtomContainer varAtomContainer = null;
+        IAtomContainer varAtomContainer;
         try {
-            varAtomContainer = (IAtomContainer) atomContainer.clone();
+            varAtomContainer = atomContainer.clone();
         } catch (CloneNotSupportedException e) {
             return getDummyDescriptorValue(e);
         }
@@ -209,9 +208,7 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
         IRing ring;
         IRingSet ringsWithThisBond;
         // SET ISINRING FLAGS FOR BONDS
-        Iterator<IBond> bondsInContainer = varAtomContainer.bonds().iterator();
-        while (bondsInContainer.hasNext()) {
-            IBond bond = bondsInContainer.next();
+        for (IBond bond : varAtomContainer.bonds()) {
             ringsWithThisBond = varRingSet.getRings(bond);
             if (ringsWithThisBond.getAtomContainerCount() > 0) {
                 bond.setFlag(CDKConstants.ISINRING, true);
@@ -236,18 +233,18 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
 
         // 2', 3', 4', 5', 6', and 7' atoms up to the target are detected:
         List<IAtom> atomsInSecondSphere = mol.getConnectedAtomsList(neighbour0);
-        List<IAtom> atomsInThirdSphere = null;
-        List<IAtom> atomsInFourthSphere = null;
-        List<IAtom> atomsInFifthSphere = null;
-        List<IAtom> atomsInSixthSphere = null;
-        List<IAtom> atomsInSeventhSphere = null;
+        List<IAtom> atomsInThirdSphere;
+        List<IAtom> atomsInFourthSphere;
+        List<IAtom> atomsInFifthSphere;
+        List<IAtom> atomsInSixthSphere;
+        List<IAtom> atomsInSeventhSphere;
 
         // SOME LISTS ARE CREATED FOR STORING OF INTERESTING ATOMS AND BONDS DURING DETECTION
-        ArrayList<Integer> singles = new ArrayList<Integer>(); // list of any bond not rotatable
-        ArrayList<Integer> doubles = new ArrayList<Integer>(); // list with only double bonds
-        ArrayList<Integer> atoms = new ArrayList<Integer>(); // list with all the atoms in spheres
+        ArrayList<Integer> singles = new ArrayList<>(); // list of any bond not rotatable
+        ArrayList<Integer> doubles = new ArrayList<>(); // list with only double bonds
+        ArrayList<Integer> atoms = new ArrayList<>(); // list with all the atoms in spheres
         //atoms.add( Integer.valueOf( mol.indexOf(neighboors[0]) ) );
-        ArrayList<Integer> bondsInCycloex = new ArrayList<Integer>(); // list for bonds in cycloexane-like rings
+        ArrayList<Integer> bondsInCycloex = new ArrayList<>(); // list for bonds in cycloexane-like rings
 
         // 2', 3', 4', 5', 6', and 7' bonds up to the target are detected:
         IBond secondBond; // (remember that first bond is proton bond)
@@ -386,7 +383,7 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
         //Variables
         double distance;
         double sum;
-        double smooth = -20;
+        double smooth;
         double partial;
         int position;
         double limitInf = 1.4;
@@ -409,9 +406,9 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
             for (int c = 0; c < ghr_topol_desc_length; c++) {
             	double ghrt = limitInf + (limitSup - limitInf) * ((double)c / ghr_topol_desc_length);
                 sum = 0;
-                for (int at = 0; at < atoms.size(); at++) {
+                for (Integer integer : atoms) {
                     distance = 0;
-                    thisAtom = atoms.get(at);
+                    thisAtom = integer;
                     position = thisAtom;
                     endVertex = mol.getAtom(position);
                     atom2 = mol.getAtom(position);
@@ -468,8 +465,7 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
         List<IAtom> neighToCarbon = mol.getConnectedAtomsList(carbonAtom);
         IBond tmpBond;
         int counter = 0;
-        for (int nei = 0; nei < neighToCarbon.size(); nei++) {
-            IAtom neighbour = neighToCarbon.get(nei);
+        for (IAtom neighbour : neighToCarbon) {
             if (neighbour.getAtomicNumber() == IElement.O) {
                 tmpBond = mol.getBond(neighbour, carbonAtom);
                 if (tmpBond.getOrder() == IBond.Order.DOUBLE) counter += 1;
@@ -495,19 +491,19 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
     private void checkAndStore(int bondToStore, IBond.Order bondOrder, ArrayList<Integer> singleVec,
             ArrayList<Integer> doubleVec, ArrayList<Integer> cycloexVec, int a1, ArrayList<Integer> atomVec,
             int sphere, boolean isBondInCycloex) {
-        if (!atomVec.contains(Integer.valueOf(a1))) {
+        if (!atomVec.contains(a1)) {
             if (sphere < 6) atomVec.add(a1);
         }
-        if (!cycloexVec.contains(Integer.valueOf(bondToStore))) {
+        if (!cycloexVec.contains(bondToStore)) {
             if (isBondInCycloex) {
                 cycloexVec.add(bondToStore);
             }
         }
         if (bondOrder == IBond.Order.DOUBLE) {
-            if (!doubleVec.contains(Integer.valueOf(bondToStore))) doubleVec.add(bondToStore);
+            if (!doubleVec.contains(bondToStore)) doubleVec.add(bondToStore);
         }
         if (bondOrder == IBond.Order.SINGLE) {
-            if (!singleVec.contains(Integer.valueOf(bondToStore))) singleVec.add(bondToStore);
+            if (!singleVec.contains(bondToStore)) singleVec.add(bondToStore);
         }
     }
 

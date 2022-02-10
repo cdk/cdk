@@ -35,7 +35,6 @@ import org.openscience.cdk.smarts.SmartsPattern;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 
-import java.io.IOException;
 import java.util.BitSet;
 import java.util.HashMap;
 import java.util.Map;
@@ -99,9 +98,9 @@ public class PubchemFingerprinter extends AbstractFingerprinter implements IFing
      */
     public static final int FP_SIZE = 881;
 
-    private byte[]          m_bits;
+    private final byte[]          m_bits;
 
-    private Map<String,SmartsPattern> cache = new HashMap<>();
+    private final Map<String,SmartsPattern> cache = new HashMap<>();
 
     public PubchemFingerprinter(IChemObjectBuilder builder) {
         m_bits = new byte[(FP_SIZE + 7) >> 3];
@@ -148,7 +147,7 @@ public class PubchemFingerprinter extends AbstractFingerprinter implements IFing
 
     static class CountElements {
 
-        int[] counts = new int[120];
+        final int[] counts = new int[120];
 
         public CountElements(IAtomContainer m) {
             for (int i = 0; i < m.getAtomCount(); i++)
@@ -167,7 +166,7 @@ public class PubchemFingerprinter extends AbstractFingerprinter implements IFing
     static class CountRings {
 
         int[][]  sssr = {};
-        IRingSet ringSet;
+        final IRingSet ringSet;
 
         public CountRings(IAtomContainer m) {
             ringSet = Cycles.sssr(m).toRingSet();
@@ -295,7 +294,7 @@ public class PubchemFingerprinter extends AbstractFingerprinter implements IFing
 
     class CountSubstructures {
 
-        private IAtomContainer mol;
+        private final IAtomContainer mol;
 
         public CountSubstructures(IAtomContainer m) {
             mol = m;
@@ -388,11 +387,11 @@ public class PubchemFingerprinter extends AbstractFingerprinter implements IFing
         return base64Encode(pack);
     }
 
-    private static String BASE64_LUT = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "abcdefghijklmnopqrstuvwxyz0123456789+/=";
+    private static final String BASE64_LUT = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "abcdefghijklmnopqrstuvwxyz0123456789+/=";
 
     // based on NCBI C implementation
     private static String base64Encode(byte[] data) {
-        char c64[] = new char[data.length * 4 / 3 + 5];
+        char[] c64 = new char[data.length * 4 / 3 + 5];
         for (int i = 0, k = 0; i < data.length; i += 3, k += 4) {
             c64[k + 0] = (char) (data[i] >> 2);
             c64[k + 1] = (char) ((data[i] & 0x03) << 4);
@@ -459,7 +458,7 @@ public class PubchemFingerprinter extends AbstractFingerprinter implements IFing
         return b64;
     }
 
-    static final int BITCOUNT[] = {0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4, 1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4,
+    static final int[] BITCOUNT = {0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4, 1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4,
             3, 4, 4, 5, 1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5, 2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6,
             1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5, 2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 2, 3, 3, 4,
             3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7, 1, 2, 2, 3, 2, 3, 3, 4,
@@ -468,7 +467,7 @@ public class PubchemFingerprinter extends AbstractFingerprinter implements IFing
             3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7, 3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7, 4, 5, 5, 6,
             5, 6, 6, 7, 5, 6, 6, 7, 6, 7, 7, 8};
 
-    static final int MASK[]     = {0x80, 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01};
+    static final int[] MASK = {0x80, 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01};
 
     /*
      * Section 1: Hierarchic Element Counts - These bs test for the presence or

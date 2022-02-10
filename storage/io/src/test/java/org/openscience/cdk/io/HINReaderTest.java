@@ -50,7 +50,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  */
 public class HINReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(HINReaderTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(HINReaderTest.class);
 
     @BeforeClass
     public static void setup() {

@@ -29,7 +29,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -81,7 +80,7 @@ public class TemplateHandler3D {
 
     private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(TemplateHandler3D.class);
 
-    private UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
+    private final UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
 
     private TemplateHandler3D() {
     }
@@ -140,12 +139,12 @@ public class TemplateHandler3D {
     public IRingSet getLargestRingSet(List<IRingSet> ringSystems) {
         IRingSet       largestRingSet = null;
         int            atomNumber     = 0;
-        IAtomContainer container      = null;
-        for (int i = 0; i < ringSystems.size(); i++) {
-            container = getAllInOneContainer(ringSystems.get(i));
+        IAtomContainer container;
+        for (IRingSet ringSystem : ringSystems) {
+            container = getAllInOneContainer(ringSystem);
             if (atomNumber < container.getAtomCount()) {
                 atomNumber = container.getAtomCount();
-                largestRingSet = ringSystems.get(i);
+                largestRingSet = ringSystem;
             }
         }
         return largestRingSet;
@@ -153,9 +152,8 @@ public class TemplateHandler3D {
 
     private IAtomContainer getAllInOneContainer(IRingSet ringSet) {
         IAtomContainer           resultContainer = ringSet.getBuilder().newInstance(IAtomContainer.class);
-        Iterator<IAtomContainer> containers      = RingSetManipulator.getAllAtomContainers(ringSet).iterator();
-        while (containers.hasNext()) {
-            resultContainer.add((IAtomContainer) containers.next());
+        for (IAtomContainer container : RingSetManipulator.getAllAtomContainers(ringSet)) {
+            resultContainer.add(container);
         }
         return resultContainer;
     }

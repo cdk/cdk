@@ -58,7 +58,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  */
 public class AtomCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private String elementName = "*";
+    private String elementName;
 
     /**
      *  Constructor for the AtomCountDescriptor object.

@@ -61,10 +61,10 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class Mopac7Writer extends DefaultChemObjectWriter {
 
     private BufferedWriter      writer;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(Mopac7Writer.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(Mopac7Writer.class);
 
     private final static char   BLANK  = ' ';
-    private NumberFormat        numberFormat;
+    private final NumberFormat        numberFormat;
 
     /**
      * Creates a writer to serialize a molecule as Mopac7 input.
@@ -163,8 +163,8 @@ public class Mopac7Writer extends DefaultChemObjectWriter {
     /** {@inheritDoc} */
     public boolean accepts(Class<? extends IChemObject> classObject) {
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IAtomContainer.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IAtomContainer.class.equals(anInterface)) return true;
         }
         if (IAtomContainer.class.equals(classObject)) return true;
         Class superClass = classObject.getSuperclass();

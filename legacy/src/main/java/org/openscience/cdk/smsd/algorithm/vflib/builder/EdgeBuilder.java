@@ -38,9 +38,9 @@ import org.openscience.cdk.smsd.algorithm.vflib.interfaces.INode;
 @Deprecated
 public class EdgeBuilder implements IEdge {
 
-    private NodeBuilder   source;
-    private NodeBuilder   target;
-    private VFBondMatcher matcher;
+    private final NodeBuilder   source;
+    private final NodeBuilder   target;
+    private final VFBondMatcher matcher;
 
     /**
      *

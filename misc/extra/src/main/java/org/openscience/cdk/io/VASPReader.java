@@ -56,10 +56,10 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class VASPReader extends DefaultChemObjectReader {
 
-    private static ILoggingTool logger  = LoggingToolFactory.createLoggingTool(VASPReader.class);
+    private static final ILoggingTool logger  = LoggingToolFactory.createLoggingTool(VASPReader.class);
 
     // This variable is used to parse the input file
-    protected StringTokenizer   st      = new StringTokenizer("", "");                            ;
+    protected StringTokenizer   st      = new StringTokenizer("", "");
     protected String            fieldVal;
     protected int               repVal  = 0;
 
@@ -68,12 +68,12 @@ public class VASPReader extends DefaultChemObjectReader {
     // VASP VARIABLES
     int                         natom   = 1;
     int                         ntype   = 1;
-    double                      acell[] = new double[3];
-    double[][]                  rprim   = new double[3][3];
+    final double[] acell = new double[3];
+    final double[][]                  rprim   = new double[3][3];
     String                      info    = "";
     String                      line;
     String[]                    anames;                                                          //size is ntype. Contains the names of the atoms
-    int                         natom_type[];                                                    //size is natom. Contain the atomic number
+    int[] natom_type;                                                    //size is natom. Contain the atomic number
     String                      representation;                                                  // "Direct" only so far
 
     /**
@@ -147,7 +147,7 @@ public class VASPReader extends DefaultChemObjectReader {
 
     private IChemSequence readChemSequence(IChemSequence sequence) throws CDKException, IOException {
         IChemModel chemModel = sequence.getBuilder().newInstance(IChemModel.class);
-        ICrystal crystal = null;
+        ICrystal crystal;
 
         // Get the info line (first token of the first line)
         inputBuffer.mark(255);
@@ -241,7 +241,7 @@ public class VASPReader extends DefaultChemObjectReader {
             crystal.setB(new Vector3d(rprim[1][0] * acell[1], rprim[1][1] * acell[1], rprim[1][2] * acell[1]));
             crystal.setC(new Vector3d(rprim[2][0] * acell[2], rprim[2][1] * acell[2], rprim[2][2] * acell[2]));
             for (int i = 0; i < atomType.length; i++) {
-                String symbol = "Du";
+                String symbol;
                 try {
                     symbol = Isotopes.getInstance().getElement(atomType[i]).getSymbol();
                 } catch (Exception exception) {

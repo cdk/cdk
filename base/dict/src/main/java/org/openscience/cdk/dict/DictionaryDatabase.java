@@ -49,18 +49,18 @@ public class DictionaryDatabase {
 
     public final static String      DICTREFPROPERTYNAME = "org.openscience.cdk.dict";
 
-    private ILoggingTool            logger              = LoggingToolFactory
+    private final ILoggingTool            logger              = LoggingToolFactory
                                                                 .createLoggingTool(DictionaryDatabase.class);
 
-    private String[]                dictionaryNames     = {"chemical", "elements", "descriptor-algorithms",
+    private final String[]                dictionaryNames     = {"chemical", "elements", "descriptor-algorithms",
             "reaction-processes"                        };
-    private String[]                dictionaryTypes     = {"xml", "owl", "owl", "owl_React"};
+    private final String[]                dictionaryTypes     = {"xml", "owl", "owl", "owl_React"};
 
-    private Map<String, Dictionary> dictionaries;
+    private final Map<String, Dictionary> dictionaries;
 
     public DictionaryDatabase() {
         // read dictionaries distributed with CDK
-        dictionaries = new Hashtable<String, Dictionary>();
+        dictionaries = new Hashtable<>();
         for (int i = 0; i < dictionaryNames.length; i++) {
             String name = dictionaryNames[i];
             String type = dictionaryTypes[i];
@@ -161,7 +161,7 @@ public class DictionaryDatabase {
     }
 
     public Entry[] getDictionaryEntry(String dictionaryName) {
-        Dictionary dictionary = (Dictionary) dictionaries.get(dictionaryName);
+        Dictionary dictionary = dictionaries.get(dictionaryName);
         return dictionary.getEntries();
     }
 
@@ -185,7 +185,7 @@ public class DictionaryDatabase {
      */
     public boolean hasEntry(String dictName, String entryID) {
         if (hasDictionary(dictName)) {
-            Dictionary dictionary = (Dictionary) dictionaries.get(dictName);
+            Dictionary dictionary = dictionaries.get(dictName);
             return dictionary.hasEntry(entryID.toLowerCase());
         } else {
             return false;

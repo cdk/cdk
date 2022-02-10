@@ -31,8 +31,6 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.util.Iterator;
-
 /**
  *  The calculation of bond-pi Partial charge is calculated
  *  determining the difference the Partial Pi Charge on atoms
@@ -61,7 +59,7 @@ import java.util.Iterator;
  */
 public class BondPartialPiChargeDescriptor extends AbstractBondDescriptor {
 
-    private GasteigerPEPEPartialCharges pepe          = null;
+    private GasteigerPEPEPartialCharges pepe;
     /**Number of maximum iterations*/
     private int                         maxIterations = -1;
     /**Number of maximum resonance structures*/
@@ -184,8 +182,7 @@ public class BondPartialPiChargeDescriptor extends AbstractBondDescriptor {
                     ac.getAtom(i).setCharge(0.0);
 
                 pepe.assignGasteigerPiPartialCharges(ac, true);
-                for (Iterator<IBond> it = ac.bonds().iterator(); it.hasNext();) {
-                    IBond bondi = it.next();
+                for (IBond bondi : ac.bonds()) {
                     double result = Math.abs(bondi.getBegin().getCharge() - bondi.getEnd().getCharge());
                     cacheDescriptorValue(bondi, ac, new DoubleResult(result));
                 }

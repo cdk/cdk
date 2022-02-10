@@ -39,20 +39,20 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 @Deprecated
 public class TargetProcessor {
 
-    private List<String>  cTab1Copy;
-    private List<String>  cTab2Copy;
-    private String[]      signArray;
+    private final List<String>  cTab1Copy;
+    private final List<String>  cTab2Copy;
+    private final String[]      signArray;
     //number of remaining molecule A bonds after the clique search, which are
     //neighbors of the MCS
-    private int           neighborBondNumB = 0;
+    private int           neighborBondNumB;
     //number of remaining molecule A bonds after the clique search, which aren't
     //neighbors
-    private int           setBondNumB      = 0;
-    private List<Integer> iBondNeighborsB;
-    private List<String>  cBondNeighborsB;
-    private int           newNeighborNumA;
-    private List<Integer> newINeighborsA;
-    private List<String>  newCNeighborsA;
+    private int           setBondNumB;
+    private final List<Integer> iBondNeighborsB;
+    private final List<String>  cBondNeighborsB;
+    private final int           newNeighborNumA;
+    private final List<Integer> newINeighborsA;
+    private final List<String>  newCNeighborsA;
 
     /**
      *
@@ -96,12 +96,12 @@ public class TargetProcessor {
             Integer indexJ = target.indexOf(target.getBond(atomIndex).getEnd());
             Integer order = target.getBond(atomIndex).getOrder().numeric();
 
-            for (int b = 0; b < unmappedNumB; b++) {
-                if (unmappedAtomsMolB.get(b).equals(indexI)) {
+            for (Integer integer : unmappedAtomsMolB) {
+                if (integer.equals(indexI)) {
                     normalBond = unMappedAtomsEqualsIndexI(target, mappingSize, atomIndex, counter, mappedAtoms,
                             indexI, indexJ, order);
                     bondConsidered = true;
-                } else if (Objects.equals(unmappedAtomsMolB.get(b), indexJ)) {
+                } else if (Objects.equals(integer, indexJ)) {
                     normalBond = unMappedAtomsEqualsIndexJ(target, mappingSize, atomIndex, counter, mappedAtoms,
                             indexI, indexJ, order);
                     bondConsidered = true;

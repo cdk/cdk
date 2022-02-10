@@ -144,8 +144,8 @@ public class AtomTypeTest extends AbstractAtomTypeTest {
     public void testCompare_AtomTypeName() {
         AtomType at1 = new AtomType("C");
         AtomType at2 = new AtomType("C");
-        at1.setAtomTypeName(new String("C4"));
-        at2.setAtomTypeName(new String("C4"));
+        at1.setAtomTypeName("C4");
+        at2.setAtomTypeName("C4");
         Assert.assertTrue(at1.compare(at2));
     }
 
@@ -153,8 +153,8 @@ public class AtomTypeTest extends AbstractAtomTypeTest {
     public void testCompare_DiffAtomTypeName() {
         AtomType at1 = new AtomType("C");
         AtomType at2 = new AtomType("C");
-        at1.setAtomTypeName(new String("C4"));
-        at2.setAtomTypeName(new String("C3"));
+        at1.setAtomTypeName("C4");
+        at2.setAtomTypeName("C3");
         Assert.assertFalse(at1.compare(at2));
     }
 

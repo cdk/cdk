@@ -39,13 +39,13 @@ public class VisitedAtoms {
     /**
      * {@link List} to hold the visited {@link IAtom}s.
      */
-    private List<IAtom> visitedItems;
+    private final List<IAtom> visitedItems;
 
     /**
      * Creates a new empty list of visited {@link IAtom}s.
      */
     public VisitedAtoms() {
-        visitedItems = new ArrayList<IAtom>();
+        visitedItems = new ArrayList<>();
     }
 
     /**

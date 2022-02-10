@@ -236,7 +236,7 @@ public class InChIGeneratorTest extends CDKTestCase {
         ac.addAtom(a1);
         ac.addAtom(a2);
         ac.addBond(new Bond(a1, a2, Order.SINGLE));
-        List<INCHI_OPTION> options = new ArrayList<INCHI_OPTION>();
+        List<INCHI_OPTION> options = new ArrayList<>();
         options.add(INCHI_OPTION.FixedH);
         options.add(INCHI_OPTION.SAbs);
         options.add(INCHI_OPTION.SAsXYZ);

@@ -43,8 +43,8 @@ package org.openscience.cdk.smsd.algorithm.rgraph;
 @Deprecated
 public class CDKRMap {
 
-    private int id1 = 0;
-    private int id2 = 0;
+    private int id1;
+    private int id2;
 
     /**
      *  Constructor for the CDKRMap

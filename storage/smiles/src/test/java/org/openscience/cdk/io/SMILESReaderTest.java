@@ -54,7 +54,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class SMILESReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(SMILESReaderTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(SMILESReaderTest.class);
 
     @BeforeClass
     public static void setup() throws Exception {
@@ -85,7 +85,7 @@ public class SMILESReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getResourceAsStream(filename);
         SMILESReader reader = new SMILESReader(ins);
         IAtomContainerSet som = reader.read(new AtomContainerSet());
-        String name = null;
+        String name;
         IAtomContainer thisMol = som.getAtomContainer(0);
         name = ((String) thisMol.getProperty("SMIdbNAME")).toString();
         Assert.assertEquals("benzene", name);

@@ -274,7 +274,7 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer> impl
      */
     @Override
     public List<IGenerator<IAtomContainer>> getGenerators() {
-        return new ArrayList<IGenerator<IAtomContainer>>(generators);
+        return new ArrayList<>(generators);
     }
 
 }

@@ -68,13 +68,13 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 @Deprecated
 public class PathGraph {
 
-    private List<PathEdge> edges;
-    private List<IAtom>    atoms;
-    private IAtomContainer mol;
+    private final List<PathEdge> edges;
+    private final List<IAtom>    atoms;
+    private final IAtomContainer mol;
 
     public PathGraph(IAtomContainer molecule) {
-        edges = new ArrayList<PathEdge>();
-        atoms = new ArrayList<IAtom>();
+        edges = new ArrayList<>();
+        atoms = new ArrayList<>();
         this.mol = molecule;
 
         loadEdges(molecule);
@@ -97,7 +97,7 @@ public class PathGraph {
 
     public List<PathEdge> remove(IAtom atom) {
         List<PathEdge> oldEdges = getEdges(atom);
-        List<PathEdge> result = new ArrayList<PathEdge>();
+        List<PathEdge> result = new ArrayList<>();
 
         for (PathEdge edge : oldEdges) {
             if (edge.isCycle()) {
@@ -118,7 +118,7 @@ public class PathGraph {
     }
 
     private List<PathEdge> spliceEdges(List<PathEdge> edges) {
-        List<PathEdge> result = new ArrayList<PathEdge>();
+        List<PathEdge> result = new ArrayList<>();
 
         for (int i = 0; i < edges.size(); i++) {
             for (int j = i + 1; j < edges.size(); j++) {
@@ -134,7 +134,7 @@ public class PathGraph {
     }
 
     private List<PathEdge> getEdges(IAtom atom) {
-        List<PathEdge> result = new ArrayList<PathEdge>();
+        List<PathEdge> result = new ArrayList<>();
 
         for (PathEdge edge : edges) {
             if (edge.isCycle()) {

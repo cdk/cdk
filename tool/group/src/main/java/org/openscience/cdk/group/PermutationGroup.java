@@ -86,14 +86,14 @@ public class PermutationGroup {
          *
          * @param p a permutation in the full group
          */
-        public void applyTo(Permutation p);
+        void applyTo(Permutation p);
 
         /**
          * Check to see if the backtracker is finished.
          *
          * @return true if complete
          */
-        public boolean isFinished();
+        boolean isFinished();
     }
 
     /**
@@ -157,7 +157,7 @@ public class PermutationGroup {
      * @return a group for all permutations of N
      */
     public static PermutationGroup makeSymN(int size) {
-        List<Permutation> generators = new ArrayList<Permutation>();
+        List<Permutation> generators = new ArrayList<>();
 
         // p1 is (0, 1)
         int[] p1 = new int[size];
@@ -229,7 +229,7 @@ public class PermutationGroup {
      * @return a list of permutations
      */
     public List<Permutation> getLeftTransversal(int index) {
-        List<Permutation> traversal = new ArrayList<Permutation>();
+        List<Permutation> traversal = new ArrayList<>();
         for (int subIndex = 0; subIndex < size; subIndex++) {
             if (permutations[index][subIndex] != null) {
                 traversal.add(permutations[index][subIndex]);
@@ -246,7 +246,7 @@ public class PermutationGroup {
      */
     public List<Permutation> transversal(final PermutationGroup subgroup) {
         final long m = this.order() / subgroup.order();
-        final List<Permutation> results = new ArrayList<Permutation>();
+        final List<Permutation> results = new ArrayList<>();
         Backtracker transversalBacktracker = new Backtracker() {
 
             private boolean finished = false;
@@ -306,7 +306,7 @@ public class PermutationGroup {
      * @return a list of permutations
      */
     public List<Permutation> all() {
-        final List<Permutation> permutations = new ArrayList<Permutation>();
+        final List<Permutation> permutations = new ArrayList<>();
         Backtracker counter = new Backtracker() {
 
             @Override

@@ -28,17 +28,17 @@ import java.util.List;
  */
 public class DoubleArrayResult extends DoubleArrayResultType {
 
-    private List<Double>      array;
+    private final List<Double>      array;
     private static final long serialVersionUID = 2345607580017306612L;
 
     public DoubleArrayResult() {
         super(0);
-        this.array = new ArrayList<Double>();
+        this.array = new ArrayList<>();
     }
 
     public DoubleArrayResult(int size) {
         super(size);
-        this.array = new ArrayList<Double>(size);
+        this.array = new ArrayList<>(size);
     }
 
     public void add(double value) {

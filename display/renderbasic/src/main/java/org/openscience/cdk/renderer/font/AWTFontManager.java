@@ -32,7 +32,7 @@ public class AWTFontManager extends AbstractFontManager {
 
     private HashMap<Integer, Font> fontSizeToFontMap;
 
-    private int                    minFontSize;
+    private final int                    minFontSize;
 
     private Font                   currentFont;
 
@@ -53,7 +53,7 @@ public class AWTFontManager extends AbstractFontManager {
     protected void makeFonts() {
         int size = this.minFontSize;
         double scale = 0.5;
-        this.fontSizeToFontMap = new HashMap<Integer, Font>();
+        this.fontSizeToFontMap = new HashMap<>();
 
         for (int i = 0; i < 20; i++) {
             if (super.getFontStyle() == IFontManager.FontStyle.NORMAL) {

@@ -43,8 +43,8 @@ import static org.junit.Assert.assertTrue;
  */
 public class MatchingTest {
 
-    private IChemObjectBuilder bldr   = SilentChemObjectBuilder.getInstance();
-    private SmilesParser       smipar = new SmilesParser(bldr);
+    private final IChemObjectBuilder bldr   = SilentChemObjectBuilder.getInstance();
+    private final SmilesParser       smipar = new SmilesParser(bldr);
 
     @Ignore("no operation performed")
     public void nop() {}

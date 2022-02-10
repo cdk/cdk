@@ -30,16 +30,16 @@ public class IntegerArrayResult extends IntegerArrayResultType {
 
     private static final long serialVersionUID = 4077762427385735922L;
 
-    private List<Integer>     array;
+    private final List<Integer>     array;
 
     public IntegerArrayResult() {
         super(0);
-        this.array = new ArrayList<Integer>();
+        this.array = new ArrayList<>();
     }
 
     public IntegerArrayResult(int size) {
         super(size);
-        this.array = new ArrayList<Integer>(size);
+        this.array = new ArrayList<>(size);
     }
 
     public void add(int value) {

@@ -56,8 +56,8 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
  */
 public class PubChemXMLHelper {
 
-    private IChemObjectBuilder builder;
-    private IsotopeFactory     factory;
+    private final IChemObjectBuilder builder;
+    private final IsotopeFactory     factory;
 
     /**
      * @throws java.io.IOException if there is error in getting the {@link IsotopeFactory}
@@ -323,9 +323,9 @@ public class PubChemXMLHelper {
     }
 
     public void parserBondBlock(XMLStreamReader parser, IAtomContainer molecule) throws Exception {
-        List<String> id1s = new ArrayList<String>();
-        List<String> id2s = new ArrayList<String>();
-        List<String> orders = new ArrayList<String>();
+        List<String> id1s = new ArrayList<>();
+        List<String> id2s = new ArrayList<>();
+        List<String> orders = new ArrayList<>();
         while (parser.next() != XMLEvent.END_DOCUMENT) {
             if (parser.getEventType() == XMLEvent.END_ELEMENT) {
                 if (EL_BONDBLOCK.equals(parser.getLocalName())) {
@@ -370,10 +370,10 @@ public class PubChemXMLHelper {
     }
 
     public void parserCoordBlock(XMLStreamReader parser, IAtomContainer molecule) throws Exception {
-        List<String> ids = new ArrayList<String>();
-        List<String> xs = new ArrayList<String>();
-        List<String> ys = new ArrayList<String>();
-        List<String> zs = new ArrayList<String>();
+        List<String> ids = new ArrayList<>();
+        List<String> xs = new ArrayList<>();
+        List<String> ys = new ArrayList<>();
+        List<String> zs = new ArrayList<>();
         boolean parsedFirstConformer = false;
         while (parser.next() != XMLEvent.END_DOCUMENT) {
             if (parser.getEventType() == XMLEvent.END_ELEMENT) {
@@ -412,7 +412,7 @@ public class PubChemXMLHelper {
     }
 
     private List<String> parseValues(XMLStreamReader parser, String endTag, String fieldTag) throws Exception {
-        List<String> values = new ArrayList<String>();
+        List<String> values = new ArrayList<>();
         while (parser.next() != XMLEvent.END_DOCUMENT) {
             if (parser.getEventType() == XMLEvent.END_ELEMENT) {
                 if (endTag.equals(parser.getLocalName())) {

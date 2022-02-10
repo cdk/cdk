@@ -82,7 +82,7 @@ public interface AtomContainerDiscretePartitionRefiner extends DiscretePartition
      *
      * @param atomContainer the atomContainer to refine
      */
-    public void refine(IAtomContainer atomContainer);
+    void refine(IAtomContainer atomContainer);
 
     /**
      * Refine an atom partition based on the connectivity in the atom container.
@@ -90,7 +90,7 @@ public interface AtomContainerDiscretePartitionRefiner extends DiscretePartition
      * @param atomContainer the atom container to use
      * @param partition the initial partition of the atoms
      */
-    public void refine(IAtomContainer atomContainer, Partition partition);
+    void refine(IAtomContainer atomContainer, Partition partition);
     
     /**
      * Checks if the atom container is canonical. Note that this calls
@@ -99,7 +99,7 @@ public interface AtomContainerDiscretePartitionRefiner extends DiscretePartition
      * @param atomContainer the atom container to check
      * @return true if the atom container is canonical
      */
-    public boolean isCanonical(IAtomContainer atomContainer);
+    boolean isCanonical(IAtomContainer atomContainer);
     
     /**
      * Gets the automorphism group of the atom container. By default it uses an
@@ -111,7 +111,7 @@ public interface AtomContainerDiscretePartitionRefiner extends DiscretePartition
      * @param atomContainer the atom container to use
      * @return the automorphism group of the atom container
      */
-    public PermutationGroup getAutomorphismGroup(IAtomContainer atomContainer);
+    PermutationGroup getAutomorphismGroup(IAtomContainer atomContainer);
     
     /**
      * Speed up the search for the automorphism group using the automorphisms in
@@ -122,7 +122,7 @@ public interface AtomContainerDiscretePartitionRefiner extends DiscretePartition
      * @param group the group of known automorphisms
      * @return the full automorphism group
      */
-    public PermutationGroup getAutomorphismGroup(IAtomContainer atomContainer, PermutationGroup group);
+    PermutationGroup getAutomorphismGroup(IAtomContainer atomContainer, PermutationGroup group);
     
     /**
      * Get the automorphism group of the molecule given an initial partition.
@@ -131,7 +131,7 @@ public interface AtomContainerDiscretePartitionRefiner extends DiscretePartition
      * @param initialPartition an initial partition of the atoms
      * @return the automorphism group starting with this partition
      */
-    public PermutationGroup getAutomorphismGroup(IAtomContainer atomContainer, Partition initialPartition);
+    PermutationGroup getAutomorphismGroup(IAtomContainer atomContainer, Partition initialPartition);
     
     /**
      * Get the automorphism partition (equivalence classes) of the atoms.
@@ -139,5 +139,5 @@ public interface AtomContainerDiscretePartitionRefiner extends DiscretePartition
      * @param atomContainer the molecule to calculate equivalence classes for
      * @return a partition of the atoms into equivalence classes
      */
-    public Partition getAutomorphismPartition(IAtomContainer atomContainer);
+    Partition getAutomorphismPartition(IAtomContainer atomContainer);
 }

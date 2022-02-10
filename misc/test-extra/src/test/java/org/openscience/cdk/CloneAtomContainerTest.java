@@ -41,7 +41,7 @@ public class CloneAtomContainerTest extends CDKTestCase {
     @Test
     public void testClone() throws Exception {
         IAtomContainer molecule = TestMoleculeFactory.makeAlphaPinene();
-        IAtomContainer clonedMol = (IAtomContainer) molecule.clone();
+        IAtomContainer clonedMol = molecule.clone();
         Assert.assertTrue(molecule.getAtomCount() == clonedMol.getAtomCount());
         for (int f = 0; f < molecule.getAtomCount(); f++) {
             for (int g = 0; g < clonedMol.getAtomCount(); g++) {

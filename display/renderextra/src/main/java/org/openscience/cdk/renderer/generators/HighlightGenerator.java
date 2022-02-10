@@ -130,7 +130,7 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
         final double radius = model.getParameter(HighlightRadius.class).getValue()
                 / model.getParameter(BasicSceneGenerator.Scale.class).getValue();
 
-        final Map<Integer, Area> shapes = new HashMap<Integer, Area>();
+        final Map<Integer, Area> shapes = new HashMap<>();
 
         for (IAtom atom : container.atoms()) {
 
@@ -295,7 +295,7 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
      * Defines a color palette, the palette should provide a color the specified
      * identifier (id).
      */
-    public static interface Palette {
+    public interface Palette {
 
         /**
          * Obtain the color in index, id.

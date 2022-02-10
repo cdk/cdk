@@ -101,7 +101,7 @@ public class DictionaryHandler extends DefaultHandler {
     }
 
     @Override
-    public void characters(char character[], int start, int length) {
+    public void characters(char[] character, int start, int length) {
         currentChars += new String(character, start, length);
     }
 

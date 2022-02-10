@@ -130,7 +130,7 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
         IAtom oAtom3 = oStrand.getBuilder().newInstance(IAtom.class, "C");
         oStrand.addAtom(oAtom2, oMono1);
         oStrand.addAtom(oAtom3, oMono2);
-        Map<String, IMonomer> monomers = new Hashtable<String, IMonomer>();
+        Map<String, IMonomer> monomers = new Hashtable<>();
         IMonomer oMon = oStrand.getBuilder().newInstance(IMonomer.class);
         oMon.setMonomerName("");
         oMon.setMonomerType("UNKNOWN");
@@ -174,7 +174,7 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
         IAtom oAtom3 = oStrand.getBuilder().newInstance(IAtom.class, "C");
         oStrand.addAtom(oAtom2, oMono1);
         oStrand.addAtom(oAtom3, oMono2);
-        Map<String, IMonomer> monomers = new Hashtable<String, IMonomer>();
+        Map<String, IMonomer> monomers = new Hashtable<>();
         IMonomer oMon = oStrand.getBuilder().newInstance(IMonomer.class);
         oMon.setMonomerName("");
         oMon.setMonomerType("UNKNOWN");

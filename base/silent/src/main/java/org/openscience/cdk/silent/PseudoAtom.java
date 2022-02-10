@@ -167,7 +167,7 @@ public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable,
      */
     @Override
     public String toString() {
-        StringBuffer description = new StringBuffer();
+        StringBuilder description = new StringBuilder();
         description.append("PseudoAtom(");
         description.append(this.hashCode());
         if (getLabel() != null) {

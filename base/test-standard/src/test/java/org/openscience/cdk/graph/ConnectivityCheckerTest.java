@@ -235,7 +235,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
     public void copySgroups() throws Exception {
         String filename = "sgroup-split.mol";
         try (InputStream ins = this.getClass().getResourceAsStream(filename);
-             ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
+             ISimpleChemObjectReader reader = new MDLV2000Reader(ins)
         ) {
             ChemFile content = (ChemFile) reader.read((ChemObject) new ChemFile());
             List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);

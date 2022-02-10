@@ -49,7 +49,7 @@ public class AbstractDifferenceListTest {
     @Test
     public void testChildDiffs() {
         DifferenceClass diffClass = new DifferenceClass();
-        List<IDifference> diffs = new ArrayList<IDifference>();
+        List<IDifference> diffs = new ArrayList<>();
         diffs.add(StringDifference.construct("Foo", "Bar1", "Bar2"));
         diffs.add(IntegerDifference.construct("Foo", 1, 2));
         diffClass.addChildren(diffs);

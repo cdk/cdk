@@ -45,7 +45,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class DaylightModelTest {
 
-    private static ElectronDonation model = ElectronDonation.daylight();
+    private static final ElectronDonation model = ElectronDonation.daylight();
 
     @Test
     public void benzene() throws Exception {

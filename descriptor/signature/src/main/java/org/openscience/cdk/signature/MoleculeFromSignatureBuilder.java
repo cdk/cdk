@@ -42,7 +42,7 @@ public class MoleculeFromSignatureBuilder extends AbstractGraphBuilder {
     /**
      * The chem object builder
      */
-    private IChemObjectBuilder builder;
+    private final IChemObjectBuilder builder;
 
     /**
      * The container that is being constructed

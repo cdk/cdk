@@ -53,8 +53,8 @@ public class AtomTypeTools {
     public static final int PYRIDINE_RING   = 10;
     public static final int PYRIMIDINE_RING = 12;
     public static final int BENZENE_RING = 5;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(AtomTypeTools.class);
-    HOSECodeGenerator hcg = null;
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(AtomTypeTools.class);
+    HOSECodeGenerator hcg;
     SmilesGenerator   sg  = null;
 
     /**
@@ -88,8 +88,8 @@ public class AtomTypeTools {
 
         //logger.debug("assignAtomTypePropertiesToAtom Start ...");
         logger.debug("assignAtomTypePropertiesToAtom Start ...");
-        String hoseCode = "";
-        IRingSet ringSetA = null;
+        String hoseCode;
+        IRingSet ringSetA;
         IRingSet ringSetMolecule = Cycles.sssr(molecule).toRingSet();
         logger.debug(ringSetMolecule);
 
@@ -98,7 +98,7 @@ public class AtomTypeTools {
                 Aromaticity.cdkLegacy().apply(molecule);
             } catch (Exception cdk1) {
                 //logger.debug("AROMATICITYError: Cannot determine aromaticity due to: " + cdk1.toString());
-                logger.error("AROMATICITYError: Cannot determine aromaticity due to: " + cdk1.toString());
+                logger.error("AROMATICITYError: Cannot determine aromaticity due to: " + cdk1);
             }
         }
 
@@ -111,14 +111,14 @@ public class AtomTypeTools {
                 ringSetA = ringSetMolecule.getRings(atom2);
                 RingSetManipulator.sort(ringSetA);
                 IRing sring = (IRing) ringSetA.getAtomContainer(ringSetA.getAtomContainerCount() - 1);
-                atom2.setProperty(CDKConstants.PART_OF_RING_OF_SIZE, Integer.valueOf(sring.getRingSize()));
+                atom2.setProperty(CDKConstants.PART_OF_RING_OF_SIZE, sring.getRingSize());
                 atom2.setProperty(
                         CDKConstants.CHEMICAL_GROUP_CONSTANT,
-                        Integer.valueOf(ringSystemClassifier(sring, getSubgraphSmiles(sring, molecule))));
+                        ringSystemClassifier(sring, getSubgraphSmiles(sring, molecule)));
                 atom2.setFlag(CDKConstants.ISINRING, true);
                 atom2.setFlag(CDKConstants.ISALIPHATIC, false);
             } else {
-                atom2.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, Integer.valueOf(CDKConstants.ISNOTINRING));
+                atom2.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, CDKConstants.ISNOTINRING);
                 atom2.setFlag(CDKConstants.ISINRING, false);
                 atom2.setFlag(CDKConstants.ISALIPHATIC, true);
             }
@@ -127,7 +127,7 @@ public class AtomTypeTools {
                 hoseCode = removeAromaticityFlagsFromHoseCode(hoseCode);
                 atom2.setProperty(CDKConstants.SPHERICAL_MATCHER, hoseCode);
             } catch (CDKException ex1) {
-                throw new CDKException("Could not build HOSECode from atom " + i + " due to " + ex1.toString(), ex1);
+                throw new CDKException("Could not build HOSECode from atom " + i + " due to " + ex1, ex1);
             }
         }
         return ringSetMolecule;

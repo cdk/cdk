@@ -49,8 +49,8 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
 
     @Ignore
     @Test
-    public void testno688() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(true), new Boolean(false)};
+    public void testno688() throws java.lang.Exception {
+        Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O=C(O)c1[nH0]cccc1"); // xlogp training set molecule no688
@@ -61,9 +61,9 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testno1596() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testno1596() throws java.lang.Exception {
         // the xlogp program value is 0.44 because of paralleled donor pair correction factor
-        Object[] params = {new Boolean(true), new Boolean(false)};
+        Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("Nc2ccc(S(=O)(=O)c1ccc(N)cc1)cc2"); // xlogp training set molecule no1596
@@ -74,8 +74,8 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testno367() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(true), new Boolean(false)};
+    public void testno367() throws java.lang.Exception {
+        Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O=C(O)C(N)CCCN"); // xlogp training set molecule no367
@@ -86,8 +86,8 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testno1837() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(true), new Boolean(false)};
+    public void testno1837() throws java.lang.Exception {
+        Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O=P(N1CC1)(N2CC2)N3CC3"); // xlogp training set molecule no1837
@@ -98,8 +98,8 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testno87() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(true), new Boolean(false)};
+    public void testno87() throws java.lang.Exception {
+        Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("c1cc2ccc3ccc4ccc5cccc6c(c1)c2c3c4c56"); // xlogp training set molecule no87
@@ -110,8 +110,8 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testno1782() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(true), new Boolean(false)};
+    public void testno1782() throws java.lang.Exception {
+        Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("S1C2N(C(=O)C2NC(=O)C(c2ccccc2)C(=O)O)C(C(=O)O)C1(C)C"); // xlogp training set molecule no30
@@ -122,8 +122,8 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testno30() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(true), new Boolean(false)};
+    public void testno30() throws java.lang.Exception {
+        Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C(#Cc1ccccc1)c1ccccc1"); // xlogp training set molecule no30
@@ -135,8 +135,8 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
 
     @Ignore
     @Test
-    public void testno937() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(true), new Boolean(false)};
+    public void testno937() throws java.lang.Exception {
+        Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("ClCC(O)C[nH0]1c([nH0]cc1[N+](=O)[O-])C"); // xlogp training set molecule no937
@@ -147,8 +147,8 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testno990() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(true), new Boolean(false)};
+    public void testno990() throws java.lang.Exception {
+        Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("FC(F)(F)c1ccc(cc1)C(=O)N"); // xlogp training set molecule no990
@@ -159,8 +159,8 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testno1000() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(true), new Boolean(false)};
+    public void testno1000() throws java.lang.Exception {
+        Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("Clc1cccc(c1)/C=C/[N+](=O)[O-]"); // xlogp training set molecule no1000
@@ -171,8 +171,8 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testApirinBug1296383() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(true), new Boolean(false)};
+    public void testApirinBug1296383() throws java.lang.Exception {
+        Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CC(=O)OC1=CC=CC=C1C(=O)O"); // aspirin
@@ -183,8 +183,8 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testno1429() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(true), new Boolean(false)};
+    public void testno1429() throws java.lang.Exception {
+        Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O=C(OC)CNC(=O)c1ccc(N)cc1"); // xlogp training set molecule no1429
@@ -195,8 +195,8 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testno1274() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(true), new Boolean(false)};
+    public void testno1274() throws java.lang.Exception {
+        Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O=[N+]([O-])c1ccc(cc1)CC(N)C(=O)O"); // xlogp training set molecule no1274
@@ -207,11 +207,11 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testno454() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testno454() throws java.lang.Exception {
         //xlogp program gives a result of -0.89, because one N is classified as in ring and not as amid
         //if one takes a 5 or 7 ring than the program assignes amid ... strange
         //sometimes amid is O=C-N-C=O sometimes not...
-        Object[] params = {new Boolean(true), new Boolean(false)};
+        Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O=C1NC(=O)C=CN1C1OC(CO)C(O)C1O"); // xlogp training set molecule no454
@@ -222,9 +222,9 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testno498() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testno498() throws java.lang.Exception {
         //even here the amid assignment is very strange
-        Object[] params = {new Boolean(true), new Boolean(false)};
+        Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O=C1N(C)C=CC(=O)N1C"); // xlogp training set molecule no498
@@ -235,9 +235,9 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testAprindine() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testAprindine() throws java.lang.Exception {
         //even here the amid assignment is very strange
-        Object[] params = {new Boolean(true), new Boolean(false)};
+        Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCN(CC)CCCN(C2Cc1ccccc1C2)c3ccccc3"); // xlogp training set molecule Aprindine
@@ -248,8 +248,8 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test1844() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(true), new Boolean(false)};
+    public void test1844() throws java.lang.Exception {
+        Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         // SMILES is in octet-rule version, PubChem has normalized one
@@ -261,8 +261,8 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test1810() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(true), new Boolean(false)};
+    public void test1810() throws java.lang.Exception {
+        Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("Clc1ccc2Sc3ccccc3N(CCCN3CCN(C)CC3)c2c1"); // xlogp training set molecule 1810
@@ -276,8 +276,8 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
      * @cdk.inchi InChI=1/C23H20N2O3S/c26-22-21(16-17-29(28)20-14-8-3-9-15-20)23(27)25(19-12-6-2-7-13-19)24(22)18-10-4-1-5-11-18/h1-15,21H,16-17H2
      */
     @Test
-    public void test1822() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(true), new Boolean(false)};
+    public void test1822() throws java.lang.Exception {
+        Object[] params = {Boolean.TRUE, Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("[S+]([O-])(CCC1C(=O)N(N(c2ccccc2)C1=O)c1ccccc1)c1ccccc1"); // xlogp training set molecule 1822

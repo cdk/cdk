@@ -73,7 +73,7 @@ public class ChemSequenceManipulator {
      * Returns all the AtomContainer's of a ChemSequence.
      */
     public static List<IAtomContainer> getAllAtomContainers(IChemSequence sequence) {
-        List<IAtomContainer> acList = new ArrayList<IAtomContainer>();
+        List<IAtomContainer> acList = new ArrayList<>();
         for (IChemModel model : sequence.chemModels()) {
             acList.addAll(ChemModelManipulator.getAllAtomContainers(model));
         }
@@ -86,7 +86,7 @@ public class ChemSequenceManipulator {
      * @return  A List of all ChemObjects.
      */
     public static List<IChemObject> getAllChemObjects(IChemSequence sequence) {
-        List<IChemObject> list = new ArrayList<IChemObject>();
+        List<IChemObject> list = new ArrayList<>();
         // list.add(sequence);
         for (int i = 0; i < sequence.getChemModelCount(); i++) {
             list.add(sequence.getChemModel(i));
@@ -100,7 +100,7 @@ public class ChemSequenceManipulator {
     }
 
     public static List<String> getAllIDs(IChemSequence sequence) {
-        ArrayList<String> list = new ArrayList<String>();
+        ArrayList<String> list = new ArrayList<>();
         if (sequence.getID() != null) list.add(sequence.getID());
         for (int i = 0; i < sequence.getChemModelCount(); i++) {
             list.addAll(ChemModelManipulator.getAllIDs(sequence.getChemModel(i)));

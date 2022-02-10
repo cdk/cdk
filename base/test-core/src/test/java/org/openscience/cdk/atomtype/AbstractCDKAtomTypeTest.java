@@ -43,7 +43,7 @@ abstract public class AbstractCDKAtomTypeTest extends AbstractAtomTypeTest {
     @Override
     public String getAtomTypeListName() {
         return ATOMTYPE_LIST;
-    };
+    }
 
     @Override
     public AtomTypeFactory getFactory() {

@@ -36,7 +36,6 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * <p>IReactionProcess which participate in movement resonance.
@@ -73,7 +72,7 @@ import java.util.Iterator;
  **/
 public class SharingChargeSBReaction extends ReactionEngine implements IReactionProcess {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(SharingChargeSBReaction.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(SharingChargeSBReaction.class);
 
     /**
      * Constructor of the SharingChargeSBReaction object.
@@ -125,25 +124,20 @@ public class SharingChargeSBReaction extends ReactionEngine implements IReaction
         IParameterReact ipr = super.getParameterClass(SetReactionCenter.class);
         if (ipr != null && !ipr.isSetParameter()) setActiveCenters(reactant);
 
-        Iterator<IAtom> atomis = reactant.atoms().iterator();
-        while (atomis.hasNext()) {
-            IAtom atomi = atomis.next();
-
+        for (IAtom atomi : reactant.atoms()) {
             if (atomi.getFlag(CDKConstants.REACTIVE_CENTER) && atomi.getFormalCharge() == 1) {
 
-                Iterator<IBond> bondis = reactant.getConnectedBondsList(atomi).iterator();
-                while (bondis.hasNext()) {
-                    IBond bondi = bondis.next();
+                for (IBond bondi : reactant.getConnectedBondsList(atomi)) {
                     if (bondi.getFlag(CDKConstants.REACTIVE_CENTER) && bondi.getOrder() == IBond.Order.SINGLE) {
 
                         IAtom atomj = bondi.getOther(atomi);
                         if (atomj.getFlag(CDKConstants.REACTIVE_CENTER) && atomj.getFormalCharge() == 0)
                             if (reactant.getConnectedSingleElectronsCount(atomj) == 0) {
 
-                                ArrayList<IAtom> atomList = new ArrayList<IAtom>();
+                                ArrayList<IAtom> atomList = new ArrayList<>();
                                 atomList.add(atomj);
                                 atomList.add(atomi);
-                                ArrayList<IBond> bondList = new ArrayList<IBond>();
+                                ArrayList<IBond> bondList = new ArrayList<>();
                                 bondList.add(bondi);
 
                                 IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(
@@ -176,15 +170,10 @@ public class SharingChargeSBReaction extends ReactionEngine implements IReaction
      * @throws CDKException
      */
     private void setActiveCenters(IAtomContainer reactant) throws CDKException {
-        Iterator<IAtom> atomis = reactant.atoms().iterator();
-        while (atomis.hasNext()) {
-            IAtom atomi = atomis.next();
-
+        for (IAtom atomi : reactant.atoms()) {
             if (atomi.getFormalCharge() == 1) {
 
-                Iterator<IBond> bondis = reactant.getConnectedBondsList(atomi).iterator();
-                while (bondis.hasNext()) {
-                    IBond bondi = bondis.next();
+                for (IBond bondi : reactant.getConnectedBondsList(atomi)) {
                     if (bondi.getOrder() == IBond.Order.SINGLE) {
 
                         IAtom atomj = bondi.getOther(atomi);

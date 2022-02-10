@@ -60,7 +60,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class SMARTSSearchTest extends CDKTestCase {
 
-    private static ILoggingTool        logger = LoggingToolFactory.createLoggingTool(SMARTSSearchTest.class);
+    private static final ILoggingTool        logger = LoggingToolFactory.createLoggingTool(SMARTSSearchTest.class);
 
     private UniversalIsomorphismTester uiTester;
 

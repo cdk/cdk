@@ -22,10 +22,8 @@ package org.openscience.cdk.silent;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.test.interfaces.AbstractRingSetTest;
-import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link RingSet}.
@@ -36,13 +34,7 @@ public class RingSetTest extends AbstractRingSetTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new RingSet();
-            }
-        });
+        setTestObjectBuilder(RingSet::new);
     }
 
     @Test

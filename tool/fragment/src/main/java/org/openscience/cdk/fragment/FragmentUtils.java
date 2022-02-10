@@ -52,7 +52,7 @@ public class FragmentUtils {
      * @return A list containing the two parts of the molecule
      */
     protected static List<IAtomContainer> splitMolecule(IAtomContainer atomContainer, IBond bond) {
-        List<IAtomContainer> ret = new ArrayList<IAtomContainer>();
+        List<IAtomContainer> ret = new ArrayList<>();
 
         for (IAtom atom : bond.atoms()) {
 
@@ -64,7 +64,7 @@ public class FragmentUtils {
             else
                 excludedAtom = bond.getBegin();
 
-            List<IBond> part = new ArrayList<IBond>();
+            List<IBond> part = new ArrayList<>();
             part.add(bond);
             part = traverse(atomContainer, atom, part);
 

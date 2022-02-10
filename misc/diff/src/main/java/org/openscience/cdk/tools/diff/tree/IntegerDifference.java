@@ -27,9 +27,9 @@ package org.openscience.cdk.tools.diff.tree;
  */
 public class IntegerDifference implements IDifference {
 
-    private String  name;
-    private Integer first;
-    private Integer second;
+    private final String  name;
+    private final Integer first;
+    private final Integer second;
 
     private IntegerDifference(String name, Integer first, Integer second) {
         this.name = name;

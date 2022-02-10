@@ -52,7 +52,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit with O-C
      */
     @Test
-    public void testAtomHybridizationVSEPRDescriptorTest_1() throws ClassNotFoundException, CDKException,
+    public void testAtomHybridizationVSEPRDescriptorTest_1() throws
             java.lang.Exception {
         AtomHybridizationVSEPRDescriptor descriptor = new AtomHybridizationVSEPRDescriptor();
 
@@ -84,7 +84,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit with [O+]=C-C
      */
     @Test
-    public void testAtomHybridizationVSEPRDescriptorTest_2() throws ClassNotFoundException, CDKException,
+    public void testAtomHybridizationVSEPRDescriptorTest_2() throws
             java.lang.Exception {
         AtomHybridizationVSEPRDescriptor descriptor = new AtomHybridizationVSEPRDescriptor();
 
@@ -116,7 +116,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit
      */
     @Test
-    public void testAtomHybridizationVSEPRDescriptorTest_3() throws ClassNotFoundException, CDKException,
+    public void testAtomHybridizationVSEPRDescriptorTest_3() throws
             java.lang.Exception {
         AtomHybridizationVSEPRDescriptor descriptor = new AtomHybridizationVSEPRDescriptor();
 
@@ -150,7 +150,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
      * @cdk.bug 2323124
      */
     @Test
-    public void testAtomHybridizationVSEPRDescriptorTest_4() throws ClassNotFoundException, CDKException,
+    public void testAtomHybridizationVSEPRDescriptorTest_4() throws
             java.lang.Exception {
         AtomHybridizationVSEPRDescriptor descriptor = new AtomHybridizationVSEPRDescriptor();
 
@@ -183,7 +183,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
      * @cdk.bug 2323133
      */
     @Test
-    public void testAtomHybridizationVSEPRDescriptorTest_5() throws ClassNotFoundException, CDKException,
+    public void testAtomHybridizationVSEPRDescriptorTest_5() throws
             java.lang.Exception {
         AtomHybridizationVSEPRDescriptor descriptor = new AtomHybridizationVSEPRDescriptor();
 
@@ -220,7 +220,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
      * @cdk.bug 2323126
      */
     @Test
-    public void testAtomHybridizationVSEPRDescriptorTest_6() throws ClassNotFoundException, CDKException,
+    public void testAtomHybridizationVSEPRDescriptorTest_6() throws
             java.lang.Exception {
         AtomHybridizationVSEPRDescriptor descriptor = new AtomHybridizationVSEPRDescriptor();
 
@@ -248,7 +248,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit with F-C=C
      */
     @Test
-    public void testAtomHybridizationVSEPRDescriptorTest_7() throws ClassNotFoundException, CDKException,
+    public void testAtomHybridizationVSEPRDescriptorTest_7() throws
             java.lang.Exception {
         int[] testResult = {IAtomType.Hybridization.SP3.ordinal(), IAtomType.Hybridization.SP2.ordinal(),
                 IAtomType.Hybridization.SP2.ordinal()}; /*
@@ -283,7 +283,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit with [F+]=C-[C-]
      */
     @Test
-    public void testAtomHybridizationVSEPRDescriptorTest_8() throws ClassNotFoundException, CDKException,
+    public void testAtomHybridizationVSEPRDescriptorTest_8() throws
             java.lang.Exception {
         int[] testResult = {IAtomType.Hybridization.SP2.ordinal(), IAtomType.Hybridization.SP2.ordinal(),
                 IAtomType.Hybridization.SP3.ordinal()};

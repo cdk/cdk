@@ -99,18 +99,18 @@ public class IsotopeTest extends AbstractIsotopeTest {
     @Test
     public void testCompare_MassNumberIntegers() {
         Isotope iso = new Isotope("C");
-        iso.setMassNumber(new Integer(12));
+        iso.setMassNumber(12);
         Isotope iso2 = new Isotope("C");
-        iso2.setMassNumber(new Integer(12));
+        iso2.setMassNumber(12);
         Assert.assertTrue(iso.compare(iso2));
     }
 
     @Test
     public void testCompare_MassNumberIntegers_ValueOf() {
         Isotope iso = new Isotope("C");
-        iso.setMassNumber(Integer.valueOf(12));
+        iso.setMassNumber(12);
         Isotope iso2 = new Isotope("C");
-        iso2.setMassNumber(Integer.valueOf(12));
+        iso2.setMassNumber(12);
         Assert.assertTrue(iso.compare(iso2));
     }
 

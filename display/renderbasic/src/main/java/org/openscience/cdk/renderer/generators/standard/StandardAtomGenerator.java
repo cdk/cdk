@@ -226,7 +226,7 @@ final class StandardAtomGenerator {
             }
 
             if (pos < len) {
-                return new AtomSymbol(new TextOutline(label, stylisedFont), Collections.<TextOutline>emptyList());
+                return new AtomSymbol(new TextOutline(label, stylisedFont), Collections.emptyList());
             } else {
                 TextOutline outline = null;
                 TextOutline ref = outlines.get(outlines.size()-1);
@@ -260,7 +260,7 @@ final class StandardAtomGenerator {
             return new AtomSymbol(outlines.get(0),
                                   outlines.subList(1, outlines.size()));
         } else {
-            return new AtomSymbol(new TextOutline(label, stylisedFont), Collections.<TextOutline>emptyList());
+            return new AtomSymbol(new TextOutline(label, stylisedFont), Collections.emptyList());
         }
     }
 
@@ -281,7 +281,7 @@ final class StandardAtomGenerator {
         if (AbbreviationLabel.parse(label, tokens)) {
             return generateAbbreviationSymbol(tokens, position);
         } else {
-            return new AtomSymbol(new TextOutline(label, font), Collections.<TextOutline>emptyList());
+            return new AtomSymbol(new TextOutline(label, font), Collections.emptyList());
         }
     }
 
@@ -425,7 +425,7 @@ final class StandardAtomGenerator {
             chargeAdjunct = chargeAdjunct.translate(nudgeX, 0);
         }
 
-        final List<TextOutline> adjuncts = new ArrayList<TextOutline>(4);
+        final List<TextOutline> adjuncts = new ArrayList<>(4);
 
         if (hydrogens > 0) adjuncts.add(hydrogenAdjunct);
         if (hydrogens > 1) adjuncts.add(hydrogenCount);

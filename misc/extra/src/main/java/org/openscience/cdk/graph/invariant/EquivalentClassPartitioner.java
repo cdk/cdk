@@ -53,8 +53,8 @@ public class EquivalentClassPartitioner {
     private int[][]             apspMatrix;
     private int                 layerNumber;
     private int                 nodeNumber;
-    private static double       LOST   = 0.000000000001;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(EquivalentClassPartitioner.class);
+    private static final double       LOST   = 0.000000000001;
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(EquivalentClassPartitioner.class);
 
     /**
      * Constructor for the TopologicalEquivalentClass object.
@@ -100,7 +100,7 @@ public class EquivalentClassPartitioner {
      * @return an array contains the automorphism partition of the molecule
      */
     public int[] getTopoEquivClassbyHuXu(IAtomContainer atomContainer) throws NoSuchAtomException {
-        double nodeSequence[] = prepareNode(atomContainer);
+        double[] nodeSequence = prepareNode(atomContainer);
         nodeMatrix = buildNodeMatrix(nodeSequence);
         bondMatrix = buildBondMatrix();
         weight = buildWeightMatrix(nodeMatrix, bondMatrix);
@@ -116,7 +116,7 @@ public class EquivalentClassPartitioner {
      * @return an array of node identifier
      */
     public double[] prepareNode(IAtomContainer atomContainer) {
-        double nodeSequence[] = new double[atomContainer.getAtomCount()];
+        double[] nodeSequence = new double[atomContainer.getAtomCount()];
         int i = 0;
         for (IAtom atom : atomContainer.atoms()) {
             String symbol = atom.getSymbol();
@@ -163,8 +163,8 @@ public class EquivalentClassPartitioner {
                     logger.debug("in case of a new node, please " + "report this bug to cdk-devel@lists.sf.net.");
                 }
             } else if (bonds.size() == 2) {
-                IBond bond0 = (IBond) bonds.get(0);
-                IBond bond1 = (IBond) bonds.get(1);
+                IBond bond0 = bonds.get(0);
+                IBond bond1 = bonds.get(1);
                 IBond.Order order0 = bond0.getOrder();
                 IBond.Order order1 = bond1.getOrder();
                 if (symbol.equals("C")) {
@@ -220,9 +220,9 @@ public class EquivalentClassPartitioner {
                     logger.debug("in case of a new node, " + "please report this bug to cdk-devel@lists.sf.net.");
                 }
             } else if (bonds.size() == 3) {
-                IBond bond0 = (IBond) bonds.get(0);
-                IBond bond1 = (IBond) bonds.get(1);
-                IBond bond2 = (IBond) bonds.get(2);
+                IBond bond0 = bonds.get(0);
+                IBond bond1 = bonds.get(1);
+                IBond bond2 = bonds.get(2);
                 IBond.Order order0 = bond0.getOrder();
                 IBond.Order order1 = bond1.getOrder();
                 IBond.Order order2 = bond2.getOrder();
@@ -359,7 +359,7 @@ public class EquivalentClassPartitioner {
         for (int i = 0; i < nodeNumber; i++) {
             weight[i + 1] = nodeMatrix[i][0];
             for (int j = 0; j < layerNumber; j++) {
-                weight[i + 1] += nodeMatrix[i][j + 1] * bondMatrix[i][j] * Math.pow(10.0, (double) -(j + 1));
+                weight[i + 1] += nodeMatrix[i][j + 1] * bondMatrix[i][j] * Math.pow(10.0, -(j + 1));
             }
         }
         weight[0] = 0.0;
@@ -374,7 +374,7 @@ public class EquivalentClassPartitioner {
      */
     public int checkDiffNumber(double[] weight) {
         // Count the number of different weight
-        double category[] = new double[weight.length];
+        double[] category = new double[weight.length];
         int i, j;
         int count = 1;
         double t;
@@ -400,8 +400,8 @@ public class EquivalentClassPartitioner {
      * @return an array contains the automorphism partition
      */
     public int[] getEquivalentClass(double[] weight) {
-        double category[] = new double[weight.length];
-        int equivalentClass[] = new int[weight.length];
+        double[] category = new double[weight.length];
+        int[] equivalentClass = new int[weight.length];
         int i, j;
         int count = 1;
         double t;
@@ -445,7 +445,7 @@ public class EquivalentClassPartitioner {
      */
     public int[] findTopoEquivClass(double[] weight) {
         int trialCount, i;
-        int equivalentClass[] = new int[weight.length];
+        int[] equivalentClass = new int[weight.length];
         int count = checkDiffNumber(weight);
         trialCount = count;
         if (count == nodeNumber) {

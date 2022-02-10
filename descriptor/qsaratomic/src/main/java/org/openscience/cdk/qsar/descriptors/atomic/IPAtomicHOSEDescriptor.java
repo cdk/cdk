@@ -73,9 +73,9 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
     private static final String[] NAMES = {"ipAtomicHOSE"};
 
     /** Maximum spheres to use by the HoseCode model.*/
-    int                           maxSpheresToUse = 10;
+    final int                           maxSpheresToUse = 10;
 
-    private IPdb                  db              = new IPdb();
+    private final IPdb                  db              = new IPdb();
 
     /**
      *  Constructor for the IPAtomicHOSEDescriptor object.

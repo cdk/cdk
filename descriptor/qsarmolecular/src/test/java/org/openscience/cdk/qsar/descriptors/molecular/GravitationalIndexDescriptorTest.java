@@ -50,7 +50,7 @@ public class GravitationalIndexDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testGravitationalIndex() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testGravitationalIndex() throws java.lang.Exception {
         String filename = "gravindex.hin";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);

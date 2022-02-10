@@ -93,8 +93,8 @@ public class DescriptorValueTest extends CDKTestCase {
                 DESC_IMPL_VENDOR);
         DoubleResult doubleVal = new DoubleResult(0.7);
         DoubleArrayResult doubleVals = new DoubleArrayResult();
-        doubleVals.add(Double.valueOf(0.1));
-        doubleVals.add(Double.valueOf(0.2));
+        doubleVals.add(0.1);
+        doubleVals.add(0.2);
         DescriptorValue value;
         value = new DescriptorValue(spec, new String[0], new Object[0], doubleVal, new String[]{"bla"});
         Assert.assertEquals(1, value.getNames().length);

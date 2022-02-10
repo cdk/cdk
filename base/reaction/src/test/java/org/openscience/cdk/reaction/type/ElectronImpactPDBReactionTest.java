@@ -53,7 +53,7 @@ import java.util.List;
 public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
 
     private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-    private IChemObjectBuilder            builder = SilentChemObjectBuilder.getInstance();
+    private final IChemObjectBuilder            builder = SilentChemObjectBuilder.getInstance();
 
     /**
      *  The JUnit setup method
@@ -98,9 +98,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
         reactant.addBond(5, 6, IBond.Order.SINGLE);
         addExplicitHydrogens(reactant);
 
-        Iterator<IBond> bonds = reactant.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond bond = (IBond) bonds.next();
+        for (IBond bond : reactant.bonds()) {
             IAtom atom1 = bond.getBegin();
             IAtom atom2 = bond.getEnd();
             if (bond.getOrder() == IBond.Order.DOUBLE && atom1.getAtomicNumber() == IElement.C && atom2.getAtomicNumber() == IElement.C) {
@@ -118,7 +116,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
         makeSureAtomTypesAreRecognized(reactant);
 
         IReactionProcess type = new ElectronImpactPDBReaction();
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -216,7 +214,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
         makeSureAtomTypesAreRecognized(reactant);
 
         IReactionProcess type = new ElectronImpactPDBReaction();
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);
@@ -256,7 +254,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
         molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -294,7 +292,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
 
         /* automatic search of the center active */
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);

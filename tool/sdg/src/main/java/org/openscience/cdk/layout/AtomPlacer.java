@@ -64,7 +64,7 @@ public class AtomPlacer {
     private static final double ANGLE_120 = Math.toRadians(120);
     public final static boolean debug = true;
     public static final String PRIORITY = "Weight";
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(AtomPlacer.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(AtomPlacer.class);
 
     /**
      *  The molecule to be laid out. To be assigned from outside
@@ -111,14 +111,14 @@ public class AtomPlacer {
      */
     public void distributePartners(IAtom atom, IAtomContainer placedNeighbours, Point2d sharedAtomsCenter,
             IAtomContainer unplacedNeighbours, double bondLength) {
-        double occupiedAngle = 0;
+        double occupiedAngle;
         //double smallestDistance = Double.MAX_VALUE;
         //IAtom[] nearestAtoms = new IAtom[2];
-        IAtom[] sortedAtoms = null;
-        double startAngle = 0.0;
-        double addAngle = 0.0;
-        double radius = 0.0;
-        double remainingAngle = 0.0;
+        IAtom[] sortedAtoms;
+        double startAngle;
+        double addAngle;
+        double radius;
+        double remainingAngle;
         /*
          * calculate the direction away from the already placed partners of atom
          */
@@ -133,7 +133,7 @@ public class AtomPlacer {
         if (Math.abs(occupiedDirection.length()) < 0.001)
             occupiedDirection = new Vector2d(0, 1);
         logger.debug("distributePartners->occupiedDirection.lenght(): " + occupiedDirection.length());
-        List<IAtom> atomsToDraw = new ArrayList<IAtom>();
+        List<IAtom> atomsToDraw = new ArrayList<>();
 
         logger.debug("Number of shared atoms: ", placedNeighbours.getAtomCount());
 
@@ -258,7 +258,7 @@ public class AtomPlacer {
                 logger.debug(exc);
             }
         }
-        IAtom startAtom = null;
+        IAtom startAtom;
 
         if (angle1 > angle3) {
             if (angle1 - angle3 < Math.PI) {
@@ -368,10 +368,10 @@ public class AtomPlacer {
         //        }
         logger.debug("Placing linear chain of length " + atomContainer.getAtomCount());
         Vector2d bondVector = initialBondVector;
-        IAtom atom = null;
-        Point2d atomPoint = null;
-        IAtom nextAtom = null;
-        IBond prevBond = null, currBond = null;
+        IAtom atom;
+        Point2d atomPoint;
+        IAtom nextAtom;
+        IBond prevBond = null, currBond;
         for (int f = 0; f < atomContainer.getAtomCount() - 1; f++) {
             atom = atomContainer.getAtom(f);
             nextAtom = atomContainer.getAtom(f + 1);
@@ -550,8 +550,8 @@ public class AtomPlacer {
      */
     public void partitionPartners(IAtom atom, IAtomContainer unplacedPartners, IAtomContainer placedPartners) {
         List atoms = molecule.getConnectedAtomsList(atom);
-        for (int i = 0; i < atoms.size(); i++) {
-            IAtom curatom = (IAtom) atoms.get(i);
+        for (Object o : atoms) {
+            IAtom curatom = (IAtom) o;
             if (curatom.getFlag(CDKConstants.ISPLACED)) {
                 placedPartners.addAtom(curatom);
             } else {
@@ -581,8 +581,8 @@ public class AtomPlacer {
         int maxPathLength = 0;
         int bestStartAtom = -1;
         int bestEndAtom = -1;
-        IAtom atom = null;
-        IAtom startAtom = null;
+        IAtom atom;
+        IAtom startAtom;
         //IAtom endAtom = null;
         for (int f = 0; f < apsp.length; f++) {
             atom = molecule.getAtom(f);
@@ -630,7 +630,7 @@ public class AtomPlacer {
         int longest = 0;
         int longestPathLength = 0;
         int maxDegreeSum = 0;
-        int degreeSum = 0;
+        int degreeSum;
         IAtomContainer[] pathes = new IAtomContainer[molecule.getAtomCount()];
         for (int f = 0; f < molecule.getAtomCount(); f++) {
             molecule.getAtom(f).setFlag(CDKConstants.VISITED, false);
@@ -638,7 +638,7 @@ public class AtomPlacer {
             pathes[f].addAtom(startAtom);
 
         }
-        List<IAtom> startSphere = new ArrayList<IAtom>();
+        List<IAtom> startSphere = new ArrayList<>();
         startSphere.add(startAtom);
         breadthFirstSearch(molecule, startSphere, pathes);
         for (int f = 0; f < molecule.getAtomCount(); f++) {
@@ -675,23 +675,23 @@ public class AtomPlacer {
      */
     static public void breadthFirstSearch(IAtomContainer ac, List<IAtom> sphere, IAtomContainer[] pathes)
             throws CDKException {
-        IAtom atom = null;
-        IAtom nextAtom = null;
+        IAtom atom;
+        IAtom nextAtom;
         int atomNr;
         int nextAtomNr;
         //IAtomContainer path = null;
-        List<IAtom> newSphere = new ArrayList<IAtom>();
+        List<IAtom> newSphere = new ArrayList<>();
         logger.debug("Start of breadthFirstSearch");
 
-        for (int f = 0; f < sphere.size(); f++) {
-            atom = sphere.get(f);
+        for (IAtom value : sphere) {
+            atom = value;
             if (!atom.getFlag(CDKConstants.ISINRING)) {
                 atomNr = ac.indexOf(atom);
                 logger.debug("BreadthFirstSearch around atom " + (atomNr + 1));
 
                 List bonds = ac.getConnectedBondsList(atom);
-                for (int g = 0; g < bonds.size(); g++) {
-                    IBond curBond = (IBond) bonds.get(g);
+                for (Object bond : bonds) {
+                    IBond curBond = (IBond) bond;
                     nextAtom = curBond.getOther(atom);
                     if (!nextAtom.getFlag(CDKConstants.VISITED) && !nextAtom.getFlag(CDKConstants.ISPLACED)) {
                         nextAtomNr = ac.indexOf(nextAtom);
@@ -709,8 +709,8 @@ public class AtomPlacer {
             }
         }
         if (newSphere.size() > 0) {
-            for (int f = 0; f < newSphere.size(); f++) {
-                newSphere.get(f).setFlag(CDKConstants.VISITED, true);
+            for (IAtom iAtom : newSphere) {
+                iAtom.setFlag(CDKConstants.VISITED, true);
             }
             breadthFirstSearch(ac, newSphere, pathes);
         }
@@ -770,8 +770,8 @@ public class AtomPlacer {
      */
     static public String listNumbers(IAtomContainer mol, List<IAtom> ac) {
         String s = "Numbers: ";
-        for (int f = 0; f < ac.size(); f++) {
-            s += (mol.indexOf((IAtom) ac.get(f)) + 1) + " ";
+        for (IAtom iAtom : ac) {
+            s += (mol.indexOf(iAtom) + 1) + " ";
         }
         return s;
     }
@@ -1021,8 +1021,8 @@ public class AtomPlacer {
     static public boolean shouldBeLinear(IAtom atom, IAtomContainer molecule) {
         int sum = 0;
         List bonds = molecule.getConnectedBondsList(atom);
-        for (int g = 0; g < bonds.size(); g++) {
-            IBond bond = (IBond) bonds.get(g);
+        for (Object o : bonds) {
+            IBond bond = (IBond) o;
             if (bond.getOrder() == IBond.Order.TRIPLE)
                 sum += 10;
             else if (bond.getOrder() == IBond.Order.SINGLE) sum += 1;

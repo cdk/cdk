@@ -62,7 +62,7 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 final class SMARTSAtomInvariants {
 
     /** Property key to index the class by. */
-    static String                KEY = "SMARTS.INVARIANTS";
+    static final String                KEY = "SMARTS.INVARIANTS";
 
     /** the molecule which this atom belongs. */
     private final IAtomContainer target;
@@ -320,7 +320,7 @@ final class SMARTSAtomInvariants {
             }
 
             SMARTSAtomInvariants inv = new SMARTSAtomInvariants(container, valence, ringNumber[v],
-                    ringSize[v] <= nAtoms ? Collections.singleton(ringSize[v]) : Collections.<Integer> emptySet(),
+                    ringSize[v] <= nAtoms ? Collections.singleton(ringSize[v]) : Collections.emptySet(),
                     ringConnections, degree, degree + implHCount, totalHCount);
 
             // if there was no properties a default size LinkedHashMap is created

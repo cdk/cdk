@@ -36,7 +36,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  */
 public class AbstractSignatureTest {
 
-    public static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    public static final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
     public static void print(IAtomContainer mol) {
         for (int i = 0; i < mol.getAtomCount(); i++) {

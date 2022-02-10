@@ -111,7 +111,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
      */
     private List<IChemObjectListener> lazyChemObjectListeners() {
         if (chemObjectListeners == null) {
-            chemObjectListeners = new ArrayList<IChemObjectListener>();
+            chemObjectListeners = new ArrayList<>();
         }
         return chemObjectListeners;
     }
@@ -310,12 +310,12 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
         ChemObject clone = (ChemObject) super.clone();
 
         // clone the flags
-        clone.flags = getFlagValue().shortValue();
+        clone.flags = getFlagValue();
 
         // clone the properties - using the HashMap copy constructor
         // this doesn't deep clone the keys/values but this wasn't happening
         // already
-        if (properties != null) clone.properties = new HashMap<Object, Object>(getProperties());
+        if (properties != null) clone.properties = new HashMap<>(getProperties());
 
         // delete all listeners
         clone.chemObjectListeners = null;

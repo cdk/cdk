@@ -44,7 +44,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  */
 public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
 
-    private String      configFile = "org/openscience/cdk/config/data/jmol_atomtypes.txt";
+    private final String      configFile = "org/openscience/cdk/config/data/jmol_atomtypes.txt";
     private InputStream ins        = null;
 
     public TXTBasedAtomTypeConfigurator() {}
@@ -64,7 +64,7 @@ public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
      */
     @Override
     public List<IAtomType> readAtomTypes(IChemObjectBuilder builder) throws IOException {
-        List<IAtomType> atomTypes = new ArrayList<IAtomType>();
+        List<IAtomType> atomTypes = new ArrayList<>();
 
         if (ins == null) {
             // trying the default

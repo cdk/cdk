@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -40,7 +39,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  */
 public class QueryAtom extends QueryChemObject implements IQueryAtom {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(QueryAtom.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(QueryAtom.class);
 
     /**
      * The partial charge of the atom.

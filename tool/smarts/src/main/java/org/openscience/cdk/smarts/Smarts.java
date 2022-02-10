@@ -46,7 +46,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Deque;
 import java.util.HashMap;
@@ -134,9 +133,9 @@ public final class Smarts {
 
 
     private static final class SmartsError {
-        private String str;
-        private int    pos;
-        private String mesg;
+        private final String str;
+        private final int    pos;
+        private final String mesg;
 
         public SmartsError(String str, int pos, String mesg) {
             this.str = str;
@@ -145,7 +144,7 @@ public final class Smarts {
         }
     }
 
-    public static ThreadLocal<SmartsError> lastError = new ThreadLocal<>();
+    public static final ThreadLocal<SmartsError> lastError = new ThreadLocal<>();
 
     private static void setErrorMesg(String sma, int pos, String str) {
         lastError.set(new SmartsError(sma, pos, str));
@@ -187,8 +186,8 @@ public final class Smarts {
     }
 
     private static final class LocalNbrs {
-        List<IBond> bonds = new ArrayList<>(4);
-        boolean     isFirst;
+        final List<IBond> bonds = new ArrayList<>(4);
+        final boolean     isFirst;
 
         LocalNbrs(boolean first) {
             this.isFirst = first;
@@ -197,18 +196,18 @@ public final class Smarts {
 
     private static final class Parser {
         public  String         error;
-        private String         str;
-        private IAtomContainer mol;
-        private int            flav;
+        private final String         str;
+        private final IAtomContainer mol;
+        private final int            flav;
         private int            pos;
 
         private IAtom     prev;
         private QueryBond bond;
-        private Deque<IAtom>            stack   = new ArrayDeque<>();
-        private IBond                   rings[] = new IBond[100];
-        private Map<IAtom, LocalNbrs>   local   = new HashMap<>();
-        private Set<IAtom>              astereo = new HashSet<>();
-        private Set<IBond>              bstereo = new HashSet<>();
+        private final Deque<IAtom>            stack   = new ArrayDeque<>();
+        private final IBond[] rings = new IBond[100];
+        private final Map<IAtom, LocalNbrs>   local   = new HashMap<>();
+        private final Set<IAtom>              astereo = new HashSet<>();
+        private final Set<IBond>              bstereo = new HashSet<>();
         private int numRingOpens;
         private ReactionRole role = ReactionRole.None;
         private int numComponents;
@@ -2606,25 +2605,24 @@ public final class Smarts {
         }
 
         private void sort(List<IBond> bonds, final IBond prev) {
-            Collections.sort(bonds,
-                             new Comparator<IBond>() {
-                                 @Override
-                                 public int compare(IBond a, IBond b) {
-                                     if (a == prev)
-                                         return -1;
-                                     if (b == prev)
-                                         return +1;
-                                     if (isRingClose(a) && !isRingClose(b))
-                                         return -1;
-                                     if (!isRingClose(a) && isRingClose(b))
-                                         return +1;
-                                     if (isRingOpen(a) && !isRingOpen(b))
-                                         return -1;
-                                     if (!isRingOpen(a) && isRingOpen(b))
-                                         return +1;
-                                     return 0;
-                                 }
-                             });
+            bonds.sort(new Comparator<IBond>() {
+                @Override
+                public int compare(IBond a, IBond b) {
+                    if (a == prev)
+                        return -1;
+                    if (b == prev)
+                        return +1;
+                    if (isRingClose(a) && !isRingClose(b))
+                        return -1;
+                    if (!isRingClose(a) && isRingClose(b))
+                        return +1;
+                    if (isRingOpen(a) && !isRingOpen(b))
+                        return -1;
+                    if (!isRingOpen(a) && isRingOpen(b))
+                        return +1;
+                    return 0;
+                }
+            });
         }
 
         private void generateRecurAtom(StringBuilder sb,

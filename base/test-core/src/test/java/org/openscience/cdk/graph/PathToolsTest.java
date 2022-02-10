@@ -61,7 +61,7 @@ public class PathToolsTest extends CDKTestCase {
     public void testBreadthFirstTargetSearch_IAtomContainer_List_IAtom_int_int() {
         org.openscience.cdk.interfaces.IAtom atom1 = molecule.getAtom(0);
         org.openscience.cdk.interfaces.IAtom atom2 = molecule.getAtom(8);
-        List<IAtom> sphere = new ArrayList<IAtom>();
+        List<IAtom> sphere = new ArrayList<>();
         sphere.add(atom1);
         int length = PathTools.breadthFirstTargetSearch(molecule, sphere, atom2, 0, 3);
         //logger.debug("PathLengthTest->length: " + length);
@@ -83,22 +83,20 @@ public class PathToolsTest extends CDKTestCase {
         PathTools.resetFlags(atomContainer);
 
         // now assume that no VISITED is set
-        Iterator<IAtom> atoms = atomContainer.atoms().iterator();
-        while (atoms.hasNext()) {
-            Assert.assertNull(atoms.next().getProperty(CDKConstants.VISITED));
+        for (IAtom iAtom : atomContainer.atoms()) {
+            Assert.assertNull(iAtom.getProperty(CDKConstants.VISITED));
         }
-        Iterator<IBond> bonds = atomContainer.bonds().iterator();
-        while (bonds.hasNext()) {
-            Assert.assertNull(bonds.next().getProperty(CDKConstants.VISITED));
+        for (IBond iBond : atomContainer.bonds()) {
+            Assert.assertNull(iBond.getProperty(CDKConstants.VISITED));
         }
     }
 
     @Test
     public void testGetShortestPath_IAtomContainer_IAtom_IAtom() throws Exception {
-        IAtomContainer atomContainer = null;
-        IAtom start = null;
-        IAtom end = null;
-        List<IAtom> path = null;
+        IAtomContainer atomContainer;
+        IAtom start;
+        IAtom end;
+        List<IAtom> path;
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         atomContainer = sp.parseSmiles("CCCC");
         start = atomContainer.getAtom(0);
@@ -139,9 +137,9 @@ public class PathToolsTest extends CDKTestCase {
 
     @Test
     public void testGetPathsOfLength_IAtomContainer_IAtom_int() throws Exception {
-        IAtomContainer atomContainer = null;
-        IAtom start = null;
-        List<List<IAtom>> paths = null;
+        IAtomContainer atomContainer;
+        IAtom start;
+        List<List<IAtom>> paths;
         atomContainer = sp.parseSmiles("c1cc2ccccc2cc1");
         start = atomContainer.getAtom(0);
         paths = PathTools.getPathsOfLength(atomContainer, start, 1);
@@ -309,7 +307,7 @@ public class PathToolsTest extends CDKTestCase {
         atomContainer = sp.parseSmiles("CCCC");
         PathTools.resetFlags(atomContainer);
         start = atomContainer.getAtom(0);
-        List<IAtom> sphere = new ArrayList<IAtom>();
+        List<IAtom> sphere = new ArrayList<>();
         sphere.add(start);
         IAtomContainer result = atomContainer.getBuilder().newInstance(IAtomContainer.class);
         PathTools.breadthFirstSearch(atomContainer, sphere, result);
@@ -323,7 +321,7 @@ public class PathToolsTest extends CDKTestCase {
         atomContainer = sp.parseSmiles("CCCC");
         PathTools.resetFlags(atomContainer);
         start = atomContainer.getAtom(0);
-        List<IAtom> sphere = new ArrayList<IAtom>();
+        List<IAtom> sphere = new ArrayList<>();
         sphere.add(start);
         IAtomContainer result = atomContainer.getBuilder().newInstance(IAtomContainer.class);
         PathTools.breadthFirstSearch(atomContainer, sphere, result, 1);

@@ -257,13 +257,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
      */
     @Override
     public Iterable<IAtomContainer> atomContainers() {
-        return new Iterable<IAtomContainer>() {
-
-            @Override
-            public Iterator<IAtomContainer> iterator() {
-                return new AtomContainerIterator();
-            }
-        };
+        return AtomContainerIterator::new;
     }
 
     /**
@@ -364,7 +358,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
      */
     @Override
     public String toString() {
-        StringBuffer buffer = new StringBuffer(32);
+        StringBuilder buffer = new StringBuilder(32);
         buffer.append("AtomContainerSet(");
         buffer.append(this.hashCode());
         if (getAtomContainerCount() > 0) {
@@ -388,7 +382,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
         clone.atomContainers = new IAtomContainer[atomContainerCount];
         clone.atomContainerCount = 0;
         for (int i = 0; i < atomContainerCount; i++) {
-            clone.addAtomContainer((IAtomContainer) atomContainers[i].clone());
+            clone.addAtomContainer(atomContainers[i].clone());
             clone.setMultiplier(i, getMultiplier(i));
         }
         return clone;

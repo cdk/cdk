@@ -110,7 +110,7 @@ public interface IDescriptor {
     *
     * @return An object containing the descriptor specification
     */
-    public IImplementationSpecification getSpecification();
+    IImplementationSpecification getSpecification();
 
     /**
      * Returns the names of the parameters for this descriptor. The method
@@ -120,7 +120,7 @@ public interface IDescriptor {
      * @return An array of String containing the names of the parameters
      *         that this descriptor can accept.
      */
-    public String[] getParameterNames();
+    String[] getParameterNames();
 
     /**
      * Returns a class matching that of the parameter with the given name. May
@@ -130,7 +130,7 @@ public interface IDescriptor {
      * @param name The name of the parameter whose type is requested
      * @return An Object of the class corresponding to the parameter with the supplied name
      */
-    public Object getParameterType(String name);
+    Object getParameterType(String name);
 
     /**
      * Sets the parameters for this descriptor.
@@ -142,7 +142,7 @@ public interface IDescriptor {
      * @throws CDKException if invalid number of type of parameters are passed to it
      * @see #getParameters
      */
-    public void setParameters(Object[] params) throws CDKException;
+    void setParameters(Object[] params) throws CDKException;
 
     /**
      * Returns the current parameter values. If not parameters have been set,
@@ -153,7 +153,7 @@ public interface IDescriptor {
      * @return An array of Object containing the parameter default values
      * @see #setParameters
      * */
-    public Object[] getParameters();
+    Object[] getParameters();
 
     /**
      * Returns an array of names for each descriptor value calculated.
@@ -175,6 +175,6 @@ public interface IDescriptor {
      * @return An array of descriptor names, equal
      * in length to the number of descriptor calculated..
      */
-    public String[] getDescriptorNames();
+    String[] getDescriptorNames();
 
 }

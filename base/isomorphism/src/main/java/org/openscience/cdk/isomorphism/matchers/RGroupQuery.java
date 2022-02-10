@@ -76,7 +76,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
 
     private static final long               serialVersionUID = -1656116487614720605L;
 
-    private static ILoggingTool             logger           = LoggingToolFactory.createLoggingTool(RGroupQuery.class);
+    private static final ILoggingTool             logger           = LoggingToolFactory.createLoggingTool(RGroupQuery.class);
 
     /**
      * The root structure (or scaffold) to which R-groups r attached.
@@ -110,7 +110,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
         List<IAtom> rGroupQueryAtoms = null;
 
         if (rootStructure != null) {
-            rGroupQueryAtoms = new ArrayList<IAtom>();
+            rGroupQueryAtoms = new ArrayList<>();
 
             for (int i = 0; i < rootStructure.getAtomCount(); i++) {
                 IAtom atom = rootStructure.getAtom(i);
@@ -135,7 +135,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
         return getRgroupQueryAtoms(null);
     }
 
-    private static Pattern validLabelPattern = Pattern.compile("^R\\d+$");
+    private static final Pattern validLabelPattern = Pattern.compile("^R\\d+$");
 
     /**
      * Validates a Pseudo atom's label to be valid RGroup query label (R1..R32).
@@ -145,7 +145,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
     public static boolean isValidRgroupQueryLabel(String Rxx) {
         Matcher matcher = validLabelPattern.matcher(Rxx);
         if (matcher.find()) {
-            int groupNumber = Integer.valueOf(Rxx.substring(1));
+            int groupNumber = Integer.parseInt(Rxx.substring(1));
             if (groupNumber >= 1 && groupNumber <= 32) {
                 return true;
             }
@@ -160,7 +160,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
 
         for (IAtom rgp : allRgroupAtoms) {
             if (RGroupQuery.isValidRgroupQueryLabel(((IPseudoAtom) rgp).getLabel())) {
-                int groupNum = Integer.valueOf(((IPseudoAtom) rgp).getLabel().substring(1));
+                int groupNum = Integer.parseInt(((IPseudoAtom) rgp).getLabel().substring(1));
                 if (rGroupDefinitions == null || rGroupDefinitions.get(groupNum) == null
                         || rGroupDefinitions.get(groupNum).getRGroups() == null
                         || rGroupDefinitions.get(groupNum).getRGroups().size() == 0) {
@@ -179,7 +179,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
                 if (rootAtom instanceof IPseudoAtom && rootAtom.getSymbol().startsWith("R")) {
                     IPseudoAtom pseudo = (IPseudoAtom) rootAtom;
                     if (pseudo.getLabel().length() > 1) {
-                        int rootAtomRgrpNumber = Integer.valueOf(pseudo.getLabel().substring(1));
+                        int rootAtomRgrpNumber = Integer.parseInt(pseudo.getLabel().substring(1));
                         if (rootAtomRgrpNumber == rgpNum) {
                             represented = true;
                             break rootLoop;
@@ -202,21 +202,21 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
         }
 
         //result = a list of concrete atom containers that are valid interpretations of the RGroup query
-        List<IAtomContainer> result = new ArrayList<IAtomContainer>();
+        List<IAtomContainer> result = new ArrayList<>();
 
         //rGroupNumbers = list holding each R# number for this RGroup query
-        List<Integer> rGroupNumbers = new ArrayList<Integer>();
+        List<Integer> rGroupNumbers = new ArrayList<>();
 
         //distributions  = a list of valid distributions, that is a one/zero representation
         //                 indicating which atom in an atom series belonging to a particular
         //                 R# group is present (1) or absent (0).
-        List<Integer[]> distributions = new ArrayList<Integer[]>();
+        List<Integer[]> distributions = new ArrayList<>();
 
         List<List<IRGroup>> substitutes = new ArrayList<>();
 
         //Valid occurrences for each R# group
-        List<List<Integer>> occurrences = new ArrayList<List<Integer>>();
-        List<Integer> occurIndexes = new ArrayList<Integer>();
+        List<List<Integer>> occurrences = new ArrayList<>();
+        List<Integer> occurIndexes = new ArrayList<>();
 
         //Build up each R# group data before recursively finding configurations.
         Iterator<Integer> rGroupNumItr = rGroupDefinitions.keySet().iterator();
@@ -260,9 +260,9 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
 
             // Clone the root to get a scaffold to plug the substitutes into.
             IAtomContainer root = this.getRootStructure();
-            IAtomContainer rootClone = null;
+            IAtomContainer rootClone;
             try {
-                rootClone = (IAtomContainer) root.clone();
+                rootClone = root.clone();
             } catch (CloneNotSupportedException e) {
                 //Abort with CDK exception
                 throw new CDKException("clone() failed; could not perform R-group substitution.");
@@ -278,9 +278,9 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
                     IAtom rAtom = this.getRgroupQueryAtoms(rNum).get(pos);
                     if (substitute != null) {
 
-                        IAtomContainer rgrpClone = null;
+                        IAtomContainer rgrpClone;
                         try {
-                            rgrpClone = (IAtomContainer) (substitute.getGroup().clone());
+                            rgrpClone = substitute.getGroup().clone();
                         } catch (CloneNotSupportedException e) {
                             throw new CDKException("clone() failed; could not perform R-group substitution.");
                         }
@@ -296,7 +296,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
                                 //Check how R# is attached to bond
                                 int whichAtomInBond = 0;
                                 if (bond.getEnd().equals(rAtom)) whichAtomInBond = 1;
-                                IAtom subsAt = null;
+                                IAtom subsAt;
                                 if (apo == 0)
                                     subsAt = substitute.getFirstAttachmentPoint();
                                 else
@@ -391,7 +391,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
                 for (int j = 0; j < candidate.length; j++) {
                     candidate[j] = 0;
                 }
-                List<Integer[]> rgrpDistributions = new ArrayList<Integer[]>();
+                List<Integer[]> rgrpDistributions = new ArrayList<>();
                 findDistributions(occurrence, candidate, rgrpDistributions, 0);
 
                 for (Integer[] distribution : rgrpDistributions) {
@@ -431,8 +431,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
                 candidate[level] = i;
 
                 int sum = 0;
-                for (int x = 0; x < candidate.length; x++)
-                    sum += candidate[x];
+                for (Integer integer : candidate) sum += integer;
 
                 if (sum == occur) {
                     distributions.add(candidate.clone());
@@ -576,7 +575,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
 
     @Override
     public List<IAtomContainer> getSubstituents() {
-        List<IAtomContainer> substitutes = new ArrayList<IAtomContainer>();
+        List<IAtomContainer> substitutes = new ArrayList<>();
         for (Integer r : rGroupDefinitions.keySet()) {
             for (IRGroup rgrp : rGroupDefinitions.get(r).getRGroups()) {
                 IAtomContainer subst = rgrp.getGroup();

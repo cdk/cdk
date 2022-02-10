@@ -37,7 +37,7 @@ public class DebugRingSet extends RingSet implements IRingSet {
 
     private static final long serialVersionUID = -4144201128508373352L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugRingSet.class);
+    final ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugRingSet.class);
 
     public DebugRingSet() {
         super();

@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IStrand;
 
 import java.util.Collection;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -54,7 +53,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
     private static final long     serialVersionUID = 4200943086350928356L;
 
     /** The list of all Monomers in the Strand.*/
-    private Map<String, IMonomer> monomers;
+    private final Map<String, IMonomer> monomers;
     /** The name of this strand (e.g. A, B). */
     private String                strandName;
     /** The type of this strand (e.g. PEPTIDE, DNA, RNA). */
@@ -66,7 +65,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
     public Strand() {
         super();
         // Stand stuff
-        monomers = new Hashtable<String, IMonomer>();
+        monomers = new Hashtable<>();
         Monomer oMonomer = new Monomer();
         oMonomer.setMonomerName("");
         oMonomer.setMonomerType("UNKNOWN");
@@ -182,7 +181,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
      */
     @Override
     public IMonomer getMonomer(String cName) {
-        return (Monomer) monomers.get(cName);
+        return monomers.get(cName);
     }
 
     /**
@@ -236,7 +235,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
 
     @Override
     public String toString() {
-        StringBuffer stringContent = new StringBuffer(32);
+        StringBuilder stringContent = new StringBuilder(32);
         stringContent.append("Strand(");
         stringContent.append(this.hashCode());
         if (getStrandName() != null) {
@@ -254,11 +253,10 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
     public IStrand clone() throws CloneNotSupportedException {
         Strand clone = (Strand) super.clone();
         clone.monomers.clear();
-        for (Iterator<String> iter = clone.getMonomerNames().iterator(); iter.hasNext();) {
-            Monomer monomerClone = (Monomer) (clone.getMonomer(iter.next().toString()).clone());
-            Iterator<IAtom> atoms = monomerClone.atoms().iterator();
-            while (atoms.hasNext()) {
-                clone.addAtom(atoms.next(), monomerClone);
+        for (String s : clone.getMonomerNames()) {
+            Monomer monomerClone = (Monomer) (clone.getMonomer(s.toString()).clone());
+            for (IAtom iAtom : monomerClone.atoms()) {
+                clone.addAtom(iAtom, monomerClone);
             }
         }
         return clone;

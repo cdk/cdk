@@ -49,7 +49,7 @@ public class DebugRing extends Ring implements IRing {
 
     private static final long serialVersionUID = -6420813246421544803L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugRing.class);
+    final ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugRing.class);
 
     public DebugRing() {
         super();

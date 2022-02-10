@@ -55,7 +55,7 @@ import org.xmlcml.cml.element.CMLAtom;
  */
 public class MDMoleculeTest extends CDKTestCase {
 
-    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDMoleculeTest.class);
+    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDMoleculeTest.class);
 
     /**
      * @cdk.bug 1748257
@@ -181,7 +181,7 @@ public class MDMoleculeTest extends CDKTestCase {
 
         CMLReader reader = new CMLReader(new ByteArrayInputStream(serializedMol.getBytes()));
         reader.registerConvention("md:mdMolecule", new MDMoleculeConvention(new ChemFile()));
-        IChemFile file = (IChemFile) reader.read(new ChemFile());
+        IChemFile file = reader.read(new ChemFile());
         reader.close();
         List containers = ChemFileManipulator.getAllAtomContainers(file);
         Assert.assertEquals(1, containers.size());
@@ -256,12 +256,12 @@ public class MDMoleculeTest extends CDKTestCase {
         //        System.out.println("****************************** testMDMoleculeCustomization()");
         //        System.out.println(cmlContent);
         //        System.out.println("******************************");
-        Assert.assertTrue(cmlContent.indexOf("xmlns:md") != -1);
-        Assert.assertTrue(cmlContent.indexOf("md:residue\"") != -1);
-        Assert.assertTrue(cmlContent.indexOf("md:resNumber\"") != -1);
-        Assert.assertTrue(cmlContent.indexOf("md:chargeGroup\"") != -1);
-        Assert.assertTrue(cmlContent.indexOf("md:cgNumber\"") != -1);
-        Assert.assertTrue(cmlContent.indexOf("md:switchingAtom\"") != -1);
+        Assert.assertTrue(cmlContent.contains("xmlns:md"));
+        Assert.assertTrue(cmlContent.contains("md:residue\""));
+        Assert.assertTrue(cmlContent.contains("md:resNumber\""));
+        Assert.assertTrue(cmlContent.contains("md:chargeGroup\""));
+        Assert.assertTrue(cmlContent.contains("md:cgNumber\""));
+        Assert.assertTrue(cmlContent.contains("md:switchingAtom\""));
     }
 
     /**

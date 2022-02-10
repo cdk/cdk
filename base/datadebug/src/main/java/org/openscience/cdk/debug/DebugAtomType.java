@@ -41,7 +41,7 @@ public class DebugAtomType extends AtomType implements IAtomType {
 
     private static final long serialVersionUID = 1427549696666679540L;
 
-    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugAtomType.class);
+    final ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugAtomType.class);
 
     public DebugAtomType(String elementSymbol) {
         super(elementSymbol);

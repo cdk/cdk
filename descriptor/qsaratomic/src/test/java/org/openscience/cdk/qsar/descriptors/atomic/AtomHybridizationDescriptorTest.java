@@ -47,7 +47,7 @@ public class AtomHybridizationDescriptorTest extends AtomicDescriptorTest {
     }
 
     @Test
-    public void testAtomHybridizationDescriptorTest() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testAtomHybridizationDescriptorTest() throws java.lang.Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C#CC=CC"); //
         addExplicitHydrogens(mol);

@@ -120,9 +120,9 @@ public class GeometryUtilTest extends CDKTestCase {
     public void testHas2DCoordinates_With000() throws CDKException {
         String filenameMol = "with000coordinate.mol";
         InputStream ins = this.getClass().getResourceAsStream(filenameMol);
-        IAtomContainer molOne = null;
+        IAtomContainer molOne;
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        molOne = (IAtomContainer) reader.read(new AtomContainer());
+        molOne = reader.read(new AtomContainer());
         Assert.assertTrue(GeometryUtil.has2DCoordinates(molOne));
     }
 
@@ -131,7 +131,7 @@ public class GeometryUtilTest extends CDKTestCase {
         IAtomContainer container = new AtomContainer();
         Assert.assertEquals(GeometryUtil.CoordinateCoverage.NONE, GeometryUtil.get2DCoordinateCoverage(container));
         Assert.assertEquals(GeometryUtil.CoordinateCoverage.NONE,
-                            GeometryUtil.get2DCoordinateCoverage((IAtomContainer) null));
+                            GeometryUtil.get2DCoordinateCoverage(null));
     }
 
     @Test
@@ -223,7 +223,7 @@ public class GeometryUtilTest extends CDKTestCase {
         InputStream ins = this.getClass().getResourceAsStream(filenameMolOne);
         IAtomContainer molOne;
         IAtomContainer molTwo;
-        Map<Integer, Integer> mappedAtoms = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> mappedAtoms = new HashMap<>();
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         molOne = reader.read(new AtomContainer());
 
@@ -486,7 +486,7 @@ public class GeometryUtilTest extends CDKTestCase {
         IAtomContainer container = new AtomContainer();
         Assert.assertEquals(GeometryUtil.CoordinateCoverage.NONE, GeometryUtil.get3DCoordinateCoverage(container));
         Assert.assertEquals(GeometryUtil.CoordinateCoverage.NONE,
-                            GeometryUtil.get3DCoordinateCoverage((IAtomContainer) null));
+                            GeometryUtil.get3DCoordinateCoverage(null));
     }
 
     @Test
@@ -635,7 +635,7 @@ public class GeometryUtilTest extends CDKTestCase {
         IAtomContainer react1 = new AtomContainer();
         react1.addAtom(atom1);
         react1.addAtom(atom2);
-        IAtomContainer react2 = (IAtomContainer) react1.clone();
+        IAtomContainer react2 = react1.clone();
 
         // shift the second molecule right
         GeometryUtil.shiftContainer(react2, GeometryUtil.getMinMax(react2), GeometryUtil.getMinMax(react1), 1.0);
@@ -666,7 +666,7 @@ public class GeometryUtilTest extends CDKTestCase {
         IAtomContainer react1 = new AtomContainer();
         react1.addAtom(atom1);
         react1.addAtom(atom2);
-        IAtomContainer react2 = (IAtomContainer) react1.clone();
+        IAtomContainer react2 = react1.clone();
 
         // shift the second molecule right
         GeometryUtil.shiftContainer(react2, GeometryUtil.getMinMax(react2), GeometryUtil.getMinMax(react1), 1.0);

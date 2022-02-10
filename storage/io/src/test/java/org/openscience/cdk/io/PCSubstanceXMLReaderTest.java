@@ -39,7 +39,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class PCSubstanceXMLReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(PCSubstanceXMLReaderTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(PCSubstanceXMLReaderTest.class);
 
     @BeforeClass
     public static void setup() throws Exception {
@@ -58,7 +58,7 @@ public class PCSubstanceXMLReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         PCSubstanceXMLReader reader = new PCSubstanceXMLReader(ins);
-        IAtomContainer molecule = (IAtomContainer) reader.read(new AtomContainer());
+        IAtomContainer molecule = reader.read(new AtomContainer());
         Assert.assertNotNull(molecule);
 
         // check atom stuff

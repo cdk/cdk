@@ -53,8 +53,8 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  */
 public class AtomTypeAwareSaturationChecker implements IValencyChecker, IDeduceBondOrderTool {
 
-    SaturationChecker           staturationChecker;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(SaturationChecker.class);
+    final SaturationChecker           staturationChecker;
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(SaturationChecker.class);
     private IBond.Order         oldBondOrder;
     private int                 startBond;
 

@@ -37,7 +37,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class DebugAdductFormula extends AdductFormula implements IAdductFormula {
 
-    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(DebugAdductFormula.class);
+    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(DebugAdductFormula.class);
 
     public DebugAdductFormula() {
         super();

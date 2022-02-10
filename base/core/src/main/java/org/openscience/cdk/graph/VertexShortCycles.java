@@ -52,7 +52,7 @@ final class VertexShortCycles {
         int[][] graph = initialCycles.graph();
         int[] sizeOf = new int[graph.length];
 
-        this.paths = new ArrayList<int[]>(initialCycles.numberOfCycles());
+        this.paths = new ArrayList<>(initialCycles.numberOfCycles());
 
         // cycles are returned ordered by length
         for (final InitialCycles.Cycle cycle : initialCycles.cycles()) {

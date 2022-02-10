@@ -24,10 +24,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.test.interfaces.AbstractStrandTest;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IStrand;
-import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link DebugStrand}.
@@ -38,13 +36,7 @@ public class DebugStrandTest extends AbstractStrandTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new DebugStrand();
-            }
-        });
+        setTestObjectBuilder(DebugStrand::new);
     }
 
     @Test
@@ -54,11 +46,11 @@ public class DebugStrandTest extends AbstractStrandTest {
         Assert.assertEquals(oStrand.getMonomerCount(), 0);
 
         IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
-        oMono1.setMonomerName(new String("TRP279"));
+        oMono1.setMonomerName("TRP279");
         IMonomer oMono2 = oStrand.getBuilder().newInstance(IMonomer.class);
-        oMono2.setMonomerName(new String("HOH"));
+        oMono2.setMonomerName("HOH");
         IMonomer oMono3 = oStrand.getBuilder().newInstance(IMonomer.class);
-        oMono3.setMonomerName(new String("GLYA16"));
+        oMono3.setMonomerName("GLYA16");
         IAtom oAtom1 = oStrand.getBuilder().newInstance(IAtom.class, "C");
         IAtom oAtom2 = oStrand.getBuilder().newInstance(IAtom.class, "C");
         IAtom oAtom3 = oStrand.getBuilder().newInstance(IAtom.class, "C");

@@ -91,7 +91,7 @@ public class BremserPredictorTest extends CDKTestCase {
         double[] result = {28.5, 25.7, 28.5, 34.9, 28.5, 25.7, 25.4, 28.5, 28.5, 14.8, 13.3, 23.0, 34.9, 25.7, 25.7,
                 28.5, 25.7, 25.7, 13.3, 14.4, 14.4, 8.9, 14.8, 14.8, 13.3, 13.3, 13.3, 14.4, 14.4, 13.3, 14.4, 14.4,
                 8.9, 14.8, 14.8, 13.3, 13.3, 13.3, 14.4, 14.4, 13.3};
-        IAtomContainer molecule = null;
+        IAtomContainer molecule;
         String filename = "BremserPredictionTest.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
@@ -99,7 +99,7 @@ public class BremserPredictorTest extends CDKTestCase {
         double prediction;
         BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
         HOSECodeGenerator hcg = new HOSECodeGenerator();
-        String s = null;
+        String s;
         removeHydrogens(molecule);
         //logger.debug("Molecule has " + molecule.getAtomCount() + " atoms.");
         for (int f = 0; f < molecule.getAtomCount(); f++) {
@@ -155,7 +155,7 @@ public class BremserPredictorTest extends CDKTestCase {
     }
 
     private void removeHydrogens(IAtomContainer ac) {
-        org.openscience.cdk.interfaces.IAtom atom = null;
+        org.openscience.cdk.interfaces.IAtom atom;
         int f = ac.getAtomCount() - 1;
 
         do {

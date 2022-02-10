@@ -110,23 +110,23 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
      * Maintain order of neighboring atoms - required for atom-based
      * stereochemistry.
      */
-    private Map<IAtom, List<IAtom>>             neighbors      = new HashMap<IAtom, List<IAtom>>();
+    private final Map<IAtom, List<IAtom>>             neighbors      = new HashMap<>();
 
     /**
      * Lookup of atom indices.
      */
-    private BitSet                              tetrahedral    = new BitSet();
+    private final BitSet                              tetrahedral    = new BitSet();
 
     /**
      * Stores the directional '/' or '\' bonds. Speeds up looking for double
      * bond configurations.
      */
-    private List<IBond>                         stereoBonds    = new ArrayList<IBond>();
+    private final List<IBond>                         stereoBonds    = new ArrayList<>();
 
     /**
      * Stores the double bonds in the query.
      */
-    private List<IBond>                         doubleBonds    = new ArrayList<IBond>();
+    private final List<IBond>                         doubleBonds    = new ArrayList<>();
 
     public SmartsQueryVisitor(IChemObjectBuilder builder) {
         this.builder = builder;
@@ -191,8 +191,8 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
                 // Here I assume the bond are always same. This should be checked by the parser already
                 ringBond = ringAtoms[ringId].getRingBond();
             }
-            ((IBond) ringBond).setAtoms(new IAtom[]{ringAtoms[ringId].getAtom(), atom});
-            query.addBond((IBond) ringBond);
+            ringBond.setAtoms(new IAtom[]{ringAtoms[ringId].getAtom(), atom});
+            query.addBond(ringBond);
 
             // if the connected atoms was tracking neighbors, replace the
             // placeholder reference
@@ -349,7 +349,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
     }
 
     public Object visit(ASTSmarts node, Object data) {
-        SMARTSAtom atom = null;
+        SMARTSAtom atom;
         SMARTSBond bond = null;
 
         ASTAtom first = (ASTAtom) node.jjtGetChild(0);
@@ -374,7 +374,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
         query.addAtom(atom);
 
         if (tetrahedral.get(query.getAtomCount() - 1)) {
-            List<IAtom> localNeighbors = new ArrayList<IAtom>(query.getConnectedAtomsList(atom));
+            List<IAtom> localNeighbors = new ArrayList<>(query.getConnectedAtomsList(atom));
             localNeighbors.add(atom);
             neighbors.put(atom, localNeighbors);
         }
@@ -397,7 +397,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
                     neighbors.get(atom).add(newAtom);
                 }
                 if (tetrahedral.get(query.getAtomCount() - 1)) {
-                    List<IAtom> localNeighbors = new ArrayList<IAtom>(query.getConnectedAtomsList(newAtom));
+                    List<IAtom> localNeighbors = new ArrayList<>(query.getConnectedAtomsList(newAtom));
                     localNeighbors.add(newAtom);
                     neighbors.put(newAtom, localNeighbors);
                 }
@@ -523,7 +523,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
                 stereoBonds.add(bond);
                 break;
             default:
-                logger.error("Un parsed bond: " + node.toString());
+                logger.error("Un parsed bond: " + node);
                 break;
         }
         return bond;
@@ -683,7 +683,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
     }
 
     public Object visit(ASTExplicitAtom node, Object data) {
-        IQueryAtom atom = null;
+        IQueryAtom atom;
         String symbol = node.getSymbol();
         if ("*".equals(symbol)) {
             atom = new AnyAtom(builder);

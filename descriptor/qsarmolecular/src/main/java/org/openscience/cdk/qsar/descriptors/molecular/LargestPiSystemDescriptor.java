@@ -182,8 +182,8 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
                     || container.getAtom(i).getAtomicNumber() == IElement.N || container.getAtom(i).getAtomicNumber() == IElement.O)
                     && !container.getAtom(i).getFlag(CDKConstants.VISITED)) {
                 //logger.debug("...... -> Accepted");
-                startSphere = new ArrayList<IAtom>();
-                path = new ArrayList<IAtom>();
+                startSphere = new ArrayList<>();
+                path = new ArrayList<>();
                 startSphere.add(container.getAtom(i));
                 try {
                     breadthFirstSearch(container, startSphere, path);
@@ -237,7 +237,7 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
      */
     private void breadthFirstSearch(IAtomContainer container, List<IAtom> sphere, List<IAtom> path) throws CDKException {
         IAtom nextAtom;
-        List<IAtom> newSphere = new ArrayList<IAtom>();
+        List<IAtom> newSphere = new ArrayList<>();
         //logger.debug("Start of breadthFirstSearch");
         for (IAtom atom : sphere) {
             //logger.debug("BreadthFirstSearch around atom " + (atomNr + 1));

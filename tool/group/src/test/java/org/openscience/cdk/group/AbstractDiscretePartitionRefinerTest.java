@@ -15,7 +15,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
 
     public class Graph {
 
-        public int     vertexCount;
+        public final int     vertexCount;
         public int[][] connectionTable;
 
         public Graph(int vertexCount) {
@@ -25,7 +25,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
 
     public class MockRefiner extends AbstractDiscretePartitionRefiner {
 
-        public Graph graph;
+        public final Graph graph;
 
         public MockRefiner(Graph graph) {
             super();
@@ -63,7 +63,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         }
 
         private int[] getConnectedIndices(int vertexIndex) {
-            Set<Integer> connectedSet = new HashSet<Integer>();
+            Set<Integer> connectedSet = new HashSet<>();
             for (int index = 0; index < graph.connectionTable.length; index++) {
                 if (graph.connectionTable[vertexIndex][index] == 1) {
                     connectedSet.add(index);

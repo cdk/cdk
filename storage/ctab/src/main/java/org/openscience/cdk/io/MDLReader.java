@@ -28,7 +28,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -89,8 +88,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @Deprecated
 public class MDLReader extends DefaultChemObjectReader {
 
-    BufferedReader               input          = null;
-    private static ILoggingTool  logger         = LoggingToolFactory.createLoggingTool(MDLReader.class);
+    BufferedReader               input;
+    private static final ILoggingTool  logger         = LoggingToolFactory.createLoggingTool(MDLReader.class);
 
     private BooleanIOSetting     forceReadAs3DCoords;
     private static final Pattern TRAILING_SPACE = Pattern.compile("\\s+$");
@@ -153,10 +152,10 @@ public class MDLReader extends DefaultChemObjectReader {
         if (IChemModel.class.equals(classObject)) return true;
         if (IAtomContainer.class.equals(classObject)) return true;
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IChemFile.class.equals(interfaces[i])) return true;
-            if (IChemModel.class.equals(interfaces[i])) return true;
-            if (IAtomContainer.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IChemFile.class.equals(anInterface)) return true;
+            if (IChemModel.class.equals(anInterface)) return true;
+            if (IAtomContainer.class.equals(anInterface)) return true;
         }
         Class superClass = classObject.getSuperclass();
         if (superClass != null) return this.accepts(superClass);
@@ -311,18 +310,18 @@ public class MDLReader extends DefaultChemObjectReader {
     private IAtomContainer readMolecule(IAtomContainer molecule) throws CDKException {
         logger.debug("Reading new molecule");
         int linecount = 0;
-        int atoms = 0;
-        int bonds = 0;
-        int atom1 = 0;
-        int atom2 = 0;
-        int order = 0;
+        int atoms;
+        int bonds;
+        int atom1;
+        int atom2;
+        int order;
         IBond.Stereo stereo = (IBond.Stereo) CDKConstants.UNSET;
         int RGroupCounter = 1;
-        int Rnumber = 0;
-        String[] rGroup = null;
-        double x = 0.0;
-        double y = 0.0;
-        double z = 0.0;
+        int Rnumber;
+        String[] rGroup;
+        double x;
+        double y;
+        double z;
         double totalX = 0.0;
         double totalY = 0.0;
         double totalZ = 0.0;
@@ -371,9 +370,9 @@ public class MDLReader extends DefaultChemObjectReader {
                     throw new CDKException("This file must be read with the MDLV3000Reader.");
                 }
             }
-            atoms = Integer.valueOf(line.substring(0, 3).trim()).intValue();
+            atoms = Integer.parseInt(line.substring(0, 3).trim());
             logger.debug("Atomcount: " + atoms);
-            bonds = Integer.valueOf(line.substring(3, 6).trim()).intValue();
+            bonds = Integer.parseInt(line.substring(3, 6).trim());
             logger.debug("Bondcount: " + bonds);
 
             // read ATOM block
@@ -387,9 +386,9 @@ public class MDLReader extends DefaultChemObjectReader {
                             trailingSpaceMatcher.end());
                     line = trailingSpaceMatcher.replaceAll("");
                 }
-                x = new Double(line.substring(0, 10).trim()).doubleValue();
-                y = new Double(line.substring(10, 20).trim()).doubleValue();
-                z = new Double(line.substring(20, 30).trim()).doubleValue();
+                x = new Double(line.substring(0, 10).trim());
+                y = new Double(line.substring(10, 20).trim());
+                z = new Double(line.substring(20, 30).trim());
                 // *all* values should be zero, not just the sum
                 totalX += Math.abs(x);
                 totalY += Math.abs(y);
@@ -503,11 +502,11 @@ public class MDLReader extends DefaultChemObjectReader {
                 //shk3: This reads shifts from after the molecule. I don't think this is an official format, but I saw it frequently 80=>78 for alk
                 if (line.length() >= 78) {
                     double shift = Double.parseDouble(line.substring(69, 80).trim());
-                    atom.setProperty("first shift", new Double(shift));
+                    atom.setProperty("first shift", shift);
                 }
                 if (line.length() >= 87) {
                     double shift = Double.parseDouble(line.substring(79, 87).trim());
-                    atom.setProperty("second shift", new Double(shift));
+                    atom.setProperty("second shift", shift);
                 }
 
                 molecule.addAtom(atom);
@@ -521,9 +520,7 @@ public class MDLReader extends DefaultChemObjectReader {
                 }
             } else if (totalZ == 0.0 && !forceReadAs3DCoords.isSet()) {
                 logger.info("Total 3D Z is 0.0, interpreting it as a 2D structure");
-                Iterator<IAtom> atomsToUpdate = molecule.atoms().iterator();
-                while (atomsToUpdate.hasNext()) {
-                    IAtom atomToUpdate = (IAtom) atomsToUpdate.next();
+                for (IAtom atomToUpdate : molecule.atoms()) {
                     Point3d p3d = atomToUpdate.getPoint3d();
                     atomToUpdate.setPoint2d(new Point2d(p3d.x, p3d.y));
                     atomToUpdate.setPoint3d(null);
@@ -535,11 +532,11 @@ public class MDLReader extends DefaultChemObjectReader {
             for (int f = 0; f < bonds; f++) {
                 line = input.readLine();
                 linecount++;
-                atom1 = java.lang.Integer.valueOf(line.substring(0, 3).trim()).intValue();
-                atom2 = java.lang.Integer.valueOf(line.substring(3, 6).trim()).intValue();
-                order = java.lang.Integer.valueOf(line.substring(6, 9).trim()).intValue();
+                atom1 = Integer.parseInt(line.substring(0, 3).trim());
+                atom2 = Integer.parseInt(line.substring(3, 6).trim());
+                order = Integer.parseInt(line.substring(6, 9).trim());
                 if (line.length() > 12) {
-                    int mdlStereo = Integer.valueOf(line.substring(9, 12).trim());
+                    int mdlStereo = Integer.parseInt(line.substring(9, 12).trim());
                     if (mdlStereo == 1) {
                         // MDL up bond
                         stereo = IBond.Stereo.UP;

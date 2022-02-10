@@ -37,7 +37,7 @@ import java.util.regex.Pattern;
  */
 public class MM2BasedAtomTypePattern {
 
-    private List<Pattern> atomTypePatterns = new Vector<Pattern>();
+    private final List<Pattern> atomTypePatterns = new Vector<>();
 
     /**
      *Constructor for the MM2BasedAtomTypePattern object

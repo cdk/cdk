@@ -35,7 +35,6 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
-import org.openscience.cdk.io.setting.StringIOSetting;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -76,7 +75,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
     private BooleanIOSetting writeAgents;
 
     private BufferedWriter      writer;
-    private static ILoggingTool logger   = LoggingToolFactory.createLoggingTool(MDLRXNWriter.class);
+    private static final ILoggingTool logger   = LoggingToolFactory.createLoggingTool(MDLRXNWriter.class);
     private int                 reactionNumber;
     public Map<String, Object>  rdFields = null;
 
@@ -230,7 +229,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
             writer.write("$RXN");
             writer.write('\n');
             // reaction name
-            String line = (String) reaction.getProperty(CDKConstants.TITLE);
+            String line = reaction.getProperty(CDKConstants.TITLE);
             if (line == null) line = "";
             if (line.length() > 80) line = line.substring(0, 80);
             writer.write(line);
@@ -238,7 +237,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
             // user/program/date&time/reaction registry no. line
             writer.write('\n');
             // comment line
-            line = (String) reaction.getProperty(CDKConstants.REMARK);
+            line = reaction.getProperty(CDKConstants.REMARK);
             if (line == null) line = "";
             if (line.length() > 80) line = line.substring(0, 80);
             writer.write(line);
@@ -267,10 +266,8 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
             //write sdfields, if any
             if (rdFields != null) {
                 Set<String> set = rdFields.keySet();
-                Iterator<String> iterator = set.iterator();
-                while (iterator.hasNext()) {
-                    Object element = iterator.next();
-                    writer.write("> <" + (String) element + ">");
+                for (Object element : set) {
+                    writer.write("> <" + element + ">");
                     writer.write('\n');
                     writer.write(rdFields.get(element).toString());
                     writer.write('\n');
@@ -305,7 +302,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
                 StringWriter sw = new StringWriter();
                 writer.write("$MOL");
                 writer.write('\n');
-                MDLV2000Writer mdlwriter = null;
+                MDLV2000Writer mdlwriter;
                 try {
                     mdlwriter = new MDLV2000Writer(sw);
                 } catch (Exception ex) {
@@ -329,7 +326,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
      * @return     The String to be written into the connectiontable
      */
     private String formatMDLInt(int i, int l) {
-        String s = "", fs = "";
+        String s, fs = "";
         NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
         nf.setParseIntegerOnly(true);
         nf.setMinimumIntegerDigits(1);

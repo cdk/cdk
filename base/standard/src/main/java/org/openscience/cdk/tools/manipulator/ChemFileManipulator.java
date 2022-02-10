@@ -78,7 +78,7 @@ public class ChemFileManipulator {
      * @return  A list of all ChemObjects
      */
     public static List<IChemObject> getAllChemObjects(IChemFile file) {
-        List<IChemObject> list = new ArrayList<IChemObject>();
+        List<IChemObject> list = new ArrayList<>();
         //list.add(file); // should not add the original file
         for (int i = 0; i < file.getChemSequenceCount(); i++) {
             list.add(file.getChemSequence(i));
@@ -88,7 +88,7 @@ public class ChemFileManipulator {
     }
 
     public static List<String> getAllIDs(IChemFile file) {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         if (file.getID() != null) list.add(file.getID());
         for (int i = 0; i < file.getChemSequenceCount(); i++) {
             list.addAll(ChemSequenceManipulator.getAllIDs(file.getChemSequence(i)));
@@ -100,7 +100,7 @@ public class ChemFileManipulator {
      * Returns all the AtomContainer's of a ChemFile.
      */
     public static List<IAtomContainer> getAllAtomContainers(IChemFile file) {
-        List<IAtomContainer> acList = new ArrayList<IAtomContainer>();
+        List<IAtomContainer> acList = new ArrayList<>();
         for (IChemSequence sequence : file.chemSequences()) {
             acList.addAll(ChemSequenceManipulator.getAllAtomContainers(sequence));
         }
@@ -114,7 +114,7 @@ public class ChemFileManipulator {
      * @return      The List of IChemModel objects inside.
      */
     public static List<IChemModel> getAllChemModels(IChemFile file) {
-        List<IChemModel> modelsList = new ArrayList<IChemModel>();
+        List<IChemModel> modelsList = new ArrayList<>();
 
         for (int f = 0; f < file.getChemSequenceCount(); f++) {
             for (IChemModel model : file.getChemSequence(f).chemModels()) {
@@ -131,10 +131,10 @@ public class ChemFileManipulator {
      * @return      The List of IReaction objects inside.
      */
     public static List<IReaction> getAllReactions(IChemFile file) {
-        List<IReaction> reactonList = new ArrayList<IReaction>();
+        List<IReaction> reactonList = new ArrayList<>();
         List<IChemModel> chemModel = getAllChemModels(file);
-        for (int f = 0; f < chemModel.size(); f++) {
-            for (IReaction reaction : chemModel.get(f).getReactionSet().reactions()) {
+        for (IChemModel iChemModel : chemModel) {
+            for (IReaction reaction : iChemModel.getReactionSet().reactions()) {
                 reactonList.add(reaction);
             }
         }

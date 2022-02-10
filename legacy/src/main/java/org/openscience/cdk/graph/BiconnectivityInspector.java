@@ -27,7 +27,6 @@ package org.openscience.cdk.graph;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -60,7 +59,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 public class BiconnectivityInspector {
 
     private List            biconnectedSets;
-    private UndirectedGraph graph;
+    private final UndirectedGraph graph;
 
     /**
      * Creates a biconnectivity inspector for the specified undirected graph.
@@ -76,10 +75,8 @@ public class BiconnectivityInspector {
         if (biconnectedSets == null) {
             biconnectedSets = new ArrayList();
 
-            Iterator connectedSets = new ConnectivityInspector(graph).connectedSets().iterator();
-
-            while (connectedSets.hasNext()) {
-                Set connectedSet = (Set) connectedSets.next();
+            for (Object value : new ConnectivityInspector(graph).connectedSets()) {
+                Set connectedSet = (Set) value;
                 if (connectedSet.size() == 1) {
                     continue;
                 }
@@ -119,10 +116,9 @@ public class BiconnectivityInspector {
 
                     dfsVertices.add(currentVertex);
 
-                    Iterator edges = subgraph.edgesOf(currentVertex).iterator();
-                    while (edges.hasNext()) {
+                    for (Object o : subgraph.edgesOf(currentVertex)) {
                         // find a neighbour vertex of the current vertex
-                        Edge edge = (Edge) edges.next();
+                        Edge edge = (Edge) o;
 
                         if (!treeEdges.contains(edge)) {
 
@@ -153,14 +149,12 @@ public class BiconnectivityInspector {
 
                 Set connected = new HashSet();
 
-                for (Iterator it = dfsVertices.iterator(); it.hasNext();) {
-                    Object v = it.next();
-
+                for (Object v : dfsVertices) {
                     visitedVertices.add(v);
 
                     // find all adjacent non-tree edges
-                    for (Iterator adjacentEdges = subgraph.edgesOf(v).iterator(); adjacentEdges.hasNext();) {
-                        Edge l = (Edge) adjacentEdges.next();
+                    for (Object o : subgraph.edgesOf(v)) {
+                        Edge l = (Edge) o;
                         if (!treeEdges.contains(l)) {
                             h.addVertex(l);
                             Object u = l.oppositeVertex(v);

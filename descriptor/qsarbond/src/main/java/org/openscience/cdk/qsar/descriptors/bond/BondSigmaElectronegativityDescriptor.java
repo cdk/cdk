@@ -59,7 +59,7 @@ public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor
     /**Number of maximum iterations*/
     private int maxIterations = 6;
 
-    private Electronegativity electronegativity;
+    private final Electronegativity electronegativity;
 
     private static final String[] NAMES = {"elecSigB"};
 
@@ -134,12 +134,10 @@ public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor
         IBond bond;
 
         try {
-            ac = (IAtomContainer) atomContainer.clone();
+            ac = atomContainer.clone();
             bond = ac.getBond(atomContainer.indexOf(aBond));
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
-        } catch (CDKException e) {
-            return getDummyDescriptorValue(e);
-        } catch (CloneNotSupportedException e) {
+        } catch (CDKException | CloneNotSupportedException e) {
             return getDummyDescriptorValue(e);
         }
 

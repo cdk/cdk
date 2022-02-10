@@ -25,10 +25,8 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.test.interfaces.AbstractReactionTest;
-import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 
 /**
  * TestCase for the Reaction class.
@@ -39,13 +37,7 @@ public class ReactionTest extends AbstractReactionTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new Reaction();
-            }
-        });
+        setTestObjectBuilder(Reaction::new);
     }
 
     @Test

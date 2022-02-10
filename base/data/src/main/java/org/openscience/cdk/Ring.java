@@ -148,7 +148,7 @@ public class Ring extends AtomContainer implements java.io.Serializable, IRing {
 
     @Override
     public String toString() {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         buffer.append("Ring(");
         buffer.append(super.toString());
         buffer.append(')');

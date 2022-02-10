@@ -62,7 +62,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class CDKMCSTest extends CDKTestCase {
 
-    boolean standAlone = false;
+    final boolean standAlone = false;
 
     @Test
     public void testIsSubgraph_IAtomContainer_IAtomContainer() throws java.lang.Exception {
@@ -199,8 +199,8 @@ public class CDKMCSTest extends CDKTestCase {
         String queryfile = "org/openscience/cdk/smsd/algorithm/decalin.mol";
         IAtomContainer mol = new AtomContainer();
         IAtomContainer temp = new AtomContainer();
-        QueryAtomContainer query1 = null;
-        QueryAtomContainer query2 = null;
+        QueryAtomContainer query1;
+        QueryAtomContainer query2;
 
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(molfile);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
@@ -273,7 +273,7 @@ public class CDKMCSTest extends CDKTestCase {
         InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(file2);
         new MDLV2000Reader(ins2, Mode.STRICT).read(mol2);
         AtomContainerAtomPermutor permutor = new AtomContainerAtomPermutor(mol2);
-        mol2 = new AtomContainer((AtomContainer) permutor.next());
+        mol2 = new AtomContainer(permutor.next());
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol1.getBuilder());

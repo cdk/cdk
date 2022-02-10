@@ -32,7 +32,6 @@ import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -109,9 +108,9 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
 
     public static final class FP {
 
-        public int   hashCode;
-        public int   iteration;
-        public int[] atoms;
+        public final int   hashCode;
+        public final int   iteration;
+        public final int[] atoms;
 
         public FP(int hashCode, int iteration, int[] atoms) {
             this.hashCode = hashCode;
@@ -132,8 +131,8 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
     private int[]          identity;
     private boolean[]      resolvedChiral;
     private int[][]        atomGroup;
-    private CRC32          crc            = new CRC32();        // recycled for each CRC calculation
-    private ArrayList<FP>  fplist         = new ArrayList<FP>();
+    private final CRC32          crc            = new CRC32();        // recycled for each CRC calculation
+    private final ArrayList<FP>  fplist         = new ArrayList<>();
 
     // summary information about the molecule, for quick access
     private boolean[]      amask;                               // true for all heavy atoms, i.e. hydrogens and non-elements are excluded
@@ -155,7 +154,8 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
     private boolean[]      tetrazole;                                           // special flag for being in a tetrazole (C1=NN=NN1) ring
 
     // ------------ options -------------------
-    private int     classType, atomClass;
+    private final int     classType;
+    private int atomClass;
     private boolean optPerceiveStereo = false;
 
     // ------------ public methods ------------
@@ -217,7 +217,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
             case CLASS_FCFP4: type = "FCFP4"; break;
             case CLASS_FCFP6: type = "FCFP6"; break;
         }
-        return Arrays.<Map.Entry<String, String>>asList(
+        return Arrays.asList(
             new AbstractMap.SimpleImmutableEntry<>("classType", type),
             new AbstractMap.SimpleImmutableEntry<>("perceiveStereochemistry",
                                                    Boolean.toString(optPerceiveStereo))
@@ -301,8 +301,8 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
     public IBitFingerprint getBitFingerprint(IAtomContainer mol) throws CDKException {
         calculate(mol);
         final BitSet bits = new BitSet(length);
-        for (int n = 0; n < fplist.size(); n++) {
-            int i = fplist.get(n).hashCode;
+        for (FP fp : fplist) {
+            int i = fp.hashCode;
             long b = i >= 0 ? i : ((i & 0x7FFFFFFF) | (1L << 31));
             bits.set((int) (b % length));
         }
@@ -321,7 +321,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
         calculate(mol);
 
         // extract a convenient {hash:count} datastructure
-        final Map<Integer, Integer> map = new TreeMap<Integer, Integer>();
+        final Map<Integer, Integer> map = new TreeMap<>();
         for (FP fp : fplist) {
             if (map.containsKey(fp.hashCode))
                 map.put(fp.hashCode, map.get(fp.hashCode) + 1);
@@ -504,11 +504,10 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
     private int[] growAtoms(int[] atoms) {
         final int na = mol.getAtomCount();
         boolean[] mask = new boolean[na];
-        for (int n = 0; n < atoms.length; n++) {
-            mask[atoms[n]] = true;
-            int[] adj = atomAdj[atoms[n]];
-            for (int i = 0; i < adj.length; i++)
-                mask[adj[i]] = true;
+        for (int atom : atoms) {
+            mask[atom] = true;
+            int[] adj = atomAdj[atom];
+            for (int j : adj) mask[j] = true;
         }
         int sz = 0;
         for (int n = 0; n < na; n++)
@@ -621,7 +620,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
 
         markRingBlocks();
 
-        ArrayList<int[]> rings = new ArrayList<int[]>();
+        ArrayList<int[]> rings = new ArrayList<>();
         for (int rsz = 3; rsz <= 7; rsz++) {
             int[] path = new int[rsz];
             for (int n = 0; n < na; n++)
@@ -648,11 +647,12 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
         final int na = mol.getAtomCount();
         ringBlock = new int[na];
 
-        boolean visited[] = new boolean[na];
+        boolean[] visited = new boolean[na];
         for (int n = 0; n < na; n++)
             visited[n] = !amask[n]; // skip hydrogens
 
-        int path[] = new int[na + 1], plen = 0;
+        int[] path = new int[na + 1];
+        int plen = 0;
         while (true) {
             int last, current;
 
@@ -728,7 +728,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
                         break;
                     }
                 if (!fnd) {
-                    int newPath[] = new int[capacity];
+                    int[] newPath = new int[capacity];
                     for (int i = 0; i < psize; i++)
                         newPath[i] = path[i];
                     newPath[psize] = adj;
@@ -750,11 +750,11 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
 
         // make sure every element in the path has exactly 2 neighbours within the path; otherwise it is spanning a bridge, which
         // is an undesirable ring definition
-        for (int n = 0; n < path.length; n++) {
-            int count = 0, p = path[n];
+        for (int j : path) {
+            int count = 0, p = j;
             for (int i = 0; i < atomAdj[p].length; i++)
-                for (int j = 0; j < path.length; j++)
-                    if (atomAdj[p][i] == path[j]) {
+                for (int k : path)
+                    if (atomAdj[p][i] == k) {
                         count++;
                         break;
                     }
@@ -768,14 +768,13 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
         int fm = (first - 1 + psize) % psize, fp = (first + 1) % psize;
         boolean flip = path[fm] < path[fp];
         if (first != 0 || flip) {
-            int newPath[] = new int[psize];
+            int[] newPath = new int[psize];
             for (int n = 0; n < psize; n++)
                 newPath[n] = path[(first + (flip ? psize - n : n)) % psize];
             path = newPath;
         }
 
-        for (int n = 0; n < rings.size(); n++) {
-            int[] look = rings.get(n);
+        for (int[] look : rings) {
             boolean same = true;
             for (int i = 0; i < psize; i++)
                 if (look[i] != path[i]) {
@@ -806,7 +805,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
                 piAtom[mol.indexOf(bond.getEnd())] = true;
             }
 
-        ArrayList<int[]> maybe = new ArrayList<int[]>(); // rings which may yet be aromatic
+        ArrayList<int[]> maybe = new ArrayList<>(); // rings which may yet be aromatic
         for (int[] r : smallRings)
             if (r.length == 6) {
                 boolean consider = true;
@@ -1091,8 +1090,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
     private void considerBioTypeAromaticity(final int[] ring) {
         final int rsz = ring.length;
         int countDouble = 0;
-        for (int n = 0; n < rsz; n++) {
-            final int a = ring[n];
+        for (final int a : ring) {
             if (hasDouble[a]) {
                 countDouble++;
                 continue;
@@ -1100,8 +1098,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
             if (!lonePair[a]) return;
         }
         if (countDouble < rsz - 2) return;
-        for (int n = 0; n < rsz; n++)
-            maskAro[ring[n]] = true;
+        for (int i : ring) maskAro[i] = true;
     }
 
     // if the given ring is a tetrazole, mark the aroms accordingly; must be ring size length 5; it's possible to fool the

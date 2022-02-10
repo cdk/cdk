@@ -81,9 +81,7 @@ public class CanonicalLabelerTest extends CDKTestCase {
         IAtomContainer molecule = parser.parseSmiles("CC(=O)CBr");
 
         labeler.canonLabel(molecule);
-        Iterator<IAtom> atoms = molecule.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : molecule.atoms()) {
             Assert.assertNotNull(atom.getProperty(InvPair.CANONICAL_LABEL));
         }
 
@@ -105,9 +103,7 @@ public class CanonicalLabelerTest extends CDKTestCase {
     public void testSomeMoleculeWithDifferentStartingOrder() throws Exception {
         IAtomContainer molecule = parser.parseSmiles("O=C(C)CBr");
         labeler.canonLabel(molecule);
-        Iterator<IAtom> atoms = molecule.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : molecule.atoms()) {
             Assert.assertNotNull(atom.getProperty(InvPair.CANONICAL_LABEL));
         }
         Assert.assertEquals(1, ((Long) molecule.getAtom(0).getProperty(InvPair.CANONICAL_LABEL)).intValue());
@@ -156,9 +152,7 @@ public class CanonicalLabelerTest extends CDKTestCase {
     @Override
     protected void addImplicitHydrogens(IAtomContainer container) throws Exception {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
-        Iterator<IAtom> atoms = container.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : container.atoms()) {
             IAtomType type = matcher.findMatchingAtomType(container, atom);
             AtomTypeManipulator.configure(atom, type);
         }

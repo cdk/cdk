@@ -51,7 +51,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class CrystClustWriter extends DefaultChemObjectWriter {
 
     private BufferedWriter      writer;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CrystClustWriter.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(CrystClustWriter.class);
 
     /**
      * Constructs a new CrystClustWriter class. Output will be stored in the Writer
@@ -209,7 +209,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
         try {
             writer.write(s);
         } catch (IOException e) {
-            System.err.println("CMLWriter IOException while printing \"" + s + "\":" + e.toString());
+            System.err.println("CMLWriter IOException while printing \"" + s + "\":" + e);
         }
     }
 
@@ -218,7 +218,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
             writer.write(s);
             writer.write('\n');
         } catch (IOException e) {
-            System.err.println("CMLWriter IOException while printing \"" + s + "\":" + e.toString());
+            System.err.println("CMLWriter IOException while printing \"" + s + "\":" + e);
         }
     }
 

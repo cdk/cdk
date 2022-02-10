@@ -39,9 +39,9 @@ public class FragmentComplexityDescriptorTest extends MolecularDescriptorTest {
         IAtomContainer mol = reader.read(new AtomContainer());
         gf.generateFragments(mol);
         IAtomContainer[] setOfFragments = gf.getFrameworksAsContainers();
-        for (int i = 0; i < setOfFragments.length; i++) {
-            addExplicitHydrogens(setOfFragments[i]);
-            Complexity = ((DoubleResult) descriptor.calculate(setOfFragments[i]).getValue()).doubleValue();
+        for (IAtomContainer setOfFragment : setOfFragments) {
+            addExplicitHydrogens(setOfFragment);
+            Complexity = ((DoubleResult) descriptor.calculate(setOfFragment).getValue()).doubleValue();
             //System.out.println("Complexity:"+Complexity);
         }
         Assert.assertEquals(659.00, Complexity, 0.01);

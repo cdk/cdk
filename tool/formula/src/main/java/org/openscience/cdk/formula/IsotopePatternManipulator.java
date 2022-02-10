@@ -1,6 +1,5 @@
 package org.openscience.cdk.formula;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -84,10 +83,10 @@ public class IsotopePatternManipulator {
 
             // Sort the isotopes
             List<IsotopeContainer> listISO = isoSort.getIsotopes();
-            Collections.sort(listISO, new Comparator<IsotopeContainer>() {
+            listISO.sort(new Comparator<IsotopeContainer>() {
                 @Override
                 public int compare(IsotopeContainer o1, IsotopeContainer o2) {
-                    return Double.compare(o2.getIntensity(),o1.getIntensity());
+                    return Double.compare(o2.getIntensity(), o1.getIntensity());
                 }
             });
            
@@ -120,10 +119,10 @@ public class IsotopePatternManipulator {
 
             // Sort the isotopes
             List<IsotopeContainer> listISO = isoSort.getIsotopes();
-            Collections.sort(listISO, new Comparator<IsotopeContainer>() {
+            listISO.sort(new Comparator<IsotopeContainer>() {
                 @Override
                 public int compare(IsotopeContainer o1, IsotopeContainer o2) {
-                    return Double.compare(o1.getMass(),o2.getMass());
+                    return Double.compare(o1.getMass(), o2.getMass());
                 }
             });
            

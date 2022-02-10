@@ -391,8 +391,8 @@ final class InitialCycles {
         int[] count = new int[DEFAULT_DEGREE + 1];
 
         // count the occurrences of each key (degree)
-        for (int v = 0; v < n; v++) {
-            int key = graph[v].length + 1;
+        for (int[] ints : graph) {
+            int key = ints.length + 1;
             if (key >= count.length) count = copyOf(count, key * 2);
             count[key]++;
         }
@@ -435,8 +435,8 @@ final class InitialCycles {
     static int[] join(int[] pathToY, int[] pathToZ) {
         int[] path = copyOf(pathToY, pathToY.length + pathToZ.length);
         int j = path.length - 1;
-        for (int i = 0; i < pathToZ.length; i++) {
-            path[j--] = pathToZ[i];
+        for (int k : pathToZ) {
+            path[j--] = k;
         }
         return path;
     }
@@ -455,8 +455,8 @@ final class InitialCycles {
         int[] path = copyOf(pathToP, 1 + pathToQ.length + pathToQ.length);
         path[pathToP.length] = y;
         int j = path.length - 1;
-        for (int i = 0; i < pathToQ.length; i++) {
-            path[j--] = pathToQ[i];
+        for (int k : pathToQ) {
+            path[j--] = k;
         }
         return path;
     }
@@ -490,9 +490,9 @@ final class InitialCycles {
      */
     static abstract class Cycle implements Comparable<Cycle> {
 
-        private int[] path;
-        ShortestPaths paths;
-        BitSet        edgeVector;
+        private final int[] path;
+        final ShortestPaths paths;
+        final BitSet        edgeVector;
 
         Cycle(final ShortestPaths paths, final int[] path) {
             this.path = path;
@@ -574,7 +574,9 @@ final class InitialCycles {
      */
     class EvenCycle extends Cycle {
 
-        int p, q, y;
+        final int p;
+        final int q;
+        final int y;
 
         EvenCycle(ShortestPaths paths, int[] pathToP, int y, int[] pathToQ) {
             super(paths, join(pathToP, y, pathToQ));
@@ -621,7 +623,8 @@ final class InitialCycles {
      */
     class OddCycle extends Cycle {
 
-        int y, z;
+        final int y;
+        final int z;
 
         OddCycle(ShortestPaths paths, int[] pathToY, int[] pathToZ) {
             super(paths, join(pathToY, pathToZ));

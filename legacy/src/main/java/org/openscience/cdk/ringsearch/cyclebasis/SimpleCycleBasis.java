@@ -61,9 +61,9 @@ import org._3pq.jgrapht.graph.Subgraph;
 @Deprecated
 public class SimpleCycleBasis {
 
-    private List              edgeList;
-    private List<SimpleCycle> cycles;
-    private UndirectedGraph   graph;
+    private final List              edgeList;
+    private final List<SimpleCycle> cycles;
+    private final UndirectedGraph   graph;
 
     private boolean           isMinimized = false;
     private HashMap           edgeIndexMap;
@@ -77,7 +77,7 @@ public class SimpleCycleBasis {
     }
 
     public SimpleCycleBasis(UndirectedGraph graph) {
-        this.cycles = new ArrayList<SimpleCycle>();
+        this.cycles = new ArrayList<>();
         this.edgeList = new ArrayList();
         this.graph = graph;
 
@@ -146,10 +146,9 @@ public class SimpleCycleBasis {
         while (!vertexQueue.isEmpty()) {
             currentVertex = vertexQueue.removeFirst();
 
-            Iterator edges = subgraph.edgesOf(currentVertex).iterator();
-            while (edges.hasNext()) {
+            for (Object o : subgraph.edgesOf(currentVertex)) {
                 // find a neighbour vertex of the current vertex
-                Edge edge = (Edge) edges.next();
+                Edge edge = (Edge) o;
 
                 if (!visitedEdges.contains(edge)) {
 
@@ -211,7 +210,7 @@ public class SimpleCycleBasis {
     }
 
     boolean[][] getCycleEdgeIncidenceMatrix() {
-        return getCycleEdgeIncidenceMatrix((Object[]) cycles.toArray());
+        return getCycleEdgeIncidenceMatrix(cycles.toArray());
     }
 
     boolean[][] getCycleEdgeIncidenceMatrix(Object[] cycleArray) {
@@ -260,18 +259,14 @@ public class SimpleCycleBasis {
 
             SimpleCycle shortestCycle = cycles.get(i);
 
-            Iterator vertexIterator = graph.vertexSet().iterator();
-            while (vertexIterator.hasNext()) {
-                Object vertex = vertexIterator.next();
-
+            for (Object vertex : graph.vertexSet()) {
                 // check if the vertex is incident to an edge with u[edge] == 1
                 boolean shouldSearchCycle = false;
 
                 Collection incidentEdges = graph.edgesOf(vertex);
 
-                Iterator edgeIterator = incidentEdges.iterator();
-                while (edgeIterator.hasNext()) {
-                    Edge edge = (Edge) edgeIterator.next();
+                for (Object incidentEdge : incidentEdges) {
+                    Edge edge = (Edge) incidentEdge;
                     int index = getEdgeIndex(edge);
                     if (u[index]) {
                         shouldSearchCycle = true;
@@ -292,7 +287,7 @@ public class SimpleCycleBasis {
 
                     Object v = vertex;
 
-                    edgeIterator = auxPath.iterator();
+                    Iterator edgeIterator = auxPath.iterator();
                     while (edgeIterator.hasNext()) {
                         Edge auxEdge = (Edge) edgeIterator.next();
 
@@ -366,7 +361,7 @@ public class SimpleCycleBasis {
 
         int[] result = new int[cycles.size()];
         for (int i = 0; i < cycles.size(); i++) {
-            SimpleCycle cycle = (SimpleCycle) cycles.get(i);
+            SimpleCycle cycle = cycles.get(i);
             result[i] = (int) cycle.weight();
         }
         Arrays.sort(result);
@@ -453,8 +448,8 @@ public class SimpleCycleBasis {
                 // check if the vertex is incident to an edge with u[edge] == 1
                 boolean shouldSearchCycle = false;
 
-                for (Iterator it = incidentEdges.iterator(); it.hasNext();) {
-                    Edge edge = (Edge) it.next();
+                for (Object incidentEdge : incidentEdges) {
+                    Edge edge = (Edge) incidentEdge;
                     int index = getEdgeIndex(edge);
                     if (u[index]) {
                         shouldSearchCycle = true;
@@ -472,8 +467,8 @@ public class SimpleCycleBasis {
                         List auxPath = (List) minPaths.next();
                         List edgesOfNewCycle = new ArrayList(auxPath.size());
 
-                        for (Iterator it = auxPath.iterator(); it.hasNext();) {
-                            Edge auxEdge = (Edge) it.next();
+                        for (Object o : auxPath) {
+                            Edge auxEdge = (Edge) o;
 
                             // Get the edge corresponding to the aux. edge
                             Edge e = (Edge) gu.edge(auxEdge);
@@ -488,11 +483,11 @@ public class SimpleCycleBasis {
 
                         SimpleCycle cycle = new SimpleCycle(graph, edgesOfNewCycle);
 
-                        if (cycle.weight() > ((SimpleCycle) cycles.get(i)).weight()) {
+                        if (cycle.weight() > cycles.get(i).weight()) {
                             break;
                         }
 
-                        if (!cycle.equals((SimpleCycle) cycles.get(i))) {
+                        if (!cycle.equals(cycles.get(i))) {
                             isEssential = false;
                             break;
                         }
@@ -530,17 +525,14 @@ public class SimpleCycleBasis {
             // Construct auxiliary graph gu
             AuxiliaryGraph gu = new AuxiliaryGraph(graph, u);
 
-            Iterator vertexIterator = graph.vertexSet().iterator();
-            while (vertexIterator.hasNext()) {
-                Object vertex = vertexIterator.next();
-
+            for (Object vertex : graph.vertexSet()) {
                 Collection incidentEdges = graph.edgesOf(vertex);
 
                 // check if the vertex is incident to an edge with u[edge] == 1
                 boolean shouldSearchCycle = false;
 
-                for (Iterator it = incidentEdges.iterator(); it.hasNext();) {
-                    Edge edge = (Edge) it.next();
+                for (Object incidentEdge : incidentEdges) {
+                    Edge edge = (Edge) incidentEdge;
                     int index = getEdgeIndex(edge);
                     if (u[index]) {
                         shouldSearchCycle = true;
@@ -555,13 +547,12 @@ public class SimpleCycleBasis {
 
                     // Search for shortest paths
 
-                    for (Iterator minPaths = new MinimalPathIterator(gu, auxVertex0, auxVertex1); minPaths.hasNext();) {
+                    for (Iterator minPaths = new MinimalPathIterator(gu, auxVertex0, auxVertex1); minPaths.hasNext(); ) {
                         List auxPath = (List) minPaths.next();
                         List edgesOfNewCycle = new ArrayList(auxPath.size());
 
-                        Iterator edgeIterator = auxPath.iterator();
-                        while (edgeIterator.hasNext()) {
-                            Edge auxEdge = (Edge) edgeIterator.next();
+                        for (Object o : auxPath) {
+                            Edge auxEdge = (Edge) o;
 
                             // Get the edge corresponding to the aux. edge
                             Edge e = (Edge) gu.edge(auxEdge);
@@ -576,11 +567,11 @@ public class SimpleCycleBasis {
 
                         SimpleCycle cycle = new SimpleCycle(graph, edgesOfNewCycle);
 
-                        if (cycle.weight() > ((SimpleCycle) cycles.get(i)).weight()) {
+                        if (cycle.weight() > cycles.get(i).weight()) {
                             break;
                         }
 
-                        result.put(cycle, (SimpleCycle) cycles.get(i));
+                        result.put(cycle, cycles.get(i));
                     }
 
                 }
@@ -634,10 +625,10 @@ public class SimpleCycleBasis {
             // This is done by finding a cycle C with <C,u[i]>=1 and <C,u[j]>=1
 
             for (int i = left; i <= right; i++) {
-                if (essentialCycles.contains((SimpleCycle) cyclesArray[i])) continue;
+                if (essentialCycles.contains(cyclesArray[i])) continue;
 
                 for (int j = i + 1; j <= right; j++) {
-                    if (essentialCycles.contains((SimpleCycle) cyclesArray[j])) continue;
+                    if (essentialCycles.contains(cyclesArray[j])) continue;
 
                     // check if cyclesArray[i] and cyclesArray[j] are already in the same class
                     if (connectivityInspector.pathExists(cyclesArray[i], cyclesArray[j])) continue;
@@ -646,17 +637,14 @@ public class SimpleCycleBasis {
 
                     AuxiliaryGraph2 auxGraph = new AuxiliaryGraph2(graph, u[i], u[j]);
 
-                    for (Iterator it = graph.vertexSet().iterator(); it.hasNext();) {
-                        Object vertex = it.next();
-
+                    for (Object vertex : graph.vertexSet()) {
                         // check if the vertex is incident to an edge with u[edge] == 1
                         boolean shouldSearchCycle = false;
 
                         Collection incidentEdges = graph.edgesOf(vertex);
 
-                        Iterator edgeIterator = incidentEdges.iterator();
-                        while (edgeIterator.hasNext()) {
-                            Edge edge = (Edge) edgeIterator.next();
+                        for (Object incidentEdge : incidentEdges) {
+                            Edge edge = (Edge) incidentEdge;
                             int index = getEdgeIndex(edge);
                             if (u[i][index] || u[j][index]) {
                                 shouldSearchCycle = true;
@@ -692,24 +680,22 @@ public class SimpleCycleBasis {
             // This is done by finding a cycle a[k] with <u[k],u[i]>=1 and <u[k],u[j]>=1
 
             for (int i = left; i <= right; i++) {
-                if (essentialCycles.contains((SimpleCycle) cyclesArray[i])) continue;
+                if (essentialCycles.contains(cyclesArray[i])) continue;
 
                 for (int j = i + 1; j <= right; j++) {
-                    if (essentialCycles.contains((SimpleCycle) cyclesArray[j])) continue;
+                    if (essentialCycles.contains(cyclesArray[j])) continue;
 
                     // check if cyclesArray[i] and cyclesArray[j] are already in the same class
                     if (connectivityInspector.pathExists(cyclesArray[i], cyclesArray[j])) continue;
 
                     boolean sameClass = false;
 
-                    for (int k = 0; ((SimpleCycle) cyclesArray[k]).weight() < weight[left]; k++) {
+                    for (int k = 0; cyclesArray[k].weight() < weight[left]; k++) {
 
                         AuxiliaryGraph2 auxGraph = new AuxiliaryGraph2(graph, u[i], u[k]);
 
                         boolean shortestPathFound = false;
-                        for (Iterator it = graph.vertexSet().iterator(); it.hasNext();) {
-                            Object vertex = it.next();
-
+                        for (Object vertex : graph.vertexSet()) {
                             Object auxVertex00 = auxGraph.auxVertex00(vertex);
                             Object auxVertex11 = auxGraph.auxVertex11(vertex);
 
@@ -727,9 +713,7 @@ public class SimpleCycleBasis {
 
                         auxGraph = new AuxiliaryGraph2(graph, u[j], u[k]);
 
-                        for (Iterator it = graph.vertexSet().iterator(); it.hasNext();) {
-                            Object vertex = it.next();
-
+                        for (Object vertex : graph.vertexSet()) {
                             Object auxVertex00 = auxGraph.auxVertex00(vertex);
                             Object auxVertex11 = auxGraph.auxVertex11(vertex);
 
@@ -761,29 +745,29 @@ public class SimpleCycleBasis {
     private HashMap createEdgeIndexMap(List edgeList) {
         HashMap map = new HashMap();
         for (int i = 0; i < edgeList.size(); i++) {
-            map.put(edgeList.get(i), Integer.valueOf(i));
+            map.put(edgeList.get(i), i);
         }
         return map;
     }
 
     private int getEdgeIndex(Edge edge) {
-        return ((Integer) edgeIndexMap.get(edge)).intValue();
+        return (Integer) edgeIndexMap.get(edge);
     }
 
     private class AuxiliaryGraph extends SimpleGraph {
 
         private static final long serialVersionUID = 857337988734567429L;
         // graph to aux. graph
-        HashMap                   vertexMap0       = new HashMap();
-        HashMap                   vertexMap1       = new HashMap();
+        final HashMap                   vertexMap0       = new HashMap();
+        final HashMap                   vertexMap1       = new HashMap();
 
-        HashMap                   auxVertexMap     = new HashMap();
+        final HashMap                   auxVertexMap     = new HashMap();
 
         // aux. edge to edge
-        Map                       auxEdgeMap       = new HashMap();
+        final Map                       auxEdgeMap       = new HashMap();
 
-        Graph                     g;
-        boolean[]                 u;
+        final Graph                     g;
+        final boolean[]                 u;
 
         AuxiliaryGraph(Graph graph, boolean[] u) {
             g = graph;
@@ -795,8 +779,8 @@ public class SimpleCycleBasis {
 
             Object vertex = auxVertexMap.get(auxVertex);
 
-            for (Iterator edgeIterator = g.edgesOf(vertex).iterator(); edgeIterator.hasNext();) {
-                Edge edge = (Edge) edgeIterator.next();
+            for (Object o : g.edgesOf(vertex)) {
+                Edge edge = (Edge) o;
                 int j = getEdgeIndex(edge);
 
                 Object vertex1 = edge.getSource();
@@ -861,19 +845,19 @@ public class SimpleCycleBasis {
         private static final long serialVersionUID = 5930876716644738726L;
 
         // graph to aux. graph
-        private HashMap           vertexMap00      = new HashMap();
-        private HashMap           vertexMap01      = new HashMap();
-        private HashMap           vertexMap10      = new HashMap();
-        private HashMap           vertexMap11      = new HashMap();
+        private final HashMap           vertexMap00      = new HashMap();
+        private final HashMap           vertexMap01      = new HashMap();
+        private final HashMap           vertexMap10      = new HashMap();
+        private final HashMap           vertexMap11      = new HashMap();
 
-        private HashMap           auxVertexMap     = new HashMap();
+        private final HashMap           auxVertexMap     = new HashMap();
 
         // aux. edge to edge
-        private Map               auxEdgeMap       = new HashMap();
+        private final Map               auxEdgeMap       = new HashMap();
 
-        private Graph             g;
-        private boolean[]         ui;
-        private boolean[]         uj;
+        private final Graph             g;
+        private final boolean[]         ui;
+        private final boolean[]         uj;
 
         AuxiliaryGraph2(Graph graph, boolean[] ui, boolean[] uj) {
             g = graph;
@@ -930,8 +914,8 @@ public class SimpleCycleBasis {
 
             Object vertex = auxVertexMap.get(auxVertex);
 
-            for (Iterator edgeIterator = g.edgesOf(vertex).iterator(); edgeIterator.hasNext();) {
-                Edge edge = (Edge) edgeIterator.next();
+            for (Object o : g.edgesOf(vertex)) {
+                Edge edge = (Edge) o;
                 int k = getEdgeIndex(edge);
 
                 Object vertex1 = edge.getSource();
@@ -1035,9 +1019,9 @@ public class SimpleCycleBasis {
          */
 
         boolean[][] incidMatr = getCycleEdgeIncidenceMatrix();
-        for (int i = 0; i < incidMatr.length; i++) {
-            for (int j = 0; j < incidMatr[i].length; j++) {
-                System.out.print(incidMatr[i][j] ? 1 : 0);
+        for (boolean[] booleans : incidMatr) {
+            for (boolean aBoolean : booleans) {
+                System.out.print(aBoolean ? 1 : 0);
             }
             System.out.println();
         }

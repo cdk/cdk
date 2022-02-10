@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
@@ -78,7 +77,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  */
 public class ChiClusterDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static ILoggingTool   logger = LoggingToolFactory.createLoggingTool(ChiClusterDescriptor.class);
+    private static final ILoggingTool   logger = LoggingToolFactory.createLoggingTool(ChiClusterDescriptor.class);
     private SmilesParser          sp;
 
     private static final String[] NAMES  = {"SC-3", "SC-4", "SC-5", "SC-6", "VC-3", "VC-4", "VC-5", "VC-6"};
@@ -133,9 +132,7 @@ public class ChiClusterDescriptor extends AbstractMolecularDescriptor implements
         // removeHydrogens does a deep copy, so no need to clone
         IAtomContainer localAtomContainer = AtomContainerManipulator.removeHydrogens(container);
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
-        Iterator<IAtom> atoms = localAtomContainer.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : localAtomContainer.atoms()) {
             IAtomType type;
             try {
                 type = matcher.findMatchingAtomType(localAtomContainer, atom);

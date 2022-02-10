@@ -224,9 +224,9 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
      * is atom Hydrogen then its not removed.
      */
     public static IAtomContainer removeHydrogensExceptSingleAndPreserveAtomID(IAtomContainer atomContainer) {
-        Map<IAtom, IAtom> map = new HashMap<IAtom, IAtom>(); // maps original atoms to clones.
-        List<IAtom> remove = new ArrayList<IAtom>(); // lists removed Hs.
-        IAtomContainer mol = null;
+        Map<IAtom, IAtom> map = new HashMap<>(); // maps original atoms to clones.
+        List<IAtom> remove = new ArrayList<>(); // lists removed Hs.
+        IAtomContainer mol;
         if (atomContainer.getBondCount() > 0) {
             // Clone atoms except those to be removed.
             mol = atomContainer.getBuilder().newInstance(IAtomContainer.class);
@@ -237,7 +237,7 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
                 if (atom.getAtomicNumber() != IElement.H) {
                     IAtom clonedAtom = null;
                     try {
-                        clonedAtom = (IAtom) atom.clone();
+                        clonedAtom = atom.clone();
                     } catch (CloneNotSupportedException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
@@ -377,7 +377,7 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
             IBond.Stereo stereo = container.getBond(index).getStereo();
             bonds[index] = new Bond(atom1, atom2, order, stereo);
             if (container.getBond(index).getID() != null) {
-                bonds[index].setID(new String(container.getBond(index).getID()));
+                bonds[index].setID(container.getBond(index).getID());
             }
             newAtomContainer.addBond(bonds[index]);
 
@@ -433,7 +433,7 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
             {
                 IBond clone = null;
                 try {
-                    clone = (IBond) atomContainer.getBond(i).clone();
+                    clone = atomContainer.getBond(i).clone();
                 } catch (CloneNotSupportedException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();

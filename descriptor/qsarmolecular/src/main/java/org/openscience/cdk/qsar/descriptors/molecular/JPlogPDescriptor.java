@@ -48,7 +48,7 @@ public class JPlogPDescriptor extends AbstractMolecularDescriptor implements IMo
 
 	private static final String[] NAMES = { "JPLogP" };
 	private boolean addImplicitH = true;
-	JPlogPCalculator jplogp = null;
+	JPlogPCalculator jplogp;
 
 	/**
 	 * Default constructor which will setup the required coefficients to enable
@@ -116,20 +116,18 @@ public class JPlogPDescriptor extends AbstractMolecularDescriptor implements IMo
 	public DescriptorValue calculate(IAtomContainer container) {
 		IAtomContainer struct;
 		try {
-			struct = (IAtomContainer) container.clone();
+			struct = container.clone();
 			AtomContainerManipulator.percieveAtomTypesAndConfigureUnsetProperties(struct);
 			CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(struct.getBuilder());
 			hAdder.addImplicitHydrogens(struct);
 			AtomContainerManipulator.convertImplicitToExplicitHydrogens(struct);
 			Aromaticity.cdkLegacy().apply(struct);
-		} catch (CloneNotSupportedException e) {
-			return getDummyDescriptorValue(e);
-		} catch (CDKException e) {
+		} catch (CloneNotSupportedException | CDKException e) {
 			return getDummyDescriptorValue(e);
 		}
 
 
-		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(jplogp.calcLogP(struct)),
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(jplogp.calcLogP(struct)),
 				getDescriptorNames());
 	}
 
@@ -146,7 +144,7 @@ public class JPlogPDescriptor extends AbstractMolecularDescriptor implements IMo
 	 */
 	protected class JPlogPCalculator
 	{
-		Map<Integer, Double> coeffs  = null;
+		Map<Integer, Double> coeffs;
 
 		/**
 		 * Initialises the required coefficients for the trained model from the paper.
@@ -231,7 +229,7 @@ public class JPlogPDescriptor extends AbstractMolecularDescriptor implements IMo
 			int nonHNeighbours = nonHNeighbours(atom);
 			int charge = atom.getFormalCharge();
 			int aNum = atom.getAtomicNumber();
-			int toadd = 0;
+			int toadd;
 
 			// Initialise the type integer with what we know so far
 			returnMe += 100000 * (charge + 1);
@@ -351,7 +349,7 @@ public class JPlogPDescriptor extends AbstractMolecularDescriptor implements IMo
 		protected int getFluorineSpecial(IAtom atom) {
 			int toadd;
 			int numconn = atom.getBondCount();
-			int neighbourconn = 0;
+			int neighbourconn;
 			if (numconn == 1) {
 				IBond bond = atom.bonds().iterator().next();
 				IAtom next = bond.getOther(atom);

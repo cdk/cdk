@@ -21,9 +21,6 @@ package org.openscience.cdk.pharmacophore;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
-import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
-import org.openscience.cdk.smarts.Smarts;
 import org.openscience.cdk.smarts.SmartsPattern;
 
 /**
@@ -44,8 +41,8 @@ import org.openscience.cdk.smarts.SmartsPattern;
  */
 public class PharmacophoreQueryAtom extends Atom implements IQueryAtom {
 
-    private String smarts;
-    private SmartsPattern[] compiledSmarts;
+    private final String smarts;
+    private final SmartsPattern[] compiledSmarts;
     private String symbol;
 
     /**
@@ -125,7 +122,7 @@ public class PharmacophoreQueryAtom extends Atom implements IQueryAtom {
      */
     @Override
     public String toString() {
-        StringBuffer s = new StringBuffer();
+        StringBuilder s = new StringBuilder();
         s.append(getSymbol()).append(" [").append(getSmarts()).append(']');
         return s.toString();
     }

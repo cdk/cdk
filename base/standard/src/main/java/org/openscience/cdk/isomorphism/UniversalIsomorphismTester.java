@@ -43,7 +43,6 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -277,7 +276,7 @@ public class UniversalIsomorphismTester {
         if (list == null) {
             return makeAtomsMapsOfBondsMaps(getSubgraphMaps(g1, g2), g1, g2);
         } else {
-            List<List<RMap>> atomsMap = new ArrayList<List<RMap>>();
+            List<List<RMap>> atomsMap = new ArrayList<>();
             atomsMap.add(list);
             return atomsMap;
         }
@@ -428,7 +427,7 @@ public class UniversalIsomorphismTester {
 
         // handle single query atom case separately
         if (g2.getAtomCount() == 1) {
-            List<List<RMap>> matches = new ArrayList<List<RMap>>();
+            List<List<RMap>> matches = new ArrayList<>();
             IAtom queryAtom = g2.getAtom(0);
 
             // we can have a IQueryAtomContainer *or* an IAtomContainer
@@ -436,7 +435,7 @@ public class UniversalIsomorphismTester {
                 IQueryAtom qAtom = (IQueryAtom) queryAtom;
                 for (IAtom atom : g1.atoms()) {
                     if (qAtom.matches(atom)) {
-                        List<RMap> lmap = new ArrayList<RMap>();
+                        List<RMap> lmap = new ArrayList<>();
                         lmap.add(new RMap(g1.indexOf(atom), 0));
                         matches.add(lmap);
                     }
@@ -444,7 +443,7 @@ public class UniversalIsomorphismTester {
             } else {
                 for (IAtom atom : g1.atoms()) {
                     if (queryAtom.getAtomicNumber().equals(atom.getAtomicNumber())) {
-                        List<RMap> lmap = new ArrayList<RMap>();
+                        List<RMap> lmap = new ArrayList<>();
                         lmap.add(new RMap(g1.indexOf(atom), 0));
                         matches.add(lmap);
                     }
@@ -454,7 +453,7 @@ public class UniversalIsomorphismTester {
         }
 
         // reset result
-        List<List<RMap>> rMapsList = new ArrayList<List<RMap>>();
+        List<List<RMap>> rMapsList = new ArrayList<>();
 
         // build the RGraph corresponding to this problem
         RGraph rGraph = buildRGraph(g1, g2);
@@ -509,14 +508,13 @@ public class UniversalIsomorphismTester {
     public static IAtomContainer project(List<RMap> rMapList, IAtomContainer g, int id) {
         IAtomContainer ac = g.getBuilder().newInstance(IAtomContainer.class);
 
-        Map<IAtom, IAtom> table = new HashMap<IAtom, IAtom>();
+        Map<IAtom, IAtom> table = new HashMap<>();
         IAtom a1;
         IAtom a2;
         IAtom a;
         IBond bond;
 
-        for (Iterator<RMap> i = rMapList.iterator(); i.hasNext();) {
-            RMap rMap = i.next();
+        for (RMap rMap : rMapList) {
             if (id == UniversalIsomorphismTester.ID1) {
                 bond = g.getBond(rMap.getId1());
             } else {
@@ -524,11 +522,11 @@ public class UniversalIsomorphismTester {
             }
 
             a = bond.getBegin();
-            a1 = (IAtom) table.get(a);
+            a1 = table.get(a);
 
             if (a1 == null) {
                 try {
-                    a1 = (IAtom) a.clone();
+                    a1 = a.clone();
                 } catch (CloneNotSupportedException e) {
                     e.printStackTrace();
                 }
@@ -541,7 +539,7 @@ public class UniversalIsomorphismTester {
 
             if (a2 == null) {
                 try {
-                    a2 = (IAtom) a.clone();
+                    a2 = a.clone();
                 } catch (CloneNotSupportedException e) {
                     e.printStackTrace();
                 }
@@ -564,7 +562,7 @@ public class UniversalIsomorphismTester {
      * @return            a list of AtomContainer
      */
     public static List<IAtomContainer> projectList(List<List<RMap>> rMapsList, IAtomContainer g, int id) {
-        List<IAtomContainer> graphList = new ArrayList<IAtomContainer>();
+        List<IAtomContainer> graphList = new ArrayList<>();
 
         for (List<RMap> rMapList : rMapsList) {
             IAtomContainer ac = project(rMapList, g, id);
@@ -581,7 +579,7 @@ public class UniversalIsomorphismTester {
      * @throws CDKException if there is a problem in obtaining subgraphs
      */
     private List<IAtomContainer> getMaximum(List<IAtomContainer> graphList) throws CDKException {
-        List<IAtomContainer> reducedGraphList = new ArrayList<IAtomContainer>();
+        List<IAtomContainer> reducedGraphList = new ArrayList<>();
         reducedGraphList.addAll(graphList);
 
         for (int i = 0; i < graphList.size(); i++) {
@@ -615,7 +613,7 @@ public class UniversalIsomorphismTester {
             throw new CDKException("The first IAtomContainer must not be an IQueryAtomContainer");
 
         if (g2.getAtomCount() == 1) {
-            List<RMap> arrayList = new ArrayList<RMap>();
+            List<RMap> arrayList = new ArrayList<>();
             IAtom atom = g2.getAtom(0);
             if (atom instanceof IQueryAtom) {
                 IQueryAtom qAtom = (IQueryAtom) atom;
@@ -630,7 +628,7 @@ public class UniversalIsomorphismTester {
             }
             return arrayList;
         } else if (g1.getAtomCount() == 1) {
-            List<RMap> arrayList = new ArrayList<RMap>();
+            List<RMap> arrayList = new ArrayList<>();
             IAtom atom = g1.getAtom(0);
             for (int i = 0; i < g2.getAtomCount(); i++) {
                 IAtom atom2 = g2.getAtom(i);
@@ -661,7 +659,7 @@ public class UniversalIsomorphismTester {
             return l;
         }
         if (g2.getAtomCount() == 1) return l; // since the RMap is already an atom-atom mapping
-        List<List<RMap>> result = new ArrayList<List<RMap>>();
+        List<List<RMap>> result = new ArrayList<>();
         for (List<RMap> l2 : l) {
             result.add(makeAtomsMapOfBondsMap(l2, g1, g2));
         }
@@ -680,7 +678,7 @@ public class UniversalIsomorphismTester {
      */
     public static List<RMap> makeAtomsMapOfBondsMap(List<RMap> l, IAtomContainer g1, IAtomContainer g2) {
         if (l == null) return (l);
-        List<RMap> result = new ArrayList<RMap>();
+        List<RMap> result = new ArrayList<>();
         for (int i = 0; i < l.size(); i++) {
             IBond bond1 = g1.getBond(l.get(i).getId1());
             IBond bond2 = g2.getBond(l.get(i).getId2());
@@ -688,13 +686,13 @@ public class UniversalIsomorphismTester {
             IAtom[] atom2 = BondManipulator.getAtomArray(bond2);
             for (int j = 0; j < 2; j++) {
                 List<IBond> bondsConnectedToAtom1j = g1.getConnectedBondsList(atom1[j]);
-                for (int k = 0; k < bondsConnectedToAtom1j.size(); k++) {
-                    if (!bondsConnectedToAtom1j.get(k).equals(bond1)) {
-                        IBond testBond = (IBond) bondsConnectedToAtom1j.get(k);
-                        for (int m = 0; m < l.size(); m++) {
+                for (IBond iBond : bondsConnectedToAtom1j) {
+                    if (!iBond.equals(bond1)) {
+                        IBond testBond = iBond;
+                        for (RMap rMap : l) {
                             IBond testBond2;
-                            if (((RMap) l.get(m)).getId1() == g1.indexOf(testBond)) {
-                                testBond2 = g2.getBond(((RMap) l.get(m)).getId2());
+                            if (rMap.getId1() == g1.indexOf(testBond)) {
+                                testBond2 = g2.getBond(rMap.getId2());
                                 for (int n = 0; n < 2; n++) {
                                     List<IBond> bondsToTest = g2.getConnectedBondsList(atom2[n]);
                                     if (bondsToTest.contains(testBond2)) {
@@ -796,7 +794,7 @@ public class UniversalIsomorphismTester {
     private static void arcConstructor(RGraph gr, IAtomContainer ac1, IAtomContainer ac2) throws CDKException {
         // each node is incompatible with himself
         for (int i = 0; i < gr.getGraph().size(); i++) {
-            RNode x = (RNode) gr.getGraph().get(i);
+            RNode x = gr.getGraph().get(i);
             x.getForbidden().set(i);
         }
 

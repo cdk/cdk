@@ -50,11 +50,11 @@ import org.xml.sax.helpers.XMLReaderFactory;
  */
 public class Dictionary {
 
-    private Map<String, Entry> entries;
+    private final Map<String, Entry> entries;
     private String             ownNS = null;
 
     public Dictionary() {
-        entries = new Hashtable<String, Entry>();
+        entries = new Hashtable<>();
     }
 
     public static Dictionary unmarshal(Reader reader) {
@@ -86,7 +86,7 @@ public class Dictionary {
             parser.parse(new InputSource(reader));
             dict = handler.getDictionary();
         } catch (IOException e) {
-            logger.error("IOException: " + e.toString());
+            logger.error("IOException: " + e);
             logger.debug(e);
         } catch (SAXException saxe) {
             logger.error("SAXException: " + saxe.getClass().getName());
@@ -105,7 +105,7 @@ public class Dictionary {
         Iterator<Entry> elements = entries.values().iterator();
         int counter = 0;
         while (elements.hasNext() && counter < size) {
-            entryArray[counter] = (Entry) elements.next();
+            entryArray[counter] = elements.next();
             counter++;
         }
         return entryArray;

@@ -83,8 +83,8 @@ public class GeometricCumulativeDoubleBondFactoryTest {
         IAtomContainer container = mock(IAtomContainer.class);
         IAtom start = mock(IAtom.class);
         IAtom end = mock(IAtom.class);
-        when(container.getConnectedBondsList(start)).thenReturn(Collections.<IBond> emptyList());
-        when(container.getConnectedBondsList(end)).thenReturn(Collections.<IBond> emptyList());
+        when(container.getConnectedBondsList(start)).thenReturn(Collections.emptyList());
+        when(container.getConnectedBondsList(end)).thenReturn(Collections.emptyList());
         assertNull(GeometricCumulativeDoubleBondFactory.axialEncoder(container, start, end));
     }
 

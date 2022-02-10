@@ -51,7 +51,7 @@ public class SingleStructureRandomGeneratorTest {
 
     private boolean showIt(IAtomContainer molecule, String name) throws Exception {
         StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-        sdg.setMolecule((IAtomContainer) molecule.clone());
+        sdg.setMolecule(molecule.clone());
         sdg.generateCoordinates(new Vector2d(0, 1));
         return true;
     }
@@ -69,7 +69,7 @@ public class SingleStructureRandomGeneratorTest {
          * carbon-only molecule until we have a proper hydrogen count
          * configurator
          */
-        double bondCount = 0;
+        double bondCount;
         org.openscience.cdk.interfaces.IAtom atom;
         for (int f = 0; f < mol.getAtomCount(); f++) {
             atom = mol.getAtom(f);

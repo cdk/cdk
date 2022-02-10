@@ -155,5 +155,5 @@ public enum BasicAtomEncoder implements AtomEncoder {
         public int encode(IAtom atom, IAtomContainer container) {
             return container.getConnectedSingleElectronsCount(atom);
         }
-    };
+    }
 }

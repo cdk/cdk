@@ -46,28 +46,28 @@ public class AtomSymbolTest {
     @Test
     public void alignToCenter() throws Exception {
         TextOutline outline = new TextOutline("Cl", font);
-        AtomSymbol symbol = new AtomSymbol(outline, Collections.<TextOutline> emptyList());
+        AtomSymbol symbol = new AtomSymbol(outline, Collections.emptyList());
         assertCloseTo(outline.getCenter(), symbol.alignTo(Center).getAlignmentCenter(), 0.01);
     }
 
     @Test
     public void alignToLeft() throws Exception {
         TextOutline outline = new TextOutline("Cl", font);
-        AtomSymbol symbol = new AtomSymbol(outline, Collections.<TextOutline> emptyList());
+        AtomSymbol symbol = new AtomSymbol(outline, Collections.emptyList());
         assertCloseTo(outline.getFirstGlyphCenter(), symbol.alignTo(Left).getAlignmentCenter(), 0.01);
     }
 
     @Test
     public void alignToRight() throws Exception {
         TextOutline outline = new TextOutline("Cl", font);
-        AtomSymbol symbol = new AtomSymbol(outline, Collections.<TextOutline> emptyList());
+        AtomSymbol symbol = new AtomSymbol(outline, Collections.emptyList());
         assertCloseTo(outline.getLastGlyphCenter(), symbol.alignTo(Right).getAlignmentCenter(), 0.01);
     }
 
     @Test
     public void testGetOutlines() throws Exception {
         TextOutline outline = new TextOutline("Cl", font);
-        AtomSymbol symbol = new AtomSymbol(outline, Collections.<TextOutline> emptyList());
+        AtomSymbol symbol = new AtomSymbol(outline, Collections.emptyList());
         Rectangle outlineBounds = outline.getOutline().getBounds();
         Rectangle symbolBounds = symbol.getOutlines().get(0).getBounds();
         assertThat(outlineBounds.getX(), closeTo(symbolBounds.getX(), 0.01));
@@ -92,7 +92,7 @@ public class AtomSymbolTest {
     @Test
     public void testGetConvexHull() throws Exception {
         TextOutline outline = new TextOutline("Cl", font);
-        AtomSymbol symbol = new AtomSymbol(outline, Collections.<TextOutline> emptyList());
+        AtomSymbol symbol = new AtomSymbol(outline, Collections.emptyList());
         ConvexHull outlineHull = ConvexHull.ofShape(outline.getOutline());
         ConvexHull symbolHull = symbol.getConvexHull();
 
@@ -108,7 +108,7 @@ public class AtomSymbolTest {
     @Test
     public void testResize() throws Exception {
         TextOutline outline = new TextOutline("Cl", font);
-        AtomSymbol symbol = new AtomSymbol(outline, Collections.<TextOutline> emptyList());
+        AtomSymbol symbol = new AtomSymbol(outline, Collections.emptyList());
         AtomSymbol transformed = symbol.resize(2, 2);
         Rectangle2D orgBounds = outline.getBounds();
         Rectangle2D newBounds = transformed.getOutlines().get(0).getBounds2D();
@@ -121,7 +121,7 @@ public class AtomSymbolTest {
     @Test
     public void testCenter() throws Exception {
         TextOutline outline = new TextOutline("Cl", font);
-        AtomSymbol symbol = new AtomSymbol(outline, Collections.<TextOutline> emptyList());
+        AtomSymbol symbol = new AtomSymbol(outline, Collections.emptyList());
         AtomSymbol transformed = symbol.center(2, 2);
         Rectangle2D oBounds = outline.getBounds();
         Rectangle2D newBounds = transformed.getOutlines().get(0).getBounds2D();
@@ -138,7 +138,7 @@ public class AtomSymbolTest {
     @Test
     public void testTranslate() throws Exception {
         TextOutline outline = new TextOutline("Cl", font);
-        AtomSymbol symbol = new AtomSymbol(outline, Collections.<TextOutline> emptyList());
+        AtomSymbol symbol = new AtomSymbol(outline, Collections.emptyList());
         AtomSymbol transformed = symbol.translate(4, 2);
         Rectangle2D orgBounds = symbol.getOutlines().get(0).getBounds2D();
         Rectangle2D newBounds = transformed.getOutlines().get(0).getBounds2D();

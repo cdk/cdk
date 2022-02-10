@@ -92,17 +92,15 @@ public class RandomAccessSDFReader extends RandomAccessReader {
         if (co instanceof IChemFile) {
             int c = ((IChemFile) co).getChemSequenceCount();
             for (int i = 0; i < c; i++) {
-                Iterator<IChemModel> cm = ((IChemFile) co).getChemSequence(i).chemModels().iterator();
-                while (cm.hasNext()) {
-                    Iterator<IAtomContainer> sm = (cm.next()).getMoleculeSet().atomContainers().iterator();
-                    while (sm.hasNext()) {
+                for (IChemModel iChemModel : ((IChemFile) co).getChemSequence(i).chemModels()) {
+                    for (IAtomContainer container : iChemModel.getMoleculeSet().atomContainers()) {
 
-                        co = sm.next();
+                        co = container;
                         break;
                     }
                     break;
                 }
-                cm = null;
+                Iterator<IChemModel> cm = null;
                 break;
             }
             //cs = null;

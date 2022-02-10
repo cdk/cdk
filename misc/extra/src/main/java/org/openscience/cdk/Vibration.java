@@ -37,12 +37,12 @@ public class Vibration {
      * Label identifying this vibration. For example, the
      * frequency in reciprocal centimetres could be used.
      */
-    private String         label;
+    private final String         label;
 
     /**
      * List of atom vectors of type double[3]
      */
-    private List<double[]> atomVectors = new ArrayList<double[]>();
+    private final List<double[]> atomVectors = new ArrayList<>();
 
     /**
      * Create a vibration identified by the label.

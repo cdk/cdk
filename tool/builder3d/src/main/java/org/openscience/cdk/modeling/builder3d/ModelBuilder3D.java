@@ -74,7 +74,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  */
 public class ModelBuilder3D {
 
-    private static Map<String, ModelBuilder3D> memyselfandi    = new HashMap<String, ModelBuilder3D>();
+    private static final Map<String, ModelBuilder3D> memyselfandi    = new HashMap<>();
 
     private TemplateHandler3D                  templateHandler = null;
 
@@ -84,7 +84,7 @@ public class ModelBuilder3D {
 
     String                                     forceFieldName  = "mm2";
 
-    private static ILoggingTool                logger          = LoggingToolFactory
+    private static final ILoggingTool                logger          = LoggingToolFactory
                                                                        .createLoggingTool(ModelBuilder3D.class);
 
     /**
@@ -150,7 +150,7 @@ public class ModelBuilder3D {
      * Generate 3D coordinates with force field information.
      */
     public IAtomContainer generate3DCoordinates(IAtomContainer molecule, boolean clone) throws CDKException,
-            NoSuchAtomTypeException, CloneNotSupportedException, IOException {
+            CloneNotSupportedException, IOException {
         String[] originalAtomTypeNames = new String[molecule.getAtomCount()];
         for (int i = 0; i < originalAtomTypeNames.length; i++) {
             originalAtomTypeNames[i] = molecule.getAtom(i).getAtomTypeName();
@@ -174,7 +174,7 @@ public class ModelBuilder3D {
         ap3d.initilize(parameterSet);
         atlp3d.setParameterSet(parameterSet);
 
-        if (clone) molecule = (IAtomContainer) molecule.clone();
+        if (clone) molecule = molecule.clone();
         atomPlacer.setMolecule(molecule);
 
         if (ap3d.numberOfUnplacedHeavyAtoms(molecule) == 1) {
@@ -193,8 +193,8 @@ public class ModelBuilder3D {
         //Assing Atoms to Rings,Aliphatic and Atomtype
         IRingSet ringSetMolecule = ffc.assignAtomTyps(molecule);
         List ringSystems = null;
-        IRingSet largestRingSet = null;
-        int numberOfRingAtoms = 0;
+        IRingSet largestRingSet;
+        int numberOfRingAtoms;
 
         if (ringSetMolecule.getAtomContainerCount() > 0) {
             if (templateHandler == null) {
@@ -215,7 +215,7 @@ public class ModelBuilder3D {
             largestRingSet = null;
         } else {
             //logger.debug("****** Start of handling aliphatic molecule ******");
-            IAtomContainer ac = null;
+            IAtomContainer ac;
 
             ac = atomPlacer.getInitialLongestChain(molecule);
             setAtomsToUnVisited(molecule);
@@ -249,9 +249,9 @@ public class ModelBuilder3D {
      */
     private IRingSet getRingSetOfAtom(List ringSystems, IAtom atom) {
         IRingSet ringSetOfAtom = null;
-        for (int i = 0; i < ringSystems.size(); i++) {
-            if (((IRingSet) ringSystems.get(i)).contains(atom)) {
-                return (IRingSet) ringSystems.get(i);
+        for (Object ringSystem : ringSystems) {
+            if (((IRingSet) ringSystem).contains(atom)) {
+                return (IRingSet) ringSystem;
             }
         }
         return ringSetOfAtom;
@@ -266,9 +266,9 @@ public class ModelBuilder3D {
             AtomTetrahedralLigandPlacer3D atlp3d, AtomPlacer atomPlacer) throws CDKException, IOException,
             CloneNotSupportedException {
         //logger.debug("****** LAYOUT MOLECULE MAIN *******");
-        IAtomContainer ac = null;
+        IAtomContainer ac;
         int safetyCounter = 0;
-        IAtom atom = null;
+        IAtom atom;
         //Place rest Chains/Atoms
         do {
             safetyCounter++;
@@ -459,13 +459,13 @@ public class ModelBuilder3D {
     private void searchAndPlaceBranches(IAtomContainer molecule, IAtomContainer chain, AtomPlacer3D ap3d,
             AtomTetrahedralLigandPlacer3D atlp3d, AtomPlacer atomPlacer) throws CDKException {
         //logger.debug("****** SEARCH AND PLACE ****** Chain length: "+chain.getAtomCount());
-        List atoms = null;
+        List atoms;
         IAtomContainer branchAtoms = molecule.getBuilder().newInstance(IAtomContainer.class);
         IAtomContainer connectedAtoms = molecule.getBuilder().newInstance(IAtomContainer.class);
         for (int i = 0; i < chain.getAtomCount(); i++) {
             atoms = molecule.getConnectedAtomsList(chain.getAtom(i));
-            for (int j = 0; j < atoms.size(); j++) {
-                IAtom atom = (IAtom) atoms.get(j);
+            for (Object o : atoms) {
+                IAtom atom = (IAtom) o;
                 if (!(atom.getSymbol()).equals("H") & !(atom.getFlag(CDKConstants.ISPLACED))
                         & !(atom.getFlag(CDKConstants.ISINRING))) {
                     //logger.debug("SEARCH PLACE AND FOUND Branch Atom "+molecule.indexOf(chain.getAtomAt(i))+
@@ -477,7 +477,7 @@ public class ModelBuilder3D {
                         setBranchAtom(molecule, atom, chain.getAtom(i), connectedAtoms, ap3d, atlp3d);
                     } catch (CDKException ex2) {
                         logger.error("SearchAndPlaceBranchERROR: Cannot find enough neighbour atoms due to"
-                                + ex2.toString());
+                                + ex2);
                         throw new CDKException("SearchAndPlaceBranchERROR: Cannot find enough neighbour atoms: "
                                 + ex2.getMessage(), ex2);
                     }
@@ -498,8 +498,8 @@ public class ModelBuilder3D {
     private void placeLinearChains3D(IAtomContainer molecule, IAtomContainer startAtoms, AtomPlacer3D ap3d,
             AtomTetrahedralLigandPlacer3D atlp3d, AtomPlacer atomPlacer) throws CDKException {
         //logger.debug("****** PLACE LINEAR CHAINS ******");
-        IAtom dihPlacedAtom = null;
-        IAtom thirdPlacedAtom = null;
+        IAtom dihPlacedAtom;
+        IAtom thirdPlacedAtom;
         IAtomContainer longestUnplacedChain = molecule.getBuilder().newInstance(IAtomContainer.class);
         if (startAtoms.getAtomCount() == 0) {
             //no branch points ->linear chain

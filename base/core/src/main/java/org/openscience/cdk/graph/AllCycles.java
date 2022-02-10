@@ -79,7 +79,7 @@ import java.util.List;
 public final class AllCycles {
 
     /** All simple cycles. */
-    private final List<int[]> cycles = new ArrayList<int[]>();
+    private final List<int[]> cycles = new ArrayList<>();
 
     /** Indicates whether the perception completed. */
     private final boolean     completed;
@@ -154,8 +154,7 @@ public final class AllCycles {
         final int[] rank = new int[ord];
 
         // frequency of each degree
-        for (int v = 0; v < ord; v++)
-            count[g[v].length + 1]++;
+        for (int[] ints : g) count[ints.length + 1]++;
         // cumulated counts
         for (int i = 0; count[i] < ord; i++)
             count[i + 1] += count[i];

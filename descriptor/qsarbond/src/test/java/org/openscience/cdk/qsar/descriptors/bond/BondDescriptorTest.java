@@ -83,9 +83,9 @@ public abstract class BondDescriptorTest extends DescriptorTest<IBondDescriptor>
         String[] names = v.getNames();
         Assert.assertNotNull("The descriptor must return labels using the getNames() method.", names);
         Assert.assertNotSame("At least one label must be given.", 0, names.length);
-        for (int i = 0; i < names.length; i++) {
-            Assert.assertNotNull("A descriptor label may not be null.", names[i]);
-            Assert.assertNotSame("The label string must not be empty.", 0, names[i].length());
+        for (String name : names) {
+            Assert.assertNotNull("A descriptor label may not be null.", name);
+            Assert.assertNotSame("The label string must not be empty.", 0, name.length());
             //        	System.out.println("Label: " + names[i]);
         }
         Assert.assertNotNull(v.getValue());
@@ -118,7 +118,7 @@ public abstract class BondDescriptorTest extends DescriptorTest<IBondDescriptor>
     public void testCalculate_NoModifications() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
         IBond bond = mol.getBond(0);
-        IBond clone = (IBond) mol.getBond(0).clone();
+        IBond clone = mol.getBond(0).clone();
         descriptor.calculate(bond, mol);
         String diff = BondDiff.diff(clone, bond);
         Assert.assertEquals("(" + descriptor.getClass().toString()

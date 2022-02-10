@@ -48,7 +48,7 @@ public interface IReactionMechanism {
      * @throws CDKException if an error occurs during the reaction process.
      * See documentation for individual reaction processes
      */
-    public IReaction initiate(IAtomContainerSet atomContainerSet, ArrayList<IAtom> atomList, ArrayList<IBond> bondList)
+    IReaction initiate(IAtomContainerSet atomContainerSet, ArrayList<IAtom> atomList, ArrayList<IBond> bondList)
             throws CDKException;
 
 }

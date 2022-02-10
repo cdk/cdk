@@ -59,10 +59,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
 import static org.openscience.cdk.interfaces.IBond.Order.UNSET;
@@ -100,7 +98,7 @@ final class StandardBondGenerator {
     private final ILoggingTool               logger       = LoggingToolFactory.createLoggingTool(getClass());
 
     // indexes of atoms and rings
-    private final Map<IAtom, Integer>        atomIndexMap = new HashMap<IAtom, Integer>();
+    private final Map<IAtom, Integer>        atomIndexMap = new HashMap<>();
     private final Map<IBond, IAtomContainer> ringMap;
 
     // parameters
@@ -551,7 +549,7 @@ final class StandardBondGenerator {
                 .distance(fromBackOffPoint);
         final double end = toPoint.equals(toBackOffPoint) ? Double.MAX_VALUE : fromPoint.distance(toBackOffPoint);
 
-        List<PathElement> path = new ArrayList<PathElement>();
+        List<PathElement> path = new ArrayList<>();
         if (start == Double.MIN_VALUE) {
             path.add(new MoveTo(fromPoint.x, fromPoint.y));
             started = true;
@@ -1080,7 +1078,7 @@ final class StandardBondGenerator {
         Vector2d peak = scale(bndVec, step);
         Vector2d unit = VecmathUtil.newUnitVector(beg, end);
 
-        List<PathElement> path = new ArrayList<PathElement>();
+        List<PathElement> path = new ArrayList<>();
 
         int halfNCurves = nCurves / 2;
         // one half
@@ -1598,9 +1596,9 @@ final class StandardBondGenerator {
 
         final List<IAtomContainer> rings = AtomContainerSetManipulator.getAllAtomContainers(smallest);
 
-        Collections.sort(rings, new RingBondOffsetComparator(container));
+        rings.sort(new RingBondOffsetComparator(container));
 
-        final Map<IBond, IAtomContainer> ringMap = new HashMap<IBond, IAtomContainer>();
+        final Map<IBond, IAtomContainer> ringMap = new HashMap<>();
 
         // index bond -> ring based on the first encountered bond
         for (IAtomContainer ring : rings) {

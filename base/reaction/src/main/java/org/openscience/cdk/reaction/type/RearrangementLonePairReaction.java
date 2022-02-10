@@ -36,7 +36,6 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * <p>IReactionProcess which participate in movement resonance.
@@ -74,7 +73,7 @@ import java.util.Iterator;
  **/
 public class RearrangementLonePairReaction extends ReactionEngine implements IReactionProcess {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(RearrangementLonePairReaction.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(RearrangementLonePairReaction.class);
 
     /**
      * Constructor of the RearrangementLonePairReaction object
@@ -127,25 +126,19 @@ public class RearrangementLonePairReaction extends ReactionEngine implements IRe
         IParameterReact ipr = super.getParameterClass(SetReactionCenter.class);
         if (ipr != null && !ipr.isSetParameter()) setActiveCenters(reactant);
 
-        Iterator<IAtom> atomis = reactant.atoms().iterator();
-        while (atomis.hasNext()) {
-            IAtom atomi = atomis.next();
+        for (IAtom atomi : reactant.atoms()) {
             if (atomi.getFlag(CDKConstants.REACTIVE_CENTER)
                     && (atomi.getFormalCharge() == CDKConstants.UNSET ? 0 : atomi.getFormalCharge()) == 0
                     && reactant.getConnectedLonePairsCount(atomi) > 0) {
 
-                Iterator<IBond> bondis = reactant.getConnectedBondsList(atomi).iterator();
-                while (bondis.hasNext()) {
-                    IBond bondi = bondis.next();
+                for (IBond bondi : reactant.getConnectedBondsList(atomi)) {
                     if (bondi.getFlag(CDKConstants.REACTIVE_CENTER) && bondi.getOrder() == IBond.Order.SINGLE) {
                         IAtom atomj = bondi.getOther(atomi);
                         if (atomj.getFlag(CDKConstants.REACTIVE_CENTER)
                                 && (atomj.getFormalCharge() == CDKConstants.UNSET ? 0 : atomj.getFormalCharge()) == 0
                                 && reactant.getConnectedSingleElectronsCount(atomj) == 0) {
 
-                            Iterator<IBond> bondjs = reactant.getConnectedBondsList(atomj).iterator();
-                            while (bondjs.hasNext()) {
-                                IBond bondj = bondjs.next();
+                            for (IBond bondj : reactant.getConnectedBondsList(atomj)) {
                                 if (bondj.equals(bondi)) continue;
 
                                 if (bondj.getFlag(CDKConstants.REACTIVE_CENTER)
@@ -155,13 +148,13 @@ public class RearrangementLonePairReaction extends ReactionEngine implements IRe
                                     if (atomk.getFlag(CDKConstants.REACTIVE_CENTER)
                                             && reactant.getConnectedSingleElectronsCount(atomk) == 0
                                             && (atomk.getFormalCharge() == CDKConstants.UNSET ? 0 : atomk
-                                                    .getFormalCharge()) >= 0) {
+                                            .getFormalCharge()) >= 0) {
 
-                                        ArrayList<IAtom> atomList = new ArrayList<IAtom>();
+                                        ArrayList<IAtom> atomList = new ArrayList<>();
                                         atomList.add(atomi);
                                         atomList.add(atomj);
                                         atomList.add(atomk);
-                                        ArrayList<IBond> bondList = new ArrayList<IBond>();
+                                        ArrayList<IBond> bondList = new ArrayList<>();
                                         bondList.add(bondi);
                                         bondList.add(bondj);
 
@@ -200,23 +193,17 @@ public class RearrangementLonePairReaction extends ReactionEngine implements IRe
      * @throws CDKException
      */
     private void setActiveCenters(IAtomContainer reactant) throws CDKException {
-        Iterator<IAtom> atomis = reactant.atoms().iterator();
-        while (atomis.hasNext()) {
-            IAtom atomi = atomis.next();
+        for (IAtom atomi : reactant.atoms()) {
             if ((atomi.getFormalCharge() == CDKConstants.UNSET ? 0 : atomi.getFormalCharge()) == 0
                     && reactant.getConnectedLonePairsCount(atomi) > 0) {
 
-                Iterator<IBond> bondis = reactant.getConnectedBondsList(atomi).iterator();
-                while (bondis.hasNext()) {
-                    IBond bondi = bondis.next();
+                for (IBond bondi : reactant.getConnectedBondsList(atomi)) {
                     if (bondi.getOrder() == IBond.Order.SINGLE) {
                         IAtom atomj = bondi.getOther(atomi);
                         if ((atomj.getFormalCharge() == CDKConstants.UNSET ? 0 : atomj.getFormalCharge()) == 0
                                 && reactant.getConnectedSingleElectronsCount(atomj) == 0) {
 
-                            Iterator<IBond> bondjs = reactant.getConnectedBondsList(atomj).iterator();
-                            while (bondjs.hasNext()) {
-                                IBond bondj = bondjs.next();
+                            for (IBond bondj : reactant.getConnectedBondsList(atomj)) {
                                 if (bondj.equals(bondi)) continue;
 
                                 if (bondj.getOrder() == IBond.Order.DOUBLE) {
@@ -224,7 +211,7 @@ public class RearrangementLonePairReaction extends ReactionEngine implements IRe
 
                                     if (reactant.getConnectedSingleElectronsCount(atomk) == 0
                                             && (atomk.getFormalCharge() == CDKConstants.UNSET ? 0 : atomk
-                                                    .getFormalCharge()) >= 0) {
+                                            .getFormalCharge()) >= 0) {
 
                                         atomi.setFlag(CDKConstants.REACTIVE_CENTER, true);
                                         atomj.setFlag(CDKConstants.REACTIVE_CENTER, true);

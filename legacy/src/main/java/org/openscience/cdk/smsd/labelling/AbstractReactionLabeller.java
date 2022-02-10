@@ -13,7 +13,6 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -33,11 +32,11 @@ public class AbstractReactionLabeller {
     /**
      * A nasty hack necessary to get around a bug in the CDK
      */
-    private boolean fixAtomMappingCastType = false;
+    private final boolean fixAtomMappingCastType = false;
 
     private void fixAtomMapping(IAtomContainer canonicalForm) {
         for (IAtom a : canonicalForm.atoms()) {
-            String v = (String) a.getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+            String v = a.getProperty(CDKConstants.ATOM_ATOM_MAPPING);
             if (v != null) {
                 a.setProperty(CDKConstants.ATOM_ATOM_MAPPING, Integer.valueOf(v));
             }
@@ -47,7 +46,7 @@ public class AbstractReactionLabeller {
     private Map<IAtom, IAtom> atomAtomMap(IReaction reaction, IReaction clone, Map<IAtomContainer, int[]> permutationMap) {
         // create a Map of corresponding atoms for molecules
         // (key: original Atom, value: clone Atom)
-        Map<IAtom, IAtom> atomAtom = new Hashtable<IAtom, IAtom>();
+        Map<IAtom, IAtom> atomAtom = new Hashtable<>();
         IAtomContainerSet reactants = reaction.getReactants();
         IAtomContainerSet clonedReactants = clone.getReactants();
         for (int i = 0; i < reactants.getAtomContainerCount(); ++i) {
@@ -84,13 +83,13 @@ public class AbstractReactionLabeller {
     private List<IMapping> cloneMappings(IReaction reaction, Map<IAtom, IAtom> atomAtomMap) {
         // clone the mappings
         int numberOfMappings = reaction.getMappingCount();
-        List<IMapping> map = new ArrayList<IMapping>();
+        List<IMapping> map = new ArrayList<>();
         for (int mappingIndex = 0; mappingIndex < numberOfMappings; mappingIndex++) {
             IMapping mapping = reaction.getMapping(mappingIndex);
             IChemObject keyChemObj0 = mapping.getChemObject(0);
             IChemObject keyChemObj1 = mapping.getChemObject(1);
-            IChemObject co0 = (IChemObject) atomAtomMap.get(keyChemObj0);
-            IChemObject co1 = (IChemObject) atomAtomMap.get(keyChemObj1);
+            IChemObject co0 = atomAtomMap.get(keyChemObj0);
+            IChemObject co1 = atomAtomMap.get(keyChemObj1);
             map.add(new Mapping(co0, co1));
         }
         return map;
@@ -106,7 +105,7 @@ public class AbstractReactionLabeller {
             Map<IAtomContainer, int[]> permutationMap) {
 
         // make a lookup for the indices of the atoms in the copy
-        final Map<IChemObject, Integer> indexMap = new HashMap<IChemObject, Integer>();
+        final Map<IChemObject, Integer> indexMap = new HashMap<>();
         List<IAtomContainer> all = ReactionManipulator.getAllAtomContainers(copyOfReaction);
         int globalIndex = 0;
         for (IAtomContainer ac : all) {
@@ -132,7 +131,7 @@ public class AbstractReactionLabeller {
             }
 
         };
-        Collections.sort(map, mappingSorter);
+        map.sort(mappingSorter);
         int mappingIndex = 0;
         for (IMapping mapping : map) {
             mapping.getChemObject(0).setProperty(CDKConstants.ATOM_ATOM_MAPPING, mappingIndex);
@@ -147,7 +146,7 @@ public class AbstractReactionLabeller {
         System.out.println("labelling");
         IReaction canonReaction = new Reaction();
 
-        Map<IAtomContainer, int[]> permutationMap = new HashMap<IAtomContainer, int[]>();
+        Map<IAtomContainer, int[]> permutationMap = new HashMap<>();
 
         IAtomContainerSet canonicalProducts = DefaultChemObjectBuilder.getInstance().newInstance(
                 IAtomContainerSet.class);

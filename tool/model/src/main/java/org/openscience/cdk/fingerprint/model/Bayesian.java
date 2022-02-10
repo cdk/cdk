@@ -90,17 +90,17 @@ import java.util.regex.Pattern;
 
 public class Bayesian {
 
-    private int                    classType;
+    private final int                    classType;
     private int                    folding      = 0;
 
     // incoming hash codes: actual values, and subsumed values are {#active,#total}
     private int                    numActive    = 0;
-    protected Map<Integer, int[]>  inHash       = new HashMap<Integer, int[]>();
-    protected ArrayList<int[]>     training     = new ArrayList<int[]>();
-    protected ArrayList<Boolean>   activity     = new ArrayList<Boolean>();
+    protected final Map<Integer, int[]>  inHash       = new HashMap<>();
+    protected final ArrayList<int[]>     training     = new ArrayList<>();
+    protected final ArrayList<Boolean>   activity     = new ArrayList<>();
 
     // built model: contributions for each hash code
-    protected Map<Integer, Double> contribs     = new HashMap<Integer, Double>();
+    protected final Map<Integer, Double> contribs     = new HashMap<>();
     protected double               lowThresh    = 0, highThresh = 0;
     protected double               range        = 0, invRange = 0;                            // cached to speed up scaling calibration
 
@@ -194,7 +194,7 @@ public class Bayesian {
 
         // gather all of the (folded) fingerprints into a sorted set
         final int AND_BITS = folding - 1; // e.g. 1024/0x400 -> 1023/0x3FF: chop off higher order bits
-        Set<Integer> hashset = new TreeSet<Integer>();
+        Set<Integer> hashset = new TreeSet<>();
         for (int n = circ.getFPCount() - 1; n >= 0; n--) {
             int code = circ.getFP(n).hashCode;
             if (folding > 0) code &= AND_BITS;
@@ -279,7 +279,7 @@ public class Bayesian {
 
         // gather all of the (folded) fingerprints (eliminating duplicates)
         final int AND_BITS = folding - 1; // e.g. 1024/0x400 -> 1023/0x3FF: chop off higher order bits
-        Set<Integer> hashset = new HashSet<Integer>();
+        Set<Integer> hashset = new HashSet<>();
         for (int n = circ.getFPCount() - 1; n >= 0; n--) {
             int code = circ.getFP(n).hashCode;
             if (folding > 0) code &= AND_BITS;
@@ -476,7 +476,7 @@ public class Bayesian {
      * @return serialised model
      */
     public String serialise() {
-        StringBuffer buff = new StringBuffer();
+        StringBuilder buff = new StringBuilder();
 
         String fpname = classType == CircularFingerprinter.CLASS_ECFP0 ? "ECFP0"
                 : classType == CircularFingerprinter.CLASS_ECFP2 ? "ECFP2"
@@ -491,7 +491,7 @@ public class Bayesian {
         buff.append("Bayesian!(" + fpname + "," + folding + "," + lowThresh + "," + highThresh + ")\n");
 
         // primary payload: the bit contributions
-        Set<Integer> sorted = new TreeSet<Integer>();
+        Set<Integer> sorted = new TreeSet<>();
         for (Integer hash : contribs.keySet())
             sorted.add(hash);
         for (Integer hash : sorted) {
@@ -564,7 +564,7 @@ public class Bayesian {
                                                 .equals("FCFP6") ? CircularFingerprinter.CLASS_FCFP6 : 0;
         if (classType == 0) throw new IOException("Unknown fingerprint type: " + bits[0]);
 
-        int folding = Integer.valueOf(bits[1]);
+        int folding = Integer.parseInt(bits[1]);
         if (folding > 0) for (int f = folding; f > 0; f = f >> 1)
             if ((f & 1) == 1 && f != 1) {
                 folding = -1;
@@ -586,18 +586,18 @@ public class Bayesian {
 
             Matcher m = PTN_HASHLINE.matcher(line);
             if (m.find()) {
-                int hash = Integer.valueOf(m.group(1));
+                int hash = Integer.parseInt(m.group(1));
                 double c = Double.valueOf(m.group(2));
                 model.contribs.put(hash, c);
             } else if (line.startsWith("training:size=")) {
                 try {
-                    model.trainingSize = Integer.valueOf(line.substring(14));
+                    model.trainingSize = Integer.parseInt(line.substring(14));
                 } catch (NumberFormatException ex) {
                     throw new IOException("Invalid training info line: " + line);
                 }
             } else if (line.startsWith("training:actives=")) {
                 try {
-                    model.trainingActives = Integer.valueOf(line.substring(17));
+                    model.trainingActives = Integer.parseInt(line.substring(17));
                 } catch (NumberFormatException ex) {
                     throw new IOException("Invalid training info line: " + line);
                 }
@@ -693,10 +693,10 @@ public class Bayesian {
 
     // generates a contribution model based on all the training set for which (n%div)!=seg; e.g. for 5-fold, it would use the 80% of the training set
     // that is not implied by the current skein
-    private Map<Integer, Double> buildPartial(final int order[], int seg, int div) {
+    private Map<Integer, Double> buildPartial(final int[] order, int seg, int div) {
         final int sz = training.size();
         int na = 0, nt = 0;
-        final Map<Integer, int[]> ih = new HashMap<Integer, int[]>();
+        final Map<Integer, int[]> ih = new HashMap<>();
         for (int n = 0; n < sz; n++)
             if (n % div != seg) {
                 final boolean active = activity.get(order[n]);
@@ -711,7 +711,7 @@ public class Bayesian {
                 }
             }
 
-        Map<Integer, Double> segContribs = new HashMap<Integer, Double>();
+        Map<Integer, Double> segContribs = new HashMap<>();
 
         final double invSz = 1.0 / nt;
         final double P_AT = na * invSz;
@@ -727,7 +727,7 @@ public class Bayesian {
     }
 
     // using contributions build from some partial section of the training set, uses that to estimate for an untrained entry
-    private double estimatePartial(final int order[], int N, Map<Integer, Double> segContrib) {
+    private double estimatePartial(final int[] order, int N, Map<Integer, Double> segContrib) {
         double val = 0;
         for (int h : training.get(order[N])) {
             Double c = segContrib.get(h);

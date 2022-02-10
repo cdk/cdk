@@ -34,7 +34,10 @@ package org.openscience.cdk.math;
 public class Quaternion {
 
     /** The content of the quaternion */
-    private double a, b, c, d;
+    private final double a;
+    private final double b;
+    private final double c;
+    private final double d;
 
     public Quaternion() {
         a = b = c = d = 0d;

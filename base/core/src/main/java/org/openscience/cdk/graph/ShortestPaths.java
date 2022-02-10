@@ -618,7 +618,7 @@ public final class ShortestPaths {
     }
 
     /** Helper class for building a route to the shortest path */
-    private static interface Route {
+    private interface Route {
 
         /**
          * Recursively convert this route to all possible shortest paths. The length

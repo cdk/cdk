@@ -32,8 +32,6 @@ package org.openscience.cdk.config.fragments;
 
 import org.openscience.cdk.smarts.SmartsPattern;
 
-import java.io.IOException;
-
 /**
  * A class representing the 79 E-state atom types in terms of SMARTS.
  * 

@@ -22,7 +22,6 @@ package org.openscience.cdk.io;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Assert;
@@ -44,14 +43,14 @@ public class ChemObjectIOInstantionTests extends CDKTestCase {
 
     private final static String      IO_FORMATS_LIST = "io-formats.set";
 
-    private static ILoggingTool      logger          = LoggingToolFactory
+    private static final ILoggingTool      logger          = LoggingToolFactory
                                                              .createLoggingTool(ChemObjectIOInstantionTests.class);
 
     private static List<IChemFormat> formats         = null;
 
     private void loadFormats() {
         if (formats == null) {
-            formats = new ArrayList<IChemFormat>();
+            formats = new ArrayList<>();
             try {
                 logger.debug("Starting loading Formats...");
                 BufferedReader reader = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader()
@@ -88,10 +87,9 @@ public class ChemObjectIOInstantionTests extends CDKTestCase {
     public void testInstantion() {
         loadFormats();
 
-        IChemFormat format = null;
-        Iterator<IChemFormat> formatIter = formats.iterator();
-        while (formatIter.hasNext()) {
-            format = (IChemFormat) formatIter.next();
+        IChemFormat format;
+        for (IChemFormat iChemFormat : formats) {
+            format = iChemFormat;
             if (format.getReaderClassName() != null) {
                 tryToInstantiate(format.getReaderClassName());
             }

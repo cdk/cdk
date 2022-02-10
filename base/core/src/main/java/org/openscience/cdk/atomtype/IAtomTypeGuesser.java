@@ -48,5 +48,5 @@ public interface IAtomTypeGuesser {
      * @throws           CDKException when something went wrong with going through
      *                   the AtomType's
      */
-    public List<IAtomType> possibleAtomTypes(IAtomContainer container, IAtom atom) throws CDKException;
+    List<IAtomType> possibleAtomTypes(IAtomContainer container, IAtom atom) throws CDKException;
 }

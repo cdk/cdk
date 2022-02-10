@@ -36,12 +36,12 @@ import org.openscience.cdk.tools.HOSECodeGenerator;
  */
 public class AtomTypeCharges implements IChargeCalculator {
 
-    HOSECodeGenerator hcg = new HOSECodeGenerator();
-    Pattern           pOC = Pattern.compile("O-[1][-];=?+C[(]=?+O.*+");
-    Pattern           pOP = Pattern.compile("O-[1][-];=?+P.*+");
-    Pattern           pOS = Pattern.compile("O-[1][-];=?+S.*+");
-    Pattern           p_p = Pattern.compile("[A-Za-z]{1,2}+[-][0-6].?+[+].*+");
-    Pattern           p_n = Pattern.compile("[A-Za-z]{1,2}+[-][0-6].?+[-].*+");
+    final HOSECodeGenerator hcg = new HOSECodeGenerator();
+    final Pattern           pOC = Pattern.compile("O-[1][-];=?+C[(]=?+O.*+");
+    final Pattern           pOP = Pattern.compile("O-[1][-];=?+P.*+");
+    final Pattern           pOS = Pattern.compile("O-[1][-];=?+S.*+");
+    final Pattern           p_p = Pattern.compile("[A-Za-z]{1,2}+[-][0-6].?+[+].*+");
+    final Pattern           p_n = Pattern.compile("[A-Za-z]{1,2}+[-][0-6].?+[-].*+");
 
     /**
      *  Constructor for the AtomTypeCharges object.
@@ -88,18 +88,18 @@ public class AtomTypeCharges implements IChargeCalculator {
      *@exception  CDKException  Description of the Exception
      */
     private IAtomContainer setInitialCharges(IAtomContainer ac) throws CDKException {
-        Matcher matOC = null;
-        Matcher matOP = null;
-        Matcher matOS = null;
-        Matcher mat_p = null;
-        Matcher mat_n = null;
-        String hoseCode = "";
+        Matcher matOC;
+        Matcher matOP;
+        Matcher matOS;
+        Matcher mat_p;
+        Matcher mat_n;
+        String hoseCode;
 
         for (int i = 0; i < ac.getAtomCount(); i++) {
             try {
                 hoseCode = hcg.getHOSECode(ac, ac.getAtom(i), 3);
             } catch (CDKException ex1) {
-                throw new CDKException("Could not build HOSECode from atom " + i + " due to " + ex1.toString(), ex1);
+                throw new CDKException("Could not build HOSECode from atom " + i + " due to " + ex1, ex1);
             }
             hoseCode = removeAromaticityFlagsFromHoseCode(hoseCode);
 

@@ -42,7 +42,7 @@ public interface ICrystal extends IAtomContainer {
      * @param container The molecule to add
      */
     @Override
-    public void add(IAtomContainer container);
+    void add(IAtomContainer container);
 
     /**
      * Adds the atom to the crystal. Symmetry related atoms should
@@ -51,7 +51,7 @@ public interface ICrystal extends IAtomContainer {
      * @param atom the atom to add
      */
     @Override
-    public void addAtom(IAtom atom);
+    void addAtom(IAtom atom);
 
     /**
      * Sets the A unit cell axes in carthesian coordinates in a
@@ -60,7 +60,7 @@ public interface ICrystal extends IAtomContainer {
      * @param  newAxis the new A axis
      * @see    #getA
      */
-    public void setA(Vector3d newAxis);
+    void setA(Vector3d newAxis);
 
     /**
      * Gets the A unit cell axes in carthesian coordinates
@@ -69,7 +69,7 @@ public interface ICrystal extends IAtomContainer {
      * @return a Vector3D representing the A axis
      * @see       #setA
      */
-    public Vector3d getA();
+    Vector3d getA();
 
     /**
      * Sets the B unit cell axes in carthesian coordinates.
@@ -77,7 +77,7 @@ public interface ICrystal extends IAtomContainer {
      * @param  newAxis the new B axis
      * @see    #getB
      */
-    public void setB(Vector3d newAxis);
+    void setB(Vector3d newAxis);
 
     /**
      * Gets the B unit cell axes in carthesian coordinates
@@ -86,7 +86,7 @@ public interface ICrystal extends IAtomContainer {
      * @return a Vector3D representing the B axis
      * @see       #setB
      */
-    public Vector3d getB();
+    Vector3d getB();
 
     /**
      * Sets the C unit cell axes in carthesian coordinates.
@@ -94,7 +94,7 @@ public interface ICrystal extends IAtomContainer {
      * @param  newAxis the new C axis
      * @see       #getC
      */
-    public void setC(Vector3d newAxis);
+    void setC(Vector3d newAxis);
 
     /**
      * Gets the C unit cell axes in carthesian coordinates
@@ -103,7 +103,7 @@ public interface ICrystal extends IAtomContainer {
      * @return a Vector3D representing the C axis
      * @see       #setC
      */
-    public Vector3d getC();
+    Vector3d getC();
 
     /**
      * Gets the space group of this crystal.
@@ -111,7 +111,7 @@ public interface ICrystal extends IAtomContainer {
      * @return the space group of this crystal structure
      * @see       #setSpaceGroup
      */
-    public String getSpaceGroup();
+    String getSpaceGroup();
 
     /**
      * Sets the space group of this crystal.
@@ -119,7 +119,7 @@ public interface ICrystal extends IAtomContainer {
      * @param   group  the space group of this crystal structure
      * @see       #getSpaceGroup
      */
-    public void setSpaceGroup(String group);
+    void setSpaceGroup(String group);
 
     /**
      * Gets the number of asymmetric parts in the unit cell.
@@ -127,7 +127,7 @@ public interface ICrystal extends IAtomContainer {
      * @return the number of assymetric parts in the unit cell
      * @see    #setZ
      */
-    public Integer getZ();
+    Integer getZ();
 
     /**
      * Sets the number of assymmetric parts in the unit cell.
@@ -135,11 +135,11 @@ public interface ICrystal extends IAtomContainer {
      * @param   value the number of assymetric parts in the unit cell
      * @see           #getZ
      */
-    public void setZ(Integer value);
+    void setZ(Integer value);
 
     /**
      *{@inheritDoc}
      */
     @Override
-    public ICrystal clone() throws CloneNotSupportedException;
+    ICrystal clone() throws CloneNotSupportedException;
 }

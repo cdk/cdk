@@ -962,8 +962,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         List<String> listGenerated = Arrays.asList(arrayGenerated);
         Assert.assertEquals(113, listGenerated.size());
 
-        for (int i = 0; i < listElements.length; i++) {
-            String element = listElements[i];
+        for (String element : listElements) {
             Assert.assertTrue("Element missing from generateOrderEle: " + element, listGenerated.contains(element));
         }
     }

@@ -50,7 +50,6 @@ package org.openscience.cdk.smsd.ring;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -70,9 +69,9 @@ import org.openscience.cdk.smsd.algorithm.matchers.AtomMatcher;
 @Deprecated
 public class RingFilter {
 
-    private RingFinder          ringFinder;
-    private Comparator<List<?>> comparator;
-    private AtomMatcher         filter;
+    private final RingFinder          ringFinder;
+    private final Comparator<List<?>> comparator;
+    private final AtomMatcher         filter;
     private IAtomContainer      mol;
 
     public RingFilter(AtomMatcher filter, RingFinder finder) {
@@ -95,8 +94,8 @@ public class RingFilter {
 
     public void filterAtoms(IAtomContainer molecule, Collection<IAtom> atoms) {
         this.mol = molecule;
-        List<List<IAtom>> rings = new ArrayList<List<IAtom>>(ringFinder.findRings(molecule));
-        Collections.sort(rings, comparator);
+        List<List<IAtom>> rings = new ArrayList<>(ringFinder.findRings(molecule));
+        rings.sort(comparator);
 
         for (List<IAtom> ring : rings) {
             if (atoms.size() == molecule.getAtomCount()) {

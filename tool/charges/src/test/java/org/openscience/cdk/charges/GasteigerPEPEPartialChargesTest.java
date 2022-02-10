@@ -36,7 +36,6 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -48,8 +47,8 @@ import java.util.List;
  */
 public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
 
-    private IChemObjectBuilder      builder = SilentChemObjectBuilder.getInstance();
-    private LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+    private final IChemObjectBuilder      builder = SilentChemObjectBuilder.getInstance();
+    private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
     /**
      * A unit test for JUnit with methylenfluoride
@@ -95,13 +94,13 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
         lpcheck.saturate(mol1);
 
-        List<Boolean> oldBondOrders = new ArrayList<Boolean>();
+        List<Boolean> oldBondOrders = new ArrayList<>();
         for (int i = 0; i < mol1.getBondCount(); i++)
             oldBondOrders.add(mol1.getBond(i).getFlag(CDKConstants.ISAROMATIC));
 
         peoe.calculateCharges(mol1);
 
-        List<Boolean> newBondOrders = new ArrayList<Boolean>();
+        List<Boolean> newBondOrders = new ArrayList<>();
         for (int i = 0; i < mol1.getBondCount(); i++)
             newBondOrders.add(mol1.getBond(i).getFlag(CDKConstants.ISAROMATIC));
 
@@ -257,8 +256,7 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
         addExplicitHydrogens(molecule);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         lpcheck.saturate(molecule);
-        for (Iterator<IAtom> it = molecule.atoms().iterator(); it.hasNext();)
-            it.next().setCharge(0.0);
+        for (IAtom iAtom : molecule.atoms()) iAtom.setCharge(0.0);
 
         IAtomContainerSet set = builder.newInstance(IAtomContainerSet.class);
         set.addAtomContainer(molecule);

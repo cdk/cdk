@@ -44,8 +44,6 @@ import org.openscience.cdk.io.formats.RGroupQueryFormat;
 import org.openscience.cdk.isomorphism.matchers.IRGroup;
 import org.openscience.cdk.isomorphism.matchers.IRGroupList;
 import org.openscience.cdk.isomorphism.matchers.IRGroupQuery;
-import org.openscience.cdk.isomorphism.matchers.RGroup;
-import org.openscience.cdk.isomorphism.matchers.RGroupList;
 
 /**
  * A writer for Symyx' Rgroup files (RGFiles).<br>
@@ -182,7 +180,7 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
             IAtomContainer rootAtc = rGroupQuery.getRootStructure();
 
             //Construct header
-            StringBuffer rootBlock = new StringBuffer();
+            StringBuilder rootBlock = new StringBuilder();
             String header = "$MDL  REV  1   " + now + LSEP + "$MOL" + LSEP + "$HDR" + LSEP
                     + "  Rgroup query file (RGFile)" + LSEP + "  CDK    " + now + "2D" + LSEP + LSEP + "$END HDR"
                     + LSEP + "$CTAB";
@@ -224,7 +222,7 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
                         apoIdx++;
                     }
                     if (!implicitlyOrdered) {
-                        StringBuffer aalLine = new StringBuffer("M  AAL");
+                        StringBuilder aalLine = new StringBuilder("M  AAL");
                         for (int atIdx = 0; atIdx < rootAtc.getAtomCount(); atIdx++) {
                             if (rootAtc.getAtom(atIdx).equals(rgroupAtom)) {
                                 aalLine.append(MDLV2000Writer.formatMDLInt((atIdx + 1), 4));
@@ -244,7 +242,7 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
                                 }
                             }
                         }
-                        rootBlock.append(aalLine.toString()).append(LSEP);
+                        rootBlock.append(aalLine).append(LSEP);
                     }
                 }
             }
@@ -252,11 +250,11 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
             rootBlock.append("M  END").append(LSEP).append("$END CTAB").append(LSEP);
 
             //Construct each R-group block
-            StringBuffer rgpBlock = new StringBuffer();
+            StringBuilder rgpBlock = new StringBuilder();
             for (Integer rgrpNum : rGroupQuery.getRGroupDefinitions().keySet()) {
                 List<IRGroup> rgrpList = rGroupQuery.getRGroupDefinitions().get(rgrpNum).getRGroups();
                 if (rgrpList != null && rgrpList.size() != 0) {
-                    rgpBlock.append("$RGP").append(LSEP);;
+                    rgpBlock.append("$RGP").append(LSEP);
                     rgpBlock.append(MDLV2000Writer.formatMDLInt(rgrpNum, 4)).append(LSEP);
 
                     for (IRGroup rgroup : rgrpList) {
@@ -271,7 +269,7 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
                         IAtom secondAttachmentPoint = rgroup.getSecondAttachmentPoint();
                         int apoCount = 0;
                         if (firstAttachmentPoint != null) {
-                            StringBuffer apoLine = new StringBuffer();
+                            StringBuilder apoLine = new StringBuilder();
                             for (int atIdx = 0; atIdx < rgroup.getGroup().getAtomCount(); atIdx++) {
                                 if (rgroup.getGroup().getAtom(atIdx).equals(firstAttachmentPoint)) {
                                     apoLine.append(MDLV2000Writer.formatMDLInt((atIdx + 1), 4));

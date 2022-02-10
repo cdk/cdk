@@ -43,7 +43,10 @@ final class DoubleBond3DParity extends GeometricParity {
     // x       w
     //  \     /
     //   u = v
-    private Point3d u, v, x, w;
+    private final Point3d u;
+    private final Point3d v;
+    private final Point3d x;
+    private final Point3d w;
 
     /**
      * Create a new double bond parity for the 2D coordinates of the atoms.

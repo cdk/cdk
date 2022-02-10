@@ -70,7 +70,7 @@ import java.util.Map;
  */
 public class MACCSFingerprinter extends AbstractFingerprinter implements IFingerprinter {
 
-    private static ILoggingTool logger          = LoggingToolFactory.createLoggingTool(MACCSFingerprinter.class);
+    private static final ILoggingTool logger          = LoggingToolFactory.createLoggingTool(MACCSFingerprinter.class);
 
     private static final String KEY_DEFINITIONS = "data/maccs.txt";
 
@@ -81,9 +81,7 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
     public MACCSFingerprinter(IChemObjectBuilder builder) {
         try {
             keys = readKeyDef(builder);
-        } catch (IOException e) {
-            logger.debug(e);
-        } catch (CDKException e) {
+        } catch (IOException | CDKException e) {
             logger.debug(e);
         }
     }
@@ -235,7 +233,7 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
     }
 
     private MaccsKey[] readKeyDef(final IChemObjectBuilder builder) throws IOException, CDKException {
-        List<MaccsKey> keys = new ArrayList<MaccsKey>(166);
+        List<MaccsKey> keys = new ArrayList<>(166);
         BufferedReader reader = new BufferedReader(new InputStreamReader(getClass()
                 .getResourceAsStream(KEY_DEFINITIONS)));
 
@@ -254,9 +252,9 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
 
     private class MaccsKey {
 
-        private String  smarts;
-        private int     count;
-        private Pattern pattern;
+        private final String  smarts;
+        private final int     count;
+        private final Pattern pattern;
 
         private MaccsKey(String smarts, Pattern pattern, int count) {
             this.smarts = smarts;

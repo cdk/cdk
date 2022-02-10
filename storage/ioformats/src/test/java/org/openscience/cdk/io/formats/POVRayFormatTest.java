@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class POVRayFormatTest extends ResourceFormatTest {
 
     public POVRayFormatTest() {
-        super.setResourceFormat((IResourceFormat) POVRayFormat.getInstance());
+        super.setResourceFormat(POVRayFormat.getInstance());
     }
 
 }

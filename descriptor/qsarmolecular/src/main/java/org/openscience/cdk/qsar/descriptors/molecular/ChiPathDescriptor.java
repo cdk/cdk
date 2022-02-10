@@ -19,7 +19,6 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
@@ -119,9 +118,7 @@ public class ChiPathDescriptor extends AbstractMolecularDescriptor implements IM
 
         IAtomContainer localAtomContainer = AtomContainerManipulator.removeHydrogens(container);
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
-        Iterator<IAtom> atoms = localAtomContainer.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : localAtomContainer.atoms()) {
             IAtomType type;
             try {
                 type = matcher.findMatchingAtomType(localAtomContainer, atom);
@@ -218,9 +215,9 @@ public class ChiPathDescriptor extends AbstractMolecularDescriptor implements IM
     }
 
     private List<List<Integer>> order0(IAtomContainer atomContainer) {
-        List<List<Integer>> fragments = new ArrayList<List<Integer>>();
+        List<List<Integer>> fragments = new ArrayList<>();
         for (IAtom atom : atomContainer.atoms()) {
-            List<Integer> tmp = new ArrayList<Integer>();
+            List<Integer> tmp = new ArrayList<>();
             tmp.add(atomContainer.indexOf(atom));
             fragments.add(tmp);
         }
@@ -228,10 +225,10 @@ public class ChiPathDescriptor extends AbstractMolecularDescriptor implements IM
     }
 
     private List<List<Integer>> order1(IAtomContainer atomContainer) throws CDKException {
-        List<List<Integer>> fragments = new ArrayList<List<Integer>>();
+        List<List<Integer>> fragments = new ArrayList<>();
         for (IBond bond : atomContainer.bonds()) {
             if (bond.getAtomCount() != 2) throw new CDKException("We only consider 2 center bonds");
-            List<Integer> tmp = new ArrayList<Integer>();
+            List<Integer> tmp = new ArrayList<>();
             tmp.add(atomContainer.indexOf(bond.getBegin()));
             tmp.add(atomContainer.indexOf(bond.getEnd()));
             fragments.add(tmp);

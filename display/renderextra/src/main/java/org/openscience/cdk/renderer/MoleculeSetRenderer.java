@@ -105,7 +105,7 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  */
 public class MoleculeSetRenderer extends AbstractRenderer<IAtomContainerSet> implements IRenderer<IAtomContainerSet> {
 
-    private IRenderer<IAtomContainer> atomContainerRenderer;
+    private final IRenderer<IAtomContainer> atomContainerRenderer;
 
     /**
      * A renderer that generates diagrams using the specified
@@ -289,7 +289,7 @@ public class MoleculeSetRenderer extends AbstractRenderer<IAtomContainerSet> imp
     /** {@inheritDoc} */
     @Override
     public List<IGenerator<IAtomContainerSet>> getGenerators() {
-        return new ArrayList<IGenerator<IAtomContainerSet>>(generators);
+        return new ArrayList<>(generators);
     }
 
 }

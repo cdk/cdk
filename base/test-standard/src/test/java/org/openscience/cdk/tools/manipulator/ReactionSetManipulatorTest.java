@@ -19,7 +19,6 @@
 package org.openscience.cdk.tools.manipulator;
 
 import java.io.InputStream;
-import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Assert;
@@ -58,7 +57,7 @@ public class ReactionSetManipulatorTest extends CDKTestCase {
         String filename1 = "reaction-1.rxn";
         InputStream ins1 = this.getClass().getResourceAsStream(filename1);
         MDLRXNReader reader1 = new MDLRXNReader(ins1);
-        set = (ReactionSet) reader1.read(new ReactionSet());
+        set = reader1.read(new ReactionSet());
         reader1.close();
     }
 
@@ -106,9 +105,7 @@ public class ReactionSetManipulatorTest extends CDKTestCase {
 
     @Test
     public void testGetRelevantReaction_IReactionSet_IAtom() {
-        Iterator<IAtomContainer> atomContainers = ReactionSetManipulator.getAllAtomContainers(set).iterator();
-        while (atomContainers.hasNext()) {
-            IAtomContainer container = atomContainers.next();
+        for (IAtomContainer container : ReactionSetManipulator.getAllAtomContainers(set)) {
             IAtom anAtom = container.getAtom(0);
             Assert.assertEquals(set.getReaction(0), ReactionSetManipulator.getRelevantReaction(set, anAtom));
         }
@@ -116,9 +113,7 @@ public class ReactionSetManipulatorTest extends CDKTestCase {
 
     @Test
     public void testGetRelevantReaction_IReactionSet_IBond() {
-        Iterator<IAtomContainer> atomContainers = ReactionSetManipulator.getAllAtomContainers(set).iterator();
-        while (atomContainers.hasNext()) {
-            IAtomContainer container = atomContainers.next();
+        for (IAtomContainer container : ReactionSetManipulator.getAllAtomContainers(set)) {
             IBond aBond = container.getBond(0);
             Assert.assertEquals(set.getReaction(0), ReactionSetManipulator.getRelevantReaction(set, aBond));
         }
@@ -126,9 +121,7 @@ public class ReactionSetManipulatorTest extends CDKTestCase {
 
     @Test
     public void testGetRelevantAtomContainer_IReactionSet_IAtom() {
-        Iterator<IAtomContainer> atomContainers = ReactionSetManipulator.getAllAtomContainers(set).iterator();
-        while (atomContainers.hasNext()) {
-            IAtomContainer container = atomContainers.next();
+        for (IAtomContainer container : ReactionSetManipulator.getAllAtomContainers(set)) {
             IAtom anAtom = container.getAtom(0);
             Assert.assertEquals(container, ReactionSetManipulator.getRelevantAtomContainer(set, anAtom));
         }
@@ -136,9 +129,7 @@ public class ReactionSetManipulatorTest extends CDKTestCase {
 
     @Test
     public void testGetRelevantAtomContainer_IReactionSet_IBond() {
-        Iterator<IAtomContainer> atomContainers = ReactionSetManipulator.getAllAtomContainers(set).iterator();
-        while (atomContainers.hasNext()) {
-            IAtomContainer container = atomContainers.next();
+        for (IAtomContainer container : ReactionSetManipulator.getAllAtomContainers(set)) {
             IBond aBond = container.getBond(0);
             Assert.assertEquals(container, ReactionSetManipulator.getRelevantAtomContainer(set, aBond));
         }
@@ -147,12 +138,8 @@ public class ReactionSetManipulatorTest extends CDKTestCase {
     @Test
     public void testSetAtomProperties_IReactionSet_Object_Object() throws Exception {
         ReactionSetManipulator.setAtomProperties(set, "test", "ok");
-        Iterator<IAtomContainer> atomContainers = ReactionSetManipulator.getAllAtomContainers(set).iterator();
-        while (atomContainers.hasNext()) {
-            IAtomContainer container = atomContainers.next();
-            Iterator<IAtom> atoms = container.atoms().iterator();
-            while (atoms.hasNext()) {
-                IAtom atom = atoms.next();
+        for (IAtomContainer container : ReactionSetManipulator.getAllAtomContainers(set)) {
+            for (IAtom atom : container.atoms()) {
                 Assert.assertNotNull(atom.getProperty("test"));
                 Assert.assertEquals("ok", atom.getProperty("test"));
             }

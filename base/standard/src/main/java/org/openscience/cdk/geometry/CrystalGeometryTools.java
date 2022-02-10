@@ -173,9 +173,8 @@ public class CrystalGeometryTools {
      * @return  boolean indication that 3D coordinates are available
      */
     public static boolean hasCrystalCoordinates(IAtomContainer container) {
-        Iterator<IAtom> atoms = container.atoms().iterator();
-        while (atoms.hasNext()) {
-            if (atoms.next().getFractionalPoint3d() == null) {
+        for (IAtom iAtom : container.atoms()) {
+            if (iAtom.getFractionalPoint3d() == null) {
                 return false;
             }
         }

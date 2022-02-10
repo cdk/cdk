@@ -51,7 +51,6 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -129,7 +128,7 @@ import java.util.Set;
  */
 public final class SmilesParser {
 
-    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(SmilesParser.class);
+    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(SmilesParser.class);
 
     /**
      * The builder determines which CDK domain objects to create.

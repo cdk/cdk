@@ -20,7 +20,6 @@ package org.openscience.cdk.tools.manipulator;
 
 import java.io.InputStream;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -129,7 +128,7 @@ public class ChemFileManipulatorTest extends CDKTestCase {
         IDCreator.createIDs(chemFile);
         List<String> allIDs = ChemFileManipulator.getAllIDs(chemFile);
         Assert.assertEquals(19, ChemFileManipulator.getAllIDs(chemFile).size());
-        Set<String> uniq = new HashSet<String>(allIDs);
+        Set<String> uniq = new HashSet<>(allIDs);
         Assert.assertEquals(13, uniq.size());
     }
 
@@ -157,8 +156,7 @@ public class ChemFileManipulatorTest extends CDKTestCase {
         int reactionSetCount = 0;
         int chemModelCount = 0;
         int chemSequenceCount = 0;
-        for (Iterator<IChemObject> iter = list.iterator(); iter.hasNext();) {
-            Object o = iter.next();
+        for (Object o : list) {
             if (o instanceof IAtom) ++atomCount;
             if (o instanceof IBond) ++bondCount;
             if (o instanceof IAtomContainer)

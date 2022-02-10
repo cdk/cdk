@@ -41,7 +41,7 @@ public class OWLAtomTypeHandler extends DefaultHandler {
 
     private final String              NS_ATOMTYPE = "http://cdk.sf.net/ontologies/atomtypes#";
 
-    private static ILoggingTool       logger      = LoggingToolFactory.createLoggingTool(OWLAtomTypeHandler.class);
+    private static final ILoggingTool       logger      = LoggingToolFactory.createLoggingTool(OWLAtomTypeHandler.class);
     private String                    currentChars;
     private List<IAtomType>           atomTypes;
     private IAtomType                 currentAtomType;
@@ -76,7 +76,7 @@ public class OWLAtomTypeHandler extends DefaultHandler {
     /** {@inheritDoc} */
     @Override
     public void startDocument() {
-        atomTypes = new ArrayList<IAtomType>();
+        atomTypes = new ArrayList<>();
         currentAtomType = null;
     }
 
@@ -182,7 +182,7 @@ public class OWLAtomTypeHandler extends DefaultHandler {
 
     /** {@inheritDoc} */
     @Override
-    public void characters(char chars[], int start, int length) {
+    public void characters(char[] chars, int start, int length) {
         logger.debug("character data");
         currentChars += new String(chars, start, length);
     }

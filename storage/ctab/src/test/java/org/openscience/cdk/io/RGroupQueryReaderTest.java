@@ -62,7 +62,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
 
     public RGroupQueryReaderTest() {}
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(RGroupQueryReaderTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(RGroupQueryReaderTest.class);
 
     @BeforeClass
     public static void setup() {
@@ -100,7 +100,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         RGroupQueryReader reader = new RGroupQueryReader(ins);
-        RGroupQuery rGroupQuery = (RGroupQuery) reader.read(new RGroupQuery(DefaultChemObjectBuilder.getInstance()));
+        RGroupQuery rGroupQuery = reader.read(new RGroupQuery(DefaultChemObjectBuilder.getInstance()));
         reader.close();
         Assert.assertNotNull(rGroupQuery);
         Assert.assertEquals(rGroupQuery.getRGroupDefinitions().size(), 1);
@@ -168,7 +168,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         RGroupQueryReader reader = new RGroupQueryReader(ins);
-        RGroupQuery rGroupQuery = (RGroupQuery) reader.read(new RGroupQuery(DefaultChemObjectBuilder.getInstance()));
+        RGroupQuery rGroupQuery = reader.read(new RGroupQuery(DefaultChemObjectBuilder.getInstance()));
         reader.close();
         Assert.assertNotNull(rGroupQuery);
         Assert.assertEquals(rGroupQuery.getRGroupDefinitions().size(), 3);
@@ -256,7 +256,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         RGroupQueryReader reader = new RGroupQueryReader(ins);
-        RGroupQuery rGroupQuery = (RGroupQuery) reader.read(new RGroupQuery(DefaultChemObjectBuilder.getInstance()));
+        RGroupQuery rGroupQuery = reader.read(new RGroupQuery(DefaultChemObjectBuilder.getInstance()));
         reader.close();
         Assert.assertNotNull(rGroupQuery);
         Assert.assertEquals(rGroupQuery.getRGroupDefinitions().size(), 1);
@@ -298,7 +298,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         RGroupQueryReader reader = new RGroupQueryReader(ins);
-        RGroupQuery rGroupQuery = (RGroupQuery) reader.read(new RGroupQuery(DefaultChemObjectBuilder.getInstance()));
+        RGroupQuery rGroupQuery = reader.read(new RGroupQuery(DefaultChemObjectBuilder.getInstance()));
         reader.close();
         Assert.assertNotNull(rGroupQuery);
         Assert.assertEquals(rGroupQuery.getRGroupDefinitions().size(), 1);
@@ -335,7 +335,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         RGroupQueryReader reader = new RGroupQueryReader(ins);
-        RGroupQuery rGroupQuery = (RGroupQuery) reader.read(new RGroupQuery(DefaultChemObjectBuilder.getInstance()));
+        RGroupQuery rGroupQuery = reader.read(new RGroupQuery(DefaultChemObjectBuilder.getInstance()));
         reader.close();
         Assert.assertNotNull(rGroupQuery);
         Assert.assertEquals(rGroupQuery.getRGroupDefinitions().size(), 4);
@@ -355,7 +355,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         RGroupQueryReader reader = new RGroupQueryReader(ins);
-        RGroupQuery rGroupQuery = (RGroupQuery) reader.read(new RGroupQuery(DefaultChemObjectBuilder.getInstance()));
+        RGroupQuery rGroupQuery = reader.read(new RGroupQuery(DefaultChemObjectBuilder.getInstance()));
         reader.close();
         Assert.assertNotNull(rGroupQuery);
         Assert.assertEquals(rGroupQuery.getRGroupDefinitions().size(), 3);
@@ -383,7 +383,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         RGroupQueryReader reader = new RGroupQueryReader(ins);
-        RGroupQuery rGroupQuery = (RGroupQuery) reader.read(new RGroupQuery(DefaultChemObjectBuilder.getInstance()));
+        RGroupQuery rGroupQuery = reader.read(new RGroupQuery(DefaultChemObjectBuilder.getInstance()));
         reader.close();
         Assert.assertNotNull(rGroupQuery);
         Assert.assertEquals(rGroupQuery.getRGroupDefinitions().size(), 1);

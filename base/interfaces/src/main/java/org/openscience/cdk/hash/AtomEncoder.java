@@ -46,6 +46,6 @@ public interface AtomEncoder {
      * @param container non-null container
      * @return encoding of an invariant atom attribute
      */
-    public int encode(IAtom atom, IAtomContainer container);
+    int encode(IAtom atom, IAtomContainer container);
 
 }

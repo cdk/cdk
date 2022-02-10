@@ -41,7 +41,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest {
 
     private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-    LonePairElectronChecker                 lpcheck = new LonePairElectronChecker();
+    final LonePairElectronChecker                 lpcheck = new LonePairElectronChecker();
 
     public StabilizationPlusChargeDescriptorTest() {
         descriptor = new StabilizationPlusChargeDescriptor();

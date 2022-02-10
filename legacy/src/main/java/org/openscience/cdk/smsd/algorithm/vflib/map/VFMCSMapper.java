@@ -77,8 +77,8 @@ import org.openscience.cdk.smsd.tools.TimeManager;
 @Deprecated
 public class VFMCSMapper implements IMapper {
 
-    private IQuery                  query          = null;
-    private List<Map<INode, IAtom>> maps           = null;
+    private IQuery                  query;
+    private List<Map<INode, IAtom>> maps;
     private int                     currentMCSSize = -1;
     private static TimeManager      timeManager    = null;
 
@@ -111,7 +111,7 @@ public class VFMCSMapper implements IMapper {
     public VFMCSMapper(IQuery query) {
         setTimeManager(new TimeManager());
         this.query = query;
-        this.maps = new ArrayList<Map<INode, IAtom>>();
+        this.maps = new ArrayList<>();
     }
 
     /**
@@ -122,7 +122,7 @@ public class VFMCSMapper implements IMapper {
     public VFMCSMapper(IAtomContainer queryMolecule, boolean bondMatcher) {
         setTimeManager(new TimeManager());
         this.query = new QueryCompiler(queryMolecule, bondMatcher).compile();
-        this.maps = new ArrayList<Map<INode, IAtom>>();
+        this.maps = new ArrayList<>();
     }
 
     /** {@inheritDoc}
@@ -141,7 +141,7 @@ public class VFMCSMapper implements IMapper {
         IState state = new VFState(query, new TargetProperties(target));
         maps.clear();
         mapAll(state);
-        return new ArrayList<Map<INode, IAtom>>(maps);
+        return new ArrayList<>(maps);
     }
 
     /** {@inheritDoc}
@@ -154,7 +154,7 @@ public class VFMCSMapper implements IMapper {
         IState state = new VFState(query, new TargetProperties(target));
         maps.clear();
         mapFirst(state);
-        return maps.isEmpty() ? new HashMap<INode, IAtom>() : maps.get(0);
+        return maps.isEmpty() ? new HashMap<>() : maps.get(0);
     }
 
     /** {@inheritDoc} */
@@ -184,7 +184,7 @@ public class VFMCSMapper implements IMapper {
         IState state = new VFState(query, targetMolecule);
         maps.clear();
         mapAll(state);
-        return new ArrayList<Map<INode, IAtom>>(maps);
+        return new ArrayList<>(maps);
     }
 
     /** {@inheritDoc}
@@ -197,7 +197,7 @@ public class VFMCSMapper implements IMapper {
         IState state = new VFState(query, targetMolecule);
         maps.clear();
         mapFirst(state);
-        return maps.isEmpty() ? new HashMap<INode, IAtom>() : maps.get(0);
+        return maps.isEmpty() ? new HashMap<>() : maps.get(0);
     }
 
     /** {@inheritDoc}

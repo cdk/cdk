@@ -132,8 +132,8 @@ final class MmffAromaticTypeMapping {
         // aromatic atoms are needed for checking each ring
         final boolean[] aromaticAtoms = new boolean[contribution.length];
 
-        final List<int[]> ringsOfSize6 = new ArrayList<int[]>();
-        final List<int[]> ringsOfSize5 = new ArrayList<int[]>();
+        final List<int[]> ringsOfSize6 = new ArrayList<>();
+        final List<int[]> ringsOfSize5 = new ArrayList<>();
 
         do {
             found = false;
@@ -160,7 +160,7 @@ final class MmffAromaticTypeMapping {
             }
         } while (found);
 
-        List<int[]> rings = new ArrayList<int[]>();
+        List<int[]> rings = new ArrayList<>();
         rings.addAll(ringsOfSize6);
         rings.addAll(ringsOfSize5);
 

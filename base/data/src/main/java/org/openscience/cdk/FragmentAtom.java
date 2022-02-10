@@ -87,11 +87,11 @@ public class FragmentAtom extends PseudoAtom implements IFragmentAtom {
 
     @Override
     public String toString() {
-        StringBuffer buffer = new StringBuffer(50);
+        StringBuilder buffer = new StringBuilder(50);
         buffer.append("FragmentAtom{").append(hashCode());
         buffer.append(", A=").append(super.toString());
         if (fragment != null) {
-            buffer.append(", F=").append(fragment.toString());
+            buffer.append(", F=").append(fragment);
         }
         buffer.append('}');
         return buffer.toString();

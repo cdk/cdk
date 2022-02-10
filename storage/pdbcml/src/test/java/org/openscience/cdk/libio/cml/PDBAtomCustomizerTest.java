@@ -18,7 +18,7 @@ import java.io.StringWriter;
  */
 public class PDBAtomCustomizerTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(PDBAtomCustomizerTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(PDBAtomCustomizerTest.class);
 
     @Test
     public void testPDBAtomCustomization() throws Exception {
@@ -37,6 +37,6 @@ public class PDBAtomCustomizerTest {
         logger.debug("****************************** testPDBAtomCustomization()");
         logger.debug(cmlContent);
         logger.debug("******************************");
-        Assert.assertTrue(cmlContent.indexOf("<scalar dictRef=\"pdb:resName") != -1);
+        Assert.assertTrue(cmlContent.contains("<scalar dictRef=\"pdb:resName"));
     }
 }

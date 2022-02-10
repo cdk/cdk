@@ -29,7 +29,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.NoSuchElementException;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -63,9 +62,9 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class IteratingSMILESReader extends DefaultIteratingChemObjectReader<IAtomContainer> {
 
     private BufferedReader           input;
-    private static ILoggingTool      logger           = LoggingToolFactory
+    private static final ILoggingTool      logger           = LoggingToolFactory
                                                               .createLoggingTool(IteratingSMILESReader.class);
-    private SmilesParser             sp               = null;
+    private SmilesParser             sp;
 
     private boolean                  nextAvailableIsKnown;
     private boolean                  hasNext;

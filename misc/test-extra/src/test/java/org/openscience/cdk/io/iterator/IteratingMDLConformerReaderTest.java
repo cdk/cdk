@@ -19,7 +19,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class IteratingMDLConformerReaderTest extends CDKTestCase {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingMDLConformerReaderTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingMDLConformerReaderTest.class);
 
     @Test
     public void testSDF() throws Exception {

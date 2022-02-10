@@ -34,7 +34,7 @@ import javax.swing.undo.UndoableEdit;
  */
 public class UndoAdapter implements UndoableEditListener {
 
-    private UndoManager undoManager;
+    private final UndoManager undoManager;
 
     /**
      * @param undoManager

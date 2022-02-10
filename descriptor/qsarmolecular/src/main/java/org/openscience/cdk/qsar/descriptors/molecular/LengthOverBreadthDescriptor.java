@@ -62,7 +62,7 @@ import javax.vecmath.Point3d;
  */
 public class LengthOverBreadthDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static ILoggingTool   logger = LoggingToolFactory.createLoggingTool(LengthOverBreadthDescriptor.class);
+    private static final ILoggingTool   logger = LoggingToolFactory.createLoggingTool(LengthOverBreadthDescriptor.class);
 
     private static final String[] NAMES  = {"LOBMAX", "LOBMIN"};
 

@@ -33,5 +33,5 @@ public interface ICDKObject extends Cloneable {
      *
      * @return The {@link IChemObjectBuilder} matching this {@link ICDKObject}
      */
-    public IChemObjectBuilder getBuilder();
+    IChemObjectBuilder getBuilder();
 }

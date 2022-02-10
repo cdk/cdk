@@ -41,7 +41,7 @@ public interface IAtomType extends IIsotope {
      * An enum for the different hybridization states.
      *
      */
-    public enum Hybridization {
+    enum Hybridization {
         S, SP1, // linear
         SP2, // trigonal planar (single pi-electron in pz)
         SP3, // tetrahedral
@@ -59,7 +59,7 @@ public interface IAtomType extends IIsotope {
      * @param  identifier  The new AtomTypeID value. Null if unset.
      * @see    #getAtomTypeName
      */
-    public void setAtomTypeName(String identifier);
+    void setAtomTypeName(String identifier);
 
     /**
      * Sets the MaxBondOrder attribute of the AtomType object.
@@ -67,7 +67,7 @@ public interface IAtomType extends IIsotope {
      * @param  maxBondOrder  The new MaxBondOrder value
      * @see    #getMaxBondOrder
      */
-    public void setMaxBondOrder(IBond.Order maxBondOrder);
+    void setMaxBondOrder(IBond.Order maxBondOrder);
 
     /**
      * Sets the the exact bond order sum attribute of the AtomType object.
@@ -75,7 +75,7 @@ public interface IAtomType extends IIsotope {
      * @param  bondOrderSum  The new bondOrderSum value
      * @see    #getBondOrderSum
      */
-    public void setBondOrderSum(Double bondOrderSum);
+    void setBondOrderSum(Double bondOrderSum);
 
     /**
      * Gets the id attribute of the AtomType object.
@@ -83,7 +83,7 @@ public interface IAtomType extends IIsotope {
      * @return    The id value
      * @see       #setAtomTypeName
      */
-    public String getAtomTypeName();
+    String getAtomTypeName();
 
     /**
      * Gets the MaxBondOrder attribute of the AtomType object.
@@ -91,7 +91,7 @@ public interface IAtomType extends IIsotope {
      * @return    The MaxBondOrder value
      * @see       #setMaxBondOrder
      */
-    public IBond.Order getMaxBondOrder();
+    IBond.Order getMaxBondOrder();
 
     /**
      * Gets the bondOrderSum attribute of the AtomType object.
@@ -99,7 +99,7 @@ public interface IAtomType extends IIsotope {
      * @return    The bondOrderSum value
      * @see       #setBondOrderSum
      */
-    public Double getBondOrderSum();
+    Double getBondOrderSum();
 
     /**
      * Sets the formal charge of this atom.
@@ -107,7 +107,7 @@ public interface IAtomType extends IIsotope {
      * @param  charge  The formal charge
      * @see    #getFormalCharge
      */
-    public void setFormalCharge(Integer charge);
+    void setFormalCharge(Integer charge);
 
     /**
      * Returns the formal charge of this atom.
@@ -115,7 +115,7 @@ public interface IAtomType extends IIsotope {
      * @return the formal charge of this atom
      * @see    #setFormalCharge
      */
-    public Integer getFormalCharge();
+    Integer getFormalCharge();
 
     /**
      * Sets the formal neighbour count of this atom.
@@ -123,7 +123,7 @@ public interface IAtomType extends IIsotope {
      * @param  count  The neighbour count
      * @see    #getFormalNeighbourCount
      */
-    public void setFormalNeighbourCount(Integer count);
+    void setFormalNeighbourCount(Integer count);
 
     /**
      * Returns the formal neighbour count of this atom.
@@ -131,7 +131,7 @@ public interface IAtomType extends IIsotope {
      * @return the formal neighbour count of this atom
      * @see    #setFormalNeighbourCount
      */
-    public Integer getFormalNeighbourCount();
+    Integer getFormalNeighbourCount();
 
     /**
      * Sets the hybridization of this atom.
@@ -139,7 +139,7 @@ public interface IAtomType extends IIsotope {
      * @param  hybridization  The hybridization
      * @see    #getHybridization
      */
-    public void setHybridization(Hybridization hybridization);
+    void setHybridization(Hybridization hybridization);
 
     /**
      * Returns the hybridization of this atom.
@@ -147,7 +147,7 @@ public interface IAtomType extends IIsotope {
      * @return the hybridization of this atom
      * @see    #setHybridization
      */
-    public Hybridization getHybridization();
+    Hybridization getHybridization();
 
     /**
      * Sets the covalent radius for this AtomType.
@@ -155,7 +155,7 @@ public interface IAtomType extends IIsotope {
      * @param radius The covalent radius for this AtomType
      * @see    #getCovalentRadius
      */
-    public void setCovalentRadius(Double radius);
+    void setCovalentRadius(Double radius);
 
     /**
      * Returns the covalent radius for this AtomType.
@@ -163,7 +163,7 @@ public interface IAtomType extends IIsotope {
      * @return The covalent radius for this AtomType
      * @see    #setCovalentRadius
      */
-    public Double getCovalentRadius();
+    Double getCovalentRadius();
 
     /**
      * Sets the the exact electron valency of the AtomType object.
@@ -171,7 +171,7 @@ public interface IAtomType extends IIsotope {
      * @param  valency  The new valency value
      * @see    #getValency()
      */
-    public void setValency(Integer valency);
+    void setValency(Integer valency);
 
     /**
      * Gets the the exact electron valency of the AtomType object.
@@ -179,6 +179,6 @@ public interface IAtomType extends IIsotope {
      * @return The valency value
      * @see    #setValency(Integer)
      */
-    public Integer getValency();
+    Integer getValency();
 
 }

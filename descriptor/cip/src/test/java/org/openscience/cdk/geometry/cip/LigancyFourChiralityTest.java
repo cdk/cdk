@@ -78,11 +78,11 @@ public class LigancyFourChiralityTest extends CDKTestCase {
 
     @Test
     public void testConstructor_ILigancyFourChirality() {
-        List<IAtom> ligandAtoms = new ArrayList<IAtom>();
+        List<IAtom> ligandAtoms = new ArrayList<>();
         for (ILigand ligand : ligands)
             ligandAtoms.add(ligand.getLigandAtom());
         ITetrahedralChirality cdkChiral = new TetrahedralChirality(molecule.getAtom(1),
-                (IAtom[]) ligandAtoms.toArray(new IAtom[]{}), Stereo.CLOCKWISE);
+                ligandAtoms.toArray(new IAtom[]{}), Stereo.CLOCKWISE);
         LigancyFourChirality chirality = new LigancyFourChirality(molecule, cdkChiral);
         Assert.assertNotNull(chirality);
         Assert.assertEquals(molecule.getAtom(1), chirality.getChiralAtom());

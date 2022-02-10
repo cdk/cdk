@@ -66,7 +66,7 @@ public class AtomTools {
             if (atom.getPoint3d() == null) {
                 List<IAtom> connectedAtoms = atomContainer.getConnectedAtomsList(atom);
                 if (connectedAtoms.size() == 1) {
-                    IAtom refAtom = (IAtom) connectedAtoms.get(0);;
+                    IAtom refAtom = connectedAtoms.get(0);
                     if (refAtom.getPoint3d() != null) {
                         refAtoms.addAtom(refAtom);
                         // store atoms with no coords and ref atoms in a
@@ -96,7 +96,7 @@ public class AtomTools {
             }
             Point3d[] newPoints = calculate3DCoordinatesForLigands(atomContainer, refAtom, nwanted, length, angle);
             for (int j = 0; j < nLigands; j++) {
-                IAtom ligand = (IAtom) noCoordLigands.get(j);
+                IAtom ligand = noCoordLigands.get(j);
                 Point3d newPoint = rescaleBondLength(refAtom, ligand, newPoints[j]);
                 ligand.setPoint3d(newPoint);
             }
@@ -175,7 +175,7 @@ public class AtomTools {
      */
     public static Point3d[] calculate3DCoordinatesForLigands(IAtomContainer atomContainer, IAtom refAtom, int nwanted,
             double length, double angle) {
-        Point3d newPoints[] = new Point3d[0];
+        Point3d[] newPoints = new Point3d[0];
         Point3d aPoint = refAtom.getPoint3d();
         // get ligands
         List<IAtom> connectedAtoms = atomContainer.getConnectedAtomsList(refAtom);
@@ -184,8 +184,7 @@ public class AtomTools {
         }
         int nligands = connectedAtoms.size();
         IAtomContainer ligandsWithCoords = atomContainer.getBuilder().newInstance(IAtomContainer.class);
-        for (int i = 0; i < nligands; i++) {
-            IAtom ligand = connectedAtoms.get(i);
+        for (IAtom ligand : connectedAtoms) {
             if (ligand.getPoint3d() != null) {
                 ligandsWithCoords.addAtom(ligand);
             }
@@ -203,8 +202,7 @@ public class AtomTools {
             connectedAtoms = ligandsWithCoords.getConnectedAtomsList(bAtom);
             // does B have a ligand (other than A)
             IAtom jAtom = null;
-            for (int i = 0; i < connectedAtoms.size(); i++) {
-                IAtom connectedAtom = connectedAtoms.get(i);
+            for (IAtom connectedAtom : connectedAtoms) {
                 if (!connectedAtom.equals(refAtom)) {
                     jAtom = connectedAtom;
                     break;
@@ -296,7 +294,7 @@ public class AtomTools {
      */
     public static Point3d[] calculate3DCoordinates1(Point3d aPoint, Point3d bPoint, Point3d cPoint, int nwanted,
             double length, double angle) {
-        Point3d points[] = new Point3d[nwanted];
+        Point3d[] points = new Point3d[nwanted];
         // BA vector
         Vector3d ba = new Vector3d(aPoint);
         ba.sub(bPoint);
@@ -362,7 +360,7 @@ public class AtomTools {
      */
     public static Point3d[] calculate3DCoordinates2(Point3d aPoint, Point3d bPoint, Point3d cPoint, int nwanted,
             double length, double angle) {
-        Point3d newPoints[] = new Point3d[0];
+        Point3d[] newPoints = new Point3d[0];
         double ang2 = angle / 2.0;
 
         Vector3d ba = new Vector3d(aPoint);
@@ -372,7 +370,7 @@ public class AtomTools {
         Vector3d baxca = new Vector3d();
         baxca.cross(ba, ca);
         if (baxca.length() < 0.00000001) {
-            ; // linear
+            // linear
         } else if (nwanted == 1) {
             newPoints = new Point3d[1];
             Vector3d ax = new Vector3d(ba);

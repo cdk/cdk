@@ -64,7 +64,6 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertTrue;
 import static org.openscience.cdk.CDKConstants.ISAROMATIC;
 
 /**
@@ -106,7 +105,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
         mdlWriter.write(molecule);
         mdlWriter.close();
-        Assert.assertTrue(writer.toString().indexOf("M  END") != -1);
+        Assert.assertTrue(writer.toString().contains("M  END"));
     }
 
     /**
@@ -125,7 +124,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         mdlWriter.close();
         String output = writer.toString();
         //logger.debug("MDL output for testBug1212219: " + output);
-        Assert.assertTrue(output.indexOf("M  ISO  1   1  14") != -1);
+        Assert.assertTrue(output.contains("M  ISO  1   1  14"));
     }
 
     @Test
@@ -141,8 +140,8 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         mdlWriter.write(molecule);
         mdlWriter.close();
         String output = writer.toString();
-        Assert.assertTrue(output.indexOf("0  0  0  0  0  1  0  0  0  0  0  0") != -1);
-        Assert.assertTrue(output.indexOf("0  0  0  0  0 15  0  0  0  0  0  0") != -1);
+        Assert.assertTrue(output.contains("0  0  0  0  0  1  0  0  0  0  0  0"));
+        Assert.assertTrue(output.contains("0  0  0  0  0 15  0  0  0  0  0  0"));
     }
 
     @Test
@@ -169,8 +168,8 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         mdlWriter.write(molecule);
         mdlWriter.close();
         String output = writer.toString();
-        Assert.assertTrue(output.indexOf("0  0  0  0  0  0  0  0  0  1  0  0") != -1);
-        Assert.assertTrue(output.indexOf("0  0  0  0  0  0  0  0  0 15  0  0") != -1);
+        Assert.assertTrue(output.contains("0  0  0  0  0  0  0  0  0  1  0  0"));
+        Assert.assertTrue(output.contains("0  0  0  0  0  0  0  0  0 15  0  0"));
     }
 
     /**
@@ -313,8 +312,8 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         mdlWriter.write(mol);
         mdlWriter.close();
         String output = writer.toString();
-        Assert.assertTrue(output.indexOf("1  2  2  4  0  0  0") > -1);
-        Assert.assertTrue(output.indexOf("2  3  1  3  0  0  0") > -1);
+        Assert.assertTrue(output.contains("1  2  2  4  0  0  0"));
+        Assert.assertTrue(output.contains("2  3  1  3  0  0  0"));
     }
 
     @Test(expected = CDKException.class)
@@ -376,8 +375,8 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         mdlWriter.close();
         String output = writer.toString();
 
-        Assert.assertTrue("Test for R#", -1 != output.indexOf("R#"));
-        Assert.assertTrue("Test for RGP line", -1 != output.indexOf("M  RGP  1   1  12"));
+        Assert.assertTrue("Test for R#", output.contains("R#"));
+        Assert.assertTrue("Test for RGP line", output.contains("M  RGP  1   1  12"));
     }
 
     /**
@@ -401,8 +400,8 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         mdlWriter.write(molecule);
         mdlWriter.close();
 
-        Assert.assertTrue(writer.toString().indexOf("V    1 Oxygen comment") != -1);
-        Assert.assertTrue(writer.toString().indexOf("V    2 Carbon comment") != -1);
+        Assert.assertTrue(writer.toString().contains("V    1 Oxygen comment"));
+        Assert.assertTrue(writer.toString().contains("V    2 Carbon comment"));
 
     }
 
@@ -427,7 +426,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
         mdlWriter.write(benzene);
         mdlWriter.close();
-        Assert.assertTrue(writer.toString().indexOf("1  2  1  0  0  0  0") != -1);
+        Assert.assertTrue(writer.toString().contains("1  2  1  0  0  0  0"));
 
         writer = new StringWriter();
         mdlWriter = new MDLV2000Writer(writer);
@@ -438,7 +437,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         mdlWriter.customizeJob();
         mdlWriter.write(benzene);
         mdlWriter.close();
-        Assert.assertTrue(writer.toString().indexOf("1  2  4  0  0  0  0") != -1);
+        Assert.assertTrue(writer.toString().contains("1  2  4  0  0  0  0"));
     }
 
     @Test
@@ -474,8 +473,8 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         mwriter.close();
 
         String output = writer.toString();
-        Assert.assertTrue(output.indexOf("Gln") != -1);
-        Assert.assertTrue(output.indexOf("Leu") != -1);
+        Assert.assertTrue(output.contains("Gln"));
+        Assert.assertTrue(output.contains("Leu"));
     }
 
     /**

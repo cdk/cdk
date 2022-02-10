@@ -67,7 +67,7 @@ public class MomentOfInertiaDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testMomentOfInertia1() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testMomentOfInertia1() throws java.lang.Exception {
         String filename = "gravindex.hin";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);
@@ -87,7 +87,7 @@ public class MomentOfInertiaDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testMomentOfInertia2() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testMomentOfInertia2() throws java.lang.Exception {
         String filename = "momi2.hin";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);

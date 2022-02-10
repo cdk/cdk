@@ -123,7 +123,7 @@ public class DfPattern extends Pattern {
     @Override
     public Mappings matchAll(IAtomContainer mol) {
         if (mol.getAtomCount() < query.getAtomCount())
-            return new Mappings(src, mol, Collections.<int[]>emptySet());
+            return new Mappings(src, mol, Collections.emptySet());
         if (mol.getAtomCount() > 0)
             checkCompatibleAPI(mol.getAtom(0));
         DfState local = new DfState(state);
@@ -146,7 +146,7 @@ public class DfPattern extends Pattern {
             local.setRoot(root);
             return filter(new Mappings(query, mol, local), query, mol);
         } else {
-            return new Mappings(query, mol, Collections.<int[]>emptySet());
+            return new Mappings(query, mol, Collections.emptySet());
         }
     }
 

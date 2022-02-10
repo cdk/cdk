@@ -89,7 +89,7 @@ public class OrbitTest {
     @Test
     public void isEmptyTest() {
         Assert.assertFalse("The setUp method should have made an orbit with " + "some indices in it", orbit.isEmpty());
-        List<Integer> indices = new ArrayList<Integer>();
+        List<Integer> indices = new ArrayList<>();
         for (int index : orbit) {
             indices.add(index);
         }

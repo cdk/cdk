@@ -46,7 +46,7 @@ public class ConnectionMatrix implements IGraphMatrix {
      * @return           A connection matrix representing this AtomContainer
      */
     public static double[][] getMatrix(IAtomContainer container) {
-        IBond bond = null;
+        IBond bond;
         int indexAtom1;
         int indexAtom2;
         double[][] conMat = new double[container.getAtomCount()][container.getAtomCount()];

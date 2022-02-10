@@ -106,7 +106,7 @@ public class InChIGenerator {
 
     protected InchiOptions options;
 
-    protected InchiInput input;
+    protected final InchiInput input;
 
     protected InchiOutput output;
 
@@ -208,7 +208,7 @@ public class InChIGenerator {
         boolean all3d = true;
         boolean all2d = true;
         while (atoms.hasNext()) {
-            IAtom atom = (IAtom) atoms.next();
+            IAtom atom = atoms.next();
             if (atom.getPoint3d() == null) {
                 all3d = false;
             }
@@ -217,7 +217,7 @@ public class InChIGenerator {
             }
         }
 
-        Map<IAtom, InchiAtom> atomMap = new HashMap<IAtom, InchiAtom>();
+        Map<IAtom, InchiAtom> atomMap = new HashMap<>();
         atoms = atomContainer.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
@@ -369,10 +369,10 @@ public class InChIGenerator {
                         .getStereo();
 
                 IBond stereoBond = dbStereo.getStereoBond();
-                InchiAtom at0 = null;
-                InchiAtom at1 = null;
-                InchiAtom at2 = null;
-                InchiAtom at3 = null;
+                InchiAtom at0;
+                InchiAtom at1;
+                InchiAtom at2;
+                InchiAtom at3;
                 // TODO: I should check for two atom bonds... or maybe that should happen when you
                 //    create a double bond stereochemistry
                 if (stereoBond.contains(surroundingBonds[0].getBegin())) {
@@ -393,7 +393,7 @@ public class InChIGenerator {
                     at2 = atomMap.get(surroundingBonds[1].getEnd());
                     at3 = atomMap.get(surroundingBonds[1].getBegin());
                 }
-                InchiStereoParity p = InchiStereoParity.UNKNOWN;
+                InchiStereoParity p;
                 if (stereoType == org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.TOGETHER) {
                     p = InchiStereoParity.ODD;
                 } else if (stereoType == org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.OPPOSITE) {
@@ -471,7 +471,7 @@ public class InChIGenerator {
                     }
                 }
 
-                InchiStereoParity parity = InchiStereoParity.UNKNOWN;
+                InchiStereoParity parity;
                 if (winding == Stereo.ANTI_CLOCKWISE)
                     parity = InchiStereoParity.ODD;
                 else if (winding == Stereo.CLOCKWISE)
@@ -489,7 +489,7 @@ public class InChIGenerator {
     }
 
     private static List<IBond> onlySingleBonded(List<IBond> bonds) {
-        List<IBond> filtered = new ArrayList<IBond>();
+        List<IBond> filtered = new ArrayList<>();
         for (IBond bond : bonds) {
             if (bond.getOrder() == IBond.Order.SINGLE) filtered.add(bond);
         }

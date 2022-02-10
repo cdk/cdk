@@ -41,6 +41,6 @@ public interface ISetting {
      *
      * @return the name of the setting
      */
-    public String getName();
+    String getName();
 
 }

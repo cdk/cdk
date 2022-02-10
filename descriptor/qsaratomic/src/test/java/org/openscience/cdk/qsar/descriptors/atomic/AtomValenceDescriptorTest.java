@@ -44,7 +44,7 @@ public class AtomValenceDescriptorTest extends AtomicDescriptorTest {
     }
 
     @Test
-    public void testAtomValenceDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testAtomValenceDescriptor() throws java.lang.Exception {
         IAtomicDescriptor descriptor = new AtomValenceDescriptor();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCCl"); //

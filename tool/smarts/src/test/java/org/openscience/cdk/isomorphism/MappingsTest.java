@@ -106,7 +106,7 @@ public class MappingsTest {
         Iterable<String> strings = ms.map(f);
         Iterator<String> stringIt = strings.iterator();
 
-        verify(f, atMost(0)).apply(ArgumentMatchers.<int[]> any());
+        verify(f, atMost(0)).apply(ArgumentMatchers.any());
 
         assertTrue(stringIt.hasNext());
         assertThat(stringIt.next(), is("p1"));
@@ -118,7 +118,7 @@ public class MappingsTest {
         assertThat(stringIt.next(), is("p4"));
         assertFalse(stringIt.hasNext());
 
-        verify(f, atMost(4)).apply(ArgumentMatchers.<int[]> any());
+        verify(f, atMost(4)).apply(ArgumentMatchers.any());
     }
 
     @Test
@@ -218,18 +218,18 @@ public class MappingsTest {
 
         assertTrue(iterator.hasNext());
         Map<IChemObject, IChemObject> m1 = iterator.next();
-        assertThat(m1.get(query.getAtom(0)), is((IChemObject)target.getAtom(0)));
-        assertThat(m1.get(query.getAtom(1)), is((IChemObject)target.getAtom(1)));
-        assertThat(m1.get(query.getAtom(2)), is((IChemObject)target.getAtom(2)));
-        assertThat(m1.get(query.getBond(0)), is((IChemObject)target.getBond(0)));
-        assertThat(m1.get(query.getBond(1)), is((IChemObject)target.getBond(1)));
+        assertThat(m1.get(query.getAtom(0)), is(target.getAtom(0)));
+        assertThat(m1.get(query.getAtom(1)), is(target.getAtom(1)));
+        assertThat(m1.get(query.getAtom(2)), is(target.getAtom(2)));
+        assertThat(m1.get(query.getBond(0)), is(target.getBond(0)));
+        assertThat(m1.get(query.getBond(1)), is(target.getBond(1)));
         assertTrue(iterator.hasNext());
         Map<IChemObject, IChemObject> m2 = iterator.next();
-        assertThat(m2.get(query.getAtom(0)), is((IChemObject)target.getAtom(2)));
-        assertThat(m2.get(query.getAtom(1)), is((IChemObject)target.getAtom(1)));
-        assertThat(m2.get(query.getAtom(2)), is((IChemObject)target.getAtom(0)));
-        assertThat(m2.get(query.getBond(0)), is((IChemObject)target.getBond(1)));
-        assertThat(m2.get(query.getBond(1)), is((IChemObject)target.getBond(0)));
+        assertThat(m2.get(query.getAtom(0)), is(target.getAtom(2)));
+        assertThat(m2.get(query.getAtom(1)), is(target.getAtom(1)));
+        assertThat(m2.get(query.getAtom(2)), is(target.getAtom(0)));
+        assertThat(m2.get(query.getBond(0)), is(target.getBond(1)));
+        assertThat(m2.get(query.getBond(1)), is(target.getBond(0)));
         assertFalse(iterator.hasNext());
     }
 
@@ -333,8 +333,8 @@ public class MappingsTest {
         assertThat(ms.iterator(), is(sameInstance(iterator)));
     }
 
-    IChemObjectBuilder bldr   = SilentChemObjectBuilder.getInstance();
-    SmilesParser       smipar = new SmilesParser(bldr);
+    final IChemObjectBuilder bldr   = SilentChemObjectBuilder.getInstance();
+    final SmilesParser       smipar = new SmilesParser(bldr);
 
     IAtomContainer smi(String smi) throws Exception {
         return smipar.parseSmiles(smi);

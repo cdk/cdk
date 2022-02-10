@@ -23,7 +23,6 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.ChemFile;
@@ -402,14 +401,14 @@ public class SmilesGeneratorTest extends CDKTestCase {
         IsotopeFactory ifac = Isotopes.getInstance();
         ifac.configureAtoms(mol1);
 
-        mol1.setStereoElements(new ArrayList<IStereoElement>()); // clear existing
+        mol1.setStereoElements(new ArrayList<>()); // clear existing
         mol1.addStereoElement(new DoubleBondStereochemistry(mol1.getBond(2), new IBond[]{mol1.getBond(1),
                 mol1.getBond(3)}, IDoubleBondStereochemistry.Conformation.OPPOSITE));
         String smiles1 = sg.create(mol1);
         Assert.assertNotNull(smiles1);
         Assert.assertEquals("S\\C(\\F)=C(/F)\\S", smiles1);
 
-        mol1.setStereoElements(new ArrayList<IStereoElement>()); // clear existing
+        mol1.setStereoElements(new ArrayList<>()); // clear existing
         mol1.addStereoElement(new DoubleBondStereochemistry(mol1.getBond(2), new IBond[]{mol1.getBond(1),
                 mol1.getBond(3)}, IDoubleBondStereochemistry.Conformation.TOGETHER));
 
@@ -427,7 +426,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         mol1.getAtom(mol1.getAtomCount() - 1).setImplicitHydrogenCount(0);
         mol1.addBond(5, 7, IBond.Order.SINGLE);
 
-        mol1.setStereoElements(new ArrayList<IStereoElement>()); // clear existing
+        mol1.setStereoElements(new ArrayList<>()); // clear existing
         mol1.addStereoElement(new DoubleBondStereochemistry(mol1.getBond(2), new IBond[]{mol1.getBond(0),
                 mol1.getBond(3)}, IDoubleBondStereochemistry.Conformation.OPPOSITE));
 
@@ -435,7 +434,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         Assert.assertNotNull(smiles1);
         Assert.assertEquals("S(/C(/F)=C(/F)\\S[H])[H]", smiles1);
 
-        mol1.setStereoElements(new ArrayList<IStereoElement>()); // clear existing
+        mol1.setStereoElements(new ArrayList<>()); // clear existing
         mol1.addStereoElement(new DoubleBondStereochemistry(mol1.getBond(2), new IBond[]{mol1.getBond(0),
                 mol1.getBond(3)}, IDoubleBondStereochemistry.Conformation.TOGETHER));
 
@@ -449,7 +448,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testPartitioning() throws Exception {
-        String smiles = "";
+        String smiles;
         IAtomContainer molecule = new AtomContainer();
         SmilesGenerator sg = new SmilesGenerator();
         Atom sodium = new Atom("Na");
@@ -461,7 +460,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         molecule.addAtom(hydroxyl);
         addImplicitHydrogens(molecule);
         smiles = sg.create(molecule);
-        Assert.assertTrue(smiles.indexOf(".") != -1);
+        Assert.assertTrue(smiles.contains("."));
     }
 
     /**
@@ -469,7 +468,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testBug791091() throws Exception {
-        String smiles = "";
+        String smiles;
         IAtomContainer molecule = new AtomContainer();
         SmilesGenerator sg = new SmilesGenerator();
         molecule.addAtom(new Atom("C"));
@@ -492,7 +491,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testBug590236() throws Exception {
-        String smiles = "";
+        String smiles;
         IAtomContainer molecule = new AtomContainer();
         SmilesGenerator sg = SmilesGenerator.isomeric();
         molecule.addAtom(new Atom("C"));
@@ -512,18 +511,18 @@ public class SmilesGeneratorTest extends CDKTestCase {
      */
     @Test
     public void testSFBug956923_aromatic() throws Exception {
-        String smiles = "";
+        String smiles;
         IAtomContainer molecule = new AtomContainer();
         SmilesGenerator sg = new SmilesGenerator().aromatic();
         Atom sp2CarbonWithOneHydrogen = new Atom("C");
         sp2CarbonWithOneHydrogen.setHybridization(IAtomType.Hybridization.SP2);
         sp2CarbonWithOneHydrogen.setImplicitHydrogenCount(1);
         molecule.addAtom(sp2CarbonWithOneHydrogen);
-        molecule.addAtom((Atom) sp2CarbonWithOneHydrogen.clone());
-        molecule.addAtom((Atom) sp2CarbonWithOneHydrogen.clone());
-        molecule.addAtom((Atom) sp2CarbonWithOneHydrogen.clone());
-        molecule.addAtom((Atom) sp2CarbonWithOneHydrogen.clone());
-        molecule.addAtom((Atom) sp2CarbonWithOneHydrogen.clone());
+        molecule.addAtom(sp2CarbonWithOneHydrogen.clone());
+        molecule.addAtom(sp2CarbonWithOneHydrogen.clone());
+        molecule.addAtom(sp2CarbonWithOneHydrogen.clone());
+        molecule.addAtom(sp2CarbonWithOneHydrogen.clone());
+        molecule.addAtom(sp2CarbonWithOneHydrogen.clone());
         molecule.addBond(0, 1, IBond.Order.SINGLE);
         molecule.addBond(1, 2, IBond.Order.SINGLE);
         molecule.addBond(2, 3, IBond.Order.SINGLE);
@@ -538,18 +537,18 @@ public class SmilesGeneratorTest extends CDKTestCase {
 
     @Test
     public void testSFBug956923_nonAromatic() throws Exception {
-        String smiles = "";
+        String smiles;
         IAtomContainer molecule = new AtomContainer();
         SmilesGenerator sg = new SmilesGenerator();
         Atom sp2CarbonWithOneHydrogen = new Atom("C");
         sp2CarbonWithOneHydrogen.setHybridization(IAtomType.Hybridization.SP2);
         sp2CarbonWithOneHydrogen.setImplicitHydrogenCount(1);
         molecule.addAtom(sp2CarbonWithOneHydrogen);
-        molecule.addAtom((Atom) sp2CarbonWithOneHydrogen.clone());
-        molecule.addAtom((Atom) sp2CarbonWithOneHydrogen.clone());
-        molecule.addAtom((Atom) sp2CarbonWithOneHydrogen.clone());
-        molecule.addAtom((Atom) sp2CarbonWithOneHydrogen.clone());
-        molecule.addAtom((Atom) sp2CarbonWithOneHydrogen.clone());
+        molecule.addAtom(sp2CarbonWithOneHydrogen.clone());
+        molecule.addAtom(sp2CarbonWithOneHydrogen.clone());
+        molecule.addAtom(sp2CarbonWithOneHydrogen.clone());
+        molecule.addAtom(sp2CarbonWithOneHydrogen.clone());
+        molecule.addAtom(sp2CarbonWithOneHydrogen.clone());
         molecule.addBond(0, 1, IBond.Order.SINGLE);
         molecule.addBond(1, 2, IBond.Order.SINGLE);
         molecule.addBond(2, 3, IBond.Order.SINGLE);
@@ -580,10 +579,10 @@ public class SmilesGeneratorTest extends CDKTestCase {
         addImplicitHydrogens(mol);
         AtomContainerAtomPermutor acap = new AtomContainerAtomPermutor(mol);
         SmilesGenerator sg = SmilesGenerator.unique();
-        String smiles = "";
+        String smiles;
         String oldSmiles = sg.create(mol);
         while (acap.hasNext()) {
-            smiles = sg.create(new AtomContainer((AtomContainer) acap.next()));
+            smiles = sg.create(new AtomContainer(acap.next()));
             //logger.debug(smiles);
             Assert.assertEquals(oldSmiles, smiles);
         }
@@ -610,10 +609,10 @@ public class SmilesGeneratorTest extends CDKTestCase {
         addImplicitHydrogens(mol);
         AtomContainerBondPermutor acbp = new AtomContainerBondPermutor(mol);
         SmilesGenerator sg = SmilesGenerator.unique();
-        String smiles = "";
+        String smiles;
         String oldSmiles = sg.create(mol);
         while (acbp.hasNext()) {
-            smiles = sg.create(new AtomContainer((AtomContainer) acbp.next()));
+            smiles = sg.create(new AtomContainer(acbp.next()));
             //logger.debug(smiles);
             Assert.assertEquals(oldSmiles, smiles);
         }
@@ -626,7 +625,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
          * carbon-only molecule until we have a proper hydrogen count
          * configurator
          */
-        double bondCount = 0;
+        double bondCount;
         org.openscience.cdk.interfaces.IAtom atom;
         for (int f = 0; f < mol.getAtomCount(); f++) {
             atom = mol.getAtom(f);
@@ -647,7 +646,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
     public void testPseudoAtom() throws Exception {
         IAtom atom = new PseudoAtom("Star");
         SmilesGenerator sg = new SmilesGenerator(SmiFlavor.Generic);
-        String smiles = "";
+        String smiles;
         IAtomContainer molecule = new AtomContainer();
         molecule.addAtom(atom);
         addImplicitHydrogens(molecule);
@@ -862,7 +861,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         String filename_cml = "test1.cml";
         InputStream ins1 = this.getClass().getResourceAsStream(filename_cml);
         CMLReader reader1 = new CMLReader(ins1);
-        IChemFile chemFile = (IChemFile) reader1.read(new ChemFile());
+        IChemFile chemFile = reader1.read(new ChemFile());
         Assert.assertNotNull(chemFile);
         IChemSequence seq = chemFile.getChemSequence(0);
         Assert.assertNotNull(seq);
@@ -891,7 +890,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         InputStream ins1 = this.getClass().getResourceAsStream(filename_cml);
         InputStream ins2 = this.getClass().getResourceAsStream(filename_mol);
         CMLReader reader1 = new CMLReader(ins1);
-        IChemFile chemFile = (IChemFile) reader1.read(new ChemFile());
+        IChemFile chemFile = reader1.read(new ChemFile());
         IChemSequence seq = chemFile.getChemSequence(0);
         IChemModel model = seq.getChemModel(0);
         IAtomContainer mol1 = model.getMoleculeSet().getAtomContainer(0);
@@ -937,7 +936,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 
         SmilesGenerator smilesGenerator = new SmilesGenerator().aromatic();
         String smiles = smilesGenerator.create(mol);
-        Assert.assertTrue(smiles.indexOf("[nH]") >= 0);
+        Assert.assertTrue(smiles.contains("[nH]"));
     }
 
     @Test
@@ -948,7 +947,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         Aromaticity.cdkLegacy().apply(mol);
         SmilesGenerator smilesGenerator = new SmilesGenerator().aromatic();
         String smiles = smilesGenerator.create(mol);
-        Assert.assertTrue(smiles.indexOf("[nH]") >= 0);
+        Assert.assertTrue(smiles.contains("[nH]"));
     }
 
     /**
@@ -1013,11 +1012,11 @@ public class SmilesGeneratorTest extends CDKTestCase {
         String genSmiles = smilesGenerator.create(cdkMol);
 
         // check that we have the appropriate ring closure symbols
-        Assert.assertTrue("There were'nt any % ring closures in the output", genSmiles.indexOf("%") >= 0);
-        Assert.assertTrue(genSmiles.indexOf("%10") >= 0);
-        Assert.assertTrue(genSmiles.indexOf("%11") >= 0);
-        Assert.assertTrue(genSmiles.indexOf("%12") >= 0);
-        Assert.assertTrue(genSmiles.indexOf("%13") >= 0);
+        Assert.assertTrue("There were'nt any % ring closures in the output", genSmiles.contains("%"));
+        Assert.assertTrue(genSmiles.contains("%10"));
+        Assert.assertTrue(genSmiles.contains("%11"));
+        Assert.assertTrue(genSmiles.contains("%12"));
+        Assert.assertTrue(genSmiles.contains("%13"));
 
         // check that we can read in the SMILES we got
         IAtomContainer cdkRoundTripMol = smilesParser.parseSmiles(genSmiles);
@@ -1047,7 +1046,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         IAtomContainer mol = sp.parseSmiles(smiles);
         SmilesGenerator smilesGenerator = new SmilesGenerator().aromatic();
         String genSmiles = smilesGenerator.create(mol);
-        Assert.assertTrue("Generated SMILES should not have explicit H: " + genSmiles, genSmiles.indexOf("H") == -1);
+        Assert.assertTrue("Generated SMILES should not have explicit H: " + genSmiles, !genSmiles.contains("H"));
     }
 
     /**
@@ -1103,7 +1102,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         IsotopeFactory fact = Isotopes.getInstance();
         fact.configureAtoms(mol);
         SmilesGenerator sg = new SmilesGenerator();
-        String smiles = sg.create((IAtomContainer) mol);
+        String smiles = sg.create(mol);
         IAtomContainer mol2 = sp.parseSmiles(smiles);
         Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(mol, mol2));
     }
@@ -1353,7 +1352,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
     }
 
     static void define(IAtomContainer container, IStereoElement... elements) {
-        container.setStereoElements(Arrays.<IStereoElement>asList(elements));
+        container.setStereoElements(Arrays.asList(elements));
     }
 
     static String canon(String smi) throws Exception {

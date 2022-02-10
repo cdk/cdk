@@ -107,9 +107,9 @@ final class AbbreviationLabel {
                                                              "T", "TBS", "TBDMS", "Trt", "TBDPS", "TES", "Tf", "THP", "THPO", "TIPS", "TMS", "Tos", "Tol", "Tosyl", "Tr", "Troc",
                                                              "Vinyl", "Voc", "Z"};
 
-    private static Trie PREFIX_TRIE = new Trie();
-    private static Trie ITAL_PREFIX_TRIE = new Trie();
-    private static Trie SYMBOL_TRIE = new Trie();
+    private static final Trie PREFIX_TRIE = new Trie();
+    private static final Trie ITAL_PREFIX_TRIE = new Trie();
+    private static final Trie SYMBOL_TRIE = new Trie();
 
     // build the tries on class init
     static {
@@ -124,10 +124,10 @@ final class AbbreviationLabel {
             insert(SYMBOL_TRIE, str, 0);
     }
 
-    static int STYLE_NORMAL    = 0;
-    static int STYLE_SUBSCRIPT = -1;
-    static int STYLE_SUPSCRIPT = +1;
-    static int STYLE_ITALIC    = 2;
+    static final int STYLE_NORMAL    = 0;
+    static final int STYLE_SUBSCRIPT = -1;
+    static final int STYLE_SUPSCRIPT = +1;
+    static final int STYLE_ITALIC    = 2;
 
     /**
      * A small class to help describe which parts of a string
@@ -449,6 +449,6 @@ final class AbbreviationLabel {
      */
     private static final class Trie {
         String token;
-        Trie[] children = new Trie[128];
+        final Trie[] children = new Trie[128];
     }
 }

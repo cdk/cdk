@@ -21,7 +21,7 @@ import java.util.Map;
  */
 public class AtomPairs2DFingerprintTest extends AbstractFingerprinterTest {
 
-    SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+    final SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
 
     @Test
     public void testFingerprint() throws Exception {

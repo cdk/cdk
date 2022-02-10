@@ -50,7 +50,7 @@ import org.xml.sax.SAXParseException;
  */
 public class XMLIsotopeFactoryTest extends CDKTestCase {
 
-    boolean standAlone = false;
+    final boolean standAlone = false;
 
     final static AtomTypeFactory atf = AtomTypeFactory.getInstance(new ChemObject().getBuilder());
 
@@ -261,7 +261,7 @@ public class XMLIsotopeFactoryTest extends CDKTestCase {
         File tmpFile = File.createTempFile(prefix, suffix);
         FileOutputStream out = new FileOutputStream(tmpFile);
         byte[] buf = new byte[4096];
-        int i = 0;
+        int i;
         while ((i = in.read(buf)) != -1) {
             if (toReplace != null && replaceWith != null && i >= toReplace.length()
                 && new String(buf).contains(toReplace)) {
@@ -281,7 +281,7 @@ public class XMLIsotopeFactoryTest extends CDKTestCase {
 
     class SAXValidityErrorHandler implements ErrorHandler {
 
-        private String atomTypeList;
+        private final String atomTypeList;
 
         public SAXValidityErrorHandler(String atomTypeList) {
             this.atomTypeList = atomTypeList;

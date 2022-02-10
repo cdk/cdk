@@ -70,9 +70,9 @@ import java.io.StringReader;
  */
 public class SMILESReader extends DefaultChemObjectReader {
 
-    private BufferedReader      input  = null;
+    private BufferedReader      input;
     private SmilesParser        sp     = null;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(SMILESReader.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(SMILESReader.class);
 
     /**
      * Construct a new reader from a Reader and a specified builder object.

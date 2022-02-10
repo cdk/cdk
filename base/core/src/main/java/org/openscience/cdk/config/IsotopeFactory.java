@@ -44,10 +44,10 @@ public abstract class IsotopeFactory {
 
     public static final IIsotope[] EMPTY_ISOTOPE_ARRAY = new IIsotope[0];
     @SuppressWarnings("unchecked")
-    private List<IIsotope> isotopes[]      = new List[256];
+    private final List<IIsotope>[] isotopes = new List[256];
     @SuppressWarnings("unchecked")
-    private IIsotope        majorIsotope[] = new IIsotope[256];
-    protected static ILoggingTool  logger        = LoggingToolFactory.createLoggingTool(IsotopeFactory.class);
+    private final IIsotope[] majorIsotope = new IIsotope[256];
+    protected static final ILoggingTool  logger        = LoggingToolFactory.createLoggingTool(IsotopeFactory.class);
 
     /**
      *  Returns the number of isotopes defined by this class.
@@ -111,7 +111,7 @@ public abstract class IsotopeFactory {
      * @return         An array of all isotopes
      */
     public IIsotope[] getIsotopes() {
-        List<IIsotope> list = new ArrayList<IIsotope>();
+        List<IIsotope> list = new ArrayList<>();
         for (List<IIsotope> isotopes : this.isotopes) {
             if (isotopes == null) continue;
             for (IIsotope isotope : isotopes) {

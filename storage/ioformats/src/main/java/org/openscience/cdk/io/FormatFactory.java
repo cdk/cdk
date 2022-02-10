@@ -58,9 +58,9 @@ import java.util.stream.Collectors;
  */
 public class FormatFactory {
 
-    private int                      headerLength;
+    private final int                      headerLength;
 
-    private List<IChemFormatMatcher> formats = new ArrayList<IChemFormatMatcher>(100);
+    private final List<IChemFormatMatcher> formats = new ArrayList<>(100);
     private final static ILoggingTool LOGGER = LoggingToolFactory.createLoggingTool(FormatFactory.class);
 
     /**
@@ -176,7 +176,7 @@ public class FormatFactory {
     private  IChemFormat getMatchResult( BufferedReader buffer) throws IOException{
     	 /* Search file for a line containing an identifying keyword */
         List<String> lines = buffer.lines().collect(Collectors.toList());
-        Set<MatchResult> results = new TreeSet<MatchResult>();
+        Set<MatchResult> results = new TreeSet<>();
 
         for (IChemFormatMatcher format : formats) {
             results.add(format.matches(lines));

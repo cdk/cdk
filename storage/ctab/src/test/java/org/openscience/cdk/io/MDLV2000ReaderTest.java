@@ -104,7 +104,7 @@ import static org.mockito.Mockito.verify;
  */
 public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV2000ReaderTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV2000ReaderTest.class);
 
     @BeforeClass
     public static void setup() {
@@ -256,13 +256,11 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainer container = containersList.get(0);
         Assert.assertEquals(10, container.getAtomCount());
         Assert.assertEquals(9, container.getBondCount());
-        Iterator<IAtom> atoms = container.atoms().iterator();
-        while (atoms.hasNext()) {
-            Assert.assertEquals("C", atoms.next().getSymbol());
+        for (IAtom iAtom : container.atoms()) {
+            Assert.assertEquals("C", iAtom.getSymbol());
         }
-        Iterator<IBond> bonds = container.bonds().iterator();
-        while (bonds.hasNext()) {
-            Assert.assertEquals(Order.SINGLE, bonds.next().getOrder());
+        for (IBond iBond : container.bonds()) {
+            Assert.assertEquals(Order.SINGLE, iBond.getOrder());
         }
     }
 
@@ -773,8 +771,8 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
         for (IBond bond : mol.bonds()) {
-            IPseudoAtom rGroup = null;
-            IAtom partner = null;
+            IPseudoAtom rGroup;
+            IAtom partner;
             if (bond.getBegin() instanceof IPseudoAtom) {
                 rGroup = (IPseudoAtom) bond.getBegin();
                 partner = bond.getEnd();
@@ -883,7 +881,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
     public void testHas2DCoordinates_With000() throws Exception {
         String filenameMol = "with000coordinate.mol";
         InputStream ins = this.getClass().getResourceAsStream(filenameMol);
-        IAtomContainer molOne = null;
+        IAtomContainer molOne;
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         molOne = reader.read(new AtomContainer());
         reader.close();
@@ -1026,7 +1024,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         reader.read(molecule);
         reader.close();
         IAtom atom = molecule.getAtom(55);
-        org.hamcrest.MatcherAssert.assertThat(atom, CoreMatchers.<IAtom>instanceOf(IPseudoAtom.class));
+        org.hamcrest.MatcherAssert.assertThat(atom, CoreMatchers.instanceOf(IPseudoAtom.class));
         Assert.assertEquals("R", ((IPseudoAtom)atom).getLabel());
     }
 
@@ -1393,7 +1391,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         reader.close();
         assertThat(container.getAtom(6), is(instanceOf(IPseudoAtom.class)));
         assertThat(((IPseudoAtom) container.getAtom(6)).getLabel(), is("N1"));
-        assertThat(((IPseudoAtom) container.getAtom(6)).getAtomicNumber(), is(7));
+        assertThat(container.getAtom(6).getAtomicNumber(), is(7));
     }
 
     @Test
@@ -1482,7 +1480,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
 
-        assertThat((String) mol.getAtom(1).getProperty(CDKConstants.ACDLABS_LABEL), is("6"));
+        assertThat(mol.getAtom(1).getProperty(CDKConstants.ACDLABS_LABEL), is("6"));
     }
 
     /**
@@ -1504,9 +1502,9 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ1abcdefghijklmnopqrstuvwxyz",
             "012345678901234567890123456789012345678901234567890"
         };
-        assertThat((String) mol.getAtom(0).getProperty(CDKConstants.ACDLABS_LABEL), is(expected[0]));
-        assertThat((String) mol.getAtom(1).getProperty(CDKConstants.ACDLABS_LABEL), is(expected[1]));
-        assertThat((String) mol.getAtom(2).getProperty(CDKConstants.ACDLABS_LABEL), is(expected[2]));
+        assertThat(mol.getAtom(0).getProperty(CDKConstants.ACDLABS_LABEL), is(expected[0]));
+        assertThat(mol.getAtom(1).getProperty(CDKConstants.ACDLABS_LABEL), is(expected[1]));
+        assertThat(mol.getAtom(2).getProperty(CDKConstants.ACDLABS_LABEL), is(expected[2]));
     }
 
     /**
@@ -1541,7 +1539,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
         // Leading and trailing whitespace in both prefix and suffix
         String expected = " a 1 b ";
-        assertThat((String) mol.getAtom(0).getProperty(CDKConstants.ACDLABS_LABEL), is(expected));
+        assertThat(mol.getAtom(0).getProperty(CDKConstants.ACDLABS_LABEL), is(expected));
     }
 
     /**
@@ -1558,7 +1556,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
         // Embedded whitespace in both prefix and suffix
         String expected = "a b1c d";
-        assertThat((String) mol.getAtom(0).getProperty(CDKConstants.ACDLABS_LABEL), is(expected));
+        assertThat(mol.getAtom(0).getProperty(CDKConstants.ACDLABS_LABEL), is(expected));
     }
 
     /**
@@ -1579,7 +1577,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         String suffix = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx";
         String expected = prefix + digits + suffix;
 
-        assertThat((String) mol.getAtom(0).getProperty(CDKConstants.ACDLABS_LABEL), is(expected));
+        assertThat(mol.getAtom(0).getProperty(CDKConstants.ACDLABS_LABEL), is(expected));
     }
 
     @Test
@@ -1606,7 +1604,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             Sgroup sgroup = sgroups.get(0);
             assertThat(sgroup.getType(), is(SgroupType.CtabStructureRepeatUnit));
             assertThat(sgroup.getSubscript(), is("n"));
-            assertThat((String) sgroup.getValue(SgroupKey.CtabConnectivity), is("HT"));
+            assertThat(sgroup.getValue(SgroupKey.CtabConnectivity), is("HT"));
             assertThat(sgroup.getAtoms().size(), is(10));
             assertThat(sgroup.getBonds().size(), is(2));
             List<SgroupBracket> brackets = sgroup.getValue(SgroupKey.CtabBracket);
@@ -1699,10 +1697,10 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             assertThat(sgroups.size(), is(2));
             Sgroup sgroup = sgroups.get(0);
             assertThat(sgroup.getType(), is(SgroupType.CtabStructureRepeatUnit));
-            assertThat((Integer) sgroup.getValue(SgroupKey.CtabBracketStyle), is(1));
+            assertThat(sgroup.getValue(SgroupKey.CtabBracketStyle), is(1));
             sgroup = sgroups.get(1);
             assertThat(sgroup.getType(), is(SgroupType.CtabStructureRepeatUnit));
-            assertThat((Integer) sgroup.getValue(SgroupKey.CtabBracketStyle), is(1));
+            assertThat(sgroup.getValue(SgroupKey.CtabBracketStyle), is(1));
         }
     }
 
@@ -1846,7 +1844,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
              MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
             IQueryAtomContainer mol       = mdlr.read(new QueryAtomContainer(SilentChemObjectBuilder.getInstance()));
             IAtom               deref     = AtomRef.deref(mol.getAtom(0));
-            assertThat(deref, CoreMatchers.<IAtom>instanceOf(QueryAtom.class));
+            assertThat(deref, CoreMatchers.instanceOf(QueryAtom.class));
             QueryAtom           queryAtom = (QueryAtom) deref;
             Expr expr = queryAtom.getExpression();
             Expr expected = new Expr(Expr.Type.ELEMENT, 9) // F
@@ -1860,7 +1858,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
              MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
             IQueryAtomContainer mol       = mdlr.read(new QueryAtomContainer(SilentChemObjectBuilder.getInstance()));
             IAtom               deref     = AtomRef.deref(mol.getAtom(0));
-            assertThat(deref, CoreMatchers.<IAtom>instanceOf(QueryAtom.class));
+            assertThat(deref, CoreMatchers.instanceOf(QueryAtom.class));
             QueryAtom           queryAtom = (QueryAtom) deref;
             Expr expr = queryAtom.getExpression();
             Expr expected = new Expr(Expr.Type.ELEMENT, 9) // F
@@ -1875,7 +1873,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
              MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
             IQueryAtomContainer mol       = mdlr.read(new QueryAtomContainer(SilentChemObjectBuilder.getInstance()));
             IAtom               deref     = AtomRef.deref(mol.getAtom(0));
-            assertThat(deref, CoreMatchers.<IAtom>instanceOf(QueryAtom.class));
+            assertThat(deref, CoreMatchers.instanceOf(QueryAtom.class));
             QueryAtom           queryAtom = (QueryAtom) deref;
             Expr expr = queryAtom.getExpression();
             Expr expected = new Expr(Expr.Type.ELEMENT, 9) // F
@@ -1890,7 +1888,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
              MDLV2000Reader mdlr = new MDLV2000Reader(in)) {
             IQueryAtomContainer mol       = mdlr.read(new QueryAtomContainer(SilentChemObjectBuilder.getInstance()));
             IAtom               deref     = AtomRef.deref(mol.getAtom(0));
-            assertThat(deref, CoreMatchers.<IAtom>instanceOf(QueryAtom.class));
+            assertThat(deref, CoreMatchers.instanceOf(QueryAtom.class));
             QueryAtom           queryAtom = (QueryAtom) deref;
             Expr expr = queryAtom.getExpression();
             Expr expected = new Expr(Expr.Type.ELEMENT, 9) // F
@@ -1929,7 +1927,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
             IAtomContainer mol   = mdlr.read(SilentChemObjectBuilder.getInstance().newAtomContainer());
             IAtom          deref = AtomRef.deref(mol.getAtom(0));
-            assertThat(deref, CoreMatchers.<IAtom>instanceOf(QueryAtom.class));
+            assertThat(deref, CoreMatchers.instanceOf(QueryAtom.class));
         }
     }
 
@@ -1949,15 +1947,15 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
                 }
             }
             assertNotNull(dataSgroup);
-            assertThat(dataSgroup.<String>getValue(SgroupKey.DataFieldName),
+            assertThat(dataSgroup.getValue(SgroupKey.DataFieldName),
                        CoreMatchers.is("WEIGHT_PERCENT"));
             // note it looks like MDL/Accelys/BIOVIA simply omit units/format
             // but check we pass it okay
-            assertThat(dataSgroup.<String>getValue(SgroupKey.DataFieldUnits),
+            assertThat(dataSgroup.getValue(SgroupKey.DataFieldUnits),
                        CoreMatchers.is("%"));
-            assertThat(dataSgroup.<String>getValue(SgroupKey.DataFieldFormat),
+            assertThat(dataSgroup.getValue(SgroupKey.DataFieldFormat),
                        CoreMatchers.is("N"));
-            assertThat(dataSgroup.<String>getValue(SgroupKey.Data),
+            assertThat(dataSgroup.getValue(SgroupKey.Data),
                        CoreMatchers.is("33%"));
         } catch (IOException | CDKException e) {
             e.printStackTrace();

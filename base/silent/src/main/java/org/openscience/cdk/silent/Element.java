@@ -170,7 +170,7 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
 
     @Override
     public String toString() {
-        StringBuffer resultString = new StringBuffer(32);
+        StringBuilder resultString = new StringBuilder(32);
         resultString.append("Element(").append(hashCode());
         if (getSymbol() != null) {
             resultString.append(", S:").append(getSymbol());

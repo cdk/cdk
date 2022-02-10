@@ -54,7 +54,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class AtomContainerComparator implements Comparator<IAtomContainer> {
 
     /** Configure LoggingTool */
-    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(AtomContainerComparator.class);
+    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(AtomContainerComparator.class);
 
     /** Creates a new instance of AtomContainerComparator */
     public AtomContainerComparator() {}
@@ -90,8 +90,8 @@ public class AtomContainerComparator implements Comparator<IAtomContainer> {
             return -1;
         else {
             // 2. Atom count equal, compare molecular weight (heavy atoms only)
-            double mw1 = 0;
-            double mw2 = 0;
+            double mw1;
+            double mw2;
             try {
                 mw1 = getMolecularWeight(atomContainer1);
                 mw2 = getMolecularWeight(atomContainer2);
@@ -142,7 +142,7 @@ public class AtomContainerComparator implements Comparator<IAtomContainer> {
                     final IIsotope majorIsotope = isotopeFactory.getMajorIsotope(atom.getSymbol());
 
                     if (majorIsotope != null && majorIsotope.getExactMass() != null) {
-                        mw += majorIsotope.getExactMass().doubleValue();
+                        mw += majorIsotope.getExactMass();
                     }
                 }
             }

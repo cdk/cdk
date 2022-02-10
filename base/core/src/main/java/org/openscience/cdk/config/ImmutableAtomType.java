@@ -256,7 +256,7 @@ final class ImmutableAtomType implements IAtomType {
     @Override
     public Double getExactMass() {
         return exactMass;
-    };
+    }
 
     @Override
     public Integer getMassNumber() {
@@ -350,7 +350,7 @@ final class ImmutableAtomType implements IAtomType {
 
     @Override
     public String toString() {
-        StringBuffer resultString = new StringBuffer(64);
+        StringBuilder resultString = new StringBuilder(64);
         resultString.append("ImmutableAtomType(").append(hashCode());
         if (getAtomTypeName() != null) {
             resultString.append(", N:").append(getAtomTypeName());

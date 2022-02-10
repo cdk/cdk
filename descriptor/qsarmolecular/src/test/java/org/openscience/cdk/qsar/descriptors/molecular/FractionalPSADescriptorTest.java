@@ -47,7 +47,7 @@ import org.junit.Test;
 
 public class FractionalPSADescriptorTest extends MolecularDescriptorTest {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(FractionalPSADescriptorTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(FractionalPSADescriptorTest.class);
 
     public FractionalPSADescriptorTest() {}
 

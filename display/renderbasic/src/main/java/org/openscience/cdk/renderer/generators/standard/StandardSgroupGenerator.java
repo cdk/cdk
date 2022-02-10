@@ -166,7 +166,7 @@ final class StandardSgroupGenerator {
         int numSgroupAtoms = sgroupAtoms.size();
         int numSgroupBonds = 0;
 
-        Color color = null;
+        Color color;
         Color refcolor = null;
 
         for (IAtom atom : sgroupAtoms) {
@@ -319,11 +319,11 @@ final class StandardSgroupGenerator {
 
         // generate child brackets first
         sgroups = new ArrayList<>(sgroups);
-        Collections.sort(sgroups, new Comparator<Sgroup>() {
+        sgroups.sort(new Comparator<Sgroup>() {
             @Override
             public int compare(Sgroup o1, Sgroup o2) {
                 return Integer.compare(getTotalChildCount(children, o1),
-                                       getTotalChildCount(children, o2));
+                        getTotalChildCount(children, o2));
             }
         });
 
@@ -368,7 +368,7 @@ final class StandardSgroupGenerator {
             return generateSgroupBrackets(sgroup,
                                           brackets,
                                           symbolMap,
-                                          (String) sgroup.getValue(SgroupKey.CtabSubScript),
+                    sgroup.getValue(SgroupKey.CtabSubScript),
                                           null);
         } else {
             return new ElementGroup();
@@ -532,7 +532,7 @@ final class StandardSgroupGenerator {
                 case CtabComponent:
                     Integer compNum = sgroup.getValue(SgroupKey.CtabComponentNumber);
                     if (compNum != null)
-                        subscript = "c" + Integer.toString(compNum);
+                        subscript = "c" + compNum;
                     else
                         subscript = "c";
                     break;
@@ -618,7 +618,7 @@ final class StandardSgroupGenerator {
 
         // first we need to pair the brackets with the bonds
         Map<SgroupBracket, IBond> pairs = crossingBonds.size() == brackets.size() ? bracketBondPairs(brackets, crossingBonds)
-                                                                                  : Collections.<SgroupBracket, IBond>emptyMap();
+                                                                                  : Collections.emptyMap();
 
         // override bracket layout around single atoms to bring them in closer
         if (atoms.size() == 1 &&
@@ -819,10 +819,10 @@ final class StandardSgroupGenerator {
                     bounds.add(childBounds);
             }
 
-            Point2d b1p1 = brackets.get(0).getFirstPoint();
-            Point2d b1p2 = brackets.get(0).getSecondPoint();
-            Point2d b2p1 = brackets.get(1).getFirstPoint();
-            Point2d b2p2 = brackets.get(1).getSecondPoint();
+            Point2d b1p1;
+            Point2d b1p2;
+            Point2d b2p1;
+            Point2d b2p2;
 
             double margin = 5*(parameters.get(BasicSceneGenerator.Margin.class)/scale);
 

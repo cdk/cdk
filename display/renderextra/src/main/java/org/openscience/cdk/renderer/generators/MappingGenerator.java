@@ -56,7 +56,7 @@ public class MappingGenerator implements IGenerator<IReaction> {
         }
     }
 
-    private IGeneratorParameter<Color> atomAtomMappingLineColor = new AtomAtomMappingLineColor();
+    private final IGeneratorParameter<Color> atomAtomMappingLineColor = new AtomAtomMappingLineColor();
 
     /**
      * The width on screen of an atom-atom mapping line.
@@ -70,7 +70,7 @@ public class MappingGenerator implements IGenerator<IReaction> {
         }
     }
 
-    private IGeneratorParameter<Double> mappingLineWidth = new MappingLineWidth();
+    private final IGeneratorParameter<Double> mappingLineWidth = new MappingLineWidth();
 
     /** Boolean by which atom-atom mapping depiction can be temporarily disabled. */
     public static class ShowAtomAtomMapping extends AbstractGeneratorParameter<Boolean> {
@@ -82,7 +82,7 @@ public class MappingGenerator implements IGenerator<IReaction> {
         }
     }
 
-    private IGeneratorParameter<Boolean> showAtomAtomMapping = new ShowAtomAtomMapping();
+    private final IGeneratorParameter<Boolean> showAtomAtomMapping = new ShowAtomAtomMapping();
 
     public MappingGenerator() {}
 

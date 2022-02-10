@@ -43,7 +43,7 @@ import javax.vecmath.Point3d;
 public class Tessellate {
 
     Triangle[] oldtess;
-    int        maxlevel;
+    final int        maxlevel;
 
     public Tessellate() {
         this.oldtess = this.repIco();

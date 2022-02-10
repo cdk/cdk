@@ -36,7 +36,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * <p>IReactionProcess which produces an adduction of the Sodium.
@@ -75,7 +74,7 @@ import java.util.Iterator;
  **/
 public class AdductionSodiumLPReaction extends ReactionEngine implements IReactionProcess {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(AdductionSodiumLPReaction.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(AdductionSodiumLPReaction.class);
 
     /**
      * Constructor of the AdductionSodiumLPReaction object.
@@ -130,15 +129,14 @@ public class AdductionSodiumLPReaction extends ReactionEngine implements IReacti
 
         if (AtomContainerManipulator.getTotalCharge(reactant) > 0) return setOfReactions;
 
-        Iterator<IAtom> atoms = reactant.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atomi = atoms.next(); // Atom pos 1
+        // Atom pos 1
+        for (IAtom atomi : reactant.atoms()) {
             if (atomi.getFlag(CDKConstants.REACTIVE_CENTER)
                     && (atomi.getFormalCharge() == CDKConstants.UNSET ? 0 : atomi.getFormalCharge()) <= 0
                     && reactant.getConnectedLonePairsCount(atomi) > 0
                     && reactant.getConnectedSingleElectronsCount(atomi) == 0) {
 
-                ArrayList<IAtom> atomList = new ArrayList<IAtom>();
+                ArrayList<IAtom> atomList = new ArrayList<>();
                 atomList.add(atomi);
                 IAtom atomH = reactant.getBuilder().newInstance(IAtom.class, "Na");
                 atomH.setFormalCharge(1);
@@ -175,9 +173,8 @@ public class AdductionSodiumLPReaction extends ReactionEngine implements IReacti
     private void setActiveCenters(IAtomContainer reactant) throws CDKException {
         if (AtomContainerManipulator.getTotalCharge(reactant) > 0) return;
 
-        Iterator<IAtom> atoms = reactant.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atomi = atoms.next(); // Atom pos 1
+        // Atom pos 1
+        for (IAtom atomi : reactant.atoms()) {
             if ((atomi.getFormalCharge() == CDKConstants.UNSET ? 0 : atomi.getFormalCharge()) <= 0
                     && reactant.getConnectedLonePairsCount(atomi) > 0
                     && reactant.getConnectedSingleElectronsCount(atomi) == 0) {

@@ -62,20 +62,20 @@ public class RingPlacer {
     static final   String       SNAP_HINT = "sdg.snap.bridged";
     public static final double RAD_30 = Math.toRadians(-30);
     final static   boolean      debug     = false;
-    private static ILoggingTool logger    = LoggingToolFactory.createLoggingTool(RingPlacer.class);
+    private static final ILoggingTool logger    = LoggingToolFactory.createLoggingTool(RingPlacer.class);
 
     private IAtomContainer molecule;
 
     private AtomPlacer atomPlacer = new AtomPlacer();
 
-    static int FUSED   = 0;
-    static int BRIDGED = 1;
-    static int SPIRO   = 2;
+    static final int FUSED   = 0;
+    static final int BRIDGED = 1;
+    static final int SPIRO   = 2;
 
     /**
      * Default ring start angles. Map contains pairs: ring size with start angle.
      */
-    public static final Map<Integer, Double> defaultAngles = new HashMap<Integer, Double>();
+    public static final Map<Integer, Double> defaultAngles = new HashMap<>();
 
     static {
         defaultAngles.put(3, Math.PI * (0.1666667));
@@ -88,7 +88,7 @@ public class RingPlacer {
     /**
      * Suggested ring start angles for JChempaint, different due to Y inversion of canvas.
      */
-    public static final Map<Integer, Double> jcpAngles = new HashMap<Integer, Double>();
+    public static final Map<Integer, Double> jcpAngles = new HashMap<>();
 
     static {
         jcpAngles.put(3, Math.PI * (0.5));
@@ -167,9 +167,9 @@ public class RingPlacer {
          * Store all atoms to draw in consecutive order relative to the chosen
          * bond.
          */
-        Vector<IAtom> atomsToDraw = new Vector<IAtom>();
+        Vector<IAtom> atomsToDraw = new Vector<>();
         IAtom currentAtom = startAtom;
-        IBond currentBond = (IBond) bonds.get(0);
+        IBond currentBond = bonds.get(0);
         for (int i = 0; i < ring.getBondCount(); i++) {
             currentBond = ring.getNextBond(currentBond, currentAtom);
             currentAtom = currentBond.getOther(currentAtom);
@@ -186,14 +186,14 @@ public class RingPlacer {
      */
     public IAtomContainer placeRingSubstituents(IRingSet rs, double bondLength) {
         logger.debug("RingPlacer.placeRingSubstituents() start");
-        IRing ring = null;
-        IAtom atom = null;
-        IRingSet rings = null;
+        IRing ring;
+        IAtom atom;
+        IRingSet rings;
         IAtomContainer unplacedPartners = rs.getBuilder().newInstance(IAtomContainer.class);
         IAtomContainer sharedAtoms = rs.getBuilder().newInstance(IAtomContainer.class);
         IAtomContainer primaryAtoms = rs.getBuilder().newInstance(IAtomContainer.class);
         IAtomContainer treatedAtoms = rs.getBuilder().newInstance(IAtomContainer.class);
-        Point2d centerOfRingGravity = null;
+        Point2d centerOfRingGravity;
         for (int j = 0; j < rs.getAtomContainerCount(); j++) {
             ring = (IRing) rs.getAtomContainer(j); /*
                                                     * Get the j-th Ring in
@@ -381,7 +381,7 @@ public class RingPlacer {
         Vector2d bondAtom2Vector = new Vector2d(bondAtom2.getPoint2d());
 
         Point2d midPoint   = getMidPoint(bondAtom1Vector, bondAtom2Vector);
-        Point2d ringCenter = null;
+        Point2d ringCenter;
         double  radius     = getNativeRingRadius(ring, bondLength);
         double  offset     = 0;
 
@@ -590,9 +590,9 @@ public class RingPlacer {
         final double xDiff = beg.getPoint2d().x - end.getPoint2d().x;
         final double yDiff = beg.getPoint2d().y - end.getPoint2d().y;
 
-        double startAngle;;
+        double startAngle;
 
-        int direction = 1;
+        int direction;
         // if bond is vertical
         if (xDiff == 0) {
             logger.debug("placeFusedRing->Bond is vertical");
@@ -722,7 +722,7 @@ public class RingPlacer {
 
     public boolean allPlaced(IRingSet rs) {
         for (int i = 0; i < rs.getAtomContainerCount(); i++) {
-            if (!((IRing) rs.getAtomContainer(i)).getFlag(CDKConstants.ISPLACED)) {
+            if (!rs.getAtomContainer(i).getFlag(CDKConstants.ISPLACED)) {
                 return false;
             }
         }
@@ -736,14 +736,14 @@ public class RingPlacer {
      * @param   rs  The ringset to be checked
      */
     public void checkAndMarkPlaced(IRingSet rs) {
-        IRing ring = null;
-        boolean allPlaced = true;
+        IRing ring;
+        boolean allPlaced;
         boolean ringsetPlaced = true;
         for (int i = 0; i < rs.getAtomContainerCount(); i++) {
             ring = (IRing) rs.getAtomContainer(i);
             allPlaced = true;
             for (int j = 0; j < ring.getAtomCount(); j++) {
-                if (!((IAtom) ring.getAtom(j)).getFlag(CDKConstants.ISPLACED)) {
+                if (!ring.getAtom(j).getFlag(CDKConstants.ISPLACED)) {
                     allPlaced = false;
                     ringsetPlaced = false;
                     break;
@@ -785,8 +785,8 @@ public class RingPlacer {
      */
     public void partitionNonRingPartners(IAtom atom, IRing ring, IAtomContainer ringAtoms, IAtomContainer nonRingAtoms) {
         List atoms = molecule.getConnectedAtomsList(atom);
-        for (int i = 0; i < atoms.size(); i++) {
-            IAtom curAtom = (IAtom) atoms.get(i);
+        for (Object o : atoms) {
+            IAtom curAtom = (IAtom) o;
             if (!ring.contains(curAtom)) {
                 nonRingAtoms.addAtom(curAtom);
             } else {
@@ -855,7 +855,7 @@ public class RingPlacer {
                 //				logger.debug(connectedRing.toString(molecule));
                 final IAtomContainer sharedAtoms = AtomContainerManipulator.getIntersection(ring, connectedRing);
                 final int numSharedAtoms = sharedAtoms.getAtomCount();
-                logger.debug("placeConnectedRings-> connectedRing: " + (ring.toString()));
+                logger.debug("placeConnectedRings-> connectedRing: " + (ring));
                 if ((numSharedAtoms == 2 && handleType == FUSED) ||
                     (numSharedAtoms == 1 && handleType == SPIRO) ||
                     (numSharedAtoms > 2  && handleType == BRIDGED)) {

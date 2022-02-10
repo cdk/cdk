@@ -67,12 +67,12 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @Deprecated
 public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
 
-    private              List<Map<IAtom, IAtom>>     allAtomMCS     = null;
-    private              Map<IAtom, IAtom>           atomsMCS       = null;
-    private              List<Map<IAtom, IAtom>>     allAtomMCSCopy = null;
-    private              Map<Integer, Integer>       firstMCS       = null;
-    private              List<Map<Integer, Integer>> allMCS         = null;
-    private              List<Map<Integer, Integer>> allMCSCopy     = null;
+    private              List<Map<IAtom, IAtom>>     allAtomMCS;
+    private              Map<IAtom, IAtom>           atomsMCS;
+    private              List<Map<IAtom, IAtom>>     allAtomMCSCopy;
+    private              Map<Integer, Integer>       firstMCS;
+    private              List<Map<Integer, Integer>> allMCS;
+    private              List<Map<Integer, Integer>> allMCSCopy;
     private              IQueryAtomContainer         queryMol       = null;
     private              IAtomContainer              mol1           = null;
     private              IAtomContainer              mol2           = null;
@@ -86,12 +86,12 @@ public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
      * Constructor for an extended VF Algorithm for the MCS search
      */
     public VFlibTurboHandler() {
-        allAtomMCS = new ArrayList<Map<IAtom, IAtom>>();
-        allAtomMCSCopy = new ArrayList<Map<IAtom, IAtom>>();
-        atomsMCS = new HashMap<IAtom, IAtom>();
-        firstMCS = new TreeMap<Integer, Integer>();
-        allMCS = new ArrayList<Map<Integer, Integer>>();
-        allMCSCopy = new ArrayList<Map<Integer, Integer>>();
+        allAtomMCS = new ArrayList<>();
+        allAtomMCSCopy = new ArrayList<>();
+        atomsMCS = new HashMap<>();
+        firstMCS = new TreeMap<>();
+        allMCS = new ArrayList<>();
+        allMCSCopy = new ArrayList<>();
     }
 
     private void setFirstMappings() {
@@ -172,7 +172,7 @@ public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
     }
 
     private int checkCommonAtomCount(IAtomContainer reactantMolecule, IAtomContainer productMolecule) {
-        ArrayList<String> atoms = new ArrayList<String>();
+        ArrayList<String> atoms = new ArrayList<>();
         for (int i = 0; i < reactantMolecule.getAtomCount(); i++) {
             atoms.add(reactantMolecule.getAtom(i).getSymbol());
         }
@@ -189,9 +189,9 @@ public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
 
     private void searchVFMappings() {
         //        System.out.println("searchVFMappings ");
-        IQuery query = null;
-        IMapper mapper = null;
-        vfLibSolutions = new HashMap<INode, IAtom>();
+        IQuery query;
+        IMapper mapper;
+        vfLibSolutions = new HashMap<>();
         if (queryMol != null) {
             query = new QueryCompiler(queryMol).compile();
             mapper = new VFMapper(query);
@@ -226,7 +226,7 @@ public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
     }
 
     private void searchMcGregorMapping() throws CDKException, IOException {
-        List<List<Integer>> mappings = new ArrayList<List<Integer>>();
+        List<List<Integer>> mappings = new ArrayList<>();
         for (Map<Integer, Integer> firstPassMappings : allMCSCopy) {
             McGregor mgit = new McGregor(getReactantMol(), getProductMol(), mappings, isBondMatchFlag());
             mgit.startMcGregorIteration(mgit.getMCSSize(), firstPassMappings); //Start McGregor search
@@ -243,8 +243,8 @@ public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
     private void setVFMappings(boolean ronp, IQuery query) {
         int counter = 0;
 
-        Map<IAtom, IAtom> atomatomMapping = new HashMap<IAtom, IAtom>();
-        Map<Integer, Integer> indexindexMapping = new TreeMap<Integer, Integer>();
+        Map<IAtom, IAtom> atomatomMapping = new HashMap<>();
+        Map<Integer, Integer> indexindexMapping = new TreeMap<>();
         if (vfLibSolutions.size() > vfMCSSize) {
             this.vfMCSSize = vfLibSolutions.size();
             allAtomMCSCopy.clear();
@@ -252,8 +252,8 @@ public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
             counter = 0;
         }
         for (Map.Entry<INode, IAtom> mapping : vfLibSolutions.entrySet()) {
-            IAtom qAtom = null;
-            IAtom tAtom = null;
+            IAtom qAtom;
+            IAtom tAtom;
             if (ronp) {
                 qAtom = query.getAtom(mapping.getKey());
                 tAtom = mapping.getValue();
@@ -261,8 +261,8 @@ public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
                 tAtom = query.getAtom(mapping.getKey());
                 qAtom = mapping.getValue();
             }
-            Integer qIndex = Integer.valueOf(getReactantMol().indexOf(qAtom));
-            Integer tIndex = Integer.valueOf(getProductMol().indexOf(tAtom));
+            Integer qIndex = getReactantMol().indexOf(qAtom);
+            Integer tIndex = getProductMol().indexOf(tAtom);
             if (qIndex != null && tIndex != null) {
                 atomatomMapping.put(qAtom, tAtom);
                 indexindexMapping.put(qIndex, tIndex);
@@ -295,11 +295,11 @@ public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
                 allMCS.clear();
                 counter = 0;
             }
-            Map<IAtom, IAtom> atomatomMapping = new HashMap<IAtom, IAtom>();
-            Map<Integer, Integer> indexindexMapping = new TreeMap<Integer, Integer>();
+            Map<IAtom, IAtom> atomatomMapping = new HashMap<>();
+            Map<Integer, Integer> indexindexMapping = new TreeMap<>();
             for (int index = 0; index < mapping.size(); index += 2) {
-                IAtom qAtom = null;
-                IAtom tAtom = null;
+                IAtom qAtom;
+                IAtom tAtom;
 
                 qAtom = getReactantMol().getAtom(mapping.get(index));
                 tAtom = getProductMol().getAtom(mapping.get(index + 1));

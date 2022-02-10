@@ -40,8 +40,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
 
-    private IChemObjectBuilder      builder = SilentChemObjectBuilder.getInstance();
-    private LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+    private final IChemObjectBuilder      builder = SilentChemObjectBuilder.getInstance();
+    private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
     public SigmaElectronegativityDescriptorTest() {}
 
@@ -51,7 +51,7 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
     }
 
     @Test
-    public void testSigmaElectronegativityDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testSigmaElectronegativityDescriptor() throws java.lang.Exception {
         double[] testResult = {8.7177, 11.306};/*
                                                 * from Petra online:
                                                 * http://www2.
@@ -79,7 +79,7 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit with Methyl chloride
      */
     @Test
-    public void testSigmaElectronegativityDescriptor_Methyl_chloride() throws ClassNotFoundException, CDKException,
+    public void testSigmaElectronegativityDescriptor_Methyl_chloride() throws
             java.lang.Exception {
         double[] testResult = {8.3293, 10.491};/*
                                                 * from Petra online:
@@ -106,7 +106,7 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit with Allyl bromide
      */
     @Test
-    public void testSigmaElectronegativityDescriptor_Allyl_bromide() throws ClassNotFoundException, CDKException,
+    public void testSigmaElectronegativityDescriptor_Allyl_bromide() throws
             java.lang.Exception {
         double[] testResult = {7.8677, 8.1073, 8.4452, 10.154}; /*
                                                                  * from Petra
@@ -138,7 +138,7 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit with Isopentyl iodide
      */
     @Test
-    public void testSigmaElectronegativityDescriptor_Isopentyl_iodide() throws ClassNotFoundException, CDKException,
+    public void testSigmaElectronegativityDescriptor_Isopentyl_iodide() throws
             java.lang.Exception {
         double testResult = 9.2264; /*
                                      * from Petra online:
@@ -159,7 +159,7 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit with Ethoxy ethane
      */
     @Test
-    public void testSigmaElectronegativityDescriptor_Ethoxy_ethane() throws ClassNotFoundException, CDKException,
+    public void testSigmaElectronegativityDescriptor_Ethoxy_ethane() throws
             java.lang.Exception {
         double[] testResult = {7.6009, 8.3948, 9.4663, 8.3948, 7.6009}; /*
                                                                          * from
@@ -201,7 +201,7 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit with Ethanolamine
      */
     @Test
-    public void testSigmaElectronegativityDescriptor_Ethanolamine() throws ClassNotFoundException, CDKException,
+    public void testSigmaElectronegativityDescriptor_Ethanolamine() throws
             java.lang.Exception {
         double[] testResult = {8.1395, 8.1321, 8.5049, 9.3081}; /*
                                                                  * from Petra
@@ -233,7 +233,7 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit with Allyl mercaptan
      */
     @Test
-    public void testSigmaElectronegativityDescriptor_Allyl_mercaptan() throws ClassNotFoundException, CDKException,
+    public void testSigmaElectronegativityDescriptor_Allyl_mercaptan() throws
             java.lang.Exception {
         double[] testResult = {7.8634, 8.0467, 8.061, 8.5917}; /*
                                                                 * from Petra
@@ -264,7 +264,7 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
      *  @cdk.inchi InChI=1/C3H7Cl/c1-2-3-4/h2-3H2,1H3
      */
     @Test
-    public void testCompareIonized() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testCompareIonized() throws java.lang.Exception {
 
         IAtomContainer molA = builder.newInstance(IAtomContainer.class);
         molA.addAtom(builder.newInstance(IAtom.class, "C"));

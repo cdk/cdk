@@ -45,7 +45,7 @@ public interface IChemObjectSelection {
      *
      * @param chemModel an IChemModel to select from.
      */
-    public void select(IChemModel chemModel);
+    void select(IChemModel chemModel);
 
     /**
      * Make an IAtomContainer where all the bonds
@@ -53,14 +53,14 @@ public interface IChemObjectSelection {
      *
      * @return a well defined atom container.
      */
-    public IAtomContainer getConnectedAtomContainer();
+    IAtomContainer getConnectedAtomContainer();
 
     /**
      * The opposite of a method like "isEmpty".
      *
      * @return true if there is anything in the selection
      */
-    public boolean isFilled();
+    boolean isFilled();
 
     /**
      * Determines if the {@link IChemObject} is part of the current selection.
@@ -68,7 +68,7 @@ public interface IChemObjectSelection {
      * @param obj {@link IChemObject} which might be part of the selection
      * @return true, if the given <code>obj</code> is part of the selection
      */
-    public boolean contains(IChemObject obj);
+    boolean contains(IChemObject obj);
 
     /**
      * Returns a {@link Collection} of all selected {@link IChemObject}s of the
@@ -77,5 +77,5 @@ public interface IChemObjectSelection {
      * @param clazz type of {@link IChemObject}s that should be returned.
      * @return a {@link Collection} of {@link IChemObject} of the given type
      */
-    public <E extends IChemObject> Collection<E> elements(Class<E> clazz);
+    <E extends IChemObject> Collection<E> elements(Class<E> clazz);
 }

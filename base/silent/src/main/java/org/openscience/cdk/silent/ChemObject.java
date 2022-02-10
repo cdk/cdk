@@ -260,7 +260,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
         // this does not deep copy all objects but this was not done
         // originally
         if (properties != null) {
-            clone.properties = new HashMap<Object, Object>(getProperties());
+            clone.properties = new HashMap<>(getProperties());
         }
 
         return clone;

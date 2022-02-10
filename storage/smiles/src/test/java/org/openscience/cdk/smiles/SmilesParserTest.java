@@ -19,7 +19,6 @@
 package org.openscience.cdk.smiles;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -81,7 +80,7 @@ import static org.junit.Assert.fail;
  */
 public class SmilesParserTest extends CDKTestCase {
 
-    private static SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+    private static final SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
 
     @Test(timeout = 1000)
     public void testSingleOrDoubleFlag() throws Exception {
@@ -461,9 +460,7 @@ public class SmilesParserTest extends CDKTestCase {
         String smiles = "n12:n:n:n:c:2:c:c:c:c:1";
         IAtomContainer molecule = loadExact(smiles);
         assertAtomTypesPerceived(molecule);
-        Iterator<IBond> bonds = molecule.bonds().iterator();
-        while (bonds.hasNext())
-            assertTrue(bonds.next().getFlag(CDKConstants.ISAROMATIC));
+        for (IBond iBond : molecule.bonds()) assertTrue(iBond.getFlag(CDKConstants.ISAROMATIC));
     }
 
     /**
@@ -862,9 +859,9 @@ public class SmilesParserTest extends CDKTestCase {
         for (int i = 0; i < mol.getAtomCount(); i++) {
             if (mol.getAtom(i).getAtomicNumber() == IElement.N) {
                 Assert.assertEquals(IBond.Order.SINGLE,
-                        ((IBond) mol.getConnectedBondsList(mol.getAtom(i)).get(0)).getOrder());
+                        mol.getConnectedBondsList(mol.getAtom(i)).get(0).getOrder());
                 Assert.assertEquals(IBond.Order.SINGLE,
-                        ((IBond) mol.getConnectedBondsList(mol.getAtom(i)).get(1)).getOrder());
+                        mol.getConnectedBondsList(mol.getAtom(i)).get(1).getOrder());
             }
         }
     }
@@ -933,9 +930,7 @@ public class SmilesParserTest extends CDKTestCase {
         IAtomContainer mol = sp.parseSmiles(smiles);
         Assert.assertEquals(5, mol.getAtomCount());
         // each atom should have 1 implicit hydrogen, and two neighbors
-        Iterator<IAtom> atoms = mol.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atomi = atoms.next();
+        for (IAtom atomi : mol.atoms()) {
             Assert.assertEquals(1, atomi.getImplicitHydrogenCount().intValue());
             Assert.assertEquals(2, mol.getConnectedBondsCount(atomi));
         }
@@ -1207,9 +1202,8 @@ public class SmilesParserTest extends CDKTestCase {
         IAtom nitrogen = mol.getAtom(3);
         // the second atom
         Assert.assertEquals("N", nitrogen.getSymbol());
-        Iterator<IAtom> atoms = mol.atoms().iterator();
-        while (atoms.hasNext()) {
-            Assert.assertEquals(IAtomType.Hybridization.SP2, atoms.next().getHybridization());
+        for (IAtom iAtom : mol.atoms()) {
+            Assert.assertEquals(IAtomType.Hybridization.SP2, iAtom.getHybridization());
         }
     }
 
@@ -1523,9 +1517,7 @@ public class SmilesParserTest extends CDKTestCase {
         atomtype(mol);
         Aromaticity.cdkLegacy().apply(mol);
         assertAtomTypesPerceived(mol);
-        Iterator<IAtom> atoms = mol.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : mol.atoms()) {
             Assert.assertEquals(IAtomType.Hybridization.SP2, atom.getHybridization());
             assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
         }
@@ -1764,9 +1756,7 @@ public class SmilesParserTest extends CDKTestCase {
         assertAtomTypesPerceived(mol);
         Assert.assertEquals(9, mol.getAtomCount());
 
-        Iterator<IAtom> atoms = mol.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : mol.atoms()) {
             assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
         }
     }
@@ -1783,9 +1773,7 @@ public class SmilesParserTest extends CDKTestCase {
         Aromaticity.cdkLegacy().apply(mol);
         assertAtomTypesPerceived(mol);
         Assert.assertEquals(9, mol.getAtomCount());
-        Iterator<IAtom> atoms = mol.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : mol.atoms()) {
             assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
         }
     }
@@ -2221,7 +2209,7 @@ public class SmilesParserTest extends CDKTestCase {
         List<IStereoElement<?,?>> stereoElements = new ArrayList<>();
         mol.stereoElements().forEach(stereoElements::add);
 
-        Collections.sort(stereoElements, new Comparator<IStereoElement>() {
+        stereoElements.sort(new Comparator<IStereoElement>() {
 
             @Override
             public int compare(IStereoElement o1, IStereoElement o2) {
@@ -2477,7 +2465,7 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals(2, mol.getAtom(0).getFormalNeighbourCount().intValue());
         Assert.assertEquals("C.sp2", mol.getAtom(1).getAtomTypeName());
         Assert.assertEquals(3, mol.getAtom(1).getFormalNeighbourCount().intValue());
-        IAtomContainer clone = (IAtomContainer) mol.clone();
+        IAtomContainer clone = mol.clone();
         Assert.assertEquals("O.sp3", clone.getAtom(0).getAtomTypeName());
         Assert.assertEquals(2, clone.getAtom(0).getFormalNeighbourCount().intValue());
         Assert.assertEquals("C.sp2", clone.getAtom(1).getAtomTypeName());
@@ -2540,7 +2528,7 @@ public class SmilesParserTest extends CDKTestCase {
         assertTrue(ses.hasNext());
         IStereoElement se = ses.next();
         assertThat(se, instanceOf(SquarePlanar.class));
-        assertThat(((SquarePlanar) se).getConfigOrder(), is(1));
+        assertThat(se.getConfigOrder(), is(1));
     }
 
     @Test
@@ -2550,7 +2538,7 @@ public class SmilesParserTest extends CDKTestCase {
         assertTrue(ses.hasNext());
         IStereoElement se = ses.next();
         assertThat(se, instanceOf(SquarePlanar.class));
-        assertThat(((SquarePlanar) se).getConfigOrder(), is(3));
+        assertThat(se.getConfigOrder(), is(3));
     }
 
     @Test
@@ -2560,7 +2548,7 @@ public class SmilesParserTest extends CDKTestCase {
         assertTrue(ses.hasNext());
         IStereoElement se = ses.next();
         assertThat(se, instanceOf(SquarePlanar.class));
-        assertThat(((SquarePlanar) se).getConfigOrder(), is(2));
+        assertThat(se.getConfigOrder(), is(2));
     }
 
     @Test
@@ -2570,7 +2558,7 @@ public class SmilesParserTest extends CDKTestCase {
         assertTrue(ses.hasNext());
         IStereoElement se = ses.next();
         assertThat(se, instanceOf(TrigonalBipyramidal.class));
-        assertThat(((TrigonalBipyramidal) se).getConfigOrder(), is(1));
+        assertThat(se.getConfigOrder(), is(1));
     }
 
     @Test
@@ -2580,7 +2568,7 @@ public class SmilesParserTest extends CDKTestCase {
         assertTrue(ses.hasNext());
         IStereoElement se = ses.next();
         assertThat(se, instanceOf(TrigonalBipyramidal.class));
-        assertThat(((TrigonalBipyramidal) se).getConfigOrder(), is(2));
+        assertThat(se.getConfigOrder(), is(2));
     }
 
     @Test
@@ -2727,7 +2715,7 @@ public class SmilesParserTest extends CDKTestCase {
     }
 
     static void atomtype(IAtomContainer container) throws Exception {
-        Set<IAtom> aromatic = new HashSet<IAtom>();
+        Set<IAtom> aromatic = new HashSet<>();
         for (IAtom atom : container.atoms()) {
             if (atom.getFlag(CDKConstants.ISAROMATIC)) aromatic.add(atom);
         }

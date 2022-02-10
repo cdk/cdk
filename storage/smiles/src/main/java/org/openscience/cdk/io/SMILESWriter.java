@@ -49,14 +49,14 @@ import java.io.*;
  */
 public class SMILESWriter extends DefaultChemObjectWriter {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(SMILESWriter.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(SMILESWriter.class);
     private BufferedWriter writer;
     private BooleanIOSetting aromSetting;
     private BooleanIOSetting titleSetting;
     private IntegerIOSetting flavorSetting;
-    private int flav = SmiFlavor.Default;
+    private final int flav = SmiFlavor.Default;
     private SmilesGenerator smigen = new SmilesGenerator(flav);
-    private StringBuilder buffer = new StringBuilder();
+    private final StringBuilder buffer = new StringBuilder();
 
     /**
      * Constructs a new SMILESWriter that can write a list of SMILES to a Writer
@@ -144,9 +144,9 @@ public class SMILESWriter extends DefaultChemObjectWriter {
         if (IAtomContainer.class.equals(classObject)) return true;
         if (IAtomContainerSet.class.equals(classObject)) return true;
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IAtomContainerSet.class.equals(interfaces[i])) return true;
-            if (IAtomContainer.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IAtomContainerSet.class.equals(anInterface)) return true;
+            if (IAtomContainer.class.equals(anInterface)) return true;
         }
         Class superClass = classObject.getSuperclass();
         if (superClass != null) return this.accepts(superClass);

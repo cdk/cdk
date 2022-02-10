@@ -49,7 +49,7 @@ public class BinaryTree {
      */
     private BinaryTree equal    = null;
     private BinaryTree notEqual = null;
-    private int        value    = -1;
+    private int        value;
 
     /**
      * Return value of the node

@@ -27,7 +27,6 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ConformerContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -149,9 +148,9 @@ public class PharmacophoreUtilityTest {
         int ndist = 0;
         int nangle = 0;
         for (String line : lines) {
-            if (line.indexOf("</pharmacophore>") != -1) ndef++;
-            if (line.indexOf("</distanceConstraint>") != -1) ndist++;
-            if (line.indexOf("</angleConstraint>") != -1) nangle++;
+            if (line.contains("</pharmacophore>")) ndef++;
+            if (line.contains("</distanceConstraint>")) ndist++;
+            if (line.contains("</angleConstraint>")) nangle++;
         }
         Assert.assertEquals(2, ndef);
         Assert.assertEquals(5, ndist);
@@ -159,7 +158,7 @@ public class PharmacophoreUtilityTest {
     }
 
     private IAtom[] getAtoms(IBond bond) {
-        ArrayList<IAtom> alist = new ArrayList<IAtom>();
+        ArrayList<IAtom> alist = new ArrayList<>();
         for (IAtom iAtom : bond.atoms()) {
             alist.add(iAtom);
         }

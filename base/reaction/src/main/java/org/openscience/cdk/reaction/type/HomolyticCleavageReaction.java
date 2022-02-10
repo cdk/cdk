@@ -36,7 +36,6 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * <p>IReactionProcess which breaks the bond homogeneously leading to radical ions.
@@ -71,7 +70,7 @@ import java.util.Iterator;
  **/
 public class HomolyticCleavageReaction extends ReactionEngine implements IReactionProcess {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(HomolyticCleavageReaction.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(HomolyticCleavageReaction.class);
 
     /**
      * Constructor of the HomolyticCleavageReaction object.
@@ -123,9 +122,7 @@ public class HomolyticCleavageReaction extends ReactionEngine implements IReacti
         IParameterReact ipr = super.getParameterClass(SetReactionCenter.class);
         if (ipr != null && !ipr.isSetParameter()) setActiveCenters(reactant);
 
-        Iterator<IBond> bondis = reactant.bonds().iterator();
-        while (bondis.hasNext()) {
-            IBond bondi = bondis.next();
+        for (IBond bondi : reactant.bonds()) {
             IAtom atom1 = bondi.getBegin();
             IAtom atom2 = bondi.getEnd();
             if (bondi.getFlag(CDKConstants.REACTIVE_CENTER) && atom1.getFlag(CDKConstants.REACTIVE_CENTER)
@@ -135,10 +132,10 @@ public class HomolyticCleavageReaction extends ReactionEngine implements IReacti
                     && reactant.getConnectedSingleElectronsCount(atom1) == 0
                     && reactant.getConnectedSingleElectronsCount(atom2) == 0) {
 
-                ArrayList<IAtom> atomList = new ArrayList<IAtom>();
+                ArrayList<IAtom> atomList = new ArrayList<>();
                 atomList.add(atom1);
                 atomList.add(atom2);
-                ArrayList<IBond> bondList = new ArrayList<IBond>();
+                ArrayList<IBond> bondList = new ArrayList<>();
                 bondList.add(bondi);
                 IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(IAtomContainerSet.class);
                 moleculeSet.addAtomContainer(reactant);
@@ -169,9 +166,7 @@ public class HomolyticCleavageReaction extends ReactionEngine implements IReacti
      * @throws CDKException
      */
     private void setActiveCenters(IAtomContainer reactant) throws CDKException {
-        Iterator<IBond> bondis = reactant.bonds().iterator();
-        while (bondis.hasNext()) {
-            IBond bond = bondis.next();
+        for (IBond bond : reactant.bonds()) {
             IAtom atom1 = bond.getBegin();
             IAtom atom2 = bond.getEnd();
             if ((atom1.getFormalCharge() == CDKConstants.UNSET ? 0 : atom1.getFormalCharge()) == 0

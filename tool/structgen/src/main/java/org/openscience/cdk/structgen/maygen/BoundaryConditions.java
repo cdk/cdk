@@ -41,9 +41,9 @@ class BoundaryConditions {
      */
     public static boolean detectTripleBonds(int[][] mat) {
         int length = mat.length;
-        for (int i = 0; i < length; i++) {
+        for (int[] ints : mat) {
             for (int j = 0; j < length; j++) {
-                if (mat[i][j] == 3) {
+                if (ints[j] == 3) {
                     return true;
                 }
             }
@@ -60,10 +60,10 @@ class BoundaryConditions {
     public static boolean detectAdjacentDoubleBonds(int[][] mat) {
         boolean check = false;
         int count;
-        for (int i = 0; i < mat.length; i++) {
+        for (int[] ints : mat) {
             count = 0;
             for (int j = 0; j < mat.length; j++) {
-                if (mat[i][j] == 2) count++;
+                if (ints[j] == 2) count++;
             }
             if (count >= 2) {
                 check = true;

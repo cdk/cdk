@@ -87,9 +87,9 @@ public class AtomTetrahedralLigandPlacer3D {
      * @cdk.keyword           3D model
      */
     public void add3DCoordinatesForSinglyBondedLigands(IAtomContainer atomContainer) throws CDKException {
-        IAtom refAtom = null;
+        IAtom refAtom;
         IAtom atomC = null;
-        int nwanted = 0;
+        int nwanted;
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
             refAtom = atomContainer.getAtom(i);
             if (refAtom.getAtomicNumber() != IElement.H && hasUnsetNeighbour(refAtom, atomContainer)) {
@@ -188,7 +188,7 @@ public class AtomTetrahedralLigandPlacer3D {
 
     public Point3d[] get3DCoordinatesForLigands(IAtom refAtom, IAtomContainer noCoords, IAtomContainer withCoords,
             IAtom atomC, int nwanted, double length, double angle) throws CDKException {
-        Point3d newPoints[] = new Point3d[1];
+        Point3d[] newPoints = new Point3d[1];
 
         if (noCoords.getAtomCount() == 0 && withCoords.getAtomCount() == 0) {
             return newPoints;
@@ -259,7 +259,7 @@ public class AtomTetrahedralLigandPlacer3D {
     public Point3d[] get3DCoordinatesForSP2Ligands(IAtom refAtom, IAtomContainer noCoords, IAtomContainer withCoords,
             IAtom atomC, double length, double angle) {
         //logger.debug(" SP2 Ligands start");
-        Point3d newPoints[] = new Point3d[1];
+        Point3d[] newPoints = new Point3d[1];
         if (angle < 0) {
             angle = SP2_ANGLE;
         }
@@ -294,7 +294,7 @@ public class AtomTetrahedralLigandPlacer3D {
     public Point3d[] get3DCoordinatesForSP3Ligands(IAtom refAtom, IAtomContainer noCoords, IAtomContainer withCoords,
             IAtom atomC, int nwanted, double length, double angle) {
         //logger.debug("SP3 Ligands start ");
-        Point3d newPoints[] = new Point3d[0];
+        Point3d[] newPoints = new Point3d[0];
         Point3d aPoint = refAtom.getPoint3d();
         int nwithCoords = withCoords.getAtomCount();
         if (angle < 0) {
@@ -333,7 +333,7 @@ public class AtomTetrahedralLigandPlacer3D {
      *@return          Point3d[] nwanted points (or zero if failed)
      */
     public Point3d[] calculate3DCoordinates0(Point3d aPoint, int nwanted, double length) {
-        Point3d points[] = new Point3d[0];
+        Point3d[] points = new Point3d[0];
         if (nwanted == 1) {
             points = new Point3d[1];
             points[0] = new Point3d(aPoint);
@@ -385,7 +385,7 @@ public class AtomTetrahedralLigandPlacer3D {
      */
     public Point3d[] calculate3DCoordinates1(Point3d aPoint, Point3d bPoint, Point3d cPoint, int nwanted,
             double length, double angle) {
-        Point3d points[] = new Point3d[nwanted];
+        Point3d[] points = new Point3d[nwanted];
         // BA vector
         Vector3d ba = new Vector3d(aPoint);
         ba.sub(bPoint);
@@ -452,7 +452,7 @@ public class AtomTetrahedralLigandPlacer3D {
     public Point3d[] calculate3DCoordinates2(Point3d aPoint, Point3d bPoint, Point3d cPoint, int nwanted,
             double length, double angle) {
         //logger.debug("3DCoordinates2");
-        Point3d newPoints[] = new Point3d[0];
+        Point3d[] newPoints = new Point3d[0];
         double ang2 = angle / 2.0;
 
         Vector3d ba = new Vector3d(aPoint);
@@ -462,7 +462,6 @@ public class AtomTetrahedralLigandPlacer3D {
         Vector3d baxca = new Vector3d();
         baxca.cross(ba, ca);
         if (baxca.length() < 0.00000001) {
-            ;
             // linear
         } else if (nwanted == 1) {
             newPoints = new Point3d[1];
@@ -602,7 +601,7 @@ public class AtomTetrahedralLigandPlacer3D {
             double angle) {
         //logger.debug("3DCoordinatesSP_2");
         Vector3d ca = new Vector3d();
-        Point3d newPoints[] = new Point3d[2];
+        Point3d[] newPoints = new Point3d[2];
         Vector3d ba = new Vector3d(bPoint);
         ba.sub(aPoint);
 
@@ -679,7 +678,7 @@ public class AtomTetrahedralLigandPlacer3D {
      *@exception  Exception  Description of the Exception
      */
     private double getDistanceValue(String id1, String id2) {
-        String dkey = "";
+        String dkey;
         if (pSet.containsKey(("bond" + id1 + ";" + id2))) {
             dkey = "bond" + id1 + ";" + id2;
         } else if (pSet.containsKey(("bond" + id2 + ";" + id1))) {
@@ -688,7 +687,7 @@ public class AtomTetrahedralLigandPlacer3D {
             //			logger.debug("DistanceKEYError:pSet has no key:" + id2 + " ; " + id1 + " take default bond length:" + DEFAULT_BOND_LENGTH_H);
             return DEFAULT_BOND_LENGTH_H;
         }
-        return ((Double) (((List) pSet.get(dkey)).get(0))).doubleValue();
+        return (Double) (((List) pSet.get(dkey)).get(0));
     }
 
     /**
@@ -700,7 +699,7 @@ public class AtomTetrahedralLigandPlacer3D {
      * @return                The angleKey value
      */
     public double getAngleValue(String id1, String id2, String id3) {
-        String akey = "";
+        String akey;
         if (pSet.containsKey(("angle" + id1 + ";" + id2 + ";" + id3))) {
             akey = "angle" + id1 + ";" + id2 + ";" + id3;
         } else if (pSet.containsKey(("angle" + id3 + ";" + id2 + ";" + id1))) {
@@ -718,7 +717,7 @@ public class AtomTetrahedralLigandPlacer3D {
                     + TETRAHEDRAL_ANGLE);
             return TETRAHEDRAL_ANGLE;
         }
-        return ((Double) (((List) pSet.get(akey)).get(0))).doubleValue();
+        return (Double) (((List) pSet.get(akey)).get(0));
     }
 
     /**
@@ -743,7 +742,7 @@ public class AtomTetrahedralLigandPlacer3D {
         Vector3d b = new Vector3d((atomB.x - atomA.x), (atomB.y - atomA.y), (atomB.z - atomA.z));
         Vector3d c = new Vector3d((atomC.x - atomA.x), (atomC.y - atomA.y), (atomC.z - atomA.z));
         Vector3d n1 = new Vector3d();
-        Vector3d n2 = null;
+        Vector3d n2;
         n1.cross(b, c);
         n1.normalize();
 
@@ -753,7 +752,7 @@ public class AtomTetrahedralLigandPlacer3D {
                 n1.normalize();
             }
         }
-        double dotProduct = 0;
+        double dotProduct;
         for (int i = 0; i < branchPoints.length; i++) {
             n2 = new Vector3d(branchPoints[0].x, branchPoints[0].y, branchPoints[0].z);
             dotProduct = n1.dot(n2);
@@ -818,9 +817,9 @@ public class AtomTetrahedralLigandPlacer3D {
 
         List bonds = ac.getConnectedBondsList(atom);
         IAtomContainer connectedAtoms = atom.getBuilder().newInstance(IAtomContainer.class);
-        IAtom connectedAtom = null;
-        for (int i = 0; i < bonds.size(); i++) {
-            connectedAtom = ((IBond) bonds.get(i)).getOther(atom);
+        IAtom connectedAtom;
+        for (Object bond : bonds) {
+            connectedAtom = ((IBond) bond).getOther(atom);
             if (connectedAtom.getFlag(CDKConstants.ISPLACED)) {
                 connectedAtoms.addAtom(connectedAtom);
             }
@@ -839,8 +838,8 @@ public class AtomTetrahedralLigandPlacer3D {
     public IAtomContainer getUnsetAtomsInAtomContainer(IAtom atom, IAtomContainer ac) {
         List atoms = ac.getConnectedAtomsList(atom);
         IAtomContainer connectedAtoms = atom.getBuilder().newInstance(IAtomContainer.class);
-        for (int i = 0; i < atoms.size(); i++) {
-            IAtom curAtom = (IAtom) atoms.get(i);
+        for (Object o : atoms) {
+            IAtom curAtom = (IAtom) o;
             if (!curAtom.getFlag(CDKConstants.ISPLACED)) {//&& atoms[i].getPoint3d() == null) {
                 connectedAtoms.addAtom(curAtom);
             }
@@ -850,8 +849,8 @@ public class AtomTetrahedralLigandPlacer3D {
 
     public boolean hasUnsetNeighbour(IAtom atom, IAtomContainer ac) {
         List atoms = ac.getConnectedAtomsList(atom);
-        for (int i = 0; i < atoms.size(); i++) {
-            IAtom curAtom = (IAtom) atoms.get(i);
+        for (Object o : atoms) {
+            IAtom curAtom = (IAtom) o;
             if (!curAtom.getFlag(CDKConstants.ISPLACED)) {//&& atoms[i].getPoint3d() == null) {
                 return true;
             }
@@ -871,8 +870,8 @@ public class AtomTetrahedralLigandPlacer3D {
     public IAtom getPlacedHeavyAtomInAtomContainer(IAtom atomA, IAtom atomB, IAtomContainer ac) {
         List atoms = ac.getConnectedAtomsList(atomA);
         IAtom atom = null;
-        for (int i = 0; i < atoms.size(); i++) {
-            IAtom curAtom = (IAtom) atoms.get(i);
+        for (Object o : atoms) {
+            IAtom curAtom = (IAtom) o;
             if (curAtom.getFlag(CDKConstants.ISPLACED) && curAtom.getAtomicNumber() != IElement.H && !Objects.equals(curAtom, atomB)) {
                 return curAtom;
             }

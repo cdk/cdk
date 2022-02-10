@@ -52,7 +52,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
     boolean                     standAlone = false;
-    private static ILoggingTool logger     = LoggingToolFactory.createLoggingTool(ShortestPathFingerprinter.class);
+    private static final ILoggingTool logger     = LoggingToolFactory.createLoggingTool(ShortestPathFingerprinter.class);
 
     @Override
     public IFingerprinter getBitFingerprinter() {
@@ -162,7 +162,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
     }
 
     @Test
-    public void testGenerateFingerprintAnthracene() throws InvalidSmilesException, Exception {
+    public void testGenerateFingerprintAnthracene() throws Exception {
 
         String smiles = "C1=CC2=CC3=CC=CC=C3C=C2C=C1";
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -176,7 +176,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
     }
 
     @Test
-    public void testGenerateFingerprintNaphthalene() throws InvalidSmilesException, Exception {
+    public void testGenerateFingerprintNaphthalene() throws Exception {
 
         String smiles = "C1=CC2=CC=CC=C2C=C1";
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -190,7 +190,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
     }
 
     @Test
-    public void testGenerateFingerprintMultiphtalene() throws InvalidSmilesException, Exception {
+    public void testGenerateFingerprintMultiphtalene() throws Exception {
 
         String smiles = "C1=CC2=CC=C3C4=CC5=CC6=CC=CC=C6C=C5C=C4C=CC3=C2C=C1";
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -463,9 +463,9 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
     public static void main(String[] args) throws Exception {
         BigInteger bi = new BigInteger("0");
         bi = bi.add(BigInteger.valueOf((long) Math.pow(2, 63)));
-        System.err.println(bi.toString());
+        System.err.println(bi);
         bi = bi.add(BigInteger.valueOf((long) Math.pow(2, 0)));
-        System.err.println(bi.toString());
+        System.err.println(bi);
         //        ShortestPathFingerprinter fpt = new ShortestPathFingerprinter();
         //        fpt.standAlone = true;
         //        fpt.testFingerprinter();

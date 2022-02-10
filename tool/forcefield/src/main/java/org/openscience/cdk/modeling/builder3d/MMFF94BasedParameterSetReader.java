@@ -57,20 +57,20 @@ public class MMFF94BasedParameterSetReader {
     private final ILoggingTool  LOG            = LoggingToolFactory
                                                        .createLoggingTool(MMFF94BasedParameterSetReader.class);
 
-    private String              configFile     = "org/openscience/cdk/modeling/forcefield/data/mmff94.prm";
+    private final String              configFile     = "org/openscience/cdk/modeling/forcefield/data/mmff94.prm";
     private InputStream         ins            = null;
-    private Map<String, Object> parameterSet;
-    private List<IAtomType>     atomTypes;
+    private final Map<String, Object> parameterSet;
+    private final List<IAtomType>     atomTypes;
     private StringTokenizer     st;
     private String              key            = "";
     private String              sid;
 
-    private String              configFilevdW  = "org/openscience/cdk/modeling/forcefield/data/mmffvdw.prm";
+    private final String              configFilevdW  = "org/openscience/cdk/modeling/forcefield/data/mmffvdw.prm";
     private InputStream         insvdW         = null;
     private StringTokenizer     stvdW;
     private String              sidvdW;
 
-    private String              configFileDFSB = "org/openscience/cdk/modeling/forcefield/data/mmffdfsb.par";
+    private final String              configFileDFSB = "org/openscience/cdk/modeling/forcefield/data/mmffdfsb.par";
     private InputStream         insDFSB;
     private StringTokenizer     stDFSB;
 
@@ -78,8 +78,8 @@ public class MMFF94BasedParameterSetReader {
      * Constructor for the MM2BasedParameterSetReader object
      */
     public MMFF94BasedParameterSetReader() {
-        parameterSet = new Hashtable<String, Object>();
-        atomTypes = new Vector<IAtomType>();
+        parameterSet = new Hashtable<>();
+        atomTypes = new Vector<>();
     }
 
     public Map<String, Object> getParamterSet() {
@@ -125,22 +125,22 @@ public class MMFF94BasedParameterSetReader {
         String sG = stvdW.nextToken();
 
         try {
-            double well = new Double(swell).doubleValue();
-            double apol = new Double(sapol).doubleValue();
-            double Neff = new Double(sNeff).doubleValue();
-            double fcadj = new Double(sfcadj).doubleValue();
+            double well = new Double(swell);
+            double apol = new Double(sapol);
+            double Neff = new Double(sNeff);
+            double fcadj = new Double(sfcadj);
             //double pbci = new Double(spbci).doubleValue();
-            double a = new Double(sA).doubleValue();
-            double g = new Double(sG).doubleValue();
+            double a = new Double(sA);
+            double g = new Double(sG);
 
-            data.add(new Double(well));
-            data.add(new Double(apol));
-            data.add(new Double(Neff));
-            data.add(new String(sDA));
-            data.add(new Double(fcadj));
+            data.add(well);
+            data.add(apol);
+            data.add(Neff);
+            data.add(sDA);
+            data.add(fcadj);
             data.add(new Double(spbci));
-            data.add(new Double(a));
-            data.add(new Double(g));
+            data.add(a);
+            data.add(g);
 
         } catch (NumberFormatException nfe) {
             throw new IOException("Data: Malformed Number due to:" + nfe);
@@ -152,8 +152,8 @@ public class MMFF94BasedParameterSetReader {
         key = "vdw" + sid;
         data = new Vector();
         try {
-            double radius = new Double(sradius).doubleValue();
-            data.add(new Double(radius));
+            double radius = new Double(sradius);
+            data.add(radius);
 
         } catch (NumberFormatException nfe2) {
             LOG.debug("vdwError: Malformed Number due to:" + nfe2);
@@ -163,8 +163,8 @@ public class MMFF94BasedParameterSetReader {
         key = "charge" + sid;
         data = new Vector();
         try {
-            double q0 = new Double(sq0).doubleValue();
-            data.add(new Double(q0));
+            double q0 = new Double(sq0);
+            data.add(q0);
         } catch (NumberFormatException nfe3) {
             System.err.println("Charge: Malformed Number due to:" + nfe3);
         }
@@ -177,16 +177,16 @@ public class MMFF94BasedParameterSetReader {
      * @throws Exception Description of the Exception
      */
     private void setAtomTypes(IChemObjectBuilder builder) throws Exception {
-        String name = "";
-        String rootType = "";
+        String name;
+        String rootType;
         //int an = 0;
         int rl = 255;
         int gl = 20;
         int bl = 147;
-        int maxbond = 0;
-        int atomNr = 0;
+        int maxbond;
+        int atomNr;
 
-        double mass = 0.0;
+        double mass;
         st.nextToken();
         String sid = st.nextToken();
         rootType = st.nextToken();
@@ -234,16 +234,16 @@ public class MMFF94BasedParameterSetReader {
         String sbci = st.nextToken();
 
         try {
-            double len = new Double(slen).doubleValue();
-            double k2 = new Double(sk2).doubleValue();
-            double k3 = new Double(sk3).doubleValue();
-            double k4 = new Double(sk4).doubleValue();
-            double bci = new Double(sbci).doubleValue();
-            data.add(new Double(len));
-            data.add(new Double(k2));
-            data.add(new Double(k3));
-            data.add(new Double(k4));
-            data.add(new Double(bci));
+            double len = new Double(slen);
+            double k2 = new Double(sk2);
+            double k3 = new Double(sk3);
+            double k4 = new Double(sk4);
+            double bci = new Double(sbci);
+            data.add(len);
+            data.add(k2);
+            data.add(k3);
+            data.add(k4);
+            data.add(bci);
 
         } catch (NumberFormatException nfe) {
             throw new IOException("setBond: Malformed Number due to:" + nfe);
@@ -272,23 +272,23 @@ public class MMFF94BasedParameterSetReader {
 
         try {
             //int code=new Integer(scode).intValue();
-            double va1 = new Double(value1).doubleValue();
-            double va2 = new Double(value2).doubleValue();
-            double va3 = new Double(value3).doubleValue();
-            double va4 = new Double(value4).doubleValue();
-            data.add(new Double(va1));
-            data.add(new Double(va2));
-            data.add(new Double(va3));
-            data.add(new Double(va4));
+            double va1 = new Double(value1);
+            double va2 = new Double(value2);
+            double va3 = new Double(value3);
+            double va4 = new Double(value4);
+            data.add(va1);
+            data.add(va2);
+            data.add(va3);
+            data.add(va4);
 
             //			key = "angle" + scode + ";" + sid1 + ";" + sid2 + ";" + sid3;
             key = "angle" + sid1 + ";" + sid2 + ";" + sid3;
             if (parameterSet.containsKey(key)) {
                 data = (Vector) parameterSet.get(key);
-                data.add(new Double(va1));
-                data.add(new Double(va2));
-                data.add(new Double(va3));
-                data.add(new Double(va4));
+                data.add(va1);
+                data.add(va2);
+                data.add(va3);
+                data.add(va4);
             }
             parameterSet.put(key, data);
 
@@ -314,10 +314,10 @@ public class MMFF94BasedParameterSetReader {
 
         try {
             //int code=new Integer(scode).intValue();
-            double va1 = new Double(value1).doubleValue();
-            double va2 = new Double(value2).doubleValue();
-            data.add(new Double(va1));
-            data.add(new Double(va2));
+            double va1 = new Double(value1);
+            double va2 = new Double(value2);
+            data.add(va1);
+            data.add(va2);
 
         } catch (NumberFormatException nfe) {
             throw new IOException("setStrBnd: Malformed Number due to:" + nfe);
@@ -333,7 +333,7 @@ public class MMFF94BasedParameterSetReader {
      * @throws Exception Description of the Exception
      */
     private void setTorsion() throws Exception {
-        List data = null;
+        List data;
         st.nextToken();
         String scode = st.nextToken(); // String scode
         String sid1 = st.nextToken();
@@ -347,29 +347,29 @@ public class MMFF94BasedParameterSetReader {
         String value5 = st.nextToken();
 
         try {
-            double va1 = new Double(value1).doubleValue();
-            double va2 = new Double(value2).doubleValue();
-            double va3 = new Double(value3).doubleValue();
-            double va4 = new Double(value4).doubleValue();
-            double va5 = new Double(value5).doubleValue();
+            double va1 = new Double(value1);
+            double va2 = new Double(value2);
+            double va3 = new Double(value3);
+            double va4 = new Double(value4);
+            double va5 = new Double(value5);
 
             key = "torsion" + scode + ";" + sid1 + ";" + sid2 + ";" + sid3 + ";" + sid4;
             LOG.debug("key = " + key);
             if (parameterSet.containsKey(key)) {
                 data = (Vector) parameterSet.get(key);
-                data.add(new Double(va1));
-                data.add(new Double(va2));
-                data.add(new Double(va3));
-                data.add(new Double(va4));
-                data.add(new Double(va5));
+                data.add(va1);
+                data.add(va2);
+                data.add(va3);
+                data.add(va4);
+                data.add(va5);
                 LOG.debug("data = " + data);
             } else {
                 data = new Vector();
-                data.add(new Double(va1));
-                data.add(new Double(va2));
-                data.add(new Double(va3));
-                data.add(new Double(va4));
-                data.add(new Double(va5));
+                data.add(va1);
+                data.add(va2);
+                data.add(va3);
+                data.add(va4);
+                data.add(va5);
                 LOG.debug("data = " + data);
             }
 
@@ -395,12 +395,12 @@ public class MMFF94BasedParameterSetReader {
         String value1 = st.nextToken();
 
         try {
-            double va1 = new Double(value1).doubleValue();
-            data.add(new Double(va1));
+            double va1 = new Double(value1);
+            data.add(va1);
             key = "opbend" + sid1 + ";" + sid2 + ";" + sid3 + ";" + sid4;
             if (parameterSet.containsKey(key)) {
                 data = (Vector) parameterSet.get(key);
-                data.add(new Double(va1));
+                data.add(va1);
             }
             parameterSet.put(key, data);
 
@@ -426,10 +426,10 @@ public class MMFF94BasedParameterSetReader {
 
         try {
             key = "DFSB" + sIR + ";" + sJR + ";" + sKR;
-            double kbaIJK = new Double(skbaIJK).doubleValue();
-            double kbaKJI = new Double(skbaKJI).doubleValue();
-            data.add(new Double(kbaIJK));
-            data.add(new Double(kbaKJI));
+            double kbaIJK = new Double(skbaIJK);
+            double kbaKJI = new Double(skbaKJI);
+            data.add(kbaIJK);
+            data.add(kbaKJI);
             parameterSet.put(key, data);
 
         } catch (NumberFormatException nfe) {

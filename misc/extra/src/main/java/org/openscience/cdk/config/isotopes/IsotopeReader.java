@@ -53,10 +53,10 @@ import org.xml.sax.XMLReader;
 public class IsotopeReader {
 
     private XMLReader           parser;
-    private InputStream         input;
+    private final InputStream         input;
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(IsotopeReader.class);
-    private IChemObjectBuilder  builder;
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(IsotopeReader.class);
+    private final IChemObjectBuilder  builder;
 
     /**
      * Instantiates a new reader that parses the XML from the given <code>input</code>.
@@ -123,7 +123,7 @@ public class IsotopeReader {
      *         occurred.
      */
     public List<IIsotope> readIsotopes() {
-        List<IIsotope> isotopes = new ArrayList<IIsotope>();
+        List<IIsotope> isotopes = new ArrayList<>();
         try {
             parser.setFeature("http://xml.org/sax/features/validation", false);
             logger.info("Deactivated validation");

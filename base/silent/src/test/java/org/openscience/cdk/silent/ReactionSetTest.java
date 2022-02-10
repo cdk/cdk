@@ -22,10 +22,8 @@ package org.openscience.cdk.silent;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.test.interfaces.AbstractReactionSetTest;
-import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link ReactionSet}.
@@ -36,13 +34,7 @@ public class ReactionSetTest extends AbstractReactionSetTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new ReactionSet();
-            }
-        });
+        setTestObjectBuilder(ReactionSet::new);
     }
 
     @Test

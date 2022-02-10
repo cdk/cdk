@@ -59,12 +59,12 @@ public class StandardSubstructureSets {
         InputStream ins = StandardSubstructureSets.class.getClassLoader().getResourceAsStream(filename);
         BufferedReader reader = new BufferedReader(new InputStreamReader(ins));
 
-        List<String> tmp = new ArrayList<String>();
+        List<String> tmp = new ArrayList<>();
         String line;
         while ((line = reader.readLine()) != null) {
             if (line.startsWith("#") || line.trim().length() == 0) continue;
             String[] toks = line.split(":");
-            StringBuffer s = new StringBuffer();
+            StringBuilder s = new StringBuilder();
             for (int i = 1; i < toks.length - 1; i++)
                 s.append(toks[i] + ":");
             s.append(toks[toks.length - 1]);

@@ -46,10 +46,10 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class MolecularFormulaChecker {
 
-    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(MolecularFormulaChecker.class);
+    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MolecularFormulaChecker.class);
 
     /** List of IRules to be applied in the validation.*/
-    private List<IRule>  rules;
+    private final List<IRule>  rules;
 
     /**
      * Construct an instance of MolecularFormulaChecker. It must be initialized
@@ -86,9 +86,8 @@ public class MolecularFormulaChecker {
         IMolecularFormula formulaWith = isValid(formula);
         Map<Object, Object> properties = formulaWith.getProperties();
 
-        Iterator<IRule> iterRules = rules.iterator();
-        while (iterRules.hasNext()) {
-            result *= (Double) properties.get(iterRules.next().getClass());
+        for (IRule rule : rules) {
+            result *= (Double) properties.get(rule.getClass());
         }
         return result;
     }

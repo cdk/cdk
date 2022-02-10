@@ -43,7 +43,6 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.Iterator;
 
 import org.openscience.cdk.exception.CDKException;
 
@@ -78,9 +77,7 @@ public class GaussiansCalculationTest {
 
             IChemSequence chemSequence = chemFile.getChemSequence(0);
             IChemModel chemModel = chemSequence.getChemModel(0);
-            Iterator<IAtomContainer> containers = ChemModelManipulator.getAllAtomContainers(chemModel).iterator();
-            while (containers.hasNext()) {
-                IAtomContainer atomContainer = containers.next();
+            for (IAtomContainer atomContainer : ChemModelManipulator.getAllAtomContainers(chemModel)) {
                 IAtom[] atoms = AtomContainerManipulator.getAtomArray(atomContainer);
 
                 GaussiansBasis basis = new SimpleBasisSet(atoms);
@@ -88,8 +85,7 @@ public class GaussiansCalculationTest {
                 Orbitals orbitals = new Orbitals(basis);
 
                 int count_electrons = 0;
-                for (int i = 0; i < atoms.length; i++)
-                    count_electrons += atoms[i].getAtomicNumber();
+                for (IAtom atom : atoms) count_electrons += atom.getAtomicNumber();
                 orbitals.setCountElectrons(count_electrons);
 
                 ClosedShellJob job = new ClosedShellJob(orbitals);

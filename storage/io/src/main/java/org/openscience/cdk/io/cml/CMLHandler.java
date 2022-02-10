@@ -44,14 +44,14 @@ import org.xml.sax.helpers.DefaultHandler;
 public class CMLHandler extends DefaultHandler {
 
     private ICMLModule              conv;
-    private static ILoggingTool     logger = LoggingToolFactory.createLoggingTool(CMLHandler.class);
-    private boolean                 debug  = true;
+    private static final ILoggingTool     logger = LoggingToolFactory.createLoggingTool(CMLHandler.class);
+    private final boolean                 debug  = true;
 
-    private Map<String, ICMLModule> userConventions;
+    private final Map<String, ICMLModule> userConventions;
 
-    private CMLStack                xpath;
-    private CMLStack                conventionStack;
-    private CMLModuleStack          moduleStack;
+    private final CMLStack                xpath;
+    private final CMLStack                conventionStack;
+    private final CMLModuleStack          moduleStack;
 
     /**
      * Constructor for the CMLHandler.
@@ -60,7 +60,7 @@ public class CMLHandler extends DefaultHandler {
      **/
     public CMLHandler(IChemFile chemFile) {
         conv = new CMLCoreModule(chemFile);
-        userConventions = new Hashtable<String, ICMLModule>();
+        userConventions = new Hashtable<>();
         xpath = new CMLStack();
         conventionStack = new CMLStack();
         moduleStack = new CMLModuleStack();
@@ -76,7 +76,7 @@ public class CMLHandler extends DefaultHandler {
      * @param ch        characters to handle
      */
     @Override
-    public void characters(char ch[], int start, int length) {
+    public void characters(char[] ch, int start, int length) {
         if (debug) logger.debug(new String(ch, start, length));
         conv.characterData(xpath, ch, start, length);
     }
@@ -155,7 +155,7 @@ public class CMLHandler extends DefaultHandler {
                         conv = new QSARConvention(conv);
                     } else if (userConventions.containsKey(convName)) {
                         //unknown convention. userConvention?
-                        ICMLModule newconv = (ICMLModule) userConventions.get(convName);
+                        ICMLModule newconv = userConventions.get(convName);
                         newconv.inherit(conv);
                         conv = newconv;
                     } else {

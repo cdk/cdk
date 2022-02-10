@@ -20,11 +20,11 @@ public class AtomContainerPrinter {
 
     private class Edge implements Comparable<Edge> {
 
-        public String firstString;
-        public String lastString;
-        public int    first;
-        public int    last;
-        public int    order;
+        public final String firstString;
+        public final String lastString;
+        public final int    first;
+        public final int    last;
+        public final int    order;
 
         public Edge(int first, int last, int order, String firstString, String lastString) {
             this.first = first;
@@ -58,7 +58,7 @@ public class AtomContainerPrinter {
             sb.append(atom.getSymbol());
         }
         sb.append(' ');
-        List<Edge> edges = new ArrayList<Edge>();
+        List<Edge> edges = new ArrayList<>();
         for (IBond bond : atomContainer.bonds()) {
             IAtom a0 = bond.getBegin();
             IAtom a1 = bond.getEnd();
@@ -74,7 +74,7 @@ public class AtomContainerPrinter {
             }
         }
         Collections.sort(edges);
-        sb.append(edges.toString());
+        sb.append(edges);
         return sb.toString();
     }
 

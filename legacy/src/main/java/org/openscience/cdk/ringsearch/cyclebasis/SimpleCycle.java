@@ -25,7 +25,6 @@ package org.openscience.cdk.ringsearch.cyclebasis;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -75,8 +74,8 @@ public class SimpleCycle extends UndirectedSubgraph {
 
     static private Set inducedVertices(Set edges) {
         Set inducedVertices = new HashSet();
-        for (Iterator i = edges.iterator(); i.hasNext();) {
-            Edge edge = (Edge) i.next();
+        for (Object o : edges) {
+            Edge edge = (Edge) o;
             inducedVertices.add(edge.getSource());
             inducedVertices.add(edge.getTarget());
         }
@@ -90,9 +89,8 @@ public class SimpleCycle extends UndirectedSubgraph {
      */
     public double weight() {
         double result = 0;
-        Iterator edgeIterator = edgeSet().iterator();
-        while (edgeIterator.hasNext()) {
-            result += ((Edge) edgeIterator.next()).getWeight();
+        for (Object o : edgeSet()) {
+            result += ((Edge) o).getWeight();
         }
         return result;
     }

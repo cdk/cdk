@@ -33,7 +33,6 @@ import java.util.StringTokenizer;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.ZMatrixTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -188,23 +187,23 @@ public class ZMatrixReader extends DefaultChemObjectReader {
                         i++;
                     } else if (i == 1) {
                         types[i] = tokenizer.nextToken();
-                        d_atom[i] = Integer.valueOf(tokenizer.nextToken()) - 1;
+                        d_atom[i] = Integer.parseInt(tokenizer.nextToken()) - 1;
                         d[i] = Double.valueOf(tokenizer.nextToken());
                         i++;
                     } else if (i == 2) {
                         types[i] = tokenizer.nextToken();
-                        d_atom[i] = Integer.valueOf(tokenizer.nextToken()) - 1;
+                        d_atom[i] = Integer.parseInt(tokenizer.nextToken()) - 1;
                         d[i] = Double.valueOf(tokenizer.nextToken());
-                        a_atom[i] = Integer.valueOf(tokenizer.nextToken()) - 1;
+                        a_atom[i] = Integer.parseInt(tokenizer.nextToken()) - 1;
                         a[i] = Double.valueOf(tokenizer.nextToken());
                         i++;
                     } else {
                         types[i] = tokenizer.nextToken();
-                        d_atom[i] = Integer.valueOf(tokenizer.nextToken()) - 1;
+                        d_atom[i] = Integer.parseInt(tokenizer.nextToken()) - 1;
                         d[i] = Double.valueOf(tokenizer.nextToken());
-                        a_atom[i] = Integer.valueOf(tokenizer.nextToken()) - 1;
+                        a_atom[i] = Integer.parseInt(tokenizer.nextToken()) - 1;
                         a[i] = Double.valueOf(tokenizer.nextToken());
-                        da_atom[i] = Integer.valueOf(tokenizer.nextToken()) - 1;
+                        da_atom[i] = Integer.parseInt(tokenizer.nextToken()) - 1;
                         da[i] = Double.valueOf(tokenizer.nextToken());
                         i++;
                     }

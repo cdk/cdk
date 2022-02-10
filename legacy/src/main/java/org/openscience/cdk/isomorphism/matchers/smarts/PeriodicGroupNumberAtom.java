@@ -38,7 +38,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
 @Deprecated
 public class PeriodicGroupNumberAtom extends SMARTSAtom {
 
-    int groupNumber;
+    final int groupNumber;
 
     /**
      * Creates a new instance

@@ -121,7 +121,7 @@ import java.util.Arrays;
  */
 public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(BCUTDescriptor.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(BCUTDescriptor.class);
 
     // the number of negative & positive eigenvalues
     // to return for each class of BCUT descriptor
@@ -184,7 +184,7 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
      */
     @Override
     public Object[] getParameters() {
-        Object params[] = new Object[3];
+        Object[] params = new Object[3];
         params[0] = this.nhigh;
         params[1] = this.nlow;
         params[2] = this.checkAromaticity;

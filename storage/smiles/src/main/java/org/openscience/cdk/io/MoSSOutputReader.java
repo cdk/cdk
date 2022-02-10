@@ -63,7 +63,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class MoSSOutputReader extends DefaultChemObjectReader {
 
     private BufferedReader      input;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MoSSOutputReader.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MoSSOutputReader.class);
 
     /**
      * Create a reader for MoSS output files from a {@link Reader}.
@@ -118,9 +118,9 @@ public class MoSSOutputReader extends DefaultChemObjectReader {
         if (IAtomContainerSet.class.equals(testClass)) return true;
         if (IChemFile.class.equals(testClass)) return true;
         Class<?>[] interfaces = testClass.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IAtomContainerSet.class.equals(interfaces[i])) return true;
-            if (IChemFile.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IAtomContainerSet.class.equals(anInterface)) return true;
+            if (IChemFile.class.equals(anInterface)) return true;
         }
         Class superClass = testClass.getSuperclass();
         if (superClass != null) return this.accepts(superClass);

@@ -19,7 +19,7 @@ public abstract class AbstractFingerprinterTest extends CDKTestCase {
 
     public IFingerprinter getBitFingerprinter() {
         throw new IllegalAccessError("This method should be overwritten " + "by subclasses unit tests");
-    };
+    }
 
     /* override if method is implemented */
     @Test(expected = UnsupportedOperationException.class)

@@ -48,7 +48,7 @@ import java.io.IOException;
 @Deprecated
 public class MoleculeFactory {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MoleculeFactory.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(MoleculeFactory.class);
 
     public static IAtomContainer makeAlphaPinene() {
         IAtomContainer mol = new AtomContainer();
@@ -1236,10 +1236,10 @@ public class MoleculeFactory {
     }
 
     public static IAtomContainer loadMolecule(String inFile) {
-        ChemFile chemFile = null;
-        IChemSequence chemSequence = null;
-        IChemModel chemModel = null;
-        IAtomContainerSet setOfMolecules = null;
+        ChemFile chemFile;
+        IChemSequence chemSequence;
+        IChemModel chemModel;
+        IAtomContainerSet setOfMolecules;
         IAtomContainer molecule = null;
         try (FileInputStream fis = new FileInputStream(inFile);
              MDLReader mr = new MDLReader(fis)) {

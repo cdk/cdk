@@ -106,7 +106,7 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
     @Test
     public void testValid_Bromine() throws Exception {
 
-        List<double[]> spectrum = new ArrayList<double[]>();
+        List<double[]> spectrum = new ArrayList<>();
         spectrum.add(new double[]{157.8367, 51.399});
         spectrum.add(new double[]{159.8346, 100.00});
         spectrum.add(new double[]{161.8326, 48.639});
@@ -142,7 +142,7 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
 
         /** experimental results*/
 
-        List<double[]> spectrum = new ArrayList<double[]>();
+        List<double[]> spectrum = new ArrayList<>();
         spectrum.add(new double[]{133.0977, 100.00});
         spectrum.add(new double[]{134.09475, 0.6});
         spectrum.add(new double[]{134.1010, 5.4});

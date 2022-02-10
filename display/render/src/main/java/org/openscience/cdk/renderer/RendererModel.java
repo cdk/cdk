@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -58,9 +57,9 @@ public class RendererModel implements Serializable, Cloneable {
     /* If true, the class will notify its listeners of changes */
     private boolean                            notification         = true;
 
-    private transient List<ICDKChangeListener> listeners            = new ArrayList<ICDKChangeListener>();
+    private transient List<ICDKChangeListener> listeners            = new ArrayList<>();
 
-    private Map<IAtom, String>                 toolTipTextMap       = new HashMap<IAtom, String>();
+    private Map<IAtom, String>                 toolTipTextMap       = new HashMap<>();
 
     private IAtom                              highlightedAtom      = null;
 
@@ -72,7 +71,7 @@ public class RendererModel implements Serializable, Cloneable {
 
     private IChemObjectSelection               selection;
 
-    private Map<IAtom, IAtom>                  merge                = new HashMap<IAtom, IAtom>();
+    private final Map<IAtom, IAtom>                  merge                = new HashMap<>();
 
     /**
      * Color of a selection.
@@ -98,7 +97,7 @@ public class RendererModel implements Serializable, Cloneable {
         }
     }
 
-    private IGeneratorParameter<Color> externalHighlightColor = new ExternalHighlightColor();
+    private final IGeneratorParameter<Color> externalHighlightColor = new ExternalHighlightColor();
 
     /**
      * Padding between molecules in a grid or row.
@@ -120,11 +119,11 @@ public class RendererModel implements Serializable, Cloneable {
         /** {@inheritDoc} */
         @Override
         public Map<IChemObject, Color> getDefault() {
-            return new Hashtable<IChemObject, Color>();
+            return new Hashtable<>();
         }
     }
 
-    private IGeneratorParameter<Map<IChemObject, Color>> colorHash           = new ColorHash();
+    private final IGeneratorParameter<Map<IChemObject, Color>> colorHash           = new ColorHash();
 
     /**
      * Size of title font relative compared to atom symbols
@@ -166,7 +165,7 @@ public class RendererModel implements Serializable, Cloneable {
     /**
      * A map of {@link IGeneratorParameter} class names to instances.
      */
-    private Map<String, IGeneratorParameter<?>>          renderingParameters = new HashMap<String, IGeneratorParameter<?>>();
+    private final Map<String, IGeneratorParameter<?>>          renderingParameters = new HashMap<>();
 
     /**
      * Construct a renderer model with no parameters. To put parameters into
@@ -189,7 +188,7 @@ public class RendererModel implements Serializable, Cloneable {
      * @return a new List with {@link IGeneratorParameter}s
      */
     public List<IGeneratorParameter<?>> getRenderingParameters() {
-        List<IGeneratorParameter<?>> parameters = new ArrayList<IGeneratorParameter<?>>();
+        List<IGeneratorParameter<?>> parameters = new ArrayList<>();
         parameters.addAll(renderingParameters.values());
         return parameters;
     }
@@ -229,10 +228,7 @@ public class RendererModel implements Serializable, Cloneable {
         // only to return the default value anyway...
         try {
             return param.newInstance().getDefault();
-        } catch (InstantiationException exception) {
-            throw new IllegalArgumentException("Could not instantiate a default " + param.getClass().getName(),
-                    exception);
-        } catch (IllegalAccessException exception) {
+        } catch (InstantiationException | IllegalAccessException exception) {
             throw new IllegalArgumentException("Could not instantiate a default " + param.getClass().getName(),
                     exception);
         }
@@ -384,7 +380,7 @@ public class RendererModel implements Serializable, Cloneable {
      */
     public void addCDKChangeListener(ICDKChangeListener listener) {
         if (listeners == null) {
-            listeners = new ArrayList<ICDKChangeListener>();
+            listeners = new ArrayList<>();
         }
         if (!listeners.contains(listener)) {
             listeners.add(listener);
@@ -408,8 +404,8 @@ public class RendererModel implements Serializable, Cloneable {
     public void fireChange() {
         if (getNotification() && listeners != null) {
             EventObject event = new EventObject(this);
-            for (int i = 0; i < listeners.size(); i++) {
-                listeners.get(i).stateChanged(event);
+            for (ICDKChangeListener listener : listeners) {
+                listener.stateChanged(event);
             }
         }
     }
@@ -476,9 +472,8 @@ public class RendererModel implements Serializable, Cloneable {
             for (int i = 0; i < externalSelectedPart.getAtomCount(); i++) {
                 colorHash.put(externalSelectedPart.getAtom(i), getParameter(ExternalHighlightColor.class).getValue());
             }
-            Iterator<IBond> bonds = externalSelectedPart.bonds().iterator();
-            while (bonds.hasNext()) {
-                colorHash.put(bonds.next(), getParameter(ExternalHighlightColor.class).getValue());
+            for (IBond iBond : externalSelectedPart.bonds()) {
+                colorHash.put(iBond, getParameter(ExternalHighlightColor.class).getValue());
             }
         }
         fireChange();
@@ -511,6 +506,6 @@ public class RendererModel implements Serializable, Cloneable {
      */
     public void setNotification(boolean notification) {
         this.notification = notification;
-    };
+    }
 
 }

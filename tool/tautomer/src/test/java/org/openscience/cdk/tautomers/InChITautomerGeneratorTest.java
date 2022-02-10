@@ -52,7 +52,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 public class InChITautomerGeneratorTest extends CDKTestCase {
 
-    private SmilesParser           smilesParser;
+    private final SmilesParser           smilesParser;
     private InChITautomerGenerator tautomerGenerator = new InChITautomerGenerator();
 
     public InChITautomerGeneratorTest() throws CDKException {

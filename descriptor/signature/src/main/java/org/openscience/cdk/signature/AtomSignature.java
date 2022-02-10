@@ -79,7 +79,7 @@ public class AtomSignature extends AbstractVertexSignature {
     /**
      * The atom container to make signatures from.
      */
-    private IAtomContainer molecule;
+    private final IAtomContainer molecule;
 
     /**
      * Create an atom signature starting at <code>atomIndex</code>.

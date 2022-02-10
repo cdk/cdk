@@ -66,8 +66,8 @@ public class DefaultVFAtomMatcher implements VFAtomMatcher {
 
     static final long  serialVersionUID = -7861469841127327812L;
     private int        maximumNeighbors;
-    private String     symbol           = null;
-    private IAtom      qAtom            = null;
+    private String     symbol;
+    private IAtom      qAtom;
     private IQueryAtom smartQueryAtom   = null;
     private boolean    shouldMatchBonds = false;
 

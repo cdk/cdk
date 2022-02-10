@@ -19,7 +19,6 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
@@ -83,7 +82,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  */
 public class ChiChainDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static ILoggingTool   logger = LoggingToolFactory.createLoggingTool(ChiChainDescriptor.class);
+    private static final ILoggingTool   logger = LoggingToolFactory.createLoggingTool(ChiChainDescriptor.class);
     private SmilesParser          sp;
 
     private static final String[] NAMES  = {"SCH-3", "SCH-4", "SCH-5", "SCH-6", "SCH-7", "VCH-3", "VCH-4", "VCH-5",
@@ -139,9 +138,7 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
         // we don't make a clone, since removeHydrogens returns a deep copy
         IAtomContainer localAtomContainer = AtomContainerManipulator.removeHydrogens(container);
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
-        Iterator<IAtom> atoms = localAtomContainer.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : localAtomContainer.atoms()) {
             IAtomType type;
             try {
                 type = matcher.findMatchingAtomType(localAtomContainer, atom);
@@ -215,7 +212,7 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
     }
 
     private List order3(IAtomContainer container) {
-        List<List<Integer>> ret = new ArrayList<List<Integer>>();
+        List<List<Integer>> ret = new ArrayList<>();
 
         IRingSet rings = Cycles.sssr(container).toRingSet();
 
@@ -223,10 +220,8 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
         for (int i = 0; i < nring; i++) {
             IAtomContainer ring = rings.getAtomContainer(i);
             if (ring.getAtomCount() == 3) {
-                List<Integer> tmp = new ArrayList<Integer>();
-                Iterator<IAtom> iter = ring.atoms().iterator();
-                while (iter.hasNext()) {
-                    IAtom atom = iter.next();
+                List<Integer> tmp = new ArrayList<>();
+                for (IAtom atom : ring.atoms()) {
                     tmp.add(container.indexOf(atom));
                 }
                 ret.add(tmp);

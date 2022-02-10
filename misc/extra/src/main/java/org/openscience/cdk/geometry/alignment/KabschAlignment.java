@@ -92,15 +92,18 @@ import Jama.Matrix;
  */
 public class KabschAlignment {
 
-    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(KabschAlignment.class);
+    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(KabschAlignment.class);
 
     private double[][]   U;
     private double       rmsd   = -1.0;
-    private Point3d[]    p1, p2, rp;                                                          // rp are the rotated coordinates
-    private double[]     wts;
-    private int          npoint;
+    private final Point3d[]    p1;
+    private final Point3d[] p2;
+    private Point3d[] rp;                                                          // rp are the rotated coordinates
+    private final double[]     wts;
+    private final int          npoint;
     private Point3d      cm1, cm2;
-    private double[]     atwt1, atwt2;
+    private final double[]     atwt1;
+    private final double[] atwt2;
 
     private Point3d[] getPoint3dArray(IAtom[] a) {
         Point3d[] p = new Point3d[a.length];
@@ -319,12 +322,12 @@ public class KabschAlignment {
             tR[2][1] += p1[i].z * p2[i].y * wts[i];
             tR[2][2] += p1[i].z * p2[i].z * wts[i];
         }
-        double[][] R = new double[3][3];
+        double[][] R;
         tmp = new Matrix(tR);
         R = tmp.transpose().getArray();
 
         // now get the RtR (=R'R) matrix
-        double[][] RtR = new double[3][3];
+        double[][] RtR;
         Matrix jamaR = new Matrix(R);
         tmp = tmp.times(jamaR);
         RtR = tmp.getArray();

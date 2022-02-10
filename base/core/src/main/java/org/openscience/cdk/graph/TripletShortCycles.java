@@ -241,7 +241,7 @@ public final class TripletShortCycles {
     private final boolean   canonical;
 
     /** The current cycle basis. */
-    private final Set<Path> basis = new TreeSet<Path>();
+    private final Set<Path> basis = new TreeSet<>();
 
     /**
      * Compute the cycles of the extended smallest set of smallest rings (ESSSR)
@@ -493,7 +493,7 @@ public final class TripletShortCycles {
     private static class Path implements Comparable<Path> {
 
         /** Path of vertices. */
-        private int[] vertices;
+        private final int[] vertices;
 
         /**
          * Create a new path from the given vertices.

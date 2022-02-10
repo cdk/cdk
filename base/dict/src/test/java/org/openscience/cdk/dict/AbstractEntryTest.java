@@ -108,7 +108,7 @@ public abstract class AbstractEntryTest extends CDKTestCase {
     public void testRawContent() {
         Entry entry = getTestClass();
         Assert.assertNull(entry.getRawContent());
-        Object someObject = new Double(5);
+        Object someObject = 5.0;
         entry.setRawContent(someObject);
         Assert.assertEquals(someObject, entry.getRawContent());
     }

@@ -52,7 +52,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class IteratingSMILESReaderTest extends CDKTestCase {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingSMILESReaderTest.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingSMILESReaderTest.class);
 
     @Test
     public void testSMILESFileWithNames() throws Exception {
@@ -103,8 +103,8 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
 
         while (reader.hasNext()) {
 
-            IAtomContainer mol = (IAtomContainer) reader.next();
-            String title = (String) mol.getProperty(CDKConstants.TITLE);
+            IAtomContainer mol = reader.next();
+            String title = mol.getProperty(CDKConstants.TITLE);
             Assert.assertNotNull(title);
         }
 

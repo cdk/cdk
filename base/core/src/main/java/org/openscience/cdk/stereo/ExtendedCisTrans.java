@@ -31,8 +31,6 @@ import org.openscience.cdk.interfaces.IStereoElement;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
-
 /**
  * Extended Cis/Trans double bond configuration. This stereo element is
  * used to represent configurations of odd numbers of double bonds:

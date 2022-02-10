@@ -37,10 +37,10 @@ public class Matrix {
 
     // Attention! Variables are unprotected
     /** the content of this matrix **/
-    public double[][] matrix;
+    public final double[][] matrix;
 
     /** the number of rows of this matrix */
-    public int        rows;
+    public final int        rows;
     /** the number of columns of this matrix */
     public int        columns;
 
@@ -257,7 +257,7 @@ public class Matrix {
         DecimalFormat format = new DecimalFormat("00.0000");
         format.setPositivePrefix("+");
 
-        StringBuffer str = new StringBuffer();
+        StringBuilder str = new StringBuilder();
         for (i = 0; i < (rows - 1); i++) {
             for (j = 0; j < (columns - 1); j++)
                 if (Math.round(matrix[i][j] * 10000) != 0)

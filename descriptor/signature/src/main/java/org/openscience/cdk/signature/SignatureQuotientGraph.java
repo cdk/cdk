@@ -45,7 +45,7 @@ public class SignatureQuotientGraph extends AbstractQuotientGraph {
     /**
      * The atom container to work on
      */
-    private IAtomContainer atomContainer;
+    private final IAtomContainer atomContainer;
 
     /**
      * Construct a quotient graph from the symmetry classes generated from the

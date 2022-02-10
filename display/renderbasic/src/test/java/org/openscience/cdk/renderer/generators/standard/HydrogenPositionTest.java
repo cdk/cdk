@@ -146,7 +146,7 @@ public class HydrogenPositionTest {
     public void useDefaultPlacementWithNoBonds() throws Exception {
         IAtom atom = mock(IAtom.class);
         when(atom.getAtomicNumber()).thenReturn(8);
-        assertThat(HydrogenPosition.position(atom, Collections.<IAtom> emptyList()), is(Left));
+        assertThat(HydrogenPosition.position(atom, Collections.emptyList()), is(Left));
     }
 
     @Test

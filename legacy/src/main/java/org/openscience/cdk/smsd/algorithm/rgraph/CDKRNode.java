@@ -50,11 +50,11 @@ public class CDKRNode {
 
     // G1/G2 mapping
 
-    private CDKRMap rMap      = null;
+    private CDKRMap rMap;
     // set of neighbour nodes in the RGraph
-    private BitSet  extension = null;
+    private BitSet  extension;
     // set of incompatible nodes in the RGraph
-    private BitSet  forbidden = null;
+    private BitSet  forbidden;
 
     /**
      *  Constructor for the RNode object

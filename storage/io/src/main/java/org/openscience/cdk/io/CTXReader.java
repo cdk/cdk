@@ -24,7 +24,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -52,7 +51,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
 public class CTXReader extends DefaultChemObjectReader {
 
     private BufferedReader      input;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CTXReader.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(CTXReader.class);
 
     private IChemFile           file;
 
@@ -96,8 +95,8 @@ public class CTXReader extends DefaultChemObjectReader {
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IChemFile.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IChemFile.class.equals(anInterface)) return true;
         }
         Class superClass = classObject.getSuperclass();
         if (superClass != null) return this.accepts(superClass);
@@ -126,7 +125,7 @@ public class CTXReader extends DefaultChemObjectReader {
             String line = input.readLine();
             while (input.ready() && line != null) {
                 logger.debug((lineNumber++) + ": ", line);
-                String command = null;
+                String command;
                 if (isCommand(line)) {
                     command = getCommand(line);
                     int lineCount = getContentLinesCount(line);
@@ -198,7 +197,7 @@ public class CTXReader extends DefaultChemObjectReader {
                 IBond bond = container.getBuilder().newInstance(IBond.class, container.getAtom(atom1),
                         container.getAtom(atom2));
                 int order = Integer.parseInt(line.substring(23).trim());
-                bond.setOrder(BondManipulator.createBondOrder((double) order));
+                bond.setOrder(BondManipulator.createBondOrder(order));
                 container.addBond(bond);
             } // else: bond already present; CTX store the bonds twice
         }

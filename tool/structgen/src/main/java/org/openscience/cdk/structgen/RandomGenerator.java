@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  */
 public class RandomGenerator {
 
-    ILoggingTool           logger            = LoggingToolFactory.createLoggingTool(RandomGenerator.class);
+    final ILoggingTool           logger            = LoggingToolFactory.createLoggingTool(RandomGenerator.class);
 
     private IAtomContainer proposedStructure = null;
     private IAtomContainer molecule          = null;
@@ -113,16 +113,16 @@ public class RandomGenerator {
     public void mutate(IAtomContainer ac) {
         logger.debug("RandomGenerator->mutate() Start");
         int nrOfAtoms = ac.getAtomCount();
-        int x1 = 0, x2 = 0, y1 = 0, y2 = 0;
-        double a11 = 0, a12 = 0, a22 = 0, a21 = 0;
-        double b11 = 0, lowerborder = 0, upperborder = 0;
+        int x1, x2, y1, y2;
+        double a11, a12, a22, a21;
+        double b11 = 0, lowerborder, upperborder;
 
-        IAtom ax1 = null, ax2 = null, ay1 = null, ay2 = null;
-        IBond b1 = null, b2 = null, b3 = null, b4 = null;
+        IAtom ax1, ax2, ay1, ay2;
+        IBond b1, b2, b3, b4;
         int[] choices = new int[3];
-        int choiceCounter = 0;
+        int choiceCounter;
         /* We need at least two non-zero bonds in order to be successful */
-        int nonZeroBondsCounter = 0;
+        int nonZeroBondsCounter;
         do {
             do {
                 nonZeroBondsCounter = 0;

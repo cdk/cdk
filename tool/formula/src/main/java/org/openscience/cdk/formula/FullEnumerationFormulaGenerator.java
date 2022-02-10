@@ -97,8 +97,8 @@ class FullEnumerationFormulaGenerator implements IFormulaGenerator {
      * The lastIncreasedPosition index indicates the last position in
      * currentCounts that was increased by calling increaseCounter(position)
      */
-    private final IIsotope isotopes[];
-    private final int minCounts[], maxCounts[], currentCounts[];
+    private final IIsotope[] isotopes;
+    private final int[] minCounts, maxCounts, currentCounts;
     private int lastIncreasedPosition = 0;
 
     /**
@@ -155,7 +155,7 @@ class FullEnumerationFormulaGenerator implements IFormulaGenerator {
 
         // Sort the elements by mass in ascending order. That speeds up
         // the search.
-        final TreeSet<IIsotope> isotopesSet = new TreeSet<IIsotope>(
+        final TreeSet<IIsotope> isotopesSet = new TreeSet<>(
                 new IIsotopeSorterByMass());
         for (IIsotope isotope : mfRange.isotopes()) {
             // Check if exact mass of each isotope is set

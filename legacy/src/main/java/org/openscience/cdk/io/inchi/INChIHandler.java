@@ -51,8 +51,8 @@ import org.xml.sax.helpers.DefaultHandler;
 @Deprecated
 public class INChIHandler extends DefaultHandler {
 
-    private static ILoggingTool       logger = LoggingToolFactory.createLoggingTool(INChIHandler.class);
-    private INChIContentProcessorTool inchiTool;
+    private static final ILoggingTool       logger = LoggingToolFactory.createLoggingTool(INChIHandler.class);
+    private final INChIContentProcessorTool inchiTool;
 
     private ChemFile                  chemFile;
     private ChemSequence              chemSequence;
@@ -154,7 +154,7 @@ public class INChIHandler extends DefaultHandler {
      * @param ch        characters to handle
      */
     @Override
-    public void characters(char ch[], int start, int length) {
+    public void characters(char[] ch, int start, int length) {
         logger.debug("character data");
         currentChars += new String(ch, start, length);
     }

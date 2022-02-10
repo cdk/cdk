@@ -49,7 +49,7 @@ public class MMFF94BasedParameterSetReaderTest {
     public void testreadParameterSets() throws Exception {
         MMFF94BasedParameterSetReader mmff94bpsr = new MMFF94BasedParameterSetReader();
         mmff94bpsr.readParameterSets(DefaultChemObjectBuilder.getInstance());
-        Map<String, Object> parameterSet = new Hashtable<String, Object>();
+        Map<String, Object> parameterSet;
         parameterSet = mmff94bpsr.getParamterSet();
 
         //test atom type
@@ -77,12 +77,12 @@ public class MMFF94BasedParameterSetReaderTest {
         String sk4 = "715.009";
         String sbci = "0.0000";
         String bondkey = "bond" + sid1 + ";" + sid2;
-        List<Double> bonddata = new ArrayList<Double>();
-        bonddata.add((Double) (new Double(slen).doubleValue()));
-        bonddata.add((Double) (new Double(sk2).doubleValue()));
-        bonddata.add((Double) (new Double(sk3).doubleValue()));
-        bonddata.add((Double) (new Double(sk4).doubleValue()));
-        bonddata.add((Double) (new Double(sbci).doubleValue()));
+        List<Double> bonddata = new ArrayList<>();
+        bonddata.add(new Double(slen));
+        bonddata.add(new Double(sk2));
+        bonddata.add(new Double(sk3));
+        bonddata.add(new Double(sk4));
+        bonddata.add(new Double(sbci));
 
         //strbnd
         //		scode = "0";
@@ -92,9 +92,9 @@ public class MMFF94BasedParameterSetReaderTest {
         String value1 = "14.82507";
         String value2 = "14.82507";
         String strbndkey = "strbnd" + sid1 + ";" + sid2 + ";" + sid3;
-        List<Double> strbnddata = new ArrayList<Double>();
-        strbnddata.add((Double) (new Double(value1).doubleValue()));
-        strbnddata.add((Double) (new Double(value2).doubleValue()));
+        List<Double> strbnddata = new ArrayList<>();
+        strbnddata.add(new Double(value1));
+        strbnddata.add(new Double(value2));
 
         //angle
         //      scode = "0";
@@ -106,11 +106,11 @@ public class MMFF94BasedParameterSetReaderTest {
         String value3 = "-34.5494";
         String value4 = "0";
         String anglekey = "angle" + sid1 + ";" + sid2 + ";" + sid3;
-        List<Double> angledata = new ArrayList<Double>();
-        angledata.add((Double) (new Double(value1).doubleValue()));
-        angledata.add((Double) (new Double(value2).doubleValue()));
-        angledata.add((Double) (new Double(value3).doubleValue()));
-        angledata.add((Double) (new Double(value4).doubleValue()));
+        List<Double> angledata = new ArrayList<>();
+        angledata.add(new Double(value1));
+        angledata.add(new Double(value2));
+        angledata.add(new Double(value3));
+        angledata.add(new Double(value4));
 
         //torsion
         //	    scode = "0";
@@ -124,12 +124,12 @@ public class MMFF94BasedParameterSetReaderTest {
         value4 = "0.000";
         String value5 = "0.000";
         String torsionkey = "torsion" + ";" + sid1 + ";" + sid2 + ";" + sid3 + ";" + sid4;
-        List<Double> torsiondata = new ArrayList<Double>();
-        torsiondata.add((Double) (new Double(value1).doubleValue()));
-        torsiondata.add((Double) (new Double(value2).doubleValue()));
-        torsiondata.add((Double) (new Double(value3).doubleValue()));
-        torsiondata.add((Double) (new Double(value4).doubleValue()));
-        torsiondata.add((Double) (new Double(value5).doubleValue()));
+        List<Double> torsiondata = new ArrayList<>();
+        torsiondata.add(new Double(value1));
+        torsiondata.add(new Double(value2));
+        torsiondata.add(new Double(value3));
+        torsiondata.add(new Double(value4));
+        torsiondata.add(new Double(value5));
 
         //opbend
         //      scode = "0";
@@ -139,8 +139,8 @@ public class MMFF94BasedParameterSetReaderTest {
         sid4 = "CR4R";
         value1 = "10.86681780";
         String opbendkey = "opbend" + ";" + sid1 + ";" + sid2 + ";" + sid3 + ";" + sid4;
-        List<Double> opbenddata = new ArrayList<Double>();
-        opbenddata.add((Double) (new Double(value1).doubleValue()));
+        List<Double> opbenddata = new ArrayList<>();
+        opbenddata.add(new Double(value1));
 
         //TODO data lines testing
 

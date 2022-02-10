@@ -29,8 +29,8 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
     @Test
     public void testSetProperty_Object_Object() {
         IChemObject chemObject = newChemObject();
-        String cDescription = new String("description");
-        String cProperty = new String("property");
+        String cDescription = "description";
+        String cProperty = "property";
         chemObject.setProperty(cDescription, cProperty);
         Assert.assertEquals(cProperty, chemObject.getProperty(cDescription));
     }
@@ -39,7 +39,7 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
     public void testSetProperties_Map() {
         IChemObject chemObject = newChemObject();
         chemObject.setProperty("remove", "me");
-        Map<Object, Object> props = new Hashtable<Object, Object>();
+        Map<Object, Object> props = new Hashtable<>();
         props.put("keep", "me");
         chemObject.setProperties(props);
         Assert.assertEquals("me", chemObject.getProperty("keep"));
@@ -49,9 +49,9 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
     @Test
     public void testAddProperties_Map() {
         IChemObject chemObject = newChemObject();
-        Map<Object, Object> props = new Hashtable<Object, Object>();
-        String cDescription = new String("description");
-        String cProperty = new String("property");
+        Map<Object, Object> props = new Hashtable<>();
+        String cDescription = "description";
+        String cProperty = "property";
         props.put(cDescription, cProperty);
         chemObject.addProperties(props);
         Assert.assertEquals(cProperty, chemObject.getProperty(cDescription));
@@ -94,8 +94,8 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
     @Test
     public void testRemoveProperty_Object() {
         IChemObject chemObject = newChemObject();
-        String cDescription = new String("description");
-        String cProperty = new String("property");
+        String cDescription = "description";
+        String cProperty = "property";
         chemObject.setProperty(cDescription, cProperty);
         Assert.assertNotNull(chemObject.getProperty(cDescription));
         chemObject.removeProperty(cDescription);
@@ -246,12 +246,12 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
     @Test
     public void testClone_Properties() throws Exception {
         IChemObject chemObject1 = newChemObject();
-        Map<Object, Object> props1 = new Hashtable<Object, Object>();
+        Map<Object, Object> props1 = new Hashtable<>();
         chemObject1.addProperties(props1);
         IChemObject chemObject2 = (IChemObject) chemObject1.clone();
 
         // test cloning of properties field
-        Map<Object, Object> props2 = new Hashtable<Object, Object>();
+        Map<Object, Object> props2 = new Hashtable<>();
         props2.put("key", "value");
         chemObject2.addProperties(props2);
         Assert.assertEquals(props1, chemObject1.getProperties());
@@ -262,14 +262,14 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
     @Test
     public void testClone_Properties2() throws Exception {
         IChemObject chemObject1 = newChemObject();
-        Map<Object, Object> props1 = new Hashtable<Object, Object>();
+        Map<Object, Object> props1 = new Hashtable<>();
         IAtom atom = chemObject1.getBuilder().newInstance(IAtom.class, "C");
         props1.put("atom", atom);
         chemObject1.addProperties(props1);
         IChemObject chemObject2 = (IChemObject) chemObject1.clone();
 
         // test cloning of properties field
-        Map<Object, Object> props2 = new Hashtable<Object, Object>();
+        Map<Object, Object> props2 = new Hashtable<>();
         chemObject2.addProperties(props2);
         Assert.assertEquals(props1, chemObject1.getProperties());
         Assert.assertEquals(1, chemObject2.getProperties().size());
@@ -343,7 +343,7 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
 
         @Test
         @Override
-        public void stateChanged(IChemObjectChangeEvent event) {};
+        public void stateChanged(IChemObjectChangeEvent event) {}
     }
 
     @Test

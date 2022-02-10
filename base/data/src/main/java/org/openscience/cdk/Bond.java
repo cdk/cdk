@@ -69,12 +69,12 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
     /**
      * Number of atoms contained by this object.
      */
-    protected int             atomCount        = 0;
+    protected int             atomCount;
 
     /**
      * A list of atoms participating in this bond.
      */
-    protected IAtom[]         atoms            = null;
+    protected IAtom[]         atoms;
 
     /**
      * A descriptor the stereochemical orientation of this bond.
@@ -164,13 +164,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      */
     @Override
     public Iterable<IAtom> atoms() {
-        return new Iterable<IAtom>() {
-
-            @Override
-            public Iterator<IAtom> iterator() {
-                return new AtomsIterator();
-            }
-        };
+        return AtomsIterator::new;
     }
 
     /**
@@ -564,7 +558,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
             clone.atoms = new IAtom[atoms.length];
             for (int f = 0; f < atoms.length; f++) {
                 if (atoms[f] != null) {
-                    clone.atoms[f] = (IAtom) ((IAtom) atoms[f]).clone();
+                    clone.atoms[f] = atoms[f].clone();
                 }
             }
         }
@@ -597,7 +591,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      */
     @Override
     public String toString() {
-        StringBuffer resultString = new StringBuffer(32);
+        StringBuilder resultString = new StringBuilder(32);
         resultString.append("Bond(").append(this.hashCode());
         if (getOrder() != null) {
             resultString.append(", #O:").append(getOrder());

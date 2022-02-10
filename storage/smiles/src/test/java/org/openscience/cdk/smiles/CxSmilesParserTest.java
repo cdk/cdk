@@ -211,7 +211,7 @@ public class CxSmilesParserTest {
         CxSmilesState state = new CxSmilesState();
         assertThat(CxSmilesParser.processCx("|SgD::cdk&#58;ReactionConditions:Heat&#10;Hv|", state), is(not(-1)));
         assertThat(state.mysgroups,
-                   hasItem(new CxSmilesState.CxDataSgroup(new ArrayList<Integer>(), "cdk:ReactionConditions", "Heat\nHv", "", "", "")));
+                   hasItem(new CxSmilesState.CxDataSgroup(new ArrayList<>(), "cdk:ReactionConditions", "Heat\nHv", "", "", "")));
     }
 
     @Test public void unescape() {
@@ -376,8 +376,8 @@ public class CxSmilesParserTest {
      */
     private static class AprxDoubleArray extends BaseMatcher<double[]> {
 
-        double[] expected;
-        double epsilon = 0.01;
+        final double[] expected;
+        final double epsilon = 0.01;
 
         public AprxDoubleArray(double ... expected) {
             this.expected = expected;

@@ -24,10 +24,8 @@ package org.openscience.cdk;
 
 import org.openscience.cdk.test.interfaces.AbstractPolymerTest;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IPolymer;
-import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -45,13 +43,7 @@ public class PolymerTest extends AbstractPolymerTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new Polymer();
-            }
-        });
+        setTestObjectBuilder(Polymer::new);
     }
 
     @Test

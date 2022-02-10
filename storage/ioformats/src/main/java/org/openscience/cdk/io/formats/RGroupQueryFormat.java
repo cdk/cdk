@@ -81,7 +81,7 @@ public class RGroupQueryFormat extends SimpleChemFormatMatcher implements IChemF
     /** {@inheritDoc} */
     @Override
     public boolean matches(int lineNumber, String line) {
-        if (line.indexOf("$RGP") >= 0)
+        if (line.contains("$RGP"))
             return true;
         else
             return false;

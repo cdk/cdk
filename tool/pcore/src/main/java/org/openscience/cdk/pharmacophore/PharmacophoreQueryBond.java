@@ -122,7 +122,7 @@ public class PharmacophoreQueryBond extends Bond implements IQueryBond {
      */
     @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append("DC::" + getAtom(0) + "::" + getAtom(1) + "::[" + getLower() + " - " + getUpper() + "] ");
         return sb.toString();
     }

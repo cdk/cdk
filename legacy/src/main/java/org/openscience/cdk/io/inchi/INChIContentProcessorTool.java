@@ -36,7 +36,7 @@ import java.util.regex.Pattern;
 @Deprecated
 public class INChIContentProcessorTool {
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(INChIContentProcessorTool.class); ;
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(INChIContentProcessorTool.class);
 
     public INChIContentProcessorTool() {}
 
@@ -93,7 +93,7 @@ public class INChIContentProcessorTool {
     public void processConnections(String bondsEncoding, IAtomContainer container, int source) {
         logger.debug("Parsing bond data: ", bondsEncoding);
 
-        IBond bondToAdd = null;
+        IBond bondToAdd;
         /* Fixme: treatment of branching is too limited! */
         String remainder = bondsEncoding;
         while (remainder.length() > 0) {
@@ -139,7 +139,7 @@ public class INChIContentProcessorTool {
     private String chopBranch(String remainder) {
         boolean doChop = false;
         int branchLevel = 0;
-        StringBuffer choppedString = new StringBuffer();
+        StringBuilder choppedString = new StringBuilder();
         for (int i = 0; i < remainder.length(); i++) {
             char currentChar = remainder.charAt(i);
             if (currentChar == '(') {

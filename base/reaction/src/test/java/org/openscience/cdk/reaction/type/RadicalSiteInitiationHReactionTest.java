@@ -51,7 +51,7 @@ import java.util.List;
  */
 public class RadicalSiteInitiationHReactionTest extends ReactionProcessTest {
 
-    private IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    private final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
     /**
      *  The JUnit setup method
@@ -85,7 +85,7 @@ public class RadicalSiteInitiationHReactionTest extends ReactionProcessTest {
         /* initiate */
         makeSureAtomTypesAreRecognized(molecule);
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);
@@ -132,7 +132,7 @@ public class RadicalSiteInitiationHReactionTest extends ReactionProcessTest {
         molecule.getBond(2).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(3).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -178,7 +178,7 @@ public class RadicalSiteInitiationHReactionTest extends ReactionProcessTest {
         molecule.getBond(2).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(3).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
@@ -217,7 +217,7 @@ public class RadicalSiteInitiationHReactionTest extends ReactionProcessTest {
         molecule.getBond(2).setFlag(CDKConstants.REACTIVE_CENTER, true);
         molecule.getBond(3).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);

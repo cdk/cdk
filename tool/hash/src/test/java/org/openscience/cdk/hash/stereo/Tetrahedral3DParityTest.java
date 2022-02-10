@@ -38,8 +38,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class Tetrahedral3DParityTest {
 
-    private static int CLOCKWISE     = -1;
-    private static int ANTICLOCKWISE = +1;
+    private static final int CLOCKWISE     = -1;
+    private static final int ANTICLOCKWISE = +1;
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstruction_Empty() throws Exception {

@@ -42,7 +42,7 @@ public interface IMonomer extends IAtomContainer {
      * @return The name of the Monomer object
      * @see    #setMonomerName
      */
-    public String getMonomerName();
+    String getMonomerName();
 
     /**
      * Retrieve the monomer type.
@@ -50,7 +50,7 @@ public interface IMonomer extends IAtomContainer {
      * @return The type of the Monomer object
      * @see    #setMonomerType
      */
-    public String getMonomerType();
+    String getMonomerType();
 
     /**
      * Set the name of the Monomer object.
@@ -58,7 +58,7 @@ public interface IMonomer extends IAtomContainer {
      * @param cMonomerName  The new name for this monomer
      * @see    #getMonomerName
      */
-    public void setMonomerName(String cMonomerName);
+    void setMonomerName(String cMonomerName);
 
     /**
      * Set the type of the Monomer object.
@@ -66,11 +66,11 @@ public interface IMonomer extends IAtomContainer {
      * @param cMonomerType  The new type for this monomer
      * @see    #getMonomerType
      */
-    public void setMonomerType(String cMonomerType);
+    void setMonomerType(String cMonomerType);
 
     /**
      *{@inheritDoc}
      */
     @Override
-    public IMonomer clone() throws CloneNotSupportedException;
+    IMonomer clone() throws CloneNotSupportedException;
 }

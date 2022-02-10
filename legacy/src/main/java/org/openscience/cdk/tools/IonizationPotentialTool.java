@@ -165,7 +165,7 @@ public class IonizationPotentialTool {
      * @return           True, if it belongs
      */
     private static boolean familyBond(IAtomContainer container, IBond bond) {
-        List<String> normalAt = new ArrayList<String>();
+        List<String> normalAt = new ArrayList<>();
         normalAt.add("C");
         normalAt.add("H");
 
@@ -363,7 +363,7 @@ public class IonizationPotentialTool {
      * @return              The result
      */
     private static double getDTHalogenF(double[] resultsH) {
-        double result = 0.0;
+        double result;
         double SE = resultsH[0];
         double PSC = resultsH[2];
         double PIC = resultsH[3];
@@ -388,7 +388,7 @@ public class IonizationPotentialTool {
      * @return              The result
      */
     private static double getDTOxygenF(double[] resultsH) {
-        double result = 0.0;
+        double result;
         double SE = resultsH[0];
         double PE = resultsH[1];
         double PSC = resultsH[2];
@@ -413,7 +413,7 @@ public class IonizationPotentialTool {
      * @return              The result
      */
     private static double getDTNitrogenF(double[] resultsH) {
-        double result = 0.0;
+        double result;
         double SE = resultsH[0];
         double PE = resultsH[1];
         double PSC = resultsH[2];
@@ -436,7 +436,7 @@ public class IonizationPotentialTool {
      * @return              The result
      */
     private static double getDTBondF(double[] resultsH) {
-        double result = 0.0;
+        double result;
         double SE = resultsH[0];
         double PE = resultsH[1];
         double PSC = resultsH[2];
@@ -465,7 +465,7 @@ public class IonizationPotentialTool {
         setOfReactants.addAtomContainer(container);
 
         atom.setFlag(CDKConstants.REACTIVE_CENTER, true);
-        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        List<IParameterReact> paramList = new ArrayList<>();
         IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);

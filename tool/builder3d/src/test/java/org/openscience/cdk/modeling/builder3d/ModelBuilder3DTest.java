@@ -24,7 +24,6 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.vecmath.Point2d;
@@ -300,7 +299,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
         Assume.assumeTrue(runSlowTests());
 
         boolean notCalculatedResults = false;
-        List<IAtomContainer> inputList = new ArrayList<IAtomContainer>();
+        List<IAtomContainer> inputList = new ArrayList<>();
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         //generate the input molecules. This are molecules without x, y, z coordinats
@@ -318,11 +317,10 @@ public class ModelBuilder3DTest extends CDKTestCase {
         // Generate 2D coordinates for the input molecules with the Structure Diagram Generator
 
         StructureDiagramGenerator str;
-        List<IAtomContainer> resultList = new ArrayList<IAtomContainer>();
-        for (Iterator<IAtomContainer> iter = inputList.iterator(); iter.hasNext();) {
-            IAtomContainer molecules = iter.next();
+        List<IAtomContainer> resultList = new ArrayList<>();
+        for (IAtomContainer molecules : inputList) {
             str = new StructureDiagramGenerator();
-            str.setMolecule((IAtomContainer) molecules);
+            str.setMolecule(molecules);
             str.generateCoordinates();
             resultList.add(str.getMolecule());
         }
@@ -331,10 +329,8 @@ public class ModelBuilder3DTest extends CDKTestCase {
         /////////////////////////////////////////////////////////////////////////////////////////////
         // Delete x and y coordinates
 
-        for (Iterator<IAtomContainer> iter = inputList.iterator(); iter.hasNext();) {
-            IAtomContainer molecules = iter.next();
-            for (Iterator<IAtom> atom = molecules.atoms().iterator(); atom.hasNext();) {
-                IAtom last = atom.next();
+        for (IAtomContainer molecules : inputList) {
+            for (IAtom last : molecules.atoms()) {
                 last.setPoint2d(null);
             }
         }

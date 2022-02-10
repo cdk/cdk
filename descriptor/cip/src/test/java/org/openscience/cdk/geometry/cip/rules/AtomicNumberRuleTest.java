@@ -23,7 +23,6 @@
 package org.openscience.cdk.geometry.cip.rules;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
@@ -43,7 +42,7 @@ import org.openscience.cdk.smiles.SmilesParser;
  */
 public class AtomicNumberRuleTest extends CDKTestCase {
 
-    static SmilesParser   smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
+    static final SmilesParser   smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
     static IAtomContainer molecule;
 
     @BeforeClass
@@ -74,13 +73,13 @@ public class AtomicNumberRuleTest extends CDKTestCase {
         ILigand ligand2 = new Ligand(molecule, visitedAtoms, molecule.getAtom(1), molecule.getAtom(3));
         ILigand ligand3 = new Ligand(molecule, visitedAtoms, molecule.getAtom(1), molecule.getAtom(2));
         ILigand ligand4 = new Ligand(molecule, visitedAtoms, molecule.getAtom(1), molecule.getAtom(0));
-        List<ILigand> ligands = new ArrayList<ILigand>();
+        List<ILigand> ligands = new ArrayList<>();
         ligands.add(ligand1);
         ligands.add(ligand2);
         ligands.add(ligand3);
         ligands.add(ligand4);
 
-        Collections.sort(ligands, new AtomicNumberRule());
+        ligands.sort(new AtomicNumberRule());
         Assert.assertEquals("H", ligands.get(0).getLigandAtom().getSymbol());
         Assert.assertEquals("Cl", ligands.get(1).getLigandAtom().getSymbol());
         Assert.assertEquals("Br", ligands.get(2).getLigandAtom().getSymbol());

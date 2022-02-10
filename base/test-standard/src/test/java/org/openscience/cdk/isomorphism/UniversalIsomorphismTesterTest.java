@@ -66,7 +66,7 @@ import java.util.List;
  */
 public class UniversalIsomorphismTesterTest extends CDKTestCase {
 
-    boolean                            standAlone = false;
+    final boolean                            standAlone = false;
     private UniversalIsomorphismTester uiTester;
 
     @Before
@@ -181,8 +181,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase {
         String queryfile = "decalin.mol";
         IAtomContainer mol = new AtomContainer();
         IAtomContainer temp = new AtomContainer();
-        QueryAtomContainer query1 = null;
-        QueryAtomContainer query2 = null;
+        QueryAtomContainer query1;
+        QueryAtomContainer query2;
 
         InputStream ins = this.getClass().getResourceAsStream(molfile);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
@@ -304,15 +304,13 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase {
         //Test for atom mapping between the mols
         List<List<RMap>> list = uiTester.search(mol1, mol2, new BitSet(), new BitSet(), true, true);
         Assert.assertEquals(3, list.size());
-        for (int i = 0; i < list.size(); i++) {
-            List<RMap> first = list.get(i);
+        for (List<RMap> first : list) {
             Assert.assertNotSame(0, first.size());
         }
 
         list = uiTester.search(mol1, mol2, new BitSet(), new BitSet(), false, false);
         Assert.assertEquals(1, list.size());
-        for (int i = 0; i < list.size(); i++) {
-            List<RMap> first = list.get(i);
+        for (List<RMap> first : list) {
             Assert.assertNotSame(0, first.size());
         }
     }
@@ -329,8 +327,7 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase {
         List<List<RMap>> list = uiTester.getSubgraphAtomsMaps(mol1, mol2);
         Assert.assertNotNull(list);
         Assert.assertNotSame(0, list.size());
-        for (int i = 0; i < list.size(); i++) {
-            List<RMap> first = list.get(i);
+        for (List<RMap> first : list) {
             Assert.assertNotNull(first);
             Assert.assertNotSame(0, first.size());
         }
@@ -359,8 +356,7 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase {
         List<List<RMap>> list = uiTester.getSubgraphAtomsMaps(mol1, mol2);
         Assert.assertNotNull(list);
         Assert.assertEquals(2, list.size());
-        for (int i = 0; i < list.size(); i++) {
-            List<RMap> first = list.get(i);
+        for (List<RMap> first : list) {
             Assert.assertNotNull(first);
             Assert.assertEquals(4, first.size());
         }
@@ -381,7 +377,7 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase {
         InputStream ins2 = this.getClass().getResourceAsStream(file2);
         new MDLV2000Reader(ins2, Mode.STRICT).read(mol2);
         AtomContainerAtomPermutor permutor = new AtomContainerAtomPermutor(mol2);
-        mol2 = new AtomContainer((AtomContainer) permutor.next());
+        mol2 = new AtomContainer(permutor.next());
 
         List<IAtomContainer> list1 = uiTester.getOverlaps(mol1, mol2);
         List<IAtomContainer> list2 = uiTester.getOverlaps(mol2, mol1);
@@ -554,11 +550,11 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase {
         String filename = "UITTimeout.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
-        ChemFile content = (ChemFile) reader.read(new ChemFile());
+        ChemFile content = reader.read(new ChemFile());
         List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer[] molecules = new IAtomContainer[2];
         for (int j = 0; j < 2; j++) {
-            IAtomContainer aAtomContainer = (IAtomContainer) cList.get(j);
+            IAtomContainer aAtomContainer = cList.get(j);
             CDKAtomTypeMatcher tmpMatcher = CDKAtomTypeMatcher.getInstance(aAtomContainer.getBuilder());
             CDKHydrogenAdder tmpAdder = CDKHydrogenAdder.getInstance(aAtomContainer.getBuilder());
             for (int i = 0; i < aAtomContainer.getAtomCount(); i++) {

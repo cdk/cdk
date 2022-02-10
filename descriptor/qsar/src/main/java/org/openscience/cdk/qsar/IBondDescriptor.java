@@ -38,6 +38,6 @@ public interface IBondDescriptor extends IDescriptor {
      * @return An object of {@link DescriptorValue} that contain the
      *         calculated value as well as specification details
      */
-    public DescriptorValue calculate(IBond bond, IAtomContainer atomContainer);
+    DescriptorValue calculate(IBond bond, IAtomContainer atomContainer);
 
 }

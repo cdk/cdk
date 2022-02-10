@@ -144,7 +144,7 @@ public class DefaultBondMatcher implements BondMatcher {
     }
 
     private int getValency(IAtom atom) {
-        return (atom.getValency() == null) ? 0 : atom.getValency().intValue();
+        return (atom.getValency() == null) ? 0 : atom.getValency();
     }
 
     private int getUnsaturation(IAtomContainer container, IBond bond) {

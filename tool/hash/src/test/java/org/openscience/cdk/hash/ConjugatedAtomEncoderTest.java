@@ -55,7 +55,7 @@ public class ConjugatedAtomEncoderTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstruction_Empty() {
-        new ConjugatedAtomEncoder(Collections.<AtomEncoder> emptyList());
+        new ConjugatedAtomEncoder(Collections.emptyList());
     }
 
     /**
@@ -69,7 +69,7 @@ public class ConjugatedAtomEncoderTest {
         IAtom atom = mock(IAtom.class);
         IAtomContainer container = mock(IAtomContainer.class);
 
-        List<AtomEncoder> encoders = new ArrayList<AtomEncoder>();
+        List<AtomEncoder> encoders = new ArrayList<>();
         encoders.add(a);
         encoders.add(b);
         encoders.add(c);

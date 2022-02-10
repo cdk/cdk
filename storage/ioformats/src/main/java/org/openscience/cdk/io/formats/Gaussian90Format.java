@@ -74,7 +74,7 @@ public class Gaussian90Format extends SimpleChemFormatMatcher implements IChemFo
     /** {@inheritDoc} */
     @Override
     public boolean matches(int lineNumber, String line) {
-        if (line.indexOf("Gaussian G90") >= 0) {
+        if (line.contains("Gaussian G90")) {
             return true;
         }
         return false;

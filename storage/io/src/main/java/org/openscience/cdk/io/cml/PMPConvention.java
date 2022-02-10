@@ -68,7 +68,7 @@ public class PMPConvention extends CMLCoreModule {
     }
 
     @Override
-    public void characterData(CMLStack xpath, char ch[], int start, int length) {
+    public void characterData(CMLStack xpath, char[] ch, int start, int length) {
         String s = new String(ch, start, length).trim();
         logger.debug("Start PMP chardata (" + CurrentElement + ") :" + s);
         logger.debug(" ElTitle: " + elementTitle);

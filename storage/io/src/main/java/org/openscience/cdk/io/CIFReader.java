@@ -59,7 +59,7 @@ import java.util.StringTokenizer;
 public class CIFReader extends DefaultChemObjectReader {
 
     private BufferedReader      input;
-    private static ILoggingTool logger  = LoggingToolFactory.createLoggingTool(CIFReader.class);
+    private static final ILoggingTool logger  = LoggingToolFactory.createLoggingTool(CIFReader.class);
 
     private ICrystal            crystal = null;
     // cell parameters
@@ -106,8 +106,8 @@ public class CIFReader extends DefaultChemObjectReader {
     public boolean accepts(Class<? extends IChemObject> testClass) {
         if (IChemFile.class.equals(testClass)) return true;
         Class<?>[] interfaces = testClass.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IChemFile.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IChemFile.class.equals(anInterface)) return true;
         }
         Class superClass = testClass.getSuperclass();
         if (superClass != null) return this.accepts(superClass);
@@ -160,7 +160,7 @@ public class CIFReader extends DefaultChemObjectReader {
             } else {
 
                 /* determine CIF command */
-                String command = "";
+                String command;
                 int spaceIndex = line.indexOf(' ');
                 if (spaceIndex != -1) {
                     // everything upto space is command
@@ -432,7 +432,7 @@ public class CIFReader extends DefaultChemObjectReader {
     }
 
     private String extractFirstLetters(String value) {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         for (int i = 0; i < value.length(); i++) {
             if (Character.isDigit(value.charAt(i))) {
                 break;

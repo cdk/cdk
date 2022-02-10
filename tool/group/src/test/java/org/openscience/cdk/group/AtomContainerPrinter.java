@@ -33,7 +33,7 @@ public class AtomContainerPrinter {
     }
 
     public static String toString(IAtomContainer atomContainer, Permutation permutation, boolean sortEdges) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         int atomCount = atomContainer.getAtomCount();
         IAtom[] pAtoms = new IAtom[atomCount];
         for (int i = 0; i < atomCount; i++) {
@@ -47,7 +47,7 @@ public class AtomContainerPrinter {
         int i = 0;
         List<String> edgeStrings = null;
         if (sortEdges) {
-            edgeStrings = new ArrayList<String>();
+            edgeStrings = new ArrayList<>();
         }
         for (IBond bond : atomContainer.bonds()) {
             int a0 = atomContainer.indexOf(bond.getBegin());

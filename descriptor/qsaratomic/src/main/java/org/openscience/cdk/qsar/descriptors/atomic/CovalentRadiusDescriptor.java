@@ -58,7 +58,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class CovalentRadiusDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
     private AtomTypeFactory     factory = null;
-    private static ILoggingTool logger  = LoggingToolFactory.createLoggingTool(CovalentRadiusDescriptor.class);
+    private static final ILoggingTool logger  = LoggingToolFactory.createLoggingTool(CovalentRadiusDescriptor.class);
 
     /**
      *  Constructor for the CovalentRadiusDescriptor object.

@@ -19,7 +19,6 @@
 package org.openscience.cdk.geometry;
 
 import java.io.InputStream;
-import java.util.Iterator;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -105,9 +104,8 @@ public class BondToolsTest extends CDKTestCase {
                 SilentChemObjectBuilder.getInstance());
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         IAtomContainer mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
-        Iterator<IAtom> atoms = mol.atoms().iterator();
-        while (atoms.hasNext()) {
-            atf.configure(atoms.next());
+        for (IAtom iAtom : mol.atoms()) {
+            atf.configure(iAtom);
         }
         Assert.assertTrue(BondTools.closeEnoughToBond(mol.getAtom(0), mol.getAtom(1), 1));
         Assert.assertFalse(BondTools.closeEnoughToBond(mol.getAtom(0), mol.getAtom(8), 1));

@@ -99,8 +99,8 @@ public class IsotopePatternSimilarityTest extends CDKTestCase {
         String mfString = "";
         String[] listMF = {"C4H8N6O", "C2H12N4O4", "C3H12N2O5", "C6H10N3O2", "CH10N5O4", "C4H14NO5"};
 
-        for (int i = 0; i < listMF.length; i++) {
-            IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula(listMF[i], builder);
+        for (String s : listMF) {
+            IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula(s, builder);
             IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.01);
             IsotopePattern patternIsoPredicted = isotopeGe.getIsotopes(formula);
 

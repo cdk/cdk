@@ -69,7 +69,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class ShelXReader extends DefaultChemObjectReader {
 
     private BufferedReader      input;
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(ShelXReader.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(ShelXReader.class);
 
     /**
      * Create an ShelX file reader.
@@ -112,9 +112,9 @@ public class ShelXReader extends DefaultChemObjectReader {
         if (IChemFile.class.equals(classObject)) return true;
         if (ICrystal.class.equals(classObject)) return true;
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (ICrystal.class.equals(interfaces[i])) return true;
-            if (IChemFile.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (ICrystal.class.equals(anInterface)) return true;
+            if (IChemFile.class.equals(anInterface)) return true;
         }
         Class superClass = classObject.getSuperclass();
         if (superClass != null) return this.accepts(superClass);
@@ -176,7 +176,7 @@ public class ShelXReader extends DefaultChemObjectReader {
             /* determine ShelX command */
             String command;
             try {
-                command = new String(line.substring(0, 4));
+                command = line.substring(0, 4);
             } catch (StringIndexOutOfBoundsException sioobe) {
                 // disregard this line
                 break;
@@ -337,7 +337,7 @@ public class ShelXReader extends DefaultChemObjectReader {
                     // atom type has a one letter code
                     atype = atype.substring(0, 1);
                 } else {
-                    StringBuffer sb2 = new StringBuffer();
+                    StringBuilder sb2 = new StringBuilder();
                     sb2.append(atype.charAt(1));
                     atype = atype.substring(0, 1) + sb2.toString().toLowerCase();
                 }

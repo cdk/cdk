@@ -72,12 +72,12 @@ public class SMARTSQueryToolTest extends CDKTestCase {
         int nmatch = querytool.countMatches();
         Assert.assertEquals(2, nmatch);
 
-        List<Integer> map1 = new ArrayList<Integer>();
+        List<Integer> map1 = new ArrayList<>();
         map1.add(1);
         map1.add(2);
         map1.add(3);
 
-        List<Integer> map2 = new ArrayList<Integer>();
+        List<Integer> map2 = new ArrayList<>();
         map2.add(3);
         map2.add(4);
         map2.add(5);

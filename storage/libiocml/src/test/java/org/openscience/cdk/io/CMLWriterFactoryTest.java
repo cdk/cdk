@@ -35,7 +35,7 @@ import org.openscience.cdk.io.formats.IChemFormat;
  */
 public class CMLWriterFactoryTest {
 
-    private WriterFactory factory = new WriterFactory();
+    private final WriterFactory factory = new WriterFactory();
 
     @Test
     public void testCMLWriter() {

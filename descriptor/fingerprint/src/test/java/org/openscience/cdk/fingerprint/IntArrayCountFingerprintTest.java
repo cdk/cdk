@@ -30,7 +30,7 @@ public class IntArrayCountFingerprintTest {
             }
         });
 
-        Map<Integer, Integer> hashCounts = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> hashCounts = new HashMap<>();
         for (int i = 0; i < fp1.numOfPopulatedbins(); i++) {
             hashCounts.put(fp1.getHash(i), fp1.getCount(i));
         }

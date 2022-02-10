@@ -28,7 +28,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -57,7 +56,7 @@ public class RendererModelTest {
     public void testGetRenderingParameter() {
         IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
 
-            IGeneratorParameter<Boolean> someParam = new SomeParam();
+            final IGeneratorParameter<Boolean> someParam = new SomeParam();
 
             @Override
             public List<IGeneratorParameter<?>> getParameters() {
@@ -84,7 +83,7 @@ public class RendererModelTest {
     public void testHasParameter() {
         IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
 
-            IGeneratorParameter<Boolean> someParam = new SomeParam();
+            final IGeneratorParameter<Boolean> someParam = new SomeParam();
 
             @Override
             public List<IGeneratorParameter<?>> getParameters() {
@@ -112,7 +111,7 @@ public class RendererModelTest {
     public void testReturningTheRealParamaterValue() {
         IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
 
-            IGeneratorParameter<Boolean> someParam = new SomeParam();
+            final IGeneratorParameter<Boolean> someParam = new SomeParam();
 
             @Override
             public List<IGeneratorParameter<?>> getParameters() {
@@ -143,7 +142,7 @@ public class RendererModelTest {
     public void testSetRenderingParameter() {
         IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
 
-            IGeneratorParameter<Boolean> someParam = new SomeParam();
+            final IGeneratorParameter<Boolean> someParam = new SomeParam();
 
             @Override
             public List<IGeneratorParameter<?>> getParameters() {
@@ -172,7 +171,7 @@ public class RendererModelTest {
     public void testGetDefaultRenderingParameter() {
         IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
 
-            IGeneratorParameter<Boolean> someParam = new SomeParam();
+            final IGeneratorParameter<Boolean> someParam = new SomeParam();
 
             @Override
             public List<IGeneratorParameter<?>> getParameters() {
@@ -199,7 +198,7 @@ public class RendererModelTest {
     public void testGetRenderingParameters() {
         IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
 
-            IGeneratorParameter<Boolean> someParam = new SomeParam();
+            final IGeneratorParameter<Boolean> someParam = new SomeParam();
 
             @Override
             public List<IGeneratorParameter<?>> getParameters() {
@@ -224,7 +223,7 @@ public class RendererModelTest {
         Assert.assertNotNull(params);
         Assert.assertEquals(nDefaultParams + 1, params.size()); // the registered one + defaults
 
-        List<Class<?>> paramClasses = new ArrayList<Class<?>>();
+        List<Class<?>> paramClasses = new ArrayList<>();
         for (IGeneratorParameter<?> param : params)
             paramClasses.add(param.getClass());
 
@@ -253,7 +252,7 @@ public class RendererModelTest {
 
     @Test
     public void testToolTipFunctionality() {
-        Map<IAtom, String> tips = new HashMap<IAtom, String>();
+        Map<IAtom, String> tips = new HashMap<>();
         IAtom anonAtom = new Atom();
         tips.put(anonAtom, "Repelsteeltje");
         RendererModel model = new RendererModel();

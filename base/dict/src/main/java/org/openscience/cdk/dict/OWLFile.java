@@ -48,8 +48,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class OWLFile extends Dictionary {
 
-    private static String rdfNS  = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
-    private static String rdfsNS = "http://www.w3.org/2000/01/rdf-schema#";
+    private static final String rdfNS  = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+    private static final String rdfsNS = "http://www.w3.org/2000/01/rdf-schema#";
 
     public OWLFile() {
         super();

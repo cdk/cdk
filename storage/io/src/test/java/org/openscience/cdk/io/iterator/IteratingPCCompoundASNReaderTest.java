@@ -37,7 +37,7 @@ import java.io.InputStream;
  */
 public class IteratingPCCompoundASNReaderTest extends CDKTestCase {
 
-    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingPCCompoundASNReaderTest.class);
+    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingPCCompoundASNReaderTest.class);
 
     @Test
     public void testList() throws Exception {

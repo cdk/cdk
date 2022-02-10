@@ -159,8 +159,8 @@ public class HINReader extends DefaultChemObjectReader {
         String info;
 
         StringTokenizer tokenizer;
-        List<String> aroringText = new ArrayList<String>();
-        List<IAtomContainer> mols = new ArrayList<IAtomContainer>();
+        List<String> aroringText = new ArrayList<>();
+        List<IAtomContainer> mols = new ArrayList<>();
 
         try {
             String line;
@@ -191,7 +191,7 @@ public class HINReader extends DefaultChemObjectReader {
                 // the start and end indices and bond order of each bond
                 // found in the HIN file. Before adding bonds we need to reduce
                 // the number of bonds so as not to count the same bond twice
-                List<List<Object>> cons = new ArrayList<List<Object>>();
+                List<List<Object>> cons = new ArrayList<>();
 
                 // read data for current molecule
                 int atomSerial = 0;
@@ -237,7 +237,7 @@ public class HINReader extends DefaultChemObjectReader {
                                 bo = IBond.Order.QUADRUPLE;
                                 break;
                         }
-                        List<Object> ar = new ArrayList<Object>(3);
+                        List<Object> ar = new ArrayList<>(3);
                         ar.add(atomSerial);
                         ar.add(s);
                         ar.add(bo);

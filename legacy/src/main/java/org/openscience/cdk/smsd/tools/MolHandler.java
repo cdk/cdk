@@ -55,9 +55,9 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class MolHandler {
 
     private IAtomContainer             atomContainer  = null;
-    private boolean                    removeHydrogen = false;
+    private boolean                    removeHydrogen;
     private final ILoggingTool         logger         = LoggingToolFactory.createLoggingTool(MolHandler.class);
-    private ICanonicalMoleculeLabeller canonLabeler   = new CanonicalLabellingAdaptor();
+    private final ICanonicalMoleculeLabeller canonLabeler   = new CanonicalLabellingAdaptor();
 
     /**
      * Creates a new instance of MolHandler
@@ -71,11 +71,11 @@ public class MolHandler {
         MDLReader molRead = null;
         this.removeHydrogen = removeHydrogen;
         try {
-            FileInputStream readMolecule = null;
+            FileInputStream readMolecule;
 
             readMolecule = new FileInputStream(molFile);
             molRead = new MDLReader(new InputStreamReader(readMolecule));
-            this.atomContainer = (IAtomContainer) molRead.read(new AtomContainer());
+            this.atomContainer = molRead.read(new AtomContainer());
             molRead.close();
             readMolecule.close();
             /* Remove Hydrogen by Asad */

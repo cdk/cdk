@@ -19,8 +19,6 @@
 package org.openscience.cdk.renderer.color;
 
 import java.awt.Color;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;

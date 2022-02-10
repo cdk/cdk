@@ -25,10 +25,8 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.test.interfaces.AbstractMonomerTest;
-import org.openscience.cdk.test.interfaces.ITestObjectBuilder;
 
 /**
  * TestCase for the Monomer class.
@@ -42,13 +40,7 @@ public class MonomerTest extends AbstractMonomerTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new Monomer();
-            }
-        });
+        setTestObjectBuilder(Monomer::new);
     }
 
     @Test

@@ -65,7 +65,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
 
     AtomTypeFactory             structgenATF;
 
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(SaturationChecker.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(SaturationChecker.class);
 
     /**
      * @param builder the ChemObjectBuilder implementation used to construct the AtomType's.
@@ -95,8 +95,8 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
             logger.debug("Atom has max = " + bondOrderSum);
         } catch (Exception exc) {
         }
-        for (int f = 0; f < atomTypes.length; f++) {
-            if (bondOrderSum == atomTypes[f].getBondOrderSum() && maxBondOrder == atomTypes[f].getMaxBondOrder()) {
+        for (IAtomType atomType : atomTypes) {
+            if (bondOrderSum == atomType.getBondOrderSum() && maxBondOrder == atomType.getMaxBondOrder()) {
                 try {
                     logger.debug("Atom " + ac.indexOf(atom) + " has perfect configuration");
                 } catch (Exception exc) {
@@ -137,8 +137,8 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
 
         IAtom[] atoms = BondManipulator.getAtomArray(bond);
         boolean isUnsaturated = true;
-        for (int i = 0; i < atoms.length; i++) {
-            isUnsaturated = isUnsaturated && !isSaturated(atoms[i], atomContainer);
+        for (IAtom atom : atoms) {
+            isUnsaturated = isUnsaturated && !isSaturated(atom, atomContainer);
         }
         return isUnsaturated;
     }
@@ -150,8 +150,8 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
     public boolean isSaturated(IBond bond, IAtomContainer atomContainer) throws CDKException {
         IAtom[] atoms = BondManipulator.getAtomArray(bond);
         boolean isSaturated = true;
-        for (int i = 0; i < atoms.length; i++) {
-            isSaturated = isSaturated && isSaturated(atoms[i], atomContainer);
+        for (IAtom atom : atoms) {
+            isSaturated = isSaturated && isSaturated(atom, atomContainer);
         }
         return isSaturated;
     }
@@ -175,9 +175,9 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
         } catch (Exception exc) {
             logger.debug(exc);
         }
-        for (int f = 0; f < atomTypes.length; f++) {
-            if (bondOrderSum - charge + hcount == atomTypes[f].getBondOrderSum()
-                    && !BondManipulator.isHigherOrder(maxBondOrder, atomTypes[f].getMaxBondOrder())) {
+        for (IAtomType atomType : atomTypes) {
+            if (bondOrderSum - charge + hcount == atomType.getBondOrderSum()
+                    && !BondManipulator.isHigherOrder(maxBondOrder, atomType.getMaxBondOrder())) {
                 logger.debug("*** Good ! ***");
                 return true;
             }
@@ -207,8 +207,8 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
             logger.debug("hcount: " + hcount);
         } catch (Exception exc) {
         }
-        for (int f = 0; f < atomTypes.length; f++) {
-            if (bondOrderSum - charge + hcount > atomTypes[f].getBondOrderSum()) {
+        for (IAtomType atomType : atomTypes) {
+            if (bondOrderSum - charge + hcount > atomType.getBondOrderSum()) {
                 logger.debug("*** Good ! ***");
                 return true;
             }
@@ -230,11 +230,11 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
         double bondOrderSum = ac.getBondOrderSum(atom);
         Integer hcount = atom.getImplicitHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getImplicitHydrogenCount();
         double max = 0;
-        double current = 0;
-        for (int f = 0; f < atomTypes.length; f++) {
+        double current;
+        for (IAtomType atomType : atomTypes) {
             current = hcount + bondOrderSum;
-            if (atomTypes[f].getBondOrderSum() - current > max) {
-                max = atomTypes[f].getBondOrderSum() - current;
+            if (atomType.getBondOrderSum() - current > max) {
+                max = atomType.getBondOrderSum() - current;
             }
         }
         return max;
@@ -272,17 +272,17 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
             for (int i = 0; i < bonds.length; i++)
                 bonds[i] = atomContainer.getBond(i);
             boolean succeeded = newSaturate(bonds, atomContainer);
-            for (int i = 0; i < bonds.length; i++) {
-                if (bonds[i].getOrder() == IBond.Order.DOUBLE && bonds[i].getFlag(CDKConstants.ISAROMATIC)
-                        && (bonds[i].getBegin().getAtomicNumber() == IElement.N && bonds[i].getEnd().getAtomicNumber() == IElement.N)) {
+            for (IBond iBond : bonds) {
+                if (iBond.getOrder() == Order.DOUBLE && iBond.getFlag(CDKConstants.ISAROMATIC)
+                        && (iBond.getBegin().getAtomicNumber() == IElement.N && iBond.getEnd()
+                                                                                     .getAtomicNumber() == IElement.N)) {
                     int atomtohandle = 0;
-                    if (bonds[i].getBegin().getAtomicNumber() == IElement.N) atomtohandle = 1;
-                    List<IBond> bondstohandle = atomContainer.getConnectedBondsList(bonds[i].getAtom(atomtohandle));
-                    for (int k = 0; k < bondstohandle.size(); k++) {
-                        IBond bond = bondstohandle.get(k);
-                        if (bond.getOrder() == IBond.Order.SINGLE && bond.getFlag(CDKConstants.ISAROMATIC)) {
-                            bond.setOrder(IBond.Order.DOUBLE);
-                            bonds[i].setOrder(IBond.Order.SINGLE);
+                    if (iBond.getBegin().getAtomicNumber() == IElement.N) atomtohandle = 1;
+                    List<IBond> bondstohandle = atomContainer.getConnectedBondsList(iBond.getAtom(atomtohandle));
+                    for (IBond bond : bondstohandle) {
+                        if (bond.getOrder() == Order.SINGLE && bond.getFlag(CDKConstants.ISAROMATIC)) {
+                            bond.setOrder(Order.DOUBLE);
+                            iBond.setOrder(Order.SINGLE);
                             break;
                         }
                     }
@@ -435,12 +435,12 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
          * newSaturate(atomContainer); } public void oldSaturate(AtomContainer
          * atomContainer) throws CDKException {
          */
-        IAtom partner = null;
-        IAtom atom = null;
-        List<IAtom> partners = null;
-        IAtomType[] atomTypes1 = null;
-        IAtomType[] atomTypes2 = null;
-        IBond bond = null;
+        IAtom partner;
+        IAtom atom;
+        List<IAtom> partners;
+        IAtomType[] atomTypes1;
+        IAtomType[] atomTypes2;
+        IBond bond;
         for (int i = 1; i < 4; i++) {
             // handle atoms with degree 1 first and then proceed to higher order
             for (int f = 0; f < atomContainer.getAtomCount(); f++) {
@@ -488,7 +488,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
                             logger.debug("Atom has " + atomContainerBondOrderSum + ", may have: " + bondOrderSum);
                             partners = atomContainer.getConnectedAtomsList(atom);
                             for (int g = 0; g < partners.size(); g++) {
-                                partner = (IAtom) partners.get(g);
+                                partner = partners.get(g);
                                 logger.debug("Atom has " + partners.size() + " partners");
                                 atomTypes2 = getAtomTypeFactory(atom.getBuilder()).getAtomTypes(partner.getSymbol());
                                 if (atomTypes2.length == 0) return;
@@ -520,14 +520,14 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
         IRingSet rs = Cycles.sssr(atomContainer.getBuilder().newInstance(IAtomContainer.class, atomContainer))
                 .toRingSet();
         List<IRingSet> ringSets = RingPartitioner.partitionRings(rs);
-        IAtomContainer ac = null;
-        IAtom atom = null;
-        int temp[];
-        for (int f = 0; f < ringSets.size(); f++) {
-            rs = ringSets.get(f);
+        IAtomContainer ac;
+        IAtom atom;
+        int[] temp;
+        for (IRingSet ringSet : ringSets) {
+            rs = ringSet;
             List<IAtomContainer> containers = RingSetManipulator.getAllAtomContainers(rs);
-            for (int counter = 0; counter < containers.size(); counter++) {
-                ac = containers.get(counter);
+            for (IAtomContainer container : containers) {
+                ac = container;
                 temp = new int[ac.getAtomCount()];
                 for (int g = 0; g < ac.getAtomCount(); g++) {
                     atom = ac.getAtom(g);
@@ -585,7 +585,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
     }
 
     public int calculateNumberOfImplicitHydrogens(IAtom atom) throws CDKException {
-        List<IBond> bonds = new ArrayList<IBond>();
+        List<IBond> bonds = new ArrayList<>();
         return this.calculateNumberOfImplicitHydrogens(atom, 0, 0, bonds, false);
     }
 
@@ -634,9 +634,9 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
 
                 if (atom.getFlag(CDKConstants.ISAROMATIC)) {
                     boolean subtractOne = true;
-                    for (int i = 0; i < connectedBonds.size(); i++) {
-                        IBond conBond = (IBond) connectedBonds.get(i);
-                        if (conBond.getOrder() == IBond.Order.DOUBLE || conBond.getFlag(CDKConstants.ISAROMATIC))
+                    for (IBond connectedBond : connectedBonds) {
+                        IBond conBond = connectedBond;
+                        if (conBond.getOrder() == Order.DOUBLE || conBond.getFlag(CDKConstants.ISAROMATIC))
                             subtractOne = false;
                     }
                     if (subtractOne) missingHydrogen--;

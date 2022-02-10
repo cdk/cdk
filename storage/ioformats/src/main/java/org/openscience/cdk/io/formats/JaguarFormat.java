@@ -76,7 +76,7 @@ public class JaguarFormat extends SimpleChemFormatMatcher implements IChemFormat
     /** {@inheritDoc} */
     @Override
     public boolean matches(int lineNumber, String line) {
-        if (line.indexOf("Jaguar") >= 0 && line.indexOf("Schrodinger") >= 0) {
+        if (line.contains("Jaguar") && line.contains("Schrodinger")) {
             return true;
         }
         return false;

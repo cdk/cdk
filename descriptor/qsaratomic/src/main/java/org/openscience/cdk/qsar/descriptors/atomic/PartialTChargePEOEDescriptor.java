@@ -33,7 +33,6 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -68,8 +67,8 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
 
     private static final String[]          NAMES         = {"pepeT"};
 
-    private GasteigerMarsiliPartialCharges peoe          = null;
-    private GasteigerPEPEPartialCharges    pepe          = null;
+    private GasteigerMarsiliPartialCharges peoe;
+    private GasteigerPEPEPartialCharges    pepe;
 
     /**Number of maximum iterations*/
     private int                            maxIterations = -1;
@@ -182,12 +181,10 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
 
             try {
                 peoe.assignGasteigerMarsiliSigmaPartialCharges(ac, true);
-                List<Double> peoeAtom = new ArrayList<Double>();
-                for (Iterator<IAtom> it = ac.atoms().iterator(); it.hasNext();)
-                    peoeAtom.add(it.next().getCharge());
+                List<Double> peoeAtom = new ArrayList<>();
+                for (IAtom value : ac.atoms()) peoeAtom.add(value.getCharge());
 
-                for (Iterator<IAtom> it = ac.atoms().iterator(); it.hasNext();)
-                    it.next().setCharge(0.0);
+                for (IAtom iAtom : ac.atoms()) iAtom.setCharge(0.0);
 
                 pepe.assignGasteigerPiPartialCharges(ac, true);
                 for (int i = 0; i < ac.getAtomCount(); i++)

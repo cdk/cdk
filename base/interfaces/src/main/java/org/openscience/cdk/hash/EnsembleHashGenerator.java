@@ -43,6 +43,6 @@ public interface EnsembleHashGenerator {
      * @param ensemble an ensemble molecule
      * @return hash code for the ensemble
      */
-    public long generate(Set<IAtomContainer> ensemble);
+    long generate(Set<IAtomContainer> ensemble);
 
 }
