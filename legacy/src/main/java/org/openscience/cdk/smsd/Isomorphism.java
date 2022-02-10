@@ -27,6 +27,7 @@ package org.openscience.cdk.smsd;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -747,7 +748,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
             double matchCount = getFirstMapping().size();
             tanimotoAtom = (matchCount) / (rAtomCount + pAtomCount - matchCount);
             BigDecimal tan = new BigDecimal(tanimotoAtom);
-            tan = tan.setScale(decimalPlaces, BigDecimal.ROUND_HALF_UP);
+            tan = tan.setScale(decimalPlaces, RoundingMode.HALF_UP);
             tanimotoAtom = tan.doubleValue();
         }
         return tanimotoAtom;
@@ -766,7 +767,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
             double matchCount = getFirstBondMap().size();
             tanimotoAtom = (matchCount) / (rBondCount + pBondCount - matchCount);
             BigDecimal tan = new BigDecimal(tanimotoAtom);
-            tan = tan.setScale(decimalPlaces, BigDecimal.ROUND_HALF_UP);
+            tan = tan.setScale(decimalPlaces, RoundingMode.HALF_UP);
             tanimotoAtom = tan.doubleValue();
         }
         return tanimotoAtom;
@@ -863,7 +864,7 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
             double common = getFirstMapping().size();
             euclidean = Math.sqrt(source + target - 2 * common);
             BigDecimal dist = new BigDecimal(euclidean);
-            dist = dist.setScale(decimalPlaces, BigDecimal.ROUND_HALF_UP);
+            dist = dist.setScale(decimalPlaces, RoundingMode.HALF_UP);
             euclidean = dist.doubleValue();
         }
         return euclidean;
