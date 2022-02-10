@@ -304,7 +304,7 @@ public class BKKCKCF {
 
             //find respective neighbor position in potentialVertex, which is needed for the deletion from potentialVertex
 
-            if (potentialVertex.indexOf(nElementAtB) <= index && potentialVertex.indexOf(nElementAtB) > -1) {
+            if (potentialVertex.indexOf(nElementAtB) <= index && potentialVertex.contains(nElementAtB)) {
                 --index;
             }
             potentialVertex.remove(nElementAtB);
@@ -424,7 +424,7 @@ public class BKKCKCF {
                     }
                 }
 
-                if (vertex.indexOf(neighbourVertexOfC) <= index && vertex.indexOf(neighbourVertexOfC) > -1) {
+                if (vertex.indexOf(neighbourVertexOfC) <= index && vertex.contains(neighbourVertexOfC)) {
                     --index;
                 }
                 vertex.remove(neighbourVertexOfC);
