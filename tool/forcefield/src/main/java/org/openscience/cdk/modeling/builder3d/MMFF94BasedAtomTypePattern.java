@@ -34,7 +34,10 @@ import java.util.regex.Pattern;
  * @cdk.created    2004-09-07
  * @cdk.module     forcefield
  * @cdk.githash
+ * @deprecated {@link org.openscience.cdk.forcefield.mmff.Mmff} is faster more
+ *             robust and fully validated
  */
+@Deprecated
 public class MMFF94BasedAtomTypePattern {
 
     private final List<Pattern> atomTypePatterns = new Vector<>();
@@ -132,14 +135,14 @@ public class MMFF94BasedAtomTypePattern {
         //O=+
         atomTypePatterns.add(Pattern.compile("O-[1-2];[H]{0,2}+.*"));
         //O in water
-        atomTypePatterns.add(Pattern.compile("O-2;CC.=C.*+&.*+&.*+"));
+        atomTypePatterns.add(Pattern.compile("O-2;CC.=C.+&.+&.*+"));
         //osp2furan (36)
 
         atomTypePatterns.add(Pattern.compile("N-[0-3];[A-Za-z &&[^=%]]{1,3}+.*+"));
         //N nsp3
         atomTypePatterns.add(Pattern.compile("N-[1-3];[H]{0,2}+[A-Za-z]*+=[CN].*+"));
         //N=C n imides
-        atomTypePatterns.add(Pattern.compile("N-[1-3];[H]{0,3}+[C]*+[(].*+=C.*+"));
+        atomTypePatterns.add(Pattern.compile("N-[1-3];[H]{0,3}+[C]*+[(].+=C.*+"));
         //NC=C
         atomTypePatterns.add(Pattern.compile("N-[1-2][+]?+;%.*+"));
         //nsp (40)
@@ -153,7 +156,7 @@ public class MMFF94BasedAtomTypePattern {
         //N2OX n aromatic n oxide sp2
         atomTypePatterns.add(Pattern.compile("N-[1-3];[H]{0,2}+[O]{0,1}+[-]?+[A-Za-z[^O]]{0,2}+[O]{0,1}+[-]?+[(].*+"));
         //N3OX aromatic n oxide sp3
-        atomTypePatterns.add(Pattern.compile("N-[1-3][+]?+;[H]{0,2}+[A-Za-z]{0,6}+[(].*+%C.*+%N.*+"));
+        atomTypePatterns.add(Pattern.compile("N-[1-3][+]?+;[H]{0,2}+[A-Za-z]{0,6}+[(].+%C.+%N.*+"));
         //NC#N N->CN
         atomTypePatterns.add(Pattern.compile("N-3[+];=OCO-.*+"));
         //n no2

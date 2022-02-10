@@ -161,7 +161,8 @@ public class TaeAminoAcidDescriptor extends AbstractMolecularDescriptor implemen
                 taeParams.put(key, data);
             }
         } catch (IOException | CDKException ioe) {
-            ioe.printStackTrace();
+            LoggingToolFactory.createLoggingTool(TaeAminoAcidDescriptor.class)
+                              .warn("Unexpected Error:", ioe);
             taeParams = null;
             return;
         }

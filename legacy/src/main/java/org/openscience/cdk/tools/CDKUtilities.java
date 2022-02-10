@@ -197,7 +197,8 @@ public class CDKUtilities {
             // srs = s.findEssentialRings();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(CDKUtilities.class)
+                              .warn("Unexpected Error:", e);
         }
 
         try {
@@ -209,7 +210,8 @@ public class CDKUtilities {
             // figure out which simple (non cycles) rings are aromatic:
             // HueckelAromaticityDetector.detectAromaticity(m, srs);
         } catch (Exception e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(CDKUtilities.class)
+                              .warn("Unexpected Error:", e);
         }
 
         // only atoms in 6 membered rings are aromatic

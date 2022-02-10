@@ -38,6 +38,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.isomorphism.mcss.RGraph;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.isomorphism.mcss.RNode;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 import java.util.ArrayList;
@@ -528,7 +529,8 @@ public class UniversalIsomorphismTester {
                 try {
                     a1 = a.clone();
                 } catch (CloneNotSupportedException e) {
-                    e.printStackTrace();
+                    LoggingToolFactory.createLoggingTool(UniversalIsomorphismTester.class)
+                                      .warn("Unexpected Error:", e);
                 }
                 ac.addAtom(a1);
                 table.put(a, a1);
@@ -541,7 +543,8 @@ public class UniversalIsomorphismTester {
                 try {
                     a2 = a.clone();
                 } catch (CloneNotSupportedException e) {
-                    e.printStackTrace();
+                    LoggingToolFactory.createLoggingTool(UniversalIsomorphismTester.class)
+                                      .warn("Unexpected Error:", e);
                 }
                 ac.addAtom(a2);
                 table.put(a, a2);

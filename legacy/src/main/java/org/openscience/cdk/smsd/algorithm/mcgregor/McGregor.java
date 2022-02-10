@@ -33,6 +33,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.smsd.helper.BinaryTree;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Class which reports MCS solutions based on the McGregor algorithm
@@ -732,7 +733,8 @@ public final class McGregor {
                 //                    System.out.println("mappings " + mappings);
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            LoggingToolFactory.createLoggingTool(McGregor.class)
+                              .warn("Unexpected Error:", ex);
         }
     }
 

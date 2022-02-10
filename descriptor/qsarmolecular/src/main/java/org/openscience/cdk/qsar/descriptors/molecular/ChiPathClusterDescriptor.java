@@ -198,7 +198,8 @@ public class ChiPathClusterDescriptor extends AbstractMolecularDescriptor implem
         try {
             queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC(C)CC"), false);
         } catch (InvalidSmilesException e) {
-            e.printStackTrace(); //To change body of catch statement use File | Settings | File Templates.
+            LoggingToolFactory.createLoggingTool(ChiPathClusterDescriptor.class)
+                              .warn("Unexpected Error:", e);
         }
         return ChiIndexUtils.getFragments(atomContainer, queries);
     }
@@ -210,7 +211,8 @@ public class ChiPathClusterDescriptor extends AbstractMolecularDescriptor implem
             queries[1] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC(C)(C)CC"), false);
             queries[2] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CCC(C)CC"), false);
         } catch (InvalidSmilesException e) {
-            e.printStackTrace(); //To change body of catch statement use File | Settings | File Templates.
+            LoggingToolFactory.createLoggingTool(ChiPathClusterDescriptor.class)
+                              .warn("Unexpected Error:", e);
         }
         return ChiIndexUtils.getFragments(atomContainer, queries);
     }
@@ -225,7 +227,8 @@ public class ChiPathClusterDescriptor extends AbstractMolecularDescriptor implem
             queries[4] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CCC(C)CCC"), false);
             queries[5] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC(C)(CC)CC"), false);
         } catch (InvalidSmilesException e) {
-            e.printStackTrace(); //To change body of catch statement use File | Settings | File Templates.
+            LoggingToolFactory.createLoggingTool(ChiPathClusterDescriptor.class)
+                              .warn("Unexpected Error:", e);
         }
         return ChiIndexUtils.getFragments(atomContainer, queries);
 

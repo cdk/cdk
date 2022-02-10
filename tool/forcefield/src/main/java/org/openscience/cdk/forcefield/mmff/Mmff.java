@@ -286,14 +286,14 @@ public class Mmff {
                         nTerm++;
                     }
                 }
-                double qSplt = qSum / nTerm;
-
-                for (int w : adjList[focus]) {
-                    if (mol.getAtom(w).getAtomTypeName().equals(symbType)) {
-                        atom.setCharge(qSplt);
+                if (nTerm != 0) {
+                    double qSplt = qSum / nTerm;
+                    for (int w : adjList[focus]) {
+                        if (mol.getAtom(w).getAtomTypeName().equals(symbType)) {
+                            atom.setCharge(qSplt);
+                        }
                     }
                 }
-
             }
             // charge sharing between nitrogen anions 
             else if (symbType.equals("N5M")) {

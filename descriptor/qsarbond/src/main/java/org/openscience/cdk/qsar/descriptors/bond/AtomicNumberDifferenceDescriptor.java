@@ -32,6 +32,7 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IBondDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
@@ -57,8 +58,8 @@ public class AtomicNumberDifferenceDescriptor extends AbstractBondDescriptor imp
             try {
                 factory = Isotopes.getInstance();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                LoggingToolFactory.createLoggingTool(AtomicNumberDifferenceDescriptor.class)
+                                  .warn("Unexpected Error:", e);
             }
         }
     }

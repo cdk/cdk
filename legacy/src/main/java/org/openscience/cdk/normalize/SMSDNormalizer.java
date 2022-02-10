@@ -52,6 +52,7 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
@@ -134,7 +135,8 @@ public class SMSDNormalizer extends AtomContainerManipulator {
             // srs = s.findEssentialRings();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(SMSDNormalizer.class)
+                              .warn("Unexpected Error:", e);
         }
 
         try {
@@ -150,7 +152,8 @@ public class SMSDNormalizer extends AtomContainerManipulator {
             // figure out which simple (non cycles) rings are aromatic:
             // HueckelAromaticityDetector.detectAromaticity(atomContainer, srs);
         } catch (Exception e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(SMSDNormalizer.class)
+                              .warn("Unexpected Error:", e);
         }
 
         // only atoms in 6 membered rings are aromatic
@@ -238,8 +241,8 @@ public class SMSDNormalizer extends AtomContainerManipulator {
                     try {
                         clonedAtom = atom.clone();
                     } catch (CloneNotSupportedException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+                        LoggingToolFactory.createLoggingTool(SMSDNormalizer.class)
+                                          .warn("Unexpected Error:", e);
                     }
                     //added by Asad to preserve the Atom ID for atom mapping without Hydrogen
                     clonedAtom.setID(atom.getID());
@@ -436,8 +439,8 @@ public class SMSDNormalizer extends AtomContainerManipulator {
                 try {
                     clone = atomContainer.getBond(i).clone();
                 } catch (CloneNotSupportedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    LoggingToolFactory.createLoggingTool(SMSDNormalizer.class)
+                                      .warn("Unexpected Error:", e);
                 }
                 assert clone != null;
                 clone.setAtoms(new IAtom[]{map.get(bond.getBegin()), map.get(bond.getEnd())});

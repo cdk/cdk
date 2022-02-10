@@ -168,7 +168,8 @@ public class StructureResonanceGenerator {
         try {
             type.setParameterList(paramList);
         } catch (CDKException e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(StructureResonanceGenerator.class)
+                              .warn("Unexpected Error:", e);
         }
         reactionsList.add(type);
 
@@ -180,7 +181,8 @@ public class StructureResonanceGenerator {
         try {
             type.setParameterList(paramList2);
         } catch (CDKException e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(StructureResonanceGenerator.class)
+                              .warn("Unexpected Error:", e);
         }
         reactionsList.add(type);
 
@@ -188,7 +190,8 @@ public class StructureResonanceGenerator {
         try {
             type.setParameterList(paramList);
         } catch (CDKException e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(StructureResonanceGenerator.class)
+                              .warn("Unexpected Error:", e);
         }
         reactionsList.add(type);
 
@@ -196,7 +199,8 @@ public class StructureResonanceGenerator {
         try {
             type.setParameterList(paramList);
         } catch (CDKException e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(StructureResonanceGenerator.class)
+                              .warn("Unexpected Error:", e);
         }
         reactionsList.add(type);
 
@@ -204,7 +208,8 @@ public class StructureResonanceGenerator {
         try {
             type.setParameterList(paramList);
         } catch (CDKException e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(StructureResonanceGenerator.class)
+                              .warn("Unexpected Error:", e);
         }
         reactionsList.add(type);
 
@@ -212,7 +217,8 @@ public class StructureResonanceGenerator {
         try {
             type.setParameterList(paramList);
         } catch (CDKException e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(StructureResonanceGenerator.class)
+                              .warn("Unexpected Error:", e);
         }
         reactionsList.add(type);
 
@@ -249,7 +255,8 @@ public class StructureResonanceGenerator {
                                 }
                             }
                 } catch (CDKException e) {
-                    e.printStackTrace();
+                    LoggingToolFactory.createLoggingTool(StructureResonanceGenerator.class)
+                                      .warn("Unexpected Error:", e);
                 }
             }
         }
@@ -405,7 +412,8 @@ public class StructureResonanceGenerator {
                     bond.setFlag(CDKConstants.ISAROMATIC, false);
             }
         } catch (CloneNotSupportedException e1) {
-            e1.printStackTrace();
+            LoggingToolFactory.createLoggingTool(StructureResonanceGenerator.class)
+                              .warn("Unexpected Error:", e1);
         }
 
         for (int i = 0; i < acClone.getAtomCount(); i++)
@@ -416,7 +424,8 @@ public class StructureResonanceGenerator {
             try {
                 Aromaticity.cdkLegacy().apply(acClone);
             } catch (CDKException e) {
-                e.printStackTrace();
+                LoggingToolFactory.createLoggingTool(StructureResonanceGenerator.class)
+                                  .warn("Unexpected Error:", e);
             }
         } else {
             if (!lookingSymmetry) { /* remove all aromatic flags */

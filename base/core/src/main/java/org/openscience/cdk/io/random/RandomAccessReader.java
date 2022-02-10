@@ -307,10 +307,17 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
             if (isRecordEnd(s)) {
                 //fireFrameRead();
                 if (records >= maxRecords) {
-                    index = resize(index,
-                            records
-                                    + (int) (records + (raFile.length() - records * raFile.getFilePointer())
-                                            / recordLength));
+                    if (recordLength == 0) {
+                        maxRecords = maxRecords + maxRecords>>>1;
+                    } else {
+                        // JWM it's not completely clear what this is doing,
+                        // I think it's estimating the avg record size to work
+                        // how many more there are
+                        maxRecords = records
+                                + (int) (records + (raFile.length() - records * raFile.getFilePointer())
+                                / recordLength);
+                    }
+                    index = resize(index, maxRecords);
                 }
                 end += 4;
                 index[records][0] = start;
@@ -319,7 +326,6 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
                 if (maxRecordLength < index[records][1]) maxRecordLength = (int) index[records][1];
                 records++;
                 recordLength += end - start;
-
                 start = raFile.getFilePointer();
             } else {
                 end = raFile.getFilePointer();

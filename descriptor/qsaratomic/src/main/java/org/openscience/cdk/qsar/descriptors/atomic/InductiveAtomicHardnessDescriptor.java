@@ -190,6 +190,8 @@ public class InductiveAtomicHardnessDescriptor extends AbstractAtomicDescriptor 
 
         atomicHardness = 2 * atomicHardness;
         atomicHardness = atomicHardness * 0.172;
+        if (atomicHardness == 0)
+            return getDummyDescriptorValue(new ArithmeticException("atomicHardness was 0 before division!"));
         atomicHardness = 1 / atomicHardness;
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
                 atomicHardness), NAMES);

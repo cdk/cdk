@@ -204,7 +204,6 @@ public class LoggingTool implements ILoggingTool {
             localLogger.error("Properties file not found: ", e.getMessage());
             localLogger.debug(e);
         } catch (Exception e) {
-            e.printStackTrace();
             localLogger.error("Unknown error occurred: ", e.getMessage());
             localLogger.debug(e);
         }

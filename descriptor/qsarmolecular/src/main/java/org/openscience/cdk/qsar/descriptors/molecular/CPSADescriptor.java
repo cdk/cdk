@@ -339,8 +339,8 @@ public class CPSADescriptor extends AbstractMolecularDescriptor implements IMole
         }
 
         // relative descriptors
-        double rpcg = maxpcharge / totpcharge;
-        double rncg = maxncharge / totncharge;
+        double rpcg = totpcharge == 0d ? 0 : maxpcharge / totpcharge;
+        double rncg = totncharge == 0d ? 0 : maxncharge / totncharge;
         double rpcs = atomSurfaces[pidx] * rpcg;
         double rncs = atomSurfaces[nidx] * rncg;
 

@@ -512,7 +512,8 @@ public final class Isomorphism extends AbstractMCS implements Serializable {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(Isomorphism.class)
+                              .warn("Unexpected Error:", e);
         }
     }
 

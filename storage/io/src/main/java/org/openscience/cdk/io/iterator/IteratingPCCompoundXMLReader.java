@@ -129,7 +129,6 @@ public class IteratingPCCompoundXMLReader extends DefaultIteratingChemObjectRead
                 }
 
             } catch (Exception e) {
-                e.printStackTrace();
                 hasNext = false;
             }
 

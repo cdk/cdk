@@ -660,7 +660,8 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
         try {
             if (Aromaticity.cdkLegacy().apply(ac)) if (!Aromaticity.cdkLegacy().apply(atomContainer)) fA = 0.3;
         } catch (CDKException e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(GasteigerPEPEPartialCharges.class)
+                              .warn("Aromaticity Exception:", e);
         }
         logger.debug("return " + fQ * fB * fPlus * fA + "= sp:" + fQ + ", dc:" + fB + ", fPlus:" + fPlus + ", fA:" + fA);
 

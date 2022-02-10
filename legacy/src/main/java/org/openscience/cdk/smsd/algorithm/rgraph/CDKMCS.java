@@ -71,6 +71,7 @@ import org.openscience.cdk.smsd.algorithm.matchers.DefaultMatcher;
 import org.openscience.cdk.smsd.algorithm.matchers.DefaultRGraphAtomMatcher;
 import org.openscience.cdk.smsd.global.TimeOut;
 import org.openscience.cdk.smsd.tools.TimeManager;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
@@ -553,7 +554,8 @@ public class CDKMCS {
                 try {
                     atom1 = atom.clone();
                 } catch (CloneNotSupportedException e) {
-                    e.printStackTrace();
+                    LoggingToolFactory.createLoggingTool(CDKMCS.class)
+                                      .warn("Unexpected Error:", e);
                 }
                 atomContainer.addAtom(atom1);
                 table.put(atom, atom1);
@@ -566,7 +568,8 @@ public class CDKMCS {
                 try {
                     atom2 = atom.clone();
                 } catch (CloneNotSupportedException e) {
-                    e.printStackTrace();
+                    LoggingToolFactory.createLoggingTool(CDKMCS.class)
+                                      .warn("Unexpected Error:", e);
                 }
                 atomContainer.addAtom(atom2);
                 table.put(atom, atom2);

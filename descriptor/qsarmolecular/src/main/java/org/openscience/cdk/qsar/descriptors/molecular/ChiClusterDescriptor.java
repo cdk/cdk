@@ -204,7 +204,8 @@ public class ChiClusterDescriptor extends AbstractMolecularDescriptor implements
         try {
             queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("C(C)(C)(C)"), false);
         } catch (InvalidSmilesException e) {
-            e.printStackTrace(); //To change body of catch statement use File | Settings | File Templates.
+            LoggingToolFactory.createLoggingTool(ChiClusterDescriptor.class)
+                              .warn("Unexpected Error:", e);
         }
         return ChiIndexUtils.getFragments(atomContainer, queries);
     }
@@ -215,7 +216,8 @@ public class ChiClusterDescriptor extends AbstractMolecularDescriptor implements
             queries[0] = QueryAtomContainerCreator
                     .createAnyAtomAnyBondContainer(sp.parseSmiles("C(C)(C)(C)(C)"), false);
         } catch (InvalidSmilesException e) {
-            e.printStackTrace(); //To change body of catch statement use File | Settings | File Templates.
+            LoggingToolFactory.createLoggingTool(ChiClusterDescriptor.class)
+                              .warn("Unexpected Error:", e);
         }
         return ChiIndexUtils.getFragments(atomContainer, queries);
     }
@@ -225,7 +227,8 @@ public class ChiClusterDescriptor extends AbstractMolecularDescriptor implements
         try {
             queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC(C)C(C)(C)"), false);
         } catch (InvalidSmilesException e) {
-            e.printStackTrace(); //To change body of catch statement use File | Settings | File Templates.
+            LoggingToolFactory.createLoggingTool(ChiClusterDescriptor.class)
+                              .warn("Unexpected Error:", e);
         }
         return ChiIndexUtils.getFragments(atomContainer, queries);
     }
@@ -235,7 +238,8 @@ public class ChiClusterDescriptor extends AbstractMolecularDescriptor implements
         try {
             queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC(C)C(C)(C)C"), false);
         } catch (InvalidSmilesException e) {
-            e.printStackTrace(); //To change body of catch statement use File | Settings | File Templates.
+            LoggingToolFactory.createLoggingTool(ChiClusterDescriptor.class)
+                              .warn("Unexpected Error:", e);
         }
         return ChiIndexUtils.getFragments(atomContainer, queries);
     }

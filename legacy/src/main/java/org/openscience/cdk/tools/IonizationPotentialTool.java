@@ -246,7 +246,8 @@ public class IonizationPotentialTool {
         try {
             pepe.assignGasteigerPiPartialCharges(container, true);
         } catch (Exception e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(IonizationPotentialTool.class)
+                              .warn("Unexpected Error:", e);
         }
         results[3] = atom.getCharge();
         // effectiveAtomicPolarizability
@@ -316,7 +317,8 @@ public class IonizationPotentialTool {
             try {
                 peoe.assignGasteigerMarsiliSigmaPartialCharges(container, true);
             } catch (Exception e) {
-                e.printStackTrace();
+                LoggingToolFactory.createLoggingTool(IonizationPotentialTool.class)
+                                  .warn("Unexpected Error:", e);
             }
             results[2] += atom.getCharge();
             // partialPiCharge
@@ -325,7 +327,8 @@ public class IonizationPotentialTool {
             try {
                 pepe.assignGasteigerPiPartialCharges(container, true);
             } catch (Exception e) {
-                e.printStackTrace();
+                LoggingToolFactory.createLoggingTool(IonizationPotentialTool.class)
+                                  .warn("Unexpected Error:", e);
             }
             results[3] += atom.getCharge();
             // effectiveAtomicPolarizability

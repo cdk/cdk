@@ -38,6 +38,7 @@ import org.openscience.cdk.smsd.algorithm.matchers.DefaultBondMatcher;
 import org.openscience.cdk.smsd.algorithm.matchers.DefaultMCSPlusAtomMatcher;
 import org.openscience.cdk.smsd.algorithm.matchers.DefaultMatcher;
 import org.openscience.cdk.smsd.helper.BinaryTree;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Class to perform check/methods for McGregor class.
@@ -99,7 +100,8 @@ public class McGregorChecks {
                             return true;
                         }
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        LoggingToolFactory.createLoggingTool(McGregorChecks.class)
+                                          .warn("Unexpected Error:", e);
                     }
                 }
             }
@@ -595,7 +597,8 @@ public class McGregorChecks {
                             return true;
                         }
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        LoggingToolFactory.createLoggingTool(McGregorChecks.class)
+                                          .warn("Unexpected Error:", e);
                     }
                 }
             }

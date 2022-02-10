@@ -65,6 +65,8 @@ import java.util.TreeSet;
 // see also SignatureFingerprintTanimotoTest
 public class Tanimoto {
 
+    public static final String EMPTY_FINGERPRINTS_PROVIDED = "Cannot compute Tanimoto of two empty fingerprints!";
+
     private Tanimoto() {}
 
     /**
@@ -135,7 +137,10 @@ public class Tanimoto {
             a2 += features1[i] * features1[i];
             b2 += features2[i] * features2[i];
         }
-        return (float) ab / (float) (a2 + b2 - ab);
+        double union = a2 + b2 - ab;
+        if (union == 0.0)
+            throw new IllegalArgumentException(EMPTY_FINGERPRINTS_PROVIDED);
+        return (float) ab / (float) union;
     }
 
     /**
@@ -163,7 +168,10 @@ public class Tanimoto {
         for (Integer c : features2.values()) {
             y += c * c;
         }
-        return (float) (xy / (x + y - xy));
+        double union = x + y - xy;
+        if (union == 0.0)
+            throw new IllegalArgumentException(EMPTY_FINGERPRINTS_PROVIDED);
+        return (float) (xy / union);
     }
 
     /**
@@ -198,15 +206,18 @@ public class Tanimoto {
             int hash = fp1.getHash(i);
             for (int j = 0; j < fp2.numOfPopulatedbins(); j++) {
                 if (hash == fp2.getHash(j)) {
-                    xy += fp1.getCount(i) * fp2.getCount(j);
+                    xy += (long) fp1.getCount(i) * fp2.getCount(j);
                 }
             }
-            x += fp1.getCount(i) * fp1.getCount(i);
+            x += (long) fp1.getCount(i) * fp1.getCount(i);
         }
         for (int j = 0; j < fp2.numOfPopulatedbins(); j++) {
-            y += fp2.getCount(j) * fp2.getCount(j);
+            y += (long) fp2.getCount(j) * fp2.getCount(j);
         }
-        return ((double) xy / (x + y - xy));
+        long union = x + y - xy;
+        if (union == 0)
+            throw new IllegalArgumentException(EMPTY_FINGERPRINTS_PROVIDED);
+        return ((double) xy / union);
     }
 
     /**

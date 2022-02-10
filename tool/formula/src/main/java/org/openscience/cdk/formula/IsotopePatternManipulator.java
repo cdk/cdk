@@ -1,5 +1,7 @@
 package org.openscience.cdk.formula;
 
+import org.openscience.cdk.tools.LoggingToolFactory;
+
 import java.util.Comparator;
 import java.util.List;
 
@@ -45,7 +47,8 @@ public class IsotopePatternManipulator {
                     isoNormalized.addIsotope(icClone);
 
             } catch (CloneNotSupportedException e) {
-                e.printStackTrace();
+                LoggingToolFactory.createLoggingTool(IsotopePatternGenerator.class)
+                                  .warn("Clone failed:", e);
             }
 
         }
@@ -96,7 +99,8 @@ public class IsotopePatternManipulator {
             return isoSort;
 
         } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(IsotopePatternGenerator.class)
+                              .warn("Clone failed:", e);
         }
 
         return null;
@@ -132,7 +136,8 @@ public class IsotopePatternManipulator {
             return isoSort;
 
         } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(IsotopePatternManipulator.class)
+                              .warn("Unexpected Error:", e);
         }
 
         return null;

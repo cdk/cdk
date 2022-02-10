@@ -120,7 +120,8 @@ public class MolecularFormulaChecker {
 
             }
         } catch (CDKException e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(MolecularFormulaChecker.class)
+                              .warn("Unexpected Error:", e);
         }
 
         return formula;

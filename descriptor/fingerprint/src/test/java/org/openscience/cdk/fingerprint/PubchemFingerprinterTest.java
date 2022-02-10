@@ -44,6 +44,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -301,7 +302,8 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
                 try {
                     fp = fpr.getBitFingerprint(mol).asBitSet();
                 } catch (CDKException e) {
-                    e.printStackTrace(); //To change body of catch statement use File | Settings | File Templates.
+                    LoggingToolFactory.createLoggingTool(PubchemFingerprinterTest.class)
+                                      .warn("FP Error:", e);
                 }
                 return fp;
             }

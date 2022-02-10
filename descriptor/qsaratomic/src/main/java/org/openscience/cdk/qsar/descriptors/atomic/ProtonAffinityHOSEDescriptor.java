@@ -275,7 +275,8 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
                     }
                 }
             } catch (CDKException e) {
-                e.printStackTrace();
+                LoggingToolFactory.createLoggingTool(ProtonAffinityHOSEDescriptor.class)
+                                  .warn("Unexpected Error:", e);
             }
             return 0;
         }
@@ -298,7 +299,8 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
                     hoseVSenergy.put(values.get(0), Double.valueOf(values.get(1)));
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                LoggingToolFactory.createLoggingTool(ProtonAffinityHOSEDescriptor.class)
+                                  .warn("Unexpected Error:", e);
             }
             return hoseVSenergy;
         }

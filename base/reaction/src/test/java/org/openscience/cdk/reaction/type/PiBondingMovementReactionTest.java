@@ -38,6 +38,7 @@ import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionProcessTest;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.ArrayList;
@@ -359,7 +360,8 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
             makeSureAtomTypesAreRecognized(molecule);
         } catch (Exception e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(getClass())
+                              .error("Unexpected Error:", e);
         }
 
         setOfReactants.addAtomContainer(molecule);
@@ -406,7 +408,8 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
             makeSureAtomTypesAreRecognized(molecule);
         } catch (Exception e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(getClass())
+                              .error("Unexpected Error:", e);
         }
 
         setOfProducts.addAtomContainer(molecule);

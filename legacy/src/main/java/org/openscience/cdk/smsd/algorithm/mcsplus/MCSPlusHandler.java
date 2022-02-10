@@ -37,6 +37,7 @@ import org.openscience.cdk.smsd.helper.FinalMappings;
 import org.openscience.cdk.smsd.interfaces.AbstractMCSAlgorithm;
 import org.openscience.cdk.smsd.interfaces.IMCSBase;
 import org.openscience.cdk.smsd.tools.MolHandler;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * This class acts as a handler class for MCSPlus algorithm.
@@ -136,7 +137,8 @@ public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
             }
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+            LoggingToolFactory.createLoggingTool(MCSPlusHandler.class)
+                              .warn("Unexpected Error:", ex);
         }
 
     }

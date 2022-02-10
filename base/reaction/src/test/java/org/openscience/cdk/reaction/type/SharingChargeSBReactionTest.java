@@ -39,6 +39,7 @@ import org.openscience.cdk.reaction.ReactionProcessTest;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
@@ -283,7 +284,8 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
             lpcheck.saturate(molecule);
         } catch (CDKException e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(getClass())
+                              .error("Unexpected Error:", e);
         }
 
         setOfReactants.addAtomContainer(molecule);
@@ -314,7 +316,8 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
             lpcheck.saturate(expected1);
         } catch (CDKException e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(getClass())
+                              .error("Unexpected Error:", e);
         }
 
         IAtomContainer expected2 = builder.newInstance(IAtomContainer.class);
@@ -329,7 +332,8 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
         try {
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected2);
         } catch (CDKException e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(getClass())
+                              .error("Unexpected Error:", e);
         }
 
         setOfProducts.addAtomContainer(expected1);

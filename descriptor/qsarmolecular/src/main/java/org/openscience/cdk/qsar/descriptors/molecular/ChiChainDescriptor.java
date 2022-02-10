@@ -236,7 +236,8 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
             queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("C1CCC1"), false);
             queries[1] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC1CC1"), false);
         } catch (InvalidSmilesException e) {
-            e.printStackTrace(); //To change body of catch statement use File | Settings | File Templates.
+            LoggingToolFactory.createLoggingTool(ChiChainDescriptor.class)
+                              .warn("Unexpected Error:", e);
         }
         return ChiIndexUtils.getFragments(atomContainer, queries);
     }
@@ -248,7 +249,8 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
             queries[1] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC1CCC1"), false);
             queries[2] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC1CC1(C)"), false);
         } catch (InvalidSmilesException e) {
-            e.printStackTrace(); //To change body of catch statement use File | Settings | File Templates.
+            LoggingToolFactory.createLoggingTool(ChiChainDescriptor.class)
+                              .warn("Unexpected Error:", e);
         }
         return ChiIndexUtils.getFragments(atomContainer, queries);
     }
@@ -266,7 +268,8 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
             queries[7] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CCCC1CC1"), false);
             queries[8] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CCC1CC1(C)"), false);
         } catch (InvalidSmilesException e) {
-            e.printStackTrace(); //To change body of catch statement use File | Settings | File Templates.
+            LoggingToolFactory.createLoggingTool(ChiChainDescriptor.class)
+                              .warn("Unexpected Error:", e);
         }
         return ChiIndexUtils.getFragments(atomContainer, queries);
     }
@@ -288,7 +291,8 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
             for (int i = 0; i < smiles.length; i++)
                 queries[i] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles(smiles[i]), false);
         } catch (InvalidSmilesException e) {
-            e.printStackTrace();
+            LoggingToolFactory.createLoggingTool(ChiChainDescriptor.class)
+                              .warn("Unexpected Error:", e);
         }
         return ChiIndexUtils.getFragments(atomContainer, queries);
     }

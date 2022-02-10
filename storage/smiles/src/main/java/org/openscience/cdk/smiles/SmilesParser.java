@@ -234,8 +234,7 @@ public final class SmilesParser {
             // CXSMILES layer
             parseRxnCXSMILES(title, reaction);
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new InvalidSmilesException("Error parsing CXSMILES:" + e.getMessage());
+            throw new InvalidSmilesException("Error parsing CXSMILES", e);
         }
 
         return reaction;
@@ -270,8 +269,7 @@ public final class SmilesParser {
                     // CXSMILES layer
                     parseMolCXSMILES(g.getTitle(), mol);
                 } catch (Exception e) {
-                    e.printStackTrace();
-                    throw new InvalidSmilesException("Error parsing CXSMILES:" + e.getMessage());
+                    throw new InvalidSmilesException("Error parsing CXSMILES", e);
                 }
             }
 

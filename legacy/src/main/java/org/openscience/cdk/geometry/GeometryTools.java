@@ -394,6 +394,8 @@ public class GeometryTools {
                 length++;
             }
         }
+        if (length == 0)
+            return new Point2d(0,0);
         return new Point2d(xsum / (double) length, ysum / (double) length);
     }
 
@@ -417,6 +419,8 @@ public class GeometryTools {
             }
             ++length;
         }
+        if (length == 0)
+            return new Point2d(0,0);
         return new Point2d(xsum / (double) length, ysum / (double) length);
     }
 
@@ -461,7 +465,8 @@ public class GeometryTools {
             xsum += mass * a.getPoint2d().x;
             ysum += mass * a.getPoint2d().y;
         }
-
+        if (totalmass == 0)
+            return new Point2d(0,0);
         return new Point2d(xsum / totalmass, ysum / totalmass);
     }
 
@@ -483,6 +488,8 @@ public class GeometryTools {
                 counter++;
             }
         }
+        if (counter == 0)
+            return new Point2d(0,0);
         return new Point2d(centerX / (counter), centerY / (counter));
     }
 
@@ -533,7 +540,8 @@ public class GeometryTools {
             ysum += mass * a.getPoint3d().y;
             zsum += mass * a.getPoint3d().z;
         }
-
+        if (totalmass == 0)
+            return new Point3d(0,0,0);
         return new Point3d(xsum / totalmass, ysum / totalmass, zsum / totalmass);
     }
 
@@ -557,6 +565,8 @@ public class GeometryTools {
                 counter++;
             }
         }
+        if (counter == 0)
+            return new Point3d(0,0,0);
         return new Point3d(centerX / (counter), centerY / (counter), centerZ / (counter));
     }
 
@@ -897,6 +907,8 @@ public class GeometryTools {
                 bondLengthSum += getLength2D(bond);
             }
         }
+        if (bondCounter == 0)
+            return 0;
         return bondLengthSum / bondCounter;
     }
 
@@ -1161,6 +1173,8 @@ public class GeometryTools {
                         + Math.pow(atom1.getPoint2d().y - atom2.getPoint2d().y, 2));
             }
         }
+        if (counter == 0)
+            return 1.0;
         bondlength = bondlength / counter;
         ratio = desiredBondLength / bondlength;
         return ratio;
@@ -1330,8 +1344,8 @@ public class GeometryTools {
                 firstAC = secondAC.clone();
                 secondAC = tmp.clone();
             } catch (CloneNotSupportedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                LoggingToolFactory.createLoggingTool(GeometryTools.class)
+                                  .warn("Unexpected Error:", e);
             }
         }
     }
@@ -1404,6 +1418,8 @@ public class GeometryTools {
         }
         setVisitedFlagsToFalse(firstAtomContainer);
         setVisitedFlagsToFalse(secondAtomContainer);
+        if (n == 0)
+            return 0;
         return Math.sqrt(sum / n);
     }
 
@@ -1455,6 +1471,8 @@ public class GeometryTools {
                 }
             }//if
         }
+        if (n == 0)
+            return 0;
         return Math.sqrt(sum / n);
     }
 
@@ -1496,7 +1514,7 @@ public class GeometryTools {
             Map<Integer, Integer> mappedAtoms, boolean Coords3d) throws CDKException {
         //logger.debug("**** GT getAllAtomRMSD ****");
         double sum = 0;
-        double RMSD;
+        double rmsd;
         Iterator<Integer> firstAtoms = mappedAtoms.keySet().iterator();
         int firstAtomNumber;
         int secondAtomNumber;
@@ -1523,8 +1541,10 @@ public class GeometryTools {
                 throw new CDKException(ex.getMessage(), ex);
             }
         }
-        RMSD = Math.sqrt(sum / n);
-        return RMSD;
+        if (n == 0)
+            return 0;
+        rmsd = Math.sqrt(sum / n);
+        return rmsd;
     }
 
     /**
@@ -1542,7 +1562,7 @@ public class GeometryTools {
             Map<Integer, Integer> mappedAtoms, boolean hetAtomOnly, boolean Coords3d) {
         //logger.debug("**** GT getAllAtomRMSD ****");
         double sum = 0;
-        double RMSD;
+        double rmsd;
         Iterator<Integer> firstAtoms = mappedAtoms.keySet().iterator();
         int firstAtomNumber;
         int secondAtomNumber;
@@ -1586,8 +1606,10 @@ public class GeometryTools {
             }
 
         }
-        RMSD = Math.sqrt(sum / n);
-        return RMSD;
+        if (n == 0)
+            return 0;
+        rmsd = Math.sqrt(sum / n);
+        return rmsd;
     }
 
     /**
@@ -1609,6 +1631,8 @@ public class GeometryTools {
                 bondLengthSum += atom1.getPoint3d().distance(atom2.getPoint3d());
             }
         }
+        if (bondCounter == 0)
+            return 0;
         return bondLengthSum / bondCounter;
     }
 
@@ -1654,6 +1678,8 @@ public class GeometryTools {
             containercount++;
             bondlenghtsum += getBondLengthAverage(container);
         }
+        if (containercount == 0)
+            return 0;
         return bondlenghtsum / containercount;
     }
 

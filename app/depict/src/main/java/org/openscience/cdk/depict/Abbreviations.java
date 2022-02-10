@@ -49,6 +49,7 @@ import org.openscience.cdk.sgroup.SgroupType;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.io.BufferedReader;
@@ -885,7 +886,8 @@ public class Abbreviations implements Iterable<String> {
                     if (add(line))
                         count++;
                 } catch (InvalidSmilesException e) {
-                    e.printStackTrace();
+                    LoggingToolFactory.createLoggingTool(Abbreviations.class)
+                                      .warn("Ignored Invalid SMILES", e);
                 }
             }
         }

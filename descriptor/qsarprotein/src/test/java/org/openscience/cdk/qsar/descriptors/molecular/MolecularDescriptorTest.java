@@ -108,7 +108,6 @@ public abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularD
         try {
             mol = someoneBringMeSomeWater(DefaultChemObjectBuilder.getInstance());
         } catch (Exception e) {
-            e.printStackTrace();
             Assert.fail("Error in generating the test molecule");
         }
 

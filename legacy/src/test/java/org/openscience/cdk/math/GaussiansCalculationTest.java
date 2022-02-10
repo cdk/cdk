@@ -37,6 +37,7 @@ import org.openscience.cdk.math.qm.ClosedShellJob;
 import org.openscience.cdk.math.qm.GaussiansBasis;
 import org.openscience.cdk.math.qm.Orbitals;
 import org.openscience.cdk.math.qm.SimpleBasisSet;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
@@ -92,7 +93,8 @@ public class GaussiansCalculationTest {
                 orbitals = job.calculate();
             }
         } catch (FileNotFoundException | CDKException exc) {
-            exc.printStackTrace();
+            LoggingToolFactory.createLoggingTool(GaussiansCalculationTest.class)
+                              .warn("Unexpected Error:", exc);
         }
     }
 
