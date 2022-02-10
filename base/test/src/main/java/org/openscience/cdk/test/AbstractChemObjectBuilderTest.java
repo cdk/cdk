@@ -235,7 +235,7 @@ public abstract class AbstractChemObjectBuilderTest extends CDKTestCase {
     public void testNewBond_arrayIAtom_IBond_Order() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IBond bond = builder.newInstance(IBond.class,
-                (Object[]) new IAtom[]{builder.newInstance(IAtom.class), builder.newInstance(IAtom.class)},
+                new IAtom[]{builder.newInstance(IAtom.class), builder.newInstance(IAtom.class)},
                 IBond.Order.DOUBLE);
         Assert.assertNotNull(bond);
     }

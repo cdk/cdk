@@ -90,7 +90,7 @@ public class TemplateExtractor {
                 System.out.println("...");
             }
             IAtomContainer m = builder.newInstance(IAtomContainer.class);
-            m = (IAtomContainer) imdl.next();
+            m = imdl.next();
             if (m.getAtomCount() > 2) {
                 if (m.getAtom(0).getPoint3d() != null) {
                     som.addAtomContainer(m);
@@ -119,7 +119,7 @@ public class TemplateExtractor {
         }
         System.out.println("READY");
         while (imdl.hasNext()) {
-            som.addAtomContainer((IAtomContainer) imdl.next());
+            som.addAtomContainer(imdl.next());
         }
         try {
             imdl.close();
@@ -135,7 +135,7 @@ public class TemplateExtractor {
         try (BufferedReader fin = new BufferedReader(new FileReader(dataFile));
              IteratingSDFReader imdl = new IteratingSDFReader(fin, builder)) {
             while (imdl.hasNext()) {
-                m = (IAtomContainer) imdl.next();
+                m = imdl.next();
                 System.out.println("Atoms:" + m.getAtomCount());
                 IRingSet ringSetM = Cycles.sssr(m).toRingSet();
                 // som.addAtomContainer(m);
@@ -175,7 +175,7 @@ public class TemplateExtractor {
              BufferedReader fin = new BufferedReader(new FileReader(dataFile));
              IteratingSDFReader imdl = new IteratingSDFReader(fin, builder)) {
             while (imdl.hasNext()) {
-                m = (IAtomContainer) imdl.next();
+                m = imdl.next();
                 counterMolecules = counterMolecules + 1;
                 /*
                  * try{ HueckelAromaticityDetector.detectAromaticity(m);
@@ -192,12 +192,12 @@ public class TemplateExtractor {
                     ringSystems = RingPartitioner.partitionRings(ringSetM);
 
                     for (IRingSet ringSystem : ringSystems) {
-                        ringSet = (IRingSet) ringSystem;
+                        ringSet = ringSystem;
                         ac = builder.newInstance(IAtomContainer.class);
                         Iterator<IAtomContainer> containers = RingSetManipulator.getAllAtomContainers(ringSet)
                                                                                 .iterator();
                         while (containers.hasNext()) {
-                            ac.add((IAtomContainer) containers.next());
+                            ac.add(containers.next());
                         }
                         counterRings = counterRings + 1;
                         // Only connection is important
@@ -292,7 +292,7 @@ public class TemplateExtractor {
             System.out.println("Could not read Molecules from file " + dataFileIn + " due to: " + exc.getMessage());
         }
         while (imdl.hasNext()) {
-            m = (IAtomContainer) imdl.next();
+            m = imdl.next();
             /*
              * try{ HueckelAromaticityDetector.detectAromaticity(m);
              * }catch(Exception ex1){ System.out.println("Could not find
@@ -303,7 +303,7 @@ public class TemplateExtractor {
             // Molecule(m)));
             try {
 
-                data.add((String) smiles.create(builder.newInstance(IAtomContainer.class, m)));
+                data.add(smiles.create(builder.newInstance(IAtomContainer.class, m)));
             } catch (IllegalArgumentException | CDKException exc1) {
                 System.out.println("Could not create smile due to: " + exc1.getMessage());
             }
@@ -324,7 +324,7 @@ public class TemplateExtractor {
             // System.out.println("write:"+(String)data.get(i));
             try {
 
-                fout.write(((String) datum));
+                fout.write(datum);
                 fout.write('\n');
             } catch (Exception exc4) {
             }
@@ -361,7 +361,7 @@ public class TemplateExtractor {
         int fingerprintCounter = 0;
         logger.info("Generated Fingerprints: " + fingerprintCounter + "    ");
         while (imdl.hasNext() && (moleculeCounter < limit || limit == -1)) {
-            m = (IAtomContainer) imdl.next();
+            m = imdl.next();
             moleculeCounter++;
             if (anyAtom && !anyAtomAnyBond) {
                 query = QueryAtomContainerCreator.createAnyAtomContainer(m, false);
@@ -463,7 +463,7 @@ public class TemplateExtractor {
     }
 
     public IAtomContainer createAnyAtomAtomContainer(IAtomContainer atomContainer) throws Exception {
-        IAtomContainer query = (IAtomContainer) atomContainer.clone();
+        IAtomContainer query = atomContainer.clone();
         // System.out.println("createAnyAtomAtomContainer");
         for (int i = 0; i < query.getAtomCount(); i++) {
             // System.out.print(" "+i);

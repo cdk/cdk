@@ -104,7 +104,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
     public void setReaction(Class<?> reactionClass) throws Exception {
         if (dictionary == null) dictionary = openingDictionary();
 
-        Object object = (Object) reactionClass.newInstance();
+        Object object = reactionClass.newInstance();
         if (!(object instanceof IReactionProcess)) {
             throw new CDKException("The passed reaction class must be a IReactionProcess");
         } else if (reaction == null) {
@@ -328,7 +328,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
                 + "]  must contain at least one example of reaction.", xmlList.size() > 0);
         for (String xml : xmlList) {
             CMLReader reader = new CMLReader(new ByteArrayInputStream(xml.getBytes()));
-            IChemFile chemFile = (IChemFile) reader.read(builder.newInstance(IChemFile.class));
+            IChemFile chemFile = reader.read(builder.newInstance(IChemFile.class));
             IReaction reactionDict = chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0);
 
             IAtomContainerSet reactants = reactionDict.getReactants();

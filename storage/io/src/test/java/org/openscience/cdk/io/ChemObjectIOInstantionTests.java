@@ -91,7 +91,7 @@ public class ChemObjectIOInstantionTests extends CDKTestCase {
         IChemFormat format = null;
         Iterator<IChemFormat> formatIter = formats.iterator();
         while (formatIter.hasNext()) {
-            format = (IChemFormat) formatIter.next();
+            format = formatIter.next();
             if (format.getReaderClassName() != null) {
                 tryToInstantiate(format.getReaderClassName());
             }

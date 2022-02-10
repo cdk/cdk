@@ -109,12 +109,12 @@ public class ValidatorEngine implements IValidator {
         // traverse into hierarchy
         Iterator<IAtom> atoms = subject.atoms().iterator();
         while (atoms.hasNext()) {
-            report.addReport(validateAtom((IAtom) atoms.next()));
+            report.addReport(validateAtom(atoms.next()));
         }
 
         Iterator<IBond> bonds = subject.bonds().iterator();
         while (bonds.hasNext()) {
-            IBond bond = (IBond) bonds.next();
+            IBond bond = bonds.next();
             report.addReport(validateBond(bond));
         }
         return report;
@@ -147,7 +147,7 @@ public class ValidatorEngine implements IValidator {
         // traverse into hierarchy
         Iterator<IAtom> atoms = subject.atoms().iterator();
         while (atoms.hasNext()) {
-            report.addReport(validateAtom((IAtom) atoms.next()));
+            report.addReport(validateAtom(atoms.next()));
         }
         return report;
     }

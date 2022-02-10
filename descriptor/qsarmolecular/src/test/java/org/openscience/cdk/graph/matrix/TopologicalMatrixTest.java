@@ -20,7 +20,7 @@ public class TopologicalMatrixTest extends CDKTestCase {
         String filename = "data/mdl/chlorobenzene.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IAtomContainer container = (IAtomContainer) reader.read(new AtomContainer());
+        IAtomContainer container = reader.read(new AtomContainer());
         int[][] matrix = TopologicalMatrix.getMatrix(container);
         Assert.assertEquals(12, matrix.length);
         for (int[] ints : matrix) {

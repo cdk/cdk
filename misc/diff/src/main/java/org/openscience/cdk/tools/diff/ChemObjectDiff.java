@@ -65,8 +65,8 @@ public class ChemObjectDiff {
         if (!(first instanceof IChemObject && second instanceof IChemObject)) {
             return null;
         }
-        IChemObject firstElem = (IChemObject) first;
-        IChemObject secondElem = (IChemObject) second;
+        IChemObject firstElem = first;
+        IChemObject secondElem = second;
         ChemObjectDifference coDiff = new ChemObjectDifference("ChemObjectDiff");
         // Compare flags
         boolean[] firstFlags = firstElem.getFlags();

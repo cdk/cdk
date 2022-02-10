@@ -131,7 +131,7 @@ public class IsProtonInAromaticSystemDescriptor extends AbstractAtomicDescriptor
     public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer) {
         IAtomContainer clonedAtomContainer;
         try {
-            clonedAtomContainer = (IAtomContainer) atomContainer.clone();
+            clonedAtomContainer = atomContainer.clone();
         } catch (CloneNotSupportedException e) {
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
                     (int) Double.NaN), NAMES, e);
@@ -150,7 +150,7 @@ public class IsProtonInAromaticSystemDescriptor extends AbstractAtomicDescriptor
             }
         }
         List<IAtom> neighboor = mol.getConnectedAtomsList(clonedAtom);
-        IAtom neighbour0 = (IAtom) neighboor.get(0);
+        IAtom neighbour0 = neighboor.get(0);
         if (atom.getAtomicNumber() == IElement.H) {
             //logger.debug("aromatic proton");
             if (neighbour0.getFlag(CDKConstants.ISAROMATIC)) {

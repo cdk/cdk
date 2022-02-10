@@ -293,12 +293,12 @@ public class TaeAminoAcidDescriptor extends AbstractMolecularDescriptor implemen
             if (o.length() == 0) continue;
 
             String olc = String.valueOf(o.toLowerCase().charAt(0));
-            String tlc = (String) nametrans.get(olc);
+            String tlc = nametrans.get(olc);
 
             logger.debug("Converted " + olc + " to " + tlc);
 
             // get the params for this AA
-            Double[] params = (Double[]) taeParams.get(tlc);
+            Double[] params = taeParams.get(tlc);
 
             for (int i = 0; i < ndesc; i++)
                 desc[i] += params[i];

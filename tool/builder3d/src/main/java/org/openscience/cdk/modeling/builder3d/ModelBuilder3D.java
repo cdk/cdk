@@ -174,7 +174,7 @@ public class ModelBuilder3D {
         ap3d.initilize(parameterSet);
         atlp3d.setParameterSet(parameterSet);
 
-        if (clone) molecule = (IAtomContainer) molecule.clone();
+        if (clone) molecule = molecule.clone();
         atomPlacer.setMolecule(molecule);
 
         if (ap3d.numberOfUnplacedHeavyAtoms(molecule) == 1) {

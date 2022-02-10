@@ -173,7 +173,7 @@ public abstract class AbstractCrystalTest extends AbstractAtomContainerTest {
         ICrystal crystal1 = (ICrystal) newChemObject();
         Vector3d axes = new Vector3d(1.0, 2.0, 3.0);
         crystal1.setA(axes);
-        ICrystal crystal2 = (ICrystal) crystal1.clone();
+        ICrystal crystal2 = crystal1.clone();
 
         // test cloning of axes
         crystal1.getA().x = 5.0;

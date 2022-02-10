@@ -125,7 +125,7 @@ public abstract class AtomicDescriptorTest extends DescriptorTest<IAtomicDescrip
     public void testCalculate_NoModifications() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
         IAtom atom = mol.getAtom(1);
-        IAtom clone = (IAtom) mol.getAtom(1).clone();
+        IAtom clone = mol.getAtom(1).clone();
         descriptor.calculate(atom, mol);
         String diff = AtomDiff.diff(clone, atom);
         Assert.assertEquals("The descriptor must not change the passed atom in any respect, but found this diff: "

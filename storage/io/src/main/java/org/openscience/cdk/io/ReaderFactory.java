@@ -178,7 +178,7 @@ public class ReaderFactory {
         if (!(input instanceof BufferedReader)) {
             input = new BufferedReader(input);
         }
-        IChemFormat chemFormat = formatFactory.guessFormat((BufferedReader) input);
+        IChemFormat chemFormat = formatFactory.guessFormat(input);
         ISimpleChemObjectReader coReader = createReader(chemFormat);
         try {
             coReader.setReader(input);

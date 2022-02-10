@@ -488,7 +488,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
                             logger.debug("Atom has " + atomContainerBondOrderSum + ", may have: " + bondOrderSum);
                             partners = atomContainer.getConnectedAtomsList(atom);
                             for (int g = 0; g < partners.size(); g++) {
-                                partner = (IAtom) partners.get(g);
+                                partner = partners.get(g);
                                 logger.debug("Atom has " + partners.size() + " partners");
                                 atomTypes2 = getAtomTypeFactory(atom.getBuilder()).getAtomTypes(partner.getSymbol());
                                 if (atomTypes2.length == 0) return;
@@ -635,7 +635,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
                 if (atom.getFlag(CDKConstants.ISAROMATIC)) {
                     boolean subtractOne = true;
                     for (IBond connectedBond : connectedBonds) {
-                        IBond conBond = (IBond) connectedBond;
+                        IBond conBond = connectedBond;
                         if (conBond.getOrder() == Order.DOUBLE || conBond.getFlag(CDKConstants.ISAROMATIC))
                             subtractOne = false;
                     }

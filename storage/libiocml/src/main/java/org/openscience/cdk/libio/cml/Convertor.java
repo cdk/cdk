@@ -463,7 +463,7 @@ public class Convertor {
             cmlMolecule.setRef(structure.getID());
 
         if (structure.getTitle() != null) {
-            cmlMolecule.setTitle((String) structure.getTitle());
+            cmlMolecule.setTitle(structure.getTitle());
         }
         if (structure.getProperty(CDKConstants.INCHI) != null) {
             CMLIdentifier ident = new CMLIdentifier();
@@ -638,7 +638,7 @@ public class Convertor {
 
         Iterator<String> elements = customizers.keySet().iterator();
         while (elements.hasNext()) {
-            ICMLCustomizer customizer = (ICMLCustomizer) customizers.get(elements.next());
+            ICMLCustomizer customizer = customizers.get(elements.next());
             try {
                 customizer.customize(cdkAtom, cmlAtom);
             } catch (Exception exception) {

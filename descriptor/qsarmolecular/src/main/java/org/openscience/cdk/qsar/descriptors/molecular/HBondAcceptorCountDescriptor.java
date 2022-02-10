@@ -154,7 +154,7 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
 
         IAtomContainer ac;
         try {
-            ac = (IAtomContainer) atomContainer.clone();
+            ac = atomContainer.clone();
         } catch (CloneNotSupportedException e) {
             return getDummyDescriptorValue(e);
         }

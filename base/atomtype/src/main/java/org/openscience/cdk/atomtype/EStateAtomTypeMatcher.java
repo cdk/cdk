@@ -77,7 +77,7 @@ public class EStateAtomTypeMatcher implements IAtomTypeMatcher {
             List<IAtom> attachedAtoms = atomContainer.getConnectedAtomsList(atom);
 
             for (int j = 0; j <= attachedAtoms.size() - 1; j++) {
-                IAtom attached = (IAtom) attachedAtoms.get(j);
+                IAtom attached = attachedAtoms.get(j);
                 IBond b = atomContainer.getBond(atom, attached);
                 if (attached.getAtomicNumber() == IElement.H) NumHAtoms++;
 

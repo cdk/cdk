@@ -118,7 +118,7 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
         try {
-            IAtomContainer clone = (IAtomContainer) container.clone();
+            IAtomContainer clone = container.clone();
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(clone);
             int nsp2 = 0;
             int nsp3 = 0;

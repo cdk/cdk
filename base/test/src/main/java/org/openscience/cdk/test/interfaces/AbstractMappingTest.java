@@ -55,9 +55,9 @@ public abstract class AbstractMappingTest extends AbstractChemObjectTest {
 
         Iterator<IChemObject> iter = mapping.relatedChemObjects().iterator();
         Assert.assertTrue(iter.hasNext());
-        Assert.assertEquals(atom0, (IAtom) iter.next());
+        Assert.assertEquals(atom0, iter.next());
         Assert.assertTrue(iter.hasNext());
-        Assert.assertEquals(atom1, (IAtom) iter.next());
+        Assert.assertEquals(atom1, iter.next());
         Assert.assertFalse(iter.hasNext());
     }
 

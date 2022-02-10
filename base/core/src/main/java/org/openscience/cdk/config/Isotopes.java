@@ -84,8 +84,8 @@ public class Isotopes extends IsotopeFactory {
             ((Buffer) bin).position(0);
             int isotopeCount = bin.getInt();
             for (int i = 0; i < isotopeCount; i++) {
-                int atomicNum = (int) bin.get();
-                int massNum = (int) bin.getShort();
+                int atomicNum = bin.get();
+                int massNum = bin.getShort();
                 double exactMass = bin.getDouble();
                 double natAbund = bin.get() == 1 ? bin.getDouble() : 0.0;
                 IIsotope isotope = new BODRIsotope(PeriodicTable.getSymbol(atomicNum), atomicNum, massNum, exactMass,

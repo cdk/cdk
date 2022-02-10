@@ -84,7 +84,7 @@ public class CDKUtilities {
 
                             count = 0;
                             for (int j = 0; j <= 2; j++) {
-                                IAtom caj = (IAtom) ca.get(j);
+                                IAtom caj = ca.get(j);
                                 if (caj.getAtomicNumber() == IElement.O) {
                                     if (m.getConnectedBondsCount(caj) == 1) {// account for possibility of ONO2
                                         cao[count] = caj;
@@ -145,7 +145,7 @@ public class CDKUtilities {
 
                             count = 0;
                             for (int j = 0; j <= 2; j++) {
-                                IAtom caj = (IAtom) ca.get(j);
+                                IAtom caj = ca.get(j);
                                 if (caj.getAtomicNumber() == IElement.O) {
                                     if (m.getConnectedBondsCount(caj) == 1) {// account for possibility of ONO2
                                         cao[count] = caj;
@@ -269,7 +269,7 @@ public class CDKUtilities {
 
                 if (bondOrderSum > 1) {
                     for (IAtom connectedAtom : connectedAtoms) {
-                        IAtom conAtom = (IAtom) connectedAtom;
+                        IAtom conAtom = connectedAtom;
                         if (conAtom.getAtomicNumber() == IElement.H) {
                             m.removeAtom(conAtom);
                         }

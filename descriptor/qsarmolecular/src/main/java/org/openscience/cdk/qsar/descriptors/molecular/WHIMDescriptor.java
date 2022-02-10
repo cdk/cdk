@@ -314,7 +314,7 @@ public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMole
         IAtomContainer ac;
 
         try {
-            ac = (IAtomContainer) container.clone();
+            ac = container.clone();
         } catch (CloneNotSupportedException e) {
             return getDummyDescriptorValue(e);
         }
@@ -351,7 +351,7 @@ public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMole
             }
             for (int i = 0; i < ac.getAtomCount(); i++) {
                 String sym = ac.getAtom(i).getSymbol();
-                wt[i] = (Double) hash.get(sym);
+                wt[i] = hash.get(sym);
             }
         }
 
@@ -398,7 +398,7 @@ public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMole
                 }
                 if (!foundmatch) na++;
             }
-            double n = (double) ac.getAtomCount();
+            double n = ac.getAtomCount();
             gamma[i] = -1.0
                     * ((ns / n) * Math.log(ns / n) / Math.log(2.0) + (na / n) * Math.log(1.0 / n) / Math.log(2.0));
             gamma[i] = 1.0 / (1.0 + gamma[i]);

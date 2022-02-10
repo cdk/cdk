@@ -423,7 +423,7 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
     @Test
     public void testMoleculeInvariance() throws Exception, CloneNotSupportedException {
         IAtomContainer mol = TestMoleculeFactory.makePyrrole();
-        IAtomContainer clone = (IAtomContainer) mol.clone();
+        IAtomContainer clone = mol.clone();
 
         // should pass since we have not explicitly detected aromaticity
         for (IAtom atom : mol.atoms()) {

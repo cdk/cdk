@@ -316,7 +316,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
         Point2d point2 = bond.getEnd().getPoint2d();
         Color color = this.getColorForBond(bond, model);
         double bondWidth = this.getWidthForBond(bond, model);
-        double bondDistance = (Double) model.get(BondDistance.class) / model.getParameter(Scale.class).getValue();
+        double bondDistance = model.get(BondDistance.class) / model.getParameter(Scale.class).getValue();
         if (type == IBond.Order.SINGLE) {
             return new LineElement(point1.x, point1.y, point2.x, point2.y, bondWidth, color);
         } else {
@@ -466,7 +466,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
      * @return true if the bond has stero information
      */
     private boolean isStereoBond(IBond bond) {
-        return bond.getStereo() != IBond.Stereo.NONE && bond.getStereo() != (IBond.Stereo) CDKConstants.UNSET
+        return bond.getStereo() != IBond.Stereo.NONE && bond.getStereo() != CDKConstants.UNSET
                 && bond.getStereo() != IBond.Stereo.E_Z_BY_COORDINATES;
     }
 

@@ -397,7 +397,7 @@ public class StructureResonanceGenerator {
 
         IAtomContainer acClone = null;
         try {
-            acClone = (IAtomContainer) atomContainer.clone();
+            acClone = atomContainer.clone();
             if (!lookingSymmetry) { /* remove all aromatic flags */
                 for (IAtom atom : acClone.atoms())
                     atom.setFlag(CDKConstants.ISAROMATIC, false);

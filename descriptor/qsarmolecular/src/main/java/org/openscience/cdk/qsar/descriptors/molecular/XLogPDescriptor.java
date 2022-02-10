@@ -198,7 +198,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer ac;
         try {
-            ac = (IAtomContainer) atomContainer.clone();
+            ac = atomContainer.clone();
             AtomContainerManipulator.percieveAtomTypesAndConfigureUnsetProperties(ac);
             CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(ac.getBuilder());
             hAdder.addImplicitHydrogens(ac);
@@ -229,7 +229,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
         int checkAminoAcid = 1;//if 0 no check, if >1 check
         IAtom atomi = null;
         for (int i = 0; i < atomCount; i++) {
-            atomi = (IAtom) ac.getAtom(i);
+            atomi = ac.getAtom(i);
             //			Problem fused ring systems
             atomRingSet = rs.getRings(atomi);
             atomi.setProperty("IS_IN_AROMATIC_RING", false);
@@ -254,7 +254,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
                                 ((IRing) atomRingSet.getAtomContainer(j)).getRingSize());
                     }
 
-                    if (((IRing) atomRingSet.getAtomContainer(j)).contains(atomi)) {
+                    if (atomRingSet.getAtomContainer(j).contains(atomi)) {
                         if (((IRing) atomRingSet.getAtomContainer(j)).getRingSize() >= 6
                                 && atomi.getFlag(CDKConstants.ISAROMATIC)) {
                             atomi.setProperty("IS_IN_AROMATIC_RING", true);
@@ -272,7 +272,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
         }
 
         for (int i = 0; i < atomCount; i++) {
-            atomi = (IAtom) ac.getAtom(i);
+            atomi = ac.getAtom(i);
             if (xlogPOld == xlogP & i > 0 & !symbol.equals("H")) {
                 //logger.debug("\nXlogPAssignmentError: Could not assign atom number:"+(i-1));
             }
@@ -1231,7 +1231,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
      *@return       The presenceOfCarbonil value
      */
     private boolean getPresenceOfHydroxy(IAtomContainer ac, IAtom atom) {
-        IAtom neighbour0 = (IAtom) ac.getConnectedAtomsList(atom).get(0);
+        IAtom neighbour0 = ac.getConnectedAtomsList(atom).get(0);
         List first = null;
         if (neighbour0.getAtomicNumber() == IElement.C) {
             first = ac.getConnectedAtomsList(neighbour0);

@@ -224,7 +224,7 @@ public class CDKHueckelAromaticityDetector {
     }
 
     private static int getLonePairCount(IAtom atom) {
-        Integer count = (Integer) atom.getProperty(CDKConstants.LONE_PAIR_COUNT);
+        Integer count = atom.getProperty(CDKConstants.LONE_PAIR_COUNT);
         if (count == null) {
             return 0;
         } else {

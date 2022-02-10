@@ -206,7 +206,7 @@ public class SettingManager<T extends ISetting> {
      * @see #get(String)
      */
     public <S extends T> S get(String name, Class<S> c) {
-        return (S) get(name);
+        return get(name);
     }
 
     /**
@@ -246,7 +246,7 @@ public class SettingManager<T extends ISetting> {
      * @see #getSettings()
      */
     public T[] toArray(T[] c) {
-        return (T[]) getSettings().toArray(c);
+        return getSettings().toArray(c);
     }
 
 }

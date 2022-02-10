@@ -181,7 +181,7 @@ public class MDMoleculeTest extends CDKTestCase {
 
         CMLReader reader = new CMLReader(new ByteArrayInputStream(serializedMol.getBytes()));
         reader.registerConvention("md:mdMolecule", new MDMoleculeConvention(new ChemFile()));
-        IChemFile file = (IChemFile) reader.read(new ChemFile());
+        IChemFile file = reader.read(new ChemFile());
         reader.close();
         List containers = ChemFileManipulator.getAllAtomContainers(file);
         Assert.assertEquals(1, containers.size());

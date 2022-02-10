@@ -200,7 +200,7 @@ public class PharmacophoreMatcher {
         if (!checkQuery(pharmacophoreQuery))
             throw new CDKException(
                     "A problem in the query. Make sure all pharmacophore groups of the same symbol have the same same SMARTS");
-        String title = (String) atomContainer.getTitle();
+        String title = atomContainer.getTitle();
 
         if (initializeTarget)
             pharmacophoreMolecule = getPharmacophoreMolecule(atomContainer);

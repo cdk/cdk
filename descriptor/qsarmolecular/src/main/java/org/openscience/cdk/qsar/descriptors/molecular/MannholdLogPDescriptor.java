@@ -107,7 +107,7 @@ public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implemen
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer ac = null;
         try {
-            ac = (IAtomContainer) atomContainer.clone();
+            ac = atomContainer.clone();
         } catch (CloneNotSupportedException e) {
             return getDummyDescriptorValue(e);
         }

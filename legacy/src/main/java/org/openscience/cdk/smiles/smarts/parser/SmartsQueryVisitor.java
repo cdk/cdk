@@ -191,8 +191,8 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
                 // Here I assume the bond are always same. This should be checked by the parser already
                 ringBond = ringAtoms[ringId].getRingBond();
             }
-            ((IBond) ringBond).setAtoms(new IAtom[]{ringAtoms[ringId].getAtom(), atom});
-            query.addBond((IBond) ringBond);
+            ringBond.setAtoms(new IAtom[]{ringAtoms[ringId].getAtom(), atom});
+            query.addBond(ringBond);
 
             // if the connected atoms was tracking neighbors, replace the
             // placeholder reference

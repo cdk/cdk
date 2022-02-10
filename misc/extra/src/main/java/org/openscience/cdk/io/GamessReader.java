@@ -427,7 +427,7 @@ public class GamessReader extends DefaultChemObjectReader {
         if (coordinatesUnits == GamessReader.BOHR_UNIT) {
             return PhysicalConstants.BOHR_TO_ANGSTROM;
         } else { //condition is: (coordinatesUnits == GamessReader.ANGTROM_UNIT)
-            return (double) 1;
+            return 1;
         }
     }
 

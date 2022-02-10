@@ -519,11 +519,11 @@ public class SmilesGeneratorTest extends CDKTestCase {
         sp2CarbonWithOneHydrogen.setHybridization(IAtomType.Hybridization.SP2);
         sp2CarbonWithOneHydrogen.setImplicitHydrogenCount(1);
         molecule.addAtom(sp2CarbonWithOneHydrogen);
-        molecule.addAtom((Atom) sp2CarbonWithOneHydrogen.clone());
-        molecule.addAtom((Atom) sp2CarbonWithOneHydrogen.clone());
-        molecule.addAtom((Atom) sp2CarbonWithOneHydrogen.clone());
-        molecule.addAtom((Atom) sp2CarbonWithOneHydrogen.clone());
-        molecule.addAtom((Atom) sp2CarbonWithOneHydrogen.clone());
+        molecule.addAtom(sp2CarbonWithOneHydrogen.clone());
+        molecule.addAtom(sp2CarbonWithOneHydrogen.clone());
+        molecule.addAtom(sp2CarbonWithOneHydrogen.clone());
+        molecule.addAtom(sp2CarbonWithOneHydrogen.clone());
+        molecule.addAtom(sp2CarbonWithOneHydrogen.clone());
         molecule.addBond(0, 1, IBond.Order.SINGLE);
         molecule.addBond(1, 2, IBond.Order.SINGLE);
         molecule.addBond(2, 3, IBond.Order.SINGLE);
@@ -545,11 +545,11 @@ public class SmilesGeneratorTest extends CDKTestCase {
         sp2CarbonWithOneHydrogen.setHybridization(IAtomType.Hybridization.SP2);
         sp2CarbonWithOneHydrogen.setImplicitHydrogenCount(1);
         molecule.addAtom(sp2CarbonWithOneHydrogen);
-        molecule.addAtom((Atom) sp2CarbonWithOneHydrogen.clone());
-        molecule.addAtom((Atom) sp2CarbonWithOneHydrogen.clone());
-        molecule.addAtom((Atom) sp2CarbonWithOneHydrogen.clone());
-        molecule.addAtom((Atom) sp2CarbonWithOneHydrogen.clone());
-        molecule.addAtom((Atom) sp2CarbonWithOneHydrogen.clone());
+        molecule.addAtom(sp2CarbonWithOneHydrogen.clone());
+        molecule.addAtom(sp2CarbonWithOneHydrogen.clone());
+        molecule.addAtom(sp2CarbonWithOneHydrogen.clone());
+        molecule.addAtom(sp2CarbonWithOneHydrogen.clone());
+        molecule.addAtom(sp2CarbonWithOneHydrogen.clone());
         molecule.addBond(0, 1, IBond.Order.SINGLE);
         molecule.addBond(1, 2, IBond.Order.SINGLE);
         molecule.addBond(2, 3, IBond.Order.SINGLE);
@@ -583,7 +583,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         String smiles = "";
         String oldSmiles = sg.create(mol);
         while (acap.hasNext()) {
-            smiles = sg.create(new AtomContainer((AtomContainer) acap.next()));
+            smiles = sg.create(new AtomContainer(acap.next()));
             //logger.debug(smiles);
             Assert.assertEquals(oldSmiles, smiles);
         }
@@ -613,7 +613,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         String smiles = "";
         String oldSmiles = sg.create(mol);
         while (acbp.hasNext()) {
-            smiles = sg.create(new AtomContainer((AtomContainer) acbp.next()));
+            smiles = sg.create(new AtomContainer(acbp.next()));
             //logger.debug(smiles);
             Assert.assertEquals(oldSmiles, smiles);
         }
@@ -862,7 +862,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         String filename_cml = "test1.cml";
         InputStream ins1 = this.getClass().getResourceAsStream(filename_cml);
         CMLReader reader1 = new CMLReader(ins1);
-        IChemFile chemFile = (IChemFile) reader1.read(new ChemFile());
+        IChemFile chemFile = reader1.read(new ChemFile());
         Assert.assertNotNull(chemFile);
         IChemSequence seq = chemFile.getChemSequence(0);
         Assert.assertNotNull(seq);
@@ -891,7 +891,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         InputStream ins1 = this.getClass().getResourceAsStream(filename_cml);
         InputStream ins2 = this.getClass().getResourceAsStream(filename_mol);
         CMLReader reader1 = new CMLReader(ins1);
-        IChemFile chemFile = (IChemFile) reader1.read(new ChemFile());
+        IChemFile chemFile = reader1.read(new ChemFile());
         IChemSequence seq = chemFile.getChemSequence(0);
         IChemModel model = seq.getChemModel(0);
         IAtomContainer mol1 = model.getMoleculeSet().getAtomContainer(0);
@@ -1103,7 +1103,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         IsotopeFactory fact = Isotopes.getInstance();
         fact.configureAtoms(mol);
         SmilesGenerator sg = new SmilesGenerator();
-        String smiles = sg.create((IAtomContainer) mol);
+        String smiles = sg.create(mol);
         IAtomContainer mol2 = sp.parseSmiles(smiles);
         Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(mol, mol2));
     }

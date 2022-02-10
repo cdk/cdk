@@ -221,7 +221,7 @@ public class CPSADescriptor extends AbstractMolecularDescriptor implements IMole
 
         IAtomContainer container;
         try {
-            container = (IAtomContainer) atomContainer.clone();
+            container = atomContainer.clone();
         } catch (CloneNotSupportedException e) {
             logger.debug("Error during clone");
             for (int i = 0; i < 29; i++)

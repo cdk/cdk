@@ -136,7 +136,7 @@ public class AtomContainerManipulator {
      */
     public static IAtomContainer extractSubstructure(IAtomContainer atomContainer, int... atomIndices)
             throws CloneNotSupportedException {
-        IAtomContainer substructure = (IAtomContainer) atomContainer.clone();
+        IAtomContainer substructure = atomContainer.clone();
         int numberOfAtoms = substructure.getAtomCount();
         IAtom[] atoms = new IAtom[numberOfAtoms];
         for (int atomIndex = 0; atomIndex < numberOfAtoms; atomIndex++) {
@@ -803,7 +803,7 @@ public class AtomContainerManipulator {
             if (!removedBond) {
                 IBond clone = null;
                 try {
-                    clone = (IBond) org.getBond(i).clone();
+                    clone = org.getBond(i).clone();
                 } catch (CloneNotSupportedException e) {
                     e.printStackTrace();
                 }
@@ -836,7 +836,7 @@ public class AtomContainerManipulator {
 
         IAtom clonedAtom = null;
         try {
-            clonedAtom = (IAtom) atom.clone();
+            clonedAtom = atom.clone();
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
@@ -1304,7 +1304,7 @@ public class AtomContainerManipulator {
             if (!suppressibleHydrogen(ac, atom) || preserve.contains(atom)) {
                 IAtom a = null;
                 try {
-                    a = (IAtom) atom.clone();
+                    a = atom.clone();
                 } catch (CloneNotSupportedException e) {
                     e.printStackTrace();
                 }
@@ -1338,7 +1338,7 @@ public class AtomContainerManipulator {
 
                 IBond clone = null;
                 try {
-                    clone = (IBond) ac.getBond(i).clone();
+                    clone = ac.getBond(i).clone();
                 } catch (CloneNotSupportedException e) {
                     e.printStackTrace();
                 }
@@ -1614,7 +1614,7 @@ public class AtomContainerManipulator {
      */
     public static IAtomContainer createAllCarbonAllSingleNonAromaticBondAtomContainer(IAtomContainer atomContainer)
             throws CloneNotSupportedException {
-        IAtomContainer query = (IAtomContainer) atomContainer.clone();
+        IAtomContainer query = atomContainer.clone();
         for (int i = 0; i < query.getBondCount(); i++) {
             query.getBond(i).setOrder(IBond.Order.SINGLE);
             query.getBond(i).setFlag(CDKConstants.ISAROMATIC, false);

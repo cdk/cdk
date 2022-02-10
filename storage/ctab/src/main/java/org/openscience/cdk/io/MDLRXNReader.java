@@ -345,7 +345,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
 
                 // read MDL molfile content
                 MDLReader reader = new MDLReader(new StringReader(molFile.toString()));
-                IAtomContainer reactant = (IAtomContainer) reader.read(builder.newInstance(IAtomContainer.class));
+                IAtomContainer reactant = reader.read(builder.newInstance(IAtomContainer.class));
                 reader.close();
 
                 // add reactant
@@ -373,7 +373,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
 
                 // read MDL molfile content
                 MDLReader reader = new MDLReader(new StringReader(molFile.toString()), super.mode);
-                IAtomContainer product = (IAtomContainer) reader.read(builder.newInstance(IAtomContainer.class));
+                IAtomContainer product = reader.read(builder.newInstance(IAtomContainer.class));
                 reader.close();
 
                 // add reactant
@@ -401,7 +401,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
 
                 // read MDL molfile content
                 MDLReader reader = new MDLReader(new StringReader(molFile.toString()), super.mode);
-                IAtomContainer agent = (IAtomContainer) reader.read(builder.newInstance(IAtomContainer.class));
+                IAtomContainer agent = reader.read(builder.newInstance(IAtomContainer.class));
                 reader.close();
 
                 // add reactant

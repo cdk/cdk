@@ -637,23 +637,23 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         boolean haveCsAr = false;
 
         for (int j = 0; j <= ca.size() - 1; j++) {
-            if (((IAtom) ca.get(j)).getAtomicNumber() == IElement.H) {
+            if (ca.get(j).getAtomicNumber() == IElement.H) {
                 alogpfrag[atomContainer.indexOf(ca.get(j))] = htype;
                 continue;
             }
 
-            if (atomContainer.getBond(ai, ((IAtom) ca.get(j))).getOrder() == IBond.Order.SINGLE) {
-                if (((IAtom) ca.get(j)).getAtomicNumber() != IElement.C) {
+            if (atomContainer.getBond(ai, ca.get(j)).getOrder() == IBond.Order.SINGLE) {
+                if (ca.get(j).getAtomicNumber() != IElement.C) {
                     haveCsX = true;
                 }
 
-                if (((IAtom) ca.get(j)).getFlag(CDKConstants.ISAROMATIC)) {
+                if (ca.get(j).getFlag(CDKConstants.ISAROMATIC)) {
                     haveCsAr = true;
                 }
 
             }
-            else if (atomContainer.getBond(ai, ((IAtom) ca.get(j))).getOrder() == IBond.Order.DOUBLE) {
-                if (((IAtom) ca.get(j)).getAtomicNumber() != IElement.C) {
+            else if (atomContainer.getBond(ai, ca.get(j)).getOrder() == IBond.Order.DOUBLE) {
+                if (ca.get(j).getAtomicNumber() != IElement.C) {
                     haveCdX = true;
                 }
             }
@@ -775,11 +775,11 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
             }
         }
         else if (fragment[i].equals("SddC")) {
-            if (((IAtom) nbors.get(0)).getAtomicNumber() == IElement.C && ((IAtom) nbors.get(1)).getAtomicNumber() == IElement.C) {// R==C==R
+            if (nbors.get(0).getAtomicNumber() == IElement.C && nbors.get(1).getAtomicNumber() == IElement.C) {// R==C==R
                 frags[22]++;
                 alogpfrag[i] = 22;
             }
-            else if (((IAtom) nbors.get(0)).getAtomicNumber() != IElement.C && ((IAtom) nbors.get(1)).getAtomicNumber() != IElement.C) {// X==C==X
+            else if (nbors.get(0).getAtomicNumber() != IElement.C && nbors.get(1).getAtomicNumber() != IElement.C) {// X==C==X
                 frags[40]++;
                 alogpfrag[i] = 40;
             }
@@ -790,12 +790,12 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
             boolean haveCsX = false;
 
             for (int j = 0; j <= nbors.size() - 1; j++) {
-                if (atomContainer.getBond(ai, ((IAtom) nbors.get(j))).getOrder() == IBond.Order.SINGLE) {
-                    if (((IAtom) nbors.get(j)).getAtomicNumber() != IElement.C) {
+                if (atomContainer.getBond(ai, nbors.get(j)).getOrder() == IBond.Order.SINGLE) {
+                    if (nbors.get(j).getAtomicNumber() != IElement.C) {
                         haveCsX = true;
                     }
-                } else if (atomContainer.getBond(ai, ((IAtom) nbors.get(j))).getOrder() == IBond.Order.TRIPLE) {
-                    if (((IAtom) nbors.get(j)).getAtomicNumber() != IElement.C) {
+                } else if (atomContainer.getBond(ai, nbors.get(j)).getOrder() == IBond.Order.TRIPLE) {
+                    if (nbors.get(j).getAtomicNumber() != IElement.C) {
                         haveCtX = true;
                     }
                 }
@@ -873,7 +873,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
             }
         }
 
-        if ((ca0).getAtomicNumber() != IElement.C && ((IAtom) nbors.get(1)).getAtomicNumber() != IElement.C) {
+        if ((ca0).getAtomicNumber() != IElement.C && nbors.get(1).getAtomicNumber() != IElement.C) {
             if (haveDouble1 && haveDouble2) { // X--CH--X
                 frags[30]++;
                 alogpfrag[i] = 30;
@@ -918,7 +918,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
         int sameringatomscount = 0;
         for (int j = 0; j <= nbors.size() - 1; j++) {
-            if (inSameAromaticRing(atomContainer, atm, ((IAtom) nbors.get(j)), rs)) {
+            if (inSameAromaticRing(atomContainer, atm, nbors.get(j), rs)) {
                 sameringatomscount++;
             }
 
@@ -927,11 +927,11 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         if (sameringatomscount == 2) {
             int count = 0;
             for (int j = 0; j <= nbors.size() - 1; j++) {
-                if (inSameAromaticRing(atomContainer, atm, ((IAtom) nbors.get(j)), rs)) {
-                    sameringatoms[count] = (IAtom) nbors.get(j);
+                if (inSameAromaticRing(atomContainer, atm, nbors.get(j), rs)) {
+                    sameringatoms[count] = nbors.get(j);
                     count++;
                 } else {
-                    nonringatom = (IAtom) nbors.get(j);
+                    nonringatom = nbors.get(j);
                 }
 
             }
@@ -944,9 +944,9 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                     return -Boolean.compare(isHetero(a), isHetero(b));
                 }
             });
-            sameringatoms[0] = (IAtom) nbors.get(0);
-            sameringatoms[1] = (IAtom) nbors.get(1);
-            nonringatom = (IAtom) nbors.get(2);
+            sameringatoms[0] = nbors.get(0);
+            sameringatoms[1] = nbors.get(1);
+            nonringatom = nbors.get(2);
         }
 
         // check if both hetero atoms have at least one double bond
@@ -1335,8 +1335,8 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         frags[htype] += atom.getImplicitHydrogenCount();
 
         for (int j = 0; j <= nbors.size() - 1; j++) {
-            if (((IAtom) nbors.get(j)).getAtomicNumber() == IElement.H) continue;
-            if (((IAtom) nbors.get(j)).getFlag(CDKConstants.ISAROMATIC))
+            if (nbors.get(j).getAtomicNumber() == IElement.H) continue;
+            if (nbors.get(j).getFlag(CDKConstants.ISAROMATIC))
                 nAr++;
             else
                 nAl++;
@@ -1349,15 +1349,15 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
             for (int j = 0; j <= nbors.size() - 1; j++) {
                 if (nbors.get(j).getAtomicNumber() == 1)
                     continue;
-                List ca2 = atomContainer.getConnectedAtomsList((IAtom) nbors.get(j));
+                List ca2 = atomContainer.getConnectedAtomsList(nbors.get(j));
                 for (int k = 0; k <= ca2.size() - 1; k++) {
                     IAtom ca2k = (IAtom) ca2.get(k);
                     if (atomContainer.indexOf(ca2k) != i) {
                         if (ca2k.getAtomicNumber() != IElement.C) {
                             if (!ca2k.getFlag(CDKConstants.ISAROMATIC)
-                                && !((IAtom) nbors.get(j)).getFlag(CDKConstants.ISAROMATIC)
+                                && !nbors.get(j).getFlag(CDKConstants.ISAROMATIC)
                                 && !ai.getFlag(CDKConstants.ISAROMATIC)) {
-                                if (atomContainer.getBond(((IAtom) nbors.get(j)), ca2k).getOrder() == IBond.Order.DOUBLE) {
+                                if (atomContainer.getBond(nbors.get(j), ca2k).getOrder() == IBond.Order.DOUBLE) {
                                     frags[72]++;
                                     alogpfrag[i] = 72;
                                     return;
@@ -1425,12 +1425,12 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
             boolean ar       = false;
 
             for (int j = 0; j <= nbors.size() - 1; j++) {
-                if (fragment[atomContainer.indexOf(((IAtom) nbors.get(j)))].equals("SsOm")) {
+                if (fragment[atomContainer.indexOf(nbors.get(j))].equals("SsOm")) {
                     haveSsOm++;
-                } else if (fragment[atomContainer.indexOf(((IAtom) nbors.get(j)))].equals("SdO")) {
+                } else if (fragment[atomContainer.indexOf(nbors.get(j))].equals("SdO")) {
                     haveSdO++;
                 } else {
-                    if (((IAtom) nbors.get(j)).getFlag(CDKConstants.ISAROMATIC)) {
+                    if (nbors.get(j).getFlag(CDKConstants.ISAROMATIC)) {
                         ar = true;
                     }
                 }
@@ -1450,7 +1450,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
             }
 
         } else if (fragment[i].equals("StN")) {
-            IAtom ca0 = (IAtom) nbors.get(0);
+            IAtom ca0 = nbors.get(0);
             if (ca0.getAtomicNumber() == IElement.C) { // R#N
                 frags[74]++;
                 alogpfrag[i] = 74;
@@ -1470,9 +1470,9 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
             boolean flag2 = false;
 
             for (int j = 0; j <= nbors.size() - 1; j++) {
-                if (((IAtom) nbors.get(j)).getAtomicNumber() == IElement.H) continue;
-                if (atomContainer.getBond(ai, ((IAtom) nbors.get(j))).getOrder() == IBond.Order.DOUBLE) {
-                    if (((IAtom) nbors.get(j)).getAtomicNumber() == IElement.C) {
+                if (nbors.get(j).getAtomicNumber() == IElement.H) continue;
+                if (atomContainer.getBond(ai, nbors.get(j)).getOrder() == IBond.Order.DOUBLE) {
+                    if (nbors.get(j).getAtomicNumber() == IElement.C) {
                         frags[74]++;
                         alogpfrag[i] = 74;
                         return;
@@ -1480,8 +1480,8 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                         flag1 = true;
                     }
                 } else {
-                    if (((IAtom) nbors.get(j)).getAtomicNumber() != IElement.C
-                            || ((IAtom) nbors.get(j)).getFlag(CDKConstants.ISAROMATIC)) {
+                    if (nbors.get(j).getAtomicNumber() != IElement.C
+                            || nbors.get(j).getFlag(CDKConstants.ISAROMATIC)) {
                         flag2 = true;
                     }
                 }

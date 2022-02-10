@@ -84,7 +84,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
         IPDBAtom atom = (IPDBAtom) newChemObject();
         atom.setSymbol("C");
         atom.setPoint3d(new Point3d(2, 3, 4));
-        IAtom clone = (IAtom) atom.clone();
+        IAtom clone = atom.clone();
         Assert.assertEquals(clone.getPoint3d().x, 2.0, 0.001);
     }
 
@@ -97,7 +97,7 @@ public abstract class AbstractPDBAtomTest extends AbstractAtomTest {
         IPDBAtom atom = (IPDBAtom) newChemObject();
         atom.setSymbol("C");
         atom.setFractionalPoint3d(new Point3d(2, 3, 4));
-        IAtom clone = (IAtom) atom.clone();
+        IAtom clone = atom.clone();
         Assert.assertEquals(clone.getFractionalPoint3d().x, 2.0, 0.001);
     }
 

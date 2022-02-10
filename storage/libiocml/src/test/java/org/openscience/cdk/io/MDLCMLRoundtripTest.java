@@ -62,7 +62,7 @@ public class MDLCMLRoundtripTest {
         cmlWriter.close();
         //Read this again
         CMLReader cmlreader = new CMLReader(new ByteArrayInputStream(writer.toString().getBytes()));
-        IChemFile file = (IChemFile) cmlreader.read(new org.openscience.cdk.ChemFile());
+        IChemFile file = cmlreader.read(new org.openscience.cdk.ChemFile());
         cmlreader.close();
         //And finally write as mol
         StringWriter writermdl = new StringWriter();

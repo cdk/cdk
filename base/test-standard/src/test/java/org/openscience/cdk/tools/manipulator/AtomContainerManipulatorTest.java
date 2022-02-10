@@ -1018,8 +1018,8 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
                 Assert.assertEquals("incorrect hydrogen count", 2, atom.getImplicitHydrogenCount().intValue());
                 List<IAtom> nbs = ac.getConnectedAtomsList(atom);
                 Assert.assertEquals("incorrect connected count", 2, nbs.size());
-                Assert.assertEquals("incorrect bond", "H", ((IAtom) nbs.get(0)).getSymbol());
-                Assert.assertEquals("incorrect bond", "H", ((IAtom) nbs.get(1)).getSymbol());
+                Assert.assertEquals("incorrect bond", "H", nbs.get(0).getSymbol());
+                Assert.assertEquals("incorrect bond", "H", nbs.get(1).getSymbol());
             } else if (sym.equals("H")) {
                 h++;
             }
@@ -1091,7 +1091,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         String filename = "lobtest2.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
-        ChemFile content = (ChemFile) reader.read(new ChemFile());
+        ChemFile content = reader.read(new ChemFile());
         List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = cList.get(0);
 

@@ -123,7 +123,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
      */
     @Override
     public IReaction getReaction(int number) {
-        return (IReaction) reactions[number];
+        return reactions[number];
     }
 
     /**
@@ -210,7 +210,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
         clone.reactionCount = this.reactionCount;
         clone.reactions = new Reaction[clone.reactionCount];
         for (int f = 0; f < clone.reactionCount; f++) {
-            clone.reactions[f] = (Reaction) ((Reaction) reactions[f]).clone();
+            clone.reactions[f] = (Reaction) reactions[f].clone();
         }
         return clone;
     }

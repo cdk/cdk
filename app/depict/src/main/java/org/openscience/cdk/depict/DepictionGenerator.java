@@ -276,7 +276,7 @@ public final class DepictionGenerator {
         final T param = (T) params.get(key);
         if (param == null)
             throw new IllegalArgumentException("No parameter registered: " + key + " " + params.keySet());
-        return (U) param.getValue();
+        return param.getValue();
     }
 
     private <T extends IGeneratorParameter<S>, S, U extends S> void setParam(Class<T> key, U val) {

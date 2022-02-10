@@ -161,7 +161,7 @@ public class DictionaryDatabase {
     }
 
     public Entry[] getDictionaryEntry(String dictionaryName) {
-        Dictionary dictionary = (Dictionary) dictionaries.get(dictionaryName);
+        Dictionary dictionary = dictionaries.get(dictionaryName);
         return dictionary.getEntries();
     }
 
@@ -185,7 +185,7 @@ public class DictionaryDatabase {
      */
     public boolean hasEntry(String dictName, String entryID) {
         if (hasDictionary(dictName)) {
-            Dictionary dictionary = (Dictionary) dictionaries.get(dictName);
+            Dictionary dictionary = dictionaries.get(dictName);
             return dictionary.hasEntry(entryID.toLowerCase());
         } else {
             return false;

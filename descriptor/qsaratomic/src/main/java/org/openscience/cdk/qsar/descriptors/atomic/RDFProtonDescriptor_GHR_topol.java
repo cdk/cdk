@@ -161,7 +161,7 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
     public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer, IRingSet precalculatedringset) {
         IAtomContainer varAtomContainer = null;
         try {
-            varAtomContainer = (IAtomContainer) atomContainer.clone();
+            varAtomContainer = atomContainer.clone();
         } catch (CloneNotSupportedException e) {
             return getDummyDescriptorValue(e);
         }

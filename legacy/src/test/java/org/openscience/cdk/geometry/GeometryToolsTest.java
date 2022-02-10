@@ -113,7 +113,7 @@ public class GeometryToolsTest extends CDKTestCase {
         InputStream ins = this.getClass().getResourceAsStream(filenameMol);
         IAtomContainer molOne = null;
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        molOne = (IAtomContainer) reader.read(new AtomContainer());
+        molOne = reader.read(new AtomContainer());
         Assert.assertTrue(GeometryTools.has2DCoordinates(molOne));
     }
 
@@ -122,7 +122,7 @@ public class GeometryToolsTest extends CDKTestCase {
         IAtomContainer container = new AtomContainer();
         Assert.assertEquals(GeometryTools.CoordinateCoverage.NONE, GeometryTools.get2DCoordinateCoverage(container));
         Assert.assertEquals(GeometryTools.CoordinateCoverage.NONE,
-                GeometryTools.get2DCoordinateCoverage((IAtomContainer) null));
+                GeometryTools.get2DCoordinateCoverage(null));
     }
 
     @Test
@@ -494,7 +494,7 @@ public class GeometryToolsTest extends CDKTestCase {
         IAtomContainer container = new AtomContainer();
         Assert.assertEquals(GeometryTools.CoordinateCoverage.NONE, GeometryTools.get3DCoordinateCoverage(container));
         Assert.assertEquals(GeometryTools.CoordinateCoverage.NONE,
-                GeometryTools.get3DCoordinateCoverage((IAtomContainer) null));
+                GeometryTools.get3DCoordinateCoverage(null));
     }
 
     @Test
@@ -643,7 +643,7 @@ public class GeometryToolsTest extends CDKTestCase {
         IAtomContainer react1 = new AtomContainer();
         react1.addAtom(atom1);
         react1.addAtom(atom2);
-        IAtomContainer react2 = (IAtomContainer) react1.clone();
+        IAtomContainer react2 = react1.clone();
 
         // shift the second molecule right
         GeometryTools.shiftContainer(react2, GeometryTools.getRectangle2D(react2),
@@ -675,7 +675,7 @@ public class GeometryToolsTest extends CDKTestCase {
         IAtomContainer react1 = new AtomContainer();
         react1.addAtom(atom1);
         react1.addAtom(atom2);
-        IAtomContainer react2 = (IAtomContainer) react1.clone();
+        IAtomContainer react2 = react1.clone();
 
         // shift the second molecule right
         GeometryTools.shiftContainer(react2, GeometryTools.getRectangle2D(react2),

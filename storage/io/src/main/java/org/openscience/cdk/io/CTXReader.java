@@ -198,7 +198,7 @@ public class CTXReader extends DefaultChemObjectReader {
                 IBond bond = container.getBuilder().newInstance(IBond.class, container.getAtom(atom1),
                         container.getAtom(atom2));
                 int order = Integer.parseInt(line.substring(23).trim());
-                bond.setOrder(BondManipulator.createBondOrder((double) order));
+                bond.setOrder(BondManipulator.createBondOrder(order));
                 container.addBond(bond);
             } // else: bond already present; CTX store the bonds twice
         }

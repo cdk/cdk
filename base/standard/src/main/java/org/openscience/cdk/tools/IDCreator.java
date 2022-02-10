@@ -244,7 +244,7 @@ public abstract class IDCreator {
 
         Iterator<IAtomContainer> acs = containerSet.atomContainers().iterator();
         while (acs.hasNext()) {
-            createIDsForAtomContainer((IAtomContainer) acs.next(), tabuList);
+            createIDsForAtomContainer(acs.next(), tabuList);
         }
     }
 
@@ -274,7 +274,7 @@ public abstract class IDCreator {
         }
         Iterator<IAtomContainer> agents = reaction.getAgents().atomContainers().iterator();
         while (agents.hasNext()) {
-            createIDsForAtomContainer((IAtomContainer) agents.next(), tabuList);
+            createIDsForAtomContainer(agents.next(), tabuList);
         }
     }
 

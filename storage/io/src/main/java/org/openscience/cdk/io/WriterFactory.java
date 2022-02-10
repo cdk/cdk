@@ -85,11 +85,11 @@ public class WriterFactory {
         Iterator<IChemFormat> iter = formats.iterator();
         List<IChemFormat> matches = new ArrayList<>();
         while (iter.hasNext()) {
-            IChemFormat format = (IChemFormat) iter.next();
+            IChemFormat format = iter.next();
             if ((format.getSupportedDataFeatures() & features) == features) matches.add(format);
         }
 
-        return (IChemFormat[]) matches.toArray(new IChemFormat[matches.size()]);
+        return matches.toArray(new IChemFormat[matches.size()]);
     }
 
     public int formatCount() {

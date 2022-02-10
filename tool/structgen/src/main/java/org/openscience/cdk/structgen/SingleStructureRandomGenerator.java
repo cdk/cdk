@@ -83,7 +83,7 @@ public class SingleStructureRandomGenerator {
      * Constructor for the SingleStructureRandomGenerator object.
      */
     public SingleStructureRandomGenerator() throws java.lang.Exception {
-        this((long) 11000);
+        this(11000);
     }
 
     /**

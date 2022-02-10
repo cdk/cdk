@@ -260,7 +260,7 @@ class ChiIndexUtils {
             List<RMap> current = subgraph;
             List<Integer> ids = new ArrayList<>();
             for (RMap aCurrent : current) {
-                RMap rmap = (RMap) aCurrent;
+                RMap rmap = aCurrent;
                 ids.add(rmap.getId1());
             }
             Collections.sort(ids);

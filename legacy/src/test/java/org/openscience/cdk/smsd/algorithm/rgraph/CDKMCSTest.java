@@ -273,7 +273,7 @@ public class CDKMCSTest extends CDKTestCase {
         InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(file2);
         new MDLV2000Reader(ins2, Mode.STRICT).read(mol2);
         AtomContainerAtomPermutor permutor = new AtomContainerAtomPermutor(mol2);
-        mol2 = new AtomContainer((AtomContainer) permutor.next());
+        mol2 = new AtomContainer(permutor.next());
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol1.getBuilder());

@@ -483,10 +483,10 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                     atom.setAtomicNumber(e.number());
                 } else if ("D".equals(element) && optHydIso.isSet()) {
                     atom.setMassNumber(2);
-                    atom.setAtomicNumber((int)IElement.H);
+                    atom.setAtomicNumber(IElement.H);
                 } else if ("T".equals(element) && optHydIso.isSet()) {
                     atom.setMassNumber(3);
-                    atom.setAtomicNumber((int)IElement.H);
+                    atom.setAtomicNumber(IElement.H);
                 } else if ("A".equals(element)) {
                     atom = readData.getBuilder().newInstance(IPseudoAtom.class, element);
                 } else if ("Q".equals(element)) {
@@ -645,7 +645,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                         bond.setOrder(IBond.Order.UNSET);
                         logger.warn("Query order types are not supported (yet). File a bug if you need it");
                     } else {
-                        bond.setOrder(BondManipulator.createBondOrder((double) order));
+                        bond.setOrder(BondManipulator.createBondOrder(order));
                     }
                 } catch (Exception exception) {
                     String error = "Error while parsing bond index";

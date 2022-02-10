@@ -155,7 +155,7 @@ public class CMLHandler extends DefaultHandler {
                         conv = new QSARConvention(conv);
                     } else if (userConventions.containsKey(convName)) {
                         //unknown convention. userConvention?
-                        ICMLModule newconv = (ICMLModule) userConventions.get(convName);
+                        ICMLModule newconv = userConventions.get(convName);
                         newconv.inherit(conv);
                         conv = newconv;
                     } else {

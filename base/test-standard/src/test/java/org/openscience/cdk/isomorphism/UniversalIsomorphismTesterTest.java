@@ -377,7 +377,7 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase {
         InputStream ins2 = this.getClass().getResourceAsStream(file2);
         new MDLV2000Reader(ins2, Mode.STRICT).read(mol2);
         AtomContainerAtomPermutor permutor = new AtomContainerAtomPermutor(mol2);
-        mol2 = new AtomContainer((AtomContainer) permutor.next());
+        mol2 = new AtomContainer(permutor.next());
 
         List<IAtomContainer> list1 = uiTester.getOverlaps(mol1, mol2);
         List<IAtomContainer> list2 = uiTester.getOverlaps(mol2, mol1);
@@ -550,11 +550,11 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase {
         String filename = "UITTimeout.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
-        ChemFile content = (ChemFile) reader.read(new ChemFile());
+        ChemFile content = reader.read(new ChemFile());
         List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer[] molecules = new IAtomContainer[2];
         for (int j = 0; j < 2; j++) {
-            IAtomContainer aAtomContainer = (IAtomContainer) cList.get(j);
+            IAtomContainer aAtomContainer = cList.get(j);
             CDKAtomTypeMatcher tmpMatcher = CDKAtomTypeMatcher.getInstance(aAtomContainer.getBuilder());
             CDKHydrogenAdder tmpAdder = CDKHydrogenAdder.getInstance(aAtomContainer.getBuilder());
             for (int i = 0; i < aAtomContainer.getAtomCount(); i++) {

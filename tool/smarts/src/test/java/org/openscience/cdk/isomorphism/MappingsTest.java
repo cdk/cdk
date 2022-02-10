@@ -218,18 +218,18 @@ public class MappingsTest {
 
         assertTrue(iterator.hasNext());
         Map<IChemObject, IChemObject> m1 = iterator.next();
-        assertThat(m1.get(query.getAtom(0)), is((IChemObject)target.getAtom(0)));
-        assertThat(m1.get(query.getAtom(1)), is((IChemObject)target.getAtom(1)));
-        assertThat(m1.get(query.getAtom(2)), is((IChemObject)target.getAtom(2)));
-        assertThat(m1.get(query.getBond(0)), is((IChemObject)target.getBond(0)));
-        assertThat(m1.get(query.getBond(1)), is((IChemObject)target.getBond(1)));
+        assertThat(m1.get(query.getAtom(0)), is(target.getAtom(0)));
+        assertThat(m1.get(query.getAtom(1)), is(target.getAtom(1)));
+        assertThat(m1.get(query.getAtom(2)), is(target.getAtom(2)));
+        assertThat(m1.get(query.getBond(0)), is(target.getBond(0)));
+        assertThat(m1.get(query.getBond(1)), is(target.getBond(1)));
         assertTrue(iterator.hasNext());
         Map<IChemObject, IChemObject> m2 = iterator.next();
-        assertThat(m2.get(query.getAtom(0)), is((IChemObject)target.getAtom(2)));
-        assertThat(m2.get(query.getAtom(1)), is((IChemObject)target.getAtom(1)));
-        assertThat(m2.get(query.getAtom(2)), is((IChemObject)target.getAtom(0)));
-        assertThat(m2.get(query.getBond(0)), is((IChemObject)target.getBond(1)));
-        assertThat(m2.get(query.getBond(1)), is((IChemObject)target.getBond(0)));
+        assertThat(m2.get(query.getAtom(0)), is(target.getAtom(2)));
+        assertThat(m2.get(query.getAtom(1)), is(target.getAtom(1)));
+        assertThat(m2.get(query.getAtom(2)), is(target.getAtom(0)));
+        assertThat(m2.get(query.getBond(0)), is(target.getBond(1)));
+        assertThat(m2.get(query.getBond(1)), is(target.getBond(0)));
         assertFalse(iterator.hasNext());
     }
 

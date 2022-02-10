@@ -103,8 +103,8 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
 
         while (reader.hasNext()) {
 
-            IAtomContainer mol = (IAtomContainer) reader.next();
-            String title = (String) mol.getProperty(CDKConstants.TITLE);
+            IAtomContainer mol = reader.next();
+            String title = mol.getProperty(CDKConstants.TITLE);
             Assert.assertNotNull(title);
         }
 

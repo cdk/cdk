@@ -69,7 +69,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
         String filename1 = "reaction-1.rxn";
         InputStream ins1 = this.getClass().getResourceAsStream(filename1);
         MDLRXNReader reader1 = new MDLRXNReader(ins1);
-        ReactionSet set = (ReactionSet) reader1.read(new ReactionSet());
+        ReactionSet set = reader1.read(new ReactionSet());
         reaction = set.getReaction(0);
         reader1.close();
     }

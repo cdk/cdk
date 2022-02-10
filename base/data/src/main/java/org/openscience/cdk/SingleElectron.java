@@ -151,7 +151,7 @@ public class SingleElectron extends ElectronContainer implements Serializable, I
         SingleElectron clone = (SingleElectron) super.clone();
         // clone the Atom
         if (atom != null) {
-            clone.atom = (IAtom) ((IAtom) atom).clone();
+            clone.atom = atom.clone();
         }
         return clone;
     }

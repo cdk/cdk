@@ -57,7 +57,7 @@ public class ReactionSchemeManipulator {
                         break;
                     }
                 }
-                if (!contain) molSet.addAtomContainer((IAtomContainer) (ac));
+                if (!contain) molSet.addAtomContainer(ac);
             }
         }
         for (IReaction reaction : scheme.reactions()) {

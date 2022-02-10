@@ -220,7 +220,7 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer ac;
         try {
-            ac = (IAtomContainer) atomContainer.clone();
+            ac = atomContainer.clone();
         } catch (CloneNotSupportedException e) {
             return getDummyDescriptorValue(e);
         }
@@ -273,7 +273,7 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
 
                 // EXPLICIT hydrogens: count the number of hydrogen atoms
                 for (int neighbourIndex = 0; neighbourIndex < numberOfNeighbours; neighbourIndex++)
-                    if (((IAtom) connectedAtoms.get(neighbourIndex)).getAtomicNumber() == IElement.H) hCount++;
+                    if (connectedAtoms.get(neighbourIndex).getAtomicNumber() == IElement.H) hCount++;
                 // IMPLICIT hydrogens: count the number of hydrogen atoms and adjust other atom profile properties
                 Integer implicitHAtoms = atom.getImplicitHydrogenCount();
                 if (implicitHAtoms == CDKConstants.UNSET) {
@@ -317,7 +317,7 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
         double tpsa = 0;
         for (String profile : profiles) {
             if (map.containsKey(profile)) {
-                tpsa += (Double) map.get(profile);
+                tpsa += map.get(profile);
                 //logger.debug("tpsa contribs: " + profiles.elementAt(profileIndex) + "\t" + ((Double)map.get(profiles.elementAt(profileIndex))).doubleValue());
             }
         }

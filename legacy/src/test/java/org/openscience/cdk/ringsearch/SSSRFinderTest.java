@@ -299,7 +299,7 @@ public class SSSRFinderTest extends CDKTestCase {
         String filename = "buckyball.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        molecule = (IAtomContainer) reader.read(new AtomContainer());
+        molecule = reader.read(new AtomContainer());
         reader.close();
         Assert.assertTrue("Atom count is 60 ", molecule.getAtomCount() == 60);
         Assert.assertTrue("Bond count is 90 ", molecule.getBondCount() == 90);

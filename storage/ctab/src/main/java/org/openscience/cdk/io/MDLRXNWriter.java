@@ -230,7 +230,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
             writer.write("$RXN");
             writer.write('\n');
             // reaction name
-            String line = (String) reaction.getProperty(CDKConstants.TITLE);
+            String line = reaction.getProperty(CDKConstants.TITLE);
             if (line == null) line = "";
             if (line.length() > 80) line = line.substring(0, 80);
             writer.write(line);
@@ -238,7 +238,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
             // user/program/date&time/reaction registry no. line
             writer.write('\n');
             // comment line
-            line = (String) reaction.getProperty(CDKConstants.REMARK);
+            line = reaction.getProperty(CDKConstants.REMARK);
             if (line == null) line = "";
             if (line.length() > 80) line = line.substring(0, 80);
             writer.write(line);
@@ -270,7 +270,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
                 Iterator<String> iterator = set.iterator();
                 while (iterator.hasNext()) {
                     Object element = iterator.next();
-                    writer.write("> <" + (String) element + ">");
+                    writer.write("> <" + element + ">");
                     writer.write('\n');
                     writer.write(rdFields.get(element).toString());
                     writer.write('\n');

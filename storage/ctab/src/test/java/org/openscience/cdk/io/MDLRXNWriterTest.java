@@ -96,7 +96,7 @@ public class MDLRXNWriterTest extends ChemObjectIOTest {
         // now deserialize the MDL RXN output
         IReaction reaction2 = builder.newInstance(IReaction.class);
         MDLRXNReader reader = new MDLRXNReader(new StringReader(file));
-        reaction2 = (IReaction) reader.read(reaction2);
+        reaction2 = reader.read(reaction2);
         reader.close();
 
         Assert.assertEquals(2, reaction2.getReactantCount());
@@ -134,7 +134,7 @@ public class MDLRXNWriterTest extends ChemObjectIOTest {
         // now deserialize the MDL RXN output
         IReaction reaction2 = builder.newInstance(IReaction.class);
         MDLRXNReader reader = new MDLRXNReader(new StringReader(file));
-        reaction2 = (IReaction) reader.read(reaction2);
+        reaction2 = reader.read(reaction2);
         reader.close();
 
         Assert.assertEquals(2, reaction2.getReactantCount());
@@ -188,7 +188,7 @@ public class MDLRXNWriterTest extends ChemObjectIOTest {
         // now deserialize the MDL RXN output
         IReactionSet reactionSetF = builder.newInstance(IReactionSet.class);
         MDLRXNReader reader = new MDLRXNReader(new StringReader(file));
-        reactionSetF = (IReactionSet) reader.read(reactionSetF);
+        reactionSetF = reader.read(reactionSetF);
         reader.close();
 
         Assert.assertEquals(2, reactionSetF.getReactionCount());

@@ -217,7 +217,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
             clone.setOfReactions = null;
         }
         if (crystal != null) {
-            clone.crystal = (Crystal) crystal.clone();
+            clone.crystal = crystal.clone();
         } else {
             clone.crystal = null;
         }

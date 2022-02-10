@@ -165,7 +165,7 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
 
         IAtomContainer varAtomContainer;
         try {
-            varAtomContainer = (IAtomContainer) atomContainer.clone();
+            varAtomContainer = atomContainer.clone();
         } catch (CloneNotSupportedException e) {
             return getDummyDescriptorValue(e);
         }

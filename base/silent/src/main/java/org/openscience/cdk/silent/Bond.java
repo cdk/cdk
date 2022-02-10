@@ -550,7 +550,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
             clone.atoms = new IAtom[atoms.length];
             for (int f = 0; f < atoms.length; f++) {
                 if (atoms[f] != null) {
-                    clone.atoms[f] = (IAtom) ((IAtom) atoms[f]).clone();
+                    clone.atoms[f] = atoms[f].clone();
                 }
             }
         }

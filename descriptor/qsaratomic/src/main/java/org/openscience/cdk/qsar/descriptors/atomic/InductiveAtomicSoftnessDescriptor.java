@@ -165,7 +165,7 @@ public class InductiveAtomicSoftnessDescriptor extends AbstractAtomicDescriptor 
         }
 
         while (allAtoms.hasNext()) {
-            IAtom curAtom = (IAtom) allAtoms.next();
+            IAtom curAtom = allAtoms.next();
             if (atom.getPoint3d() == null || curAtom.getPoint3d() == null) {
                 return getDummyDescriptorValue(new CDKException(
                         "The target atom or current atom had no 3D coordinates. These are required"));

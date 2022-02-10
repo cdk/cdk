@@ -213,7 +213,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
         clone.reactionCount = this.reactionCount;
         clone.reactions = new IReaction[clone.reactionCount];
         for (int f = 0; f < clone.reactionCount; f++) {
-            clone.reactions[f] = (IReaction) ((IReaction) reactions[f]).clone();
+            clone.reactions[f] = (IReaction) reactions[f].clone();
         }
         return clone;
     }

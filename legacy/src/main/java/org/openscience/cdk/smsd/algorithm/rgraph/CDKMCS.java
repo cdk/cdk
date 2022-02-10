@@ -552,7 +552,7 @@ public class CDKMCS {
 
             if (atom1 == null) {
                 try {
-                    atom1 = (IAtom) atom.clone();
+                    atom1 = atom.clone();
                 } catch (CloneNotSupportedException e) {
                     e.printStackTrace();
                 }
@@ -565,7 +565,7 @@ public class CDKMCS {
 
             if (atom2 == null) {
                 try {
-                    atom2 = (IAtom) atom.clone();
+                    atom2 = atom.clone();
                 } catch (CloneNotSupportedException e) {
                     e.printStackTrace();
                 }

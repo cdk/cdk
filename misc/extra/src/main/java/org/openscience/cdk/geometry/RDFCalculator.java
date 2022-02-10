@@ -140,7 +140,7 @@ public class RDFCalculator {
         Point3d atomPoint = atom.getPoint3d();
         Iterator<IAtom> atomsInContainer = container.atoms().iterator();
         while (atomsInContainer.hasNext()) {
-            IAtom atomInContainer = (IAtom) atomsInContainer.next();
+            IAtom atomInContainer = atomsInContainer.next();
             if (atomInContainer.equals(atom)) continue; // don't include the central atom
             distance = atomPoint.distance(atomInContainer.getPoint3d());
             index = (int) ((distance - startCutoff) / this.resolution);

@@ -75,7 +75,7 @@ public class QSARCMLRoundTripTest {
         logger.debug("CML string: ", cmlString);
         CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
 
-        IChemFile file = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile file = reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
         Assert.assertNotNull(file);
         Assert.assertEquals(1, file.getChemSequenceCount());

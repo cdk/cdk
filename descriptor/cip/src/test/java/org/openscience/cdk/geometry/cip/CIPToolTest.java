@@ -122,7 +122,7 @@ public class CIPToolTest extends CDKTestCase {
         for (ILigand ligand : ligands)
             ligandAtoms.add(ligand.getLigandAtom());
         ITetrahedralChirality chirality = new TetrahedralChirality(molecule.getAtom(1),
-                (IAtom[]) ligandAtoms.toArray(new IAtom[]{}), Stereo.CLOCKWISE);
+                ligandAtoms.toArray(new IAtom[]{}), Stereo.CLOCKWISE);
         CIP_CHIRALITY rsChirality = CIPTool.getCIPChirality(molecule, chirality);
         Assert.assertEquals(CIP_CHIRALITY.S, rsChirality);
     }
@@ -135,7 +135,7 @@ public class CIPToolTest extends CDKTestCase {
             ligandAtoms.add(ligand.getLigandAtom());
 
         ITetrahedralChirality chirality = new TetrahedralChirality(molecule.getAtom(1),
-                (IAtom[]) ligandAtoms.toArray(new IAtom[]{}), Stereo.ANTI_CLOCKWISE);
+                ligandAtoms.toArray(new IAtom[]{}), Stereo.ANTI_CLOCKWISE);
         CIP_CHIRALITY rsChirality = CIPTool.getCIPChirality(molecule, chirality);
         Assert.assertEquals(CIP_CHIRALITY.S, rsChirality);
     }

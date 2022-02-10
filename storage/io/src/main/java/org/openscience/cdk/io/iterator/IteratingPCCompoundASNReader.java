@@ -133,7 +133,7 @@ public class IteratingPCCompoundASNReader extends DefaultIteratingChemObjectRead
                 if (startMoleculeFound && endMoleculeFound) {
                     hasNext = true;
                     PCCompoundASNReader asnReader = new PCCompoundASNReader(new StringReader(buffer.toString()));
-                    IChemFile cFile = (IChemFile) asnReader.read(builder.newInstance(IChemFile.class));
+                    IChemFile cFile = asnReader.read(builder.newInstance(IChemFile.class));
                     asnReader.close();
                     nextMolecule = ChemFileManipulator.getAllAtomContainers(cFile).get(0);
                 }

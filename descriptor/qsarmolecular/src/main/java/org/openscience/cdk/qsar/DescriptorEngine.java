@@ -341,7 +341,7 @@ public class DescriptorEngine {
         if (dictClasses.size() == 0)
             return null;
         else
-            return (String[]) dictClasses.toArray(new String[]{});
+            return dictClasses.toArray(new String[]{});
     }
 
     /**
@@ -509,7 +509,7 @@ public class DescriptorEngine {
             if (tmp != null) classList.addAll(Arrays.asList(tmp));
         }
         Set<String> uniqueClasses = new HashSet<>(classList);
-        return (String[]) uniqueClasses.toArray(new String[]{});
+        return uniqueClasses.toArray(new String[]{});
     }
 
     /**

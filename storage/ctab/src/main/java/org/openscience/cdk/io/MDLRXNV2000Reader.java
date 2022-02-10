@@ -161,7 +161,7 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
         } else if (object instanceof IChemFile) {
             IChemFile chemFile = object.getBuilder().newInstance(IChemFile.class);
             IChemSequence sequence = object.getBuilder().newInstance(IChemSequence.class);
-            sequence.addChemModel((IChemModel) read(object.getBuilder().newInstance(IChemModel.class)));
+            sequence.addChemModel(read(object.getBuilder().newInstance(IChemModel.class)));
             chemFile.addChemSequence(sequence);
             return (T) chemFile;
         } else {

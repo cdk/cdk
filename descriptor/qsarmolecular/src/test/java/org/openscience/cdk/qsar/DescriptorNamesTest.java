@@ -58,7 +58,7 @@ public class DescriptorNamesTest extends CDKTestCase {
         String filename = "descriptors/molecular/lobtest2.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
-        ChemFile content = (ChemFile) reader.read(new ChemFile());
+        ChemFile content = reader.read(new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(0);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
@@ -68,7 +68,7 @@ public class DescriptorNamesTest extends CDKTestCase {
         int ncalc = 0;
         List<String> descNames = new ArrayList<>();
         for (IImplementationSpecification spec : specs) {
-            DescriptorValue value = (DescriptorValue) ac.getProperty(spec);
+            DescriptorValue value = ac.getProperty(spec);
             if (value == null) Assert.fail(spec.getImplementationTitle() + " was not calculated.");
             ncalc++;
             String[] names = value.getNames();

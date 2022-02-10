@@ -73,13 +73,13 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
 
         int numberOfAromaticAtoms = 0;
         for (int i = 0; i < mol.getAtomCount(); i++) {
-            if (((IAtom) mol.getAtom(i)).getFlag(CDKConstants.ISAROMATIC)) numberOfAromaticAtoms++;
+            if (mol.getAtom(i).getFlag(CDKConstants.ISAROMATIC)) numberOfAromaticAtoms++;
         }
         Assert.assertEquals(6, numberOfAromaticAtoms);
 
         int numberOfAromaticBonds = 0;
         for (int i = 0; i < mol.getBondCount(); i++) {
-            if (((IBond) mol.getBond(i)).getFlag(CDKConstants.ISAROMATIC)) numberOfAromaticBonds++;
+            if (mol.getBond(i).getFlag(CDKConstants.ISAROMATIC)) numberOfAromaticBonds++;
         }
         Assert.assertEquals(6, numberOfAromaticBonds);
 
@@ -358,7 +358,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         String filename = "porphyrin.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        IAtomContainer molecule = (IAtomContainer) reader.read(DefaultChemObjectBuilder.getInstance().newInstance(
+        IAtomContainer molecule = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(
                 IAtomContainer.class));
         reader.close();
 
@@ -384,7 +384,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         String filename = "bug698152.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        IAtomContainer molecule = (IAtomContainer) reader.read(DefaultChemObjectBuilder.getInstance().newInstance(
+        IAtomContainer molecule = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(
                 IAtomContainer.class));
         reader.close();
 
@@ -419,7 +419,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         String filename = "bug1328739.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        IAtomContainer molecule = (IAtomContainer) reader.read(DefaultChemObjectBuilder.getInstance().newInstance(
+        IAtomContainer molecule = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(
                 IAtomContainer.class));
         reader.close();
 

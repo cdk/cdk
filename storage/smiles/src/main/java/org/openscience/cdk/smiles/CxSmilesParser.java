@@ -133,7 +133,7 @@ final class CxSmilesParser {
         double fracPart = 0;
         int divisor = 1;
 
-        intPart = (double) processUnsignedInt(iter);
+        intPart = processUnsignedInt(iter);
         if (intPart < 0) intPart = 0;
         iter.nextIf('.');
 

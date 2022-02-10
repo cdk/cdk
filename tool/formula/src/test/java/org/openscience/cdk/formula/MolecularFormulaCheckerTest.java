@@ -123,7 +123,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
         IMolecularFormula formulaWith = MFChecker.isValid(formula);
 
         Assert.assertEquals(0.0d,
-                            (double)formulaWith.getProperty((new MMElementRule()).getClass()),
+                formulaWith.getProperty((new MMElementRule()).getClass()),
                             0.01);
 
     }

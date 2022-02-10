@@ -125,7 +125,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularD
     @Test
     public void testCalculate_NoModifications() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer clone = (IAtomContainer) mol.clone();
+        IAtomContainer clone = mol.clone();
         descriptor.calculate(mol);
         String diff = AtomContainerDiff.diff(clone, mol);
         Assert.assertEquals("The descriptor must not change the passed molecule in any respect, but found this diff: "

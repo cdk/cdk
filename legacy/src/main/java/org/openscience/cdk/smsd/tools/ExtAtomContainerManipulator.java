@@ -237,7 +237,7 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
                 if (atom.getAtomicNumber() != IElement.H) {
                     IAtom clonedAtom = null;
                     try {
-                        clonedAtom = (IAtom) atom.clone();
+                        clonedAtom = atom.clone();
                     } catch (CloneNotSupportedException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
@@ -433,7 +433,7 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
             {
                 IBond clone = null;
                 try {
-                    clone = (IBond) atomContainer.getBond(i).clone();
+                    clone = atomContainer.getBond(i).clone();
                 } catch (CloneNotSupportedException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();

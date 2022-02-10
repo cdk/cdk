@@ -455,7 +455,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
 
-        IChemFile file = (IChemFile) reader.read(new ChemFile());
+        IChemFile file = reader.read(new ChemFile());
         Assert.assertNotNull(file);
         Assert.assertEquals(1, file.getChemSequenceCount());
         IChemSequence sequence = file.getChemSequence(0);

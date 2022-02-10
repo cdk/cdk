@@ -368,7 +368,7 @@ final class StandardSgroupGenerator {
             return generateSgroupBrackets(sgroup,
                                           brackets,
                                           symbolMap,
-                                          (String) sgroup.getValue(SgroupKey.CtabSubScript),
+                    sgroup.getValue(SgroupKey.CtabSubScript),
                                           null);
         } else {
             return new ElementGroup();

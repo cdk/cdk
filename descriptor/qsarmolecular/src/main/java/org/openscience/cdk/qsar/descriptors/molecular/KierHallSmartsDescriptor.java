@@ -389,7 +389,7 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
 
         IAtomContainer atomContainer;
         try {
-            atomContainer = (IAtomContainer) container.clone();
+            atomContainer = container.clone();
             for (IAtom atom : atomContainer.atoms()) {
                 if (atom.getImplicitHydrogenCount() == null)
                     atom.setImplicitHydrogenCount(0);

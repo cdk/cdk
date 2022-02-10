@@ -523,11 +523,11 @@ public class UniversalIsomorphismTester {
             }
 
             a = bond.getBegin();
-            a1 = (IAtom) table.get(a);
+            a1 = table.get(a);
 
             if (a1 == null) {
                 try {
-                    a1 = (IAtom) a.clone();
+                    a1 = a.clone();
                 } catch (CloneNotSupportedException e) {
                     e.printStackTrace();
                 }
@@ -540,7 +540,7 @@ public class UniversalIsomorphismTester {
 
             if (a2 == null) {
                 try {
-                    a2 = (IAtom) a.clone();
+                    a2 = a.clone();
                 } catch (CloneNotSupportedException e) {
                     e.printStackTrace();
                 }
@@ -689,11 +689,11 @@ public class UniversalIsomorphismTester {
                 List<IBond> bondsConnectedToAtom1j = g1.getConnectedBondsList(atom1[j]);
                 for (IBond iBond : bondsConnectedToAtom1j) {
                     if (!iBond.equals(bond1)) {
-                        IBond testBond = (IBond) iBond;
+                        IBond testBond = iBond;
                         for (RMap rMap : l) {
                             IBond testBond2;
-                            if (((RMap) rMap).getId1() == g1.indexOf(testBond)) {
-                                testBond2 = g2.getBond(((RMap) rMap).getId2());
+                            if (rMap.getId1() == g1.indexOf(testBond)) {
+                                testBond2 = g2.getBond(rMap.getId2());
                                 for (int n = 0; n < 2; n++) {
                                     List<IBond> bondsToTest = g2.getConnectedBondsList(atom2[n]);
                                     if (bondsToTest.contains(testBond2)) {
@@ -795,7 +795,7 @@ public class UniversalIsomorphismTester {
     private static void arcConstructor(RGraph gr, IAtomContainer ac1, IAtomContainer ac2) throws CDKException {
         // each node is incompatible with himself
         for (int i = 0; i < gr.getGraph().size(); i++) {
-            RNode x = (RNode) gr.getGraph().get(i);
+            RNode x = gr.getGraph().get(i);
             x.getForbidden().set(i);
         }
 

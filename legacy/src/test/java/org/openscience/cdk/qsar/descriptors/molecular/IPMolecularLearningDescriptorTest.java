@@ -155,8 +155,8 @@ public class IPMolecularLearningDescriptorTest extends CDKTestCase {
         lpcheck.saturate(mol);
 
         IPMolecularLearningDescriptor descriptor = new IPMolecularLearningDescriptor();
-        DoubleArrayResult dar = ((DoubleArrayResult) ((IPMolecularLearningDescriptor) descriptor).calculatePlus(mol)
-                .getValue());
+        DoubleArrayResult dar = ((DoubleArrayResult) descriptor.calculatePlus(mol)
+                                                               .getValue());
 
         double resultAccordingNIST = 9.50;
         Assert.assertEquals(2, dar.length());
@@ -303,8 +303,8 @@ public class IPMolecularLearningDescriptorTest extends CDKTestCase {
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
 
         IPMolecularLearningDescriptor descriptor = new IPMolecularLearningDescriptor();
-        DoubleArrayResult dar = ((DoubleArrayResult) ((IPMolecularLearningDescriptor) descriptor).calculatePlus(mol)
-                .getValue());
+        DoubleArrayResult dar = ((DoubleArrayResult) descriptor.calculatePlus(mol)
+                                                               .getValue());
 
         Assert.assertEquals(6, dar.length());
     }

@@ -544,7 +544,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
      */
     @Override
     public IAtom getLastAtom() {
-        return getAtomCount() > 0 ? (IAtom) atoms[getAtomCount() - 1] : null;
+        return getAtomCount() > 0 ? atoms[getAtomCount() - 1] : null;
     }
 
     /**
@@ -1492,14 +1492,14 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
         clone.removeAllElements();
         // clone all atoms
         for (int f = 0; f < getAtomCount(); f++) {
-            clone.addAtom((IAtom) getAtom(f).clone());
+            clone.addAtom(getAtom(f).clone());
         }
         // clone bonds
         IBond bond;
         IBond newBond;
         for (int i = 0; i < getBondCount(); ++i) {
             bond = getBond(i);
-            newBond = (IBond) bond.clone();
+            newBond = bond.clone();
             newAtoms = new IAtom[bond.getAtomCount()];
             for (int j = 0; j < bond.getAtomCount(); ++j) {
                 newAtoms[j] = clone.getAtom(getAtomNumber(bond.getAtom(j)));

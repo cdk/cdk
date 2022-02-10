@@ -286,7 +286,7 @@ public class BayesianTest {
             int row = 0, numActives = 0;
             while (rdr.hasNext()) {
                 IAtomContainer mol = rdr.next();
-                boolean actv = "true".equals((String) mol.getProperties().get("Active"));
+                boolean actv = "true".equals(mol.getProperties().get("Active"));
                 molecules.add(mol);
                 activities.add(actv);
                 model.addMolecule(mol, actv);

@@ -1393,7 +1393,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         reader.close();
         assertThat(container.getAtom(6), is(instanceOf(IPseudoAtom.class)));
         assertThat(((IPseudoAtom) container.getAtom(6)).getLabel(), is("N1"));
-        assertThat(((IPseudoAtom) container.getAtom(6)).getAtomicNumber(), is(7));
+        assertThat(container.getAtom(6).getAtomicNumber(), is(7));
     }
 
     @Test
@@ -1482,7 +1482,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
 
-        assertThat((String) mol.getAtom(1).getProperty(CDKConstants.ACDLABS_LABEL), is("6"));
+        assertThat(mol.getAtom(1).getProperty(CDKConstants.ACDLABS_LABEL), is("6"));
     }
 
     /**
@@ -1504,9 +1504,9 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ1abcdefghijklmnopqrstuvwxyz",
             "012345678901234567890123456789012345678901234567890"
         };
-        assertThat((String) mol.getAtom(0).getProperty(CDKConstants.ACDLABS_LABEL), is(expected[0]));
-        assertThat((String) mol.getAtom(1).getProperty(CDKConstants.ACDLABS_LABEL), is(expected[1]));
-        assertThat((String) mol.getAtom(2).getProperty(CDKConstants.ACDLABS_LABEL), is(expected[2]));
+        assertThat(mol.getAtom(0).getProperty(CDKConstants.ACDLABS_LABEL), is(expected[0]));
+        assertThat(mol.getAtom(1).getProperty(CDKConstants.ACDLABS_LABEL), is(expected[1]));
+        assertThat(mol.getAtom(2).getProperty(CDKConstants.ACDLABS_LABEL), is(expected[2]));
     }
 
     /**
@@ -1541,7 +1541,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
         // Leading and trailing whitespace in both prefix and suffix
         String expected = " a 1 b ";
-        assertThat((String) mol.getAtom(0).getProperty(CDKConstants.ACDLABS_LABEL), is(expected));
+        assertThat(mol.getAtom(0).getProperty(CDKConstants.ACDLABS_LABEL), is(expected));
     }
 
     /**
@@ -1558,7 +1558,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
         // Embedded whitespace in both prefix and suffix
         String expected = "a b1c d";
-        assertThat((String) mol.getAtom(0).getProperty(CDKConstants.ACDLABS_LABEL), is(expected));
+        assertThat(mol.getAtom(0).getProperty(CDKConstants.ACDLABS_LABEL), is(expected));
     }
 
     /**
@@ -1579,7 +1579,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         String suffix = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx";
         String expected = prefix + digits + suffix;
 
-        assertThat((String) mol.getAtom(0).getProperty(CDKConstants.ACDLABS_LABEL), is(expected));
+        assertThat(mol.getAtom(0).getProperty(CDKConstants.ACDLABS_LABEL), is(expected));
     }
 
     @Test
@@ -1606,7 +1606,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             Sgroup sgroup = sgroups.get(0);
             assertThat(sgroup.getType(), is(SgroupType.CtabStructureRepeatUnit));
             assertThat(sgroup.getSubscript(), is("n"));
-            assertThat((String) sgroup.getValue(SgroupKey.CtabConnectivity), is("HT"));
+            assertThat(sgroup.getValue(SgroupKey.CtabConnectivity), is("HT"));
             assertThat(sgroup.getAtoms().size(), is(10));
             assertThat(sgroup.getBonds().size(), is(2));
             List<SgroupBracket> brackets = sgroup.getValue(SgroupKey.CtabBracket);
@@ -1699,10 +1699,10 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             assertThat(sgroups.size(), is(2));
             Sgroup sgroup = sgroups.get(0);
             assertThat(sgroup.getType(), is(SgroupType.CtabStructureRepeatUnit));
-            assertThat((Integer) sgroup.getValue(SgroupKey.CtabBracketStyle), is(1));
+            assertThat(sgroup.getValue(SgroupKey.CtabBracketStyle), is(1));
             sgroup = sgroups.get(1);
             assertThat(sgroup.getType(), is(SgroupType.CtabStructureRepeatUnit));
-            assertThat((Integer) sgroup.getValue(SgroupKey.CtabBracketStyle), is(1));
+            assertThat(sgroup.getValue(SgroupKey.CtabBracketStyle), is(1));
         }
     }
 

@@ -141,7 +141,7 @@ public class VicinitySampler {
                                     b22 = a22 - a11 + b11;
                                     LOGGER.debug("Trying atom combination : " + x1 + ":" + x2 + ":" + y1 + ":" + y2);
                                     try {
-                                        newAc = (IAtomContainer) ac.clone();
+                                        newAc = ac.clone();
                                         change(newAc, x1, y1, x2, y2, b11, b12, b21, b22);
                                         if (ConnectivityChecker.isConnected(newAc)) {
                                             structures.add(newAc);

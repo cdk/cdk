@@ -147,7 +147,7 @@ public class FixBondOrdersTool {
     public IAtomContainer kekuliseAromaticRings(IAtomContainer molecule) throws CDKException {
         IAtomContainer mNew = null;
         try {
-            mNew = (IAtomContainer) molecule.clone();
+            mNew = molecule.clone();
         } catch (Exception e) {
             throw new CDKException("Failed to clone source molecule");
         }

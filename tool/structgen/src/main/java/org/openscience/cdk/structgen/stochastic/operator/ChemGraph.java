@@ -49,7 +49,7 @@ public class ChemGraph {
 
     public ChemGraph(IAtomContainer chrom) {
         dim = chrom.getAtomCount();
-        numAtoms = (int) (dim / 2);
+        numAtoms = dim / 2;
         contab = new double[dim][dim];
         contab = ConnectionMatrix.getMatrix(chrom);
     }
@@ -119,7 +119,7 @@ public class ChemGraph {
             }
             while (adjSet.size() > 0) {
                 int adjIndex = RandomNumbersTool.randomInt(0, adjSet.size() - 1);
-                atomQueue.add((Integer) adjSet.get(adjIndex));
+                atomQueue.add(adjSet.get(adjIndex));
                 visited[(Integer) adjSet.get(adjIndex)] = true;
                 adjSet.remove(adjIndex);
             }

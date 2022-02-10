@@ -145,7 +145,7 @@ public class AromaticBondsCountDescriptor extends AbstractMolecularDescriptor im
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer ac;
         try {
-            ac = (IAtomContainer) atomContainer.clone();
+            ac = atomContainer.clone();
         } catch (CloneNotSupportedException e) {
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
                     (int) Double.NaN), getDescriptorNames(), new CDKException("Error during clone"));

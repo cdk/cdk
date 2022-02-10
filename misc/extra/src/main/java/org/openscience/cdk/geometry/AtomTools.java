@@ -66,7 +66,7 @@ public class AtomTools {
             if (atom.getPoint3d() == null) {
                 List<IAtom> connectedAtoms = atomContainer.getConnectedAtomsList(atom);
                 if (connectedAtoms.size() == 1) {
-                    IAtom refAtom = (IAtom) connectedAtoms.get(0);;
+                    IAtom refAtom = connectedAtoms.get(0);;
                     if (refAtom.getPoint3d() != null) {
                         refAtoms.addAtom(refAtom);
                         // store atoms with no coords and ref atoms in a
@@ -96,7 +96,7 @@ public class AtomTools {
             }
             Point3d[] newPoints = calculate3DCoordinatesForLigands(atomContainer, refAtom, nwanted, length, angle);
             for (int j = 0; j < nLigands; j++) {
-                IAtom ligand = (IAtom) noCoordLigands.get(j);
+                IAtom ligand = noCoordLigands.get(j);
                 Point3d newPoint = rescaleBondLength(refAtom, ligand, newPoints[j]);
                 ligand.setPoint3d(newPoint);
             }

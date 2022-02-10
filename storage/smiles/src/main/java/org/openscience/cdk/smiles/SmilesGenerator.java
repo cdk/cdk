@@ -906,10 +906,10 @@ public final class SmilesGenerator {
                         // can be generated but currently ignored
                         CxSmilesState.CxDataSgroup cxDataSgrp;
                         cxDataSgrp= new CxSmilesState.CxDataSgroup(toAtomIdxs(sgroup.getAtoms(), atomidx),
-                                                                  (String)sgroup.getValue(SgroupKey.DataFieldName),
-                                                                  (String)sgroup.getValue(SgroupKey.Data),
+                                sgroup.getValue(SgroupKey.DataFieldName),
+                                sgroup.getValue(SgroupKey.Data),
                                                                    null,
-                                                                  (String)sgroup.getValue(SgroupKey.DataFieldUnits),
+                                sgroup.getValue(SgroupKey.DataFieldUnits),
                                                                   null);
                         state.mysgroups.add(cxDataSgrp);
                         mapping.put(sgroup, cxDataSgrp);

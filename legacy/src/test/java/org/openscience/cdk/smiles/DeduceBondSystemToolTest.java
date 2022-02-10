@@ -102,7 +102,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
         molecule = dbst.fixAromaticBondOrders(molecule);
         Assert.assertNotNull(molecule);
 
-        molecule = (IAtomContainer) AtomContainerManipulator.removeHydrogens(molecule);
+        molecule = AtomContainerManipulator.removeHydrogens(molecule);
 
         int doubleBondCount = 0;
         for (int i = 0; i < molecule.getBondCount(); i++) {
@@ -123,7 +123,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
         molecule = dbst.fixAromaticBondOrders(molecule);
         Assert.assertNotNull(molecule);
 
-        molecule = (IAtomContainer) AtomContainerManipulator.removeHydrogens(molecule);
+        molecule = AtomContainerManipulator.removeHydrogens(molecule);
         Assert.assertEquals(34, molecule.getAtomCount());
 
         // we should have 14 double bonds
@@ -148,7 +148,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
         molecule = dbst.fixAromaticBondOrders(molecule);
         Assert.assertNotNull(molecule);
 
-        molecule = (IAtomContainer) AtomContainerManipulator.removeHydrogens(molecule);
+        molecule = AtomContainerManipulator.removeHydrogens(molecule);
         Assert.assertEquals(40, molecule.getAtomCount());
 
         // we should have 14 double bonds
@@ -173,7 +173,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
         molecule = dbst.fixAromaticBondOrders(molecule);
         Assert.assertNotNull(molecule);
 
-        molecule = (IAtomContainer) AtomContainerManipulator.removeHydrogens(molecule);
+        molecule = AtomContainerManipulator.removeHydrogens(molecule);
         int doubleBondCount = 0;
         for (int i = 0; i < molecule.getBondCount(); i++) {
             IBond bond = molecule.getBond(i);

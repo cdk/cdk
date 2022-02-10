@@ -294,7 +294,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
 
                 double charge = 0.0;
                 if (tokenizer.nextToken() == StreamTokenizer.TT_NUMBER) {
-                    charge = (double) tokenizer.nval;
+                    charge = tokenizer.nval;
                     logger.debug("Found charge for atom " + atomCounter + ": " + charge);
                 } else {
                     throw new CDKException("Error while reading charge: expected double.");

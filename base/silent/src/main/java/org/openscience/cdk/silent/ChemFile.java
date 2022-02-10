@@ -205,7 +205,7 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable, ICh
         clone.chemSequenceCount = getChemSequenceCount();
         clone.chemSequences = new ChemSequence[clone.chemSequenceCount];
         for (int f = 0; f < clone.chemSequenceCount; f++) {
-            clone.chemSequences[f] = (ChemSequence) ((ChemSequence) chemSequences[f]).clone();
+            clone.chemSequences[f] = (ChemSequence) chemSequences[f].clone();
         }
         return clone;
     }

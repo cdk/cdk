@@ -182,7 +182,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
      */
     @Override
     public IMonomer getMonomer(String cName) {
-        return (Monomer) monomers.get(cName);
+        return monomers.get(cName);
     }
 
     /**

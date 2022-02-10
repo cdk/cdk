@@ -55,7 +55,7 @@ public class SpanningTreeTest extends CDKTestCase {
             String filename = "azulene.mol";
             InputStream ins = this.getClass().getResourceAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-            IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
+            IChemFile chemFile = reader.read(new ChemFile());
             IChemSequence seq = chemFile.getChemSequence(0);
             IChemModel model = seq.getChemModel(0);
             IAtomContainer azuleneMolecule = model.getMoleculeSet().getAtomContainer(0);

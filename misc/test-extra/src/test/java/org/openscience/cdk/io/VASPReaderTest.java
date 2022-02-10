@@ -56,7 +56,7 @@ public class VASPReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         VASPReader reader = new VASPReader(ins);
-        ChemFile chemFile = (ChemFile) reader.read(new ChemFile());
+        ChemFile chemFile = reader.read(new ChemFile());
         Assert.assertNotNull(chemFile);
         org.openscience.cdk.interfaces.IChemSequence sequence = chemFile.getChemSequence(0);
         Assert.assertNotNull(sequence);

@@ -285,7 +285,7 @@ public class AtomTypeFactory {
                 atomList.add(atomType);
             }
         }
-        IAtomType[] atomTypes = (IAtomType[]) atomList.toArray(new IAtomType[atomList.size()]);
+        IAtomType[] atomTypes = atomList.toArray(new IAtomType[atomList.size()]);
         if (atomTypes.length > 0)
             logger.debug("Atomtype for symbol ", symbol, " has this number of types: " + atomTypes.length);
         else
@@ -300,7 +300,7 @@ public class AtomTypeFactory {
      */
     public IAtomType[] getAllAtomTypes() {
         logger.debug("Returning list of size: ", getSize());
-        return (IAtomType[]) atomTypes.values().toArray(new IAtomType[atomTypes.size()]);
+        return atomTypes.values().toArray(new IAtomType[atomTypes.size()]);
     }
 
     /**

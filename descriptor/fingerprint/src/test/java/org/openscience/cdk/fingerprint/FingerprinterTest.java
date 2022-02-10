@@ -169,7 +169,7 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
         logger.info("Testing: " + filename1);
         InputStream ins1 = this.getClass().getResourceAsStream(filename1);
         MDLRXNV2000Reader reader = new MDLRXNV2000Reader(ins1, Mode.STRICT);
-        IReaction reaction = (IReaction) reader.read(new Reaction());
+        IReaction reaction = reader.read(new Reaction());
         Assert.assertNotNull(reaction);
 
         IAtomContainer reactant = reaction.getReactants().getAtomContainer(0);

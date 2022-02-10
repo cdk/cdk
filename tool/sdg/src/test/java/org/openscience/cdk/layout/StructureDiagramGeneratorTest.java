@@ -552,7 +552,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
                 + "   130   122   124    1\n" + "   131   122   125    1\n" + "   132    91   126    1\n"
                 + "   133   126   127    1\n" + "   134     4   128    1\n" + "   135   128   129    1\n";
         Mol2Reader r = new Mol2Reader(new StringReader(problematicMol2));
-        IChemModel model = (IChemModel) r.read(SilentChemObjectBuilder.getInstance().newInstance(IChemModel.class));
+        IChemModel model = r.read(SilentChemObjectBuilder.getInstance().newInstance(IChemModel.class));
         final IAtomContainer mol = model.getMoleculeSet().getAtomContainer(0);
         layout(mol);
         assertTrue(GeometryUtil.has2DCoordinates(mol));
@@ -675,7 +675,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase {
         ISimpleChemObjectReader molReader = new MDLV2000Reader(ins, Mode.STRICT);
 
         // read molecule
-        IAtomContainer molecule = (IAtomContainer) molReader.read(SilentChemObjectBuilder.getInstance().newInstance(
+        IAtomContainer molecule = molReader.read(SilentChemObjectBuilder.getInstance().newInstance(
                 IAtomContainer.class));
 
         // rebuild 2D coordinates

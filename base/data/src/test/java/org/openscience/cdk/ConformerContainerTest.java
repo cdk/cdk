@@ -59,7 +59,7 @@ public class ConformerContainerTest extends CDKTestCase {
                 p.z = rnd.nextDouble();
                 base.getAtom(j).setPoint3d(p);
             }
-            ret[i] = (IAtomContainer) base.clone();
+            ret[i] = base.clone();
         }
         return ret;
     }

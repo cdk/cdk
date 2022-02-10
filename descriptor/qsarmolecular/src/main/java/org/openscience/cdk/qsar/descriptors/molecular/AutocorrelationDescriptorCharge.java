@@ -52,7 +52,7 @@ public class AutocorrelationDescriptorCharge extends AbstractMolecularDescriptor
         double[] charges = new double[natom];
         try {
             IAtomContainer mol = container.getBuilder().newInstance(IAtomContainer.class,
-                    ((IAtomContainer) container.clone()));
+                    container.clone());
             GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
             peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);
             for (int i = 0; i < natom; i++) {
@@ -70,7 +70,7 @@ public class AutocorrelationDescriptorCharge extends AbstractMolecularDescriptor
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer container;
         try {
-            container = (IAtomContainer) atomContainer.clone();
+            container = atomContainer.clone();
             container = AtomContainerManipulator.removeHydrogens(container);
         } catch (CloneNotSupportedException e) {
             DoubleArrayResult result = new DoubleArrayResult(5);

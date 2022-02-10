@@ -159,7 +159,7 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
     private void writeAtoms(IAtomContainer molecule) throws Exception {
         Iterator<IAtom> atoms = molecule.atoms().iterator();
         while (atoms.hasNext()) {
-            IAtom atom = (IAtom) atoms.next();
+            IAtom atom = atoms.next();
             writeAtom(atom);
             writer.write("  mol.addAtom(" + atom.getID() + ");");
             writer.write('\n');
@@ -169,7 +169,7 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
     private void writeBonds(IAtomContainer molecule) throws Exception {
         Iterator<IBond> bonds = molecule.bonds().iterator();
         while (bonds.hasNext()) {
-            IBond bond = (IBond) bonds.next();
+            IBond bond = bonds.next();
             writeBond(bond);
             writer.write("  mol.addBond(" + bond.getID() + ");");
             writer.write('\n');

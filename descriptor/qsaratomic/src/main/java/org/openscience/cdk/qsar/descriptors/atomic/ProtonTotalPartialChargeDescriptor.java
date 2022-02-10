@@ -120,7 +120,7 @@ public class ProtonTotalPartialChargeDescriptor extends AbstractAtomicDescriptor
 
         IAtomContainer clone;
         try {
-            clone = (IAtomContainer) ac.clone();
+            clone = ac.clone();
         } catch (CloneNotSupportedException e) {
             return getDummyDescriptorValue(e);
         }

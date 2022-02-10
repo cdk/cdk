@@ -163,7 +163,7 @@ public class RDFProtonDescriptor_GHR extends AbstractAtomicDescriptor implements
     public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer, IRingSet precalculatedringset) {
         IAtomContainer varAtomContainer;
         try {
-            varAtomContainer = (IAtomContainer) atomContainer.clone();
+            varAtomContainer = atomContainer.clone();
         } catch (CloneNotSupportedException e) {
             return getDummyDescriptorValue(e);
         }

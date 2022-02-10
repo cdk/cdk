@@ -145,7 +145,7 @@ public class PiContactDetectionDescriptor extends AbstractAtomPairDescriptor imp
     public DescriptorValue calculate(IAtom first, IAtom second, IAtomContainer atomContainer) {
         IAtomContainer ac;
         try {
-            ac = (IAtomContainer) atomContainer.clone();
+            ac = atomContainer.clone();
         } catch (CloneNotSupportedException e) {
             return getDummyDescriptorValue(e);
         }

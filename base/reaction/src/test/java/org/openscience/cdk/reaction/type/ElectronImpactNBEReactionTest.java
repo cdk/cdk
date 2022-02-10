@@ -104,7 +104,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 
         Iterator<IAtom> atoms = reactant.atoms().iterator();
         while (atoms.hasNext()) {
-            IAtom atom = (IAtom) atoms.next();
+            IAtom atom = atoms.next();
             if (reactant.getConnectedLonePairsCount(atom) > 0) {
                 atom.setFlag(CDKConstants.REACTIVE_CENTER, true);
             }

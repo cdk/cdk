@@ -128,7 +128,7 @@ public class ShortestPathFingerprinter extends AbstractFingerprinter implements 
 
         IAtomContainer atomContainer = null;
         try {
-            atomContainer = (IAtomContainer) ac.clone();
+            atomContainer = ac.clone();
         } catch (CloneNotSupportedException ex) {
             logger.error("Failed to clone the molecule:", ex);
         }

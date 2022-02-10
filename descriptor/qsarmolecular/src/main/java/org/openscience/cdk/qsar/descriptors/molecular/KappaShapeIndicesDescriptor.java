@@ -118,7 +118,7 @@ public class KappaShapeIndicesDescriptor extends AbstractMolecularDescriptor imp
     public DescriptorValue calculate(IAtomContainer container) {
         IAtomContainer atomContainer;
         try {
-            atomContainer = (IAtomContainer) container.clone();
+            atomContainer = container.clone();
         } catch (CloneNotSupportedException e) {
             DoubleArrayResult kierValues = new DoubleArrayResult(3);
             kierValues.add(Double.NaN);

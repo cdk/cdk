@@ -120,7 +120,7 @@ public class TextGUIListener implements IReaderListener, IWriterListener {
                 List<String> settings = optionSet.getOptions();
                 for (int i = 0; i < settings.size(); i++) {
                     this.out.println();
-                    String option = (String) settings.get(i);
+                    String option = settings.get(i);
                     this.out.print((i + 1) + ". " + option);
                     if (option.equals(setting.getSetting())) {
                         this.out.print(" (Default)");

@@ -211,7 +211,7 @@ public class SimpleCycleBasis {
     }
 
     boolean[][] getCycleEdgeIncidenceMatrix() {
-        return getCycleEdgeIncidenceMatrix((Object[]) cycles.toArray());
+        return getCycleEdgeIncidenceMatrix(cycles.toArray());
     }
 
     boolean[][] getCycleEdgeIncidenceMatrix(Object[] cycleArray) {
@@ -366,7 +366,7 @@ public class SimpleCycleBasis {
 
         int[] result = new int[cycles.size()];
         for (int i = 0; i < cycles.size(); i++) {
-            SimpleCycle cycle = (SimpleCycle) cycles.get(i);
+            SimpleCycle cycle = cycles.get(i);
             result[i] = (int) cycle.weight();
         }
         Arrays.sort(result);
@@ -488,11 +488,11 @@ public class SimpleCycleBasis {
 
                         SimpleCycle cycle = new SimpleCycle(graph, edgesOfNewCycle);
 
-                        if (cycle.weight() > ((SimpleCycle) cycles.get(i)).weight()) {
+                        if (cycle.weight() > cycles.get(i).weight()) {
                             break;
                         }
 
-                        if (!cycle.equals((SimpleCycle) cycles.get(i))) {
+                        if (!cycle.equals(cycles.get(i))) {
                             isEssential = false;
                             break;
                         }
@@ -576,11 +576,11 @@ public class SimpleCycleBasis {
 
                         SimpleCycle cycle = new SimpleCycle(graph, edgesOfNewCycle);
 
-                        if (cycle.weight() > ((SimpleCycle) cycles.get(i)).weight()) {
+                        if (cycle.weight() > cycles.get(i).weight()) {
                             break;
                         }
 
-                        result.put(cycle, (SimpleCycle) cycles.get(i));
+                        result.put(cycle, cycles.get(i));
                     }
 
                 }
@@ -634,10 +634,10 @@ public class SimpleCycleBasis {
             // This is done by finding a cycle C with <C,u[i]>=1 and <C,u[j]>=1
 
             for (int i = left; i <= right; i++) {
-                if (essentialCycles.contains((SimpleCycle) cyclesArray[i])) continue;
+                if (essentialCycles.contains(cyclesArray[i])) continue;
 
                 for (int j = i + 1; j <= right; j++) {
-                    if (essentialCycles.contains((SimpleCycle) cyclesArray[j])) continue;
+                    if (essentialCycles.contains(cyclesArray[j])) continue;
 
                     // check if cyclesArray[i] and cyclesArray[j] are already in the same class
                     if (connectivityInspector.pathExists(cyclesArray[i], cyclesArray[j])) continue;
@@ -690,17 +690,17 @@ public class SimpleCycleBasis {
             // This is done by finding a cycle a[k] with <u[k],u[i]>=1 and <u[k],u[j]>=1
 
             for (int i = left; i <= right; i++) {
-                if (essentialCycles.contains((SimpleCycle) cyclesArray[i])) continue;
+                if (essentialCycles.contains(cyclesArray[i])) continue;
 
                 for (int j = i + 1; j <= right; j++) {
-                    if (essentialCycles.contains((SimpleCycle) cyclesArray[j])) continue;
+                    if (essentialCycles.contains(cyclesArray[j])) continue;
 
                     // check if cyclesArray[i] and cyclesArray[j] are already in the same class
                     if (connectivityInspector.pathExists(cyclesArray[i], cyclesArray[j])) continue;
 
                     boolean sameClass = false;
 
-                    for (int k = 0; ((SimpleCycle) cyclesArray[k]).weight() < weight[left]; k++) {
+                    for (int k = 0; cyclesArray[k].weight() < weight[left]; k++) {
 
                         AuxiliaryGraph2 auxGraph = new AuxiliaryGraph2(graph, u[i], u[k]);
 

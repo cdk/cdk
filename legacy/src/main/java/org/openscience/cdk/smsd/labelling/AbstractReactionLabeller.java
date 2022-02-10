@@ -37,7 +37,7 @@ public class AbstractReactionLabeller {
 
     private void fixAtomMapping(IAtomContainer canonicalForm) {
         for (IAtom a : canonicalForm.atoms()) {
-            String v = (String) a.getProperty(CDKConstants.ATOM_ATOM_MAPPING);
+            String v = a.getProperty(CDKConstants.ATOM_ATOM_MAPPING);
             if (v != null) {
                 a.setProperty(CDKConstants.ATOM_ATOM_MAPPING, Integer.valueOf(v));
             }
@@ -89,8 +89,8 @@ public class AbstractReactionLabeller {
             IMapping mapping = reaction.getMapping(mappingIndex);
             IChemObject keyChemObj0 = mapping.getChemObject(0);
             IChemObject keyChemObj1 = mapping.getChemObject(1);
-            IChemObject co0 = (IChemObject) atomAtomMap.get(keyChemObj0);
-            IChemObject co1 = (IChemObject) atomAtomMap.get(keyChemObj1);
+            IChemObject co0 = atomAtomMap.get(keyChemObj0);
+            IChemObject co1 = atomAtomMap.get(keyChemObj1);
             map.add(new Mapping(co0, co1));
         }
         return map;

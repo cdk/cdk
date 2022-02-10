@@ -89,7 +89,7 @@ public class PDBWriterTest extends ChemObjectIOTest {
         Assert.assertTrue(output.length() > 0);
 
         PDBReader reader = new PDBReader();
-        ChemFile chemFile = (ChemFile) reader.read(new ChemFile());
+        ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
         Assert.assertNotNull(chemFile);
@@ -125,7 +125,7 @@ public class PDBWriterTest extends ChemObjectIOTest {
         Assert.assertTrue(output.length() > 0);
 
         PDBReader reader = new PDBReader();
-        ChemFile chemFile = (ChemFile) reader.read(new ChemFile());
+        ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
         Assert.assertNotNull(chemFile);
@@ -253,7 +253,7 @@ public class PDBWriterTest extends ChemObjectIOTest {
         writer.close();
         String output = stringWriter.toString();
         PDBReader reader = new PDBReader(new StringReader(output));
-        IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
         IAtomContainer reconstructed = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
         Assert.assertEquals(original.getAtomCount(), reconstructed.getAtomCount());

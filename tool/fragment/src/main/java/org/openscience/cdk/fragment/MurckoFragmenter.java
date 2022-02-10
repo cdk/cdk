@@ -267,7 +267,7 @@ public class MurckoFragmenter implements IFragmenter {
 
         IAtomContainer currentFramework; // needed for recursion
         try {
-            currentFramework = (IAtomContainer) clone.clone();
+            currentFramework = clone.clone();
         } catch (CloneNotSupportedException exception) {
             throw new CDKException(exception.getMessage(), exception);
         }
@@ -512,12 +512,12 @@ public class MurckoFragmenter implements IFragmenter {
     }
 
     private boolean islinker(IAtom atom) {
-        Boolean o = (Boolean) atom.getProperty(IS_LINKER_ATOM);
+        Boolean o = atom.getProperty(IS_LINKER_ATOM);
         return o != null && o;
     }
 
     private boolean issidechain(IAtom atom) {
-        Boolean o = (Boolean) atom.getProperty(IS_SIDECHAIN_ATOM);
+        Boolean o = atom.getProperty(IS_SIDECHAIN_ATOM);
         return o != null && o;
     }
 

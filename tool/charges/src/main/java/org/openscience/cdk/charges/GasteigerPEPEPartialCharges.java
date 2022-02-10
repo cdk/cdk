@@ -310,7 +310,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
             Wt[i - 1] = getTopologicalFactors(iSet.getAtomContainer(i), ac);
             logger.debug(", W:" + Wt[i - 1]);
             try {
-                acCloned = (IAtomContainer) iSet.getAtomContainer(i).clone();
+                acCloned = iSet.getAtomContainer(i).clone();
 
                 acCloned = peoe.assignGasteigerMarsiliSigmaPartialCharges(acCloned, true);
                 for (int j = 0; j < acCloned.getAtomCount(); j++)

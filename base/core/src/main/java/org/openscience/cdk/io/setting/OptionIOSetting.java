@@ -69,7 +69,7 @@ public class OptionIOSetting extends IOSetting {
      */
     public void setSetting(int setting) throws CDKException {
         if (setting < settings.size() + 1 && setting > 0) {
-            this.setting = (String) settings.get(setting - 1);
+            this.setting = settings.get(setting - 1);
         } else {
             throw new CDKException("Setting " + setting + " does not exist.");
         }

@@ -62,7 +62,7 @@ public class ShelXWriterTest extends CDKTestCase {
 
         // deserialazing
         ShelXReader resReader = new ShelXReader(new StringReader(resContent));
-        ICrystal rCrystal = (ICrystal) resReader.read(new Crystal());
+        ICrystal rCrystal = resReader.read(new Crystal());
 
         // OK, do checking
         Assert.assertNotNull(rCrystal);

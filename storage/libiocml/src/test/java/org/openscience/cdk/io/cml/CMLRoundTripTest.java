@@ -705,7 +705,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         String filename = "custompropertiestest.cml";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        ChemFile chemFile = (ChemFile) reader.read((ChemFile) new ChemFile());
+        ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
         Assert.assertNotNull(chemFile);
         IAtomContainer container = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);

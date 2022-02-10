@@ -175,11 +175,11 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
 
         // clone the atoms and place in a map
         Map<IBond, IBond> mapping = new HashMap<>();
-        IBond c1c2clone = (IBond) c1c2.clone();
+        IBond c1c2clone = c1c2.clone();
         mapping.put(c1c2, c1c2clone);
-        IBond c1o3clone = (IBond) c1o3.clone();
+        IBond c1o3clone = c1o3.clone();
         mapping.put(c1o3, c1o3clone);
-        IBond c2o4clone = (IBond) c2o4.clone();
+        IBond c2o4clone = c2o4.clone();
         mapping.put(c2o4, c2o4clone);
 
         // map the existing element a new element

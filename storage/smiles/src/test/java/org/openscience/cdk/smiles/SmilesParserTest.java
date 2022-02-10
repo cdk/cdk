@@ -862,9 +862,9 @@ public class SmilesParserTest extends CDKTestCase {
         for (int i = 0; i < mol.getAtomCount(); i++) {
             if (mol.getAtom(i).getAtomicNumber() == IElement.N) {
                 Assert.assertEquals(IBond.Order.SINGLE,
-                        ((IBond) mol.getConnectedBondsList(mol.getAtom(i)).get(0)).getOrder());
+                        mol.getConnectedBondsList(mol.getAtom(i)).get(0).getOrder());
                 Assert.assertEquals(IBond.Order.SINGLE,
-                        ((IBond) mol.getConnectedBondsList(mol.getAtom(i)).get(1)).getOrder());
+                        mol.getConnectedBondsList(mol.getAtom(i)).get(1).getOrder());
             }
         }
     }
@@ -2477,7 +2477,7 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals(2, mol.getAtom(0).getFormalNeighbourCount().intValue());
         Assert.assertEquals("C.sp2", mol.getAtom(1).getAtomTypeName());
         Assert.assertEquals(3, mol.getAtom(1).getFormalNeighbourCount().intValue());
-        IAtomContainer clone = (IAtomContainer) mol.clone();
+        IAtomContainer clone = mol.clone();
         Assert.assertEquals("O.sp3", clone.getAtom(0).getAtomTypeName());
         Assert.assertEquals(2, clone.getAtom(0).getFormalNeighbourCount().intValue());
         Assert.assertEquals("C.sp2", clone.getAtom(1).getAtomTypeName());
@@ -2540,7 +2540,7 @@ public class SmilesParserTest extends CDKTestCase {
         assertTrue(ses.hasNext());
         IStereoElement se = ses.next();
         assertThat(se, instanceOf(SquarePlanar.class));
-        assertThat(((SquarePlanar) se).getConfigOrder(), is(1));
+        assertThat(se.getConfigOrder(), is(1));
     }
 
     @Test
@@ -2550,7 +2550,7 @@ public class SmilesParserTest extends CDKTestCase {
         assertTrue(ses.hasNext());
         IStereoElement se = ses.next();
         assertThat(se, instanceOf(SquarePlanar.class));
-        assertThat(((SquarePlanar) se).getConfigOrder(), is(3));
+        assertThat(se.getConfigOrder(), is(3));
     }
 
     @Test
@@ -2560,7 +2560,7 @@ public class SmilesParserTest extends CDKTestCase {
         assertTrue(ses.hasNext());
         IStereoElement se = ses.next();
         assertThat(se, instanceOf(SquarePlanar.class));
-        assertThat(((SquarePlanar) se).getConfigOrder(), is(2));
+        assertThat(se.getConfigOrder(), is(2));
     }
 
     @Test
@@ -2570,7 +2570,7 @@ public class SmilesParserTest extends CDKTestCase {
         assertTrue(ses.hasNext());
         IStereoElement se = ses.next();
         assertThat(se, instanceOf(TrigonalBipyramidal.class));
-        assertThat(((TrigonalBipyramidal) se).getConfigOrder(), is(1));
+        assertThat(se.getConfigOrder(), is(1));
     }
 
     @Test
@@ -2580,7 +2580,7 @@ public class SmilesParserTest extends CDKTestCase {
         assertTrue(ses.hasNext());
         IStereoElement se = ses.next();
         assertThat(se, instanceOf(TrigonalBipyramidal.class));
-        assertThat(((TrigonalBipyramidal) se).getConfigOrder(), is(2));
+        assertThat(se.getConfigOrder(), is(2));
     }
 
     @Test

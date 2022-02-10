@@ -62,7 +62,7 @@ public class JumboTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile chemFile = reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
 
         // test the resulting ChemFile content
@@ -95,7 +95,7 @@ public class JumboTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile chemFile = reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
 
         // test the resulting ChemFile content
@@ -129,7 +129,7 @@ public class JumboTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile chemFile = reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
 
         // test the resulting ChemFile content

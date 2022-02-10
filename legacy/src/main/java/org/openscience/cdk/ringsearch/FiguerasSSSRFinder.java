@@ -133,19 +133,19 @@ public class FiguerasSSSRFinder {
                 rememberNodes = new IAtom[nodesN2.size()];
                 nodesToBreakCounter = 0;
                 for (IAtom iAtom : nodesN2) {
-                    ring = getRing((IAtom) iAtom, molecule);
+                    ring = getRing(iAtom, molecule);
                     if (ring != null) {
                         // check, if this ring already is in SSSR
                         if (!RingSetManipulator.ringAlreadyInSet(ring, sssr)) {
                             sssr.addAtomContainer(ring);
-                            rememberNodes[nodesToBreakCounter] = (IAtom) iAtom;
+                            rememberNodes[nodesToBreakCounter] = iAtom;
                             nodesToBreakCounter++;
                         }
                     }
                 }
                 if (nodesToBreakCounter == 0) {
                     nodesToBreakCounter = 1;
-                    rememberNodes[0] = (IAtom) nodesN2.get(0);
+                    rememberNodes[0] = nodesN2.get(0);
                 }
                 for (int f = 0; f < nodesToBreakCounter; f++) {
                     breakBond(rememberNodes[f], molecule);
@@ -220,7 +220,7 @@ public class FiguerasSSSRFinder {
                 mAtom = (IAtom) atom;
                 if (!mAtom.equals(((List) node.getProperty(PATH)).get(((List<IAtom>) node.getProperty(PATH)).size() - 2))) {
                     if (((List) mAtom.getProperty(PATH)).size() > 0) {
-                        intersection = getIntersection((List) node.getProperty(PATH), (List) mAtom.getProperty(PATH));
+                        intersection = getIntersection(node.getProperty(PATH), mAtom.getProperty(PATH));
                         if (intersection.size() == 1) {
                             // we have found a valid ring closure
                             // now let's prepare the path to
@@ -229,7 +229,7 @@ public class FiguerasSSSRFinder {
                             logger.debug("path2  ", ((List) mAtom.getProperty(PATH)));
                             logger.debug("rootNode  ", rootNode);
                             logger.debug("ring   ", ring);
-                            ring = getUnion((List) node.getProperty(PATH), (List) mAtom.getProperty(PATH));
+                            ring = getUnion(node.getProperty(PATH), mAtom.getProperty(PATH));
                             return prepareRing(ring, molecule);
                         }
                     } else {
@@ -295,7 +295,7 @@ public class FiguerasSSSRFinder {
     private void trim(IAtom atom, IAtomContainer molecule) {
         List<IBond> bonds = molecule.getConnectedBondsList(atom);
         for (IBond bond : bonds) {
-            molecule.removeElectronContainer((IBond) bond);
+            molecule.removeElectronContainer(bond);
         }
         // you are erased! Har, har, har.....  >8-)
     }
@@ -354,7 +354,7 @@ public class FiguerasSSSRFinder {
     private void breakBond(IAtom atom, IAtomContainer molecule) {
         Iterator<IBond> bonds = molecule.bonds().iterator();
         while (bonds.hasNext()) {
-            IBond bond = (IBond) bonds.next();
+            IBond bond = bonds.next();
             if (bond.contains(atom)) {
                 molecule.removeElectronContainer(bond);
                 break;
@@ -380,7 +380,7 @@ public class FiguerasSSSRFinder {
         logger.debug("Molecule: " + molecule);
         Iterator<IBond> bonds = ring.bonds().iterator();
         while (bonds.hasNext()) {
-            bond = (IBond) bonds.next();
+            bond = bonds.next();
             molecule.removeElectronContainer(bond);
             r1 = getRing(bond.getBegin(), molecule);
             r2 = getRing(bond.getEnd(), molecule);
@@ -393,8 +393,8 @@ public class FiguerasSSSRFinder {
             molecule.addBond(bond);
         }
         for (int i = 0; i < ringSet.getAtomContainerCount(); i++) {
-            if (((IRing) ringSet.getAtomContainer(i)).getBondCount() < minMaxSize) {
-                minMaxSize = ((IRing) ringSet.getAtomContainer(i)).getBondCount();
+            if (ringSet.getAtomContainer(i).getBondCount() < minMaxSize) {
+                minMaxSize = ringSet.getAtomContainer(i).getBondCount();
                 minMax = i;
             }
         }

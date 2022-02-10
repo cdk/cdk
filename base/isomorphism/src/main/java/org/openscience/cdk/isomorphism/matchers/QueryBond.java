@@ -512,7 +512,7 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
             clone.atoms = new IAtom[atoms.length];
             for (int f = 0; f < atoms.length; f++) {
                 if (atoms[f] != null) {
-                    clone.atoms[f] = (IAtom) (atoms[f]).clone();
+                    clone.atoms[f] = (atoms[f]).clone();
                 }
             }
         }

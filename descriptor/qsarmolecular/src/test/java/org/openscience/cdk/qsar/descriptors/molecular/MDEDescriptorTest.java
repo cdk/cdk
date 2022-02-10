@@ -34,7 +34,7 @@ public class MDEDescriptorTest extends MolecularDescriptorTest {
         String filename = "mdeotest.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
-        ChemFile content = (ChemFile) reader.read(new ChemFile());
+        ChemFile content = reader.read(new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(0);
 

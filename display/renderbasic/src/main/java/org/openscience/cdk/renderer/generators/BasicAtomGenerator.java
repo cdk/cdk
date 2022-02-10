@@ -317,7 +317,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
     public IRenderingElement generate(IAtomContainer atomContainer, IAtom atom, RendererModel model) {
         if (!canDraw(atom, atomContainer, model)) {
             return null;
-        } else if ((Boolean) model.get(CompactAtom.class)) {
+        } else if (model.get(CompactAtom.class)) {
             return this.generateCompactElement(atom, model);
         } else {
             int alignment = 0;
@@ -341,7 +341,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
      */
     public IRenderingElement generateCompactElement(IAtom atom, RendererModel model) {
         Point2d point = atom.getPoint2d();
-        double radius = (Double) model.get(AtomRadius.class) / model.getParameter(Scale.class).getValue();
+        double radius = model.get(AtomRadius.class) / model.getParameter(Scale.class).getValue();
         double distance = 2 * radius;
         if (model.get(CompactShape.class) == Shape.SQUARE) {
             return new RectangleElement(point.x - radius, point.y - radius, distance, distance, true, getAtomColor(
@@ -380,7 +380,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
      */
     protected boolean showCarbon(IAtom carbonAtom, IAtomContainer container, RendererModel model) {
 
-        if ((Boolean) model.get(KekuleStructure.class)) return true;
+        if (model.get(KekuleStructure.class)) return true;
 
         if (carbonAtom.getFormalCharge() != 0) return true;
 
@@ -388,7 +388,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
 
         if (connectedBondCount < 1) return true;
 
-        if ((Boolean) model.get(ShowEndCarbons.class) && connectedBondCount == 1) return true;
+        if (model.get(ShowEndCarbons.class) && connectedBondCount == 1) return true;
 
         if (carbonAtom.getProperty(ProblemMarker.ERROR_MARKER) != null) return true;
 
@@ -405,8 +405,8 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
      */
     protected Color getAtomColor(IAtom atom, RendererModel model) {
         Color atomColor = model.get(AtomColor.class);
-        if ((Boolean) model.get(ColorByType.class)) {
-            atomColor = ((IAtomColorer) model.get(AtomColorer.class)).getAtomColor(atom);
+        if (model.get(ColorByType.class)) {
+            atomColor = model.get(AtomColorer.class).getAtomColor(atom);
         }
         return atomColor;
     }

@@ -59,7 +59,7 @@ public class ShelXReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ShelXReader reader = new ShelXReader(ins);
-        Crystal crystal = (Crystal) reader.read(new Crystal());
+        Crystal crystal = reader.read(new Crystal());
         reader.close();
         Assert.assertNotNull(crystal);
         Assert.assertEquals(42, crystal.getAtomCount());

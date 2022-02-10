@@ -105,7 +105,7 @@ public class Dictionary {
         Iterator<Entry> elements = entries.values().iterator();
         int counter = 0;
         while (elements.hasNext() && counter < size) {
-            entryArray[counter] = (Entry) elements.next();
+            entryArray[counter] = elements.next();
             counter++;
         }
         return entryArray;

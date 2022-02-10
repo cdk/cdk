@@ -262,7 +262,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
             IAtomContainer root = this.getRootStructure();
             IAtomContainer rootClone = null;
             try {
-                rootClone = (IAtomContainer) root.clone();
+                rootClone = root.clone();
             } catch (CloneNotSupportedException e) {
                 //Abort with CDK exception
                 throw new CDKException("clone() failed; could not perform R-group substitution.");
@@ -280,7 +280,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
 
                         IAtomContainer rgrpClone = null;
                         try {
-                            rgrpClone = (IAtomContainer) (substitute.getGroup().clone());
+                            rgrpClone = substitute.getGroup().clone();
                         } catch (CloneNotSupportedException e) {
                             throw new CDKException("clone() failed; could not perform R-group substitution.");
                         }

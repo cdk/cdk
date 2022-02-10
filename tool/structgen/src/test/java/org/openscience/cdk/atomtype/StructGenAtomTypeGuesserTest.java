@@ -52,7 +52,7 @@ public class StructGenAtomTypeGuesserTest extends CDKTestCase {
         Assert.assertTrue(matched.size() > 0);
         Assert.assertTrue(matched.get(0) instanceof IAtomType);
 
-        Assert.assertEquals("C", ((IAtomType) matched.get(0)).getSymbol());
+        Assert.assertEquals("C", matched.get(0).getSymbol());
     }
 
     @Test

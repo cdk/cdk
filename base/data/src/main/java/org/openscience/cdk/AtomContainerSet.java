@@ -382,7 +382,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
         clone.atomContainers = new IAtomContainer[atomContainerCount];
         clone.atomContainerCount = 0;
         for (int i = 0; i < atomContainerCount; i++) {
-            clone.addAtomContainer((IAtomContainer) atomContainers[i].clone());
+            clone.addAtomContainer(atomContainers[i].clone());
             clone.setMultiplier(i, getMultiplier(i));
         }
         return clone;

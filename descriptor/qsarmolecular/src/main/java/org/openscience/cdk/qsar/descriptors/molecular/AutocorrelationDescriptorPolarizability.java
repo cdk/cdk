@@ -81,7 +81,7 @@ public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDe
     public DescriptorValue calculate(IAtomContainer container) {
         IAtomContainer molecule;
         try {
-            molecule = (IAtomContainer) container.clone();
+            molecule = container.clone();
         } catch (CloneNotSupportedException e) {
             return getDummyDescriptorValue(new CDKException("Error occurred during clone " + e));
         }

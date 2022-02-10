@@ -208,7 +208,7 @@ public class InChIGenerator {
         boolean all3d = true;
         boolean all2d = true;
         while (atoms.hasNext()) {
-            IAtom atom = (IAtom) atoms.next();
+            IAtom atom = atoms.next();
             if (atom.getPoint3d() == null) {
                 all3d = false;
             }

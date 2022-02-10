@@ -198,7 +198,7 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
         clone.chemModelCount = getChemModelCount();
         clone.chemModels = new ChemModel[clone.chemModelCount];
         for (int f = 0; f < clone.chemModelCount; f++) {
-            clone.chemModels[f] = (ChemModel) ((ChemModel) chemModels[f]).clone();
+            clone.chemModels[f] = (ChemModel) chemModels[f].clone();
         }
         return clone;
     }

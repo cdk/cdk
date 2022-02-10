@@ -82,7 +82,7 @@ public class PolarizabilityTest extends CDKTestCase {
         Polarizability pol = new Polarizability();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("NCCN(C)(C)");
-        double result = pol.calculateBondPolarizability((IAtomContainer) mol, mol.getBond(0));
+        double result = pol.calculateBondPolarizability(mol, mol.getBond(0));
         Assert.assertFalse(Double.isNaN(result));
     }
 

@@ -155,7 +155,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
     public void testClone_Point2d() throws Exception {
         IAtom atom = (IAtom) newChemObject();
         atom.setPoint2d(new Point2d(2, 3));
-        IAtom clone = (IAtom) atom.clone();
+        IAtom clone = atom.clone();
         Assert.assertEquals(clone.getPoint2d().x, 2.0, 0.001);
     }
 
@@ -166,7 +166,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
     public void testClone_Point3d() throws Exception {
         IAtom atom = (IAtom) newChemObject();
         atom.setPoint3d(new Point3d(2, 3, 4));
-        IAtom clone = (IAtom) atom.clone();
+        IAtom clone = atom.clone();
         Assert.assertEquals(clone.getPoint3d().x, 2.0, 0.001);
     }
 
@@ -177,7 +177,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
     public void testClone_FractionalPoint3d() throws Exception {
         IAtom atom = (IAtom) newChemObject();
         atom.setFractionalPoint3d(new Point3d(2, 3, 4));
-        IAtom clone = (IAtom) atom.clone();
+        IAtom clone = atom.clone();
         Assert.assertEquals(clone.getFractionalPoint3d().x, 2.0, 0.001);
     }
 
@@ -188,7 +188,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
     public void testClone_HydrogenCount() throws Exception {
         IAtom atom = (IAtom) newChemObject();
         atom.setImplicitHydrogenCount(3);
-        IAtom clone = (IAtom) atom.clone();
+        IAtom clone = atom.clone();
 
         // test cloning
         atom.setImplicitHydrogenCount(4);
@@ -202,7 +202,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
     public void testClone_StereoParity() throws Exception {
         IAtom atom = (IAtom) newChemObject();
         atom.setStereoParity(3);
-        IAtom clone = (IAtom) atom.clone();
+        IAtom clone = atom.clone();
 
         // test cloning
         atom.setStereoParity(4);
@@ -216,7 +216,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
     public void testClone_Charge() throws Exception {
         IAtom atom = (IAtom) newChemObject();
         atom.setCharge(1.0);
-        IAtom clone = (IAtom) atom.clone();
+        IAtom clone = atom.clone();
 
         // test cloning
         atom.setCharge(5.0);

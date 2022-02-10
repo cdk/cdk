@@ -162,7 +162,7 @@ public class RssWriter extends DefaultChemObjectWriter {
                 list.add(object);
             }
             for (IChemObject iChemObject : list) {
-                IChemObject chemObject = (IChemObject) iChemObject;
+                IChemObject chemObject = iChemObject;
                 Element itemElement = new Element("item", NS_RSS10);
                 String easylink = (String) linkmap.get(chemObject);
                 if (easylink != null) itemElement.addAttribute(new Attribute("rdf:about", NS_RDF, easylink));

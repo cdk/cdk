@@ -178,7 +178,7 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
         // now consider atoms that are not associated with any monomer
         for (IAtom atom : atoms()) {
             if (!atomIsInMonomer(atom)) {
-                IAtom cloned = (IAtom) atom.clone();
+                IAtom cloned = atom.clone();
                 clone.addAtom(cloned);
                 atomMap.put(atom, cloned);
             }
@@ -187,7 +187,7 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
         // since we already removed bonds we'll have to add them back
         IBond newBond;
         for (IBond bond : bonds()) {
-            newBond = (IBond) bond.clone();
+            newBond = bond.clone();
             IAtom[] newAtoms = new IAtom[bond.getAtomCount()];
             for (int j = 0; j < bond.getAtomCount(); ++j) {
                 newAtoms[j] = atomMap.get(bond.getAtom(j));

@@ -51,7 +51,7 @@ public class SingleStructureRandomGeneratorTest {
 
     private boolean showIt(IAtomContainer molecule, String name) throws Exception {
         StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-        sdg.setMolecule((IAtomContainer) molecule.clone());
+        sdg.setMolecule(molecule.clone());
         sdg.generateCoordinates(new Vector2d(0, 1));
         return true;
     }

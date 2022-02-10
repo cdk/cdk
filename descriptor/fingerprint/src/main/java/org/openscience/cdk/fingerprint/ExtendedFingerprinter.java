@@ -153,7 +153,7 @@ public class ExtendedFingerprinter implements IFingerprinter {
             throws CDKException {
         IAtomContainer container;
         try {
-            container = (IAtomContainer) atomContainer.clone();
+            container = atomContainer.clone();
         } catch (CloneNotSupportedException e) {
             throw new CDKException("Could not clone input");
         }

@@ -80,7 +80,7 @@ public class LonePairElectronChecker {
     public boolean isSaturated(IAtom atom, IAtomContainer ac) throws CDKException {
         createAtomTypeFactory(ac.getBuilder());
         IAtomType atomType = factory.getAtomType(atom.getAtomTypeName());
-        int lpCount = (Integer) atomType.getProperty(CDKConstants.LONE_PAIR_COUNT);
+        int lpCount = atomType.getProperty(CDKConstants.LONE_PAIR_COUNT);
         int foundLPCount = ac.getConnectedLonePairsCount(atom);
         return foundLPCount >= lpCount;
     }
@@ -104,7 +104,7 @@ public class LonePairElectronChecker {
     public void saturate(IAtom atom, IAtomContainer ac) throws CDKException {
         logger.info("Saturating atom by adjusting lone pair electrons...");
         IAtomType atomType = factory.getAtomType(atom.getAtomTypeName());
-        int lpCount = (Integer) atomType.getProperty(CDKConstants.LONE_PAIR_COUNT);
+        int lpCount = atomType.getProperty(CDKConstants.LONE_PAIR_COUNT);
         int missingLPs = lpCount - ac.getConnectedLonePairsCount(atom);
 
         for (int j = 0; j < missingLPs; j++) {

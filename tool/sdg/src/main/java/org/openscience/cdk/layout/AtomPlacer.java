@@ -771,7 +771,7 @@ public class AtomPlacer {
     static public String listNumbers(IAtomContainer mol, List<IAtom> ac) {
         String s = "Numbers: ";
         for (IAtom iAtom : ac) {
-            s += (mol.indexOf((IAtom) iAtom) + 1) + " ";
+            s += (mol.indexOf(iAtom) + 1) + " ";
         }
         return s;
     }

@@ -40,7 +40,7 @@ public abstract class ReactionMechanismTest extends CDKTestCase {
      */
     public static void setMechanism(Class<?> descriptorClass) throws Exception {
         if (ReactionMechanismTest.reactionMechanism == null) {
-            Object descriptor = (Object) descriptorClass.newInstance();
+            Object descriptor = descriptorClass.newInstance();
             if (!(descriptor instanceof IReactionMechanism)) {
                 throw new CDKException("The passed reaction class must be a IReactionMechanism");
             }

@@ -120,7 +120,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
             return (T) readChemModel((IChemModel) object);
         } else if (object instanceof IChemFile) {
             IChemSequence sequence = object.getBuilder().newInstance(IChemSequence.class);
-            sequence.addChemModel((IChemModel) this.readChemModel(object.getBuilder().newInstance(IChemModel.class)));
+            sequence.addChemModel(this.readChemModel(object.getBuilder().newInstance(IChemModel.class)));
             ((IChemFile) object).addChemSequence(sequence);
             return object;
         } else {

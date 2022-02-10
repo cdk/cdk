@@ -165,7 +165,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
         Strand strand = (Strand) strands.get(strandName);
 
         if (strand != null) {
-            return (Monomer) strand.getMonomer(monName);
+            return strand.getMonomer(monName);
         } else {
             return null;
         }
@@ -224,7 +224,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
      */
     @Override
     public IStrand getStrand(String cName) {
-        return (Strand) strands.get(cName);
+        return strands.get(cName);
     }
 
     /**
@@ -280,7 +280,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
                 IMonomer monomer = strand.getMonomer(s.toString());
                 Iterator<IAtom> atoms = monomer.atoms().iterator();
                 while (atoms.hasNext()) {
-                    clone.addAtom((IAtom) atoms.next(), monomer, strand);
+                    clone.addAtom(atoms.next(), monomer, strand);
                 }
             }
         }

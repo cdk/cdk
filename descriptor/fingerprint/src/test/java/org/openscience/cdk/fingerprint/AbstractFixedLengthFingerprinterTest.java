@@ -146,12 +146,12 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
         String filename = "bug771485-1.mol";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IAtomContainer structure1 = (IAtomContainer) reader.read(builder.newAtomContainer());
+        IAtomContainer structure1 = reader.read(builder.newAtomContainer());
 
         filename = "bug771485-2.mol";
         ins = this.getClass().getResourceAsStream(filename);
         reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IAtomContainer structure2 = (IAtomContainer) reader.read(builder.newAtomContainer());
+        IAtomContainer structure2 = reader.read(builder.newAtomContainer());
 
         // these molecules are different resonance forms of the same molecule
         // make sure aromaticity is detected. although some fingerprinters do this

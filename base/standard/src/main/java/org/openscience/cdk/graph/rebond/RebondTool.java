@@ -86,7 +86,7 @@ public class RebondTool {
         // rebond all atoms
         atoms = container.atoms().iterator();
         while (atoms.hasNext()) {
-            bondAtom(container, (IAtom) atoms.next());
+            bondAtom(container, atoms.next());
         }
     }
 

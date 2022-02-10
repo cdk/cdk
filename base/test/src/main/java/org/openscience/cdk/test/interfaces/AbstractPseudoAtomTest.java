@@ -151,7 +151,7 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
     public void testClone_HydrogenCount() throws Exception {
         IAtom atom = (IAtom) newChemObject();
         atom.setImplicitHydrogenCount(3);
-        IAtom clone = (IAtom) atom.clone();
+        IAtom clone = atom.clone();
 
         // test cloning
         atom.setImplicitHydrogenCount(4);
@@ -182,7 +182,7 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
     public void testClone_StereoParity() throws Exception {
         IAtom atom = (IAtom) newChemObject();
         atom.setStereoParity(3);
-        IAtom clone = (IAtom) atom.clone();
+        IAtom clone = atom.clone();
 
         // test cloning
         atom.setStereoParity(4);

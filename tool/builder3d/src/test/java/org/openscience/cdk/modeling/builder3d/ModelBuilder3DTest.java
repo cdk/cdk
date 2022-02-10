@@ -321,7 +321,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
         List<IAtomContainer> resultList = new ArrayList<>();
         for (IAtomContainer molecules : inputList) {
             str = new StructureDiagramGenerator();
-            str.setMolecule((IAtomContainer) molecules);
+            str.setMolecule(molecules);
             str.generateCoordinates();
             resultList.add(str.getMolecule());
         }

@@ -96,7 +96,7 @@ public class CanonicalLabeler {
             step2(v, atoms);
         } else {
             //On first pass save, partitioning as symmetry classes.
-            if (((InvPair) v.get(v.size() - 1)).getCurr() < v.size()) {
+            if (v.get(v.size() - 1).getCurr() < v.size()) {
                 breakTies(v);
                 step2(v, atoms);
             }
@@ -118,7 +118,7 @@ public class CanonicalLabeler {
         StringBuilder inv;
         List<InvPair> vect = new ArrayList<>();
         while (atoms.hasNext()) {
-            a = (IAtom) atoms.next();
+            a = atoms.next();
             inv = new StringBuilder();
             inv.append(atomContainer.getConnectedAtomsList(a).size()
                     + (a.getImplicitHydrogenCount() == CDKConstants.UNSET ? 0 : a.getImplicitHydrogenCount())); //Num connections
@@ -150,7 +150,7 @@ public class CanonicalLabeler {
         IAtom a;
         long summ;
         while (it.hasNext()) {
-            inv = (InvPair) it.next();
+            inv = it.next();
             List<IAtom> neighbour = atomContainer.getConnectedAtomsList(inv.getAtom());
             n = neighbour.iterator();
             summ = 1;
@@ -199,11 +199,11 @@ public class CanonicalLabeler {
     private void rankArrayList(List<InvPair> v) {
         int num = 1;
         int[] temp = new int[v.size()];
-        InvPair last = (InvPair) v.get(0);
+        InvPair last = v.get(0);
         Iterator<InvPair> it = v.iterator();
         InvPair curr;
         for (int x = 0; it.hasNext(); x++) {
-            curr = (InvPair) it.next();
+            curr = it.next();
             if (!last.equals(curr)) {
                 num++;
             }
@@ -212,7 +212,7 @@ public class CanonicalLabeler {
         }
         it = v.iterator();
         for (int x = 0; it.hasNext(); x++) {
-            curr = (InvPair) it.next();
+            curr = it.next();
             curr.setCurr(temp[x]);
             curr.setPrime();
         }
@@ -225,11 +225,11 @@ public class CanonicalLabeler {
      * @return true if the vector is invariantly partitioned, false otherwise
      */
     private boolean isInvPart(List<InvPair> v) {
-        if (((InvPair) v.get(v.size() - 1)).getCurr() == v.size()) return true;
+        if (v.get(v.size() - 1).getCurr() == v.size()) return true;
         Iterator<InvPair> it = v.iterator();
         InvPair curr;
         while (it.hasNext()) {
-            curr = (InvPair) it.next();
+            curr = it.next();
             if (curr.getCurr() != curr.getLast()) return false;
         }
         return true;
@@ -256,7 +256,7 @@ public class CanonicalLabeler {
             }
             last = curr;
         }
-        curr = (InvPair) v.get(tie);
+        curr = v.get(tie);
         curr.setCurr(curr.getCurr() - 1);
         curr.setPrime();
     }

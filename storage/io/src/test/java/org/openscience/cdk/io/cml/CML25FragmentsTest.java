@@ -70,7 +70,7 @@ public class CML25FragmentsTest extends CDKTestCase {
     private IChemFile parseCMLString(String cmlString) throws Exception {
         IChemFile chemFile = null;
         CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
-        chemFile = (IChemFile) reader.read(new ChemFile());
+        chemFile = reader.read(new ChemFile());
         reader.close();
         return chemFile;
     }

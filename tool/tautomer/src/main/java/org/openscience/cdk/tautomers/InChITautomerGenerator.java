@@ -420,7 +420,7 @@ public final class InChITautomerGenerator {
         List<IAtomContainer> tautomers = new ArrayList<>();
 
         //Tautomeric skeleton generation
-        IAtomContainer skeleton = (IAtomContainer) inputMolecule.clone();
+        IAtomContainer skeleton = inputMolecule.clone();
 
         boolean atomsToRemove = true;
         List<IAtom> removedAtoms = new ArrayList<>();
@@ -504,7 +504,7 @@ public final class InChITautomerGenerator {
 
         Stack<Object> solutions = new Stack<>();
         for (List<Integer> hPositions : combinations) {
-            IAtomContainer tautomerSkeleton = (IAtomContainer) skeleton.clone();
+            IAtomContainer tautomerSkeleton = skeleton.clone();
             for (Integer hPos : hPositions) {
                 IAtom atom = findAtomByPosition(tautomerSkeleton, hPos);
                 atom.setImplicitHydrogenCount(atom.getImplicitHydrogenCount() + 1);
@@ -531,7 +531,7 @@ public final class InChITautomerGenerator {
             while (solutions.size() != 0) {
                 IAtomContainer tautomerSkeleton = (IAtomContainer) solutions.pop();
                 List<Integer> dblBondPositions = (List<Integer>) solutions.pop();
-                IAtomContainer tautomer = (IAtomContainer) inputMolecule.clone();
+                IAtomContainer tautomer = inputMolecule.clone();
                 for (IAtom skAtom1 : tautomerSkeleton.atoms()) {
                     for (IAtom atom1 : tautomer.atoms()) {
                         if (atom1.getID().equals(skAtom1.getID())) {

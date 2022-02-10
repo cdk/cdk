@@ -61,7 +61,7 @@ public class ReactionEngine {
 
         try {
             IReactionProcess reaction = (IReactionProcess) this;
-            EntryReact entry = initiateDictionary("reaction-processes", (IReactionProcess) reaction);
+            EntryReact entry = initiateDictionary("reaction-processes", reaction);
             initiateParameterMap2(entry);
             reaction.setParameterList(getParameterList());
             // extract mechanism dependence, if there is one

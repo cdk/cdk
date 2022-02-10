@@ -67,7 +67,7 @@ public class CMLRoundTripTool extends CDKTestCase {
         logger.debug("CML string: ", cmlString);
         CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
 
-        IChemFile file = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile file = reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
         Assert.assertNotNull(file);
         Assert.assertEquals(1, file.getChemSequenceCount());
@@ -94,7 +94,7 @@ public class CMLRoundTripTool extends CDKTestCase {
         CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
         reader.close();
 
-        IChemFile file = (IChemFile) reader.read(model.getBuilder().newInstance(IChemFile.class));
+        IChemFile file = reader.read(model.getBuilder().newInstance(IChemFile.class));
         Assert.assertNotNull(file);
         Assert.assertEquals(1, file.getChemSequenceCount());
         IChemSequence sequence = file.getChemSequence(0);
@@ -115,7 +115,7 @@ public class CMLRoundTripTool extends CDKTestCase {
         logger.debug("CML string: ", cmlString);
         CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
 
-        IChemFile file = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile file = reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
         Assert.assertNotNull(file);
         Assert.assertEquals(1, file.getChemSequenceCount());

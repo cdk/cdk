@@ -352,12 +352,12 @@ public class BasicValidator extends AbstractValidator {
         Iterator<IAtom> atoms1 = reactants.atoms().iterator();
         int totalCharge1 = 0;
         while (atoms1.hasNext()) {
-            totalCharge1 = +((IAtom) atoms1.next()).getFormalCharge();
+            totalCharge1 = +atoms1.next().getFormalCharge();
         }
         Iterator<IAtom> atoms2 = products.atoms().iterator();
         int totalCharge2 = 0;
         while (atoms2.hasNext()) {
-            totalCharge2 = +((IAtom) atoms2.next()).getFormalCharge();
+            totalCharge2 = +atoms2.next().getFormalCharge();
         }
         if (totalCharge1 != totalCharge2) {
             report.addError(chargeConservation);

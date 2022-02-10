@@ -153,8 +153,8 @@ public final class GeometryUtil {
      */
     public static void scaleMolecule(IAtomContainer atomCon, double[] areaDim, double fillFactor) {
         double[] molDim = get2DDimension(atomCon);
-        double widthFactor = (double) areaDim[0] / (double) molDim[0];
-        double heightFactor = (double) areaDim[1] / (double) molDim[1];
+        double widthFactor = areaDim[0] / molDim[0];
+        double heightFactor = areaDim[1] / molDim[1];
         double scaleFactor = Math.min(widthFactor, heightFactor) * fillFactor;
         scaleMolecule(atomCon, scaleFactor);
     }

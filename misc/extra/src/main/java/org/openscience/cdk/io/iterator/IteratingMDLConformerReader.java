@@ -74,7 +74,7 @@ public class IteratingMDLConformerReader implements Iterator {
         if (!nextIsKnown) {
             while (imdlr.hasNext()) {
                 slurpedConformers = true;
-                IAtomContainer mol = (IAtomContainer) imdlr.next();
+                IAtomContainer mol = imdlr.next();
                 if (container.size() == 0)
                     container.add(mol);
                 else {

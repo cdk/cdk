@@ -350,7 +350,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
                 //        		logger.debug("  index: " + atomIndex);
                 IBond bond = getBond(bondIndex);
                 String id = getValue(line);
-                IAtom atom = (IAtom) atomIDs.get(id);
+                IAtom atom = atomIDs.get(id);
                 if (atom == null) {
                     throw new CDKException("File is corrupt: atom ID does not exist " + id);
                 }

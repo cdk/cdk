@@ -60,7 +60,7 @@ public class CML2Test extends CDKTestCase {
         String filename = "3.cml";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
         // test the resulting ChemFile content
@@ -86,7 +86,7 @@ public class CML2Test extends CDKTestCase {
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = new ChemFile();
-        chemFile = (IChemFile) reader.read(chemFile);
+        chemFile = reader.read(chemFile);
         reader.close();
         IAtomContainer container = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
         for (IAtom atom : container.atoms()) {
@@ -100,7 +100,7 @@ public class CML2Test extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
         // test the resulting ChemFile content
@@ -134,7 +134,7 @@ public class CML2Test extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
         // test the resulting ChemFile content
@@ -168,7 +168,7 @@ public class CML2Test extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
         // test the resulting ChemFile content
@@ -196,7 +196,7 @@ public class CML2Test extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
         // test the resulting ChemFile content
@@ -224,7 +224,7 @@ public class CML2Test extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
         // test the resulting ChemFile content
@@ -252,7 +252,7 @@ public class CML2Test extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
         // test the resulting ChemFile content
@@ -280,7 +280,7 @@ public class CML2Test extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
         // test the resulting ChemFile content
@@ -308,7 +308,7 @@ public class CML2Test extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
         // test the resulting ChemFile content
@@ -336,7 +336,7 @@ public class CML2Test extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
         // test the resulting ChemFile content
@@ -364,7 +364,7 @@ public class CML2Test extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
         // test the resulting ChemFile content
@@ -392,7 +392,7 @@ public class CML2Test extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
         // test the resulting ChemFile content
@@ -420,7 +420,7 @@ public class CML2Test extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
         // test the resulting ChemFile content
@@ -448,7 +448,7 @@ public class CML2Test extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
         // test the resulting ChemFile content
@@ -476,7 +476,7 @@ public class CML2Test extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
         // test the resulting ChemFile content
@@ -508,7 +508,7 @@ public class CML2Test extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
         // test the resulting ChemFile content
@@ -540,7 +540,7 @@ public class CML2Test extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
         // test the resulting ChemFile content
@@ -573,7 +573,7 @@ public class CML2Test extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
         // test the resulting ChemFile content
@@ -607,7 +607,7 @@ public class CML2Test extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
         // test the resulting ChemFile content
@@ -639,7 +639,7 @@ public class CML2Test extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
         // test the resulting ChemFile content
@@ -668,7 +668,7 @@ public class CML2Test extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
         // test the resulting ChemFile content
@@ -696,7 +696,7 @@ public class CML2Test extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
         // test the resulting ChemFile content
@@ -725,7 +725,7 @@ public class CML2Test extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
         // test the resulting ChemFile content
@@ -764,7 +764,7 @@ public class CML2Test extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
         // test the resulting ChemFile content
@@ -803,7 +803,7 @@ public class CML2Test extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
         // test the resulting ChemFile content
@@ -843,7 +843,7 @@ public class CML2Test extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
         // test the resulting ChemFile content
@@ -883,7 +883,7 @@ public class CML2Test extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
 
         // test the resulting ChemFile content
@@ -925,7 +925,7 @@ public class CML2Test extends CDKTestCase {
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = new ChemFile();
-        chemFile = (IChemFile) reader.read(chemFile);
+        chemFile = reader.read(chemFile);
         reader.close();
         Assert.assertSame(chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0), chemFile
                 .getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0).getReactants().getAtomContainer(0));
@@ -940,7 +940,7 @@ public class CML2Test extends CDKTestCase {
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = new ChemFile();
-        chemFile = (IChemFile) reader.read(chemFile);
+        chemFile = reader.read(chemFile);
         reader.close();
         Assert.assertSame(chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0), chemFile
                 .getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0).getReactants().getAtomContainer(0));
@@ -954,10 +954,10 @@ public class CML2Test extends CDKTestCase {
         InputStream ins = this.getClass().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = new ChemFile();
-        chemFile = (IChemFile) reader.read(chemFile);
+        chemFile = reader.read(chemFile);
         reader.close();
         IReaction reaction = chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0);
 
-        Assert.assertEquals("3", (String) reaction.getProperty("Ka"));
+        Assert.assertEquals("3", reaction.getProperty("Ka"));
     }
 }

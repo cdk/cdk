@@ -169,7 +169,7 @@ public class RingPlacer {
          */
         Vector<IAtom> atomsToDraw = new Vector<>();
         IAtom currentAtom = startAtom;
-        IBond currentBond = (IBond) bonds.get(0);
+        IBond currentBond = bonds.get(0);
         for (int i = 0; i < ring.getBondCount(); i++) {
             currentBond = ring.getNextBond(currentBond, currentAtom);
             currentAtom = currentBond.getOther(currentAtom);
@@ -602,7 +602,7 @@ public class RingPlacer {
 
     public boolean allPlaced(IRingSet rs) {
         for (int i = 0; i < rs.getAtomContainerCount(); i++) {
-            if (!((IRing) rs.getAtomContainer(i)).getFlag(CDKConstants.ISPLACED)) {
+            if (!rs.getAtomContainer(i).getFlag(CDKConstants.ISPLACED)) {
                 return false;
             }
         }
@@ -623,7 +623,7 @@ public class RingPlacer {
             ring = (IRing) rs.getAtomContainer(i);
             allPlaced = true;
             for (int j = 0; j < ring.getAtomCount(); j++) {
-                if (!((IAtom) ring.getAtom(j)).getFlag(CDKConstants.ISPLACED)) {
+                if (!ring.getAtom(j).getFlag(CDKConstants.ISPLACED)) {
                     allPlaced = false;
                     ringsetPlaced = false;
                     break;

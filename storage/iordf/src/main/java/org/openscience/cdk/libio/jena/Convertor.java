@@ -233,7 +233,7 @@ public class Convertor {
         }
         Statement order = rdfObject.getProperty(CDK.HASMAXBONDORDER);
         if (order != null) {
-            Resource maxOrder = (Resource) order.getResource();
+            Resource maxOrder = order.getResource();
             element.setMaxBondOrder(resource2Order(maxOrder));
         }
         Statement formalCharge = rdfObject.getProperty(CDK.HASFORMALCHARGE);

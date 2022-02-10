@@ -466,7 +466,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
      */
     @Override
     public IAtom getLastAtom() {
-        return getAtomCount() > 0 ? (IAtom) atoms[getAtomCount() - 1] : null;
+        return getAtomCount() > 0 ? atoms[getAtomCount() - 1] : null;
     }
 
     /**
@@ -1348,7 +1348,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
         IAtom[] atoms = new IAtom[this.atomCount];
         for (int i = 0; i < atoms.length; i++) {
 
-            atoms[i] = (IAtom) this.atoms[i].clone();
+            atoms[i] = this.atoms[i].clone();
             atomMap.put(this.atoms[i], atoms[i]);
         }
         clone.setAtoms(atoms);
@@ -1358,7 +1358,7 @@ public class AtomContainer extends ChemObject implements IAtomContainer, IChemOb
         for (int i = 0; i < bonds.length; i++) {
 
             IBond   original = this.bonds[i];
-            IBond   bond     = (IBond) original.clone();
+            IBond   bond     = original.clone();
             int     n        = bond.getAtomCount();
             IAtom[] members  = new IAtom[n];
 

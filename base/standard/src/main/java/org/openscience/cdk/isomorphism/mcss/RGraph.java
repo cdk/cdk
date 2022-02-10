@@ -276,20 +276,20 @@ public class RGraph {
                     // by including the nodes not compatible with the
                     // newly accepted node.
                     newForbidden = (BitSet) forbidden.clone();
-                    newForbidden.or(((RNode) graph.get(x)).forbidden);
+                    newForbidden.or(graph.get(x).forbidden);
 
                     // if it is the first time we are here then
                     // traversed is empty and we initialize the set of
                     // possible extensions to the extension of the first
                     // accepted node in the solution.
                     if (traversed.isEmpty()) {
-                        newExtension = (BitSet) (((RNode) graph.get(x)).extension.clone());
+                        newExtension = (BitSet) (graph.get(x).extension.clone());
                     }
                     // else we simply update the set of solution by
                     // including the neighbors of the newly accepted node
                     else {
                         newExtension = (BitSet) extension.clone();
-                        newExtension.or(((RNode) graph.get(x)).extension);
+                        newExtension.or(graph.get(x).extension);
                     }
 
                     // extension my not contain forbidden nodes
@@ -525,7 +525,7 @@ public class RGraph {
         RNode xNode = null;
 
         for (int x = set.nextSetBit(0); x >= 0; x = set.nextSetBit(x + 1)) {
-            xNode = (RNode) graph.get(x);
+            xNode = graph.get(x);
             projection.set(xNode.rMap.id1);
         }
         return projection;
@@ -541,7 +541,7 @@ public class RGraph {
         RNode xNode = null;
 
         for (int x = set.nextSetBit(0); x >= 0; x = set.nextSetBit(x + 1)) {
-            xNode = (RNode) graph.get(x);
+            xNode = graph.get(x);
             projection.set(xNode.rMap.id2);
         }
         return projection;

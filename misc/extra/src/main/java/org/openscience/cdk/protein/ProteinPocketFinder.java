@@ -876,7 +876,7 @@ public class ProteinPocketFinder {
                     for (Point3d point3d : pocket) {// go through every
                         // grid point of the
                         // actual pocket
-                        Point3d actualGridPoint = (Point3d) point3d;
+                        Point3d actualGridPoint = point3d;
                         Point3d coords = gridGenerator.getCoordinatesFromGridPoint(actualGridPoint);
                         writer.write(coords.x + "\t" + coords.y + "\t" + coords.z + "\n");
                     }

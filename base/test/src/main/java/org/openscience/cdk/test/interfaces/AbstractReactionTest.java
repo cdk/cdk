@@ -327,7 +327,7 @@ public abstract class AbstractReactionTest extends AbstractChemObjectTest {
         Iterator<IMapping> mappings = reaction.mappings().iterator();
         Assert.assertNotNull(mappings);
         Assert.assertTrue(mappings.hasNext());
-        Assert.assertEquals(mapping, (IMapping) mappings.next());
+        Assert.assertEquals(mapping, mappings.next());
     }
 
     @Test

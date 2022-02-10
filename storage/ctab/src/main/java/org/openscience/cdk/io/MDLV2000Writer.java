@@ -312,7 +312,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 IChemSequence sequence = object.getBuilder().newInstance(IChemSequence.class);
                 sequence.addChemModel((IChemModel) object);
                 file.addChemSequence(sequence);
-                writeChemFile((IChemFile) file);
+                writeChemFile(file);
                 return;
             } else if (object instanceof IAtomContainer) {
                 writeMolecule((IAtomContainer) object);
@@ -396,7 +396,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         }
         writer.write('\n');
 
-        String comment = (String) container.getProperty(CDKConstants.REMARK);
+        String comment = container.getProperty(CDKConstants.REMARK);
         if (comment == null) comment = "";
         if (comment.length() > 80) comment = comment.substring(0, 80);
         writer.write(comment);
@@ -1182,7 +1182,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                         writer.write(' ');
                         writer.write(formatMDLInt(id, 3));
                         writer.write(' ');
-                        writer.write(formatMDLInt((int)sgroup.getValue(key), 3));
+                        writer.write(formatMDLInt(sgroup.getValue(key), 3));
                         writer.write('\n');
                         break;
                     case CtabConnectivity:

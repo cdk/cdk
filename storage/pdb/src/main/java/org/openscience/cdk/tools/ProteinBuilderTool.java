@@ -136,12 +136,12 @@ public class ProteinBuilderTool {
             if (aminoAcidCode.equals(" ")) {
                 // fine, just skip spaces
             } else {
-                IAminoAcid aminoAcid = (IAminoAcid) templates.get(aminoAcidCode);
+                IAminoAcid aminoAcid = templates.get(aminoAcidCode);
                 if (aminoAcid == null) {
                     throw new CDKException("Cannot build sequence! Unknown amino acid: " + aminoAcidCode);
                 }
                 try {
-                    aminoAcid = (IAminoAcid) aminoAcid.clone();
+                    aminoAcid = aminoAcid.clone();
                 } catch (CloneNotSupportedException e) {
                     throw new CDKException("Cannot build sequence! Clone exception: " + e.getMessage(), e);
                 }

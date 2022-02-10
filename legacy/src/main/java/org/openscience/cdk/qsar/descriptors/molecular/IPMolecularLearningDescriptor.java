@@ -129,7 +129,7 @@ public class IPMolecularLearningDescriptor extends AbstractMolecularDescriptor i
         IAtomContainer local;
         if (addlp) {
             try {
-                local = (IAtomContainer) atomContainer.clone();
+                local = atomContainer.clone();
                 LonePairElectronChecker lpcheck = new LonePairElectronChecker();
                 lpcheck.saturate(local);
             } catch (CloneNotSupportedException | CDKException e) {

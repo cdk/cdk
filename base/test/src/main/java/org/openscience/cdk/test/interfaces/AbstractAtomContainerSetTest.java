@@ -499,7 +499,7 @@ public abstract class AbstractAtomContainerSetTest extends AbstractChemObjectTes
 
             @Override
             public int compare(IAtomContainer o1, IAtomContainer o2) {
-                return ((String) o1.getProperty("multiplierSortCode")).compareTo((String) o2
+                return ((String) o1.getProperty("multiplierSortCode")).compareTo(o2
                         .getProperty("multiplierSortCode"));
             }
         });

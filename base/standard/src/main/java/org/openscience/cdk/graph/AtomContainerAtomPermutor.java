@@ -64,7 +64,7 @@ public class AtomContainerAtomPermutor extends AtomContainerPermutor {
     @Override
     public IAtomContainer containerFromPermutation(int[] permutation) {
         try {
-            IAtomContainer permutedContainer = (IAtomContainer) atomContainer.clone();
+            IAtomContainer permutedContainer = atomContainer.clone();
             IAtom[] atoms = new IAtom[atomContainer.getAtomCount()];
             for (int i = 0; i < atomContainer.getAtomCount(); i++) {
                 atoms[permutation[i]] = permutedContainer.getAtom(i);

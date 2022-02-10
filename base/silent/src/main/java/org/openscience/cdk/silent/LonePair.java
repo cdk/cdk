@@ -125,7 +125,7 @@ public class LonePair extends ElectronContainer implements Serializable, ILonePa
         LonePair clone = (LonePair) super.clone();
         // clone the Atom
         if (atom != null) {
-            clone.atom = (IAtom) ((IAtom) atom).clone();
+            clone.atom = atom.clone();
         }
         return clone;
     }

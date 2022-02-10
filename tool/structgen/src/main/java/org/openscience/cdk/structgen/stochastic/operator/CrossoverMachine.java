@@ -120,28 +120,28 @@ public class CrossoverMachine {
 
             List<IAtom> blueAtomsInRedChild0 = new ArrayList<>();
             for (Integer blueAtom1 : blueAtoms) {
-                blueAtomsInRedChild0.add(redChild[0].getAtom((Integer) blueAtom1));
+                blueAtomsInRedChild0.add(redChild[0].getAtom(blueAtom1));
             }
             for (IAtom element : blueAtomsInRedChild0) {
                 redChild[0].removeAtom(element);
             }
             List<IAtom> blueAtomsInRedChild1 = new ArrayList<>();
             for (Integer blueAtom : blueAtoms) {
-                blueAtomsInRedChild1.add(redChild[1].getAtom((Integer) blueAtom));
+                blueAtomsInRedChild1.add(redChild[1].getAtom(blueAtom));
             }
             for (IAtom item : blueAtomsInRedChild1) {
                 redChild[1].removeAtom(item);
             }
             List<IAtom> redAtomsInBlueChild0 = new ArrayList<>();
             for (Integer integer : redAtoms) {
-                redAtomsInBlueChild0.add(blueChild[0].getAtom((Integer) integer));
+                redAtomsInBlueChild0.add(blueChild[0].getAtom(integer));
             }
             for (IAtom value : redAtomsInBlueChild0) {
                 blueChild[0].removeAtom(value);
             }
             List<IAtom> redAtomsInBlueChild1 = new ArrayList<>();
             for (Integer redAtom : redAtoms) {
-                redAtomsInBlueChild1.add(blueChild[1].getAtom((Integer) redAtom));
+                redAtomsInBlueChild1.add(blueChild[1].getAtom(redAtom));
             }
             for (IAtom iAtom : redAtomsInBlueChild1) {
                 blueChild[1].removeAtom(iAtom);

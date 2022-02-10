@@ -422,7 +422,7 @@ public class StructureDiagramGenerator {
             if (!afix.isEmpty() || !bfix.isEmpty())
                 throw new IllegalArgumentException("Laying out a cloned molecule, can't fix atom or bonds.");
             try {
-                this.molecule = (IAtomContainer) mol.clone();
+                this.molecule = mol.clone();
             } catch (CloneNotSupportedException e) {
                 logger.error("Should clone, but exception occurred: ", e.getMessage());
                 logger.debug(e);
@@ -2142,7 +2142,7 @@ public class StructureDiagramGenerator {
      */
     private boolean allPlaced(IRingSet rings) {
         for (int f = 0; f < rings.getAtomContainerCount(); f++) {
-            if (!((IRing) rings.getAtomContainer(f)).getFlag(CDKConstants.ISPLACED)) {
+            if (!rings.getAtomContainer(f).getFlag(CDKConstants.ISPLACED)) {
                 logger.debug("allPlaced->Ring " + f + " not placed");
                 return false;
             }

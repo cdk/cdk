@@ -61,7 +61,7 @@ public class PDBAtomCustomizerTest extends CDKTestCase {
         InputStream ins1 = this.getClass().getResourceAsStream(filename_pdb);
 
         ISimpleChemObjectReader reader = new PDBReader(ins1);
-        IChemFile chemFile1 = (IChemFile) reader.read(new ChemFile());
+        IChemFile chemFile1 = reader.read(new ChemFile());
         reader.close();
         IChemSequence seq1 = chemFile1.getChemSequence(0);
         IChemModel model1 = seq1.getChemModel(0);
@@ -79,7 +79,7 @@ public class PDBAtomCustomizerTest extends CDKTestCase {
         String cmlContent1 = writer.toString();
 
         CMLReader reader2 = new CMLReader(new ByteArrayInputStream(cmlContent1.getBytes()));
-        IChemFile chemFil2 = (IChemFile) reader2.read(new ChemFile());
+        IChemFile chemFil2 = reader2.read(new ChemFile());
         reader2.close();
         IChemSequence seq2 = chemFil2.getChemSequence(0);
         IChemModel model2 = seq2.getChemModel(0);

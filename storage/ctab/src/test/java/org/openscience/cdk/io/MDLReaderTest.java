@@ -91,7 +91,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
                 + "  1  3  1  6  0  0\n" + "  1  4  1  0  0  0\n" + "  1  5  1  1  0  0\n" + "  2  3  1  0  0  0\n"
                 + "  2  6  1  0  0  0\n" + "  2  7  1  6  0  0\n" + "  3  8  1  6  0  0\n" + "  3  9  1  0  0  0\n";
         MDLReader reader = new MDLReader(new StringReader(mdl), Mode.STRICT);
-        ChemFile chemFile = (ChemFile) reader.read(new ChemFile());
+        ChemFile chemFile = reader.read(new ChemFile());
         reader.close();
         assertNotNull(chemFile);
         Assert.assertEquals(1, chemFile.getChemSequenceCount());
@@ -197,7 +197,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
     public void testEmptyString() throws Exception {
         String emptyString = "";
         MDLReader reader = new MDLReader(new StringReader(emptyString), Mode.STRICT);
-        IAtomContainer mol = (IAtomContainer) reader.read(new AtomContainer());
+        IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
         Assert.assertNull(mol);
     }
@@ -208,7 +208,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getResourceAsStream(filename);
         MDLReader reader = new MDLReader(ins, Mode.RELAXED);
-        IAtomContainer mol = (IAtomContainer) reader.read(new AtomContainer());
+        IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
         Assert.assertEquals(IBond.Stereo.E_OR_Z, mol.getBond(1).getStereo());
         Assert.assertEquals(IBond.Stereo.E_OR_Z, mol.getBond(6).getStereo());

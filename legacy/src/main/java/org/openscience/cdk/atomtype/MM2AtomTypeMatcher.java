@@ -67,7 +67,7 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     private String getSphericalMatcher(IAtomType type) throws CDKException {//NOPMD
-        return (String) type.getProperty(CDKConstants.SPHERICAL_MATCHER);
+        return type.getProperty(CDKConstants.SPHERICAL_MATCHER);
     }
 
     private String getSphericalMatcher(String type) throws CDKException {//NOPMD
@@ -114,8 +114,8 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 
         IAtom atom = atomInterface;
         logger.debug("****** Configure MM2 AtomType via findMatching ******");
-        String atomSphericalMatcher = (String) atom.getProperty(CDKConstants.SPHERICAL_MATCHER);
-        int atomChemicalGroupConstant = (Integer) atom.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT);
+        String atomSphericalMatcher = atom.getProperty(CDKConstants.SPHERICAL_MATCHER);
+        int atomChemicalGroupConstant = atom.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT);
         int atomRingSize = 0; // not all atom types have ring sizes define; 0 is default
         Object oRingSize = atom.getProperty(CDKConstants.PART_OF_RING_OF_SIZE);
         if (oRingSize != null) {

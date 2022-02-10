@@ -35,7 +35,7 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
         String filename = "lobtest.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
-        ChemFile content = (ChemFile) reader.read(new ChemFile());
+        ChemFile content = reader.read(new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(0);
         Isotopes.getInstance().configureAtoms(ac);
@@ -51,7 +51,7 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
         String filename = "lobtest.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
-        ChemFile content = (ChemFile) reader.read(new ChemFile());
+        ChemFile content = reader.read(new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(1);
         Isotopes.getInstance().configureAtoms(ac);
@@ -67,7 +67,7 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
         String filename = "lobtest.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
-        ChemFile content = (ChemFile) reader.read(new ChemFile());
+        ChemFile content = reader.read(new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(2);
 
@@ -84,7 +84,7 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
         String filename = "lobtest.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
-        ChemFile content = (ChemFile) reader.read(new ChemFile());
+        ChemFile content = reader.read(new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(3);
         Isotopes.getInstance().configureAtoms(ac);
@@ -103,7 +103,7 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
         String filename = "lobtest2.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
-        ChemFile content = (ChemFile) reader.read(new ChemFile());
+        ChemFile content = reader.read(new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(0);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);

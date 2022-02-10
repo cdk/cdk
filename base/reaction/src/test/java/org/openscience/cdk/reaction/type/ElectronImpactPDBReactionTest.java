@@ -100,7 +100,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
 
         Iterator<IBond> bonds = reactant.bonds().iterator();
         while (bonds.hasNext()) {
-            IBond bond = (IBond) bonds.next();
+            IBond bond = bonds.next();
             IAtom atom1 = bond.getBegin();
             IAtom atom2 = bond.getEnd();
             if (bond.getOrder() == IBond.Order.DOUBLE && atom1.getAtomicNumber() == IElement.C && atom2.getAtomicNumber() == IElement.C) {

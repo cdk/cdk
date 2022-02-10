@@ -65,7 +65,7 @@ public class ElementComparator implements Comparator<String> {
             if (C_ELEMENT_SYMBOL.equals(o2) || H_ELEMENT_SYMBOL.equals(o2)) {
                 return 1;
             } else {
-                return ((String) o1).compareTo((String) o2);
+                return o1.compareTo(o2);
             }
         }
     }

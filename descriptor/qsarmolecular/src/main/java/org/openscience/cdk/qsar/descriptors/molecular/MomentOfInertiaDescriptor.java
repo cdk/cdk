@@ -175,7 +175,7 @@ public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor imple
         IAtomContainer clone;
         IsotopeFactory factory;
         try {
-            clone = (IAtomContainer) container.clone();
+            clone = container.clone();
             factory = Isotopes.getInstance();
             factory.configureAtoms(clone);
         } catch (CloneNotSupportedException | IOException e) {

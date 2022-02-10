@@ -107,7 +107,7 @@ public class BondPartialSigmaChargeDescriptor extends AbstractBondDescriptor {
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
-        params[0] = (Integer) maxIterations;
+        params[0] = maxIterations;
         return params;
     }
 

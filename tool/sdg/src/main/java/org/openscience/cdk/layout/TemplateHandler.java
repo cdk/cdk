@@ -130,7 +130,7 @@ public final class TemplateHandler {
                 try {
                     CMLReader structureReader = new CMLReader(this.getClass().getClassLoader()
                                                                   .getResourceAsStream(line));
-                    IChemFile file = (IChemFile) structureReader.read(builder.newInstance(IChemFile.class));
+                    IChemFile file = structureReader.read(builder.newInstance(IChemFile.class));
                     List<IAtomContainer> files = ChemFileManipulator.getAllAtomContainers(file);
                     for (IAtomContainer container : files) addMolecule(container);
                     LOGGER.debug("Successfully read template ", line);

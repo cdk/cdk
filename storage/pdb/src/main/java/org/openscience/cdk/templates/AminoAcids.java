@@ -79,7 +79,7 @@ public class AminoAcids {
 
             Iterator<IBond> bonds = acid.bonds().iterator();
             while (bonds.hasNext()) {
-                IBond bond = (IBond) bonds.next();
+                IBond bond = bonds.next();
                 info[counter][0] = counter;
                 info[counter][1] = acid.indexOf(bond.getBegin());
                 info[counter][2] = acid.indexOf(bond.getEnd());
@@ -126,12 +126,12 @@ public class AminoAcids {
         CMLReader reader = new CMLReader(AminoAcids.class.getClassLoader().getResourceAsStream(
                 "org/openscience/cdk/templates/data/list_aminoacids.cml"));
         try {
-            list = (IChemFile) reader.read(list);
+            list = reader.read(list);
             List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(list);
             Iterator<IAtomContainer> iterator = containersList.iterator();
             int counter = 0;
             while (iterator.hasNext()) {
-                IAtomContainer ac = (IAtomContainer) iterator.next();
+                IAtomContainer ac = iterator.next();
                 LOGGER.debug("Adding AA: ", ac);
                 // convert into an AminoAcid
                 AminoAcid aminoAcid = new AminoAcid();
@@ -158,8 +158,8 @@ public class AminoAcids {
                     }
                 }
                 while (atoms.hasNext()) {
-                    IAtom atom = (IAtom) atoms.next();
-                    String dictRef = (String) atom.getProperty("org.openscience.cdk.dict");
+                    IAtom atom = atoms.next();
+                    String dictRef = atom.getProperty("org.openscience.cdk.dict");
                     if (dictRef != null && dictRef.equals("pdb:nTerminus")) {
                         aminoAcid.addNTerminus(atom);
                     } else if (dictRef != null && dictRef.equals("pdb:cTerminus")) {
@@ -170,7 +170,7 @@ public class AminoAcids {
                 }
                 Iterator<IBond> bonds = ac.bonds().iterator();
                 while (bonds.hasNext()) {
-                    IBond bond = (IBond) bonds.next();
+                    IBond bond = bonds.next();
                     aminoAcid.addBond(bond);
                 }
                 AminoAcidManipulator.removeAcidicOxygen(aminoAcid);
@@ -204,7 +204,7 @@ public class AminoAcids {
         IAminoAcid[] monomers = createAAs();
         HashMap<String, IAminoAcid> map = new HashMap<>();
         for (IAminoAcid monomer : monomers) {
-            map.put((String) monomer.getProperty(RESIDUE_NAME_SHORT), monomer);
+            map.put(monomer.getProperty(RESIDUE_NAME_SHORT), monomer);
         }
         return map;
     }
@@ -217,7 +217,7 @@ public class AminoAcids {
         AminoAcid[] monomers = createAAs();
         Map<String, IAminoAcid> map = new HashMap<>();
         for (AminoAcid monomer : monomers) {
-            map.put((String) monomer.getProperty(RESIDUE_NAME), monomer);
+            map.put(monomer.getProperty(RESIDUE_NAME), monomer);
         }
         return map;
     }
@@ -230,7 +230,7 @@ public class AminoAcids {
         AminoAcid[] monomers = createAAs();
         for (AminoAcid monomer : monomers) {
             if (monomer.getProperty(RESIDUE_NAME).equals(threeLetterCode)) {
-                return (String) monomer.getProperty(RESIDUE_NAME_SHORT);
+                return monomer.getProperty(RESIDUE_NAME_SHORT);
             }
         }
         return null;
@@ -244,7 +244,7 @@ public class AminoAcids {
         AminoAcid[] monomers = createAAs();
         for (AminoAcid monomer : monomers) {
             if (monomer.getProperty(RESIDUE_NAME_SHORT).equals(oneLetterCode)) {
-                return (String) monomer.getProperty(RESIDUE_NAME);
+                return monomer.getProperty(RESIDUE_NAME);
             }
         }
         return null;

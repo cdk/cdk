@@ -583,7 +583,7 @@ public class DeduceBondSystemTool {
 
                 IAtomContainer mnew = null;
                 try {
-                    mnew = (IAtomContainer) atomContainer.clone();
+                    mnew = atomContainer.clone();
                 } catch (Exception e) {
                     logger.error("Failed to clone atomContainer: ", e.getMessage());
                     logger.debug(e);

@@ -75,7 +75,7 @@ public class MolHandler {
 
             readMolecule = new FileInputStream(molFile);
             molRead = new MDLReader(new InputStreamReader(readMolecule));
-            this.atomContainer = (IAtomContainer) molRead.read(new AtomContainer());
+            this.atomContainer = molRead.read(new AtomContainer());
             molRead.close();
             readMolecule.close();
             /* Remove Hydrogen by Asad */

@@ -240,7 +240,7 @@ public class PMPReader extends DefaultChemObjectReader {
                             }
                             if (chemObject instanceof IAtom) {
                                 atomids.put(id, modelStructure.getAtomCount());
-                                atomGivenIds.put(Integer.valueOf((String) chemObject.getProperty(PMP_ID)),
+                                atomGivenIds.put(Integer.valueOf(chemObject.getProperty(PMP_ID)),
                                                  id);
                                 modelStructure.addAtom((IAtom) chemObject);
                             } else if (chemObject instanceof IBond) {

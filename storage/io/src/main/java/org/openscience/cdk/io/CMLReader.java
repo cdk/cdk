@@ -227,7 +227,7 @@ public class CMLReader extends DefaultChemObjectReader {
             logger.debug(e);
             throw new CDKException(error, e);
         } catch (SAXParseException saxe) {
-            SAXParseException spe = (SAXParseException) saxe;
+            SAXParseException spe = saxe;
             String error = "Found well-formedness error in line " + spe.getLineNumber();
             logger.error(error);
             logger.debug(saxe);
