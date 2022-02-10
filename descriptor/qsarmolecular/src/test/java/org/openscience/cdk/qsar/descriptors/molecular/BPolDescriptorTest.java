@@ -43,7 +43,7 @@ public class BPolDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testBPolDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testBPolDescriptor() throws java.lang.Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O=C(O)CC");
         addExplicitHydrogens(mol);

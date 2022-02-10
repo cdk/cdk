@@ -26,7 +26,7 @@ public class LargestChainDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test1LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void test1LargestChainDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE, Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -36,7 +36,7 @@ public class LargestChainDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test2LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void test2LargestChainDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE, Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -46,7 +46,7 @@ public class LargestChainDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test3LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void test3LargestChainDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE, Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -56,7 +56,7 @@ public class LargestChainDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test4LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void test4LargestChainDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE, Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -66,7 +66,7 @@ public class LargestChainDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test5LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void test5LargestChainDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE, Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -76,7 +76,7 @@ public class LargestChainDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test6LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void test6LargestChainDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE, Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -86,7 +86,7 @@ public class LargestChainDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test7LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void test7LargestChainDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE, Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -96,7 +96,7 @@ public class LargestChainDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testSingleCAtom() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testSingleCAtom() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE, Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -106,7 +106,7 @@ public class LargestChainDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testSingleOAtom() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testSingleOAtom() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE, Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -116,7 +116,7 @@ public class LargestChainDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test8LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void test8LargestChainDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE, Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -125,7 +125,7 @@ public class LargestChainDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test9LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void test9LargestChainDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE, Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -134,7 +134,7 @@ public class LargestChainDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test10LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void test10LargestChainDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE, Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -143,7 +143,7 @@ public class LargestChainDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test11LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void test11LargestChainDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE, Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

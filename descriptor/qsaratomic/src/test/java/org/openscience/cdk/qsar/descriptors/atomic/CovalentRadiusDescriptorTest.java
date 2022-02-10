@@ -53,7 +53,7 @@ public class CovalentRadiusDescriptorTest extends AtomicDescriptorTest {
      *  A unit test for JUnit
      */
     @Test
-    public void testVdWRadiusDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testVdWRadiusDescriptor() throws java.lang.Exception {
         double[] testResult = {0.77};
         IAtomicDescriptor descriptor = new CovalentRadiusDescriptor();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

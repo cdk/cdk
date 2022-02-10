@@ -162,7 +162,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
     }
 
     @Test
-    public void testGenerateFingerprintAnthracene() throws InvalidSmilesException, Exception {
+    public void testGenerateFingerprintAnthracene() throws Exception {
 
         String smiles = "C1=CC2=CC3=CC=CC=C3C=C2C=C1";
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -176,7 +176,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
     }
 
     @Test
-    public void testGenerateFingerprintNaphthalene() throws InvalidSmilesException, Exception {
+    public void testGenerateFingerprintNaphthalene() throws Exception {
 
         String smiles = "C1=CC2=CC=CC=C2C=C1";
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -190,7 +190,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
     }
 
     @Test
-    public void testGenerateFingerprintMultiphtalene() throws InvalidSmilesException, Exception {
+    public void testGenerateFingerprintMultiphtalene() throws Exception {
 
         String smiles = "C1=CC2=CC=C3C4=CC5=CC6=CC=CC=C6C=C5C=C4C=CC3=C2C=C1";
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());

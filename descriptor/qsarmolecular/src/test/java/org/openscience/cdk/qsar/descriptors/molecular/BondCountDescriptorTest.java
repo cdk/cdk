@@ -51,7 +51,7 @@ public class BondCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testSingleBondCount() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testSingleBondCount() throws java.lang.Exception {
         descriptor.setParameters(new String[]{"s"});
         IAtomContainer mol = sp.parseSmiles("CCO"); // ethanol
         Assert.assertEquals(2, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
@@ -60,7 +60,7 @@ public class BondCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testDoubleBondCount() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testDoubleBondCount() throws java.lang.Exception {
         descriptor.setParameters(new String[]{"d"});
         IAtomContainer mol = sp.parseSmiles("CCO"); // ethanol
         Assert.assertEquals(0, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());

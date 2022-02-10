@@ -142,7 +142,7 @@ public class CDKRMapHandlerTest {
      * Test of getMappings method, of class CDKRMapHandler.
      */
     @Test
-    public void testGetMappings() throws InvalidSmilesException, CDKException {
+    public void testGetMappings() throws CDKException {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         SmilesParser sp = new SmilesParser(builder);
         IAtomContainer Molecule1 = sp.parseSmiles("O1C=CC=C1");

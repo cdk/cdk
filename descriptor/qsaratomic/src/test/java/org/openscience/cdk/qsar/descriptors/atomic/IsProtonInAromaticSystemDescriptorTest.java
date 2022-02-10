@@ -46,7 +46,7 @@ public class IsProtonInAromaticSystemDescriptorTest extends AtomicDescriptorTest
     }
 
     @Test
-    public void testIsProtonInAromaticSystemDescriptor() throws ClassNotFoundException, CDKException,
+    public void testIsProtonInAromaticSystemDescriptor() throws
             java.lang.Exception {
         IAtomicDescriptor descriptor = new IsProtonInAromaticSystemDescriptor();
         Object[] params = {Boolean.TRUE};

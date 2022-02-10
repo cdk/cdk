@@ -25,7 +25,7 @@ public class LargestPiSystemDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test1LargestPiSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void test1LargestPiSystemDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -34,7 +34,7 @@ public class LargestPiSystemDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test2LargestPiSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void test2LargestPiSystemDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -44,7 +44,7 @@ public class LargestPiSystemDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test3LargestPiSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void test3LargestPiSystemDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -54,7 +54,7 @@ public class LargestPiSystemDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test4LargestPiSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void test4LargestPiSystemDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -64,7 +64,7 @@ public class LargestPiSystemDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test5LargestPiSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void test5LargestPiSystemDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -74,7 +74,7 @@ public class LargestPiSystemDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test6LargestPiSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void test6LargestPiSystemDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -84,7 +84,7 @@ public class LargestPiSystemDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void test7LargestPiSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void test7LargestPiSystemDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.FALSE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

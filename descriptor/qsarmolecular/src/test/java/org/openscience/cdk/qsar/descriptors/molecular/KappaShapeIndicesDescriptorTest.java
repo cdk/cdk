@@ -44,7 +44,7 @@ public class KappaShapeIndicesDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testKappaShapeIndicesDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testKappaShapeIndicesDescriptor() throws java.lang.Exception {
         double[] testResult = {5, 2.25, 4};
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O=C(O)CC");

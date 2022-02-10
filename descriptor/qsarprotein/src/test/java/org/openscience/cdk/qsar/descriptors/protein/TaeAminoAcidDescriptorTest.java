@@ -53,7 +53,7 @@ public class TaeAminoAcidDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testTaeAminoAcidDescriptor() throws ClassNotFoundException, CDKException, Exception {
+    public void testTaeAminoAcidDescriptor() throws Exception {
         IBioPolymer pepseq = ProteinBuilderTool.createProtein("ACDEFGH", SilentChemObjectBuilder.getInstance());
         DescriptorValue result = descriptor.calculate(pepseq);
 

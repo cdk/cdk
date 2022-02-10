@@ -49,7 +49,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testNitrogenRule() throws ClassNotFoundException, CDKException, Exception {
+    public void testNitrogenRule() throws Exception {
 
         IRule rule = new NitrogenRule();
         Assert.assertNotNull(rule);
@@ -62,7 +62,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testDefault() throws ClassNotFoundException, CDKException, Exception {
+    public void testDefault() throws Exception {
 
         IRule rule = new NitrogenRule();
         Object[] objects = rule.getParameters();
@@ -76,7 +76,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testSetParameters() throws ClassNotFoundException, CDKException, Exception {
+    public void testSetParameters() throws Exception {
 
         IRule rule = new NitrogenRule();
         rule.setParameters(null);
@@ -92,7 +92,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testDefaultValidFalse() throws ClassNotFoundException, CDKException, Exception {
+    public void testDefaultValidFalse() throws Exception {
 
         IRule rule = new NitrogenRule();
 
@@ -107,7 +107,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testDefaultValidFalse_SetParam() throws ClassNotFoundException, CDKException, Exception {
+    public void testDefaultValidFalse_SetParam() throws Exception {
 
         IRule rule = new NitrogenRule();
 
@@ -123,7 +123,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testDefaultValidTrue() throws ClassNotFoundException, CDKException, Exception {
+    public void testDefaultValidTrue() throws Exception {
 
         IRule rule = new NitrogenRule();
 
@@ -139,7 +139,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testC45H75NO15() throws ClassNotFoundException, CDKException, Exception {
+    public void testC45H75NO15() throws Exception {
 
         IRule rule = new NitrogenRule();
 
@@ -155,7 +155,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testC45H71N7O10() throws ClassNotFoundException, CDKException, Exception {
+    public void testC45H71N7O10() throws Exception {
 
         IRule rule = new NitrogenRule();
 
@@ -171,7 +171,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testC49H75NO12() throws ClassNotFoundException, CDKException, Exception {
+    public void testC49H75NO12() throws Exception {
 
         IRule rule = new NitrogenRule();
 
@@ -187,7 +187,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testC50H95NO10() throws ClassNotFoundException, CDKException, Exception {
+    public void testC50H95NO10() throws Exception {
 
         IRule rule = new NitrogenRule();
 
@@ -203,7 +203,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testC47H75N5O10() throws ClassNotFoundException, CDKException, Exception {
+    public void testC47H75N5O10() throws Exception {
 
         IRule rule = new NitrogenRule();
 
@@ -219,7 +219,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testC36H42N2O23() throws ClassNotFoundException, CDKException, Exception {
+    public void testC36H42N2O23() throws Exception {
 
         IRule rule = new NitrogenRule();
 
@@ -235,7 +235,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testN() throws ClassNotFoundException, CDKException, Exception {
+    public void testN() throws Exception {
 
         IRule rule = new NitrogenRule();
 
@@ -251,7 +251,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testNPlus() throws ClassNotFoundException, CDKException, Exception {
+    public void testNPlus() throws Exception {
 
         IRule rule = new NitrogenRule();
 
@@ -267,7 +267,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testNominalMass() throws ClassNotFoundException, CDKException, Exception {
+    public void testNominalMass() throws Exception {
 
         IRule rule = new NitrogenRule();
 
@@ -283,7 +283,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testDoubleCharge() throws ClassNotFoundException, CDKException, Exception {
+    public void testDoubleCharge() throws Exception {
 
         IRule rule = new NitrogenRule();
 
@@ -299,7 +299,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testWithFe() throws ClassNotFoundException, CDKException, Exception {
+    public void testWithFe() throws Exception {
 
         IRule rule = new NitrogenRule();
 
@@ -315,7 +315,7 @@ public class NitrogenRuleTest extends FormulaRuleTest {
      *
      */
     @Test
-    public void testWithCo() throws ClassNotFoundException, CDKException, Exception {
+    public void testWithCo() throws Exception {
 
         IRule rule = new NitrogenRule();
 

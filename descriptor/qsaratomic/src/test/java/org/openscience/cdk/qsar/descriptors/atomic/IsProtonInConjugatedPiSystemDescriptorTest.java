@@ -43,7 +43,7 @@ public class IsProtonInConjugatedPiSystemDescriptorTest extends AtomicDescriptor
     }
 
     @Test
-    public void testIsProtonInConjugatedPiSystemDescriptor() throws ClassNotFoundException, CDKException,
+    public void testIsProtonInConjugatedPiSystemDescriptor() throws
             java.lang.Exception {
         IAtomicDescriptor descriptor = new IsProtonInConjugatedPiSystemDescriptor();
         Object[] params = {Boolean.TRUE};

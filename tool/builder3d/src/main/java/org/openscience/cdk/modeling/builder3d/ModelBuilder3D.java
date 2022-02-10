@@ -150,7 +150,7 @@ public class ModelBuilder3D {
      * Generate 3D coordinates with force field information.
      */
     public IAtomContainer generate3DCoordinates(IAtomContainer molecule, boolean clone) throws CDKException,
-            NoSuchAtomTypeException, CloneNotSupportedException, IOException {
+            CloneNotSupportedException, IOException {
         String[] originalAtomTypeNames = new String[molecule.getAtomCount()];
         for (int i = 0; i < originalAtomTypeNames.length; i++) {
             originalAtomTypeNames[i] = molecule.getAtom(i).getAtomTypeName();

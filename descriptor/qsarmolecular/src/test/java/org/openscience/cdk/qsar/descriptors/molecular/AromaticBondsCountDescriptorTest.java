@@ -47,7 +47,7 @@ public class AromaticBondsCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testAromaticBondsCountDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testAromaticBondsCountDescriptor() throws java.lang.Exception {
         Object[] params = {true};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

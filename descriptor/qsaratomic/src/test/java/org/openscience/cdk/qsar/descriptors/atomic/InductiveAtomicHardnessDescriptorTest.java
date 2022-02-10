@@ -44,7 +44,7 @@ public class InductiveAtomicHardnessDescriptorTest extends AtomicDescriptorTest 
     }
 
     @Test
-    public void testInductiveAtomicHardnessDescriptor() throws ClassNotFoundException, CDKException,
+    public void testInductiveAtomicHardnessDescriptor() throws
             java.lang.Exception {
         double[] testResult = {1.28};
 

@@ -102,7 +102,7 @@ public class WeightedPathDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testWpo() throws ClassNotFoundException, CDKException, Exception {
+    public void testWpo() throws Exception {
         try (InputStream ins = this.getClass().getResourceAsStream("wpo.sdf");
              MDLV2000Reader reader = new MDLV2000Reader(ins)) {
             IChemFile content = reader.read(new org.openscience.cdk.ChemFile());
@@ -114,7 +114,7 @@ public class WeightedPathDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testWPN() throws ClassNotFoundException, CDKException, Exception {
+    public void testWPN() throws Exception {
         try (InputStream ins = this.getClass().getResourceAsStream("wpn.sdf");
              MDLV2000Reader reader = new MDLV2000Reader(ins)) {
             IChemFile content = reader.read(new org.openscience.cdk.ChemFile());

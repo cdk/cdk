@@ -30,7 +30,7 @@ public class MDEDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testMDE1() throws ClassNotFoundException, CDKException, Exception {
+    public void testMDE1() throws Exception {
         String filename = "mdeotest.sdf";
         InputStream ins = this.getClass().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);

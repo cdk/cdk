@@ -142,7 +142,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
      *
      */
     @Test
-    public void testGetMappedChemObject_IReaction_IBond() throws ClassNotFoundException, CDKException,
+    public void testGetMappedChemObject_IReaction_IBond() throws
             java.lang.Exception {
         IReaction reaction = builder.newInstance(IReaction.class);
         IAtomContainer reactant = (new SmilesParser(builder)).parseSmiles("[C+]-C=C");

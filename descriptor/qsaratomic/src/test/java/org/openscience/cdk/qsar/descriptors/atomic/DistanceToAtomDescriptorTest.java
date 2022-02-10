@@ -46,7 +46,7 @@ public class DistanceToAtomDescriptorTest extends AtomicDescriptorTest {
     }
 
     @Test
-    public void testDistanceToAtomDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testDistanceToAtomDescriptor() throws java.lang.Exception {
         IAtomicDescriptor descriptor = new DistanceToAtomDescriptor();
         Object[] params = {2};
         descriptor.setParameters(params);

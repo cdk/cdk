@@ -53,7 +53,7 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testRotatableBondsCount() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testRotatableBondsCount() throws java.lang.Exception {
         Object[] params = {true, false};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

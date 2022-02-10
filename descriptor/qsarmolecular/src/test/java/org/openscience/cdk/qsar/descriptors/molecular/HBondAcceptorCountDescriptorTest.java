@@ -50,7 +50,7 @@ public class HBondAcceptorCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test
-    public void testHBondAcceptorCountDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testHBondAcceptorCountDescriptor() throws java.lang.Exception {
         Object[] params = {Boolean.TRUE};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

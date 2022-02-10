@@ -510,7 +510,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
      *  A unit test for JUnit with [H]C([H])=C([H])[C+]([H])[H]
      */
     @Test
-    public void testChargeWithProtonExplicit() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testChargeWithProtonExplicit() throws java.lang.Exception {
         SmilesParser sp = new SmilesParser(builder);
         IAtomContainer mol = sp.parseSmiles("[H]C([H])=C([H])[C+]([H])[H]");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
@@ -537,7 +537,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase {
      *  A unit test for JUnit with [H]C([H])=C([H])[C+]([H])[H]
      */
     @Test
-    public void testChargeWithProtonImplicit() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testChargeWithProtonImplicit() throws java.lang.Exception {
         SmilesParser sp = new SmilesParser(builder);
         IAtomContainer mol = sp.parseSmiles("C=C[C+]");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);

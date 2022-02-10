@@ -42,7 +42,7 @@ public class BondsToAtomDescriptorTest extends AtomicDescriptorTest {
     }
 
     @Test
-    public void testBondsToAtomDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testBondsToAtomDescriptor() throws java.lang.Exception {
         BondsToAtomDescriptor descriptor = new BondsToAtomDescriptor();
         Object[] params = {5};
         descriptor.setParameters(params);
