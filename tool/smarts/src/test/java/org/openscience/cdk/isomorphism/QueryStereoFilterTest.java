@@ -71,7 +71,7 @@ public class QueryStereoFilterTest {
 
     @Test
     public void tetrahedral_match() {
-        IAtomContainer query = sma("[C@@](C)(C)(C)C");;
+        IAtomContainer query = sma("[C@@](C)(C)(C)C");
         IAtomContainer target = dimethylpropane();
         target.addStereoElement(new TetrahedralChirality(target.getAtom(0), new IAtom[]{target.getAtom(1),
                 target.getAtom(2), target.getAtom(3), target.getAtom(4)}, ITetrahedralChirality.Stereo.CLOCKWISE));

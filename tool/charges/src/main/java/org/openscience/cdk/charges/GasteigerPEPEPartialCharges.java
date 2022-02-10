@@ -298,7 +298,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
         }
 
         /* 3: set sigma charge (PEOE). Initial start point */
-        GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();;
+        GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
         peoe.setMaxGasteigerIters(6);
         IAtomContainer acCloned;
 

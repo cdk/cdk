@@ -507,6 +507,6 @@ public class RendererModel implements Serializable, Cloneable {
      */
     public void setNotification(boolean notification) {
         this.notification = notification;
-    };
+    }
 
 }

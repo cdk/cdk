@@ -34,9 +34,9 @@ import java.util.regex.Pattern;
 
 final class INChIContentProcessorTool {
 
-        private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(INChIContentProcessorTool.class); ;
+        private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(INChIContentProcessorTool.class);
 
-        public INChIContentProcessorTool() {}
+    public INChIContentProcessorTool() {}
 
         /**
          * Processes the content from the formula field of the INChI.

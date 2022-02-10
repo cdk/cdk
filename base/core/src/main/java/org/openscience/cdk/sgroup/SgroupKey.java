@@ -51,5 +51,5 @@ public enum SgroupKey {
     DataFieldFormat,
     DataFieldUnits,
     DataDisplayInformation,
-    Data;
+    Data
 }

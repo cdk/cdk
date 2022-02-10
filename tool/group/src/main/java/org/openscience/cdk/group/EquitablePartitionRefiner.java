@@ -56,7 +56,7 @@ class EquitablePartitionRefiner {
      */
     public enum SplitOrder {
         FORWARD, REVERSE
-    };
+    }
 
     /**
      * The bias in splitting cells when refining

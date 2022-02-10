@@ -50,7 +50,7 @@ public class OrderQueryBondOrderOnly extends QueryBond implements IQueryBond {
             return true;
         } // else
         return false;
-    };
+    }
 
     @Override
     public void setAtoms(IAtom[] atoms) {

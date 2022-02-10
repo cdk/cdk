@@ -470,7 +470,7 @@ public class RingPlacer {
         final double xDiff = beg.getPoint2d().x - end.getPoint2d().x;
         final double yDiff = beg.getPoint2d().y - end.getPoint2d().y;
 
-        double startAngle;;
+        double startAngle;
 
         int direction = 1;
         // if bond is vertical

@@ -52,7 +52,7 @@ public class WedgeLineElement extends LineElement {
      * point in the line.
      */
     public enum Direction {
-        toFirst, toSecond;
+        toFirst, toSecond
     }
 
     /**

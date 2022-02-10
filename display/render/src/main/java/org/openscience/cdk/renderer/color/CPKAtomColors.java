@@ -124,7 +124,7 @@ public class CPKAtomColors implements IAtomColorer, java.io.Serializable {
         ATOM_COLORS_MASSNUM.put(53, ATOM_COLORS_SYMBOL.get("I"));
         ATOM_COLORS_MASSNUM.put(56, ATOM_COLORS_SYMBOL.get("BA"));
         ATOM_COLORS_MASSNUM.put(79, ATOM_COLORS_SYMBOL.get("AU"));
-    };
+    }
 
     //////////
     // METHODS

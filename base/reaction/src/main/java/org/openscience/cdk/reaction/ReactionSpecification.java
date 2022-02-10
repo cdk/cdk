@@ -60,21 +60,21 @@ public class ReactionSpecification implements IImplementationSpecification {
     @Override
     public String getSpecificationReference() {
         return this.specificationReference;
-    };
+    }
 
     @Override
     public String getImplementationTitle() {
         return this.implementationTitle;
-    };
+    }
 
     @Override
     public String getImplementationIdentifier() {
         return this.implementationIdentifier;
-    };
+    }
 
     @Override
     public String getImplementationVendor() {
         return this.implementationVendor;
-    };
+    }
 
 }

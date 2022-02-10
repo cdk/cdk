@@ -462,7 +462,6 @@ public class AtomTetrahedralLigandPlacer3D {
         Vector3d baxca = new Vector3d();
         baxca.cross(ba, ca);
         if (baxca.length() < 0.00000001) {
-            ;
             // linear
         } else if (nwanted == 1) {
             newPoints = new Point3d[1];

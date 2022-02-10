@@ -252,8 +252,8 @@ public class INChIReader extends DefaultChemObjectReader {
         public void startDocument() {
             chemFile = builder.newInstance(IChemFile.class);
             chemSequence = builder.newInstance(IChemSequence.class);
-            chemModel = builder.newInstance(IChemModel.class);;
-            setOfMolecules = builder.newInstance(IAtomContainerSet.class);;
+            chemModel = builder.newInstance(IChemModel.class);
+            setOfMolecules = builder.newInstance(IAtomContainerSet.class);
         }
 
         @Override

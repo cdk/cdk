@@ -167,7 +167,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
      */
     public enum Shape {
         OVAL, SQUARE
-    };
+    }
 
     /**
      * Shape to be used when drawing atoms in compact mode,

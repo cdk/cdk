@@ -31,5 +31,5 @@ package org.openscience.cdk.renderer.elements.path;
  * @cdk.githash
  */
 public enum Type {
-    MoveTo, LineTo, QuadTo, CubicTo, Close;
+    MoveTo, LineTo, QuadTo, CubicTo, Close
 }

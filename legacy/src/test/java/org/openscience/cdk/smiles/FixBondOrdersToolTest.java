@@ -203,11 +203,11 @@ public class FixBondOrdersToolTest extends CDKTestCase {
         //Assert.assertTrue(fbot.isOK(enol));
 
         // now check whether it did the right thing
-        Assert.assertEquals(Order.DOUBLE, enol.getBond(0).getOrder());;
-        Assert.assertEquals(Order.SINGLE, enol.getBond(1).getOrder());;
-        Assert.assertEquals(Order.DOUBLE, enol.getBond(2).getOrder());;
-        Assert.assertEquals(Order.SINGLE, enol.getBond(3).getOrder());;
-        Assert.assertEquals(Order.SINGLE, enol.getBond(4).getOrder());;
+        Assert.assertEquals(Order.DOUBLE, enol.getBond(0).getOrder());
+        Assert.assertEquals(Order.SINGLE, enol.getBond(1).getOrder());
+        Assert.assertEquals(Order.DOUBLE, enol.getBond(2).getOrder());
+        Assert.assertEquals(Order.SINGLE, enol.getBond(3).getOrder());
+        Assert.assertEquals(Order.SINGLE, enol.getBond(4).getOrder());
     }
 
     @Test

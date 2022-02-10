@@ -98,7 +98,7 @@ public class GeometryTools {
          */
         NONE
 
-    };
+    }
 
     /**
      *  Adds an automatically calculated offset to the coordinates of all atoms

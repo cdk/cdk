@@ -39,7 +39,7 @@ public class TextGroupElement extends TextElement {
      */
     public enum Position {
         NW, SW, SE, NE, S, N, W, E
-    };
+    }
 
     /**
      * A string of text that should be shown around the parent.

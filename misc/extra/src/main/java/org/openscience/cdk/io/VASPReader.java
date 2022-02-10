@@ -59,7 +59,7 @@ public class VASPReader extends DefaultChemObjectReader {
     private static final ILoggingTool logger  = LoggingToolFactory.createLoggingTool(VASPReader.class);
 
     // This variable is used to parse the input file
-    protected StringTokenizer   st      = new StringTokenizer("", "");                            ;
+    protected StringTokenizer   st      = new StringTokenizer("", "");
     protected String            fieldVal;
     protected int               repVal  = 0;
 

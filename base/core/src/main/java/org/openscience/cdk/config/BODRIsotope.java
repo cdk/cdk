@@ -180,7 +180,7 @@ final class BODRIsotope implements IIsotope {
     @Override
     public Double getExactMass() {
         return exactMass;
-    };
+    }
 
     @Override
     public Integer getMassNumber() {

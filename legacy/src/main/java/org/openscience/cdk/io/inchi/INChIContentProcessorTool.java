@@ -36,7 +36,7 @@ import java.util.regex.Pattern;
 @Deprecated
 public class INChIContentProcessorTool {
 
-    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(INChIContentProcessorTool.class); ;
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(INChIContentProcessorTool.class);
 
     public INChIContentProcessorTool() {}
 

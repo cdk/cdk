@@ -64,7 +64,7 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
     private final IChemObjectBuilder  builder;
     private final EventCMLHandler     cdo;
 
-    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(EventCMLReader.class); ;
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(EventCMLReader.class);
 
     /**
      * Define this CMLReader to take the input from a java.io.Reader

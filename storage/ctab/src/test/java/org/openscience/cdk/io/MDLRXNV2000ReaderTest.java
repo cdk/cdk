@@ -142,7 +142,7 @@ public class MDLRXNV2000ReaderTest extends SimpleChemObjectReaderTest {
     @Test
     public void testAgentParts() throws Exception {
         try (InputStream in = this.getClass().getResourceAsStream("ethylesterification.mol");
-             MDLRXNV2000Reader rdr = new MDLRXNV2000Reader(in);) {
+             MDLRXNV2000Reader rdr = new MDLRXNV2000Reader(in)) {
             IReaction reaction = rdr.read(new Reaction());
             assertThat(reaction.getAgents().getAtomContainerCount(), is(1));
         }

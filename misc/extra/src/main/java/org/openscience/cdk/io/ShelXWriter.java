@@ -134,7 +134,7 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         } else {
             throw new CDKException("Only Crystal objects can be read.");
         }
-    };
+    }
 
     // Private procedures
 

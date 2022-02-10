@@ -46,4 +46,4 @@ public class SomeParam extends AbstractGeneratorParameter<Boolean> {
     public void setValue(Boolean value) {
         this.value = value;
     }
-};
+}

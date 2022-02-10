@@ -66,7 +66,7 @@ public class AtomTools {
             if (atom.getPoint3d() == null) {
                 List<IAtom> connectedAtoms = atomContainer.getConnectedAtomsList(atom);
                 if (connectedAtoms.size() == 1) {
-                    IAtom refAtom = connectedAtoms.get(0);;
+                    IAtom refAtom = connectedAtoms.get(0);
                     if (refAtom.getPoint3d() != null) {
                         refAtoms.addAtom(refAtom);
                         // store atoms with no coords and ref atoms in a
@@ -370,7 +370,7 @@ public class AtomTools {
         Vector3d baxca = new Vector3d();
         baxca.cross(ba, ca);
         if (baxca.length() < 0.00000001) {
-            ; // linear
+            // linear
         } else if (nwanted == 1) {
             newPoints = new Point3d[1];
             Vector3d ax = new Vector3d(ba);

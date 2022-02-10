@@ -256,7 +256,7 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
             for (Integer rgrpNum : rGroupQuery.getRGroupDefinitions().keySet()) {
                 List<IRGroup> rgrpList = rGroupQuery.getRGroupDefinitions().get(rgrpNum).getRGroups();
                 if (rgrpList != null && rgrpList.size() != 0) {
-                    rgpBlock.append("$RGP").append(LSEP);;
+                    rgpBlock.append("$RGP").append(LSEP);
                     rgpBlock.append(MDLV2000Writer.formatMDLInt(rgrpNum, 4)).append(LSEP);
 
                     for (IRGroup rgroup : rgrpList) {

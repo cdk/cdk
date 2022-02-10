@@ -28,4 +28,4 @@ public enum ReactionRole {
     Agent,
     Product,
     None
-};
+}

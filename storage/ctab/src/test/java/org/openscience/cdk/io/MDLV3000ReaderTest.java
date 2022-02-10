@@ -85,7 +85,7 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
         String filename = "iterator/molV3000.mol";
         logger.info("Testing: " + filename);
         try (InputStream ins = this.getClass().getResourceAsStream(filename);
-             MDLV3000Reader reader = new MDLV3000Reader(ins);) {
+             MDLV3000Reader reader = new MDLV3000Reader(ins)) {
             IAtomContainer m = reader.read(new AtomContainer());
             reader.close();
             Assert.assertNotNull(m);
@@ -115,7 +115,7 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
     @Test
     public void testPseudoAtomLabels() throws Exception {
         try (InputStream in = getClass().getResourceAsStream("pseudoatomsv3000.mol");
-        MDLV3000Reader reader = new MDLV3000Reader(in);) {
+        MDLV3000Reader reader = new MDLV3000Reader(in)) {
             IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
             molecule = reader.read(molecule);
             reader.close();

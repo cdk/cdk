@@ -218,8 +218,6 @@ public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMole
                 this.getClass().getName(), "The Chemistry Development Kit");
     }
 
-    ;
-
     /**
      * Sets the parameters attribute of the WHIMDescriptor object.
      *

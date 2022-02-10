@@ -546,7 +546,7 @@ public class GIMatrix {
      */
     public GIMatrix diagonal() throws BadMatrixFormatException {
         if (m != n) throw new BadMatrixFormatException();
-        double[][] diagonal = new double[array.length][array[0].length];;
+        double[][] diagonal = new double[array.length][array[0].length];
         for (int i = 0; i < m; i++)
             for (int j = 0; j < n; j++) {
                 if (i == j)

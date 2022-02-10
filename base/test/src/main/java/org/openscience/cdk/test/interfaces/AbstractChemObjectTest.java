@@ -343,7 +343,7 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
 
         @Test
         @Override
-        public void stateChanged(IChemObjectChangeEvent event) {};
+        public void stateChanged(IChemObjectChangeEvent event) {}
     }
 
     @Test

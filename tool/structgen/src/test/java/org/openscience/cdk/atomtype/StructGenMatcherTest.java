@@ -54,7 +54,7 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
     @Override
     public String getAtomTypeListName() {
         return ATOMTYPE_LIST;
-    };
+    }
 
     @Override
     public AtomTypeFactory getFactory() {

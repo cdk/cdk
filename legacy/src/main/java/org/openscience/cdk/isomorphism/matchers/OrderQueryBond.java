@@ -49,7 +49,7 @@ public class OrderQueryBond extends QueryBond implements IQueryBond {
             return true;
         } // else
         return false;
-    };
+    }
 
     @Override
     public void setAtoms(IAtom[] atoms) {

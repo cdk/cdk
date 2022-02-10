@@ -256,7 +256,7 @@ final class ImmutableAtomType implements IAtomType {
     @Override
     public Double getExactMass() {
         return exactMass;
-    };
+    }
 
     @Override
     public Integer getMassNumber() {

@@ -74,7 +74,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
 public class Gaussian98Reader extends DefaultChemObjectReader {
 
     private BufferedReader      input;
-    private static final ILoggingTool logger    = LoggingToolFactory.createLoggingTool(Gaussian98Reader.class); ;
+    private static final ILoggingTool logger    = LoggingToolFactory.createLoggingTool(Gaussian98Reader.class);
     private int                 atomCount = 0;
     private String              lastRoute = "";
 

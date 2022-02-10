@@ -42,7 +42,7 @@ abstract class AbstractDiscretePartitionRefiner implements DiscretePartitionRefi
      */
     enum Result {
         WORSE, EQUAL, BETTER
-    };
+    }
 
     /**
      * If true, then at least one partition has been refined

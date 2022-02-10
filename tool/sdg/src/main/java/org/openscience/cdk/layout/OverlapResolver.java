@@ -217,7 +217,7 @@ public class OverlapResolver {
         double overlapScore = 0;
         IBond bond1 = null;
         IBond bond2 = null;
-        double bondLength = GeometryUtil.getBondLengthAverage(ac);;
+        double bondLength = GeometryUtil.getBondLengthAverage(ac);
         double overlapCutoff = bondLength / 2;
         for (int f = 0; f < ac.getBondCount(); f++) {
             bond1 = ac.getBond(f);
