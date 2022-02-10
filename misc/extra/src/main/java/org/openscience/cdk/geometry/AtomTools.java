@@ -184,8 +184,7 @@ public class AtomTools {
         }
         int nligands = connectedAtoms.size();
         IAtomContainer ligandsWithCoords = atomContainer.getBuilder().newInstance(IAtomContainer.class);
-        for (int i = 0; i < nligands; i++) {
-            IAtom ligand = connectedAtoms.get(i);
+        for (IAtom ligand : connectedAtoms) {
             if (ligand.getPoint3d() != null) {
                 ligandsWithCoords.addAtom(ligand);
             }
@@ -203,8 +202,7 @@ public class AtomTools {
             connectedAtoms = ligandsWithCoords.getConnectedAtomsList(bAtom);
             // does B have a ligand (other than A)
             IAtom jAtom = null;
-            for (int i = 0; i < connectedAtoms.size(); i++) {
-                IAtom connectedAtom = connectedAtoms.get(i);
+            for (IAtom connectedAtom : connectedAtoms) {
                 if (!connectedAtom.equals(refAtom)) {
                     jAtom = connectedAtom;
                     break;

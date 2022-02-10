@@ -409,9 +409,9 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
             for (int c = 0; c < ghr_topol_desc_length; c++) {
             	double ghrt = limitInf + (limitSup - limitInf) * ((double)c / ghr_topol_desc_length);
                 sum = 0;
-                for (int at = 0; at < atoms.size(); at++) {
+                for (Integer integer : atoms) {
                     distance = 0;
-                    thisAtom = atoms.get(at);
+                    thisAtom = integer;
                     position = thisAtom;
                     endVertex = mol.getAtom(position);
                     atom2 = mol.getAtom(position);
@@ -468,8 +468,7 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
         List<IAtom> neighToCarbon = mol.getConnectedAtomsList(carbonAtom);
         IBond tmpBond;
         int counter = 0;
-        for (int nei = 0; nei < neighToCarbon.size(); nei++) {
-            IAtom neighbour = neighToCarbon.get(nei);
+        for (IAtom neighbour : neighToCarbon) {
             if (neighbour.getAtomicNumber() == IElement.O) {
                 tmpBond = mol.getBond(neighbour, carbonAtom);
                 if (tmpBond.getOrder() == IBond.Order.DOUBLE) counter += 1;

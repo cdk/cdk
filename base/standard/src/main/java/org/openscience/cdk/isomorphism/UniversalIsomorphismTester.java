@@ -515,8 +515,7 @@ public class UniversalIsomorphismTester {
         IAtom a;
         IBond bond;
 
-        for (Iterator<RMap> i = rMapList.iterator(); i.hasNext();) {
-            RMap rMap = i.next();
+        for (RMap rMap : rMapList) {
             if (id == UniversalIsomorphismTester.ID1) {
                 bond = g.getBond(rMap.getId1());
             } else {
@@ -688,13 +687,13 @@ public class UniversalIsomorphismTester {
             IAtom[] atom2 = BondManipulator.getAtomArray(bond2);
             for (int j = 0; j < 2; j++) {
                 List<IBond> bondsConnectedToAtom1j = g1.getConnectedBondsList(atom1[j]);
-                for (int k = 0; k < bondsConnectedToAtom1j.size(); k++) {
-                    if (!bondsConnectedToAtom1j.get(k).equals(bond1)) {
-                        IBond testBond = (IBond) bondsConnectedToAtom1j.get(k);
-                        for (int m = 0; m < l.size(); m++) {
+                for (IBond iBond : bondsConnectedToAtom1j) {
+                    if (!iBond.equals(bond1)) {
+                        IBond testBond = (IBond) iBond;
+                        for (RMap rMap : l) {
                             IBond testBond2;
-                            if (((RMap) l.get(m)).getId1() == g1.indexOf(testBond)) {
-                                testBond2 = g2.getBond(((RMap) l.get(m)).getId2());
+                            if (((RMap) rMap).getId1() == g1.indexOf(testBond)) {
+                                testBond2 = g2.getBond(((RMap) rMap).getId2());
                                 for (int n = 0; n < 2; n++) {
                                     List<IBond> bondsToTest = g2.getConnectedBondsList(atom2[n]);
                                     if (bondsToTest.contains(testBond2)) {

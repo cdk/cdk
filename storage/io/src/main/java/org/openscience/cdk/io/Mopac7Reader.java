@@ -221,18 +221,18 @@ public class Mopac7Reader extends DefaultChemObjectReader {
         }
         String[] eigenVals = eigenProp.toString().split("\\s");
         int levelCounter = 0;
-        for (int i = 0; i < eigenVals.length; i++) {
-            if (eigenVals[i].trim().isEmpty())
+        for (String eigenVal : eigenVals) {
+            if (eigenVal.trim().isEmpty())
                 continue;
             else
                 try {
                     // check if the value is an proper double:
-                    Double.parseDouble(eigenVals[i]);
+                    Double.parseDouble(eigenVal);
                     levelCounter++;
                     if (levelCounter == nFilledLevels) {
-                        mol.setProperty("EHOMO", eigenVals[i]);
+                        mol.setProperty("EHOMO", eigenVal);
                     } else if (levelCounter == (nFilledLevels + 1)) {
-                        mol.setProperty("ELUMO", eigenVals[i]);
+                        mol.setProperty("ELUMO", eigenVal);
                     }
                 } catch (NumberFormatException exception) {
                     return;
@@ -267,8 +267,8 @@ public class Mopac7Reader extends DefaultChemObjectReader {
     /** {@inheritDoc} */
     public boolean accepts(Class<? extends IChemObject> classObject) {
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IAtomContainer.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IAtomContainer.class.equals(anInterface)) return true;
         }
         if (IAtomContainer.class.equals(classObject)) return true;
         Class superClass = classObject.getSuperclass();

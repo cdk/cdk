@@ -890,8 +890,8 @@ public final class Stereocenters {
 
             // remove the other neighbor from neighbors when checking
             // equivalence
-            for (int i = 0; i < neighbors.length; i++) {
-                if (neighbors[i] != other) this.neighbors[n++] = neighbors[i];
+            for (int neighbor : neighbors) {
+                if (neighbor != other) this.neighbors[n++] = neighbor;
             }
         }
     }

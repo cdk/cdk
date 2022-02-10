@@ -609,8 +609,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         String[] value = {"true", "false"};
 
         IAtomContainer mol = TestMoleculeFactory.makeBenzene();
-        for (Iterator<IAtom> it = mol.atoms().iterator(); it.hasNext();) {
-            IAtom a = it.next();
+        for (IAtom a : mol.atoms()) {
             for (int i = 0; i < key.length; i++)
                 a.setProperty(key[i], value[i]);
         }
@@ -619,8 +618,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         //Assert.assertEquals(convertor.cdkMoleculeToCMLMolecule(mol).toXML(),
         //	   convertor.cdkMoleculeToCMLMolecule(roundTrippedMol).toXML());
 
-        for (Iterator<IAtom> it = roundTrippedMol.atoms().iterator(); it.hasNext();) {
-            IAtom a = it.next();
+        for (IAtom a : roundTrippedMol.atoms()) {
             for (int i = 0; i < key.length; i++) {
                 Object actual = a.getProperty(key[i]);
                 Assert.assertNotNull(actual);
@@ -640,8 +638,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         String[] key = {"customBondProperty1", "customBondProperty2"};
         String[] value = {"true", "false"};
         IAtomContainer mol = TestMoleculeFactory.makeBenzene();
-        for (Iterator<IBond> it = mol.bonds().iterator(); it.hasNext();) {
-            IBond b = it.next();
+        for (IBond b : mol.bonds()) {
             for (int i = 0; i < key.length; i++)
                 b.setProperty(key[i], value[i]);
         }
@@ -650,8 +647,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         //Assert.assertEquals(convertor.cdkMoleculeToCMLMolecule(mol).toXML(),
         //	   convertor.cdkMoleculeToCMLMolecule(roundTrippedMol).toXML());
 
-        for (Iterator<IBond> it = roundTrippedMol.bonds().iterator(); it.hasNext();) {
-            IBond b = it.next();
+        for (IBond b : roundTrippedMol.bonds()) {
             for (int i = 0; i < key.length; i++) {
                 Object actual = b.getProperty(key[i]);
                 Assert.assertNotNull(actual);

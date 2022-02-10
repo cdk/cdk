@@ -72,9 +72,7 @@ public class AminoAcids {
 
         int counter = 0;
         int total = 0;
-        for (int aa = 0; aa < aminoAcids.length; aa++) {
-            AminoAcid acid = aminoAcids[aa];
-
+        for (AminoAcid acid : aminoAcids) {
             LOGGER.debug("#bonds for ", acid.getProperty(RESIDUE_NAME).toString(), " = " + acid.getBondCount());
             total += acid.getBondCount();
             LOGGER.debug("total #bonds: ", total);
@@ -205,8 +203,8 @@ public class AminoAcids {
     public static Map<String, IAminoAcid> getHashMapBySingleCharCode() {
         IAminoAcid[] monomers = createAAs();
         HashMap<String, IAminoAcid> map = new HashMap<>();
-        for (int i = 0; i < monomers.length; i++) {
-            map.put((String) monomers[i].getProperty(RESIDUE_NAME_SHORT), monomers[i]);
+        for (IAminoAcid monomer : monomers) {
+            map.put((String) monomer.getProperty(RESIDUE_NAME_SHORT), monomer);
         }
         return map;
     }
@@ -218,8 +216,8 @@ public class AminoAcids {
     public static Map<String, IAminoAcid> getHashMapByThreeLetterCode() {
         AminoAcid[] monomers = createAAs();
         Map<String, IAminoAcid> map = new HashMap<>();
-        for (int i = 0; i < monomers.length; i++) {
-            map.put((String) monomers[i].getProperty(RESIDUE_NAME), monomers[i]);
+        for (AminoAcid monomer : monomers) {
+            map.put((String) monomer.getProperty(RESIDUE_NAME), monomer);
         }
         return map;
     }
@@ -230,9 +228,9 @@ public class AminoAcids {
      */
     public static String convertThreeLetterCodeToOneLetterCode(String threeLetterCode) {
         AminoAcid[] monomers = createAAs();
-        for (int i = 0; i < monomers.length; i++) {
-            if (monomers[i].getProperty(RESIDUE_NAME).equals(threeLetterCode)) {
-                return (String) monomers[i].getProperty(RESIDUE_NAME_SHORT);
+        for (AminoAcid monomer : monomers) {
+            if (monomer.getProperty(RESIDUE_NAME).equals(threeLetterCode)) {
+                return (String) monomer.getProperty(RESIDUE_NAME_SHORT);
             }
         }
         return null;
@@ -244,9 +242,9 @@ public class AminoAcids {
      */
     public static String convertOneLetterCodeToThreeLetterCode(String oneLetterCode) {
         AminoAcid[] monomers = createAAs();
-        for (int i = 0; i < monomers.length; i++) {
-            if (monomers[i].getProperty(RESIDUE_NAME_SHORT).equals(oneLetterCode)) {
-                return (String) monomers[i].getProperty(RESIDUE_NAME);
+        for (AminoAcid monomer : monomers) {
+            if (monomer.getProperty(RESIDUE_NAME_SHORT).equals(oneLetterCode)) {
+                return (String) monomer.getProperty(RESIDUE_NAME);
             }
         }
         return null;

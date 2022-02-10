@@ -326,8 +326,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
                 + "]  must contain at least one example of reaction.", xmlList.size() != 0);
         Assert.assertTrue("The representation entry for [" + entryString
                 + "]  must contain at least one example of reaction.", xmlList.size() > 0);
-        for (Iterator<String> it = xmlList.iterator(); it.hasNext();) {
-            String xml = it.next();
+        for (String xml : xmlList) {
             CMLReader reader = new CMLReader(new ByteArrayInputStream(xml.getBytes()));
             IChemFile chemFile = (IChemFile) reader.read(builder.newInstance(IChemFile.class));
             IReaction reactionDict = chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0);
@@ -344,7 +343,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
 
             Assert.assertSame("The products for [" + entryString + "] reaction is not the expected.", products
                     .getAtomContainer(0).getAtomCount(), reactions.getReaction(0).getProducts().getAtomContainer(0)
-                    .getAtomCount());
+                                                                  .getAtomCount());
 
         }
     }

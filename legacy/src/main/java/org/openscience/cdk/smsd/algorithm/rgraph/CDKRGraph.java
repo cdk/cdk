@@ -431,9 +431,7 @@ public class CDKRGraph {
 
         // only nodes that fulfill the initial constrains
         // are allowed in the initial extension set : targetBitSet
-        for (Iterator<CDKRNode> i = getGraph().iterator(); i.hasNext();) {
-            CDKRNode rNode = i.next();
-
+        for (CDKRNode rNode : getGraph()) {
             checkTimeOut();
 
             if ((sourceBitSet.get(rNode.getRMap().getId1()) || sourceBitSet.isEmpty())
@@ -517,8 +515,7 @@ public class CDKRGraph {
         String message = "";
         int jIndex = 0;
 
-        for (Iterator<CDKRNode> i = getGraph().iterator(); i.hasNext();) {
-            CDKRNode rNode = i.next();
+        for (CDKRNode rNode : getGraph()) {
             message += "-------------\n" + "CDKRNode " + jIndex + "\n" + rNode.toString() + "\n";
             jIndex++;
         }

@@ -1471,15 +1471,14 @@ public final class GeometryUtil {
             centerAtomSecondMolecule = secondAtomContainer.getAtom(mappedAtoms.get(firstAtomContainer
                     .indexOf(centerAtomFirstMolecule)));
             connectedAtoms = firstAtomContainer.getConnectedAtomsList(centerAtomFirstMolecule);
-            for (int i = 0; i < connectedAtoms.size(); i++) {
-                IAtom conAtom = connectedAtoms.get(i);
+            for (IAtom conAtom : connectedAtoms) {
                 //this step is built to know if the program has already calculate a bond length (so as not to have duplicate values)
                 if (!conAtom.getFlag(CDKConstants.VISITED)) {
                     if (Coords3d) {
                         distance1 = centerAtomFirstMolecule.getPoint3d().distance(conAtom.getPoint3d());
                         distance2 = centerAtomSecondMolecule.getPoint3d().distance(
                                 secondAtomContainer.getAtom(mappedAtoms.get(firstAtomContainer.indexOf(conAtom)))
-                                        .getPoint3d());
+                                                   .getPoint3d());
                         sum = sum + Math.pow((distance1 - distance2), 2);
                         n++;
                     } else {

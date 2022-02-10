@@ -315,9 +315,9 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
         // END OF ATOM LOOP
         // calculate the tpsa for the AtomContainer ac
         double tpsa = 0;
-        for (int profileIndex = 0; profileIndex < profiles.size(); profileIndex++) {
-            if (map.containsKey(profiles.get(profileIndex))) {
-                tpsa += (Double) map.get(profiles.get(profileIndex));
+        for (String profile : profiles) {
+            if (map.containsKey(profile)) {
+                tpsa += (Double) map.get(profile);
                 //logger.debug("tpsa contribs: " + profiles.elementAt(profileIndex) + "\t" + ((Double)map.get(profiles.elementAt(profileIndex))).doubleValue());
             }
         }

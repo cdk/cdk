@@ -124,11 +124,11 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         if (IReaction.class.equals(classObject)) return true;
         if (IReactionSet.class.equals(classObject)) return true;
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IChemModel.class.equals(interfaces[i])) return true;
-            if (IChemFile.class.equals(interfaces[i])) return true;
-            if (IReaction.class.equals(interfaces[i])) return true;
-            if (IReactionSet.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IChemModel.class.equals(anInterface)) return true;
+            if (IChemFile.class.equals(anInterface)) return true;
+            if (IReaction.class.equals(anInterface)) return true;
+            if (IReactionSet.class.equals(anInterface)) return true;
         }
         Class superClass = classObject.getSuperclass();
         if (superClass != null) return this.accepts(superClass);

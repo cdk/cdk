@@ -87,8 +87,7 @@ public class ReactionChain extends ReactionSet {
         if (!hashMapChain.containsValue(position)) return null;
 
         Set<Entry<IReaction, Integer>> entries = hashMapChain.entrySet();
-        for (Iterator<Entry<IReaction, Integer>> it = entries.iterator(); it.hasNext();) {
-            Entry<IReaction, Integer> entry = it.next();
+        for (Entry<IReaction, Integer> entry : entries) {
             if (entry.getValue().equals(position)) return entry.getKey();
         }
 

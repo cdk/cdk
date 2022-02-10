@@ -549,9 +549,9 @@ public class DescriptorEngine {
         }
 
         List<String> classlist = new ArrayList<>();
-        for (int i = 0; i < jars.length; i++) {
-            logger.debug("Looking in " + jars[i]);
-            try (JarFile jarFile = new JarFile(jars[i])) {
+        for (String jar : jars) {
+            logger.debug("Looking in " + jar);
+            try (JarFile jarFile = new JarFile(jar)) {
                 Enumeration enumeration = jarFile.entries();
                 while (enumeration.hasMoreElements()) {
                     JarEntry jarEntry = (JarEntry) enumeration.nextElement();
@@ -582,7 +582,7 @@ public class DescriptorEngine {
                     }
                 }
             } catch (IOException e) {
-                logger.error("Error opening the jar file: " + jars[i]);
+                logger.error("Error opening the jar file: " + jar);
                 logger.debug(e);
             }
         }

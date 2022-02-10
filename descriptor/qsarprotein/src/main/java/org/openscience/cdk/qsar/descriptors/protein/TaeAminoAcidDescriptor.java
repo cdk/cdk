@@ -125,13 +125,11 @@ public class TaeAminoAcidDescriptor extends AbstractMolecularDescriptor implemen
 
         Map<String, IStrand> strands = iBioPolymer.getStrands();
         Set<String> strandKeys = strands.keySet();
-        for (Iterator<String> iterator = strandKeys.iterator(); iterator.hasNext(); ) {
-            String key = iterator.next();
+        for (String key : strandKeys) {
             IStrand aStrand = strands.get(key);
             Map<String, IMonomer> tmp = aStrand.getMonomers();
             Set<String> keys = tmp.keySet();
-            for (Iterator<String> iterator1 = keys.iterator(); iterator1.hasNext(); ) {
-                String o1 = iterator1.next();
+            for (String o1 : keys) {
                 monomList.add(tmp.get(o1));
             }
         }
@@ -289,9 +287,7 @@ public class TaeAminoAcidDescriptor extends AbstractMolecularDescriptor implemen
 
         List<IMonomer> monomers = getMonomers(peptide);
 
-        for (Iterator<IMonomer> iterator = monomers.iterator(); iterator.hasNext();) {
-            IMonomer monomer = iterator.next();
-
+        for (IMonomer monomer : monomers) {
             String o = monomer.getMonomerName();
 
             if (o.length() == 0) continue;

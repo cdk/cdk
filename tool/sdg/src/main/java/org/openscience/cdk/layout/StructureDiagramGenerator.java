@@ -350,8 +350,8 @@ public class StructureDiagramGenerator {
                             int bestSize = 0;
                             for (int part = 1; part <= numParts; part++) {
                                 int size = 0;
-                                for (int i = 0; i < parts2.length; i++) {
-                                    if (parts2[i] == part)
+                                for (int j : parts2) {
+                                    if (j == part)
                                         ++size;
                                 }
                                 if (size > bestSize) {
@@ -2020,8 +2020,8 @@ public class StructureDiagramGenerator {
         IAtomContainer unplacedAtoms = atom.getBuilder().newInstance(IAtomContainer.class);
         List bonds = molecule.getConnectedBondsList(atom);
         IAtom connectedAtom;
-        for (int f = 0; f < bonds.size(); f++) {
-            connectedAtom = ((IBond) bonds.get(f)).getOther(atom);
+        for (Object bond : bonds) {
+            connectedAtom = ((IBond) bond).getOther(atom);
             if (!connectedAtom.getFlag(CDKConstants.ISPLACED)) {
                 unplacedAtoms.addAtom(connectedAtom);
             }
@@ -2041,8 +2041,8 @@ public class StructureDiagramGenerator {
         IAtomContainer placedAtoms = atom.getBuilder().newInstance(IAtomContainer.class);
         List bonds = molecule.getConnectedBondsList(atom);
         IAtom connectedAtom;
-        for (int f = 0; f < bonds.size(); f++) {
-            connectedAtom = ((IBond) bonds.get(f)).getOther(atom);
+        for (Object bond : bonds) {
+            connectedAtom = ((IBond) bond).getOther(atom);
             if (connectedAtom.getFlag(CDKConstants.ISPLACED)) {
                 placedAtoms.addAtom(connectedAtom);
             }
@@ -2175,8 +2175,8 @@ public class StructureDiagramGenerator {
      */
     private IRingSet getRingSystemOfAtom(List ringSystems, IAtom ringAtom) {
         IRingSet ringSet = null;
-        for (int f = 0; f < ringSystems.size(); f++) {
-            ringSet = (IRingSet) ringSystems.get(f);
+        for (Object ringSystem : ringSystems) {
+            ringSet = (IRingSet) ringSystem;
             if (ringSet.contains(ringAtom)) {
                 return ringSet;
             }

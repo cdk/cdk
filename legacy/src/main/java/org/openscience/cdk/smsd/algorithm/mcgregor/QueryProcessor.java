@@ -103,18 +103,18 @@ public class QueryProcessor {
             Integer order = query.getBond(atomIndex).getOrder().numeric();
 
             //            System.out.println(AtomI + "= , =" + AtomJ );
-            for (Integer unMappedAtomIndex = 0; unMappedAtomIndex < unmappedNumA; unMappedAtomIndex++) {
+            for (Integer integer : unmappedAtomsMolA) {
 
-                if (unmappedAtomsMolA.get(unMappedAtomIndex).equals(indexI)) {
+                if (integer.equals(indexI)) {
                     normalBond = unMappedAtomsEqualsIndexJ(query, target, atomIndex, counter, mappedAtoms, indexI,
                             indexJ, order);
                     bondConsidered = true;
                 } else //Does a ungemaptes atom at second position in the connection occur?
-                if (unmappedAtomsMolA.get(unMappedAtomIndex).equals(indexJ)) {
-                    normalBond = unMappedAtomsEqualsIndexI(query, target, atomIndex, counter, mappedAtoms, indexI,
-                            indexJ, order);
-                    bondConsidered = true;
-                }
+                    if (integer.equals(indexJ)) {
+                        normalBond = unMappedAtomsEqualsIndexI(query, target, atomIndex, counter, mappedAtoms, indexI,
+                                indexJ, order);
+                        bondConsidered = true;
+                    }
                 if (normalBond && bondConsidered) {
                     markNormalBonds(atomIndex, indexI, indexJ, order);
                     normalBond = true;
@@ -151,18 +151,18 @@ public class QueryProcessor {
             }
 
             //            System.out.println(AtomI + "= , =" + AtomJ );
-            for (Integer unMappedAtomIndex = 0; unMappedAtomIndex < unmappedNumA; unMappedAtomIndex++) {
+            for (Integer integer : unmappedAtomsMolA) {
 
-                if (unmappedAtomsMolA.get(unMappedAtomIndex).equals(indexI)) {
+                if (integer.equals(indexI)) {
                     normalBond = unMappedAtomsEqualsIndexJ(query, target, atomIndex, counter, mappedAtoms, indexI,
                             indexJ, order);
                     bondConsidered = true;
                 } else //Does a ungemaptes atom at second position in the connection occur?
-                if (unmappedAtomsMolA.get(unMappedAtomIndex).equals(indexJ)) {
-                    normalBond = unMappedAtomsEqualsIndexI(query, target, atomIndex, counter, mappedAtoms, indexI,
-                            indexJ, order);
-                    bondConsidered = true;
-                }
+                    if (integer.equals(indexJ)) {
+                        normalBond = unMappedAtomsEqualsIndexI(query, target, atomIndex, counter, mappedAtoms, indexI,
+                                indexJ, order);
+                        bondConsidered = true;
+                    }
                 if (normalBond && bondConsidered) {
                     markNormalBonds(atomIndex, indexI, indexJ, order);
                     normalBond = true;

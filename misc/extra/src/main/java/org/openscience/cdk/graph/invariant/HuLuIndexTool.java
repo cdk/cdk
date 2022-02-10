@@ -211,8 +211,8 @@ public class HuLuIndexTool {
         int[] atomLayers = new int[apspMatrix.length];
         for (int i = 0; i < apspMatrix.length; i++) {
             atomLayers[i] = 0;
-            for (int j = 0; j < apspMatrix.length; j++) {
-                if (atomLayers[i] < 1 + apspMatrix[j][i]) atomLayers[i] = 1 + apspMatrix[j][i];
+            for (int[] matrix : apspMatrix) {
+                if (atomLayers[i] < 1 + matrix[i]) atomLayers[i] = 1 + matrix[i];
             }
 
         }
@@ -224,8 +224,8 @@ public class HuLuIndexTool {
         String line;
         for (int f = 0; f < matrix.length; f++) {
             line = "";
-            for (int g = 0; g < matrix.length; g++) {
-                line += matrix[g][f] + " | ";
+            for (double[] doubles : matrix) {
+                line += doubles[f] + " | ";
             }
             logger.debug(line);
         }
@@ -236,8 +236,8 @@ public class HuLuIndexTool {
         String line;
         for (int f = 0; f < matrix.length; f++) {
             line = "";
-            for (int g = 0; g < matrix.length; g++) {
-                line += matrix[g][f] + " | ";
+            for (int[] ints : matrix) {
+                line += ints[f] + " | ";
             }
             logger.debug(line);
         }
@@ -246,8 +246,8 @@ public class HuLuIndexTool {
     /** Lists a 1D array to the System console. */
     public static void displayArray(int[] array) {
         String line = "";
-        for (int f = 0; f < array.length; f++) {
-            line += array[f] + " | ";
+        for (int i : array) {
+            line += i + " | ";
         }
         logger.debug(line);
     }
@@ -255,8 +255,8 @@ public class HuLuIndexTool {
     /** Lists a 1D array to the System console. */
     public static void displayArray(double[] array) {
         String line = "";
-        for (int f = 0; f < array.length; f++) {
-            line += array[f] + " | ";
+        for (double v : array) {
+            line += v + " | ";
         }
         logger.debug(line);
     }

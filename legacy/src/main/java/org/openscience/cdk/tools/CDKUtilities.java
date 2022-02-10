@@ -252,8 +252,7 @@ public class CDKUtilities {
 
                 int bondOrderSum = 0;
 
-                for (int j = 0; j < connectedAtoms.size(); j++) {
-                    IAtom conAtom = connectedAtoms.get(j);
+                for (IAtom conAtom : connectedAtoms) {
                     if (conAtom.getAtomicNumber() != IElement.H) {
                         IBond bond = m.getBond(a, conAtom);
                         if (bond.getOrder() == IBond.Order.SINGLE) {
@@ -269,8 +268,8 @@ public class CDKUtilities {
                 }
 
                 if (bondOrderSum > 1) {
-                    for (int j = 0; j < connectedAtoms.size(); j++) {
-                        IAtom conAtom = (IAtom) connectedAtoms.get(j);
+                    for (IAtom connectedAtom : connectedAtoms) {
+                        IAtom conAtom = (IAtom) connectedAtom;
                         if (conAtom.getAtomicNumber() == IElement.H) {
                             m.removeAtom(conAtom);
                         }

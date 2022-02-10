@@ -130,9 +130,9 @@ public class NitrogenRule implements IRule {
     private int getOthers(IMolecularFormula formula) {
         int number = 0;
         String[] elements = {"Co", "Hg", "Pt", "As"};
-        for (int i = 0; i < elements.length; i++)
+        for (String element : elements)
             number += MolecularFormulaManipulator.getElementCount(formula,
-                    formula.getBuilder().newInstance(IElement.class, elements[i]));
+                    formula.getBuilder().newInstance(IElement.class, element));
 
         return number;
     }

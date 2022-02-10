@@ -66,8 +66,8 @@ public class AtomMappingTools {
         try {
             list = new UniversalIsomorphismTester().getSubgraphAtomsMap(firstAtomContainer, secondAtomContainer);
             //logger.debug("ListSize:"+list.size());
-            for (int i = 0; i < list.size(); i++) {
-                map = list.get(i);
+            for (RMap rMap : list) {
+                map = rMap;
                 atom1 = firstAtomContainer.getAtom(map.getId1());
                 atom2 = secondAtomContainer.getAtom(map.getId2());
                 if (checkAtomMapping(firstAtomContainer, secondAtomContainer, firstAtomContainer.indexOf(atom1),

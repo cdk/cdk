@@ -475,16 +475,14 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
             IAtom       atom  = atomContainer.getAtom(i);
             int         htype = getHAtomType(atom, ca);
             frags[htype] += atom.getImplicitHydrogenCount();
-            for (int j = 0; j < ca.size(); j++) {
-                if (ca.get(j).getAtomicNumber() == IElement.C) {
+            for (IAtom iAtom : ca) {
+                if (iAtom.getAtomicNumber() == IElement.C) {
                     frags[1]++;
                     alogpfrag[i] = 1;
-                }
-                else if (ca.get(j).getAtomicNumber() == IElement.H) {
+                } else if (iAtom.getAtomicNumber() == IElement.H) {
                     frags[htype]++;
-                    alogpfrag[atomContainer.indexOf(ca.get(j))] = htype;
-                }
-                else {
+                    alogpfrag[atomContainer.indexOf(iAtom)] = htype;
+                } else {
                     frags[5]++;
                     alogpfrag[i] = 5;
                 }
@@ -506,14 +504,13 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
             int         carbonCount = 0;
             int         heteroCount = 0;
             // logger.debug("here");
-            for (int j = 0; j < nbors.size(); j++) {
-                if (nbors.get(j).getAtomicNumber() == IElement.C)
+            for (IAtom nbor : nbors) {
+                if (nbor.getAtomicNumber() == IElement.C)
                     carbonCount++;
-                else if (nbors.get(j).getAtomicNumber() == IElement.H) {
+                else if (nbor.getAtomicNumber() == IElement.H) {
                     frags[htype]++;
-                    alogpfrag[atomContainer.indexOf(nbors.get(j))] = htype;
-                }
-                else
+                    alogpfrag[atomContainer.indexOf(nbor)] = htype;
+                } else
                     heteroCount++;
             }
 

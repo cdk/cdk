@@ -229,11 +229,11 @@ public class BasicValidator extends AbstractValidator {
                 IAtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
                 IAtomType failedOn = null;
                 boolean foundMatchingAtomType = false;
-                for (int j = 0; j < atomTypes.length; j++) {
-                    if (!BondManipulator.isHigherOrder(bond.getOrder(), atomTypes[j].getMaxBondOrder())) {
+                for (IAtomType atomType : atomTypes) {
+                    if (!BondManipulator.isHigherOrder(bond.getOrder(), atomType.getMaxBondOrder())) {
                         foundMatchingAtomType = true;
                     } else {
-                        failedOn = atomTypes[j];
+                        failedOn = atomType;
                     }
                 }
                 if (foundMatchingAtomType) {
@@ -267,8 +267,8 @@ public class BasicValidator extends AbstractValidator {
             if (isotope.getMassNumber() != null &&
                 isotope.getMassNumber() != 0) {
                 boolean foundKnownIsotope = false;
-                for (int i = 0; i < isotopes.length; i++) {
-                    if (Objects.equals(isotopes[i].getMassNumber(), isotope.getMassNumber())) {
+                for (IIsotope iIsotope : isotopes) {
+                    if (Objects.equals(iIsotope.getMassNumber(), isotope.getMassNumber())) {
                         foundKnownIsotope = true;
                     }
                 }
@@ -304,14 +304,13 @@ public class BasicValidator extends AbstractValidator {
             } else {
                 IAtomType failedOn = null;
                 boolean foundMatchingAtomType = false;
-                for (int j = 0; j < atomTypes.length; j++) {
-                    IAtomType type = atomTypes[j];
+                for (IAtomType type : atomTypes) {
                     if (Objects.equals(atom.getFormalCharge(), type.getFormalCharge())) {
                         foundMatchingAtomType = true;
                         if (bos == type.getBondOrderSum()) {
                             // skip this atom type
                         } else {
-                            failedOn = atomTypes[j];
+                            failedOn = type;
                         }
                     }
                 }

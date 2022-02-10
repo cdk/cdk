@@ -201,8 +201,7 @@ public class ShortestPathFingerprinter extends AbstractFingerprinter implements 
          */
         IRingSet sssr = Cycles.essential(container).toRingSet();
         RingSetManipulator.sort(sssr);
-        for (Iterator<IAtomContainer> it = sssr.atomContainers().iterator(); it.hasNext();) {
-            IAtomContainer ring = it.next();
+        for (IAtomContainer ring : sssr.atomContainers()) {
             int toHashCode = String.valueOf(ring.getAtomCount()).hashCode();
             paths.add(patternIndex, toHashCode);
             patternIndex++;
@@ -211,8 +210,7 @@ public class ShortestPathFingerprinter extends AbstractFingerprinter implements 
          * Check for the charges
          */
         List<String> l = new ArrayList<>();
-        for (Iterator<IAtom> it = container.atoms().iterator(); it.hasNext();) {
-            IAtom atom = it.next();
+        for (IAtom atom : container.atoms()) {
             int charge = atom.getFormalCharge() == null ? 0 : atom.getFormalCharge();
             if (charge != 0) {
                 l.add(atom.getSymbol().concat(String.valueOf(charge)));
@@ -227,8 +225,7 @@ public class ShortestPathFingerprinter extends AbstractFingerprinter implements 
         /*
          * atom stereo parity
          */
-        for (Iterator<IAtom> it = container.atoms().iterator(); it.hasNext();) {
-            IAtom atom = it.next();
+        for (IAtom atom : container.atoms()) {
             int st = atom.getStereoParity() == null ? 0 : atom.getStereoParity();
             if (st != 0) {
                 l.add(atom.getSymbol().concat(String.valueOf(st)));

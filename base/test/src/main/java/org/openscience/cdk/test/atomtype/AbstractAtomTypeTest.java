@@ -153,8 +153,8 @@ abstract public class AbstractAtomTypeTest extends CDKTestCase implements IAtomT
         IAtomType[] expectedTypesArray = getFactory().getAllAtomTypes();
         Set<String> alreadyDefinedTypes = new HashSet<>();
 
-        for (int i = 0; i < expectedTypesArray.length; i++) {
-            String definedType = expectedTypesArray[i].getAtomTypeName();
+        for (IAtomType iAtomType : expectedTypesArray) {
+            String definedType = iAtomType.getAtomTypeName();
             if (alreadyDefinedTypes.contains(definedType)) {
                 Assert.fail("Duplicate atom type definition in XML: " + definedType);
             }
@@ -168,8 +168,8 @@ abstract public class AbstractAtomTypeTest extends CDKTestCase implements IAtomT
 
         Set<String> definedTypes = new HashSet<>();
         IAtomType[] expectedTypesArray = factory.getAllAtomTypes();
-        for (int i = 0; i < expectedTypesArray.length; i++) {
-            definedTypes.add(expectedTypesArray[i].getAtomTypeName());
+        for (IAtomType iAtomType : expectedTypesArray) {
+            definedTypes.add(iAtomType.getAtomTypeName());
         }
 
         if (definedTypes.size() == testedAtomTypes.size() && definedTypes.containsAll(testedAtomTypes)) {

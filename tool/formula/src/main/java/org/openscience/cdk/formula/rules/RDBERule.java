@@ -126,8 +126,7 @@ public class RDBERule implements IRule {
         logger.info("Start validation of ", formula);
 
         List<Double> RDBEList = getRDBEValue(formula);
-        for (Iterator<Double> it = RDBEList.iterator(); it.hasNext();) {
-            double RDBE = it.next();
+        for (double RDBE : RDBEList) {
             if (min <= RDBE && RDBE <= 30) if (validate(formula, RDBE)) return 1.0;
         }
 
@@ -176,12 +175,11 @@ public class RDBERule implements IRule {
         // (v+n-1)!/[n!(v-1)!]
         int nE = 0; // number of elements to change
         List<Integer> nV = new ArrayList<>(); // number of valence changing
-        for (Iterator<IIsotope> it = formula.isotopes().iterator(); it.hasNext();) {
-            IIsotope isotope = it.next();
+        for (IIsotope isotope : formula.isotopes()) {
             int[] valence = getOxidationState(formula.getBuilder().newInstance(IAtom.class, isotope.getSymbol()));
             if (valence.length != 1) {
-                for (int i = 0; i < valence.length; i++) {
-                    nV.add(valence[i]);
+                for (int j : valence) {
+                    nV.add(j);
                 }
                 nE += MolecularFormulaManipulator.getElementCount(formula,
                         formula.getBuilder().newInstance(IElement.class, isotope.getSymbol()));
@@ -190,8 +188,7 @@ public class RDBERule implements IRule {
 
         double RDBE = 0;
         if (nE == 0) {
-            for (Iterator<IIsotope> it = formula.isotopes().iterator(); it.hasNext();) {
-                IIsotope isotope = it.next();
+            for (IIsotope isotope : formula.isotopes()) {
                 int[] valence = getOxidationState(formula.getBuilder().newInstance(IAtom.class, isotope.getSymbol()));
                 double value = (valence[0] - 2) * formula.getIsotopeCount(isotope) / 2.0;
                 RDBE += value;
@@ -200,8 +197,7 @@ public class RDBERule implements IRule {
             RDBEList.add(RDBE);
         } else {
             double RDBE_1 = 0;
-            for (Iterator<IIsotope> it = formula.isotopes().iterator(); it.hasNext();) {
-                IIsotope isotope = it.next();
+            for (IIsotope isotope : formula.isotopes()) {
                 int[] valence = getOxidationState(formula.getBuilder().newInstance(IAtom.class, isotope.getSymbol()));
                 double value = (valence[0] - 2) * formula.getIsotopeCount(isotope) * 0.5;
                 RDBE_1 += value;
@@ -214,8 +210,8 @@ public class RDBERule implements IRule {
             while (c.hasMoreElements()) {
                 double RDBE_int = 0.0;
                 Object[] combo = (Object[]) c.nextElement();
-                for (int i = 0; i < combo.length; i++) {
-                    int value = (Integer.parseInt((String) combo[i]) - 2) / 2;
+                for (Object o : combo) {
+                    int value = (Integer.parseInt((String) o) - 2) / 2;
                     RDBE_int += value;
                 }
                 RDBE = 1 + RDBE_1 + RDBE_int;

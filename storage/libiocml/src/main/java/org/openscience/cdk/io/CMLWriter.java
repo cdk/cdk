@@ -197,16 +197,16 @@ public class CMLWriter extends DefaultChemObjectWriter {
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IAtom.class.equals(interfaces[i])) return true;
-            if (IBond.class.equals(interfaces[i])) return true;
-            if (ICrystal.class.equals(interfaces[i])) return true;
-            if (IChemModel.class.equals(interfaces[i])) return true;
-            if (IChemFile.class.equals(interfaces[i])) return true;
-            if (IChemSequence.class.equals(interfaces[i])) return true;
-            if (IAtomContainerSet.class.equals(interfaces[i])) return true;
-            if (IReactionSet.class.equals(interfaces[i])) return true;
-            if (IReaction.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IAtom.class.equals(anInterface)) return true;
+            if (IBond.class.equals(anInterface)) return true;
+            if (ICrystal.class.equals(anInterface)) return true;
+            if (IChemModel.class.equals(anInterface)) return true;
+            if (IChemFile.class.equals(anInterface)) return true;
+            if (IChemSequence.class.equals(anInterface)) return true;
+            if (IAtomContainerSet.class.equals(anInterface)) return true;
+            if (IReactionSet.class.equals(anInterface)) return true;
+            if (IReaction.class.equals(anInterface)) return true;
         }
         return false;
     }

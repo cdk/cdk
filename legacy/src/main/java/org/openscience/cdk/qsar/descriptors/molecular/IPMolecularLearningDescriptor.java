@@ -161,13 +161,11 @@ public class IPMolecularLearningDescriptor extends AbstractMolecularDescriptor i
     public DescriptorValue calculatePlus(IAtomContainer container) throws CDKException {
 
         ArrayList<Double> dar = new ArrayList<>();
-        for (Iterator<IAtom> itA = container.atoms().iterator(); itA.hasNext();) {
-            IAtom atom = itA.next();
+        for (IAtom atom : container.atoms()) {
             double value = IonizationPotentialTool.predictIP(container, atom);
             if (value != 0) dar.add(value);
         }
-        for (Iterator<IBond> itB = container.bonds().iterator(); itB.hasNext();) {
-            IBond bond = itB.next();
+        for (IBond bond : container.bonds()) {
             if (bond.getOrder() == IBond.Order.DOUBLE && bond.getBegin().getAtomicNumber() == IElement.C
                     && bond.getEnd().getAtomicNumber() == IElement.C) {
                 double value = IonizationPotentialTool.predictIP(container, bond);

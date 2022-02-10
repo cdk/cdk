@@ -229,8 +229,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
         IAtomContainerSet iSet = ac.getBuilder().newInstance(IAtomContainerSet.class);
         iSet.addAtomContainer(ac);
 
-        if (acSet != null) for (Iterator<IAtomContainer> it = acSet.atomContainers().iterator(); it.hasNext();) {
-            IAtomContainer container = it.next();
+        if (acSet != null) for (IAtomContainer container : acSet.atomContainers()) {
             ac = setFlags(container, ac, true);
 
             // Aromatic don't break its double bond homolytically
@@ -252,7 +251,8 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
                 IAtomContainer aa = setAntiFlags(container, ac, number, true);
                 if (aa != null) {
                     IAtomContainerSet ab = gR2.getStructures(aa);
-                    if (ab.getAtomContainerCount() > 1) for (int j = 1; j < ab.getAtomContainerCount(); j++) { // the first is already added
+                    if (ab.getAtomContainerCount() > 1)
+                        for (int j = 1; j < ab.getAtomContainerCount(); j++) { // the first is already added
                             iSet.addAtomContainer(ab.getAtomContainer(j));
                         }
                     ac = setAntiFlags(container, aa, number, false);
@@ -474,12 +474,12 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
      * @return          Container with added flags
      */
     private IAtomContainer setFlags(IAtomContainer container, IAtomContainer ac, boolean b) {
-        for (Iterator<IAtom> it = container.atoms().iterator(); it.hasNext();) {
-            int positionA = ac.indexOf(it.next());
+        for (IAtom iAtom : container.atoms()) {
+            int positionA = ac.indexOf(iAtom);
             ac.getAtom(positionA).setFlag(CDKConstants.REACTIVE_CENTER, b);
         }
-        for (Iterator<IBond> it = container.bonds().iterator(); it.hasNext();) {
-            int positionB = ac.indexOf(it.next());
+        for (IBond iBond : container.bonds()) {
+            int positionB = ac.indexOf(iBond);
             ac.getBond(positionB).setFlag(CDKConstants.REACTIVE_CENTER, b);
 
         }

@@ -153,14 +153,12 @@ public class BiconnectivityInspector {
 
                 Set connected = new HashSet();
 
-                for (Iterator it = dfsVertices.iterator(); it.hasNext();) {
-                    Object v = it.next();
-
+                for (Object v : dfsVertices) {
                     visitedVertices.add(v);
 
                     // find all adjacent non-tree edges
-                    for (Iterator adjacentEdges = subgraph.edgesOf(v).iterator(); adjacentEdges.hasNext();) {
-                        Edge l = (Edge) adjacentEdges.next();
+                    for (Object o : subgraph.edgesOf(v)) {
+                        Edge l = (Edge) o;
                         if (!treeEdges.contains(l)) {
                             h.addVertex(l);
                             Object u = l.oppositeVertex(v);

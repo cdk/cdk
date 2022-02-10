@@ -819,8 +819,8 @@ public class AtomTetrahedralLigandPlacer3D {
         List bonds = ac.getConnectedBondsList(atom);
         IAtomContainer connectedAtoms = atom.getBuilder().newInstance(IAtomContainer.class);
         IAtom connectedAtom = null;
-        for (int i = 0; i < bonds.size(); i++) {
-            connectedAtom = ((IBond) bonds.get(i)).getOther(atom);
+        for (Object bond : bonds) {
+            connectedAtom = ((IBond) bond).getOther(atom);
             if (connectedAtom.getFlag(CDKConstants.ISPLACED)) {
                 connectedAtoms.addAtom(connectedAtom);
             }
@@ -839,8 +839,8 @@ public class AtomTetrahedralLigandPlacer3D {
     public IAtomContainer getUnsetAtomsInAtomContainer(IAtom atom, IAtomContainer ac) {
         List atoms = ac.getConnectedAtomsList(atom);
         IAtomContainer connectedAtoms = atom.getBuilder().newInstance(IAtomContainer.class);
-        for (int i = 0; i < atoms.size(); i++) {
-            IAtom curAtom = (IAtom) atoms.get(i);
+        for (Object o : atoms) {
+            IAtom curAtom = (IAtom) o;
             if (!curAtom.getFlag(CDKConstants.ISPLACED)) {//&& atoms[i].getPoint3d() == null) {
                 connectedAtoms.addAtom(curAtom);
             }
@@ -850,8 +850,8 @@ public class AtomTetrahedralLigandPlacer3D {
 
     public boolean hasUnsetNeighbour(IAtom atom, IAtomContainer ac) {
         List atoms = ac.getConnectedAtomsList(atom);
-        for (int i = 0; i < atoms.size(); i++) {
-            IAtom curAtom = (IAtom) atoms.get(i);
+        for (Object o : atoms) {
+            IAtom curAtom = (IAtom) o;
             if (!curAtom.getFlag(CDKConstants.ISPLACED)) {//&& atoms[i].getPoint3d() == null) {
                 return true;
             }
@@ -871,8 +871,8 @@ public class AtomTetrahedralLigandPlacer3D {
     public IAtom getPlacedHeavyAtomInAtomContainer(IAtom atomA, IAtom atomB, IAtomContainer ac) {
         List atoms = ac.getConnectedAtomsList(atomA);
         IAtom atom = null;
-        for (int i = 0; i < atoms.size(); i++) {
-            IAtom curAtom = (IAtom) atoms.get(i);
+        for (Object o : atoms) {
+            IAtom curAtom = (IAtom) o;
             if (curAtom.getFlag(CDKConstants.ISPLACED) && curAtom.getAtomicNumber() != IElement.H && !Objects.equals(curAtom, atomB)) {
                 return curAtom;
             }

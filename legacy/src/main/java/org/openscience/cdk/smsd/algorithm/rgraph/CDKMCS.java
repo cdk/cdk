@@ -540,8 +540,7 @@ public class CDKMCS {
         IAtom atom;
         IBond bond;
 
-        for (Iterator<CDKRMap> i = rMapList.iterator(); i.hasNext();) {
-            CDKRMap rMap = i.next();
+        for (CDKRMap rMap : rMapList) {
             if (key == CDKMCS.ID1) {
                 bond = graph.getBond(rMap.getId1());
             } else {
@@ -728,13 +727,13 @@ public class CDKMCS {
             IAtom[] atom2 = BondManipulator.getAtomArray(bond2);
             for (int j = 0; j < 2; j++) {
                 List<IBond> bondsConnectedToAtom1j = sourceGraph.getConnectedBondsList(atom1[j]);
-                for (int k = 0; k < bondsConnectedToAtom1j.size(); k++) {
-                    if (!bondsConnectedToAtom1j.get(k).equals(bond1)) {
-                        IBond testBond = bondsConnectedToAtom1j.get(k);
-                        for (int m = 0; m < list.size(); m++) {
+                for (IBond iBond : bondsConnectedToAtom1j) {
+                    if (!iBond.equals(bond1)) {
+                        IBond testBond = iBond;
+                        for (CDKRMap cdkrMap : list) {
                             IBond testBond2;
-                            if ((list.get(m)).getId1() == sourceGraph.indexOf(testBond)) {
-                                testBond2 = targetGraph.getBond((list.get(m)).getId2());
+                            if (cdkrMap.getId1() == sourceGraph.indexOf(testBond)) {
+                                testBond2 = targetGraph.getBond(cdkrMap.getId2());
                                 for (int n = 0; n < 2; n++) {
                                     List<IBond> bondsToTest = targetGraph.getConnectedBondsList(atom2[n]);
                                     if (bondsToTest.contains(testBond2)) {

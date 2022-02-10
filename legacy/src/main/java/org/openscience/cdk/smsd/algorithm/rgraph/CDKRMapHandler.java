@@ -349,13 +349,13 @@ public class CDKRMapHandler {
                 IAtom[] tAtoms = BondManipulator.getAtomArray(tBond);
                 for (int j = 0; j < 2; j++) {
                     List<IBond> bondsConnectedToAtom1j = graph1.getConnectedBondsList(qAtoms[j]);
-                    for (int k = 0; k < bondsConnectedToAtom1j.size(); k++) {
-                        if (!bondsConnectedToAtom1j.get(k).equals(qBond)) {
-                            IBond testBond = bondsConnectedToAtom1j.get(k);
-                            for (int m = 0; m < rMapList.size(); m++) {
+                    for (IBond iBond : bondsConnectedToAtom1j) {
+                        if (!iBond.equals(qBond)) {
+                            IBond testBond = iBond;
+                            for (CDKRMap cdkrMap : rMapList) {
                                 IBond testBond2;
-                                if ((rMapList.get(m)).getId1() == graph1.indexOf(testBond)) {
-                                    testBond2 = graph2.getBond((rMapList.get(m)).getId2());
+                                if (cdkrMap.getId1() == graph1.indexOf(testBond)) {
+                                    testBond2 = graph2.getBond(cdkrMap.getId2());
                                     for (int n = 0; n < 2; n++) {
                                         List<IBond> bondsToTest = graph2.getConnectedBondsList(tAtoms[n]);
                                         if (bondsToTest.contains(testBond2)) {

@@ -157,8 +157,7 @@ public class ChemFileManipulatorTest extends CDKTestCase {
         int reactionSetCount = 0;
         int chemModelCount = 0;
         int chemSequenceCount = 0;
-        for (Iterator<IChemObject> iter = list.iterator(); iter.hasNext();) {
-            Object o = iter.next();
+        for (Object o : list) {
             if (o instanceof IAtom) ++atomCount;
             if (o instanceof IBond) ++bondCount;
             if (o instanceof IAtomContainer)

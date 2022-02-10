@@ -1351,8 +1351,7 @@ public class MolecularFormulaManipulator {
 
         List<String> eleSymb = new ArrayList<>();
         List<Integer> eleCount = new ArrayList<>();
-        for (int i = 0; i < listMF.size(); i++) {
-            String thisFormula = listMF.get(i);
+        for (String thisFormula : listMF) {
             for (int f = 0; f < thisFormula.length(); f++) {
                 thisChar = thisFormula.charAt(f);
                 if (f < thisFormula.length()) {

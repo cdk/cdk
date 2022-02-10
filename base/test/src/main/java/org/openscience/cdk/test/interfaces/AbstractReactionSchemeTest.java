@@ -81,8 +81,7 @@ public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest
 
         Assert.assertEquals(3, scheme.getReactionCount());
         int count = 0;
-        for (Iterator<IReaction> it = scheme.reactions().iterator(); it.hasNext();) {
-            it.next();
+        for (IReaction iReaction : scheme.reactions()) {
             ++count;
         }
         Assert.assertEquals(3, count);

@@ -132,8 +132,7 @@ public class GIMatrix {
     public GIMatrix(GIMatrix[][] table) throws BadMatrixFormatException {
         verifyTableFormat(table);
         m = n = 0;
-        for (int i = 0; i < table.length; i++)
-            m += table[i][0].height();
+        for (GIMatrix[] giMatrices : table) m += giMatrices[0].height();
         for (int j = 0; j < table[0].length; j++)
             n += table[0][j].width();
         double[][] temp = new double[m][n];
@@ -770,11 +769,11 @@ public class GIMatrix {
         if ((testedTable.length == 0) || (testedTable[0].length == 0)) throw new BadMatrixFormatException();
         int noOfColumns = testedTable[0].length;
         int currentHeigth, currentWidth;
-        for (int i = 0; i < testedTable.length; i++) { // verifies correspondence of m's (heigth)
-            if (testedTable[i].length != noOfColumns) throw new BadMatrixFormatException();
-            currentHeigth = testedTable[i][0].height();
+        for (GIMatrix[] giMatrices : testedTable) { // verifies correspondence of m's (heigth)
+            if (giMatrices.length != noOfColumns) throw new BadMatrixFormatException();
+            currentHeigth = giMatrices[0].height();
             for (int j = 1; j < testedTable[0].length; j++)
-                if (testedTable[i][j].height() != currentHeigth) throw new BadMatrixFormatException();
+                if (giMatrices[j].height() != currentHeigth) throw new BadMatrixFormatException();
         }
         for (int j = 0; j < testedTable[0].length; j++) { // verifies correspondence of n's (width)
             currentWidth = testedTable[0][j].width();

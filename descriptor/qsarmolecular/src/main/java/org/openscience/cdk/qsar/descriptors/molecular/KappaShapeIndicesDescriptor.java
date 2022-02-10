@@ -152,16 +152,16 @@ public class KappaShapeIndicesDescriptor extends AbstractMolecularDescriptor imp
         for (int a1 = 0; a1 < atomsCount; a1++) {
             bond1 = 0;
             firstAtomNeighboors = atomContainer.getConnectedAtomsList(atomContainer.getAtom(a1));
-            for (int a2 = 0; a2 < firstAtomNeighboors.size(); a2++) {
-                bond1 = atomContainer.indexOf(atomContainer.getBond(atomContainer.getAtom(a1), (IAtom) firstAtomNeighboors.get(a2)));
+            for (Object firstAtomNeighboor : firstAtomNeighboors) {
+                bond1 = atomContainer.indexOf(atomContainer.getBond(atomContainer.getAtom(a1), (IAtom) firstAtomNeighboor));
                 if (!singlePaths.contains(new Double(bond1))) {
                     singlePaths.add(bond1);
                     java.util.Collections.sort(singlePaths);
                 }
-                secondAtomNeighboors = atomContainer.getConnectedAtomsList((IAtom) firstAtomNeighboors.get(a2));
-                for (int a3 = 0; a3 < secondAtomNeighboors.size(); a3++) {
-                    bond2 = atomContainer.indexOf(atomContainer.getBond((IAtom) firstAtomNeighboors.get(a2),
-                            (IAtom) secondAtomNeighboors.get(a3)));
+                secondAtomNeighboors = atomContainer.getConnectedAtomsList((IAtom) firstAtomNeighboor);
+                for (Object secondAtomNeighboor : secondAtomNeighboors) {
+                    bond2 = atomContainer.indexOf(atomContainer.getBond((IAtom) firstAtomNeighboor,
+                            (IAtom) secondAtomNeighboor));
                     if (!singlePaths.contains(new Double(bond2))) {
                         singlePaths.add(bond2);
                     }
@@ -174,10 +174,10 @@ public class KappaShapeIndicesDescriptor extends AbstractMolecularDescriptor imp
                     if (!doublePaths.contains(tmpbond2) && (bond1 != bond2)) {
                         doublePaths.add(tmpbond2);
                     }
-                    thirdAtomNeighboors = atomContainer.getConnectedAtomsList((IAtom) secondAtomNeighboors.get(a3));
-                    for (int a4 = 0; a4 < thirdAtomNeighboors.size(); a4++) {
-                        bond3 = atomContainer.indexOf(atomContainer.getBond((IAtom) secondAtomNeighboors.get(a3),
-                                (IAtom) thirdAtomNeighboors.get(a4)));
+                    thirdAtomNeighboors = atomContainer.getConnectedAtomsList((IAtom) secondAtomNeighboor);
+                    for (Object thirdAtomNeighboor : thirdAtomNeighboors) {
+                        bond3 = atomContainer.indexOf(atomContainer.getBond((IAtom) secondAtomNeighboor,
+                                (IAtom) thirdAtomNeighboor));
                         if (!singlePaths.contains(new Double(bond3))) {
                             singlePaths.add(bond3);
                         }

@@ -166,9 +166,9 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
         IAtomType[] expectedTypes = factory.getAllAtomTypes();
         if (expectedTypes.length != testedAtomTypes.size()) {
             String errorMessage = "Atom types not tested:";
-            for (int i = 0; i < expectedTypes.length; i++) {
-                if (!testedAtomTypes.containsKey(expectedTypes[i].getAtomTypeName()))
-                    errorMessage += " " + expectedTypes[i].getAtomTypeName();
+            for (IAtomType expectedType : expectedTypes) {
+                if (!testedAtomTypes.containsKey(expectedType.getAtomTypeName()))
+                    errorMessage += " " + expectedType.getAtomTypeName();
             }
             Assert.assertEquals(errorMessage, factory.getAllAtomTypes().length, testedAtomTypes.size());
         }

@@ -346,8 +346,8 @@ public class ValidatorEngine implements IValidator {
         // traverse into super class
         report.addReport(validateChemObject(subject));
         // traverse into hierarchy
-        for (Iterator<IReaction> iter = subject.reactions().iterator(); iter.hasNext();) {
-            report.addReport(validateReaction((IReaction) iter.next()));
+        for (IReaction iReaction : subject.reactions()) {
+            report.addReport(validateReaction(iReaction));
         }
         return report;
     }

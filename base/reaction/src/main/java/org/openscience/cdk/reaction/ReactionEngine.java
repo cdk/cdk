@@ -115,12 +115,11 @@ public class ReactionEngine {
         List<List<String>> paramDic = entry.getParameterClass();
 
         paramsMap2 = new ArrayList<>();
-        for (Iterator<List<String>> it = paramDic.iterator(); it.hasNext();) {
-            List<String> param = it.next();
+        for (List<String> param : paramDic) {
             String paramName = "org.openscience.cdk.reaction.type.parameters." + param.get(0);
             try {
                 IParameterReact ipc = (IParameterReact) this.getClass().getClassLoader().loadClass(paramName)
-                        .newInstance();
+                                                            .newInstance();
                 ipc.setParameter(Boolean.parseBoolean(param.get(1)));
                 ipc.setValue(param.get(2));
 
@@ -169,8 +168,7 @@ public class ReactionEngine {
      * @return           The IParameterReact
      */
     public IParameterReact getParameterClass(Class<?> paramClass) {
-        for (Iterator<IParameterReact> it = paramsMap2.iterator(); it.hasNext();) {
-            IParameterReact ipr = it.next();
+        for (IParameterReact ipr : paramsMap2) {
             if (ipr.getClass().equals(paramClass)) return ipr;
         }
 

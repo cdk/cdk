@@ -309,8 +309,7 @@ public class StructureResonanceGenerator {
             for (int ato = 0; ato < 2; ato++) {
                 IAtom atomA1 = bondA.getAtom(ato);
                 List<IBond> bondA1s = molecule.getConnectedBondsList(atomA1);
-                for (int j = 0; j < bondA1s.size(); j++) {
-                    IBond bondB = bondA1s.get(j);
+                for (IBond bondB : bondA1s) {
                     if (!newBondList.contains(bondB)) for (int k = 0; k < bondList.size(); k++)
                         if (bondList.get(k).equals(bondB)) if (flagBelonging[k] == 0) {
                             flagBelonging[k] = maxGroup;

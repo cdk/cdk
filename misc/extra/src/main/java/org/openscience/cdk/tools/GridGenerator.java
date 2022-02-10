@@ -87,11 +87,11 @@ public class GridGenerator {
         if (cubicGridFlag) {
             double min = minMax[0];
             double max = minMax[0];
-            for (int i = 0; i < minMax.length; i++) {
-                if (minMax[i] < min) {
-                    min = minMax[i];
-                } else if (minMax[i] > max) {
-                    max = minMax[i];
+            for (double v : minMax) {
+                if (v < min) {
+                    min = v;
+                } else if (v > max) {
+                    max = v;
                 }
             }
             setDimension(min, max);
@@ -175,8 +175,8 @@ public class GridGenerator {
         int dimCounter = 0;
         for (int z = 0; z < grid[0][0].length; z++) {
             for (int y = 0; y < grid[0].length; y++) {
-                for (int x = 0; x < grid.length; x++) {
-                    gridArray[dimCounter] = grid[x][y][z];
+                for (double[][] doubles : grid) {
+                    gridArray[dimCounter] = doubles[y][z];
                     dimCounter++;
                 }
             }
@@ -278,13 +278,13 @@ public class GridGenerator {
             int numberOfGridPoints = 0;
             for (int z = 0; z < grid[0][0].length; z++) {
                 for (int y = 0; y < grid[0].length; y++) {
-                    for (int x = 0; x < grid.length; x++) {
+                    for (double[][] doubles : grid) {
                         if (negative) {
-                            if (grid[x][y][z] <= cutOff) {
+                            if (doubles[y][z] <= cutOff) {
                                 numberOfGridPoints++;
                             }
                         } else {
-                            if (grid[x][y][z] >= cutOff) {
+                            if (doubles[y][z] >= cutOff) {
                                 numberOfGridPoints++;
                             }
                         }

@@ -111,8 +111,8 @@ public class DisjointSetForest {
      */
     public int[][] getSets() {
         int n = 0;
-        for (int i = 0; i < forest.length; i++) {
-            if (forest[i] < 0) {
+        for (int j : forest) {
+            if (j < 0) {
                 n++;
             }
         }

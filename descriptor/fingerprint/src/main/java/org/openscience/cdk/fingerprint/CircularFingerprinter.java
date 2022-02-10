@@ -301,8 +301,8 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
     public IBitFingerprint getBitFingerprint(IAtomContainer mol) throws CDKException {
         calculate(mol);
         final BitSet bits = new BitSet(length);
-        for (int n = 0; n < fplist.size(); n++) {
-            int i = fplist.get(n).hashCode;
+        for (FP fp : fplist) {
+            int i = fp.hashCode;
             long b = i >= 0 ? i : ((i & 0x7FFFFFFF) | (1L << 31));
             bits.set((int) (b % length));
         }
@@ -504,11 +504,10 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
     private int[] growAtoms(int[] atoms) {
         final int na = mol.getAtomCount();
         boolean[] mask = new boolean[na];
-        for (int n = 0; n < atoms.length; n++) {
-            mask[atoms[n]] = true;
-            int[] adj = atomAdj[atoms[n]];
-            for (int i = 0; i < adj.length; i++)
-                mask[adj[i]] = true;
+        for (int atom : atoms) {
+            mask[atom] = true;
+            int[] adj = atomAdj[atom];
+            for (int j : adj) mask[j] = true;
         }
         int sz = 0;
         for (int n = 0; n < na; n++)
@@ -750,11 +749,11 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
 
         // make sure every element in the path has exactly 2 neighbours within the path; otherwise it is spanning a bridge, which
         // is an undesirable ring definition
-        for (int n = 0; n < path.length; n++) {
-            int count = 0, p = path[n];
+        for (int j : path) {
+            int count = 0, p = j;
             for (int i = 0; i < atomAdj[p].length; i++)
-                for (int j = 0; j < path.length; j++)
-                    if (atomAdj[p][i] == path[j]) {
+                for (int k : path)
+                    if (atomAdj[p][i] == k) {
                         count++;
                         break;
                     }
@@ -774,8 +773,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
             path = newPath;
         }
 
-        for (int n = 0; n < rings.size(); n++) {
-            int[] look = rings.get(n);
+        for (int[] look : rings) {
             boolean same = true;
             for (int i = 0; i < psize; i++)
                 if (look[i] != path[i]) {
@@ -1091,8 +1089,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
     private void considerBioTypeAromaticity(final int[] ring) {
         final int rsz = ring.length;
         int countDouble = 0;
-        for (int n = 0; n < rsz; n++) {
-            final int a = ring[n];
+        for (final int a : ring) {
             if (hasDouble[a]) {
                 countDouble++;
                 continue;
@@ -1100,8 +1097,7 @@ public class CircularFingerprinter extends AbstractFingerprinter implements IFin
             if (!lonePair[a]) return;
         }
         if (countDouble < rsz - 2) return;
-        for (int n = 0; n < rsz; n++)
-            maskAro[ring[n]] = true;
+        for (int i : ring) maskAro[i] = true;
     }
 
     // if the given ring is a tetrazole, mark the aroms accordingly; must be ring size length 5; it's possible to fool the

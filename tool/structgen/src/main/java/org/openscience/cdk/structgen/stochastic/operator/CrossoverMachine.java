@@ -119,32 +119,32 @@ public class CrossoverMachine {
             blueChild[1] = dad.getBuilder().newInstance(IAtomContainer.class, mom);
 
             List<IAtom> blueAtomsInRedChild0 = new ArrayList<>();
-            for (int j = 0; j < blueAtoms.size(); j++) {
-                blueAtomsInRedChild0.add(redChild[0].getAtom((Integer) blueAtoms.get(j)));
+            for (Integer blueAtom1 : blueAtoms) {
+                blueAtomsInRedChild0.add(redChild[0].getAtom((Integer) blueAtom1));
             }
-            for (int j = 0; j < blueAtomsInRedChild0.size(); j++) {
-                redChild[0].removeAtom(blueAtomsInRedChild0.get(j));
+            for (IAtom element : blueAtomsInRedChild0) {
+                redChild[0].removeAtom(element);
             }
             List<IAtom> blueAtomsInRedChild1 = new ArrayList<>();
-            for (int j = 0; j < blueAtoms.size(); j++) {
-                blueAtomsInRedChild1.add(redChild[1].getAtom((Integer) blueAtoms.get(j)));
+            for (Integer blueAtom : blueAtoms) {
+                blueAtomsInRedChild1.add(redChild[1].getAtom((Integer) blueAtom));
             }
-            for (int j = 0; j < blueAtomsInRedChild1.size(); j++) {
-                redChild[1].removeAtom(blueAtomsInRedChild1.get(j));
+            for (IAtom item : blueAtomsInRedChild1) {
+                redChild[1].removeAtom(item);
             }
             List<IAtom> redAtomsInBlueChild0 = new ArrayList<>();
-            for (int j = 0; j < redAtoms.size(); j++) {
-                redAtomsInBlueChild0.add(blueChild[0].getAtom((Integer) redAtoms.get(j)));
+            for (Integer integer : redAtoms) {
+                redAtomsInBlueChild0.add(blueChild[0].getAtom((Integer) integer));
             }
-            for (int j = 0; j < redAtomsInBlueChild0.size(); j++) {
-                blueChild[0].removeAtom(redAtomsInBlueChild0.get(j));
+            for (IAtom value : redAtomsInBlueChild0) {
+                blueChild[0].removeAtom(value);
             }
             List<IAtom> redAtomsInBlueChild1 = new ArrayList<>();
-            for (int j = 0; j < redAtoms.size(); j++) {
-                redAtomsInBlueChild1.add(blueChild[1].getAtom((Integer) redAtoms.get(j)));
+            for (Integer redAtom : redAtoms) {
+                redAtomsInBlueChild1.add(blueChild[1].getAtom((Integer) redAtom));
             }
-            for (int j = 0; j < redAtomsInBlueChild1.size(); j++) {
-                blueChild[1].removeAtom(redAtomsInBlueChild1.get(j));
+            for (IAtom iAtom : redAtomsInBlueChild1) {
+                blueChild[1].removeAtom(iAtom);
             }
             //if the two fragments of one and only one parent have an uneven number
             //of attachment points, we need to rearrange them

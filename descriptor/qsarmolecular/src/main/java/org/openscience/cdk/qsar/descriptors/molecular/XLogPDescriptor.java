@@ -833,11 +833,11 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
             pairCheck = initializeHydrogenPairCheck(new int[atomCount][atomCount]);
         }
         AllPairsShortestPaths apsp = new AllPairsShortestPaths(ac);
-        for (int i = 0; i < hBondAcceptors.size(); i++) {
-            for (int j = 0; j < hBondDonors.size(); j++) {
-                if (checkRingLink(rs, ac, ac.getAtom(hBondAcceptors.get(i)))
-                        || checkRingLink(rs, ac, ac.getAtom(hBondDonors.get(j).intValue()))) {
-                    int dist = apsp.from(ac.getAtom(hBondAcceptors.get(i))).distanceTo(ac.getAtom(hBondDonors.get(j)));
+        for (Integer hBondAcceptor : hBondAcceptors) {
+            for (Integer hBondDonor : hBondDonors) {
+                if (checkRingLink(rs, ac, ac.getAtom(hBondAcceptor))
+                        || checkRingLink(rs, ac, ac.getAtom(hBondDonor.intValue()))) {
+                    int dist = apsp.from(ac.getAtom(hBondAcceptor)).distanceTo(ac.getAtom(hBondDonor));
                     //					//logger.debug(" Acc:"+checkRingLink(rs,ac,atoms[((Integer)hBondAcceptors.get(i)).intValue()])
                     //					+" S:"+atoms[((Integer)hBondAcceptors.get(i)).intValue()].getSymbol()
                     //					+" Nr:"+((Integer)hBondAcceptors.get(i)).intValue()
@@ -845,19 +845,19 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
                     //					+" S:"+atoms[((Integer)hBondDonors.get(j)).intValue()].getSymbol()
                     //					+" Nr:"+((Integer)hBondDonors.get(j)).intValue()
                     //					+" i:"+i+" j:"+j+" path:"+path.size());
-                    if (checkRingLink(rs, ac, ac.getAtom(hBondAcceptors.get(i)))
-                            && checkRingLink(rs, ac, ac.getAtom(hBondDonors.get(j).intValue()))) {
-                        if (dist == 3 && pairCheck[hBondAcceptors.get(i)][hBondDonors.get(j)] == 0) {
+                    if (checkRingLink(rs, ac, ac.getAtom(hBondAcceptor))
+                            && checkRingLink(rs, ac, ac.getAtom(hBondDonor.intValue()))) {
+                        if (dist == 3 && pairCheck[hBondAcceptor][hBondDonor] == 0) {
                             xlogP += 0.429;
-                            pairCheck[hBondAcceptors.get(i)][hBondDonors.get(j)] = 1;
-                            pairCheck[hBondDonors.get(j)][hBondAcceptors.get(i)] = 1;
+                            pairCheck[hBondAcceptor][hBondDonor] = 1;
+                            pairCheck[hBondDonor][hBondAcceptor] = 1;
                             //logger.debug("XLOGP: Internal HBonds 1-4	 0.429");
                         }
                     } else {
-                        if (dist == 4 && pairCheck[hBondAcceptors.get(i)][hBondDonors.get(j)] == 0) {
+                        if (dist == 4 && pairCheck[hBondAcceptor][hBondDonor] == 0) {
                             xlogP += 0.429;
-                            pairCheck[hBondAcceptors.get(i)][hBondDonors.get(j)] = 1;
-                            pairCheck[hBondDonors.get(j)][hBondAcceptors.get(i)] = 1;
+                            pairCheck[hBondAcceptor][hBondDonor] = 1;
+                            pairCheck[hBondDonor][hBondAcceptor] = 1;
                             //logger.debug("XLOGP: Internal HBonds 1-5	 0.429");
                         }
                     }
@@ -1202,22 +1202,22 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
         List neighbours = ac.getConnectedAtomsList(atom);
         int picounter = 0;
         List bonds = null;
-        for (int i = 0; i < neighbours.size(); i++) {
-            IAtom neighbour = (IAtom) neighbours.get(i);
+        for (Object value : neighbours) {
+            IAtom neighbour = (IAtom) value;
             bonds = ac.getConnectedBondsList(neighbour);
-            for (int j = 0; j < bonds.size(); j++) {
-                IBond bond = (IBond) bonds.get(j);
+            for (Object o : bonds) {
+                IBond bond = (IBond) o;
                 if (bond.getOrder() != IBond.Order.SINGLE && !bond.getOther(neighbour).equals(atom)
                         && neighbour.getAtomicNumber() != IElement.P && neighbour.getAtomicNumber() != IElement.S) {
                     picounter += 1;
                 }/*
-                  * else if (bonds[j].getOther(neighbours[i])!=atom &&
-                  * neighbours[i].getAtomicNumber() != IElement.P &&
-                  * neighbours[i].getAtomicNumber() != IElement.S &&
-                  * bonds[j].getOther
-                  * (neighbours[i]).getFlag(CDKConstants.ISAROMATIC)){ picounter
-                  * += 1; }
-                  */
+                 * else if (bonds[j].getOther(neighbours[i])!=atom &&
+                 * neighbours[i].getAtomicNumber() != IElement.P &&
+                 * neighbours[i].getAtomicNumber() != IElement.S &&
+                 * bonds[j].getOther
+                 * (neighbours[i]).getFlag(CDKConstants.ISAROMATIC)){ picounter
+                 * += 1; }
+                 */
             }
         }
         return picounter;
@@ -1235,8 +1235,8 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
         List first = null;
         if (neighbour0.getAtomicNumber() == IElement.C) {
             first = ac.getConnectedAtomsList(neighbour0);
-            for (int i = 0; i < first.size(); i++) {
-                IAtom conAtom = (IAtom) first.get(i);
+            for (Object o : first) {
+                IAtom conAtom = (IAtom) o;
                 if (conAtom.getAtomicNumber() == IElement.O) {
                     if (ac.getBond(neighbour0, conAtom).getOrder() == IBond.Order.SINGLE) {
                         if (ac.getConnectedBondsCount(conAtom) > 1 && getHydrogenCount(ac, conAtom) == 0) {
@@ -1263,12 +1263,12 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
         List second = null;
         IBond bond = null;
         //int counter = 0;
-        for (int i = 0; i < neighbours.size(); i++) {
-            IAtom neighbour = (IAtom) neighbours.get(i);
+        for (Object value : neighbours) {
+            IAtom neighbour = (IAtom) value;
             if (neighbour.getAtomicNumber() == IElement.N) {
                 second = ac.getConnectedAtomsList(neighbour);
-                for (int b = 0; b < second.size(); b++) {
-                    IAtom conAtom = (IAtom) second.get(b);
+                for (Object o : second) {
+                    IAtom conAtom = (IAtom) o;
                     if (conAtom.getAtomicNumber() == IElement.O) {
                         bond = ac.getBond(neighbour, conAtom);
                         if (bond.getOrder() == IBond.Order.DOUBLE) {
@@ -1314,12 +1314,12 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
         List second = null;
         IBond bond = null;
         int counter = 0;
-        for (int i = 0; i < neighbours.size(); i++) {
-            IAtom neighbour = (IAtom) neighbours.get(i);
+        for (Object value : neighbours) {
+            IAtom neighbour = (IAtom) value;
             if (neighbour.getAtomicNumber() == IElement.C) {
                 second = ac.getConnectedAtomsList(neighbour);
-                for (int b = 0; b < second.size(); b++) {
-                    IAtom conAtom = (IAtom) second.get(b);
+                for (Object o : second) {
+                    IAtom conAtom = (IAtom) o;
                     if (conAtom.getAtomicNumber() == IElement.O) {
                         bond = ac.getBond(neighbour, conAtom);
                         if (bond.getOrder() == IBond.Order.DOUBLE) {
@@ -1346,24 +1346,24 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
         List third = null;
         //org.openscience.cdk.interfaces.IAtom[] fourth = null;
         if (first.size() > 0) {
-            for (int i = 0; i < first.size(); i++) {
-                IAtom firstAtom = (IAtom) first.get(i);
+            for (Object item : first) {
+                IAtom firstAtom = (IAtom) item;
                 if (firstAtom.getAtomicNumber() == IElement.C || firstAtom.getAtomicNumber() == IElement.H) {
                 } else {
                     return false;
                 }
                 second = ac.getConnectedAtomsList(firstAtom);
                 if (second.size() > 0) {
-                    for (int b = 0; b < second.size(); b++) {
-                        IAtom secondAtom = (IAtom) second.get(b);
+                    for (Object value : second) {
+                        IAtom secondAtom = (IAtom) value;
                         if (secondAtom.getAtomicNumber() == IElement.C || secondAtom.getAtomicNumber() == IElement.H) {
                         } else {
                             return false;
                         }
                         third = ac.getConnectedAtomsList(secondAtom);
                         if (third.size() > 0) {
-                            for (int c = 0; c < third.size(); c++) {
-                                IAtom thirdAtom = (IAtom) third.get(c);
+                            for (Object o : third) {
+                                IAtom thirdAtom = (IAtom) o;
                                 if (thirdAtom.getAtomicNumber() == IElement.C || thirdAtom.getAtomicNumber() == IElement.H) {
                                 } else {
                                     return false;

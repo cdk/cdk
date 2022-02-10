@@ -88,8 +88,7 @@ public class GaussiansCalculationTest {
                 Orbitals orbitals = new Orbitals(basis);
 
                 int count_electrons = 0;
-                for (int i = 0; i < atoms.length; i++)
-                    count_electrons += atoms[i].getAtomicNumber();
+                for (IAtom atom : atoms) count_electrons += atom.getAtomicNumber();
                 orbitals.setCountElectrons(count_electrons);
 
                 ClosedShellJob job = new ClosedShellJob(orbitals);

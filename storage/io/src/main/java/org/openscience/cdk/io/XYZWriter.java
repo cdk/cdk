@@ -112,8 +112,8 @@ public class XYZWriter extends DefaultChemObjectWriter {
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IAtomContainer.class.equals(classObject)) return true;
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IAtomContainer.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IAtomContainer.class.equals(anInterface)) return true;
         }
         Class superClass = classObject.getSuperclass();
         if (superClass != null) return this.accepts(superClass);

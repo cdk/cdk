@@ -23,12 +23,12 @@ public class TopologicalMatrixTest extends CDKTestCase {
         IAtomContainer container = (IAtomContainer) reader.read(new AtomContainer());
         int[][] matrix = TopologicalMatrix.getMatrix(container);
         Assert.assertEquals(12, matrix.length);
-        for (int i = 0; i < matrix.length; i++) {
+        for (int[] ints : matrix) {
 
             System.out.println("");
 
             for (int j = 0; j < matrix.length; j++) {
-                System.out.print(matrix[i][j] + " ");
+                System.out.print(ints[j] + " ");
             }
         }
     System.out.print("\n");

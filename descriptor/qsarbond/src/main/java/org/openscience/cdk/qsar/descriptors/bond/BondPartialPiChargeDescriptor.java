@@ -184,8 +184,7 @@ public class BondPartialPiChargeDescriptor extends AbstractBondDescriptor {
                     ac.getAtom(i).setCharge(0.0);
 
                 pepe.assignGasteigerPiPartialCharges(ac, true);
-                for (Iterator<IBond> it = ac.bonds().iterator(); it.hasNext();) {
-                    IBond bondi = it.next();
+                for (IBond bondi : ac.bonds()) {
                     double result = Math.abs(bondi.getBegin().getCharge() - bondi.getEnd().getCharge());
                     cacheDescriptorValue(bondi, ac, new DoubleResult(result));
                 }

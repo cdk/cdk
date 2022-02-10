@@ -70,8 +70,7 @@ public class MolecularFormulaRange implements Cloneable {
             throw new IllegalArgumentException("Isotope must not be null");
         
         boolean flag = false;
-        for (Iterator<IIsotope> it = isotopes().iterator(); it.hasNext();) {
-            IIsotope thisIsotope = it.next();
+        for (IIsotope thisIsotope : isotopes()) {
             if (isTheSame(thisIsotope, isotope)) {
                 isotopesMax.put(thisIsotope, countMax);
                 isotopesMin.put(thisIsotope, countMin);
@@ -94,8 +93,7 @@ public class MolecularFormulaRange implements Cloneable {
      * @return          True, if the MolecularFormula contains the given isotope object
      */
     public boolean contains(IIsotope isotope) {
-        for (Iterator<IIsotope> it = isotopes().iterator(); it.hasNext();) {
-            IIsotope thisIsotope = it.next();
+        for (IIsotope thisIsotope : isotopes()) {
             if (isTheSame(thisIsotope, isotope)) {
                 return true;
             }
@@ -147,8 +145,7 @@ public class MolecularFormulaRange implements Cloneable {
     * @see            #isotopes
      */
     private IIsotope getIsotope(IIsotope isotope) {
-        for (Iterator<IIsotope> it = isotopes().iterator(); it.hasNext();) {
-            IIsotope thisIsotope = it.next();
+        for (IIsotope thisIsotope : isotopes()) {
             if (isTheSame(isotope, thisIsotope)) return thisIsotope;
         }
         return null;

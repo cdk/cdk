@@ -270,10 +270,8 @@ final class EdmondsMaximumMatching {
         int[] supports1 = blossomSupports(v, w, base);
         int[] supports2 = blossomSupports(w, v, base);
 
-        for (int i = 0; i < supports1.length; i++)
-            dsf.makeUnion(supports1[i], supports1[0]);
-        for (int i = 0; i < supports2.length; i++)
-            dsf.makeUnion(supports2[i], supports2[0]);
+        for (int k : supports1) dsf.makeUnion(k, supports1[0]);
+        for (int j : supports2) dsf.makeUnion(j, supports2[0]);
 
         even[dsf.getRoot(base)] = even[base];
     }

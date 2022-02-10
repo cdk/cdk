@@ -58,8 +58,8 @@ public class AromaticBondsCountDescriptorTest extends MolecularDescriptorTest {
     @Test
     public void testViaFlags() throws Exception {
         IAtomContainer molecule = TestMoleculeFactory.makeBenzene();
-        for (Iterator bonds = molecule.bonds().iterator(); bonds.hasNext();) {
-            ((IBond) bonds.next()).setFlag(CDKConstants.ISAROMATIC, true);
+        for (IBond iBond : molecule.bonds()) {
+            iBond.setFlag(CDKConstants.ISAROMATIC, true);
         }
         Assert.assertEquals(6, ((IntegerResult) descriptor.calculate(molecule).getValue()).intValue());
     }

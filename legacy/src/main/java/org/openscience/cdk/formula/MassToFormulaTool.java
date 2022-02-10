@@ -271,12 +271,12 @@ public class MassToFormulaTool {
 
         isotopes_TO = orderList(isotopes_TO);
 
-        for (int i = 0; i < matrix.length; i++) {
+        for (int[] ints : matrix) {
 
             /* constructing initial combinations */
             int[] value_In = new int[numberElements];
             for (int j = 0; j < numberElements; j++) {
-                if (matrix[i][j] == 0)
+                if (ints[j] == 0)
                     value_In[j] = 0;
                 else
                     value_In[j] = 1;
@@ -378,7 +378,7 @@ public class MassToFormulaTool {
                 }
 
                 if (count_E == 1) /* only valid for the first random 1000 */
-                break;
+                    break;
 
                 if (possChan < elem_Pos.size() - 1) {
                     /* Means that is possible to fit the next */
@@ -420,8 +420,7 @@ public class MassToFormulaTool {
      */
     private List<IIsotope> orderList(List<IIsotope> isotopes_TO) {
         List<IIsotope> newOrderList = new ArrayList<>();
-        for (int i = 0; i < orderElements.length; i++) {
-            String symbol = orderElements[i];
+        for (String symbol : orderElements) {
             Iterator<IIsotope> itIso = isotopes_TO.iterator();
             while (itIso.hasNext()) {
                 IIsotope isotopeToCo = itIso.next();
@@ -502,8 +501,8 @@ public class MassToFormulaTool {
      */
     private IMolecularFormula putInOrder(IMolecularFormula formula) {
         IMolecularFormula new_formula = formula.getBuilder().newInstance(IMolecularFormula.class);
-        for (int i = 0; i < orderElements.length; i++) {
-            IElement element = builder.newInstance(IElement.class, orderElements[i]);
+        for (String orderElement : orderElements) {
+            IElement element = builder.newInstance(IElement.class, orderElement);
             if (MolecularFormulaManipulator.containsElement(formula, element)) {
                 Iterator<IIsotope> isotopes = MolecularFormulaManipulator.getIsotopes(formula, element).iterator();
                 while (isotopes.hasNext()) {

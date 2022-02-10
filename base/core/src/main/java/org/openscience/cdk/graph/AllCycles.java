@@ -154,8 +154,7 @@ public final class AllCycles {
         final int[] rank = new int[ord];
 
         // frequency of each degree
-        for (int v = 0; v < ord; v++)
-            count[g[v].length + 1]++;
+        for (int[] ints : g) count[ints.length + 1]++;
         // cumulated counts
         for (int i = 0; count[i] < ord; i++)
             count[i + 1] += count[i];

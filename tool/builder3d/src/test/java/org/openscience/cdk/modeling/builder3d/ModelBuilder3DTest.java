@@ -319,8 +319,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
 
         StructureDiagramGenerator str;
         List<IAtomContainer> resultList = new ArrayList<>();
-        for (Iterator<IAtomContainer> iter = inputList.iterator(); iter.hasNext();) {
-            IAtomContainer molecules = iter.next();
+        for (IAtomContainer molecules : inputList) {
             str = new StructureDiagramGenerator();
             str.setMolecule((IAtomContainer) molecules);
             str.generateCoordinates();
@@ -331,10 +330,8 @@ public class ModelBuilder3DTest extends CDKTestCase {
         /////////////////////////////////////////////////////////////////////////////////////////////
         // Delete x and y coordinates
 
-        for (Iterator<IAtomContainer> iter = inputList.iterator(); iter.hasNext();) {
-            IAtomContainer molecules = iter.next();
-            for (Iterator<IAtom> atom = molecules.atoms().iterator(); atom.hasNext();) {
-                IAtom last = atom.next();
+        for (IAtomContainer molecules : inputList) {
+            for (IAtom last : molecules.atoms()) {
                 last.setPoint2d(null);
             }
         }

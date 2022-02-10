@@ -147,9 +147,9 @@ public abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularD
         String[] names = v.getNames();
         Assert.assertNotNull("The descriptor must return labels using the getNames() method.", names);
         Assert.assertNotSame("At least one label must be given.", 0, names.length);
-        for (int i = 0; i < names.length; i++) {
-            Assert.assertNotNull("A descriptor label may not be null.", names[i]);
-            Assert.assertNotSame("The label string must not be empty.", 0, names[i].length());
+        for (String name : names) {
+            Assert.assertNotNull("A descriptor label may not be null.", name);
+            Assert.assertNotSame("The label string must not be empty.", 0, name.length());
             //        	System.out.println("Label: " + names[i]);
         }
         Assert.assertNotNull(v.getValue());

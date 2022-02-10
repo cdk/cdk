@@ -161,8 +161,8 @@ public class RssWriter extends DefaultChemObjectWriter {
             } else {
                 list.add(object);
             }
-            for (int i = 0; i < list.size(); i++) {
-                IChemObject chemObject = (IChemObject) list.get(i);
+            for (IChemObject iChemObject : list) {
+                IChemObject chemObject = (IChemObject) iChemObject;
                 Element itemElement = new Element("item", NS_RSS10);
                 String easylink = (String) linkmap.get(chemObject);
                 if (easylink != null) itemElement.addAttribute(new Attribute("rdf:about", NS_RDF, easylink));
@@ -200,7 +200,7 @@ public class RssWriter extends DefaultChemObjectWriter {
                 }
                 Element root = null;
                 Convertor convertor = new Convertor(true, null);
-                object = list.get(i);
+                object = iChemObject;
                 if (object instanceof ICrystal) {
                     root = convertor.cdkCrystalToCMLMolecule((ICrystal) object);
                 } else if (object instanceof IAtomContainer) {

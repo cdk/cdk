@@ -296,8 +296,8 @@ public class Maygen {
      */
     public int sum(int[] array) {
         int sum = 0;
-        for (int i = 0; i < array.length; i++) {
-            sum = sum + array[i];
+        for (int j : array) {
+            sum = sum + j;
         }
         return sum;
     }
@@ -397,12 +397,12 @@ public class Maygen {
      */
     public void sortAscending(List<String> symbols) {
         HashMap<String, Integer> inputs = new HashMap<>();
-        for (int i = 0; i < symbols.size(); i++) {
-            if (inputs.containsKey(symbols.get(i))) {
-                Integer localCount = inputs.get(symbols.get(i)) + 1;
-                inputs.put(symbols.get(i), localCount);
+        for (String symbol : symbols) {
+            if (inputs.containsKey(symbol)) {
+                Integer localCount = inputs.get(symbol) + 1;
+                inputs.put(symbol, localCount);
             } else {
-                inputs.put(symbols.get(i), 1);
+                inputs.put(symbol, 1);
             }
         }
 
@@ -2732,8 +2732,8 @@ public class Maygen {
      */
     public boolean allIs0(int[] list) {
         boolean check = true;
-        for (int i = 0; i < list.length; i++) {
-            if (list[i] != 0) {
+        for (int j : list) {
+            if (j != 0) {
                 check = false;
                 break;
             }
@@ -3636,9 +3636,9 @@ public class Maygen {
     /** Setting the initial atom container of a molecular formula with a single heavy atom */
     public void initSingleAC() {
         atomContainer = builder.newAtomContainer();
-        for (int i = 0; i < symbolArray.length; i++) {
+        for (String s : symbolArray) {
             IAtom atom = builder.newAtom();
-            atom.setSymbol(symbolArray[i]);
+            atom.setSymbol(s);
             atomContainer.addAtom(atom);
         }
         for (IAtom atom : atomContainer.atoms()) {
@@ -3684,9 +3684,9 @@ public class Maygen {
      * @return IAtomContainer
      */
     public IAtomContainer initAC(IAtomContainer ac, String[] symbolArrayCopy) {
-        for (int i = 0; i < symbolArrayCopy.length; i++) {
+        for (String s : symbolArrayCopy) {
             IAtom atom = builder.newAtom();
-            atom.setSymbol(symbolArrayCopy[i].split(NUMBERS_FROM_0_TO_9)[0]);
+            atom.setSymbol(s.split(NUMBERS_FROM_0_TO_9)[0]);
             ac.addAtom(atom);
         }
         for (IAtom atom : ac.atoms()) {

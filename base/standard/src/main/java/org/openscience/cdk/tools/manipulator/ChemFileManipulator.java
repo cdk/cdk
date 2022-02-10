@@ -133,8 +133,8 @@ public class ChemFileManipulator {
     public static List<IReaction> getAllReactions(IChemFile file) {
         List<IReaction> reactonList = new ArrayList<>();
         List<IChemModel> chemModel = getAllChemModels(file);
-        for (int f = 0; f < chemModel.size(); f++) {
-            for (IReaction reaction : chemModel.get(f).getReactionSet().reactions()) {
+        for (IChemModel iChemModel : chemModel) {
+            for (IReaction reaction : iChemModel.getReactionSet().reactions()) {
                 reactonList.add(reaction);
             }
         }

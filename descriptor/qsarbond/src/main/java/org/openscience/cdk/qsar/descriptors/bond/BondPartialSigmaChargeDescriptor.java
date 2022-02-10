@@ -138,8 +138,7 @@ public class BondPartialSigmaChargeDescriptor extends AbstractBondDescriptor {
             if (maxIterations != 0) peoe.setMaxGasteigerIters(maxIterations);
             try {
                 peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);
-                for (Iterator<IBond> it = ac.bonds().iterator(); it.hasNext();) {
-                    IBond bondi = it.next();
+                for (IBond bondi : ac.bonds()) {
                     double result = Math.abs(bondi.getBegin().getCharge() - bondi.getEnd().getCharge());
                     cacheDescriptorValue(bondi, ac, new DoubleResult(result));
                 }

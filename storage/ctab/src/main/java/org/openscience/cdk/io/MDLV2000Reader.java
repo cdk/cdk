@@ -1434,8 +1434,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             // load Sgroups into molecule, first we downcast
             List<Sgroup> sgroupOrgList = new ArrayList<>(sgroups.values());
             List<Sgroup> sgroupCpyList = new ArrayList<>(sgroupOrgList.size());
-            for (int i = 0; i < sgroupOrgList.size(); i++) {
-                Sgroup cpy = sgroupOrgList.get(i).downcast();
+            for (Sgroup sgroup : sgroupOrgList) {
+                Sgroup cpy = sgroup.downcast();
                 sgroupCpyList.add(cpy);
             }
             // update replaced parents

@@ -665,8 +665,8 @@ public class RingPlacer {
      */
     public void partitionNonRingPartners(IAtom atom, IRing ring, IAtomContainer ringAtoms, IAtomContainer nonRingAtoms) {
         List atoms = molecule.getConnectedAtomsList(atom);
-        for (int i = 0; i < atoms.size(); i++) {
-            IAtom curAtom = (IAtom) atoms.get(i);
+        for (Object o : atoms) {
+            IAtom curAtom = (IAtom) o;
             if (!ring.contains(curAtom)) {
                 nonRingAtoms.addAtom(curAtom);
             } else {

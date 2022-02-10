@@ -304,15 +304,13 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase {
         //Test for atom mapping between the mols
         List<List<RMap>> list = uiTester.search(mol1, mol2, new BitSet(), new BitSet(), true, true);
         Assert.assertEquals(3, list.size());
-        for (int i = 0; i < list.size(); i++) {
-            List<RMap> first = list.get(i);
+        for (List<RMap> first : list) {
             Assert.assertNotSame(0, first.size());
         }
 
         list = uiTester.search(mol1, mol2, new BitSet(), new BitSet(), false, false);
         Assert.assertEquals(1, list.size());
-        for (int i = 0; i < list.size(); i++) {
-            List<RMap> first = list.get(i);
+        for (List<RMap> first : list) {
             Assert.assertNotSame(0, first.size());
         }
     }
@@ -329,8 +327,7 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase {
         List<List<RMap>> list = uiTester.getSubgraphAtomsMaps(mol1, mol2);
         Assert.assertNotNull(list);
         Assert.assertNotSame(0, list.size());
-        for (int i = 0; i < list.size(); i++) {
-            List<RMap> first = list.get(i);
+        for (List<RMap> first : list) {
             Assert.assertNotNull(first);
             Assert.assertNotSame(0, first.size());
         }
@@ -359,8 +356,7 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase {
         List<List<RMap>> list = uiTester.getSubgraphAtomsMaps(mol1, mol2);
         Assert.assertNotNull(list);
         Assert.assertEquals(2, list.size());
-        for (int i = 0; i < list.size(); i++) {
-            List<RMap> first = list.get(i);
+        for (List<RMap> first : list) {
             Assert.assertNotNull(first);
             Assert.assertEquals(4, first.size());
         }

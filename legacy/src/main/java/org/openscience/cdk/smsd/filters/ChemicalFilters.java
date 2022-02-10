@@ -469,8 +469,7 @@ public class ChemicalFilters {
         });
         // logger.info(list);
         Map<Integer, Double> result = new LinkedHashMap<>();
-        for (Iterator<Map.Entry<Integer, Double>> it = list.iterator(); it.hasNext();) {
-            Map.Entry<Integer, Double> entry = it.next();
+        for (Map.Entry<Integer, Double> entry : list) {
             result.put(entry.getKey(), entry.getValue());
         }
         return result;
@@ -490,8 +489,7 @@ public class ChemicalFilters {
         });
         // logger.info(list);
         Map<Integer, Double> result = new LinkedHashMap<>();
-        for (Iterator<Map.Entry<Integer, Double>> it = list.iterator(); it.hasNext();) {
-            Map.Entry<Integer, Double> entry = it.next();
+        for (Map.Entry<Integer, Double> entry : list) {
             result.put(entry.getKey(), entry.getValue());
         }
         return result;

@@ -122,48 +122,42 @@ public class StructureResonanceGeneratorTest extends CDKTestCase {
         SharingLonePairReaction slReaction = (SharingLonePairReaction) reactionList.get(0);
         Assert.assertEquals(1, slReaction.getParameterList().size());
         List<IParameterReact> objects = slReaction.getParameterList();
-        for (Iterator<IParameterReact> it = objects.iterator(); it.hasNext();) {
-            IParameterReact object = it.next();
+        for (IParameterReact object : objects) {
             if (object instanceof SetReactionCenter) Assert.assertFalse((Boolean) object.isSetParameter());
         }
 
         PiBondingMovementReaction pBReaction = (PiBondingMovementReaction) reactionList.get(1);
         Assert.assertEquals(1, pBReaction.getParameterList().size());
         objects = pBReaction.getParameterList();
-        for (Iterator<IParameterReact> it = objects.iterator(); it.hasNext();) {
-            IParameterReact object = it.next();
+        for (IParameterReact object : objects) {
             if (object instanceof SetReactionCenter) Assert.assertFalse((Boolean) object.isSetParameter());
         }
 
         RearrangementAnionReaction raReaction = (RearrangementAnionReaction) reactionList.get(2);
         Assert.assertEquals(1, raReaction.getParameterList().size());
         objects = raReaction.getParameterList();
-        for (Iterator<IParameterReact> it = objects.iterator(); it.hasNext();) {
-            IParameterReact object = it.next();
+        for (IParameterReact object : objects) {
             if (object instanceof SetReactionCenter) Assert.assertFalse((Boolean) object.isSetParameter());
         }
 
         RearrangementCationReaction rcReaction = (RearrangementCationReaction) reactionList.get(3);
         Assert.assertEquals(1, rcReaction.getParameterList().size());
         objects = rcReaction.getParameterList();
-        for (Iterator<IParameterReact> it = objects.iterator(); it.hasNext();) {
-            IParameterReact object = it.next();
+        for (IParameterReact object : objects) {
             if (object instanceof SetReactionCenter) Assert.assertFalse((Boolean) object.isSetParameter());
         }
 
         RearrangementLonePairReaction lnReaction = (RearrangementLonePairReaction) reactionList.get(4);
         Assert.assertEquals(1, lnReaction.getParameterList().size());
         objects = lnReaction.getParameterList();
-        for (Iterator<IParameterReact> it = objects.iterator(); it.hasNext();) {
-            IParameterReact object = it.next();
+        for (IParameterReact object : objects) {
             if (object instanceof SetReactionCenter) Assert.assertFalse((Boolean) object.isSetParameter());
         }
 
         RearrangementRadicalReaction rrReaction = (RearrangementRadicalReaction) reactionList.get(5);
         Assert.assertEquals(1, rrReaction.getParameterList().size());
         objects = rrReaction.getParameterList();
-        for (Iterator<IParameterReact> it = objects.iterator(); it.hasNext();) {
-            IParameterReact object = it.next();
+        for (IParameterReact object : objects) {
             if (object instanceof SetReactionCenter) Assert.assertFalse((Boolean) object.isSetParameter());
         }
 

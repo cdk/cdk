@@ -116,8 +116,8 @@ public class ShelXWriter extends DefaultChemObjectWriter {
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (ICrystal.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (ICrystal.class.equals(anInterface)) return true;
         }
         return false;
     }

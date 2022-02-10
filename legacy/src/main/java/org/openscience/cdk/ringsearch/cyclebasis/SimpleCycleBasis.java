@@ -453,8 +453,8 @@ public class SimpleCycleBasis {
                 // check if the vertex is incident to an edge with u[edge] == 1
                 boolean shouldSearchCycle = false;
 
-                for (Iterator it = incidentEdges.iterator(); it.hasNext();) {
-                    Edge edge = (Edge) it.next();
+                for (Object incidentEdge : incidentEdges) {
+                    Edge edge = (Edge) incidentEdge;
                     int index = getEdgeIndex(edge);
                     if (u[index]) {
                         shouldSearchCycle = true;
@@ -472,8 +472,8 @@ public class SimpleCycleBasis {
                         List auxPath = (List) minPaths.next();
                         List edgesOfNewCycle = new ArrayList(auxPath.size());
 
-                        for (Iterator it = auxPath.iterator(); it.hasNext();) {
-                            Edge auxEdge = (Edge) it.next();
+                        for (Object o : auxPath) {
+                            Edge auxEdge = (Edge) o;
 
                             // Get the edge corresponding to the aux. edge
                             Edge e = (Edge) gu.edge(auxEdge);
@@ -539,8 +539,8 @@ public class SimpleCycleBasis {
                 // check if the vertex is incident to an edge with u[edge] == 1
                 boolean shouldSearchCycle = false;
 
-                for (Iterator it = incidentEdges.iterator(); it.hasNext();) {
-                    Edge edge = (Edge) it.next();
+                for (Object incidentEdge : incidentEdges) {
+                    Edge edge = (Edge) incidentEdge;
                     int index = getEdgeIndex(edge);
                     if (u[index]) {
                         shouldSearchCycle = true;
@@ -646,9 +646,7 @@ public class SimpleCycleBasis {
 
                     AuxiliaryGraph2 auxGraph = new AuxiliaryGraph2(graph, u[i], u[j]);
 
-                    for (Iterator it = graph.vertexSet().iterator(); it.hasNext();) {
-                        Object vertex = it.next();
-
+                    for (Object vertex : graph.vertexSet()) {
                         // check if the vertex is incident to an edge with u[edge] == 1
                         boolean shouldSearchCycle = false;
 
@@ -707,9 +705,7 @@ public class SimpleCycleBasis {
                         AuxiliaryGraph2 auxGraph = new AuxiliaryGraph2(graph, u[i], u[k]);
 
                         boolean shortestPathFound = false;
-                        for (Iterator it = graph.vertexSet().iterator(); it.hasNext();) {
-                            Object vertex = it.next();
-
+                        for (Object vertex : graph.vertexSet()) {
                             Object auxVertex00 = auxGraph.auxVertex00(vertex);
                             Object auxVertex11 = auxGraph.auxVertex11(vertex);
 
@@ -727,9 +723,7 @@ public class SimpleCycleBasis {
 
                         auxGraph = new AuxiliaryGraph2(graph, u[j], u[k]);
 
-                        for (Iterator it = graph.vertexSet().iterator(); it.hasNext();) {
-                            Object vertex = it.next();
-
+                        for (Object vertex : graph.vertexSet()) {
                             Object auxVertex00 = auxGraph.auxVertex00(vertex);
                             Object auxVertex11 = auxGraph.auxVertex11(vertex);
 
@@ -795,8 +789,8 @@ public class SimpleCycleBasis {
 
             Object vertex = auxVertexMap.get(auxVertex);
 
-            for (Iterator edgeIterator = g.edgesOf(vertex).iterator(); edgeIterator.hasNext();) {
-                Edge edge = (Edge) edgeIterator.next();
+            for (Object o : g.edgesOf(vertex)) {
+                Edge edge = (Edge) o;
                 int j = getEdgeIndex(edge);
 
                 Object vertex1 = edge.getSource();
@@ -930,8 +924,8 @@ public class SimpleCycleBasis {
 
             Object vertex = auxVertexMap.get(auxVertex);
 
-            for (Iterator edgeIterator = g.edgesOf(vertex).iterator(); edgeIterator.hasNext();) {
-                Edge edge = (Edge) edgeIterator.next();
+            for (Object o : g.edgesOf(vertex)) {
+                Edge edge = (Edge) o;
                 int k = getEdgeIndex(edge);
 
                 Object vertex1 = edge.getSource();
@@ -1035,9 +1029,9 @@ public class SimpleCycleBasis {
          */
 
         boolean[][] incidMatr = getCycleEdgeIncidenceMatrix();
-        for (int i = 0; i < incidMatr.length; i++) {
-            for (int j = 0; j < incidMatr[i].length; j++) {
-                System.out.print(incidMatr[i][j] ? 1 : 0);
+        for (boolean[] booleans : incidMatr) {
+            for (int j = 0; j < booleans.length; j++) {
+                System.out.print(booleans[j] ? 1 : 0);
             }
             System.out.println();
         }

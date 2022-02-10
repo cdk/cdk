@@ -114,8 +114,8 @@ public class MinimalPathIterator implements Iterator {
             int distance = iter.level;
             distanceMap.put(vertex, Integer.valueOf(distance));
 
-            for (Iterator edges = g.edgesOf(vertex).iterator(); edges.hasNext();) {
-                Edge edge = (Edge) edges.next();
+            for (Object o : g.edgesOf(vertex)) {
+                Edge edge = (Edge) o;
                 Object opposite = edge.oppositeVertex(vertex);
                 if (distanceMap.get(opposite) != null) {
                     if (((Integer) distanceMap.get(opposite)).intValue() + 1 == distance) {

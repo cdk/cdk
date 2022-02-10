@@ -152,19 +152,19 @@ public class ProteinPocketFinder {
         minMax[3] = atoms[0].getPoint3d().y;
         minMax[4] = atoms[0].getPoint3d().z;
         minMax[5] = atoms[0].getPoint3d().z;
-        for (int i = 0; i < atoms.length; i++) {
-            if (atoms[i].getPoint3d().x > minMax[1]) {
-                minMax[1] = atoms[i].getPoint3d().x;
-            } else if (atoms[i].getPoint3d().y > minMax[3]) {
-                minMax[3] = atoms[i].getPoint3d().y;
-            } else if (atoms[i].getPoint3d().z > minMax[5]) {
-                minMax[5] = atoms[i].getPoint3d().z;
-            } else if (atoms[i].getPoint3d().x < minMax[0]) {
-                minMax[0] = atoms[i].getPoint3d().x;
-            } else if (atoms[i].getPoint3d().y < minMax[2]) {
-                minMax[2] = atoms[i].getPoint3d().y;
-            } else if (atoms[i].getPoint3d().z < minMax[4]) {
-                minMax[4] = atoms[i].getPoint3d().z;
+        for (IAtom atom : atoms) {
+            if (atom.getPoint3d().x > minMax[1]) {
+                minMax[1] = atom.getPoint3d().x;
+            } else if (atom.getPoint3d().y > minMax[3]) {
+                minMax[3] = atom.getPoint3d().y;
+            } else if (atom.getPoint3d().z > minMax[5]) {
+                minMax[5] = atom.getPoint3d().z;
+            } else if (atom.getPoint3d().x < minMax[0]) {
+                minMax[0] = atom.getPoint3d().x;
+            } else if (atom.getPoint3d().y < minMax[2]) {
+                minMax[2] = atom.getPoint3d().y;
+            } else if (atom.getPoint3d().z < minMax[4]) {
+                minMax[4] = atom.getPoint3d().z;
             }
         }
         return minMax;
@@ -203,13 +203,13 @@ public class ProteinPocketFinder {
         //int proteinAtomCount = 0;//Debugging
         int[] minMax = {0, 0, 0, 0, 0, 0};
 
-        for (int i = 0; i < atoms.length; i++) {
-            if (((PDBAtom) atoms[i]).getHetAtom()) {
+        for (IAtom atom : atoms) {
+            if (((PDBAtom) atom).getHetAtom()) {
                 continue;
             }
-            gridPoint = gridGenerator.getGridPointFrom3dCoordinates(atoms[i].getPoint3d());
+            gridPoint = gridGenerator.getGridPointFrom3dCoordinates(atom.getPoint3d());
             this.grid[(int) gridPoint.x][(int) gridPoint.y][(int) gridPoint.z] = -1;
-            vdWRadius = PeriodicTable.getVdwRadius(atoms[i].getSymbol());
+            vdWRadius = PeriodicTable.getVdwRadius(atom.getSymbol());
             if (vdWRadius == 0) {
                 vdWRadius = rAtom;
             }
@@ -351,8 +351,8 @@ public class ProteinPocketFinder {
             List<Integer> value = hashPockets.get(keys.get(i));
             //			logger.debug("key:" + i + " Value" + keys.get(i)
             //					+ " #Pockets:" + value.size());
-            for (int j = 0; j < value.size(); j++) {
-                sortPockets.add(pockets.get(value.get(j)));
+            for (Integer integer : value) {
+                sortPockets.add(pockets.get(integer));
             }
         }
         //		logger.debug("	SORT POCKETS End#:" + sortPockets.size());
@@ -480,9 +480,8 @@ public class ProteinPocketFinder {
      * Method which assigns upon a PSP event +1 to these grid points.
      */
     private void firePSPEvent(List<Point3d> line) {
-        for (int i = 0; i < line.size(); i++) {
-            this.grid[(int) line.get(i).x][(int) line.get(i).y][(int) line.get(i).z] = this.grid[(int) line.get(i).x][(int) line
-                    .get(i).y][(int) line.get(i).z] + 1;
+        for (Point3d point3d : line) {
+            this.grid[(int) point3d.x][(int) point3d.y][(int) point3d.z] = this.grid[(int) point3d.x][(int) point3d.y][(int) point3d.z] + 1;
         }
 
     }
@@ -820,9 +819,9 @@ public class ProteinPocketFinder {
         } catch (Exception ex1) {
             System.out.println("Problem with AtomTypeFactory due to:" + ex1.toString());
         }
-        for (int i = 0; i < atoms.length; i++) {
+        for (IAtom atom : atoms) {
             try {
-                atf.configure(atoms[i]);
+                atf.configure(atom);
             } catch (Exception ex2) {
                 logger.error("Problem with atf.configure due to:" + ex2.toString());
             }
@@ -874,10 +873,10 @@ public class ProteinPocketFinder {
                 try (BufferedWriter writer = new BufferedWriter(new FileWriter(outPutFileName + "-" + i + ".pmesh"))) {
                     List<Point3d> pocket = pockets.get(i);
                     writer.write(pocket.size() + "\n");
-                    for (int j = 0; j < pocket.size(); j++) {// go through every
+                    for (Point3d point3d : pocket) {// go through every
                         // grid point of the
                         // actual pocket
-                        Point3d actualGridPoint = (Point3d) pocket.get(j);
+                        Point3d actualGridPoint = (Point3d) point3d;
                         Point3d coords = gridGenerator.getCoordinatesFromGridPoint(actualGridPoint);
                         writer.write(coords.x + "\t" + coords.y + "\t" + coords.z + "\n");
                     }

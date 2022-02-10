@@ -111,9 +111,9 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
         if (IChemModel.class.equals(classObject)) return true;
         if (IReaction.class.equals(classObject)) return true;
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IChemModel.class.equals(interfaces[i])) return true;
-            if (IReaction.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IChemModel.class.equals(anInterface)) return true;
+            if (IReaction.class.equals(anInterface)) return true;
         }
         Class superClass = classObject.getSuperclass();
         if (superClass != null) return this.accepts(superClass);

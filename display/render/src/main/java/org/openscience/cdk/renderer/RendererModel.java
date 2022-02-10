@@ -405,8 +405,8 @@ public class RendererModel implements Serializable, Cloneable {
     public void fireChange() {
         if (getNotification() && listeners != null) {
             EventObject event = new EventObject(this);
-            for (int i = 0; i < listeners.size(); i++) {
-                listeners.get(i).stateChanged(event);
+            for (ICDKChangeListener listener : listeners) {
+                listener.stateChanged(event);
             }
         }
     }

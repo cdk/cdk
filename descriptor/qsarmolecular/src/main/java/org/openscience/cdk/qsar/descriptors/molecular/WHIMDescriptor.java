@@ -501,8 +501,7 @@ public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMole
             // get the covariance matrix
             double[][] covmat = new double[ncol][ncol];
             double sumwt = 0.;
-            for (int i = 0; i < nrow; i++)
-                sumwt += wt[i];
+            for (double v : wt) sumwt += v;
             for (int i = 0; i < ncol; i++) {
                 double meanx = 0;
                 for (int k = 0; k < nrow; k++)

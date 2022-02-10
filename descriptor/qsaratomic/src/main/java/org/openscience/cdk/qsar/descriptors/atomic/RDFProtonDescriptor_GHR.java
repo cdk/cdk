@@ -456,8 +456,7 @@ public class RDFProtonDescriptor_GHR extends AbstractAtomicDescriptor implements
         List<IAtom> neighToCarbon = mol.getConnectedAtomsList(carbonAtom);
         IBond tmpBond;
         int counter = 0;
-        for (int nei = 0; nei < neighToCarbon.size(); nei++) {
-            IAtom neighbour = neighToCarbon.get(nei);
+        for (IAtom neighbour : neighToCarbon) {
             if (neighbour.getAtomicNumber() == IElement.O) {
                 tmpBond = mol.getBond(neighbour, carbonAtom);
                 if (tmpBond.getOrder() == IBond.Order.DOUBLE) counter += 1;

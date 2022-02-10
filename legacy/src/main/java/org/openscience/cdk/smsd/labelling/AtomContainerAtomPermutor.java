@@ -45,8 +45,8 @@ public class AtomContainerAtomPermutor extends Permutor implements Iterator<IAto
         IAtomContainer permutedContainer = null;
         try {
             permutedContainer = atomContainer.getBuilder().newInstance(IAtomContainer.class);
-            for (int i = 0; i < p.length; i++) {
-                IAtom atom = atomContainer.getAtom(p[i]);
+            for (int j : p) {
+                IAtom atom = atomContainer.getAtom(j);
                 permutedContainer.addAtom((IAtom) atom.clone());
             }
             for (IBond bond : atomContainer.bonds()) {

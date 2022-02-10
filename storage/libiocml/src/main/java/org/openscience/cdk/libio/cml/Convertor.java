@@ -249,8 +249,8 @@ public class Convertor {
         }
         if (cdkScheme.getID() != null && !cdkScheme.getID().equals("")) reactionScheme.setId(cdkScheme.getID());
 
-        for (Iterator<IReaction> it = cdkScheme.reactions().iterator(); it.hasNext();) {
-            reactionScheme.appendChild(cdkReactionToCMLReaction(it.next(), true));
+        for (IReaction iReaction : cdkScheme.reactions()) {
+            reactionScheme.appendChild(cdkReactionToCMLReaction(iReaction, true));
         }
         for (IReactionScheme intScheme : cdkScheme.reactionSchemes()) {
             reactionScheme.appendChild(cdkReactionSchemeToCMLReactionScheme(intScheme));
@@ -513,22 +513,21 @@ public class Convertor {
                     CMLFormula cmlFormula = new CMLFormula();
                     List<IIsotope> isotopesList = MolecularFormulaManipulator.putInOrder(
                             MolecularFormulaManipulator.generateOrderEle(), cdkFormula);
-                    for (int i = 0; i < isotopesList.size(); i++) {
+                    for (IIsotope iIsotope : isotopesList) {
                         cmlFormula
-                                .add(isotopesList.get(i).getSymbol(), cdkFormula.getIsotopeCount(isotopesList.get(i)));
+                                .add(iIsotope.getSymbol(), cdkFormula.getIsotopeCount(iIsotope));
                     }
                     cmlMolecule.appendChild(cmlFormula);
                 } else if (props.get(key) instanceof IMolecularFormulaSet) {
                     IMolecularFormulaSet cdkFormulaSet = (IMolecularFormulaSet) props.get(key);
-                    for (Iterator<IMolecularFormula> it = cdkFormulaSet.molecularFormulas().iterator(); it.hasNext();) {
-                        IMolecularFormula cdkFormula = it.next();
+                    for (IMolecularFormula cdkFormula : cdkFormulaSet.molecularFormulas()) {
                         List<IIsotope> isotopesList = MolecularFormulaManipulator.putInOrder(
                                 MolecularFormulaManipulator.generateOrderEle(), cdkFormula);
                         CMLFormula cmlFormula = new CMLFormula();
                         cmlFormula.setDictRef("cdk:possibleMachts");
-                        for (int i = 0; i < isotopesList.size(); i++) {
-                            cmlFormula.add(isotopesList.get(i).getSymbol(),
-                                    cdkFormula.getIsotopeCount(isotopesList.get(i)));
+                        for (IIsotope iIsotope : isotopesList) {
+                            cmlFormula.add(iIsotope.getSymbol(),
+                                    cdkFormula.getIsotopeCount(iIsotope));
                         }
                         cmlMolecule.appendChild(cmlFormula);
                     }

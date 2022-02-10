@@ -86,8 +86,8 @@ public class CycleBasis {
         UndirectedGraph simpleGraph = new UndirectedSubgraph(g, null, null);
 
         // Iterate over the edges and discard all edges with the same source and target
-        for (Iterator it = g.edgeSet().iterator(); it.hasNext();) {
-            Edge edge = (Edge) it.next();
+        for (Object item : g.edgeSet()) {
+            Edge edge = (Edge) item;
             Object u = edge.getSource();
             Object v = edge.getTarget();
             List edges = simpleGraph.getAllEdges(u, v);
@@ -96,14 +96,14 @@ public class CycleBasis {
                 // Keep the edge with the least weight
 
                 Edge minEdge = edge;
-                for (Iterator jt = edges.iterator(); jt.hasNext();) {
-                    Edge nextEdge = (Edge) jt.next();
+                for (Object value : edges) {
+                    Edge nextEdge = (Edge) value;
                     minEdge = nextEdge.getWeight() < minEdge.getWeight() ? nextEdge : minEdge;
                 }
 
                 //  ...and remove the others.
-                for (Iterator jt = edges.iterator(); jt.hasNext();) {
-                    Edge nextEdge = (Edge) jt.next();
+                for (Object o : edges) {
+                    Edge nextEdge = (Edge) o;
                     if (nextEdge != minEdge) {
                         // Remove edge from the graph
                         simpleGraph.removeEdge(nextEdge);
@@ -125,13 +125,13 @@ public class CycleBasis {
 
         List biconnectedComponents = new BiconnectivityInspector(simpleGraph).biconnectedSets();
 
-        for (Iterator it = biconnectedComponents.iterator(); it.hasNext();) {
-            Set edges = (Set) it.next();
+        for (Object biconnectedComponent : biconnectedComponents) {
+            Set edges = (Set) biconnectedComponent;
 
             if (edges.size() > 1) {
                 Set vertices = new HashSet();
-                for (Iterator edgeIt = edges.iterator(); edgeIt.hasNext();) {
-                    Edge edge = (Edge) edgeIt.next();
+                for (Object o : edges) {
+                    Edge edge = (Edge) o;
                     vertices.add(edge.getSource());
                     vertices.add(edge.getTarget());
                 }

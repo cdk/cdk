@@ -171,8 +171,8 @@ public class PDBReader extends DefaultChemObjectReader {
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IChemFile.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IChemFile.class.equals(anInterface)) return true;
         }
         if (IChemFile.class.equals(classObject)) return true;
         Class superClass = classObject.getSuperclass();
@@ -507,8 +507,8 @@ public class PDBReader extends DefaultChemObjectReader {
             logger.error("Could not find bond target atom in map with serial id: ", bondAtomNo);
         }
         IBond bond = firstAtom.getBuilder().newInstance(IBond.class, firstAtom, secondAtom, IBond.Order.SINGLE);
-        for (int i = 0; i < bondsFromConnectRecords.size(); i++) {
-            IBond existingBond = (IBond) bondsFromConnectRecords.get(i);
+        for (IBond bondsFromConnectRecord : bondsFromConnectRecords) {
+            IBond existingBond = (IBond) bondsFromConnectRecord;
             IAtom a = existingBond.getBegin();
             IAtom b = existingBond.getEnd();
             if ((a.equals(firstAtom) && b.equals(secondAtom)) || (b.equals(firstAtom) && a.equals(secondAtom))) {

@@ -58,8 +58,8 @@ public class VicinitySamplerTest extends CDKTestCase {
         IAtomContainer temp = null;
         List structures = VicinitySampler.sample(mol);
         Assert.assertEquals(37, structures.size());
-        for (int f = 0; f < structures.size(); f++) {
-            temp = (IAtomContainer) structures.get(f);
+        for (Object structure : structures) {
+            temp = (IAtomContainer) structure;
             Assert.assertNotNull(temp);
             Assert.assertTrue(ConnectivityChecker.isConnected(temp));
             Assert.assertEquals(mol.getAtomCount(), temp.getAtomCount());
@@ -79,8 +79,8 @@ public class VicinitySamplerTest extends CDKTestCase {
         IAtomContainer temp = null;
         List structures = VicinitySampler.sample(mol);
         Assert.assertEquals(1, structures.size());
-        for (int f = 0; f < structures.size(); f++) {
-            temp = (IAtomContainer) structures.get(f);
+        for (Object structure : structures) {
+            temp = (IAtomContainer) structure;
             Assert.assertNotNull(temp);
             Assert.assertTrue(ConnectivityChecker.isConnected(temp));
             Assert.assertEquals(mol.getAtomCount(), temp.getAtomCount());

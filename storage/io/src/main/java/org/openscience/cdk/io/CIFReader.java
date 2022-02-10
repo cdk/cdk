@@ -106,8 +106,8 @@ public class CIFReader extends DefaultChemObjectReader {
     public boolean accepts(Class<? extends IChemObject> testClass) {
         if (IChemFile.class.equals(testClass)) return true;
         Class<?>[] interfaces = testClass.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IChemFile.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IChemFile.class.equals(anInterface)) return true;
         }
         Class superClass = testClass.getSuperclass();
         if (superClass != null) return this.accepts(superClass);

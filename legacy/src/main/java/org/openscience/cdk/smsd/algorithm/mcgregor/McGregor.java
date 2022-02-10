@@ -248,9 +248,9 @@ public final class McGregor {
 
         int cliqueNumber = 0;
 
-        for (int a = 0; a < cliqueSize; a++) {
+        for (Integer integer : cliqueVector) {
             //go through all clique nodes
-            cliqueNumber = cliqueVector.get(a);
+            cliqueNumber = integer;
             for (int b = 0; b < vecSize; b += 3) {
                 //go through all nodes in the compatibility graph
                 if (cliqueNumber == compGraphNodes.get(b + 2)) {

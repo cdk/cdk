@@ -414,9 +414,9 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
             for (int c = 0; c < gdr_desc_length; c++) {
             	double ghd = limitInf + (limitSup - limitInf) * ((double)c / gdr_desc_length);
                 sum = 0;
-                for (int dou = 0; dou < doubles.size(); dou++) {
+                for (Integer aDouble : doubles) {
                     partial = 0;
-                    position = doubles.get(dou);
+                    position = aDouble;
                     theDoubleBond = mol.getBond(position);
                     goodPosition = getNearestBondtoAGivenAtom(mol, atom, theDoubleBond);
                     goodBond = mol.getBond(goodPosition);

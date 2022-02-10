@@ -425,9 +425,7 @@ public class RGraph {
 
         // only nodes that fulfill the initial constrains
         // are allowed in the initial extension set : B
-        for (Iterator<RNode> i = graph.iterator(); i.hasNext();) {
-            RNode rn = i.next();
-
+        for (RNode rn : graph) {
             if ((c1.get(rn.rMap.id1) || c1.isEmpty()) && (c2.get(rn.rMap.id2) || c2.isEmpty())) {
                 bs.set(graph.indexOf(rn));
             }
@@ -508,8 +506,7 @@ public class RGraph {
         String message = "";
         int j = 0;
 
-        for (Iterator<RNode> i = graph.iterator(); i.hasNext();) {
-            RNode rn = i.next();
+        for (RNode rn : graph) {
             message += "-------------\n" + "RNode " + j + "\n" + rn.toString() + "\n";
             j++;
         }

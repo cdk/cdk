@@ -177,17 +177,17 @@ public class FixBondOrdersTool {
 
         //Loop through each group of rings checking all choices of double bond combis and seeing if you can get a
         //proper molecule.
-        for (int i = 0; i < ringGroups.size(); i++) {
+        for (List<Integer> ringGroup : ringGroups) {
 
             //Set all ring bonds with single order to allow Matrix solving to work
-            setAllRingBondsSingleOrder(ringGroups.get(i), ringSet);
+            setAllRingBondsSingleOrder(ringGroup, ringSet);
 
             //Set up  lists of atoms, bonds and atom pairs for this ringGroup
             List<Integer> atomNos = null;
-            atomNos = getAtomNosForRingGroup(mNew, ringGroups.get(i), ringSet);
+            atomNos = getAtomNosForRingGroup(mNew, ringGroup, ringSet);
 
             List<Integer> bondNos = null;
-            bondNos = getBondNosForRingGroup(mNew, ringGroups.get(i), ringSet);
+            bondNos = getBondNosForRingGroup(mNew, ringGroup, ringSet);
 
             //Array of same dimensions as bondNos (cols in Matrix)
             List<Integer[]> atomNoPairs = null;
@@ -316,8 +316,8 @@ public class FixBondOrdersTool {
         //Anything not added yet is a singleton
         for (int i = 0; i < rBondsArray.size(); i++) {
             boolean found = false;
-            for (int j = 0; j < ringGroups.size(); j++) {
-                if (ringGroups.get(j).contains(i)) {
+            for (List<Integer> ringGroup : ringGroups) {
+                if (ringGroup.contains(i)) {
                     found = true;
                     break;
                 }

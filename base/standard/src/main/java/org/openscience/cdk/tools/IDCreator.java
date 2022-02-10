@@ -286,8 +286,8 @@ public abstract class IDCreator {
             reactionSetCount = setID(REACTIONSET_PREFIX, reactionSetCount, reactionSet, tabuList);
         }
 
-        for (Iterator<IReaction> reaction = reactionSet.reactions().iterator(); reaction.hasNext();) {
-            createIDsForReaction(reaction.next(), tabuList);
+        for (IReaction iReaction : reactionSet.reactions()) {
+            createIDsForReaction(iReaction, tabuList);
         }
     }
 

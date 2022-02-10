@@ -118,8 +118,7 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
      */
     @Override
     public boolean contains(IIsotope isotope) {
-        for (Iterator<IIsotope> it = isotopes().iterator(); it.hasNext();) {
-            IIsotope thisIsotope = it.next();
+        for (IIsotope thisIsotope : isotopes()) {
             if (isTheSame(thisIsotope, isotope)) {
                 return true;
             }

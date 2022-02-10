@@ -71,11 +71,11 @@ public class WienerNumbersDescriptorTest extends MolecularDescriptorTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         double[] testResult = {10, 20, 35, 56, 84, 120, 165, 220, 286};
         String smiles = "CCC";
-        for (int i = 0; i < testResult.length; i++) {
+        for (double v : testResult) {
             smiles += "C"; // create the matching paraffin
             IAtomContainer mol = sp.parseSmiles(smiles);
             DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(mol).getValue();
-            Assert.assertEquals(testResult[i], retval.get(0), 0.0001);
+            Assert.assertEquals(v, retval.get(0), 0.0001);
         }
     }
 }

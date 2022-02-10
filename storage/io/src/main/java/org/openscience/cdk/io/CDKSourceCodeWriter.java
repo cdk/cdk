@@ -130,8 +130,8 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
     @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IAtomContainer.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IAtomContainer.class.equals(anInterface)) return true;
         }
         if (IAtomContainer.class.equals(classObject)) return true;
         Class superClass = classObject.getSuperclass();

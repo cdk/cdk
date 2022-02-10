@@ -132,8 +132,8 @@ class SimpleNode implements Node, Cloneable {
     /** Accept the visitor. * */
     public Object childrenAccept(SMARTSParserVisitor visitor, Object data) {
         if (children != null) {
-            for (int i = 0; i < children.length; ++i) {
-                children[i].jjtAccept(visitor, data);
+            for (Node child : children) {
+                child.jjtAccept(visitor, data);
             }
         }
         return data;
@@ -163,8 +163,8 @@ class SimpleNode implements Node, Cloneable {
     public void dump(String prefix) {
         System.out.println(toString(prefix));
         if (children != null) {
-            for (int i = 0; i < children.length; ++i) {
-                SimpleNode n = (SimpleNode) children[i];
+            for (Node child : children) {
+                SimpleNode n = (SimpleNode) child;
                 if (n != null) {
                     n.dump(prefix + " ");
                 }

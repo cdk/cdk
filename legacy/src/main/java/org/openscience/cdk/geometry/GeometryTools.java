@@ -1401,8 +1401,8 @@ public class GeometryTools {
             centerAtomSecondMolecule = secondAtomContainer.getAtom(mappedAtoms.get(firstAtomContainer
                     .indexOf(centerAtomFirstMolecule)));
             connectedAtoms = firstAtomContainer.getConnectedAtomsList(centerAtomFirstMolecule);
-            for (int i = 0; i < connectedAtoms.size(); i++) {
-                IAtom conAtom = (IAtom) connectedAtoms.get(i);
+            for (IAtom connectedAtom : connectedAtoms) {
+                IAtom conAtom = (IAtom) connectedAtom;
                 //this step is built to know if the program has already calculate a bond length (so as not to have duplicate values)
                 if (!conAtom.getFlag(CDKConstants.VISITED)) {
                     if (Coords3d) {

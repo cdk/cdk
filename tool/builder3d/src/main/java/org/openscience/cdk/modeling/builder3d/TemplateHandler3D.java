@@ -141,11 +141,11 @@ public class TemplateHandler3D {
         IRingSet       largestRingSet = null;
         int            atomNumber     = 0;
         IAtomContainer container      = null;
-        for (int i = 0; i < ringSystems.size(); i++) {
-            container = getAllInOneContainer(ringSystems.get(i));
+        for (IRingSet ringSystem : ringSystems) {
+            container = getAllInOneContainer(ringSystem);
             if (atomNumber < container.getAtomCount()) {
                 atomNumber = container.getAtomCount();
-                largestRingSet = ringSystems.get(i);
+                largestRingSet = ringSystem;
             }
         }
         return largestRingSet;

@@ -431,8 +431,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
                 candidate[level] = i;
 
                 int sum = 0;
-                for (int x = 0; x < candidate.length; x++)
-                    sum += candidate[x];
+                for (Integer integer : candidate) sum += integer;
 
                 if (sum == occur) {
                     distributions.add(candidate.clone());

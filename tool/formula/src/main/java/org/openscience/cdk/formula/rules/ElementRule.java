@@ -139,8 +139,7 @@ public class ElementRule implements IRule {
                     "Li", "Tl", "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac", "Th", "Pa", "U", "Np", "Pu"};
 
             mfRange = new MolecularFormulaRange();
-            for (int i = 0; i < elements.length; i++)
-                mfRange.addIsotope(builder.newInstance(IIsotope.class, elements[i]), 0, 50);
+            for (String element : elements) mfRange.addIsotope(builder.newInstance(IIsotope.class, element), 0, 50);
         }
     }
 }

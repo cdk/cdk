@@ -409,10 +409,10 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
             for (int c = 0; c < gsr_desc_length; c++) {
             	double ghs = limitSup * ((double)c / gsr_desc_length);
                 sum = 0;
-                for (int sing = 0; sing < singles.size(); sing++) {
+                for (Integer single : singles) {
                     angle = 0;
                     partial = 0;
-                    Integer thisSingleBond = singles.get(sing);
+                    Integer thisSingleBond = single;
                     position = thisSingleBond;
                     theSingleBond = mol.getBond(position);
                     middlePoint = theSingleBond.get3DCenter();
@@ -485,8 +485,7 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
         List<IAtom> neighToCarbon = mol.getConnectedAtomsList(carbonAtom);
         IBond tmpBond;
         int counter = 0;
-        for (int nei = 0; nei < neighToCarbon.size(); nei++) {
-            IAtom neighbour = neighToCarbon.get(nei);
+        for (IAtom neighbour : neighToCarbon) {
             if (neighbour.getAtomicNumber() == IElement.O) {
                 tmpBond = mol.getBond(neighbour, carbonAtom);
                 if (tmpBond.getOrder() == IBond.Order.DOUBLE) counter += 1;

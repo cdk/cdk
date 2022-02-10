@@ -132,13 +132,13 @@ public class FiguerasSSSRFinder {
             else if (smallestDegree == 2) {
                 rememberNodes = new IAtom[nodesN2.size()];
                 nodesToBreakCounter = 0;
-                for (int f = 0; f < nodesN2.size(); f++) {
-                    ring = getRing((IAtom) nodesN2.get(f), molecule);
+                for (IAtom iAtom : nodesN2) {
+                    ring = getRing((IAtom) iAtom, molecule);
                     if (ring != null) {
                         // check, if this ring already is in SSSR
                         if (!RingSetManipulator.ringAlreadyInSet(ring, sssr)) {
                             sssr.addAtomContainer(ring);
-                            rememberNodes[nodesToBreakCounter] = (IAtom) nodesN2.get(f);
+                            rememberNodes[nodesToBreakCounter] = (IAtom) iAtom;
                             nodesToBreakCounter++;
                         }
                     }
@@ -203,10 +203,10 @@ public class FiguerasSSSRFinder {
         }
         // Initialize the queue with nodes attached to rootNode
         neighbors = molecule.getConnectedAtomsList(rootNode);
-        for (int f = 0; f < neighbors.size(); f++) {
+        for (Object o : neighbors) {
             //if the degree of the f-st neighbor of rootNode is greater
             //than zero (i.e., it has not yet been deleted from the list)
-            neighbor = (IAtom) neighbors.get(f);
+            neighbor = (IAtom) o;
             // push the f-st node onto our FIFO queue
             // after assigning rootNode as its source
             queue.push(neighbor);
@@ -216,8 +216,8 @@ public class FiguerasSSSRFinder {
         while (queue.size() > 0) {
             node = (IAtom) queue.pop();
             mAtoms = molecule.getConnectedAtomsList(node);
-            for (int f = 0; f < mAtoms.size(); f++) {
-                mAtom = (IAtom) mAtoms.get(f);
+            for (Object atom : mAtoms) {
+                mAtom = (IAtom) atom;
                 if (!mAtom.equals(((List) node.getProperty(PATH)).get(((List<IAtom>) node.getProperty(PATH)).size() - 2))) {
                     if (((List) mAtom.getProperty(PATH)).size() > 0) {
                         intersection = getIntersection((List) node.getProperty(PATH), (List) mAtom.getProperty(PATH));
@@ -294,8 +294,8 @@ public class FiguerasSSSRFinder {
      */
     private void trim(IAtom atom, IAtomContainer molecule) {
         List<IBond> bonds = molecule.getConnectedBondsList(atom);
-        for (int i = 0; i < bonds.size(); i++) {
-            molecule.removeElectronContainer((IBond) bonds.get(i));
+        for (IBond bond : bonds) {
+            molecule.removeElectronContainer((IBond) bond);
         }
         // you are erased! Har, har, har.....  >8-)
     }
@@ -321,8 +321,8 @@ public class FiguerasSSSRFinder {
      */
     private List getIntersection(List<IAtom> list1, List<IAtom> list2) {
         List is = new ArrayList<IAtom>();
-        for (int f = 0; f < list1.size(); f++) {
-            if (list2.contains(list1.get(f))) is.add(list1.get(f));
+        for (IAtom iAtom : list1) {
+            if (list2.contains(iAtom)) is.add(iAtom);
         }
         return is;
     }

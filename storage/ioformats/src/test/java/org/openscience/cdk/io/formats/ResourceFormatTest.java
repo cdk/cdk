@@ -77,8 +77,8 @@ abstract public class ResourceFormatTest {
                     resourceFormat.getNameExtensions());
             String[] allExtensions = resourceFormat.getNameExtensions();
             boolean prefExtInAllExtList = false;
-            for (int i = 0; i < allExtensions.length; i++) {
-                if (allExtensions[i].equals(prefExtension)) prefExtInAllExtList = true;
+            for (String allExtension : allExtensions) {
+                if (allExtension.equals(prefExtension)) prefExtInAllExtList = true;
             }
             Assert.assertTrue("The preferred extension is not found in the list of all extensions", prefExtInAllExtList);
         }
@@ -94,8 +94,7 @@ abstract public class ResourceFormatTest {
             // FIXME: needs to be discussed
         } else {
             String[] exts = resourceFormat.getNameExtensions();
-            for (int i = 0; i < exts.length; i++) {
-                String extension = exts[i];
+            for (String extension : exts) {
                 Assert.assertNotNull(extension);
                 Assert.assertNotSame(0, extension.length());
                 assertFalse("File name extensions should not contain ',' characters", extension.contains(","));

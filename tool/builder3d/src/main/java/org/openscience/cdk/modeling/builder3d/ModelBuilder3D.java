@@ -249,9 +249,9 @@ public class ModelBuilder3D {
      */
     private IRingSet getRingSetOfAtom(List ringSystems, IAtom atom) {
         IRingSet ringSetOfAtom = null;
-        for (int i = 0; i < ringSystems.size(); i++) {
-            if (((IRingSet) ringSystems.get(i)).contains(atom)) {
-                return (IRingSet) ringSystems.get(i);
+        for (Object ringSystem : ringSystems) {
+            if (((IRingSet) ringSystem).contains(atom)) {
+                return (IRingSet) ringSystem;
             }
         }
         return ringSetOfAtom;
@@ -464,8 +464,8 @@ public class ModelBuilder3D {
         IAtomContainer connectedAtoms = molecule.getBuilder().newInstance(IAtomContainer.class);
         for (int i = 0; i < chain.getAtomCount(); i++) {
             atoms = molecule.getConnectedAtomsList(chain.getAtom(i));
-            for (int j = 0; j < atoms.size(); j++) {
-                IAtom atom = (IAtom) atoms.get(j);
+            for (Object o : atoms) {
+                IAtom atom = (IAtom) o;
                 if (!(atom.getSymbol()).equals("H") & !(atom.getFlag(CDKConstants.ISPLACED))
                         & !(atom.getFlag(CDKConstants.ISINRING))) {
                     //logger.debug("SEARCH PLACE AND FOUND Branch Atom "+molecule.indexOf(chain.getAtomAt(i))+

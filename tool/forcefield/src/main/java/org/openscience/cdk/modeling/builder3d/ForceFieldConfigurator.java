@@ -101,8 +101,8 @@ public class ForceFieldConfigurator {
 
     public boolean checkForceFieldType(String ffname) {
         boolean check = false;
-        for (int i = 0; i < fftypes.length; i++) {
-            if (fftypes[i].equals(ffname)) {
+        for (String fftype : fftypes) {
+            if (fftype.equals(ffname)) {
                 check = true;
                 break;
             }
@@ -227,8 +227,8 @@ public class ForceFieldConfigurator {
      */
     private IAtomType getAtomType(String ID) throws NoSuchAtomTypeException {
         IAtomType at = null;
-        for (int i = 0; i < atomTypes.size(); i++) {
-            at = (IAtomType) atomTypes.get(i);
+        for (IAtomType atomType : atomTypes) {
+            at = (IAtomType) atomType;
             if (at.getAtomTypeName().equals(ID)) {
                 return at;
             }

@@ -82,9 +82,9 @@ public class SwissArmyKnife {
      */
     public static String printInt2D(int[][] contab) {
         String line = "";
-        for (int f = 0; f < contab.length; f++) {
+        for (int[] ints : contab) {
             for (int g = 0; g < contab.length; g++) {
-                line += contab[f][g] + " ";
+                line += ints[g] + " ";
             }
             line += "\n";
         }

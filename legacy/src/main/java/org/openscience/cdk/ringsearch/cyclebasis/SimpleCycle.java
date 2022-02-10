@@ -75,8 +75,8 @@ public class SimpleCycle extends UndirectedSubgraph {
 
     static private Set inducedVertices(Set edges) {
         Set inducedVertices = new HashSet();
-        for (Iterator i = edges.iterator(); i.hasNext();) {
-            Edge edge = (Edge) i.next();
+        for (Object o : edges) {
+            Edge edge = (Edge) o;
             inducedVertices.add(edge.getSource());
             inducedVertices.add(edge.getTarget());
         }

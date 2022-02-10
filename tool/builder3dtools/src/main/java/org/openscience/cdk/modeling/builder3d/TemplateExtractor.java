@@ -191,10 +191,11 @@ public class TemplateExtractor {
                 if (ringSetM.getAtomContainerCount() > 0) {
                     ringSystems = RingPartitioner.partitionRings(ringSetM);
 
-                    for (int i = 0; i < ringSystems.size(); i++) {
-                        ringSet = (IRingSet) ringSystems.get(i);
+                    for (IRingSet ringSystem : ringSystems) {
+                        ringSet = (IRingSet) ringSystem;
                         ac = builder.newInstance(IAtomContainer.class);
-                        Iterator<IAtomContainer> containers = RingSetManipulator.getAllAtomContainers(ringSet).iterator();
+                        Iterator<IAtomContainer> containers = RingSetManipulator.getAllAtomContainers(ringSet)
+                                                                                .iterator();
                         while (containers.hasNext()) {
                             ac.add((IAtomContainer) containers.next());
                         }
@@ -319,11 +320,11 @@ public class TemplateExtractor {
         } catch (Exception exc3) {
             System.out.println("Could not write smile in file " + dataFileOut + " due to: " + exc3.getMessage());
         }
-        for (int i = 0; i < data.size(); i++) {
+        for (String datum : data) {
             // System.out.println("write:"+(String)data.get(i));
             try {
 
-                fout.write(((String) data.get(i)));
+                fout.write(((String) datum));
                 fout.write('\n');
             } catch (Exception exc4) {
             }
@@ -434,9 +435,9 @@ public class TemplateExtractor {
         } catch (Exception exc3) {
             System.out.println("Could not write Fingerprint in file " + dataFileOut + " due to: " + exc3.getMessage());
         }
-        for (int i = 0; i < data.size(); i++) {
+        for (IBitFingerprint datum : data) {
             try {
-                fout.write(data.get(i).toString());
+                fout.write(datum.toString());
                 fout.write('\n');
             } catch (Exception exc4) {
             }

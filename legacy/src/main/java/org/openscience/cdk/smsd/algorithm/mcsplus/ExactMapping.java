@@ -52,9 +52,9 @@ public class ExactMapping {
         int cliqueSize = cliqueList.size();
         int vecSize = compGraphNodes.size();
         //        System.out.println("VEC  SIZE " + vec_size);
-        for (int a = 0; a < cliqueSize; a++) {
+        for (Integer integer : cliqueList) {
             for (int b = 0; b < vecSize; b += 3) {
-                if (cliqueList.get(a) == compGraphNodes.get(b + 2)) {
+                if (integer == compGraphNodes.get(b + 2)) {
                     cliqueMapping.add(compGraphNodes.get(b));
                     cliqueMapping.add(compGraphNodes.get(b + 1));
                 }

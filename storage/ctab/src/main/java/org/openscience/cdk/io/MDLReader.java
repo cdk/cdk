@@ -153,10 +153,10 @@ public class MDLReader extends DefaultChemObjectReader {
         if (IChemModel.class.equals(classObject)) return true;
         if (IAtomContainer.class.equals(classObject)) return true;
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IChemFile.class.equals(interfaces[i])) return true;
-            if (IChemModel.class.equals(interfaces[i])) return true;
-            if (IAtomContainer.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IChemFile.class.equals(anInterface)) return true;
+            if (IChemModel.class.equals(anInterface)) return true;
+            if (IAtomContainer.class.equals(anInterface)) return true;
         }
         Class superClass = classObject.getSuperclass();
         if (superClass != null) return this.accepts(superClass);
