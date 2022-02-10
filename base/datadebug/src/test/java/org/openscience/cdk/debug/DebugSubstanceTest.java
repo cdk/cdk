@@ -32,12 +32,6 @@ public class DebugSubstanceTest extends AbstractSubstanceTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new DebugSubstance();
-            }
-        });
+        setTestObjectBuilder(DebugSubstance::new);
     }
 }

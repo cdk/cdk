@@ -39,13 +39,7 @@ public class SingleElectronTest extends AbstractSingleElectronTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new SingleElectron();
-            }
-        });
+        setTestObjectBuilder(SingleElectron::new);
     }
 
     @Test

@@ -37,13 +37,7 @@ public class DebugElementTest extends AbstractElementTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new DebugElement();
-            }
-        });
+        setTestObjectBuilder(DebugElement::new);
     }
 
     @Test

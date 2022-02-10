@@ -110,13 +110,7 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable, ICh
      */
     @Override
     public Iterable<IChemSequence> chemSequences() {
-        return new Iterable<IChemSequence>() {
-
-            @Override
-            public Iterator<IChemSequence> iterator() {
-                return new ChemSequenceIterator();
-            }
-        };
+        return ChemSequenceIterator::new;
     }
 
     /**

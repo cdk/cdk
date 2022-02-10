@@ -41,13 +41,7 @@ public class BioPolymerTest extends AbstractBioPolymerTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new BioPolymer();
-            }
-        });
+        setTestObjectBuilder(BioPolymer::new);
     }
 
     @Test

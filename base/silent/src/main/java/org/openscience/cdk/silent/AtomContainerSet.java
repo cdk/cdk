@@ -241,13 +241,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
      */
     @Override
     public Iterable<IAtomContainer> atomContainers() {
-        return new Iterable<IAtomContainer>() {
-
-            @Override
-            public Iterator<IAtomContainer> iterator() {
-                return new AtomContainerIterator();
-            }
-        };
+        return AtomContainerIterator::new;
     }
 
     /**

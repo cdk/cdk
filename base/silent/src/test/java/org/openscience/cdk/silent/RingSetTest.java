@@ -36,13 +36,7 @@ public class RingSetTest extends AbstractRingSetTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new RingSet();
-            }
-        });
+        setTestObjectBuilder(RingSet::new);
     }
 
     @Test

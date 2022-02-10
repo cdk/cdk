@@ -197,13 +197,7 @@ public class QueryBond extends QueryChemObject implements IQueryBond {
      */
     @Override
     public Iterable<IAtom> atoms() {
-        return new Iterable<IAtom>() {
-
-            @Override
-            public Iterator<IAtom> iterator() {
-                return new AtomsIterator();
-            }
-        };
+        return AtomsIterator::new;
     }
 
     /**

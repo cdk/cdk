@@ -36,13 +36,7 @@ public class DebugElectronContainerTest extends AbstractElectronContainerTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new DebugElectronContainer();
-            }
-        });
+        setTestObjectBuilder(DebugElectronContainer::new);
     }
 
     @Test

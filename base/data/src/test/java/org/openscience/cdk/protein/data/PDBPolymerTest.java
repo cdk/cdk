@@ -43,13 +43,7 @@ public class PDBPolymerTest extends AbstractPDBPolymerTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new PDBPolymer();
-            }
-        });
+        setTestObjectBuilder(PDBPolymer::new);
     }
 
     @Test

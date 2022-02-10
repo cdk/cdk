@@ -41,13 +41,7 @@ public class MoleculeTest extends AbstractMoleculeTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new AtomContainer();
-            }
-        });
+        setTestObjectBuilder(AtomContainer::new);
     }
 
     // test constructors

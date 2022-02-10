@@ -72,13 +72,7 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
      */
     @Override
     public Iterable<IChemObject> relatedChemObjects() {
-        return new Iterable<IChemObject>() {
-
-            @Override
-            public Iterator<IChemObject> iterator() {
-                return new ChemObjectIterator();
-            }
-        };
+        return ChemObjectIterator::new;
     }
 
     /**

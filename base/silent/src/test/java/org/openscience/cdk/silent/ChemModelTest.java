@@ -43,13 +43,7 @@ public class ChemModelTest extends AbstractChemModelTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new ChemModel();
-            }
-        });
+        setTestObjectBuilder(ChemModel::new);
     }
 
     @Test

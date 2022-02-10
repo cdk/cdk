@@ -43,13 +43,7 @@ public class StrandTest extends AbstractStrandTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new Strand();
-            }
-        });
+        setTestObjectBuilder(Strand::new);
     }
 
     @Test

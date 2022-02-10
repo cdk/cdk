@@ -173,13 +173,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      */
     @Override
     public Iterable<IMapping> mappings() {
-        return new Iterable<IMapping>() {
-
-            @Override
-            public Iterator<IMapping> iterator() {
-                return new MappingIterator();
-            }
-        };
+        return MappingIterator::new;
     }
 
     /**

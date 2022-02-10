@@ -39,13 +39,7 @@ public class DebugCrystalTest extends AbstractCrystalTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new DebugCrystal();
-            }
-        });
+        setTestObjectBuilder(DebugCrystal::new);
     }
 
     @Test

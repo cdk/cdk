@@ -164,13 +164,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      */
     @Override
     public Iterable<IAtom> atoms() {
-        return new Iterable<IAtom>() {
-
-            @Override
-            public Iterator<IAtom> iterator() {
-                return new AtomsIterator();
-            }
-        };
+        return AtomsIterator::new;
     }
 
     /**

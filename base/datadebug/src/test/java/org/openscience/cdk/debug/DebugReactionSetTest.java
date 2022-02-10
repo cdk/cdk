@@ -36,13 +36,7 @@ public class DebugReactionSetTest extends AbstractReactionSetTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new DebugReactionSet();
-            }
-        });
+        setTestObjectBuilder(DebugReactionSet::new);
     }
 
     @Test

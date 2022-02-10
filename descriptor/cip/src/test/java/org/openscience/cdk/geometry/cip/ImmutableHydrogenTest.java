@@ -81,13 +81,7 @@ public class ImmutableHydrogenTest extends CDKTestCase {
         Assert.assertEquals(0, hydrogen.getListenerCount());
 
         hydrogen.notifyChanged();
-        hydrogen.notifyChanged(new IChemObjectChangeEvent() {
-
-            @Override
-            public Object getSource() {
-                return new String();
-            }
-        });
+        hydrogen.notifyChanged(String::new);
 
         Assert.assertFalse(hydrogen.getNotification());
         hydrogen.setNotification(true);

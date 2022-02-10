@@ -41,13 +41,7 @@ public class PseudoAtomTest extends AbstractPseudoAtomTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new PseudoAtom();
-            }
-        });
+        setTestObjectBuilder(PseudoAtom::new);
     }
 
     @Test

@@ -136,13 +136,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
      */
     @Override
     public Iterable<IReaction> reactions() {
-        return new Iterable<IReaction>() {
-
-            @Override
-            public Iterator<IReaction> iterator() {
-                return new ReactionIterator();
-            }
-        };
+        return ReactionIterator::new;
     }
 
     /**

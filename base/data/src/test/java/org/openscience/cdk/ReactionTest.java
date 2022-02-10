@@ -39,13 +39,7 @@ public class ReactionTest extends AbstractReactionTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new Reaction();
-            }
-        });
+        setTestObjectBuilder(Reaction::new);
     }
 
     @Test

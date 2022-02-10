@@ -37,13 +37,7 @@ public class DebugBondTest extends AbstractBondTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new DebugBond();
-            }
-        });
+        setTestObjectBuilder(DebugBond::new);
     }
 
     @Test

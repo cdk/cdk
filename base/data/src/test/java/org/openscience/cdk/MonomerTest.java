@@ -42,13 +42,7 @@ public class MonomerTest extends AbstractMonomerTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new Monomer();
-            }
-        });
+        setTestObjectBuilder(Monomer::new);
     }
 
     @Test

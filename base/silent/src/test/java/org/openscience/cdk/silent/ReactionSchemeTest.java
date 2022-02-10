@@ -35,13 +35,7 @@ public class ReactionSchemeTest extends AbstractReactionSchemeTest {
 
     @BeforeClass
     public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-
-            @Override
-            public IChemObject newTestObject() {
-                return new ReactionScheme();
-            }
-        });
+        setTestObjectBuilder(ReactionScheme::new);
     }
 
     @Test

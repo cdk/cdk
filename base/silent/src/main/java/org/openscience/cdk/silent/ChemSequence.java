@@ -112,13 +112,7 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
      */
     @Override
     public Iterable<IChemModel> chemModels() {
-        return new Iterable<IChemModel>() {
-
-            @Override
-            public Iterator<IChemModel> iterator() {
-                return new ChemModelIterator();
-            }
-        };
+        return ChemModelIterator::new;
     }
 
     /**
