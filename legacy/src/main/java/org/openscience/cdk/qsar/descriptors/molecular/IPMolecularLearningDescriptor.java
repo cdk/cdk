@@ -132,10 +132,7 @@ public class IPMolecularLearningDescriptor extends AbstractMolecularDescriptor i
                 local = (IAtomContainer) atomContainer.clone();
                 LonePairElectronChecker lpcheck = new LonePairElectronChecker();
                 lpcheck.saturate(local);
-            } catch (CloneNotSupportedException e) {
-                return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                        Double.NaN), getDescriptorNames(), e);
-            } catch (CDKException e) {
+            } catch (CloneNotSupportedException | CDKException e) {
                 return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
                         Double.NaN), getDescriptorNames(), e);
             }

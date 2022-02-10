@@ -154,10 +154,7 @@ public class PiElectronegativityDescriptor extends AbstractAtomicDescriptor impl
                 lpcheck.saturate(atomContainer);
             }
             localAtom = clone.getAtom(atomContainer.indexOf(atom));
-        } catch (CloneNotSupportedException e) {
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                    Double.NaN), NAMES, null);
-        } catch (CDKException e) {
+        } catch (CloneNotSupportedException | CDKException e) {
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
                     Double.NaN), NAMES, null);
         }

@@ -122,14 +122,12 @@ public class JPlogPDescriptor extends AbstractMolecularDescriptor implements IMo
 			hAdder.addImplicitHydrogens(struct);
 			AtomContainerManipulator.convertImplicitToExplicitHydrogens(struct);
 			Aromaticity.cdkLegacy().apply(struct);
-		} catch (CloneNotSupportedException e) {
-			return getDummyDescriptorValue(e);
-		} catch (CDKException e) {
+		} catch (CloneNotSupportedException | CDKException e) {
 			return getDummyDescriptorValue(e);
 		}
 
 
-		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(jplogp.calcLogP(struct)),
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(jplogp.calcLogP(struct)),
 				getDescriptorNames());
 	}
 

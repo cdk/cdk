@@ -214,9 +214,7 @@ public class SMARTSQueryTool {
         this.smarts = smarts;
         try {
             initializeQuery();
-        } catch (TokenMgrError error) {
-            throw new IllegalArgumentException("Error parsing SMARTS", error);
-        } catch (CDKException error) {
+        } catch (TokenMgrError | CDKException error) {
             throw new IllegalArgumentException("Error parsing SMARTS", error);
         }
     }

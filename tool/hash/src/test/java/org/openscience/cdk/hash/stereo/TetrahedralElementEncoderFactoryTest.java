@@ -179,9 +179,7 @@ public class TetrahedralElementEncoderFactoryTest {
                 field = encoder.getClass().getDeclaredField("geometric");
                 field.setAccessible(true);
                 return (GeometricParity) field.get(encoder);
-            } catch (NoSuchFieldException e) {
-                System.err.println(e.getMessage());
-            } catch (IllegalAccessException e) {
+            } catch (NoSuchFieldException | IllegalAccessException e) {
                 System.err.println(e.getMessage());
             }
         }
@@ -195,9 +193,7 @@ public class TetrahedralElementEncoderFactoryTest {
                 field = encoder.getClass().getDeclaredField("encoders");
                 field.setAccessible(true);
                 return (List<StereoEncoder>) field.get(encoder);
-            } catch (NoSuchFieldException e) {
-                System.err.println(e.getMessage());
-            } catch (IllegalAccessException e) {
+            } catch (NoSuchFieldException | IllegalAccessException e) {
                 System.err.println(e.getMessage());
             }
         }

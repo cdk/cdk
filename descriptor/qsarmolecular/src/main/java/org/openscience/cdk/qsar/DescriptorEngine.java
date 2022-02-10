@@ -562,12 +562,8 @@ public class DescriptorEngine {
                         Class klass = null;
                         try {
                             klass = Class.forName(className);
-                        } catch (ClassNotFoundException cnfe) {
+                        } catch (ClassNotFoundException | UnsatisfiedLinkError | NoClassDefFoundError cnfe) {
                             logger.debug(cnfe);
-                        } catch (NoClassDefFoundError ncdfe) {
-                            logger.debug(ncdfe);
-                        } catch (UnsatisfiedLinkError ule) {
-                            logger.debug(ule);
                         }
                         if (klass == null) continue;
 
@@ -659,12 +655,9 @@ public class DescriptorEngine {
                 descriptor.initialise(builder);
                 descriptors.add(descriptor);
                 logger.info("Loaded descriptor: ", descriptorName);
-            } catch (NoClassDefFoundError error) {
+            } catch (NoClassDefFoundError | ClassNotFoundException error) {
                 logger.error("Could not find this Descriptor: ", descriptorName);
                 logger.debug(error);
-            } catch (ClassNotFoundException exception) {
-                logger.error("Could not find this Descriptor: ", descriptorName);
-                logger.debug(exception);
             } catch (IllegalAccessException | InvocationTargetException | InstantiationException exception) {
                 logger.error("Could not load this Descriptor: ", descriptorName);
                 logger.debug(exception);

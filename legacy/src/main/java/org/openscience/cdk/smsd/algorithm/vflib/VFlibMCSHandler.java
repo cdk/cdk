@@ -109,9 +109,7 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
         if (flag && !vfLibSolutions.isEmpty()) {
             try {
                 searchMcGregorMapping();
-            } catch (CDKException ex) {
-                LOGGER.error(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
+            } catch (CDKException | IOException ex) {
                 LOGGER.error(Level.SEVERE, null, ex);
             }
         }

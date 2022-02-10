@@ -203,9 +203,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
             CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(ac.getBuilder());
             hAdder.addImplicitHydrogens(ac);
             AtomContainerManipulator.convertImplicitToExplicitHydrogens(ac);
-        } catch (CloneNotSupportedException e) {
-            return getDummyDescriptorValue(e);
-        } catch (CDKException e) {
+        } catch (CloneNotSupportedException | CDKException e) {
             return getDummyDescriptorValue(e);
         }
 

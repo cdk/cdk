@@ -137,9 +137,7 @@ public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor
             ac = (IAtomContainer) atomContainer.clone();
             bond = ac.getBond(atomContainer.indexOf(aBond));
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
-        } catch (CDKException e) {
-            return getDummyDescriptorValue(e);
-        } catch (CloneNotSupportedException e) {
+        } catch (CDKException | CloneNotSupportedException e) {
             return getDummyDescriptorValue(e);
         }
 

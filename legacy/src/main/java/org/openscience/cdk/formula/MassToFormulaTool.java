@@ -184,9 +184,7 @@ public class MassToFormulaTool {
     public void setDefaultRestrictions() {
         try {
             callDefaultRestrictions();
-        } catch (CDKException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (CDKException | IOException e) {
             e.printStackTrace();
         }
     }

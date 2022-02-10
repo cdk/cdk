@@ -131,9 +131,7 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
             double ratio = nsp3 / (double) (nsp2 + nsp3);
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                     new DoubleResult(ratio), getDescriptorNames());
-        } catch (CloneNotSupportedException e) {
-            return getDummyDescriptorValue(e);
-        } catch (CDKException e) {
+        } catch (CloneNotSupportedException | CDKException e) {
             return getDummyDescriptorValue(e);
         }
     }

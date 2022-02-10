@@ -229,10 +229,7 @@ public class RendererModel implements Serializable, Cloneable {
         // only to return the default value anyway...
         try {
             return param.newInstance().getDefault();
-        } catch (InstantiationException exception) {
-            throw new IllegalArgumentException("Could not instantiate a default " + param.getClass().getName(),
-                    exception);
-        } catch (IllegalAccessException exception) {
+        } catch (InstantiationException | IllegalAccessException exception) {
             throw new IllegalArgumentException("Could not instantiate a default " + param.getClass().getName(),
                     exception);
         }

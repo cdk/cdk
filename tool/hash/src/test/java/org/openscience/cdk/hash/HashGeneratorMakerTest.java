@@ -197,9 +197,7 @@ public class HashGeneratorMakerTest {
                 Field f = generator.getClass().getDeclaredField("factory");
                 f.setAccessible(true);
                 return (StereoEncoderFactory) f.get(generator);
-            } catch (NoSuchFieldException e) {
-                System.err.println(e.getMessage());
-            } catch (IllegalAccessException e) {
+            } catch (NoSuchFieldException | IllegalAccessException e) {
                 System.err.println(e.getMessage());
             }
         }
@@ -224,9 +222,7 @@ public class HashGeneratorMakerTest {
                 Object o2 = f2.get(seedGenerator);
                 return getEncoders((ConjugatedAtomEncoder) o2);
             }
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }
         return Collections.emptyList();
@@ -237,9 +233,7 @@ public class HashGeneratorMakerTest {
             Field field = conjugated.getClass().getDeclaredField("encoders");
             field.setAccessible(true);
             return (List<AtomEncoder>) field.get(conjugated);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }
         return Collections.emptyList();

@@ -139,10 +139,7 @@ public class SigmaElectronegativityDescriptor extends AbstractAtomicDescriptor i
             clone = (IAtomContainer) ac.clone();
             localAtom = clone.getAtom(ac.indexOf(atom));
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(clone);
-        } catch (CDKException e) {
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
-                    Double.NaN), NAMES, e);
-        } catch (CloneNotSupportedException e) {
+        } catch (CDKException | CloneNotSupportedException e) {
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
                     Double.NaN), NAMES, e);
         }

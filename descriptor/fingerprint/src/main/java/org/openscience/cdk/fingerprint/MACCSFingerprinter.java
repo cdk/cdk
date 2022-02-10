@@ -81,9 +81,7 @@ public class MACCSFingerprinter extends AbstractFingerprinter implements IFinger
     public MACCSFingerprinter(IChemObjectBuilder builder) {
         try {
             keys = readKeyDef(builder);
-        } catch (IOException e) {
-            logger.debug(e);
-        } catch (CDKException e) {
+        } catch (IOException | CDKException e) {
             logger.debug(e);
         }
     }
